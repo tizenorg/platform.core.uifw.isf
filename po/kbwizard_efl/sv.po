@@ -1,0 +1,1318 @@
+# Swedish translation for scim
+# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# This file is distributed under the same license as the scim package.
+# <>, 2006.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: scim\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"PO-Revision-Date: 2006-09-09 21:37+0200\n"
+"Last-Translator:  <>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
+#, fuzzy
+msgid "Keyboard selection"
+msgstr "Tangentval"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Tangentval"
+
+#, fuzzy
+#~ msgid "Option"
+#~ msgstr "Alternativ"
+
+#, fuzzy
+#~ msgid "General"
+#~ msgstr "Tyska"
+
+#, fuzzy
+#~ msgid "S/W keyboard"
+#~ msgstr "Latinsk teckeninmatning"
+
+#, fuzzy
+#~ msgid "Keyboard option"
+#~ msgstr "Tangentval"
+
+#, fuzzy
+#~ msgid "H/W keyboard"
+#~ msgstr "Latinsk teckeninmatning"
+
+#, fuzzy
+#~ msgid "option"
+#~ msgstr "Alternativ"
+
+#, fuzzy
+#~ msgid "Keyboard"
+#~ msgstr "Latinsk teckeninmatning"
+
+#~ msgid "English/Keyboard"
+#~ msgstr "Latinsk teckeninmatning"
+
+#, fuzzy
+#~ msgid "English input service"
+#~ msgstr "Engelska (amerikansk)"
+
+#~ msgid "Amharic"
+#~ msgstr "Amhariska"
+
+#~ msgid "Arabic"
+#~ msgstr "Arabiska"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "Arabiska (Egypten)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "Arabiska (Libanon)"
+
+#~ msgid "Assamese"
+#~ msgstr "Assamesiska"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "Azerbajdzjanska"
+
+#~ msgid "Belarusian"
+#~ msgstr "Vitryska"
+
+#~ msgid "Bulgarian"
+#~ msgstr "Bulgariska"
+
+#~ msgid "Bengali"
+#~ msgstr "Bengali"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Bengali (Indien)"
+
+#~ msgid "Tibetan"
+#~ msgstr "Tibetanska"
+
+#~ msgid "Bosnian"
+#~ msgstr "Bosniska"
+
+#~ msgid "Catalan"
+#~ msgstr "Katalanska"
+
+#~ msgid "Czech"
+#~ msgstr "Tjeckiska"
+
+#~ msgid "Welsh"
+#~ msgstr "Kymriska"
+
+#~ msgid "Danish"
+#~ msgstr "Danska"
+
+#~ msgid "German"
+#~ msgstr "Tyska"
+
+#~ msgid "Greek"
+#~ msgstr "Grekiska"
+
+#~ msgid "English"
+#~ msgstr "Engelska"
+
+#~ msgid "English (Australian)"
+#~ msgstr "Engelska (australiensisk)"
+
+#~ msgid "English (Canadian)"
+#~ msgstr "Engelska (kanadensisk)"
+
+#~ msgid "English (British)"
+#~ msgstr "Engelska (brittisk)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "Engelska (irländsk)"
+
+#~ msgid "English (American)"
+#~ msgstr "Engelska (amerikansk)"
+
+#~ msgid "Spanish"
+#~ msgstr "Spanska"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "Spanska (Mexiko)"
+
+#~ msgid "Estonian"
+#~ msgstr "Estniska"
+
+#~ msgid "Basque"
+#~ msgstr "Baskiska"
+
+#~ msgid "Persian"
+#~ msgstr "Persiska"
+
+#~ msgid "Finnish"
+#~ msgstr "Finska"
+
+#~ msgid "French"
+#~ msgstr "Franska"
+
+#~ msgid "Irish"
+#~ msgstr "Irländska"
+
+#~ msgid "Galician"
+#~ msgstr "Galiciska"
+
+#~ msgid "Gujarati"
+#~ msgstr "Gujarati"
+
+#~ msgid "Hebrew"
+#~ msgstr "Hebreiska"
+
+#~ msgid "Hindi"
+#~ msgstr "Hindi"
+
+#~ msgid "Croatian"
+#~ msgstr "Kroatiska"
+
+#~ msgid "Hungarian"
+#~ msgstr "Ungerska"
+
+#, fuzzy
+#~ msgid "Armenian"
+#~ msgstr "Rumänska"
+
+#~ msgid "Interlingua"
+#~ msgstr "Interlingua"
+
+#~ msgid "Indonesian"
+#~ msgstr "Indonesiska"
+
+#~ msgid "Icelandic"
+#~ msgstr "Isländska"
+
+#~ msgid "Italian"
+#~ msgstr "Italienska"
+
+#~ msgid "Japanese"
+#~ msgstr "Japanska"
+
+#, fuzzy
+#~ msgid "Georgian"
+#~ msgstr "Tyska"
+
+#~ msgid "Kazakh"
+#~ msgstr "Kazakisk"
+
+#~ msgid "Cambodian"
+#~ msgstr "Kambodjanska"
+
+#~ msgid "Kannada"
+#~ msgstr "Kannada"
+
+#~ msgid "Korean"
+#~ msgstr "Koreanska"
+
+#~ msgid "Laothian"
+#~ msgstr "Laotiska"
+
+#~ msgid "Lithuanian"
+#~ msgstr "Litauiska"
+
+#~ msgid "Latvian"
+#~ msgstr "Lettiska"
+
+#~ msgid "Macedonian"
+#~ msgstr "Makedonska"
+
+#~ msgid "Malayalam"
+#~ msgstr "Malayalam"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongolska"
+
+#~ msgid "Marathi"
+#~ msgstr "Marathi"
+
+#~ msgid "Malay"
+#~ msgstr "Malay"
+
+#~ msgid "Nepali"
+#~ msgstr "Nepali (Khaskura)"
+
+#~ msgid "Dutch"
+#~ msgstr "Holländska"
+
+#, fuzzy
+#~ msgid "Norwegian (Nynorsk)"
+#~ msgstr "Norska (nynorsk)"
+
+#, fuzzy
+#~ msgid "Norwegian (Bokmal)"
+#~ msgstr "Norska (bokmål)"
+
+#~ msgid "Oriya"
+#~ msgstr "Oriya"
+
+#~ msgid "Punjabi"
+#~ msgstr "Punjabi"
+
+#~ msgid "Polish"
+#~ msgstr "Polska"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugisiska"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "Portugisiska (Brasilien)"
+
+#~ msgid "Romanian"
+#~ msgstr "Rumänska"
+
+#~ msgid "Russian"
+#~ msgstr "Ryska"
+
+#~ msgid "Slovak"
+#~ msgstr "Slovakiska"
+
+#~ msgid "Slovenian"
+#~ msgstr "Slovenska"
+
+#~ msgid "Albanian"
+#~ msgstr "Albanska"
+
+#~ msgid "Serbian"
+#~ msgstr "Serbiska"
+
+#~ msgid "Swedish"
+#~ msgstr "Svenska"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "Svenska (Finland)"
+
+#~ msgid "Tamil"
+#~ msgstr "Tamil"
+
+#~ msgid "Telugu"
+#~ msgstr "Telagu"
+
+#~ msgid "Thai"
+#~ msgstr "Thai"
+
+#~ msgid "Turkish"
+#~ msgstr "Turkiska"
+
+#~ msgid "Uighur"
+#~ msgstr "Uiguriska"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ukrainska"
+
+#~ msgid "Urdu"
+#~ msgstr "Urdu"
+
+#~ msgid "Uzbek"
+#~ msgstr "Uzbekiska"
+
+#~ msgid "Vietnamese"
+#~ msgstr "Vietnamesiska"
+
+#~ msgid "Walloon"
+#~ msgstr "Vallonska"
+
+#~ msgid "Yiddish"
+#~ msgstr "Jiddish"
+
+#~ msgid "Chinese"
+#~ msgstr "Kinesiska"
+
+#, fuzzy
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "Kinesiska (förenklad)"
+
+#, fuzzy
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "Kinesiska (traditionell)"
+
+#, fuzzy
+#~ msgid "Dutch (Belgian)"
+#~ msgstr "Belgisk"
+
+#, fuzzy
+#~ msgid "English (United States)"
+#~ msgstr "Engelsk (US)"
+
+#, fuzzy
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Engelska (kanadensisk)"
+
+#, fuzzy
+#~ msgid "English (New Zealand)"
+#~ msgstr "Engelska (irländsk)"
+
+#, fuzzy
+#~ msgid "English (Irish)"
+#~ msgstr "Engelska (brittisk)"
+
+#, fuzzy
+#~ msgid "English (South Africa)"
+#~ msgstr "Engelska (amerikansk)"
+
+#, fuzzy
+#~ msgid "English (Jamaica)"
+#~ msgstr "Engelska (kanadensisk)"
+
+#, fuzzy
+#~ msgid "English (Belize)"
+#~ msgstr "Engelska (brittisk)"
+
+#, fuzzy
+#~ msgid "English (Trinidad)"
+#~ msgstr "Engelska (brittisk)"
+
+#, fuzzy
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "Engelska (kanadensisk)"
+
+#, fuzzy
+#~ msgid "English (Philippines)"
+#~ msgstr "Engelska (brittisk)"
+
+#, fuzzy
+#~ msgid "French (Standard)"
+#~ msgstr "Fransk (kanadensisk)"
+
+#, fuzzy
+#~ msgid "French (Belgian)"
+#~ msgstr "Fransk (kanadensisk)"
+
+#~ msgid "French (Canadian)"
+#~ msgstr "Fransk (kanadensisk)"
+
+#, fuzzy
+#~ msgid "French (Swiss)"
+#~ msgstr "Tysk (Schweizisk)"
+
+#, fuzzy
+#~ msgid "French (Monaco)"
+#~ msgstr "Fransk (kanadensisk)"
+
+#, fuzzy
+#~ msgid "German (Standard)"
+#~ msgstr "Tysk (med 'Tottaste')"
+
+#~ msgid "German (Swiss)"
+#~ msgstr "Tysk (Schweizisk)"
+
+#, fuzzy
+#~ msgid "German (Austrian)"
+#~ msgstr "Engelska (australiensisk)"
+
+#, fuzzy
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "Tysk (Schweizisk)"
+
+#, fuzzy
+#~ msgid "Italian (Swiss)"
+#~ msgstr "Tysk (Schweizisk)"
+
+#, fuzzy
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "Portugisiska (Brasilien)"
+
+#, fuzzy
+#~ msgid "Portuguese (Standard)"
+#~ msgstr "Portugisiska (Brasilien)"
+
+#, fuzzy
+#~ msgid "Spanish (Traditional Sort)"
+#~ msgstr "Spansk (Latinamerika)"
+
+#, fuzzy
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "Spansk (Latinamerika)"
+
+#, fuzzy
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "Spansk (Latinamerika)"
+
+#, fuzzy
+#~ msgid "Spanish (Panama)"
+#~ msgstr "Spansk (Latinamerika)"
+
+#, fuzzy
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "Spansk (Latinamerika)"
+
+#, fuzzy
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Peru)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Chile)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "Spansk (CP 850)"
+
+#, fuzzy
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "Spanska (Mexiko)"
+
+#, fuzzy
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "Malayalam"
+
+#~ msgid "Norwegian"
+#~ msgstr "Norsk"
+
+#, fuzzy
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbiska"
+
+#, fuzzy
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Kinesiska (traditionell)"
+
+#, fuzzy
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "Kinesiska (traditionell)"
+
+#, fuzzy
+#~ msgid "Chinese (Macau)"
+#~ msgstr "Kinesiska (traditionell)"
+
+#, fuzzy
+#~ msgid "Chinese (PRC)"
+#~ msgstr "Kinesiska"
+
+#, fuzzy
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "Kinesiska (förenklad)"
+
+#, fuzzy
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Libya)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Oman)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Syria)"
+#~ msgstr "Arabiska (Egypten)"
+
+#, fuzzy
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "Arabiska (Egypten)"
+
+#, fuzzy
+#~ msgid "Arabic (UAE)"
+#~ msgstr "Arabiska (Egypten)"
+
+#, fuzzy
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "Arabiska (Libanon)"
+
+#, fuzzy
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "Arabiska (Egypten)"
+
+#~ msgid "Other"
+#~ msgstr "Annat"
+
+#~ msgid "Unknown"
+#~ msgstr "Okänd"
+
+#~ msgid "English (US)"
+#~ msgstr "Engelsk (US)"
+
+#~ msgid "Belgian"
+#~ msgstr "Belgisk"
+
+#~ msgid "Czech (qwerty)"
+#~ msgstr "Tjeckisk (qwerty)"
+
+#~ msgid "Dvorak"
+#~ msgstr "Dvorak"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "Fransk (schweizisk)"
+
+#~ msgid "German (with deadkeys)"
+#~ msgstr "Tysk (med 'Tottaste')"
+
+#~ msgid "Portuguese (Brazil US accents)"
+#~ msgstr "Portugisisk (Brazilien, am. diakriter)"
+
+#~ msgid "Slovak (qwerty)"
+#~ msgstr "Slovakisk (qwerty)"
+
+#~ msgid "Spanish (CP 850)"
+#~ msgstr "Spansk (CP 850)"
+
+#~ msgid "Spanish (Latin America)"
+#~ msgstr "Spansk (Latinamerika)"
+
+#~ msgid "English (UK)"
+#~ msgstr "Engelsk (UK)"
+
+#~ msgid "Simplified-Traditional Chinese Conversion"
+#~ msgstr "Omvandling förenklad/traditionell kinesiska"
+
+#~ msgid "Convert between Simplified Chinese and Traditional Chinese"
+#~ msgstr "Omvandla förenklad kinesiska till traditionell och vice versa"
+
+#~ msgid "SC-TC"
+#~ msgstr "SC-TC"
+
+#~ msgid "Simplified-Traditional Chinese conversion"
+#~ msgstr "Omvandling förenklad/traditionell kinesiska"
+
+#~ msgid "No Conversion"
+#~ msgstr "Ingen omvandling"
+
+#~ msgid "Simplified to Traditional"
+#~ msgstr "Förenklad till traditionell"
+
+#~ msgid "Convert Simplified Chinese to Traditional Chinese"
+#~ msgstr "Omvandla förenklad kinesiska till traditionell"
+
+#~ msgid "Traditional to Simplified"
+#~ msgstr "Traditionell till förenklad"
+
+#~ msgid "Convert Traditional Chinese to Simplified Chinese"
+#~ msgstr "Omvandla traditionell kinesiska till förenklad"
+
+#~ msgid "James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "SC->TC"
+#~ msgstr "SC->TC"
+
+#~ msgid "TC->SC"
+#~ msgstr "TC->SC"
+
+#~ msgid "Smart Common Input Method platform "
+#~ msgstr "Scim-plattformen (Smart Common Input Method)"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ ":\n"
+#~ "\n"
+#~ msgstr ""
+#~ ":\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+
+#~ msgid "Enable"
+#~ msgstr "Aktivera"
+
+#~ msgid "Name"
+#~ msgstr "Namn"
+
+#~ msgid "Cursor Position"
+#~ msgstr "Markörens position"
+
+#~ msgid "The current position of the insertion cursor in chars."
+#~ msgstr "Markörens läge i texten, räknat i tecken."
+
+#~ msgid "Maximum length"
+#~ msgstr "Maxlängd"
+
+#~ msgid ""
+#~ "Maximum number of characters for this string view. Zero if no maximum."
+#~ msgstr ""
+#~ "Högsta antal tecken att visa i den här teckenraden. Välj 0 för att inte "
+#~ "begränsa längden."
+
+#~ msgid "Maximum width"
+#~ msgstr "Maxbredd"
+
+#~ msgid "Maximum width of this string view."
+#~ msgstr "Maximal bredd för att visa den här teckenraden."
+
+#~ msgid "Has Frame"
+#~ msgstr "Med ram"
+
+#~ msgid "FALSE removes outside bevel from string view."
+#~ msgstr "Om FALSK tas ytterkanten bort från strängvyn."
+
+#~ msgid "Draw cursor"
+#~ msgstr "Visa markör"
+
+#~ msgid "TRUE draw blinking cursor."
+#~ msgstr "Om SANT använd blinkande markör."
+
+#~ msgid "Auto move cursor"
+#~ msgstr "Flytta markören automatiskt"
+
+#~ msgid "TRUE auto move cursor position when mouse clicking."
+#~ msgstr "Flytta markören automatiskt vid musklick."
+
+#, fuzzy
+#~ msgid "Forward button press/release event"
+#~ msgstr "Direktmata tangenter"
+
+#, fuzzy
+#~ msgid "TRUE forward button press/release event to user program."
+#~ msgstr "Skicka tangentnedtryckningar till användarprogrammet."
+
+#~ msgid "Auto resize the widget to fit the string"
+#~ msgstr "Anpassa storleken automatiskt till teckenraden."
+
+#~ msgid "TRUE Auto resize on."
+#~ msgstr "Storleken anpassas automatiskt."
+
+#, fuzzy
+#~ msgid "TRUE Emit move_cursor signal when press the string."
+#~ msgstr "Flytta markören automatiskt vid musklick."
+
+#~ msgid "Width in chars"
+#~ msgstr "Bredd (antal tecken)"
+
+#~ msgid "Number of characters to leave space for in the string view."
+#~ msgstr "Antal tecken att göra rum för i teckenraden."
+
+#~ msgid "Scroll offset"
+#~ msgstr "Mjuk rullning"
+
+#~ msgid ""
+#~ "Number of pixels of the string view scrolled off the screen to the left"
+#~ msgstr "Antal pixlar i teckenraden som rullat över vänsterkanten på skärmen"
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "The contents of the string view"
+#~ msgstr "Innehållet i teckenraden"
+
+#~ msgid "Selected _Keys:"
+#~ msgstr "Valda _kortkommandon:"
+
+#~ msgid "Key Code:"
+#~ msgstr "Tangentkod:"
+
+#, fuzzy
+#~ msgid "....."
+#~ msgstr "..."
+
+#~ msgid "Modifiers:"
+#~ msgstr "Specialtangenter:"
+
+#~ msgid "_Ctrl"
+#~ msgstr "_Ctrl"
+
+#~ msgid "A_lt"
+#~ msgstr "A_lt"
+
+#~ msgid "_Shift"
+#~ msgstr "_Shift"
+
+#~ msgid "_Release"
+#~ msgstr "_Release"
+
+#~ msgid "_Meta"
+#~ msgstr "_Meta"
+
+#~ msgid "S_uper"
+#~ msgstr "S_uper"
+
+#~ msgid "_Hyper"
+#~ msgstr "_Hyper"
+
+#~ msgid "Please enter a Key Code first."
+#~ msgstr "Ange tangentkod först."
+
+#, fuzzy
+#~ msgid ""
+#~ "Press a key (or a key combination).\n"
+#~ "This dialog will be closed \n"
+#~ "when the key is released."
+#~ msgstr ""
+#~ "Tryck på en tangent eller på en tangentkombination.\n"
+#~ "Den här rutan försvinner när du släpper tangenten."
+
+#~ msgid "Grabbing a key."
+#~ msgstr "Plockar tangent"
+
+#~ msgid "Key Selection"
+#~ msgstr "Tangentval"
+
+#~ msgid "Orientation"
+#~ msgstr "Riktning"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "Panelens riktning."
+
+#, fuzzy
+#~ msgid "Next"
+#~ msgstr "Text"
+
+#, fuzzy
+#~ msgid "Automatic"
+#~ msgstr "Amhariska"
+
+#, fuzzy
+#~ msgid "Always used"
+#~ msgstr "Alltid"
+
+#, fuzzy
+#~ msgid "%s Option"
+#~ msgstr "Alternativ"
+
+#, fuzzy
+#~ msgid "Keyboards"
+#~ msgstr "Latinsk teckeninmatning"
+
+#~ msgid "English/European"
+#~ msgstr "Västerländsk"
+
+#~ msgid "RAW CODE"
+#~ msgstr "TANGENTKOD"
+
+#~ msgid "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid ""
+#~ "Hot Keys:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    switch between Multibyte encoding and Unicode.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    reset the input method.\n"
+#~ msgstr ""
+#~ "Snabbtangenter:\n"
+#~ "\n"
+#~ "  Ctrl+u:\n"
+#~ "    Växla mellan multibytekodning and Unicode.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    återställ inmatningsmetod.\n"
+
+#~ msgid "The status of the current input method. Click to change it."
+#~ msgstr "Aktuell inmatningsmetod. Klicka för att ändra."
+
+#~ msgid "Unicode"
+#~ msgstr "Unicode"
+
+#~ msgid "Global Setup"
+#~ msgstr "Allmänna inställningar"
+
+#~ msgid ""
+#~ "Setup the global options used by All FrontEnd modules, including X11 "
+#~ "FrontEnd, GTK IMModule, QT IMModule etc."
+#~ msgstr ""
+#~ "Allmänna inställningar som gäller alla användargränssnitt, t.ex. X11 "
+#~ "FrontEnd, GTK IMModule, QT IMModule etc."
+
+#~ msgid "_Trigger:"
+#~ msgstr "Ak_tiveringstangent"
+
+#~ msgid "Select the trigger keys"
+#~ msgstr "Välj aktiveringstangenter"
+
+#~ msgid ""
+#~ "The key events to turn on/off SCIM input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "Tangentkombinationer som öppnar och stänger SCIM-inmatningen. Klicka "
+#~ "påknappen till höger för att ändra."
+
+#~ msgid "Turn _On:"
+#~ msgstr "Slå på (_o):"
+
+#~ msgid "Select the Turn On keys"
+#~ msgstr "Välj på-kommando"
+
+#~ msgid ""
+#~ "The key events to turn on SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Tangentkombinationer som öppnar SCIM-inmatningen. Klicka påknappen till "
+#~ "höger för att ändra."
+
+#~ msgid "Turn O_ff:"
+#~ msgstr "Stäng av (_f):"
+
+#~ msgid "Select the Turn Off keys"
+#~ msgstr "Välj på-kommando"
+
+#~ msgid ""
+#~ "The key events to turn off SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Tangentkombinationer som stänger SCIM-inmatningen. Klicka påknappen till "
+#~ "höger för att ändra."
+
+#~ msgid "_Next input method:"
+#~ msgstr "_Nästa inmatningsmetod:"
+
+#~ msgid "Select the next input method keys"
+#~ msgstr "Välj kommando för att hoppa till nästa"
+
+#~ msgid ""
+#~ "The key events to switch to the next input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "Tangentkombinationer som växlar till nästa inmatningsmetod. Klicka "
+#~ "påknappen till höger för att ändra."
+
+#~ msgid "_Previous input method:"
+#~ msgstr "Föregående inmatningsmetod (_p):"
+
+#~ msgid "Select the previous input method keys"
+#~ msgstr "Välj kommando för att hoppa till föregående"
+
+#~ msgid ""
+#~ "The key events to switch to the previous input method. Click on the "
+#~ "button on the right to edit it."
+#~ msgstr ""
+#~ "Tangentkombinationer som växlar till föregående inmatningsmetod. Klicka "
+#~ "påknappen till höger för att ändra."
+
+#~ msgid "Show input method _menu:"
+#~ msgstr "Visa _meny med inmatningsmetoder:"
+
+#~ msgid "Select the show input method menu keys"
+#~ msgstr "Välj kommando för att visa menyn med inmatningsmetoder"
+
+#~ msgid ""
+#~ "The key events to show the input method menu. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Tangentkombinationer som visar menyn med inmatningsmetoder. Klicka "
+#~ "påknappen till höger för att ändra."
+
+#~ msgid "_Keyboard Layout:"
+#~ msgstr "Tangentbordslayout (_k):"
+
+#~ msgid ""
+#~ "You should choose your currently used keyboard layout here so that input "
+#~ "methods, who care about keyboard layout, could work correctly."
+#~ msgstr ""
+#~ "Här väljer du vilket slags tangentbord du har. Det är nödvändigt föratt "
+#~ "vissa inmatningsmetoder skall fungera."
+
+#~ msgid "_Embed Preedit String into client window"
+#~ msgstr "Visa okonverterad_e latinska tecken i ditt arbetsfönster."
+
+#~ msgid ""
+#~ "If this option is checked, the preedit string will be displayed directly "
+#~ "in the client input window, rather than in a independent float window."
+#~ msgstr ""
+#~ "Med det här alternativet förbockat kommer de latinska bokstäver du "
+#~ "skriveratt visas direkt i fönstret du arbetar i. Annars visas de i ett "
+#~ "popup-fönster."
+
+#~ msgid "_Share the same input method among all applications"
+#~ msgstr "Använd _samma inmatningsmetod i alla program"
+
+#~ msgid ""
+#~ "If this option is checked, then only one input method could be used by "
+#~ "all applications at the same time.Otherwise different input method could "
+#~ "be used by each application."
+#~ msgstr ""
+#~ "Med det här alternativet förbockat kommer bara en inmatningsmetod att "
+#~ "användasi taget. Annars kan varje program använda olika metoder."
+
+#~ msgid "Hotkeys"
+#~ msgstr "Kortkommandon"
+
+#~ msgid ""
+#~ "You can enable/disable input methods and set hotkeys for input methods "
+#~ "here."
+#~ msgstr ""
+#~ "Slå av och på inmatningsmetoder och ange kortkommandon för olika "
+#~ "inmatningsmetoder här."
+
+#~ msgid "The installed input method services:"
+#~ msgstr "Installerade inmatningsmetoder:"
+
+#~ msgid "Edit _Hotkeys"
+#~ msgstr "Redigera kortkommandon (_h)"
+
+#~ msgid "Edit Hotkeys associated with the selected input method."
+#~ msgstr "Välj kortkommandon för vald inmatningsmetod."
+
+#~ msgid "Select _Filters"
+#~ msgstr "Välj _filter"
+
+#~ msgid "Select the Filters which will be attached to this input method."
+#~ msgstr "Välj filter att använda till den här inmatningsmetoden."
+
+#~ msgid "_Expand"
+#~ msgstr "Visa allt (_e)"
+
+#~ msgid "Expand all language categories."
+#~ msgstr "Visa alla inmatningsmetoder"
+
+#~ msgid "_Collapse"
+#~ msgstr "Göm allt (_c)"
+
+#~ msgid "Collapse all language categories."
+#~ msgstr "Göm alla inmatningsmetoder."
+
+#~ msgid "E_nable All"
+#~ msgstr "Markera alla (_n)"
+
+#~ msgid "Enable all input methods."
+#~ msgstr "Gör alla inmatningsmetoder tillgängliga för användning."
+
+#~ msgid "_Disable All"
+#~ msgstr "Avmarkera alla (_d)"
+
+#~ msgid "Disable all input methods."
+#~ msgstr "Gör alla inmatningsmetoder otillgängliga för användning."
+
+#~ msgid "Filters"
+#~ msgstr "Filter"
+
+#~ msgid "Languages"
+#~ msgstr "Språk"
+
+#~ msgid "Description"
+#~ msgstr "Beskrivning"
+
+#~ msgid "Edit Hotkeys for %s"
+#~ msgstr "Välj kortkommando för %s"
+
+#~ msgid "Select Filters for %s"
+#~ msgstr "Välj filter för %s"
+
+#~ msgid "Move _Up"
+#~ msgstr "Flytta _uppåt"
+
+#~ msgid "Move _Down"
+#~ msgstr "Flytta ne_dåt"
+
+#~ msgid "GTK"
+#~ msgstr "GTK"
+
+#~ msgid "A panel daemon based on GTK+-2.x library."
+#~ msgstr "Paneldemon byggd på GTK+-2.x-biblioteket."
+
+#~ msgid "On demand"
+#~ msgstr "På begäran"
+
+#~ msgid "Never"
+#~ msgstr "Aldrig"
+
+#~ msgid "ToolBar"
+#~ msgstr "Verktygsfält"
+
+#~ msgid "_Show:"
+#~ msgstr "Vi_sa"
+
+#~ msgid "Auto s_nap"
+#~ msgstr "Fäst vid skärmka_nt"
+
+#~ msgid "Show _input method icon"
+#~ msgstr "Visa ikon för aktuell inmatningsmetod"
+
+#~ msgid "Show inp_ut method name"
+#~ msgstr "Visa namn på akt_uell inmatningsmetod"
+
+#~ msgid "Hide time_out:"
+#~ msgstr "Time_out för att dölja:"
+
+#~ msgid "Show s_tick icon"
+#~ msgstr "Vi_sa fixeringsikonen"
+
+#~ msgid "Show m_enu icon"
+#~ msgstr "Visa m_enyikonen"
+
+#~ msgid "Show _help icon"
+#~ msgstr "Visa _hjälpikonen"
+
+#~ msgid "Show _property label"
+#~ msgstr "Visa inmatningsalternativ"
+
+#~ msgid "Input window"
+#~ msgstr "Inmatningsfönster"
+
+#~ msgid "E_mbedded lookup table"
+#~ msgstr "Infälld teckenväljare (_m)"
+
+#~ msgid "_Vertical lookup table"
+#~ msgstr "_Vertikal teckenväljare"
+
+#~ msgid "Misc"
+#~ msgstr "Diverse"
+
+#~ msgid "Show tra_y icon"
+#~ msgstr "Visa ikon i s_ystempanelen"
+
+#~ msgid "Stick _windows"
+#~ msgstr "Fäst fönster (_w)"
+
+#~ msgid "_Font:"
+#~ msgstr "Typsnitt (_f)"
+
+#~ msgid ""
+#~ "If option \"Always\" is selected, the toolbar will always be shown on the "
+#~ "screen. If option \"On demand\" is selected, it will only be shown when "
+#~ "SCIM is activated. If option \"Never\" is selected, it will never be "
+#~ "shown."
+#~ msgstr ""
+#~ "Välj \"Alltid\" för att ständigt visa verktygsfältet på skärmen. Välj\"På "
+#~ "begäran\" för att bara visa verktygsfältet när Scim är aktivt.Välj \"Never"
+#~ "\" för att aldrig visa verktygsfältet."
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar will be snapped to the screen "
+#~ "border."
+#~ msgstr ""
+#~ "Med det här alternativet förbockat är verktygsfältet alltid fäst mot "
+#~ "skärmkanten."
+
+#~ msgid ""
+#~ "The toolbar will be hidden out after this timeout is elapsed. This option "
+#~ "is only valid when \"Always show\" is selected. Set to zero to disable "
+#~ "this behavior."
+#~ msgstr ""
+#~ "Verktygsfältet döljs efter så här lång tid. Den här inställningen används "
+#~ "baranär du har valt \"Alltid\" i menyn till vänster. Välj 0 för att "
+#~ "aldrig döljaverktygsfältet."
+
+#~ msgid ""
+#~ "If this option is checked, the input method icon will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas alltid ikonen för "
+#~ "aktuellinmatningsmetod i verktygsfältet."
+
+#~ msgid ""
+#~ "If this option is checked, the input method name will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas alltid namnet på "
+#~ "aktuellinmatningsmetod i verktygsfältet."
+
+#~ msgid ""
+#~ "If this option is checked, the stick icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas häftstiftsikonen i "
+#~ "verktygsfältet"
+
+#~ msgid ""
+#~ "If this option is checked, the menu icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas menyikonen i verktygsfältet"
+
+#~ msgid ""
+#~ "If this option is checked, the help icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas hjälpikonen i verktygsfältet."
+
+#~ msgid ""
+#~ "If this option is checked, the text label of input method properties will "
+#~ "be showed on the toolbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas en textlapp med "
+#~ "inmatningsalternativi verktygsfältet"
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be embedded into the "
+#~ "input window."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat, visas teckenväljaren infälld "
+#~ "iinmatningsfönstret."
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be displayed vertically."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat används en vertikal teckenväljare."
+
+#~ msgid ""
+#~ "If this option is checked, the tray icon will be showed on the desktop's "
+#~ "taskbar."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat visas panelikonen i "
+#~ "skrivbordetssystempanel."
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar, input and lookup table windows "
+#~ "will be sticked to its original position."
+#~ msgstr ""
+#~ "Med det här alternativet förkryssat fixeras verktygsfält, "
+#~ "inmatningsfönsteroch teckenväljare på en given plats."
+
+#~ msgid "The font setting will be used in the input and lookup table windows."
+#~ msgstr ""
+#~ "Det typsnitt som kommer att användas i inmatnings- och teckenväljarfönster"
+
+#~ msgid "Select Interface Font"
+#~ msgstr "Välj typsnitt för användargränssnittet"
+
+#~ msgid "SCIM"
+#~ msgstr "SCIM"
+
+#~ msgid "FrontEnd"
+#~ msgstr "FrontEnd"
+
+#~ msgid "IMEngine"
+#~ msgstr "IMEngine"
+
+#~ msgid "Panel"
+#~ msgstr "Panel"
+
+#~ msgid "Extra"
+#~ msgstr "Extra"
+
+#~ msgid "SCIM Input Method Setup"
+#~ msgstr "Inställningar för Scim"
+
+#~ msgid ""
+#~ " <span size=\"20000\">Smart Common Input Method platform</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI Setup Utility</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+#~ msgstr ""
+#~ " <span size=\"20000\">Scim-plattformen (Smart Common Input Method)</"
+#~ "span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">Grafiskt inställningsverktyg</"
+#~ "span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+
+#~ msgid "<span size=\"x-large\">The Setup for %s modules.</span>"
+#~ msgstr "<span size=\"x-large\">Inställningar för %s-moduler.</span>"
+
+#~ msgid "Are you sure you want to quit SCIM Setup?"
+#~ msgstr "Vill du avsluta inställningsverktyget för Scim?"
+
+#~ msgid ""
+#~ "Not all configuration can be reloaded on the fly. Don't forget to restart "
+#~ "SCIM in order to let all of the new configuration take effect."
+#~ msgstr ""
+#~ "Många inställningar kräver att du startar om Scim innan du fortsätter,för "
+#~ "att de skall börja verka."
+
+#~ msgid "SCIM Setup"
+#~ msgstr "Inställningar för Scim"
+
+#~ msgid "Integrated Setup Utility based on GTK Widget library."
+#~ msgstr "Inställningsverktyg byggt på GTK Widget-biblioteket."
+
+#~ msgid "Setup utility for Smart Common Input Method platform"
+#~ msgstr ""
+#~ "Inställningsverktyg för Scim-plattformen (Smart Common Input Method)"
+
+#~ msgid "SCIM Help"
+#~ msgstr "Om Scim"
+
+#~ msgid "Smart Common Input Method"
+#~ msgstr "Scim (Smart Common Input Method)"
+
+#~ msgid "Stick/unstick the input window and the toolbar."
+#~ msgstr "Fixera/lossa inmatningsfönstret och verktygsfältet"
+
+#~ msgid "Show a brief help about SCIM and the current input method."
+#~ msgstr "Kortfattad information om Scim och om aktuell inmatningsmetod."
+
+#~ msgid "Show command menu."
+#~ msgstr "Visa kommandomenyn."
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "Reload Configuration"
+#~ msgstr "Återhämta inställningar"
+
+#~ msgid "Stick Windows"
+#~ msgstr "Fixera fönster"
+
+#~ msgid "Hide Toolbar"
+#~ msgstr "Dölj verktygsfältet"
+
+#~ msgid "Help ..."
+#~ msgstr "Hjälp ..."
+
+#~ msgid "Exit"
+#~ msgstr "Avsluta"

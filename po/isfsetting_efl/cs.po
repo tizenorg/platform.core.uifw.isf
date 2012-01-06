@@ -1,0 +1,1342 @@
+# translation of cs.po to Czech
+# translation of cs.po to cs_CZ
+# translation of scim.po to cs_CZ
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Klara Cihlarova <koty@seznam.cz>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: cs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 20:17+0900\n"
+"PO-Revision-Date: 2005-12-11 19:55+0100\n"
+"Last-Translator: Klara Cihlarova <koty@seznam.cz>\n"
+"Language-Team: Czech <suse@suse.cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.2\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:432
+#: ism/extras/efl_setting/isf_setting_efl.cpp:713
+msgid "Set"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:441
+#: ism/extras/efl_setting/isf_setting_efl.cpp:443
+#: ism/extras/efl_setting/isf_setting_efl.cpp:722
+#, fuzzy
+msgid "Selection"
+msgstr "Výběr kláves"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:636
+#: ism/extras/efl_setting/isf_setting_efl.cpp:830
+#, fuzzy, c-format
+msgid "Option"
+msgstr "Volby"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+msgid "Auto capitalization"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+msgid "Auto period"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:963
+#, fuzzy
+msgid "General"
+msgstr "Němčina"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
+#, fuzzy
+msgid "S/W keyboard"
+msgstr "Angličtina/klávesnice"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1004
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1079
+#, fuzzy
+msgid "Keyboard selection"
+msgstr "Výběr kláves"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1016
+#, fuzzy
+msgid "Keyboard option"
+msgstr "Výběr kláves"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1052
+#, fuzzy
+msgid "H/W keyboard"
+msgstr "Angličtina/klávesnice"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1065
+#, fuzzy
+msgid "option"
+msgstr "Volby"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1110
+msgid "Back"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1118
+#, fuzzy
+msgid "Keyboard"
+msgstr "Angličtina/klávesnice"
+
+#~ msgid "English/Keyboard"
+#~ msgstr "Angličtina/klávesnice"
+
+#, fuzzy
+#~ msgid "English input service"
+#~ msgstr "Angličtina (americká)"
+
+#~ msgid "Amharic"
+#~ msgstr "Amharština"
+
+#~ msgid "Arabic"
+#~ msgstr "Arabština"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "Arabština (egyptská)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "Arabština (libanonská)"
+
+#~ msgid "Assamese"
+#~ msgstr "Ásámština"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "Azerbajdžánština"
+
+#~ msgid "Belarusian"
+#~ msgstr "Běloruština"
+
+#~ msgid "Bulgarian"
+#~ msgstr "Bulharština"
+
+#~ msgid "Bengali"
+#~ msgstr "Bengálština"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Bengálština (indická)"
+
+#~ msgid "Tibetan"
+#~ msgstr "Tibetština"
+
+#~ msgid "Bosnian"
+#~ msgstr "Bosenština"
+
+#~ msgid "Catalan"
+#~ msgstr "Katalánština"
+
+#~ msgid "Czech"
+#~ msgstr "Čeština"
+
+#~ msgid "Welsh"
+#~ msgstr "Welština"
+
+#~ msgid "Danish"
+#~ msgstr "Dánština"
+
+#~ msgid "German"
+#~ msgstr "Němčina"
+
+#~ msgid "Greek"
+#~ msgstr "Řečtina"
+
+#~ msgid "English"
+#~ msgstr "Angličtina"
+
+#~ msgid "English (Australian)"
+#~ msgstr "Angličtina (australská)"
+
+#~ msgid "English (Canadian)"
+#~ msgstr "Angličtina (kanadská)"
+
+#~ msgid "English (British)"
+#~ msgstr "Angličtina (britská)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "Angličtina (irská)"
+
+#~ msgid "English (American)"
+#~ msgstr "Angličtina (americká)"
+
+#~ msgid "Spanish"
+#~ msgstr "Španělština"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "Španělština (mexická)"
+
+#~ msgid "Estonian"
+#~ msgstr "Estonština"
+
+#~ msgid "Basque"
+#~ msgstr "Baskičtina"
+
+#~ msgid "Persian"
+#~ msgstr "Perština"
+
+#~ msgid "Finnish"
+#~ msgstr "Finština"
+
+#~ msgid "French"
+#~ msgstr "Francouzština"
+
+#~ msgid "Irish"
+#~ msgstr "Irština"
+
+#~ msgid "Galician"
+#~ msgstr "Galština"
+
+#~ msgid "Gujarati"
+#~ msgstr "Gudžarádština"
+
+#~ msgid "Hebrew"
+#~ msgstr "Hebrejština"
+
+#~ msgid "Hindi"
+#~ msgstr "Hindština"
+
+#~ msgid "Croatian"
+#~ msgstr "Chorvatština"
+
+#~ msgid "Hungarian"
+#~ msgstr "Maďarština"
+
+#, fuzzy
+#~ msgid "Armenian"
+#~ msgstr "Rumunština"
+
+#~ msgid "Interlingua"
+#~ msgstr "Interlingua"
+
+#~ msgid "Indonesian"
+#~ msgstr "Indonézština"
+
+#~ msgid "Icelandic"
+#~ msgstr "Islandština"
+
+#~ msgid "Italian"
+#~ msgstr "Italština"
+
+#~ msgid "Japanese"
+#~ msgstr "Japonština"
+
+#, fuzzy
+#~ msgid "Georgian"
+#~ msgstr "Němčina"
+
+#~ msgid "Kazakh"
+#~ msgstr "Kazaština"
+
+#~ msgid "Cambodian"
+#~ msgstr "Khmerština"
+
+#~ msgid "Kannada"
+#~ msgstr "Kannadština"
+
+#~ msgid "Korean"
+#~ msgstr "Korejština"
+
+#~ msgid "Laothian"
+#~ msgstr "Laoština"
+
+#~ msgid "Lithuanian"
+#~ msgstr "Litevština"
+
+#~ msgid "Latvian"
+#~ msgstr "Lotyšština"
+
+#~ msgid "Macedonian"
+#~ msgstr "Makedonština"
+
+#~ msgid "Malayalam"
+#~ msgstr "Malajámština"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongolština"
+
+#~ msgid "Marathi"
+#~ msgstr "Maráthština"
+
+#~ msgid "Malay"
+#~ msgstr "Malajština"
+
+#~ msgid "Nepali"
+#~ msgstr "Nepálština"
+
+#~ msgid "Dutch"
+#~ msgstr "Nizozemské"
+
+#, fuzzy
+#~ msgid "Norwegian (Nynorsk)"
+#~ msgstr "Norština (nynorsk)"
+
+#, fuzzy
+#~ msgid "Norwegian (Bokmal)"
+#~ msgstr "Norština (bokmal)"
+
+#~ msgid "Oriya"
+#~ msgstr "Orijština"
+
+#~ msgid "Punjabi"
+#~ msgstr "Pandžábština"
+
+#~ msgid "Polish"
+#~ msgstr "Polština"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugalština"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "Portugalština (brazilská)"
+
+#~ msgid "Romanian"
+#~ msgstr "Rumunština"
+
+#~ msgid "Russian"
+#~ msgstr "Ruština"
+
+#~ msgid "Slovak"
+#~ msgstr "Slovenština"
+
+#~ msgid "Slovenian"
+#~ msgstr "Slovinština"
+
+#~ msgid "Albanian"
+#~ msgstr "Albánština"
+
+#~ msgid "Serbian"
+#~ msgstr "Srbština"
+
+#~ msgid "Swedish"
+#~ msgstr "Švédština"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "Švédština (finská)"
+
+#~ msgid "Tamil"
+#~ msgstr "Tamilština"
+
+#~ msgid "Telugu"
+#~ msgstr "Telugština"
+
+#~ msgid "Thai"
+#~ msgstr "Thajština"
+
+#~ msgid "Turkish"
+#~ msgstr "Turečtina"
+
+#~ msgid "Uighur"
+#~ msgstr "Ujgurština"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ukrajinština"
+
+#~ msgid "Urdu"
+#~ msgstr "Urdština"
+
+#~ msgid "Uzbek"
+#~ msgstr "Uzbečtina"
+
+#~ msgid "Vietnamese"
+#~ msgstr "Vietnamština"
+
+#~ msgid "Walloon"
+#~ msgstr "Walloon"
+
+#~ msgid "Yiddish"
+#~ msgstr "Jidiš"
+
+#~ msgid "Chinese"
+#~ msgstr "Čínština"
+
+#, fuzzy
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "Čínština (zjednodušená)"
+
+#, fuzzy
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "Čínština (tradiční)"
+
+#, fuzzy
+#~ msgid "Dutch (Belgian)"
+#~ msgstr "Belgičtina"
+
+#, fuzzy
+#~ msgid "English (United States)"
+#~ msgstr "Angličtina (US)"
+
+#, fuzzy
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Angličtina (kanadská)"
+
+#, fuzzy
+#~ msgid "English (New Zealand)"
+#~ msgstr "Angličtina (irská)"
+
+#, fuzzy
+#~ msgid "English (Irish)"
+#~ msgstr "Angličtina (britská)"
+
+#, fuzzy
+#~ msgid "English (South Africa)"
+#~ msgstr "Angličtina (americká)"
+
+#, fuzzy
+#~ msgid "English (Jamaica)"
+#~ msgstr "Angličtina (kanadská)"
+
+#, fuzzy
+#~ msgid "English (Belize)"
+#~ msgstr "Angličtina (britská)"
+
+#, fuzzy
+#~ msgid "English (Trinidad)"
+#~ msgstr "Angličtina (britská)"
+
+#, fuzzy
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "Angličtina (kanadská)"
+
+#, fuzzy
+#~ msgid "English (Philippines)"
+#~ msgstr "Angličtina (britská)"
+
+#, fuzzy
+#~ msgid "French (Standard)"
+#~ msgstr "Francouzština (kanadská)"
+
+#, fuzzy
+#~ msgid "French (Belgian)"
+#~ msgstr "Francouzština (kanadská)"
+
+#~ msgid "French (Canadian)"
+#~ msgstr "Francouzština (kanadská)"
+
+#, fuzzy
+#~ msgid "French (Swiss)"
+#~ msgstr "Němčina (švýcarská)"
+
+#, fuzzy
+#~ msgid "French (Monaco)"
+#~ msgstr "Francouzština (kanadská)"
+
+#, fuzzy
+#~ msgid "German (Standard)"
+#~ msgstr "Němčina (s mrtvými klávesami)"
+
+#~ msgid "German (Swiss)"
+#~ msgstr "Němčina (švýcarská)"
+
+#, fuzzy
+#~ msgid "German (Austrian)"
+#~ msgstr "Angličtina (australská)"
+
+#, fuzzy
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "Němčina (švýcarská)"
+
+#, fuzzy
+#~ msgid "Italian (Swiss)"
+#~ msgstr "Němčina (švýcarská)"
+
+#, fuzzy
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "Portugalština (brazilská)"
+
+#, fuzzy
+#~ msgid "Portuguese (Standard)"
+#~ msgstr "Portugalština (brazilská)"
+
+#, fuzzy
+#~ msgid "Spanish (Traditional Sort)"
+#~ msgstr "Španělština (jihoamerická)"
+
+#, fuzzy
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "Španělština (jihoamerická)"
+
+#, fuzzy
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "Španělština (jihoamerická)"
+
+#, fuzzy
+#~ msgid "Spanish (Panama)"
+#~ msgstr "Španělština (jihoamerická)"
+
+#, fuzzy
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "Španělština (jihoamerická)"
+
+#, fuzzy
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Peru)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Chile)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "Španělština (CP 850)"
+
+#, fuzzy
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "Španělština (mexická)"
+
+#, fuzzy
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "Malajámština"
+
+#~ msgid "Norwegian"
+#~ msgstr "Norština"
+
+#, fuzzy
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Srbština"
+
+#, fuzzy
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Čínština (tradiční)"
+
+#, fuzzy
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "Čínština (tradiční)"
+
+#, fuzzy
+#~ msgid "Chinese (Macau)"
+#~ msgstr "Čínština (tradiční)"
+
+#, fuzzy
+#~ msgid "Chinese (PRC)"
+#~ msgstr "Čínština"
+
+#, fuzzy
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "Čínština (zjednodušená)"
+
+#, fuzzy
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Libya)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Oman)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Syria)"
+#~ msgstr "Arabština (egyptská)"
+
+#, fuzzy
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "Arabština (egyptská)"
+
+#, fuzzy
+#~ msgid "Arabic (UAE)"
+#~ msgstr "Arabština (egyptská)"
+
+#, fuzzy
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "Arabština (libanonská)"
+
+#, fuzzy
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "Arabština (egyptská)"
+
+#~ msgid "Other"
+#~ msgstr "Ostatní"
+
+#~ msgid "Unknown"
+#~ msgstr "Neznámé"
+
+#~ msgid "English (US)"
+#~ msgstr "Angličtina (US)"
+
+#~ msgid "Belgian"
+#~ msgstr "Belgičtina"
+
+#~ msgid "Czech (qwerty)"
+#~ msgstr "Čeština (qwerty)"
+
+#~ msgid "Dvorak"
+#~ msgstr "Dvorak"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "Francouzština (švýcarská)"
+
+#~ msgid "German (with deadkeys)"
+#~ msgstr "Němčina (s mrtvými klávesami)"
+
+#~ msgid "Portuguese (Brazil US accents)"
+#~ msgstr "Portugalština (brazilská)"
+
+#~ msgid "Slovak (qwerty)"
+#~ msgstr "Slovenština (qwerty)"
+
+#~ msgid "Spanish (CP 850)"
+#~ msgstr "Španělština (CP 850)"
+
+#~ msgid "Spanish (Latin America)"
+#~ msgstr "Španělština (jihoamerická)"
+
+#~ msgid "English (UK)"
+#~ msgstr "Angličtina (UK)"
+
+#~ msgid "Simplified-Traditional Chinese Conversion"
+#~ msgstr "Převod zjednodušená - tradiční čínština"
+
+#~ msgid "Convert between Simplified Chinese and Traditional Chinese"
+#~ msgstr "Převod mezi zjednodušenou čínštinou a tradiční čínštinou"
+
+#~ msgid "SC-TC"
+#~ msgstr "SC-TC"
+
+#~ msgid "Simplified-Traditional Chinese conversion"
+#~ msgstr "Převod zjednodušená - tradiční čínština"
+
+#~ msgid "No Conversion"
+#~ msgstr "Bez převodu"
+
+#~ msgid "Simplified to Traditional"
+#~ msgstr "Ze zjednodušené do tradiční"
+
+#~ msgid "Convert Simplified Chinese to Traditional Chinese"
+#~ msgstr "Převést zjednodušenou čínštinu do tradiční čínštiny"
+
+#~ msgid "Traditional to Simplified"
+#~ msgstr "Z tradiční do zjednodušené"
+
+#~ msgid "Convert Traditional Chinese to Simplified Chinese"
+#~ msgstr "Převést tradiční čínštinu do zjednodušené čínštiny"
+
+#~ msgid "James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "SC->TC"
+#~ msgstr "SC->TC"
+
+#~ msgid "TC->SC"
+#~ msgstr "TC->SC"
+
+#~ msgid "Smart Common Input Method platform "
+#~ msgstr "SCIM platforma"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ ":\n"
+#~ "\n"
+#~ msgstr ""
+#~ ":\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+
+#~ msgid "Enable"
+#~ msgstr "Stav"
+
+#~ msgid "Name"
+#~ msgstr "Název"
+
+#~ msgid "Cursor Position"
+#~ msgstr "Pozice kurzoru"
+
+#~ msgid "The current position of the insertion cursor in chars."
+#~ msgstr "Aktuální pozice vkládacího kurzoru mezi znaky."
+
+#~ msgid "Maximum length"
+#~ msgstr "Maximální délka"
+
+#~ msgid ""
+#~ "Maximum number of characters for this string view. Zero if no maximum."
+#~ msgstr ""
+#~ "Maximální počet znaků při zobrazení řetězce. Nula, pokud není nic "
+#~ "nastaveno."
+
+#~ msgid "Maximum width"
+#~ msgstr "Maximální šířka"
+
+#~ msgid "Maximum width of this string view."
+#~ msgstr "Maximální šířka pohledu na řetězec."
+
+#~ msgid "Has Frame"
+#~ msgstr "S rámem"
+
+#~ msgid "FALSE removes outside bevel from string view."
+#~ msgstr "FALSE odstraní zkosení."
+
+#~ msgid "Draw cursor"
+#~ msgstr "Vykreslit kurzor"
+
+#~ msgid "TRUE draw blinking cursor."
+#~ msgstr "TRUE vykreslí blikající kurzor."
+
+#~ msgid "Auto move cursor"
+#~ msgstr "Automatické přesunutí kurzoru"
+
+#~ msgid "TRUE auto move cursor position when mouse clicking."
+#~ msgstr "TRUE automaticky přemístí kurzor při kliknutí myší."
+
+#, fuzzy
+#~ msgid "Forward button press/release event"
+#~ msgstr "Předání událost stisknutí tlačítka"
+
+#, fuzzy
+#~ msgid "TRUE forward button press/release event to user program."
+#~ msgstr "TRUE předá událost stisknutí tlačítka programu."
+
+#~ msgid "Auto resize the widget to fit the string"
+#~ msgstr "Automatická změna velikosti widgetu podle řetězce"
+
+#~ msgid "TRUE Auto resize on."
+#~ msgstr "TRUE povolí automatickou změnu velikosti."
+
+#, fuzzy
+#~ msgid "TRUE Emit move_cursor signal when press the string."
+#~ msgstr "TRUE automaticky přemístí kurzor při kliknutí myší."
+
+#~ msgid "Width in chars"
+#~ msgstr "Šířka znaků"
+
+#~ msgid "Number of characters to leave space for in the string view."
+#~ msgstr "Počet znaků, pro které se v řetězci vynechá místo."
+
+#~ msgid "Scroll offset"
+#~ msgstr "Scroll offset"
+
+#~ msgid ""
+#~ "Number of pixels of the string view scrolled off the screen to the left"
+#~ msgstr "Počet pixelů v zobrazeném řetězci při přesunu vlevo"
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "The contents of the string view"
+#~ msgstr "Obsahy zobrazeného řetězce"
+
+#~ msgid "Selected _Keys:"
+#~ msgstr "Zvolené _klávesy:"
+
+#~ msgid "Key Code:"
+#~ msgstr "Kód klávesy:"
+
+#, fuzzy
+#~ msgid "....."
+#~ msgstr "..."
+
+#~ msgid "Modifiers:"
+#~ msgstr "Modifikátor:"
+
+#~ msgid "_Ctrl"
+#~ msgstr "_Ctrl"
+
+#~ msgid "A_lt"
+#~ msgstr "A_lt"
+
+#~ msgid "_Shift"
+#~ msgstr "_Shift"
+
+#~ msgid "_Release"
+#~ msgstr "_Uvolnit"
+
+#~ msgid "_Meta"
+#~ msgstr "_Meta"
+
+#~ msgid "S_uper"
+#~ msgstr "S_uper"
+
+#~ msgid "_Hyper"
+#~ msgstr "_Hyper"
+
+#~ msgid "Please enter a Key Code first."
+#~ msgstr "Zadejte prosím nejdřív kód klávesy."
+
+#, fuzzy
+#~ msgid ""
+#~ "Press a key (or a key combination).\n"
+#~ "This dialog will be closed \n"
+#~ "when the key is released."
+#~ msgstr ""
+#~ "Stiskněte klávesu (nebo kombinaci kláves).\n"
+#~ "Dialog se zavře po uvolnění kláves."
+
+#~ msgid "Grabbing a key."
+#~ msgstr "Zachycení klávesy."
+
+#~ msgid "Key Selection"
+#~ msgstr "Výběr kláves"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientace"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "Orientace panelu."
+
+#, fuzzy
+#~ msgid "Next"
+#~ msgstr "Text"
+
+#, fuzzy
+#~ msgid "Automatic"
+#~ msgstr "Amharština"
+
+#, fuzzy
+#~ msgid "Always used"
+#~ msgstr "Vždy"
+
+#, fuzzy
+#~ msgid "%s Option"
+#~ msgstr "Volby"
+
+#, fuzzy
+#~ msgid "Keyboards"
+#~ msgstr "Angličtina/klávesnice"
+
+#~ msgid "English/European"
+#~ msgstr "Angličtina/Evropa"
+
+#~ msgid "RAW CODE"
+#~ msgstr "RAW KÓD"
+
+#~ msgid "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid ""
+#~ "Hot Keys:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    switch between Multibyte encoding and Unicode.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    reset the input method.\n"
+#~ msgstr ""
+#~ "Klávesové zkratky:\n"
+#~ "\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    přepnutí mezi Multibyte a Unicode kódováním.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    zrušení vstupní metody.\n"
+
+#~ msgid "The status of the current input method. Click to change it."
+#~ msgstr "Stav aktuální vstupní metody. Změnu provedete kliknutím."
+
+#~ msgid "Unicode"
+#~ msgstr "Unicode"
+
+#~ msgid "Global Setup"
+#~ msgstr "Obecná nastavení"
+
+#~ msgid ""
+#~ "Setup the global options used by All FrontEnd modules, including X11 "
+#~ "FrontEnd, GTK IMModule, QT IMModule etc."
+#~ msgstr ""
+#~ "Nastavení klávesový zkratek používaných moduly včetně X11, GTK, IMModule, "
+#~ "GTK IMModule, QT IMModule atd."
+
+#~ msgid "_Trigger:"
+#~ msgstr "_Spouštění:"
+
+#~ msgid "Select the trigger keys"
+#~ msgstr "Zvolte spouštěcí klávesy"
+
+#~ msgid ""
+#~ "The key events to turn on/off SCIM input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "Klávesové události zapínající/vypínající SCIM vstupní metodu. Úpravu "
+#~ "provedete kliknutím na tlačítko vpravo."
+
+#~ msgid "Turn _On:"
+#~ msgstr "_Zapnout:"
+
+#~ msgid "Select the Turn On keys"
+#~ msgstr "Zvolte spouštěcí klávesy"
+
+#~ msgid ""
+#~ "The key events to turn on SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Klávesové události zapínající SCIM vstupní metodu. Úpravu provedete "
+#~ "kliknutím na tlačítko vpravo."
+
+#~ msgid "Turn O_ff:"
+#~ msgstr "_Vypnout:"
+
+#~ msgid "Select the Turn Off keys"
+#~ msgstr "Zvolte vypínací klávesy"
+
+#~ msgid ""
+#~ "The key events to turn off SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Klávesové události vypínající SCIM vstupní metodu. Úpravu provedete "
+#~ "kliknutím na tlačítko vpravo."
+
+#~ msgid "_Next input method:"
+#~ msgstr "_Další vstupní metoda:"
+
+#~ msgid "Select the next input method keys"
+#~ msgstr "Zvolte klávesy další vstupní metody"
+
+#~ msgid ""
+#~ "The key events to switch to the next input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "Klávesové události přepínající na další vstupní metodu. Úpravu provedete "
+#~ "kliknutím na tlačítko vpravo."
+
+#~ msgid "_Previous input method:"
+#~ msgstr "_Předchozí vstupní metoda:"
+
+#~ msgid "Select the previous input method keys"
+#~ msgstr "Zvolte klávesy předchozí vstupní metody"
+
+#~ msgid ""
+#~ "The key events to switch to the previous input method. Click on the "
+#~ "button on the right to edit it."
+#~ msgstr ""
+#~ "Klávesové události přepnutí do předcházející vstupní metody. Úpravu "
+#~ "provedete kliknutím na tlačítko vpravo."
+
+#~ msgid "Show input method _menu:"
+#~ msgstr "_Zobrazit nabídku vstupní metody:"
+
+#~ msgid "Select the show input method menu keys"
+#~ msgstr "Zvolte klávesy zobrazení nabídky vstupní metody"
+
+#~ msgid ""
+#~ "The key events to show the input method menu. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Klávesové události k zobrazení nabídky vstupní metody. Úpravu provedete "
+#~ "kliknutím na tlačítko vpravo."
+
+#~ msgid "_Keyboard Layout:"
+#~ msgstr "_Rozložení klávesnice:"
+
+#~ msgid ""
+#~ "You should choose your currently used keyboard layout here so that input "
+#~ "methods, who care about keyboard layout, could work correctly."
+#~ msgstr ""
+#~ "Zde můžete nastavit své rozložení klávesnice tak, aby zvolené vstupní "
+#~ "metody fungovaly korektně."
+
+#~ msgid "_Embed Preedit String into client window"
+#~ msgstr "_Vložit předpřipravený řetězec do klientského okna"
+
+#~ msgid ""
+#~ "If this option is checked, the preedit string will be displayed directly "
+#~ "in the client input window, rather than in a independent float window."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, zobrazí se předpřipravený řetězec přímo v "
+#~ "klientském vstupním okně než v nezávislém plovoucím okně."
+
+#~ msgid "_Share the same input method among all applications"
+#~ msgstr "_Zdílet vstupní metody u všech aplikací"
+
+#~ msgid ""
+#~ "If this option is checked, then only one input method could be used by "
+#~ "all applications at the same time.Otherwise different input method could "
+#~ "be used by each application."
+#~ msgstr ""
+#~ "Pokud tuto volbu zaškrtnete, bude se u všech aplikací používat pouze "
+#~ "jeden typ vstupní metody. V opačném případě se u každé aplikace může "
+#~ "použije jiná."
+
+#~ msgid "Hotkeys"
+#~ msgstr "Klávesové zkratky"
+
+#~ msgid ""
+#~ "You can enable/disable input methods and set hotkeys for input methods "
+#~ "here."
+#~ msgstr ""
+#~ "Zde můžete povolit/zakázat vstupní metody a nastavit jejich klávesové "
+#~ "zkratky."
+
+#~ msgid "The installed input method services:"
+#~ msgstr "Služby nainstalované vstupní metody:"
+
+#~ msgid "Edit _Hotkeys"
+#~ msgstr "Upravit _klávesové zkratky"
+
+#~ msgid "Edit Hotkeys associated with the selected input method."
+#~ msgstr "Úprava klávesových zkratek spojených se zvolenou vstupní metodou."
+
+#~ msgid "Select _Filters"
+#~ msgstr "Zvolit _filtry"
+
+#~ msgid "Select the Filters which will be attached to this input method."
+#~ msgstr "Zvolte filtry spojené s touto vstupní metodou."
+
+#~ msgid "_Expand"
+#~ msgstr "_Rozbalit"
+
+#~ msgid "Expand all language categories."
+#~ msgstr "Zobrazení všech jazykových kategorií."
+
+#~ msgid "_Collapse"
+#~ msgstr "_Zabalit"
+
+#~ msgid "Collapse all language categories."
+#~ msgstr "Skrytí všech jazykových kategorií."
+
+#~ msgid "E_nable All"
+#~ msgstr "_Povolit vše"
+
+#~ msgid "Enable all input methods."
+#~ msgstr "Povolit všechny vstupní metody."
+
+#~ msgid "_Disable All"
+#~ msgstr "_Zakázat vše"
+
+#~ msgid "Disable all input methods."
+#~ msgstr "Zakázat všechny vstupní metody."
+
+#~ msgid "Filters"
+#~ msgstr "Filtry"
+
+#~ msgid "Languages"
+#~ msgstr "Jazyky"
+
+#~ msgid "Description"
+#~ msgstr "Popis"
+
+#~ msgid "Edit Hotkeys for %s"
+#~ msgstr "Upravit klávesové zkratky %s"
+
+#~ msgid "Select Filters for %s"
+#~ msgstr "Zvolte filtry pro %s"
+
+#~ msgid "Move _Up"
+#~ msgstr "Posunout na_horu"
+
+#~ msgid "Move _Down"
+#~ msgstr "Posunout _dolů"
+
+#~ msgid "GTK"
+#~ msgstr "GTK"
+
+#~ msgid "A panel daemon based on GTK+-2.x library."
+#~ msgstr "Démon zapuštěný do panelu založený na knihovně GTK+-2.x."
+
+#~ msgid "On demand"
+#~ msgstr "Na požádání"
+
+#~ msgid "Never"
+#~ msgstr "Nikdy"
+
+#~ msgid "ToolBar"
+#~ msgstr "Nástrojová lišta"
+
+#~ msgid "_Show:"
+#~ msgstr "_Zobrazit:"
+
+#~ msgid "Auto s_nap"
+#~ msgstr "Automatické přicvaknutí"
+
+#~ msgid "Show _input method icon"
+#~ msgstr "Zobrazit ikonu _vstupní metody"
+
+#~ msgid "Show inp_ut method name"
+#~ msgstr "Zobrazit _název vstupní metody"
+
+#~ msgid "Hide time_out:"
+#~ msgstr "Délka _zobrazení::"
+
+#~ msgid "Show s_tick icon"
+#~ msgstr "Zobrazit ikonu _přilepení"
+
+#~ msgid "Show m_enu icon"
+#~ msgstr "Zobrazit ikonu _nabídky"
+
+#~ msgid "Show _help icon"
+#~ msgstr "Zobrazit ikonu _nápovědy"
+
+#~ msgid "Show _property label"
+#~ msgstr "Zobrazit _vlastnosti"
+
+#~ msgid "Input window"
+#~ msgstr "Vstupní okno"
+
+#~ msgid "E_mbedded lookup table"
+#~ msgstr "_Vložená vyhledávací tabulka"
+
+#~ msgid "_Vertical lookup table"
+#~ msgstr "V_ertikální vyhledávací tabulka"
+
+#~ msgid "Misc"
+#~ msgstr "Různé"
+
+#~ msgid "Show tra_y icon"
+#~ msgstr "Pohltit ikonu do panelu"
+
+#~ msgid "Stick _windows"
+#~ msgstr "Přišpendlit _okno"
+
+#~ msgid "_Font:"
+#~ msgstr "_Písmo:"
+
+#~ msgid ""
+#~ "If option \"Always\" is selected, the toolbar will always be shown on the "
+#~ "screen. If option \"On demand\" is selected, it will only be shown when "
+#~ "SCIM is activated. If option \"Never\" is selected, it will never be "
+#~ "shown."
+#~ msgstr ""
+#~ "Pokud jste zvolili \"Vždy\", bude lišta vždy zobrazena. V případě \"Na "
+#~ "požádání\" bude vždy po deaktivaci SCIM skryta. U volby \"Nikdy\" se "
+#~ "nezobrazí nikdy."
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar will be snapped to the screen "
+#~ "border."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, bude nástrojová lišta přichycena k okraji "
+#~ "pracovní plochy."
+
+#~ msgid ""
+#~ "The toolbar will be hidden out after this timeout is elapsed. This option "
+#~ "is only valid when \"Always show\" is selected. Set to zero to disable "
+#~ "this behavior."
+#~ msgstr ""
+#~ "Lišta se skryje po uplynutí zadaného času. Tato volba je platná pouze "
+#~ "pokud jste současně zvolili \"Vždy zobrazit'\". Funkci vypnete nastavením "
+#~ "na hodnotu 0."
+
+#~ msgid ""
+#~ "If this option is checked, the input method icon will be showed on the "
+#~ "toolbar."
+#~ msgstr "Pokud zvolíte tuto možnost, objeví se na liště ikona metody."
+
+#~ msgid ""
+#~ "If this option is checked, the input method name will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, objeví se na liště název vstupní metody."
+
+#~ msgid ""
+#~ "If this option is checked, the stick icon will be showed on the toolbar."
+#~ msgstr "Pokud zvolíte tuto možnost, objeví se na liště ikona přišpendlení."
+
+#~ msgid ""
+#~ "If this option is checked, the menu icon will be showed on the toolbar."
+#~ msgstr "Pokud zvolíte tuto možnost, objeví se na liště ikona nabídky."
+
+#~ msgid ""
+#~ "If this option is checked, the help icon will be showed on the toolbar."
+#~ msgstr "Pokud zvolíte tuto možnost, objeví se na liště ikona nápovědy."
+
+#~ msgid ""
+#~ "If this option is checked, the text label of input method properties will "
+#~ "be showed on the toolbar."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, objeví se na liště ikona vlastností vstupní "
+#~ "metody."
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be embedded into the "
+#~ "input window."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, připojí se vstupního okna vyhledávací tabulka."
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be displayed vertically."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, zobrazí se vyhledávací tabulka vertikálně."
+
+#~ msgid ""
+#~ "If this option is checked, the tray icon will be showed on the desktop's "
+#~ "taskbar."
+#~ msgstr "Pokud zvolíte tuto možnost, zapustí se ikona programu do panelu."
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar, input and lookup table windows "
+#~ "will be sticked to its original position."
+#~ msgstr ""
+#~ "Pokud zvolíte tuto možnost, lišta nástrojů, vstupní okno a vyhledávací "
+#~ "tabulka se přišpendlí do původní pozice."
+
+#~ msgid "The font setting will be used in the input and lookup table windows."
+#~ msgstr "Nastavení písma v okně vstupu a ve vyhledávací tabulce."
+
+#~ msgid "Select Interface Font"
+#~ msgstr "Zvolte písmo rozhraní"
+
+#~ msgid "SCIM"
+#~ msgstr "SCIM"
+
+#~ msgid "FrontEnd"
+#~ msgstr "Rozhraní"
+
+#~ msgid "IMEngine"
+#~ msgstr "IMEngine"
+
+#~ msgid "Panel"
+#~ msgstr "Panel"
+
+#~ msgid "Extra"
+#~ msgstr "Rozšíření"
+
+#~ msgid "SCIM Input Method Setup"
+#~ msgstr "Nastavení vstupní metody SCIM"
+
+#~ msgid ""
+#~ " <span size=\"20000\">Smart Common Input Method platform</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI Setup Utility</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+#~ msgstr ""
+#~ "<span size=\"20000\">Smart Common Input Method platforma</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">Grafické rozhraní</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+
+#~ msgid "<span size=\"x-large\">The Setup for %s modules.</span>"
+#~ msgstr "<span size=\"x-large\">Nastavení %s modulů.</span>"
+
+#~ msgid "Are you sure you want to quit SCIM Setup?"
+#~ msgstr "Chcete skutečně ukončit nastavení SCIM?"
+
+#~ msgid ""
+#~ "Not all configuration can be reloaded on the fly. Don't forget to restart "
+#~ "SCIM in order to let all of the new configuration take effect."
+#~ msgstr ""
+#~ "Ne všechna nastavení lze zavést za běhu. Nezapomeňte SCIM restartovat."
+
+#~ msgid "SCIM Setup"
+#~ msgstr "Nastavit SCIM"
+
+#~ msgid "Integrated Setup Utility based on GTK Widget library."
+#~ msgstr "Grafické rozhraní založené na knihovně GTK Widget."
+
+#~ msgid "Setup utility for Smart Common Input Method platform"
+#~ msgstr "Nástroj pro nastavení Smart Common Input Method platformy"
+
+#~ msgid "SCIM Help"
+#~ msgstr "Nápověda SCIM"
+
+#~ msgid "Smart Common Input Method"
+#~ msgstr "Smart Common Input Method"
+
+#~ msgid "Stick/unstick the input window and the toolbar."
+#~ msgstr "Přišpendlit/odšpendlit vstupní okno a nástrojovou lištu."
+
+#~ msgid "Show a brief help about SCIM and the current input method."
+#~ msgstr "Zobrazí krátkou nápovědu o aktuální vstupní metodě."
+
+#~ msgid "Show command menu."
+#~ msgstr "Zobrazí nabídku příkazů."
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "Reload Configuration"
+#~ msgstr "Obnovit konfiguraci"
+
+#~ msgid "Stick Windows"
+#~ msgstr "Přišpendlit okno"
+
+#~ msgid "Hide Toolbar"
+#~ msgstr "Skrýt lištu"
+
+#~ msgid "Help ..."
+#~ msgstr "Nápověda..."
+
+#~ msgid "Exit"
+#~ msgstr "Ukončit"
+
+#~ msgid "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+#~ msgstr "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+
+#~ msgid "En"
+#~ msgstr "En"

@@ -1,0 +1,1377 @@
+# translation of fr.po to French
+# This file is distributed under the same license as the scim package.
+# Copyright (C) 2004 James Su <suzhe@tsinghua.org.cn>.
+#
+# Damien Menanteau <MengDaming@nerdshack.com>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 20:17+0900\n"
+"PO-Revision-Date: 2005-12-11 13:54+0800\n"
+"Last-Translator: Damien Menanteau <MengDaming@nerdshack.com>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:432
+#: ism/extras/efl_setting/isf_setting_efl.cpp:713
+msgid "Set"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:441
+#: ism/extras/efl_setting/isf_setting_efl.cpp:443
+#: ism/extras/efl_setting/isf_setting_efl.cpp:722
+#, fuzzy
+msgid "Selection"
+msgstr "Sélection de Touche"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:636
+#: ism/extras/efl_setting/isf_setting_efl.cpp:830
+#, fuzzy, c-format
+msgid "Option"
+msgstr "Options"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+msgid "Auto capitalization"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+msgid "Auto period"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:963
+#, fuzzy
+msgid "General"
+msgstr "Allemand"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
+#, fuzzy
+msgid "S/W keyboard"
+msgstr "Français/Clavier"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1004
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1079
+#, fuzzy
+msgid "Keyboard selection"
+msgstr "Sélection de Touche"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1016
+#, fuzzy
+msgid "Keyboard option"
+msgstr "Sélection de Touche"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1052
+#, fuzzy
+msgid "H/W keyboard"
+msgstr "Français/Clavier"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1065
+#, fuzzy
+msgid "option"
+msgstr "Options"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1110
+msgid "Back"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1118
+#, fuzzy
+msgid "Keyboard"
+msgstr "Français/Clavier"
+
+#~ msgid "English/Keyboard"
+#~ msgstr "Français/Clavier"
+
+#, fuzzy
+#~ msgid "English input service"
+#~ msgstr "Anglais (Etats-Unis)"
+
+#~ msgid "Amharic"
+#~ msgstr "Amharique"
+
+#~ msgid "Arabic"
+#~ msgstr "Arabe"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "Arabe (Egypte)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "Arabe (Liban)"
+
+#~ msgid "Assamese"
+#~ msgstr "Assamais"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "Azerbaïdjanais"
+
+#~ msgid "Belarusian"
+#~ msgstr "Biélorusse"
+
+#~ msgid "Bulgarian"
+#~ msgstr "Bulgare"
+
+#~ msgid "Bengali"
+#~ msgstr "Bengali"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Bengali (Inde)"
+
+#~ msgid "Tibetan"
+#~ msgstr "Tibétain"
+
+#~ msgid "Bosnian"
+#~ msgstr "Bosniaque"
+
+#~ msgid "Catalan"
+#~ msgstr "Catalan"
+
+#~ msgid "Czech"
+#~ msgstr "Tchèque"
+
+#~ msgid "Welsh"
+#~ msgstr "Gallois"
+
+#~ msgid "Danish"
+#~ msgstr "Danois"
+
+#~ msgid "German"
+#~ msgstr "Allemand"
+
+#~ msgid "Divehi"
+#~ msgstr "Maldivien"
+
+#~ msgid "Greek"
+#~ msgstr "Grec"
+
+#~ msgid "English"
+#~ msgstr "Anglais"
+
+#~ msgid "English (Australian)"
+#~ msgstr "Anglais (Australie)"
+
+#~ msgid "English (Canadian)"
+#~ msgstr "Anglais (Canada)"
+
+#~ msgid "English (British)"
+#~ msgstr "Anglais (Royaume Uni)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "Anglais (Irlande)"
+
+#~ msgid "English (American)"
+#~ msgstr "Anglais (Etats-Unis)"
+
+#~ msgid "Spanish"
+#~ msgstr "Espagnol"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "Espagnol (Mexique)"
+
+#~ msgid "Estonian"
+#~ msgstr "Estonien"
+
+#~ msgid "Basque"
+#~ msgstr "Basque"
+
+#~ msgid "Persian"
+#~ msgstr "Perse"
+
+#~ msgid "Finnish"
+#~ msgstr "Finnois"
+
+#~ msgid "French"
+#~ msgstr "Français"
+
+#~ msgid "Irish"
+#~ msgstr "Irlandais"
+
+#~ msgid "Galician"
+#~ msgstr "Galicien"
+
+#~ msgid "Gujarati"
+#~ msgstr "Gujarati"
+
+#~ msgid "Hebrew"
+#~ msgstr "Hébreu"
+
+#~ msgid "Hindi"
+#~ msgstr "Hindou"
+
+#~ msgid "Croatian"
+#~ msgstr "Croate"
+
+#~ msgid "Hungarian"
+#~ msgstr "Hongrois"
+
+#~ msgid "Armenian"
+#~ msgstr "Arménien"
+
+#~ msgid "Interlingua"
+#~ msgstr "Interlingua"
+
+#~ msgid "Indonesian"
+#~ msgstr "Indonésien"
+
+#~ msgid "Icelandic"
+#~ msgstr "Islandais"
+
+#~ msgid "Italian"
+#~ msgstr "Italien"
+
+#~ msgid "Japanese"
+#~ msgstr "Japonais"
+
+#~ msgid "Georgian"
+#~ msgstr "Géorgien"
+
+#~ msgid "Kazakh"
+#~ msgstr "Kazakh"
+
+#~ msgid "Cambodian"
+#~ msgstr "Khmer"
+
+#~ msgid "Kannada"
+#~ msgstr "Kannara"
+
+#~ msgid "Korean"
+#~ msgstr "Coréen"
+
+#~ msgid "Laothian"
+#~ msgstr "Laotien"
+
+#~ msgid "Lithuanian"
+#~ msgstr "Lituanien"
+
+#~ msgid "Latvian"
+#~ msgstr "Letton"
+
+#~ msgid "Macedonian"
+#~ msgstr "Macédonien"
+
+#~ msgid "Malayalam"
+#~ msgstr "Malayalam"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongol"
+
+#~ msgid "Marathi"
+#~ msgstr "Marathi"
+
+#~ msgid "Malay"
+#~ msgstr "Malais"
+
+#~ msgid "Burmese"
+#~ msgstr "Birman"
+
+#~ msgid "Nepali"
+#~ msgstr "Népalais"
+
+#~ msgid "Dutch"
+#~ msgstr "Néerlandais"
+
+#, fuzzy
+#~ msgid "Norwegian (Nynorsk)"
+#~ msgstr "Norvégien (Nynorsk)"
+
+#, fuzzy
+#~ msgid "Norwegian (Bokmal)"
+#~ msgstr "Norvégien (Bokmal)"
+
+#~ msgid "Oriya"
+#~ msgstr "Oriya"
+
+#~ msgid "Punjabi"
+#~ msgstr "Punjabi"
+
+#~ msgid "Polish"
+#~ msgstr "Polonais"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugais"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "Portugais (Brésil)"
+
+#~ msgid "Romanian"
+#~ msgstr "Roumain"
+
+#~ msgid "Russian"
+#~ msgstr "Russe"
+
+#~ msgid "Sinhala"
+#~ msgstr "Singhalais"
+
+#~ msgid "Slovak"
+#~ msgstr "Slovaque"
+
+#~ msgid "Slovenian"
+#~ msgstr "Slovène"
+
+#~ msgid "Albanian"
+#~ msgstr "Albanais"
+
+#~ msgid "Serbian"
+#~ msgstr "Serbe"
+
+#~ msgid "Swedish"
+#~ msgstr "Suédois"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "Suédois (Finlande)"
+
+#~ msgid "Tamil"
+#~ msgstr "Tamoul"
+
+#~ msgid "Telugu"
+#~ msgstr "Telugu"
+
+#~ msgid "Thai"
+#~ msgstr "Thaï"
+
+#~ msgid "Turkish"
+#~ msgstr "Turc"
+
+#~ msgid "Uighur"
+#~ msgstr "Uighur"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ukrainien"
+
+#~ msgid "Urdu"
+#~ msgstr "Ourdou"
+
+#~ msgid "Uzbek"
+#~ msgstr "Ouzbèque"
+
+#~ msgid "Vietnamese"
+#~ msgstr "Vietnamien"
+
+#~ msgid "Walloon"
+#~ msgstr "Wallon"
+
+#~ msgid "Yiddish"
+#~ msgstr "Yiddish"
+
+#~ msgid "Chinese"
+#~ msgstr "Chinois"
+
+#, fuzzy
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "Chinois (simplifié)"
+
+#, fuzzy
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "Chinois (traditionnel)"
+
+#, fuzzy
+#~ msgid "Dutch (Belgian)"
+#~ msgstr "Belge"
+
+#, fuzzy
+#~ msgid "English (United States)"
+#~ msgstr "Anglais (US)"
+
+#, fuzzy
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Anglais (Canada)"
+
+#, fuzzy
+#~ msgid "English (New Zealand)"
+#~ msgstr "Anglais (Irlande)"
+
+#, fuzzy
+#~ msgid "English (Irish)"
+#~ msgstr "Anglais (Royaume Uni)"
+
+#, fuzzy
+#~ msgid "English (South Africa)"
+#~ msgstr "Anglais (Etats-Unis)"
+
+#, fuzzy
+#~ msgid "English (Jamaica)"
+#~ msgstr "Anglais (Canada)"
+
+#, fuzzy
+#~ msgid "English (Belize)"
+#~ msgstr "Anglais (Royaume Uni)"
+
+#, fuzzy
+#~ msgid "English (Trinidad)"
+#~ msgstr "Anglais (Royaume Uni)"
+
+#, fuzzy
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "Anglais (Canada)"
+
+#, fuzzy
+#~ msgid "English (Philippines)"
+#~ msgstr "Anglais (Royaume Uni)"
+
+#, fuzzy
+#~ msgid "French (Standard)"
+#~ msgstr "Français (Canada)"
+
+#, fuzzy
+#~ msgid "French (Belgian)"
+#~ msgstr "Français (Canada)"
+
+#~ msgid "French (Canadian)"
+#~ msgstr "Français (Canada)"
+
+#, fuzzy
+#~ msgid "French (Swiss)"
+#~ msgstr "Allemand (Suisse)"
+
+#, fuzzy
+#~ msgid "French (Monaco)"
+#~ msgstr "Français (Canada)"
+
+#, fuzzy
+#~ msgid "German (Standard)"
+#~ msgstr "Allemand (avec touches mortes)"
+
+#~ msgid "German (Swiss)"
+#~ msgstr "Allemand (Suisse)"
+
+#, fuzzy
+#~ msgid "German (Austrian)"
+#~ msgstr "Anglais (Australie)"
+
+#, fuzzy
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "Allemand (Suisse)"
+
+#, fuzzy
+#~ msgid "Italian (Swiss)"
+#~ msgstr "Allemand (Suisse)"
+
+#, fuzzy
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "Portugais (Brésil)"
+
+#, fuzzy
+#~ msgid "Portuguese (Standard)"
+#~ msgstr "Portugais (Brésil)"
+
+#, fuzzy
+#~ msgid "Spanish (Traditional Sort)"
+#~ msgstr "Espagnol (Amérique latine)"
+
+#, fuzzy
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "Espagnol (Amérique latine)"
+
+#, fuzzy
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "Espagnol (Amérique latine)"
+
+#, fuzzy
+#~ msgid "Spanish (Panama)"
+#~ msgstr "Espagnol (Amérique latine)"
+
+#, fuzzy
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "Espagnol (Amérique latine)"
+
+#, fuzzy
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Peru)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Chile)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "Espagnol (CP 850)"
+
+#, fuzzy
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "Espagnol (Mexique)"
+
+#, fuzzy
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "Malayalam"
+
+#~ msgid "Norwegian"
+#~ msgstr "Norvégien"
+
+#, fuzzy
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbe"
+
+#, fuzzy
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Chinois (traditionnel)"
+
+#, fuzzy
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "Chinois (traditionnel)"
+
+#, fuzzy
+#~ msgid "Chinese (Macau)"
+#~ msgstr "Chinois (traditionnel)"
+
+#, fuzzy
+#~ msgid "Chinese (PRC)"
+#~ msgstr "Chinois"
+
+#, fuzzy
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "Chinois (simplifié)"
+
+#, fuzzy
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Libya)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Oman)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Syria)"
+#~ msgstr "Arabe (Egypte)"
+
+#, fuzzy
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "Arabe (Egypte)"
+
+#, fuzzy
+#~ msgid "Arabic (UAE)"
+#~ msgstr "Arabe (Egypte)"
+
+#, fuzzy
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "Arabe (Liban)"
+
+#, fuzzy
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "Arabe (Egypte)"
+
+#~ msgid "Other"
+#~ msgstr "Autre"
+
+#~ msgid "Unknown"
+#~ msgstr "Inconnu"
+
+#~ msgid "English (US)"
+#~ msgstr "Anglais (US)"
+
+#~ msgid "Belgian"
+#~ msgstr "Belge"
+
+#~ msgid "Czech (qwerty)"
+#~ msgstr "Tchèque (qwerty)"
+
+#~ msgid "Dvorak"
+#~ msgstr "Dvorak"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "Français (Suisse)"
+
+#~ msgid "German (with deadkeys)"
+#~ msgstr "Allemand (avec touches mortes)"
+
+#~ msgid "Portuguese (Brazil US accents)"
+#~ msgstr "Portugais (Brésil accents US)"
+
+#~ msgid "Slovak (qwerty)"
+#~ msgstr "Slovaque (qwerty)"
+
+#~ msgid "Spanish (CP 850)"
+#~ msgstr "Espagnol (CP 850)"
+
+#~ msgid "Spanish (Latin America)"
+#~ msgstr "Espagnol (Amérique latine)"
+
+#~ msgid "English (UK)"
+#~ msgstr "Anglais (GB)"
+
+#~ msgid "Simplified-Traditional Chinese Conversion"
+#~ msgstr "Conversion Chinois Simplifié-Traditionnel"
+
+#~ msgid "Convert between Simplified Chinese and Traditional Chinese"
+#~ msgstr "Conversion entre chinois simplifié et chinois traditionnel"
+
+#~ msgid "SC-TC"
+#~ msgstr "CS-CT"
+
+#~ msgid "Simplified-Traditional Chinese conversion"
+#~ msgstr "Conversion Chinois Simplifié-Traditionnel"
+
+#~ msgid "No Conversion"
+#~ msgstr "Pas de conversion"
+
+#~ msgid "Simplified to Traditional"
+#~ msgstr "Simplifié vers Traditionnel"
+
+#~ msgid "Convert Simplified Chinese to Traditional Chinese"
+#~ msgstr "Conversion du chinois simplifié en chinois traditionnel"
+
+#~ msgid "Traditional to Simplified"
+#~ msgstr "Traditionnel vers Simplifié"
+
+#~ msgid "Convert Traditional Chinese to Simplified Chinese"
+#~ msgstr "Conversion du chinois traditionnel en chinois simplifié"
+
+#~ msgid "James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "SC->TC"
+#~ msgstr "CS->CT"
+
+#~ msgid "TC->SC"
+#~ msgstr "CT->CS"
+
+#~ msgid "Smart Common Input Method platform "
+#~ msgstr "Plateforme Smart Common Input Method"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ ":\n"
+#~ "\n"
+#~ msgstr ""
+#~ " :\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+
+#~ msgid "Enable"
+#~ msgstr "Activer"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Cursor Position"
+#~ msgstr "Position du Curseur"
+
+#~ msgid "The current position of the insertion cursor in chars."
+#~ msgstr "Position courante du curseur d'insertion dans les caractères."
+
+#~ msgid "Maximum length"
+#~ msgstr "Longueur maximale"
+
+#~ msgid ""
+#~ "Maximum number of characters for this string view. Zero if no maximum."
+#~ msgstr ""
+#~ "Nombre maximum de caractères pour cette vue de chaîne de caractères. Zero "
+#~ "si pas de maximum."
+
+#~ msgid "Maximum width"
+#~ msgstr "Largeur maximale"
+
+#~ msgid "Maximum width of this string view."
+#~ msgstr "Largeur maximale de cette vue de chaîne de caractères."
+
+#~ msgid "Has Frame"
+#~ msgstr "Avec Cadre"
+
+#~ msgid "FALSE removes outside bevel from string view."
+#~ msgstr "FAUX supprime le cadre extérieur de la vue de chaîne de caractères."
+
+#~ msgid "Draw cursor"
+#~ msgstr "Affichage du curseur"
+
+#~ msgid "TRUE draw blinking cursor."
+#~ msgstr "VRAI Affichage d'un curseur clignotant."
+
+#~ msgid "Auto move cursor"
+#~ msgstr "Déplacement automatique du curseur"
+
+#~ msgid "TRUE auto move cursor position when mouse clicking."
+#~ msgstr ""
+#~ "VRAI Déplacement automatique de la position du curseur sur clic de souris."
+
+#, fuzzy
+#~ msgid "Forward button press/release event"
+#~ msgstr "Transmission événement d'appui de bouton"
+
+#, fuzzy
+#~ msgid "TRUE forward button press/release event to user program."
+#~ msgstr ""
+#~ "VRAI Fait suivre les événements d'appui de bouton vers le programme "
+#~ "client."
+
+#~ msgid "Auto resize the widget to fit the string"
+#~ msgstr "Redimensionnement automatique à la taille de la chaîne"
+
+#~ msgid "TRUE Auto resize on."
+#~ msgstr "VRAI Redimensionnement automatique activé."
+
+#, fuzzy
+#~ msgid "TRUE Emit move_cursor signal when press the string."
+#~ msgstr ""
+#~ "VRAI Déplacement automatique de la position du curseur sur clic de souris."
+
+#~ msgid "Width in chars"
+#~ msgstr "Largeur en caractères"
+
+#~ msgid "Number of characters to leave space for in the string view."
+#~ msgstr ""
+#~ "Nombre de caractères à laisser vides dans la vue de chaîne de caractères."
+
+#~ msgid "Scroll offset"
+#~ msgstr "Décalage"
+
+#~ msgid ""
+#~ "Number of pixels of the string view scrolled off the screen to the left"
+#~ msgstr ""
+#~ "Nombre de pixels de la vue de chaîne de caractères décalés à gauche en "
+#~ "dehors de l'écran"
+
+#~ msgid "Text"
+#~ msgstr "Texte"
+
+#~ msgid "The contents of the string view"
+#~ msgstr "Le contenu de la vue de chaîne de caractères"
+
+#~ msgid "Selected _Keys:"
+#~ msgstr "_Touches Sélectionnées :"
+
+#~ msgid "Key Code:"
+#~ msgstr "Code Touche:"
+
+#, fuzzy
+#~ msgid "....."
+#~ msgstr "..."
+
+#~ msgid "Modifiers:"
+#~ msgstr "Modificateurs:"
+
+#~ msgid "_Ctrl"
+#~ msgstr "_Ctrl"
+
+#~ msgid "A_lt"
+#~ msgstr "_Alt"
+
+#~ msgid "_Shift"
+#~ msgstr "_Maj"
+
+#~ msgid "_Release"
+#~ msgstr "_Relâche"
+
+#~ msgid "_Meta"
+#~ msgstr "_Meta"
+
+#~ msgid "S_uper"
+#~ msgstr "S_uper"
+
+#~ msgid "_Hyper"
+#~ msgstr "_Hyper"
+
+#~ msgid "Please enter a Key Code first."
+#~ msgstr "Veuillez d'abord entrer un code de touche."
+
+#, fuzzy
+#~ msgid ""
+#~ "Press a key (or a key combination).\n"
+#~ "This dialog will be closed \n"
+#~ "when the key is released."
+#~ msgstr ""
+#~ "Appuyer sur une touche (ou une combinaison de touches).\n"
+#~ "Cette fenêtre se fermera dès que la touche sera relâchée."
+
+#~ msgid "Grabbing a key."
+#~ msgstr "Capture de touche."
+
+#~ msgid "Key Selection"
+#~ msgstr "Sélection de Touche"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientation"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "Orientation du tiroir."
+
+#, fuzzy
+#~ msgid "Next"
+#~ msgstr "Texte"
+
+#, fuzzy
+#~ msgid "Automatic"
+#~ msgstr "Amharique"
+
+#, fuzzy
+#~ msgid "Always used"
+#~ msgstr "Toujours"
+
+#, fuzzy
+#~ msgid "%s Option"
+#~ msgstr "Options"
+
+#, fuzzy
+#~ msgid "Keyboards"
+#~ msgstr "Français/Clavier"
+
+#~ msgid "English/European"
+#~ msgstr "Français/Européen"
+
+#~ msgid "RAW CODE"
+#~ msgstr "CODE BRUT"
+
+#~ msgid "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid ""
+#~ "Hot Keys:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    switch between Multibyte encoding and Unicode.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    reset the input method.\n"
+#~ msgstr ""
+#~ "Racourcis :\n"
+#~ "\n"
+#~ "  Ctrl+u :\n"
+#~ "    bascule entre encodage Multi-octets et Unicode.\n"
+#~ "\n"
+#~ "  Echap :\n"
+#~ "    réinitialise la méthode de saisie.\n"
+
+#~ msgid "The status of the current input method. Click to change it."
+#~ msgstr "Etat de la méthode de saisie courante. Cliquer pour la modifier."
+
+#~ msgid "Unicode"
+#~ msgstr "Unicode"
+
+#~ msgid "Global Setup"
+#~ msgstr "Configuration globale"
+
+#~ msgid ""
+#~ "Setup the global options used by All FrontEnd modules, including X11 "
+#~ "FrontEnd, GTK IMModule, QT IMModule etc."
+#~ msgstr ""
+#~ "Configurer des options globales utilisées par tous les modules frontaux, "
+#~ "incluant le frontal X11, GTK IMModule, QT IMModule etc."
+
+#~ msgid "_Trigger:"
+#~ msgstr "_Déclencheur :"
+
+#~ msgid "Select the trigger keys"
+#~ msgstr "Sélectionner les touches d'activation"
+
+#~ msgid ""
+#~ "The key events to turn on/off SCIM input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "Touches pour activer/désactiver SCIM. Cliquer sur le bouton de droite "
+#~ "pour les modifier."
+
+#~ msgid "Turn _On:"
+#~ msgstr "_Activer:"
+
+#~ msgid "Select the Turn On keys"
+#~ msgstr "Sélectionner les touches d'activation"
+
+#~ msgid ""
+#~ "The key events to turn on SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Touches pour activer SCIM. Cliquer sur le bouton de droite pour les "
+#~ "modifier."
+
+#~ msgid "Turn O_ff:"
+#~ msgstr "Désac_tiver:"
+
+#~ msgid "Select the Turn Off keys"
+#~ msgstr "Sélectionner les touches de désactivation"
+
+#~ msgid ""
+#~ "The key events to turn off SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Touches pour désactiver SCIM. Cliquer sur le bouton de droite pour les "
+#~ "modifier."
+
+#~ msgid "_Next input method:"
+#~ msgstr "Méthode de saisie _Suivante :"
+
+#~ msgid "Select the next input method keys"
+#~ msgstr "Sélectionner les touches pour la méthode de saisie suivante"
+
+#~ msgid ""
+#~ "The key events to switch to the next input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "Touches pour aller à la méthode de saisie suivante. Cliquer sur le bouton "
+#~ "de droite pour les modifier."
+
+#~ msgid "_Previous input method:"
+#~ msgstr "Méthode de saisie _Précédente :"
+
+#~ msgid "Select the previous input method keys"
+#~ msgstr "Sélectionner les touches pour la méthode de saisie précédente"
+
+#~ msgid ""
+#~ "The key events to switch to the previous input method. Click on the "
+#~ "button on the right to edit it."
+#~ msgstr ""
+#~ "Touches pour revenir à la méthode de saisie précédente. Cliquer sur le "
+#~ "bouton de droite pour les modifier."
+
+#~ msgid "Show input method _menu:"
+#~ msgstr "Accès au _Menu des méthodes de saisie :"
+
+#~ msgid "Select the show input method menu keys"
+#~ msgstr ""
+#~ "Sélectionner les touches pour accéder au menu des méthodes de saisie"
+
+#~ msgid ""
+#~ "The key events to show the input method menu. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "Touches pour accéder au menu des méthodes de saisie. Cliquer sur le "
+#~ "bouton de droite pour les modifier."
+
+#~ msgid "_Keyboard Layout:"
+#~ msgstr "_Type de Clavier:"
+
+#~ msgid ""
+#~ "You should choose your currently used keyboard layout here so that input "
+#~ "methods, who care about keyboard layout, could work correctly."
+#~ msgstr ""
+#~ "Indiquez ici le type de clavier que vous utilisez afin que les méthodes "
+#~ "de saisie qui dépendent du type de clavier puissent fonctionner "
+#~ "correctement."
+
+#~ msgid "_Embed Preedit String into client window"
+#~ msgstr "Insérer les chaîne en préédition dans la fenêtre cliente"
+
+#~ msgid ""
+#~ "If this option is checked, the preedit string will be displayed directly "
+#~ "in the client input window, rather than in a independent float window."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, la table de préédition est affichée "
+#~ "directement dans la fenêtre de saisie, et non pas dans une fenêtre "
+#~ "indépendante."
+
+#~ msgid "_Share the same input method among all applications"
+#~ msgstr "_Partage de la même méthode de saisie entre toutes les applications"
+
+#~ msgid ""
+#~ "If this option is checked, then only one input method could be used by "
+#~ "all applications at the same time.Otherwise different input method could "
+#~ "be used by each application."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, la même méthode de saisie peut être "
+#~ "utilisée par toutes les applications en même temps. Dans le cas "
+#~ "contraire, chaque application utilise sa propre méthode de saisie."
+
+#~ msgid "Hotkeys"
+#~ msgstr "Raccourcis"
+
+#~ msgid ""
+#~ "You can enable/disable input methods and set hotkeys for input methods "
+#~ "here."
+#~ msgstr ""
+#~ "Ici, vous pouvez activer/désactiver les méthodes de saisie et les jeux de "
+#~ "raccourcis pour les méthodes de saisie."
+
+#~ msgid "The installed input method services:"
+#~ msgstr "Services de méthode de saisie installés :"
+
+#~ msgid "Edit _Hotkeys"
+#~ msgstr "Editer les _Raccourcis"
+
+#~ msgid "Edit Hotkeys associated with the selected input method."
+#~ msgstr "Editer les raccourcis associés à la méthode de saisie sélectionnée."
+
+#~ msgid "Select _Filters"
+#~ msgstr "Sélectionner les _Filtres"
+
+#~ msgid "Select the Filters which will be attached to this input method."
+#~ msgstr "Sélectionner les Filtres à associer à cette méthode de saisie."
+
+#~ msgid "_Expand"
+#~ msgstr "_Ouvrir"
+
+#~ msgid "Expand all language categories."
+#~ msgstr "Ouvrir toutes les catégories de langage."
+
+#~ msgid "_Collapse"
+#~ msgstr "_Refermer"
+
+#~ msgid "Collapse all language categories."
+#~ msgstr "Fermer toutes les catégories de langage."
+
+#~ msgid "E_nable All"
+#~ msgstr "Tout Activer"
+
+#~ msgid "Enable all input methods."
+#~ msgstr "Activer toutes les méthodes de saisie."
+
+#~ msgid "_Disable All"
+#~ msgstr "Tout Désactiver"
+
+#~ msgid "Disable all input methods."
+#~ msgstr "Désactiver toutes les méthodes de saisie."
+
+#~ msgid "Filters"
+#~ msgstr "Filtres"
+
+#~ msgid "Languages"
+#~ msgstr "Langues"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Edit Hotkeys for %s"
+#~ msgstr "Editer les raccourcis pour %s"
+
+#~ msgid "Select Filters for %s"
+#~ msgstr "Sélectionner les filtres pour %s"
+
+#~ msgid "Move _Up"
+#~ msgstr "_Monter"
+
+#~ msgid "Move _Down"
+#~ msgstr "_Descendre"
+
+#~ msgid "GTK"
+#~ msgstr "GTK"
+
+#~ msgid "A panel daemon based on GTK+-2.x library."
+#~ msgstr "Un panneau serveur basé sur la librairie GTK+-2.x."
+
+#~ msgid "On demand"
+#~ msgstr "A la demande"
+
+#~ msgid "Never"
+#~ msgstr "Jamais"
+
+#~ msgid "ToolBar"
+#~ msgstr "Barre d'Outils"
+
+#~ msgid "_Show:"
+#~ msgstr "_Afficher"
+
+#~ msgid "Auto s_nap"
+#~ msgstr "Aligne_ment automatique"
+
+#~ msgid "Show _input method icon"
+#~ msgstr "Affichage icône méthode de _saisie"
+
+#~ msgid "Show inp_ut method name"
+#~ msgstr "Affichage _nom méthode de saisie"
+
+#~ msgid "Hide time_out:"
+#~ msgstr "_Délai avant masquage :"
+
+#~ msgid "Show s_tick icon"
+#~ msgstr "Affichage icône d'épin_glage fenêtre"
+
+#~ msgid "Show m_enu icon"
+#~ msgstr "Afficher l'icône de m_enu"
+
+#~ msgid "Show _help icon"
+#~ msgstr "Affichage icône d'_aide"
+
+#~ msgid "Show _property label"
+#~ msgstr "Affichage label de p_ropriété"
+
+#~ msgid "Input window"
+#~ msgstr "Fenêtre de saisie"
+
+#~ msgid "E_mbedded lookup table"
+#~ msgstr "Table de recherche _embarquée"
+
+#~ msgid "_Vertical lookup table"
+#~ msgstr "Table de recherche _verticale"
+
+#~ msgid "Misc"
+#~ msgstr "Divers"
+
+#~ msgid "Show tra_y icon"
+#~ msgstr "Affichage icône barre de _tâches"
+
+#~ msgid "Stick _windows"
+#~ msgstr "Epinglage _fenêtres"
+
+#~ msgid "_Font:"
+#~ msgstr "P_olice :"
+
+#~ msgid ""
+#~ "If option \"Always\" is selected, the toolbar will always be shown on the "
+#~ "screen. If option \"On demand\" is selected, it will only be shown when "
+#~ "SCIM is activated. If option \"Never\" is selected, it will never be "
+#~ "shown."
+#~ msgstr ""
+#~ "Quand l'option \"Toujours\" est sélectionnée, la barre d'outils est "
+#~ "affichée en permanence à l'écran. Quand l'option \"A la demande\" est "
+#~ "sélectionnée, la barre d'outils est affichée uniquement lorsque SCIM est "
+#~ "activé. Quand l'option \"Jamais\" estsélectionnée, la barre d'outils "
+#~ "n'est jamais affichée."
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar will be snapped to the screen "
+#~ "border."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, la barre d'outil s'aligne "
+#~ "automatiquement sur le bord de l'écran."
+
+#~ msgid ""
+#~ "The toolbar will be hidden out after this timeout is elapsed. This option "
+#~ "is only valid when \"Always show\" is selected. Set to zero to disable "
+#~ "this behavior."
+#~ msgstr ""
+#~ "La barre d'outils sera masquée automatiquement après l'expiration de ce "
+#~ "délai. Cette option n'est valide que si l'option \"Afficher Toujours\" "
+#~ "est sélectionnée. Une valeur de délai de 0 supprime ce comportement."
+
+#~ msgid ""
+#~ "If this option is checked, the input method icon will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, l'icône de la méthode de saisie est "
+#~ "inséré dans la barre d'outils."
+
+#~ msgid ""
+#~ "If this option is checked, the input method name will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, le nom de la méthode de saisie est "
+#~ "inséré dans la barre d'outils."
+
+#~ msgid ""
+#~ "If this option is checked, the stick icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, l'icône d'épinglage de fenêtre est "
+#~ "inséré dans la barre d'outils."
+
+#~ msgid ""
+#~ "If this option is checked, the menu icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, l'icône de menu est inséré dans la "
+#~ "barre d'outils."
+
+#~ msgid ""
+#~ "If this option is checked, the help icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, l'icône d'aide est inséré dans la "
+#~ "barre d'outils."
+
+#~ msgid ""
+#~ "If this option is checked, the text label of input method properties will "
+#~ "be showed on the toolbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, le label des propriétés de la "
+#~ "méthode de saisie est inséré dans la barre d'outils."
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be embedded into the "
+#~ "input window."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, la table de recherche est embarquée "
+#~ "dans la fenêtre de saisie."
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be displayed vertically."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, la table de recherche est affichée "
+#~ "verticalement."
+
+#~ msgid ""
+#~ "If this option is checked, the tray icon will be showed on the desktop's "
+#~ "taskbar."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, l'icône est inséré dans la barre de "
+#~ "tâches du bureau."
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar, input and lookup table windows "
+#~ "will be sticked to its original position."
+#~ msgstr ""
+#~ "Quand cette option est sélectionnée, les fenêtres de saisie et de "
+#~ "recherche sont maintenues à leur position originale."
+
+#~ msgid "The font setting will be used in the input and lookup table windows."
+#~ msgstr ""
+#~ "La police de caractères configurée est utilisée dans les fenêtres de "
+#~ "saisie et de recherche."
+
+#~ msgid "Select Interface Font"
+#~ msgstr "Police de Caractères"
+
+#~ msgid "SCIM"
+#~ msgstr "SCIM"
+
+#~ msgid "FrontEnd"
+#~ msgstr "Interface"
+
+#~ msgid "IMEngine"
+#~ msgstr "Moteur de Saisie"
+
+#~ msgid "Panel"
+#~ msgstr "Panneau"
+
+#~ msgid "Extra"
+#~ msgstr "Extra"
+
+#~ msgid "SCIM Input Method Setup"
+#~ msgstr "Configuration de la Méthode de Saisie SCIM"
+
+#~ msgid ""
+#~ " <span size=\"20000\">Smart Common Input Method platform</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI Setup Utility</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+#~ msgstr ""
+#~ " <span size=\"20000\">Plateforme Smart Common Input Method</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">Utilitaire de Configuration</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+
+#~ msgid "<span size=\"x-large\">The Setup for %s modules.</span>"
+#~ msgstr "<span size=\"x-large\">Configuration des modules %s.</span>"
+
+#~ msgid "Are you sure you want to quit SCIM Setup?"
+#~ msgstr "Etes vous sûr de vouloir quitter SCIM Config. ?"
+
+#~ msgid ""
+#~ "Not all configuration can be reloaded on the fly. Don't forget to restart "
+#~ "SCIM in order to let all of the new configuration take effect."
+#~ msgstr ""
+#~ "Certains des paramètres de configuration ne peuvent pas être pris en "
+#~ "compte automatiquement. N'oubliez pas de redémarrer SCIM afin que toutes "
+#~ "les nouvelles valeurs de configuration soient prises en compte."
+
+#~ msgid "SCIM Setup"
+#~ msgstr "Configuration de SCIM"
+
+#~ msgid "Integrated Setup Utility based on GTK Widget library."
+#~ msgstr ""
+#~ "Utilitaire de configuration intégré basé sur la librairie GTK Widget."
+
+#~ msgid "Setup utility for Smart Common Input Method platform"
+#~ msgstr ""
+#~ "Utilitaire de configuration de la plateforme \"Smart Common Input Method\""
+
+#~ msgid "SCIM Help"
+#~ msgstr "Aide SCIM"
+
+#~ msgid "Smart Common Input Method"
+#~ msgstr "Smart Common Input Method"
+
+#~ msgid "Stick/unstick the input window and the toolbar."
+#~ msgstr "Epingle la fenêtre de saisie et la barre d'outils."
+
+#~ msgid "Show a brief help about SCIM and the current input method."
+#~ msgstr ""
+#~ "Affiche une aide succincte sur SCIM et la méthode de saisie courante."
+
+#~ msgid "Show command menu."
+#~ msgstr "Afficher le menu des commandes."
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "Reload Configuration"
+#~ msgstr "Recharger la Configuration"
+
+#~ msgid "Stick Windows"
+#~ msgstr "Epingler les Fenêtres"
+
+#~ msgid "Hide Toolbar"
+#~ msgstr "Masquer la Barre d'Outils"
+
+#~ msgid "Help ..."
+#~ msgstr "Aide ..."
+
+#~ msgid "Exit"
+#~ msgstr "Quitter"
+
+#~ msgid "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+#~ msgstr "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+
+#~ msgid "En"
+#~ msgstr "Fr"

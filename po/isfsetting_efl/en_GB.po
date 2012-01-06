@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 20:17+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:432
+#: ism/extras/efl_setting/isf_setting_efl.cpp:713
+msgid "Set"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:441
+#: ism/extras/efl_setting/isf_setting_efl.cpp:443
+#: ism/extras/efl_setting/isf_setting_efl.cpp:722
+msgid "Selection"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:636
+#: ism/extras/efl_setting/isf_setting_efl.cpp:830
+#, c-format
+msgid "Option"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+msgid "Auto capitalization"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+msgid "Auto period"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:963
+msgid "General"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
+msgid "S/W keyboard"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1004
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1079
+msgid "Keyboard selection"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1016
+msgid "Keyboard option"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1052
+msgid "H/W keyboard"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1065
+msgid "option"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1110
+msgid "Back"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1118
+msgid "Keyboard"
+msgstr ""

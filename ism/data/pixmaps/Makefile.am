@@ -1,0 +1,40 @@
+## Makefile.am -- Process this file with automake to produce Makefile.in
+## Copyright (C) 2002 James Su
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2, or (at your option)
+## any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, write to the Free Software
+## Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+MAINTAINERCLEANFILES = Makefile.in
+CLEANFILES           = *.bak *.edj
+
+ISF_CANDIDATE_PNG = 08_textinput_predictive_popup_arrow.png \
+                    08_textinput_predictive_popup_arrow_2.png
+
+#pixmapsdir = @SCIM_DATADIR@/pixmaps
+#pixmaps_DATA = $(ISF_CANDIDATE_PNG)
+
+EXTRA_DIST = $(ISF_CANDIDATE_PNG)
+
+# edjes
+isf_candidate_theme1.edj : isf_candidate_theme1.edc
+	edje_cc $^ $@
+
+isf_candidate_theme2.edj : isf_candidate_theme2.edc
+	edje_cc $^ $@
+
+isfsetting.edj : isfsetting.edc
+	edje_cc $^ $@
+
+edjdir   = @SCIM_DATADIR@
+edj_DATA = isf_candidate_theme1.edj isf_candidate_theme2.edj isfsetting.edj

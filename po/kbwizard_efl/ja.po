@@ -1,0 +1,2056 @@
+# Japanese translation for SCIM
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# James Su <suzhe@tsinghua.org.cn>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ja\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"PO-Revision-Date: 2005-12-11 11:00+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <ja@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
+#, fuzzy
+msgid "Keyboard selection"
+msgstr "キー選択"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "キー選択"
+
+#, fuzzy
+#~ msgid "Option"
+#~ msgstr "オプション"
+
+#, fuzzy
+#~ msgid "Auto capitalization"
+#~ msgstr "自動スプリット:"
+
+#, fuzzy
+#~ msgid "Auto period"
+#~ msgstr "自動スプリット:"
+
+#, fuzzy
+#~ msgid "General"
+#~ msgstr "全般"
+
+#, fuzzy
+#~ msgid "S/W keyboard"
+#~ msgstr "英語/キーボード"
+
+#, fuzzy
+#~ msgid "Keyboard option"
+#~ msgstr "キー選択"
+
+#, fuzzy
+#~ msgid "H/W keyboard"
+#~ msgstr "英語/キーボード"
+
+#, fuzzy
+#~ msgid "option"
+#~ msgstr "オプション"
+
+#, fuzzy
+#~ msgid "Keyboard"
+#~ msgstr "英語/キーボード"
+
+#~ msgid "English/Keyboard"
+#~ msgstr "英語/キーボード"
+
+#, fuzzy
+#~ msgid "English input service"
+#~ msgstr "英語(アメリカ)"
+
+#~ msgid "Amharic"
+#~ msgstr "アムハラ語"
+
+#~ msgid "Arabic"
+#~ msgstr "アラビア語"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "アラビア語(エジプト)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "アラビア語(レバノン)"
+
+#~ msgid "Assamese"
+#~ msgstr "アッサム語"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "アゼルバイジャン語"
+
+#~ msgid "Belarusian"
+#~ msgstr "白ロシア語"
+
+#~ msgid "Bulgarian"
+#~ msgstr "ブルガリア語"
+
+#~ msgid "Bengali"
+#~ msgstr "ベンガル語"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "ベンガル語(インド)"
+
+#~ msgid "Tibetan"
+#~ msgstr "チベット語"
+
+#~ msgid "Bosnian"
+#~ msgstr "ボスニア語"
+
+#~ msgid "Catalan"
+#~ msgstr "カタロニア語"
+
+#~ msgid "Czech"
+#~ msgstr "チェコ語"
+
+#~ msgid "Welsh"
+#~ msgstr "ウェールズ語"
+
+#~ msgid "Danish"
+#~ msgstr "デンマーク語"
+
+#~ msgid "German"
+#~ msgstr "ドイツ語"
+
+#~ msgid "Greek"
+#~ msgstr "ギリシャ語"
+
+#~ msgid "English"
+#~ msgstr "英語"
+
+#~ msgid "English (Australian)"
+#~ msgstr "英語(オーストラリア)"
+
+#~ msgid "English (Canadian)"
+#~ msgstr "英語(カナダ)"
+
+#~ msgid "English (British)"
+#~ msgstr "英語(イギリス)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "英語(アイルランド)"
+
+#~ msgid "English (American)"
+#~ msgstr "英語(アメリカ)"
+
+#~ msgid "Spanish"
+#~ msgstr "スペイン語"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#~ msgid "Estonian"
+#~ msgstr "エストニア語"
+
+#~ msgid "Basque"
+#~ msgstr "バスク語"
+
+#~ msgid "Persian"
+#~ msgstr "ペルシア語"
+
+#~ msgid "Finnish"
+#~ msgstr "フィンランド語"
+
+#~ msgid "French"
+#~ msgstr "フランス語"
+
+#~ msgid "Irish"
+#~ msgstr "アイルランド語"
+
+#~ msgid "Galician"
+#~ msgstr "ガリシア語"
+
+#~ msgid "Gujarati"
+#~ msgstr "グジャラート語"
+
+#~ msgid "Hebrew"
+#~ msgstr "ヘブライ語"
+
+#~ msgid "Hindi"
+#~ msgstr "ヒンディー語"
+
+#~ msgid "Croatian"
+#~ msgstr "クロアチア語"
+
+#~ msgid "Hungarian"
+#~ msgstr "ハンガリー語"
+
+#, fuzzy
+#~ msgid "Armenian"
+#~ msgstr "ルーマニア語"
+
+#~ msgid "Interlingua"
+#~ msgstr "インターリングア"
+
+#~ msgid "Indonesian"
+#~ msgstr "インドネシア語"
+
+#~ msgid "Icelandic"
+#~ msgstr "アイスランド語"
+
+#~ msgid "Italian"
+#~ msgstr "イタリア語"
+
+#~ msgid "Japanese"
+#~ msgstr "日本語"
+
+#, fuzzy
+#~ msgid "Georgian"
+#~ msgstr "ドイツ語"
+
+#~ msgid "Kazakh"
+#~ msgstr "カザフスタン語"
+
+#~ msgid "Cambodian"
+#~ msgstr "クメール語"
+
+#~ msgid "Kannada"
+#~ msgstr "カンナダ語"
+
+#~ msgid "Korean"
+#~ msgstr "ハングル"
+
+#~ msgid "Laothian"
+#~ msgstr "ラオス語"
+
+#~ msgid "Lithuanian"
+#~ msgstr "リトアニア語"
+
+#~ msgid "Latvian"
+#~ msgstr "ラトヴィア語"
+
+#~ msgid "Macedonian"
+#~ msgstr "マケドニア語"
+
+#~ msgid "Malayalam"
+#~ msgstr "マラヤーラム語"
+
+#~ msgid "Mongolian"
+#~ msgstr "モンゴル語"
+
+#~ msgid "Marathi"
+#~ msgstr "マラーティー語"
+
+#~ msgid "Malay"
+#~ msgstr "マレー語"
+
+#, fuzzy
+#~ msgid "Burmese"
+#~ msgstr "ブラウズ"
+
+#~ msgid "Nepali"
+#~ msgstr "ネパール語"
+
+#~ msgid "Dutch"
+#~ msgstr "オランダ語"
+
+#, fuzzy
+#~ msgid "Norwegian (Nynorsk)"
+#~ msgstr "ノルウェー語(ニューノルスク)"
+
+#, fuzzy
+#~ msgid "Norwegian (Bokmal)"
+#~ msgstr "ノルウェー語(ボックモール)"
+
+#~ msgid "Oriya"
+#~ msgstr "オリヤー語"
+
+#~ msgid "Punjabi"
+#~ msgstr "パンジャブ語"
+
+#~ msgid "Polish"
+#~ msgstr "ポーランド語"
+
+#~ msgid "Portuguese"
+#~ msgstr "ポルトガル語"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "ポルトガル語(ブラジル)"
+
+#~ msgid "Romanian"
+#~ msgstr "ルーマニア語"
+
+#~ msgid "Russian"
+#~ msgstr "ロシア語"
+
+#~ msgid "Slovak"
+#~ msgstr "スロバキア語"
+
+#~ msgid "Slovenian"
+#~ msgstr "スロベニア語"
+
+#~ msgid "Albanian"
+#~ msgstr "アルバニア語"
+
+#~ msgid "Serbian"
+#~ msgstr "セルビア語"
+
+#~ msgid "Swedish"
+#~ msgstr "スウェーデン語"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "スウェーデン語(フィンランド)"
+
+#~ msgid "Tamil"
+#~ msgstr "タミル語"
+
+#~ msgid "Telugu"
+#~ msgstr "テルグ語"
+
+#~ msgid "Thai"
+#~ msgstr "タイ語"
+
+#~ msgid "Turkish"
+#~ msgstr "トルコ語"
+
+#~ msgid "Uighur"
+#~ msgstr "ウィグル語"
+
+#~ msgid "Ukrainian"
+#~ msgstr "ウクライナ語"
+
+#~ msgid "Urdu"
+#~ msgstr "ウルドゥー語"
+
+#~ msgid "Uzbek"
+#~ msgstr "ウズベク語"
+
+#~ msgid "Vietnamese"
+#~ msgstr "ベトナム語"
+
+#~ msgid "Walloon"
+#~ msgstr "ワロン語"
+
+#~ msgid "Yiddish"
+#~ msgstr "イディッシュ語"
+
+#~ msgid "Chinese"
+#~ msgstr "中国語"
+
+#, fuzzy
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "簡体中国語"
+
+#, fuzzy
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "繁体中国語"
+
+#, fuzzy
+#~ msgid "Dutch (Belgian)"
+#~ msgstr "ベルギー"
+
+#, fuzzy
+#~ msgid "English (United States)"
+#~ msgstr "英語(US)"
+
+#, fuzzy
+#~ msgid "English (United Kingdom)"
+#~ msgstr "英語(カナダ)"
+
+#, fuzzy
+#~ msgid "English (New Zealand)"
+#~ msgstr "英語(アイルランド)"
+
+#, fuzzy
+#~ msgid "English (Irish)"
+#~ msgstr "英語(イギリス)"
+
+#, fuzzy
+#~ msgid "English (South Africa)"
+#~ msgstr "英語(アメリカ)"
+
+#, fuzzy
+#~ msgid "English (Jamaica)"
+#~ msgstr "英語(カナダ)"
+
+#, fuzzy
+#~ msgid "English (Belize)"
+#~ msgstr "英語(イギリス)"
+
+#, fuzzy
+#~ msgid "English (Trinidad)"
+#~ msgstr "英語(イギリス)"
+
+#, fuzzy
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "英語(カナダ)"
+
+#, fuzzy
+#~ msgid "English (Philippines)"
+#~ msgstr "英語(イギリス)"
+
+#, fuzzy
+#~ msgid "French (Standard)"
+#~ msgstr "フランス語(カナダ)"
+
+#, fuzzy
+#~ msgid "French (Belgian)"
+#~ msgstr "フランス語(カナダ)"
+
+#~ msgid "French (Canadian)"
+#~ msgstr "フランス語(カナダ)"
+
+#, fuzzy
+#~ msgid "French (Swiss)"
+#~ msgstr "ドイツ語(スイス)"
+
+#, fuzzy
+#~ msgid "French (Monaco)"
+#~ msgstr "フランス語(カナダ)"
+
+#, fuzzy
+#~ msgid "German (Standard)"
+#~ msgstr "ドイツ語(deadkeyあり)"
+
+#~ msgid "German (Swiss)"
+#~ msgstr "ドイツ語(スイス)"
+
+#, fuzzy
+#~ msgid "German (Austrian)"
+#~ msgstr "英語(オーストラリア)"
+
+#, fuzzy
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "ドイツ語(スイス)"
+
+#, fuzzy
+#~ msgid "Italian (Swiss)"
+#~ msgstr "ドイツ語(スイス)"
+
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "ポルトガル語(ブラジル)"
+
+#, fuzzy
+#~ msgid "Portuguese (Standard)"
+#~ msgstr "ポルトガル語(ブラジル)"
+
+#, fuzzy
+#~ msgid "Spanish (Traditional Sort)"
+#~ msgstr "スペイン語(ラテンアメリカ)"
+
+#, fuzzy
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "スペイン語(ラテンアメリカ)"
+
+#, fuzzy
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "スペイン語(ラテンアメリカ)"
+
+#, fuzzy
+#~ msgid "Spanish (Panama)"
+#~ msgstr "スペイン語(ラテンアメリカ)"
+
+#, fuzzy
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "スペイン語(ラテンアメリカ)"
+
+#, fuzzy
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Peru)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Chile)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "スペイン語(CP 850)"
+
+#, fuzzy
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "スペイン語(メキシコ)"
+
+#, fuzzy
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "マラヤーラム語"
+
+#~ msgid "Norwegian"
+#~ msgstr "ノルウェー語"
+
+#, fuzzy
+#~ msgid "Serbian (Latin)"
+#~ msgstr "セルビア語"
+
+#, fuzzy
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "繁体中国語"
+
+#, fuzzy
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "繁体中国語"
+
+#, fuzzy
+#~ msgid "Chinese (Macau)"
+#~ msgstr "繁体中国語"
+
+#, fuzzy
+#~ msgid "Chinese (PRC)"
+#~ msgstr "中国語"
+
+#, fuzzy
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "簡体中国語"
+
+#, fuzzy
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Libya)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Oman)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Syria)"
+#~ msgstr "アラビア語(エジプト)"
+
+#, fuzzy
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "アラビア語(エジプト)"
+
+#, fuzzy
+#~ msgid "Arabic (UAE)"
+#~ msgstr "アラビア語(エジプト)"
+
+#, fuzzy
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "アラビア語(レバノン)"
+
+#, fuzzy
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "アラビア語(エジプト)"
+
+#~ msgid "Other"
+#~ msgstr "その他"
+
+#~ msgid "Unknown"
+#~ msgstr "不明"
+
+#~ msgid "English (US)"
+#~ msgstr "英語(US)"
+
+#~ msgid "Belgian"
+#~ msgstr "ベルギー"
+
+#~ msgid "Czech (qwerty)"
+#~ msgstr "チェコ語(qwerty)"
+
+#~ msgid "Dvorak"
+#~ msgstr "Dvorak"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "フランス語(スイス)"
+
+#~ msgid "German (with deadkeys)"
+#~ msgstr "ドイツ語(deadkeyあり)"
+
+#~ msgid "Portuguese (Brazil US accents)"
+#~ msgstr "ポルトガル語(ブラジルUSアクセント)"
+
+#~ msgid "Slovak (qwerty)"
+#~ msgstr "スロバキア語(qwerty)"
+
+#~ msgid "Spanish (CP 850)"
+#~ msgstr "スペイン語(CP 850)"
+
+#~ msgid "Spanish (Latin America)"
+#~ msgstr "スペイン語(ラテンアメリカ)"
+
+#~ msgid "English (UK)"
+#~ msgstr "英語(UK)"
+
+#~ msgid "Simplified-Traditional Chinese Conversion"
+#~ msgstr "簡体-繁体中国語相互変換"
+
+#~ msgid "Convert between Simplified Chinese and Traditional Chinese"
+#~ msgstr "簡体中国語と繁体中国語を相互変換する"
+
+#~ msgid "SC-TC"
+#~ msgstr "簡体-繁体"
+
+#~ msgid "Simplified-Traditional Chinese conversion"
+#~ msgstr "簡体-繁体中国語相互変換"
+
+#~ msgid "No Conversion"
+#~ msgstr "変換しない"
+
+#~ msgid "Simplified to Traditional"
+#~ msgstr "簡体から繁体へ"
+
+#~ msgid "Convert Simplified Chinese to Traditional Chinese"
+#~ msgstr "簡体中国語を繁体中国語に変換する"
+
+#~ msgid "Traditional to Simplified"
+#~ msgstr "繁体から簡体へ"
+
+#~ msgid "Convert Traditional Chinese to Simplified Chinese"
+#~ msgstr "繁体中国語を簡体中国語に変換する"
+
+#~ msgid "James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "SC->TC"
+#~ msgstr "簡体->繁体"
+
+#~ msgid "TC->SC"
+#~ msgstr "繁体->簡体"
+
+#~ msgid "Smart Common Input Method platform "
+#~ msgstr "Smart Common Input Method platform"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ ":\n"
+#~ "\n"
+#~ msgstr ""
+#~ ":\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+
+#~ msgid "Enable"
+#~ msgstr "有効にする"
+
+#~ msgid "Name"
+#~ msgstr "名称"
+
+#~ msgid "Cursor Position"
+#~ msgstr "カーソル位置"
+
+#~ msgid "The current position of the insertion cursor in chars."
+#~ msgstr "現在のカーソル位置"
+
+#~ msgid "Maximum length"
+#~ msgstr "最大の長さ"
+
+#~ msgid ""
+#~ "Maximum number of characters for this string view. Zero if no maximum."
+#~ msgstr ""
+#~ "String viewウィジェットの最大表示文字数。無制限の場合は0を指定して下さい。"
+
+#~ msgid "Maximum width"
+#~ msgstr "最大幅"
+
+#~ msgid "Maximum width of this string view."
+#~ msgstr "String viewウィジェットの最大表示幅"
+
+#~ msgid "Has Frame"
+#~ msgstr "フレーム有りかどうか"
+
+#~ msgid "FALSE removes outside bevel from string view."
+#~ msgstr "FALSEを指定した場合、文字表示ウィジェットの縁取りを描画しません。"
+
+#~ msgid "Draw cursor"
+#~ msgstr "カーソルを描画する"
+
+#~ msgid "TRUE draw blinking cursor."
+#~ msgstr "TRUEを指定した場合、カーソルを点滅させます。"
+
+#~ msgid "Auto move cursor"
+#~ msgstr "カーソルの自動移動"
+
+#~ msgid "TRUE auto move cursor position when mouse clicking."
+#~ msgstr ""
+#~ "TRUEを指定した場合、マウスクリックされた位置にカーソルが移動します。"
+
+#, fuzzy
+#~ msgid "Forward button press/release event"
+#~ msgstr "マウスボタンのイベントを送る"
+
+#, fuzzy
+#~ msgid "TRUE forward button press/release event to user program."
+#~ msgstr "TRUEの場合はマウスボタンのイベントをユーザプログラムに送ります。"
+
+#~ msgid "Auto resize the widget to fit the string"
+#~ msgstr "文字列に合わせてウィジェットのサイズを自動調整"
+
+#~ msgid "TRUE Auto resize on."
+#~ msgstr "TRUEを指定した、場合はウィジェットサイズを自動的に調整します。"
+
+#, fuzzy
+#~ msgid "TRUE Emit move_cursor signal when press the string."
+#~ msgstr ""
+#~ "TRUEを指定した場合、マウスクリックされた位置にカーソルが移動します。"
+
+#~ msgid "Width in chars"
+#~ msgstr "文字の幅"
+
+#~ msgid "Number of characters to leave space for in the string view."
+#~ msgstr "String viewウィジェットに表示する文字数"
+
+#~ msgid "Scroll offset"
+#~ msgstr "スクロールオフセット"
+
+#~ msgid ""
+#~ "Number of pixels of the string view scrolled off the screen to the left"
+#~ msgstr "String viewウィジェットが画面左端に畳み込まれた際の表示ピクセル数"
+
+#~ msgid "Text"
+#~ msgstr "テキスト"
+
+#~ msgid "The contents of the string view"
+#~ msgstr "String viewウィジェットの内容"
+
+#~ msgid "Selected _Keys:"
+#~ msgstr "設定済のキー:"
+
+#~ msgid "Key Code:"
+#~ msgstr "キーコード:"
+
+#, fuzzy
+#~ msgid "....."
+#~ msgstr "..."
+
+#~ msgid "Modifiers:"
+#~ msgstr "モディファイア:"
+
+#~ msgid "_Ctrl"
+#~ msgstr "_Ctrl"
+
+#~ msgid "A_lt"
+#~ msgstr "A_lt"
+
+#~ msgid "_Shift"
+#~ msgstr "_Shift"
+
+#~ msgid "_Release"
+#~ msgstr "リリース(_R)"
+
+#~ msgid "_Meta"
+#~ msgstr "_Meta"
+
+#~ msgid "S_uper"
+#~ msgstr "S_uper"
+
+#~ msgid "_Hyper"
+#~ msgstr "_Hyper"
+
+#~ msgid "Please enter a Key Code first."
+#~ msgstr "キーコードを先に入力して下さい。"
+
+#, fuzzy
+#~ msgid ""
+#~ "Press a key (or a key combination).\n"
+#~ "This dialog will be closed \n"
+#~ "when the key is released."
+#~ msgstr ""
+#~ "キー（もしくは複数のキーの組合せ）を押して下さい。\n"
+#~ "キーをリリースするとこのダイアログは閉じます。"
+
+#~ msgid "Grabbing a key."
+#~ msgstr "キー選択"
+
+#~ msgid "Key Selection"
+#~ msgstr "キー選択"
+
+#~ msgid "Orientation"
+#~ msgstr "方向"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "トレイの方向"
+
+#, fuzzy
+#~ msgid "Next"
+#~ msgstr "テキスト"
+
+#, fuzzy
+#~ msgid "Automatic"
+#~ msgstr "アムハラ語"
+
+#, fuzzy
+#~ msgid "Always used"
+#~ msgstr "常に"
+
+#, fuzzy
+#~ msgid "%s Option"
+#~ msgstr "オプション"
+
+#, fuzzy
+#~ msgid "Keyboards"
+#~ msgstr "英語/キーボード"
+
+#~ msgid "English/European"
+#~ msgstr "英語/ヨーロッパ言語"
+
+#~ msgid "RAW CODE"
+#~ msgstr "RAW CODE"
+
+#~ msgid "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid ""
+#~ "Hot Keys:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    switch between Multibyte encoding and Unicode.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    reset the input method.\n"
+#~ msgstr ""
+#~ "ホットキー:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    マルチバイトエンコード/ユニコードの切替え\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "   入力メソッドをリセット\n"
+
+#~ msgid "The status of the current input method. Click to change it."
+#~ msgstr "現在の入力モード。変更するにはここをクリックして下さい。"
+
+#~ msgid "Unicode"
+#~ msgstr "ユニコード"
+
+#~ msgid "Global Setup"
+#~ msgstr "全体設定"
+
+#~ msgid ""
+#~ "Setup the global options used by All FrontEnd modules, including X11 "
+#~ "FrontEnd, GTK IMModule, QT IMModule etc."
+#~ msgstr ""
+#~ "全てのフロントエンドモジュール(X11 FrontEnd/GTK-Immoduele/Qt-Immoduleを含"
+#~ "む)で使用する全体オプションを設定"
+
+#~ msgid "_Trigger:"
+#~ msgstr "開始/終了(_T):"
+
+#~ msgid "Select the trigger keys"
+#~ msgstr "開始/終了キーの設定"
+
+#~ msgid ""
+#~ "The key events to turn on/off SCIM input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "入力メソッドを開始/終了するキー。変更する\n"
+#~ "場合は右のボタンをクリックして下さい。"
+
+#~ msgid "Turn _On:"
+#~ msgstr "開始(_O):"
+
+#~ msgid "Select the Turn On keys"
+#~ msgstr "開始キーの設定"
+
+#~ msgid ""
+#~ "The key events to turn on SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "入力メソッドを開始するキー。変更する場合は\n"
+#~ "右のボタンをクリックして下さい。"
+
+#~ msgid "Turn O_ff:"
+#~ msgstr "終了(_F):"
+
+#~ msgid "Select the Turn Off keys"
+#~ msgstr "終了キーの設定"
+
+#~ msgid ""
+#~ "The key events to turn off SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "入力メソッドを終了するキー。変更する場合は\n"
+#~ "右のボタンをクリックして下さい。"
+
+#~ msgid "_Next input method:"
+#~ msgstr "次の入力メソッド(_N):"
+
+#~ msgid "Select the next input method keys"
+#~ msgstr "次の入力メソッドキーの設定"
+
+#~ msgid ""
+#~ "The key events to switch to the next input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "次の入力メソッドに切替えるキー。変更する場合は\n"
+#~ "右のボタンをクリックして下さい。"
+
+#~ msgid "_Previous input method:"
+#~ msgstr "前の入力メソッド(_P):"
+
+#~ msgid "Select the previous input method keys"
+#~ msgstr "前の入力メソッドキーの設定"
+
+#~ msgid ""
+#~ "The key events to switch to the previous input method. Click on the "
+#~ "button on the right to edit it."
+#~ msgstr ""
+#~ "前の入力メソッドに切替えるキー。変更する場合は\n"
+#~ "右のボタンをクリックして下さい。"
+
+#~ msgid "Show input method _menu:"
+#~ msgstr "入力メソッドメニューを表示(_M):"
+
+#~ msgid "Select the show input method menu keys"
+#~ msgstr "入力メソッドメニュー表示キーの設定"
+
+#~ msgid ""
+#~ "The key events to show the input method menu. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "入力メソッドメニューを表示させるキー。変更する\n"
+#~ "場合は右のボタンをクリックして下さい。"
+
+#~ msgid "_Keyboard Layout:"
+#~ msgstr "キーボード配列(_K):"
+
+#~ msgid ""
+#~ "You should choose your currently used keyboard layout here so that input "
+#~ "methods, who care about keyboard layout, could work correctly."
+#~ msgstr ""
+#~ "キーボード配列を認識する入力メソッドが正しく動作するように、現在使用されて"
+#~ "いるキーボード配列を選んでください。"
+
+#~ msgid "_Embed Preedit String into client window"
+#~ msgstr "未確定文字列を入力対象クライアントのウィンドウに表示(_E)"
+
+#~ msgid ""
+#~ "If this option is checked, the preedit string will be displayed directly "
+#~ "in the client input window, rather than in a independent float window."
+#~ msgstr ""
+#~ "このオプションを有効にすると、未確定文字列は独立した入力ウィンドウにではな"
+#~ "く入力対象クライアントに直接表示されます。"
+
+#~ msgid "_Share the same input method among all applications"
+#~ msgstr "全てのアプリケーションで同一入力メソッドを使用(_S)"
+
+#~ msgid ""
+#~ "If this option is checked, then only one input method could be used by "
+#~ "all applications at the same time.Otherwise different input method could "
+#~ "be used by each application."
+#~ msgstr ""
+#~ "このオプションを有効にすると、同一の入力メソッドを全てのアプリケーションで"
+#~ "使用できるようになります。アプリケーションごとに別々の入力メソッドを使用す"
+#~ "る場合はこのオプションを無効にして下さい。"
+
+#~ msgid "Hotkeys"
+#~ msgstr "ホットキー"
+
+#~ msgid ""
+#~ "You can enable/disable input methods and set hotkeys for input methods "
+#~ "here."
+#~ msgstr "入力メソッドの有効/無効とホットキーの設定を行います。"
+
+#~ msgid "The installed input method services:"
+#~ msgstr "インストールされている入力メソッド:"
+
+#~ msgid "Edit _Hotkeys"
+#~ msgstr "ホットキー(_H)"
+
+#~ msgid "Edit Hotkeys associated with the selected input method."
+#~ msgstr "この入力メソッドに切り替えるホットキーを編集"
+
+#~ msgid "Select _Filters"
+#~ msgstr "フィルター(_F)"
+
+#~ msgid "Select the Filters which will be attached to this input method."
+#~ msgstr "この入力メソッドで使用するフィルターを選択"
+
+#~ msgid "_Expand"
+#~ msgstr "開く(_E)"
+
+#~ msgid "Expand all language categories."
+#~ msgstr "全ての言語グループを展開する"
+
+#~ msgid "_Collapse"
+#~ msgstr "閉じる(_C)"
+
+#~ msgid "Collapse all language categories."
+#~ msgstr "全ての言語グループを閉じる"
+
+#~ msgid "E_nable All"
+#~ msgstr "全て有効(_N)"
+
+#~ msgid "Enable all input methods."
+#~ msgstr "全ての入力メソッドを有効にする"
+
+#~ msgid "_Disable All"
+#~ msgstr "全て無効(_D)"
+
+#~ msgid "Disable all input methods."
+#~ msgstr "全ての入力メソッドを無効にする"
+
+#~ msgid "Filters"
+#~ msgstr "フィルター"
+
+#~ msgid "Languages"
+#~ msgstr "言語"
+
+#~ msgid "Description"
+#~ msgstr "説明"
+
+#~ msgid "Edit Hotkeys for %s"
+#~ msgstr "%s のホットキーを編集"
+
+#~ msgid "Select Filters for %s"
+#~ msgstr "%s のフィルターを編集"
+
+#~ msgid "Move _Up"
+#~ msgstr "上に移動(_U)"
+
+#~ msgid "Move _Down"
+#~ msgstr "下に移動(_D)"
+
+#~ msgid "GTK"
+#~ msgstr "GTK"
+
+#~ msgid "A panel daemon based on GTK+-2.x library."
+#~ msgstr "GTK+-2.xライブラリによるパネルデーモン"
+
+#~ msgid "On demand"
+#~ msgstr "開始時に"
+
+#~ msgid "Never"
+#~ msgstr "しない"
+
+#~ msgid "ToolBar"
+#~ msgstr "ツールバー"
+
+#~ msgid "_Show:"
+#~ msgstr "表示(_S):"
+
+#~ msgid "Auto s_nap"
+#~ msgstr "オートスナップ(_N)"
+
+#~ msgid "Show _input method icon"
+#~ msgstr "入力メソッドのアイコンを表示(_I)"
+
+#~ msgid "Show inp_ut method name"
+#~ msgstr "入力メソッドの名称を表示(_U)"
+
+#~ msgid "Hide time_out:"
+#~ msgstr "オートハイド(_O)："
+
+#~ msgid "Show s_tick icon"
+#~ msgstr "スティックアイコンを表示(_T)"
+
+#~ msgid "Show m_enu icon"
+#~ msgstr "メニューアイコンを表示(_E)"
+
+#~ msgid "Show _help icon"
+#~ msgstr "ヘルプアイコンを表示(_H)"
+
+#~ msgid "Show _property label"
+#~ msgstr "プロパティーラベルを表示(_P)"
+
+#~ msgid "Input window"
+#~ msgstr "入力ウィンドウ"
+
+#~ msgid "E_mbedded lookup table"
+#~ msgstr "候補ウィンドウを埋め込む(_M)"
+
+#~ msgid "_Vertical lookup table"
+#~ msgstr "候補ウィンドウを縦に表示(_V)"
+
+#~ msgid "Misc"
+#~ msgstr "その他"
+
+#~ msgid "Show tra_y icon"
+#~ msgstr "トレーアイコンを表示(_Y)"
+
+#~ msgid "Stick _windows"
+#~ msgstr "ウィンドウを固定(_W)"
+
+#~ msgid "_Font:"
+#~ msgstr "フォント(_F):"
+
+#~ msgid ""
+#~ "If option \"Always\" is selected, the toolbar will always be shown on the "
+#~ "screen. If option \"On demand\" is selected, it will only be shown when "
+#~ "SCIM is activated. If option \"Never\" is selected, it will never be "
+#~ "shown."
+#~ msgstr ""
+#~ "\"常に\"を選ぶと、SCIMがアクティブでない時もツールバーが表示されます。\"開"
+#~ "始時に\"を選ぶと、SCIMがアクティブな時だけ表示されます。\"しない\"を選ぶ"
+#~ "と、SCIMがアクティブな時もツールバーは表示されません。"
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar will be snapped to the screen "
+#~ "border."
+#~ msgstr ""
+#~ "このオプションを有効にするとツールバーが\n"
+#~ "自動的にスクリーンの端に移動します。"
+
+#~ msgid ""
+#~ "The toolbar will be hidden out after this timeout is elapsed. This option "
+#~ "is only valid when \"Always show\" is selected. Set to zero to disable "
+#~ "this behavior."
+#~ msgstr ""
+#~ "ここで設定した時間が経過するとツールバーは自動的に消えます。このオプション"
+#~ "は表示に\"常に\"が選択されている場合にのみ有効です。オートハイドを無効にす"
+#~ "るには値をゼロにして下さい。"
+
+#~ msgid ""
+#~ "If this option is checked, the input method icon will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "このオプションを有効にすると入力メソッドの\n"
+#~ "アイコンがツールバーに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the input method name will be showed on the "
+#~ "toolbar."
+#~ msgstr ""
+#~ "このオプションを有効にすると入力メソッドの\n"
+#~ "名称がツールバーに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the stick icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "このオプションを有効にするとスティックアイコンが\n"
+#~ "ツールバーに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the menu icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "このオプションを有効にするとメニューアイコンが\n"
+#~ "ツールバーに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the help icon will be showed on the toolbar."
+#~ msgstr ""
+#~ "このオプションを有効にするとヘルプアイコンが\n"
+#~ "ツールバーに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the text label of input method properties will "
+#~ "be showed on the toolbar."
+#~ msgstr ""
+#~ "このオプションを有効にすると入力メソッドの\n"
+#~ "プロパティーがツールバーにテキスト表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be embedded into the "
+#~ "input window."
+#~ msgstr ""
+#~ "このオプションを有効にすると候補ウィンドウが\n"
+#~ "入力ウィンドウの中に表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be displayed vertically."
+#~ msgstr ""
+#~ "このオプションを有効にすると候補ウィンドウが\n"
+#~ "縦に表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the tray icon will be showed on the desktop's "
+#~ "taskbar."
+#~ msgstr ""
+#~ "このオプションを有効にするとトレーアイコンが\n"
+#~ "タスクバーに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar, input and lookup table windows "
+#~ "will be sticked to its original position."
+#~ msgstr ""
+#~ "このオプションを有効にするとツールバーと入力/候補ウィンドウが\n"
+#~ "本来の表示位置に固定されます。"
+
+#~ msgid "The font setting will be used in the input and lookup table windows."
+#~ msgstr "このフォント設定は入力/候補ウィンドウに適用されます。"
+
+#~ msgid "Select Interface Font"
+#~ msgstr "インターフェイスのフォントを選択"
+
+#~ msgid "SCIM"
+#~ msgstr "SCIM"
+
+#~ msgid "FrontEnd"
+#~ msgstr "フロントエンド"
+
+#~ msgid "IMEngine"
+#~ msgstr "IMエンジン"
+
+#~ msgid "Panel"
+#~ msgstr "パネル"
+
+#~ msgid "Extra"
+#~ msgstr "その他"
+
+#~ msgid "SCIM Input Method Setup"
+#~ msgstr "SCIM入力メソッドの設定"
+
+#~ msgid ""
+#~ " <span size=\"20000\">Smart Common Input Method platform</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI Setup Utility</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+#~ msgstr ""
+#~ " <span size=\"20000\">Smart Common Input Method platform</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI セットアップユーティリティ</"
+#~ "span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+
+#~ msgid "<span size=\"x-large\">The Setup for %s modules.</span>"
+#~ msgstr "<span size=\"x-large\">%s モジュールの設定</span>"
+
+#~ msgid "Are you sure you want to quit SCIM Setup?"
+#~ msgstr "SCIMの設定を終了しますか？"
+
+#~ msgid ""
+#~ "Not all configuration can be reloaded on the fly. Don't forget to restart "
+#~ "SCIM in order to let all of the new configuration take effect."
+#~ msgstr ""
+#~ "すぐに有効にならない設定項目があります。\n"
+#~ "すべての変更を有効にするにはSCIMを再起動して下さい。"
+
+#~ msgid "SCIM Setup"
+#~ msgstr "SCIMを設定"
+
+#~ msgid "Integrated Setup Utility based on GTK Widget library."
+#~ msgstr "GTK Widget library に基づく統合設定ユーティリティ"
+
+#~ msgid "Setup utility for Smart Common Input Method platform"
+#~ msgstr "Smart Common Input Method platform セットアップユーティリティ"
+
+#~ msgid "SCIM Help"
+#~ msgstr "SCIMヘルプ"
+
+#~ msgid "Smart Common Input Method"
+#~ msgstr "Smart Common Input Method"
+
+#~ msgid "Stick/unstick the input window and the toolbar."
+#~ msgstr "入力ウィンドウ・ツールバーを固定する/固定しない"
+
+#~ msgid "Show a brief help about SCIM and the current input method."
+#~ msgstr "SCIMと現在の入力メソッドについて簡単なヘルプを表示します"
+
+#~ msgid "Show command menu."
+#~ msgstr "コマンドメニューを表示"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "Reload Configuration"
+#~ msgstr "設定をリロード"
+
+#~ msgid "Stick Windows"
+#~ msgstr "ウィンドウを固定"
+
+#~ msgid "Hide Toolbar"
+#~ msgstr "ツールバーを隠す"
+
+#~ msgid "Help ..."
+#~ msgstr "ヘルプ..."
+
+#~ msgid "Exit"
+#~ msgstr "終了"
+
+#~ msgid "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+#~ msgstr "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+
+#~ msgid "En"
+#~ msgstr "En"
+
+#~ msgid "Preedit String mode"
+#~ msgstr "未確定文字列の表示モード"
+
+#~ msgid "X Window"
+#~ msgstr "Xウィンドウ"
+
+#~ msgid "A FrontEnd module for X11R6 Window System, using XIM Protocol."
+#~ msgstr ""
+#~ "XIMプロトコルによるX11R6ウィンドウシステム用フロントエンドモジュール"
+
+#~ msgid "XIM Settings"
+#~ msgstr "XIMの設定"
+
+#~ msgid "_On The Spot"
+#~ msgstr "_On The Spot"
+
+#~ msgid "_Dynamic Event Flow"
+#~ msgstr "_Dynamic Event Flow"
+
+#~ msgid ""
+#~ "If this option is checked, the OnTheSpot input style will be used when "
+#~ "the client supports it."
+#~ msgstr ""
+#~ "このオプションを有効にするとOn The Spot入力スタイルが適用されます。但し、"
+#~ "クライアント側のサポートが必要です。"
+
+#~ msgid ""
+#~ "If this option is checked, then dynamic event flow will be used.This can "
+#~ "speed up the key event response, especially in remote X11 environment.But "
+#~ "SCIM may become unstable."
+#~ msgstr ""
+#~ "このオプションを有効にすると、特にリモートX11環境においてキーイベントのレ"
+#~ "スポンスを向上させることができます。但し、SCIMが不安定になる場合がありま"
+#~ "す。"
+
+#, fuzzy
+#~ msgid "Slovene"
+#~ msgstr "スロベニア語"
+
+#, fuzzy
+#~ msgid "Global"
+#~ msgstr "全体設定"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>"
+
+#, fuzzy
+#~ msgid "Hot Keys"
+#~ msgstr ""
+#~ "ショートカットキー:\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ "Hot keys:\n"
+#~ "\n"
+#~ "  "
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2004 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ "ショートカットキー:\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ ":\n"
+#~ "    open/close the input method.\n"
+#~ "\n"
+#~ "  "
+#~ msgstr ""
+#~ ":\n"
+#~ "   入力メソッドを開始/終了する\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ ":\n"
+#~ "    switch to the next input method.\n"
+#~ "\n"
+#~ "  "
+#~ msgstr ""
+#~ ":\n"
+#~ "    次の入力メソッドに切替える\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ ":\n"
+#~ "    switch to the previous input method.\n"
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ ":\n"
+#~ "    前の入力メソッドに切替える\n"
+#~ "\n"
+#~ "\n"
+
+#~ msgid "Full/Half Letter"
+#~ msgstr "全角/半角文字"
+
+#~ msgid "Full/Half Punct"
+#~ msgstr "全角/半角句読点"
+
+#~ msgid ""
+#~ "The input mode of the letters. Click to toggle between half and full."
+#~ msgstr ""
+#~ "文字入力モード。全角/半角文字に切替えるにはここをクリックして下さい。"
+
+#~ msgid ""
+#~ "The input mode of the puncutations. Click to toggle between half and full."
+#~ msgstr "句読点入力モード。全角/半角に切替えるにはここをクリックして下さい。"
+
+#~ msgid ""
+#~ "    Switch between full/half width letter mode.\n"
+#~ "\n"
+#~ "  "
+#~ msgstr ""
+#~ "    全角/半角文字切替\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ "    Switch between full/half width punctuation mode.\n"
+#~ "\n"
+#~ "  "
+#~ msgstr ""
+#~ "    全角/半角句読点切替\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ "    Switch between Forward/Input mode.\n"
+#~ "\n"
+#~ "  "
+#~ msgstr "直接入力/変換入力モードに切替"
+
+#~ msgid ""
+#~ "    Add a new phrase.\n"
+#~ "\n"
+#~ "  "
+#~ msgstr ""
+#~ "    新しいフレーズを追加する\n"
+#~ "\n"
+#~ "  "
+
+#~ msgid ""
+#~ "    Delete the selected phrase.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    選択されたフレーズを削除する\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "  Control+Down:\n"
+#~ "    Move lookup cursor to next shorter phrase\n"
+#~ "    Only available when LongPhraseFirst option is set.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Control+Down:\n"
+#~ "    カーソルを次のより短いフレーズに移動する\n"
+#~ "    \"長いフレーズを優先的に表示\"が有効な場合のみ使用できます。\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "  Control+Up:\n"
+#~ "    Move lookup cursor to previous longer phrase\n"
+#~ "    Only available when LongPhraseFirst option is set.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "  Control+Up:\n"
+#~ "    カーソルを前のより長いフレーズに移動する\n"
+#~ "    \"長いフレーズを優先的に表示\"が有効な場合のみ使用できます。\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "  Esc:\n"
+#~ "    reset the input method.\n"
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "  Esc:\n"
+#~ "   入力メソッドをリセット\n"
+#~ "\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "How to add a phrase:\n"
+#~ "    Input the new phrase as normal, then press the\n"
+#~ "  hot key. A hint will be shown to let you input a key\n"
+#~ "  for this phrase.\n"
+#~ "    Input a key then press the space bar.\n"
+#~ "  A hint will be shown to indicate whether\n"
+#~ "  the phrase was added sucessfully.\n"
+#~ msgstr ""
+#~ "フレーズの追加方法:\n"
+#~ "  新しいフレーズを普通に入力しショートカットキーを押します。\n"
+#~ "  ヒントが表示され、そのフレーズを入力する際に使うキーの入力\n"
+#~ "  を促します。\n"
+#~ "  キーを入力しスペースを押して下さい。\n"
+#~ "  ヒントにフレーズが正しく登録されたかどうか表示されますので\n"
+#~ "  確認して下さい。\n"
+
+#~ msgid "Input a key string for phrase: "
+#~ msgstr "このフレーズに使うキーを入力して下さい: "
+
+#~ msgid "Success."
+#~ msgstr "登録完了"
+
+#~ msgid "Failed."
+#~ msgstr "登録に失敗しました"
+
+#~ msgid "option -no cannot be used with -o\n"
+#~ msgstr "-noオプションは-oオプションと同時には使用できません\n"
+
+#~ msgid "option -o cannot be used with -no\n"
+#~ msgstr "-oオプションは-noオプションと同時には使用できません\n"
+
+#~ msgid "No argument for option "
+#~ msgstr "オプション引数がありません"
+
+#~ msgid "Invalid option: "
+#~ msgstr "オプションが無効です:"
+
+#~ msgid "Loading table file "
+#~ msgstr "テーブルを読込中"
+
+#~ msgid " ...\n"
+#~ msgstr " ...\n"
+
+#~ msgid "table file load failed!"
+#~ msgstr "テーブルの読込に失敗!"
+
+#~ msgid "Saving frequency table file "
+#~ msgstr "頻度テーブルを保存中"
+
+#~ msgid "frequency table file load failed!"
+#~ msgstr "頻度テーブルの読込に失敗!"
+
+#~ msgid "Saving table file "
+#~ msgstr "テーブルを保存中"
+
+#~ msgid "Table file save failed!"
+#~ msgstr "テーブルの保存に失敗!"
+
+#~ msgid "Generic Table"
+#~ msgstr "汎用テーブル"
+
+#~ msgid "An IMEngine Module which uses generic table input method file."
+#~ msgstr "汎用テーブル入力メソッドを使用するIMエンジンモジュール"
+
+#~ msgid "Full width _punctuation:"
+#~ msgstr "全角/半角句読点(_P):"
+
+#~ msgid "Select full width puncutation keys"
+#~ msgstr "全角/半角句読点切替キーの設定"
+
+#~ msgid ""
+#~ "The key events to switch full/half width punctuation input mode. Click on "
+#~ "the button on the right to edit it."
+#~ msgstr ""
+#~ "全角/半角句読点を切替えるキー。変更する\n"
+#~ "場合は右のボタンをクリックして下さい。"
+
+#~ msgid "Full width _letter:"
+#~ msgstr "全角/半角文字(_L):"
+
+#~ msgid "Select full width letter keys"
+#~ msgstr "全角/半角文字切替キーの設定"
+
+#~ msgid ""
+#~ "The key events to switch full/half width letter input mode. Click on the "
+#~ "button on the right to edit it."
+#~ msgstr ""
+#~ "全角/半角文字を切替えるキー。変更する\n"
+#~ "場合は右のボタンをクリックして下さい。"
+
+#~ msgid "_Mode switch:"
+#~ msgstr "入力モード切替(_M):"
+
+#~ msgid "Select mode switch keys"
+#~ msgstr "入力モード切替キーの設定"
+
+#~ msgid ""
+#~ "The key events to change current input mode. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "入力モードを切替えるキー。変更する場合は\n"
+#~ "右のボタンをクリックして下さい。"
+
+#~ msgid "_Add phrase:"
+#~ msgstr "フレーズ追加(_A):"
+
+#~ msgid "Select add phrase keys."
+#~ msgstr "フレーズ追加キーの設定"
+
+#~ msgid ""
+#~ "The key events to add a new user defined phrase. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "新しいフレーズを追加するキー。変更する\n"
+#~ "場合は右のボタンをクリックして下さい。"
+
+#~ msgid "_Delete phrase:"
+#~ msgstr "フレーズ削除(_D):"
+
+#~ msgid "Select delete phrase keys."
+#~ msgstr "フレーズ削除キーの設定"
+
+#~ msgid ""
+#~ "The key events to delete a selected phrase. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "選択されたフレーズを削除するキー。変更する\n"
+#~ "場合は右のボタンをクリックして下さい。"
+
+#~ msgid "Show _prompt"
+#~ msgstr "プロンプトを表示(_P)"
+
+#~ msgid "Show key _hint"
+#~ msgstr "ヒントキーを表示(_H)"
+
+#~ msgid "Save _user table in binary format"
+#~ msgstr "ユーザーテーブルをバイナリー形式で保存(_U)"
+
+#~ msgid "Show the u_ser defined phrases first"
+#~ msgstr "ユーザー定義フレーズを優先的に表示(_S)"
+
+#~ msgid "Show the _longer phrases first"
+#~ msgstr "長いフレーズを優先的に表示(_L)"
+
+#~ msgid ""
+#~ "If this option is checked, the key prompt of the currently selected "
+#~ "phrase will be shown."
+#~ msgstr ""
+#~ "このオプションを有効にすると選択された\n"
+#~ "フレーズのキープロンプトが表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the remaining keystrokes of the phraseswill be "
+#~ "shown on the lookup table."
+#~ msgstr ""
+#~ "このオプションを有効にするとフレーズの残りの\n"
+#~ "キーストロークが候補ウィンドウに表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the user table will be stored with binary "
+#~ "format, this will increase the loading speed."
+#~ msgstr ""
+#~ "このオプションを有効にするとユーザー定義テーブルがバイナリー\n"
+#~ "形式で保存されます。テーブルの読込が速くなります。"
+
+#~ msgid ""
+#~ "If this option is checked, the user defined phrases will be shown in "
+#~ "front of others. "
+#~ msgstr ""
+#~ "このオプションを有効にするとユーザー定義フレーズ\n"
+#~ "が優先的に表示されます。"
+
+#~ msgid ""
+#~ "If this option is checked, the longer phrase will be shown in front of "
+#~ "others. "
+#~ msgstr ""
+#~ "このオプションを有効にすると長いフレーズが\n"
+#~ "優先的に表示されます。"
+
+#~ msgid "The installed tables:"
+#~ msgstr "インストール済みのテーブル:"
+
+#~ msgid "_Install"
+#~ msgstr "インストール(_I)"
+
+#~ msgid "Install a new table."
+#~ msgstr "新しいテーブルをインストール"
+
+#~ msgid "_Delete"
+#~ msgstr "削除(_D)"
+
+#~ msgid "Delete the selected table."
+#~ msgstr "選択されたテーブルを削除"
+
+#~ msgid "_Properties"
+#~ msgstr "プロパティー(_P)"
+
+#~ msgid "Edit the properties of the selected table."
+#~ msgstr "選択されたテーブルのプロパティーを編集"
+
+#~ msgid "Table Management"
+#~ msgstr "テーブル管理"
+
+#~ msgid "Select an icon file"
+#~ msgstr "アイコンファイルを選択"
+
+#~ msgid "User"
+#~ msgstr "ユーザー"
+
+#~ msgid "System"
+#~ msgstr "システム"
+
+#~ msgid "Please select the table file to be installed."
+#~ msgstr "インストールするテーブルファイルを選択して下さい。"
+
+#~ msgid "Failed to install the table! It's already in table file directory."
+#~ msgstr "テーブルのインストールに失敗!すでにインストールされています。"
+
+#~ msgid "Failed to load the table file!"
+#~ msgstr "テーブルファイルの読込に失敗!"
+
+#~ msgid ""
+#~ "Failed to install the table! Another version of this table was already "
+#~ "installed."
+#~ msgstr ""
+#~ "テーブルのインストールに失敗!他のバージョンが\n"
+#~ "すでにインストールされています。"
+
+#~ msgid ""
+#~ "Another version of this table was already installed. Do you want to "
+#~ "replace it with the new one?"
+#~ msgstr ""
+#~ "このテーブルの他のバージョンがすでにインストールされています。\n"
+#~ "新しいバージョンに置き換えますか?"
+
+#~ msgid ""
+#~ "Failed to install the table! A table with the same file name was already "
+#~ "installed."
+#~ msgstr ""
+#~ "テーブルのインストールに失敗!同じ名前のテーブルが\n"
+#~ "すでにインストールされています。"
+
+#~ msgid ""
+#~ "A table with the same file name was already installed. Do you want to "
+#~ "overwrite it?"
+#~ msgstr ""
+#~ "同じ名前のテーブルがすでにインストールされています。\n"
+#~ "上書きしますか?"
+
+#~ msgid "Failed to install the table to %s!"
+#~ msgstr "%sにテーブルをインストールできませんでした!"
+
+#~ msgid "Can not delete the file %s!"
+#~ msgstr "ファイル%sを削除できません!"
+
+#~ msgid "Are you sure to delete this table file?"
+#~ msgstr "このテーブルを削除しますか?"
+
+#~ msgid "Failed to delete the table file!"
+#~ msgstr "テーブルの削除に失敗!"
+
+#~ msgid "True"
+#~ msgstr "True"
+
+#~ msgid "False"
+#~ msgstr "False"
+
+#~ msgid "Split Keys:"
+#~ msgstr "スプリットキー:"
+
+#~ msgid "The key strokes to split inputed string."
+#~ msgstr "入力済みの文字列を分割するキー"
+
+#~ msgid "Commit Keys:"
+#~ msgstr "変換確定キー:"
+
+#~ msgid "The key strokes to commit converted result to client."
+#~ msgstr "変換結果をクライアントに送るキー"
+
+#~ msgid "Forward Keys:"
+#~ msgstr "直接入力キー:"
+
+#~ msgid "The key strokes to forward inputed string to client."
+#~ msgstr "入力された文字列を変換せずに直接クライアントに送るキー"
+
+#~ msgid "The key strokes to select candidate phrases in lookup table."
+#~ msgstr "候補ウィンドウからフレーズを選択するキー"
+
+#~ msgid "Page Up Keys:"
+#~ msgstr "前ページキー:"
+
+#~ msgid "The lookup table page up keys"
+#~ msgstr "候補ウィンドウで前のページに戻るキー"
+
+#~ msgid "Page Down Keys:"
+#~ msgstr "次ページキー:"
+
+#~ msgid "The lookup table page down keys"
+#~ msgstr "候補ウィンドウで次のページに進むキー"
+
+#~ msgid "Table Properties"
+#~ msgstr "テーブルのプロパティー"
+
+#~ msgid "Name:"
+#~ msgstr "名称:"
+
+#~ msgid "The name of this table."
+#~ msgstr "このテーブルの名称"
+
+#~ msgid "Author:"
+#~ msgstr "作者:"
+
+#~ msgid "The author of this table."
+#~ msgstr "このテーブルの作者"
+
+#~ msgid "UUID:"
+#~ msgstr "UUID:"
+
+#~ msgid "The unique ID of this table."
+#~ msgstr "このテーブルのID"
+
+#~ msgid "Serial Number:"
+#~ msgstr "バージョン:"
+
+#~ msgid "The serial number of this table."
+#~ msgstr "このテーブルのバージョン"
+
+#~ msgid "Icon File:"
+#~ msgstr "アイコンファイル:"
+
+#~ msgid "The icon file of this table."
+#~ msgstr "このテーブルのアイコンファイル"
+
+#~ msgid "Supported Languages:"
+#~ msgstr "サポート言語:"
+
+#~ msgid "The languages supported by this table."
+#~ msgstr "このテーブルがサポートする言語"
+
+#~ msgid "Status Prompt:"
+#~ msgstr "ステイタスプロンプト:"
+
+#~ msgid "A prompt string to be shown in status area."
+#~ msgstr "ステイタスに表示される文字列"
+
+#~ msgid "Valid Input Chars:"
+#~ msgstr "有効な文字:"
+
+#~ msgid "The valid input chars of this table."
+#~ msgstr "このテーブルで使用できる文字"
+
+#~ msgid "Multi Wildcard Char:"
+#~ msgstr "マルチワイルドカード文字:"
+
+#~ msgid ""
+#~ "The multi wildcard chars of this table. These chars can be used to match "
+#~ "one or more arbitrary chars."
+#~ msgstr ""
+#~ "このテーブルのマルチワイルドカード文字。\n"
+#~ "複数の文字の代わりに使用できます。"
+
+#~ msgid "Single Wildcard Char:"
+#~ msgstr "シングルワイルドカード文字:"
+
+#~ msgid ""
+#~ "The single wildcard chars of this table.These chars can be used to match "
+#~ "one arbitrary char."
+#~ msgstr ""
+#~ "このテーブルのシングルワイルドカード文字。\n"
+#~ "任意の一文字の代わりに使用できます。"
+
+#~ msgid "Max Key Length:"
+#~ msgstr "最大キー数:"
+
+#~ msgid "The maxmium length of key strings."
+#~ msgstr "文字列の最大キー数"
+
+#~ msgid "Show Key Prompt:"
+#~ msgstr "キープロンプトを表示:"
+
+#~ msgid "If true then the key prompts will be shown instead of the raw keys."
+#~ msgstr "Trueの場合は入力された文字の代わりにキープロンプトが表示されます。"
+
+#~ msgid "Auto Select:"
+#~ msgstr "自動選択:"
+
+#~ msgid ""
+#~ "If true then the first candidate phrase will be selected automatically "
+#~ "when inputing the next key."
+#~ msgstr ""
+#~ "Trueの場合は次のフレーズの入力を開始すると同時に入力済みの\n"
+#~ "フレーズに対してその第一変換候補が自動的に選択されます。"
+
+#~ msgid "Auto Wildcard:"
+#~ msgstr "自動ワイルドカード:"
+
+#~ msgid ""
+#~ "If true then a multi wildcard char will be append to the end of inputed "
+#~ "key string when searching phrases."
+#~ msgstr ""
+#~ "Trueの場合は検索時にマルチワイルドカード文字が\n"
+#~ "入力された文字列の最後に自動的に付加されます。"
+
+#~ msgid "Auto Commit:"
+#~ msgstr "自動コミット:"
+
+#~ msgid ""
+#~ "If true then the converted result string will be committed to client "
+#~ "automatically."
+#~ msgstr "Trueの場合は変換結果が自動的にコミットされます。"
+
+#~ msgid ""
+#~ "If true then the inputed key string will be splitted automatically when "
+#~ "necessary."
+#~ msgstr "Trueの場合は、入力された文字列が必要に応じて自動的に分割されます。"
+
+#~ msgid "Discard Invalid Key:"
+#~ msgstr "無効な文字列を排除:"
+
+#~ msgid ""
+#~ "If true then the invalid key will be discarded automatically.This option "
+#~ "is only valid when Auto Select and Auto Commit is true."
+#~ msgstr ""
+#~ "Trueの場合は、入力された無効な文字列を自動的に排除します。このオプションは"
+#~ "自動選択と自動コミットがTrueの場合のみ有効になります。"
+
+#~ msgid "Dynamic Adjust:"
+#~ msgstr "動的アップデート:"
+
+#~ msgid "If true then the phrases' frequencies will be adjusted dynamically."
+#~ msgstr "Trueの場合は、使用頻度情報が動的にアップデートされます。"
+
+#~ msgid "Auto Fill Preedit Area:"
+#~ msgstr "プリエディットの自動補完:"
+
+#~ msgid ""
+#~ "If true then the preedit string will be filled up with the current "
+#~ "candiate phrase automatically.This option is only valid when Auto Select "
+#~ "is TRUE."
+#~ msgstr ""
+#~ "Trueの場合は、自動的にプリエディットが変換候補によって補完されます。\n"
+#~ "このオプションは自動選択がTrueの場合のみ有効になります。"
+
+#~ msgid "Always Show Lookup Table:"
+#~ msgstr "候補リストを常に表示:"
+
+#~ msgid ""
+#~ "If true then the lookup table will always be shown when any candidate "
+#~ "phrase is available. Otherwise the lookup table will only be shown when "
+#~ "necessary.\n"
+#~ "If Auto Fill is false, then this option will be no effect, and always be "
+#~ "true."
+#~ msgstr ""
+#~ "Trueの場合は変換候補があれば常に候補ウィンドウが表示されます。\n"
+#~ "Falseの場合は必要な時のみ表示されます。\n"
+#~ "但し、自動補完が無効の場合は常に表示されます。"
+
+#~ msgid "Default Full Width Punct:"
+#~ msgstr "デフォルト句読点を全角に設定:"
+
+#~ msgid "If true then full width punctuations will be inputed by default."
+#~ msgstr "Trueの場合は、指定のない限り全角句読点が入力されます。"
+
+#~ msgid "Default Full Width Letter:"
+#~ msgstr "デフォルト文字幅を全角に設定:"
+
+#~ msgid "If true then full width letters will be inputed by default."
+#~ msgstr "Trueの場合は、指定のない限り全角文字が入力されます。"
+
+#~ msgid "Invalid icon file."
+#~ msgstr "アイコンファイルが無効です。"
+
+#~ msgid "Invalid languages."
+#~ msgstr "言語が無効です。"
+
+#~ msgid "Invalid status prompt."
+#~ msgstr "ステイタスプロンプトが無効です。"
+
+#~ msgid "Invalid multi wildcard chars."
+#~ msgstr "マルチワイルドカード文字が無効です。"
+
+#~ msgid "Invalid single wildcard chars."
+#~ msgstr "シングルワイルドカード文字が無効です。"
+
+#~ msgid "Invalid commit keys."
+#~ msgstr "コミットキーが無効です。"
+
+#~ msgid "Invalid select keys."
+#~ msgstr "選択キーが無効です。"
+
+#~ msgid "Invalid page up keys."
+#~ msgstr "次ページキーが無効です。"
+
+#~ msgid "Invalid page down keys."
+#~ msgstr "前ページキーが無効です。"
+
+#~ msgid "Invalid max key length."
+#~ msgstr "最大キー数が無効です。"
+
+#~ msgid "Failed to save table %s!"
+#~ msgstr "テーブル%sの保存に失敗!"
+
+#~ msgid "Failed to load any Config Modules!"
+#~ msgstr "設定モジュールの読込に失敗!"
+
+#~ msgid "_Current Config Module:"
+#~ msgstr "現在の設定モジュール(_C):"
+
+#~ msgid "<Not found>"
+#~ msgstr "<見つかりません>"
+
+#~ msgid "Current Config Module has been changed to %s."
+#~ msgstr "現在の設定モジュールを%sに変更しました。"
+
+#~ msgid "Start the SCIM Setup Utility."
+#~ msgstr "SCIMセットアップユーティリティを開く"
+
+#~ msgid "Setup ..."
+#~ msgstr "設定..."

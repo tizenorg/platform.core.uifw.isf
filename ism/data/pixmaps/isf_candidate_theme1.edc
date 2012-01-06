@@ -1,0 +1,11 @@
+#define CANDIDATE_BG            "00_popup_bubble_bg_black.png"
+#define POPUP_LINE              "00_popup_line.png"
+#define BUTTON_NORMAL_BG        "00_button_01_normal_black.png"
+#define BUTTON_PRESS_BG         "00_button_01_normal_press_black.png"
+
+#define BUTTON_IMAGE_BORDER     4
+
+#define COLOR_NORMAL_TEXT       255 255 255 255
+#define COLOR_PRESS_TEXT        255 255 255 255
+
+#include "isf_candidate.edc"

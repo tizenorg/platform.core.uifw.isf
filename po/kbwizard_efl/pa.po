@@ -1,0 +1,1295 @@
+# translation of pa.po to Punjabi
+# translation of scim.NEW.po to Punjabi
+# translation of scim.po to Punjabi
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Amanpreet Singh Alam <amanpreetalam@yahoo.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"PO-Revision-Date: 2005-12-13 08:28+0530\n"
+"Last-Translator: Amanpreet Singh Alam <amanpreetalam@yahoo.com>\n"
+"Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
+#, fuzzy
+msgid "Keyboard selection"
+msgstr "ਸਵਿੱਚ ਚੋਣ"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "ਸਵਿੱਚ ਚੋਣ"
+
+#, fuzzy
+#~ msgid "Option"
+#~ msgstr "ਚੋਣ"
+
+#, fuzzy
+#~ msgid "General"
+#~ msgstr "ਜਰਮਨ"
+
+#, fuzzy
+#~ msgid "S/W keyboard"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ/ਕੀ-ਬੋਰਡ"
+
+#, fuzzy
+#~ msgid "Keyboard option"
+#~ msgstr "ਸਵਿੱਚ ਚੋਣ"
+
+#, fuzzy
+#~ msgid "H/W keyboard"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ/ਕੀ-ਬੋਰਡ"
+
+#, fuzzy
+#~ msgid "option"
+#~ msgstr "ਚੋਣ"
+
+#, fuzzy
+#~ msgid "Keyboard"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ/ਕੀ-ਬੋਰਡ"
+
+#~ msgid "English/Keyboard"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ/ਕੀ-ਬੋਰਡ"
+
+#, fuzzy
+#~ msgid "English input service"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕੀ)"
+
+#~ msgid "Amharic"
+#~ msgstr "ਅਮਹੀਕਿਨ"
+
+#~ msgid "Arabic"
+#~ msgstr "ਅਰਬੀ"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "ਅਰਬੀ (ਮਿਸਰ)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#~ msgid "Assamese"
+#~ msgstr "ਆਸਾਮੀ"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "ਅਜ਼ਰਬਾਈਜਾਨ"
+
+#~ msgid "Belarusian"
+#~ msgstr "ਬੇਲਾਰੂਸੀ"
+
+#~ msgid "Bulgarian"
+#~ msgstr "ਬੁਲਗਾਰੀਅਨ"
+
+#~ msgid "Bengali"
+#~ msgstr "ਬੰਗਾਲੀ"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "ਬੰਗਾਲੀ (ਭਾਰਤ)"
+
+#~ msgid "Tibetan"
+#~ msgstr "ਤਿੱਬਤੀ"
+
+#~ msgid "Bosnian"
+#~ msgstr "ਬੋਸਨੀਅਨ"
+
+#~ msgid "Catalan"
+#~ msgstr "ਕੇਟੇਲਨ"
+
+#~ msgid "Czech"
+#~ msgstr "ਚੈੱਕ"
+
+#~ msgid "Welsh"
+#~ msgstr "ਵਾਲਿਸ਼"
+
+#~ msgid "Danish"
+#~ msgstr "ਡੈਨਿਸ਼"
+
+#~ msgid "German"
+#~ msgstr "ਜਰਮਨ"
+
+#~ msgid "Greek"
+#~ msgstr "ਗਰੀਕ"
+
+#~ msgid "English"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ"
+
+#~ msgid "English (Australian)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਸਟਰੇਲੀਅਨ)"
+
+#~ msgid "English (Canadian)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਕੈਨੇਡੀ)"
+
+#~ msgid "English (British)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਵੀਂ)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਆਇਰਲੈਂਡ)"
+
+#~ msgid "English (American)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕੀ)"
+
+#~ msgid "Spanish"
+#~ msgstr "ਸਪੇਨੀ"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#~ msgid "Estonian"
+#~ msgstr "ਈਸਟੋਨੀਅਨ"
+
+#~ msgid "Basque"
+#~ msgstr "ਬਸਕਿਉ"
+
+#~ msgid "Persian"
+#~ msgstr "ਪਰਸੀਅਨ"
+
+#~ msgid "Finnish"
+#~ msgstr "ਫੈਨਿਸ਼"
+
+#~ msgid "French"
+#~ msgstr "ਫਰੈਂਚ"
+
+#~ msgid "Irish"
+#~ msgstr "ਆਇਰਸ਼"
+
+#~ msgid "Galician"
+#~ msgstr "ਗਾਲੇਸ਼ੀਅਨ"
+
+#~ msgid "Gujarati"
+#~ msgstr "ਗੁਜਰਾਤੀ"
+
+#~ msgid "Hebrew"
+#~ msgstr "ਹੈਬਰਿਊ"
+
+#~ msgid "Hindi"
+#~ msgstr "ਹਿੰਦੀ"
+
+#~ msgid "Croatian"
+#~ msgstr "ਕਰੋਆਟੀਅਨ"
+
+#~ msgid "Hungarian"
+#~ msgstr "ਹੰਗਰੀਅਨ"
+
+#, fuzzy
+#~ msgid "Armenian"
+#~ msgstr "ਰੋਮਾਨੀਆਈ"
+
+#~ msgid "Interlingua"
+#~ msgstr "ਇੰਟਰਲਿੰਗੂਆ"
+
+#~ msgid "Indonesian"
+#~ msgstr "ਇੰਡੋਨੇਸ਼ੀਆਈ"
+
+#~ msgid "Icelandic"
+#~ msgstr "ਆਈਸਲੈਂਡੀ"
+
+#~ msgid "Italian"
+#~ msgstr "ਇਤਾਲਵੀ"
+
+#~ msgid "Japanese"
+#~ msgstr "ਜਾਪਾਨੀ"
+
+#, fuzzy
+#~ msgid "Georgian"
+#~ msgstr "ਜਰਮਨ"
+
+#~ msgid "Kazakh"
+#~ msgstr "ਕਾਜ਼ਕ"
+
+#~ msgid "Cambodian"
+#~ msgstr "ਕੰਬੋਡੀਅਨ"
+
+#~ msgid "Kannada"
+#~ msgstr "ਕੰਨੜ"
+
+#~ msgid "Korean"
+#~ msgstr "ਕੋਰੀਅਨ"
+
+#~ msgid "Laothian"
+#~ msgstr "ਲਿਊਥੀਅਨ"
+
+#~ msgid "Lithuanian"
+#~ msgstr "ਲੀਥੂਵਨੀਅਨ"
+
+#~ msgid "Latvian"
+#~ msgstr "ਲਾਟਵੀਅਨ"
+
+#~ msgid "Macedonian"
+#~ msgstr "ਮੈਕਡੋਨੀਅਨ"
+
+#~ msgid "Malayalam"
+#~ msgstr "ਮਾਲਿਆਲਮ"
+
+#~ msgid "Mongolian"
+#~ msgstr "ਮੰਗੋਲੀਅਨ"
+
+#~ msgid "Marathi"
+#~ msgstr "ਮਰਾਠੀ"
+
+#~ msgid "Malay"
+#~ msgstr "ਮਲਾਇਆ"
+
+#~ msgid "Nepali"
+#~ msgstr "ਨੇਪਾਲੀ"
+
+#~ msgid "Dutch"
+#~ msgstr "ਡੱਚ"
+
+#, fuzzy
+#~ msgid "Norwegian (Nynorsk)"
+#~ msgstr "ਨਾਰਵੇਗੀਅਨ (ਨਿਉਰਸਕ)"
+
+#, fuzzy
+#~ msgid "Norwegian (Bokmal)"
+#~ msgstr "ਨਾਰਵੇਗੀਅਨ (ਬੋਕਮਾਲ)"
+
+#~ msgid "Oriya"
+#~ msgstr "ਓੜੀਆ"
+
+#~ msgid "Punjabi"
+#~ msgstr "ਪੰਜਾਬੀ"
+
+#~ msgid "Polish"
+#~ msgstr "ਪੋਲਿਸ਼"
+
+#~ msgid "Portuguese"
+#~ msgstr "ਪੁਰਤਗਾਲੀ"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "ਪੁਰਤਗਾਲੀ (ਬਰਾਜ਼ੀਲ)"
+
+#~ msgid "Romanian"
+#~ msgstr "ਰੋਮਾਨੀਆਈ"
+
+#~ msgid "Russian"
+#~ msgstr "ਰੂਸੀ"
+
+#~ msgid "Slovak"
+#~ msgstr "ਸਲੋਵਾਕ"
+
+#~ msgid "Slovenian"
+#~ msgstr "ਸਲੋਵੀਅਨ"
+
+#~ msgid "Albanian"
+#~ msgstr "ਅਲਬਾਈਅਨ"
+
+#~ msgid "Serbian"
+#~ msgstr "ਸਰਬੀਅਨ"
+
+#~ msgid "Swedish"
+#~ msgstr "ਸਵੀਡਸ਼"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "ਸਵਡਿਸ਼ (ਫਿਨਲੈਂਡ)"
+
+#~ msgid "Tamil"
+#~ msgstr "ਤਾਮਿਲ"
+
+#~ msgid "Telugu"
+#~ msgstr "ਤੇਲਗੂ"
+
+#~ msgid "Thai"
+#~ msgstr "ਥਾਈ"
+
+#~ msgid "Turkish"
+#~ msgstr "ਤੁਰਕੀ"
+
+#~ msgid "Uighur"
+#~ msgstr "ਊਘਰ"
+
+#~ msgid "Ukrainian"
+#~ msgstr "ਯੂਕਰੇਨੀ"
+
+#~ msgid "Urdu"
+#~ msgstr "ਊਰਦੂ"
+
+#~ msgid "Uzbek"
+#~ msgstr "ਉਜੇਬਕ"
+
+#~ msgid "Vietnamese"
+#~ msgstr "ਵੀਅਤਨਾਮੀ"
+
+#~ msgid "Walloon"
+#~ msgstr "ਵਾਲਿਸ਼"
+
+#~ msgid "Yiddish"
+#~ msgstr "ਯਿਡਿੱਸ਼"
+
+#~ msgid "Chinese"
+#~ msgstr "ਚੀਨੀ"
+
+#, fuzzy
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "ਚੀਨੀ (ਸਧਾਰਨ)"
+
+#, fuzzy
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "ਚੀਨੀ (ਮੂਲ)"
+
+#, fuzzy
+#~ msgid "Dutch (Belgian)"
+#~ msgstr "ਬੈਲਜੀਅਨ"
+
+#, fuzzy
+#~ msgid "English (United States)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "English (United Kingdom)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਕੈਨੇਡੀ)"
+
+#, fuzzy
+#~ msgid "English (New Zealand)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਆਇਰਲੈਂਡ)"
+
+#, fuzzy
+#~ msgid "English (Irish)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਵੀਂ)"
+
+#, fuzzy
+#~ msgid "English (South Africa)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "English (Jamaica)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਕੈਨੇਡੀ)"
+
+#, fuzzy
+#~ msgid "English (Belize)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਵੀਂ)"
+
+#, fuzzy
+#~ msgid "English (Trinidad)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਵੀਂ)"
+
+#, fuzzy
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਕੈਨੇਡੀ)"
+
+#, fuzzy
+#~ msgid "English (Philippines)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਵੀਂ)"
+
+#, fuzzy
+#~ msgid "French (Standard)"
+#~ msgstr "ਫਰੈਂਚ (ਕੈਨੇਡੀ)"
+
+#, fuzzy
+#~ msgid "French (Belgian)"
+#~ msgstr "ਫਰੈਂਚ (ਕੈਨੇਡੀ)"
+
+#~ msgid "French (Canadian)"
+#~ msgstr "ਫਰੈਂਚ (ਕੈਨੇਡੀ)"
+
+#, fuzzy
+#~ msgid "French (Swiss)"
+#~ msgstr "ਜਰਮਨ (ਸਵਿੱਸ)"
+
+#, fuzzy
+#~ msgid "French (Monaco)"
+#~ msgstr "ਫਰੈਂਚ (ਕੈਨੇਡੀ)"
+
+#, fuzzy
+#~ msgid "German (Standard)"
+#~ msgstr "ਜਰਮਨ (ਡਿੱਡ ਸਵਿੱਚਾਂ ਨਾਲ)"
+
+#~ msgid "German (Swiss)"
+#~ msgstr "ਜਰਮਨ (ਸਵਿੱਸ)"
+
+#, fuzzy
+#~ msgid "German (Austrian)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਸਟਰੇਲੀਅਨ)"
+
+#, fuzzy
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "ਜਰਮਨ (ਸਵਿੱਸ)"
+
+#, fuzzy
+#~ msgid "Italian (Swiss)"
+#~ msgstr "ਜਰਮਨ (ਸਵਿੱਸ)"
+
+#, fuzzy
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "ਪੁਰਤਗਾਲੀ (ਬਰਾਜ਼ੀਲ)"
+
+#, fuzzy
+#~ msgid "Portuguese (Standard)"
+#~ msgstr "ਪੁਰਤਗਾਲੀ (ਬਰਾਜ਼ੀਲ)"
+
+#, fuzzy
+#~ msgid "Spanish (Traditional Sort)"
+#~ msgstr "ਸਪੇਨੀ (ਲੈਟਿਨ ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "ਸਪੇਨੀ (ਲੈਟਿਨ ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "ਸਪੇਨੀ (ਲੈਟਿਨ ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "Spanish (Panama)"
+#~ msgstr "ਸਪੇਨੀ (ਲੈਟਿਨ ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "ਸਪੇਨੀ (ਲੈਟਿਨ ਅਮਰੀਕੀ)"
+
+#, fuzzy
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Peru)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Chile)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "ਸਪੇਨੀ (CP 850)"
+
+#, fuzzy
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸਿਕੋ)"
+
+#, fuzzy
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "ਮਾਲਿਆਲਮ"
+
+#~ msgid "Norwegian"
+#~ msgstr "ਨਾਰਵੇਗੀਅਨ"
+
+#, fuzzy
+#~ msgid "Serbian (Latin)"
+#~ msgstr "ਸਰਬੀਅਨ"
+
+#, fuzzy
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "ਚੀਨੀ (ਮੂਲ)"
+
+#, fuzzy
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "ਚੀਨੀ (ਮੂਲ)"
+
+#, fuzzy
+#~ msgid "Chinese (Macau)"
+#~ msgstr "ਚੀਨੀ (ਮੂਲ)"
+
+#, fuzzy
+#~ msgid "Chinese (PRC)"
+#~ msgstr "ਚੀਨੀ"
+
+#, fuzzy
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "ਚੀਨੀ (ਸਧਾਰਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Libya)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Oman)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Syria)"
+#~ msgstr "ਅਰਬੀ (ਮਿਸਰ)"
+
+#, fuzzy
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "ਅਰਬੀ (ਮਿਸਰ)"
+
+#, fuzzy
+#~ msgid "Arabic (UAE)"
+#~ msgstr "ਅਰਬੀ (ਮਿਸਰ)"
+
+#, fuzzy
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "ਅਰਬੀ (ਲਿਬਨਾਨ)"
+
+#, fuzzy
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "ਅਰਬੀ (ਮਿਸਰ)"
+
+#~ msgid "Other"
+#~ msgstr "ਹੋਰ"
+
+#~ msgid "Unknown"
+#~ msgstr "ਅਣਜਾਣ"
+
+#~ msgid "English (US)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕੀ)"
+
+#~ msgid "Belgian"
+#~ msgstr "ਬੈਲਜੀਅਨ"
+
+#~ msgid "Czech (qwerty)"
+#~ msgstr "ਚੈੱਕ(ਕਿਉਵਰਟੀ)"
+
+#~ msgid "Dvorak"
+#~ msgstr "ਡਵੋਰਿਕ"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "ਫਰੈਂਚ (ਸਵਟਿਜ਼ਰਲੈਂਡ)"
+
+#~ msgid "German (with deadkeys)"
+#~ msgstr "ਜਰਮਨ (ਡਿੱਡ ਸਵਿੱਚਾਂ ਨਾਲ)"
+
+#~ msgid "Portuguese (Brazil US accents)"
+#~ msgstr "ਪੁਰਤਗਾਲੀ (ਬਰਾਜ਼ੀਲ ਅਮਰੀਕੀ ਢੰਗ)"
+
+#~ msgid "Slovak (qwerty)"
+#~ msgstr "ਸਲੋਵਾਕ(ਕਿਉਵਰਟੀ)"
+
+#~ msgid "Spanish (CP 850)"
+#~ msgstr "ਸਪੇਨੀ (CP 850)"
+
+#~ msgid "Spanish (Latin America)"
+#~ msgstr "ਸਪੇਨੀ (ਲੈਟਿਨ ਅਮਰੀਕੀ)"
+
+#~ msgid "English (UK)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਵੀਂ)"
+
+#~ msgid "Simplified-Traditional Chinese Conversion"
+#~ msgstr "ਸਧਾਰਨ-ਮੂਲ ਚੀਨੀ ਤਬਦੀਲੀ"
+
+#~ msgid "Convert between Simplified Chinese and Traditional Chinese"
+#~ msgstr "ਸਧਾਰਨ ਚੀਨੀ ਅਤੇ ਮੂਲ ਚੀਨੀ ਵਿੱਚ ਤਬਦੀਲੀ"
+
+#~ msgid "SC-TC"
+#~ msgstr "SC-TC"
+
+#~ msgid "Simplified-Traditional Chinese conversion"
+#~ msgstr "ਸਧਾਰਨ-ਮੂਲ ਚੀਨੀ ਤਬਦੀਲੀ"
+
+#~ msgid "No Conversion"
+#~ msgstr "ਕੋਈ ਤਬਦੀਲੀ ਨਹੀਂ"
+
+#~ msgid "Simplified to Traditional"
+#~ msgstr "ਸਧਾਰਨ ਤੋਂ ਮੂਲ"
+
+#~ msgid "Convert Simplified Chinese to Traditional Chinese"
+#~ msgstr "ਸਧਾਰਨ ਚੀਨੀ ਤੋਂ ਮੂਲ ਚੀਨੀ ਤਬਦੀਲ"
+
+#~ msgid "Traditional to Simplified"
+#~ msgstr "ਮੂਲ ਤੋਂ ਸਧਾਰਨ"
+
+#~ msgid "Convert Traditional Chinese to Simplified Chinese"
+#~ msgstr "ਮੂਲ ਚੀਨੀ ਤੋਂ ਸਧਾਰਨ ਚੀਨੀ ਅਨੁਵਾਦ"
+
+#~ msgid "James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "SC->TC"
+#~ msgstr "SC->TC"
+
+#~ msgid "TC->SC"
+#~ msgstr "TC->SC"
+
+#~ msgid "Smart Common Input Method platform "
+#~ msgstr "ਸਮਾਰਟ ਕਾਮਨ ਇੰਪੁੱਟ ਮੈਥਡ ਪਲੇਟਫਾਰਮ"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ ":\n"
+#~ "\n"
+#~ msgstr ""
+#~ ":\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+
+#~ msgid "Enable"
+#~ msgstr "ਯੋਗ"
+
+#~ msgid "Name"
+#~ msgstr "ਨਾਂ"
+
+#~ msgid "Cursor Position"
+#~ msgstr "ਕਰਸਰ ਸਥਿਤੀ"
+
+#~ msgid "The current position of the insertion cursor in chars."
+#~ msgstr "ਕਰਸਰ ਦੀ ਮੌਜੂਦਾ ਸਥਿਤੀ ਅੱਖਰਾਂ ਵਿੱਚ।"
+
+#~ msgid "Maximum length"
+#~ msgstr "ਵੱਧ ਤੋ ਵੱਧ ਲੰਬਾਈ"
+
+#~ msgid ""
+#~ "Maximum number of characters for this string view. Zero if no maximum."
+#~ msgstr ""
+#~ "ਇਸ ਸਤਰ ਝਲਕ ਲਈ ਵੱਧ ਤੋਂ ਵੱਧ ਅੱਖਰਾਂ ਦੀ ਗਿਣਤੀ। ਜੇਕਰ ਵੱਧ ਤੋਂ ਵੱਧ ਨਾ ਹੋਇਆ ਤਾਂ ਸਿਫ਼ਰ ਹੋਵੇਗਾ।"
+
+#~ msgid "Maximum width"
+#~ msgstr "ਵੱਧ ਤੋਂ ਵੱਧ ਚੌੜਾਈ"
+
+#~ msgid "Maximum width of this string view."
+#~ msgstr "ਇਸ ਸਤਰ ਝਲਕ ਦੀ ਵੱਧ ਤੋਂ ਵੱਧ ਚੌੜਾਈ ਹੈ।"
+
+#~ msgid "Has Frame"
+#~ msgstr "ਫਰੇਮ ਹੈ"
+
+#~ msgid "FALSE removes outside bevel from string view."
+#~ msgstr "FALSE ਨਾਲ ਸਤਰ ਝਲਕ ਤੋਂ ਬਾਹਰੀ bevel ਹਟਾਏ ਜਾਏਗਾ।"
+
+#~ msgid "Draw cursor"
+#~ msgstr "ਕਰਸਰ ਬਣਾਓ"
+
+#~ msgid "TRUE draw blinking cursor."
+#~ msgstr "TRUE ਝਪਕਦੀ ਕਰਸਰ ਬਣਾਏਗਾ।"
+
+#~ msgid "Auto move cursor"
+#~ msgstr "ਸਵੈ ਏਧਰ ਓਧਰ ਕਰਸਰ"
+
+#~ msgid "TRUE auto move cursor position when mouse clicking."
+#~ msgstr "TRUE ਮਾਊਸ ਦਬਾਉਣ ਨਾਲ ਕਰਸਰ ਨੂੰ ਸਵੈ-ਚਾਲਤ ਏਧਰ ਓਧਰ ਕੀਤਾ ਜਾਵੇਗਾ।"
+
+#, fuzzy
+#~ msgid "Forward button press/release event"
+#~ msgstr "ਅੱਗੇ ਬਟਨ ਦਬਾਉਣ ਘਟਨਾ"
+
+#, fuzzy
+#~ msgid "TRUE forward button press/release event to user program."
+#~ msgstr "TRUE ਉਪਭੋਗੀ ਪਰੋਗਰਾਮ ਲਈ ਅੱਗੇ ਬਟਨ ਦਬਾਉਣ ਘਟਨਾ ਹੈ।"
+
+#~ msgid "Auto resize the widget to fit the string"
+#~ msgstr "ਸਤਰ ਫਿੱਟ ਕਰਨ ਲਈ ਵਿਦਗਿਟ ਸਵੈ ਮੁੜ-ਅਕਾਰ"
+
+#~ msgid "TRUE Auto resize on."
+#~ msgstr "TRUE ਸਵੈ ਮੁੜ-ਅਕਾਰ ਚਾਲੂ ਹੈ।"
+
+#, fuzzy
+#~ msgid "TRUE Emit move_cursor signal when press the string."
+#~ msgstr "TRUE ਮਾਊਸ ਦਬਾਉਣ ਨਾਲ ਕਰਸਰ ਨੂੰ ਸਵੈ-ਚਾਲਤ ਏਧਰ ਓਧਰ ਕੀਤਾ ਜਾਵੇਗਾ।"
+
+#~ msgid "Width in chars"
+#~ msgstr "ਅੱਖਰਾਂ ਵਿੱਚ ਚੌਡ਼ਾਈ"
+
+#~ msgid "Number of characters to leave space for in the string view."
+#~ msgstr "ਸਤਰ ਝਲਕ ਵਿੱਚ ਖਾਲੀ ਥਾਂ ਛੱਡਣ ਲਈ ਅੱਖਰਾਂ ਦੀ ਗਿਣਤੀ ਹੈ।"
+
+#~ msgid "Scroll offset"
+#~ msgstr "ਸੰਤੁਲਨ ਸਕਰੋਲ"
+
+#~ msgid ""
+#~ "Number of pixels of the string view scrolled off the screen to the left"
+#~ msgstr "ਖੱਬੇ ਤੋਂ ਸਕਰੀਨ ਨੂੰ ਸਤਰ ਝਲਕ ਸਮੇਟਣ ਲਈ ਪਿਕਸਲਾਂ ਦੀ ਗਿਣਤੀ"
+
+#~ msgid "Text"
+#~ msgstr "ਪਾਠ"
+
+#~ msgid "The contents of the string view"
+#~ msgstr "ਸਤਰ ਝਲਕ ਦਾ ਪਰਸੰਗ"
+
+#~ msgid "Selected _Keys:"
+#~ msgstr "ਚੁਣੀਆਂ ਸਵਿੱਚਾਂ(_K):"
+
+#~ msgid "Key Code:"
+#~ msgstr "ਸਵਿੱਚ ਕੋਡ:"
+
+#, fuzzy
+#~ msgid "....."
+#~ msgstr "..."
+
+#~ msgid "Modifiers:"
+#~ msgstr "ਸੋਧਕ:"
+
+#~ msgid "_Ctrl"
+#~ msgstr "_Ctrl"
+
+#~ msgid "A_lt"
+#~ msgstr "A_lt"
+
+#~ msgid "_Shift"
+#~ msgstr "_Shift"
+
+#~ msgid "_Release"
+#~ msgstr "ਜਾਰੀ(_R)"
+
+#~ msgid "_Meta"
+#~ msgstr "ਮੈਟਾ(_M)"
+
+#~ msgid "S_uper"
+#~ msgstr "ਸੁਪਰ(_u)"
+
+#~ msgid "_Hyper"
+#~ msgstr "ਹਾਈਪਰ(_H)"
+
+#~ msgid "Please enter a Key Code first."
+#~ msgstr "ਪਹਿਲਾਂ ਇੱਕ ਸਵਿੱਚ ਕੋਡ ਦਿਓ।"
+
+#, fuzzy
+#~ msgid ""
+#~ "Press a key (or a key combination).\n"
+#~ "This dialog will be closed \n"
+#~ "when the key is released."
+#~ msgstr ""
+#~ "ਇੱਕ ਸਵਿੱਚ (ਜਾਂ ਇੱਕ ਸਵਿੱਚ ਜੋੜ) ਦਬਾਉ।\n"
+#~ "ਇਹ ਵਾਰਤਾਲਾਪ ਇੱਕ ਸਵਿੱਚ ਦਬਾਉਣ ਨਾਲ ਬੰਦ ਹੋ ਜਾਵੇਗਾ।"
+
+#~ msgid "Grabbing a key."
+#~ msgstr "ਇੱਕ ਸਵਿੱਚ ਫੜੋ।"
+
+#~ msgid "Key Selection"
+#~ msgstr "ਸਵਿੱਚ ਚੋਣ"
+
+#~ msgid "Orientation"
+#~ msgstr "ਸਥਿਤੀ"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "ਟਰੇ ਦੀ ਸਥਿਤੀ ਹੈ।"
+
+#, fuzzy
+#~ msgid "Next"
+#~ msgstr "ਪਾਠ"
+
+#, fuzzy
+#~ msgid "Automatic"
+#~ msgstr "ਅਮਹੀਕਿਨ"
+
+#, fuzzy
+#~ msgid "Always used"
+#~ msgstr "ਹਮੇਸ਼ਾ"
+
+#, fuzzy
+#~ msgid "%s Option"
+#~ msgstr "ਚੋਣ"
+
+#, fuzzy
+#~ msgid "Keyboards"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ/ਕੀ-ਬੋਰਡ"
+
+#~ msgid "English/European"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ/ਯੂਰਪ"
+
+#~ msgid "RAW CODE"
+#~ msgstr "ਕੱਚਾ ਕੋਡ"
+
+#~ msgid "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr "(C) 2002-2006 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid ""
+#~ "Hot Keys:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    switch between Multibyte encoding and Unicode.\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    reset the input method.\n"
+#~ msgstr ""
+#~ "ਹਾਟ ਸਵਿੱਚਾਂ:\n"
+#~ "\n"
+#~ "  Control+u:\n"
+#~ "    ਬਹੁ-ਬਾਈਟ ਇੰਕੋਡਿੰਗ ਅਤੇ ਯੂਨੀਕਰੋਡ ਵਿੱਚ ਤਬਦੀਲ ਹੋਣ ਲਈ।\n"
+#~ "\n"
+#~ "  Esc:\n"
+#~ "    ਇੰਪੁੱਟ ਢੰਗ ਮੁੜ-ਸੈਟ ਕਰਨ ਲਈ।\n"
+
+#~ msgid "The status of the current input method. Click to change it."
+#~ msgstr "ਮੌਜੂਦਾ ਇੰਪੁੱਟ ਢੰਗ ਦੀ ਸਥਿਤੀ ਹੈ। ਤਬਦੀਲ ਕਰਨ ਲਈ ਦਬਾਉ।"
+
+#~ msgid "Unicode"
+#~ msgstr "ਯੂਨੀਕੋਡ"
+
+#~ msgid "Global Setup"
+#~ msgstr "ਗਲੋਬਲ ਸੈਟਅੱਪ"
+
+#~ msgid ""
+#~ "Setup the global options used by All FrontEnd modules, including X11 "
+#~ "FrontEnd, GTK IMModule, QT IMModule etc."
+#~ msgstr ""
+#~ "ਸਭ ਮੁੱਖ ਮੈਡੀਊਲ ਰਾਹੀਂ ਵਰਤੇ ਜਾਦੇ ਗਲੋਬਲ ਚੋਣ ਸੈਟਅੱਪ, ਜਿਸ ਵਿੱਚ X11 ਮੁੱਖ ਭੂਮੀ, GTK IMModule, "
+#~ "QT IMModule ਆਦਿ"
+
+#~ msgid "_Trigger:"
+#~ msgstr "ਤਬਦੀਲ(_T):"
+
+#~ msgid "Select the trigger keys"
+#~ msgstr "ਤਬਦੀਲੀ ਸਵਿੱਚ ਚੁਣੋ"
+
+#~ msgid ""
+#~ "The key events to turn on/off SCIM input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "SCIM ਇੰਪੁੱਟ ਢੰਗ ਨੂੰ ਚਾਲੂ/ਬੰਦ ਕਰਨ ਲਈ ਕੁੰਜੀ ਘਟਨਾ ਹੈ। ਇਸ ਨੂੰ ਸੋਧਣ ਲਈ ਸੱਜੇ ਪਾਸੇ ਬਟਨ ਨੂੰ ਦਬਾਉ।"
+
+#~ msgid "Turn _On:"
+#~ msgstr "ਚਾਲੂ ਕਰੋ(_O):"
+
+#~ msgid "Select the Turn On keys"
+#~ msgstr "ਚਾਲੂ ਕਰਨ ਵਾਲੀਆਂ ਕੁੰਜੀਆਂ ਚੁਣੋ"
+
+#~ msgid ""
+#~ "The key events to turn on SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "SCIM ਇੰਪੁੱਟ ਢੰਗ ਚਾਲੂ ਕਰਨ ਲਈ ਕੁੰਜੀਆਂ ਦੀ ਚੋਣ ਕਰੋ। ਇਸ ਨੂੰ ਸੋਧਣ ਲਈ ਸੱਜੇ ਪਾਸੇ ਦੇ ਬਟਨ ਨੂੰ ਦਬਾਉ।"
+
+#~ msgid "Turn O_ff:"
+#~ msgstr "ਬੰਦ ਕਰੋ(_f):"
+
+#~ msgid "Select the Turn Off keys"
+#~ msgstr "ਬੰਦ ਕਰਨ ਵਾਲੀਆਂ ਕੁੰਜੀਆਂ"
+
+#~ msgid ""
+#~ "The key events to turn off SCIM input method. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr ""
+#~ "SCIM ਇੰਪੁੱਟ ਢੰਗ ਬੰਦ ਕਰਨ ਲਈ ਕੁੰਜੀਆਂ ਦੀ ਚੋਣ ਕਰੋ। ਇਸ ਨੂੰ ਸੋਧਣ ਲਈ ਸੱਜੇ ਪਾਸੇ ਦੇ ਬਟਨ ਨੂੰ ਦਬਾਉ।"
+
+#~ msgid "_Next input method:"
+#~ msgstr "ਅੱਗੇ ਇੰਪੁੱਟ ਢੰਗ(_N):"
+
+#~ msgid "Select the next input method keys"
+#~ msgstr "ਅੱਗੇ ਇੰਪੁੱਟ ਢੰਗ ਦੀ ਚੋਣ ਕਰਨ ਲਈ ਕੁੰਜੀਆਂ ਚੁਣੋ"
+
+#~ msgid ""
+#~ "The key events to switch to the next input method. Click on the button on "
+#~ "the right to edit it."
+#~ msgstr ""
+#~ "ਅੱਗੇ ਇੰਪੁੱਟ ਢੰਗ ਦੀ ਚੋਣ ਕਰਨ ਲਈ ਕੁੰਜੀਆਂ ਦੀ ਚੋਣ ਕਰੋ। ਇਸ ਨੂੰ ਸੋਧਣ ਲਈ ਸੱਜੇ ਪਾਸੇ ਦੇ ਬਟਨ ਨੂੰ ਦਬਾਉ।"
+
+#~ msgid "_Previous input method:"
+#~ msgstr "ਪਿੱਛੇ ਇੰਪੁੱਟ ਢੰਗ(_P):"
+
+#~ msgid "Select the previous input method keys"
+#~ msgstr "ਪਿਛਲਾ ਇੰਪੁੱਟ ਢੰਗ ਕੁੰਜੀਆਂ ਚੁਣੋ"
+
+#~ msgid ""
+#~ "The key events to switch to the previous input method. Click on the "
+#~ "button on the right to edit it."
+#~ msgstr ""
+#~ "ਪਿਛਲਾ ਇੰਪੁੱਟ ਢੰਗ ਚਾਲੂ ਕਰਨ ਲਈ ਕੁੰਜੀਆਂ ਦੀ ਚੋਣ ਕਰੋ। ਇਸ ਨੂੰ ਸੋਧਣ ਲਈ ਸੱਜੇ ਪਾਸੇ ਦੇ ਬਟਨ ਨੂੰ ਦਬਾਉ।"
+
+#~ msgid "Show input method _menu:"
+#~ msgstr "ਇੰਪੁੱਟ ਢੰਗ ਮੇਨੂ ਵੇਖਾਓ(_m):"
+
+#~ msgid "Select the show input method menu keys"
+#~ msgstr "ਇੰਪੁੱਟ ਢੰਗ ਮੇਨੂ ਵੇਖਾਉਣ ਲਈ ਕੁੰਜੀਆਂ ਚੁਣੋ"
+
+#~ msgid ""
+#~ "The key events to show the input method menu. Click on the button on the "
+#~ "right to edit it."
+#~ msgstr "ਇੰਪੁੱਟ ਢੰਗ ਮੇਨੂ ਵੇਖਾਉਣ ਲਈ ਕੁੰਜੀਆਂ ਦੀ ਚੋਣ ਕਰੋ। ਇਸ ਨੂੰ ਸੋਧਣ ਲਈ ਸੱਜੇ ਪਾਸੇ ਦੇ ਬਟਨ ਨੂੰ ਦਬਾਉ।"
+
+#~ msgid "_Keyboard Layout:"
+#~ msgstr "ਕੀ-ਬੋਰਡ ਖਾਕਾ(_K):"
+
+#~ msgid ""
+#~ "You should choose your currently used keyboard layout here so that input "
+#~ "methods, who care about keyboard layout, could work correctly."
+#~ msgstr ""
+#~ "ਤੁਹਾਨੂੰ ਇੱਥੇ ਆਪਣਾ ਮੌਜੂਦਾ ਕੀ-ਬੋਰਡ ਖਾਕੇ ਦੀ ਚੋਣ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ, ਤਾਂ ਕਿ ਇੰਪੁੱਟ ਢੰਗ, ਜੋ ਕਿ ਕੀ-"
+#~ "ਬੋਰਡ ਖਾਕੇ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ, ਠੀਕ ਤਰਾਂ ਕੰਮ ਕਰ ਸਕੇ।"
+
+#~ msgid "_Embed Preedit String into client window"
+#~ msgstr "ਕਲਾਂਇਟ ਝਰੋਖੇ 'ਚ ਪਹਿਲਾਂ-ਸੋਧ ਸਤਰ(_E)"
+
+#~ msgid ""
+#~ "If this option is checked, the preedit string will be displayed directly "
+#~ "in the client input window, rather than in a independent float window."
+#~ msgstr ""
+#~ "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਕਲਾਂਇਟ ਇੰਪੁੱਟ ਝਰੋਖੇ ਵਿੱਚ ਪਹਿਲਾਂ-ਸੋਧ ਸਤਰ ਸਿੱਧੀ ਵਿਖਾਈ ਜਾਵੇਗਾ, ਨਾ "
+#~ "ਕਿ ਇੱਕ ਆਜ਼ਾਦ ਤਰਦੇ ਝਰੋਖਾ।"
+
+#~ msgid "_Share the same input method among all applications"
+#~ msgstr "ਸਭ ਕਾਰਜਾਂ 'ਚ ਇੱਕੋ ਹੀ ਇੰਪੁੱਟ ਢੰਗ ਵਰਤੋਂ(_S)"
+
+#~ msgid ""
+#~ "If this option is checked, then only one input method could be used by "
+#~ "all applications at the same time.Otherwise different input method could "
+#~ "be used by each application."
+#~ msgstr ""
+#~ "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਸਿਰਫ਼ ਇੱਕ ਹੀ ਇੰਪੁੱਟ ਢੰਗ ਦੀ ਵਰਤੋਂ ਕੀਤੀ ਜਾਵੇਗੀ, ਜੋ ਕਿ ਇੱਕ ਸਮੇਂ ਸਭ "
+#~ "ਕਾਰਜਾਂ ਲਈ ਵਰਤਿਆ ਜਾਵੇਗਾ। ਨਹੀਂ ਤਾਂ ਹਰ ਕਾਰਜ ਲਈ ਵੱਖਰਾ ਢੰਗ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਸੀ।"
+
+#~ msgid "Hotkeys"
+#~ msgstr "ਹਾਟ-ਸਵਿੱਚ"
+
+#~ msgid ""
+#~ "You can enable/disable input methods and set hotkeys for input methods "
+#~ "here."
+#~ msgstr "ਤੁਸੀਂ ਇੱਥੇ ਇੰਪੁੱਟ ਢੰਗ ਯੋਗ/ਅਯੋਗ ਕਰ ਅਤੇ ਇੰਪੁੱਟ ਢੰਗ ਲਈ ਹਾਟ-ਸਵਿੱਚਾਂ ਸੈਟ ਕਰ ਸਕਦੇ ਹੋ।"
+
+#~ msgid "The installed input method services:"
+#~ msgstr "ਇੰਸਟਾਲ ਹੋਏ ਇੰਪੁੱਟ ਢੰਗ ਸੇਵਾਵਾਂ:"
+
+#~ msgid "Edit _Hotkeys"
+#~ msgstr "ਹਾਟ-ਸਵਿੱਚ ਸੋਧ(_H)"
+
+#~ msgid "Edit Hotkeys associated with the selected input method."
+#~ msgstr "ਚੁਣੇ ਇੰਪੁੱਟ ਢੰਗ ਨਾਲ ਸਬੰਧਤ ਹਾਟ-ਕੁੰਜੀਆਂ ਦੀ ਸੋਧ ਕਰੋ।"
+
+#~ msgid "Select _Filters"
+#~ msgstr "ਫਿਲਟਰ ਚੁਣੋ(_F)"
+
+#~ msgid "Select the Filters which will be attached to this input method."
+#~ msgstr "ਫਿਲਟਰ ਦੀ ਚੋਣ ਕਰੋ, ਜੋ ਕਿ ਇਸ ਇੰਪੁੱਟ ਢੰਗ ਨਾਲ ਜੋੜਿਆ ਜਾਵੇਗਾ।"
+
+#~ msgid "_Expand"
+#~ msgstr "ਫੈਲਾਓ(_E)"
+
+#~ msgid "Expand all language categories."
+#~ msgstr "ਸਭ ਭਾਸ਼ਾ ਵਰਗ ਫੈਲਾਓ।"
+
+#~ msgid "_Collapse"
+#~ msgstr "ਸਮੇਟੋ(_C)"
+
+#~ msgid "Collapse all language categories."
+#~ msgstr "ਸਭ ਭਾਸ਼ਾ ਵਰਗ ਸਮੇਟੋ।"
+
+#~ msgid "E_nable All"
+#~ msgstr "ਸਭ ਯੋਗ(_n)"
+
+#~ msgid "Enable all input methods."
+#~ msgstr "ਸਭ ਇੰਪੁੱਟ ਢੰਗ ਯੋਗ ਕਰਦਾ ਹੈ।"
+
+#~ msgid "_Disable All"
+#~ msgstr "ਸਭ ਆਯੋਗ(_D)"
+
+#~ msgid "Disable all input methods."
+#~ msgstr "ਸਭ ਇੰਪੁੱਟ ਢੰਗ ਆਯੋਗ ਹਨ।"
+
+#~ msgid "Filters"
+#~ msgstr "ਫਿਲਟਰ"
+
+#~ msgid "Languages"
+#~ msgstr "ਭਾਸ਼ਾਵਾਂ"
+
+#~ msgid "Description"
+#~ msgstr "ਵੇਰਵਾ"
+
+#~ msgid "Edit Hotkeys for %s"
+#~ msgstr "%s ਲਈ ਹਾਟ-ਸਵਿੱਚ ਸੋਧ"
+
+#~ msgid "Select Filters for %s"
+#~ msgstr "%s ਲਈ ਫਿਲਟਰ ਚੁਣੋ"
+
+#~ msgid "Move _Up"
+#~ msgstr "ਉੱਪਰ ਜਾਓ(_U)"
+
+#~ msgid "Move _Down"
+#~ msgstr "ਹੇਠਾਂ ਜਾਓ(_D)"
+
+#~ msgid "GTK"
+#~ msgstr "GTK"
+
+#~ msgid "A panel daemon based on GTK+-2.x library."
+#~ msgstr "GTK+-2.x ਲਾਇਬਰੇਰੀ 'ਤੇ ਪੈਨਲ ਡਾਈਮੋਨ ਹੈ।"
+
+#~ msgid "On demand"
+#~ msgstr "ਲੋੜ ਸਮੇਂ"
+
+#~ msgid "Never"
+#~ msgstr "ਕਦੇ ਨਹੀਂ"
+
+#~ msgid "ToolBar"
+#~ msgstr "ਸੰਦ-ਪੱਟੀ"
+
+#~ msgid "_Show:"
+#~ msgstr "ਵੇਖਾਓ(_S):"
+
+#~ msgid "Auto s_nap"
+#~ msgstr "ਸਵੈ ਸਨੈਪ(_n)"
+
+#~ msgid "Show _input method icon"
+#~ msgstr "ਇੰਪੁੱਟ ਆਈਕਾਨ ਢੰਗ ਆਈਕਾਨ ਵੇਖਾਓ(_i)"
+
+#~ msgid "Show inp_ut method name"
+#~ msgstr "ਇੰਪੁੱਟ ਢੰਗ ਨਾਂ ਵੇਖਾਓ(_u)"
+
+#~ msgid "Hide time_out:"
+#~ msgstr "ਸਮਾਂ-ਅੰਤਰਾਲ ਓਹਲੇ(_o):"
+
+#~ msgid "Show s_tick icon"
+#~ msgstr "ਟਿੱਕ ਆਈਕਾਨ ਵੇਖਾਓ(_t)"
+
+#~ msgid "Show m_enu icon"
+#~ msgstr "ਮੇਨੂ ਆਈਕਾਨ ਵੇਖਾਓ(_e)"
+
+#~ msgid "Show _help icon"
+#~ msgstr "ਸਹਾਇਤਾ ਆਈਕਾਨ ਵੇਖਾਓ(_h)"
+
+#~ msgid "Show _property label"
+#~ msgstr "ਵਿਸ਼ੇਸ਼ਤਾ ਲੇਬਲ ਵੇਖਾਓ(_p)"
+
+#~ msgid "Input window"
+#~ msgstr "ਇੰਪੁੱਟ ਝਰੋਖਾ"
+
+#~ msgid "E_mbedded lookup table"
+#~ msgstr "ਸ਼ਾਮਲ ਖੋਜ ਸਾਰਣੀ(_m)"
+
+#~ msgid "_Vertical lookup table"
+#~ msgstr "ਲੰਬਕਾਰੀ ਖੋਜ ਸਾਰਣੀ(_V)"
+
+#~ msgid "Misc"
+#~ msgstr "ਫੁਟਕਲ"
+
+#~ msgid "Show tra_y icon"
+#~ msgstr "ਟਰੇ ਆਈਕਾਨ ਵੇਖਾਓ(_y)"
+
+#~ msgid "Stick _windows"
+#~ msgstr "ਝਰੋਖੇ ਚੇਪੋ(_w)"
+
+#~ msgid "_Font:"
+#~ msgstr "ਫੋਂਟ(_F):"
+
+#~ msgid ""
+#~ "If option \"Always\" is selected, the toolbar will always be shown on the "
+#~ "screen. If option \"On demand\" is selected, it will only be shown when "
+#~ "SCIM is activated. If option \"Never\" is selected, it will never be "
+#~ "shown."
+#~ msgstr ""
+#~ "ਜੇਕਰ \"ਹਮੇਸ਼ਾ\" ਚੋਣ ਯੋਗ ਕੀਤੀ ਗਈ ਤਾਂ, ਸੰਦ-ਪੱਟੀ ਨੂੰ ਹਮੇਸ਼ਾ ਪਰਦੇ 'ਤੇ ਵਿਖਾਇਆ ਜਾਵੇਗਾ। ਜੇਕਰ "
+#~ "\"ਲੋੜ ਸਮੇਂ\" ਦੀ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਹੀ ਵੇਖਾਇਆ ਜਾਵੇਗਾ, ਜਦੋਂ SCIM ਦੇ ਸਰਗਰਮ ਹੋਵੇਗਾ। ਜੇਕਰ \"ਕਦੇ "
+#~ "ਨਹੀਂ\" ਦੀ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਇਸ ਨੂੰ ਕਦੇ ਨਹੀਂ ਵੇਖਾਇਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar will be snapped to the screen "
+#~ "border."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਸੰਦ-ਪੱਟੀ ਸਕਰੀਨ ਹਾਸ਼ੀਏ 'ਚ ਸਮੇਟੀ ਜਾਵੇਗੀ।"
+
+#~ msgid ""
+#~ "The toolbar will be hidden out after this timeout is elapsed. This option "
+#~ "is only valid when \"Always show\" is selected. Set to zero to disable "
+#~ "this behavior."
+#~ msgstr ""
+#~ "ਇਸ ਅੰਤਰਾਲ ਖਤਮ ਹੋਣ ਦੇ ਬਾਅਦ ਸੰਦ-ਪੱਟੀ ਨੂੰ ਓਹਲੇ ਕੀਤਾ ਜਾਵੇਗਾ। ਇਹ ਚੋਣ ਸਿਰਫ਼ ਤਾਂ ਹੀ ਠੀਕ ਹੈ, "
+#~ "ਜੇਕਰ \"ਹਮੇਸ਼ਾ ਵੇਖਾਓ\" ਦੀ ਚੋਣ ਕੀਤੀ ਹੈ। ਇਸ ਵਿਹਾਰ ਨੂੰ ਅਯੋਗ ਕਰਨ ਲਈ ਜ਼ੀਰੋ (0) ਬਣਾਓ।"
+
+#~ msgid ""
+#~ "If this option is checked, the input method icon will be showed on the "
+#~ "toolbar."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਇੰਪੁੱਟ ਢੰਗ ਆਈਕਾਨ ਸੰਦ-ਪੱਟੀ 'ਚ ਵਿਖਾਇਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the input method name will be showed on the "
+#~ "toolbar."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਇੰਪੁੱਟ ਢੰਗ ਨਾਂ ਨੂੰ ਸੰਦ-ਪੱਟੀ 'ਚ ਚੁਣਿਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the stick icon will be showed on the toolbar."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਸਟਿੱਕੀ ਆਈਕਾਨ ਸੰਦ-ਪੱਟੀ 'ਚ ਵਿਖਾਇਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the menu icon will be showed on the toolbar."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਮੇਨੂ ਆਈਕਾਨ ਨੂੰ ਸੰਦ-ਪੱਟੀ 'ਚ ਵਿਖਾਇਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the help icon will be showed on the toolbar."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਸਹਾਇਤਾ ਆਈਕਾਨ ਸੰਦ-ਪੱਟੀ 'ਚ ਵਿਖਾਇਆ ਜਾਦਾ ਹੈ।"
+
+#~ msgid ""
+#~ "If this option is checked, the text label of input method properties will "
+#~ "be showed on the toolbar."
+#~ msgstr ""
+#~ "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਇੰਪੁੱਟ ਢੰਗ ਵਿਸ਼ੇਸ਼ਤਾ ਦਾ ਪਾਠ ਲੇਬਲ ਸੰਦ-ਪੱਟੀ 'ਚ ਵਿਖਾਇਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be embedded into the "
+#~ "input window."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਖੋਜ ਸਾਰਣੀ ਨੂੰ ਇੰਪੁੱਟ ਝਰੋਖੇ 'ਚ ਹੀ ਸ਼ਾਮਲ ਕੀਤਾ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the lookup table will be displayed vertically."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਖੋਜ ਸਾਰਣੀ ਨੂੰ ਲੰਬਕਾਰੀ ਰੂਪ 'ਚ ਵਿਖਾਇਆ ਜਾਵੇਗਾ।"
+
+#~ msgid ""
+#~ "If this option is checked, the tray icon will be showed on the desktop's "
+#~ "taskbar."
+#~ msgstr "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ ਟਰੇ ਆਈਕਾਨ ਨੂੰ ਵੇਹੜੇ ਦੀ ਸੰਦ-ਪੱਟੀ 'ਚ ਵਿਖਾਉ।"
+
+#~ msgid ""
+#~ "If this option is checked, the toolbar, input and lookup table windows "
+#~ "will be sticked to its original position."
+#~ msgstr ""
+#~ "ਜੇਕਰ ਇਹ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ, ਸੰਦ-ਪੱਟੀ, ਇੰਪੁੱਟ ਅਤੇ ਖੋਜ ਸਾਰਣੀ ਝਰੋਖੇ ਨੂੰ ਇਸ ਦੀ ਅਸਲੀ ਸਥਿਤੀ ਨਾਲ "
+#~ "ਹੀ ਜੋੜੀ ਰੱਖਿਆ ਜਾਵੇਗਾ।"
+
+#~ msgid "The font setting will be used in the input and lookup table windows."
+#~ msgstr "ਇੰਪੁੱਟ ਅਤੇ ਖੋਜ ਸਾਰਣੀ ਝਰੋਖੇ ਵਿੱਚ ਫੋਂਟ ਸੈਟਿੰਗ ਵਰਤੀ ਜਾਵੇਗੀ।"
+
+#~ msgid "Select Interface Font"
+#~ msgstr "ਇੰਟਰਫੇਸ ਫੋਂਟ ਚੁਣੋ"
+
+#~ msgid "SCIM"
+#~ msgstr "SCIM"
+
+#~ msgid "FrontEnd"
+#~ msgstr "ਮੁੱਖ-ਭਾਗ"
+
+#~ msgid "IMEngine"
+#~ msgstr "IMEngine"
+
+#~ msgid "Panel"
+#~ msgstr "ਪੈਨਲ"
+
+#~ msgid "Extra"
+#~ msgstr "ਹੋਰ"
+
+#~ msgid "SCIM Input Method Setup"
+#~ msgstr "SCIM ਇੰਪੁੱਟ ਢੰਗ ਸੈਟਅੱਪ"
+
+#~ msgid ""
+#~ " <span size=\"20000\">Smart Common Input Method platform</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI Setup Utility</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">Copyright 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+#~ msgstr ""
+#~ " <span size=\"20000\">ਸਮਾਰਟ ਕਾਮਨ ਇੰਪੁੱਟ ਮੈਂਥਡ ਪਲੇਟਫਾਰਮ</span> \n"
+#~ "\n"
+#~ "<span size=\"16000\" style=\"italic\">GUI ਸੈਟਅੱਪ ਸਹੂਲਤ</span>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "<span size=\"12000\">ਕਾਪੀਰਾਈਟ 2002-2004, James Su &lt;suzhe@tsinghua.org."
+#~ "cn&gt;</span>"
+
+#~ msgid "<span size=\"x-large\">The Setup for %s modules.</span>"
+#~ msgstr "<span size=\"x-large\">%s ਮੈਡੀਊਲ ਲਈ ਸੈਟਅੱਪ ਹੈ।</span>"
+
+#~ msgid "Are you sure you want to quit SCIM Setup?"
+#~ msgstr "ਕੀ ਤੁਸੀਂ SCIM ਸੈਟਅੱਪ ਨੂੰ ਬੰਦ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#~ msgid ""
+#~ "Not all configuration can be reloaded on the fly. Don't forget to restart "
+#~ "SCIM in order to let all of the new configuration take effect."
+#~ msgstr ""
+#~ "ਸਭ ਸੰਰਚਨਾ ਨੂੰ ਯਕਦਮ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਨਵੀਂ ਸੰਰਚਨਾ ਨੂੰ ਪਰਭਾਵੀ ਹੋਣ ਲਈ SCIM ਨੂੰ ਮੁੜ-"
+#~ "ਚਾਲੂ ਕਰਨਾ ਨਾ ਭੁੱਲੋ।"
+
+#~ msgid "SCIM Setup"
+#~ msgstr "SCIM ਸੈਟਅੱਪ"
+
+#~ msgid "Integrated Setup Utility based on GTK Widget library."
+#~ msgstr "GTK ਵਿਦਗਿਟ ਲਾਇਬਰੇਰੀ 'ਤੇ ਅਧਾਰਤ ਸੈਟਅੱਪ ਸਹੂਲਤ ਹੈ।"
+
+#~ msgid "Setup utility for Smart Common Input Method platform"
+#~ msgstr "ਸਮਾਰਟ ਕਾਮਨ ਇੰਪੁੱਟ ਮੈਂਥਸਡ ਪਲੇਟਫਾਰਮ ਲਈ ਸੈਟਅੱਪ ਸਹੂਲਤ"
+
+#~ msgid "SCIM Help"
+#~ msgstr "SCIM ਸਹਾਇਤਾ"
+
+#~ msgid "Smart Common Input Method"
+#~ msgstr "ਸਮਾਰਟ ਕਾਮਨ ਇੰਪੁੱਟ ਮੈਂਥਡ"
+
+#~ msgid "Stick/unstick the input window and the toolbar."
+#~ msgstr "ਇੰਪੁੱਟ ਝਰੋਖਾ ਅਤੇ ਸੰਦ-ਪੱਟੀ ਸਟਿੱਕੀ/ਨਾ-ਸਟਿੱਕੀ ਹੈ।"
+
+#~ msgid "Show a brief help about SCIM and the current input method."
+#~ msgstr "SCIM ਅਤੇ ਮੌਜੂਦਾ ਇੰਪੁੱਟ ਢੰਗ ਬਾਰੇ ਸੰਖੇਪ ਸਹਾਇਤਾ ਵਿਖਾਓ।"
+
+#~ msgid "Show command menu."
+#~ msgstr "ਕਮਾਂਡ ਮੇਨ ਵੇਖਾਓ।"
+
+#~ msgid ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+#~ msgstr ""
+#~ "\n"
+#~ "(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>"
+
+#~ msgid "Reload Configuration"
+#~ msgstr "ਸੰਰਚਨਾ ਮੁੜ-ਲੋਡ"
+
+#~ msgid "Stick Windows"
+#~ msgstr "ਸਟਿੱਕੀ ਝਰੋਖੇ"
+
+#~ msgid "Hide Toolbar"
+#~ msgstr "ਸੰਦ-ਪੱਟੀ ਓਹਲੇ"
+
+#~ msgid "Help ..."
+#~ msgstr "ਸਹਾਇਤਾ ..."
+
+#~ msgid "Exit"
+#~ msgstr "ਬਾਹਰ"
+
+#~ msgid "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+#~ msgstr "zh_CN,zh_TW,zh_HK,zh_SG,ja_JP,ko_KR"
+
+#~ msgid "En"
+#~ msgstr "En"

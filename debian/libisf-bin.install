@@ -1,0 +1,13 @@
+usr/bin/*
+usr/etc/*
+usr/share/*
+usr/lib/*.so*
+usr/lib/*/immodules/*.so
+opt/ug/lib/*.so
+opt/ug/res/*
+usr/lib/scim-1.0/scim-launcher
+usr/lib/scim-1.0/scim-helper-launcher
+usr/lib/scim-1.0/1.4.0/Config/*.so
+usr/lib/scim-1.0/1.4.0/FrontEnd/*.so
+usr/lib/scim-1.0/1.4.0/IMEngine/*.so
+etc/*

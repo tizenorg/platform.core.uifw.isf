@@ -1,0 +1,46 @@
+isf (2.3.4821-1slp2+1) unstable; urgency=low
+
+  * code cleanup
+  * Git: slp/pkgs/i/isf
+  * Tag: isf_2.3.4821-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Wed, 21 Dec 2011 09:44:04 +0900
+
+isf (2.3.4816-1slp2+1) unstable; urgency=low
+
+  * [immodule] support autocapital in webkit editor
+  * [panel] change theme name
+  * Git: slp/pkgs/i/isf
+  * Tag: isf_2.3.4816-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Fri, 16 Dec 2011 08:58:25 +0900
+
+isf (2.3.4809-1slp2+2) unstable; urgency=low
+  * [gtk_panel] codes cleanup
+  * Git: pkgs/i/isf
+  * Tag: isf_2.3.4809-1slp2+2
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Fri, 9 Dec 2011 20:15:00 +0900
+
+isf (2.3.4809-1slp2+1) unstable; urgency=low
+  * [isf-panel-efl/isfsetting] codes cleanup
+  * Git: pkgs/i/isf
+  * Tag: isf_2.3.4809-1slp2+1
+
+ -- Shuo Liu <shuo0805.liu@samsung.com>  Fri, 9 Dec 2011 19:59:00 +0900
+
+isf (2.3.4807-1slp2+3) unstable; urgency=low
+
+  * [isf-panel-efl] Fix rotation defect
+  * Git: pkgs/i/isf
+  * Tag: isf_2.3.4807-1slp2+3
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Wed, 07 Dec 2011 15:29:00 +0900
+
+isf (2.3.4807-1slp2+2) unstable; urgency=low
+
+  * remove CommonISE UUID
+  * Git: pkgs/i/isf
+  * Tag: isf_2.3.4807-1slp2+2
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Wed, 07 Dec 2011 10:40:11 +0900
