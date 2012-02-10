@@ -85,8 +85,6 @@ static void layout_cb (struct ui_gadget *ug, enum ug_mode mode, void *priv)
 
 static void result_cb (struct ui_gadget *ug, bundle *result, void *priv)
 {
-    struct appdata *ad = (appdata*) priv;
-
     if (!result) return;
 
     const char *name = bundle_get_val(result, "name");
@@ -104,20 +102,6 @@ static void destroy_cb (struct ui_gadget *ug, void *priv)
         return;
 
     ug_destroy (ug);
-}
-
-static void cam_destroy_cb (struct ui_gadget *ug, void *priv)
-{
-    printf ("enter cam_destroy_cb ().........\n");
-    if (!ug)
-        return;
-
-    ug_destroy (ug);
-    struct appdata *ad = (struct appdata *) priv;
-    if (ad->layout_main != NULL)
-        evas_object_show(ad->layout_main);
-    if (ad->bg != NULL)
-        evas_object_show(ad->bg);
 }
 
 static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info)
@@ -158,12 +142,6 @@ static void keyboard_setting_wizard_bt (void *data, Evas_Object *obj, void *even
                         ad->data, &cbs);
     bundle_free (ad->data);
     ad->data = NULL;
-}
-
-static void response_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    if ((int)event_info != 5)
-        evas_object_del (obj);
 }
 
 static int create_demo_view (struct appdata *ad)

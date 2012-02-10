@@ -167,20 +167,22 @@ isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -lglib-2.0 -lgobject-2.0
 endif
 
 isf_query_engines_SOURCES  = isf_query_engines.cpp
-isf_query_engines_CXXFLAGS = @VCONF_CFLAGS@
+isf_query_engines_CXXFLAGS = @VCONF_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@
 isf_query_engines_LDADD    = libscim@SCIM_EPOCH@.la
-isf_query_engines_LDFLAGS  = @LTLIBINTL@ @VCONF_LIBS@
+isf_query_engines_LDFLAGS  = @LTLIBINTL@ @VCONF_LIBS@ @PRIVILEGE_CONTROL_LIBS@
 
 libexecdir		= $(libdir)/scim@SCIM_EPOCH@
 libexec_PROGRAMS        = scim-launcher scim-helper-launcher
 
-scim_launcher_SOURCES 	= scim_launcher.cpp 
+scim_launcher_SOURCES 	= scim_launcher.cpp
 scim_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_launcher_LDFLAGS	= @LTLIBINTL@
+scim_launcher_CXXFLAGS  = @PRIVILEGE_CONTROL_CFLAGS@
+scim_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@
 
-scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp 
+scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp
+scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@
 scim_helper_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_helper_launcher_LDFLAGS	= @LTLIBINTL@
+scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@
 
 
 

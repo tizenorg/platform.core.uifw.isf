@@ -481,7 +481,7 @@ void ISFSetupWin::create_ise_help_main (gint type, char *name, char *title)
                         String (_("\n(C) 2008 SAMSUNG")) +
                         String (_("\n\n Help file is needed!!"));
         } else {
-            /* FIXME -- 256 char per line for now -- mingbin.qu */
+            /* FIXME -- 256 char per line for now -- */
             char str[256];
             while (helpfile.getline (str, sizeof (str))) {
                 help_line = help_line + String (str) + String("\n");

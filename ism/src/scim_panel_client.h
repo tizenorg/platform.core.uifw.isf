@@ -52,6 +52,9 @@ typedef Slot1<void, int>
 typedef Slot2<void, int, int>
         PanelClientSlotInt;
 
+typedef Slot3<void, int, int, int>
+        PanelClientSlotIntInt;
+
 typedef Slot2<void, int, const String &>
         PanelClientSlotString;
 
@@ -175,6 +178,7 @@ public:
     void update_factory_info    (int icid, const PanelFactoryInfo &info);
     void update_spot_location   (int icid, int x, int y, int top_y);
     void update_cursor_position (int icid, int cursor_pos);
+    void update_surrounding_text (int icid, const WideString &str, int cursor);
     void show_preedit_string    (int icid);
     void show_aux_string        (int icid);
     void show_lookup_table      (int icid);
@@ -353,9 +357,41 @@ public:
      */
     Connection signal_connect_update_keyboard_ise           (PanelClientSlotVoid                    *slot);
 
+    /**
+     * @brief Signal: show preedit string
+     *
+     * slot prototype: void show_preedit_string (int context);
+     */
     Connection signal_connect_show_preedit_string           (PanelClientSlotVoid                    *slot);
+
+    /**
+     * @brief Signal: hide preedit string
+     *
+     * slot prototype: void hide_preedit_string (int context);
+     */
     Connection signal_connect_hide_preedit_string           (PanelClientSlotVoid                    *slot);
+
+    /**
+     * @brief Signal: update preedit string
+     *
+     * slot prototype: void update_preedit_string (int context, const WideString &str, const AttributeList &attrs);
+     */
     Connection signal_connect_update_preedit_string         (PanelClientSlotStringAttrs             *slot);
+
+    /**
+     * @brief Signal: Request to get surrounding text
+     *
+     * slot prototype: void get_surrounding text (int context, int maxlen_before, int maxlen_after);
+     */
+    Connection signal_connect_get_surrounding_text          (PanelClientSlotIntInt                  *slot);
+
+    /**
+     * @brief Signal: Delete surrounding text
+     *
+     * slot prototype: void delete_surrounding text (int context, int offset, int len);
+     */
+    Connection signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot);
+
     /** @} */
 };
 

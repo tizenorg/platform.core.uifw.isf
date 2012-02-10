@@ -111,6 +111,7 @@ public:
     HelperAgentSignalInt            signal_update_screen;
     HelperAgentSignalIntInt         signal_update_spot_location;
     HelperAgentSignalInt            signal_update_cursor_position;
+    HelperAgentSignalInt            signal_update_surrounding_text;
     HelperAgentSignalString         signal_trigger_property;
     HelperAgentSignalTransaction    signal_process_imengine_event;
     HelperAgentSignalVoid           signal_focus_out;
@@ -136,6 +137,7 @@ public:
     HelperAgentSignalStringVector       signal_update_keyboard_ise_list;
     HelperAgentSignalVoid               signal_candidate_more_window_show;
     HelperAgentSignalVoid               signal_candidate_more_window_hide;
+    HelperAgentSignalInt                signal_select_aux;
     HelperAgentSignalInt                signal_select_candidate;
     HelperAgentSignalVoid               signal_candidate_table_page_up;
     HelperAgentSignalVoid               signal_candidate_table_page_down;
@@ -421,6 +423,14 @@ HelperAgent::filter_event ()
                     m_impl->signal_update_cursor_position (this, ic, ic_uuid, (int) cursor_pos);
                 break;
             }
+            case ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT:
+            {
+                String text;
+                uint32 cursor;
+                if (m_impl->recv.get_data (text) && m_impl->recv.get_data (cursor))
+                    m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
+                break;
+            }
             case SCIM_TRANS_CMD_TRIGGER_PROPERTY:
             {
                 String property;
@@ -680,6 +690,13 @@ HelperAgent::filter_event ()
             case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE:
             {
                 m_impl->signal_candidate_more_window_hide (this, ic, ic_uuid);
+                break;
+            }
+            case ISM_TRANS_CMD_SELECT_AUX:
+            {
+                uint32 item;
+                if (m_impl->recv.get_data (item))
+                    m_impl->signal_select_aux (this, ic, ic_uuid, item);
                 break;
             }
             case SCIM_TRANS_CMD_SELECT_CANDIDATE:
@@ -1268,6 +1285,48 @@ HelperAgent::update_input_context (uint32 type, uint32 value) const
 }
 
 /**
+ * @ brief Request to get surrounding text.
+ *
+ * @param uuid The helper ISE UUID.
+ * @param maxlen_before The max length of before.
+ * @param maxlen_after The max length of after.
+ */
+void
+HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int maxlen_after) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT);
+        m_impl->send.put_data (uuid);
+        m_impl->send.put_data (maxlen_before);
+        m_impl->send.put_data (maxlen_after);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @ brief Request to delete surrounding text.
+ *
+ * @param offset The offset for cursor position.
+ * @param len The length for delete text.
+ */
+void
+HelperAgent::delete_surrounding_text (int offset, int len) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT);
+        m_impl->send.put_data (offset);
+        m_impl->send.put_data (len);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
  * @brief Request to get uuid list of all keyboard ISEs.
  *
  * @param uuid The helper ISE UUID.
@@ -1558,6 +1617,20 @@ Connection
 HelperAgent::signal_connect_update_cursor_position (HelperAgentSlotInt *slot)
 {
     return m_impl->signal_update_cursor_position.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper update surrounding text signal.
+ *
+ * This signal is used to let the Helper get the surrounding text.
+ *
+ * The prototype of the slot is:
+ * void update_surrounding_text (const HelperAgent *agent, int ic, const String &text, int cursor);
+ */
+Connection
+HelperAgent::signal_connect_update_surrounding_text (HelperAgentSlotInt *slot)
+{
+    return m_impl->signal_update_surrounding_text.connect (slot);
 }
 
 /**
@@ -1913,6 +1986,20 @@ Connection
 HelperAgent::signal_connect_candidate_more_window_hide (HelperAgentSlotVoid *slot)
 {
     return m_impl->signal_candidate_more_window_hide.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper select aux signal.
+ *
+ * This signal is used to do something when aux is selected.
+ *
+ * The prototype of the slot is:
+ * void select_aux (const HelperAgent *agent, int ic, const String &uuid, int index);
+ */
+Connection
+HelperAgent::signal_connect_select_aux (HelperAgentSlotInt *slot)
+{
+    return m_impl->signal_select_aux.connect (slot);
 }
 
 /**

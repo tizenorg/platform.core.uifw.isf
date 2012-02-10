@@ -464,6 +464,26 @@ public:
                                    uint32                       value) const;
 
     /**
+     * @ brief Request to get surrounding text.
+     *
+     * @param uuid The helper ISE UUID.
+     * @param maxlen_before The max length of before.
+     * @param maxlen_after The max length of after.
+     */
+    void get_surrounding_text     (const String                &uuid,
+                                   int                          maxlen_before,
+                                   int                          maxlen_after) const;
+
+    /**
+     * @ brief Request to delete surrounding text.
+     *
+     * @param offset The offset for cursor position.
+     * @param len The length for delete text.
+     */
+    void delete_surrounding_text  (int                          offset,
+                                   int                          len) const;
+
+    /**
      * @ brief Set new candidate UI.
      *
      * @param style style of new candidate UI.
@@ -616,7 +636,7 @@ public:
      * void update_spot_location (const HelperAgent *agent, int ic, const String &ic_uuid, int x, int y);
      */
     Connection signal_connect_update_spot_location   (HelperAgentSlotIntInt      *slot);
-    
+
     /**
      * @brief Connect a slot to Helper update cursor position signal.
      *
@@ -626,6 +646,16 @@ public:
      * void update_cursor_position (const HelperAgent *agent, int ic, const String &ic_uuid, int cursor_pos);
      */
     Connection signal_connect_update_cursor_position (HelperAgentSlotInt         *slot);
+
+    /**
+     * @brief Connect a slot to Helper update surrounding text signal.
+     *
+     * This signal is used to let the Helper get the surrounding text.
+     *
+     * The prototype of the slot is:
+     * void update_surrounding_text (const HelperAgent *agent, int ic, const String &text, int cursor);
+     */
+    Connection signal_connect_update_surrounding_text (HelperAgentSlotInt        *slot);
 
     /**
      * @brief Connect a slot to Helper trigger property signal.
@@ -881,6 +911,16 @@ public:
      * void candidate_more_window_hide (const HelperAgent *agent, int ic, const String &uuid);
      */
     Connection signal_connect_candidate_more_window_hide        (HelperAgentSlotVoid                *slot);
+
+    /**
+     * @brief Connect a slot to Helper select aux signal.
+     *
+     * This signal is used to do something when aux is selected.
+     *
+     * The prototype of the slot is:
+     * void select_aux (const HelperAgent *agent, int ic, const String &uuid, int index);
+     */
+    Connection signal_connect_select_aux                        (HelperAgentSlotInt                 *slot);
 
     /**
      * @brief Connect a slot to Helper select candidate signal.

@@ -127,8 +127,6 @@ static Evas_Object * create_inner_layout (void *data)
     struct appdata *ad = (struct appdata *)data;
     Evas_Object *bx = NULL ;
     Evas_Object *ef = NULL ;
-    Evas_Object *en = NULL ;
-
     Evas_Object *parent = ad->naviframe;
 
     bx = elm_box_add (parent);

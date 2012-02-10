@@ -46,6 +46,9 @@ typedef Signal1<void, int>
 typedef Signal2<void, int, int>
         PanelClientSignalInt;
 
+typedef Signal3<void, int, int, int>
+        PanelClientSignalIntInt;
+
 typedef Signal2<void, int, const String &>
         PanelClientSignalString;
 
@@ -92,6 +95,8 @@ class PanelClient::PanelClientImpl
     PanelClientSignalVoid                       m_signal_show_preedit_string;
     PanelClientSignalVoid                       m_signal_hide_preedit_string;
     PanelClientSignalStringAttrs                m_signal_update_preedit_string;
+    PanelClientSignalIntInt                     m_signal_get_surrounding_text;
+    PanelClientSignalIntInt                     m_signal_delete_surrounding_text;
 
 public:
     PanelClientImpl ()
@@ -351,6 +356,22 @@ public:
                         }
                     }
                     break;
+                case SCIM_TRANS_CMD_GET_SURROUNDING_TEXT:
+                    {
+                        uint32 maxlen_before;
+                        uint32 maxlen_after;
+                        if (recv.get_data (maxlen_before) && recv.get_data (maxlen_after))
+                            m_signal_get_surrounding_text ((int) context, (int)maxlen_before, (int)maxlen_after);
+                    }
+                    break;
+                case SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT:
+                    {
+                        uint32 offset;
+                        uint32 len;
+                        if (recv.get_data (offset) && recv.get_data (len))
+                            m_signal_delete_surrounding_text ((int) context, (int)offset, (int)len);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -476,6 +497,14 @@ public:
         if (m_send_refcount > 0 && m_current_icid == icid) {
             m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_CURSOR_POSITION);
             m_send_trans.put_data ((uint32) cursor_pos);
+        }
+    }
+    void update_surrounding_text (int icid, const WideString &str, int cursor)
+    {
+        if (m_send_refcount > 0 && m_current_icid == icid) {
+            m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT);
+            m_send_trans.put_data (utf8_wcstombs (str));
+            m_send_trans.put_data ((uint32) cursor);
         }
     }
     void show_preedit_string    (int icid)
@@ -629,6 +658,8 @@ public:
         m_signal_show_preedit_string.reset();
         m_signal_hide_preedit_string.reset();
         m_signal_update_preedit_string.reset();
+        m_signal_get_surrounding_text.reset();
+        m_signal_delete_surrounding_text.reset();
     }
 
     Connection signal_connect_reload_config                 (PanelClientSlotVoid                    *slot)
@@ -724,6 +755,17 @@ public:
     {
         return m_signal_update_preedit_string.connect (slot);
     }
+
+    Connection signal_connect_get_surrounding_text          (PanelClientSlotIntInt                  *slot)
+    {
+        return m_signal_get_surrounding_text.connect (slot);
+    }
+
+    Connection signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot)
+    {
+        return m_signal_delete_surrounding_text.connect (slot);
+    }
+
 private:
     void launch_panel (const String &config, const String &display) const
     {
@@ -838,6 +880,11 @@ void
 PanelClient::update_cursor_position (int icid, int cursor_pos)
 {
     m_impl->update_cursor_position (icid, cursor_pos);
+}
+void
+PanelClient::update_surrounding_text (int icid, const WideString &str, int cursor)
+{
+    m_impl->update_surrounding_text (icid, str, cursor);
 }
 void
 PanelClient::show_preedit_string    (int icid)
@@ -1064,6 +1111,17 @@ PanelClient::signal_connect_update_preedit_string         (PanelClientSlotString
     return m_impl->signal_connect_update_preedit_string (slot);
 }
 
+Connection
+PanelClient::signal_connect_get_surrounding_text          (PanelClientSlotIntInt                  *slot)
+{
+    return m_impl->signal_connect_get_surrounding_text (slot);
+}
+
+Connection
+PanelClient::signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot)
+{
+    return m_impl->signal_connect_delete_surrounding_text (slot);
+}
 
 } /* namespace scim */
 

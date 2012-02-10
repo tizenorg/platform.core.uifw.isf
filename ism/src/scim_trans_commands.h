@@ -563,6 +563,7 @@ const int SCIM_TRANS_CMD_RELOAD_CONFIG                    = 314;
 const int SCIM_TRANS_CMD_UPDATE_SCREEN                    = 400;
 const int SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION             = 401;
 const int ISM_TRANS_CMD_UPDATE_CURSOR_POSITION            = 402;
+const int ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT           = 403;
 
 //Privately used by panel.
 const int SCIM_TRANS_CMD_PANEL_EXIT                       = 500;

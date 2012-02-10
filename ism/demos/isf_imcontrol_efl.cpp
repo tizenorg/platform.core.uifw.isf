@@ -38,7 +38,6 @@ enum {
     INPUT_PANEL_PRIVATE_KEY_SET,
     INPUT_PANEL_KEY_DISABLED_SET,
     INPUT_PANEL_STATE_GET,
-    INPUT_PANEL_MOVE,
     CONTROL_PANEL_SHOW,
     CONTROL_PANEL_HIDE,
 };
@@ -54,7 +53,6 @@ const char *api_list[]={
     "PANEL PRIVATE KEY SET",
     "PANEL KEY DISABLED SET",
     "INPUT PANEL STATE GET",
-    "INPUT PANEL MOVE",
     "CTRL PANEL SHOW",
     "CTRL PANEL HIDE",
 };
@@ -164,13 +162,6 @@ void test_control_panel_hide (void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-void test_input_panel_move (void *data, Evas_Object *obj, void *event_info)
-{
-    if (imf_context != NULL) {
-        ecore_imf_context_input_panel_move (imf_context, 100, 100);
-    }
-}
-
 char *gli_label_get (void *data, Evas_Object *obj, const char *part)
 {
     int j = (int)data;
@@ -210,9 +201,6 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
         break;
     case INPUT_PANEL_STATE_GET:
         test_input_panel_state_get (NULL, obj, event_info);
-        break;
-    case INPUT_PANEL_MOVE:
-        test_input_panel_move (NULL, obj, event_info);
         break;
     case CONTROL_PANEL_SHOW:
         test_control_panel_show (NULL, obj, event_info);

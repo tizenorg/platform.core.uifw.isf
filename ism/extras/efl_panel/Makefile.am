@@ -28,12 +28,13 @@ bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
                          isf_panel_utility.cpp
 
-isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ @VCONF_CFLAGS@ @HEYNOTI_CFLAGS@
+isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ @VCONF_CFLAGS@ @HEYNOTI_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@
 
 isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @VCONF_LIBS@ \
                          @HEYNOTI_LIBS@ \
-                         @X11_LIBS@
+                         @X11_LIBS@ \
+                         @PRIVILEGE_CONTROL_LIBS@
 
 isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
 

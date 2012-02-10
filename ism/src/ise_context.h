@@ -35,7 +35,7 @@ typedef struct {
     int fUseImEffect;
     Ecore_IMF_Input_Panel_Lang language;
     Ecore_IMF_Input_Panel_Layout layout;
-    Ecore_IMF_Input_Panel_Orient orient;
+    int orient;
     unsigned int disabled_key_num;
     unsigned int private_key_num;
     int input_panel_x;

@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include "scim_private.h"
 #include "scim.h"
+#include <privilege-control.h>
 
 using namespace scim;
 
@@ -43,6 +44,8 @@ int main (int argc, char *argv [])
     String helper;
     String uuid;
     bool   daemon = false;
+
+    control_privilege ();
 
     char *p =  getenv ("DISPLAY");
     if (p) display = String (p);

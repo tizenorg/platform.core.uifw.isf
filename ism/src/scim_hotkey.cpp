@@ -101,7 +101,7 @@ HotkeyMatcher::get_all_hotkeys (KeyEventList &keys, std::vector <int> &ids) cons
 }
 
 size_t
-HotkeyMatcher::find_hotkeys     (int id, KeyEventList &keys) const
+HotkeyMatcher::find_hotkeys (int id, KeyEventList &keys) const
 {
     keys.clear ();
 
@@ -155,12 +155,12 @@ HotkeyMatcher::get_match_result (void) const
     return m_impl->m_result;
 }
 
-//===================== IMEngineHotkeyMatcher =======================
+/*===================== IMEngineHotkeyMatcher =======================*/
 class IMEngineHotkeyMatcher::IMEngineHotkeyMatcherImpl
 {
 public:
     HotkeyMatcher        m_matcher;
-    std::vector <ISEInfo> m_uuids;
+    std::vector<ISEInfo> m_uuids;
 };
 
 IMEngineHotkeyMatcher::IMEngineHotkeyMatcher ()
@@ -219,30 +219,12 @@ IMEngineHotkeyMatcher::load_hotkeys (const ConfigPointer &config)
         }
     }
     uuids.clear ();
-
-    scim_split_string_list (uuids, config->read (String (SCIM_CONFIG_HOTKEYS_NEWISE_LIST), String ("")));
-
-    std::sort (uuids.begin (), uuids.end ());
-    uuids.erase (std::unique (uuids.begin (), uuids.end ()), uuids.end ());
-
-    if (uuids.size ()) {
-        KeyEventList keys;
-        for (std::vector <String>::iterator uit = uuids.begin (); uit != uuids.end (); ++uit) {
-            if (scim_string_to_key_list (keys, config->read (String (SCIM_CONFIG_HOTKEYS_NEWISE "/") + *uit, String ("")))) {
-                ISEInfo info;
-                info.type = NEWISE_T;
-                info.uuid = *uit;
-                m_impl->m_matcher.add_hotkeys (keys, (int) m_impl->m_uuids.size ());
-                m_impl->m_uuids.push_back (info);
-            }
-        }
-    }
 }
 
 void
 IMEngineHotkeyMatcher::save_hotkeys (const ConfigPointer &config) const
 {
-    if (config.null () || !config->valid () /*|| !m_impl->m_uuids.size ()*/) return;//liushuo
+    if (config.null () || !config->valid () /*|| !m_impl->m_uuids.size ()*/) return;
 
     std::vector <String> uuids;
     KeyEventList keys;
@@ -250,7 +232,7 @@ IMEngineHotkeyMatcher::save_hotkeys (const ConfigPointer &config) const
     std::vector <String> i_uuids;
     std::vector <String> n_uuids;
     std::vector <String> h_uuids;
-//-------------------clear  imengine hotkeys in config file --------------------
+    /* Clear imengine hotkeys in config file */
     scim_split_string_list (uuids, config->read (String (SCIM_CONFIG_HOTKEYS_IMENGINE_LIST), String ("")));
 
     std::sort (uuids.begin (), uuids.end ());
@@ -258,29 +240,12 @@ IMEngineHotkeyMatcher::save_hotkeys (const ConfigPointer &config) const
 
     if (uuids.size ()) {
         for (std::vector <String>::iterator uit = uuids.begin (); uit != uuids.end (); ++uit)
-        {
             config->write (String (SCIM_CONFIG_HOTKEYS_IMENGINE "/") + *uit, "");
-        }
     }
 
     config->write (String (SCIM_CONFIG_HOTKEYS_IMENGINE_LIST), "");
-    uuids.clear();
-//---------------clear new ise hotkeys  in config file--------------------------
-    scim_split_string_list (uuids, config->read (String (SCIM_CONFIG_HOTKEYS_NEWISE_LIST), String ("")));
-
-    std::sort (uuids.begin (), uuids.end ());
-    uuids.erase (std::unique (uuids.begin (), uuids.end ()), uuids.end ());
-
-    if (uuids.size ()) {
-        for (std::vector <String>::iterator uit = uuids.begin (); uit != uuids.end (); ++uit)
-        {
-            config->write (String (SCIM_CONFIG_HOTKEYS_NEWISE "/") + *uit, "");
-        }
-    }
-
-    config->write (String (SCIM_CONFIG_HOTKEYS_NEWISE_LIST), "");
     uuids.clear ();
-//-----------------clear helper hotkeys  in config file----------------------------
+    /* Clear helper hotkeys  in config file */
     scim_split_string_list (uuids, config->read (String (SCIM_CONFIG_HOTKEYS_HELPER_LIST), String ("")));
 
     std::sort (uuids.begin (), uuids.end ());
@@ -288,24 +253,19 @@ IMEngineHotkeyMatcher::save_hotkeys (const ConfigPointer &config) const
 
     if (uuids.size ()) {
         for (std::vector <String>::iterator uit = uuids.begin (); uit != uuids.end (); ++uit)
-        {
             config->write (String (SCIM_CONFIG_HOTKEYS_HELPER "/") + *uit, "");
-        }
     }
 
     config->write (String (SCIM_CONFIG_HOTKEYS_HELPER_LIST), "");
     uuids.clear ();
 
-//---------------------- save to config --------------------------------------------
+    /* Save to config */
     for (size_t i = 0; i < m_impl->m_uuids.size (); ++i) {
         if (m_impl->m_matcher.find_hotkeys ((int) i, keys) > 0 && scim_key_list_to_string (keystr, keys)) {
             ISE_TYPE type = m_impl->m_uuids [i].type;
             if (type == IMENGINE_T) {
                 config->write (String (SCIM_CONFIG_HOTKEYS_IMENGINE "/") + m_impl->m_uuids [i].uuid, keystr);
                 i_uuids.push_back (m_impl->m_uuids [i].uuid);
-            } else if (type == NEWISE_T) {
-                config->write (String (SCIM_CONFIG_HOTKEYS_NEWISE "/") + m_impl->m_uuids [i].uuid, keystr);
-                n_uuids.push_back (m_impl->m_uuids [i].uuid);
             } else if (type == HELPER_T) {
                 config->write (String (SCIM_CONFIG_HOTKEYS_HELPER "/") + m_impl->m_uuids [i].uuid, keystr);
                 h_uuids.push_back (m_impl->m_uuids [i].uuid);
@@ -314,12 +274,11 @@ IMEngineHotkeyMatcher::save_hotkeys (const ConfigPointer &config) const
     }
 
     config->write (String (SCIM_CONFIG_HOTKEYS_IMENGINE_LIST), scim_combine_string_list (i_uuids));
-    config->write (String (SCIM_CONFIG_HOTKEYS_NEWISE_LIST), scim_combine_string_list (n_uuids));
     config->write (String (SCIM_CONFIG_HOTKEYS_HELPER_LIST), scim_combine_string_list (h_uuids));
 }
 
 void
-IMEngineHotkeyMatcher::add_hotkey(const KeyEvent &key, const String &uuid, const ISE_TYPE &type)
+IMEngineHotkeyMatcher::add_hotkey (const KeyEvent &key, const String &uuid, const ISE_TYPE &type)
 {
     if (key.empty () || !uuid.length ()) return;
 
@@ -336,7 +295,6 @@ IMEngineHotkeyMatcher::add_hotkey(const KeyEvent &key, const String &uuid, const
         info.uuid = uuid;
         m_impl->m_uuids.push_back (info);
     }
-
 
     m_impl->m_matcher.add_hotkey (key, i);
 }
@@ -426,7 +384,7 @@ IMEngineHotkeyMatcher::get_match_result (void) const
     return ISEInfo ();
 }
 
-//============================ FrontEndHotkeyMatcher ==========================
+/*============================ FrontEndHotkeyMatcher ==========================*/
 static const char *__scim_frontend_hotkey_config_paths [] =
 {
     0,
@@ -454,7 +412,7 @@ static const char *__scim_frontend_hotkey_defaults [] =
 class FrontEndHotkeyMatcher::FrontEndHotkeyMatcherImpl
 {
 public:
-    HotkeyMatcher        m_matcher;
+    HotkeyMatcher m_matcher;
 };
 
 FrontEndHotkeyMatcher::FrontEndHotkeyMatcher ()
@@ -476,7 +434,7 @@ FrontEndHotkeyMatcher::load_hotkeys (const ConfigPointer &config)
 
     KeyEventList keys;
 
-    // Load the least important hotkeys first.
+    /* Load the least important hotkeys first */
     for (int i = SCIM_FRONTEND_HOTKEY_SHOW_FACTORY_MENU; i >= SCIM_FRONTEND_HOTKEY_TRIGGER; --i) {
         if (scim_string_to_key_list (keys, config->read (String (__scim_frontend_hotkey_config_paths [i]), String (__scim_frontend_hotkey_defaults [i]))))
             m_impl->m_matcher.add_hotkeys (keys, i);
@@ -570,7 +528,7 @@ FrontEndHotkeyMatcher::get_match_result (void) const
     return SCIM_FRONTEND_HOTKEY_NOOP;
 }
 
-} // namespace scim
+} /* namespace scim */
 
 /*
 vi:ts=4:nowrap:ai:expandtab

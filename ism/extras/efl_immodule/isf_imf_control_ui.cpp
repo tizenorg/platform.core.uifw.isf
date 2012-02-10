@@ -64,7 +64,6 @@ static Ecore_Timer       *hide_timer = NULL;
 
 Ecore_IMF_Context        *input_panel_ctx = NULL;
 
-
 static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 {
     Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
@@ -86,15 +85,20 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
     return ECORE_CALLBACK_PASS_ON;
 }
 
-static void _save_current_xid (Evas *evas)
+static void _save_current_xid (Ecore_IMF_Context *ctx)
 {
     Ecore_X_Window xid = 0, rootwin_xid = 0;
     Ecore_Evas *ee = NULL;
+    Evas *evas = NULL;
+
+    evas = (Evas *)ecore_imf_context_client_canvas_get(ctx);
 
     if (evas) {
         ee = ecore_evas_ecore_evas_get (evas);
         if (ee)
             xid = (Ecore_X_Window)ecore_evas_window_get (ee);
+    } else {
+        xid = (Ecore_X_Window)ecore_imf_context_client_window_get (ctx);
     }
 
     if (xid == 0)
@@ -106,25 +110,6 @@ static void _save_current_xid (Evas *evas)
     ecore_x_window_prop_property_set (rootwin_xid, isf_active_window_atom, ((Ecore_X_Atom) 33), 32, &xid, 1);
     ecore_x_flush ();
     ecore_x_sync ();
-}
-
-static Ecore_IMF_Input_Panel_Orient _orient_get (Evas *evas)
-{
-    Ecore_Evas *ee = NULL;
-    int degree;
-    Ecore_IMF_Input_Panel_Orient orient;
-
-    if (!evas)
-        return ECORE_IMF_INPUT_PANEL_ORIENT_NONE;
-    ee = ecore_evas_ecore_evas_get (evas);
-    if (!ee)
-        return ECORE_IMF_INPUT_PANEL_ORIENT_NONE;
-
-    degree = ecore_evas_rotation_get (ee);
-
-    orient = (Ecore_IMF_Input_Panel_Orient)(degree % 360 / 90);
-
-    return orient;
 }
 
 static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
@@ -161,7 +146,7 @@ static void _isf_imf_context_init (void)
     iseContext.IfFullStyle  = FALSE;
     iseContext.state        = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
     iseContext.language     = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
-    iseContext.orient       = ECORE_IMF_INPUT_PANEL_ORIENT_NONE;
+    iseContext.orient       = 0;
     iseContext.fUseImEffect = TRUE;
 
     if (!IfInitContext) {
@@ -280,7 +265,6 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     void *list_data = NULL;
     void *offset = NULL;
     void *packet = NULL;
-    Evas *evas = NULL;
 
     input_panel_ctx = ctx;
 
@@ -324,12 +308,6 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     iseContext.private_key_num = eina_list_count (private_key_list);
     IMFCONTROLUIDBG("private key_num : %d\n", iseContext.private_key_num);
 
-    evas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
-
-    if (evas) {
-        iseContext.orient = _orient_get (evas);
-    }
-
     /* calculate packet size */
     length = sizeof (iseContext);
     length += iseContext.disabled_key_num * sizeof (Disable_Key_Item);
@@ -363,7 +341,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     }
 
     /* Set the current XID of the active window into the root window property */
-    _save_current_xid (evas);
+    _save_current_xid (ctx);
 
     iseContext.state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
 

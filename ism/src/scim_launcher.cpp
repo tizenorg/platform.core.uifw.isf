@@ -32,12 +32,16 @@
 #define Uses_SCIM_CONFIG
 #define Uses_C_LOCALE
 #define Uses_SCIM_UTILITY
+#define Uses_SCIM_PANEL_AGENT
+
 #include "scim_private.h"
 #include "scim.h"
 #include <sys/types.h>
 #include <sys/times.h>
 #include <unistd.h>
 #include <signal.h>
+#include <privilege-control.h>
+#include "isf_query_utility.h"
 
 using namespace scim;
 
@@ -89,6 +93,8 @@ int main (int argc, char *argv [])
     bool daemon = false;
 
     new_argv [new_argc ++] = argv [0];
+
+    control_privilege ();
 
     while (i < argc) {
         if (++i >= argc) break;
@@ -218,6 +224,9 @@ int main (int argc, char *argv [])
             return 1;
         }
         gettime (clock_start, "Create Config");
+
+        // Create folder for saving engine list
+        scim_make_dir (USER_ENGINE_LIST_PATH);
 
         /* create backend */
         backend = new CommonBackEnd (config, engine_list);

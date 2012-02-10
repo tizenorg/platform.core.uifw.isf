@@ -38,6 +38,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "isf_query_utility.h"
+#include <privilege-control.h>
 
 
 using namespace scim;
@@ -57,6 +58,8 @@ int main (int argc, char *argv[])
     char *isename = NULL;
     int isetype = 0;
     int uninstall = 0;
+
+    control_privilege ();
 
     int i = 1;
     while (i < argc) {
@@ -91,10 +94,13 @@ int main (int argc, char *argv[])
 
     if (access (engine_file_name.c_str (), F_OK | W_OK) != 0) {
         FILE *filp = fopen (engine_file_name.c_str (), "a");
-        if (filp == NULL)
+        if (filp == NULL) {
             engine_file_name = user_file_name;
-        else
+            // Create folder for saving engine list
+            scim_make_dir (USER_ENGINE_LIST_PATH);
+        } else {
             fclose (filp);
+        }
     }
 
     if (uninstall == 1) {

@@ -54,6 +54,7 @@
 #include <vconf.h>
 #include <vconf-keys.h>
 #endif
+#include <privilege-control.h>
 #include "isf_panel_utility.h"
 
 
@@ -69,7 +70,6 @@ using namespace scim;
 #define ISF_CONFIG_PANEL_LOOKUP_TABLE_VERTICAL          "/Panel/Gtk/LookupTableVertical"
 #define ISF_CONFIG_PANEL_LOOKUP_TABLE_STYLE             "/Panel/Gtk/LookupTableStyle"
 #define ISF_CONFIG_PANEL_LOOKUP_TABLE_MODE              "/Panel/Gtk/LookupTableMode"
-#define ISF_CONFIG_HARDWARE_KEYBOARD_DETECT             "/isf/hw_keyboard_detect"
 
 #define ISF_CANDIDATE_TABLE                             0
 
@@ -2843,6 +2843,8 @@ int main (int argc, char *argv [])
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
     Ecore_Event_Handler *xclient_msg_handler = NULL;
     Ecore_Event_Handler *prop_change_handler = NULL;
+
+    control_privilege ();
 
     check_time ("\nStarting ISF Panel EFL...... ");
 

@@ -146,7 +146,6 @@ public:
 };
 
 typedef enum {
-    NEWISE_T,
     HELPER_T,
     IMENGINE_T
 } ISE_TYPE;

@@ -5,7 +5,7 @@ Maintainer: Sehwan Park <sehwan@samsung.com>, Haifeng Deng <haifeng.deng@samsung
 Uploaders: Ji-hoon Lee <dalton.lee@samsung.com>
 Build-Depends: debhelper (>= 5), autotools-dev, pkg-config, libelm-dev, libglib2.0-dev,
  libappcore-efl-dev, libslp-utilx-dev, libslp-setting-dev, libui-gadget-dev, libheynoti-dev,
- libecore-dev, libevas-dev, libx11-dev, dlog-dev
+ libecore-dev, libevas-dev, libx11-dev, dlog-dev, libprivilege-control-dev
 Standards-Version: 3.7.2
 Homepage: http://www.scim-im.org
 

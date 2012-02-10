@@ -750,6 +750,8 @@ public:
 
         unlock ();
 
+        helper_select_aux (item);
+
         return client >= 0;
     }
 
@@ -3452,6 +3454,8 @@ private:
                         socket_update_spot_location ();
                     else if (cmd == ISM_TRANS_CMD_UPDATE_CURSOR_POSITION)
                         socket_update_cursor_position ();
+                    else if (cmd == ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT)
+                        socket_update_surrounding_text ();
                     else if (cmd == SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO)
                         socket_update_factory_info ();
                     else if (cmd == SCIM_TRANS_CMD_SHOW_PREEDIT_STRING)
@@ -3596,6 +3600,10 @@ private:
                     socket_helper_im_embedded_editor_preedit_changed (client_id);
                 } else if(cmd == ISM_TRANS_CMD_LAUNCH_HELPER_ISE_LIST_SELECTION){
                     socket_helper_launch_helper_ise_list_selection();
+                } else if (cmd == SCIM_TRANS_CMD_GET_SURROUNDING_TEXT) {
+                    socket_helper_get_surrounding_text (client_id);
+                } else if (cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT) {
+                    socket_helper_delete_surrounding_text (client_id);
                 }
             }
             socket_transaction_end ();
@@ -3971,6 +3979,41 @@ private:
         if (m_recv_trans.get_data (cursor_pos)) {
             SCIM_DEBUG_MAIN(4) << "New cursor position pos=" << cursor_pos << "\n";
             helper_all_update_cursor_position ((int)cursor_pos);
+        }
+    }
+
+    void socket_update_surrounding_text         (void)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
+
+        String text;
+        uint32 cursor;
+        if (m_recv_trans.get_data (text) && m_recv_trans.get_data (cursor)) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ())
+            {
+                int    client;
+                uint32 context;
+                Socket client_socket (it->second.id);
+                uint32 ctx;
+
+                lock ();
+
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (ctx);
+                m_send_trans.put_data (m_current_helper_uuid);
+                m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT);
+                m_send_trans.put_data (text);
+                m_send_trans.put_data (cursor);
+                m_send_trans.write_to_socket (client_socket);
+
+                unlock ();
+            }
         }
     }
 
@@ -4719,6 +4762,71 @@ private:
         }
     }
 
+    void socket_helper_get_surrounding_text     (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
+
+        String uuid;
+        uint32 maxlen_before;
+        uint32 maxlen_after;
+
+        if (m_recv_trans.get_data (uuid) &&
+            m_recv_trans.get_data (maxlen_before) &&
+            m_recv_trans.get_data (maxlen_after)) {
+
+            int     focused_client;
+            uint32  focused_context;
+            String  focused_uuid;
+
+            focused_uuid = get_focused_context (focused_client, focused_context);
+
+            ClientInfo client_info = socket_get_client_info (focused_client);
+            if (client_info.type == FRONTEND_CLIENT) {
+                Socket socket_client (focused_client);
+                lock ();
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (focused_context);
+                m_send_trans.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT);
+                m_send_trans.put_data (maxlen_before);
+                m_send_trans.put_data (maxlen_after);
+                m_send_trans.write_to_socket (socket_client);
+                unlock ();
+            }
+        }
+    }
+
+    void socket_helper_delete_surrounding_text  (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
+
+        uint32 offset;
+        uint32 len;
+
+        if (m_recv_trans.get_data (offset) && m_recv_trans.get_data (len)) {
+
+            int     focused_client;
+            uint32  focused_context;
+            String  focused_uuid;
+
+            focused_uuid = get_focused_context (focused_client, focused_context);
+
+            ClientInfo client_info = socket_get_client_info (focused_client);
+            if (client_info.type == FRONTEND_CLIENT) {
+                Socket socket_client (focused_client);
+                lock ();
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (focused_context);
+                m_send_trans.put_command (SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT);
+                m_send_trans.put_data (offset);
+                m_send_trans.put_data (len);
+                m_send_trans.write_to_socket (socket_client);
+                unlock ();
+            }
+        }
+    }
+
     void socket_helper_show_preedit_string            (int client)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_helper_show_preedit_string (" << client << ")\n";
@@ -5176,7 +5284,7 @@ private:
         }
     }
 
-     void socket_helper_im_embedded_editor_preedit_changed          (int client)
+    void socket_helper_im_embedded_editor_preedit_changed (int client)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_helper_im_embedded_editor_preedit_changed (" << client << ")\n";
 
@@ -5209,8 +5317,40 @@ private:
         }
     }
 
+    bool helper_select_aux (uint32 item)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_select_aux \n";
 
-    bool helper_select_candidate (uint32         item)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+        {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ())
+            {
+                int    client;
+                uint32 context;
+                Socket client_socket (it->second.id);
+                uint32 ctx;
+
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (ctx);
+                m_send_trans.put_data (m_current_helper_uuid);
+                m_send_trans.put_command (ISM_TRANS_CMD_SELECT_AUX);
+                m_send_trans.put_data ((uint32)item);
+                m_send_trans.write_to_socket (client_socket);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool helper_select_candidate (uint32 item)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_select_candidate \n";
 

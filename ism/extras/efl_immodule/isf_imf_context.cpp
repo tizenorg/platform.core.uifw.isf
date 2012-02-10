@@ -33,11 +33,11 @@
 #include <sys/time.h>
 #include <sys/times.h>
 #include <pthread.h>
+#include <langinfo.h>
 
-#include <Elementary.h>
+#include <Evas.h>
 #include <Ecore_Evas.h>
 #include <Ecore_X.h>
-#include <Edje.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <X11/Xutil.h>
@@ -51,6 +51,10 @@
 #include "scim.h"
 #include "isf_imf_context.h"
 #include "isf_imf_control_ui.h"
+
+#ifndef CODESET
+# define CODESET "INVALID"
+#endif
 
 const double DOUBLE_SPACE_INTERVAL=1.0;
 const int    PREDICTION_ALLOW_SET = 0xa0;
@@ -127,6 +131,12 @@ static void     panel_slot_hide_preedit_string          (int                    
 static void     panel_slot_update_preedit_string        (int                     context,
                                                          const WideString       &str,
                                                          const AttributeList    &attrs);
+static void     panel_slot_get_surrounding_text         (int                     context,
+                                                         int                     maxlen_before,
+                                                         int                     maxlen_after);
+static void     panel_slot_delete_surrounding_text      (int                     context,
+                                                         int                     offset,
+                                                         int                     len);
 
 static void     panel_req_focus_in                      (EcoreIMFContextISF     *ic);
 static void     panel_req_update_factory_info           (EcoreIMFContextISF     *ic);
@@ -157,10 +167,8 @@ static void     open_specific_factory                   (EcoreIMFContextISF     
                                                          const String           &uuid);
 static void     initialize_modifier_bits                (Display *display);
 static unsigned int scim_x11_keymask_scim_to_x11        (Display *display, uint16 scimkeymask);
-static XKeyEvent createKeyEvent                         (Display *display, const Window &win,
-                                                         const Window &winRoot, bool press,
-                                                         int keycode, int modifiers);
-static void     _x_send_key_event                       (const KeyEvent &key);
+static XKeyEvent createKeyEvent                         (bool press, int keycode, int modifiers, bool fake);
+static void     send_x_key_event                        (const KeyEvent &key, bool fake);
 
 static void     attach_instance                         (const IMEngineInstancePointer &si);
 
@@ -484,7 +492,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
             break;
     }
 
-    for (i=0; i < punc_num; i++) {
+    for (i = 0; i < punc_num; i++) {
         uni_puncs[i] = eina_unicode_utf8_to_unicode(puncs[i], NULL);
     }
 
@@ -497,7 +505,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
     }
 
     // Convert into plain string
-    plain_str = elm_entry_markup_to_utf8(markup_str);
+    plain_str = evas_textblock_text_markup_to_utf8(NULL, markup_str);
     if (!plain_str) goto done;
 
     // Convert string from utf8 to unicode
@@ -524,7 +532,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
         tail = eina_unicode_strndup(ustr+cursor_pos-2, 2);
 
         if (tail) {
-            for (i=0; i < punc_num; i++) {
+            for (i = 0; i < punc_num; i++) {
                 if (!eina_unicode_strcmp(tail, uni_puncs[i])) {
                     ret = EINA_TRUE;
                     break;
@@ -540,7 +548,7 @@ done:
     if (markup_str) free(markup_str);
     if (plain_str) free(plain_str);
 
-    for (i=0; i < punc_num; i++) {
+    for (i = 0; i < punc_num; i++) {
         if (uni_puncs[i]) free(uni_puncs[i]);
     }
 
@@ -620,11 +628,6 @@ isf_imf_context_new (void)
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     int val;
-    Ecore_X_Display  *display = ecore_x_display_get ();
-    if (!display) {
-        std::cerr << "ecore_x_display_get () failed !!!";
-        return NULL;
-    }
 
     EcoreIMFContextISF *context_scim = new EcoreIMFContextISF;
     if (context_scim == NULL) {
@@ -1104,9 +1107,6 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
         if (context_scim->impl->preedit_updating)
             return;
 
-        if (!context_scim->impl->client_canvas)
-            return;
-
         if (context_scim->impl->cursor_pos != cursor_pos) {
             context_scim->impl->cursor_pos = cursor_pos;
 
@@ -1148,13 +1148,15 @@ isf_imf_context_cursor_location_set (Ecore_IMF_Context *ctx, int cx, int cy, int
         if (context_scim->impl->preedit_updating)
             return;
 
-        if (!context_scim->impl->client_canvas)
-            return;
+        if (context_scim->impl->client_canvas) {
+            ee = ecore_evas_ecore_evas_get(context_scim->impl->client_canvas);
 
-        ee = ecore_evas_ecore_evas_get(context_scim->impl->client_canvas);
-        if (!ee) return;
-
-        ecore_evas_geometry_get (ee, &canvas_x, &canvas_y, NULL, NULL);
+            if (ee)
+                ecore_evas_geometry_get (ee, &canvas_x, &canvas_y, NULL, NULL);
+        }
+        else if (context_scim->impl->client_window) {
+            ecore_x_window_geometry_get(context_scim->impl->client_window, &canvas_x, &canvas_y, NULL, NULL);
+        }
 
         if (context_scim->impl->cursor_x != canvas_x + cx || context_scim->impl->cursor_y != canvas_y + cy + ch) {
             context_scim->impl->cursor_x     = canvas_x + cx;
@@ -1463,7 +1465,6 @@ isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapi
  * the event was not handled), but there is no obligation of any events to be
  * submitted to this function.
  */
-
 EAPI Eina_Bool
 isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type, Ecore_IMF_Event *event)
 {
@@ -1482,6 +1483,8 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
+        if (isupper(key.code))
+            key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT) key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL) key.mask |=SCIM_KEY_ControlMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT) key.mask |=SCIM_KEY_AltMask;
@@ -1492,6 +1495,8 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
         key.mask = SCIM_KEY_ReleaseMask;
+        if (isupper(key.code))
+            key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT) key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL) key.mask |=SCIM_KEY_ControlMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT) key.mask |=SCIM_KEY_AltMask;
@@ -1670,44 +1675,124 @@ panel_slot_select_candidate (int context, int cand_index)
     }
 }
 
-static const char *
-get_sw_keyname (const char *key_string)
+static int
+_keyname_to_keycode(const char *keyname)
 {
-    const static char *SW_KEY_NAMES[][2] = {
-        {"0x1008ff84", "XF86XK_UserPB"},
-        {"0x1008ff85", "XF86XK_User1KB"},
-        {"0x1008ff86", "XF86XK_User2KB"},
-    };
-    const char* key_name = key_string;
-    int loop;
-    if (key_string) {
-        for (loop = 0; ((unsigned int)loop) < (sizeof (SW_KEY_NAMES) / sizeof (SW_KEY_NAMES[0])); loop++) {
-            if (!strcmp (key_string, SW_KEY_NAMES[loop][0])) {
-                key_name = SW_KEY_NAMES[loop][1];
-                break;
-            }
-        }
+    int keycode = 0;
+    int keysym;
+    Display *display = (Display *)ecore_x_display_get();
+
+    keysym = XStringToKeysym(keyname);
+
+    if (!strncmp(keyname, "Keycode-", 8))
+        keycode = atoi(keyname + 8);
+    else {
+        keycode = XKeysymToKeycode(display, keysym);
     }
-    return key_name;
+
+    return keycode;
 }
 
 static void
-feed_key_event (Evas *evas, const char *str, Eina_Bool fake)
+send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
 {
-    char key_string[128] = {0};
+    char *keyname;
+    char *key;
+    char key_string[256] = {0};
+    char *keysym_str;
+    char compose_buffer[256] = {0};
+    const char *str = scim_key.get_key_string().c_str();
+    char *compose = NULL;
     unsigned int timestamp = 0;
+    int shift = 0;
+    int val;
+    KeySym keysym;
+    ::KeyCode keycode;
+    XKeyEvent xkey;
+
+    Display *display = (Display *)ecore_x_display_get ();
+
+    if (!evas) return;
 
     if (!fake)
         timestamp = get_time ();
 
-    if (strncmp (str, "KeyRelease+", 11) == 0) {
-        strncpy(key_string, str + 11, strlen(str)-11);
-        evas_event_feed_key_up (evas, key_string, get_sw_keyname(key_string), NULL, NULL, timestamp, NULL);
-        SCIM_DEBUG_FRONTEND(1) << "    evas_event_feed_key_up ()...\n";
-    } else {
+    if (scim_key.is_key_press ()) {
         strncpy(key_string, str, strlen(str));
-        evas_event_feed_key_down (evas, key_string, get_sw_keyname(key_string), NULL, NULL, timestamp, NULL);
+    } else {
+        if (strncmp (str, "KeyRelease+", 11) == 0) {
+            strncpy(key_string, str + 11, strlen(str)-11);
+        }
+    }
+
+    if (strncmp (key_string, "Shift+", 6) == 0) {
+        keysym_str = key_string + 6;
+    }
+    else {
+        keysym_str = key_string;
+    }
+
+    // get x keysym, keycode, keyname, and key
+    keysym = XStringToKeysym(keysym_str);
+    if (keysym == NoSymbol)
+        return;
+
+    keycode = _keyname_to_keycode(keysym_str);
+    keyname = XKeysymToString(XKeycodeToKeysym(display, keycode, 0));
+    key = keysym_str;
+
+    // check modifier
+    if (XKeycodeToKeysym(display, keycode, 0) != keysym) {
+        if (XKeycodeToKeysym(display, keycode, 1) == keysym)
+            shift = 1;
+        else
+            keycode = 0;
+    }
+    else
+        shift = 0;
+
+    unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, scim_key.mask);
+
+    if (shift)
+        modifier |= ShiftMask;
+
+    // get keystring
+    xkey = createKeyEvent(scim_key.is_key_press(), keycode, modifier, False);
+    val = XLookupString (&xkey, compose_buffer, sizeof(compose_buffer), NULL, 0);
+
+    if (val > 0) {
+        compose_buffer[val] = 0;
+        compose = eina_str_convert(nl_langinfo(CODESET), "UTF-8",
+                                   compose_buffer);
+    }
+
+    if (!keyname)
+        keyname = key;
+
+    // feed key event
+    if (scim_key.is_key_press()) {
+        evas_event_feed_key_down (evas, keyname, key, compose, compose, timestamp, NULL);
         SCIM_DEBUG_FRONTEND(1) << "    evas_event_feed_key_down ()...\n";
+    } else {
+        evas_event_feed_key_up (evas, keyname, key, compose, compose, timestamp, NULL);
+        SCIM_DEBUG_FRONTEND(1) << "    evas_event_feed_key_up ()...\n";
+    }
+
+    if (compose)
+        free(compose);
+}
+
+static void
+feed_key_event (EcoreIMFContextISF *ic, const KeyEvent &key, bool fake)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (!ic || !ic->impl) return;
+
+    if (ic->impl->client_canvas) {
+        send_evas_key_event(ic->impl->client_canvas, key, fake);
+    } else {
+        send_x_key_event(key, fake);
     }
 }
 
@@ -1717,9 +1802,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
-    if (ic && ic->impl && ic->impl->client_canvas) {
-        feed_key_event(ic->impl->client_canvas, key.get_key_string().c_str(), EINA_FALSE);
-    }
+    feed_key_event (ic, key, false);
 }
 
 static void
@@ -1745,8 +1828,7 @@ panel_slot_forward_key_event (int context, const KeyEvent &key)
     if (strlen (key.get_key_string ().c_str ()) >= 116)
         return;
 
-    if (ic && ic->impl && ic->impl->client_canvas)
-        feed_key_event (ic->impl->client_canvas, key.get_key_string ().c_str (), EINA_TRUE);
+    feed_key_event (ic, key, true);
 }
 
 static void
@@ -1896,6 +1978,35 @@ panel_slot_update_preedit_string (int context,
                 _panel_client.update_preedit_string (ic->id, str, attrs);
             }
         }
+    }
+}
+
+static void
+panel_slot_get_surrounding_text (int context, int maxlen_before, int maxlen_after)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = find_ic (context);
+
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+        int cursor = 0;
+        WideString text = WideString ();
+        slot_get_surrounding_text (ic->impl->si, text, cursor, maxlen_before, maxlen_after);
+        _panel_client.prepare (ic->id);
+        _panel_client.update_surrounding_text (ic->id, text, cursor);
+        _panel_client.send ();
+    }
+}
+
+static void
+panel_slot_delete_surrounding_text (int context, int offset, int len)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = find_ic (context);
+
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+        slot_delete_surrounding_text (ic->impl->si, offset, len);
     }
 }
 
@@ -2335,6 +2446,8 @@ initialize (void)
     _panel_client.signal_connect_show_preedit_string           (slot (panel_slot_show_preedit_string));
     _panel_client.signal_connect_hide_preedit_string           (slot (panel_slot_hide_preedit_string));
     _panel_client.signal_connect_update_preedit_string         (slot (panel_slot_update_preedit_string));
+    _panel_client.signal_connect_get_surrounding_text          (slot (panel_slot_get_surrounding_text));
+    _panel_client.signal_connect_delete_surrounding_text       (slot (panel_slot_delete_surrounding_text));
 
     if (!panel_initialize ()) {
         std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";
@@ -2612,51 +2725,99 @@ static unsigned int scim_x11_keymask_scim_to_x11 (Display *display, uint16 scimk
     return state;
 }
 
-static XKeyEvent createKeyEvent (Display *display, const Window &win,
-                                 const Window &winRoot, bool press,
-                                 int keycode, int modifiers)
+static XKeyEvent createKeyEvent (bool press, int keycode, int modifiers, bool fake)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     XKeyEvent event;
+    Window focus_win;
+    Display *display = (Display *)ecore_x_display_get ();
+    int revert = RevertToParent;
+
+    XGetInputFocus (display, &focus_win, &revert);
 
     event.display     = display;
-    event.window      = win;
-    event.root        = winRoot;
+    event.window      = focus_win;
+    event.root        = DefaultRootWindow (display);
     event.subwindow   = None;
-    event.time        = CurrentTime;
+    if (fake)
+        event.time    = 0;
+    else
+        event.time    = get_time();
+
     event.x           = 1;
     event.y           = 1;
     event.x_root      = 1;
     event.y_root      = 1;
-    event.same_screen = EINA_TRUE;
+    event.same_screen = True;
     event.state       = modifiers;
-    event.keycode     = XKeysymToKeycode (display, keycode);
+    event.keycode     = keycode;
     if (press)
         event.type = KeyPress;
     else
         event.type = KeyRelease;
-    event.send_event  = EINA_FALSE;
+    event.send_event  = False;
     event.serial = 0;
 
     return event;
 }
 
-static void _x_send_key_event (const KeyEvent &key)
+static void send_x_key_event (const KeyEvent &key, bool fake)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    //std::cout << "[slot_send_key_event] code : " << key.code << " mask : " << key.mask << "\n";
+    ::KeyCode keycode = 0;
+    ::KeySym keysym = 0;
+    int shift = 0;
+    const char *key_string;
 
     // Obtain the X11 display.
-    Display *display = XOpenDisplay (NULL);
+    Display *display = (Display *)ecore_x_display_get ();
     if (display == NULL) {
-        std::cerr << "XOpenDisplay failed\n";
+        std::cerr << "ecore_x_display_get () failed\n";
         return;
     }
 
-    // Get the root window for the current display.
-    Window winRoot = 0;// = XRootWindow (display, 1);
+    if (strncmp (key.get_key_string().c_str(), "KeyRelease+", 11) == 0) {
+        key_string = key.get_key_string().c_str() + 11;
+    } else {
+        key_string = key.get_key_string().c_str();
+    }
+
+    keysym = XStringToKeysym(key_string);
+    if (keysym == NoSymbol)
+        return;
+
+    keycode = _keyname_to_keycode(key_string);
+    if (XKeycodeToKeysym(display, keycode, 0) != keysym) {
+        if (XKeycodeToKeysym(display, keycode, 1) == keysym)
+            shift = 1;
+        else
+            keycode = 0;
+    }
+    else
+        shift = 0;
+
+    if (keycode == 0) {
+        static int mod = 0;
+        KeySym *keysyms;
+        int keycode_min, keycode_max, keycode_num;
+        int i;
+
+        XDisplayKeycodes(display, &keycode_min, &keycode_max);
+        keysyms = XGetKeyboardMapping(display, keycode_min,
+                keycode_max - keycode_min + 1,
+                &keycode_num);
+        mod = (mod + 1) & 0x7;
+        i = (keycode_max - keycode_min - mod - 1) * keycode_num;
+
+        keysyms[i] = keysym;
+        XChangeKeyboardMapping(display, keycode_min, keycode_num,
+                keysyms, (keycode_max - keycode_min));
+        XFree(keysyms);
+        XSync(display, False);
+        keycode = keycode_max - mod - 1;
+    }
 
     // Find the window which has the current keyboard focus.
     Window winFocus = 0;
@@ -2669,16 +2830,28 @@ static void _x_send_key_event (const KeyEvent &key)
     XMapWindow (display, winFocus);
 
     unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, key.mask);
+
+    if (shift)
+        modifier |= ShiftMask;
+
     XKeyEvent event;
     if (key.is_key_press ()) {
-        event = createKeyEvent (display, winFocus, winRoot, true, key.code, modifier);
+        if (shift) {
+            event = createKeyEvent (true, XKeysymToKeycode(display, XK_Shift_L), modifier, fake);
+            XSendEvent (event.display, event.window, True, KeyPressMask, (XEvent *)&event);
+        }
+
+        event = createKeyEvent (true, keycode, modifier, fake);
         XSendEvent (event.display, event.window, True, KeyPressMask, (XEvent *)&event);
     } else {
-        event = createKeyEvent (display, winFocus, winRoot, false, key.code, modifier);
+        event = createKeyEvent (false, keycode, modifier, fake);
         XSendEvent (event.display, event.window, True, KeyReleaseMask, (XEvent *)&event);
-    }
 
-    XCloseDisplay (display);
+        if (shift) {
+            event = createKeyEvent (false, XKeysymToKeycode(display, XK_Shift_L), modifier, fake);
+            XSendEvent (event.display, event.window, True, KeyReleaseMask, (XEvent *)&event);
+        }
+    }
 }
 
 static void
@@ -2750,7 +2923,6 @@ slot_show_preedit_string (IMEngineInstanceBase *si)
         if (ic->impl->use_preedit) {
             if (!ic->impl->preedit_started) {
                 ecore_imf_context_preedit_start_event_add (_focused_ic->ctx);
-                //ecore_x_window_background_color_set ((Ecore_X_Window)(_focused_ic->impl->client_window), 0, 128, 128);
                 ic->impl->preedit_started = true;
             }
             //if (ic->impl->preedit_string.length ())
@@ -2917,7 +3089,7 @@ slot_forward_key_event (IMEngineInstanceBase *si,
 
     if (ic && _focused_ic == ic) {
         if (!_fallback_instance->process_key_event (key)) {
-            _x_send_key_event(key);
+            feed_key_event (ic, key, true);
         }
     }
 }
@@ -3027,8 +3199,10 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
         if (ecore_imf_context_surrounding_get (_focused_ic->ctx, &surrounding, &cursor_index)) {
             SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
             SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
-            WideString before (utf8_mbstowcs (String (surrounding, surrounding + cursor_index)));
-            WideString after (utf8_mbstowcs (String (surrounding + cursor_index)));
+            WideString before = utf8_mbstowcs (String (surrounding));
+            before = before.substr (0, cursor_index);
+            WideString after = utf8_mbstowcs (String (surrounding));
+            after =  after.substr (cursor_index, after.length () - cursor_index);
             if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
                 before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());
             else if (maxlen_before == 0) before = WideString ();

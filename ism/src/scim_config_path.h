@@ -60,8 +60,6 @@ namespace scim {
 #define SCIM_CONFIG_HOTKEYS_IMENGINE_LIST                           "/Hotkeys/IMEngine/List"
 #define SCIM_CONFIG_HOTKEYS_HELPER                                  "/Hotkeys/Helper"
 #define SCIM_CONFIG_HOTKEYS_HELPER_LIST                             "/Hotkeys/Helper/List"
-#define SCIM_CONFIG_HOTKEYS_NEWISE                                  "/Hotkeys/NewISE"
-#define SCIM_CONFIG_HOTKEYS_NEWISE_LIST                             "/Hotkeys/NewISE/List"
 
 #define SCIM_CONFIG_FILTER_FILTERED_IMENGINES                       "/Filter/FilteredIMEngines"
 #define SCIM_CONFIG_FILTER_FILTERED_IMENGINES_LIST                  "/Filter/FilteredIMEngines/List"
@@ -104,6 +102,9 @@ namespace scim {
 #define SCIM_PREDICTION_ENGINE_CONFIG_QWERTY_NEXT_WORD_PREDIECTION                "/QWERTY/next_word_prediction"
 #define SCIM_PREDICTION_ENGINE_CONFIG_QWERTY_AUTO_SUBSTITUTION                    "/QWERTY/auto_substitution"
 #define SCIM_PREDICTION_ENGINE_CONFIG_QWERTY_REGIONAL_INPUT                       "/QWERTY/regional_input"
+
+#define ISF_CONFIG_HARDWARE_KEYBOARD_DETECT                         "/isf/hw_keyboard_detect"
+
 /** @} */
 
 } // namespace scim
