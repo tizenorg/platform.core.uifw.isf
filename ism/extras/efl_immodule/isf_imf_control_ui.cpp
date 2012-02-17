@@ -41,7 +41,6 @@ using namespace scim;
 #define IMFCONTROLUIDBG(str...)
 #define IMFCONTROLUIERR(str...) printf(str)
 
-
 typedef struct {
     void (*func)(void *data, Ecore_IMF_Context *ctx, int value);
     void *data;
@@ -404,7 +403,7 @@ EAPI void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, uns
  * @param[in] data pointer of data to sets up to ISE
  * @param[in] length length of data
  */
-EAPI void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const char* data, int length)
+EAPI void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const void* data, int length)
 {
     IMFCONTROLUIDBG("[%s] data : %s, len : %d\n", __func__, data, length);
 
@@ -422,22 +421,12 @@ EAPI void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const 
  * @param[out] data pointer of data to return
  * @param[out] length length of data
  */
-EAPI void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, char* data, int* length)
+EAPI void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
     _isf_imf_context_input_panel_imdata_get (data, length);
     IMFCONTROLUIDBG("[%s] imdata : %s, len : %d\n", __func__, data, *length);
-}
-
-EAPI void isf_imf_context_input_panel_move (Ecore_IMF_Context *ctx, int x, int y)
-{
-    IMFCONTROLUIDBG("[%s] x : %d, y : %d\n", __func__, x, y);
-
-    if (!IfInitContext)
-        _isf_imf_context_init ();
-    iseContext.input_panel_x = x;
-    iseContext.input_panel_x = y;
 }
 
 /**

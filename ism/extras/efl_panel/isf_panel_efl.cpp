@@ -161,7 +161,6 @@ static void       change_hw_and_sw_keyboard            (void);
 static Evas_Object       *_candidate_window                 = 0;
 static Evas_Object       *_candidate_area_1                 = 0;
 static Evas_Object       *_candidate_area_2                 = 0;
-static Evas_Object       *_candidate_toolbar                = 0;
 static Evas_Object       *_candidate_bg                     = 0;
 static Evas_Object       *_candidate_0_scroll               = 0;
 static Evas_Object       *_candidate_scroll                 = 0;
@@ -217,9 +216,6 @@ static int                _candidate_scroll_width_max       = 663;
 static int                _candidate_scroll_height_min      = 124;
 static int                _candidate_scroll_height_max      = 190;
 
-static Elm_Toolbar_Item  *_candidate_table_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
-static Elm_Toolbar_Item  *_candidate_seperator_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
-
 static Evas_Object       *_aux_area                         = 0;
 static Evas_Object       *_aux_line                         = 0;
 static Evas_Object       *_aux_table                        = 0;
@@ -266,7 +262,6 @@ static std::vector<Ecore_Fd_Handler *> _read_handler_list;
 
 static ISF_CANDIDATE_STYLE_T _candidate_style               = PREDICTION_ENGINE_CANDIDATE_STYLE;
 static ISF_CANDIDATE_MODE_T  _candidate_mode                = PORTRAIT_VERTICAL_CANDIDATE_MODE;
-static bool                  _candidate_vertical            = true;
 
 static clock_t            _clock_start;
 
@@ -467,7 +462,6 @@ static void load_config (void)
     if (!_config.null ()) {
         _candidate_style    = (ISF_CANDIDATE_STYLE_T)_config->read (String (ISF_CONFIG_PANEL_LOOKUP_TABLE_STYLE), _candidate_style);
         _candidate_mode     = (ISF_CANDIDATE_MODE_T)_config->read (String (ISF_CONFIG_PANEL_LOOKUP_TABLE_MODE), _candidate_mode);
-        _candidate_vertical = _config->read (String (ISF_CONFIG_PANEL_LOOKUP_TABLE_VERTICAL), _candidate_vertical);
         shared_ise          = _config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), shared_ise);
         _panel_agent->set_should_shared_ise (shared_ise);
     }
@@ -529,7 +523,7 @@ static void ui_candidate_window_adjust (void)
 
     /* Get candidate window size */
     evas_object_geometry_get (_candidate_window, &x, &y, &width, &height);
-    if (_candidate_vertical) {
+    {
         if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
             evas_object_show (_aux_line);
             ui_candidate_window_resize (width, _candidate_port_height_min_2);
@@ -572,19 +566,6 @@ static void ui_candidate_window_adjust (void)
                 evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
             }
         }
-    } else {
-        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
-            evas_object_show (_aux_line);
-            ui_candidate_window_resize (width, _candidate_port_height_min_2);
-            evas_object_move (_candidate_area_1, 0, _candidate_port_height_min_2 - _candidate_port_height_min);
-        } else if (evas_object_visible_get (_aux_area)) {
-            evas_object_hide (_aux_line);
-            ui_candidate_window_resize (width, _aux_height);
-        } else if (evas_object_visible_get (_candidate_area_1)) {
-            evas_object_hide (_aux_line);
-            ui_candidate_window_resize (width, _candidate_port_height_min);
-            evas_object_move (_candidate_area_1, 0, 0);
-        }
     }
 }
 
@@ -602,29 +583,17 @@ static void ui_candidate_window_rotate (int angle)
     elm_win_rotation_set (_candidate_window, angle);
     ui_candidate_hide (true);
     if (angle == 90 || angle == 270) {
-        if (_candidate_vertical) {
-            _candidate_scroll_width = _candidate_scroll_width_max;
-            ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
-            evas_object_resize (_aux_area, _aux_land_width, _aux_height);
-            evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_max, _item_min_height);
-            evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_min);
-        } else {
-            evas_object_resize (_candidate_window, _screen_height, _candidate_land_height_min);
-            evas_object_resize (_candidate_area_1, _screen_height, _candidate_land_height_min);
-            evas_object_resize (_aux_area, _screen_height - 2*_blank_width, _aux_height);
-        }
+        _candidate_scroll_width = _candidate_scroll_width_max;
+        ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
+        evas_object_resize (_aux_area, _aux_land_width, _aux_height);
+        evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_max, _item_min_height);
+        evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_min);
     } else {
-        if (_candidate_vertical) {
-            _candidate_scroll_width = _candidate_scroll_width_min;
-            ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
-            evas_object_resize (_aux_area, _aux_port_width, _aux_height);
-            evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_min, _item_min_height);
-            evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_max);
-        } else {
-            evas_object_resize (_candidate_window, _screen_width, _candidate_port_height_min);
-            evas_object_resize (_candidate_area_1, _screen_width, _candidate_port_height_min);
-            evas_object_resize (_aux_area, _screen_width - 2*_blank_width, _aux_height);
-        }
+        _candidate_scroll_width = _candidate_scroll_width_min;
+        ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
+        evas_object_resize (_aux_area, _aux_port_width, _aux_height);
+        evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_min, _item_min_height);
+        evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_max);
     }
 
     /* Delete old candidate items and popup lines */
@@ -1021,24 +990,6 @@ static void ui_more_window_candidate_item_click_cb (void *data, Evas_Object *obj
 }
 
 /**
- * @brief Callback function for horizontal candidate item is clicked.
- *
- * @param data Data to pass when it is called.
- * @param object The Evas_Object handler for current event.
- * @param event_info The information for current event.
- */
-static void ui_horizontal_candidate_item_click_cb (void *data, Evas_Object *object, void *event_info)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    _panel_agent->select_candidate ((uint32)GPOINTER_TO_INT (data));
-    Elm_Toolbar_Item *it = elm_toolbar_selected_item_get (_candidate_toolbar);
-
-    if (it)
-        elm_toolbar_item_selected_set (it, EINA_FALSE);
-}
-
-/**
  * @brief Create more window for candidate.
  */
 static void ui_create_more_window (void)
@@ -1144,10 +1095,8 @@ static void ui_create_more_window (void)
 
 /**
  * @brief Create prediction engine style candidate window.
- *
- * @param vertical An indicator for vertical window or horizontal window.
  */
-static void ui_create_prediction_engine_candidate_window (bool vertical)
+static void ui_create_prediction_engine_candidate_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -1238,18 +1187,19 @@ static void ui_create_prediction_engine_candidate_window (bool vertical)
         _candidate_window = efl_create_window ("candidate", "Prediction Window");
         evas_object_resize (_candidate_window, _screen_width, _candidate_port_height_min);
 
-        if (vertical) {
+        {
             evas_object_resize (_candidate_window, _candidate_port_width, _candidate_port_height_min);
 
             /* Add background */
             _candidate_bg = edje_object_add (evas_object_evas_get (_candidate_window));
             edje_object_file_set (_candidate_bg, _candidate_edje_file.c_str (), "candidate_bg");
+            evas_object_size_hint_weight_set(_candidate_bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
             elm_win_resize_object_add (_candidate_window, _candidate_bg);
             evas_object_show (_candidate_bg);
 
             /* Create _candidate_0 scroller */
             _candidate_0_scroll = elm_scroller_add (_candidate_window);
-            elm_scroller_bounce_set (_candidate_0_scroll, 1, 0);
+            elm_scroller_bounce_set (_candidate_0_scroll, EINA_TRUE, EINA_FALSE);
             elm_scroller_policy_set (_candidate_0_scroll, ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_OFF);
             evas_object_resize (_candidate_0_scroll, _candidate_scroll_0_width_min, _item_min_height);
             evas_object_move (_candidate_0_scroll, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
@@ -1294,24 +1244,6 @@ static void ui_create_prediction_engine_candidate_window (bool vertical)
             evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
             evas_object_resize (_close_btn, 84 * _width_rate, _item_min_height);
             evas_object_event_callback_add (_close_btn, EVAS_CALLBACK_MOUSE_UP, ui_candidate_window_close_button_cb, NULL);
-        } else {
-            /* Add background */
-            Evas_Object *bg = elm_bg_add (_candidate_window);
-            evas_object_size_hint_weight_set (bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-            elm_bg_file_set (bg, EFL_CANDIDATE_BG, NULL);
-            elm_win_resize_object_add (_candidate_window, bg);
-            evas_object_show (bg);
-
-            /* Create candidate toolbar */
-            _candidate_toolbar = elm_toolbar_add (_candidate_window);
-            elm_toolbar_mode_shrink_set(_candidate_toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
-            elm_toolbar_homogeneous_set (_candidate_toolbar, 0);
-            elm_toolbar_align_set (_candidate_toolbar, 0);
-            evas_object_size_hint_weight_set (_candidate_toolbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-            evas_object_size_hint_align_set (_candidate_toolbar, EVAS_HINT_FILL, EVAS_HINT_FILL);
-            evas_object_resize (_candidate_toolbar, _screen_width, _candidate_port_height_min);
-            evas_object_move (_candidate_toolbar, 0, 0);
-            _candidate_area_1 = _candidate_toolbar;
         }
 
         _tmp_candidate_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
@@ -1328,10 +1260,7 @@ static void ui_create_prediction_engine_candidate_window (bool vertical)
         _aux_area = elm_scroller_add (_candidate_window);
         elm_scroller_bounce_set (_aux_area, 1, 0);
         elm_scroller_policy_set (_aux_area, ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_OFF);
-        if (vertical)
-            evas_object_resize (_aux_area, _aux_port_width, _aux_height);
-        else
-            evas_object_resize (_aux_area, _screen_width - 2*_blank_width, _aux_height);
+        evas_object_resize (_aux_area, _aux_port_width, _aux_height);
         evas_object_move (_aux_area, _blank_width, 0);
 
         _aux_table = elm_table_add (_candidate_window);
@@ -1357,9 +1286,8 @@ static void ui_create_prediction_engine_candidate_window (bool vertical)
  * @brief Create candidate window.
  *
  * @param style The candidate window style.
- * @param vertical An indicator for vertical window or horizontal window.
  */
-static void ui_create_candidate_window (ISF_CANDIDATE_STYLE_T style, bool vertical)
+static void ui_create_candidate_window (ISF_CANDIDATE_STYLE_T style)
 {
     check_time ("\nEnter ui_create_candidate_window");
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
@@ -1368,7 +1296,7 @@ static void ui_create_candidate_window (ISF_CANDIDATE_STYLE_T style, bool vertic
 
     _candidate_angle = 0;
 
-    ui_create_prediction_engine_candidate_window (vertical);
+    ui_create_prediction_engine_candidate_window ();
 
     check_time ("Exit ui_create_candidate_window");
 }
@@ -1393,16 +1321,6 @@ static void ui_destroy_candidate_window (void)
         if (_candidate_items [i]) {
             evas_object_del (_candidate_items [i]);
             _candidate_items [i] = NULL;
-        }
-
-        if (_candidate_table_items [i]) {
-            elm_toolbar_item_del (_candidate_table_items [i]);
-            _candidate_table_items [i] = NULL;
-        }
-
-        if (_candidate_seperator_items [i]) {
-            elm_toolbar_item_del (_candidate_seperator_items [i]);
-            _candidate_seperator_items [i] = NULL;
         }
     }
 
@@ -1516,17 +1434,9 @@ static void ui_settle_candidate_window (void)
     }
 
     if (_candidate_angle == 90 || _candidate_angle == 270) {
-        if (_candidate_vertical) {
-            spot_y = (_screen_height - width) / 2;
-        } else {
-            spot_y = 0;
-        }
+        spot_y = (_screen_height - width) / 2;
     } else {
-        if (_candidate_vertical) {
-            spot_x = (_screen_width - width) / 2;
-        } else {
-            spot_x = 0;
-        }
+        spot_x = (_screen_width - width) / 2;
     }
 
     if (spot_x != x || spot_y != y) {
@@ -1761,7 +1671,7 @@ static void slot_focus_in (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (!_candidate_window) {
-        ui_create_candidate_window (_candidate_style, _candidate_vertical);
+        ui_create_candidate_window (_candidate_style);
     }
 }
 
@@ -2000,8 +1910,7 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
  * @param table_items The table items for candidate or associate.
  * @param seperator_items The seperator items for candidate or associate.
  */
-static void update_table (const int table_type, const LookupTable &table,
-                          Elm_Toolbar_Item *table_items[], Elm_Toolbar_Item *seperator_items[])
+static void update_table (const int table_type, const LookupTable &table)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -2011,7 +1920,7 @@ static void update_table (const int table_type, const LookupTable &table,
     int i, x, y, width, height, item_width, item_number, item_0_width;
     int item_num = table.get_current_page_size ();
 
-    if (_candidate_vertical) {
+    {
         _more_list.clear ();
 
         if (_candidate_angle == 90 || _candidate_angle == 270)
@@ -2098,33 +2007,6 @@ static void update_table (const int table_type, const LookupTable &table,
 
             ui_more_window_update ();
         }
-    } else {
-        for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
-            if (i < item_num) {
-                wcs = table.get_candidate_in_current_page (i);
-                mbs = utf8_wcstombs (wcs);
-
-                if (table_items [i]) {
-                    elm_toolbar_item_label_set (table_items [i], mbs.c_str ());
-                } else {
-                    if (i > 0) {
-                        seperator_items [i] = elm_toolbar_item_append (_candidate_toolbar, NULL, mbs.c_str (), NULL, NULL);
-                        elm_toolbar_item_separator_set (seperator_items [i], 1);
-                    }
-
-                    table_items [i] = elm_toolbar_item_append (_candidate_toolbar, NULL, mbs.c_str (), ui_horizontal_candidate_item_click_cb, GINT_TO_POINTER (i));
-                }
-            } else {
-                if (table_items [i]) {
-                    elm_toolbar_item_del (table_items [i]);
-                    table_items [i] = NULL;
-                }
-                if (seperator_items [i]) {
-                    elm_toolbar_item_del (seperator_items [i]);
-                    seperator_items [i] = NULL;
-                }
-            }
-        }
     }
 }
 
@@ -2147,7 +2029,7 @@ static void slot_update_candidate_table (const LookupTable &table)
         slot_show_candidate_table ();
     }
 
-    update_table (ISF_CANDIDATE_TABLE, table, _candidate_table_items, _candidate_seperator_items);
+    update_table (ISF_CANDIDATE_TABLE, table);
 }
 
 /**
@@ -3039,8 +2921,6 @@ int main (int argc, char *argv [])
     for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; i++) {
         _candidate_0 [i]     = NULL;
         _candidate_items [i] = NULL;
-        _candidate_table_items [i]     = NULL;
-        _candidate_seperator_items [i] = NULL;
     }
 
     efl_get_screen_size (_screen_width, _screen_height);

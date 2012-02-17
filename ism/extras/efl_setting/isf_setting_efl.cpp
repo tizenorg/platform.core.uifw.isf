@@ -63,7 +63,6 @@ using namespace scim;
 #define SETTING_LOCALEDIR                         "/opt/ug/res/locale"
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
 
-
 enum {
     F_CONNECTION_AUTO = 0,
     F_CONNECTION_ALWAYS_USED,
@@ -134,7 +133,6 @@ extern std::vector <String>  _uuids;
 extern std::vector <String>  _module_names;
 extern std::vector <String>  _langs;
 
-
 static Evas_Object *_gl_icon_get(void *data, Evas_Object *obj, const char *part);
 static char *_gl_label_get(void *data, Evas_Object *obj, const char *part);
 static Eina_Bool _gl_state_get(void *data, Evas_Object *obj, const char *part);
@@ -153,14 +151,14 @@ static void _hw_radio_cb (void *data, Evas_Object *obj, void *event_info);
 static Evas_Object *_create_bg(Evas_Object *win)
 {
     Evas_Object *bg = elm_bg_add(win);
-    evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_weight_set (bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_show(bg);
     return bg;
 }
 
 static Evas_Object *create_fullview (Evas_Object *parent, struct ug_data *ugd)
 {
-    Evas_Object *bg = _create_bg(parent);
+    Evas_Object *bg = _create_bg (parent);
     Evas_Object *layout_main = NULL;
     layout_main = elm_layout_add (parent);
 
@@ -168,7 +166,7 @@ static Evas_Object *create_fullview (Evas_Object *parent, struct ug_data *ugd)
         return NULL;
 
     elm_layout_theme_set (layout_main, "layout", "application", "default");
-    elm_object_style_set(bg, "group_list");
+    elm_object_style_set (bg, "group_list");
     elm_object_part_content_set (layout_main, "elm.swallow.bg", bg);
 
     return layout_main;
@@ -176,13 +174,13 @@ static Evas_Object *create_fullview (Evas_Object *parent, struct ug_data *ugd)
 
 static Evas_Object *create_frameview (Evas_Object *parent, struct ug_data *ugd)
 {
-    Evas_Object *bg = _create_bg(parent);
+    Evas_Object *bg = _create_bg (parent);
     Evas_Object *layout_main = elm_layout_add (parent);
     if (layout_main == NULL)
         return NULL;
 
     elm_layout_theme_set (layout_main, "layout", "application", "default");
-    elm_object_style_set(bg, "group_list");
+    elm_object_style_set (bg, "group_list");
     elm_object_part_content_set (layout_main, "elm.swallow.bg", bg);
     return layout_main;
 }
@@ -353,9 +351,9 @@ static void sw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, vo
 static void update_isf_setting_main_view(ug_data *ugd)
 {
     p_items[SW_KEYBOARD_SEL_ITEM]->sub_text = strdup(_active_ise_name);
-    elm_genlist_item_data_set(ugd->sw_ise_item_tizen,p_items[SW_KEYBOARD_SEL_ITEM]);
+    elm_object_item_data_set (ugd->sw_ise_item_tizen, p_items[SW_KEYBOARD_SEL_ITEM]);
     p_items[HW_KEYBOARD_SEL_ITEM]->sub_text = strdup(_active_hw_ise_name);
-    elm_genlist_item_data_set(ugd->hw_ise_item_tizen,p_items[HW_KEYBOARD_SEL_ITEM]);
+    elm_object_item_data_set (ugd->hw_ise_item_tizen, p_items[HW_KEYBOARD_SEL_ITEM]);
 }
 
 static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
@@ -411,32 +409,32 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
     std::vector<String> langlist_vec,normal_langlist_vec;
     scim_split_string_list(langlist_vec,langlist_str);
     normal_langlist_str = ((scim_get_language_name(langlist_vec[0].c_str())).c_str()) ;
-    for (unsigned int i = 1;i<langlist_vec.size();i++) {
+    for (unsigned int i = 1; i < langlist_vec.size(); i++) {
         normal_langlist_str += String(", ");
         normal_langlist_str += ((scim_get_language_name(langlist_vec[i].c_str())).c_str());
     }
 
     Evas_Object *scroller = elm_scroller_add(common_ugd->naviframe);
-    elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_FALSE);
+    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_FALSE);
 
     Evas_Object* layout = elm_layout_add(common_ugd->naviframe);
-    elm_layout_file_set(layout, ISF_SETTING_EDJ, "isfsetting/languageview");
+    elm_layout_file_set (layout, ISF_SETTING_EDJ, "isfsetting/languageview");
 
     Evas_Object *label = elm_label_add(layout);
-    elm_label_line_wrap_set(label, ELM_WRAP_WORD);
+    elm_label_line_wrap_set (label, ELM_WRAP_WORD);
 
     Evas_Coord win_w = 0, win_h = 0;
     ecore_x_window_size_get(ecore_x_window_root_first_get(), &win_w, &win_h);
-    elm_label_wrap_width_set(label, win_w - PADDING_X * 2);
-    elm_object_text_set(label, normal_langlist_str.c_str());
-    elm_object_part_content_set(layout, "content", label);
+    elm_label_wrap_width_set (label, win_w - PADDING_X * 2);
+    elm_object_text_set (label, normal_langlist_str.c_str());
+    elm_object_part_content_set (layout, "content", label);
 
     elm_object_content_set (scroller, layout);
 
     //Push the layout along with function buttons and title
     Elm_Object_Item *it = elm_naviframe_item_push(common_ugd->naviframe, _T(sw_iselist[index].c_str()), NULL, NULL, scroller, NULL);
 
-    Evas_Object *back_btn = elm_object_item_content_part_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
     evas_object_smart_callback_add (back_btn, "clicked", lang_view_back_cb, NULL);
 
     common_ugd->key_end_cb = lang_view_back_cb;
@@ -465,7 +463,7 @@ static Evas_Object *_gl_icon_get(void *data, Evas_Object *obj, const char *part)
         Evas_Object *onoff_ck = elm_check_add(obj);
         elm_object_style_set (onoff_ck, "on&off");
         if (item_data->mode == AUTO_CAPITALIZATION_ITEM) {
-            elm_check_state_set(onoff_ck,f_auto_capitalization);
+            elm_check_state_set (onoff_ck,f_auto_capitalization);
         }
         evas_object_smart_callback_add (onoff_ck, "changed", _onoff_cb, (void *)(item_data->mode));
         return onoff_ck;
@@ -486,8 +484,8 @@ static void _gl_del(void *data, Evas_Object *obj)
 
 static void _gl_sw_ise_sel(void *data, Evas_Object *obj, void *event_info)
 {
-    Elm_Genlist_Item *item = (Elm_Genlist_Item *)event_info;
-    elm_genlist_item_selected_set(item, EINA_FALSE);
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    elm_genlist_item_selected_set (item, EINA_FALSE);
 
     mark = (int) (data);
     set_active_ise(mark);
@@ -499,8 +497,8 @@ static void _gl_sw_ise_sel(void *data, Evas_Object *obj, void *event_info)
 
 static void _gl_hw_ise_sel(void *data, Evas_Object *obj, void *event_info)
 {
-    Elm_Genlist_Item *item = (Elm_Genlist_Item *)event_info;
-    elm_genlist_item_selected_set(item, EINA_FALSE);
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    elm_genlist_item_selected_set (item, EINA_FALSE);
 
     hw_mark = (int) (data);
     snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", hw_iselist[hw_mark].c_str ());
@@ -512,8 +510,8 @@ static void _gl_hw_ise_sel(void *data, Evas_Object *obj, void *event_info)
 
 static void _gl_sel(void *data, Evas_Object *obj, void *event_info)
 {
-    Elm_Genlist_Item *item = (Elm_Genlist_Item *)event_info;
-    elm_genlist_item_selected_set(item, EINA_FALSE);
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    elm_genlist_item_selected_set (item, EINA_FALSE);
 
     int id = (int) (data);
 
@@ -529,19 +527,19 @@ static void _gl_sel(void *data, Evas_Object *obj, void *event_info)
 
 static void _gl_keyboard_sel(void *data, Evas_Object *obj, void *event_info)
 {
-    Elm_Genlist_Item *item = (Elm_Genlist_Item *)event_info;
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
     ug_data *ugd = (ug_data *)data;
     if (item == ugd->sw_ise_item_tizen)
         sw_keyboard_selection_view_tizen (ugd);
     if (item == ugd->hw_ise_item_tizen)
         hw_keyboard_selection_view_tizen(ugd);
-    elm_genlist_item_selected_set(item, EINA_FALSE);
+    elm_genlist_item_selected_set (item, EINA_FALSE);
     return;
 }
 
 static void _gl_ise_option_sel(void *data, Evas_Object *obj, void *event_info)
 {
-    Elm_Genlist_Item *item = (Elm_Genlist_Item *)event_info;
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
     ug_data *ugd = (ug_data *)data;
     const char *isename = NULL;
     if (item == ugd->sw_ise_opt_item_tizen)
@@ -549,7 +547,7 @@ static void _gl_ise_option_sel(void *data, Evas_Object *obj, void *event_info)
     else
         isename = _active_hw_ise_name;
     show_ise_option_module(ugd, isename);
-    elm_genlist_item_selected_set(item, EINA_FALSE);
+    elm_genlist_item_selected_set (item, EINA_FALSE);
 }
 
 static char *_gl_exp_sw_label_get(void *data, Evas_Object *obj, const char *part)
@@ -579,7 +577,7 @@ static Evas_Object *_gl_exp_sw_icon_get(void *data, Evas_Object *obj, const char
     }
     if (!strcmp(part,"elm.icon.2")) {
         Evas_Object *icon = elm_button_add(obj);
-        elm_object_style_set(icon, "reveal");
+        elm_object_style_set (icon, "reveal");
         evas_object_smart_callback_add (icon, "clicked", show_lang_cb, (void *)(index));
         evas_object_propagate_events_set (icon, EINA_FALSE);//not propagate to genlist item.
         return icon;
@@ -631,7 +629,7 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
     //Push the layout along with function buttons and title
     Elm_Object_Item *it = elm_naviframe_item_push(ugd->naviframe, _T("Selection"), NULL, NULL, genlist, NULL);
 
-    Evas_Object *back_btn = elm_object_item_content_part_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
     evas_object_smart_callback_add (back_btn, "clicked", sw_keyboard_selection_view_set_cb, ugd);
 
     unsigned int i = 0;
@@ -646,13 +644,13 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
     if (sw_iselist.size () > 0) {
         // Set item class for dialogue group seperator
         itcSeparator.item_style = "dialogue/separator/21/with_line";
-        itcSeparator.func.label_get = NULL;
-        itcSeparator.func.icon_get = NULL;
+        itcSeparator.func.text_get = NULL;
+        itcSeparator.func.content_get = NULL;
         itcSeparator.func.state_get = NULL;
         itcSeparator.func.del = NULL;
 
         //separator
-        Elm_Genlist_Item *item;
+        Elm_Object_Item *item;
         item = elm_genlist_item_append(
                     genlist,                // genlist object
                     &itcSeparator,          // item class
@@ -661,7 +659,7 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set(item, EINA_TRUE);
+        elm_genlist_item_display_only_set (item, EINA_TRUE);
     }
 
     for (i = 0; i < sw_iselist.size (); i++) {
@@ -673,8 +671,8 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
 
     //set item class for 1text.1icon(text+radiobutton)
     itc4.item_style = "dialogue/1text.2icon.2";
-    itc4.func.label_get = _gl_exp_sw_label_get;
-    itc4.func.icon_get = _gl_exp_sw_icon_get;
+    itc4.func.text_get = _gl_exp_sw_label_get;
+    itc4.func.content_get = _gl_exp_sw_icon_get;
     itc4.func.state_get = _gl_state_get;
     itc4.func.del = _gl_del;
     for (i = 0;i < sw_iselist.size();i++) {
@@ -750,7 +748,7 @@ static void show_ise_option_module(ug_data *ugd , const char *isename)
 
         Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, title, NULL, NULL, ugd->opt_eo, NULL);
 
-        Evas_Object *back_btn = elm_object_item_content_part_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+        Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
         evas_object_smart_callback_add (back_btn, "clicked", ise_option_view_set_cb, ugd);
         ugd->key_end_cb = ise_option_view_set_cb;
     }
@@ -815,7 +813,7 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
     //Push the layout along with function buttons and title
     Elm_Object_Item *nf_it = elm_naviframe_item_push(ugd->naviframe, _T("Selection"), NULL, NULL, genlist, NULL);
 
-    Evas_Object *back_btn = elm_object_item_content_part_get (nf_it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (nf_it, ELM_NAVIFRAME_ITEM_PREV_BTN);
     evas_object_smart_callback_add (back_btn, "clicked", hw_keyboard_selection_view_set_cb, ugd);
 
     unsigned int i = 0;
@@ -829,13 +827,13 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
     if (hw_iselist.size () > 0) {
         // Set item class for dialogue group seperator
         itcSeparator.item_style = "dialogue/separator/21/with_line";
-        itcSeparator.func.label_get = NULL;
-        itcSeparator.func.icon_get = NULL;
+        itcSeparator.func.text_get = NULL;
+        itcSeparator.func.content_get = NULL;
         itcSeparator.func.state_get = NULL;
         itcSeparator.func.del = NULL;
 
         //separator
-        Elm_Genlist_Item *item;
+        Elm_Object_Item *item;
         item = elm_genlist_item_append(
                     genlist,                // genlist object
                     &itcSeparator,                 // item class
@@ -844,7 +842,7 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set(item, EINA_TRUE);
+        elm_genlist_item_display_only_set (item, EINA_TRUE);
     }
 
     std::vector<String>::iterator it;
@@ -862,8 +860,8 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
 
     //set item class for 1text.1icon(text+radiobutton)
     itc5.item_style = "dialogue/1text.1icon.2";
-    itc5.func.label_get = _gl_exp_hw_label_get;
-    itc5.func.icon_get = _gl_exp_hw_icon_get;
+    itc5.func.text_get = _gl_exp_hw_label_get;
+    itc5.func.content_get = _gl_exp_hw_icon_get;
     itc5.func.state_get = _gl_state_get;
     itc5.func.del = _gl_del;
     for (i = 0;i < hw_iselist.size();i++) {
@@ -875,7 +873,7 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
 
 static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 {
-    Elm_Genlist_Item *item = NULL;
+    Elm_Object_Item *item = NULL;
 
     if (ugd->naviframe == NULL)
     {
@@ -885,36 +883,36 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         Evas_Object *genlist = elm_genlist_add(ugd->naviframe);
         //set item class for 1text.1icon(text+radiobutton)
         itc1.item_style = "dialogue/1text.1icon";
-        itc1.func.label_get = _gl_label_get;
-        itc1.func.icon_get = _gl_icon_get;
+        itc1.func.text_get = _gl_label_get;
+        itc1.func.content_get = _gl_icon_get;
         itc1.func.state_get = _gl_state_get;
         itc1.func.del = _gl_del;
 
         //set item class for 2text(text+subtext)
         itc2.item_style = "dialogue/2text.3";
-        itc2.func.label_get = _gl_label_get;
-        itc2.func.icon_get = NULL;
+        itc2.func.text_get = _gl_label_get;
+        itc2.func.content_get = NULL;
         itc2.func.state_get = _gl_state_get;
         itc2.func.del = _gl_del;
 
         //set item class for normal text(text)
         itc3.item_style = "dialogue/1text";
-        itc3.func.label_get = _gl_label_get;
-        itc3.func.icon_get = NULL;
+        itc3.func.text_get = _gl_label_get;
+        itc3.func.content_get = NULL;
         itc3.func.state_get = _gl_state_get;
         itc3.func.del = _gl_del;
 
         // Set item class for dialogue group seperator
         itcSeparator.item_style = "dialogue/separator/21/with_line";
-        itcSeparator.func.label_get = NULL;
-        itcSeparator.func.icon_get = NULL;
+        itcSeparator.func.text_get = NULL;
+        itcSeparator.func.content_get = NULL;
         itcSeparator.func.state_get = NULL;
         itcSeparator.func.del = NULL;
 
         // Set item class for dialogue group title
         itcTitle.item_style = "dialogue/title";
-        itcTitle.func.label_get = _gl_label_get;
-        itcTitle.func.icon_get = NULL;
+        itcTitle.func.text_get = _gl_label_get;
+        itcTitle.func.content_get = NULL;
         itcTitle.func.state_get = _gl_state_get;
         itcTitle.func.del = _gl_del;
 //==================================group begin =======================
@@ -929,12 +927,12 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set(item, EINA_TRUE);
+        elm_genlist_item_display_only_set (item, EINA_TRUE);
 
 //group1 item1
         item_data = (ItemData *)malloc(sizeof(ItemData));
         if (item_data != NULL) {
-            memset(item_data,0,sizeof(ItemData));
+            memset (item_data, 0, sizeof(ItemData));
             p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
             item_data->text = strdup(_T("Auto capitalization"));
             item_data->mode = AUTO_CAPITALIZATION_ITEM;
@@ -951,7 +949,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 //group2 title
         item_data = (ItemData *)malloc(sizeof(ItemData));
         if (item_data != NULL) {
-            memset(item_data,0,sizeof(ItemData));
+            memset (item_data, 0, sizeof(ItemData));
             p_items[SW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
             item_data->text = strdup(_T("Software keyboard"));
             item = elm_genlist_item_append(
@@ -962,7 +960,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-            elm_genlist_item_display_only_set(item, EINA_TRUE);
+            elm_genlist_item_display_only_set (item, EINA_TRUE);
         }
 
 //group2 item1
@@ -974,7 +972,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 
         item_data = (ItemData *)malloc(sizeof(ItemData));
         if (item_data!=NULL) {
-            memset(item_data,0,sizeof(ItemData));
+            memset (item_data, 0, sizeof(ItemData));
             p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text = strdup(_T("Keyboard selection"));
             item_data->sub_text = strdup(_active_ise_name);
@@ -990,13 +988,13 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     (void *)ugd);
 
             if (is_hw_connected)
-                elm_genlist_item_disabled_set(ugd->sw_ise_item_tizen, EINA_TRUE);
+                elm_object_item_disabled_set (ugd->sw_ise_item_tizen, EINA_TRUE);
         }
 
 //group2 item2
         item_data = (ItemData *)malloc(sizeof(ItemData));
         if (item_data != NULL) {
-            memset(item_data,0,sizeof(ItemData));
+            memset (item_data, 0, sizeof(ItemData));
             p_items[SW_ISE_OPTION_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard option"));
             item_data->mode = SW_ISE_OPTION_ITEM;
@@ -1010,13 +1008,13 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     (void *)ugd);
 
             if (is_hw_connected)
-                elm_genlist_item_disabled_set(ugd->sw_ise_opt_item_tizen,EINA_TRUE);
+                elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
         }
 
 //group3 title
         item_data = (ItemData *)malloc(sizeof(ItemData));
         if (item_data != NULL) {
-            memset(item_data,0,sizeof(ItemData));
+            memset (item_data, 0, sizeof(ItemData));
             p_items[HW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
             item_data->text=strdup(_T("Hardware keyboard"));
             item = elm_genlist_item_append(
@@ -1027,7 +1025,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-            elm_genlist_item_display_only_set(item, EINA_TRUE);
+            elm_genlist_item_display_only_set (item, EINA_TRUE);
         }
 
 //group3 item1
@@ -1045,7 +1043,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 
         item_data = (ItemData *)malloc(sizeof(ItemData));
         if (item_data != NULL) {
-            memset(item_data,0,sizeof(ItemData));
+            memset (item_data, 0, sizeof(ItemData));
             p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text = strdup(_T("Keyboard selection"));
             item_data->sub_text = strdup(_active_hw_ise_name);
@@ -1059,14 +1057,14 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     (void *)ugd);
 
             if (!is_hw_connected)
-                elm_genlist_item_disabled_set(ugd->hw_ise_item_tizen,EINA_TRUE);
+                elm_object_item_disabled_set (ugd->hw_ise_item_tizen,EINA_TRUE);
         }
 //group3 item2
             p_items[HW_ISE_OPTION_ITEM] = NULL;
 
 //==================================group end =========================
         Evas_Object *back_btn = elm_button_add(ugd->naviframe);
-        elm_object_style_set(back_btn, "naviframe/back_btn/default");
+        elm_object_style_set (back_btn, "naviframe/back_btn/default");
         evas_object_smart_callback_add (back_btn, "clicked", back_cb, ugd);
 
         elm_naviframe_item_push (ugd->naviframe, _T("Keyboard"), back_btn, NULL, genlist, NULL);
@@ -1123,10 +1121,10 @@ static void load_config_module (void)
 static void hw_connection_change_cb(ug_data *ugd)
 {
     //enable / disable switch
-    elm_genlist_item_disabled_set(ugd->sw_ise_item_tizen,!elm_genlist_item_disabled_get(ugd->sw_ise_item_tizen));
-    elm_genlist_item_disabled_set(ugd->sw_ise_opt_item_tizen,!elm_genlist_item_disabled_get(ugd->sw_ise_opt_item_tizen));
-    elm_genlist_item_disabled_set(ugd->hw_ise_item_tizen,!elm_genlist_item_disabled_get(ugd->hw_ise_item_tizen));
-    elm_genlist_item_disabled_set(ugd->hw_ise_opt_item_tizen,!elm_genlist_item_disabled_get(ugd->hw_ise_opt_item_tizen));
+    elm_object_item_disabled_set (ugd->sw_ise_item_tizen, !elm_object_item_disabled_get(ugd->sw_ise_item_tizen));
+    elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, !elm_object_item_disabled_get(ugd->sw_ise_opt_item_tizen));
+    elm_object_item_disabled_set (ugd->hw_ise_item_tizen, !elm_object_item_disabled_get(ugd->hw_ise_item_tizen));
+    elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, !elm_object_item_disabled_get(ugd->hw_ise_opt_item_tizen));
 
     if (!is_hw_connected)
     {
@@ -1171,7 +1169,7 @@ static void init_hw_keyboard_listener(ug_data *ugd)
     if (_prop_change_handler) return;
 
     _rootwin = ecore_x_window_root_first_get();
-    ecore_x_event_mask_set(_rootwin, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+    ecore_x_event_mask_set (_rootwin, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 
     _prop_change_handler = ecore_event_handler_add
                             (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, (void *)ugd);
@@ -1424,7 +1422,7 @@ extern "C"
                 continue;
             }
             else{
-                if (mdl->option_reset(_config) == false)
+                if (mdl->option_reset (_config) == false)
                 {
                     printf("mdl %s failed to reset option!\n",module_name);
                     if (mdl)

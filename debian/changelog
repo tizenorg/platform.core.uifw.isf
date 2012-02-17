@@ -1,8 +1,8 @@
-isf (2.3.5009-1slp2+1) unstable; urgency=low
+isf (2.3.5016-1slp2+1) unstable; urgency=low
 
   * upload tizen beta code
   * Git: slp/pkgs/i/isf
-  * Tag: isf_2.3.5009-1slp2+1
+  * Tag: isf_2.3.5016-1slp2+1
 
  -- Jihoon Kim <jihoon48.kim@samsung.com>  Thu, 09 Feb 2012 17:48:05 +0900
 

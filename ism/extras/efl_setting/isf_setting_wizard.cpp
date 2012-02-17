@@ -108,7 +108,7 @@ static Evas_Object *create_fullview (Evas_Object *parent, struct ug_data *ugd)
 
     elm_layout_theme_set (layout_main, "layout","application","default");
     elm_object_style_set(bg, "group_list");
-    elm_layout_content_set (layout_main, "elm.swallow.bg", bg);
+    elm_object_part_content_set (layout_main, "elm.swallow.bg", bg);
 
     return layout_main;
 }
@@ -121,7 +121,7 @@ static Evas_Object *create_frameview (Evas_Object *parent, struct ug_data *ugd)
         return NULL;
     elm_layout_theme_set (layout_main, "layout", "application", "default");
     elm_object_style_set(bg, "group_list");
-    elm_layout_content_set (layout_main, "elm.swallow.bg", bg);
+    elm_object_part_content_set (layout_main, "elm.swallow.bg", bg);
 
     return layout_main;
 }
@@ -138,7 +138,7 @@ static void back_cb (void *data, Evas_Object *obj, void *event_info)
 static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
 {
     Evas_Object *naviframe = elm_naviframe_add (parent);
-    elm_layout_content_set (parent, "elm.swallow.content", naviframe);
+    elm_object_part_content_set (parent, "elm.swallow.content", naviframe);
     evas_object_show (naviframe);
 
     return naviframe;
@@ -224,7 +224,7 @@ static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
 
 static void _gl_sel(void *data, Evas_Object *obj, void *event_info)
 {
-    Elm_Genlist_Item *item = (Elm_Genlist_Item *)event_info;
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
     elm_genlist_item_selected_set(item, 0);
     mark = (int) (data);
     snprintf (_active_ise_name, sizeof (_active_ise_name), "%s", sw_iselist[mark].c_str ());
@@ -328,13 +328,13 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
     if (sw_iselist.size () > 0) {
         // Set item class for dialogue group seperator
         itcSeparator.item_style = "dialogue/separator/21/with_line";
-        itcSeparator.func.label_get = NULL;
-        itcSeparator.func.icon_get = NULL;
+        itcSeparator.func.text_get = NULL;
+        itcSeparator.func.content_get = NULL;
         itcSeparator.func.state_get = NULL;
         itcSeparator.func.del = NULL;
 
         //separator
-        Elm_Genlist_Item *item;
+        Elm_Object_Item *item;
         item = elm_genlist_item_append(
                     genlist,                // genlist object
                     &itcSeparator,          // item class
@@ -355,8 +355,8 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
 
     //set item class for 1text.1icon(text+radiobutton)
     itc1.item_style = "dialogue/1text.1icon.2";
-    itc1.func.label_get = _gl_label_get;
-    itc1.func.icon_get = _gl_icon_get;
+    itc1.func.text_get = _gl_label_get;
+    itc1.func.content_get = _gl_icon_get;
     itc1.func.state_get = _gl_state_get;
     itc1.func.del = _gl_del;
     for (i = 0;i < sw_iselist.size();i++) {
@@ -425,7 +425,7 @@ static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, v
 
     if (ugd->layout_main != NULL) {
         content = isf_setting_main_view_tizen(ugd);
-        elm_layout_content_set (ugd->layout_main, "elm.swallow.content", content);
+        elm_object_part_content_set (ugd->layout_main, "elm.swallow.content", content);
     }
     return (void *)ugd->layout_main;
 }

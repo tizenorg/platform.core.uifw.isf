@@ -230,7 +230,7 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     evas_object_smart_callback_add (_ise_show_button, "clicked", _button_bt, NULL);
 
     Elm_Object_Item *it = elm_naviframe_item_push (ad->naviframe, _("label event demo"), NULL, NULL, layout, NULL);
-    Evas_Object *back_btn = elm_object_item_content_part_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
     evas_object_smart_callback_add (back_btn, "clicked",  nf_back_event_cb, ad );
 }
 
@@ -242,7 +242,7 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
     Evas_Object *li = ad->ev_li;
     if (li == NULL) return;
 
-    Elm_List_Item *it = (Elm_List_Item *)elm_list_selected_item_get (li);
+    Elm_Object_Item *it = (Elm_Object_Item *)elm_list_selected_item_get (li);
 
     if (it != NULL)
         elm_list_item_selected_set (it, EINA_FALSE);

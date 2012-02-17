@@ -40,8 +40,8 @@ extern "C"
 
     int _isf_imf_context_input_panel_language_set (Ecore_IMF_Input_Panel_Lang lang);
 
-    int _isf_imf_context_input_panel_imdata_set (const char *data, int len);
-    int _isf_imf_context_input_panel_imdata_get (char *data, int *len);
+    int _isf_imf_context_input_panel_imdata_set (const void *data, int len);
+    int _isf_imf_context_input_panel_imdata_get (void *data, int *len);
     int _isf_imf_context_input_panel_geometry_get (int *x, int *y, int *w, int *h);
     int _isf_imf_context_input_panel_private_key_set (int layout_index, int key_index, const char *label, const char *value);
     int _isf_imf_context_input_panel_private_key_set_by_image (int layout_index, int key_index, const char *img_path, const char *value);

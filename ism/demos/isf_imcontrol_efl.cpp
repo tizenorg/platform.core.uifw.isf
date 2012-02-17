@@ -35,8 +35,6 @@ enum {
     INPUT_PANEL_IMDATA_GET,
     INPUT_PANEL_LAYOUT_SET,
     INPUT_PANEL_LAYOUT_GET,
-    INPUT_PANEL_PRIVATE_KEY_SET,
-    INPUT_PANEL_KEY_DISABLED_SET,
     INPUT_PANEL_STATE_GET,
     CONTROL_PANEL_SHOW,
     CONTROL_PANEL_HIDE,
@@ -50,8 +48,6 @@ const char *api_list[]={
     "INPUT PANEL IMDATA GET",
     "INPUT PANEL LAYOUT SET",
     "INPUT PANEL LAYOUT GET",
-    "PANEL PRIVATE KEY SET",
-    "PANEL KEY DISABLED SET",
     "INPUT PANEL STATE GET",
     "CTRL PANEL SHOW",
     "CTRL PANEL HIDE",
@@ -121,23 +117,6 @@ void test_input_panel_layout_get (void *data, Evas_Object *obj, void *event_info
     }
 }
 
-void test_input_panel_private_key_set (void *data, Evas_Object *obj, void *event_info)
-{
-    int layout_index = 1;
-
-    if (imf_context != NULL)
-        ecore_imf_context_input_panel_private_key_set (imf_context, layout_index, ECORE_IMF_INPUT_PANEL_KEY_ENTER, NULL, "Go", ECORE_IMF_INPUT_PANEL_KEY_ENTER, NULL);
-}
-
-void test_input_panel_key_disabled_set (void *data, Evas_Object *obj, void *event_info)
-{
-    int layout_index = 1;
-    int key_index    = 1;
-
-    if (imf_context != NULL)
-        ecore_imf_context_input_panel_key_disabled_set (imf_context, layout_index, key_index, EINA_TRUE);
-}
-
 void test_input_panel_state_get (void *data, Evas_Object *obj, void *event_info)
 {
     Ecore_IMF_Input_Panel_State state;
@@ -193,12 +172,6 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
     case INPUT_PANEL_LAYOUT_GET:
         test_input_panel_layout_get (NULL,obj, event_info);
         break;
-    case INPUT_PANEL_PRIVATE_KEY_SET:
-        test_input_panel_private_key_set (NULL, obj, event_info);
-        break;
-    case INPUT_PANEL_KEY_DISABLED_SET:
-        test_input_panel_key_disabled_set (NULL, obj, event_info);
-        break;
     case INPUT_PANEL_STATE_GET:
         test_input_panel_state_get (NULL, obj, event_info);
         break;
@@ -228,8 +201,8 @@ static Evas_Object *_create_imcontrolapi_list (Evas_Object *parent)
     Evas_Object *gl = elm_genlist_add (parent);
 
     itci.item_style     = "default";
-    itci.func.label_get = gli_label_get;
-    itci.func.icon_get  = NULL;
+    itci.func.text_get  = gli_label_get;
+    itci.func.content_get  = NULL;
     itci.func.state_get = NULL;
     itci.func.del       = NULL;
 
@@ -260,7 +233,7 @@ void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
 
     Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("isfimcontrol api"), NULL, NULL, gl, NULL);
 
-    Evas_Object *back_btn = elm_object_item_content_part_get (navi_it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (navi_it, ELM_NAVIFRAME_ITEM_PREV_BTN);
     evas_object_smart_callback_add (back_btn, "clicked", _nf_back_event, ad);
 }
 

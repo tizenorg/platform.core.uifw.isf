@@ -195,20 +195,20 @@ EAPI int _isf_imf_context_input_panel_language_set (Ecore_IMF_Input_Panel_Lang l
     return 0;
 }
 
-EAPI int _isf_imf_context_input_panel_imdata_set (const char *data, int len)
+EAPI int _isf_imf_context_input_panel_imdata_set (const void *data, int len)
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.set_imdata (data, len);
+    _imcontrol_client.set_imdata ((const char *)data, len);
     _imcontrol_client.send ();
     return 0;
 }
 
-EAPI int _isf_imf_context_input_panel_imdata_get (char *data, int *len)
+EAPI int _isf_imf_context_input_panel_imdata_get (void *data, int *len)
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.get_imdata (data, len);
+    _imcontrol_client.get_imdata ((char *)data, len);
     return 0;
 }
 

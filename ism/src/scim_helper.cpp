@@ -148,15 +148,6 @@ public:
     HelperAgentSignalInt                signal_update_associate_table_page_size;
     HelperAgentSignalVoid               signal_reset_ise_context;
     HelperAgentSignalUintVoid           signal_set_screen_direction;
-    HelperAgentSignalRawVoid            signal_set_indicator_char_count;
-    HelperAgentSignalRawVoid            signal_set_im_embedded_editor_im_button_label;
-    HelperAgentSignalRawVoid            signal_set_im_embedded_editor_preset_text;
-    HelperAgentSignalRawVoid            signal_set_im_embedded_editor_text;
-    HelperAgentSignalUintVoid           signal_set_im_embedded_editor_max_length;
-    HelperAgentSignalUintVoid           signal_set_im_embedded_editor_button_senstivity;
-    HelperAgentSignalIntUint            signal_set_im_embedded_editor_progress_bar;
-    HelperAgentSignalGetIMDataVoid      signal_get_im_embedded_editor_text;
-    HelperAgentSignalRawVoid            signal_set_im_indicator_count_label;
     HelperAgentSignalUintVoid           signal_turn_on_log;
 
 public:
@@ -757,92 +748,6 @@ HelperAgent::filter_event ()
                 uint32 direction;
                 if (m_impl->recv.get_data (direction))
                     m_impl->signal_set_screen_direction (this, direction);
-                break;
-            }
-            case ISM_TRANS_CMD_SET_INDICATOR_CHAR_COUNT:
-            {
-                char   *buf = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&buf, len))
-                    m_impl->signal_set_indicator_char_count (this, buf, len);
-                if (buf)
-                    delete [] buf;
-                break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_IM_BUTTON_SET_LABEL:
-            {
-                char   *buf = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&buf, len))
-                    m_impl->signal_set_im_embedded_editor_im_button_label (this, buf, len);
-                if (buf)
-                    delete [] buf;
-                break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_SET_PRESET_TEXT:
-            {
-                char   *buf = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&buf, len))
-                    m_impl->signal_set_im_embedded_editor_preset_text (this, buf, len);
-                if (buf)
-                    delete [] buf;
-                break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_SET_TEXT:
-            {
-                char   *buf = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&buf, len))
-                    m_impl->signal_set_im_embedded_editor_text (this, buf, len);
-                if (buf)
-                    delete [] buf;
-                break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_SET_MAX_LENGTH:
-            {
-                uint32 length;
-
-                if (m_impl->recv.get_data (length))
-                    m_impl->signal_set_im_embedded_editor_max_length (this, length);
-                break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_BUTTON_SENSTIVITY:
-            {
-                uint32 senstivity;
-
-                if (m_impl->recv.get_data (senstivity))
-                    m_impl->signal_set_im_embedded_editor_button_senstivity (this, senstivity);
-                break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_PROGRESS_BAR:
-            {
-                uint32 timeout,is_showing;
-
-                if (m_impl->recv.get_data (timeout) && m_impl->recv.get_data (is_showing) )
-                    m_impl->signal_set_im_embedded_editor_progress_bar (this, timeout,is_showing);
-              break;
-            }
-            case ISM_TRANS_CMD_IM_EMBEDDED_EDITOR_GET_TEXT:
-            {
-                char   *buf = NULL;
-                size_t  len = 0;
-
-                m_impl->signal_get_im_embedded_editor_text (this, &buf, len);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (buf, len);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case ISM_TRANS_CMD_IM_INDICATOR_SET_COUNT_LABEL:
-            {
-                char   *buf = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&buf, len))
-                    m_impl->signal_set_im_indicator_count_label (this, buf, len);
-                if (buf)
-                    delete [] buf;
                 break;
             }
             case ISM_TRANS_CMD_TURN_ON_LOG:

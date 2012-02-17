@@ -66,15 +66,10 @@ extern "C"
         isf_imf_context_cursor_location_set,
         isf_imf_context_input_panel_imdata_set,
         isf_imf_context_input_panel_imdata_get,
-        NULL,                                   /* use effect set */
-        NULL,                                   /* orient_set */
-        isf_imf_context_input_panel_move,
         isf_imf_context_input_panel_geometry_get,
         isf_imf_context_input_panel_private_key_set,
         isf_imf_context_input_panel_key_disabled_set,
-        NULL,                                   /* input_panel_reset */
         isf_imf_context_input_panel_state_get,
-
         isf_imf_context_input_panel_event_callback_add,
         isf_imf_context_input_panel_event_callback_del
     };

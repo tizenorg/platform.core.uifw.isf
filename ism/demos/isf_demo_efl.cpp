@@ -49,7 +49,7 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
     Evas_Object *li = ad->li;
     if (li == NULL) return;
 
-    Elm_List_Item *it = (Elm_List_Item *)elm_list_selected_item_get (li);
+    Elm_Object_Item *it = (Elm_Object_Item *)elm_list_selected_item_get (li);
 
     if (it != NULL)
         elm_list_item_selected_set (it, EINA_FALSE);
@@ -270,7 +270,7 @@ static Evas_Object* create_layout_main (Evas_Object* parent)
 static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
 {
     Evas_Object *naviframe = elm_naviframe_add (parent);
-    elm_layout_content_set (parent, "elm.swallow.content", naviframe);
+    elm_object_part_content_set (parent, "elm.swallow.content", naviframe);
 
     evas_object_show (naviframe);
 

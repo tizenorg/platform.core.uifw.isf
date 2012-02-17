@@ -65,8 +65,8 @@ static void add_layout_to_conformant (void *data, Evas_Object *lay_in, const cha
    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_TRUE);
    evas_object_show (scroller);
 
-   elm_scroller_content_set (scroller, lay_in);
-   elm_conformant_content_set (conform, scroller);
+   elm_object_content_set (scroller, lay_in);
+   elm_object_content_set (conform, scroller);
    elm_naviframe_item_push (ad->naviframe, title, NULL, NULL, conform, NULL);
 }
 

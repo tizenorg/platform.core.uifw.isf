@@ -42,8 +42,8 @@ extern "C"
     void isf_imf_context_control_panel_hide (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Lang lang);
     Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx);
-    void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const char* data, int len);
-    void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, char* data, int* len);
+    void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const void* data, int len);
+    void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* data, int* len);
     void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h);
     void isf_imf_context_input_panel_private_key_set (Ecore_IMF_Context *ctx, int layout_index, int key_index, const char *img_path, const char *label, const char *value);
     void isf_imf_context_input_panel_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout);
@@ -56,7 +56,6 @@ extern "C"
     void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *ctx);
 
     void isf_imf_context_input_panel_key_disabled_set (Ecore_IMF_Context *ctx, int layout_index, int key_index, Eina_Bool disabled);
-    void isf_imf_context_input_panel_move (Ecore_IMF_Context *ctx, int x, int y);
 
 #ifdef __cplusplus
 }
