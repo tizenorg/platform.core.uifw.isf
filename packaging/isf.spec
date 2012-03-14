@@ -3,16 +3,17 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.2.4418
+Version:	2.3.5016
 Release:    1
 Group:      TO_BE/FILLED_IN
-License:    TO_BE/FILLED_IN
-Source0:    %{name}-%{version}.tar.bz2
-BuildRequires:  edje-bin
-BuildRequires:  embryo-bin
+License:    GPLv2
+Source0:    %{name}-%{version}.tar.gz
+BuildRequires:  edje-tools
+BuildRequires:  embryo
 BuildRequires:  gettext-tools
 BuildRequires:  vconf-keys-devel
 BuildRequires:  pkgconfig(appcore-efl)
+BuildRequires:  pkgconfig(libprivilege-control)
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(vconf)
@@ -45,8 +46,7 @@ This package contains ISF header files for ISE development.
 %build
 
 ./bootstrap
-%configure --disable-static \
-		--disable-tray-icon --disable-filter-sctc
+%configure --disable-tray-icon --disable-filter-sctc
 make %{?jobs:-j%jobs}
 
 %install
@@ -58,7 +58,6 @@ rm -rf %{buildroot}
 
 /usr/bin/vconftool set -t string db/isf/input_lang "Automatic" -g 6514
 /usr/bin/vconftool set -t string db/setting/autocapital_allow 0 -g 6514
-/usr/bin/vconftool set -t string db/setting/autoperiod_allow 0 -g 6514
 
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc3.d/S42isf-panel-efl
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
@@ -69,7 +68,6 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 
 
 %files
-%defattr(-,root,root,-)
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
@@ -83,10 +81,7 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %{_bindir}/scim
 %{_bindir}/isf-log
 %{_bindir}/isf-panel-efl
-%{_bindir}/idm_core
 %{_bindir}/isf-query-engines
-%{_libdir}/libidm_context.so.*
-%{_libdir}/libidm_capture.so
 %{_libdir}/ecore/immodules/libisf-imf-module.so
 %{_libdir}/scim-1.0/1.4.0/IMEngine/socket.so
 %{_libdir}/scim-1.0/1.4.0/Config/simple.so
@@ -98,6 +93,7 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %{_ugdir}/res/locale/*
 %{_ugdir}/lib/libug-keyboard-setting-wizard-efl.so
 %{_ugdir}/lib/libug-isfsetting-efl.so
+/usr/share/scim/isfsetting.edj
 
 %files devel
 %defattr(-,root,root,-)
@@ -105,4 +101,3 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %{_libdir}/libscim-1.0.so
 %{_libdir}/pkgconfig/isf.pc
 %{_libdir}/pkgconfig/scim.pc
-%{_libdir}/libidm_context.so
