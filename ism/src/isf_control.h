@@ -29,7 +29,7 @@ namespace scim
 {
 
     int isf_control_set_active_ise_by_uuid (const char *uuid);
-    int isf_control_get_iselist (char ***iselist);
+    int isf_control_get_ise_list (char ***iselist);
     int isf_control_reset_ise_option (void);
 
 }

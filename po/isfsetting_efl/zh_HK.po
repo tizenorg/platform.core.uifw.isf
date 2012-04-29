@@ -36,10 +36,6 @@ msgstr "無選項"
 msgid "Auto capitalization"
 msgstr "首字母大寫"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:953
-msgid "Auto period"
-msgstr "自動空格"
-
 #: ism/extras/efl_setting/isf_setting_efl.cpp:963
 msgid "General"
 msgstr "通用"

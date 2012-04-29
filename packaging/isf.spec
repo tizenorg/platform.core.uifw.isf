@@ -3,15 +3,14 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:	2.3.5016
+Version:    2.3.5205
 Release:    1
 Group:      TO_BE/FILLED_IN
-License:    GPLv2
+License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
-BuildRequires:  edje-tools
-BuildRequires:  embryo
+BuildRequires:  edje-bin
+BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
-BuildRequires:  vconf-keys-devel
 BuildRequires:  pkgconfig(appcore-efl)
 BuildRequires:  pkgconfig(libprivilege-control)
 BuildRequires:  pkgconfig(elementary)
@@ -46,7 +45,8 @@ This package contains ISF header files for ISE development.
 %build
 
 ./bootstrap
-%configure --disable-tray-icon --disable-filter-sctc
+%configure --disable-static \
+		--disable-tray-icon --disable-filter-sctc
 make %{?jobs:-j%jobs}
 
 %install
@@ -68,14 +68,15 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 
 
 %files
+%defattr(-,root,root,-)
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config
+%{_datadir}/scim/isfsetting.edj
 %{_datadir}/scim/isf_candidate_theme2.edj
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
-%{_datadir}/applications/isf-panel-efl.desktop
 %{_datadir}/locale/*
 %{_bindir}/isf-demo-efl
 %{_bindir}/scim
@@ -93,7 +94,6 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %{_ugdir}/res/locale/*
 %{_ugdir}/lib/libug-keyboard-setting-wizard-efl.so
 %{_ugdir}/lib/libug-isfsetting-efl.so
-/usr/share/scim/isfsetting.edj
 
 %files devel
 %defattr(-,root,root,-)

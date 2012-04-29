@@ -60,6 +60,7 @@ static Ecore_X_Atom       prop_x_ext_keyboard_exist = 0;
 static Ecore_X_Window     _rootwin;
 static unsigned int       hw_kbd_num = 0;
 static Ecore_Timer       *hide_timer = NULL;
+static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 
 Ecore_IMF_Context        *input_panel_ctx = NULL;
 
@@ -130,8 +131,23 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
         fn = (EventCallbackNode *)list_data;
 
         if ((fn) && (fn->imf_context == using_ic) &&
-            (fn->type == type) && (fn->func))
+            (fn->type == type) && (fn->func)) {
+            if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
+                switch (value)
+                {
+                    case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
+                        LOGD("input panel has been hidden. ctx : %p\n", fn->imf_context);
+                        break;
+                    case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
+                        LOGD("input panel has been shown. ctx : %p\n", fn->imf_context);
+                        break;
+                    case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
+                        LOGD("input panel will be shown. ctx : %p\n", fn->imf_context);
+                        break;
+                }
+            }
             fn->func (fn->data, fn->imf_context, value);
+        }
 
         IMFCONTROLUIDBG("\tFunc : %p\tType : %d\n", fn->func, fn->type);
     }
@@ -140,13 +156,10 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 static void _isf_imf_context_init (void)
 {
     IMFCONTROLUIDBG("debug start --%s\n", __FUNCTION__);
-    memset (iseContext.name, '\0', sizeof (iseContext.name));
-    iseContext.IfAlwaysShow = FALSE;
-    iseContext.IfFullStyle  = FALSE;
-    iseContext.state        = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
-    iseContext.language     = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
-    iseContext.orient       = 0;
-    iseContext.fUseImEffect = TRUE;
+    iseContext.language            = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
+    iseContext.return_key_type     = ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
+    iseContext.return_key_disabled = FALSE;
+    iseContext.prediction_allow    = TRUE;
 
     if (!IfInitContext) {
         IfInitContext = true;
@@ -157,7 +170,7 @@ static void _isf_imf_context_init (void)
 
 static Eina_Bool _hide_timer_handler (void *data)
 {
-    LOGD("input panel hide. ctx : %p\n", data);
+    LOGD("request to hide input panel. ctx : %p\n", data);
     _isf_imf_context_input_panel_hide ();
 
     hide_timer = NULL;
@@ -178,11 +191,9 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
         _isf_imf_context_init ();
     }
 
-    if (iseContext.state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+    if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
         hide_req_ic = ctx;
     }
-
-    iseContext.IfAlwaysShow = FALSE;
 
     if (instant) {
         if (hide_timer) {
@@ -190,7 +201,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
             hide_timer = NULL;
         }
 
-        LOGD("input panel hide. ctx : %p\n", ctx);
+        LOGD("request to hide input panel. ctx : %p\n", ctx);
         _isf_imf_context_input_panel_hide ();
     } else {
         _input_panel_hide_timer_start (ctx);
@@ -247,6 +258,8 @@ EAPI void isf_imf_input_panel_shutdown (void)
     }
 
     if (hide_timer) {
+        if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+            _isf_imf_context_input_panel_hide ();
         ecore_timer_del (hide_timer);
         hide_timer = NULL;
     }
@@ -254,16 +267,9 @@ EAPI void isf_imf_input_panel_shutdown (void)
 
 EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 {
-    int   length = -1;
-    int   i = 0;
-    Disable_Key_Item *dkey_item = NULL;
-    Private_Key_Item *pkey_item = NULL;
-    Eina_List *disable_key_list = NULL;
-    Eina_List *private_key_list = NULL;
-    Eina_List *l = NULL;
-    void *list_data = NULL;
-    void *offset = NULL;
+    int length = -1;
     void *packet = NULL;
+    char imdata[1024] = {0};
 
     input_panel_ctx = ctx;
 
@@ -277,6 +283,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     if (hide_timer) {
         ecore_timer_del(hide_timer);
         hide_timer = NULL;
+        hide_req_ic = NULL;
     }
 
     if (IfInitContext == false) {
@@ -285,32 +292,38 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     show_req_ic = ctx;
 
-    /* get input language */
+    /* set password mode */
+    iseContext.password_mode = !!(ecore_imf_context_input_mode_get (ctx) & ECORE_IMF_INPUT_MODE_INVISIBLE);
+
+    /* set input language in ise context info */
     iseContext.language = ecore_imf_context_input_panel_language_get (ctx);
     IMFCONTROLUIDBG("[%s] language : %d\n", __func__, iseContext.language);
 
-    /* get layout */
+    /* set layout in ise context info */
     iseContext.layout = ecore_imf_context_input_panel_layout_get (ctx);
     IMFCONTROLUIDBG("[%s] layout : %d\n", __func__, iseContext.layout);
 
-    /* get language */
-    iseContext.language = ecore_imf_context_input_panel_language_get (ctx);
-    IMFCONTROLUIDBG("[%s] language : %d\n", __func__, iseContext.language);
+    /* set return key type */
+    iseContext.return_key_type = ecore_imf_context_input_panel_return_key_type_get (ctx);
+    IMFCONTROLUIDBG("[%s] return_key_type : %d\n", __func__, iseContext.return_key_type);
 
-    /* get disable key list */
-    disable_key_list = ecore_imf_context_input_panel_key_disabled_list_get (ctx);
-    iseContext.disabled_key_num = eina_list_count (disable_key_list);
-    IMFCONTROLUIDBG("disable key_num : %d\n", iseContext.disabled_key_num);
+    /* set return key disabled */
+    iseContext.return_key_disabled = ecore_imf_context_input_panel_return_key_disabled_get (ctx);
+    IMFCONTROLUIDBG("[%s] return_key_disabled : %d\n", __func__, iseContext.return_key_disabled);
 
-    /* get private key list */
-    private_key_list = ecore_imf_context_input_panel_private_key_list_get (ctx);
-    iseContext.private_key_num = eina_list_count (private_key_list);
-    IMFCONTROLUIDBG("private key_num : %d\n", iseContext.private_key_num);
+    /* set prediction allow */
+    iseContext.prediction_allow = ecore_imf_context_prediction_allow_get (ctx);
+    IMFCONTROLUIDBG("[%s] prediction_allow : %d\n", __func__, iseContext.prediction_allow);
+
+    /* set caps mode */
+    iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
+    IMFCONTROLUIDBG("[%s] caps mode : %d\n", __func__, iseContext.caps_mode);
+
+    ecore_imf_context_input_panel_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
 
     /* calculate packet size */
     length = sizeof (iseContext);
-    length += iseContext.disabled_key_num * sizeof (Disable_Key_Item);
-    length += iseContext.private_key_num * sizeof (Private_Key_Item);
+    length += iseContext.imdata_size;
 
     /* create packet */
     packet = calloc (1, length);
@@ -319,37 +332,18 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     memcpy (packet, (void *)&iseContext, sizeof (iseContext));
 
-    i = 0;
-    offset = (void *)((unsigned int)packet + sizeof (iseContext));
-    EINA_LIST_FOREACH(disable_key_list, l, list_data) {
-        dkey_item = (Disable_Key_Item *)list_data;
-
-        memcpy ((void *)((unsigned int)offset+i*sizeof(Disable_Key_Item)), dkey_item, sizeof (Disable_Key_Item));
-        IMFCONTROLUIDBG("[Disable Key] layout : %d, key : %d, disable : %d\n", dkey_item->layout_idx, dkey_item->key_idx, dkey_item->disabled);
-        i++;
-    }
-
-    offset = (void *)((unsigned int)offset + iseContext.disabled_key_num * sizeof (Disable_Key_Item));
-
-    i = 0;
-    EINA_LIST_FOREACH(private_key_list, l, list_data) {
-        pkey_item = (Private_Key_Item *)list_data;
-        memcpy ((void *)((unsigned int)offset + i * sizeof (Private_Key_Item)), pkey_item, sizeof (Private_Key_Item));
-        IMFCONTROLUIDBG("[Private Key] layout : %d, key : %d, label : %s, key_value : %d, key_str : %s\n", pkey_item->layout_idx, pkey_item->key_idx, pkey_item->data, pkey_item->key_value, pkey_item->key_string);
-        i++;
-    }
+    memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
     /* Set the current XID of the active window into the root window property */
     _save_current_xid (ctx);
 
-    iseContext.state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
+    if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+        input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
 
-    LOGD("input panel show. ctx : %p\n", ctx);
+    LOGD("request to show input panel. ctx : %p\n", ctx);
 
     _isf_imf_context_input_panel_show (packet ,length);
     free (packet);
-
-    send_caps_mode (ctx);
 }
 
 EAPI void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
@@ -387,6 +381,15 @@ EAPI Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_
     return iseContext.language;
 }
 
+EAPI void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ctx, char **locale)
+{
+    if (!IfInitContext)
+        _isf_imf_context_init ();
+
+    if (locale)
+        _isf_imf_context_input_panel_language_locale_get (locale);
+}
+
 EAPI void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, unsigned int mode)
 {
     IMFCONTROLUIDBG("[%s] shift mode : %d\n", __func__, mode);
@@ -394,6 +397,19 @@ EAPI void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, uns
     if (!IfInitContext)
         _isf_imf_context_init ();
     _isf_imf_context_input_panel_caps_mode_set (mode);
+}
+
+EAPI void isf_imf_context_input_panel_caps_lock_mode_set (Ecore_IMF_Context *ctx, Eina_Bool mode)
+{
+    IMFCONTROLUIDBG("[%s] caps lock mode : %d\n", __func__, mode);
+
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (!IfInitContext)
+        _isf_imf_context_init ();
+
+    if (context_scim == get_focused_ic ())
+        caps_mode_check(ctx, EINA_TRUE, EINA_TRUE);
 }
 
 /**
@@ -407,11 +423,10 @@ EAPI void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const 
 {
     IMFCONTROLUIDBG("[%s] data : %s, len : %d\n", __func__, data, length);
 
-    if (length < 0)
-        return;
-    if (!IfInitContext)
-        _isf_imf_context_init ();
-    _isf_imf_context_input_panel_imdata_set (data, length);
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (context_scim == get_focused_ic ())
+        _isf_imf_context_input_panel_imdata_set (data, length);
 }
 
 /**
@@ -449,62 +464,88 @@ EAPI void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int 
 }
 
 /**
- * Sets up a private key in active ISE keyboard layout for own's application.
- * In some case which does not support the private key will be ignored even 
- * through the application requested.
+ * Set type of return key.
  *
  * @param[in] ctx a #Ecore_IMF_Context
- * @param[in] layout_idx an index of layout page to be set
- * @param[in] key_idx an index of key to be set
- * @param[in] img_path the image file to be set
- * @param[in] label a text label to be displayed on private key
- * @param[in] value a value of key. If null, it will use original value of key
+ * @param[in] type the type of return key
  */
-EAPI void isf_imf_context_input_panel_private_key_set (Ecore_IMF_Context *ctx,
-                                                       int                layout_index,
-                                                       int                key_index,
-                                                       const char        *img_path,
-                                                       const char        *label,
-                                                       const char        *value)
+EAPI void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Return_Key_Type type)
 {
-    IMFCONTROLUIDBG("[%s] layout : %d, key_index : %d, img_path : %s, label : %s, value : %s\n", __func__, layout_index, key_index, img_path, label, value);
+    IMFCONTROLUIDBG("[%s] value : %d\n", __func__, type);
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (!IfInitContext)
         _isf_imf_context_init ();
 
-    if (context_scim != get_focused_ic ())
-        return;
-
-    if (img_path) {
-        _isf_imf_context_input_panel_private_key_set_by_image (layout_index, key_index, img_path, value);
-    } else {
-        _isf_imf_context_input_panel_private_key_set (layout_index, key_index, label, value);
+    if (context_scim == get_focused_ic ()) {
+        _isf_imf_context_input_panel_return_key_type_set (type);
     }
 }
 
 /**
- * Make a key to be disabled in active ISE keyboard layout for own's application.
- * In some case which does not support the disable key will be ignored
- * even through the application requested.
+ * Get type of return key.
  *
  * @param[in] ctx a #Ecore_IMF_Context
- * @param[in] layout_idx an index of layout page to be set
- * @param[in] key_idx an index of key to be set
- * @param[in] disabled the state
+ *
+ * @return the type of return key.
  */
-EAPI void isf_imf_context_input_panel_key_disabled_set (Ecore_IMF_Context *ctx, int layout_index, int key_index, Eina_Bool disabled)
+EAPI Ecore_IMF_Input_Panel_Return_Key_Type isf_imf_context_input_panel_return_key_type_get (Ecore_IMF_Context *ctx)
 {
-    IMFCONTROLUIDBG("[%s] layout : %d, key_index : %d, value : %d\n", __func__, layout_index, key_index, disabled);
+    IMFCONTROLUIDBG("[%s]\n", __func__);
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (!IfInitContext)
         _isf_imf_context_init ();
 
-    if (context_scim == get_focused_ic())
-        _isf_imf_context_input_panel_key_disabled_set (layout_index, key_index, disabled);
+    Ecore_IMF_Input_Panel_Return_Key_Type type = ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
+    if (context_scim == get_focused_ic ())
+        _isf_imf_context_input_panel_return_key_type_get (type);
+
+    return type;
+}
+
+/**
+ * Make return key to be disabled in active ISE keyboard layout for own's application.
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ * @param[in] disabled the state
+ */
+EAPI void isf_imf_context_input_panel_return_key_disabled_set (Ecore_IMF_Context *ctx, Eina_Bool disabled)
+{
+    IMFCONTROLUIDBG("[%s] value : %d\n", __func__, disabled);
+
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (!IfInitContext)
+        _isf_imf_context_init ();
+
+    if (context_scim == get_focused_ic ())
+        _isf_imf_context_input_panel_return_key_disabled_set (disabled);
+}
+
+/**
+ * Get the disabled status of return key.
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ *
+ * @return the disable state of return key.
+ */
+EAPI Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Context *ctx)
+{
+    IMFCONTROLUIDBG("[%s]\n", __func__);
+
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (!IfInitContext)
+        _isf_imf_context_init ();
+
+    Eina_Bool disabled = EINA_FALSE;
+    if (context_scim == get_focused_ic ())
+        _isf_imf_context_input_panel_return_key_disabled_get (disabled);
+
+    return disabled;
 }
 
 /**
@@ -555,11 +596,11 @@ EAPI Ecore_IMF_Input_Panel_Layout isf_imf_context_input_panel_layout_get (Ecore_
  */
 EAPI Ecore_IMF_Input_Panel_State isf_imf_context_input_panel_state_get (Ecore_IMF_Context *ctx)
 {
-    IMFCONTROLUIDBG("[%s] state : %d\n", __func__, iseContext.state);
+    IMFCONTROLUIDBG("[%s] state : %d\n", __func__, input_panel_state);
 
     if (!IfInitContext)
         _isf_imf_context_init ();
-    return iseContext.state;
+    return input_panel_state;
 }
 
 EAPI void isf_imf_context_input_panel_event_callback_add (Ecore_IMF_Context *ctx,
@@ -623,13 +664,32 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
 }
 
 /**
+ * Get candidate window position and size, in screen coodinates of the candidate rectangle not the client area,
+ * the represents the size and location of the candidate window
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ * @param[out] x the x position of candidate window
+ * @param[out] y the y position of candidate window
+ * @param[out] w the width of candidate window
+ * @param[out] h the height of candidate window
+ */
+EAPI void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h)
+{
+    if (!IfInitContext)
+        _isf_imf_context_init ();
+    _isf_imf_context_candidate_window_geometry_get (x, y, w, h);
+
+    IMFCONTROLUIDBG("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, *x, *y, *w, *h);
+}
+
+/**
  * process command message, ISM_TRANS_CMD_ISE_PANEL_SHOWED of ecore_ise_process_event()
  */
 static bool _process_ise_panel_showed (void)
 {
     /* When the size of ISE gets changed, STATE_SHOW is be delivered again to letting applications know the change.
        Later, an event type for notifying the size change of ISE needs to be added instead. */
-    iseContext.state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
+    input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
 
     /* Notify that ISE status has changed */
     _event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
@@ -642,12 +702,12 @@ static bool _process_ise_panel_showed (void)
  */
 static bool _process_ise_panel_hided (void)
 {
-    if (iseContext.state == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+    if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         IMFCONTROLUIDBG("ISE is already hided (_process_ise_panel_hided)\n");
         return false;
     }
 
-    iseContext.state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
+    input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 
     /* Notify that ISE status has changed */
     _event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
@@ -668,14 +728,21 @@ static bool _process_update_input_context (Transaction &trans)
 
     IMFCONTROLUIDBG("[%s] receive input context: [%d:%d]\n", __FUNCTION__, type, value);
 
-    if (type == (uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT && value == (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        _process_ise_panel_hided ();
-        return true;
-    }
-
-    if (type == (uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT && value == (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-        _process_ise_panel_showed ();
-        return true;
+    if (type == (uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
+        switch(value)
+        {
+            case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
+                _process_ise_panel_hided ();
+                return true;
+            case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
+                _process_ise_panel_showed ();
+                return true;
+            case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
+                input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
+                break;
+            default:
+                break;
+        }
     }
 
     _event_callback_call ((Ecore_IMF_Input_Panel_Event)type, (int)value);
@@ -704,6 +771,11 @@ void ecore_ise_process_data (Transaction &trans, int cmd)
     }
     case ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT : {
         IMFCONTROLUIDBG ("cmd is ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT\n");
+        _process_update_input_context (trans);
+        break;
+    }
+    case ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL : {
+        IMFCONTROLUIDBG ("cmd is ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL\n");
         _process_update_input_context (trans);
         break;
     }

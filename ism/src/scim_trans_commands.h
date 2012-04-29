@@ -613,7 +613,8 @@ const int ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST               = 950;
 #define ISM_TRANS_CMD_SHOW_ISF_CONTROL                      1102
 #define ISM_TRANS_CMD_HIDE_ISF_CONTROL                      1103
 
-/*command that ISE sends to IMControl*/
+/* commands to send from Control Panel to IMControl */
+#define ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL            1105
 #define ISM_TRANS_CMD_UPDATE_ISE_STYLE                      1106
 
 /* commands to communicate between IMControl and Control Panel*/
@@ -624,13 +625,12 @@ const int ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST               = 950;
 #define ISM_TRANS_CMD_GET_ACTIVE_ISE_NAME                   1111
 #define ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_NAME                1112
 #define ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID                1113
-#define ISM_TRANS_CMD_GET_ACTIVE_ISE_SIZE                   1114
+#define ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY               1114
 #define ISM_TRANS_CMD_ISE_CHANGED                           1115
-#define ISM_TRANS_CMD_SET_PRIVATE_KEY                       1116
-#define ISM_TRANS_CMD_SET_PRIVATE_KEY_BY_IMG                1117
-#define ISM_TRANS_CMD_SET_LAYOUT                            1118
-#define ISM_TRANS_CMD_GET_LAYOUT                            1119
-#define ISM_TRANS_CMD_SET_CAPS_MODE                         1120
+#define ISM_TRANS_CMD_SET_LAYOUT                            1116
+#define ISM_TRANS_CMD_GET_LAYOUT                            1117
+#define ISM_TRANS_CMD_SET_CAPS_MODE                         1118
+#define ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE               1119
 
 /* commands that ISE sends info to IMControl*/
 #define ISM_TRANS_CMD_UPDATE_ISE_HIDED                      1122
@@ -649,10 +649,12 @@ const int ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST               = 950;
 #define ISM_TRANS_CMD_ISF_CONTROL_HIDED                     1133
 
 #define ISM_TRANS_CMD_RESET_ISE_CONTEXT                     1134
-#define ISM_TRANS_CMD_SET_ISE_SCREEN_DIRECTION              1135
-#define ISM_TRANS_CMD_ISE_RESULT_TO_IMCONTROL               1136
-#define ISM_TRANS_CMD_SET_DISABLE_KEY                       1137
-#define ISM_TRANS_CMD_GET_LAYOUT_LIST                       1138
+#define ISM_TRANS_CMD_ISE_RESULT_TO_IMCONTROL               1135
+#define ISM_TRANS_CMD_GET_LAYOUT_LIST                       1136
+#define ISM_TRANS_CMD_SET_RETURN_KEY_TYPE                   1137
+#define ISM_TRANS_CMD_GET_RETURN_KEY_TYPE                   1138
+#define ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE                1139
+#define ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE                1140
 
 
 // ISE to Control Panel
@@ -667,8 +669,8 @@ const int ISM_TRANS_CMD_GET_KEYBOARD_ISE            = 1208;
 const int ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE         = 1209;
 const int ISM_TRANS_CMD_SET_CANDIDATE_POSITION      = 1210;
 const int ISM_TRANS_CMD_HIDE_CANDIDATE              = 1211;
-const int ISM_TRANS_CMD_GET_CANDIDATE_RECT          = 1212;
-const int ISM_TRANS_CMD_UPDATE_CANDIDATE_RECT       = 1213;
+const int ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY      = 1212;
+const int ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY   = 1213;
 const int ISM_TRANS_CMD_LAUNCH_HELPER_ISE_LIST_SELECTION = 1214;
 // Candidate to Helper ISE
 const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW  = 1251;

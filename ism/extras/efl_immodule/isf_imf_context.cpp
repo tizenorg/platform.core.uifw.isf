@@ -70,6 +70,8 @@ struct _EcoreIMFContextISFImpl {
     WideString               preedit_string;
     AttributeList            preedit_attrlist;
     Ecore_IMF_Autocapital_Type autocapital_type;
+    void                    *imdata;
+    int                      imdata_size;
     int                      preedit_caret;
     int                      cursor_x;
     int                      cursor_y;
@@ -222,8 +224,6 @@ static void     reload_config_callback                  (const ConfigPointer    
 static void     fallback_commit_string_cb               (IMEngineInstanceBase   *si,
                                                          const WideString       &str);
 
-static void     caps_mode_check                         (Ecore_IMF_Context *ctx, Eina_Bool force);
-
 /* Local variables declaration */
 static String                                           _language;
 static EcoreIMFContextISFImpl                          *_used_ic_impl_list          = 0;
@@ -333,6 +333,8 @@ new_ic_impl (EcoreIMFContextISF *parent)
     _used_ic_impl_list = impl;
 
     impl->parent = parent;
+    impl->imdata = NULL;
+    impl->imdata_size = 0;
 
     return impl;
 }
@@ -352,6 +354,12 @@ delete_ic_impl (EcoreIMFContextISFImpl *impl)
             rec->next = _free_ic_impl_list;
             _free_ic_impl_list = rec;
 
+            if (rec->imdata) {
+                free(rec->imdata);
+                rec->imdata = NULL;
+            }
+
+            rec->imdata_size = 0;
             rec->parent = 0;
             rec->si.reset ();
             rec->client_window = 0;
@@ -457,12 +465,6 @@ set_prediction_allow (IMEngineInstancePointer si, bool prediction)
     }
 }
 
-void
-send_caps_mode(Ecore_IMF_Context *ctx)
-{
-    caps_mode_check(ctx, EINA_TRUE);
-}
-
 static Eina_Bool
 analyze_surrounding_text(Ecore_IMF_Context *ctx)
 {
@@ -555,41 +557,50 @@ done:
     return ret;
 }
 
-static void
-caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force)
+Eina_Bool
+caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 {
     Eina_Bool uppercase;
     EcoreIMFContextISF *context_scim;
 
-    if (!ctx) return;
+    if (!ctx) return EINA_FALSE;
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get(ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
-        return;
-
-    if (autocap_allow == EINA_FALSE)
-        return;
+        return EINA_FALSE;
 
     // Check autocapital type
     if (!context_scim || !context_scim->impl)
-        return;
+        return EINA_FALSE;
 
-    if (analyze_surrounding_text(ctx)) {
+    if (ecore_imf_context_input_panel_caps_lock_mode_get(ctx)) {
         uppercase = EINA_TRUE;
-    } else {
-        uppercase = EINA_FALSE;
+    }
+    else {
+        if (autocap_allow == EINA_FALSE)
+            return EINA_FALSE;
+
+        if (analyze_surrounding_text(ctx)) {
+            uppercase = EINA_TRUE;
+        } else {
+            uppercase = EINA_FALSE;
+        }
     }
 
     if (force) {
         context_scim->impl->uppercase = uppercase;
-        isf_imf_context_input_panel_caps_mode_set(ctx, uppercase);
+        if (noti)
+            isf_imf_context_input_panel_caps_mode_set(ctx, uppercase);
     } else {
         if (context_scim->impl->uppercase != uppercase) {
             context_scim->impl->uppercase = uppercase;
-            isf_imf_context_input_panel_caps_mode_set(ctx, uppercase);
+            if (noti)
+                isf_imf_context_input_panel_caps_mode_set(ctx, uppercase);
         }
     }
+
+    return uppercase;
 }
 
 static void
@@ -787,6 +798,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
     if (!_ic_list) return;
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF*)ecore_imf_context_data_get (ctx);
+    Ecore_IMF_Input_Panel_State input_panel_state = ecore_imf_context_input_panel_state_get (ctx);
 
     if (context_scim) {
         if (context_scim->id != _ic_list->id) {
@@ -817,7 +829,10 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
 
         if (input_panel_ctx == ctx && _scim_initialized) {
             LOGD("Context is deleted. ctx : %p\n", ctx);
-            isf_imf_context_input_panel_hide(ctx);
+            if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
+                input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+                isf_imf_context_input_panel_hide(ctx);
+            }
         }
 
         // Delete the instance.
@@ -1136,7 +1151,7 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
         if (context_scim->impl->cursor_pos != cursor_pos) {
             context_scim->impl->cursor_pos = cursor_pos;
 
-            caps_mode_check(ctx, EINA_FALSE);
+            caps_mode_check(ctx, EINA_FALSE, EINA_TRUE);
 
             _panel_client.prepare (context_scim->id);
             panel_req_update_cursor_position (context_scim, cursor_pos);
@@ -1165,15 +1180,12 @@ isf_imf_context_cursor_location_set (Ecore_IMF_Context *ctx, int cx, int cy, int
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
     Ecore_Evas *ee;
     int canvas_x, canvas_y;
+    int new_cursor_x, new_cursor_y;
 
     if (cw == 0 && ch == 0)
         return;
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        // Don't update spot location while updating preedit string.
-        if (context_scim->impl->preedit_updating)
-            return;
-
         if (context_scim->impl->client_canvas) {
             ee = ecore_evas_ecore_evas_get(context_scim->impl->client_canvas);
             if (!ee) return;
@@ -1187,9 +1199,16 @@ isf_imf_context_cursor_location_set (Ecore_IMF_Context *ctx, int cx, int cy, int
                 return;
         }
 
-        if (context_scim->impl->cursor_x != canvas_x + cx || context_scim->impl->cursor_y != canvas_y + cy + ch) {
-            context_scim->impl->cursor_x     = canvas_x + cx;
-            context_scim->impl->cursor_y     = canvas_y + cy + ch;
+        new_cursor_x = canvas_x + cx;
+        new_cursor_y = canvas_y + cy + ch;
+
+        // Don't update spot location while updating preedit string.
+        if (context_scim->impl->preedit_updating && (context_scim->impl->cursor_y == new_cursor_y))
+            return;
+
+        if (context_scim->impl->cursor_x != new_cursor_x || context_scim->impl->cursor_y != new_cursor_y) {
+            context_scim->impl->cursor_x     = new_cursor_x;
+            context_scim->impl->cursor_y     = new_cursor_y;
             context_scim->impl->cursor_top_y = canvas_y + cy;
             _panel_client.prepare (context_scim->id);
             panel_req_update_spot_location (context_scim);
@@ -1512,8 +1531,6 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
-        if (isupper(key.code))
-            key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT) key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL) key.mask |=SCIM_KEY_ControlMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT) key.mask |=SCIM_KEY_AltMask;
@@ -1524,8 +1541,6 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
         key.mask = SCIM_KEY_ReleaseMask;
-        if (isupper(key.code))
-            key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT) key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL) key.mask |=SCIM_KEY_ControlMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT) key.mask |=SCIM_KEY_AltMask;
@@ -1534,7 +1549,8 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get(ctx)) {
             LOGD("Mouse-up event. ctx : %p\n", ctx);
-            isf_imf_context_input_panel_show(ctx);
+            if (ic == _focused_ic)
+                isf_imf_context_input_panel_show(ctx);
         }
         return EINA_FALSE;
     } else {
@@ -1559,7 +1575,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
                         ecore_imf_context_commit_event_add (ic->ctx, string);
                         ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)string);
                         _panel_client.send ();
-                        caps_mode_check(ctx, EINA_FALSE);
+                        caps_mode_check(ctx, EINA_FALSE, EINA_TRUE);
                         return EINA_TRUE;
                     }
                 }
@@ -1575,6 +1591,46 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
     _panel_client.send ();
 
     return ret;
+}
+
+/**
+ * Set up an ISE specific data
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ * @param[in] data pointer of data to sets up to ISE
+ * @param[in] length length of data
+ */
+EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context *ctx, const void* data, int length)
+{
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (context_scim && context_scim->impl) {
+        if (context_scim->impl->imdata)
+            free(context_scim->impl->imdata);
+
+        context_scim->impl->imdata = calloc (1, length);
+        memcpy (context_scim->impl->imdata, data, length);
+        context_scim->impl->imdata_size = length;
+    }
+
+    isf_imf_context_input_panel_imdata_set (ctx, data, length);
+}
+
+/**
+ * Get the ISE specific data from ISE
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ * @param[out] data pointer of data to return
+ * @param[out] length length of data
+ */
+EAPI void isf_imf_context_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length)
+{
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (data && context_scim->impl->imdata)
+        memcpy (data, context_scim->impl->imdata, context_scim->impl->imdata_size);
+
+    *length = context_scim->impl->imdata_size;
 }
 
 /* Panel Slot functions */
@@ -2866,12 +2922,14 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
 
     // Find the window which has the current keyboard focus.
     Window winFocus = 0;
+    XWindowAttributes attr;
     int revert = RevertToParent;
 
     XGetInputFocus (display, &winFocus, &revert);
 
     // Send a fake key press event to the window.
-    XSelectInput (display, winFocus, FocusChangeMask|KeyPressMask|KeyReleaseMask);
+    XGetWindowAttributes (display, winFocus, &attr);
+    XSelectInput (display, winFocus, attr.your_event_mask | FocusChangeMask | KeyPressMask | KeyReleaseMask);
     XMapWindow (display, winFocus);
 
     unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, key.mask);

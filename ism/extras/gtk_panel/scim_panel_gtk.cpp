@@ -306,7 +306,7 @@ static bool       slot_get_ise_info_by_name            (const String &name, ISE_
 static void       slot_set_candidate_ui                (int style, int mode);
 static void       slot_get_candidate_ui                (int &style, int &mode);
 static void       slot_set_candidate_position          (int left, int top);
-static void       slot_get_candidate_rect              (struct rectinfo &info);
+static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_set_keyboard_ise                (int type, const String &ise);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_start_default_ise               ();
@@ -2623,7 +2623,7 @@ static void ui_settle_input_window (bool relative, bool force)
             spot_y = screen_height - ws.height;
     } else {
         rectinfo ise_rect;
-        _panel_agent->get_current_ise_rect (ise_rect);
+        _panel_agent->get_current_ise_geometry (ise_rect);
         //std::cout << " ise x : " << ise_rect.pos_x << " ise y : " << ise_rect.pos_y;
         //std::cout << " ise width : " << ise_rect.width << " ise height : " << ise_rect.height << "\n";
 
@@ -3260,7 +3260,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_set_candidate_ui           (slot (slot_set_candidate_ui));
     _panel_agent->signal_connect_get_candidate_ui           (slot (slot_get_candidate_ui));
     _panel_agent->signal_connect_set_candidate_position     (slot (slot_set_candidate_position));
-    _panel_agent->signal_connect_get_candidate_rect         (slot (slot_get_candidate_rect));
+    _panel_agent->signal_connect_get_candidate_geometry     (slot (slot_get_candidate_geometry));
     _panel_agent->signal_connect_set_keyboard_ise           (slot (slot_set_keyboard_ise));
     _panel_agent->signal_connect_get_keyboard_ise           (slot (slot_get_keyboard_ise));
     _panel_agent->signal_connect_show_preedit_string        (slot (slot_show_preedit_string));
@@ -4345,11 +4345,11 @@ static void slot_set_candidate_position (int left, int top)
 }
 
 /**
- * @brief Get candidate rect slot function for PanelAgent.
+ * @brief Get candidate window geometry slot function for PanelAgent.
  *
  * @param info The data is used to store candidate position and size.
  */
-static void slot_get_candidate_rect (struct rectinfo &info)
+static void slot_get_candidate_geometry (struct rectinfo &info)
 {
     if (!GTK_IS_WIDGET (_input_window))
         create_candidate_window (_candidate_style, _lookup_table_vertical);

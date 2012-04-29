@@ -1,9 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=ISFPanel
-Comment=ISF Panel Application
-Exec=/usr/bin/isf-panel-efl
-Icon=elementary
-Terminal=false
-Type=Application
-Categories=Applications;Utility;

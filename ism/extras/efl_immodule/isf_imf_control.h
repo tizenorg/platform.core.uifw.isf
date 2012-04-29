@@ -39,16 +39,20 @@ extern "C"
     int _isf_imf_context_control_panel_hide (void);
 
     int _isf_imf_context_input_panel_language_set (Ecore_IMF_Input_Panel_Lang lang);
+    int _isf_imf_context_input_panel_language_locale_get (char **locale);
 
     int _isf_imf_context_input_panel_imdata_set (const void *data, int len);
     int _isf_imf_context_input_panel_imdata_get (void *data, int *len);
     int _isf_imf_context_input_panel_geometry_get (int *x, int *y, int *w, int *h);
-    int _isf_imf_context_input_panel_private_key_set (int layout_index, int key_index, const char *label, const char *value);
-    int _isf_imf_context_input_panel_private_key_set_by_image (int layout_index, int key_index, const char *img_path, const char *value);
     int _isf_imf_context_input_panel_layout_set (Ecore_IMF_Input_Panel_Layout layout);
     int _isf_imf_context_input_panel_layout_get (Ecore_IMF_Input_Panel_Layout *layout);
-    int _isf_imf_context_input_panel_key_disabled_set (int layout_index, int key_index, Eina_Bool disabled);
+    int _isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Input_Panel_Return_Key_Type type);
+    int _isf_imf_context_input_panel_return_key_type_get (Ecore_IMF_Input_Panel_Return_Key_Type &type);
+    int _isf_imf_context_input_panel_return_key_disabled_set (Eina_Bool disabled);
+    int _isf_imf_context_input_panel_return_key_disabled_get (Eina_Bool &disabled);
     int _isf_imf_context_input_panel_caps_mode_set (unsigned int mode);
+
+    int _isf_imf_context_candidate_window_geometry_get (int *x, int *y, int *w, int *h);
 
 #ifdef __cplusplus
 }

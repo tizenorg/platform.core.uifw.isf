@@ -34,6 +34,7 @@ struct ug_data {
     Evas_Object *layout_main;
     Evas_Object *naviframe;
     Evas_Object *opt_eo;
+    Elm_Object_Item *autocapital_item; // autocapital option
     Elm_Object_Item *sw_ise_item_tizen; //sw
     Elm_Object_Item *hw_ise_item_tizen; //hw
     Elm_Object_Item *sw_ise_opt_item_tizen; //sw opt

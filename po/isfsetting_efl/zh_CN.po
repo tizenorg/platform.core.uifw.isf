@@ -4,71 +4,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zh_CN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-25 17:13+0900\n"
+"POT-Creation-Date: 2012-03-19 11:22+0900\n"
 "PO-Revision-Date: 2011-01-01 14:57+0800\n"
 "Last-Translator: Haifeng Deng <haifeng.deng@samsung.com>\n"
 "Language-Team: Simplified Chinese <zh@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:428
-#: ism/extras/efl_setting/isf_setting_efl.cpp:723
-msgid "Set"
-msgstr "设定"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:439
-#: ism/extras/efl_setting/isf_setting_efl.cpp:441
-#: ism/extras/efl_setting/isf_setting_efl.cpp:732
+#. Push the layout along with function buttons and title
+#: ism/extras/efl_setting/isf_setting_efl.cpp:630
+#: ism/extras/efl_setting/isf_setting_efl.cpp:813
 msgid "Selection"
 msgstr "键盘选择"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:646
-#: ism/extras/efl_setting/isf_setting_efl.cpp:840
+#: ism/extras/efl_setting/isf_setting_efl.cpp:737
+msgid "No option"
+msgstr "无选项"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:744
 msgid "Options"
 msgstr "选项"
 
-msgid "No option"
-msgstr "无选项" 
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:962
+#: ism/extras/efl_setting/isf_setting_efl.cpp:936
 msgid "Auto capitalization"
 msgstr "首字母大写"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:962
-msgid "Auto period"
-msgstr "自动空格"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:972
-msgid "General"
-msgstr "通用"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1007
+#: ism/extras/efl_setting/isf_setting_efl.cpp:953
 msgid "Software keyboard"
 msgstr "软键盘"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1013
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1088
+#: ism/extras/efl_setting/isf_setting_efl.cpp:976
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1047
 msgid "Keyboard selection"
 msgstr "键盘选择"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1025
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
 msgid "Keyboard option"
 msgstr "键盘选项"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1061
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1018
 msgid "Hardware keyboard"
 msgstr "硬键盘"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1074
-msgid "option"
-msgstr "选项"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1119
-msgid "Back"
-msgstr "返回"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1127
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1069
 msgid "Keyboard"
 msgstr "键盘"
+
+#~ msgid "Set"
+#~ msgstr "设定"
+
+#~ msgid "General"
+#~ msgstr "通用"
+
+#~ msgid "option"
+#~ msgstr "选项"
+
+#~ msgid "Back"
+#~ msgstr "返回"

@@ -20,9 +20,6 @@ CLEANFILES		= *.bak
 
 SUBDIRS			= icons pixmaps
 
-desktopdir     = /usr/share/applications/
-desktop_DATA   = isf-panel-efl.desktop
-
 isfshelldir    = /etc/profile.d/
 isfshell_DATA  = isf.sh
 

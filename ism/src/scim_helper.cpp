@@ -78,17 +78,14 @@ typedef Signal3<void, const HelperAgent *, int, uint32 &>
 typedef Signal3 <void, const HelperAgent *, char *, size_t &>
         HelperAgentSignalRawVoid;
 
+typedef Signal3 <void, const HelperAgent *, char **, size_t &>
+        HelperAgentSignalGetRawVoid;
+
 typedef Signal4 <void, const HelperAgent *, int, char *, size_t &>
         HelperAgentSignalIntRawVoid;
 
-typedef Signal3 <void, const HelperAgent *, char **, size_t &>
-        HelperAgentSignalGetIMDataVoid;
-
-typedef Signal5 <void, const HelperAgent *, uint32 &, uint32 &, char *, char *>
-        HelperAgentSignalSetPrivateKeyVoid;
-
-typedef Signal4<void, const HelperAgent *, uint32 &, uint32 &, uint32 &>
-        HelperAgentSignalSetDisableKeyVoid;
+typedef Signal3 <void, const HelperAgent *, int, char **>
+        HelperAgentSignalIntGetStringVoid;
 
 typedef Signal2<void, const HelperAgent *, std::vector<uint32> &>
         HelperAgentSignalUintVector;
@@ -118,21 +115,23 @@ public:
     HelperAgentSignalVoid           signal_focus_in;
     HelperAgentSignalIntRawVoid     signal_ise_show;
     HelperAgentSignalVoid           signal_ise_hide;
-    HelperAgentSignalSize           signal_get_size;
+    HelperAgentSignalSize           signal_get_geometry;
     HelperAgentSignalUintVoid       signal_set_mode;
     HelperAgentSignalUintVoid       signal_set_language;
     HelperAgentSignalRawVoid        signal_set_imdata;
-    HelperAgentSignalGetIMDataVoid  signal_get_imdata;
-    HelperAgentSignalSetPrivateKeyVoid  signal_set_private_key_by_label;
-    HelperAgentSignalSetPrivateKeyVoid  signal_set_private_key_by_image;
-    HelperAgentSignalSetDisableKeyVoid  signal_set_disable_key;
+    HelperAgentSignalGetRawVoid     signal_get_imdata;
+    HelperAgentSignalIntGetStringVoid   signal_get_language_locale;
+    HelperAgentSignalUintVoid           signal_set_return_key_type;
+    HelperAgentSignalUintVoid           signal_get_return_key_type;
+    HelperAgentSignalUintVoid           signal_set_return_key_disable;
+    HelperAgentSignalUintVoid           signal_get_return_key_disable;
     HelperAgentSignalUintVoid           signal_set_layout;
     HelperAgentSignalUintVoid           signal_get_layout;
     HelperAgentSignalUintVoid           signal_set_caps_mode;
     HelperAgentSignalUintVector         signal_get_layout_list;
     HelperAgentSignalVoid               signal_reset_input_context;
     HelperAgentSignalIntInt             signal_update_candidate_ui;
-    HelperAgentSignalRect               signal_update_candidate_rect;
+    HelperAgentSignalRect               signal_update_candidate_geometry;
     HelperAgentSignalString2            signal_update_keyboard_ise;
     HelperAgentSignalStringVector       signal_update_keyboard_ise_list;
     HelperAgentSignalVoid               signal_candidate_more_window_show;
@@ -147,7 +146,6 @@ public:
     HelperAgentSignalVoid               signal_associate_table_page_down;
     HelperAgentSignalInt                signal_update_associate_table_page_size;
     HelperAgentSignalVoid               signal_reset_ise_context;
-    HelperAgentSignalUintVoid           signal_set_screen_direction;
     HelperAgentSignalUintVoid           signal_turn_on_log;
 
 public:
@@ -192,7 +190,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     if (ret == false) {
         scim_usleep (100000);
         std::cerr << " Re-connecting to PanelAgent server.";
-        ISF_SYSLOG (" Re-connecting to PanelAgent server.\n");
+        ISF_LOG (" Re-connecting to PanelAgent server.\n");
         for (i = 0; i < 200; ++i) {
             if (m_impl->socket.connect (address)) {
                 ret = true;
@@ -202,13 +200,13 @@ HelperAgent::open_connection (const HelperInfo &info,
             scim_usleep (100000);
         }
         std::cerr << " Connected :" << i << "\n";
-        ISF_SYSLOG ("  Connected :%d\n", i);
+        ISF_LOG ("  Connected :%d\n", i);
     }
 
     if (ret == false)
     {
         std::cerr << "m_impl->socket.connect () is failed!!!\n";
-        ISF_SYSLOG ("m_impl->socket.connect () is failed!!!\n");
+        ISF_LOG ("m_impl->socket.connect () is failed!!!\n");
         return -1;
     }
 
@@ -219,11 +217,11 @@ HelperAgent::open_connection (const HelperInfo &info,
                                       timeout)) {
         m_impl->socket.close ();
         std::cerr << "scim_socket_open_connection () is failed!!!\n";
-        ISF_SYSLOG ("scim_socket_open_connection () is failed!!!\n");
+        ISF_LOG ("scim_socket_open_connection () is failed!!!\n");
         return -1;
     }
 
-    ISF_SYSLOG ("scim_socket_open_connection () is successful.\n");
+    ISF_LOG ("scim_socket_open_connection () is successful.\n");
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (magic);
@@ -467,10 +465,10 @@ HelperAgent::filter_event ()
                 m_impl->signal_ise_hide (this, ic, ic_uuid);
                 break;
             }
-            case ISM_TRANS_CMD_GET_ACTIVE_ISE_SIZE:
+            case ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY:
             {
                 struct rectinfo info = {0, 0, 0, 0};
-                m_impl->signal_get_size (this, info);
+                m_impl->signal_get_geometry (this, info);
                 m_impl->send.clear ();
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
                 m_impl->send.put_data (info.pos_x);
@@ -519,69 +517,53 @@ HelperAgent::filter_event ()
                     delete[] buf;
                 break;
             }
-            case ISM_TRANS_CMD_SET_PRIVATE_KEY:
+            case ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE:
             {
-                uint32  layout_idx, key_idx;
-                char   *label = NULL;
-                size_t  len1;
-                char   *value = NULL;
-                size_t  len2;
-
-                if (m_impl->recv.get_data (layout_idx)
-                    && m_impl->recv.get_data (key_idx)
-                    && m_impl->recv.get_data (&label, len1)
-                    && m_impl->recv.get_data (&value, len2))
-                {
-                    m_impl->signal_set_private_key_by_label (this,
-                                                             layout_idx,
-                                                             key_idx,
-                                                             label,
-                                                             value);
-                }
-                if (NULL != label)
-                    delete[] label;
-                if (NULL != value)
-                    delete[] value;
+                char *buf = NULL;
+                m_impl->signal_get_language_locale (this, ic, &buf);
+                m_impl->send.clear ();
+                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+                if (buf != NULL)
+                    m_impl->send.put_data (buf, strlen (buf));
+                m_impl->send.write_to_socket (m_impl->socket);
+                if (NULL != buf)
+                    delete[] buf;
                 break;
             }
-            case ISM_TRANS_CMD_SET_PRIVATE_KEY_BY_IMG:
+            case ISM_TRANS_CMD_SET_RETURN_KEY_TYPE:
             {
-                uint32  layout_idx, key_idx;
-                char   *image = NULL;
-                size_t  len1;
-                char   *value = NULL;
-                size_t  len2;
-
-                if (m_impl->recv.get_data (layout_idx)
-                    && m_impl->recv.get_data (key_idx)
-                    && m_impl->recv.get_data (&image, len1)
-                    && m_impl->recv.get_data (&value, len2))
-                {
-                    m_impl->signal_set_private_key_by_image (this,
-                                                             layout_idx,
-                                                             key_idx,
-                                                             image,
-                                                             value);
+                uint32 type = 0;
+                if (m_impl->recv.get_data (type)) {
+                    m_impl->signal_set_return_key_type (this, type);
                 }
-                if (NULL != image)
-                    delete[] image;
-                if (NULL != value)
-                    delete[] value;
                 break;
             }
-            case ISM_TRANS_CMD_SET_DISABLE_KEY:
+            case ISM_TRANS_CMD_GET_RETURN_KEY_TYPE:
             {
-                uint32  layout_idx, key_idx, disabled;
-
-                if (m_impl->recv.get_data (layout_idx)
-                    && m_impl->recv.get_data (key_idx)
-                    && m_impl->recv.get_data (disabled))
-                {
-                    m_impl->signal_set_disable_key (this,
-                                                    layout_idx,
-                                                    key_idx,
-                                                    disabled);
+                uint32 type = 0;
+                m_impl->signal_get_return_key_type (this, type);
+                m_impl->send.clear ();
+                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+                m_impl->send.put_data (type);
+                m_impl->send.write_to_socket (m_impl->socket);
+                break;
+            }
+            case ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE:
+            {
+                uint32 disabled = 0;
+                if (m_impl->recv.get_data (disabled)) {
+                    m_impl->signal_set_return_key_disable (this, disabled);
                 }
+                break;
+            }
+            case ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE:
+            {
+                uint32 disabled = 0;
+                m_impl->signal_get_return_key_type (this, disabled);
+                m_impl->send.clear ();
+                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+                m_impl->send.put_data (disabled);
+                m_impl->send.write_to_socket (m_impl->socket);
                 break;
             }
             case ISM_TRANS_CMD_SET_LAYOUT:
@@ -635,14 +617,14 @@ HelperAgent::filter_event ()
                     m_impl->signal_update_candidate_ui (this, ic, ic_uuid, style, mode);
                 break;
             }
-            case ISM_TRANS_CMD_UPDATE_CANDIDATE_RECT:
+            case ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY:
             {
                 struct rectinfo info = {0, 0, 0, 0};
                 if (m_impl->recv.get_data (info.pos_x)
                     && m_impl->recv.get_data (info.pos_y)
                     && m_impl->recv.get_data (info.width)
                     && m_impl->recv.get_data (info.height))
-                    m_impl->signal_update_candidate_rect (this, ic, ic_uuid, info);
+                    m_impl->signal_update_candidate_geometry (this, ic, ic_uuid, info);
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE:
@@ -657,14 +639,11 @@ HelperAgent::filter_event ()
                 uint32 num;
                 String ise;
                 std::vector<String> list;
-                if (m_impl->recv.get_data (num))
-                {
-                    for (unsigned int i = 0; i < num; i++)
-                    {
-                        if (m_impl->recv.get_data (ise))
+                if (m_impl->recv.get_data (num)) {
+                    for (unsigned int i = 0; i < num; i++) {
+                        if (m_impl->recv.get_data (ise)) {
                             list.push_back (ise);
-                        else
-                        {
+                        } else {
                             list.clear ();
                             break;
                         }
@@ -741,13 +720,6 @@ HelperAgent::filter_event ()
             case ISM_TRANS_CMD_RESET_ISE_CONTEXT:
             {
                 m_impl->signal_reset_ise_context (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_SET_ISE_SCREEN_DIRECTION:
-            {
-                uint32 direction;
-                if (m_impl->recv.get_data (direction))
-                    m_impl->signal_set_screen_direction (this, direction);
                 break;
             }
             case ISM_TRANS_CMD_TURN_ON_LOG:
@@ -923,25 +895,6 @@ HelperAgent::commit_string (int               ic,
         m_impl->send.put_data ((uint32)ic);
         m_impl->send.put_data (ic_uuid);
         m_impl->send.put_data (wstr);
-        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-    }
-}
-
-/**
- * @brief Commit a buffer to client application by IMControl.
- *
- * @param buf The result context.
- * @param len The length of buffer.
- */
-void
-HelperAgent::commit_ise_result_to_imcontrol (char *buf, size_t len) const
-{
-    if (m_impl->socket_active.is_connected ()) {
-        m_impl->send.clear ();
-        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-        m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (ISM_TRANS_CMD_ISE_RESULT_TO_IMCONTROL);
-        m_impl->send.put_data (buf, len);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
 }
@@ -1250,45 +1203,6 @@ HelperAgent::get_keyboard_ise_list (const String &uuid) const
 }
 
 /**
- * @brief Set new candidate UI.
- *
- * @param style style of new candidate UI.
- * @param mode mode of new candidate UI.
- */
-void
-HelperAgent::set_candidate_ui (const ISF_CANDIDATE_STYLE_T style,
-                               const ISF_CANDIDATE_MODE_T  mode) const
-{
-    if (m_impl->socket_active.is_connected ()) {
-        m_impl->send.clear ();
-        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-        m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (ISM_TRANS_CMD_SET_CANDIDATE_UI);
-        m_impl->send.put_data (style);
-        m_impl->send.put_data (mode);
-        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-    }
-}
-
-/**
- * @brief Request to get current candidate style and mode.
- *
- * @param uuid The helper ISE UUID.
- */
-void
-HelperAgent::get_candidate_ui (const String &uuid) const
-{
-    if (m_impl->socket_active.is_connected ()) {
-        m_impl->send.clear ();
-        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-        m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (ISM_TRANS_CMD_GET_CANDIDATE_UI);
-        m_impl->send.put_data (uuid);
-        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-    }
-}
-
-/**
  * @brief Set candidate position in screen.
  *
  * @param left The x position in screen.
@@ -1329,13 +1243,13 @@ HelperAgent::candidate_hide (void) const
  * @param uuid The helper ISE UUID.
  */
 void
-HelperAgent::get_candidate_window_rect (const String &uuid) const
+HelperAgent::get_candidate_window_geometry (const String &uuid) const
 {
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
         m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (ISM_TRANS_CMD_GET_CANDIDATE_RECT);
+        m_impl->send.put_command (ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY);
         m_impl->send.put_data (uuid);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
@@ -1373,28 +1287,6 @@ HelperAgent::get_keyboard_ise (const String &uuid) const
         m_impl->send.put_data (m_impl->magic_active);
         m_impl->send.put_command (ISM_TRANS_CMD_GET_KEYBOARD_ISE);
         m_impl->send.put_data (uuid);
-        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-    }
-}
-
-/**
- * @brief Launch another helper ISE.
- *
- * @param loop If loop is true, this function will launch helper ISE by loop.
- *             If loop is false, this function will popup helper ISE list window.
- */
-void
-HelperAgent::launch_helper_ise (const bool loop) const
-{
-    if (m_impl->socket_active.is_connected ()) {
-        m_impl->send.clear ();
-        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-        m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (ISM_TRANS_CMD_LAUNCH_HELPER_ISE_LIST_SELECTION);
-        if (loop)
-            m_impl->send.put_data (0);
-        else
-            m_impl->send.put_data (1);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
 }
@@ -1624,17 +1516,17 @@ HelperAgent::signal_connect_ise_hide (HelperAgentSlotVoid *slot)
 }
 
 /**
- * @brief Connect a slot to Helper get rect signal.
+ * @brief Connect a slot to Helper get ISE window geometry signal.
  *
  * This signal is used to get Helper ISE window size and position.
  *
  * The prototype of the slot is:
- * void get_rect (const HelperAgent *agent, struct rectinfo &info);
+ * void get_geometry (const HelperAgent *agent, struct rectinfo &info);
  */
 Connection
-HelperAgent::signal_connect_get_size (HelperAgentSlotSize *slot)
+HelperAgent::signal_connect_get_geometry (HelperAgentSlotSize *slot)
 {
-    return m_impl->signal_get_size.connect (slot);
+    return m_impl->signal_get_geometry.connect (slot);
 }
 
 /**
@@ -1688,53 +1580,79 @@ HelperAgent::signal_connect_set_imdata (HelperAgentSlotRawVoid *slot)
  * void get_imdata (const HelperAgent *, char **buf, size_t &len);
  */
 Connection
-HelperAgent::signal_connect_get_imdata (HelperAgentSlotGetIMDataVoid *slot)
+HelperAgent::signal_connect_get_imdata (HelperAgentSlotGetRawVoid *slot)
 {
     return m_impl->signal_get_imdata.connect (slot);
 }
 
 /**
- * @brief Connect a slot to Helper set label private key signal.
+ * @brief Connect a slot to Helper get language locale signal.
  *
- * This signal is used to send label private key to Helper ISE.
+ * This signal is used to get language locale from Helper ISE.
  *
  * The prototype of the slot is:
- * void set_private_key_by_label (const HelperAgent *agent, uint32 &layout_idx,
- *                                uint32 & key_idx, char *label, char *value);
+ * void get_language_locale (const HelperAgent *, int ic, char **locale);
  */
 Connection
-HelperAgent::signal_connect_set_private_key_by_label (HelperAgentSlotSetPrivateKeyVoid *slot)
+HelperAgent::signal_connect_get_language_locale (HelperAgentSlotIntGetStringVoid *slot)
 {
-    return m_impl->signal_set_private_key_by_label.connect (slot);
+    return m_impl->signal_get_language_locale.connect (slot);
 }
 
 /**
- * @brief Connect a slot to Helper set image private key signal.
+ * @brief Connect a slot to Helper set return key type signal.
  *
- * This signal is used to send image private key to Helper ISE.
+ * This signal is used to send return key type to Helper ISE.
  *
  * The prototype of the slot is:
- * void set_private_key_by_image (const HelperAgent *agent, uint32 &layout_idx,
- *                                uint32 & key_idx, char *img_path, char *value);
+ * void set_return_key_type (const HelperAgent *agent, uint32 &type);
  */
 Connection
-HelperAgent::signal_connect_set_private_key_by_image (HelperAgentSlotSetPrivateKeyVoid *slot)
+HelperAgent::signal_connect_set_return_key_type (HelperAgentSlotUintVoid *slot)
 {
-    return m_impl->signal_set_private_key_by_image.connect (slot);
+    return m_impl->signal_set_return_key_type.connect (slot);
 }
 
 /**
- * @brief Connect a slot to Helper set disable key signal.
+ * @brief Connect a slot to Helper get return key type signal.
  *
- * This signal is used to send disable key to Helper ISE.
+ * This signal is used to get return key type from Helper ISE.
  *
  * The prototype of the slot is:
- * void set_disable_key (const HelperAgent *agent, uint32 &layout_idx, uint32 &key_idx, uint32 &disabled);
+ * void get_return_key_type (const HelperAgent *agent, uint32 &type);
  */
 Connection
-HelperAgent::signal_connect_set_disable_key (HelperAgentSlotSetDisableKeyVoid *slot)
+HelperAgent::signal_connect_get_return_key_type (HelperAgentSlotUintVoid *slot)
 {
-    return m_impl->signal_set_disable_key.connect (slot);
+    return m_impl->signal_get_return_key_type.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper set return key disable signal.
+ *
+ * This signal is used to send return key disable to Helper ISE.
+ *
+ * The prototype of the slot is:
+ * void set_return_key_disable (const HelperAgent *agent, uint32 &disabled);
+ */
+Connection
+HelperAgent::signal_connect_set_return_key_disable (HelperAgentSlotUintVoid *slot)
+{
+    return m_impl->signal_set_return_key_disable.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper get return key disable signal.
+ *
+ * This signal is used to get return key disable from Helper ISE.
+ *
+ * The prototype of the slot is:
+ * void get_return_key_disable (const HelperAgent *agent, uint32 &disabled);
+ */
+Connection
+HelperAgent::signal_connect_get_return_key_disable (HelperAgentSlotUintVoid *slot)
+{
+    return m_impl->signal_get_return_key_disable.connect (slot);
 }
 
 /**
@@ -1780,20 +1698,6 @@ HelperAgent::signal_connect_set_caps_mode (HelperAgentSlotUintVoid *slot)
 }
 
 /**
- * @brief Connect a slot to Helper to get layout list signal.
- *
- * This signal is used to get the availabe Helper ISE layout list.
- *
- * The prototype of the slot is:
- * void get_layout_list (const HelperAgent *agent, std::vector<uint32> &list);
- */
-Connection
-HelperAgent::signal_connect_get_layout_list (HelperAgentSlotUintVector *slot)
-{
-    return m_impl->signal_get_layout_list.connect (slot);
-}
-
-/**
  * @brief Connect a slot to Helper reset input context signal.
  *
  * This signal is used to reset Helper ISE input context.
@@ -1808,31 +1712,17 @@ HelperAgent::signal_connect_reset_input_context (HelperAgentSlotVoid *slot)
 }
 
 /**
- * @brief Connect a slot to Helper update candidate ui signal.
- *
- * This signal is used to get candidate ui style and mode.
- *
- * The prototype of the slot is:
- * void update_candidate_ui (const HelperAgent *agent, int ic, const String &uuid, int style, int mode);
- */
-Connection
-HelperAgent::signal_connect_update_candidate_ui (HelperAgentSlotIntInt *slot)
-{
-    return m_impl->signal_update_candidate_ui.connect (slot);
-}
-
-/**
- * @brief Connect a slot to Helper update candidate rect signal.
+ * @brief Connect a slot to Helper update candidate window geometry signal.
  *
  * This signal is used to get candidate window size and position.
  *
  * The prototype of the slot is:
- * void update_candidate_rect (const HelperAgent *agent, int ic, const String &uuid, const rectinfo &info);
+ * void update_candidate_geometry (const HelperAgent *agent, int ic, const String &uuid, const rectinfo &info);
  */
 Connection
-HelperAgent::signal_connect_update_candidate_rect (HelperAgentSlotRect *slot)
+HelperAgent::signal_connect_update_candidate_geometry (HelperAgentSlotRect *slot)
 {
-    return m_impl->signal_update_candidate_rect.connect (slot);
+    return m_impl->signal_update_candidate_geometry.connect (slot);
 }
 
 /**
@@ -2017,34 +1907,6 @@ Connection
 HelperAgent::signal_connect_update_associate_table_page_size (HelperAgentSlotInt *slot)
 {
     return m_impl->signal_update_associate_table_page_size.connect (slot);
-}
-
-/**
- * @brief Connect a slot to Helper reset ISE context signal.
- *
- * This signal is used to reset Helper ISE.
- *
- * The prototype of the slot is:
- * void reset_ise_context (const HelperAgent *agent, int ic, const String &uuid);
- */
-Connection
-HelperAgent::signal_connect_reset_ise_context (HelperAgentSlotVoid *slot)
-{
-    return m_impl->signal_reset_ise_context.connect (slot);
-}
-
-/**
- * @brief Connect a slot to Helper set screen direction signal.
- *
- * This signal is used to rotate and resize Helper when screen direction is changed.
- *
- * The prototype of the slot is:
- * void set_screen_direction (const HelperAgent *agent, uint32 &mode);
- */
-Connection
-HelperAgent::signal_connect_set_screen_direction (HelperAgentSlotUintVoid *slot)
-{
-    return m_impl->signal_set_screen_direction.connect (slot);
 }
 
 /**

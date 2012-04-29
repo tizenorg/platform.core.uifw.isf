@@ -274,7 +274,7 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalIntInt              m_signal_set_candidate_ui;
     PanelAgentSignalIntInt2             m_signal_get_candidate_ui;
     PanelAgentSignalIntInt              m_signal_set_candidate_position;
-    PanelAgentSignalRect                m_signal_get_candidate_rect;
+    PanelAgentSignalRect                m_signal_get_candidate_geometry;
     PanelAgentSignalIntString           m_signal_set_keyboard_ise;
     PanelAgentSignalString2             m_signal_get_keyboard_ise;
     PanelAgentSignalString              m_signal_show_help;
@@ -503,6 +503,31 @@ public:
                 trans.put_command (SCIM_TRANS_CMD_REQUEST);
                 trans.put_command (ISM_TRANS_CMD_UPDATE_ISE_STYLE);
                 trans.put_data (style);
+
+                trans.write_to_socket (client_socket);
+                break;
+            }
+        }
+    }
+
+    void update_candidate_panel_event (uint32 nType, uint32 nValue)
+    {
+        SCIM_DEBUG_MAIN(1) << __func__ << " (" << nType << ", " << nValue << ")\n";
+        ClientRepository::iterator iter = m_client_repository.begin ();
+
+        for (; iter != m_client_repository.end (); iter++)
+        {
+            if (IMCONTROL_CLIENT == iter->second.type &&
+                iter->first == m_imcontrol_map[m_current_active_imcontrol_id])
+            {
+                Socket client_socket (iter->first);
+                Transaction trans;
+
+                trans.clear ();
+                trans.put_command (SCIM_TRANS_CMD_REQUEST);
+                trans.put_command (ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL);
+                trans.put_data (nType);
+                trans.put_data (nValue);
 
                 trans.write_to_socket (client_socket);
                 break;
@@ -1329,12 +1354,7 @@ public:
         return false;
     }
 
-    bool set_helper_private_key (const String &uuid,
-                                 uint32 layout_idx,
-                                 uint32 key_idx,
-                                 char *buf, size_t len1,
-                                 char *value, size_t len2,
-                                 bool is_image)
+    bool set_helper_return_key_type (const String &uuid, int type)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1352,14 +1372,8 @@ public:
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
             m_send_trans.put_data (ctx);
             m_send_trans.put_data (uuid);
-            if (is_image)
-                m_send_trans.put_command (ISM_TRANS_CMD_SET_PRIVATE_KEY_BY_IMG);
-            else
-                m_send_trans.put_command (ISM_TRANS_CMD_SET_PRIVATE_KEY);
-            m_send_trans.put_data (layout_idx);
-            m_send_trans.put_data (key_idx);
-            m_send_trans.put_data (buf, len1);
-            m_send_trans.put_data (value, len2);
+            m_send_trans.put_command (ISM_TRANS_CMD_SET_RETURN_KEY_TYPE);
+            m_send_trans.put_data (type);
             m_send_trans.write_to_socket (client_socket);
 
             return true;
@@ -1368,10 +1382,42 @@ public:
         return false;
     }
 
-    bool set_helper_disable_key (const String &uuid,
-                                 uint32 layout_idx,
-                                 uint32 key_idx,
-                                 bool disabled)
+    bool get_helper_return_key_type (const String &uuid, uint32 &type)
+    {
+        HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+        if (it != m_helper_client_index.end ()) {
+
+            int    client;
+            uint32 context;
+            Socket client_socket (it->second.id);
+            uint32 ctx;
+            Transaction trans;
+
+            get_focused_context (client, context);
+            ctx = get_helper_ic (client, context);
+
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REPLY);
+            trans.put_data (ctx);
+            trans.put_data (uuid);
+            trans.put_command (ISM_TRANS_CMD_GET_RETURN_KEY_TYPE);
+
+            int cmd;
+            if (trans.write_to_socket (client_socket)
+                && trans.read_from_socket (client_socket)
+                && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
+                && trans.get_data (type)) {
+                SCIM_DEBUG_MAIN (1) << __func__ << " success\n";
+                return true;
+            } else {
+                std::cerr << __func__ << " failed\n";
+            }
+        }
+        return false;
+    }
+
+    bool set_helper_return_key_disable (const String &uuid, bool disabled)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1389,15 +1435,48 @@ public:
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
             m_send_trans.put_data (ctx);
             m_send_trans.put_data (uuid);
-            m_send_trans.put_command (ISM_TRANS_CMD_SET_DISABLE_KEY);
-            m_send_trans.put_data (layout_idx);
-            m_send_trans.put_data (key_idx);
+            m_send_trans.put_command (ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE);
             m_send_trans.put_data (disabled);
             m_send_trans.write_to_socket (client_socket);
 
             return true;
         }
 
+        return false;
+    }
+
+    bool get_helper_return_key_disable (const String &uuid, uint32 &disabled)
+    {
+        HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+        if (it != m_helper_client_index.end ()) {
+
+            int    client;
+            uint32 context;
+            Socket client_socket (it->second.id);
+            uint32 ctx;
+            Transaction trans;
+
+            get_focused_context (client, context);
+            ctx = get_helper_ic (client, context);
+
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REPLY);
+            trans.put_data (ctx);
+            trans.put_data (uuid);
+            trans.put_command (ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE);
+
+            int cmd;
+            if (trans.write_to_socket (client_socket)
+                && trans.read_from_socket (client_socket)
+                && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
+                && trans.get_data (disabled)) {
+                SCIM_DEBUG_MAIN (1) << __func__ << " success\n";
+                return true;
+            } else {
+                std::cerr << __func__ << " failed\n";
+            }
+        }
         return false;
     }
 
@@ -1527,7 +1606,7 @@ public:
         m_should_shared_ise = should_shared_ise;
     }
 
-    bool get_helper_size (String &uuid, struct rectinfo &info)
+    bool get_helper_geometry (String &uuid, struct rectinfo &info)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1545,7 +1624,7 @@ public:
             trans.put_command (SCIM_TRANS_CMD_REPLY);
             trans.put_data (ctx);
             trans.put_data (uuid);
-            trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE_SIZE);
+            trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY);
 
             if (trans.write_to_socket (client_socket)) {
                 int cmd;
@@ -1557,10 +1636,10 @@ public:
                     && trans.get_data (info.pos_y)
                     && trans.get_data (info.width)
                     && trans.get_data (info.height)) {
-                    SCIM_DEBUG_MAIN (1) << "get_helper_size success\n";
+                    SCIM_DEBUG_MAIN (1) << __func__ << " is successful\n";
                     return true;
                 } else {
-                    std::cerr << "get_helper_size failed\n";
+                    std::cerr << __func__ << " is failed!!!\n";
                     return false;
                 }
             }
@@ -1682,7 +1761,7 @@ public:
         return false;
     }
 
-    void get_ise_size (int client_id)
+    void get_ise_geometry (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::get_ise_size ()\n";
         struct rectinfo info;
@@ -1693,7 +1772,7 @@ public:
         mode = m_current_toolbar_mode;
 
         if (TOOLBAR_HELPER_MODE == mode)
-            ret = get_helper_size (m_current_helper_uuid, info);
+            ret = get_helper_geometry (m_current_helper_uuid, info);
 
         Transaction trans;
         Socket client_socket (client_id);
@@ -1718,21 +1797,98 @@ public:
         trans.write_to_socket (client_socket);
     }
 
-    void get_current_ise_rect (rectinfo &ise_rect)
+    void get_candidate_window_geometry (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::get_current_ise_rect ()\n";
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        struct rectinfo info;
+        info.pos_x  = 0;
+        info.pos_y  = 0;
+        info.width  = 0;
+        info.height = 0;
+        m_signal_get_candidate_geometry (info);
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.put_data (info.pos_x);
+        trans.put_data (info.pos_y);
+        trans.put_data (info.width);
+        trans.put_data (info.height);
+        trans.write_to_socket (client_socket);
+    }
+
+    void get_ise_language_locale (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        size_t  len;
+        char   *data = NULL;
+        bool    ret  = false;
+        Transaction trans;
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ()) {
+                int    client;
+                uint32 context;
+                get_focused_context (client, context);
+
+                uint32 ctx = get_helper_ic (client, context);
+
+                trans.clear ();
+                trans.put_command (SCIM_TRANS_CMD_REPLY);
+                trans.put_data (ctx);
+                trans.put_data (m_current_helper_uuid);
+                trans.put_command (ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE);
+
+                int cmd;
+                Socket client_socket (it->second.id);
+                if (trans.write_to_socket (client_socket)
+                    && trans.read_from_socket (client_socket)
+                    && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
+                    && trans.get_data (&data, len)) {
+                    ret = true;
+                } else {
+                    std::cerr << "Get ISE language locale is failed!!!\n";
+                }
+            }
+        }
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        if (data != NULL && len > 0) {
+            trans.put_command (SCIM_TRANS_CMD_OK);
+            trans.put_data (data, len);
+        } else {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+        }
+
+        Socket client_socket (client_id);
+        trans.write_to_socket (client_socket);
+
+        if (NULL != data)
+            delete [] data;
+    }
+
+    void get_current_ise_geometry (rectinfo &rect)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << " \n";
         TOOLBAR_MODE_T mode = m_current_toolbar_mode;
         bool           ret  = false;
 
         if (TOOLBAR_HELPER_MODE == mode)
-            ret = get_helper_size (m_current_helper_uuid, ise_rect);
+            ret = get_helper_geometry (m_current_helper_uuid, rect);
 
-        if (!ret)
-        {
-            ise_rect.pos_x  = 0;
-            ise_rect.pos_y  = 0;
-            ise_rect.width  = 0;
-            ise_rect.height = 0;
+        if (!ret) {
+            rect.pos_x  = 0;
+            rect.pos_y  = 0;
+            rect.width  = 0;
+            rect.height = 0;
         }
     }
 
@@ -2270,50 +2426,78 @@ public:
         return;
     }
 
-    void set_ise_private_key (int client_id, bool is_image)
+    void set_ise_return_key_type (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_ise_private_key ()\n";
-        uint32 layout_idx, key_idx;
-        char  *label = NULL, *value = NULL;
-        size_t len1, len2;
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+        uint32 type;
 
-        if (m_recv_trans.get_data (layout_idx)
-            && m_recv_trans.get_data (key_idx)
-            && m_recv_trans.get_data (&label, len1)
-            && m_recv_trans.get_data (&value, len2))
-        {
+        if (m_recv_trans.get_data (type)) {
             if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
-                set_helper_private_key (m_current_helper_uuid,
-                                        layout_idx,
-                                        key_idx,
-                                        label,
-                                        len1,
-                                        value,
-                                        len2,
-                                        is_image);
+                set_helper_return_key_type (m_current_helper_uuid, type);
         }
-
-        if (NULL != label)
-            delete[] label;
-        if (NULL != value)
-            delete[] value;
     }
 
-    void set_ise_disable_key (int client_id)
+    void get_ise_return_key_type (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_ise_disable_key ()\n";
-        uint32 layout_idx, key_idx, disabled;
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+        uint32 type = 0;
+        bool   ret  = false;
 
-        if (m_recv_trans.get_data (layout_idx)
-            && m_recv_trans.get_data (key_idx)
-            && m_recv_trans.get_data (disabled))
-        {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
-                set_helper_disable_key (m_current_helper_uuid,
-                                        layout_idx,
-                                        key_idx,
-                                        disabled);
+        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
+
+        if (TOOLBAR_HELPER_MODE == mode)
+            ret = get_helper_return_key_type (m_current_helper_uuid, type);
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        if (ret) {
+            trans.put_command (SCIM_TRANS_CMD_OK);
+            trans.put_data (type);
+        } else {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
         }
+
+        trans.write_to_socket (client_socket);
+    }
+
+    void set_ise_return_key_disable (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+        uint32 disabled;
+
+        if (m_recv_trans.get_data (disabled)) {
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+                set_helper_return_key_disable (m_current_helper_uuid, disabled);
+        }
+    }
+
+    void get_ise_return_key_disable (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+        uint32 disabled = 0;
+        bool   ret      = false;
+
+        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
+
+        if (TOOLBAR_HELPER_MODE == mode)
+            ret = get_helper_return_key_disable (m_current_helper_uuid, disabled);
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        if (ret) {
+            trans.put_command (SCIM_TRANS_CMD_OK);
+            trans.put_data (disabled);
+        } else {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+        }
+
+        trans.write_to_socket (client_socket);
     }
 
     int get_active_ise_list (std::vector<String> &strlist)
@@ -2356,45 +2540,6 @@ public:
         if (TOOLBAR_HELPER_MODE == mode)
         {
             reset_helper_context (m_current_helper_uuid);
-        }
-    }
-
-    bool set_helper_screen_direction (const String &uuid, uint32 &direction)
-    {
-        HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
-
-        if (it != m_helper_client_index.end ())
-        {
-            int client;
-            uint32 context;
-            Socket client_socket (it->second.id);
-            uint32 ctx;
-
-            get_focused_context (client, context);
-            ctx = get_helper_ic (client, context);
-
-            m_send_trans.clear ();
-            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
-            m_send_trans.put_data (ctx);
-            m_send_trans.put_data (uuid);
-            m_send_trans.put_command (ISM_TRANS_CMD_SET_ISE_SCREEN_DIRECTION);
-            m_send_trans.put_data (direction);
-            m_send_trans.write_to_socket (client_socket);
-            return true;
-        }
-
-        return false;
-    }
-
-    void set_ise_screen_direction (int client_id)
-    {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_ise_screen_direction ()\n";
-        uint32 direction;
-
-        if (m_recv_trans.get_data (direction))
-        {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
-                set_helper_screen_direction (m_current_helper_uuid, direction);
         }
     }
 
@@ -2561,9 +2706,9 @@ public:
         return m_signal_set_candidate_position.connect (slot);
     }
 
-    Connection signal_connect_get_candidate_rect         (PanelAgentSlotRect                *slot)
+    Connection signal_connect_get_candidate_geometry         (PanelAgentSlotRect                *slot)
     {
-        return m_signal_get_candidate_rect.connect (slot);
+        return m_signal_get_candidate_geometry.connect (slot);
     }
 
     Connection signal_connect_set_keyboard_ise           (PanelAgentSlotIntString           *slot)
@@ -3185,8 +3330,8 @@ private:
                     socket_set_candidate_position ();
                 } else if (cmd == ISM_TRANS_CMD_HIDE_CANDIDATE) {
                     socket_hide_candidate ();
-                } else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_RECT) {
-                    socket_get_candidate_rect ();
+                } else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY) {
+                    socket_get_candidate_geometry ();
                 } else if (cmd == ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_NAME) {
                     socket_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_NAME);
                 } else if (cmd == ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID) {
@@ -3217,8 +3362,12 @@ private:
                     show_ise_panel (client_id);
                 else if (cmd == ISM_TRANS_CMD_HIDE_ISE_PANEL)
                     hide_ise_panel (client_id);
-                else if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE_SIZE)
-                    get_ise_size (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY)
+                    get_ise_geometry (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY)
+                    get_candidate_window_geometry (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE)
+                    get_ise_language_locale (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ISE_MODE)
                     set_ise_mode (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ISE_LANGUAGE)
@@ -3233,12 +3382,14 @@ private:
                     set_active_ise_by_name (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID)
                     set_active_ise_by_uuid (client_id);
-                else if (cmd == ISM_TRANS_CMD_SET_PRIVATE_KEY)
-                    set_ise_private_key (client_id, false);
-                else if (cmd == ISM_TRANS_CMD_SET_PRIVATE_KEY_BY_IMG)
-                    set_ise_private_key (client_id, true);
-                else if (cmd == ISM_TRANS_CMD_SET_DISABLE_KEY)
-                    set_ise_disable_key (client_id);
+                else if (cmd == ISM_TRANS_CMD_SET_RETURN_KEY_TYPE)
+                    set_ise_return_key_type (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_RETURN_KEY_TYPE)
+                    get_ise_return_key_type (client_id);
+                else if (cmd == ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE)
+                    set_ise_return_key_disable (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE)
+                    get_ise_return_key_disable (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_LAYOUT)
                     get_ise_layout (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
@@ -3259,8 +3410,6 @@ private:
                     set_isf_language (client_id);
                 else if (cmd == ISM_TRANS_CMD_RESET_ISE_CONTEXT)
                     reset_ise_context (client_id);
-                else if (cmd == ISM_TRANS_CMD_SET_ISE_SCREEN_DIRECTION)
-                    set_ise_screen_direction (client_id);
             }
 
             socket_transaction_end ();
@@ -3959,16 +4108,16 @@ private:
         m_signal_hide_associate_table ();
     }
 
-    void socket_get_candidate_rect              (void)
+    void socket_get_candidate_geometry          (void)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_get_candidate_rect ()\n";
+        SCIM_DEBUG_MAIN(4) << __func__ << " \n";
 
         struct rectinfo info;
         info.pos_x  = 0;
         info.pos_y  = 0;
         info.width  = 0;
         info.height = 0;
-        m_signal_get_candidate_rect (info);
+        m_signal_get_candidate_geometry (info);
 
         String uuid;
         if (m_recv_trans.get_data (uuid))
@@ -3985,7 +4134,7 @@ private:
                 m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
                 m_send_trans.put_data (ctx);
                 m_send_trans.put_data (uuid);
-                m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_CANDIDATE_RECT);
+                m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY);
                 m_send_trans.put_data (info.pos_x);
                 m_send_trans.put_data (info.pos_y);
                 m_send_trans.put_data (info.width);
@@ -5279,9 +5428,9 @@ PanelAgent::get_current_toolbar_mode () const
 }
 
 void
-PanelAgent::get_current_ise_rect (rectinfo &ise_rect)
+PanelAgent::get_current_ise_geometry (rectinfo &rect)
 {
-    m_impl->get_current_ise_rect (ise_rect);
+    m_impl->get_current_ise_geometry (rect);
 }
 
 String
@@ -5336,6 +5485,12 @@ void
 PanelAgent::update_ise_style (uint32 &style)
 {
     m_impl->update_ise_style (style);
+}
+
+void
+PanelAgent::update_candidate_panel_event (uint32 nType, uint32 nValue)
+{
+    m_impl->update_candidate_panel_event (nType, nValue);
 }
 
 void
@@ -5610,9 +5765,9 @@ PanelAgent::signal_connect_set_candidate_position     (PanelAgentSlotIntInt     
 }
 
 Connection
-PanelAgent::signal_connect_get_candidate_rect         (PanelAgentSlotRect                *slot)
+PanelAgent::signal_connect_get_candidate_geometry     (PanelAgentSlotRect                *slot)
 {
-    return m_impl->signal_connect_get_candidate_rect (slot);
+    return m_impl->signal_connect_get_candidate_geometry (slot);
 }
 
 Connection

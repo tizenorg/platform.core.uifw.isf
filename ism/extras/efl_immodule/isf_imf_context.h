@@ -34,7 +34,6 @@
 typedef struct _EcoreIMFContextISF      EcoreIMFContextISF;
 typedef struct _EcoreIMFContextISFImpl  EcoreIMFContextISFImpl;
 
-
 struct _EcoreIMFContextISF {
     Ecore_IMF_Context *ctx;
 
@@ -47,7 +46,7 @@ struct _EcoreIMFContextISF {
 int register_key_handler ();
 int unregister_key_handler ();
 
-void send_caps_mode(Ecore_IMF_Context *ctx);
+Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti);
 
 EcoreIMFContextISF *get_focused_ic ();
 
@@ -67,6 +66,8 @@ void isf_imf_context_use_preedit_set (Ecore_IMF_Context* ctx, Eina_Bool use_pree
 Eina_Bool  isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type, Ecore_IMF_Event *event);
 void isf_imf_context_prediction_allow_set (Ecore_IMF_Context* ctx, Eina_Bool prediction);
 void isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
+void isf_imf_context_imdata_set (Ecore_IMF_Context* ctx, const void *data, int len);
+void isf_imf_context_imdata_get (Ecore_IMF_Context* ctx, void *data, int *len);
 
 EcoreIMFContextISF* isf_imf_context_new      (void);
 void                isf_imf_context_shutdown (void);

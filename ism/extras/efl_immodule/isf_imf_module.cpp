@@ -64,14 +64,17 @@ extern "C"
         isf_imf_context_input_panel_language_set,
         isf_imf_context_input_panel_language_get,
         isf_imf_context_cursor_location_set,
-        isf_imf_context_input_panel_imdata_set,
-        isf_imf_context_input_panel_imdata_get,
+        isf_imf_context_imdata_set,
+        isf_imf_context_imdata_get,
+        isf_imf_context_input_panel_return_key_type_set,
+        isf_imf_context_input_panel_return_key_disabled_set,
+        isf_imf_context_input_panel_caps_lock_mode_set,
         isf_imf_context_input_panel_geometry_get,
-        isf_imf_context_input_panel_private_key_set,
-        isf_imf_context_input_panel_key_disabled_set,
         isf_imf_context_input_panel_state_get,
         isf_imf_context_input_panel_event_callback_add,
-        isf_imf_context_input_panel_event_callback_del
+        isf_imf_context_input_panel_event_callback_del,
+        isf_imf_context_input_panel_language_locale_get,
+        isf_imf_context_candidate_window_geometry_get
     };
 
     static Ecore_IMF_Context *imf_module_create (void);

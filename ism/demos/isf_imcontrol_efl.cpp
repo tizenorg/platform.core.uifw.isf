@@ -68,6 +68,7 @@ static void test_input_panel_geometry_get (void *data, Evas_Object *obj, void *e
 void test_input_panel_show (void *data, Evas_Object *obj, void *event_info)
 {
     if (imf_context != NULL) {
+        ecore_imf_context_focus_in (imf_context);
         ecore_imf_context_input_panel_show (imf_context);
     }
 }
@@ -75,6 +76,7 @@ void test_input_panel_show (void *data, Evas_Object *obj, void *event_info)
 void test_input_panel_hide (void *data, Evas_Object *obj, void *event_info)
 {
     if (imf_context != NULL) {
+        ecore_imf_context_focus_out (imf_context);
         ecore_imf_context_input_panel_hide (imf_context);
     }
 }
@@ -233,7 +235,7 @@ void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
 
     Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("isfimcontrol api"), NULL, NULL, gl, NULL);
 
-    Evas_Object *back_btn = elm_object_item_part_content_get (navi_it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (navi_it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", _nf_back_event, ad);
 }
 

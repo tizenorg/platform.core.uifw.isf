@@ -23,14 +23,29 @@
  */
 
 #include "isf_demo_efl.h"
-#include "isf_prediction_efl.h"
+#include "isf_return_key_disable_efl.h"
 
-static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Eina_Bool allow)
+static void
+_cursor_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *en = obj;
+
+    int pos = elm_entry_cursor_pos_get (en);
+
+    if (pos == 0) {
+        elm_entry_input_panel_return_key_disabled_set (en, EINA_TRUE);
+    }
+    else {
+        elm_entry_input_panel_return_key_disabled_set (en, EINA_FALSE);
+    }
+}
+
+static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text)
 {
     Evas_Object *ef = NULL;
-    ef = _create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef,"elm.swallow.content");
-    elm_entry_prediction_allow_set (en, allow);
+    ef = _create_ef(parent,label,guide_text);
+    Evas_Object *en = elm_object_part_content_get(ef,"elm.swallow.content");
+    evas_object_smart_callback_add (en, "cursor,changed", _cursor_changed_cb, NULL);
 
     return ef;
 }
@@ -77,20 +92,16 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (bx);
 
     /* Prediction allow : TRUE */
-    ef = _create_ef_layout (parent, _("Prediction Allow : TRUE"), _("click to enter"), EINA_TRUE);
-    elm_box_pack_end (bx, ef);
-
-    /* Prediction allow : FALSE */
-    ef = _create_ef_layout (parent, _("Prediction Allow : FALSE"), _("click to enter"), EINA_FALSE);
+    ef = _create_ef_layout (parent, _("Return Key Disable"), _("Return Key will be activated when any key is pressed"));
     elm_box_pack_end (bx, ef);
 
     return bx;
 }
 
-void ise_prediction_bt (void *data, Evas_Object *obj, void *event_info)
+void ise_return_key_disable_bt (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *lay_inner = create_inner_layout (data);
-    add_layout_to_conformant (data, lay_inner, _("Prediction Allow"));
+    add_layout_to_conformant (data, lay_inner, _("Return Key Disable"));
 }
 
 /*

@@ -637,13 +637,13 @@ SocketConfig::open_connection () const
                 break;
             scim_usleep (100000);
             std::cerr << " Re-connecting to ISF(scim) server. SocketConfig connect count : " << i+1 << "\n";
-            ISF_SYSLOG (" Re-connecting to ISF(scim) server. SocketConfig connect count : %d\n", i+1);
+            ISF_LOG (" Re-connecting to ISF(scim) server. SocketConfig connect count : %d\n", i+1);
         }
     }
 
     if (!m_socket_client.is_connected ()) {
         std::cerr << " Cannot connect to SocketFrontEnd (" << m_socket_address << ").\n";
-        ISF_SYSLOG (" Cannot connect to SocketFrontEnd (%s).\n", m_socket_address.c_str ());
+        ISF_LOG (" Cannot connect to SocketFrontEnd (%s).\n", m_socket_address.c_str ());
         return false;
     }
 
@@ -657,7 +657,7 @@ SocketConfig::open_connection () const
         return false;
     }
 
-    ISF_SYSLOG (" Connect to SocketFrontEnd (%s).\n", m_socket_address.c_str ());
+    ISF_LOG (" Connect to SocketFrontEnd (%s).\n", m_socket_address.c_str ());
     m_connected = true;
     gettimeofday (&m_update_timestamp, 0);
     return true;

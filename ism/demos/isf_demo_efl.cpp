@@ -33,6 +33,9 @@
 #include "isf_event_efl.h"
 #include "isf_autocapital_efl.h"
 #include "isf_prediction_efl.h"
+#include "isf_return_key_type_efl.h"
+#include "isf_return_key_disable_efl.h"
+#include "isf_imdata_set_efl.h"
 
 #define BASE_THEME_WIDTH 720.0f
 
@@ -168,6 +171,15 @@ static int create_demo_view (struct appdata *ad)
 
     // Test prediction allow
     elm_list_item_append (li, "ISF Prediction allow", NULL, NULL, ise_prediction_bt, ad);
+
+    // Test return key type
+    elm_list_item_append (li, "ISF Return Key type", NULL, NULL, ise_return_key_type_bt, ad);
+
+    // Test return key disable
+    elm_list_item_append (li, "ISF Return Key Disable", NULL, NULL, ise_return_key_disable_bt, ad);
+
+    // Test imdata setting
+    elm_list_item_append (li, "ISF IMDATA test", NULL, NULL, ise_imdata_set_bt, ad);
 
     elm_list_item_append (li, "ISF Event Demo", NULL, NULL, isf_event_demo_bt, ad);
 
@@ -323,7 +335,7 @@ static int app_create (void *data)
     evas_object_geometry_get (ad->win_main, NULL, NULL, &ad->root_w, &ad->root_h);
 
     if (ad->root_w >= 0) {
-        elm_scale_set(ad->root_w / BASE_THEME_WIDTH );
+        elm_config_scale_set(ad->root_w / BASE_THEME_WIDTH );
     }
 
     ad->bg = create_bg(ad->win_main);
@@ -331,7 +343,7 @@ static int app_create (void *data)
     ad->layout_main = create_layout_main (ad->win_main);
 
     // Indicator
-    elm_win_indicator_state_set (ad->win_main, EINA_TRUE);
+    elm_win_indicator_mode_set (ad->win_main, ELM_WIN_INDICATOR_SHOW);
 
     // Navigation Bar
     ad->naviframe = _create_naviframe_layout (ad->layout_main);
@@ -408,6 +420,43 @@ int main (int argc, char *argv[])
     memset (&ad, 0x0, sizeof (struct appdata));
     ops.data = &ad;
     return appcore_efl_main ("isf-demo-efl", &argc, &argv, &ops);
+}
+
+static void _focused_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *ly = (Evas_Object *)data;
+
+    elm_object_signal_emit(ly, "elm,state,guidetext,hide", "elm");
+}
+
+static void _unfocused_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *ly = (Evas_Object *)data;
+
+    if (elm_entry_is_empty(obj))
+        elm_object_signal_emit(ly, "elm,state,guidetext,show", "elm");
+}
+
+//utility func
+Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *guide_text)
+{
+    Evas_Object *ef = NULL;
+    Evas_Object *en = NULL;
+
+    ef = elm_layout_add(parent);
+    elm_layout_theme_set(ef, "layout", "editfield", "title");
+    en = elm_entry_add(parent);
+    elm_object_part_content_set(ef, "elm.swallow.content", en);
+
+    elm_object_part_text_set(ef, "elm.text", label);
+    elm_object_part_text_set(ef, "elm.guidetext", guide_text);
+    evas_object_size_hint_weight_set (ef, EVAS_HINT_EXPAND, 0);
+    evas_object_size_hint_align_set (ef, EVAS_HINT_FILL, 0);
+    evas_object_smart_callback_add(en, "focused", _focused_cb, ef);
+    evas_object_smart_callback_add(en, "unfocused", _unfocused_cb, ef);
+    evas_object_show (ef);
+
+    return ef;
 }
 
 /*

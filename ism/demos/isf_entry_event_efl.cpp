@@ -66,12 +66,12 @@ static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
     Ecore_IMF_Context *imf_context = NULL;
 
     if (elm_object_focus_get (_entry1) == EINA_TRUE) {
-        imf_context = elm_entry_imf_context_get (_entry1);
+        imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry1);
         ecore_imf_context_preedit_string_get (imf_context, &preedit_string, &len);
         snprintf (str,sizeof(str), "entry 1 get preedit string: %s", preedit_string);
         elm_object_text_set (_preedit_event_label, str);
     } else if (elm_object_focus_get (_entry2) == EINA_TRUE) {
-        imf_context = elm_entry_imf_context_get (_entry2);
+        imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry2);
         ecore_imf_context_preedit_string_get (imf_context, &preedit_string, &len);
         snprintf (str, sizeof(str),"entry 2 get preedit string: %s", preedit_string);
         elm_object_text_set (_preedit_event_label, str);
@@ -115,7 +115,7 @@ void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     evas_object_show (_entry1);
     evas_object_event_callback_add (_entry1, EVAS_CALLBACK_KEY_UP, _evas_key_up_cb, (void *)NULL);
 
-    ic = elm_entry_imf_context_get (_entry1);
+    ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry1);
     if (ic != NULL)
         ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_event_callback, NULL);
 
@@ -126,7 +126,7 @@ void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     evas_object_show (_entry2);
     evas_object_event_callback_add (_entry2, EVAS_CALLBACK_KEY_UP, _evas_key_up_cb, (void *)NULL);
 
-    ic = elm_entry_imf_context_get (_entry2);
+    ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry2);
     if (ic != NULL)
         ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_event_callback, NULL);
 

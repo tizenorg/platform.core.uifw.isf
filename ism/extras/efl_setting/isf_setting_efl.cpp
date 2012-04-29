@@ -26,6 +26,7 @@
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
+#define Uses_SCIM_PANEL_AGENT
 #define Uses_SCIM_CONFIG_PATH
 #define Uses_SCIM_HELPER_MODULE
 
@@ -128,10 +129,11 @@ static ConfigPointer _config;
 static char ise_bak[256] = {'\0'};
 static char _active_ise_name[256] = {'\0'};
 
-extern std::vector <String>  _names;
-extern std::vector <String>  _uuids;
-extern std::vector <String>  _module_names;
-extern std::vector <String>  _langs;
+extern std::vector <String>         _names;
+extern std::vector <String>         _uuids;
+extern std::vector <String>         _module_names;
+extern std::vector <String>         _langs;
+extern std::vector<TOOLBAR_MODE_T>  _modes;
 
 static Evas_Object *_gl_icon_get(void *data, Evas_Object *obj, const char *part);
 static char *_gl_label_get(void *data, Evas_Object *obj, const char *part);
@@ -264,19 +266,6 @@ static String uuid_to_name(String uuid)
     return tmpName;
 }
 
-static String name_to_uuid(String name)
-{
-    String tmpUuid("");
-    for(unsigned int i = 0;i<_names.size();i++)
-    {
-        if (strcmp(name.c_str(),_names[i].c_str())== 0) {
-            tmpUuid = _uuids[i];
-            break;
-        }
-    }
-    return tmpUuid;
-}
-
 static void sw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, void *event_info)
 {
     if (data == NULL)
@@ -401,7 +390,8 @@ static void lang_view_back_cb  (void *data, Evas_Object *obj, void *event_info)
 static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
 {
     int index = GPOINTER_TO_INT(data);
-    String langlist_str,normal_langlist_str;
+    String langlist_str, normal_langlist_str;
+
     for (unsigned int i = 0; i < _names.size (); i++) {
        if (strcmp (_names[i].c_str (), sw_iselist[index].c_str()) == 0)
           langlist_str = _langs[i];
@@ -424,7 +414,7 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
     elm_label_line_wrap_set (label, ELM_WRAP_WORD);
 
     Evas_Coord win_w = 0, win_h = 0;
-    ecore_x_window_size_get(ecore_x_window_root_first_get(), &win_w, &win_h);
+    ecore_x_window_size_get (ecore_x_window_root_first_get(), &win_w, &win_h);
     elm_label_wrap_width_set (label, win_w - PADDING_X * 2);
     elm_object_text_set (label, normal_langlist_str.c_str());
     elm_object_part_content_set (layout, "content", label);
@@ -432,9 +422,9 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
     elm_object_content_set (scroller, layout);
 
     //Push the layout along with function buttons and title
-    Elm_Object_Item *it = elm_naviframe_item_push(common_ugd->naviframe, _T(sw_iselist[index].c_str()), NULL, NULL, scroller, NULL);
+    Elm_Object_Item *it = elm_naviframe_item_push (common_ugd->naviframe, _T(sw_iselist[index].c_str()), NULL, NULL, scroller, NULL);
 
-    Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", lang_view_back_cb, NULL);
 
     common_ugd->key_end_cb = lang_view_back_cb;
@@ -617,8 +607,7 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
 {
     ugd->key_end_cb = sw_keyboard_selection_view_back_cb;
 
-    if (sw_radio_grp != NULL)
-    {
+    if (sw_radio_grp != NULL) {
         evas_object_del(sw_radio_grp);
         sw_radio_grp = NULL;
     }
@@ -629,7 +618,7 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
     //Push the layout along with function buttons and title
     Elm_Object_Item *it = elm_naviframe_item_push(ugd->naviframe, _T("Selection"), NULL, NULL, genlist, NULL);
 
-    Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", sw_keyboard_selection_view_set_cb, ugd);
 
     unsigned int i = 0;
@@ -659,7 +648,7 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set (item, EINA_TRUE);
+        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
     }
 
     for (i = 0; i < sw_iselist.size (); i++) {
@@ -714,41 +703,44 @@ static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_in
     }
 }
 
-static void show_ise_option_module(ug_data *ugd , const char *isename)
+static void show_ise_option_module (ug_data *ugd, const char *isename)
 {
     String mdl_name;
     for (unsigned int i = 0; i < _names.size (); i++) {
-        if (strcmp (_names[i].c_str (), isename) == 0)
-            mdl_name = _module_names[i];
+        if (_names[i] == String (isename)) {
+            if (_modes[i] == TOOLBAR_KEYBOARD_MODE)
+                mdl_name = _module_names[i] + String ("-imengine-setup");
+            else
+                mdl_name = _module_names[i] + String ("-setup");
+        }
     }
 
-    char module_name[256];
-    snprintf (module_name, sizeof (module_name), "%s-imengine-setup", mdl_name.c_str ());
-    if (mdl)
-    {
+    if (mdl) {
         delete mdl;
         mdl = NULL;
     }
-    mdl = new SetupModule (String (module_name));
-    if ( mdl == NULL || !mdl->valid ()) {
+
+    if (mdl_name.length () > 0)
+        mdl = new SetupModule (String (mdl_name));
+
+    if (mdl == NULL || !mdl->valid ()) {
         Evas_Object *popup = elm_popup_add (ugd->naviframe);
         evas_object_size_hint_weight_set (popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         char tmp[256] = {'\0'};
-        snprintf (tmp,sizeof(tmp),"%s: %s", isename ,_T("No option"));
-        elm_popup_desc_set (popup, tmp);
-        elm_popup_mode_set (popup, ELM_POPUP_TYPE_ALERT);
+        snprintf (tmp, sizeof (tmp), "%s: %s", isename, _T("No option"));
+        elm_object_text_set (popup, tmp);
         elm_popup_timeout_set (popup, 3.0);
         evas_object_smart_callback_add (popup, "response", response_cb, NULL);
         evas_object_show (popup);
     } else {
         char title[256];
-        snprintf (title, sizeof(title), _T("Options"));
+        snprintf (title, sizeof (title), _T("Options"));
         ugd->opt_eo = mdl->create_ui (ugd->layout_main, ugd->naviframe);
         mdl->load_config (_config);
 
         Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, title, NULL, NULL, ugd->opt_eo, NULL);
 
-        Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+        Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
         evas_object_smart_callback_add (back_btn, "clicked", ise_option_view_set_cb, ugd);
         ugd->key_end_cb = ise_option_view_set_cb;
     }
@@ -801,8 +793,7 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
 {
     ugd->key_end_cb = hw_keyboard_selection_view_back_cb;
 
-    if (hw_radio_grp != NULL)
-    {
+    if (hw_radio_grp != NULL) {
         evas_object_del(hw_radio_grp);
         hw_radio_grp = NULL;
     }
@@ -813,7 +804,7 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
     //Push the layout along with function buttons and title
     Elm_Object_Item *nf_it = elm_naviframe_item_push(ugd->naviframe, _T("Selection"), NULL, NULL, genlist, NULL);
 
-    Evas_Object *back_btn = elm_object_item_part_content_get (nf_it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (nf_it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", hw_keyboard_selection_view_set_cb, ugd);
 
     unsigned int i = 0;
@@ -842,12 +833,8 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set (item, EINA_TRUE);
+        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
     }
-
-    std::vector<String>::iterator it;
-    it = std::find (hw_iselist.begin (), hw_iselist.end (), uuid_to_name(String("d75857a5-4148-4745-89e2-1da7ddaf7999")));
-    hw_iselist.erase (it);
 
     std::sort (hw_iselist.begin (), hw_iselist.end ());
 
@@ -927,7 +914,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set (item, EINA_TRUE);
+        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 //group1 item1
         item_data = (ItemData *)malloc(sizeof(ItemData));
@@ -936,7 +923,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
             p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
             item_data->text = strdup(_T("Auto capitalization"));
             item_data->mode = AUTO_CAPITALIZATION_ITEM;
-            elm_genlist_item_append(
+            ugd->autocapital_item = elm_genlist_item_append(
                     genlist,                // genlist object
                     &itc1,                  // item class
                     item_data,              // data
@@ -944,6 +931,9 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     _gl_sel,
                     (void *)(item_data->mode));
+
+            if (is_hw_connected)
+                elm_object_item_disabled_set (ugd->autocapital_item, EINA_TRUE);
         }
 
 //group2 title
@@ -960,7 +950,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-            elm_genlist_item_display_only_set (item, EINA_TRUE);
+            elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
         }
 
 //group2 item1
@@ -971,12 +961,11 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         snprintf (ise_bak, sizeof (ise_bak), "%s", _active_ise_name);
 
         item_data = (ItemData *)malloc(sizeof(ItemData));
-        if (item_data!=NULL) {
+        if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text = strdup(_T("Keyboard selection"));
             item_data->sub_text = strdup(_active_ise_name);
-            item_data->mode = AUTO_CAPITALIZATION_ITEM;
 
             ugd->sw_ise_item_tizen = elm_genlist_item_append(
                     genlist,                // genlist object
@@ -1016,7 +1005,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[HW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
-            item_data->text=strdup(_T("Hardware keyboard"));
+            item_data->text = strdup(_T("Hardware keyboard"));
             item = elm_genlist_item_append(
                     genlist,                // genlist object
                     &itcTitle,              // item class
@@ -1025,19 +1014,13 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-            elm_genlist_item_display_only_set (item, EINA_TRUE);
+            elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
         }
 
 //group3 item1
         String uuid,name;
         isf_get_keyboard_ise(uuid,name,_config);
-        //temp
-        if (strcmp(uuid.c_str(),"d75857a5-4148-4745-89e2-1da7ddaf7999") == 0)
-        {
-            name = name + String("English");
-            uuid = name_to_uuid(name);
-        }
-       snprintf(_active_hw_ise_name,sizeof(_active_hw_ise_name),"%s",name.c_str());
+        snprintf(_active_hw_ise_name,sizeof(_active_hw_ise_name),"%s",name.c_str());
 
         snprintf (hw_ise_bak, sizeof (hw_ise_bak), "%s", _active_hw_ise_name);
 
@@ -1072,11 +1055,11 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
     return ugd->naviframe;
 }
 
-static void sync_iselist()
+static void sync_ise_list (void)
 {
     // Request ISF to update ISE list, below codes are very important, dont remove
     char **iselist = NULL;
-    int count = isf_control_get_iselist (&iselist);
+    int count = isf_control_get_ise_list (&iselist);
     int i;
     for (i = 0; i < count; i++) {
         SCIM_DEBUG_MAIN (3) << " [" << i << " : " << iselist[i] << "] \n";
@@ -1121,6 +1104,7 @@ static void load_config_module (void)
 static void hw_connection_change_cb(ug_data *ugd)
 {
     //enable / disable switch
+    elm_object_item_disabled_set (ugd->autocapital_item, !elm_object_item_disabled_get(ugd->autocapital_item));
     elm_object_item_disabled_set (ugd->sw_ise_item_tizen, !elm_object_item_disabled_get(ugd->sw_ise_item_tizen));
     elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, !elm_object_item_disabled_get(ugd->sw_ise_opt_item_tizen));
     elm_object_item_disabled_set (ugd->hw_ise_item_tizen, !elm_object_item_disabled_get(ugd->hw_ise_item_tizen));
@@ -1215,9 +1199,9 @@ static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, v
 
     //only helper ISEs will be needed in isfsetting according to phone requirement.
     load_config_data (_config);
-    sync_iselist();
+    sync_ise_list ();
     isf_load_ise_information (ALL_ISE, _config);
-    init_hw_keyboard_listener(ugd);
+    init_hw_keyboard_listener (ugd);
     //-------------------------- ise infomation ----------------------------
 
     //construct the UI part of the isfsetting module
@@ -1394,7 +1378,7 @@ extern "C"
             free (ugd);
     }
 
-    UG_MODULE_API int setting_plugin_reset(bundle *data, void *priv)//for setting keyboard reset
+    UG_MODULE_API int setting_plugin_reset (bundle *data, void *priv)//for setting keyboard reset
     {
         if (vconf_set_bool (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, false) == -1)
             return -1;
@@ -1404,45 +1388,29 @@ extern "C"
         isf_load_ise_information (ALL_ISE, _config);
 
         String uuid =  scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String ("b70bf6cc-ff77-47dc-a137-60acc32d1e0c"));
-        isf_control_set_active_ise_by_uuid (uuid.c_str());
+        isf_control_set_active_ise_by_uuid (uuid.c_str ());
 
         String mdl_name;
-
         for (unsigned int i = 0; i < _module_names.size (); i++) {
-            mdl_name = _module_names[i];
-            char module_name[256];
-            snprintf (module_name, sizeof (module_name), "%s-imengine-setup", mdl_name.c_str ());
-            mdl = new SetupModule (String (module_name));
-            if ( mdl == NULL || !mdl->valid ()) {
-                if (mdl)
-                {
-                    delete mdl;
-                    mdl = NULL;
-                }
-                continue;
-            }
-            else{
+            if (_modes[i] == TOOLBAR_KEYBOARD_MODE)
+                mdl_name = _module_names[i] + String ("-imengine-setup");
+            else
+                mdl_name = _module_names[i] + String ("-setup");
+
+            mdl = new SetupModule (mdl_name);
+            if (mdl != NULL && mdl->valid ()) {
                 if (mdl->option_reset (_config) == false)
-                {
-                    printf("mdl %s failed to reset option!\n",module_name);
-                    if (mdl)
-                    {
-                        delete mdl;
-                        mdl = NULL;
-                    }
-                    return -1;
-                }
-                else
-                {
-                    _config->reload ();
-                    if (mdl)
-                    {
-                        delete mdl;
-                        mdl = NULL;
-                    }
-                }
+                    std::cerr << mdl_name << " failed to reset option!\n";
+            } else {
+                std::cerr << "Load " << mdl_name << " is failed!!!\n";
+            }
+            if (mdl) {
+                delete mdl;
+                mdl = NULL;
             }
         }
+
+        _config->reload ();
         return 0;
     }
 

@@ -23,17 +23,7 @@
  */
 
 #include "isf_demo_efl.h"
-#include "isf_prediction_efl.h"
-
-static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Eina_Bool allow)
-{
-    Evas_Object *ef = NULL;
-    ef = _create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef,"elm.swallow.content");
-    elm_entry_prediction_allow_set (en, allow);
-
-    return ef;
-}
+#include "isf_imdata_set_efl.h"
 
 static void add_layout_to_conformant (void *data, Evas_Object *lay_in, const char *title)
 {
@@ -63,34 +53,46 @@ static void add_layout_to_conformant (void *data, Evas_Object *lay_in, const cha
    elm_naviframe_item_push (ad->naviframe, title, NULL, NULL, conform, NULL);
 }
 
+static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text)
+{
+    Evas_Object *ef = NULL;
+    ef = _create_ef (parent, label, guide_text);
+    return ef;
+}
+
 static Evas_Object * create_inner_layout (void *data)
 {
     struct appdata *ad = (struct appdata *)data;
     Evas_Object *bx = NULL ;
     Evas_Object *ef = NULL ;
+    Evas_Object *en = NULL;
 
     Evas_Object *parent = ad->naviframe;
+    const char *imdata_ko = "LANG:ko_KR";
+    const char *imdata_en = "LANG:en_US";
 
     bx = elm_box_add (parent);
     evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    /* Prediction allow : TRUE */
-    ef = _create_ef_layout (parent, _("Prediction Allow : TRUE"), _("click to enter"), EINA_TRUE);
+    ef = _create_ef_layout (parent, _("ko_KR"), _("Korean Layout"));
     elm_box_pack_end (bx, ef);
+    en =  elm_object_part_content_get(ef, "elm.swallow.content");
+    elm_entry_input_panel_imdata_set (en, imdata_ko, strlen(imdata_ko));
 
-    /* Prediction allow : FALSE */
-    ef = _create_ef_layout (parent, _("Prediction Allow : FALSE"), _("click to enter"), EINA_FALSE);
+    ef = _create_ef_layout (parent, _("en_US"), _("English layout"));
     elm_box_pack_end (bx, ef);
+    en =  elm_object_part_content_get(ef, "elm.swallow.content");
+    elm_entry_input_panel_imdata_set (en, imdata_en, strlen(imdata_en));
 
     return bx;
 }
 
-void ise_prediction_bt (void *data, Evas_Object *obj, void *event_info)
+void ise_imdata_set_bt (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *lay_inner = create_inner_layout (data);
-    add_layout_to_conformant (data, lay_inner, _("Prediction Allow"));
+    add_layout_to_conformant (data, lay_inner, _("IMDATA test"));
 }
 
 /*

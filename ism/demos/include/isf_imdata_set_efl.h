@@ -22,38 +22,14 @@
  *
  */
 
-#ifndef __ISF_DEMO_EFL_H
-#define __ISF_DEMO_EFL_H
-
+#ifndef __ISE_IMDATA_SET_H
+#define __ISE_IMDATA_SET_H
 
 #include <Elementary.h>
-#include <appcore-efl.h>
 
+void ise_imdata_set_bt (void *data, Evas_Object *obj, void *event_info);
 
-struct appdata {
-    int root_w;
-    int root_h;
-    int root_x;
-    int root_y;
-
-    Evas *evas;
-    Evas_Object *win_main;
-    Evas_Object *layout_main;     // layout widget based on EDJ
-    Evas_Object *naviframe;
-    Evas_Object *bg;
-
-    struct ui_gadget *ug;
-    int is_frameview;
-
-    // add more variables here
-    Evas_Object *li;
-    Evas_Object *ev_li;
-    bundle *data;
-};
-
-//utility func
-Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *guide_text);
-#endif /* __ISF_DEMO_EFL_H */
+#endif
 
 /*
 vi:ts=4:ai:nowrap:expandtab

@@ -4,18 +4,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ISF 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"POT-Creation-Date: 2012-03-19 11:24+0900\n"
 "PO-Revision-Date: 2011-01-01 22:41+0800\n"
 "Last-Translator: Haifeng Deng <haifeng.deng@samsung.com>\n"
 "Language-Team: scim@freedesktop.org\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
-msgid "Keyboard selection"
-msgstr "鍵盤選擇"
-
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:310
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:315
 msgid "Keyboard"
 msgstr "鍵盤"
+
+#~ msgid "Keyboard selection"
+#~ msgstr "鍵盤選擇"

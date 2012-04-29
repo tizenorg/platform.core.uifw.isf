@@ -43,13 +43,13 @@ int isf_control_set_active_ise_by_uuid (const char *uuid)
     return 0;
 }
 
-int isf_control_get_iselist (char ***iselist)
+int isf_control_get_ise_list (char ***iselist)
 {
     int count;
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
-    imcontrol_client.get_iselist (&count, iselist);
+    imcontrol_client.get_ise_list (&count, iselist);
     imcontrol_client.close_connection ();
     return count;
 }

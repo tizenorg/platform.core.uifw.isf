@@ -195,6 +195,14 @@ EAPI int _isf_imf_context_input_panel_language_set (Ecore_IMF_Input_Panel_Lang l
     return 0;
 }
 
+EAPI int _isf_imf_context_input_panel_language_locale_get (char **locale)
+{
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.get_ise_language_locale (locale);
+    return 0;
+}
+
 EAPI int _isf_imf_context_input_panel_imdata_set (const void *data, int len)
 {
     connect_panel ();
@@ -216,34 +224,45 @@ EAPI int _isf_imf_context_input_panel_geometry_get (int *x, int *y, int *w, int 
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.get_window_rect (x, y, w, h);
+    _imcontrol_client.get_ise_window_geometry (x, y, w, h);
     return 0;
 }
 
-EAPI int _isf_imf_context_input_panel_private_key_set (int layout_index, int key_index, const char *label, const char *value)
+EAPI int _isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Input_Panel_Return_Key_Type type)
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.set_private_key (layout_index, key_index, label, value);
+    _imcontrol_client.set_return_key_type ((int)type);
     _imcontrol_client.send ();
     return 0;
 }
 
-EAPI int _isf_imf_context_input_panel_private_key_set_by_image (int layout_index, int key_index, const char *img_path, const char *value)
+EAPI int _isf_imf_context_input_panel_return_key_type_get (Ecore_IMF_Input_Panel_Return_Key_Type &type)
+{
+    int temp = 0;
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.get_return_key_type (temp);
+    type = (Ecore_IMF_Input_Panel_Return_Key_Type)temp;
+    return 0;
+}
+
+EAPI int _isf_imf_context_input_panel_return_key_disabled_set (Eina_Bool disabled)
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.set_private_key_by_image (layout_index, key_index, img_path, value);
+    _imcontrol_client.set_return_key_disable ((int)disabled);
     _imcontrol_client.send ();
     return 0;
 }
 
-EAPI int _isf_imf_context_input_panel_key_disabled_set (int layout_index, int key_index, Eina_Bool disabled)
+EAPI int _isf_imf_context_input_panel_return_key_disabled_get (Eina_Bool &disabled)
 {
+    int temp = 0;
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.set_disable_key (layout_index, key_index, disabled);
-    _imcontrol_client.send ();
+    _imcontrol_client.get_return_key_disable (temp);
+    disabled = (Eina_Bool)temp;
     return 0;
 }
 
@@ -277,6 +296,14 @@ EAPI int _isf_imf_context_input_panel_caps_mode_set (unsigned int mode)
     _imcontrol_client.prepare ();
     _imcontrol_client.set_caps_mode (mode);
     _imcontrol_client.send ();
+    return 0;
+}
+
+EAPI int _isf_imf_context_candidate_window_geometry_get (int *x, int *y, int *w, int *h)
+{
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.get_candidate_window_geometry (x, y, w, h);
     return 0;
 }
 

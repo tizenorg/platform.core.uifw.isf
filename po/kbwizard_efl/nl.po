@@ -8,21 +8,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"POT-Creation-Date: 2012-03-19 11:24+0900\n"
 "PO-Revision-Date: 2007-03-17 18:54+0100\n"
 "Last-Translator: Ronald Stroethoff <stroet43@zonnet.nl>\n"
 "Language-Team: Nederlands\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:310
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:315
 #, fuzzy
-msgid "Keyboard selection"
-msgstr "Toetsen selectie"
+msgid "Keyboard"
+msgstr "Nederlands/toetsenbord"
+
+#, fuzzy
+#~ msgid "Keyboard selection"
+#~ msgstr "Toetsen selectie"
 
 #, fuzzy
 #~ msgid "Selection"
@@ -51,10 +56,6 @@ msgstr "Toetsen selectie"
 #, fuzzy
 #~ msgid "option"
 #~ msgstr "Opties"
-
-#, fuzzy
-#~ msgid "Keyboard"
-#~ msgstr "Nederlands/toetsenbord"
 
 #~ msgid "English/Keyboard"
 #~ msgstr "Nederlands/toetsenbord"

@@ -230,7 +230,7 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     evas_object_smart_callback_add (_ise_show_button, "clicked", _button_bt, NULL);
 
     Elm_Object_Item *it = elm_naviframe_item_push (ad->naviframe, _("label event demo"), NULL, NULL, layout, NULL);
-    Evas_Object *back_btn = elm_object_item_part_content_get (it, ELM_NAVIFRAME_ITEM_PREV_BTN);
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked",  nf_back_event_cb, ad );
 }
 

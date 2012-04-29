@@ -307,9 +307,9 @@ public:
     /**
      * @brief Get current ISE size and position.
      *
-     * @param ise_rect A rect contains ISE size and position.
+     * @param rect It contains ISE size and position.
      */
-    void get_current_ise_rect (rectinfo &ise_rect);
+    void get_current_ise_geometry (rectinfo &rect);
 
     /**
      * @brief Update ISE name to IM Control.
@@ -324,6 +324,14 @@ public:
      * @param style The ISE style.
      */
     void update_ise_style (uint32 &style);
+
+    /**
+     * @brief Send candidate panel event to IM Control.
+     *
+     * @param nType  The candidate panel event type.
+     * @param nValue The candidate panel event value.
+     */
+    void update_candidate_panel_event (uint32 nType, uint32 nValue);
 
     /**
      * @brief Update ISE control panel status to IM Control.
@@ -679,11 +687,11 @@ public:
     Connection signal_connect_get_candidate_ui           (PanelAgentSlotIntInt2             *slot);
 
     /**
-     * @brief Signal: get candidate window rect.
+     * @brief Signal: get candidate window geometry information.
      *
-     * slot prototype: void get_candidate_rect (rectinfo &info);
+     * slot prototype: void get_candidate_geometry (rectinfo &info);
      */
-    Connection signal_connect_get_candidate_rect         (PanelAgentSlotRect                *slot);
+    Connection signal_connect_get_candidate_geometry     (PanelAgentSlotRect                *slot);
 
     /**
      * @brief Signal: set candidate position.

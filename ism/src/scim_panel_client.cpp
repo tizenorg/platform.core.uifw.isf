@@ -124,7 +124,7 @@ public:
                 scim_usleep (100000);
                 launch_panel (config, display);
                 std::cerr << " Re-connecting to PanelAgent server.";
-                ISF_SYSLOG (" Re-connecting to PanelAgent server.\n");
+                ISF_LOG (" Re-connecting to PanelAgent server.\n");
                 for (i = 0; i < 200; ++i) {
                     if (m_socket.connect (addr)) {
                         ret = true;
@@ -134,17 +134,17 @@ public:
                     scim_usleep (200000);
                 }
                 std::cerr << " Connected :" << i << "\n";
-                ISF_SYSLOG ("  Connected :%d\n", i);
+                ISF_LOG ("  Connected :%d\n", i);
                 if (m_socket.connect (addr) == false && count >= 2)
                     break;
             }
 
             if (ret && scim_socket_open_connection (m_socket_magic_key, String ("FrontEnd"), String ("Panel"), m_socket, m_socket_timeout)) {
-                ISF_SYSLOG (" PID=%d connect to PanelAgent (%s), connected:%d.\n", getpid (), panel_address.c_str (), count);
+                ISF_LOG (" PID=%d connect to PanelAgent (%s), connected:%d.\n", getpid (), panel_address.c_str (), count);
                 break;
             } else {
                 std::cerr << " PID=" << getpid () << " cannot connect to PanelAgent (" << panel_address << "), connected:" << count << ".\n";
-                ISF_SYSLOG (" PID=%d cannot connect to PanelAgent (%s), connected:%d.\n", getpid (), panel_address.c_str (), count);
+                ISF_LOG (" PID=%d cannot connect to PanelAgent (%s), connected:%d.\n", getpid (), panel_address.c_str (), count);
             }
 
             m_socket.close ();

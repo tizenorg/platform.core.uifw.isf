@@ -25,19 +25,17 @@
 #include "isf_demo_efl.h"
 #include "isf_autocapital_efl.h"
 
-static Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *guide_text, Elm_Autocapital_Type autocap)
+static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Autocapital_Type autocap, Eina_Bool caps_lock_mode)
 {
-    Evas_Object *ef = elm_editfield_add (parent);
-    elm_editfield_label_set (ef, label);
-    elm_editfield_guide_text_set (ef, guide_text);
-    evas_object_size_hint_weight_set (ef, EVAS_HINT_EXPAND, 0);
-    evas_object_size_hint_align_set (ef, EVAS_HINT_FILL, 0);
-    evas_object_show (ef);
+    Evas_Object *ef;
+    ef = _create_ef (parent, label, guide_text);
+    Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
+    elm_entry_autocapital_type_set (en, autocap);
 
-    Evas_Object *en = elm_editfield_entry_get(ef);
-    if (!en) return ef;
-
-    elm_entry_autocapital_type_set(en, autocap);
+    Ecore_IMF_Context *ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (en);
+    if (ic) {
+        ecore_imf_context_input_panel_caps_lock_mode_set (ic, caps_lock_mode);
+    }
 
     return ef;
 }
@@ -83,20 +81,40 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
+    /* Caps lock mode off */
+
     /* NONE type */
-    ef = _create_ef (parent, _("NONE type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_NONE);
+    ef = _create_ef_layout (parent, _("NONE type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_NONE, EINA_FALSE);
     elm_box_pack_end (bx, ef);
 
     /* WORD type */
-    ef = _create_ef (parent, _("WORD type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_WORD);
+    ef = _create_ef_layout (parent, _("WORD type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_WORD, EINA_FALSE);
     elm_box_pack_end (bx, ef);
 
     /* Sentence type */
-    ef = _create_ef (parent, _("SENTENCE type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_SENTENCE);
+    ef = _create_ef_layout (parent, _("SENTENCE type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_SENTENCE, EINA_FALSE);
     elm_box_pack_end (bx, ef);
 
     /* ALLCHARACTER type */
-    ef = _create_ef (parent, _("ALLCHARACTER type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_ALLCHARACTER);
+    ef = _create_ef_layout (parent, _("ALLCHARACTER type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_ALLCHARACTER, EINA_FALSE);
+    elm_box_pack_end (bx, ef);
+
+    /* Caps lock mode ON */
+
+    /* NONE type */
+    ef = _create_ef_layout (parent, _("NONE type - CAPS LOCK"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_NONE, EINA_TRUE);
+    elm_box_pack_end (bx, ef);
+
+    /* WORD type */
+    ef = _create_ef_layout (parent, _("WORD type - CAPS LOCK"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_WORD, EINA_TRUE);
+    elm_box_pack_end (bx, ef);
+
+    /* Sentence type */
+    ef = _create_ef_layout (parent, _("SENTENCE type - CAPS LOCK"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_SENTENCE, EINA_TRUE);
+    elm_box_pack_end (bx, ef);
+
+    /* ALLCHARACTER type */
+    ef = _create_ef_layout (parent, _("ALLCHARACTER type - CAPS LOCK"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_ALLCHARACTER, EINA_TRUE);
     elm_box_pack_end (bx, ef);
 
     return bx;

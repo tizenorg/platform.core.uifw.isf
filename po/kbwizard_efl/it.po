@@ -9,21 +9,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"POT-Creation-Date: 2012-03-19 11:24+0900\n"
 "PO-Revision-Date: 2005-12-13 00:36+0100\n"
 "Last-Translator: Federico Zenith <zenith@chemeng.ntnu.no>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:310
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:315
 #, fuzzy
-msgid "Keyboard selection"
-msgstr "Selezione dei tasti"
+msgid "Keyboard"
+msgstr "Inglese/Tastiera"
+
+#, fuzzy
+#~ msgid "Keyboard selection"
+#~ msgstr "Selezione dei tasti"
 
 #, fuzzy
 #~ msgid "Selection"
@@ -35,10 +40,6 @@ msgstr "Selezione dei tasti"
 
 #, fuzzy
 #~ msgid "Auto capitalization"
-#~ msgstr "Divisione automatica:"
-
-#, fuzzy
-#~ msgid "Auto period"
 #~ msgstr "Divisione automatica:"
 
 #, fuzzy
@@ -60,10 +61,6 @@ msgstr "Selezione dei tasti"
 #, fuzzy
 #~ msgid "option"
 #~ msgstr "Opzioni"
-
-#, fuzzy
-#~ msgid "Keyboard"
-#~ msgstr "Inglese/Tastiera"
 
 #~ msgid "English/Keyboard"
 #~ msgstr "Inglese/Tastiera"

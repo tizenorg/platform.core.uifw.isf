@@ -31,7 +31,7 @@
 #ifndef __SCIM_UTILITY_H
 #define __SCIM_UTILITY_H
 
-#include <syslog.h>
+//#include <syslog.h>
 
 namespace scim {
 /**
@@ -465,15 +465,15 @@ void ISF_PROF_DEBUG_TIME_END (char const* format, char const* func, int line);
 
 #endif    /* ISF_PROF */
 
-#define ENABLE_ISF_SYSLOG 1
-#ifdef ENABLE_ISF_SYSLOG
-    #define ISF_SYSLOG(fmt, args...) \
+//#define ENABLE_ISF_LOG 1
+#ifdef ENABLE_ISF_LOG
+    #define ISF_LOG(fmt, args...) \
     do{ \
-        syslog (LOG_DEBUG, "[%s %d in %s ()]", __FILE__, __LINE__, __FUNCTION__); \
-        syslog (LOG_DEBUG, fmt, ##args); \
+        /*syslog (LOG_DEBUG, "[%s %d in %s ()]", __FILE__, __LINE__, __FUNCTION__); \
+        syslog (LOG_DEBUG, fmt, ##args); \ */
     }while(0);
 #else
-    #define ISF_SYSLOG(fmt, ...)
+    #define ISF_LOG(fmt, ...)
 #endif
 
 void gettime (clock_t clock_start, const char* str);

@@ -9,21 +9,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 18:51+0900\n"
+"POT-Creation-Date: 2012-03-19 11:24+0900\n"
 "PO-Revision-Date: 2005-12-16 14:10+0100\n"
 "Last-Translator: Jan Hefti <j.hefti@chinaboard.de>\n"
 "Language-Team: German <scim-devel@lists.sourceforge.net>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11\n"
 
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:254
-#: ism/extras/efl_setting/isf_setting_wizard.cpp:257
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:310
+#: ism/extras/efl_setting/isf_setting_wizard.cpp:315
 #, fuzzy
-msgid "Keyboard selection"
-msgstr "Tastenauswahl"
+msgid "Keyboard"
+msgstr "Deutsch/Tastatur"
+
+#, fuzzy
+#~ msgid "Keyboard selection"
+#~ msgstr "Tastenauswahl"
 
 #, fuzzy
 #~ msgid "Selection"
@@ -52,10 +57,6 @@ msgstr "Tastenauswahl"
 #, fuzzy
 #~ msgid "option"
 #~ msgstr "Optionen"
-
-#, fuzzy
-#~ msgid "Keyboard"
-#~ msgstr "Deutsch/Tastatur"
 
 #~ msgid "English/Keyboard"
 #~ msgstr "Deutsch/Tastatur"
@@ -1195,8 +1196,8 @@ msgstr "Tastenauswahl"
 #~ msgid ""
 #~ "If this option is checked, the menu icon will be showed on the toolbar."
 #~ msgstr ""
-#~ "Wenn diese Option gewählt ist, wird das Symbol »Menü« auf der Symbolleiste "
-#~ "angezeigt."
+#~ "Wenn diese Option gewählt ist, wird das Symbol »Menü« auf der "
+#~ "Symbolleiste angezeigt."
 
 #~ msgid ""
 #~ "If this option is checked, the help icon will be showed on the toolbar."

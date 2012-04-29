@@ -94,7 +94,7 @@ ISF consists of following components
 @ingroup ISF_Use_Cases1
 @{
 <h3 class="pg">How to show soft keyboard as soon as application is launched.</h3>
-Call elm_object_focus() API to let entry have a focus.
+Call elm_object_focus_set() API to let entry have a focus.
 @code
 void create_entry(struct appdata *ad)
 {
@@ -103,7 +103,7 @@ void create_entry(struct appdata *ad)
 
 	// Set the layout of soft keyboard when entry has a focus or is clicked.
 	elm_entry_input_panel_layout_set(ad->eb, ELM_INPUT_PANEL_LAYOUT_URL);
-	elm_object_focus(ad->eb); //give focus to the entry and then soft keyboard will be shown automatically
+	elm_object_focus_set(ad->eb, EINA_TRUE); //give focus to the entry and then soft keyboard will be shown automatically
 }
 @endcode
 @}
@@ -131,7 +131,7 @@ elm_entry_input_panel_enabled_set(eo, EINA_FALSE);
 <tr>
     <td>
         <b>Note:</b> If you use elm_entry widget, you don't need to call this API.<br>
-        Please give a focus to entry widget using elm_object_focus() if you want to show a soft keyboard.
+        Please give a focus to entry widget using elm_object_focus_set() if you want to show a soft keyboard.
     </td>
 </tr>
 </table>
@@ -260,30 +260,6 @@ static void create_entry(struct appdata *ad)
 	}
 }
 @endcode
-@}
-@defgroup ISF_Use_Cases1_8 Sets up a private key of active ISE keyboard layout
-@ingroup ISF_Use_Cases1
-@{
-
-<h3 class="pg">Sets up a private key of active ISE keyboard layout</h3>
-@code
-int create_entry(struct appdata *ad)
-{
-	Ecore_IMF_Context *imf_context = NULL;
-	ad->entry = elm_entry_add(ad->layout_main);
-	elm_entry_input_panel_layout_set(ad->entry, ELM_ INPUT_PANEL_LAYOUT_NUMBER);
-	imf_context = elm_entry_imf_context_get(ad->entry);
-
-	if (imf_context)
-	{
-		ecore_imf_context_input_panel_private_key_set(imf_context, ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL,
-                ECORE_IMF_INPUT_PANEL_KEY_ENTER, NULL, "Go", ECORE_IMF_INPUT_PANEL_KEY_ENTER, NULL);
-	}
-}
-@endcode
-
-@image html TIZEN_ISF_PG_private_key.png<br>
-<center><b>Figure.</b> Example of private key "Go" instead of "Enter"</center>
 @}
 @defgroup ISF_Use_Cases1_91 How to set the layout of soft keyboard ISE Layout
 @ingroup ISF_Use_Cases1
@@ -986,9 +962,6 @@ The mapping of EFLIMFControl APIs and HelperAgent signals:
 </tr>
 <tr>
 	<td>ecore_imf_context_input_panel_imdata_get</td><td>signal_get_imdata</td>
-</tr>
-<tr>
-	<td>ecore_imf_context_input_panel_private_key_set</td><td>signal_set_private_key_by_label</td>
 </tr>
 <tr>
 	<td>ecore_imf_context_input_panel_layout_set</td><td>signal_set_layout</td>

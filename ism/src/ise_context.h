@@ -28,18 +28,15 @@
 #include <Ecore_IMF.h>
 
 typedef struct {
-    char name[_POSIX_PATH_MAX];
-    int IfAlwaysShow;
-    int IfFullStyle;
-    Ecore_IMF_Input_Panel_State state;
-    int fUseImEffect;
     Ecore_IMF_Input_Panel_Lang language;
     Ecore_IMF_Input_Panel_Layout layout;
-    int orient;
-    unsigned int disabled_key_num;
-    unsigned int private_key_num;
-    int input_panel_x;
-    int input_panel_y;
+    Ecore_IMF_Input_Panel_Return_Key_Type return_key_type;
+    Eina_Bool return_key_disabled;
+    int imdata_size;
+    Eina_Bool prediction_allow;
+    Eina_Bool password_mode;
+    Eina_Bool caps_mode;
+    int reserved[15];
 } Ise_Context;
 
 #endif  /* __ISE_CONTEXT_H */

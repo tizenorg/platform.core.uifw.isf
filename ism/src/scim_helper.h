@@ -178,17 +178,14 @@ typedef Slot3<void, const HelperAgent *, int, uint32 &>
 typedef Slot3 <void, const HelperAgent *, char *, size_t &>
         HelperAgentSlotRawVoid;
 
+typedef Slot3 <void, const HelperAgent *, char **, size_t &>
+        HelperAgentSlotGetRawVoid;
+
 typedef Slot4 <void, const HelperAgent *, int, char *, size_t &>
         HelperAgentSlotIntRawVoid;
 
-typedef Slot3 <void, const HelperAgent *, char **, size_t &>
-        HelperAgentSlotGetIMDataVoid;
-
-typedef Slot5 <void, const HelperAgent *, uint32 &, uint32 &, char *, char *>
-        HelperAgentSlotSetPrivateKeyVoid;
-
-typedef Slot4 <void, const HelperAgent *, uint32 &, uint32 &, uint32 &>
-        HelperAgentSlotSetDisableKeyVoid;
+typedef Slot3 <void, const HelperAgent *, int, char **>
+        HelperAgentSlotIntGetStringVoid;
 
 typedef Slot2<void, const HelperAgent *, std::vector<uint32> &>
         HelperAgentSlotUintVector;
@@ -356,14 +353,6 @@ public:
                                  const WideString   &wstr) const;
 
     /**
-     * @brief Commit a buffer to client application by IMControl.
-     *
-     * @param buf The result context.
-     * @param len The length of buffer.
-     */
-    void commit_ise_result_to_imcontrol      (char *buf, size_t len) const;
-
-    /**
      * @brief Request to show preedit string.
      *
      * @param ic The handle of the client Input Context to receive the request.
@@ -484,22 +473,6 @@ public:
                                    int                          len) const;
 
     /**
-     * @ brief Set new candidate UI.
-     *
-     * @param style style of new candidate UI.
-     * @param mode mode of new candidate UI.
-     */
-    void set_candidate_ui         (const ISF_CANDIDATE_STYLE_T  style,
-                                   const ISF_CANDIDATE_MODE_T   mode) const;
-
-    /**
-     * @ brief Request to get current candidate style and mode.
-     *
-     * @param uuid The helper ISE UUID.
-     */
-    void get_candidate_ui         (const String                &uuid) const;
-
-    /**
      * @ brief Set candidate position in screen.
      *
      * @param left The x position in screen.
@@ -518,7 +491,7 @@ public:
      *
      * @param uuid The helper ISE UUID.
      */
-    void get_candidate_window_rect(const String                &uuid) const;
+    void get_candidate_window_geometry (const String           &uuid) const;
 
     /**
      * @ brief Set current keyboard ISE.
@@ -540,14 +513,6 @@ public:
      * @param uuid The helper ISE UUID.
      */
     void get_keyboard_ise_list    (const String                &uuid) const;
-
-    /**
-     * @ brief Launch another helper ISE.
-     *
-     * @param loop If loop is true, this function will launch helper ISE by loop.
-     *             If loop is false, this function will popup helper ISE list window.
-     */
-    void launch_helper_ise        (const bool                   loop) const;
 
 public:
     /**
@@ -719,14 +684,14 @@ public:
     Connection signal_connect_ise_hide                          (HelperAgentSlotVoid                *slot);
 
     /**
-     * @brief Connect a slot to Helper get rect signal.
+     * @brief Connect a slot to Helper get ISE window geometry signal.
      *
      * This signal is used to get Helper ISE window size and position.
      *
      * The prototype of the slot is:
-     * void get_rect (const HelperAgent *agent, struct rectinfo &info);
+     * void get_geometry (const HelperAgent *agent, struct rectinfo &info);
      */
-    Connection signal_connect_get_size                          (HelperAgentSlotSize                *slot);
+    Connection signal_connect_get_geometry                      (HelperAgentSlotSize                *slot);
 
     /**
      * @brief Connect a slot to Helper set mode signal.
@@ -766,39 +731,57 @@ public:
      * The prototype of the slot is:
      * void get_imdata (const HelperAgent *, char **buf, size_t &len);
      */
-    Connection signal_connect_get_imdata                        (HelperAgentSlotGetIMDataVoid       *slot);
+    Connection signal_connect_get_imdata                        (HelperAgentSlotGetRawVoid          *slot);
 
     /**
-     * @brief Connect a slot to Helper set label private key signal.
+     * @brief Connect a slot to Helper get language locale.
      *
-     * This signal is used to send label private key to Helper ISE.
+     * This signal is used to get language locale from Helper ISE.
      *
      * The prototype of the slot is:
-     * void set_private_key_by_label (const HelperAgent *agent, uint32 &layout_idx,
-     *                                uint32 & key_idx, char *label, char *value);
+     * void get_language_locale (const HelperAgent *, int ic, char **locale);
      */
-    Connection signal_connect_set_private_key_by_label          (HelperAgentSlotSetPrivateKeyVoid   *slot);
+    Connection signal_connect_get_language_locale               (HelperAgentSlotIntGetStringVoid    *slot);
 
     /**
-     * @brief Connect a slot to Helper set image private key signal.
+     * @brief Connect a slot to Helper set return key type signal.
      *
-     * This signal is used to send image private key to Helper ISE.
+     * This signal is used to set return key type to Helper ISE.
      *
      * The prototype of the slot is:
-     * void set_private_key_by_image (const HelperAgent *agent, uint32 &layout_idx,
-     *                                uint32 & key_idx, char *img_path, char *value);
+     * void set_return_key_type (const HelperAgent *agent, uint32 &type);
      */
-    Connection signal_connect_set_private_key_by_image          (HelperAgentSlotSetPrivateKeyVoid   *slot);
+    Connection signal_connect_set_return_key_type               (HelperAgentSlotUintVoid            *slot);
 
     /**
-     * @brief Connect a slot to Helper set disable key signal.
+     * @brief Connect a slot to Helper get return key type signal.
      *
-     * This signal is used to send disable key to Helper ISE.
+     * This signal is used to get return key type from Helper ISE.
      *
      * The prototype of the slot is:
-     * void set_disable_key (const HelperAgent *agent, uint32 &layout_idx, uint32 &key_idx, uint32 &disabled);
+     * void get_return_key_type (const HelperAgent *agent, uint32 &type);
      */
-    Connection signal_connect_set_disable_key                   (HelperAgentSlotSetDisableKeyVoid   *slot);
+    Connection signal_connect_get_return_key_type               (HelperAgentSlotUintVoid            *slot);
+
+    /**
+     * @brief Connect a slot to Helper set return key disable signal.
+     *
+     * This signal is used to set return key disable to Helper ISE.
+     *
+     * The prototype of the slot is:
+     * void set_return_key_disable (const HelperAgent *agent, uint32 &disabled);
+     */
+    Connection signal_connect_set_return_key_disable            (HelperAgentSlotUintVoid            *slot);
+
+    /**
+     * @brief Connect a slot to Helper get return key disable signal.
+     *
+     * This signal is used to get return key disable from Helper ISE.
+     *
+     * The prototype of the slot is:
+     * void get_return_key_disable (const HelperAgent *agent, uint32 &disabled);
+     */
+    Connection signal_connect_get_return_key_disable            (HelperAgentSlotUintVoid            *slot);
 
     /**
      * @brief Connect a slot to Helper get layout signal.
@@ -809,16 +792,6 @@ public:
      * void get_layout (const HelperAgent *agent, uint32 &layout);
      */
     Connection signal_connect_get_layout                        (HelperAgentSlotUintVoid            *slot);
-
-    /**
-    * @brief Connect a slot to Helper to get layout list signal.
-    *
-    * This signal is used to get the availabe Helper ISE layout list.
-    *
-    * The prototype of the slot is:
-    * void get_layout_list (const HelperAgent *agent, std::vector<uint32> &list);
-    */
-    Connection signal_connect_get_layout_list            (HelperAgentSlotUintVector *slot);
 
     /**
      * @brief Connect a slot to Helper set layout signal.
@@ -851,24 +824,14 @@ public:
     Connection signal_connect_reset_input_context               (HelperAgentSlotVoid                *slot);
 
     /**
-     * @brief Connect a slot to Helper update candidate ui signal.
-     *
-     * This signal is used to get candidate ui style and mode.
-     *
-     * The prototype of the slot is:
-     * void update_candidate_ui (const HelperAgent *agent, int ic, const String &uuid, int style, int mode);
-     */
-    Connection signal_connect_update_candidate_ui               (HelperAgentSlotIntInt              *slot);
-
-    /**
-     * @brief Connect a slot to Helper update candidate rect signal.
+     * @brief Connect a slot to Helper update candidate window geometry signal.
      *
      * This signal is used to get candidate window size and position.
      *
      * The prototype of the slot is:
-     * void update_candidate_rect (const HelperAgent *agent, int ic, const String &uuid, const rectinfo &info);
+     * void update_candidate_geometry (const HelperAgent *agent, int ic, const String &uuid, const rectinfo &info);
      */
-    Connection signal_connect_update_candidate_rect             (HelperAgentSlotRect                *slot);
+    Connection signal_connect_update_candidate_geometry         (HelperAgentSlotRect                *slot);
 
     /**
      * @brief Connect a slot to Helper update keyboard ISE signal.
@@ -1001,26 +964,6 @@ public:
      * void update_associate_table_page_size (const HelperAgent *, int ic, const String &uuid, int page_size);
      */
     Connection signal_connect_update_associate_table_page_size  (HelperAgentSlotInt                 *slot);
-
-    /**
-     * @brief Connect a slot to Helper reset ISE context signal.
-     *
-     * This signal is used to reset Helper ISE.
-     *
-     * The prototype of the slot is:
-     * void reset_ise_context (const HelperAgent *agent, int ic, const String &uuid);
-     */
-    Connection signal_connect_reset_ise_context                 (HelperAgentSlotVoid                *slot);
-
-    /**
-     * @brief Connect a slot to Helper set screen direction signal.
-     *
-     * This signal is used to rotate and resize Helper when screen direction is changed.
-     *
-     * The prototype of the slot is:
-     * void set_screen_direction (const HelperAgent *agent, uint32 &mode);
-     */
-    Connection signal_connect_set_screen_direction              (HelperAgentSlotUintVoid            *slot);
 
     /**
      * @brief Connect a slot to Helper turn on log signal.

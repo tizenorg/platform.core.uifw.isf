@@ -299,21 +299,21 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
     evas_object_show(genlist);
 
     Elm_Object_Item *nf_it;
-    Evas_Object *cbar = elm_controlbar_add(ugd->naviframe);
+    Evas_Object *cbar = elm_toolbar_add (ugd->naviframe);
+    elm_toolbar_shrink_mode_set(cbar, ELM_TOOLBAR_SHRINK_EXPAND);
     if (cbar == NULL) return NULL;
-    elm_object_style_set(cbar, "naviframe");
 
     if (navi_btn_l_lable!= NULL) {
-        elm_controlbar_tool_item_append(cbar, NULL, navi_btn_l_lable, sw_keyboard_selection_view_back_cb, ugd);
-        elm_controlbar_tool_item_append(cbar, NULL, navi_btn_r_lable, sw_keyboard_selection_view_set_cb, ugd);
+        elm_toolbar_item_append(cbar, NULL, navi_btn_l_lable, sw_keyboard_selection_view_back_cb, ugd);
+        elm_toolbar_item_append(cbar, NULL, navi_btn_r_lable, sw_keyboard_selection_view_set_cb, ugd);
 
         nf_it = elm_naviframe_item_push(ugd->naviframe, T_("Keyboard"), NULL, NULL, genlist, NULL);
-        elm_object_item_part_content_set(nf_it, ELM_NAVIFRAME_ITEM_CONTROLBAR, cbar);
+        elm_object_item_part_content_set(nf_it, "controlbar", cbar);
     }
     else {
-        elm_controlbar_tool_item_append(cbar, NULL, navi_btn_r_lable, sw_keyboard_selection_view_set_cb, ugd);
+        elm_toolbar_item_append(cbar, NULL, navi_btn_r_lable, sw_keyboard_selection_view_set_cb, ugd);
         nf_it = elm_naviframe_item_push(ugd->naviframe, T_("Keyboard"), NULL, NULL, genlist, NULL);
-        elm_object_item_part_content_set(nf_it, ELM_NAVIFRAME_ITEM_CONTROLBAR, cbar);
+        elm_object_item_part_content_set(nf_it, "controlbar", cbar);
     }
 
     unsigned int i = 0;
@@ -343,7 +343,7 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
                     NULL);
-        elm_genlist_item_display_only_set(item, EINA_TRUE);
+        elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
     }
 
     for (i = 0; i < sw_iselist.size (); i++) {
@@ -406,7 +406,7 @@ static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, v
     isf_load_ise_information (HELPER_ONLY, _config);
     // Request ISF to update ISE list, below codes are very important, dont remove
     char **iselist = NULL;
-    int count = isf_control_get_iselist (&iselist);
+    int count = isf_control_get_ise_list (&iselist);
     for (unsigned int i = 0; i < (unsigned int)count; i++) {
         SCIM_DEBUG_MAIN (3) << " [" << i << " : " << iselist[i] << "] \n";
         if (iselist[i] != NULL)

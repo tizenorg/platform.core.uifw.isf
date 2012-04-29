@@ -37,7 +37,7 @@ static void _rotate_cb (void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-static void _state_cb (void *data, Ecore_IMF_Context *ctx, int value)
+static void _input_panel_state_cb (void *data, Ecore_IMF_Context *ctx, int value)
 {
     int x, y, w, h;
 
@@ -47,9 +47,59 @@ static void _state_cb (void *data, Ecore_IMF_Context *ctx, int value)
         printf ("x : %d, y : %d, w : %d, h : %d\n", x, y, w, h);
     } else if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         printf ("Input panel is hidden\n");
-    } else {
-        printf ("unknown value : %d\n", value);
+    } else if (value == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) {
+        printf ("Input panel will be shown\n");
     }
+}
+
+static void _input_panel_resize_cb (void *data, Ecore_IMF_Context *ctx, int value)
+{
+    int x, y, w, h;
+
+    ecore_imf_context_input_panel_geometry_get (ctx, &x, &y, &w, &h);
+    printf ("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, x, y, w, h);
+}
+
+static void _shift_mode_cb (void *data, Ecore_IMF_Context *ctx, int value)
+{
+    if (value == ECORE_IMF_INPUT_PANEL_SHIFT_MODE_OFF) {
+        printf ("[%s] Shift Mode : OFF\n", __func__);
+    } else if (value == ECORE_IMF_INPUT_PANEL_SHIFT_MODE_ON) {
+        printf ("[%s] Shift Mode : ON\n", __func__);
+    }
+}
+
+static void _language_changed_cb (void *data, Ecore_IMF_Context *ctx, int value)
+{
+    char *locale;
+
+    ecore_imf_context_input_panel_language_locale_get(ctx, &locale);
+
+    printf ("[%s] language : %s\n", __func__, locale);
+
+    if (locale)
+        free (locale);
+}
+
+static void _candidate_panel_state_cb (void *data, Ecore_IMF_Context *ctx, int value)
+{
+    int x, y, w, h;
+
+    if (value == ECORE_IMF_CANDIDATE_PANEL_SHOW) {
+        ecore_imf_context_candidate_panel_geometry_get (ctx, &x, &y, &w, &h);
+        printf ("Candidate window is shown\n");
+        printf ("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, x, y, w, h);
+    } else if (value == ECORE_IMF_CANDIDATE_PANEL_HIDE) {
+        printf ("Candidate window is hidden\n");
+    }
+}
+
+static void _candidate_panel_geometry_changed_cb (void *data, Ecore_IMF_Context *ctx, int value)
+{
+    int x, y, w, h;
+
+    ecore_imf_context_candidate_panel_geometry_get (ctx, &x, &y, &w, &h);
+    printf ("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, x, y, w, h);
 }
 
 static void
@@ -66,30 +116,26 @@ _key_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
     printf("[key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 }
 
-static Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout)
+static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text,Elm_Input_Panel_Layout layout)
 {
-    Evas_Object *ef = NULL;
-    Evas_Object *en = NULL;
+    Evas_Object *ef =  _create_ef(parent,label,guide_text);
     Ecore_IMF_Context *ic = NULL;
-
-    ef = elm_editfield_add (parent);
-    elm_editfield_label_set (ef, label);
-    elm_editfield_guide_text_set (ef, guide_text);
-    evas_object_size_hint_weight_set (ef, EVAS_HINT_EXPAND, 0);
-    evas_object_size_hint_align_set (ef, EVAS_HINT_FILL, 0);
-    evas_object_show (ef);
-
-    en = elm_editfield_entry_get (ef);
-    if (!en) return ef;
-
+    Evas_Object *en = elm_object_part_content_get(ef,"elm.swallow.content");
     elm_entry_input_panel_layout_set (en, layout);
     evas_object_event_callback_add(en, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
     evas_object_event_callback_add(en, EVAS_CALLBACK_KEY_UP, _key_up_cb, NULL);
 
-    ic = elm_entry_imf_context_get (en);
+    ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (en);
 
-    if (ic != NULL)
-        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _state_cb, NULL);
+    if (ic != NULL) {
+        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_state_cb, NULL);
+        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, _input_panel_resize_cb, NULL);
+        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_SHIFT_MODE_EVENT, _shift_mode_cb, NULL);
+        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT, _language_changed_cb, NULL);
+
+        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, _candidate_panel_state_cb, NULL);
+        ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, _candidate_panel_geometry_changed_cb, NULL);
+    }
 
     return ef;
 }
@@ -135,35 +181,35 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (bx);
 
     /* Normal Layout */
-    ef = _create_ef (parent, _("NORMAL LAYOUT"), _("click to enter TEXT"), ELM_INPUT_PANEL_LAYOUT_NORMAL);
+    ef = _create_ef_layout (parent, _("NORMAL LAYOUT"), _("click to enter TEXT"), ELM_INPUT_PANEL_LAYOUT_NORMAL);
     elm_box_pack_end (bx, ef);
 
     /* Number Layout */
-    ef = _create_ef (parent, _("NUMBER LAYOUT"), _("click to enter NUMBER"), ELM_INPUT_PANEL_LAYOUT_NUMBER);
+    ef = _create_ef_layout (parent, _("NUMBER LAYOUT"), _("click to enter NUMBER"), ELM_INPUT_PANEL_LAYOUT_NUMBER);
     elm_box_pack_end (bx, ef);
 
     /* Email Layout */
-    ef = _create_ef (parent, _("EMAIL LAYOUT"), _("click to enter EMAIL"), ELM_INPUT_PANEL_LAYOUT_EMAIL);
+    ef = _create_ef_layout (parent, _("EMAIL LAYOUT"), _("click to enter EMAIL"), ELM_INPUT_PANEL_LAYOUT_EMAIL);
     elm_box_pack_end (bx, ef);
 
     /* URL Layout */
-    ef = _create_ef (parent, _("URL LAYOUT"), _("click to enter URL"), ELM_INPUT_PANEL_LAYOUT_URL);
+    ef = _create_ef_layout (parent, _("URL LAYOUT"), _("click to enter URL"), ELM_INPUT_PANEL_LAYOUT_URL);
     elm_box_pack_end (bx, ef);
 
     /* Phonenumber Layout */
-    ef = _create_ef (parent, _("PHONENUMBER LAYOUT"), _("click to enter PHONENUMBER"), ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
+    ef = _create_ef_layout (parent, _("PHONENUMBER LAYOUT"), _("click to enter PHONENUMBER"), ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
     elm_box_pack_end (bx, ef);
 
     /* IP Layout */
-    ef = _create_ef (parent, _("IP LAYOUT"), _("click to enter IP"), ELM_INPUT_PANEL_LAYOUT_IP);
+    ef = _create_ef_layout (parent, _("IP LAYOUT"), _("click to enter IP"), ELM_INPUT_PANEL_LAYOUT_IP);
     elm_box_pack_end (bx, ef);
 
     /* Month Layout */
-    ef = _create_ef (parent, _("MONTH LAYOUT"), _("click to enter MONTH"), ELM_INPUT_PANEL_LAYOUT_MONTH);
+    ef = _create_ef_layout (parent, _("MONTH LAYOUT"), _("click to enter MONTH"), ELM_INPUT_PANEL_LAYOUT_MONTH);
     elm_box_pack_end (bx, ef);
 
     /* Number Only Layout */
-    ef = _create_ef (parent, _("NUMBERONLY LAYOUT"), _("click to enter NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY);
+    ef = _create_ef_layout (parent, _("NUMBERONLY LAYOUT"), _("click to enter NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY);
     elm_box_pack_end (bx, ef);
 
     /* Click to rotate button */
