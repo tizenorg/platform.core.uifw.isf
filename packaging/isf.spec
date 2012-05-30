@@ -8,6 +8,7 @@ Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
+Source1001: packaging/isf.manifest 
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
@@ -43,6 +44,7 @@ This package contains ISF header files for ISE development.
 %setup -q
 
 %build
+cp %{SOURCE1001} .
 
 ./bootstrap
 %configure --disable-static \
@@ -68,6 +70,7 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 
 
 %files
+%manifest isf.manifest
 %defattr(-,root,root,-)
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
@@ -96,6 +99,7 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %{_ugdir}/lib/libug-isfsetting-efl.so
 
 %files devel
+%manifest isf.manifest
 %defattr(-,root,root,-)
 %{_includedir}/scim-1.0/*
 %{_libdir}/libscim-1.0.so
