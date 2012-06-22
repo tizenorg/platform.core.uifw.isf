@@ -1,0 +1,3 @@
+* Wed Jun 20 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> - 2.3.5205
+- Add systemd service file
+
