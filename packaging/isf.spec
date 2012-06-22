@@ -9,6 +9,7 @@ Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
+Source1:    isf-panel.service
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
@@ -49,29 +50,36 @@ This package contains ISF header files for ISE development.
 ./bootstrap
 %configure --disable-static \
 		--disable-tray-icon --disable-filter-sctc
-make %{?jobs:-j%jobs}
+make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 %make_install
+
+install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
+install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
+ln -sf ../isf-panel.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/isf-panel.service
+
+# FIXME: remove initscripts after systemd is in
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc3.d
+mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc4.d
+ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc3.d/S42isf-panel-efl
+ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
 
 %post 
 /sbin/ldconfig
 
-/usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514
-/usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514
-
-ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc3.d/S47isf-panel-efl
-ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
-
+/usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514 || :
+/usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514 || :
 
 %postun -p /sbin/ldconfig
 
 
-
 %files
-%defattr(-,root,root,-)
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
+%{_sysconfdir}/rc.d/rc3.d/S42isf-panel-efl
+%{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
+%{_libdir}/systemd/user/core-efl.target.wants/isf-panel.service
+%{_libdir}/systemd/user/isf-panel.service
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config
