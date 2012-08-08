@@ -55,9 +55,8 @@ make %{?_smp_mflags}
 %install
 %make_install
 
-install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
+install -d %{buildroot}%{_libdir}/systemd/user
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
-ln -sf ../isf-panel.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/isf-panel.service
 
 # FIXME: remove initscripts after systemd is in
 mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc3.d
@@ -80,7 +79,6 @@ ln -s ../init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-panel
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
 %{_sysconfdir}/rc.d/rc3.d/S42isf-panel-efl
 %{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
-%{_libdir}/systemd/user/core-efl.target.wants/isf-panel.service
 %{_libdir}/systemd/user/isf-panel.service
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
