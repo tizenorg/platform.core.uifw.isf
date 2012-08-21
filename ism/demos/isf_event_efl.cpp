@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Shuo Liu <shuo0805.liu@samsung.com>, Jihoon Kim <jihoon48.kim@samsung.com>
  *
@@ -229,9 +229,9 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     evas_object_show (_ise_show_button);
     evas_object_smart_callback_add (_ise_show_button, "clicked", _button_bt, NULL);
 
-    Elm_Object_Item *it = elm_naviframe_item_push (ad->naviframe, _("label event demo"), NULL, NULL, layout, NULL);
+    Elm_Object_Item *it = elm_naviframe_item_push (ad->naviframe, _("Label Event"), NULL, NULL, layout, NULL);
     Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
-    evas_object_smart_callback_add (back_btn, "clicked",  nf_back_event_cb, ad );
+    evas_object_smart_callback_add (back_btn, "clicked",  nf_back_event_cb, ad);
 }
 
 static void _list_click (void *data, Evas_Object *obj, void *event_info)
@@ -255,11 +255,11 @@ void isf_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     ad->ev_li = elm_list_add (ad->naviframe);
     elm_list_mode_set (ad->ev_li, ELM_LIST_COMPRESS);
     evas_object_smart_callback_add (ad->ev_li, "selected", _list_click, ad);
-    elm_list_item_append (ad->ev_li, "Label event", NULL, NULL, isf_label_event_demo_bt, ad);
-    elm_list_item_append (ad->ev_li, "Entry event", NULL, NULL, isf_entry_event_demo_bt, ad);
+    elm_list_item_append (ad->ev_li, "Label Event", NULL, NULL, isf_label_event_demo_bt, ad);
+    elm_list_item_append (ad->ev_li, "Entry Event", NULL, NULL, isf_entry_event_demo_bt, ad);
     elm_list_go (ad->ev_li);
 
-    elm_naviframe_item_push (ad->naviframe, _("ise event demo"), NULL, NULL, ad->ev_li, NULL);
+    elm_naviframe_item_push (ad->naviframe, _("Event"), NULL, NULL, ad->ev_li, NULL);
 }
 
 /*

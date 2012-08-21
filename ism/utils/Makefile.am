@@ -30,13 +30,19 @@ TRAY_ICON_HEADER=scimtrayicon.h
 TRAY_ICON_SOURCE=scimtrayicon.c
 endif
 
+if SCIM_BUILD_X11_UTILS
+libscimx11utilsincludedir = $(includedir)/scim@SCIM_EPOCH@/x11
+libscimx11utilsinclude_HEADERS = scim_x11_utils.h
+X11_UTILS = libscim-x11utils@SCIM_EPOCH@.la
+endif
+
 if SCIM_BUILD_GTK_UTILS
 libscimgtkutilsincludedir = $(includedir)/scim@SCIM_EPOCH@/gtk
 libscimgtkutilsinclude_HEADERS = scimstringview.h $(TRAY_ICON_HEADER)
 GTK_UTILS = libscim-gtkutils@SCIM_EPOCH@.la
 endif
 
-lib_LTLIBRARIES = $(GTK_UTILS)
+lib_LTLIBRARIES = $(X11_UTILS) $(GTK_UTILS)
 
 libscim_gtkutils@SCIM_EPOCH@_la_SOURCES = scimstringview.c \
 				  $(TRAY_ICON_SOURCE)
@@ -51,5 +57,19 @@ libscim_gtkutils@SCIM_EPOCH@_la_LDFLAGS= -version-info $(SCIM_CURRENT):$(SCIM_RE
 				  @LTLIBINTL@ \
 				  -lgtk-x11-2.0 -lgdk-x11-2.0 -lpango-1.0 -lglib-2.0 -lgobject-2.0
 
-libscim_gtkutils@SCIM_EPOCH@_la_LIBADD= $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
+libscim_gtkutils@SCIM_EPOCH@_la_LIBADD = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la $(X11_UTILS)
 
+
+libscim_x11utils@SCIM_EPOCH@_la_SOURCES = scim_x11_utils.cpp
+
+libscim_x11utils@SCIM_EPOCH@_la_CFLAGS  = @X_CFLAGS@
+libscim_x11utils@SCIM_EPOCH@_la_CXXFLAGS= @X_CFLAGS@
+
+libscim_x11utils@SCIM_EPOCH@_la_LDFLAGS = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
+                                          -export-dynamic \
+                                          -rpath $(libdir) \
+                                          @LIBTOOL_EXPORT_OPTIONS@ \
+                                          @LTLIBINTL@ \
+                                          @X_LIBS@ 
+
+libscim_x11utils@SCIM_EPOCH@_la_LIBAD   = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

@@ -103,6 +103,9 @@ typedef Slot2<void, int &, int &>
 typedef Slot3<void, int, int, int>
         PanelAgentSlotIntIntInt;
 
+typedef Slot4<void, int, int, int, int>
+        PanelAgentSlotIntIntIntInt;
+
 typedef Slot2<void, int, const Property &>
         PanelAgentSlotIntProperty;
 
@@ -232,6 +235,32 @@ public:
     int get_active_ise_list (std::vector<String> &strlist);
 
     /**
+     * @brief Get the helper manager connection id.
+     *
+     * @return the connection id
+     */
+    int get_helper_manager_id (void);
+
+    /**
+     * @brief Check if there are any events available to be processed.
+     *
+     * If it returns true then HelperManager object should call
+     * HelperManager::filter_event () to process them.
+     *
+     * @return true if there are any events available.
+     */
+    bool has_helper_manager_pending_event (void);
+
+    /**
+     * @brief Filter the events received from helper manager.
+     *
+     * Corresponding signal will be emitted in this method.
+     *
+     * @return true if the command was sent correctly, otherwise return false.
+     */
+    bool filter_helper_manager_event (void);
+
+    /**
      * @brief Send display name to FrontEnd.
      *
      * @param name The display name.
@@ -332,6 +361,14 @@ public:
      * @param nValue The candidate panel event value.
      */
     void update_candidate_panel_event (uint32 nType, uint32 nValue);
+
+    /**
+     * @brief Send input panel event to IM Control.
+     *
+     * @param nType  The input panel event type.
+     * @param nValue The input panel event value.
+     */
+    void update_input_panel_event (uint32 nType, uint32 nValue);
 
     /**
      * @brief Update ISE control panel status to IM Control.
@@ -512,6 +549,14 @@ public:
     bool update_associate_table_page_size (uint32       size);
 
     /**
+     * @brief Inform helper ISE to update displayed candidate number.
+     *
+     * @param size The displayed candidate number.
+     * @return true if the command was sent correctly.
+     */
+    bool update_displayed_candidate_number (uint32      size);
+
+    /**
      * @brief Trigger a property of the focused IMEngineInstance object.
      *
      * @param property The property key to be triggered.
@@ -673,52 +718,59 @@ public:
     Connection signal_connect_get_keyboard_ise_list      (PanelAgentSlotBoolStringVector    *slot);
 
     /**
-     * @brief Signal: set candidate ui.
+     * @brief Signal: Set candidate ui.
      *
      * slot prototype: void set_candidate_ui (int style, int mode);
      */
     Connection signal_connect_set_candidate_ui           (PanelAgentSlotIntInt              *slot);
 
     /**
-     * @brief Signal: get candidate ui.
+     * @brief Signal: Get candidate ui.
      *
      * slot prototype: void get_candidate_ui (int &style, int &mode);
      */
     Connection signal_connect_get_candidate_ui           (PanelAgentSlotIntInt2             *slot);
 
     /**
-     * @brief Signal: get candidate window geometry information.
+     * @brief Signal: Get candidate window geometry information.
      *
      * slot prototype: void get_candidate_geometry (rectinfo &info);
      */
     Connection signal_connect_get_candidate_geometry     (PanelAgentSlotRect                *slot);
 
     /**
-     * @brief Signal: set candidate position.
+     * @brief Signal: Get input panel geometry information.
+     *
+     * slot prototype: void get_input_panel_geometry (rectinfo &info);
+     */
+    Connection signal_connect_get_input_panel_geometry   (PanelAgentSlotRect                *slot);
+
+    /**
+     * @brief Signal: Set candidate position.
      *
      * slot prototype: void set_candidate_position (int left, int top);
      */
     Connection signal_connect_set_candidate_position     (PanelAgentSlotIntInt              *slot);
 
     /**
-     * @brief Signal: set keyboard ise.
+     * @brief Signal: Set keyboard ise.
      *
      * slot prototype: void set_keyboard_ise (int type, const String &ise);
      */
     Connection signal_connect_set_keyboard_ise           (PanelAgentSlotIntString           *slot);
 
     /**
-     * @brief Signal: get keyboard ise.
+     * @brief Signal: Get keyboard ise.
      *
      * slot prototype: void get_keyboard_ise (String &ise_name);
      */
     Connection signal_connect_get_keyboard_ise           (PanelAgentSlotString2             *slot);
     /**
-     * @brief Signal: launch helper ise list selection.
+     * @brief Signal: Update ise geometry.
      *
-     * slot prototype: void launch_helper_ise_list_selecton (int withUI);
+     * slot prototype: void update_ise_geometry (int x, int y, int width, int height);
      */
-    Connection signal_connect_launch_helper_ise_list_selection (PanelAgentSlotInt           *slot);
+    Connection signal_connect_update_ise_geometry        (PanelAgentSlotIntIntIntInt        *slot);
 
     /**
      * @brief Signal: Show help.
@@ -922,6 +974,20 @@ public:
     Connection signal_connect_focus_out                  (PanelAgentSlotVoid                *slot);
 
     /**
+     * @brief Signal: Expand candidate panel.
+     *
+     * slot prototype: void expand_candidate (void);
+     */
+    Connection signal_connect_expand_candidate           (PanelAgentSlotVoid                *slot);
+
+    /**
+     * @brief Signal: Contract candidate panel.
+     *
+     * slot prototype: void contract_candidate (void);
+     */
+    Connection signal_connect_contract_candidate         (PanelAgentSlotVoid                *slot);
+
+    /**
      * @brief Signal: Get the list of ise name.
      *
      * slot prototype: bool get_ise_list (std::vector<String> &);
@@ -1034,6 +1100,13 @@ public:
      * slot prototype: void unlock (void);
      */
     Connection signal_connect_unlock                     (PanelAgentSlotVoid                *slot);
+
+    /**
+     * @brief Signal: The input context of ISE is changed.
+     *
+     * slot prototype: void update_input_context (int type, int value);
+     */
+    Connection signal_connect_update_input_context       (PanelAgentSlotIntInt              *slot);
 };
 
 /**  @} */

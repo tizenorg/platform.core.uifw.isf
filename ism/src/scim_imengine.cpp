@@ -362,6 +362,16 @@ IMEngineInstanceBase::lookup_table_page_down ()
 }
 
 void
+IMEngineInstanceBase::set_prediction_allow (bool allow)
+{
+}
+
+void
+IMEngineInstanceBase::set_layout (unsigned int layout)
+{
+}
+
+void
 IMEngineInstanceBase::reset_option ()
 {
 }

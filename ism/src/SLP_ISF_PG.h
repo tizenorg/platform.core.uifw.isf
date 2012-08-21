@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Jihoon Kim <jihoon48.kim@samsung.com>, Haifeng Deng <haifeng.deng@samsung.com>
  *
@@ -99,7 +99,7 @@ Call elm_object_focus_set() API to let entry have a focus.
 void create_entry(struct appdata *ad)
 {
 	ad->eb = elm_entry_add(ad->eb_layout);
-	elm_layout_content_set (ad->eb_layout, "btn_text", ad->eb);
+	elm_object_part_content_set(ad->eb_layout, "btn_text", ad->eb);
 
 	// Set the layout of soft keyboard when entry has a focus or is clicked.
 	elm_entry_input_panel_layout_set(ad->eb, ELM_INPUT_PANEL_LAYOUT_URL);
@@ -136,7 +136,7 @@ elm_entry_input_panel_enabled_set(eo, EINA_FALSE);
 </tr>
 </table>
 @code
-static void entry_application(appdata * ad)
+static void entry_application(struct appdata *ad)
 {
 	Evas_Object *en;
 	Ecore_IMF_Context *imf_context = NULL;
@@ -161,7 +161,7 @@ static void entry_application(appdata * ad)
 </tr>
 </table>
 @code
-static void entry_application(appdata * ad)
+static void entry_application(struct appdata * ad)
 {
 	Evas_Object *bt;
 	bt = elm_button_add(ad->win_main);
@@ -250,7 +250,7 @@ static void create_entry(struct appdata *ad)
 	Evas_Object *en;
 	Ecore_IMF_Context *imf_context = NULL;
 	en = elm_entry_add(ad->layout_main);
-	elm_layout_content_set(ad->layout_main, "entry", en);
+	elm_object_part_content_set(ad->layout_main, "entry", en);
 
 	imf_context = elm_entry_imf_context_get(en);
 
@@ -308,12 +308,10 @@ The snapshots of common layouts supported in Korean ISE are shown below
 </tr>
 </table>
 @code
-static void entry_application(appdata * ad)
+static void entry_application(struct appdata * ad)
 {
 	Evas_Object *en;
-	Ecore_IMF_Context *imf_context;
 	en = elm_entry_add(ad->win_main);
-
 	elm_entry_input_panel_layout_set(en, ELM_INPUT_PANEL_LAYOUT_URL);
 }
 @endcode
@@ -324,18 +322,76 @@ static void entry_application(appdata * ad)
 
 <h3 class="pg">Get ISE Layout of current active ISE</h3>
 @code
-void get_layout(struct appdata)
+void get_layout(struct appdata *ad)
 {
+	Evas_Object *en;
 	Elm_Input_Panel_Layout layout ;
-	Ecore_IMF_Context *imf_context = NULL;
 
+	en = elm_entry_add(ad->win_main);
+	elm_entry_input_panel_layout_set(en, ELM_INPUT_PANEL_LAYOUT_URL);
 	layout = elm_entry_input_panel_layout_get(en);
 	//here you can see what the current layout is
 	printf("the current layout is %d", layout);
 }
 @endcode
 @}
-@defgroup ISF_Use_Cases1_93 How to register a callback for any change in ISE values
+@defgroup ISF_Use_Cases1_93 How to set the return key type of soft keyboard
+@ingroup ISF_Use_Cases1
+@{
+
+<h3 class="pg">How to set the return key type of soft keyboard</h3>
+The return key types that are currently supported by ISEs are<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DONE<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_GO<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_JOIN<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_LOGIN<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_NEXT<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEARCH<br>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEND<p>
+<b>Sample code</b>: Refer to the example of ecore_imf_context_input_panel_return_key_type_set () API
+
+<table>
+<tr>
+    <th>DEFAULT type</th>
+    <th>DONE type</th>
+    <th>GO type</th>
+    <th>JOIN type</th>
+</tr>
+<tr>
+    <td>@image html TIZEN_ISF_PG_return_default.png</td>
+    <td>@image html TIZEN_ISF_PG_return_done.png</td>
+    <td>@image html TIZEN_ISF_PG_return_go.png</td>
+    <td>@image html TIZEN_ISF_PG_return_join.png</td>
+</tr>
+</table>
+
+<table>
+<tr>
+    <th>LOGIN type</th>
+    <th>NEXT type</th>
+    <th>SEARCH type</th>
+    <th>SEND type</th>
+</tr>
+<tr>
+    <td>@image html TIZEN_ISF_PG_return_login.png</td>
+    <td>@image html TIZEN_ISF_PG_return_next.png</td>
+    <td>@image html TIZEN_ISF_PG_return_search.png</td>
+    <td>@image html TIZEN_ISF_PG_return_send.png</td>
+</tr>
+</table>
+@code
+static void entry_application(struct appdata * ad)
+{
+	Evas_Object *en;
+	en = elm_entry_add(ad->win_main);
+
+	elm_entry_input_panel_return_key_type_set(en, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
+}
+@endcode
+@}
+
+@defgroup ISF_Use_Cases1_94 How to register a callback for any change in ISE values
 @ingroup ISF_Use_Cases1
 @{
 
@@ -343,9 +399,9 @@ void get_layout(struct appdata)
 @code
 void _input_panel_event_callback(void *data, Ecore_IMF_Context *ctx, int value)
 {
-	if(value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+	if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
 		// ISE state has changed to ECORE_IMF_INPUT_PANEL_STATE_SHOW status
-	} else if(value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+	} else if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
 		// ISE state has changed to ECORE_IMF_INPUT_PANEL_STATE_HIDE status
 	}
 	printf("value: %d\n", value);
@@ -355,7 +411,7 @@ static void create_entry(struct appdata *ad)
 {
 	Evas_Object *en;
 	en = elm_entry_add(ad->layout_main);
-	elm_layout_content_set(ad->layout_main, "entry", en);
+	elm_object_part_content_set(ad->layout_main, "entry", en);
 
 	Ecore_IMF_Context *imf_context = elm_entry_imf_context_get(en); // Get the input context in the entry
 
@@ -366,7 +422,7 @@ static void create_entry(struct appdata *ad)
 }
 @endcode
 @}
-@defgroup ISF_Use_Cases1_94 Unregister a callback for any change in ISE values
+@defgroup ISF_Use_Cases1_95 Unregister a callback for any change in ISE values
 @ingroup ISF_Use_Cases1
 @{
 
@@ -392,12 +448,12 @@ static int init(struct appdata *ad)
 	Evas_Object *en;
 
 	en = elm_entry_add(ad->win_main);
-	elm_layout_content_set(ad->layout_main, "entry", en);
+	elm_object_part_content_set(ad->layout_main, "entry", en);
 	elm_entry_input_panel_layout_set(en, ELM_INPUT_PANEL_LAYOUT_NUMBER);
 }
 @endcode
 @}
-@defgroup ISF_Use_Cases1_95 How Application gets ISE Input String
+@defgroup ISF_Use_Cases1_96 How Application gets ISE Input String
 @ingroup ISF_Use_Cases1
 @{
 
@@ -434,12 +490,12 @@ void test_ise_show(void *data, Evas_Object *obj, void *event_info)
 {
 	Ecore_IMF_Context *imf_context = NULL;
 	imf_context = imf_context_create(NULL);
-
-	ecore_imf_context_reset(imf_context);
-	ecore_imf_context_focus_in(imf_context);
-
 	if (imf_context)
+	{
+		ecore_imf_context_reset(imf_context);
+		ecore_imf_context_focus_in(imf_context);
 		ecore_imf_context_input_panel_show(imf_context);
+	}
 
 	ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT, _imf_event_commit_cb, NULL);
 	//please use ECORE_IMF_EVENT_PREEDIT_CHANGED if want preedit string
@@ -454,7 +510,7 @@ static void my_win_main(void)
 }
 @endcode
 @}
-@defgroup ISF_Use_Cases1_96 How Application gets ISE-Specific Key Event
+@defgroup ISF_Use_Cases1_97 How Application gets ISE-Specific Key Event
 @ingroup ISF_Use_Cases1
 @{
 
@@ -494,11 +550,11 @@ void test_ise_show(void *data, Evas_Object *obj, void *event_info)
 	imf_context = imf_context_create(NULL);
 
 	if (imf_context)
+	{
+		ecore_imf_context_reset(imf_context);
+		ecore_imf_context_focus_in(imf_context);
 		ecore_imf_context_input_panel_show(imf_context);
-
-	ecore_imf_context_reset(imf_context);
-	ecore_imf_context_focus_in(imf_context);
-
+	}
 	ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT, _imf_event_commit_cb, NULL);
 	//please use ECORE_IMF_EVENT_PREEDIT_CHANGED if want preedit string
 	//ecore_event_handler_add(ECORE_IMF_EVENT_PREEDIT_CHANGED, 	_imf_event_changed_cb, NULL);
@@ -562,7 +618,7 @@ static void my_win_main(void)
 }
 @endcode
 @}
-@defgroup ISF_Use_Cases1_97 How Application can set layout
+@defgroup ISF_Use_Cases1_98 How to get key event
 @ingroup ISF_Use_Cases1
 @{
 
@@ -587,7 +643,7 @@ _evas_key_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	else
 		sprintf (str, "");
 
-	elm_object_label_set(_key_event_label, str);
+	elm_object_text_set(_key_event_label, str);
 }
 	@endcode
 
@@ -629,7 +685,7 @@ static Eina_Bool _ecore_imf_event_changed_cb(void *data, int type, void *event)
 
 	free(preedit_string);
 
-	elm_object_label_set(_preedit_event_label,str);
+	elm_object_text_set(_preedit_event_label,str);
 
 	return ECORE_CALLBACK_PASS_ON;
 }
@@ -654,7 +710,7 @@ static Eina_Bool _ecore_imf_event_commit_cb(void *data, int type, void *event)
 	else
 		sprintf (str, "");
 
-	elm_object_label_set(_commit_event_label,str);
+	elm_object_text_set(_commit_event_label,str);
 
 	return ECORE_CALLBACK_PASS_ON;
 }
@@ -682,7 +738,7 @@ static Eina_Bool _ecore_imf_event_changed_cb(void *data, int type, void *event)
 	ecore_imf_context_preedit_string_get(imf_context, &preedit_string, &len);
 	sprint(str, "preedit string : %s\n", preedit_string);
 
-	elm_object_label_set(label, str);
+	elm_object_text_set(label, str);
 	free(preedit_string);
 
 	return ECORE_CALLBACK_PASS_ON;
@@ -694,7 +750,7 @@ static Eina_Bool _ecore_imf_event_commit_cb(void *data, int type, void *event)
 	Ecore_IMF_Event_Commit *ev = (Ecore_IMF_Event_Commit *) event;
 
 	sprint(str, "commit string : %s\n", ev->str);
-	elm_object_label_set(label, ev->str);
+	elm_object_text_set(label, ev->str);
 
 	return ECORE_CALLBACK_PASS_ON;
 }

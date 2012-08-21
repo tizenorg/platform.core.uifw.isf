@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Shuo Liu <shuo0805.liu@samsung.com>, Jihoon Kim <jihoon48.kim@samsung.com>
  *
@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Elementary.h>
-#include <ui-gadget.h>
 #include <Ecore_X.h>
 #include "isf_demo_efl.h"
 #include "isf_imcontrol_efl.h"
@@ -58,7 +57,7 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
         elm_list_item_selected_set (it, EINA_FALSE);
 }
 
-static void layout_cb (struct ui_gadget *ug, enum ug_mode mode, void *priv)
+static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
     struct appdata *ad = NULL;
     Evas_Object *base = NULL;
@@ -86,20 +85,24 @@ static void layout_cb (struct ui_gadget *ug, enum ug_mode mode, void *priv)
     }
 }
 
-static void result_cb (struct ui_gadget *ug, bundle *result, void *priv)
+static void result_cb (ui_gadget_h ug, service_h s, void *priv)
 {
-    if (!result) return;
-
-    const char *name = bundle_get_val(result, "name");
+    char *name = NULL;
+    service_get_extra_data (s, "name",&name);
     printf("get key [ %s ]\n",name);
 
-    if (strcmp(name, "keyboard-setting-wizard-efl") == 0) {
-        const char *desp = bundle_get_val(result,"description");
-        printf("====================\nresult:%s\n====================\n",desp);
+    if (strcmp (name, "keyboard-setting-wizard-efl") == 0) {
+        char *desp = NULL;
+        service_get_extra_data (s, "description",&desp);
+        printf("====================\nresult:%s\n====================\n", desp);
+        if (desp != NULL)
+            free(desp);
     }
+    if (name != NULL)
+        free(name);
 }
 
-static void destroy_cb (struct ui_gadget *ug, void *priv)
+static void destroy_cb (ui_gadget_h ug, void *priv)
 {
     if (ug == NULL)
         return;
@@ -121,7 +124,7 @@ static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info)
     ad->ug = ug_create (NULL, "isfsetting-efl",
                         UG_MODE_FULLVIEW,
                         ad->data, &cbs);
-    bundle_free (ad->data);
+    service_destroy (ad->data);
     ad->data = NULL;
 }
 
@@ -136,14 +139,14 @@ static void keyboard_setting_wizard_bt (void *data, Evas_Object *obj, void *even
     cbs.result_cb  = result_cb;
     cbs.destroy_cb = destroy_cb;
     cbs.priv       = ad;
-    ad->data = bundle_create();
-    bundle_add(ad->data, "navi_btn_left", _("Previous"));
-    //bundle_add(ad->data, "navi_btn_left", NULL);
-    bundle_add(ad->data, "navi_btn_right", _("Next"));
+    service_create(&ad->data);
+    service_add_extra_data(ad->data, "navi_btn_left", _("Previous"));
+    //service_add_extra_data(ad->data, "navi_btn_left", NULL);
+    service_add_extra_data(ad->data, "navi_btn_right", _("Next"));
     ad->ug = ug_create (NULL, "keyboard-setting-wizard-efl",
                         UG_MODE_FULLVIEW,
                         ad->data, &cbs);
-    bundle_free (ad->data);
+    service_destroy (ad->data);
     ad->data = NULL;
 }
 
@@ -161,7 +164,7 @@ static int create_demo_view (struct appdata *ad)
     evas_object_smart_callback_add (ad->li, "selected", _list_click, ad);
 
     // Test ISF imcontrol API
-    elm_list_item_append (li, "ISF imcontrol API", NULL, NULL, imcontrolapi_bt, ad);
+    elm_list_item_append (li, "ISF IM Control", NULL, NULL, imcontrolapi_bt, ad);
 
     // test ISF layout
     elm_list_item_append (li, "ISF Layout", NULL, NULL, ise_layout_bt, ad);
@@ -170,30 +173,30 @@ static int create_demo_view (struct appdata *ad)
     elm_list_item_append (li, "ISF Autocapital", NULL, NULL, ise_autocapital_bt, ad);
 
     // Test prediction allow
-    elm_list_item_append (li, "ISF Prediction allow", NULL, NULL, ise_prediction_bt, ad);
+    elm_list_item_append (li, "ISF Prediction Allow", NULL, NULL, ise_prediction_bt, ad);
 
     // Test return key type
-    elm_list_item_append (li, "ISF Return Key type", NULL, NULL, ise_return_key_type_bt, ad);
+    elm_list_item_append (li, "ISF Return Key Type", NULL, NULL, ise_return_key_type_bt, ad);
 
     // Test return key disable
     elm_list_item_append (li, "ISF Return Key Disable", NULL, NULL, ise_return_key_disable_bt, ad);
 
     // Test imdata setting
-    elm_list_item_append (li, "ISF IMDATA test", NULL, NULL, ise_imdata_set_bt, ad);
+    elm_list_item_append (li, "ISF IM Data", NULL, NULL, ise_imdata_set_bt, ad);
 
-    elm_list_item_append (li, "ISF Event Demo", NULL, NULL, isf_event_demo_bt, ad);
+    elm_list_item_append (li, "ISF Event", NULL, NULL, isf_event_demo_bt, ad);
 
     /*
     ISF language selection
     ISE selection
     */
     elm_list_item_append (li, "ISF Setting", NULL, NULL, isfsetting_bt, ad);
-    elm_list_item_append (li, "keyboard Setting wizard", NULL, NULL, keyboard_setting_wizard_bt, ad);
+    elm_list_item_append (li, "Keyboard Setting Wizard", NULL, NULL, keyboard_setting_wizard_bt, ad);
     // ISF preedit string and commit string on Label and Entry
 
     elm_list_go (li);
 
-    elm_naviframe_item_push (ad->naviframe, _("isf demo"), l_button, NULL, li, NULL);
+    elm_naviframe_item_push (ad->naviframe, _("ISF Demo"), l_button, NULL, li, NULL);
 
     return 0;
 }
@@ -254,10 +257,8 @@ static Evas_Object* create_win (const char *name)
     Evas_Object *eo = NULL;
     int w, h;
 
-    eo = elm_win_add (NULL, name, ELM_WIN_BASIC);
+    eo = elm_win_util_standard_add (name, name);
     if (eo != NULL) {
-        elm_win_title_set (eo, name);
-        elm_win_borderless_set (eo, EINA_TRUE);
         evas_object_smart_callback_add (eo, "delete,request",
                                         win_del, NULL);
         ecore_x_window_size_get (ecore_x_window_root_first_get (), &w, &h);
@@ -267,7 +268,7 @@ static Evas_Object* create_win (const char *name)
     return eo;
 }
 
-static Evas_Object* create_layout_main (Evas_Object* parent)
+static Evas_Object* create_layout_main (Evas_Object *parent)
 {
     Evas_Object *layout = elm_layout_add (parent);
     elm_layout_theme_set (layout, "layout", "application", "default");
@@ -279,7 +280,7 @@ static Evas_Object* create_layout_main (Evas_Object* parent)
     return layout;
 }
 
-static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
+static Evas_Object* _create_naviframe_layout (Evas_Object *parent)
 {
     Evas_Object *naviframe = elm_naviframe_add (parent);
     elm_object_part_content_set (parent, "elm.swallow.content", naviframe);
@@ -289,35 +290,36 @@ static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
     return naviframe;
 }
 
-static Evas_Object* create_bg(Evas_Object *win)
-{
-    Evas_Object *bg = elm_bg_add(win);
-    evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_win_resize_object_add(win, bg);
-    evas_object_show(bg);
-
-    return bg;
-}
-
-static Eina_Bool _keydown_event(void *data, int type, void *event)
+static Eina_Bool _keydown_event (void *data, int type, void *event)
 {
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     struct appdata *ad = (struct appdata *)data;
     Elm_Object_Item *top_it, *bottom_it;
     if (ad == NULL || ev == NULL) return ECORE_CALLBACK_RENEW;
 
-    if (strcmp(ev->keyname, "XF86Stop") == 0) {
-        if (ug_send_key_event(UG_KEY_EVENT_END) == -1) {
-            top_it = elm_naviframe_top_item_get(ad->naviframe);
-            bottom_it = elm_naviframe_top_item_get(ad->naviframe);
-            if (top_it && bottom_it && (elm_object_item_content_get(top_it) == elm_object_item_content_get(bottom_it))) {
-                elm_exit();
+    printf ("[ecore key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+
+    if (strcmp (ev->keyname, "XF86Stop") == 0) {
+        if (ug_send_key_event (UG_KEY_EVENT_END) == -1) {
+            top_it = elm_naviframe_top_item_get (ad->naviframe);
+            bottom_it = elm_naviframe_top_item_get (ad->naviframe);
+            if (top_it && bottom_it && (elm_object_item_content_get (top_it) == elm_object_item_content_get (bottom_it))) {
+                elm_exit ();
             }
             else {
-                elm_naviframe_item_pop(ad->naviframe);
+                elm_naviframe_item_pop (ad->naviframe);
             }
         }
     }
+    return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool _keyup_event (void *data, int type, void *event)
+{
+    Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
+
+    printf ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+
     return ECORE_CALLBACK_RENEW;
 }
 
@@ -335,10 +337,8 @@ static int app_create (void *data)
     evas_object_geometry_get (ad->win_main, NULL, NULL, &ad->root_w, &ad->root_h);
 
     if (ad->root_w >= 0) {
-        elm_config_scale_set(ad->root_w / BASE_THEME_WIDTH );
+        elm_config_scale_set (ad->root_w / BASE_THEME_WIDTH);
     }
-
-    ad->bg = create_bg(ad->win_main);
 
     ad->layout_main = create_layout_main (ad->win_main);
 
@@ -359,7 +359,8 @@ static int app_create (void *data)
     appcore_set_event_callback (APPCORE_EVENT_LANG_CHANGE,
                                 lang_changed, ad);
 
-    ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _keydown_event, ad);
+    ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _keydown_event, ad);
+    ecore_event_handler_add (ECORE_EVENT_KEY_UP, _keyup_event, ad);
 
     appcore_set_rotation_cb (_rotate_cb, ad);
 
@@ -396,16 +397,6 @@ static int app_resume (void *data)
     return 0;
 }
 
-static int app_reset (bundle *b, void *data)
-{
-    struct appdata *ad = (struct appdata *)data;
-
-    if ( (ad != NULL) && (ad->win_main != NULL))
-        elm_win_activate (ad->win_main);
-
-    return 0;
-}
-
 int main (int argc, char *argv[])
 {
     struct appdata ad;
@@ -415,7 +406,7 @@ int main (int argc, char *argv[])
     ops.terminate = app_exit;
     ops.pause     = app_pause;
     ops.resume    = app_resume;
-    ops.reset     = app_reset;
+    ops.reset     = NULL;
 
     memset (&ad, 0x0, sizeof (struct appdata));
     ops.data = &ad;
@@ -426,15 +417,15 @@ static void _focused_cb(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *ly = (Evas_Object *)data;
 
-    elm_object_signal_emit(ly, "elm,state,guidetext,hide", "elm");
+    elm_object_signal_emit (ly, "elm,state,guidetext,hide", "elm");
 }
 
 static void _unfocused_cb(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *ly = (Evas_Object *)data;
 
-    if (elm_entry_is_empty(obj))
-        elm_object_signal_emit(ly, "elm,state,guidetext,show", "elm");
+    if (elm_entry_is_empty (obj))
+        elm_object_signal_emit (ly, "elm,state,guidetext,show", "elm");
 }
 
 //utility func
@@ -443,17 +434,17 @@ Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *gui
     Evas_Object *ef = NULL;
     Evas_Object *en = NULL;
 
-    ef = elm_layout_add(parent);
-    elm_layout_theme_set(ef, "layout", "editfield", "title");
-    en = elm_entry_add(parent);
-    elm_object_part_content_set(ef, "elm.swallow.content", en);
+    ef = elm_layout_add (parent);
+    elm_layout_theme_set (ef, "layout", "editfield", "title");
+    en = elm_entry_add (parent);
+    elm_object_part_content_set (ef, "elm.swallow.content", en);
 
-    elm_object_part_text_set(ef, "elm.text", label);
-    elm_object_part_text_set(ef, "elm.guidetext", guide_text);
+    elm_object_part_text_set (ef, "elm.text", label);
+    elm_object_part_text_set (ef, "elm.guidetext", guide_text);
     evas_object_size_hint_weight_set (ef, EVAS_HINT_EXPAND, 0);
     evas_object_size_hint_align_set (ef, EVAS_HINT_FILL, 0);
-    evas_object_smart_callback_add(en, "focused", _focused_cb, ef);
-    evas_object_smart_callback_add(en, "unfocused", _unfocused_cb, ef);
+    evas_object_smart_callback_add (en, "focused", _focused_cb, ef);
+    evas_object_smart_callback_add (en, "unfocused", _unfocused_cb, ef);
     evas_object_show (ef);
 
     return ef;

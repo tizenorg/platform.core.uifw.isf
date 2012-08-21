@@ -505,6 +505,9 @@ typedef enum
 
 #define PROP_X_EXT_KEYBOARD_EXIST       "X External Keyboard Exist"
 
+#define VCONFKEY_AUTOCAPITAL_ALLOW_BOOL "file/private/isf/autocapital_allow"
+#define VCONFKEY_AUTOPERIOD_ALLOW_BOOL  "file/private/isf/autoperiod_allow"
+
 #define mzsc(m_code)                    "\x1b[" # m_code
 #define mzc_normal                      mzsc(0m)
 #define mzc_red                         mzsc(1;31m)

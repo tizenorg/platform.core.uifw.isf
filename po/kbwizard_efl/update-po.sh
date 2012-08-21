@@ -4,7 +4,6 @@ PACKAGE=keyboard-setting-wizard-efl
 SRCROOT=../..
 POTFILES=POTFILES.in
 
-#ALL_LINGUAS= am az be ca cs da de el en_CA en_GB es et fi fr hr hu it ja ko lv mk ml ms nb ne nl pa pl pt pt_BR ru rw sk sl sr sr@Latn sv ta tr uk vi zh_CN zh_TW
 ALL_LINGUAS="de_DE el_GR en es_ES fr_FR it_IT ja_JP ko_KR nl_NL pt_PT ru_RU tr_TR zh_CN zh_HK zh_TW"
 
 XGETTEXT=/usr/bin/xgettext

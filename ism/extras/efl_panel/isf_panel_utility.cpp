@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Haifeng Deng <haifeng.deng@samsung.com>, Hengliang Luo <hl.luo@samsung.com>
  *
@@ -56,10 +56,6 @@ std::vector<String>          _load_ise_list;
 /////////////////////////////////////////////////////////////////////////////
 static std::vector<String>   _current_modules_list;
 
-static MapStringVectorString _disabled_ise_map;
-static std::vector<String>   _disabled_langs_bak;
-std::vector<String>          _disabled_langs;
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal functions.
@@ -84,32 +80,14 @@ void isf_get_all_languages (std::vector<String> &all_langs)
 }
 
 /**
- * @brief Get enabled languages.
- *
- * @param enabled_langs The list to store languages.
- */
-void isf_get_enabled_languages (std::vector<String> &enabled_langs)
-{
-    String lang_name;
-
-    for (MapStringVectorSizeT::iterator it = _groups.begin (); it != _groups.end (); ++it) {
-        lang_name = scim_get_language_name_english (it->first);
-
-        if (std::find (_disabled_langs.begin (), _disabled_langs.end (), lang_name) == _disabled_langs.end ())
-            enabled_langs.push_back (lang_name);
-    }
-}
-
-/**
- * @brief Get enabled ISE names for the specific languages.
+ * @brief Get all ISE names for the specific languages.
  *
  * @param lang_list The specific languages list.
  * @param ise_names The list to store ISE names .
  */
-void isf_get_enabled_ise_names_in_languages (std::vector<String> lang_list, std::vector<String> &ise_names)
+void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vector<String> &ise_names)
 {
     String lang_name;
-    String active_app ("Default");
 
     for (MapStringVectorSizeT::iterator it = _groups.begin (); it != _groups.end (); ++it) {
         lang_name = scim_get_language_name_english (it->first);
@@ -118,11 +96,9 @@ void isf_get_enabled_ise_names_in_languages (std::vector<String> lang_list, std:
                 if (_current_modules_list.size () > 0 &&
                         std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
                     continue;
-                if (std::find (_disabled_ise_map[active_app].begin (), _disabled_ise_map[active_app].end (), _uuids[it->second[i]]) ==_disabled_ise_map[active_app].end ()) {
-                    // Avoid to add the same ise
-                    if (std::find (ise_names.begin (), ise_names.end (), _names[it->second[i]]) == ise_names.end ())
-                        ise_names.push_back (_names[it->second[i]]);
-                }
+                // Avoid to add the same ise
+                if (std::find (ise_names.begin (), ise_names.end (), _names[it->second[i]]) == ise_names.end ())
+                    ise_names.push_back (_names[it->second[i]]);
             }
         }
     }
@@ -214,7 +190,6 @@ void isf_get_keyboard_uuids_in_languages (std::vector<String> lang_list, std::ve
 void isf_get_helper_names_in_languages (std::vector<String> lang_list, std::vector<String> &helper_names)
 {
     String lang_name;
-    String active_app ("Default");
 
     for (MapStringVectorSizeT::iterator it = _groups.begin (); it != _groups.end (); ++it) {
         lang_name = scim_get_language_name_english (it->first);
@@ -226,12 +201,9 @@ void isf_get_helper_names_in_languages (std::vector<String> lang_list, std::vect
                 if (_current_modules_list.size () > 0 &&
                         std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
                     continue;
-                if (std::find (_disabled_ise_map[active_app].begin (), _disabled_ise_map[active_app].end (), _uuids[it->second[i]])
-                        ==_disabled_ise_map[active_app].end ()) {
-                    // Avoid to add the same ISE
-                    if (std::find (helper_names.begin (), helper_names.end (), _names[it->second[i]]) == helper_names.end ())
-                        helper_names.push_back (_names[it->second[i]]);
-                }
+                // Avoid to add the same ISE
+                if (std::find (helper_names.begin (), helper_names.end (), _names[it->second[i]]) == helper_names.end ())
+                    helper_names.push_back (_names[it->second[i]]);
             }
         }
     }
@@ -370,36 +342,6 @@ void isf_load_ise_information (LOAD_ISE_TYPE  type, const ConfigPointer &config)
                 _groups[ise_langs[j]].push_back (i);
         }
         ise_langs.clear ();
-    }
-
-    /* Get ISF default language */
-    std::vector<String> isf_default_langs;
-    isf_default_langs = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_ISF_DEFAULT_LANGUAGES), isf_default_langs);
-
-    /* No default ISF language */
-    if (isf_default_langs.size () == 0) {
-        String sys_input_lang, lang_info ("English");
-        sys_input_lang = config->read (String (SCIM_CONFIG_SYSTEM_INPUT_LANGUAGE), sys_input_lang);
-        MapStringVectorSizeT::iterator g = _groups.find (sys_input_lang);
-        if (g != _groups.end ())
-            lang_info = sys_input_lang;
-        else
-            std::cerr << "System input language is not included in the ISF languages.\n";
-
-        for (MapStringVectorSizeT::iterator it = _groups.begin (); it != _groups.end (); ++it) {
-            String lang_name = scim_get_language_name_english (it->first);
-            if (strcmp (lang_info.c_str (), lang_name.c_str ())) {
-                _disabled_langs.push_back (lang_name);
-                _disabled_langs_bak.push_back (lang_name);
-            }
-        }
-    } else {
-        std::vector<String> disabled;
-        disabled = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DISABLED_LANGS), disabled);
-        for (size_t i = 0; i < disabled.size (); i++) {
-            _disabled_langs.push_back (disabled[i]);
-            _disabled_langs_bak.push_back (disabled[i]);
-        }
     }
 }
 
@@ -583,46 +525,6 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
     /* When load ise list is empty, all ISEs can be loaded. */
     _load_ise_list.clear ();
     return ret;
-}
-
-/**
- * @brief Set language as specific language.
- *
- * @param language The specific language.
- */
-void isf_set_language (String language)
-{
-    if (language.length () <= 0)
-        return;
-
-    std::vector<String> langlist, all_langs;
-    if (language == String ("Automatic")) {
-        _disabled_langs.clear ();
-        _disabled_langs_bak.clear ();
-    } else {
-        scim_split_string_list (langlist, language);
-        isf_get_all_languages (all_langs);
-
-        _disabled_langs.clear ();
-        _disabled_langs_bak.clear ();
-
-        for (unsigned int i = 0; i < all_langs.size (); i++) {
-            if (std::find (langlist.begin (), langlist.end (), all_langs[i]) == langlist.end ()) {
-                _disabled_langs.push_back (all_langs[i]);
-                _disabled_langs_bak.push_back (all_langs[i]);
-            }
-        }
-    }
-    scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DISABLED_LANGS), _disabled_langs);
-
-    std::vector<String> enable_langs;
-    for (MapStringVectorSizeT::iterator it = _groups.begin (); it != _groups.end (); ++it) {
-        String lang_name = scim_get_language_name (it->first);
-        if (std::find (_disabled_langs.begin (), _disabled_langs.end (), lang_name) == _disabled_langs.end ())
-            enable_langs.push_back (lang_name);
-    }
-    scim_global_config_write (String (SCIM_GLOBAL_CONFIG_ISF_DEFAULT_LANGUAGES), enable_langs);
-    scim_global_config_flush ();
 }
 
 /*

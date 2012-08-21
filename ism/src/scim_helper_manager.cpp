@@ -29,6 +29,8 @@
  *
  */
 
+#define Uses_SCIM_IMENGINE_MODULE
+#define Uses_SCIM_HELPER_MODULE
 #define Uses_SCIM_HELPER_MANAGER
 #define Uses_SCIM_SOCKET
 #define Uses_SCIM_TRANSACTION
@@ -56,6 +58,8 @@ class HelperManager::HelperManagerImpl
     std::vector <HelperInfo> m_helpers;
 
     uint32                   m_socket_key;
+
+public:
     SocketClient             m_socket_client;
     int                      m_socket_timeout;
 
@@ -64,9 +68,7 @@ public:
         : m_socket_key (0),
           m_socket_timeout (scim_get_default_socket_timeout ())
     {
-        if (open_connection ()) {
-            get_helper_list ();
-        }
+        open_connection ();
     }
 
     ~HelperManagerImpl ()
@@ -90,11 +92,13 @@ public:
 
     void run_helper (const String &uuid, const String &config_name, const String &display)
     {
-        if (!m_socket_client.is_connected () || !uuid.length () || !m_helpers.size ())
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!uuid.length () || !m_helpers.size ())
+            return;
+        if (!m_socket_client.is_connected () && !open_connection ())
             return;
 
         Transaction trans;
-
         for (int i = 0; i < 3; ++i) {
             trans.clear ();
             trans.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -108,129 +112,155 @@ public:
                 return;
 
             m_socket_client.close ();
-
-            if (open_connection ())
-                get_helper_list ();
+            if (!open_connection ())
+                break;
         }
     }
 
-    void stop_helper (const String &name) const
+    void stop_helper (const String &name)
     {
-        if (!m_socket_client.is_connected () || !name.length ())
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!name.length ())
+            return;
+        if (!m_socket_client.is_connected () && !open_connection ())
             return;
 
         Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_STOP_HELPER);
+            trans.put_data (name);
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REQUEST);
-        trans.put_data (m_socket_key);
-        trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_STOP_HELPER);
-        trans.put_data (name);
+            int cmd;
+            if (trans.write_to_socket (m_socket_client) &&
+                trans.read_from_socket (m_socket_client) &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
+                return;
 
-        int cmd;
-        if (trans.write_to_socket (m_socket_client)
-            && trans.read_from_socket (m_socket_client)
-            && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
-            && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-            return;
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
+        }
     }
 
-    int get_active_ise_list (std::vector<String> &strlist) const
+    int get_active_ise_list (std::vector<String> &strlist)
     {
-        if (!m_socket_client.is_connected ())
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!m_socket_client.is_connected () && !open_connection ())
             return -1;
 
         strlist.clear ();
 
         Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST);
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REQUEST);
-        trans.put_data (m_socket_key);
-        trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST);
-
-        int cmd;
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client) )
-        {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_data (strlist)) {
+            int cmd;
+            if (trans.write_to_socket (m_socket_client) &&
+                trans.read_from_socket (m_socket_client) &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                trans.get_data (strlist))
                 return (int)(strlist.size ());
-            }
+
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
         }
 
         return -1;
     }
 
-    int send_display_name (String &name) const
+    int send_display_name (String &name)
     {
-        if (!m_socket_client.is_connected ())
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!m_socket_client.is_connected () && !open_connection ())
             return -1;
 
         Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_SEND_DISPLAY);
+            trans.put_data (name);
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REQUEST);
-        trans.put_data (m_socket_key);
+            int cmd;
+            if (trans.write_to_socket (m_socket_client) &&
+                trans.read_from_socket (m_socket_client) &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
+                return 0;
 
-        trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_SEND_DISPLAY);
-        trans.put_data (name);
-
-        int cmd;
-        if (trans.write_to_socket (m_socket_client)
-            && trans.read_from_socket (m_socket_client)
-            && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
-            && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-            return 0;
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
+        }
 
         return -1;
     }
 
-    int send_ise_list (String &ise_list) const
+    int send_ise_list (String &ise_list)
     {
-        if (!m_socket_client.is_connected ())
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!m_socket_client.is_connected () && !open_connection ())
             return -1;
 
         Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_SEND_ISE_LIST);
+            trans.put_data (ise_list);
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REQUEST);
-        trans.put_data (m_socket_key);
+            if (trans.write_to_socket (m_socket_client))
+                return 0;
 
-        trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_SEND_ISE_LIST);
-        trans.put_data (ise_list);
-
-        if (trans.write_to_socket (m_socket_client))
-            return 0;
-
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
+        }
         return -1;
     }
 
-    int turn_on_log (uint32 isOn) const
+    int turn_on_log (uint32 isOn)
     {
-        if (!m_socket_client.is_connected ())
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!m_socket_client.is_connected () && !open_connection ())
             return -1;
 
         Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (ISM_TRANS_CMD_TURN_ON_LOG);
+            trans.put_data (isOn);
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REQUEST);
-        trans.put_data (m_socket_key);
-        trans.put_command (ISM_TRANS_CMD_TURN_ON_LOG);
-        trans.put_data (isOn);
+            int cmd;
+            if (trans.write_to_socket (m_socket_client) &&
+                trans.read_from_socket (m_socket_client) &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
+                return 0;
 
-        int cmd;
-        if (trans.write_to_socket (m_socket_client)
-            && trans.read_from_socket (m_socket_client)
-            && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
-            && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-            return 0;
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
+        }
 
         return -1;
     }
 
     bool open_connection (void)
     {
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
         if (m_socket_client.is_connected ())
             return true;
 
@@ -238,16 +268,52 @@ public:
 
         if (address.valid ()) {
             if (!m_socket_client.connect (address)) {
-                int i = 0;
-                {
-                    std::cerr << " Re-connecting to ISF(scim) server.";
-                    for (i = 0; i < 200; ++i) {
+                int  i = 0;
+                bool bConnected = false;
+
+                std::cerr << " Connecting to ISF(scim) server.";
+                for (i = 0; i < 50; ++i) {
+                    if (m_socket_client.connect (address)) {
+                        bConnected = true;
+                        break;
+                    }
+                    scim_usleep (100000);
+                    std::cerr << ".";
+                }
+                std::cerr << " Connected :" << i << "\n";
+
+                if (!bConnected) {
+                    /* Get modules list */
+                    std::vector<String> engine_list;
+                    std::vector<String> helper_list;
+                    std::vector<String> load_engine_list;
+                    scim_get_imengine_module_list (engine_list);
+                    scim_get_helper_module_list (helper_list);
+
+                    std::vector<String>::iterator it;
+                    for (it = engine_list.begin (); it != engine_list.end (); it++) {
+                        if (*it != "socket")
+                            load_engine_list.push_back (*it);
+                    }
+                    for (it = helper_list.begin (); it != helper_list.end (); it++)
+                        load_engine_list.push_back (*it);
+
+                    std::cerr << "Launching a ISF daemon with Socket FrontEnd...\n";
+                    const char *new_argv [] = { "--stay", 0 };
+                    scim_launch (true,
+                                 "simple",
+                                 (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
+                                 "socket",
+                                 (char **)new_argv);
+
+                    std::cerr << " Reconnecting to ISF(scim) server.";
+                    for (i = 0; i < 50; ++i) {
                         if (m_socket_client.connect (address))
                             break;
                         scim_usleep (100000);
                         std::cerr << ".";
                     }
-                    std::cerr << " Connected :" << i << "\n";
+                    std::cerr << " Reconnected :" << i << "\n";
                 }
             }
         }
@@ -258,6 +324,7 @@ public:
                                          "HelperLauncher",
                                          m_socket_client,
                                          m_socket_timeout)) {
+            get_helper_list ();
             return true;
         }
 
@@ -268,25 +335,27 @@ public:
 
     void get_helper_list (void)
     {
-        Transaction trans;
-        uint32 num;
-        int cmd;
-        HelperInfo info;
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!m_socket_client.is_connected () && !open_connection ())
+            return;
 
         m_helpers.clear ();
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REQUEST);
-        trans.put_data (m_socket_key);
-        trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_GET_HELPER_LIST);
+        Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (SCIM_TRANS_CMD_HELPER_MANAGER_GET_HELPER_LIST);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+            int    cmd;
+            uint32 num;
+            if (trans.write_to_socket (m_socket_client) &&
+                trans.read_from_socket (m_socket_client, m_socket_timeout) &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 trans.get_data (num) && num > 0) {
-
                 for (uint32 j = 0; j < num; j++) {
+                    HelperInfo info;
                     if (trans.get_data (info.uuid) &&
                         trans.get_data (info.name) &&
                         trans.get_data (info.icon) &&
@@ -295,7 +364,12 @@ public:
                         m_helpers.push_back (info);
                     }
                 }
+                return;
             }
+
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
         }
     }
 };
@@ -320,6 +394,33 @@ bool
 HelperManager::get_helper_info (unsigned int idx, HelperInfo &info) const
 {
     return m_impl->get_helper_info (idx, info);
+}
+
+int
+HelperManager::get_connection_number (void) const
+{
+    if (m_impl->m_socket_client.is_connected ())
+        return m_impl->m_socket_client.get_id ();
+    return -1;
+}
+
+bool
+HelperManager::has_pending_event (void) const
+{
+    if (m_impl->m_socket_client.is_connected () && m_impl->m_socket_client.wait_for_data (0) > 0)
+        return true;
+
+    return false;
+}
+
+bool
+HelperManager::filter_event (void)
+{
+    Transaction recv;
+    if (!m_impl->m_socket_client.is_connected () || !recv.read_from_socket (m_impl->m_socket_client, m_impl->m_socket_timeout))
+        return false;
+
+    return true;
 }
 
 void

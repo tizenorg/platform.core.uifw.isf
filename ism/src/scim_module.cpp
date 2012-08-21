@@ -63,16 +63,15 @@ _scim_get_module_paths (std::vector <String> &paths, const String &type)
 
     paths.clear ();
 
+    module_paths.push_back (String (SCIM_MODULE_PATH));
+
     module_path_env = getenv ("SCIM_MODULE_PATH");
 
-    if (module_path_env)
-    {
+    if (module_path_env) {
         struct stat buf;
-        if (stat("/opt/etc/.hib_capturing", &buf) != 0)
+        if (stat ("/opt/etc/.hib_capturing", &buf) != 0)
             module_paths.push_back (String (module_path_env));
     }
-
-    module_paths.push_back (String (SCIM_MODULE_PATH));
 
     // append version to the end of the paths
     for (it = module_paths.begin (); it != module_paths.end (); ++it) {

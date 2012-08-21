@@ -389,6 +389,20 @@ protected:
     void lookup_table_page_down (int id) const;
 
     /**
+     * @brief Set prediction allow.
+     * @param id the IMEngine instance id.
+     * @param allow - the flag of prediction allow.
+     */
+    void set_prediction_allow (int id, bool allow) const;
+
+    /**
+     * @brief Set layout.
+     * @param id the IMEngine instance id.
+     * @param layout - the layout.
+     */
+    void set_layout (int id, unsigned int layout) const;
+
+    /**
      * @brief reset a specific IMEngine option.
      * @param id the id of the IMEngine instance to be reset.
      */

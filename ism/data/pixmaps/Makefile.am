@@ -18,23 +18,13 @@
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES           = *.bak *.edj
 
-ISF_CANDIDATE_PNG = 08_textinput_predictive_popup_arrow.png \
-                    08_textinput_predictive_popup_arrow_2.png
-
-#pixmapsdir = @SCIM_DATADIR@/pixmaps
-#pixmaps_DATA = $(ISF_CANDIDATE_PNG)
-
-EXTRA_DIST = $(ISF_CANDIDATE_PNG)
 
 # edjes
 isf_candidate_theme1.edj : isf_candidate_theme1.edc
-	edje_cc $^ $@
-
-isf_candidate_theme2.edj : isf_candidate_theme2.edc
 	edje_cc $^ $@
 
 isfsetting.edj : isfsetting.edc
 	edje_cc $^ $@
 
 edjdir   = @SCIM_DATADIR@
-edj_DATA = isf_candidate_theme1.edj isf_candidate_theme2.edj isfsetting.edj
+edj_DATA = isf_candidate_theme1.edj isfsetting.edj

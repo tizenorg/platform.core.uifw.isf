@@ -6,7 +6,7 @@
 
 /*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
  *
  *
@@ -703,6 +703,38 @@ SocketInstance::lookup_table_page_down ()
 }
 
 void
+SocketInstance::set_prediction_allow (bool allow)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__<< " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_SET_PREDICTION_ALLOW);
+    trans.put_data (m_peer_id);
+    trans.put_data ((uint32) allow);
+
+    commit_transaction (trans);
+}
+
+void
+SocketInstance::set_layout (unsigned int layout)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__<< " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_SET_LAYOUT);
+    trans.put_data (m_peer_id);
+    trans.put_data (layout);
+
+    commit_transaction (trans);
+}
+
+void
 SocketInstance::reset_option ()
 {
     Transaction trans;
@@ -978,7 +1010,7 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                         SCIM_DEBUG_IMENGINE(3) << "  start_helper (" << helper_uuid << ")\n";
                         start_helper (helper_uuid);
                     }
-                    break; 
+                    break;
                 }
                 case SCIM_TRANS_CMD_STOP_HELPER:
                 {
@@ -987,7 +1019,7 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                         SCIM_DEBUG_IMENGINE(3) << "  stop_helper (" << helper_uuid << ")\n";
                         stop_helper (helper_uuid);
                     }
-                    break; 
+                    break;
                 }
                 case SCIM_TRANS_CMD_SEND_HELPER_EVENT:
                 {
@@ -997,7 +1029,7 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                         SCIM_DEBUG_IMENGINE(3) << "  send_helper_event (" << helper_uuid << ")\n";
                         send_helper_event (helper_uuid, temp_trans);
                     }
-                    break; 
+                    break;
                 }
                 case SCIM_TRANS_CMD_OK:
                 {

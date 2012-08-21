@@ -82,6 +82,7 @@ class PanelClient::PanelClientImpl
     PanelClientSignalString                     m_signal_trigger_property;
     PanelClientSignalStringStringTransaction    m_signal_process_helper_event;
     PanelClientSignalInt                        m_signal_move_preedit_caret;
+    PanelClientSignalInt                        m_signal_update_preedit_caret;
     PanelClientSignalInt                        m_signal_select_aux;
     PanelClientSignalInt                        m_signal_select_candidate;
     PanelClientSignalKeyEvent                   m_signal_process_key_event;
@@ -337,6 +338,13 @@ public:
                         AttributeList attrs;
                         if (recv.get_data (wstr) && recv.get_data (attrs))
                             m_signal_update_preedit_string ((int) context, wstr, attrs);
+                    }
+                    break;
+                case SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET:
+                    {
+                        uint32 caret;
+                        if (recv.get_data (caret))
+                            m_signal_update_preedit_caret ((int) context, (int) caret);
                     }
                     break;
                 case ISM_TRANS_CMD_TURN_ON_LOG:
@@ -645,6 +653,7 @@ public:
         m_signal_trigger_property.reset();
         m_signal_process_helper_event.reset();
         m_signal_move_preedit_caret.reset();
+        m_signal_update_preedit_caret.reset ();
         m_signal_select_aux.reset();
         m_signal_select_candidate.reset();
         m_signal_process_key_event.reset();
@@ -697,6 +706,10 @@ public:
     Connection signal_connect_move_preedit_caret            (PanelClientSlotInt                     *slot)
     {
         return m_signal_move_preedit_caret.connect (slot);
+    }
+    Connection signal_connect_update_preedit_caret          (PanelClientSlotInt                     *slot)
+    {
+        return m_signal_update_preedit_caret.connect (slot);
     }
     Connection signal_connect_select_aux                    (PanelClientSlotInt                     *slot)
     {
@@ -1039,6 +1052,11 @@ Connection
 PanelClient::signal_connect_move_preedit_caret            (PanelClientSlotInt                     *slot)
 {
     return m_impl->signal_connect_move_preedit_caret (slot);
+}
+Connection
+PanelClient::signal_connect_update_preedit_caret          (PanelClientSlotInt                     *slot)
+{
+    return m_impl->signal_connect_update_preedit_caret (slot);
 }
 Connection
 PanelClient::signal_connect_select_aux                    (PanelClientSlotInt                     *slot)

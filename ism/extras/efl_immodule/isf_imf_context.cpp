@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Jihoon Kim <jihoon48.kim@samsung.com>, Haifeng Deng <haifeng.deng@samsung.com>
  *
@@ -45,7 +45,6 @@
 #include <utilX.h>
 #include <vconf.h>
 #include <vconf-keys.h>
-//#include <X11/extensions/XTest.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -56,8 +55,7 @@
 # define CODESET "INVALID"
 #endif
 
-const double DOUBLE_SPACE_INTERVAL=1.0;
-const int    PREDICTION_ALLOW_SET = 0xa0;
+const double DOUBLE_SPACE_INTERVAL = 1.0;
 
 using namespace scim;
 
@@ -112,6 +110,8 @@ static void     panel_slot_process_helper_event         (int                    
                                                          const Transaction      &trans);
 static void     panel_slot_move_preedit_caret           (int                     context,
                                                          int                     caret_pos);
+static void     panel_slot_update_preedit_caret         (int                     context,
+                                                         int                     caret);
 static void     panel_slot_select_aux                   (int                     context,
                                                          int                     aux_index);
 static void     panel_slot_select_candidate             (int                     context,
@@ -261,7 +261,9 @@ static Ecore_Event_Handler                             *_key_handler            
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
+static double                                           space_key_time              = 0.0;
 
+static Eina_Bool                                        autoperiod_allow            = EINA_FALSE;
 static Eina_Bool                                        autocap_allow               = EINA_FALSE;
 
 static Display *__current_display      = 0;
@@ -282,7 +284,7 @@ public:
     }
     ~FinalizeHandler () {
         SCIM_DEBUG_FRONTEND(1) << "FinalizeHandler::~FinalizeHandler ()\n";
-        isf_imf_context_shutdown ();
+        finalize ();
     }
 };
 
@@ -419,9 +421,6 @@ key_press_cb (void *data, int type, void *event)
         isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
         return ECORE_CALLBACK_CANCEL;
 #endif
-    } else if (!strcmp (ev->keyname, KEY_SELECT)) {
-        LOGD("HOME key is pressed\n");
-        isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
     }
 
     return ECORE_CALLBACK_RENEW;
@@ -458,11 +457,63 @@ set_prediction_allow (IMEngineInstancePointer si, bool prediction)
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     if (si) {
-        Transaction trans;
-        trans.put_command (PREDICTION_ALLOW_SET);
-        trans.put_data ((uint32)prediction);
-        si->process_helper_event ("", trans);
+        si->set_prediction_allow (prediction);
     }
+}
+
+static void
+autoperiod_insert(Ecore_IMF_Context *ctx)
+{
+    char *plain_str = NULL;
+    char *markup_str = NULL;
+    int cursor_pos = 0;
+    Eina_Unicode *ustr = NULL;
+    Ecore_IMF_Event_Delete_Surrounding ev;
+
+    if (!ctx) return;
+
+    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get(ctx);
+    if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
+        return;
+
+    if (autoperiod_allow == EINA_FALSE)
+        return;
+
+    if ((ecore_time_get() - space_key_time) > DOUBLE_SPACE_INTERVAL)
+        goto done;
+
+    ecore_imf_context_surrounding_get(ctx, &markup_str, &cursor_pos);
+    if (!markup_str) goto done;
+
+    // Convert into plain string
+    plain_str = evas_textblock_text_markup_to_utf8(NULL, markup_str);
+    if (!plain_str) goto done;
+
+    // Convert string from UTF-8 to unicode
+    ustr = eina_unicode_utf8_to_unicode(plain_str, NULL);
+    if (!ustr) goto done;
+
+    if (cursor_pos < 2) goto done;
+
+    if (((ustr[cursor_pos-2] != ':') && (ustr[cursor_pos-2] != ';') &&
+        (ustr[cursor_pos-2] != '.') && (ustr[cursor_pos-2] != ',') &&
+        (ustr[cursor_pos-2] != '?') && (ustr[cursor_pos-2] != '!') &&
+        (ustr[cursor_pos-2] != ' ')) && ((ustr[cursor_pos-1] == ' ') || (ustr[cursor_pos-1] == '\240'))) {
+        ev.ctx = ctx;
+        ev.n_chars = 1;
+        ev.offset = -1;
+        ecore_imf_context_delete_surrounding_event_add(ctx, -1, 1);
+        ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, &ev);
+
+        ecore_imf_context_commit_event_add(ctx, ".");
+        ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)".");
+     }
+
+done:
+    if (markup_str) free(markup_str);
+    if (plain_str) free(plain_str);
+    if (ustr) free(ustr);
+    space_key_time = ecore_time_get();
 }
 
 static Eina_Bool
@@ -510,7 +561,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
     plain_str = evas_textblock_text_markup_to_utf8(NULL, markup_str);
     if (!plain_str) goto done;
 
-    // Convert string from utf8 to unicode
+    // Convert string from UTF-8 to unicode
     ustr = eina_unicode_utf8_to_unicode(plain_str, NULL);
     if (!ustr) goto done;
 
@@ -522,7 +573,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
             }
         }
 
-        // Check paragraph separator <PS> and carrage return  <br>
+        // Check paragraph separator <PS> and carriage return  <br>
         if ((ustr[cursor_pos-1] == 0x2029) || (ustr[cursor_pos-1] == '\n')) {
             ret = EINA_TRUE;
             goto done;
@@ -634,11 +685,18 @@ evas_focus_out_cb(void *data, Evas *e, void *event_info)
 
     if (!ctx) return;
 
-    LOGD("Canvas focus-out. ctx : %p\n", ctx);
+    LOGD("[Canvas focus-out] ctx : %p\n", ctx);
 
     if (input_panel_ctx == ctx && _scim_initialized) {
         isf_imf_context_input_panel_instant_hide(ctx);
     }
+}
+
+static void autoperiod_allow_changed_cb (keynode_t *key, void* data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    autoperiod_allow = vconf_keynode_get_bool(key);
 }
 
 static void autocapital_allow_changed_cb (keynode_t *key, void* data)
@@ -677,13 +735,21 @@ isf_imf_context_new (void)
         _scim_initialized = true;
         isf_imf_input_panel_init ();
 
+        /* get autoperiod allow vconf value */
+        if (vconf_get_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, &val) == 0) {
+            if (val == EINA_TRUE)
+                autoperiod_allow = EINA_TRUE;
+        }
+
+        vconf_notify_key_changed (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, autoperiod_allow_changed_cb, NULL);
+
         /* get autocapital allow vconf value */
-        if (vconf_get_bool (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, &val) == 0) {
+        if (vconf_get_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, &val) == 0) {
             if (val == EINA_TRUE)
                 autocap_allow = EINA_TRUE;
         }
 
-        vconf_notify_key_changed (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb, NULL);
+        vconf_notify_key_changed (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb, NULL);
     }
 
     return context_scim;
@@ -703,10 +769,13 @@ isf_imf_context_shutdown (void)
     if (_scim_initialized) {
         _scim_initialized = false;
 
-        vconf_ignore_key_changed (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb);
+        LOGD("[immodule shutdown]\n");
 
-        finalize ();
+        vconf_ignore_key_changed (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, autoperiod_allow_changed_cb);
+        vconf_ignore_key_changed (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb);
+
         isf_imf_input_panel_shutdown ();
+        finalize ();
     }
 }
 
@@ -783,7 +852,6 @@ isf_imf_context_add (Ecore_IMF_Context *ctx)
 
     _panel_client.prepare (context_scim->id);
     _panel_client.register_input_context (context_scim->id, si->get_factory_uuid ());
-    _panel_client.start_default_ise (context_scim->id);
     set_ic_capabilities (context_scim);
     _panel_client.send ();
 
@@ -828,7 +896,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             evas_event_callback_del_full(context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
 
         if (input_panel_ctx == ctx && _scim_initialized) {
-            LOGD("Context is deleted. ctx : %p\n", ctx);
+            LOGD("[Context is deleted] ctx : %p\n", ctx);
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_input_panel_hide(ctx);
@@ -896,6 +964,8 @@ isf_imf_context_client_canvas_set (Ecore_IMF_Context *ctx, void *canvas)
     if (context_scim && context_scim->impl && context_scim->impl->client_canvas != (Evas*) canvas) {
         context_scim->impl->client_canvas = (Evas*)canvas;
 
+        LOGD("[client_canvas_set] ctx : %p, canvas : %p\n", ctx, canvas);
+
         evas_event_callback_add(context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
     }
 }
@@ -922,6 +992,8 @@ isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window)
 
     if (context_scim && context_scim->impl && context_scim->impl->client_window != (Ecore_X_Window)((Ecore_Window)window)) {
         context_scim->impl->client_window = (Ecore_X_Window)((Ecore_Window)window);
+
+        LOGD("[client_window_set] ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
 
         if ((context_scim->impl->client_window != 0) &&
                 (context_scim->impl->client_window != _client_window)) {
@@ -1023,6 +1095,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 //            _panel_client.hide_aux_string (context_scim->id);
 //            _panel_client.hide_lookup_table (context_scim->id);
             context_scim->impl->si->focus_in ();
+            context_scim->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ctx));
             set_prediction_allow (context_scim->impl->si, context_scim->impl->prediction_allow);
         } else {
             _panel_client.turn_off (context_scim->id);
@@ -1034,10 +1107,10 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         _panel_client.send ();
     }
 
-    LOGD("focus-in. ctx : %p\n", ctx);
+    LOGD("[focus-in] ctx : %p\n", ctx);
 
-    if (ecore_imf_context_input_panel_enabled_get(ctx))
-        isf_imf_context_input_panel_show(ctx);
+    if (ecore_imf_context_input_panel_enabled_get (ctx))
+        isf_imf_context_input_panel_show (ctx);
 }
 
 /**
@@ -1061,10 +1134,10 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         WideString wstr = context_scim->impl->preedit_string;
 
-        LOGD("focus-out. ctx : %p\n", ctx);
+        LOGD("[focus-out] ctx : %p\n", ctx);
 
-        if (ecore_imf_context_input_panel_enabled_get(ctx))
-            isf_imf_context_input_panel_hide(ctx);
+        if (ecore_imf_context_input_panel_enabled_get (ctx))
+            isf_imf_context_input_panel_hide (ctx);
 
         if (context_scim->impl->need_commit_preedit) {
             panel_slot_hide_preedit_string (context_scim->id);
@@ -1144,14 +1217,15 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        // Don't update spot location while updating preedit string.
-        if (context_scim->impl->preedit_updating)
-            return;
-
         if (context_scim->impl->cursor_pos != cursor_pos) {
-            context_scim->impl->cursor_pos = cursor_pos;
-
             caps_mode_check(ctx, EINA_FALSE, EINA_TRUE);
+
+            if (context_scim->impl->preedit_updating)
+                return;
+
+            LOGD("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+
+            context_scim->impl->cursor_pos = cursor_pos;
 
             _panel_client.prepare (context_scim->id);
             panel_req_update_cursor_position (context_scim, cursor_pos);
@@ -1303,21 +1377,17 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
             if (mbs.length ()) {
                 int start_index, end_index;
                 int wlen = context_scim->impl->preedit_string.length ();
-
                 Ecore_IMF_Preedit_Attr *attr = NULL;
                 AttributeList::const_iterator i;
                 bool *attrs_flag = new bool [mbs.length ()];
                 memset (attrs_flag, 0, mbs.length () *sizeof (bool));
-
                 for (i = context_scim->impl->preedit_attrlist.begin ();
                     i != context_scim->impl->preedit_attrlist.end (); ++i) {
                     start_index = i->get_start ();
                     end_index = i->get_end ();
-
                     if (end_index <= wlen && start_index < end_index && i->get_type () != SCIM_ATTR_DECORATE_NONE) {
                         start_index = g_utf8_offset_to_pointer (mbs.c_str (), i->get_start ()) - mbs.c_str ();
                         end_index = g_utf8_offset_to_pointer (mbs.c_str (), i->get_end ()) - mbs.c_str ();
-
                         if (i->get_type () == SCIM_ATTR_DECORATE) {
                             attr = (Ecore_IMF_Preedit_Attr *)calloc(1, sizeof(Ecore_IMF_Preedit_Attr));
                             if (attr == NULL)
@@ -1337,7 +1407,6 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                             } else {
                                 free (attr);
                             }
-
                             switch(i->get_value())
                             {
                                 case SCIM_ATTR_DECORATE_UNDERLINE:
@@ -1357,15 +1426,12 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                         }
                     }
                 }
-
                 // Add underline for all characters which don't have attribute.
                 for (unsigned int pos = 0; pos < mbs.length (); ++pos) {
                     if (!attrs_flag [pos]) {
                         int begin_pos = pos;
-
                         while (pos < mbs.length () && !attrs_flag [pos])
                             ++pos;
-
                         // use REVERSE style as default
                         attr = (Ecore_IMF_Preedit_Attr *)calloc(1, sizeof(Ecore_IMF_Preedit_Attr));
                         if (attr == NULL)
@@ -1376,7 +1442,6 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                         *attrs = eina_list_append(*attrs, (void *)attr);
                     }
                 }
-
                 delete [] attrs_flag;
             }
         }
@@ -1547,10 +1612,10 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_CAPS) key.mask |=SCIM_KEY_CapsLockMask;
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_NUM) key.mask |=SCIM_KEY_NumLockMask;
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
-        if (ecore_imf_context_input_panel_enabled_get(ctx)) {
-            LOGD("Mouse-up event. ctx : %p\n", ctx);
+        if (ecore_imf_context_input_panel_enabled_get (ctx)) {
+            LOGD("[Mouse-up event] ctx : %p\n", ctx);
             if (ic == _focused_ic)
-                isf_imf_context_input_panel_show(ctx);
+                isf_imf_context_input_panel_show (ctx);
         }
         return EINA_FALSE;
     } else {
@@ -1564,22 +1629,24 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
     ret = EINA_TRUE;
     if (!filter_hotkeys (ic, key)) {
         if (timestamp == 0) {
+            ret = EINA_FALSE;
             // in case of generated event
             if (type == ECORE_IMF_EVENT_KEY_DOWN) {
                 char code = key.get_ascii_code ();
-                if (isgraph(code)) {
+                if (isgraph (code)) {
                     char string[2] = {0};
-                    snprintf(string, sizeof(string), "%c", code);
+                    snprintf (string, sizeof (string), "%c", code);
 
-                    if (strlen(string) != 0) {
+                    if (strlen (string) != 0) {
                         ecore_imf_context_commit_event_add (ic->ctx, string);
                         ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)string);
-                        _panel_client.send ();
-                        caps_mode_check(ctx, EINA_FALSE, EINA_TRUE);
-                        return EINA_TRUE;
+                        caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
+                        ret = EINA_TRUE;
                     }
                 }
             }
+            _panel_client.send ();
+            return ret;
         }
 
         if (!_focused_ic || !_focused_ic->impl->is_on ||
@@ -1687,18 +1754,6 @@ panel_slot_lookup_table_page_down (int context)
 }
 
 static void
-panel_slot_reset_option (int context)
-{
-    EcoreIMFContextISF *ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
-        _panel_client.prepare (ic->id);
-        ic->impl->si->reset_option ();
-        _panel_client.send ();
-    }
-}
-
-static void
 panel_slot_trigger_property (int context, const String &property)
 {
     EcoreIMFContextISF *ic = find_ic (context);
@@ -1738,6 +1793,30 @@ panel_slot_move_preedit_caret (int context, int caret_pos)
 }
 
 static void
+panel_slot_update_preedit_caret (int context, int caret)
+{
+    EcoreIMFContextISF *ic = find_ic (context);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " caret=" << caret << " ic=" << ic << "\n";
+
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->preedit_caret != caret) {
+        ic->impl->preedit_caret = caret;
+        if (ic->impl->use_preedit) {
+            if (!ic->impl->preedit_started) {
+                ecore_imf_context_preedit_start_event_add (ic->ctx);
+                ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_PREEDIT_START, NULL);
+                ic->impl->preedit_started = true;
+            }
+            ecore_imf_context_preedit_changed_event_add (ic->ctx);
+            ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, NULL);
+        } else {
+            _panel_client.prepare (ic->id);
+            _panel_client.update_preedit_caret (ic->id, caret);
+            _panel_client.send ();
+        }
+    }
+}
+
+static void
 panel_slot_select_aux (int context, int aux_index)
 {
     EcoreIMFContextISF *ic = find_ic (context);
@@ -1762,18 +1841,18 @@ panel_slot_select_candidate (int context, int cand_index)
 }
 
 static int
-_keyname_to_keycode(const char *keyname)
+_keyname_to_keycode (const char *keyname)
 {
     int keycode = 0;
     int keysym;
-    Display *display = (Display *)ecore_x_display_get();
+    Display *display = (Display *)ecore_x_display_get ();
 
-    keysym = XStringToKeysym(keyname);
+    keysym = XStringToKeysym (keyname);
 
-    if (!strncmp(keyname, "Keycode-", 8))
-        keycode = atoi(keyname + 8);
-    else {
-        keycode = XKeysymToKeycode(display, keysym);
+    if (!strncmp (keyname, "Keycode-", 8)) {
+        keycode = atoi (keyname + 8);
+    } else {
+        keycode = XKeysymToKeycode (display, keysym);
     }
 
     return keycode;
@@ -1787,7 +1866,7 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
     char key_string[256] = {0};
     char *keysym_str;
     char compose_buffer[256] = {0};
-    const char *str = scim_key.get_key_string().c_str();
+    const char *str = scim_key.get_key_string ().c_str ();
     char *compose = NULL;
     unsigned int timestamp = 0;
     int shift = 0;
@@ -1804,10 +1883,10 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
         timestamp = get_time ();
 
     if (scim_key.is_key_press ()) {
-        strncpy(key_string, str, strlen(str));
+        strncpy (key_string, str, strlen (str));
     } else {
         if (strncmp (str, "KeyRelease+", 11) == 0) {
-            strncpy(key_string, str + 11, strlen(str)-11);
+            strncpy (key_string, str + 11, strlen (str) - 11);
         }
     }
 
@@ -1819,17 +1898,17 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
     }
 
     // get x keysym, keycode, keyname, and key
-    keysym = XStringToKeysym(keysym_str);
+    keysym = XStringToKeysym (keysym_str);
     if (keysym == NoSymbol)
         return;
 
-    keycode = _keyname_to_keycode(keysym_str);
-    keyname = XKeysymToString(XKeycodeToKeysym(display, keycode, 0));
+    keycode = _keyname_to_keycode (keysym_str);
+    keyname = XKeysymToString (XKeycodeToKeysym (display, keycode, 0));
     key = keysym_str;
 
     // check modifier
-    if (XKeycodeToKeysym(display, keycode, 0) != keysym) {
-        if (XKeycodeToKeysym(display, keycode, 1) == keysym)
+    if (XKeycodeToKeysym (display, keycode, 0) != keysym) {
+        if (XKeycodeToKeysym (display, keycode, 1) == keysym)
             shift = 1;
         else
             keycode = 0;
@@ -1843,20 +1922,20 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
         modifier |= ShiftMask;
 
     // get keystring
-    xkey = createKeyEvent(scim_key.is_key_press(), keycode, modifier, False);
-    val = XLookupString (&xkey, compose_buffer, sizeof(compose_buffer), NULL, 0);
+    xkey = createKeyEvent (scim_key.is_key_press (), keycode, modifier, False);
+    val = XLookupString (&xkey, compose_buffer, sizeof (compose_buffer), NULL, 0);
 
     if (val > 0) {
         compose_buffer[val] = 0;
-        compose = eina_str_convert(nl_langinfo(CODESET), "UTF-8",
-                                   compose_buffer);
+        compose = eina_str_convert (nl_langinfo(CODESET), "UTF-8",
+                                    compose_buffer);
     }
 
     if (!keyname)
         keyname = key;
 
     // feed key event
-    if (scim_key.is_key_press()) {
+    if (scim_key.is_key_press ()) {
         evas_event_feed_key_down (evas, keyname, key, compose, compose, timestamp, NULL);
         SCIM_DEBUG_FRONTEND(1) << "    evas_event_feed_key_down ()...\n";
     } else {
@@ -1865,20 +1944,22 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
     }
 
     if (compose)
-        free(compose);
+        free (compose);
 }
 
-static void
+static Eina_Bool
 feed_key_event (EcoreIMFContextISF *ic, const KeyEvent &key, bool fake)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (!ic || !ic->impl) return;
-
-    if (ic->impl->client_canvas) {
-        send_evas_key_event(ic->impl->client_canvas, key, fake);
+    if (key.code <= 0x7F ||
+        (key.code >= SCIM_KEY_BackSpace && key.code <= SCIM_KEY_Delete) ||
+        (key.code >= SCIM_KEY_Home && key.code <= SCIM_KEY_Hyper_R)) {
+        // ascii code and function keys
+        send_x_key_event (key, fake);
+        return EINA_TRUE;
     } else {
-        send_x_key_event(key, fake);
+        return EINA_FALSE;
     }
 }
 
@@ -1888,7 +1969,20 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
-    feed_key_event (ic, key, false);
+    if (feed_key_event (ic, key, false) == EINA_TRUE) return;
+
+    if (ic && ic->impl) {
+        _panel_client.prepare (ic->id);
+
+        if (!filter_hotkeys (ic, key)) {
+            if (!_focused_ic || !_focused_ic->impl->is_on ||
+                !_focused_ic->impl->si->process_key_event (key)) {
+                _fallback_instance->process_key_event (key);
+            }
+        }
+
+        _panel_client.send ();
+    }
 }
 
 static void
@@ -1948,8 +2042,8 @@ panel_slot_change_factory (int context, const String &uuid)
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " factory=" << uuid << " ic=" << ic << "\n";
     if (ic && ic->impl) {
-        ic->impl->si->reset ();
         _panel_client.prepare (ic->id);
+        ic->impl->si->reset ();
         open_specific_factory (ic, uuid);
         _panel_client.send ();
     }
@@ -1996,6 +2090,7 @@ panel_slot_show_preedit_string (int context)
         if (ic->impl->use_preedit) {
             if (!ic->impl->preedit_started) {
                 ecore_imf_context_preedit_start_event_add (_focused_ic->ctx);
+                ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_PREEDIT_START, NULL);
                 ic->impl->preedit_started     = true;
                 ic->impl->need_commit_preedit = true;
             }
@@ -2266,7 +2361,6 @@ panel_initialize (void)
         while (context_scim != NULL) {
             _panel_client.prepare (context_scim->id);
             _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
-            _panel_client.start_default_ise (context_scim->id);
             _panel_client.send ();
             context_scim = context_scim->next;
         }
@@ -2336,6 +2430,7 @@ turn_on_ic (EcoreIMFContextISF *ic)
 //            _panel_client.hide_aux_string (ic->id);
 //            _panel_client.hide_lookup_table (ic->id);
             ic->impl->si->focus_in ();
+            ic->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ic->ctx));
             set_prediction_allow (ic->impl->si, ic->impl->prediction_allow);
         }
 
@@ -2528,10 +2623,10 @@ initialize (void)
     _panel_client.signal_connect_update_lookup_table_page_size (slot (panel_slot_update_lookup_table_page_size));
     _panel_client.signal_connect_lookup_table_page_up          (slot (panel_slot_lookup_table_page_up));
     _panel_client.signal_connect_lookup_table_page_down        (slot (panel_slot_lookup_table_page_down));
-    _panel_client.signal_connect_reset_option                  (slot (panel_slot_reset_option));
     _panel_client.signal_connect_trigger_property              (slot (panel_slot_trigger_property));
     _panel_client.signal_connect_process_helper_event          (slot (panel_slot_process_helper_event));
     _panel_client.signal_connect_move_preedit_caret            (slot (panel_slot_move_preedit_caret));
+    _panel_client.signal_connect_update_preedit_caret          (slot (panel_slot_update_preedit_caret));
     _panel_client.signal_connect_select_aux                    (slot (panel_slot_select_aux));
     _panel_client.signal_connect_select_candidate              (slot (panel_slot_select_candidate));
     _panel_client.signal_connect_process_key_event             (slot (panel_slot_process_key_event));
@@ -2844,7 +2939,7 @@ static XKeyEvent createKeyEvent (bool press, int keycode, int modifiers, bool fa
     if (fake)
         event.time    = 0;
     else
-        event.time    = get_time();
+        event.time    = get_time ();
 
     event.x           = 1;
     event.y           = 1;
@@ -2858,7 +2953,7 @@ static XKeyEvent createKeyEvent (bool press, int keycode, int modifiers, bool fa
     else
         event.type = KeyRelease;
     event.send_event  = False;
-    event.serial = 0;
+    event.serial      = 0;
 
     return event;
 }
@@ -2871,6 +2966,7 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     ::KeySym keysym = 0;
     int shift = 0;
     const char *key_string;
+    const char *keysym_str;
 
     // Obtain the X11 display.
     Display *display = (Display *)ecore_x_display_get ();
@@ -2885,13 +2981,21 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
         key_string = key.get_key_string().c_str();
     }
 
-    keysym = XStringToKeysym(key_string);
+    if (strncmp (key_string, "Shift+", 6) == 0) {
+        keysym_str = key_string + 6;
+    }
+    else {
+        keysym_str = key_string;
+    }
+
+    // get x keysym, keycode, keyname, and key
+    keysym = XStringToKeysym (keysym_str);
     if (keysym == NoSymbol)
         return;
 
-    keycode = _keyname_to_keycode(key_string);
-    if (XKeycodeToKeysym(display, keycode, 0) != keysym) {
-        if (XKeycodeToKeysym(display, keycode, 1) == keysym)
+    keycode = _keyname_to_keycode (keysym_str);
+    if (XKeycodeToKeysym (display, keycode, 0) != keysym) {
+        if (XKeycodeToKeysym (display, keycode, 1) == keysym)
             shift = 1;
         else
             keycode = 0;
@@ -2905,32 +3009,20 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
         int keycode_min, keycode_max, keycode_num;
         int i;
 
-        XDisplayKeycodes(display, &keycode_min, &keycode_max);
-        keysyms = XGetKeyboardMapping(display, keycode_min,
+        XDisplayKeycodes (display, &keycode_min, &keycode_max);
+        keysyms = XGetKeyboardMapping (display, keycode_min,
                 keycode_max - keycode_min + 1,
                 &keycode_num);
         mod = (mod + 1) & 0x7;
         i = (keycode_max - keycode_min - mod - 1) * keycode_num;
 
         keysyms[i] = keysym;
-        XChangeKeyboardMapping(display, keycode_min, keycode_num,
+        XChangeKeyboardMapping (display, keycode_min, keycode_num,
                 keysyms, (keycode_max - keycode_min));
-        XFree(keysyms);
-        XSync(display, False);
+        XFree (keysyms);
+        XSync (display, False);
         keycode = keycode_max - mod - 1;
     }
-
-    // Find the window which has the current keyboard focus.
-    Window winFocus = 0;
-    XWindowAttributes attr;
-    int revert = RevertToParent;
-
-    XGetInputFocus (display, &winFocus, &revert);
-
-    // Send a fake key press event to the window.
-    XGetWindowAttributes (display, winFocus, &attr);
-    XSelectInput (display, winFocus, attr.your_event_mask | FocusChangeMask | KeyPressMask | KeyReleaseMask);
-    XMapWindow (display, winFocus);
 
     unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, key.mask);
 
@@ -2940,7 +3032,7 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     XKeyEvent event;
     if (key.is_key_press ()) {
         if (shift) {
-            event = createKeyEvent (true, XKeysymToKeycode(display, XK_Shift_L), modifier, fake);
+            event = createKeyEvent (true, XKeysymToKeycode (display, XK_Shift_L), modifier, fake);
             XSendEvent (event.display, event.window, True, KeyPressMask, (XEvent *)&event);
         }
 
@@ -2951,7 +3043,7 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
         XSendEvent (event.display, event.window, True, KeyReleaseMask, (XEvent *)&event);
 
         if (shift) {
-            event = createKeyEvent (false, XKeysymToKeycode(display, XK_Shift_L), modifier, fake);
+            event = createKeyEvent (false, XKeysymToKeycode (display, XK_Shift_L), modifier, fake);
             XSendEvent (event.display, event.window, True, KeyReleaseMask, (XEvent *)&event);
         }
     }
@@ -3186,6 +3278,9 @@ slot_commit_string (IMEngineInstanceBase *si,
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
     if (ic && ic->ctx) {
+        if (strcmp(utf8_wcstombs (str).c_str (), " ") == 0)
+            autoperiod_insert(ic->ctx);
+
         ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (str).c_str ());
         ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(str).c_str());
     }

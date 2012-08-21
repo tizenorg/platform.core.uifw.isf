@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Shuo Liu <shuo0805.liu@samsung.com>, Hengliang Luo <hl.luo@samsung.com>
  *
@@ -172,12 +172,12 @@ static void sw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, vo
         snprintf (ise_bak, sizeof (ise_bak), "%s", _active_ise_name);
     }
 
-    bundle *b = NULL;
-    b = bundle_create();
-    bundle_add(b, "name", "keyboard-setting-wizard-efl");
-    bundle_add(b, "description", "previous clicked");
-    ug_send_result(ugd->ug, b);
-    bundle_free(b);
+    service_h s = NULL;
+    service_create(&s);
+    service_add_extra_data(s, "name", "keyboard-setting-wizard-efl");
+    service_add_extra_data(s, "description", "previous clicked");
+    ug_send_result(ugd->ug, s);
+    service_destroy(s);
 
     back_cb(data,obj,event_info);
 
@@ -209,12 +209,12 @@ static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
         LOGD("Set active ISE : %s", ise_bak);
     }
 
-    bundle *b = NULL;
-    b = bundle_create();
-    bundle_add(b, "name", "keyboard-setting-wizard-efl");
-    bundle_add(b, "description", "next clicked");
-    ug_send_result(ugd->ug, b);
-    bundle_free(b);
+    service_h s = NULL;
+    service_create(&s);
+    service_add_extra_data(s, "name", "keyboard-setting-wizard-efl");
+    service_add_extra_data(s, "description", "next clicked");
+    ug_send_result(ugd->ug, s);
+    service_destroy(s);
 
     back_cb(data,obj,event_info);
 
@@ -286,9 +286,10 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
    LOGD("Default ISE Name : %s", ise_bak);
 
     ugd->naviframe = _create_naviframe_layout (ugd->layout_main);
-    const char *navi_btn_l_lable = bundle_get_val(ugd->data, "navi_btn_left");
-    const char *navi_btn_r_lable = bundle_get_val(ugd->data, "navi_btn_right");
-
+    char *navi_btn_l_lable = NULL;
+    char *navi_btn_r_lable = NULL;
+    service_get_extra_data(ugd->data, "navi_btn_left",&navi_btn_l_lable);
+    service_get_extra_data(ugd->data, "navi_btn_right",&navi_btn_r_lable);
     if (sw_radio_grp != NULL)
     {
         evas_object_del(sw_radio_grp);
@@ -296,6 +297,7 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
     }
 
     Evas_Object *genlist = elm_genlist_add(ugd->naviframe);
+    elm_object_style_set(genlist, "dialogue");
     evas_object_show(genlist);
 
     Elm_Object_Item *nf_it;
@@ -316,6 +318,10 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
         elm_object_item_part_content_set(nf_it, "controlbar", cbar);
     }
 
+    if (navi_btn_l_lable!= NULL)
+        free(navi_btn_l_lable);
+    if (navi_btn_r_lable!= NULL)
+        free(navi_btn_r_lable);
     unsigned int i = 0;
 
     sw_iselist.clear();
@@ -369,7 +375,7 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
 }
 
 ConfigPointer isf_imf_context_get_config(void);
-static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, void *priv)
+static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *priv)
 {
     Evas_Object *parent = NULL;
     Evas_Object *content = NULL;
@@ -381,7 +387,7 @@ static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, v
 
     struct ug_data *ugd = (struct ug_data *)priv;
     ugd->ug = ug;
-    ugd->data = data;
+    ugd->data = s;
     parent = (Evas_Object *) ug_get_parent_layout (ug);
     if (parent == NULL)
         return NULL;
@@ -430,21 +436,21 @@ static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, v
     return (void *)ugd->layout_main;
 }
 
-static void on_start (struct ui_gadget *ug, bundle *data, void *priv)
+static void on_start (ui_gadget_h ug, service_h s, void *priv)
 {
 }
 
-static void on_pause (struct ui_gadget *ug, bundle *data, void *priv)
-{
-
-}
-
-static void on_resume (struct ui_gadget *ug, bundle *data, void *priv)
+static void on_pause (ui_gadget_h ug, service_h s, void *priv)
 {
 
 }
 
-static void on_destroy (struct ui_gadget *ug, bundle *data, void *priv)
+static void on_resume (ui_gadget_h ug, service_h s, void *priv)
+{
+
+}
+
+static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
 {
     if ( ug == NULL|| priv == NULL)
         return;
@@ -472,11 +478,11 @@ static void on_destroy (struct ui_gadget *ug, bundle *data, void *priv)
     }
 }
 
-static void on_message (struct ui_gadget *ug, bundle *msg, bundle *data, void *priv)
+static void on_message (ui_gadget_h ug, service_h msg, service_h data, void *priv)
 {
 }
 
-static void on_event (struct ui_gadget *ug, enum ug_event event, bundle *data, void *priv)
+static void on_event (ui_gadget_h ug, enum ug_event event, service_h s, void *priv)
 {
     switch (event) {
     case UG_EVENT_LOW_MEMORY:
@@ -498,7 +504,7 @@ static void on_event (struct ui_gadget *ug, enum ug_event event, bundle *data, v
     }
 }
 
-static void on_key_event(struct ui_gadget *ug, enum ug_key_event event, bundle *data, void *priv)
+static void on_key_event(ui_gadget_h ug, enum ug_key_event event, service_h s, void *priv)
 {
     if (ug == NULL)
         return;

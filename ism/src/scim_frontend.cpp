@@ -363,32 +363,32 @@ FrontEndBase::get_all_locales () const
 int
 FrontEndBase::new_instance (const ConfigPointer &config, const String &sf_uuid, const String& encoding)
 {
-    std::cout << "enter new_instance" << std::endl;
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     IMEngineFactoryPointer factory = m_impl->m_backend->get_factory (sf_uuid);
 
-    if (factory.null ())
-    {
-        m_impl->m_backend->add_factory_by_uuid(config, sf_uuid);
+    if (factory.null ()) {
+        m_impl->m_backend->add_factory_by_uuid (config, sf_uuid);
         factory = m_impl->m_backend->get_factory (sf_uuid);
+        if (factory.null ()) {
+            std::cerr << "get_factory (" << sf_uuid << ") failed, and use ComposeKeyFactory\n";
+            factory = m_impl->m_backend->get_factory (SCIM_COMPOSE_KEY_FACTORY_UUID);
+        }
     }
 
     if (factory.null () || !factory->validate_encoding (encoding)) {
-        SCIM_DEBUG_FRONTEND (1) << "IMEngineFactory " << sf_uuid
-            << " does not support encoding " << encoding << "\n";
+        std::cerr << "IMEngineFactory " << sf_uuid << " does not support encoding " << encoding << "\n";
         return -1;
     }
 
-    IMEngineInstancePointer si =
-        factory->create_instance (encoding, m_impl->m_instance_count);
+    IMEngineInstancePointer si = factory->create_instance (encoding, m_impl->m_instance_count);
 
     if (si.null ()) {
-        SCIM_DEBUG_BACKEND(1) << "IMEngineFactory " << sf_uuid
-            << " failed to create new instance!\n";
+        std::cerr << "IMEngineFactory " << sf_uuid << " failed to create new instance!\n";
         return -1;
     }
 
-    ++ m_impl->m_instance_count;
+    ++m_impl->m_instance_count;
 
     if (m_impl->m_instance_count < 0)
         m_impl->m_instance_count = 0;
@@ -403,6 +403,8 @@ FrontEndBase::new_instance (const ConfigPointer &config, const String &sf_uuid, 
 bool
 FrontEndBase::replace_instance (int si_id, const String &sf_uuid)
 {
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
     IMEngineFactoryPointer sf = m_impl->m_backend->get_factory (sf_uuid);
 
     if (sf.null ()) return false;
@@ -424,7 +426,7 @@ FrontEndBase::replace_instance (int si_id, const String &sf_uuid)
         }
     }
 
-    SCIM_DEBUG_BACKEND(1) << "Cannot find IMEngine Instance " << si_id << " to replace.\n";
+    std::cerr << "Cannot find IMEngine Instance " << si_id << " to replace.\n";
 
     return false;
 }
@@ -432,6 +434,8 @@ FrontEndBase::replace_instance (int si_id, const String &sf_uuid)
 bool
 FrontEndBase::delete_instance (int id)
 {
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " id:" << id << "\n";
+
     String del_uuid;
     bool ret = false;
 
@@ -440,29 +444,26 @@ FrontEndBase::delete_instance (int id)
     IMEngineInstanceRepository::iterator it = m_impl->m_instance_repository.find (id);
 
     if (it != m_impl->m_instance_repository.end ()) {
-        std::cout << "delete_instance:" << it->second->get_factory_uuid() << "\n";
-        del_uuid = it->second->get_factory_uuid();
+        SCIM_DEBUG_FRONTEND(1) << "delete_instance:" << it->second->get_factory_uuid () << "\n";
+        del_uuid = it->second->get_factory_uuid ();
         m_impl->m_instance_repository.erase (it);
         ret = true;
     }
 
-    if (ret)
-    {
+    if (ret) {
         std::vector<String> use_uuids;
 
         use_uuids.clear ();
-        for (it = m_impl->m_instance_repository.begin(); it != m_impl->m_instance_repository.end(); it++)
-        {
-            std::vector<String>::iterator it2 = use_uuids.begin();
+        for (it = m_impl->m_instance_repository.begin (); it != m_impl->m_instance_repository.end (); it++) {
+            std::vector<String>::iterator it2 = use_uuids.begin ();
 
-            for (; it2 != use_uuids.end(); it2++)
-            {
-                if (*it2 == it->second->get_factory_uuid())
+            for (; it2 != use_uuids.end (); it2++) {
+                if (*it2 == it->second->get_factory_uuid ())
                     break;
             }
 
-            if (it2 == use_uuids.end())
-                use_uuids.push_back(it->second->get_factory_uuid());
+            if (it2 == use_uuids.end ())
+                use_uuids.push_back (it->second->get_factory_uuid ());
         }
         m_impl->m_backend->release_module (use_uuids, del_uuid);
     }
@@ -641,6 +642,22 @@ FrontEndBase::lookup_table_page_down (int id) const
 }
 
 void
+FrontEndBase::set_prediction_allow (int id, bool allow) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->set_prediction_allow (allow);
+}
+
+void
+FrontEndBase::set_layout (int id, unsigned int layout) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->set_layout (layout);
+}
+
+void
 FrontEndBase::reset_option (int id) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);
@@ -755,14 +772,13 @@ FrontEndBase::delete_surrounding_text  (int id, int offset, int len)
     return false;
 }
 void
-FrontEndBase::dump_instances  ()
+FrontEndBase::dump_instances (void)
 {
-    std::cout << "Instances in FrontEnd:" << std::endl;
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
     IMEngineInstanceRepository::iterator it = m_impl->m_instance_repository.begin ();
-    for (; it != m_impl->m_instance_repository.end (); it++)
-    {
+    for (; it != m_impl->m_instance_repository.end (); it++) {
         String name = get_instance_uuid (it->first);
-        std::cout << "\t" << name << "-----" << it->first << std::endl;
+        SCIM_DEBUG_FRONTEND(1) << "\t" << name << "-----" << it->first << "\n";
     }
 
     return;

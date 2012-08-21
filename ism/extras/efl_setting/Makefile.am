@@ -21,7 +21,7 @@ INCLUDES = -I$(top_builddir) \
 
 noinst_HEADERS =
 
-moduledir                       = /opt/ug/lib
+moduledir                       = /usr/ug/lib
 module_LTLIBRARIES              = libug-isfsetting-efl.la  libug-keyboard-setting-wizard-efl.la
 libug_isfsetting_efl_la_SOURCES = isf_setting_efl.cpp \
                                   scim_setup_module_efl.cpp \
@@ -48,7 +48,8 @@ libug_keyboard_setting_wizard_efl_la_SOURCES = isf_setting_wizard.cpp \
 
 libug_keyboard_setting_wizard_efl_la_CXXFLAGS = @EFL_CFLAGS@ \
                                    @VCONF_CFLAGS@ \
-                                   @DLOG_CFLAGS@
+                                   @DLOG_CFLAGS@ \
+                                   @UIGADGET_CFLAGS@
 
 libug_keyboard_setting_wizard_efl_la_LDFLAGS  = -avoid-version \
                                    -export-dynamic \

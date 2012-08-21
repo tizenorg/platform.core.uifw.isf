@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zh_CN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-19 11:22+0900\n"
+"POT-Creation-Date: 2012-04-10 15:02+0900\n"
 "PO-Revision-Date: 2011-01-01 14:57+0800\n"
 "Last-Translator: Haifeng Deng <haifeng.deng@samsung.com>\n"
 "Language-Team: Simplified Chinese <zh@li.org>\n"
@@ -15,52 +15,41 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 
 #. Push the layout along with function buttons and title
-#: ism/extras/efl_setting/isf_setting_efl.cpp:630
-#: ism/extras/efl_setting/isf_setting_efl.cpp:813
+#: ism/extras/efl_setting/isf_setting_efl.cpp:638
+#: ism/extras/efl_setting/isf_setting_efl.cpp:824
 msgid "Selection"
-msgstr "键盘选择"
+msgstr "选择"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:737
-msgid "No option"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:749
+msgid "No options"
 msgstr "无选项"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:744
-msgid "Options"
-msgstr "选项"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:756
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1023
+msgid "Keyboard settings"
+msgstr "键盘设置"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:936
-msgid "Auto capitalization"
-msgstr "首字母大写"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:943
+msgid "Auto capitalisation"
+msgstr "自动大写"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+#: ism/extras/efl_setting/isf_setting_efl.cpp:963
+msgid "Automatic full stop"
+msgstr "自动插入句号"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:979
 msgid "Software keyboard"
-msgstr "软键盘"
+msgstr "软件键盘"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:976
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1047
-msgid "Keyboard selection"
-msgstr "键盘选择"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1002
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1066
+msgid "Select keyboard"
+msgstr "选择键盘"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:998
-msgid "Keyboard option"
-msgstr "键盘选项"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1018
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1043
 msgid "Hardware keyboard"
-msgstr "硬键盘"
+msgstr "硬件键盘"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1069
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1088
 msgid "Keyboard"
 msgstr "键盘"
-
-#~ msgid "Set"
-#~ msgstr "设定"
-
-#~ msgid "General"
-#~ msgstr "通用"
-
-#~ msgid "option"
-#~ msgstr "选项"
-
-#~ msgid "Back"
-#~ msgstr "返回"

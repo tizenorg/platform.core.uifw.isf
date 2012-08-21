@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Jihoon Kim <jihoon48.kim@samsung.com>, Haifeng Deng <haifeng.deng@samsung.com>
  *
@@ -114,7 +114,7 @@ static Eina_Bool ecore_ise_input_handler (void *data, Ecore_Fd_Handler *fd_handl
         trans.clear ();
         if (!trans.read_from_socket (fd, timeout)) {
             IMFCONTROLERR ("%s:: read_from_socket() may be timeout \n", __FUNCTION__);
-            _imcontrol_client.close_connection ();
+            _isf_imf_control_finalize ();
             return ECORE_CALLBACK_CANCEL;
         }
 
@@ -126,7 +126,8 @@ static Eina_Bool ecore_ise_input_handler (void *data, Ecore_Fd_Handler *fd_handl
         return ECORE_CALLBACK_RENEW;
     }
     IMFCONTROLERR ("ecore_ise_input_handler is failed!!!\n");
-    return ECORE_CALLBACK_RENEW;
+    _isf_imf_control_finalize ();
+    return ECORE_CALLBACK_CANCEL;
 }
 
 static void connect_panel (void)
@@ -137,6 +138,18 @@ static void connect_panel (void)
         if (fd > 0) {
             _read_handler = ecore_main_fd_handler_add (fd, ECORE_FD_READ, ecore_ise_input_handler, NULL, NULL, NULL);
         }
+    }
+}
+
+EAPI void _isf_imf_control_finalize (void)
+{
+    IMFCONTROLDBG ("%s ...\n", __FUNCTION__);
+
+    _imcontrol_client.close_connection ();
+
+    if (_read_handler) {
+        ecore_main_fd_handler_del (_read_handler);
+        _read_handler = 0;
     }
 }
 

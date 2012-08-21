@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ISF 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-19 11:22+0900\n"
+"POT-Creation-Date: 2012-04-10 15:02+0900\n"
 "PO-Revision-Date: 2011-01-01 22:41+0800\n"
 "Last-Translator: Haifeng Deng <haifeng.deng@samsung.com>\n"
 "Language-Team: scim@freedesktop.org\n"
@@ -14,52 +14,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Push the layout along with function buttons and title
-#: ism/extras/efl_setting/isf_setting_efl.cpp:630
-#: ism/extras/efl_setting/isf_setting_efl.cpp:813
+#: ism/extras/efl_setting/isf_setting_efl.cpp:638
+#: ism/extras/efl_setting/isf_setting_efl.cpp:824
 msgid "Selection"
-msgstr "鍵盤選擇"
+msgstr "選擇"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:737
-msgid "No option"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:749
+msgid "No options"
 msgstr "無選項"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:744
-msgid "Options"
-msgstr "選項"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:756
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1023
+msgid "Keyboard settings"
+msgstr "鍵盤設定"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:936
-msgid "Auto capitalization"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:943
+msgid "Auto capitalisation"
 msgstr "首字母大寫"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:953
+#: ism/extras/efl_setting/isf_setting_efl.cpp:963
+msgid "Automatic full stop"
+msgstr "自動句號"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:979
 msgid "Software keyboard"
-msgstr "軟鍵盤"
+msgstr "螢幕小鍵盤"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:976
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1047
-msgid "Keyboard selection"
-msgstr "鍵盤選擇"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1002
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1066
+msgid "Select keyboard"
+msgstr "選擇鍵盤"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:998
-msgid "Keyboard option"
-msgstr "鍵盤選項"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1018
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1043
 msgid "Hardware keyboard"
-msgstr "硬鍵盤"
+msgstr "硬體鍵盤"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1069
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1088
 msgid "Keyboard"
 msgstr "鍵盤"
-
-#~ msgid "Set"
-#~ msgstr "設定"
-
-#~ msgid "General"
-#~ msgstr "通用"
-
-#~ msgid "option"
-#~ msgstr "選項"
-
-#~ msgid "Back"
-#~ msgstr "返回"

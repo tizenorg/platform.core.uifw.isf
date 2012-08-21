@@ -147,6 +147,7 @@ public:
     HelperAgentSignalInt                signal_update_associate_table_page_size;
     HelperAgentSignalVoid               signal_reset_ise_context;
     HelperAgentSignalUintVoid           signal_turn_on_log;
+    HelperAgentSignalInt                signal_update_displayed_candidate_number;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1) { }
@@ -729,6 +730,13 @@ HelperAgent::filter_event ()
                     m_impl->signal_turn_on_log (this, isOn);
                 break;
             }
+            case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
+            {
+                uint32 size;
+                if (m_impl->recv.get_data (size))
+                    m_impl->signal_update_displayed_candidate_number (this, ic, ic_uuid, size);
+                break;
+            }
             default:
                 break;
         }
@@ -1065,6 +1073,24 @@ HelperAgent::update_preedit_string (int                  ic,
 }
 
 /**
+ * @brief Update the preedit caret position in the preedit string.
+ *
+ * @param caret - the new position of the preedit caret.
+ */
+void
+HelperAgent::update_preedit_caret (int caret) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET);
+        m_impl->send.put_data ((uint32)caret);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
  * @brief Update a new string for aux.
  *
  * @param str The string to be updated.
@@ -1143,7 +1169,7 @@ HelperAgent::update_input_context (uint32 type, uint32 value) const
 }
 
 /**
- * @ brief Request to get surrounding text.
+ * @brief Request to get surrounding text.
  *
  * @param uuid The helper ISE UUID.
  * @param maxlen_before The max length of before.
@@ -1165,7 +1191,7 @@ HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int ma
 }
 
 /**
- * @ brief Request to delete surrounding text.
+ * @brief Request to delete surrounding text.
  *
  * @param offset The offset for cursor position.
  * @param len The length for delete text.
@@ -1287,6 +1313,60 @@ HelperAgent::get_keyboard_ise (const String &uuid) const
         m_impl->send.put_data (m_impl->magic_active);
         m_impl->send.put_command (ISM_TRANS_CMD_GET_KEYBOARD_ISE);
         m_impl->send.put_data (uuid);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @brief Update ISE window geometry.
+ *
+ * @param x      The x position in screen.
+ * @param y      The y position in screen.
+ * @param width  The ISE window width.
+ * @param height The ISE window height.
+ */
+void
+HelperAgent::update_geometry (int x, int y, int width, int height) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY);
+        m_impl->send.put_data (x);
+        m_impl->send.put_data (y);
+        m_impl->send.put_data (width);
+        m_impl->send.put_data (height);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @brief Request to expand candidate window.
+ */
+void
+HelperAgent::expand_candidate (void) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (ISM_TRANS_CMD_EXPAND_CANDIDATE);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @brief Request to contract candidate window.
+ */
+void
+HelperAgent::contract_candidate (void) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (ISM_TRANS_CMD_CONTRACT_CANDIDATE);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
 }
@@ -1921,6 +2001,20 @@ Connection
 HelperAgent::signal_connect_turn_on_log (HelperAgentSlotUintVoid *slot)
 {
     return m_impl->signal_turn_on_log.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper update displayed candidate number signal.
+ *
+ * This signal is used to inform helper ISE displayed candidate number.
+ *
+ * The prototype of the slot is:
+ * void update_displayed_candidate_number (const HelperAgent *, int ic, const String &uuid, int number);
+ */
+Connection
+HelperAgent::signal_connect_update_displayed_candidate_number (HelperAgentSlotInt *slot)
+{
+    return m_impl->signal_update_displayed_candidate_number.connect (slot);
 }
 
 } /* namespace scim */

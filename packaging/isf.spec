@@ -1,9 +1,10 @@
-%define _optdir	/opt
-%define _ugdir	%{_optdir}/ug
+#sbs-git:framework/uifw/isf isf 2.3.5617 07f2b65224e6cef5cd6799065bb01fa656bc115e
+%define _usrdir	/usr
+%define _ugdir	%{_usrdir}/ug
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.5205
+Version:    2.3.5617
 Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
@@ -16,7 +17,7 @@ BuildRequires:  pkgconfig(libprivilege-control)
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(vconf)
-BuildRequires:  pkgconfig(ui-gadget)
+BuildRequires:  pkgconfig(ui-gadget-1)
 BuildRequires:  pkgconfig(heynoti)
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
@@ -56,8 +57,8 @@ rm -rf %{buildroot}
 %post 
 /sbin/ldconfig
 
-/usr/bin/vconftool set -t string db/isf/input_lang "Automatic" -g 6514
-/usr/bin/vconftool set -t string db/setting/autocapital_allow 0 -g 6514
+/usr/bin/vconftool set -t string file/private/isf/autocapital_allow 0 -g 6514
+/usr/bin/vconftool set -t string file/private/isf/autoperiod_allow 0 -g 6514
 
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc3.d/S42isf-panel-efl
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
@@ -73,9 +74,7 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config
-%{_datadir}/scim/isfsetting.edj
-%{_datadir}/scim/isf_candidate_theme2.edj
-%{_datadir}/scim/isf_candidate_theme1.edj
+%{_datadir}/scim/*.edj
 %{_datadir}/scim/icons/*
 %{_datadir}/locale/*
 %{_bindir}/isf-demo-efl
@@ -83,14 +82,14 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %{_bindir}/isf-log
 %{_bindir}/isf-panel-efl
 %{_bindir}/isf-query-engines
-%{_libdir}/ecore/immodules/libisf-imf-module.so
+%{_libdir}/*/immodules/*.so
 %{_libdir}/scim-1.0/1.4.0/IMEngine/socket.so
 %{_libdir}/scim-1.0/1.4.0/Config/simple.so
 %{_libdir}/scim-1.0/1.4.0/Config/socket.so
-%{_libdir}/scim-1.0/1.4.0/FrontEnd/socket.so
+%{_libdir}/scim-1.0/1.4.0/FrontEnd/*.so
 %{_libdir}/scim-1.0/scim-launcher
 %{_libdir}/scim-1.0/scim-helper-launcher
-%{_libdir}/libscim-1.0.so.*
+%{_libdir}/libscim-*.so*
 %{_ugdir}/res/locale/*
 %{_ugdir}/lib/libug-keyboard-setting-wizard-efl.so
 %{_ugdir}/lib/libug-isfsetting-efl.so
@@ -98,6 +97,6 @@ ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/scim-1.0/*
-%{_libdir}/libscim-1.0.so
+%{_libdir}/libscim-*.so
 %{_libdir}/pkgconfig/isf.pc
 %{_libdir}/pkgconfig/scim.pc

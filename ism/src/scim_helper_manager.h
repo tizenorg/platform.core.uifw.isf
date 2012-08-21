@@ -74,6 +74,33 @@ public:
     bool get_helper_info (unsigned int idx, HelperInfo &info) const;
 
     /**
+     * @brief Get the connection id.
+     *
+     * @return the connection id
+     */
+    int  get_connection_number  (void) const;
+
+    /**
+     * @brief Check if there are any events available to be processed.
+     *
+     * If it returns true then HelperManager object should call
+     * HelperManager::filter_event () to process them.
+     *
+     * @return true if there are any events available.
+     */
+    bool has_pending_event      (void) const;
+
+    /**
+     * @brief Process the pending events.
+     *
+     * This function will emit the corresponding signals according
+     * to the events.
+     *
+     * @return false if the connection is broken, otherwise return true.
+     */
+    bool filter_event           (void);
+
+    /**
      * @brief Run a specific helper.
      *
      * The helper will run in a newly forked process, so this function will return as soon

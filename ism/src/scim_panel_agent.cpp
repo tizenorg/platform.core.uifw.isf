@@ -95,6 +95,9 @@ typedef Signal2<void, int &, int &>
 typedef Signal3<void, int, int, int>
         PanelAgentSignalIntIntInt;
 
+typedef Signal4<void, int, int, int, int>
+        PanelAgentSignalIntIntIntInt;
+
 typedef Signal2<void, int, const Property &>
         PanelAgentSignalIntProperty;
 
@@ -271,10 +274,12 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalIntIntInt           m_signal_update_spot_location;
     PanelAgentSignalFactoryInfo         m_signal_update_factory_info;
     PanelAgentSignalVoid                m_signal_start_default_ise;
+    PanelAgentSignalIntInt              m_signal_update_input_context;
     PanelAgentSignalIntInt              m_signal_set_candidate_ui;
     PanelAgentSignalIntInt2             m_signal_get_candidate_ui;
     PanelAgentSignalIntInt              m_signal_set_candidate_position;
     PanelAgentSignalRect                m_signal_get_candidate_geometry;
+    PanelAgentSignalRect                m_signal_get_input_panel_geometry;
     PanelAgentSignalIntString           m_signal_set_keyboard_ise;
     PanelAgentSignalString2             m_signal_get_keyboard_ise;
     PanelAgentSignalString              m_signal_show_help;
@@ -302,9 +307,11 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalString              m_signal_set_active_ise_by_name;
     PanelAgentSignalVoid                m_signal_focus_in;
     PanelAgentSignalVoid                m_signal_focus_out;
+    PanelAgentSignalVoid                m_signal_expand_candidate;
+    PanelAgentSignalVoid                m_signal_contract_candidate;
     PanelAgentSignalBoolStringVector    m_signal_get_ise_list;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
-    PanelAgentSignalInt                 m_signal_launch_helper_ise_list_selection;
+    PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
     PanelAgentSignalStringVector        m_signal_get_language_list;
     PanelAgentSignalStringVector        m_signal_get_all_language;
     PanelAgentSignalStrStringVector     m_signal_get_ise_language;
@@ -384,6 +391,12 @@ public:
 
         if (client.connect (SocketAddress (m_socket_address))) {
             client.close ();
+        }
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            String helper_uuid = get_current_helper_uuid ();
+            hide_helper (helper_uuid);
+            stop_helper (helper_uuid, -2, 0);
         }
     }
 
@@ -510,7 +523,7 @@ public:
         }
     }
 
-    void update_candidate_panel_event (uint32 nType, uint32 nValue)
+    void update_panel_event (int cmd, uint32 nType, uint32 nValue)
     {
         SCIM_DEBUG_MAIN(1) << __func__ << " (" << nType << ", " << nValue << ")\n";
         ClientRepository::iterator iter = m_client_repository.begin ();
@@ -525,7 +538,7 @@ public:
 
                 trans.clear ();
                 trans.put_command (SCIM_TRANS_CMD_REQUEST);
-                trans.put_command (ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL);
+                trans.put_command (cmd);
                 trans.put_data (nType);
                 trans.put_data (nValue);
 
@@ -996,6 +1009,22 @@ public:
         unlock ();
 
         helper_update_associate_table_page_size (size);
+
+        return client >= 0;
+    }
+
+    bool update_displayed_candidate_number (uint32 size)
+    {
+        SCIM_DEBUG_MAIN(1) << __func__ << " (" << size << ")\n";
+
+        int client;
+        uint32 context;
+
+        lock ();
+        get_focused_context (client, context);
+        unlock ();
+
+        helper_update_displayed_candidate_number (size);
 
         return client >= 0;
     }
@@ -1761,39 +1790,23 @@ public:
         return false;
     }
 
-    void get_ise_geometry (int client_id)
+    void get_input_panel_geometry (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::get_ise_size ()\n";
-        struct rectinfo info;
-        bool ret = false;
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
 
-        TOOLBAR_MODE_T mode;
-
-        mode = m_current_toolbar_mode;
-
-        if (TOOLBAR_HELPER_MODE == mode)
-            ret = get_helper_geometry (m_current_helper_uuid, info);
+        struct rectinfo info = {0, 0, 0, 0};
+        m_signal_get_input_panel_geometry (info);
 
         Transaction trans;
         Socket client_socket (client_id);
 
         trans.clear ();
         trans.put_command (SCIM_TRANS_CMD_REPLY);
-
-        if (ret)
-        {
-            trans.put_command (SCIM_TRANS_CMD_OK);
-            trans.put_data (info.pos_x);
-            trans.put_data (info.pos_y);
-            trans.put_data (info.width);
-            trans.put_data (info.height);
-        }
-        else
-        {
-            std::cerr << "get_ise_size failed\n";
-            trans.put_command (SCIM_TRANS_CMD_FAIL);
-        }
-
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.put_data (info.pos_x);
+        trans.put_data (info.pos_y);
+        trans.put_data (info.width);
+        trans.put_data (info.height);
         trans.write_to_socket (client_socket);
     }
 
@@ -1801,11 +1814,7 @@ public:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
 
-        struct rectinfo info;
-        info.pos_x  = 0;
-        info.pos_y  = 0;
-        info.width  = 0;
-        info.height = 0;
+        struct rectinfo info = {0, 0, 0, 0};
         m_signal_get_candidate_geometry (info);
 
         Transaction trans;
@@ -2507,6 +2516,21 @@ public:
         return (int)(strlist.size ());
     }
 
+    int get_helper_manager_id (void)
+    {
+        return m_helper_manager.get_connection_number ();
+    }
+
+    bool has_helper_manager_pending_event (void)
+    {
+        return m_helper_manager.has_pending_event ();
+    }
+
+    bool filter_helper_manager_event (void)
+    {
+        return m_helper_manager.filter_event ();
+    }
+
     void reset_helper_context (const String &uuid)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
@@ -2706,9 +2730,14 @@ public:
         return m_signal_set_candidate_position.connect (slot);
     }
 
-    Connection signal_connect_get_candidate_geometry         (PanelAgentSlotRect                *slot)
+    Connection signal_connect_get_candidate_geometry     (PanelAgentSlotRect                *slot)
     {
         return m_signal_get_candidate_geometry.connect (slot);
+    }
+
+    Connection signal_connect_get_input_panel_geometry   (PanelAgentSlotRect                *slot)
+    {
+        return m_signal_get_input_panel_geometry.connect (slot);
     }
 
     Connection signal_connect_set_keyboard_ise           (PanelAgentSlotIntString           *slot)
@@ -2846,6 +2875,16 @@ public:
         return m_signal_focus_out.connect (slot);
     }
 
+    Connection signal_connect_expand_candidate           (PanelAgentSlotVoid                   *slot)
+    {
+        return m_signal_expand_candidate.connect (slot);
+    }
+
+    Connection signal_connect_contract_candidate         (PanelAgentSlotVoid                   *slot)
+    {
+        return m_signal_contract_candidate.connect (slot);
+    }
+
     Connection signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector       *slot)
     {
         return m_signal_get_ise_list.connect (slot);
@@ -2855,9 +2894,10 @@ public:
     {
         return m_signal_get_keyboard_ise_list.connect (slot);
     }
-    Connection signal_connect_launch_helper_ise_list_selection (PanelAgentSlotInt              *slot)
+
+    Connection signal_connect_update_ise_geometry        (PanelAgentSlotIntIntIntInt           *slot)
     {
-        return m_signal_launch_helper_ise_list_selection.connect (slot);
+        return m_signal_update_ise_geometry.connect (slot);
     }
 
     Connection signal_connect_get_language_list          (PanelAgentSlotStringVector           *slot)
@@ -2928,6 +2968,11 @@ public:
     Connection signal_connect_unlock                     (PanelAgentSlotVoid                   *slot)
     {
         return m_signal_unlock.connect (slot);
+    }
+
+    Connection signal_connect_update_input_context       (PanelAgentSlotIntInt                 *slot)
+    {
+        return m_signal_update_input_context.connect (slot);
     }
 
 private:
@@ -3292,6 +3337,8 @@ private:
                     socket_hide_associate_table ();
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING) {
                     socket_helper_update_preedit_string (client_id);
+                } else if (cmd == SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET) {
+                    socket_helper_update_preedit_caret (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_AUX_STRING) {
                     socket_update_aux_string ();
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE) {
@@ -3338,8 +3385,12 @@ private:
                     socket_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID);
                 } else if (cmd == ISM_TRANS_CMD_GET_KEYBOARD_ISE) {
                     socket_get_keyboard_ise ();
-                } else if (cmd == ISM_TRANS_CMD_LAUNCH_HELPER_ISE_LIST_SELECTION) {
-                    socket_helper_launch_helper_ise_list_selection ();
+                } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY) {
+                    socket_helper_update_ise_geometry (client_id);
+                } else if (cmd == ISM_TRANS_CMD_EXPAND_CANDIDATE) {
+                    socket_helper_expand_candidate (client_id);
+                } else if (cmd == ISM_TRANS_CMD_CONTRACT_CANDIDATE) {
+                    socket_helper_contract_candidate (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_GET_SURROUNDING_TEXT) {
                     socket_helper_get_surrounding_text (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT) {
@@ -3363,7 +3414,7 @@ private:
                 else if (cmd == ISM_TRANS_CMD_HIDE_ISE_PANEL)
                     hide_ise_panel (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY)
-                    get_ise_geometry (client_id);
+                    get_input_panel_geometry (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY)
                     get_candidate_window_geometry (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE)
@@ -3448,13 +3499,10 @@ private:
             lock ();
             m_client_repository [client.get_id ()] = info;
 
-            if (info.type == IMCONTROL_ACT_CLIENT)
-            {
+            if (info.type == IMCONTROL_ACT_CLIENT) {
                 m_pending_active_imcontrol_id = client.get_id ();
-            }
-            else if (info.type == IMCONTROL_CLIENT)
-            {
-                m_imcontrol_map [m_pending_active_imcontrol_id] = client.get_id();
+            } else if (info.type == IMCONTROL_CLIENT) {
+                m_imcontrol_map [m_pending_active_imcontrol_id] = client.get_id ();
                 m_pending_active_imcontrol_id = -1;
             }
 
@@ -3597,8 +3645,10 @@ private:
                 m_helper_client_index.erase (uuid);
                 m_helper_info_repository.erase (hiit);
 
-                if (restart && !m_ise_exiting)
+                if (restart && !m_ise_exiting) {
                     m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
+                    std::cerr << "Auto restart soft ISE:" << uuid << "\n";
+                }
             }
 
             m_ise_exiting = false;
@@ -3784,14 +3834,14 @@ private:
 
     void socket_turn_on_log                      (void)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_turn_on_log ()\n";
-
         uint32 isOn;
         if (m_recv_trans.get_data (isOn)) {
             if (isOn) {
                 DebugOutput::enable_debug (SCIM_DEBUG_AllMask);
                 DebugOutput::set_verbose_level (7);
+                SCIM_DEBUG_MAIN(4) << __func__ << " on\n";
             } else {
+                SCIM_DEBUG_MAIN(4) << __func__ << " off\n";
                 DebugOutput::disable_debug (SCIM_DEBUG_AllMask);
                 DebugOutput::set_verbose_level (0);
             }
@@ -3801,8 +3851,10 @@ private:
 
             get_focused_context (focused_client, focused_context);
 
-            if (focused_client == -1 || focused_context == 0)
+            if (focused_client == -1) {
+                std::cerr << __func__ << " get_focused_context is failed!!!\n";
                 return;
+            }
 
             if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
             {
@@ -4112,19 +4164,13 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << " \n";
 
-        struct rectinfo info;
-        info.pos_x  = 0;
-        info.pos_y  = 0;
-        info.width  = 0;
-        info.height = 0;
-        m_signal_get_candidate_geometry (info);
-
         String uuid;
-        if (m_recv_trans.get_data (uuid))
-        {
+        if (m_recv_trans.get_data (uuid)) {
             HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
-            if (it != m_helper_client_index.end ())
-            {
+            if (it != m_helper_client_index.end ()) {
+                struct rectinfo info = {0, 0, 0, 0};
+                m_signal_get_candidate_geometry (info);
+
                 int    client;
                 uint32 context;
                 get_focused_context (client, context);
@@ -4153,11 +4199,41 @@ private:
             m_signal_set_keyboard_ise (type, ise);
     }
 
-    void socket_helper_launch_helper_ise_list_selection (void)
+    void socket_helper_update_ise_geometry (int client)
     {
-        uint32 withUI;
-        if (m_recv_trans.get_data (withUI))
-            m_signal_launch_helper_ise_list_selection (withUI);
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        uint32 x, y, width, height;
+        if (m_recv_trans.get_data (x) && m_recv_trans.get_data (y) &&
+            m_recv_trans.get_data (width) && m_recv_trans.get_data (height)) {
+            HelperInfoRepository::iterator it = m_helper_active_info_repository.find (client);
+            if (it != m_helper_active_info_repository.end ()) {
+                if (it->second.uuid == m_current_helper_uuid)
+                    m_signal_update_ise_geometry (x, y, width, height);
+            }
+        }
+    }
+
+    void socket_helper_expand_candidate (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        HelperInfoRepository::iterator it = m_helper_active_info_repository.find (client);
+        if (it != m_helper_active_info_repository.end ()) {
+            if (it->second.uuid == m_current_helper_uuid)
+                m_signal_expand_candidate ();
+        }
+    }
+
+    void socket_helper_contract_candidate (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        HelperInfoRepository::iterator it = m_helper_active_info_repository.find (client);
+        if (it != m_helper_active_info_repository.end ()) {
+            if (it->second.uuid == m_current_helper_uuid)
+                m_signal_contract_candidate ();
+        }
     }
 
     void socket_get_keyboard_ise                (void)
@@ -4696,6 +4772,32 @@ private:
         }
     }
 
+    void socket_helper_update_preedit_caret (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << " (" << client << ")\n";
+
+        uint32 caret;
+
+        if (m_recv_trans.get_data (caret)) {
+            int     focused_client;
+            uint32  focused_context;
+            String  focused_uuid;
+            focused_uuid = get_focused_context (focused_client, focused_context);
+
+            ClientInfo client_info = socket_get_client_info (focused_client);
+            if (client_info.type == FRONTEND_CLIENT) {
+                Socket socket_client (focused_client);
+                lock ();
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (focused_context);
+                m_send_trans.put_command (SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET);
+                m_send_trans.put_data (caret);
+                m_send_trans.write_to_socket (socket_client);
+                unlock ();
+            }
+        }
+    }
 
     void socket_helper_register_helper          (int client)
     {
@@ -4871,6 +4973,7 @@ private:
 
         if (m_recv_trans.get_data (type) && m_recv_trans.get_data (value))
         {
+            m_signal_update_input_context ((int)type, (int)value);
             ClientRepository::iterator iter = m_client_repository.begin ();
 
             for (; iter != m_client_repository.end (); iter++)
@@ -5246,6 +5349,37 @@ private:
         return false;
     }
 
+    bool helper_update_displayed_candidate_number (uint32 size)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ()) {
+                int    client;
+                uint32 context;
+                Socket client_socket (it->second.id);
+                uint32 ctx;
+
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (ctx);
+                m_send_trans.put_data (m_current_helper_uuid);
+                m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE);
+                m_send_trans.put_data (size);
+                m_send_trans.write_to_socket (client_socket);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     void helper_all_update_spot_location (int x, int y)
     {
         SCIM_DEBUG_MAIN (5) << "PanelAgent::helper_all_update_spot_location (" << x << "," << y << ")\n";
@@ -5490,7 +5624,13 @@ PanelAgent::update_ise_style (uint32 &style)
 void
 PanelAgent::update_candidate_panel_event (uint32 nType, uint32 nValue)
 {
-    m_impl->update_candidate_panel_event (nType, nValue);
+    m_impl->update_panel_event (ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL, nType, nValue);
+}
+
+void
+PanelAgent::update_input_panel_event (uint32 nType, uint32 nValue)
+{
+    m_impl->update_panel_event (ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT, nType, nValue);
 }
 
 void
@@ -5590,6 +5730,12 @@ PanelAgent::update_associate_table_page_size (uint32         size)
 }
 
 bool
+PanelAgent::update_displayed_candidate_number (uint32        size)
+{
+    return m_impl->update_displayed_candidate_number (size);
+}
+
+bool
 PanelAgent::trigger_property               (const String  &property)
 {
     return m_impl->trigger_property (property);
@@ -5636,6 +5782,24 @@ int
 PanelAgent::get_active_ise_list            (std::vector<String> &strlist)
 {
     return m_impl->get_active_ise_list (strlist);
+}
+
+int
+PanelAgent::get_helper_manager_id          (void)
+{
+    return m_impl->get_helper_manager_id ();
+}
+
+bool
+PanelAgent::has_helper_manager_pending_event (void)
+{
+    return m_impl->has_helper_manager_pending_event ();
+}
+
+bool
+PanelAgent::filter_helper_manager_event    (void)
+{
+    return m_impl->filter_helper_manager_event ();
 }
 
 void
@@ -5768,6 +5932,12 @@ Connection
 PanelAgent::signal_connect_get_candidate_geometry     (PanelAgentSlotRect                *slot)
 {
     return m_impl->signal_connect_get_candidate_geometry (slot);
+}
+
+Connection
+PanelAgent::signal_connect_get_input_panel_geometry   (PanelAgentSlotRect                *slot)
+{
+    return m_impl->signal_connect_get_input_panel_geometry (slot);
 }
 
 Connection
@@ -5933,6 +6103,18 @@ PanelAgent::signal_connect_focus_out                  (PanelAgentSlotVoid       
 }
 
 Connection
+PanelAgent::signal_connect_expand_candidate           (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_expand_candidate (slot);
+}
+
+Connection
+PanelAgent::signal_connect_contract_candidate         (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_contract_candidate (slot);
+}
+
+Connection
 PanelAgent::signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector    *slot)
 {
     return m_impl->signal_connect_get_ise_list (slot);
@@ -5945,9 +6127,9 @@ PanelAgent::signal_connect_get_keyboard_ise_list      (PanelAgentSlotBoolStringV
 }
 
 Connection
-PanelAgent::signal_connect_launch_helper_ise_list_selection(PanelAgentSlotInt * slot)
+PanelAgent::signal_connect_update_ise_geometry        (PanelAgentSlotIntIntIntInt        *slot)
 {
-    return m_impl->signal_connect_launch_helper_ise_list_selection (slot);
+    return m_impl->signal_connect_update_ise_geometry (slot);
 }
 
 Connection
@@ -6032,6 +6214,12 @@ Connection
 PanelAgent::signal_connect_unlock                     (PanelAgentSlotVoid                *slot)
 {
     return m_impl->signal_connect_unlock (slot);
+}
+
+Connection
+PanelAgent::signal_connect_update_input_context       (PanelAgentSlotIntInt              *slot)
+{
+    return m_impl->signal_connect_update_input_context (slot);
 }
 
 } /* namespace scim */

@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Haifeng Deng <haifeng.deng@samsung.com>, Jihoon Kim <jihoon48.kim@samsung.com>
  *
@@ -65,24 +65,19 @@ using namespace scim;
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
 #define EFL_CANDIDATE_THEME1                            (SCIM_DATADIR "/isf_candidate_theme1.edj")
-#define EFL_CANDIDATE_THEME2                            (SCIM_DATADIR "/isf_candidate_theme2.edj")
 
-#define ISF_CONFIG_PANEL_LOOKUP_TABLE_VERTICAL          "/Panel/Gtk/LookupTableVertical"
-#define ISF_CONFIG_PANEL_LOOKUP_TABLE_STYLE             "/Panel/Gtk/LookupTableStyle"
-#define ISF_CONFIG_PANEL_LOOKUP_TABLE_MODE              "/Panel/Gtk/LookupTableMode"
+#define ISF_CONFIG_PANEL_FIXED_FOR_HARDWARE_KBD         "/Panel/Hardware/Fixed"
 
 #define ISF_CANDIDATE_TABLE                             0
-
-#define ISF_PORT_BUTTON_NUMBER                          9
-#define ISF_LAND_BUTTON_NUMBER                          18
 
 #define ISF_EFL_AUX                                     1
 #define ISF_EFL_CANDIDATE_0                             2
 #define ISF_EFL_CANDIDATE_ITEMS                         3
 
-#define ISE_DEFAULT_HEIGHT_PORTRAIT                     360
-#define ISE_DEFAULT_HEIGHT_LANDSCAPE                    288
+#define ISE_DEFAULT_HEIGHT_PORTRAIT                     444
+#define ISE_DEFAULT_HEIGHT_LANDSCAPE                    316
 
+#define ISF_READY_FILE                                  "/tmp/hibernation/isf_ready"
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
@@ -95,28 +90,30 @@ extern std::vector<String>          _langs;
 extern std::vector<String>          _icons;
 extern std::vector<uint32>          _options;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
-extern std::vector<String>          _disabled_langs;
 
 extern std::vector<String>          _load_ise_list;
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal data types.
 /////////////////////////////////////////////////////////////////////////////
+typedef enum _VIRTUAL_KEYBOARD_STATE {
+    KEYBOARD_STATE_UNKNOWN = 0,
+    KEYBOARD_STATE_OFF,
+    KEYBOARD_STATE_ON,
+} VIRTUAL_KEYBOARD_STATE;
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal functions.
 /////////////////////////////////////////////////////////////////////////////
-static Evas_Object *efl_create_window                    (const char *strWinName, const char *strEffect);
-static void       efl_set_transient_for_app_window       (Evas_Object *win_obj);
-static int        efl_get_angle_for_root_window          (Evas_Object *win_obj);
+static Evas_Object *efl_create_window                  (const char *strWinName, const char *strEffect);
+static void       efl_set_transient_for_app_window     (Evas_Object *win_obj);
+static int        efl_get_angle_for_root_window        (Evas_Object *win_obj);
 
-static void       ui_candidate_hide                      (bool bForce);
-static void       ui_destroy_candidate_window            (void);
-static void       ui_settle_candidate_window             (void);
-static void       ui_create_more_window                  (void);
-static void       ui_more_window_rotate                  (int angle);
-static void       ui_more_window_update                  (void);
+static int        ui_candidate_get_valid_height        (void);
+static void       ui_candidate_hide                    (bool bForce);
+static void       ui_destroy_candidate_window          (void);
+static void       ui_settle_candidate_window           (void);
 
 /* PanelAgent related functions */
 static bool       initialize_panel_agent               (const String &config, const String &display, bool resident);
@@ -124,6 +121,10 @@ static bool       initialize_panel_agent               (const String &config, co
 static void       slot_reload_config                   (void);
 static void       slot_focus_in                        (void);
 static void       slot_focus_out                       (void);
+static void       slot_expand_candidate                (void);
+static void       slot_contract_candidate              (void);
+static void       slot_update_input_context            (int type, int value);
+static void       slot_update_ise_geometry             (int x, int y, int width, int height);
 static void       slot_update_spot_location            (int x, int y, int top_y);
 static void       slot_update_factory_info             (const PanelFactoryInfo &info);
 static void       slot_show_aux_string                 (void);
@@ -138,13 +139,10 @@ static bool       slot_get_keyboard_ise_list           (std::vector<String> &nam
 static void       slot_get_language_list               (std::vector<String> &name);
 static void       slot_get_all_language                (std::vector<String> &lang);
 static void       slot_get_ise_language                (char *, std::vector<String> &name);
-static void       slot_set_isf_language                (const String &language);
 static bool       slot_get_ise_info_by_uuid            (const String &uuid, ISE_INFO &info);
-static void       slot_set_candidate_ui                (int style, int mode);
-static void       slot_get_candidate_ui                (int &style, int &mode);
-static void       slot_set_candidate_position          (int left, int top);
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
-static void       slot_set_keyboard_ise                (int type, const String &ise);
+static void       slot_get_input_panel_geometry        (struct rectinfo &info);
+static void       slot_set_keyboard_ise                (int type, const String &uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_start_default_ise               (void);
 static void       slot_accept_connection               (int fd);
@@ -164,33 +162,26 @@ static Evas_Object       *_candidate_area_2                 = 0;
 static Evas_Object       *_candidate_bg                     = 0;
 static Evas_Object       *_candidate_0_scroll               = 0;
 static Evas_Object       *_candidate_scroll                 = 0;
+static Evas_Object       *_scroller_bg                      = 0;
 static Evas_Object       *_candidate_0_table                = 0;
 static Evas_Object       *_candidate_table                  = 0;
 static Evas_Object       *_candidate_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_candidate_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_seperate_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_seperate_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_line_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_window_show            = false;
 
-static Evas_Object       *_more_window                      = 0;
-static Evas_Object       *_more_port_table                  = 0;
-static Evas_Object       *_more_land_table                  = 0;
-static Evas_Object       *_page_button_port                 = 0;
-static Evas_Object       *_page_button_land                 = 0;
-static Evas_Object       *_port_button [ISF_PORT_BUTTON_NUMBER];
-static Evas_Object       *_land_button [ISF_LAND_BUTTON_NUMBER];
-static bool               _more_window_enable               = false;
-static int                _more_port_height                 = 329;
-static int                _more_land_height                 = 270;
-static int                _pages                            = 0;
-static int                _page_no                          = 0;
-static std::vector<String> _more_list;
-
+static int                _candidate_x                      = 0;
+static int                _candidate_y                      = 0;
 static int                _candidate_width                  = 0;
 static int                _candidate_height                 = 0;
+static int                _candidate_valid_height           = 0;
 
-static int                _candidate_port_width             = 464;
-static int                _candidate_port_height_min        = 86;
+static int                _candidate_port_width             = 480;
+static int                _candidate_port_height_min        = 76;
 static int                _candidate_port_height_min_2      = 150;
 static int                _candidate_port_height_max        = 286;
 static int                _candidate_port_height_max_2      = 350;
@@ -203,12 +194,9 @@ static int                _candidate_area_2_pos [2]         = {11, 13};
 static int                _more_btn_pos [4]                 = {369, 11, 689, 11};
 static int                _close_btn_pos [4]                = {362, 211, 682, 75};
 
-static int                _candidate_port_number            = 3;
-static int                _candidate_land_number            = 5;
-static int                _h_padding                        = 4;
-static int                _v_padding                        = 11;
-static int                _item_min_width                   = 66;
-static int                _item_min_height                  = 55;
+static int                _v_padding                        = 2;
+static int                _item_min_width                   = 99;
+static int                _item_min_height                  = 82;
 
 static int                _candidate_scroll_0_width_min     = 350;
 static int                _candidate_scroll_0_width_max     = 670;
@@ -229,33 +217,33 @@ static std::vector<Evas_Object *> _aux_items;
 
 static Evas_Object       *_tmp_aux_text                     = 0;
 static Evas_Object       *_tmp_candidate_text               = 0;
-static std::vector<Evas_Object *> _text_fonts;
 
 static int                _spot_location_x                  = -1;
 static int                _spot_location_y                  = -1;
 static int                _spot_location_top_y              = -1;
-static int                _candidate_left                   = -1;
-static int                _candidate_top                    = -1;
 static int                _candidate_angle                  = 0;
 
-static int                _indicator_height                 = 24;
-static int                _screen_width                     = 480;
-static int                _screen_height                    = 800;
+static int                _ise_width                        = -1;
+static int                _ise_height                       = -1;
+static bool               _ise_show                         = false;
+
+static int                _indicator_height                 = 0;//24;
+static int                _screen_width                     = 720;
+static int                _screen_height                    = 1280;
 static float              _width_rate                       = 1.0;
 static float              _height_rate                      = 1.0;
-static int                _blank_width                      = 10;
+static int                _blank_width                      = 30;
 
 static String             _candidate_name                   = String ("candidate");
 static String             _candidate_edje_file              = String (EFL_CANDIDATE_THEME1);
 
-static String             _candidate_font_name              = String ("SLP:style=medium");
-static int                _candidate_font_max_size          = 30;
-static int                _candidate_font_min_size          = 14;
-static int                _aux_font_size                    = 30;
-static int                _button_font_size                 = 22;
+static String             _candidate_font_name              = String ("Default");
+static int                _candidate_font_size              = 38;
+static int                _aux_font_size                    = 38;
 static int                _click_object                     = 0;
 static int                _click_down_pos [2]               = {0, 0};
 static int                _click_up_pos [2]                 = {0, 0};
+static bool               _is_click                         = true;
 
 static DEFAULT_ISE_T      _initial_ise;
 static DEFAULT_ISE_T      _active_ise;
@@ -263,10 +251,9 @@ static ConfigPointer      _config;
 static PanelAgent        *_panel_agent                      = 0;
 static std::vector<Ecore_Fd_Handler *> _read_handler_list;
 
-static ISF_CANDIDATE_STYLE_T _candidate_style               = PREDICTION_ENGINE_CANDIDATE_STYLE;
-static ISF_CANDIDATE_MODE_T  _candidate_mode                = PORTRAIT_VERTICAL_CANDIDATE_MODE;
-
 static clock_t            _clock_start;
+
+static Ecore_Timer       *_check_size_timer                 = NULL;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -310,6 +297,92 @@ static void flush_memory (void)
 {
     elm_cache_all_flush ();
     malloc_trim (0);
+}
+
+/**
+ * @brief Get ISE geometry information.
+ *
+ * @param info The data is used to store ISE position and size.
+ * @param kbd_state The keyboard state.
+ */
+static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_ise_width == -1 && _ise_height == -1) {
+        _panel_agent->get_current_ise_geometry (info);
+    } else {
+        info.width  = _ise_width;
+        info.height = _ise_height;
+    }
+
+    int win_w = _screen_width, win_h = _screen_height;
+    int angle = efl_get_angle_for_root_window (NULL);
+    if (angle == 90 || angle == 270) {
+        win_w = _screen_height;
+        win_h = _screen_width;
+    }
+    info.pos_x = (win_w - info.width) / 2;
+    if (kbd_state == KEYBOARD_STATE_OFF)
+        info.pos_y = win_h;
+    else
+        info.pos_y = win_h - info.height;
+}
+
+/**
+ * @brief Set keyboard geometry for autoscroll.
+ *
+ * @param kbd_state The keyboard state.
+ */
+static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (kbd_state == KEYBOARD_STATE_UNKNOWN)
+        return;
+
+    Ecore_X_Window* zone_lists;
+    if (ecore_x_window_prop_window_list_get (ecore_x_window_root_first_get (),
+            ECORE_X_ATOM_E_ILLUME_ZONE_LIST, &zone_lists) > 0) {
+
+        struct rectinfo info = {0, 0, 0, 0};
+        if (_ise_width == 0 && _ise_height == 0) {
+            info.pos_x = 0;
+            if (_candidate_window && evas_object_visible_get (_candidate_window)) {
+                info.width  = _candidate_width;
+                info.height = _candidate_height;
+            }
+            int angle = efl_get_angle_for_root_window (NULL);
+            if (angle == 90 || angle == 270)
+                info.pos_y = _screen_width - info.height;
+            else
+                info.pos_y = _screen_height - info.height;
+        } else {
+            get_ise_geometry (info, kbd_state);
+            if (_ise_width == -1 && _ise_height == -1) {
+                ; // Floating style
+            } else {
+                if (_candidate_window && evas_object_visible_get (_candidate_window)) {
+                    _candidate_valid_height = ui_candidate_get_valid_height ();
+                    if ((_candidate_height - _candidate_valid_height) > _ise_height) {
+                        _candidate_valid_height = _candidate_height;
+                        info.pos_y  = info.pos_y + info.height - _candidate_height;
+                        info.height = _candidate_height;
+                    } else {
+                        info.pos_y  -= _candidate_valid_height;
+                        info.height += _candidate_valid_height;
+                    }
+                }
+            }
+        }
+        if (kbd_state == KEYBOARD_STATE_ON) {
+            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+            ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, info.width, info.height);
+        } else {
+            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+            ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, 0, 0);
+        }
+    }
 }
 
 /**
@@ -357,11 +430,7 @@ static bool activate_keyboard_ise (const String &uuid, const String &name)
             return false;
     }
 
-    String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
-    _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
-    _config->flush ();
-
-    _panel_agent->change_factory (uuid);
+    slot_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID, uuid);
 
     return true;
 }
@@ -387,9 +456,14 @@ static bool activate_helper_ise (const String &uuid, bool changeDefault)
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
     } else if (TOOLBAR_KEYBOARD_MODE == mode) {
-        /*_panel_agent->change_factory ("");*/
+        String ise_uuid, ise_name;
+        isf_get_keyboard_ise (ise_uuid, ise_name, _config);
+        _panel_agent->change_factory (ise_uuid);
     }
 
+    _ise_width  = -1;
+    _ise_height = -1;
+    _ise_show   = false;
     _panel_agent->start_helper (uuid);
     if (changeDefault) {
         _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
@@ -458,14 +532,9 @@ static void load_config (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    String str;
-    bool   shared_ise = false;
-
     /* Read configurations. */
     if (!_config.null ()) {
-        _candidate_style    = (ISF_CANDIDATE_STYLE_T)_config->read (String (ISF_CONFIG_PANEL_LOOKUP_TABLE_STYLE), _candidate_style);
-        _candidate_mode     = (ISF_CANDIDATE_MODE_T)_config->read (String (ISF_CONFIG_PANEL_LOOKUP_TABLE_MODE), _candidate_mode);
-        shared_ise          = _config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), shared_ise);
+        bool shared_ise = _config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), false);
         _panel_agent->set_should_shared_ise (shared_ise);
     }
 
@@ -489,30 +558,60 @@ static void config_reload_cb (const ConfigPointer &config)
 // Start of Candidate Functions
 //////////////////////////////////////////////////////////////////////
 /**
- * @brief This function will add one candidate window resize timer.
+ * @brief Get candidate window valid height for autoscroll.
  *
- * @param new_width New width for candidate window.
+ * @return The valid height.
+ */
+static int ui_candidate_get_valid_height (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "\n";
+
+    int height = 0;
+    if (_candidate_window) {
+        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1))
+            height = _candidate_port_height_min_2;
+        else
+            height = _candidate_port_height_min;
+    }
+    return height;
+}
+
+/**
+ * @brief Resize candidate window size.
+ *
+ * @param new_width  New width for candidate window.
  * @param new_height New height for candidate window.
  */
 static void ui_candidate_window_resize (int new_width, int new_height)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " width:" << new_width << " height:" << new_height << "\n";
 
     if (!_candidate_window)
         return;
 
     int x, y, width, height;
     evas_object_geometry_get (_candidate_window, &x, &y, &width, &height);
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " old width:" << width << " old height:" << height << "\n";
 
     if (width == new_width && height == new_height)
         return;
 
     evas_object_resize (_candidate_window, new_width, new_height);
+    evas_object_resize (_aux_line, new_width, 2);
     _candidate_width  = new_width;
     _candidate_height = new_height;
-    _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+    if (evas_object_visible_get (_candidate_window))
+        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
 
-    ui_settle_candidate_window ();
+    if (evas_object_visible_get (_candidate_window)) {
+        height = ui_candidate_get_valid_height ();
+        if ((_ise_width == 0 && _ise_height == 0) ||
+            (_ise_height > 0 && _candidate_valid_height != height) ||
+            (_ise_height > 0 && (_candidate_height - height) > _ise_height)) {
+            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+        }
+    }
 }
 
 /**
@@ -530,7 +629,19 @@ static void ui_candidate_window_adjust (void)
     /* Get candidate window size */
     evas_object_geometry_get (_candidate_window, &x, &y, &width, &height);
     {
-        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
+        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
+            evas_object_show (_aux_line);
+            evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            evas_object_move (_candidate_area_2, _candidate_area_2_pos[0], _candidate_area_2_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            evas_object_move (_scroller_bg, _candidate_area_2_pos[0], _candidate_area_2_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            if (_candidate_angle == 90 || _candidate_angle == 270) {
+                ui_candidate_window_resize (width, _candidate_land_height_max_2);
+                evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            } else {
+                ui_candidate_window_resize (width, _candidate_port_height_max_2);
+                evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            }
+        } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
             evas_object_show (_aux_line);
             ui_candidate_window_resize (width, _candidate_port_height_min_2);
             evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
@@ -539,19 +650,21 @@ static void ui_candidate_window_adjust (void)
             } else {
                 evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
             }
-        } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
-            evas_object_show (_aux_line);
-            evas_object_move (_candidate_area_2, _candidate_area_2_pos[0], _candidate_area_2_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (width, _candidate_land_height_max_2);
-                evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            } else {
-                ui_candidate_window_resize (width, _candidate_port_height_max_2);
-                evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            }
         } else if (evas_object_visible_get (_aux_area)) {
             evas_object_hide (_aux_line);
             ui_candidate_window_resize (width, _aux_height);
+        } else if (evas_object_visible_get (_candidate_area_2)) {
+            evas_object_hide (_aux_line);
+            evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
+            evas_object_move (_candidate_area_2, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
+            evas_object_move (_scroller_bg, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
+            if (_candidate_angle == 90 || _candidate_angle == 270) {
+                ui_candidate_window_resize (width, _candidate_land_height_max);
+                evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3]);
+            } else {
+                ui_candidate_window_resize (width, _candidate_port_height_max);
+                evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
+            }
         } else if (evas_object_visible_get (_candidate_area_1)) {
             evas_object_hide (_aux_line);
             ui_candidate_window_resize (width, _candidate_port_height_min);
@@ -560,16 +673,6 @@ static void ui_candidate_window_adjust (void)
                 evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3]);
             } else {
                 evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
-            }
-        } else if (evas_object_visible_get (_candidate_area_2)) {
-            evas_object_hide (_aux_line);
-            evas_object_move (_candidate_area_2, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (width, _candidate_land_height_max);
-                evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3]);
-            } else {
-                ui_candidate_window_resize (width, _candidate_port_height_max);
-                evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
             }
         }
     }
@@ -594,12 +697,14 @@ static void ui_candidate_window_rotate (int angle)
         evas_object_resize (_aux_area, _aux_land_width, _aux_height);
         evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_max, _item_min_height);
         evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_min);
+        evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_min + 6);
     } else {
         _candidate_scroll_width = _candidate_scroll_width_min;
         ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
         evas_object_resize (_aux_area, _aux_port_width, _aux_height);
         evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_min, _item_min_height);
         evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_max);
+        evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
     }
 
     /* Delete old candidate items and popup lines */
@@ -608,37 +713,18 @@ static void ui_candidate_window_rotate (int angle)
             evas_object_del (_candidate_items [i]);
             _candidate_items [i] = NULL;
         }
-    }
-
-    ui_more_window_rotate (angle);
-    ui_settle_candidate_window ();
-    flush_memory ();
-}
-
-/**
- * @brief Update candidate text font size according to display width.
- *
- * @param obj A valid Evas_Object handle of text.
- * @param obj_width The text display width.
- * @param mbs The dislpayed string.
- */
-static void ui_candidate_text_update_font_size (Evas_Object *obj, int obj_width, String mbs)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (obj == NULL || mbs.length () <= 0 || _text_fonts.size () <= 0)
-        return;
-
-    int x, y, width, height;
-    edje_object_text_class_set (obj, "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_min_size);
-    for (unsigned int i = 0; i < _text_fonts.size (); i++) {
-        evas_object_text_text_set (_text_fonts [i], mbs.c_str ());
-        evas_object_geometry_get (_text_fonts [i], &x, &y, &width, &height);
-        if (width < obj_width) {
-            edje_object_text_class_set (obj, "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_max_size - 2*i);
-            break;
+        if (_seperate_items [i]) {
+            evas_object_del (_seperate_items [i]);
+            _seperate_items [i] = NULL;
+        }
+        if (_line_items [i]) {
+            evas_object_del (_line_items [i]);
+            _line_items [i] = NULL;
         }
     }
+
+    ui_settle_candidate_window ();
+    flush_memory ();
 }
 
 /**
@@ -659,6 +745,38 @@ static bool ui_candidate_can_be_hide (void)
 }
 
 /**
+ * @brief Delete check candidate window size timer.
+ *
+ * @return void
+ */
+static void ui_candidate_delete_check_size_timer (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_check_size_timer != NULL) {
+        ecore_timer_del (_check_size_timer);
+        _check_size_timer = NULL;
+    }
+}
+
+/**
+ * @brief Callback function for check candidate window size timer.
+ *
+ * @param data Data to pass when it is called.
+ *
+ * @return ECORE_CALLBACK_CANCEL
+ */
+static Eina_Bool ui_candidate_check_size_timeout (void *data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    ui_candidate_delete_check_size_timer ();
+    ui_candidate_window_resize (_candidate_width, _candidate_height);
+    ui_settle_candidate_window ();
+    return ECORE_CALLBACK_CANCEL;
+}
+
+/**
  * @brief Show candidate window.
  */
 static void ui_candidate_show (void)
@@ -673,17 +791,29 @@ static void ui_candidate_show (void)
         ui_candidate_window_rotate (angle);
     }
 
-    if (!evas_object_visible_get (_candidate_window))
+    if (!evas_object_visible_get (_candidate_window)) {
+        evas_object_show (_candidate_window);
         _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
 
+        if (!(_ise_width == -1 && _ise_height == -1)) {
+            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+        }
+
+        ui_candidate_delete_check_size_timer ();
+        _check_size_timer = ecore_timer_add (0.02, ui_candidate_check_size_timeout, NULL);
+    }
+
+    SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
     _candidate_window_show = true;
     evas_object_show (_candidate_window);
-    elm_win_raise (_candidate_window);
     efl_set_transient_for_app_window (_candidate_window);
 }
 
 /**
  * @brief Hide candidate window.
+ *
+ * @param bForce The flag to hide candidate window by force.
  */
 static void ui_candidate_hide (bool bForce)
 {
@@ -696,12 +826,24 @@ static void ui_candidate_hide (bool bForce)
         elm_scroller_region_show (_aux_area, 0, 0, 10, 10);
         evas_object_hide (_candidate_area_1);
         evas_object_hide (_candidate_area_2);
+        evas_object_hide (_scroller_bg);
     }
 
     if (ui_candidate_can_be_hide () || bForce) {
-        if (evas_object_visible_get (_candidate_window))
+        if (evas_object_visible_get (_candidate_window)) {
+            evas_object_hide (_candidate_window);
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
 
+            if (!(_ise_width == -1 && _ise_height == -1)) {
+                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                if (_ise_show)
+                    set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+                else
+                    set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+            }
+        }
+
+        SCIM_DEBUG_MAIN (3) << "    Hide candidate window\n";
         _candidate_window_show = false;
         evas_object_hide (_candidate_window);
     }
@@ -719,35 +861,14 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    evas_object_hide (_candidate_area_1);
-
     _panel_agent->candidate_more_window_show ();
-    if (_more_window_enable) {
-        ui_candidate_hide (false);
-        ui_candidate_window_adjust ();
-        if (_more_window == NULL)
-            ui_create_more_window ();
-        evas_object_show (_more_window);
 
-        _page_no = 1;
-        if (_candidate_angle == 90 || _candidate_angle == 270) {
-            _pages = _more_list.size () / ISF_LAND_BUTTON_NUMBER;
-            if ((_more_list.size () % ISF_LAND_BUTTON_NUMBER) > 0)
-                _pages += 1;
-        } else {
-            _pages = _more_list.size () / ISF_PORT_BUTTON_NUMBER;
-            if ((_more_list.size () % ISF_PORT_BUTTON_NUMBER) > 0)
-                _pages += 1;
-        }
+    evas_object_hide (_more_btn);
+    evas_object_show (_candidate_area_2);
+    evas_object_show (_scroller_bg);
+    evas_object_show (_close_btn);
+    ui_candidate_window_adjust ();
 
-        ui_more_window_update ();
-    } else {
-        evas_object_hide (_more_btn);
-        evas_object_show (_candidate_area_2);
-        evas_object_show (_close_btn);
-        elm_win_raise (_candidate_window);
-        ui_candidate_window_adjust ();
-    }
     ui_settle_candidate_window ();
     flush_memory ();
 }
@@ -766,12 +887,12 @@ static void ui_candidate_window_close_button_cb (void *data, Evas *e, Evas_Objec
 
     if (evas_object_visible_get (_candidate_area_2)) {
         evas_object_hide (_candidate_area_2);
+        evas_object_hide (_scroller_bg);
         evas_object_hide (_close_btn);
         _panel_agent->candidate_more_window_hide ();
     }
     evas_object_show (_candidate_area_1);
     evas_object_show (_more_btn);
-    elm_win_raise (_candidate_window);
     ui_candidate_window_adjust ();
     ui_settle_candidate_window ();
     elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, 100);
@@ -790,8 +911,8 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    elm_win_raise (_candidate_window);
     _click_object = GPOINTER_TO_INT (data);
+    _is_click     = true;
 
     Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
     _click_down_pos [0] = ev->canvas.x;
@@ -811,8 +932,8 @@ static void ui_mouse_button_released_cb (void *data, Evas *e, Evas_Object *butto
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " index:" << GPOINTER_TO_INT (data) << "...\n";
 
     int index = GPOINTER_TO_INT (data);
-    if (_click_object == ISF_EFL_AUX) {
-        double ret = 0;
+    if (_click_object == ISF_EFL_AUX && _is_click) {
+/*      double ret = 0;
         const char *buf = edje_object_part_state_get (button, "aux", &ret);
         if (strcmp ("selected", buf)) {
             for (unsigned int i = 0; i < _aux_items.size (); i++) {
@@ -822,10 +943,21 @@ static void ui_mouse_button_released_cb (void *data, Evas *e, Evas_Object *butto
             }
             edje_object_signal_emit (button, "aux,state,selected", "aux");
             _panel_agent->select_aux (index);
+        }*/
+        int r, g, b, a, r2, g2, b2, a2, r3, g3, b3, a3;
+        edje_object_color_class_get (_aux_items [index], "text_color", &r, &g, &b, &a, &r2, &g2, &b2, &a2, &r3, &g3, &b3, &a3);
+        // Normal item is clicked
+        if (!(r == 62 && g == 207 && b == 255)) {
+            for (unsigned int i = 0; i < _aux_items.size (); i++) {
+                edje_object_color_class_set (_aux_items [i], "text_color", 249, 249, 249, 255, r2, g2, b2, a2, r3, g3, b3, a3);
+            }
+            edje_object_color_class_set (_aux_items [index], "text_color", 62, 207, 255, 255, r2, g2, b2, a2, r3, g3, b3, a3);
+            _panel_agent->select_aux (index);
         }
-    } else if (_click_object == ISF_EFL_CANDIDATE_0) {
+    } else if (_click_object == ISF_EFL_CANDIDATE_0 && _is_click) {
+        ui_candidate_window_close_button_cb (NULL, NULL, _close_btn, NULL);
         _panel_agent->select_candidate (index);
-    } else if (_click_object == ISF_EFL_CANDIDATE_ITEMS) {
+    } else if (_click_object == ISF_EFL_CANDIDATE_ITEMS && _is_click) {
         ui_candidate_window_close_button_cb (NULL, NULL, _close_btn, NULL);
         _panel_agent->select_candidate (index);
     }
@@ -849,260 +981,8 @@ static void ui_mouse_moved_cb (void *data, Evas *e, Evas_Object *button, void *e
 
     if (abs (_click_up_pos [0] - _click_down_pos [0]) >= 10 ||
         abs (_click_up_pos [1] - _click_down_pos [1]) >= 10) {
-        _click_object = 0;
+        _is_click = false;
     }
-}
-
-/**
- * @brief Rotate more window.
- *
- * @param angle The angle of more window.
- */
-static void ui_more_window_rotate (int angle)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    if (!_candidate_window || !_more_window)
-        return;
-
-    elm_win_rotation_set (_more_window, angle);
-    if (angle == 90 || angle == 270) {
-        evas_object_resize (_more_window, _screen_height, _more_land_height);
-        evas_object_hide (_more_port_table);
-        evas_object_show (_more_land_table);
-        if (angle == 90)
-            evas_object_move (_more_window, _screen_width - _more_land_height, 0);
-        else
-            evas_object_move (_more_window, 0, 0);
-    } else {
-        evas_object_resize (_more_window, _screen_width, _more_port_height);
-        evas_object_hide (_more_land_table);
-        evas_object_show (_more_port_table);
-        if (angle == 180)
-            evas_object_move (_more_window, 0, 0);
-        else
-            evas_object_move (_more_window, 0, _screen_height - _more_port_height);
-    }
-}
-
-/**
- * @brief Update more window.
- */
-static void ui_more_window_update (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    if (!_candidate_window || !_more_window)
-        return;
-
-    unsigned int offset, index, i;
-    char buffer [20] = {0};
-
-    snprintf (buffer, sizeof (buffer), "%d/%d", _page_no, _pages);
-
-    if (_candidate_angle == 90 || _candidate_angle == 270) {
-        offset = (_page_no - 1) * ISF_LAND_BUTTON_NUMBER;
-        for (i = 0; i < ISF_LAND_BUTTON_NUMBER; i++) {
-            index = offset + i;
-            if (index < _more_list.size ()) {
-                edje_object_part_text_set (_land_button [i], "button_text", _more_list [index].c_str ());
-                ui_candidate_text_update_font_size (_land_button [i], (128 - 10)*_height_rate, _more_list [index]);
-                evas_object_show (_land_button [i]);
-            } else {
-                edje_object_part_text_set (_land_button [i], "button_text", "");
-                evas_object_hide (_land_button [i]);
-            }
-        }
-        edje_object_part_text_set (_page_button_land, "page_text", buffer);
-    } else {
-        offset = (_page_no - 1) * ISF_PORT_BUTTON_NUMBER;
-        for (i = 0; i < ISF_PORT_BUTTON_NUMBER; i++) {
-            index = offset + i;
-            if (index < _more_list.size ()) {
-                edje_object_part_text_set (_port_button [i], "button_text", _more_list [index].c_str ());
-                ui_candidate_text_update_font_size (_port_button [i], (153 - 10)*_width_rate, _more_list [index]);
-                evas_object_show (_port_button [i]);
-            } else {
-                edje_object_part_text_set (_port_button [i], "button_text", "");
-                evas_object_hide (_port_button [i]);
-            }
-        }
-        edje_object_part_text_set (_page_button_port, "page_text", buffer);
-    }
-}
-
-/**
- * @brief Callback function for close button of more window.
- *
- * @param data A pointer to data to pass in when the signal is emitted.
- * @param obj A valid Evas_Object handle for emitted signal.
- * @param emission The signal's name.
- * @param source The signal's source.
- */
-static void ui_more_window_close_button_cb (void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (evas_object_visible_get (_more_window)) {
-        evas_object_hide (_more_window);
-        _panel_agent->candidate_more_window_hide ();
-    }
-
-    elm_win_raise (_candidate_window);
-    slot_show_candidate_table ();
-    flush_memory ();
-}
-
-/**
- * @brief Callback function for page button of more window.
- *
- * @param data A pointer to data to pass in when the signal is emitted.
- * @param obj A valid Evas_Object handle for emitted signal.
- * @param emission The signal's name.
- * @param source The signal's source.
- */
-static void ui_more_window_page_button_cb (void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (_pages <= 1)
-        return;
-
-    int  action = GPOINTER_TO_INT (data);
-    if (action == 1)        /* Show prev page */
-        _page_no = (_page_no == 1) ? _pages : (_page_no - 1);
-    else                    /* Show next page */
-        _page_no = (_page_no == _pages) ? 1 : (_page_no + 1);
-
-    ui_more_window_update ();
-    flush_memory ();
-}
-
-/**
- * @brief Callback function for candidate item of more window.
- *
- * @param data A pointer to data to pass in when the signal is emitted.
- * @param obj A valid Evas_Object handle for emitted signal.
- * @param emission The signal's name.
- * @param source The signal's source.
- */
-static void ui_more_window_candidate_item_click_cb (void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    int offset;
-    int index = GPOINTER_TO_INT (data);
-    if (index < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
-        if (_candidate_angle == 90 || _candidate_angle == 270)
-            offset = (_page_no - 1) * ISF_LAND_BUTTON_NUMBER;
-        else
-            offset = (_page_no - 1) * ISF_PORT_BUTTON_NUMBER;
-
-        ui_more_window_close_button_cb (NULL, NULL, NULL, NULL);
-        _panel_agent->select_candidate (offset + index);
-    }
-}
-
-/**
- * @brief Create more window for candidate.
- */
-static void ui_create_more_window (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    Evas_Object *button = NULL;
-
-    _more_window = efl_create_window ("more_window", "ISF Popup");
-    evas_object_resize (_more_window, _screen_width, _more_port_height);
-    evas_object_move (_more_window, 0, _screen_height - _more_port_height);
-
-    Evas *evas = evas_object_evas_get (_more_window);
-
-    /* Create port table */
-    _more_port_table = elm_table_add (_more_window);
-    evas_object_size_hint_weight_set (_more_port_table, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_show (_more_port_table);
-
-    Evas_Object *bg = edje_object_add (evas);
-    edje_object_file_set (bg, _candidate_edje_file.c_str (), "candidate_bg");
-    evas_object_size_hint_min_set (bg, _screen_width, _more_port_height);
-    elm_table_pack (_more_port_table, bg, 0, 0, _screen_width, _more_port_height);
-    edje_object_signal_emit (bg, "candidate_bg,state,port_more_2", "candidate_bg");
-    evas_object_show (bg);
-
-    for (int i = 0; i < ISF_PORT_BUTTON_NUMBER; i++) {
-        button = edje_object_add (evas);
-        edje_object_file_set (button, _candidate_edje_file.c_str (), "candidate_button");
-        evas_object_size_hint_min_set (button, 153*_width_rate, 71*_height_rate);
-        elm_table_pack (_more_port_table, button, (6 + (i%3)*158)*_width_rate, (15 + (i/3)*79)*_height_rate, 153*_width_rate, 71*_height_rate);
-        edje_object_signal_callback_add (button, "button,action,clicked", "",
-                                         ui_more_window_candidate_item_click_cb, GINT_TO_POINTER (i));
-        evas_object_show (button);
-        _port_button [i] = button;
-    }
-
-    /* Create port page button */
-    _page_button_port = edje_object_add (evas);
-    edje_object_file_set (_page_button_port, _candidate_edje_file.c_str (), "page_button_port");
-    evas_object_size_hint_min_set (_page_button_port, 232*_width_rate, 71*_height_rate);
-    edje_object_text_class_set (_page_button_port, "page_text_class", "1/1", _candidate_font_max_size);
-    elm_table_pack (_more_port_table, _page_button_port, 6*_width_rate, 252*_height_rate, 233*_width_rate, 71*_height_rate);
-    edje_object_signal_callback_add (_page_button_port, "prev,action,clicked", "", ui_more_window_page_button_cb, GINT_TO_POINTER (1));
-    edje_object_signal_callback_add (_page_button_port, "next,action,clicked", "", ui_more_window_page_button_cb, GINT_TO_POINTER (2));
-    evas_object_show (_page_button_port);
-
-    /* Create port close button */
-    button = edje_object_add (evas);
-    edje_object_file_set (button, _candidate_edje_file.c_str (), "close_button");
-    evas_object_size_hint_min_set (button, 114*_width_rate, 71*_height_rate);
-    edje_object_text_class_set (button, "button_text_class", "Close", _candidate_font_max_size);
-    elm_table_pack (_more_port_table, button, 361*_width_rate, 252*_height_rate, 114*_width_rate, 71*_height_rate);
-    edje_object_signal_callback_add (button, "button,action,clicked", "", ui_more_window_close_button_cb, 0);
-    evas_object_show (button);
-
-    /* Create land table */
-    _more_land_table = elm_table_add (_more_window);
-    evas_object_size_hint_weight_set (_more_land_table, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-    bg = edje_object_add (evas);
-    edje_object_file_set (bg, _candidate_edje_file.c_str (), "candidate_bg");
-    evas_object_size_hint_min_set (bg, _screen_height, _more_land_height);
-    elm_table_pack (_more_land_table, bg, 0, 0, _screen_height, _more_land_height);
-    edje_object_signal_emit (bg, "candidate_bg,state,land_more_2", "candidate_bg");
-    evas_object_show (bg);
-
-    for (int i = 0; i < ISF_LAND_BUTTON_NUMBER; i++) {
-        button = edje_object_add (evas);
-        edje_object_file_set (button, _candidate_edje_file.c_str (), "candidate_button");
-        evas_object_size_hint_min_set (button, 128*_height_rate, 56*_width_rate);
-        elm_table_pack (_more_land_table, button, (7 + (i%6)*132)*_height_rate, (16 + (i/6)*65)*_width_rate, 128*_height_rate, 56*_width_rate);
-        edje_object_signal_callback_add (button, "button,action,clicked", "",
-                                         ui_more_window_candidate_item_click_cb, GINT_TO_POINTER (i));
-        evas_object_show (button);
-        _land_button [i] = button;
-    }
-
-    /* Create land page button */
-    _page_button_land = edje_object_add (evas);
-    edje_object_file_set (_page_button_land, _candidate_edje_file.c_str (), "page_button_land");
-    evas_object_size_hint_min_set (_page_button_land, 260*_height_rate, 56*_width_rate);
-    edje_object_text_class_set (_page_button_land, "page_text_class", "1/1", _candidate_font_max_size);
-    elm_table_pack (_more_land_table, _page_button_land, 7*_height_rate, 211*_width_rate, 260*_height_rate, 56*_width_rate);
-    edje_object_signal_callback_add (_page_button_land, "prev,action,clicked", "", ui_more_window_page_button_cb, GINT_TO_POINTER (1));
-    edje_object_signal_callback_add (_page_button_land, "next,action,clicked", "", ui_more_window_page_button_cb, GINT_TO_POINTER (2));
-    evas_object_show (_page_button_land);
-
-    /* Create land close button */
-    button = edje_object_add (evas);
-    edje_object_file_set (button, _candidate_edje_file.c_str (), "close_button");
-    evas_object_size_hint_min_set (button, 128*_height_rate, 56*_width_rate);
-    edje_object_text_class_set (button, "button_text_class", "Close", _candidate_font_max_size);
-    elm_table_pack (_more_land_table, button, 667*_height_rate, 211*_width_rate, 128*_height_rate, 56*_width_rate);
-    edje_object_signal_callback_add (button, "button,action,clicked", "", ui_more_window_close_button_cb, 0);
-    evas_object_show (button);
-
-    if (_candidate_angle != 0)
-        ui_more_window_rotate (_candidate_angle);
-
-    flush_memory ();
 }
 
 /**
@@ -1112,87 +992,41 @@ static void ui_create_prediction_engine_candidate_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    Evas_Object *tmp_text = NULL;
+    _candidate_port_width        = 720 * _width_rate;
+    _candidate_port_height_min   = 84 * _height_rate;
+    _candidate_port_height_min_2 = 168 * _height_rate;
+    _candidate_port_height_max   = 510 * _height_rate;
+    _candidate_port_height_max_2 = 594 * _height_rate;
+    _candidate_land_width        = 1280 * _height_rate;
+    _candidate_land_height_min   = 84 * _width_rate;
+    _candidate_land_height_max   = 342 * _width_rate;
+    _candidate_land_height_max_2 = 426 * _width_rate;
 
-    if (_candidate_edje_file == String (EFL_CANDIDATE_THEME2)) {
-        _candidate_port_width        = 480 * _width_rate;
-        _candidate_port_height_min   = 102 * _height_rate;
-        _candidate_port_height_min_2 = 157 * _height_rate;
-        _candidate_port_height_max   = 310 * _height_rate;
-        _candidate_port_height_max_2 = 365 * _height_rate;
-        _candidate_land_width        = 800 * _height_rate;
-        _candidate_land_height_min   = 102 * _width_rate;
-        _candidate_land_height_max   = 170 * _width_rate;
-        _candidate_land_height_max_2 = 230 * _width_rate;
+    _candidate_scroll_0_width_min= 618 * _width_rate;
+    _candidate_scroll_0_width_max= 1176 * _height_rate;
+    _candidate_scroll_width_min  = 720 * _width_rate;
+    _candidate_scroll_width_max  = 1280 * _height_rate;
+    _candidate_scroll_height_min = 252 * _width_rate;
+    _candidate_scroll_height_max = 420 * _height_rate;
 
-        _candidate_scroll_0_width_min = 350 * _width_rate;
-        _candidate_scroll_0_width_max = 670 * _height_rate;
-        _candidate_scroll_width_min  = 446 * _width_rate;
-        _candidate_scroll_width_max  = 676 * _height_rate;
-        _candidate_scroll_height_min = 130 * _height_rate;
-        _candidate_scroll_height_max = 198 * _width_rate;
+    _candidate_area_1_pos [0]    = 0 * _width_rate;
+    _candidate_area_1_pos [1]    = 2 * _height_rate;
+    _candidate_area_2_pos [0]    = 0 * _width_rate;
+    _candidate_area_2_pos [1]    = 84 * _height_rate;
+    _more_btn_pos [0]            = 628 * _width_rate;
+    _more_btn_pos [1]            = 12 * _height_rate;
+    _more_btn_pos [2]            = 1188 * _height_rate;
+    _more_btn_pos [3]            = 12 * _width_rate;
+    _close_btn_pos [0]           = 628 * _width_rate;
+    _close_btn_pos [1]           = 12 * _height_rate;
+    _close_btn_pos [2]           = 1188 * _height_rate;
+    _close_btn_pos [3]           = 12 * _width_rate;
 
-        _candidate_area_1_pos [0]    = 20 * _width_rate;
-        _candidate_area_1_pos [1]    = 20 * _height_rate;
-        _candidate_area_2_pos [0]    = 20 * _width_rate;
-        _candidate_area_2_pos [1]    = 20 * _height_rate;
-        _more_btn_pos [0]            = 376 * _width_rate;
-        _more_btn_pos [1]            = 20 * _height_rate;
-        _more_btn_pos [2]            = 696 * _height_rate;
-        _more_btn_pos [3]            = 20 * _width_rate;
-        _close_btn_pos [0]           = 376 * _width_rate;
-        _close_btn_pos [1]           = 228 * _height_rate;
-        _close_btn_pos [2]           = 696 * _height_rate;
-        _close_btn_pos [3]           = 88 * _width_rate;
+    _aux_height                  = _candidate_port_height_min - 2;
+    _aux_port_width              = 720 * _width_rate;
+    _aux_land_width              = 1280 * _height_rate;
 
-        _aux_height                  = 68 * _height_rate;
-        _aux_port_width              = 460 * _width_rate;
-        _aux_land_width              = 780 * _height_rate;
-
-        _h_padding = 5 * _width_rate;
-        _v_padding = 6 * _height_rate;
-        _item_min_height = 62 * _height_rate;
-    } else {
-        _candidate_port_width        = 464 * _width_rate;
-        _candidate_port_height_min   = 86 * _height_rate;
-        _candidate_port_height_min_2 = 150 * _height_rate;
-        _candidate_port_height_max   = 286 * _height_rate;
-        _candidate_port_height_max_2 = 350 * _height_rate;
-        _candidate_land_width        = 784 * _height_rate;
-        _candidate_land_height_min   = 86 * _width_rate;
-        _candidate_land_height_max   = 150 * _width_rate;
-        _candidate_land_height_max_2 = 214 * _width_rate;
-
-        _candidate_scroll_0_width_min = 350 * _width_rate;
-        _candidate_scroll_0_width_max = 670 * _height_rate;
-        _candidate_scroll_width_min  = 448 * _width_rate;
-        _candidate_scroll_width_max  = 676 * _height_rate;
-        _candidate_scroll_height_min = 124 * _height_rate;
-        _candidate_scroll_height_max = 190 * _width_rate;
-
-        _candidate_area_1_pos [0]    = 11 * _width_rate;
-        _candidate_area_1_pos [1]    = 13 * _height_rate;
-        _candidate_area_2_pos [0]    = 11 * _width_rate;
-        _candidate_area_2_pos [1]    = 13 * _height_rate;
-        _more_btn_pos [0]            = 366 * _width_rate;
-        _more_btn_pos [1]            = 13 * _height_rate;
-        _more_btn_pos [2]            = 689 * _height_rate;
-        _more_btn_pos [3]            = 13 * _width_rate;
-        _close_btn_pos [0]           = 366 * _width_rate;
-        _close_btn_pos [1]           = 214 * _height_rate;
-        _close_btn_pos [2]           = 689 * _height_rate;
-        _close_btn_pos [3]           = 79 * _width_rate;
-
-        _aux_height                  = _candidate_port_height_min * 4 / 5;
-        _aux_port_width              = 444 * _width_rate;
-        _aux_land_width              = 764 * _height_rate;
-
-        _h_padding = 4 * _width_rate;
-        _v_padding = 11 * _height_rate;
-        _item_min_height = 55 * _height_rate;
-    }
-
-    _candidate_name = String ("candidate");
+    _item_min_height             = 82 * _height_rate;
 
     /* Create candidate window */
     if (_candidate_window == NULL) {
@@ -1204,7 +1038,7 @@ static void ui_create_prediction_engine_candidate_window (void)
         /* Add background */
         _candidate_bg = edje_object_add (evas_object_evas_get (_candidate_window));
         edje_object_file_set (_candidate_bg, _candidate_edje_file.c_str (), "candidate_bg");
-        evas_object_size_hint_weight_set(_candidate_bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_size_hint_weight_set (_candidate_bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         elm_win_resize_object_add (_candidate_window, _candidate_bg);
         evas_object_show (_candidate_bg);
 
@@ -1217,65 +1051,68 @@ static void ui_create_prediction_engine_candidate_window (void)
         _candidate_0_table = elm_table_add (_candidate_window);
         evas_object_size_hint_weight_set (_candidate_0_table, 0.0, 0.0);
         evas_object_size_hint_align_set (_candidate_0_table, 0.0, 0.0);
-        elm_table_padding_set (_candidate_0_table, _h_padding, 0);
+        elm_table_padding_set (_candidate_0_table, 0, 0);
         elm_object_content_set (_candidate_0_scroll, _candidate_0_table);
         evas_object_show (_candidate_0_table);
         _candidate_area_1 = _candidate_0_scroll;
 
         /* Create more button */
         _more_btn = edje_object_add (evas_object_evas_get (_candidate_window));
-        edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), _candidate_name.c_str ());
-        edje_object_text_class_set (_more_btn, "candidate_text_class", _candidate_font_name.c_str (), _button_font_size);
-        edje_object_part_text_set (_more_btn, "candidate", "More");
+        if (_ise_width == 0 && _ise_height == 0)
+            edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "close_button");
+        else
+            edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
         evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
-        evas_object_resize (_more_btn, 84 * _width_rate, _item_min_height);
+        evas_object_resize (_more_btn, 80 * _width_rate, 64 * _height_rate);
         evas_object_event_callback_add (_more_btn, EVAS_CALLBACK_MOUSE_UP, ui_candidate_window_more_button_cb, NULL);
 
-        /* Create vertical scroller */
+        /* Add scroller background */
         _candidate_scroll_width = _candidate_scroll_width_min;
+        _scroller_bg = edje_object_add (evas_object_evas_get (_candidate_window));
+        edje_object_file_set (_scroller_bg, _candidate_edje_file.c_str (), "scroller_bg");
+        evas_object_size_hint_weight_set (_scroller_bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
+        evas_object_move (_scroller_bg, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
+
+        /* Create vertical scroller */
         _candidate_scroll = elm_scroller_add (_candidate_window);
         elm_scroller_bounce_set (_candidate_scroll, 0, 1);
         elm_scroller_policy_set (_candidate_scroll, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
         evas_object_resize (_candidate_scroll, _candidate_scroll_width, _candidate_scroll_height_max);
+        evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
         elm_scroller_page_size_set (_candidate_scroll, 0, _item_min_height+_v_padding);
         evas_object_move (_candidate_scroll, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
         _candidate_table = elm_table_add (_candidate_window);
         evas_object_size_hint_weight_set (_candidate_table, 0.0, 0.0);
         evas_object_size_hint_align_set (_candidate_table, 0.0, 0.0);
-        elm_table_padding_set (_candidate_table, _h_padding, _v_padding);
+        elm_table_padding_set (_candidate_table, 0, 0);
         elm_object_content_set (_candidate_scroll, _candidate_table);
         evas_object_show (_candidate_table);
         _candidate_area_2 = _candidate_scroll;
 
         /* Create close button */
         _close_btn = edje_object_add (evas_object_evas_get (_candidate_window));
-        edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), _candidate_name.c_str ());
-        edje_object_text_class_set (_close_btn, "candidate_text_class", _candidate_font_name.c_str (), _button_font_size);
-        edje_object_part_text_set (_close_btn, "candidate", "Close");
+        if (_ise_width == 0 && _ise_height == 0)
+            edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "more_button");
+        else
+            edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
         evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
-        evas_object_resize (_close_btn, 84 * _width_rate, _item_min_height);
+        evas_object_resize (_close_btn, 80 * _width_rate, 64 * _height_rate);
         evas_object_event_callback_add (_close_btn, EVAS_CALLBACK_MOUSE_UP, ui_candidate_window_close_button_cb, NULL);
 
         _tmp_candidate_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
-        evas_object_text_font_set (_tmp_candidate_text, _candidate_font_name.c_str (), _candidate_font_max_size);
-
-        _text_fonts.clear ();
-        for (int font_size = _candidate_font_max_size; font_size > _candidate_font_min_size; font_size-=2) {
-            tmp_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
-            evas_object_text_font_set (tmp_text, _candidate_font_name.c_str (), font_size);
-            _text_fonts.push_back (tmp_text);
-        }
+        evas_object_text_font_set (_tmp_candidate_text, _candidate_font_name.c_str (), _candidate_font_size);
 
         /* Create aux */
         _aux_area = elm_scroller_add (_candidate_window);
         elm_scroller_bounce_set (_aux_area, 1, 0);
         elm_scroller_policy_set (_aux_area, ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_OFF);
         evas_object_resize (_aux_area, _aux_port_width, _aux_height);
-        evas_object_move (_aux_area, _blank_width, 0);
+        evas_object_move (_aux_area, 0, 2);
 
         _aux_table = elm_table_add (_candidate_window);
         elm_object_content_set (_aux_area, _aux_table);
-        elm_table_padding_set (_aux_table, _blank_width, 0);
+        elm_table_padding_set (_aux_table, 4, 0);
         evas_object_size_hint_weight_set (_aux_table, 0.0, 0.0);
         evas_object_size_hint_align_set (_aux_table, 0.0, 0.0);
         evas_object_show (_aux_table);
@@ -1283,7 +1120,7 @@ static void ui_create_prediction_engine_candidate_window (void)
         _aux_line = edje_object_add (evas_object_evas_get (_candidate_window));
         edje_object_file_set (_aux_line, _candidate_edje_file.c_str (), "popup_line");
         evas_object_resize (_aux_line, _candidate_port_width, 2);
-        evas_object_move (_aux_line, 0, 62 * _height_rate);
+        evas_object_move (_aux_line, 0, _aux_height);
 
         _tmp_aux_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
         evas_object_text_font_set (_tmp_aux_text, _candidate_font_name.c_str (), _aux_font_size);
@@ -1295,18 +1132,28 @@ static void ui_create_prediction_engine_candidate_window (void)
 /**
  * @brief Create candidate window.
  *
- * @param style The candidate window style.
+ * @return void
  */
-static void ui_create_candidate_window (ISF_CANDIDATE_STYLE_T style)
+static void ui_create_candidate_window (void)
 {
     check_time ("\nEnter ui_create_candidate_window");
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     ui_destroy_candidate_window ();
 
+    _candidate_x     = 0;
+    _candidate_y     = 0;
     _candidate_angle = 0;
 
     ui_create_prediction_engine_candidate_window ();
+
+    int angle = efl_get_angle_for_root_window (_candidate_window);
+    if (_candidate_angle != angle) {
+        _candidate_angle = angle;
+        ui_candidate_window_rotate (angle);
+    } else {
+        ui_settle_candidate_window ();
+    }
 
     check_time ("Exit ui_create_candidate_window");
 }
@@ -1332,30 +1179,35 @@ static void ui_destroy_candidate_window (void)
             evas_object_del (_candidate_items [i]);
             _candidate_items [i] = NULL;
         }
+
+        if (_seperate_0 [i]) {
+            evas_object_del (_seperate_0 [i]);
+            _seperate_0 [i] = NULL;
+        }
+        if (_seperate_items [i]) {
+            evas_object_del (_seperate_items [i]);
+            _seperate_items [i] = NULL;
+        }
+        if (_line_items [i]) {
+            evas_object_del (_line_items [i]);
+            _line_items [i] = NULL;
+        }
     }
 
     _aux_items.clear ();
     /* Delete candidate window */
     if (_candidate_window) {
-        if (evas_object_visible_get (_candidate_window))
-            _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
+        ui_candidate_hide (true);
 
         evas_object_del (_candidate_window);
         _candidate_window = NULL;
         _aux_area         = NULL;
         _candidate_area_1 = NULL;
         _candidate_area_2 = NULL;
-    }
-    _candidate_window_show = false;
-
-    /* Delete more window */
-    if (_more_window) {
-        evas_object_del (_more_window);
-        _more_window = NULL;
+        _scroller_bg      = NULL;
     }
 
     flush_memory ();
-
     check_time ("Exit ui_destroy_candidate_window");
 }
 
@@ -1366,28 +1218,32 @@ static void ui_settle_candidate_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (!_candidate_window) {
+    if (!_candidate_window)
         return;
-    } else if (!_candidate_window_show) {
-        ui_candidate_hide (false);
-        return;
-    }
 
     int spot_x, spot_y;
-    int candidate_width, candidate_height;
-    int x, y, width, height, x2, y2, height2;
+    int x, y, width, height;
     bool reverse = false;
 
     /* Get candidate window position */
     ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
-    /* Get exact candidate window size */
-    evas_object_geometry_get (_candidate_window, &x2, &y2, &width, &height);
-    candidate_width  = width;
-    candidate_height = height;
 
-    if (_candidate_left >= 0 || _candidate_top >= 0) {
-        spot_x = _candidate_left;
-        spot_y = _candidate_top;
+    int height2 = ui_candidate_get_valid_height ();
+
+    if (_ise_height >= 0) {
+        if (_candidate_angle == 90) {
+            spot_x = _screen_width - _ise_height - height2;
+            spot_y = 0;
+        } else if (_candidate_angle == 270) {
+            spot_x = _ise_height - (_candidate_height - height2);
+            spot_y = 0;
+        } else if (_candidate_angle == 180) {
+            spot_x = 0;
+            spot_y = _ise_height - (_candidate_height - height2);
+        } else {
+            spot_x = 0;
+            spot_y = _screen_height - _ise_height - height2;
+        }
     } else {
         spot_x = _spot_location_x;
         spot_y = _spot_location_y;
@@ -1398,64 +1254,74 @@ static void ui_settle_candidate_window (void)
             if (ise_rect.height <= (uint32)0 || ise_rect.height >= (uint32)_screen_width)
                 ise_rect.height = ISE_DEFAULT_HEIGHT_LANDSCAPE * _width_rate;
         } else {
-            if (ise_rect.height <= (uint32)0 || ise_rect.height >=(uint32) _screen_height)
+            if (ise_rect.height <= (uint32)0 || ise_rect.height >= (uint32) _screen_height)
                 ise_rect.height = ISE_DEFAULT_HEIGHT_PORTRAIT * _height_rate;
         }
-
-        /* Get aux+candidate window height */
-        if (evas_object_visible_get (_aux_area))
-            height2 = _candidate_port_height_min_2;
-        else
-            height2 = _candidate_port_height_min;
 
         int nOffset = _candidate_port_height_min / 3;
         if (_candidate_angle == 270) {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_width - (int)ise_rect.height + nOffset) {
                 reverse = true;
-                spot_x = _screen_width - _spot_location_top_y;
-                if (spot_x > _screen_width - (_indicator_height+candidate_height))
-                    spot_x = _screen_width - (_indicator_height+candidate_height);
+                spot_x = _screen_width - _spot_location_top_y - (_candidate_height - height2);
             } else {
-                spot_x = _screen_width - _spot_location_y - candidate_height;
+                spot_x = _screen_width - _spot_location_y - _candidate_height;
             }
         } else if (_candidate_angle == 90) {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_width - (int)ise_rect.height + nOffset) {
                 reverse = true;
-                spot_x = _spot_location_top_y - candidate_height;
-                spot_x = spot_x < _indicator_height ? _indicator_height : spot_x;
+                spot_x = _spot_location_top_y - height2;
             } else {
                 spot_x = spot_y;
             }
         } else if (_candidate_angle == 180) {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_height - (int)ise_rect.height + nOffset) {
                 reverse = true;
-                spot_y = _screen_height - _spot_location_top_y;
-                if (spot_y > _screen_height - (_indicator_height+candidate_height))
-                    spot_y = _screen_height - (_indicator_height+candidate_height);
+                spot_y = _screen_height - _spot_location_top_y - (_candidate_height - height2);
             } else {
-                spot_y = _screen_height - _spot_location_y - candidate_height;
+                spot_y = _screen_height - _spot_location_y - _candidate_height;
             }
         } else {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_height - (int)ise_rect.height + nOffset) {
                 reverse = true;
-                spot_y = _spot_location_top_y - candidate_height;
-                spot_y = spot_y < _indicator_height ? _indicator_height : spot_y;
+                spot_y = _spot_location_top_y - height2;
             } else {
                 spot_y = spot_y;
             }
         }
     }
 
-    if (_candidate_angle == 90 || _candidate_angle == 270) {
-        spot_y = (_screen_height - width) / 2;
+    if (_candidate_angle == 90) {
+        spot_y = (_screen_height - _candidate_width) / 2;
+        spot_x = spot_x < _indicator_height ? _indicator_height : spot_x;
+        if (spot_x > _screen_width - _candidate_height)
+            spot_x = _screen_width - _candidate_height;
+    } else if (_candidate_angle == 270) {
+        spot_y = (_screen_height - _candidate_width) / 2;
+        spot_x = spot_x < 0 ? 0 : spot_x;
+        if (spot_x > _screen_width - (_indicator_height+_candidate_height))
+            spot_x = _screen_width - (_indicator_height+_candidate_height);
+    } else if (_candidate_angle == 180) {
+        spot_x = (_screen_width - _candidate_width) / 2;
+        spot_y = spot_y < 0 ? 0 : spot_y;
+        if (spot_y > _screen_height - (_indicator_height+_candidate_height))
+            spot_y = _screen_height - (_indicator_height+_candidate_height);
     } else {
-        spot_x = (_screen_width - width) / 2;
+        spot_x = (_screen_width - _candidate_width) / 2;
+        spot_y = spot_y < _indicator_height ? _indicator_height : spot_y;
+        if (spot_y > _screen_height - _candidate_height)
+            spot_y = _screen_height - _candidate_height;
     }
 
     if (spot_x != x || spot_y != y) {
+        _candidate_x = spot_x;
+        _candidate_y = spot_y;
         evas_object_move (_candidate_window, spot_x, spot_y);
-        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+        if (evas_object_visible_get (_candidate_window))
+            _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
     }
+
+    if (!_candidate_window_show)
+        ui_candidate_hide (false);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1558,7 +1424,9 @@ static int efl_get_angle_for_root_window (Evas_Object *win_obj)
     int count;
     int angle = 0;
     unsigned char *prop_data = NULL;
-    Ecore_X_Window root_win = ecore_x_window_root_get (elm_win_xwindow_get (win_obj));
+    Ecore_X_Window root_win  = ecore_x_window_root_first_get ();
+    if (win_obj)
+        root_win = ecore_x_window_root_get (elm_win_xwindow_get (win_obj));
 
     ret = ecore_x_window_prop_property_get (root_win, ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
     if (ret && prop_data) {
@@ -1606,7 +1474,84 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     efl_disable_focus_for_app_window (win);
     efl_set_showing_effect_for_app_window (win, strEffect);
 
+    const char *szProfile[] = {"mobile", ""};
+    elm_win_profiles_set (win, szProfile, 1);
+
     return win;
+}
+
+/**
+ * @brief Get default zone geometry.
+ *
+ * @param x The zone x position.
+ * @param y The zone y position.
+ * @param w The zone width.
+ * @param h The zone height.
+ *
+ * @return EINA_TRUE if successful, otherwise return EINA_FALSE
+ */
+static Eina_Bool efl_get_default_zone_geometry_info (Ecore_X_Window root, uint *x, uint *y, uint *w, uint *h)
+{
+    Ecore_X_Atom    zone_geometry_atom;
+    Ecore_X_Window *zone_lists;
+    int             num_zone_lists;
+    int             num_ret;
+    Eina_Bool       ret;
+
+    zone_geometry_atom = ecore_x_atom_get ("_E_ILLUME_ZONE_GEOMETRY");
+    if (!zone_geometry_atom) {
+        /* Error... */
+        return EINA_FALSE;
+    }
+
+    uint geom[4];
+    num_zone_lists = ecore_x_window_prop_window_list_get (root, ECORE_X_ATOM_E_ILLUME_ZONE_LIST, &zone_lists);
+    if (num_zone_lists > 0) {
+        num_ret = ecore_x_window_prop_card32_get (zone_lists[0], zone_geometry_atom, geom, 4);
+        if (num_ret == 4) {
+            if (x) *x = geom[0];
+            if (y) *y = geom[1];
+            if (w) *w = geom[2];
+            if (h) *h = geom[3];
+            ret = EINA_TRUE;
+        } else {
+            ret = EINA_FALSE;
+        }
+    } else {
+        /* if there is no zone available */
+        ret = EINA_FALSE;
+    }
+
+    if (zone_lists) {
+        /* We must free zone_lists */
+        free (zone_lists);
+    }
+
+    return ret;
+}
+
+/**
+ * @brief Get screen resolution.
+ *
+ * @param width The screen width.
+ * @param height The screen height.
+ */
+static void efl_get_screen_resolution (int &width, int &height)
+{
+    static Evas_Coord scr_w = 0, scr_h = 0;
+
+    if (scr_w == 0 || scr_h == 0) {
+        uint w, h;
+        if (efl_get_default_zone_geometry_info (ecore_x_window_root_first_get (), NULL, NULL, &w, &h)) {
+            scr_w = w;
+            scr_h = h;
+        } else {
+            ecore_x_window_size_get (ecore_x_window_root_first_get (), &scr_w, &scr_h);
+        }
+    }
+
+    width  = scr_w;
+    height = scr_h;
 }
 
 
@@ -1635,25 +1580,26 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_reload_config              (slot (slot_reload_config));
     _panel_agent->signal_connect_focus_in                   (slot (slot_focus_in));
     _panel_agent->signal_connect_focus_out                  (slot (slot_focus_out));
+    _panel_agent->signal_connect_expand_candidate           (slot (slot_expand_candidate));
+    _panel_agent->signal_connect_contract_candidate         (slot (slot_contract_candidate));
     _panel_agent->signal_connect_update_factory_info        (slot (slot_update_factory_info));
     _panel_agent->signal_connect_update_spot_location       (slot (slot_update_spot_location));
+    _panel_agent->signal_connect_update_input_context       (slot (slot_update_input_context));
+    _panel_agent->signal_connect_update_ise_geometry        (slot (slot_update_ise_geometry));
     _panel_agent->signal_connect_show_aux_string            (slot (slot_show_aux_string));
     _panel_agent->signal_connect_show_lookup_table          (slot (slot_show_candidate_table));
     _panel_agent->signal_connect_hide_aux_string            (slot (slot_hide_aux_string));
     _panel_agent->signal_connect_hide_lookup_table          (slot (slot_hide_candidate_table));
     _panel_agent->signal_connect_update_aux_string          (slot (slot_update_aux_string));
     _panel_agent->signal_connect_update_lookup_table        (slot (slot_update_candidate_table));
-    _panel_agent->signal_connect_set_candidate_ui           (slot (slot_set_candidate_ui));
-    _panel_agent->signal_connect_get_candidate_ui           (slot (slot_get_candidate_ui));
-    _panel_agent->signal_connect_set_candidate_position     (slot (slot_set_candidate_position));
     _panel_agent->signal_connect_get_candidate_geometry     (slot (slot_get_candidate_geometry));
+    _panel_agent->signal_connect_get_input_panel_geometry   (slot (slot_get_input_panel_geometry));
     _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise_by_uuid));
     _panel_agent->signal_connect_get_ise_list               (slot (slot_get_ise_list));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
     _panel_agent->signal_connect_get_all_language           (slot (slot_get_all_language));
     _panel_agent->signal_connect_get_ise_language           (slot (slot_get_ise_language));
-    _panel_agent->signal_connect_set_isf_language           (slot (slot_set_isf_language));
     _panel_agent->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info_by_uuid));
     _panel_agent->signal_connect_set_keyboard_ise           (slot (slot_set_keyboard_ise));
     _panel_agent->signal_connect_get_keyboard_ise           (slot (slot_get_keyboard_ise));
@@ -1685,7 +1631,7 @@ static void slot_focus_in (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (!_candidate_window) {
-        ui_create_candidate_window (_candidate_style);
+        ui_create_candidate_window ();
     }
 }
 
@@ -1696,6 +1642,28 @@ static void slot_focus_out (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     ui_destroy_candidate_window ();
+}
+
+/**
+ * @brief Expand candidate slot function for PanelAgent.
+ */
+static void slot_expand_candidate (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_candidate_area_2 && !evas_object_visible_get (_candidate_area_2))
+        ui_candidate_window_more_button_cb (NULL, NULL, NULL, NULL);
+}
+
+/**
+ * @brief Contract candidate slot function for PanelAgent.
+ */
+static void slot_contract_candidate (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_candidate_area_2 && evas_object_visible_get (_candidate_area_2))
+        ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
 }
 
 /**
@@ -1740,14 +1708,67 @@ static void slot_update_spot_location (int x, int y, int top_y)
 }
 
 /**
+ * @brief The input context of ISE is changed.
+ *
+ * @param type  The event type.
+ * @param value The event value.
+ */
+static void slot_update_input_context (int type, int value)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
+        if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+            _ise_show = false;
+            set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+        } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+            _ise_show = true;
+            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+        }
+    }
+}
+
+/**
+ * @brief Update ise geometry.
+ *
+ * @param x      The x position in screen.
+ * @param y      The y position in screen.
+ * @param width  The ISE window width.
+ * @param height The ISE window height.
+ */
+static void slot_update_ise_geometry (int x, int y, int width, int height)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << x << " y:" << y << " width:" << width << " height:" << height << "...\n";
+
+    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+    if (hw_kbd_detect)
+        return;
+
+    int old_height = _ise_height;
+
+    _ise_width  = width;
+    _ise_height = height;
+
+    int angle = efl_get_angle_for_root_window (_candidate_window);
+    if (_candidate_angle != angle) {
+        _candidate_angle = angle;
+        ui_candidate_window_rotate (angle);
+    } else if (old_height != height) {
+        ui_settle_candidate_window ();
+    }
+
+    if (old_height != height && _ise_show)
+        set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+}
+
+/**
  * @brief Show aux slot function for PanelAgent.
  */
 static void slot_show_aux_string (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (_aux_area == NULL || evas_object_visible_get (_aux_area) ||
-        _candidate_angle == 90 || _candidate_angle == 270)
+    if (_aux_area == NULL || evas_object_visible_get (_aux_area))
         return;
 
     evas_object_show (_aux_area);
@@ -1806,9 +1827,6 @@ static void slot_hide_candidate_table (void)
     if (!_candidate_area_1)
         return;
 
-    if (_more_window && evas_object_visible_get (_more_window))
-        evas_object_hide (_more_window);
-
     if (evas_object_visible_get (_candidate_area_1) || evas_object_visible_get (_candidate_area_2)) {
         if (evas_object_visible_get (_candidate_area_1)) {
             evas_object_hide (_candidate_area_1);
@@ -1816,6 +1834,7 @@ static void slot_hide_candidate_table (void)
         }
         if (evas_object_visible_get (_candidate_area_2)) {
             evas_object_hide (_candidate_area_2);
+            evas_object_hide (_scroller_bg);
             evas_object_hide (_close_btn);
             _panel_agent->candidate_more_window_hide ();
         }
@@ -1823,6 +1842,33 @@ static void slot_hide_candidate_table (void)
 
         ui_candidate_hide (false);
         ui_settle_candidate_window ();
+    }
+}
+
+/**
+ * @brief Set hightlight text color and background color for edje object.
+ *
+ * @param item The edje object pointer.
+ * @param nForeGround The text color.
+ * @param nBackGround The background color.
+ * @param bSetBack The flag for background color.
+ */
+static void set_highlight_color (Evas_Object *item, uint32 nForeGround, uint32 nBackGround, bool bSetBack)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    int r, g, b, a, r2, g2, b2, a2, r3, g3, b3, a3;
+    if (edje_object_color_class_get (item, "text_color", &r, &g, &b, &a, &r2, &g2, &b2, &a2, &r3, &g3, &b3, &a3)) {
+        r = SCIM_RGB_COLOR_RED(nForeGround);
+        g = SCIM_RGB_COLOR_GREEN(nForeGround);
+        b = SCIM_RGB_COLOR_BLUE(nForeGround);
+        edje_object_color_class_set (item, "text_color", r, g, b, a, r2, g2, b2, a2, r3, g3, b3, a3);
+    }
+    if (bSetBack && edje_object_color_class_get (item, "rect_color", &r, &g, &b, &a, &r2, &g2, &b2, &a2, &r3, &g3, &b3, &a3)) {
+        r = SCIM_RGB_COLOR_RED(nBackGround);
+        g = SCIM_RGB_COLOR_GREEN(nBackGround);
+        b = SCIM_RGB_COLOR_BLUE(nBackGround);
+        edje_object_color_class_set (item, "rect_color", r, g, b, 255, r2, g2, b2, a2, r3, g3, b3, a3);
     }
 }
 
@@ -1839,18 +1885,31 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
     if (!_aux_area || (str.length () <= 0))
         return;
 
+    if (!evas_object_visible_get (_aux_area)) {
+        ui_candidate_show ();
+        slot_show_aux_string ();
+    }
+
     int x, y, width, height, item_width = 0;
     unsigned int window_width = 0, count = 0, i;
 
     Evas_Object *aux_edje = NULL;
 
-    /* Get selected aux index */
+    /* Get highlight item index */
     int    aux_index = -1, aux_start = 0, aux_end = 0;
-    String strAux    = str;
-    const char *buf  = str.c_str ();
-    if (buf[0] >= '0' && buf[0] <= '9') {
-        aux_index = buf[0] - 48;
-        strAux.erase (0, 1);
+    String strAux      = str;
+    bool   bSetBack    = false;
+    uint32 nForeGround = SCIM_RGB_COLOR(62, 207, 255);
+    uint32 nBackGround = SCIM_RGB_COLOR(0, 0, 0);
+    for (AttributeList::const_iterator ait = attrs.begin (); ait != attrs.end (); ++ait) {
+        if (aux_index == -1 && ait->get_type () == SCIM_ATTR_DECORATE) {
+            aux_index = ait->get_value ();
+        } else if (ait->get_type () == SCIM_ATTR_FOREGROUND) {
+            nForeGround = ait->get_value ();
+        } else if (ait->get_type () == SCIM_ATTR_BACKGROUND) {
+            nBackGround = ait->get_value ();
+            bSetBack = true;
+        }
     }
 
     std::vector<String> aux_list;
@@ -1864,25 +1923,21 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
 
     for (i = 0; i < aux_list.size (); i++) {
         count++;
-        if (i >= _aux_items.size ()) {
-            aux_edje = edje_object_add (evas_object_evas_get (_candidate_window));
-            edje_object_file_set (aux_edje, _candidate_edje_file.c_str (), "aux");
-            edje_object_text_class_set (aux_edje, "aux_text_class", _candidate_font_name.c_str (), _aux_font_size);
-            elm_table_pack (_aux_table, aux_edje, i, 0, 1, 1);
-            evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_AUX));
-            evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
-            evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_AUX));
-            evas_object_show (aux_edje);
-            _aux_items.push_back (aux_edje);
-        } else {
-            aux_edje = _aux_items [i];
-        }
+        aux_edje = edje_object_add (evas_object_evas_get (_candidate_window));
+        edje_object_file_set (aux_edje, _candidate_edje_file.c_str (), "aux");
+        edje_object_text_class_set (aux_edje, "aux_text_class", _candidate_font_name.c_str (), _aux_font_size);
         edje_object_part_text_set (aux_edje, "aux", aux_list [i].c_str ());
-        if (i == (unsigned int)aux_index)
+        elm_table_pack (_aux_table, aux_edje, i, 0, 1, 1);
+        evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_AUX));
+        evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
+        evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_AUX));
+        evas_object_show (aux_edje);
+        _aux_items.push_back (aux_edje);
+/*      if (i == (unsigned int)aux_index)
             edje_object_signal_emit (aux_edje, "aux,state,selected", "aux");
         else
             edje_object_signal_emit (aux_edje, "aux,state,unselected", "aux");
-
+*/
         evas_object_text_text_set (_tmp_aux_text, aux_list [i].c_str ());
         evas_object_geometry_get (_tmp_aux_text, &x, &y, &width, &height);
         item_width = width + 2*_blank_width;
@@ -1892,14 +1947,16 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
             aux_start = window_width;
             aux_end   = window_width + item_width;
         }
-        window_width = window_width + item_width + _blank_width;
+        window_width = window_width + item_width + 4;
     }
 
-    /* Remove redundant aux edje */
-    if (count < _aux_items.size ()) {
-        for (i = count; i < _aux_items.size (); i++)
-            evas_object_del (_aux_items [i]);
-        _aux_items.erase (_aux_items.begin () + count, _aux_items.end ());
+    // Set highlight item
+    for (AttributeList::const_iterator ait = attrs.begin (); ait != attrs.end (); ++ait) {
+        if (ait->get_type () == SCIM_ATTR_DECORATE) {
+            unsigned int index = ait->get_value ();
+            if (index < _aux_items.size ())
+                set_highlight_color (_aux_items [index], nForeGround, nBackGround, bSetBack);
+        }
     }
 
     int w, h;
@@ -1928,100 +1985,171 @@ static void update_table (const int table_type, const LookupTable &table)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    int item_num = table.get_current_page_size ();
+    if (item_num <= 0)
+        return;
+
     String     mbs;
     WideString wcs;
 
-    int i, x, y, width, height, item_width, item_number, item_0_width;
-    int item_num = table.get_current_page_size ();
+    AttributeList attrs;
+    int i, x, y, width, height, item_0_width;
 
-    {
-        _more_list.clear ();
+    int seperate_width  = 4;
+    int seperate_height = 52 * _height_rate;
+    int line_width      = _candidate_scroll_width;
+    int line_height     = _v_padding;
+    int total_width     = 0;
+    int current_width   = 0;
+    int line_count      = 0;
+    int more_item_count = 0;
+    int scroll_0_width  = _candidate_scroll_0_width_min;
 
-        if (_candidate_angle == 90 || _candidate_angle == 270)
-            item_number = _candidate_land_number;
-        else
-            item_number = _candidate_port_number;
+    if (_candidate_angle == 90 || _candidate_angle == 270)
+        scroll_0_width = _candidate_scroll_0_width_max;
+    else
+        scroll_0_width = _candidate_scroll_0_width_min;
 
-        item_width = (_candidate_scroll_width - 6*_width_rate - (item_number-1)*_h_padding) / item_number;
+    Evas *evas = evas_object_evas_get (_candidate_window);
+    for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++ i) {
+        if (_candidate_0 [i]) {
+            evas_object_del (_candidate_0 [i]);
+            _candidate_0 [i] = NULL;
+        }
+        if (_seperate_0 [i]) {
+            evas_object_del (_seperate_0 [i]);
+            _seperate_0 [i] = NULL;
+        }
+        if (_candidate_items [i]) {
+            evas_object_del (_candidate_items [i]);
+            _candidate_items [i] = NULL;
+        }
+        if (_seperate_items [i]) {
+            evas_object_del (_seperate_items [i]);
+            _seperate_items [i] = NULL;
+        }
+        if (_line_items [i]) {
+            evas_object_del (_line_items [i]);
+            _line_items [i] = NULL;
+        }
 
-        Evas *evas = evas_object_evas_get (_candidate_window);
-        for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++ i) {
-            if (i < item_num) {
-                wcs = table.get_candidate_in_current_page (i);
-                mbs = utf8_wcstombs (wcs);
-                _more_list.push_back (mbs);
-
-                if (_candidate_0 [i]) {
-                    evas_object_del (_candidate_0 [i]);
-                    _candidate_0 [i] = NULL;
+        if (i < item_num) {
+            bool   bHighLight  = false;
+            bool   bSetBack    = false;
+            uint32 nForeGround = SCIM_RGB_COLOR(249, 249, 249);
+            uint32 nBackGround = SCIM_RGB_COLOR(0, 0, 0);
+            attrs = table.get_attributes_in_current_page (i);
+            for (AttributeList::const_iterator ait = attrs.begin (); ait != attrs.end (); ++ait) {
+                if (ait->get_type () == SCIM_ATTR_DECORATE && ait->get_value () == SCIM_ATTR_DECORATE_HIGHLIGHT) {
+                    bHighLight  = true;
+                    nForeGround = SCIM_RGB_COLOR(62, 207, 255);
+                } else if (ait->get_type () == SCIM_ATTR_FOREGROUND) {
+                    bHighLight  = true;
+                    nForeGround = ait->get_value ();
+                } else if (ait->get_type () == SCIM_ATTR_BACKGROUND) {
+                    bSetBack    = true;
+                    nBackGround = ait->get_value ();
                 }
+            }
 
-                if (!_candidate_0 [i]) {
-                    _candidate_0 [i] = edje_object_add (evas);
-                    edje_object_file_set (_candidate_0 [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
-                    edje_object_text_class_set (_candidate_0 [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_max_size);
-                    elm_table_pack (_candidate_0_table, _candidate_0 [i], i, 0, 1, 1);
-                    evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
-                    evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
-                    evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
-                    evas_object_show (_candidate_0 [i]);
-                }
+            wcs = table.get_candidate_in_current_page (i);
+            mbs = utf8_wcstombs (wcs);
+
+            if (!_candidate_0 [i] && total_width < scroll_0_width) {
+                _candidate_0 [i] = edje_object_add (evas);
+                edje_object_file_set (_candidate_0 [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
+                edje_object_text_class_set (_candidate_0 [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
+                evas_object_show (_candidate_0 [i]);
+
                 edje_object_part_text_set (_candidate_0 [i], "candidate", mbs.c_str ());
                 /* Resize _candidate_0 [i] display width */
                 evas_object_text_text_set (_tmp_candidate_text, mbs.c_str ());
                 evas_object_geometry_get (_tmp_candidate_text, &x, &y, &width, &height);
-                item_0_width = width + 3.5*_blank_width;
+                item_0_width = width + 2*_blank_width;
                 item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
                 evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
+                if (bHighLight || bSetBack) {
+                    set_highlight_color (_candidate_0 [i], nForeGround, nBackGround, bSetBack);
+                }
 
-                if (!_candidate_items [i]) {
-                    _candidate_items [i] = edje_object_add (evas);
-                    edje_object_file_set (_candidate_items [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
-                    edje_object_text_class_set (_candidate_items [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_max_size);
-                    evas_object_size_hint_min_set (_candidate_items [i], item_width, _item_min_height);
-                    evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
-                    evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
-                    evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
-                    elm_table_pack (_candidate_table, _candidate_items [i], i%item_number, i/item_number, 1, 1);
-                }
-                evas_object_show (_candidate_items [i]);
-                edje_object_part_text_set (_candidate_items [i], "candidate", mbs.c_str ());
-                ui_candidate_text_update_font_size (_candidate_items [i], item_width - 22*_width_rate, mbs);
-            } else {
-                if (_candidate_0 [i]) {
-                    evas_object_del (_candidate_0 [i]);
-                    _candidate_0 [i] = NULL;
-                }
-                if (_candidate_items [i]) {
-                    if (i < item_number) {  /* Only hide for first line */
-                        evas_object_hide (_candidate_items [i]);
-                    } else {
-                        evas_object_del (_candidate_items [i]);
-                        _candidate_items [i] = NULL;
+                // Add first item
+                if (i == 0) {
+                    elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, 0, item_0_width, _item_min_height);
+                    total_width += item_0_width;
+                    continue;
+                } else {
+                    total_width += (item_0_width + seperate_width);
+                    if (total_width < scroll_0_width) {
+                        _seperate_0 [i] = edje_object_add (evas);
+                        edje_object_file_set (_seperate_0 [i], _candidate_edje_file.c_str (), "seperate_line");
+                        evas_object_size_hint_min_set (_seperate_0 [i], seperate_width, seperate_height);
+                        elm_table_pack (_candidate_0_table, _seperate_0 [i], total_width - item_0_width - seperate_width, (_item_min_height - seperate_height)/2, seperate_width, seperate_height);
+                        evas_object_show (_seperate_0 [i]);
+
+                        elm_table_pack (_candidate_0_table, _candidate_0 [i], total_width - item_0_width, 0, item_0_width, _item_min_height);
+                        continue;
                     }
                 }
             }
-        }
-        elm_scroller_region_show (_candidate_area_1, 0, 0, _candidate_scroll_width, _item_min_height);
-        elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, item_num * 66 * _height_rate - _v_padding);
-        flush_memory ();
 
-        /* Update more window */
-        if (_more_window && evas_object_visible_get (_more_window)) {
-            _page_no = 1;
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                _pages = _more_list.size () / ISF_LAND_BUTTON_NUMBER;
-                if ((_more_list.size () % ISF_LAND_BUTTON_NUMBER) > 0)
-                    _pages += 1;
-            } else {
-                _pages = _more_list.size () / ISF_PORT_BUTTON_NUMBER;
-                if ((_more_list.size () % ISF_PORT_BUTTON_NUMBER) > 0)
-                    _pages += 1;
+            if (!_candidate_items [i]) {
+                _candidate_items [i] = edje_object_add (evas);
+                edje_object_file_set (_candidate_items [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
+                edje_object_text_class_set (_candidate_items [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
+                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
+                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
+                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
+                evas_object_show (_candidate_items [i]);
             }
-
-            ui_more_window_update ();
+            if (bHighLight || bSetBack) {
+                set_highlight_color (_candidate_items [i], nForeGround, nBackGround, bSetBack);
+            }
+            edje_object_part_text_set (_candidate_items [i], "candidate", mbs.c_str ());
+            /* Resize _candidate_items [i] display width */
+            evas_object_text_text_set (_tmp_candidate_text, mbs.c_str ());
+            evas_object_geometry_get (_tmp_candidate_text, &x, &y, &width, &height);
+            item_0_width = width + 2*_blank_width;
+            item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
+            evas_object_size_hint_min_set (_candidate_items [i], item_0_width, _item_min_height);
+            if (current_width + item_0_width > _candidate_scroll_width) {
+                current_width = 0;
+                line_count++;
+            }
+            if (current_width == 0 && !_line_items [i]) {
+                _line_items [i] = edje_object_add (evas);
+                edje_object_file_set (_line_items [i], _candidate_edje_file.c_str (), "popup_line");
+                evas_object_size_hint_min_set (_line_items [i], line_width, line_height);
+                x = 0;
+                y = line_count*(_item_min_height+line_height);
+                elm_table_pack (_candidate_table, _line_items [i], x, y, line_width, line_height);
+                evas_object_show (_line_items [i]);
+            }
+            if (current_width != 0 && !_seperate_items [i]) {
+                _seperate_items [i] = edje_object_add (evas);
+                edje_object_file_set (_seperate_items [i], _candidate_edje_file.c_str (), "seperate_line");
+                evas_object_size_hint_min_set (_seperate_items [i], seperate_width, seperate_height);
+                x = current_width;
+                y = line_count*(_item_min_height+line_height) + line_height + (_item_min_height - seperate_height)/2;
+                elm_table_pack (_candidate_table, _seperate_items [i], x, y, seperate_width, seperate_height);
+                evas_object_show (_seperate_items [i]);
+                current_width += seperate_width;
+            }
+            x = current_width;
+            y = line_count*(_item_min_height+line_height) + line_height;
+            elm_table_pack (_candidate_table, _candidate_items [i], x, y, item_0_width, _item_min_height);
+            current_width += item_0_width;
+            more_item_count++;
         }
     }
+    _panel_agent->update_displayed_candidate_number (item_num - more_item_count);
+    if (more_item_count == 0 && evas_object_visible_get (_candidate_area_2))
+        ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
+    elm_scroller_region_show (_candidate_area_1, 0, 0, _candidate_scroll_width, _item_min_height);
+    elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, _item_min_height);
+    flush_memory ();
 }
 
 /**
@@ -2037,59 +2165,12 @@ static void slot_update_candidate_table (const LookupTable &table)
         return;
 
     if (!evas_object_visible_get (_candidate_area_1) &&
-        !evas_object_visible_get (_candidate_area_2) &&
-        !evas_object_visible_get (_more_window)) {
+        !evas_object_visible_get (_candidate_area_2)) {
         ui_candidate_show ();
         slot_show_candidate_table ();
     }
 
     update_table (ISF_CANDIDATE_TABLE, table);
-}
-
-/**
- * @brief Set candidate style slot function for PanelAgent.
- *
- * @param style The new candidate style.
- * @param mode The new candidate mode.
- */
-static void slot_set_candidate_ui (int style, int mode)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-}
-
-/**
- * @brief Get candidate style slot function for PanelAgent.
- *
- * @param style The current candidate style.
- * @param mode The current candidate mode.
- */
-static void slot_get_candidate_ui (int &style, int &mode)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    style = _candidate_style;
-    mode  = _candidate_mode;
-
-    if (_more_window_enable == true && _candidate_mode == PORTRAIT_VERTICAL_CANDIDATE_MODE)
-        mode = PORTRAIT_MORE_CANDIDATE_MODE;
-    else if (_more_window_enable == true && _candidate_mode == LANDSCAPE_VERTICAL_CANDIDATE_MODE)
-        mode = LANDSCAPE_MORE_CANDIDATE_MODE;
-}
-
-/**
- * @brief Set candidate position slot function for PanelAgent.
- *
- * @param left The new candidate left position.
- * @param top The new candidate top position.
- */
-static void slot_set_candidate_position (int left, int top)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    _candidate_left = left;
-    _candidate_top  = top;
-
-    ui_settle_candidate_window ();
 }
 
 /**
@@ -2099,23 +2180,71 @@ static void slot_set_candidate_position (int left, int top)
  */
 static void slot_get_candidate_geometry (struct rectinfo &info)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
     int x      = 0;
     int y      = 0;
-    int width  = 0;//_candidate_port_width;
-    int height = 0;//_candidate_port_height_min;
-    if (_candidate_window) {
+    int width  = 0;
+    int height = 0;
+    if (_candidate_window && evas_object_visible_get (_candidate_window)) {
         /* Get candidate window position */
-        ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
+        /*ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);*/
         /* Get exact candidate window size */
-        int x2, y2;
-        evas_object_geometry_get (_candidate_window, &x2, &y2, &width, &height);
+        /*int x2, y2;
+        evas_object_geometry_get (_candidate_window, &x2, &y2, &width, &height);*/
+
+        x      = _candidate_x;
+        y      = _candidate_y;
+        width  = _candidate_width;
+        height = _candidate_height;
     }
     info.pos_x  = x;
     info.pos_y  = y;
-    info.width  = _candidate_width;
-    info.height = _candidate_height;
+    info.width  = width;
+    info.height = height;
+
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << info.pos_x << " y:" << info.pos_y
+                        << " width:" << info.width << " height:" << info.height << "\n";
+}
+
+/**
+ * @brief Get input panel geometry slot function for PanelAgent.
+ *
+ * @param info The data is used to store input panel position and size.
+ */
+static void slot_get_input_panel_geometry (struct rectinfo &info)
+{
+    VIRTUAL_KEYBOARD_STATE kbd_state = _ise_show ? KEYBOARD_STATE_ON : KEYBOARD_STATE_OFF;
+
+    if (_ise_width == 0 && _ise_height == 0) {
+        info.pos_x = 0;
+        if (_candidate_window && evas_object_visible_get (_candidate_window)) {
+            info.width  = _candidate_width;
+            info.height = _candidate_height;
+        }
+        int angle = efl_get_angle_for_root_window (NULL);
+        if (angle == 90 || angle == 270)
+            info.pos_y = _screen_width - info.height;
+        else
+            info.pos_y = _screen_height - info.height;
+    } else {
+        get_ise_geometry (info, kbd_state);
+        if (_ise_width == -1 && _ise_height == -1) {
+            ; // Floating style
+        } else {
+            if (_candidate_window && evas_object_visible_get (_candidate_window)) {
+                int height = ui_candidate_get_valid_height ();
+                if ((_candidate_height - height) > _ise_height) {
+                    info.pos_y  = info.pos_y + info.height - _candidate_height;
+                    info.height = _candidate_height;
+                } else {
+                    info.pos_y  -= height;
+                    info.height += height;
+                }
+            }
+        }
+    }
+
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << info.pos_x << " y:" << info.pos_y
+                        << " width:" << info.width << " height:" << info.height << "\n";
 }
 
 /**
@@ -2125,7 +2254,7 @@ static void slot_get_candidate_geometry (struct rectinfo &info)
  */
 static void slot_set_active_ise_by_uuid (const String &ise_uuid, bool changeDefault)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << ise_uuid << ")\n";
 
     set_active_ise_by_uuid (ise_uuid, 0, changeDefault);
 }
@@ -2145,9 +2274,9 @@ static bool slot_get_ise_list (std::vector<String> &list)
     isf_load_ise_information (ALL_ISE, _config);
     bool ret = isf_update_ise_list (ALL_ISE, _config);
 
-    std::vector<String> selected_lang;
-    isf_get_enabled_languages (selected_lang);
-    isf_get_enabled_ise_names_in_languages (selected_lang, list);
+    std::vector<String> langs;
+    isf_get_all_languages (langs);
+    isf_get_all_ise_names_in_languages (langs, list);
 
     _panel_agent->update_ise_list (list);
     return ret;
@@ -2191,8 +2320,7 @@ static void slot_get_language_list (std::vector<String> &list)
 
     for (; iter != _groups.end (); iter++) {
         lang_name = scim_get_language_name (iter->first);
-        if (std::find (_disabled_langs.begin (), _disabled_langs.end (), lang_name) ==_disabled_langs.end ())
-            list.push_back (lang_name);
+        list.push_back (lang_name);
     }
 }
 
@@ -2235,21 +2363,6 @@ static void slot_get_ise_language (char *name, std::vector<String> &list)
 }
 
 /**
- * @brief Set ISF language slot function for PanelAgent.
- *
- * @param language The ISF language string.
- */
-static void slot_set_isf_language (const String &language)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (language.length () <= 0)
-        return;
-
-    isf_set_language (language);
-}
-
-/**
  * @brief Get ISE information slot function for PanelAgent.
  *
  * @param uuid The ISE uuid.
@@ -2280,21 +2393,20 @@ static bool slot_get_ise_info_by_uuid (const String &uuid, ISE_INFO &info)
  * @brief Set keyboard ISE slot function for PanelAgent.
  *
  * @param type The variable should be ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID.
- * @param ise The variable is ISE uuid.
+ * @param uuid The variable is ISE uuid.
  */
-static void slot_set_keyboard_ise (int type, const String &ise)
+static void slot_set_keyboard_ise (int type, const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (ise.length () <= 0)
+    if (uuid.length () <= 0)
         return;
 
-    String ise_uuid = ise;
     String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
-    _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, ise_uuid);
+    _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
     _config->flush ();
 
-    _panel_agent->change_factory (ise_uuid);
+    _panel_agent->change_factory (uuid);
 }
 
 /**
@@ -2307,19 +2419,7 @@ static void slot_get_keyboard_ise (String &ise_name, String &ise_uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
-    String uuid     = _config->read (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, String (""));
-    if (ise_uuid.length () > 0)
-        uuid = ise_uuid;
-    for (unsigned int i = 0; i < _uuids.size (); i++) {
-        if (uuid == _uuids[i]) {
-            ise_name = _names[i];
-            ise_uuid = uuid;
-            return;
-        }
-    }
-    ise_name = String ("");
-    ise_uuid = String ("");
+    isf_get_keyboard_ise (ise_uuid, ise_name, _config);
 }
 
 /**
@@ -2425,41 +2525,41 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
 }
 
 /**
+ * @brief Handler function for HelperManager input.
+ *
+ * @param user_data Data to pass when it is called.
+ * @param fd_handler The Ecore Fd handler.
+ *
+ * @return ECORE_CALLBACK_RENEW
+ */
+static Eina_Bool helper_manager_input_handler (void *user_data, Ecore_Fd_Handler *fd_handler)
+{
+    if (_panel_agent->has_helper_manager_pending_event ()) {
+        if (!_panel_agent->filter_helper_manager_event ()) {
+            std::cerr << "_panel_agent->filter_helper_manager_event () is failed!!!\n";
+            elm_exit ();
+        }
+    } else {
+        std::cerr << "_panel_agent->has_helper_manager_pending_event () is failed!!!\n";
+        elm_exit ();
+    }
+
+    return ECORE_CALLBACK_RENEW;
+}
+
+/**
  * @brief Callback function for abnormal signal.
  *
  * @param sig The signal.
  */
 static void signalhandler (int sig)
 {
-    SCIM_DEBUG_MAIN (1) << __FUNCTION__ << "...\n";
+    SCIM_DEBUG_MAIN (1) << __FUNCTION__ << " Signal=" << sig << "\n";
 
-    if (_panel_agent != NULL)
-        _panel_agent->stop ();
     elm_exit ();
 }
 
 #if HAVE_VCONF
-/**
- * @brief Callback function for setting theme change.
- *
- * @param key The key node.
- * @param data The data to pass to this callback.
- */
-static void setting_theme_changed_cb (keynode_t *key, void* data)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    char *theme_str = vconf_get_str (VCONFKEY_THEME);
-    if (!theme_str) return;
-
-    if (String (theme_str) == "tizen-black" || String (theme_str) == "tizen-black-hd")
-        _candidate_edje_file = String (EFL_CANDIDATE_THEME1);
-    else if (String (theme_str) == "tizen" || String (theme_str) == "tizen-hd")
-        _candidate_edje_file = String (EFL_CANDIDATE_THEME2);
-
-    free (theme_str);
-}
-
 /**
  * @brief Update keyboard ISE name when display language is changed.
  *
@@ -2599,7 +2699,6 @@ static void hibernation_enter_cb (void *data)
 
     /* Remove callback function for input language and display language */
     vconf_ignore_key_changed (VCONFKEY_LANGSET, display_language_changed_cb);
-    vconf_ignore_key_changed (VCONFKEY_THEME, setting_theme_changed_cb);
 }
 
 /**
@@ -2619,8 +2718,6 @@ static void hibernation_leave_cb (void *data)
     }
     /* Add callback function for input language and display language */
     vconf_notify_key_changed (VCONFKEY_LANGSET, display_language_changed_cb, NULL);
-    vconf_notify_key_changed (VCONFKEY_THEME, setting_theme_changed_cb, NULL);
-    setting_theme_changed_cb (NULL, NULL);
 
     scim_global_config_update ();
     set_language_and_locale ();
@@ -2676,6 +2773,7 @@ static void change_hw_and_sw_keyboard (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     unsigned int val = 0;
+    bool fixed = _config->read (String (ISF_CONFIG_PANEL_FIXED_FOR_HARDWARE_KBD), true);
 
     _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
     if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1)) {
@@ -2684,13 +2782,31 @@ static void change_hw_and_sw_keyboard (void)
             String uuid, name;
             isf_get_keyboard_ise (uuid, name, _config);
             set_active_ise_by_uuid (uuid, 0, 1);
+            if (fixed) {
+                _ise_width  = 0;
+                _ise_height = 0;
+                if (_candidate_window && _more_btn && _close_btn) {
+                    edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "close_button");
+                    edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "more_button");
+                }
+            } else {
+                _ise_width  = -1;
+                _ise_height = -1;
+            }
+            _ise_show = false;
 
             _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
         } else {
             String previous_helper = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, _initial_ise.uuid);
             set_active_ise_by_uuid (previous_helper, 0, 1);
+            if (_candidate_window && _more_btn && _close_btn) {
+                edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
+                edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
+            }
         }
     }
+    _config->write (ISF_CONFIG_PANEL_FIXED_FOR_HARDWARE_KBD, fixed);
+    _config->flush ();
     _config->reload ();
 }
 
@@ -2723,11 +2839,10 @@ int main (int argc, char *argv [])
     struct tms    tiks_buf;
     _clock_start = times (&tiks_buf);
 
-    int           i, ret1, hib_fd;
+    int           i, ret1, hib_fd, fd;
 #ifdef WAIT_WM
     int           try_count       = 0;
 #endif
-    size_t        j;
     int           ret             = 0;
 
     bool          daemon          = false;
@@ -2738,9 +2853,9 @@ int main (int argc, char *argv [])
     ConfigModule *config_module   = NULL;
     String        config_name     = String ("socket");
     String        display_name    = String ();
-    char         *clang           = NULL;
 
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
+    Ecore_Fd_Handler *helper_manager_handler = NULL;
     Ecore_Event_Handler *xclient_msg_handler = NULL;
     Ecore_Event_Handler *prop_change_handler = NULL;
 
@@ -2867,10 +2982,6 @@ int main (int argc, char *argv [])
         _config = new DummyConfig ();
     }
 
-    signal (SIGQUIT, signalhandler);
-    signal (SIGTERM, signalhandler);
-    signal (SIGINT,  signalhandler);
-
     setenv ("ELM_FPS", "6000", 1);
     setenv ("ELM_ENGINE", "software_x11", 1); /* to avoid the inheritance of ELM_ENGINE */
     set_language_and_locale ();
@@ -2880,7 +2991,7 @@ int main (int argc, char *argv [])
         if (check_file ("/tmp/.wm_ready"))
             break;
 
-        if (try_count == 100) {
+        if (try_count == 6000) {
             std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of window manager....\n";
             break;
         }
@@ -2939,23 +3050,24 @@ int main (int argc, char *argv [])
     for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; i++) {
         _candidate_0 [i]     = NULL;
         _candidate_items [i] = NULL;
+        _seperate_0 [i]      = NULL;
+        _seperate_items [i]  = NULL;
+        _line_items [i]      = NULL;
     }
 
-    efl_get_screen_size (_screen_width, _screen_height);
+    efl_get_screen_resolution (_screen_width, _screen_height);
 
-    _width_rate       = (float)(_screen_width / 480.0);
-    _height_rate      = (float)(_screen_height / 800.0);
+    _width_rate       = (float)(_screen_width / 720.0);
+    _height_rate      = (float)(_screen_height / 1280.0);
     _blank_width      = (int)(_blank_width * _width_rate);
     _item_min_width   = (int)(_item_min_width * _width_rate);
     _item_min_height  = (int)(_item_min_height * _height_rate);
-    _aux_font_size    = (int)(_aux_font_size * _width_rate);
+    _candidate_width  = (int)(_candidate_port_width * _width_rate);
+    _candidate_height = (int)(_candidate_port_height_min * _height_rate);
+    _indicator_height = (int)(_indicator_height * _height_rate);
 
-    _button_font_size        = (int)(_button_font_size * _width_rate);
-    _candidate_font_max_size = (int)(_candidate_font_max_size * _width_rate);
-    _candidate_font_min_size = (int)(_candidate_font_min_size * _width_rate);
-
-    _more_port_height = (int)(_more_port_height * _height_rate);
-    _more_land_height = (int)(_more_land_height * _width_rate);
+    _aux_font_size       = (int)(_aux_font_size * _width_rate);
+    _candidate_font_size = (int)(_candidate_font_size * _width_rate);
 
     /* Load ISF configuration */
     load_config ();
@@ -2972,21 +3084,6 @@ int main (int argc, char *argv [])
     _initial_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), (int)TOOLBAR_HELPER_MODE);
     _initial_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String ("ff110940-b8f0-4062-9ff6-a84f4f3575c0"));
     _initial_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_NAME), String ("Input Pad"));
-
-    for (j = 0; j < _uuids.size (); ++j) {
-        if (!_uuids[j].compare (_initial_ise.uuid))
-            break;
-    }
-
-    if (j == _uuids.size ()) {
-        for (j = 0; j < _uuids.size (); ++j) {
-            if (_modes[j] == TOOLBAR_HELPER_MODE) {
-                _initial_ise.type = _modes[j];
-                _initial_ise.uuid = _uuids[j];
-                _initial_ise.name = _names[j];
-            }
-        }
-    }
 
     if (daemon) {
         check_time ("ISF Panel EFL run as daemon");
@@ -3005,58 +3102,61 @@ int main (int argc, char *argv [])
     if (ret1 == -1)
         std::cerr << "heynoti_attach_handler () is failed!!!\n";
 
-    clang = vconf_get_str (VCONFKEY_ISF_INPUT_LANG_STR);
-    if (clang == NULL) {
-        std::cerr << "\nGet vconf key value failed, set active language to Automatic...\n";
-        isf_set_language ("Automatic");
-    } else {
-        isf_set_language (String (clang));
-    }
-
     if (!ecore_file_exists ("/opt/etc/.hib_capturing")) {
         /* in case of normal booting */
         hibernation_leave_cb ((void *)1);
     }
-
-    /* set hibernation ready state flag */
-    vconf_set_int ("memory/hibernation/isf_ready", 1);
 #endif
+
+    /* create hibernation ready file */
+    FILE *rfd;
+    rfd = fopen (ISF_READY_FILE, "w+");
+    if (rfd)
+        fclose (rfd);
 
     xclient_msg_handler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, x_event_client_message_cb, NULL);
     ecore_x_event_mask_set (ecore_x_window_root_first_get (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
     prop_change_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, x_event_property_change_cb, NULL);
+    fd = _panel_agent->get_helper_manager_id ();
+    if (fd >= 0)
+        helper_manager_handler = ecore_main_fd_handler_add (fd, ECORE_FD_READ, helper_manager_input_handler, NULL, NULL, NULL);
 
     /* Set elementary scale */
-    {
-        Evas_Coord win_w = 0, win_h = 0;
-        ecore_x_window_size_get (ecore_x_window_root_first_get (), &win_w, &win_h);
-        if (win_w) {
-            elm_config_scale_set (win_w / 720.0f);
-        }
-    }
+    if (_screen_width)
+        elm_config_scale_set (_screen_width / 720.0f);
+
+    signal (SIGQUIT, signalhandler);
+    signal (SIGTERM, signalhandler);
+    signal (SIGINT,  signalhandler);
+    signal (SIGHUP,  signalhandler);
 
     check_time ("EFL Panel launch time");
 
     elm_run ();
-    elm_shutdown ();
 
     _config->flush ();
     ret = 0;
 
     ecore_event_handler_del (xclient_msg_handler);
     ecore_event_handler_del (prop_change_handler);
+    if (helper_manager_handler)
+        ecore_main_fd_handler_del (helper_manager_handler);
 #if HAVE_VCONF
     hibernation_enter_cb (NULL);
     heynoti_close (hib_fd);
 #endif
 
 cleanup:
+    ui_candidate_delete_check_size_timer ();
+
     if (!_config.null ())
         _config.reset ();
     if (config_module)
         delete config_module;
-    if (_panel_agent)
+    if (_panel_agent) {
+        _panel_agent->stop ();
         delete _panel_agent;
+    }
 
     delete []new_argv;
 

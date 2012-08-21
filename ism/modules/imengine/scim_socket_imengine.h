@@ -4,9 +4,9 @@
 
 /* ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable. */
 
-/* 
+/*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
  *
  *
@@ -87,6 +87,8 @@ public:
     virtual void update_lookup_table_page_size (unsigned int page_size);
     virtual void lookup_table_page_up ();
     virtual void lookup_table_page_down ();
+    virtual void set_prediction_allow (bool allow);
+    virtual void set_layout (unsigned int layout);
     virtual void reset_option ();
     virtual void reset ();
     virtual void focus_in ();

@@ -288,6 +288,13 @@ public:
     Connection signal_connect_move_preedit_caret            (PanelClientSlotInt                     *slot);
 
     /**
+     * @brief Signal: update preedit caret
+     *
+     * slot prototype: void update_preedit_caret (int context, int caret_pos);
+     */
+    Connection signal_connect_update_preedit_caret          (PanelClientSlotInt                     *slot);
+
+    /**
      * @brief Signal: select aux
      *
      * slot prototype: void select_aux (int context, int aux_index);

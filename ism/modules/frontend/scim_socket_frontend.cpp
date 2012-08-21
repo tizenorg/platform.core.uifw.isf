@@ -5,7 +5,7 @@
 
 /*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
  *
  *
@@ -110,7 +110,7 @@ extern "C" {
 }
 
 /**
- * To reduce the number of the servers, we merge the function of 
+ * To reduce the number of the servers, we merge the function of
  * HelperManager process into the SocketFrontEnd.
 */
 
@@ -122,7 +122,7 @@ static std::vector<String>  __load_engine_list;
 void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine_list)
 {
     SCIM_DEBUG_MAIN (1) << "load_helper_modules ()\n";
-    
+
     size_t i;
 
     __load_engine_list.clear ();
@@ -236,6 +236,9 @@ void SocketFrontEnd::run_helper (const Socket &client)
             if (pid < 0) return;
 
             if (pid == 0) {
+                if (m_socket_server.is_running ())
+                    m_socket_server.shutdown ();
+
                 const char *argv [] = { SCIM_HELPER_LAUNCHER_PROGRAM,
                                    "--daemon",
                                    "--config", const_cast<char*> (config.c_str ()),
@@ -701,6 +704,10 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             socket_lookup_table_page_up (id);
         else if (cmd == SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_DOWN)
             socket_lookup_table_page_down (id);
+        else if (cmd == ISM_TRANS_CMD_SET_PREDICTION_ALLOW)
+            socket_set_prediction_allow (id);
+        else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
+            socket_set_layout (id);
         else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
             socket_reset_option (id);
         else if (cmd == SCIM_TRANS_CMD_RESET)
@@ -776,7 +783,7 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             m_current_socket_client     = -1;
             m_current_socket_client_key = 0;
             return;
-        }else if(cmd == SCIM_TRANS_CMD_HELPER_MANAGER_GET_HELPER_LIST) {    
+        } else if (cmd == SCIM_TRANS_CMD_HELPER_MANAGER_GET_HELPER_LIST) {
             SCIM_DEBUG_FRONTEND (1) << "receive cmd SCIM_TRANS_CMD_HELPER_MANAGER_GET_HELPER_LIST\n";
             get_helper_list (client);
         } else if (cmd == SCIM_TRANS_CMD_HELPER_MANAGER_RUN_HELPER) {
@@ -819,7 +826,7 @@ SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &clie
 
     uint32 key;
     String type = scim_socket_accept_connection (key,
-                                                 String ("SocketFrontEnd,HelperLauncher"), 
+                                                 String ("SocketFrontEnd,HelperLauncher"),
                                                  String ("SocketIMEngine,SocketConfig,HelperManager"),
                                                  client,
                                                  m_socket_timeout);
@@ -827,7 +834,7 @@ SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &clie
     if (type.length ()) {
         ClientInfo info;
         info.key = key;
-        info.type = ((type == "SocketIMEngine") ? IMENGINE_CLIENT 
+        info.type = ((type == "SocketIMEngine") ? IMENGINE_CLIENT
                         : ((type == "SocketConfig") ? CONFIG_CLIENT : HELPER_MANAGER_CLIENT));
 
         SCIM_DEBUG_MAIN (2) << " Add client to repository. Type=" << type << " key=" << key << "\n";
@@ -836,7 +843,7 @@ SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &clie
     }
 
     // Client did not pass the registration process, close it.
-    SCIM_DEBUG_FRONTEND (2) << " Failed to create new connection.\n"; 
+    SCIM_DEBUG_FRONTEND (2) << " Failed to create new connection.\n";
     server->close_connection (client);
     return false;
 }
@@ -1147,7 +1154,7 @@ SocketFrontEnd::socket_move_preedit_caret (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        move_preedit_caret ((int) siid, caret); 
+        move_preedit_caret ((int) siid, caret);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1169,7 +1176,7 @@ SocketFrontEnd::socket_select_aux (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        select_aux ((int) siid, item); 
+        select_aux ((int) siid, item);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1191,7 +1198,7 @@ SocketFrontEnd::socket_select_candidate (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        select_candidate ((int) siid, item); 
+        select_candidate ((int) siid, item);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1213,7 +1220,7 @@ SocketFrontEnd::socket_update_lookup_table_page_size (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        update_lookup_table_page_size ((int) siid, size); 
+        update_lookup_table_page_size ((int) siid, size);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1233,7 +1240,7 @@ SocketFrontEnd::socket_lookup_table_page_up (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        lookup_table_page_up ((int) siid); 
+        lookup_table_page_up ((int) siid);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1253,7 +1260,51 @@ SocketFrontEnd::socket_lookup_table_page_down (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        lookup_table_page_down ((int) siid); 
+        lookup_table_page_down ((int) siid);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_set_prediction_allow (int /*client_id*/)
+{
+    uint32 siid;
+    uint32 allow;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (allow)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ").\n";
+
+        m_current_instance = (int) siid;
+
+        set_prediction_allow ((int) siid, (bool) allow);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_set_layout (int /*client_id*/)
+{
+    uint32 siid;
+    uint32 layout;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (layout)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ").\n";
+
+        m_current_instance = (int) siid;
+
+        set_layout ((int) siid, layout);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1273,7 +1324,7 @@ SocketFrontEnd::socket_reset_option (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        reset_option ((int) siid); 
+        reset_option ((int) siid);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1293,7 +1344,7 @@ SocketFrontEnd::socket_reset (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        reset ((int) siid); 
+        reset ((int) siid);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1313,7 +1364,7 @@ SocketFrontEnd::socket_focus_in (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        focus_in ((int) siid); 
+        focus_in ((int) siid);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1333,7 +1384,7 @@ SocketFrontEnd::socket_focus_out (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        focus_out ((int) siid); 
+        focus_out ((int) siid);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1355,7 +1406,7 @@ SocketFrontEnd::socket_trigger_property (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        trigger_property ((int) siid, property); 
+        trigger_property ((int) siid, property);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1379,7 +1430,7 @@ SocketFrontEnd::socket_process_helper_event (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        process_helper_event ((int) siid, helper_uuid, trans); 
+        process_helper_event ((int) siid, helper_uuid, trans);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;
@@ -1400,7 +1451,7 @@ SocketFrontEnd::socket_update_client_capabilities (int /*client_id*/)
 
         m_current_instance = (int) siid;
 
-        update_client_capabilities ((int) siid, cap); 
+        update_client_capabilities ((int) siid, cap);
 
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 

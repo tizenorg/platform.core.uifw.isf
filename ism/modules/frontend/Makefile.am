@@ -34,15 +34,40 @@ INCLUDES             = -I$(top_builddir) \
                        -DSCIM_ICONDIR=\"@SCIM_ICONDIR@\" \
                        -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\"
 
+if SCIM_BUILD_FRONTEND_X11
+CONFIG_FRONTEND_X11_MODULE    = x11.la
+SUBDIRS                       = imdkit
+endif
+
 if SCIM_BUILD_FRONTEND_SOCKET
 CONFIG_FRONTEND_SOCKET_MODULE = socket.la
 endif
 
-noinst_HEADERS     = scim_socket_frontend.h
+noinst_HEADERS     = scim_x11_ic.h \
+                     scim_x11_frontend.h \
+                     scim_socket_frontend.h
 
 moduledir          = @SCIM_MODULE_PATH@/$(SCIM_BINARY_VERSION)/FrontEnd
 
-module_LTLIBRARIES = $(CONFIG_FRONTEND_SOCKET_MODULE)
+module_LTLIBRARIES = $(CONFIG_FRONTEND_X11_MODULE) $(CONFIG_FRONTEND_SOCKET_MODULE)
+
+x11_la_SOURCES     = scim_x11_frontend.cpp \
+                     scim_x11_ic.cpp
+
+x11_la_CFLAGS      = @X_CFLAGS@
+
+x11_la_CXXFLAGS    = @X_CFLAGS@
+
+x11_la_LDFLAGS     = -avoid-version \
+                     -rpath $(moduledir) \
+                     -module \
+                     @LIBTOOL_EXPORT_OPTIONS@ \
+                     @X_LIBS@ \
+                     @LTLIBINTL@
+
+x11_la_LIBADD      = imdkit/libXimd.la \
+                     $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la \
+                     $(top_builddir)/ism/utils/libscim-x11utils@SCIM_EPOCH@.la
 
 socket_la_SOURCES  = scim_socket_frontend.cpp
 

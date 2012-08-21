@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.3.5205, isf@samsung.com)
+AC_INIT(isf, 2.3.5617, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
@@ -11,7 +11,7 @@ m4_pattern_allow([^AS_])
 # ISF version
 ISF_MAJOR_VERSION=2
 ISF_MINOR_VERSION=3
-ISF_MICRO_VERSION=5205
+ISF_MICRO_VERSION=5617
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -84,7 +84,7 @@ AM_CONFIG_HEADER([config.h])
 PLATFORM_INIT
 
 # Init gettext
-ALL_LINGUAS="zh_CN zh_TW zh_HK ja ko de fr it cs pa fi sv nl"
+ALL_LINGUAS="de_DE el_GR en es_ES fr_FR it_IT ja_JP ko_KR nl_NL pt_PT ru_RU tr_TR zh_CN zh_HK zh_TW"
 AM_GNU_GETTEXT
 
 # Init libtool
@@ -234,7 +234,7 @@ fi
 PKG_CHECK_MODULES(X11, [x11])
 
 # Check ui-gadget library
-PKG_CHECK_MODULES(UIGADGET, [ui-gadget])
+PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1])
 
 # Check utilX library
 PKG_CHECK_MODULES(UTILX, [utilX])
@@ -351,6 +351,11 @@ AC_ARG_ENABLE(config-socket,
               enable_config_socket=no,
               enable_config_socket=yes)
 
+AC_ARG_ENABLE(frontend-x11,
+              [  --disable-frontend-x11    Do not build X11 FrontEnd module],
+              enable_frontend_x11=no,
+              enable_frontend_x11=yes)
+
 AC_ARG_ENABLE(frontend-socket,
               [  --disable-frontend-socket Do not build Socket FrontEnd module],
               enable_frontend_socket=no,
@@ -396,6 +401,14 @@ AC_ARG_ENABLE(tray-icon,
               enable_tray_icon=no,
               enable_tray_icon=yes)
 
+if test "$have_x" = "yes"; then
+  SCIM_BUILD_X11_UTILS=1
+  enable_x11_utils=yes
+else
+  SCIM_BUILD_X11_UTILS=0
+  enable_x11_utils=no
+fi
+
 if test "$enable_hash_map" = "yes"; then
   AC_DEFINE(ENABLE_HASH_MAP,1,[Use hash map instead of map in libscim])
 fi
@@ -430,7 +443,14 @@ else
   SCIM_BUILD_CONFIG_SOCKET=0
   enable_config_socket=no
 fi
- 
+
+if test "$enable_frontend_x11" = "yes" -a "$have_x" = "yes"; then
+  SCIM_BUILD_FRONTEND_X11=1
+else
+  SCIM_BUILD_FRONTEND_X11=0
+  enable_frontend_x11=no
+fi
+
 if test "$enable_frontend_socket" = "yes" -a "$socket_ok" = "yes"; then
   SCIM_BUILD_FRONTEND_SOCKET=1
 else
@@ -535,6 +555,9 @@ AM_CONDITIONAL(SCIM_BUILD_CONFIG_SIMPLE,
 AM_CONDITIONAL(SCIM_BUILD_CONFIG_SOCKET,
                 [test "$enable_config_socket" = "yes"])
 
+AM_CONDITIONAL(SCIM_BUILD_FRONTEND_X11,
+                [test "$enable_frontend_x11" = "yes"])
+
 AM_CONDITIONAL(SCIM_BUILD_FRONTEND_SOCKET,
                 [test "$enable_frontend_socket" = "yes"])
 
@@ -552,6 +575,9 @@ AM_CONDITIONAL(SCIM_BUILD_FILTER_SCTC,
 
 AM_CONDITIONAL(SCIM_BUILD_GTK_UTILS,
                 [test "$enable_gtk_utils" = "yes"])
+
+AM_CONDITIONAL(SCIM_BUILD_X11_UTILS,
+                [test "$enable_x11_utils" = "yes"])
 
 AM_CONDITIONAL(SCIM_BUILD_TRAY_ICON,
                 [test "$enable_tray_icon" = "yes"])
@@ -574,6 +600,7 @@ AM_CONDITIONAL(ISF_BUILD_WITH_GCONF,
 AC_SUBST(SCIM_BUILD_TESTS)
 AC_SUBST(SCIM_BUILD_CONFIG_SIMPLE)
 AC_SUBST(SCIM_BUILD_CONFIG_SOCKET)
+AC_SUBST(SCIM_BUILD_FRONTEND_X11)
 AC_SUBST(SCIM_BUILD_FRONTEND_SOCKET)
 AC_SUBST(SCIM_BUILD_IMENGINE_RAWCODE)
 AC_SUBST(SCIM_BUILD_IMENGINE_TABLE)
@@ -583,6 +610,7 @@ AC_SUBST(SCIM_BUILD_GTK2_IMMODULE)
 AC_SUBST(SCIM_BUILD_SCIM_SETUP)
 AC_SUBST(SCIM_BUILD_PANEL_GTK)
 AC_SUBST(SCIM_BUILD_GTK_UTILS)
+AC_SUBST(SCIM_BUILD_X11_UTILS)
 AC_SUBST(ISF_BUILD_EFL_IMMODULE)
 AC_SUBST(ISF_BUILD_PANEL_EFL)
 AC_SUBST(ISF_BUILD_SETTING_EFL)
@@ -623,6 +651,7 @@ AC_CONFIG_FILES([Makefile
                  ism/data/icons/Makefile
                  ism/data/pixmaps/Makefile
                  ism/modules/Makefile
+                 ism/modules/frontend/imdkit/Makefile
                  ism/modules/frontend/Makefile
                  ism/modules/imengine/Makefile
                  ism/modules/filter/Makefile
@@ -658,6 +687,7 @@ Module options:
   Simple config module     $enable_config_simple
   Socket config module     $enable_config_socket
 
+  X11 FrontEnd module      $enable_frontend_x11
   Socket FrontEnd module   $enable_frontend_socket
 
   Socket IMEngine module   $enable_im_socket
@@ -665,6 +695,8 @@ Module options:
   SCTC Filter module       $enable_filter_sctc
 
   GTK2 Utility Library     $enable_gtk_utils
+  X11 Utility Library      $enable_x11_utils
+
   GTK2 IMModule            $enable_gtk2_immodule
   GTK2 IMModule dir        $GTK_IM_MODULEDIR
   GTK2 Panel GUI           $enable_panel_gtk

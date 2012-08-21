@@ -302,6 +302,26 @@ public:
      */
     bool append_candidate (ucs4_t               cand,
                            const AttributeList &attrs = AttributeList ());
+
+    /**
+     * @brief Add attributes for specified candidate.
+     *
+     * @param index - the candidate index in the lookup table.
+     * @param attrs - the attributes to control the display effect of this entry.
+     *
+     * @return true if success.
+     */
+    bool add_attributes (int                     index,
+                         const AttributeList    &attrs);
+
+    /**
+     * @brief Remove attributes for specified candidate.
+     *
+     * @param index - the candidate index in the lookup table.
+     *
+     * @return true if success.
+     */
+    bool remove_attributes (int                  index);
 };
 
 /** @} */

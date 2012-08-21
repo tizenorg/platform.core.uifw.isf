@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Shuo Liu <shuo0805.liu@samsung.com>, Hengliang Luo <hl.luo@samsung.com>
  *
@@ -52,10 +52,6 @@
 
 using namespace scim;
 
-
-#define SETTING_AUTO_CAPITALIZATION               "isfsetting/auto_capitalization"
-#define SETTING_SW_KEYBOARD_CONNECTION            "isfsetting/sw_keyboard_connection"
-
 #define _EDJ(x)                                   elm_layout_edje_get(x)
 #define ISF_SETTING_EDJ                           (SCIM_DATADIR "/isfsetting.edj")
 #define PADDING_X                                 25
@@ -79,6 +75,9 @@ enum {
 enum
 {
     AUTO_CAPITALIZATION_ITEM =0,
+    AUTO_CAPITALIZATION_TXT_ITEM =0,
+    AUTO_FULL_STOP_ITEM,
+    AUTO_FULL_STOP_TXT_ITEM,
     SW_KEYBOARD_GROUP_TITLE_ITEM,
     SW_KEYBOARD_SEL_ITEM,
     SW_ISE_OPTION_ITEM,
@@ -97,7 +96,7 @@ struct ItemData
 
 static struct ug_data *common_ugd ;
 static ItemData *p_items[ITEM_TOTAL_COUNT] ;
-static Elm_Genlist_Item_Class itc1, itc2, itc3, itc4 ,itc5, itcTitle, itcSeparator;
+static Elm_Genlist_Item_Class itc1, itc2, itc3, itc4 ,itc5,itcText, itcTitle, itcSeparator;
 static int mark = 0;
 static int hw_mark = 0;
 static Ecore_Event_Handler *_prop_change_handler = NULL;
@@ -123,7 +122,8 @@ static SetupModule *mdl              = NULL;
 static Evas_Object *sw_radio_grp     = NULL;      //test view raido group
 static std::vector<String> sw_iselist;
 
-static Eina_Bool f_auto_capitalization = EINA_FALSE;
+static Eina_Bool f_auto_capitalisation = EINA_FALSE;
+static Eina_Bool f_auto_full_stop = EINA_FALSE;
 
 static ConfigPointer _config;
 static char ise_bak[256] = {'\0'};
@@ -235,22 +235,14 @@ static void _ise_onoff_cb (void *data, Evas_Object *obj, void *event_info)
 
 static void set_autocap_mode()
 {
-    if (vconf_set_bool (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, f_auto_capitalization) == -1)
+    if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, f_auto_capitalisation) == -1)
         printf("Failed to set vconf autocapital\n");
 }
 
-static void _onoff_cb (void *data, Evas_Object *obj, void *event_info)
+static void set_auto_full_stop_mode()
 {
-    int index = (int)data;
-
-    if (index == AUTO_CAPITALIZATION_ITEM) {
-        if (elm_check_state_get (obj) == EINA_TRUE)
-            f_auto_capitalization = EINA_TRUE;
-        else
-            f_auto_capitalization = EINA_FALSE;
-
-        set_autocap_mode();
-    }
+    if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, f_auto_full_stop) == -1)
+        printf("Failed to set vconf autoperiod\n");
 }
 
 static String uuid_to_name(String uuid)
@@ -418,16 +410,21 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
     elm_label_wrap_width_set (label, win_w - PADDING_X * 2);
     elm_object_text_set (label, normal_langlist_str.c_str());
     elm_object_part_content_set (layout, "content", label);
-
     elm_object_content_set (scroller, layout);
 
     //Push the layout along with function buttons and title
-    Elm_Object_Item *it = elm_naviframe_item_push (common_ugd->naviframe, _T(sw_iselist[index].c_str()), NULL, NULL, scroller, NULL);
+    Elm_Object_Item *it = elm_naviframe_item_push(common_ugd->naviframe, sw_iselist[index].c_str(), NULL, NULL, scroller, NULL);
 
     Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", lang_view_back_cb, NULL);
 
     common_ugd->key_end_cb = lang_view_back_cb;
+}
+
+static char *_gl_text_get(void *data, Evas_Object *obj, const char *part)
+{
+    int index = (int)data;
+    return strdup(p_items[index]->text);
 }
 
 static char *_gl_label_get(void *data, Evas_Object *obj, const char *part)
@@ -453,9 +450,11 @@ static Evas_Object *_gl_icon_get(void *data, Evas_Object *obj, const char *part)
         Evas_Object *onoff_ck = elm_check_add(obj);
         elm_object_style_set (onoff_ck, "on&off");
         if (item_data->mode == AUTO_CAPITALIZATION_ITEM) {
-            elm_check_state_set (onoff_ck,f_auto_capitalization);
+            elm_check_state_set (onoff_ck,f_auto_capitalisation);
         }
-        evas_object_smart_callback_add (onoff_ck, "changed", _onoff_cb, (void *)(item_data->mode));
+        else if (item_data->mode == AUTO_FULL_STOP_ITEM) {
+            elm_check_state_set (onoff_ck,f_auto_full_stop);
+        }
         return onoff_ck;
     }
 
@@ -506,8 +505,12 @@ static void _gl_sel(void *data, Evas_Object *obj, void *event_info)
     int id = (int) (data);
 
     if (id ==  AUTO_CAPITALIZATION_ITEM) {
-        f_auto_capitalization = (f_auto_capitalization == EINA_TRUE? EINA_FALSE:EINA_TRUE);
+        f_auto_capitalisation = (f_auto_capitalisation == EINA_TRUE? EINA_FALSE:EINA_TRUE);
         set_autocap_mode();
+    }
+    else if (id  == AUTO_FULL_STOP_ITEM) {
+        f_auto_full_stop = (f_auto_full_stop == EINA_TRUE? EINA_FALSE:EINA_TRUE);
+        set_auto_full_stop_mode();
     }
 
     elm_genlist_item_update(item);
@@ -608,11 +611,12 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
     ugd->key_end_cb = sw_keyboard_selection_view_back_cb;
 
     if (sw_radio_grp != NULL) {
-        evas_object_del(sw_radio_grp);
+        evas_object_del (sw_radio_grp);
         sw_radio_grp = NULL;
     }
 
     Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
+    elm_object_style_set(genlist, "dialogue");
     evas_object_show (genlist);
 
     //Push the layout along with function buttons and title
@@ -727,14 +731,14 @@ static void show_ise_option_module (ug_data *ugd, const char *isename)
         Evas_Object *popup = elm_popup_add (ugd->naviframe);
         evas_object_size_hint_weight_set (popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         char tmp[256] = {'\0'};
-        snprintf (tmp, sizeof (tmp), "%s: %s", isename, _T("No option"));
+        snprintf (tmp, sizeof (tmp), "%s: %s", isename, _T("No options"));
         elm_object_text_set (popup, tmp);
         elm_popup_timeout_set (popup, 3.0);
         evas_object_smart_callback_add (popup, "response", response_cb, NULL);
         evas_object_show (popup);
     } else {
         char title[256];
-        snprintf (title, sizeof (title), _T("Options"));
+        snprintf (title, sizeof (title), _T("Keyboard settings"));
         ugd->opt_eo = mdl->create_ui (ugd->layout_main, ugd->naviframe);
         mdl->load_config (_config);
 
@@ -794,11 +798,12 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
     ugd->key_end_cb = hw_keyboard_selection_view_back_cb;
 
     if (hw_radio_grp != NULL) {
-        evas_object_del(hw_radio_grp);
+        evas_object_del (hw_radio_grp);
         hw_radio_grp = NULL;
     }
 
     Evas_Object *genlist = elm_genlist_add(ugd->naviframe);
+    elm_object_style_set(genlist, "dialogue");
     evas_object_show(genlist);
 
     //Push the layout along with function buttons and title
@@ -861,6 +866,7 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
 static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 {
     Elm_Object_Item *item = NULL;
+    Eina_Bool fullstop = EINA_FALSE;
 
     if (ugd->naviframe == NULL)
     {
@@ -868,6 +874,8 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         ugd->key_end_cb = back_cb;
 
         Evas_Object *genlist = elm_genlist_add(ugd->naviframe);
+        elm_object_style_set(genlist, "dialogue");
+        elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
         //set item class for 1text.1icon(text+radiobutton)
         itc1.item_style = "dialogue/1text.1icon";
         itc1.func.text_get = _gl_label_get;
@@ -902,6 +910,13 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         itcTitle.func.content_get = NULL;
         itcTitle.func.state_get = _gl_state_get;
         itcTitle.func.del = _gl_del;
+
+        itcText.item_style = "multiline/1text";
+        itcText.func.text_get = _gl_text_get;
+        itcText.func.content_get = NULL;
+        itcText.func.state_get = _gl_state_get;
+        itcText.func.del = _gl_del;
+
 //==================================group begin =======================
         ItemData *item_data = NULL;
 
@@ -921,9 +936,9 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
-            item_data->text = strdup(_T("Auto capitalization"));
+            item_data->text = strdup(_T("Auto capitalisation"));
             item_data->mode = AUTO_CAPITALIZATION_ITEM;
-            ugd->autocapital_item = elm_genlist_item_append(
+            ugd->autocapital_item = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc1,                  // item class
                     item_data,              // data
@@ -934,6 +949,75 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 
             if (is_hw_connected)
                 elm_object_item_disabled_set (ugd->autocapital_item, EINA_TRUE);
+        }
+
+//Text
+        item_data = (ItemData *)malloc(sizeof(ItemData));
+        if (item_data != NULL) {
+            memset (item_data, 0, sizeof(ItemData));
+            p_items[AUTO_CAPITALIZATION_TXT_ITEM] = item_data;
+            item_data->text = strdup(_T("Auto capitalisation first letter in keyboard"));
+            elm_genlist_item_append (
+                    genlist,                // genlist object
+                    &itcText,                  // item class
+                    (void *)(AUTO_CAPITALIZATION_TXT_ITEM),              // data
+                    NULL,
+                    ELM_GENLIST_ITEM_NONE,
+                    NULL,
+                    NULL);
+            elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+        }
+
+        char *env = getenv ("ISF_AUTOFULLSTOP");
+
+        if (env)
+            fullstop = !!atoi (env);
+
+        if (fullstop) {
+//separator
+            item = elm_genlist_item_append(
+                    genlist,                // genlist object
+                    &itcSeparator,          // item class
+                    NULL,                   // data
+                    NULL,
+                    ELM_GENLIST_ITEM_NONE,
+                    NULL,
+                    NULL);
+            elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+            //group1 item2
+            item_data = (ItemData *)malloc(sizeof(ItemData));
+            if (item_data != NULL) {
+                memset (item_data, 0, sizeof(ItemData));
+                p_items[AUTO_FULL_STOP_ITEM] = item_data;
+                item_data->text = strdup (_T("Automatic full stop"));
+                item_data->mode = AUTO_FULL_STOP_ITEM;
+                elm_genlist_item_append (
+                        genlist,                // genlist object
+                        &itc1,                  // item class
+                        item_data,              // data
+                        NULL,
+                        ELM_GENLIST_ITEM_NONE,
+                        _gl_sel,
+                        (void *)(item_data->mode));
+            }
+
+//Text
+            item_data = (ItemData *)malloc(sizeof(ItemData));
+            if (item_data != NULL) {
+                memset (item_data, 0, sizeof(ItemData));
+                p_items[AUTO_FULL_STOP_TXT_ITEM] = item_data;
+                item_data->text = strdup(_T("Automatically insert a full stop by tapping the space bar twice when using Qwerty keyboard"));
+                elm_genlist_item_append (
+                        genlist,                // genlist object
+                        &itcText,                  // item class
+                        (void *)(AUTO_FULL_STOP_TXT_ITEM),              // data
+                        NULL,
+                        ELM_GENLIST_ITEM_NONE,
+                        NULL,
+                        NULL);
+                elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+            }
         }
 
 //group2 title
@@ -956,18 +1040,18 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
 //group2 item1
         std::vector<String> ise_names;
 
-        String tmpStr = _config->read(SCIM_CONFIG_DEFAULT_HELPER_ISE,String("b70bf6cc-ff77-47dc-a137-60acc32d1e0c"));
-        snprintf (_active_ise_name, sizeof (_active_ise_name), "%s", (uuid_to_name(tmpStr)).c_str());
+        String tmpStr = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String("b70bf6cc-ff77-47dc-a137-60acc32d1e0c"));
+        snprintf (_active_ise_name, sizeof (_active_ise_name), "%s", (uuid_to_name (tmpStr)).c_str ());
         snprintf (ise_bak, sizeof (ise_bak), "%s", _active_ise_name);
 
-        item_data = (ItemData *)malloc(sizeof(ItemData));
+        item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
-            memset (item_data, 0, sizeof(ItemData));
+            memset (item_data, 0, sizeof (ItemData));
             p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
-            item_data->text = strdup(_T("Keyboard selection"));
-            item_data->sub_text = strdup(_active_ise_name);
+            item_data->text = strdup (_T("Select keyboard"));
+            item_data->sub_text = strdup (_active_ise_name);
 
-            ugd->sw_ise_item_tizen = elm_genlist_item_append(
+            ugd->sw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc2,                  // item class
                     item_data,              // data
@@ -985,7 +1069,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[SW_ISE_OPTION_ITEM] = item_data;
-            item_data->text = strdup (_T("Keyboard option"));
+            item_data->text = strdup (_T("Keyboard settings"));
             item_data->mode = SW_ISE_OPTION_ITEM;
             ugd->sw_ise_opt_item_tizen = elm_genlist_item_append(
                     genlist,                // genlist object
@@ -1005,8 +1089,8 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[HW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
-            item_data->text = strdup(_T("Hardware keyboard"));
-            item = elm_genlist_item_append(
+            item_data->text = strdup (_T("Hardware keyboard"));
+            item = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itcTitle,              // item class
                     item_data,              // data
@@ -1028,7 +1112,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
-            item_data->text = strdup(_T("Keyboard selection"));
+            item_data->text = strdup(_T("Select keyboard"));
             item_data->sub_text = strdup(_active_hw_ise_name);
             ugd->hw_ise_item_tizen = elm_genlist_item_append(
                     genlist,                // genlist object
@@ -1043,7 +1127,24 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                 elm_object_item_disabled_set (ugd->hw_ise_item_tizen,EINA_TRUE);
         }
 //group3 item2
-            p_items[HW_ISE_OPTION_ITEM] = NULL;
+        item_data = (ItemData *)malloc(sizeof(ItemData));
+        if (item_data != NULL) {
+            memset (item_data, 0, sizeof(ItemData));
+            p_items[HW_ISE_OPTION_ITEM] = item_data;
+            item_data->text = strdup (_T("Keyboard settings"));
+            item_data->mode = HW_ISE_OPTION_ITEM;
+            ugd->hw_ise_opt_item_tizen = elm_genlist_item_append(
+                    genlist,                // genlist object
+                    &itc3,                  // item class
+                    item_data,              // data
+                    NULL,
+                    ELM_GENLIST_ITEM_NONE,
+                    _gl_ise_option_sel,
+                    (void *)ugd);
+
+            if (!is_hw_connected)
+               elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
+        }
 
 //==================================group end =========================
         Evas_Object *back_btn = elm_button_add(ugd->naviframe);
@@ -1083,8 +1184,11 @@ static void load_config_data (ConfigPointer config)
     }
 #endif
     int tmp_cap=0;
-    vconf_get_bool (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, &tmp_cap);
-    if (tmp_cap == true) f_auto_capitalization = EINA_TRUE;
+    int tmp_period = 0;
+    vconf_get_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, &tmp_cap);
+    vconf_get_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, &tmp_period);
+    if (tmp_cap == true) f_auto_capitalisation = EINA_TRUE;
+    if (tmp_period == true) f_auto_full_stop = EINA_TRUE;
 }
 
 ConfigPointer isf_imf_context_get_config (void);
@@ -1173,7 +1277,7 @@ static void init_hw_keyboard_listener(ug_data *ugd)
     return ;
 }
 
-static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, void *priv)
+static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *priv)
 {
     Evas_Object *parent = NULL;
     Evas_Object *content = NULL;
@@ -1217,21 +1321,21 @@ static void *on_create (struct ui_gadget *ug, enum ug_mode mode, bundle *data, v
     return (void *)ugd->layout_main;
 }
 
-static void on_start (struct ui_gadget *ug, bundle *data, void *priv)
+static void on_start (ui_gadget_h ug, service_h s, void *priv)
 {
 }
 
-static void on_pause (struct ui_gadget *ug, bundle *data, void *priv)
-{
-
-}
-
-static void on_resume (struct ui_gadget *ug, bundle *data, void *priv)
+static void on_pause (ui_gadget_h ug, service_h s, void *priv)
 {
 
 }
 
-static void on_destroy (struct ui_gadget *ug, bundle *data, void *priv)
+static void on_resume (ui_gadget_h ug, service_h s, void *priv)
+{
+
+}
+
+static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
 {
     if (ug == NULL|| priv == NULL)
         return;
@@ -1290,11 +1394,11 @@ static void on_destroy (struct ui_gadget *ug, bundle *data, void *priv)
     _prop_change_handler = NULL;
 }
 
-static void on_message (struct ui_gadget *ug, bundle *msg, bundle *data, void *priv)
+static void on_message (ui_gadget_h ug, service_h msg, service_h data, void *priv)
 {
 }
 
-static void on_event (struct ui_gadget *ug, enum ug_event event, bundle *data, void *priv)
+static void on_event (ui_gadget_h ug, enum ug_event event, service_h s, void *priv)
 {
     switch (event) {
     case UG_EVENT_LOW_MEMORY:
@@ -1316,7 +1420,7 @@ static void on_event (struct ui_gadget *ug, enum ug_event event, bundle *data, v
     }
 }
 
-static void on_key_event(struct ui_gadget *ug, enum ug_key_event event, bundle *data, void *priv)
+static void on_key_event(ui_gadget_h ug, enum ug_key_event event, service_h s, void *priv)
 {
     if ( ug == NULL || priv == NULL)
         return ;
@@ -1378,9 +1482,11 @@ extern "C"
             free (ugd);
     }
 
-    UG_MODULE_API int setting_plugin_reset (bundle *data, void *priv)//for setting keyboard reset
+    UG_MODULE_API int setting_plugin_reset (service_h s, void *priv)//for setting keyboard reset
     {
-        if (vconf_set_bool (VCONFKEY_SETAPPL_AUTOCAPITAL_ALLOW_BOOL, false) == -1)
+        if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, false) == -1)
+            return -1;
+        if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, false) == -1)
             return -1;
 
         load_config_module ();

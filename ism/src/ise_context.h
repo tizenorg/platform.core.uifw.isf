@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Jihoon Kim <jihoon48.kim@samsung.com>, Haifeng Deng <haifeng.deng@samsung.com>
  *
@@ -26,6 +26,7 @@
 #define __ISE_CONTEXT_H
 
 #include <Ecore_IMF.h>
+#include <Ecore_X.h>
 
 typedef struct {
     Ecore_IMF_Input_Panel_Lang language;
@@ -36,7 +37,8 @@ typedef struct {
     Eina_Bool prediction_allow;
     Eina_Bool password_mode;
     Eina_Bool caps_mode;
-    int reserved[15];
+    Ecore_X_Window client_window;
+    int reserved[14];
 } Ise_Context;
 
 #endif  /* __ISE_CONTEXT_H */

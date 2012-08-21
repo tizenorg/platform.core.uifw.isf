@@ -1,0 +1,8 @@
+<manifest>
+  <define>
+    <domain name="isf"/>
+  </define>
+  <request>
+    <domain name="isf"/>
+  </request>
+</manifest>

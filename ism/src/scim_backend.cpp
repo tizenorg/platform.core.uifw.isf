@@ -422,7 +422,7 @@ BackEndBase::add_factory (const IMEngineFactoryPointer &factory)
 }
 
 void
-BackEndBase::add_specific_factory (const String &uuid, 
+BackEndBase::add_specific_factory (const String &uuid,
                     const IMEngineFactoryPointer &factory)
 {
     m_impl->add_specific_factory (uuid, factory);
@@ -512,6 +512,16 @@ CommonBackEnd::initialize (const ConfigPointer       &config,
         return;
     }
 
+    factory = new ComposeKeyFactory ();
+
+    if (all_factories_count == 0 ||
+        std::find (m_impl->m_disabled_factories.begin (),
+                   m_impl->m_disabled_factories.end (),
+                   factory->get_uuid ()) == m_impl->m_disabled_factories.end ()) {
+        factory = m_impl->m_filter_manager->attach_filters_to_factory (factory);
+        add_factory (factory);
+    }
+
     if (is_load_info) {
         /*for (size_t i = 0; i < new_modules.size (); ++i)
             add_module_info (config, new_modules [i]);*/
@@ -523,16 +533,6 @@ CommonBackEnd::initialize (const ConfigPointer       &config,
     for (size_t i = 0; i < new_modules.size (); ++i) {
         module_factories_count = add_module (config, new_modules [i], is_load_resource);
         all_factories_count += module_factories_count;
-    }
-
-    factory = new ComposeKeyFactory ();
-
-    if (all_factories_count == 0 ||
-        std::find (m_impl->m_disabled_factories.begin (),
-                   m_impl->m_disabled_factories.end (),
-                   factory->get_uuid ()) == m_impl->m_disabled_factories.end ()) {
-        factory = m_impl->m_filter_manager->attach_filters_to_factory (factory);
-        add_factory (factory);
     }
 }
 
@@ -605,18 +605,19 @@ CommonBackEnd::add_module (const ConfigPointer &config,
                         factory.reset ();
                     }
                 } else {
-                    SCIM_DEBUG_BACKEND (1) << "    Loading IMEngine Factory " << j << " : " << "Failed\n";
+                    std::cerr << "    Loading IMEngine Factory " << module << "(" << j << ") is Failed!!!\n";
                 }
             }
             if (module_factories_count) {
                 SCIM_DEBUG_BACKEND (1) << module << " IMEngine module is successfully loaded.\n";
             } else {
-                SCIM_DEBUG_BACKEND (1) << "No Factory loaded from " << module << " IMEngine module!\n";
+                std::cerr << "No Factory loaded from " << module << " IMEngine module!!!\n";
                 if (first_load)
                     engine_module->unload ();
             }
         } else {
-            SCIM_DEBUG_BACKEND (1) << "Failed to load " << module << " IMEngine module.\n";
+            std::cerr << __func__ << ": Failed to load " << module << " IMEngine module!!!\n";
+            engine_module->unload ();
         }
     }
 
@@ -654,9 +655,11 @@ CommonBackEnd::add_module_info (const ConfigPointer &config, const String module
                 factory.reset ();
             }
         }
-
-        ime_module.unload ();
+    } else {
+        std::cerr << __func__ << ": Failed to load " << module_name << " IMEngine module!!!\n";
     }
+
+    ime_module.unload ();
 }
 
 void
@@ -712,6 +715,7 @@ CommonBackEnd::release_module (const std::vector<String> &use_uuids, const Strin
     std::vector<IMEngineModule *>::iterator it4 = m_impl->m_engine_modules.begin ();
     for (; it4 != m_impl->m_engine_modules.end (); it4++) {
         if ((*it4)->get_module_name () == module) {
+            SCIM_DEBUG_BACKEND (1) << __FUNCTION__ << " : " << module << "\n";
             (*it4)->unload ();
             delete (*it4);
             m_impl->m_engine_modules.erase (it4);
@@ -856,9 +860,11 @@ CommonBackEnd::add_imengine_module_info (const String module_name, const ConfigP
                 factory.reset ();
             }
         }
-        ime_module.unload ();
+    } else {
+        std::cerr << __func__ << ": Failed to load " << module_name << " IMEngine module!!!\n";
     }
 
+    ime_module.unload ();
     fclose (engine_list_file);
 }
 

@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Haifeng Deng <haifeng.deng@samsung.com>, Hengliang Luo <hl.luo@samsung.com>
  *
@@ -63,10 +63,11 @@ static void _enable_panel_agent_log (bool _enable_debug)
     SocketClient  m_socket_client;
     m_socket_address.set_address (address);
 
-    printf ("%s:%d...\n", __FUNCTION__, __LINE__);
-    if (!m_socket_address.valid ())
+    if (!m_socket_address.valid ()) {
+        printf ("m_socket_address is not valid!!!\n");
         return;
-    printf ("%s:%d...\n", __FUNCTION__, __LINE__);
+    }
+
     PanelClient panel_client;
     if (panel_client.open_connection (config_name, display_name) >= 0) {
         panel_client.prepare (id);
@@ -104,7 +105,6 @@ int main (int argc, char **argv)
     gtk_init (&argc, &argv);
 #endif
 
-    printf ("after gtk_init...\n");
     try {
         _enable_panel_agent_log (_enable_debug);
         _enable_frontend_log (_enable_debug);

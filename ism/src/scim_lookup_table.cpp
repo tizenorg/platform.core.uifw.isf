@@ -402,6 +402,57 @@ CommonLookupTable::get_attributes (int index) const
     return AttributeList ();
 }
 
+bool
+CommonLookupTable::add_attributes (int                  index,
+                                   const AttributeList &attrs)
+{
+    if (index < 0 || (uint32)index >= number_of_candidates ())
+        return false;
+
+    if (attrs.size () > 0) {
+        AttributeList::iterator start;
+        if ((uint32)index < number_of_candidates () - 1)
+            start = m_impl->m_attributes.begin () + m_impl->m_attrs_index [index+1];
+        else
+            start = m_impl->m_attributes.end ();
+        m_impl->m_attributes.insert (start, attrs.begin (), attrs.end ());
+
+        if ((uint32)index < number_of_candidates () - 1) {
+            for (uint32 i = index + 1; i < number_of_candidates (); i++)
+                m_impl->m_attrs_index[i] += attrs.size ();
+        }
+    }
+
+    return true;
+}
+
+bool
+CommonLookupTable::remove_attributes (int index)
+{
+    if (index < 0 || (uint32)index >= number_of_candidates ())
+        return false;
+
+    AttributeList::iterator start, end;
+
+    start = m_impl->m_attributes.begin () + m_impl->m_attrs_index [index];
+
+    if ((uint32)index < number_of_candidates () - 1)
+        end = m_impl->m_attributes.begin () + m_impl->m_attrs_index [index+1];
+    else
+        end = m_impl->m_attributes.end ();
+
+    if (start < end)
+        m_impl->m_attributes.erase (start, end);
+
+    if ((uint32)index < number_of_candidates () - 1) {
+        uint32 size = m_impl->m_attrs_index [index+1] - m_impl->m_attrs_index [index];
+        for (uint32 i = index + 1; i < number_of_candidates (); i++)
+            m_impl->m_attrs_index[i] -= size;
+    }
+
+    return true;
+}
+
 void
 CommonLookupTable::clear ()
 {

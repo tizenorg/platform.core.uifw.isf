@@ -624,6 +624,20 @@ public:
     virtual void update_client_capabilities (unsigned int cap);
     /** @} */
 
+    /**
+     * @brief Set prediction allow.
+     *
+     * @param allow - the flag of prediction allow.
+     */
+    virtual void set_prediction_allow (bool allow);
+
+    /**
+     * @brief Set layout.
+     *
+     * @param layout - the layout.
+     */
+    virtual void set_layout (unsigned int layout);
+
 protected:
     /**
      * @name Signal activation functions

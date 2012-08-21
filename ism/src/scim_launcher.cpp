@@ -253,7 +253,10 @@ int main (int argc, char *argv [])
             std::cerr << "Starting ...\n";
         }
 
-        backend->initialize (config, engine_list, true, true);
+        bool is_load_info = true;
+        if (engine_list.size () == 1 && engine_list[0] == "socket")
+            is_load_info = false;
+        backend->initialize (config, engine_list, true, is_load_info);
         gettime (clock_start, "backend->initialize");
 
         /* reset backend pointer, in order to destroy backend automatically. */

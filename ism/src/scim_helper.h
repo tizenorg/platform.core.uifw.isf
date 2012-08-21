@@ -443,7 +443,7 @@ public:
     void update_associate_string (const LookupTable &table) const;
 
     /**
-     * @ brief When the input context of ISE is changed,
+     * @brief When the input context of ISE is changed,
      *         ISE can call this function to notify application
      *
      * @param type  type of event.
@@ -453,7 +453,7 @@ public:
                                    uint32                       value) const;
 
     /**
-     * @ brief Request to get surrounding text.
+     * @brief Request to get surrounding text.
      *
      * @param uuid The helper ISE UUID.
      * @param maxlen_before The max length of before.
@@ -464,7 +464,7 @@ public:
                                    int                          maxlen_after) const;
 
     /**
-     * @ brief Request to delete surrounding text.
+     * @brief Request to delete surrounding text.
      *
      * @param offset The offset for cursor position.
      * @param len The length for delete text.
@@ -473,7 +473,7 @@ public:
                                    int                          len) const;
 
     /**
-     * @ brief Set candidate position in screen.
+     * @brief Set candidate position in screen.
      *
      * @param left The x position in screen.
      * @param top The y position in screen.
@@ -482,37 +482,67 @@ public:
                                    int                          top) const;
 
     /**
-     * @ brief Request to hide candidate window.
+     * @brief Request to hide candidate window.
      */
     void candidate_hide           (void) const;
 
     /**
-     * @ brief Request to get candidate window size and position.
+     * @brief Request to get candidate window size and position.
      *
      * @param uuid The helper ISE UUID.
      */
     void get_candidate_window_geometry (const String           &uuid) const;
 
     /**
-     * @ brief Set current keyboard ISE.
+     * @brief Set current keyboard ISE.
      *
      * @param uuid The keyboard ISE UUID.
      */
     void set_keyboard_ise_by_uuid (const String                &uuid) const;
 
     /**
-     * @ brief Request to get current keyboard ISE information.
+     * @brief Request to get current keyboard ISE information.
      *
      * @param uuid The helper ISE UUID.
      */
     void get_keyboard_ise         (const String                &uuid) const;
 
     /**
-     * @ brief Request to get uuid list of all keyboard ISEs.
+     * @brief Request to get uuid list of all keyboard ISEs.
      *
      * @param uuid The helper ISE UUID.
      */
     void get_keyboard_ise_list    (const String                &uuid) const;
+
+    /**
+     * @brief Update ISE window geometry.
+     *
+     * @param x      The x position in screen.
+     * @param y      The y position in screen.
+     * @param width  The ISE window width.
+     * @param height The ISE window height.
+     */
+    void update_geometry          (int                          x,
+                                   int                          y,
+                                   int                          width,
+                                   int                          height) const;
+
+    /**
+     * @brief Request to expand candidate window.
+     */
+    void expand_candidate         (void) const;
+
+    /**
+     * @brief Request to contract candidate window.
+     */
+    void contract_candidate       (void) const;
+
+    /**
+     * @brief Update the preedit caret position in the preedit string.
+     *
+     * @param caret - the new position of the preedit caret.
+     */
+    void update_preedit_caret     (int                          caret) const;
 
 public:
     /**
@@ -973,7 +1003,17 @@ public:
      * The prototype of the slot is:
      * void turn_on_log (const HelperAgent *agent, uint32 &on);
      */
-    Connection signal_connect_turn_on_log                              (HelperAgentSlotUintVoid     *slot);
+    Connection signal_connect_turn_on_log                       (HelperAgentSlotUintVoid            *slot);
+
+    /**
+     * @brief Connect a slot to Helper update displayed candidate number signal.
+     *
+     * This signal is used to inform helper ISE displayed candidate number.
+     *
+     * The prototype of the slot is:
+     * void update_displayed_candidate_number (const HelperAgent *, int ic, const String &uuid, int number);
+     */
+    Connection signal_connect_update_displayed_candidate_number (HelperAgentSlotInt                 *slot);
 };
 
 /**  @} */

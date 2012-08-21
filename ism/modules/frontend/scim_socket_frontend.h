@@ -5,9 +5,9 @@
 
 /* ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable. */
 
-/* 
+/*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
  *
  *
@@ -167,6 +167,8 @@ private:
     void socket_update_lookup_table_page_size (int client_id);
     void socket_lookup_table_page_up        (int client_id);
     void socket_lookup_table_page_down      (int client_id);
+    void socket_set_prediction_allow        (int client_id);
+    void socket_set_layout                  (int client_id);
     void socket_reset_option                (int client_id);
     void socket_reset                       (int client_id);
     void socket_focus_in                    (int client_id);

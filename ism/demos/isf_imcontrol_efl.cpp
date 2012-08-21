@@ -2,7 +2,7 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd. All rights reserved.
+ * Copyright (c) 2000 - 2012 Samsung Electronics Co., Ltd. All rights reserved.
  *
  * Contact: Shuo Liu <shuo0805.liu@samsung.com>, Jihoon Kim <jihoon48.kim@samsung.com>
  *
@@ -233,7 +233,7 @@ void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
 
     gl = _create_imcontrolapi_list (ad->naviframe);
 
-    Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("isfimcontrol api"), NULL, NULL, gl, NULL);
+    Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("IM Control"), NULL, NULL, gl, NULL);
 
     Evas_Object *back_btn = elm_object_item_part_content_get (navi_it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", _nf_back_event, ad);

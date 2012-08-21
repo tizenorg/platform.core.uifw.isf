@@ -2,7 +2,7 @@
 
 /*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
  *
  *
@@ -46,6 +46,29 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
+static bool check_socket_frontend (void)
+{
+    SocketAddress address;
+    SocketClient client;
+
+    uint32 magic;
+
+    address.set_address (scim_get_default_socket_frontend_address ());
+
+    if (!client.connect (address))
+        return false;
+
+    if (!scim_socket_open_connection (magic,
+                                      String ("ConnectionTester"),
+                                      String ("SocketFrontEnd"),
+                                      client,
+                                      1000)) {
+        return false;
+    }
+
+    return true;
+}
+
 int main (int argc, char *argv [])
 {
     struct tms tiks_buf;
@@ -68,16 +91,17 @@ int main (int argc, char *argv [])
 
     int  i;
     bool daemon = false;
-    bool socket = false;
+    bool socket = true;
     bool manual = false;
 
     int   new_argc = 0;
     char *new_argv [80];
 
+    /* Display version info */
     cout << "Input Service Manager " << ISF_VERSION << "\n\n";
 
     /* Get modules list */
-    frontend_list.push_back ("socket");
+    scim_get_frontend_module_list (frontend_list);
     config_list.push_back ("simple");
     config_list.push_back ("socket");
 
@@ -94,6 +118,29 @@ int main (int argc, char *argv [])
         load_engine_list.push_back (*it);
     }
 
+    /* Use x11 FrontEnd as default if available. */
+    if (frontend_list.size ()) {
+        def_frontend = String ("x11");
+        if (std::find (frontend_list.begin (),
+                       frontend_list.end (),
+                       def_frontend) == frontend_list.end ())
+            def_frontend = frontend_list [0];
+    }
+
+    /* Use simple Config module as default if available. */
+    def_config = scim_global_config_read (SCIM_GLOBAL_CONFIG_DEFAULT_CONFIG_MODULE, String ("simple"));
+    if (std::find (config_list.begin (),
+                   config_list.end (),
+                   def_config) == config_list.end ())
+        def_config = config_list [0];
+
+    /* If no Socket Config/IMEngine/FrontEnd modules */
+    /* then do not try to start a SocketFrontEnd. */
+    if (std::find (frontend_list.begin (), frontend_list.end (), "socket") == frontend_list.end () ||
+        std::find (config_list.begin (), config_list.end (), "socket") == config_list.end () ||
+        std::find (engine_list.begin (), engine_list.end (), "socket") == engine_list.end ())
+        socket = false;
+
     /* parse command options */
     i = 0;
     while (i < argc) {
@@ -109,8 +156,7 @@ int main (int argc, char *argv [])
 
             cout << endl;
             cout << "Available Config module:\n";
-            for (it = config_list.begin (); it != config_list.end (); it++)
-            {
+            for (it = config_list.begin (); it != config_list.end (); it++) {
                 if (*it != "dummy")
                     cout << "    " << *it << endl;
             }
@@ -215,6 +261,58 @@ int main (int argc, char *argv [])
                            all_engine_list [i]) == exclude_engine_list.end () &&
                 all_engine_list [i] != "socket")
                 load_engine_list.push_back (all_engine_list [i]);
+        }
+    }
+
+    if (!def_frontend.length ()) {
+        cerr << "No FrontEnd module is available!\n";
+        return -1;
+    }
+
+    if (!def_config.length ()) {
+        cerr << "No Config module is available!\n";
+        return -1;
+    }
+
+    /* If you try to use the socket feature manually,
+       then let you do it by yourself. */
+    if (def_frontend == "socket" || def_config == "socket" ||
+        std::find (load_engine_list.begin (), load_engine_list.end (), "socket") != load_engine_list.end ())
+        socket = false;
+
+    /* If the socket address of SocketFrontEnd and SocketIMEngine/SocketConfig are different,
+       then do not try to start the SocketFrontEnd instance automatically. */
+    if (scim_get_default_socket_frontend_address () != scim_get_default_socket_imengine_address () ||
+        scim_get_default_socket_frontend_address () != scim_get_default_socket_config_address ())
+        socket = false;
+
+    /* Try to start a SocketFrontEnd daemon first. */
+    if (socket) {
+        /* If no Socket FrontEnd is running, then launch one.
+           And set manual to false. */
+        if (!check_socket_frontend ()) {
+            cerr << "Launching a daemon with Socket FrontEnd...\n";
+            char *argv [] = { const_cast<char *> ("--stay"), 0 };
+            scim_launch (true,
+                         def_config,
+                         (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
+                         "socket",
+                         argv);
+            manual = false;
+        }
+
+        /* If there is one Socket FrontEnd running and it's not manual mode,
+           then just use this Socket Frontend. */
+        if (!manual) {
+            for (int i = 0; i < 100; ++i) {
+                if (check_socket_frontend ()) {
+                    def_config = "socket";
+                    load_engine_list.clear ();
+                    load_engine_list.push_back ("socket");
+                    break;
+                }
+                scim_usleep (100000);
+            }
         }
     }
 
