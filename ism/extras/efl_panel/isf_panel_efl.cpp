@@ -123,6 +123,7 @@ static void       slot_focus_in                        (void);
 static void       slot_focus_out                       (void);
 static void       slot_expand_candidate                (void);
 static void       slot_contract_candidate              (void);
+static void       slot_set_candidate_style             (int display_line, int reserved);
 static void       slot_update_input_context            (int type, int value);
 static void       slot_update_ise_geometry             (int x, int y, int width, int height);
 static void       slot_update_spot_location            (int x, int y, int top_y);
@@ -133,13 +134,13 @@ static void       slot_hide_aux_string                 (void);
 static void       slot_hide_candidate_table            (void);
 static void       slot_update_aux_string               (const String &str, const AttributeList &attrs);
 static void       slot_update_candidate_table          (const LookupTable &table);
-static void       slot_set_active_ise_by_uuid          (const String &uuid, bool);
+static void       slot_set_active_ise                  (const String &uuid, bool changeDefault);
 static bool       slot_get_ise_list                    (std::vector<String> &name);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name);
 static void       slot_get_language_list               (std::vector<String> &name);
 static void       slot_get_all_language                (std::vector<String> &lang);
-static void       slot_get_ise_language                (char *, std::vector<String> &name);
-static bool       slot_get_ise_info_by_uuid            (const String &uuid, ISE_INFO &info);
+static void       slot_get_ise_language                (char *name, std::vector<String> &list);
+static bool       slot_get_ise_info                    (const String &uuid, ISE_INFO &info);
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_get_input_panel_geometry        (struct rectinfo &info);
 static void       slot_set_keyboard_ise                (int type, const String &uuid);
@@ -169,6 +170,7 @@ static Evas_Object       *_candidate_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_candidate_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_seperate_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_seperate_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_line_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_line_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
@@ -180,17 +182,18 @@ static int                _candidate_width                  = 0;
 static int                _candidate_height                 = 0;
 static int                _candidate_valid_height           = 0;
 
+static int                _candidate_port_line              = 1;
 static int                _candidate_port_width             = 480;
 static int                _candidate_port_height_min        = 76;
 static int                _candidate_port_height_min_2      = 150;
 static int                _candidate_port_height_max        = 286;
 static int                _candidate_port_height_max_2      = 350;
 static int                _candidate_land_width             = 784;
-static int                _candidate_land_height_min        = 86;
+static int                _candidate_land_height_min        = 84;
+static int                _candidate_land_height_min_2      = 168;
 static int                _candidate_land_height_max        = 150;
 static int                _candidate_land_height_max_2      = 214;
-static int                _candidate_area_1_pos [2]         = {11, 13};
-static int                _candidate_area_2_pos [2]         = {11, 13};
+static int                _candidate_area_1_pos [2]         = {0, 2};
 static int                _more_btn_pos [4]                 = {369, 11, 689, 11};
 static int                _close_btn_pos [4]                = {362, 211, 682, 75};
 
@@ -464,6 +467,7 @@ static bool activate_helper_ise (const String &uuid, bool changeDefault)
     _ise_width  = -1;
     _ise_height = -1;
     _ise_show   = false;
+    _candidate_port_line = 1;
     _panel_agent->start_helper (uuid);
     if (changeDefault) {
         _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
@@ -474,34 +478,24 @@ static bool activate_helper_ise (const String &uuid, bool changeDefault)
 }
 
 /**
- * @brief Set active ISE by uuid.
+ * @brief Set active ISE.
  *
  * @param uuid The ISE's uuid.
- * @param fromISE It indicates whether the request is sent from helper ISE.
+ * @param changeDefault It indicates whether call _panel_agent->set_default_ise ().
  *
  * @return false if ISE change is failed, otherwise return true.
  */
-static bool set_active_ise_by_uuid (const String &ise_uuid, bool fromISE, bool changeDefault)
+static bool set_active_ise (const String &uuid, bool changeDefault)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (ise_uuid.length () <= 0)
+    if (uuid.length () <= 0)
         return false;
 
     bool ise_changed = false;
 
-    if (fromISE) {
-        TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
-
-        if (TOOLBAR_HELPER_MODE == mode) {
-            String pre_uuid = _panel_agent->get_current_helper_uuid ();
-            _panel_agent->hide_helper (pre_uuid);
-        }
-        _panel_agent->set_ise_changing (true);
-    }
-
     for (unsigned int i = 0; i < _uuids.size (); i++) {
-        if (!ise_uuid.compare (_uuids[i])) {
+        if (!uuid.compare (_uuids[i])) {
             if (TOOLBAR_KEYBOARD_MODE == _modes[i])
                 ise_changed = activate_keyboard_ise (_uuids[i], _names[i]);
             else if (TOOLBAR_HELPER_MODE == _modes[i])
@@ -568,10 +562,19 @@ static int ui_candidate_get_valid_height (void)
 
     int height = 0;
     if (_candidate_window) {
-        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1))
-            height = _candidate_port_height_min_2;
-        else
-            height = _candidate_port_height_min;
+        int angle = efl_get_angle_for_root_window (_candidate_window);
+
+        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
+            if (angle == 90 || angle == 270)
+                height = _candidate_land_height_min_2;
+            else
+                height = _candidate_port_height_min_2;
+        } else {
+            if (angle == 90 || angle == 270)
+                height = _candidate_land_height_min;
+            else
+                height = _candidate_port_height_min;
+        }
     }
     return height;
 }
@@ -632,46 +635,52 @@ static void ui_candidate_window_adjust (void)
         if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
             evas_object_show (_aux_line);
             evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            evas_object_move (_candidate_area_2, _candidate_area_2_pos[0], _candidate_area_2_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            evas_object_move (_scroller_bg, _candidate_area_2_pos[0], _candidate_area_2_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
                 ui_candidate_window_resize (width, _candidate_land_height_max_2);
                 evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
+                evas_object_move (_candidate_area_2, 0, _candidate_land_height_min_2);
+                evas_object_move (_scroller_bg, 0, _candidate_land_height_min_2);
             } else {
                 ui_candidate_window_resize (width, _candidate_port_height_max_2);
                 evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+                evas_object_move (_candidate_area_2, 0, _candidate_port_height_min_2);
+                evas_object_move (_scroller_bg, 0, _candidate_port_height_min_2);
             }
         } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
             evas_object_show (_aux_line);
-            ui_candidate_window_resize (width, _candidate_port_height_min_2);
             evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
+                ui_candidate_window_resize (width, _candidate_land_height_min_2);
                 evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
             } else {
+                ui_candidate_window_resize (width, _candidate_port_height_min_2);
                 evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
             }
         } else if (evas_object_visible_get (_aux_area)) {
             evas_object_hide (_aux_line);
-            ui_candidate_window_resize (width, _aux_height);
+            ui_candidate_window_resize (width, _aux_height + 2);
         } else if (evas_object_visible_get (_candidate_area_2)) {
             evas_object_hide (_aux_line);
             evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
-            evas_object_move (_candidate_area_2, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
-            evas_object_move (_scroller_bg, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
                 ui_candidate_window_resize (width, _candidate_land_height_max);
                 evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3]);
+                evas_object_move (_candidate_area_2, 0, _candidate_land_height_min);
+                evas_object_move (_scroller_bg, 0, _candidate_land_height_min);
             } else {
                 ui_candidate_window_resize (width, _candidate_port_height_max);
                 evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
+                evas_object_move (_candidate_area_2, 0, _candidate_port_height_min);
+                evas_object_move (_scroller_bg, 0, _candidate_port_height_min);
             }
         } else if (evas_object_visible_get (_candidate_area_1)) {
             evas_object_hide (_aux_line);
-            ui_candidate_window_resize (width, _candidate_port_height_min);
             evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
+                ui_candidate_window_resize (width, _candidate_land_height_min);
                 evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3]);
             } else {
+                ui_candidate_window_resize (width, _candidate_port_height_min);
                 evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
             }
         }
@@ -702,13 +711,13 @@ static void ui_candidate_window_rotate (int angle)
         _candidate_scroll_width = _candidate_scroll_width_min;
         ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
         evas_object_resize (_aux_area, _aux_port_width, _aux_height);
-        evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_min, _item_min_height);
+        evas_object_resize (_candidate_area_1, _candidate_scroll_0_width_min, (_item_min_height+2)*_candidate_port_line-2);
         evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_max);
         evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
     }
 
     /* Delete old candidate items and popup lines */
-    for (int i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
+/*  for (int i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
         if (_candidate_items [i]) {
             evas_object_del (_candidate_items [i]);
             _candidate_items [i] = NULL;
@@ -721,7 +730,7 @@ static void ui_candidate_window_rotate (int angle)
             evas_object_del (_line_items [i]);
             _line_items [i] = NULL;
         }
-    }
+    }*/
 
     ui_settle_candidate_window ();
     flush_memory ();
@@ -979,8 +988,8 @@ static void ui_mouse_moved_cb (void *data, Evas *e, Evas_Object *button, void *e
     _click_up_pos [0] = ev->canvas.x;
     _click_up_pos [1] = ev->canvas.y;
 
-    if (abs (_click_up_pos [0] - _click_down_pos [0]) >= 10 ||
-        abs (_click_up_pos [1] - _click_down_pos [1]) >= 10) {
+    if (abs (_click_up_pos [0] - _click_down_pos [0]) >= (int)(15 * _height_rate) ||
+        abs (_click_up_pos [1] - _click_down_pos [1]) >= (int)(15 * _height_rate)) {
         _is_click = false;
     }
 }
@@ -993,16 +1002,17 @@ static void ui_create_prediction_engine_candidate_window (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     _candidate_port_width        = 720 * _width_rate;
-    _candidate_port_height_min   = 84 * _height_rate;
-    _candidate_port_height_min_2 = 168 * _height_rate;
-    _candidate_port_height_max   = 510 * _height_rate;
-    _candidate_port_height_max_2 = 594 * _height_rate;
+    _candidate_port_height_min   = 84 * _height_rate * _candidate_port_line;
+    _candidate_port_height_min_2 = 84 * _height_rate + _candidate_port_height_min;
+    _candidate_port_height_max   = 426 * _height_rate + _candidate_port_height_min;
+    _candidate_port_height_max_2 = 84 * _height_rate + _candidate_port_height_max;
     _candidate_land_width        = 1280 * _height_rate;
     _candidate_land_height_min   = 84 * _width_rate;
+    _candidate_land_height_min_2 = 168 * _width_rate;
     _candidate_land_height_max   = 342 * _width_rate;
     _candidate_land_height_max_2 = 426 * _width_rate;
 
-    _candidate_scroll_0_width_min= 618 * _width_rate;
+    _candidate_scroll_0_width_min= 720 * _width_rate;
     _candidate_scroll_0_width_max= 1176 * _height_rate;
     _candidate_scroll_width_min  = 720 * _width_rate;
     _candidate_scroll_width_max  = 1280 * _height_rate;
@@ -1011,8 +1021,6 @@ static void ui_create_prediction_engine_candidate_window (void)
 
     _candidate_area_1_pos [0]    = 0 * _width_rate;
     _candidate_area_1_pos [1]    = 2 * _height_rate;
-    _candidate_area_2_pos [0]    = 0 * _width_rate;
-    _candidate_area_2_pos [1]    = 84 * _height_rate;
     _more_btn_pos [0]            = 628 * _width_rate;
     _more_btn_pos [1]            = 12 * _height_rate;
     _more_btn_pos [2]            = 1188 * _height_rate;
@@ -1022,11 +1030,11 @@ static void ui_create_prediction_engine_candidate_window (void)
     _close_btn_pos [2]           = 1188 * _height_rate;
     _close_btn_pos [3]           = 12 * _width_rate;
 
-    _aux_height                  = _candidate_port_height_min - 2;
+    _aux_height                  = 84 * _height_rate - 2;
     _aux_port_width              = 720 * _width_rate;
     _aux_land_width              = 1280 * _height_rate;
 
-    _item_min_height             = 82 * _height_rate;
+    _item_min_height             = 84 * _height_rate - 2;
 
     /* Create candidate window */
     if (_candidate_window == NULL) {
@@ -1046,7 +1054,7 @@ static void ui_create_prediction_engine_candidate_window (void)
         _candidate_0_scroll = elm_scroller_add (_candidate_window);
         elm_scroller_bounce_set (_candidate_0_scroll, EINA_TRUE, EINA_FALSE);
         elm_scroller_policy_set (_candidate_0_scroll, ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_OFF);
-        evas_object_resize (_candidate_0_scroll, _candidate_scroll_0_width_min, _item_min_height);
+        evas_object_resize (_candidate_0_scroll, _candidate_scroll_0_width_min, (_item_min_height+2)*_candidate_port_line-2);
         evas_object_move (_candidate_0_scroll, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
         _candidate_0_table = elm_table_add (_candidate_window);
         evas_object_size_hint_weight_set (_candidate_0_table, 0.0, 0.0);
@@ -1072,7 +1080,7 @@ static void ui_create_prediction_engine_candidate_window (void)
         edje_object_file_set (_scroller_bg, _candidate_edje_file.c_str (), "scroller_bg");
         evas_object_size_hint_weight_set (_scroller_bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
-        evas_object_move (_scroller_bg, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
+        evas_object_move (_scroller_bg, 0, _candidate_port_height_min);
 
         /* Create vertical scroller */
         _candidate_scroll = elm_scroller_add (_candidate_window);
@@ -1081,7 +1089,7 @@ static void ui_create_prediction_engine_candidate_window (void)
         evas_object_resize (_candidate_scroll, _candidate_scroll_width, _candidate_scroll_height_max);
         evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
         elm_scroller_page_size_set (_candidate_scroll, 0, _item_min_height+_v_padding);
-        evas_object_move (_candidate_scroll, _candidate_area_2_pos[0], _candidate_area_2_pos[1]);
+        evas_object_move (_candidate_scroll, 0, _candidate_port_height_min);
         _candidate_table = elm_table_add (_candidate_window);
         evas_object_size_hint_weight_set (_candidate_table, 0.0, 0.0);
         evas_object_size_hint_align_set (_candidate_table, 0.0, 0.0);
@@ -1120,7 +1128,7 @@ static void ui_create_prediction_engine_candidate_window (void)
         _aux_line = edje_object_add (evas_object_evas_get (_candidate_window));
         edje_object_file_set (_aux_line, _candidate_edje_file.c_str (), "popup_line");
         evas_object_resize (_aux_line, _candidate_port_width, 2);
-        evas_object_move (_aux_line, 0, _aux_height);
+        evas_object_move (_aux_line, 0, _aux_height + 2);
 
         _tmp_aux_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
         evas_object_text_font_set (_tmp_aux_text, _candidate_font_name.c_str (), _aux_font_size);
@@ -1174,7 +1182,6 @@ static void ui_destroy_candidate_window (void)
             evas_object_del (_candidate_0 [i]);
             _candidate_0 [i] = NULL;
         }
-
         if (_candidate_items [i]) {
             evas_object_del (_candidate_items [i]);
             _candidate_items [i] = NULL;
@@ -1187,6 +1194,11 @@ static void ui_destroy_candidate_window (void)
         if (_seperate_items [i]) {
             evas_object_del (_seperate_items [i]);
             _seperate_items [i] = NULL;
+        }
+
+        if (_line_0 [i]) {
+            evas_object_del (_line_0 [i]);
+            _line_0 [i] = NULL;
         }
         if (_line_items [i]) {
             evas_object_del (_line_items [i]);
@@ -1582,6 +1594,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_focus_out                  (slot (slot_focus_out));
     _panel_agent->signal_connect_expand_candidate           (slot (slot_expand_candidate));
     _panel_agent->signal_connect_contract_candidate         (slot (slot_contract_candidate));
+    _panel_agent->signal_connect_set_candidate_ui           (slot (slot_set_candidate_style));
     _panel_agent->signal_connect_update_factory_info        (slot (slot_update_factory_info));
     _panel_agent->signal_connect_update_spot_location       (slot (slot_update_spot_location));
     _panel_agent->signal_connect_update_input_context       (slot (slot_update_input_context));
@@ -1594,13 +1607,13 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_update_lookup_table        (slot (slot_update_candidate_table));
     _panel_agent->signal_connect_get_candidate_geometry     (slot (slot_get_candidate_geometry));
     _panel_agent->signal_connect_get_input_panel_geometry   (slot (slot_get_input_panel_geometry));
-    _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise_by_uuid));
+    _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise));
     _panel_agent->signal_connect_get_ise_list               (slot (slot_get_ise_list));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
     _panel_agent->signal_connect_get_all_language           (slot (slot_get_all_language));
     _panel_agent->signal_connect_get_ise_language           (slot (slot_get_ise_language));
-    _panel_agent->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info_by_uuid));
+    _panel_agent->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info));
     _panel_agent->signal_connect_set_keyboard_ise           (slot (slot_set_keyboard_ise));
     _panel_agent->signal_connect_get_keyboard_ise           (slot (slot_get_keyboard_ise));
     _panel_agent->signal_connect_start_default_ise          (slot (slot_start_default_ise));
@@ -1664,6 +1677,23 @@ static void slot_contract_candidate (void)
 
     if (_candidate_area_2 && evas_object_visible_get (_candidate_area_2))
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
+}
+
+/**
+ * @brief Set candidate style slot function for PanelAgent.
+ *
+ * @param display_line The displayed line number for portrait mode.
+ * @param reserved The reserved parameter.
+ */
+static void slot_set_candidate_style (int display_line, int reserved)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " display_line:" << display_line << "\n";
+    if (display_line > 0 && display_line < 5) {
+        int nOld = _candidate_port_line;
+        _candidate_port_line = display_line;
+        if (nOld != display_line && _candidate_window)
+            ui_create_candidate_window ();
+    }
 }
 
 /**
@@ -1942,7 +1972,7 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
         evas_object_geometry_get (_tmp_aux_text, &x, &y, &width, &height);
         item_width = width + 2*_blank_width;
         item_width = item_width > _item_min_width ? item_width : _item_min_width;
-        evas_object_size_hint_min_set (aux_edje, item_width, _aux_height - 2);
+        evas_object_size_hint_min_set (aux_edje, item_width, _aux_height);
         if (aux_index == (int)i || (aux_index == -1 && i == 0)) {
             aux_start = window_width;
             aux_end   = window_width + item_width;
@@ -2001,6 +2031,7 @@ static void update_table (const int table_type, const LookupTable &table)
     int line_height     = _v_padding;
     int total_width     = 0;
     int current_width   = 0;
+    int line_0          = 0;
     int line_count      = 0;
     int more_item_count = 0;
     int scroll_0_width  = _candidate_scroll_0_width_min;
@@ -2008,10 +2039,10 @@ static void update_table (const int table_type, const LookupTable &table)
     if (_candidate_angle == 90 || _candidate_angle == 270)
         scroll_0_width = _candidate_scroll_0_width_max;
     else
-        scroll_0_width = _candidate_scroll_0_width_min;
+        scroll_0_width = 618 * _width_rate;
 
     Evas *evas = evas_object_evas_get (_candidate_window);
-    for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++ i) {
+    for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
         if (_candidate_0 [i]) {
             evas_object_del (_candidate_0 [i]);
             _candidate_0 [i] = NULL;
@@ -2055,7 +2086,7 @@ static void update_table (const int table_type, const LookupTable &table)
             wcs = table.get_candidate_in_current_page (i);
             mbs = utf8_wcstombs (wcs);
 
-            if (!_candidate_0 [i] && total_width < scroll_0_width) {
+            if (!_candidate_0 [i] && total_width <= scroll_0_width) {
                 _candidate_0 [i] = edje_object_add (evas);
                 edje_object_file_set (_candidate_0 [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
                 edje_object_text_class_set (_candidate_0 [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
@@ -2077,19 +2108,33 @@ static void update_table (const int table_type, const LookupTable &table)
 
                 // Add first item
                 if (i == 0) {
+                    item_0_width = item_0_width > scroll_0_width ? scroll_0_width : item_0_width;
+                    evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                     elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, 0, item_0_width, _item_min_height);
                     total_width += item_0_width;
                     continue;
                 } else {
                     total_width += (item_0_width + seperate_width);
-                    if (total_width < scroll_0_width) {
+                    if (total_width <= scroll_0_width) {
                         _seperate_0 [i] = edje_object_add (evas);
                         edje_object_file_set (_seperate_0 [i], _candidate_edje_file.c_str (), "seperate_line");
                         evas_object_size_hint_min_set (_seperate_0 [i], seperate_width, seperate_height);
-                        elm_table_pack (_candidate_0_table, _seperate_0 [i], total_width - item_0_width - seperate_width, (_item_min_height - seperate_height)/2, seperate_width, seperate_height);
+                        elm_table_pack (_candidate_0_table, _seperate_0 [i],
+                                        total_width - item_0_width - seperate_width,
+                                        line_0*(_item_min_height+line_height) + (_item_min_height - seperate_height)/2,
+                                        seperate_width, seperate_height);
                         evas_object_show (_seperate_0 [i]);
 
-                        elm_table_pack (_candidate_0_table, _candidate_0 [i], total_width - item_0_width, 0, item_0_width, _item_min_height);
+                        elm_table_pack (_candidate_0_table, _candidate_0 [i], total_width - item_0_width, line_0*(_item_min_height+line_height), item_0_width, _item_min_height);
+                        continue;
+                    } else if ((_candidate_angle == 0 || _candidate_angle == 180) &&
+                               (_candidate_port_line > 1 && (line_0 + 1) < _candidate_port_line)) {
+                        line_0++;
+                        scroll_0_width = _candidate_scroll_0_width_min;
+                        item_0_width = item_0_width > scroll_0_width ? scroll_0_width : item_0_width;
+                        evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
+                        elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, line_0*(_item_min_height+line_height), item_0_width, _item_min_height);
+                        total_width = item_0_width;
                         continue;
                     }
                 }
@@ -2114,7 +2159,7 @@ static void update_table (const int table_type, const LookupTable &table)
             item_0_width = width + 2*_blank_width;
             item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
             evas_object_size_hint_min_set (_candidate_items [i], item_0_width, _item_min_height);
-            if (current_width + item_0_width > _candidate_scroll_width) {
+            if (current_width > 0 && current_width + item_0_width > _candidate_scroll_width) {
                 current_width = 0;
                 line_count++;
             }
@@ -2144,6 +2189,36 @@ static void update_table (const int table_type, const LookupTable &table)
             more_item_count++;
         }
     }
+
+    for (i = 1; i < _candidate_port_line; i++) {
+        if ((_candidate_angle == 0 || _candidate_angle == 180)) {
+            if (_line_0 [i] == NULL) {
+                _line_0 [i] = edje_object_add (evas);
+                edje_object_file_set (_line_0 [i], _candidate_edje_file.c_str (), "popup_line");
+                evas_object_size_hint_min_set (_line_0 [i], line_width, line_height);
+                x = 0;
+                y = i * (_item_min_height + line_height) - line_height;
+                elm_table_pack (_candidate_0_table, _line_0 [i], x, y, line_width, line_height);
+                evas_object_show (_line_0 [i]);
+            }
+
+            // Create blank line
+            if (line_0 + 1 < _candidate_port_line && i > line_0) {
+                int nIndex = item_num + i;
+                nIndex = nIndex < SCIM_LOOKUP_TABLE_MAX_PAGESIZE ? nIndex : SCIM_LOOKUP_TABLE_MAX_PAGESIZE - 1;
+                _seperate_0 [nIndex] = edje_object_add (evas);
+                edje_object_file_set (_seperate_0 [nIndex], _candidate_edje_file.c_str (), "seperate_line");
+                evas_object_size_hint_min_set (_seperate_0 [nIndex], seperate_width, _item_min_height);
+                elm_table_pack (_candidate_0_table, _seperate_0 [nIndex],
+                                0, i*(_item_min_height+line_height), seperate_width, _item_min_height);
+                //evas_object_show (_seperate_0 [nIndex]);
+            }
+        } else if (_line_0 [i]) {
+            evas_object_del (_line_0 [i]);
+            _line_0 [i] = NULL;
+        }
+    }
+
     _panel_agent->update_displayed_candidate_number (item_num - more_item_count);
     if (more_item_count == 0 && evas_object_visible_get (_candidate_area_2))
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
@@ -2250,13 +2325,14 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
 /**
  * @brief Set active ISE slot function for PanelAgent.
  *
- * @param ise_uuid The active ISE's uuid.
+ * @param uuid The active ISE's uuid.
+ * @param changeDefault The flag for changeing default ISE.
  */
-static void slot_set_active_ise_by_uuid (const String &ise_uuid, bool changeDefault)
+static void slot_set_active_ise (const String &uuid, bool changeDefault)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << ise_uuid << ")\n";
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << uuid << ")\n";
 
-    set_active_ise_by_uuid (ise_uuid, 0, changeDefault);
+    set_active_ise (uuid, changeDefault);
 }
 
 /**
@@ -2370,7 +2446,7 @@ static void slot_get_ise_language (char *name, std::vector<String> &list)
  *
  * @return true if this operation is successful, otherwise return false.
  */
-static bool slot_get_ise_info_by_uuid (const String &uuid, ISE_INFO &info)
+static bool slot_get_ise_info (const String &uuid, ISE_INFO &info)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -2435,9 +2511,9 @@ static void slot_start_default_ise (void)
     default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
     default_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_NAME), _initial_ise.name);
 
-    if (!set_active_ise_by_uuid (default_ise.uuid, 0, 1)) {
+    if (!set_active_ise (default_ise.uuid, 1)) {
         if (default_ise.uuid != _initial_ise.uuid)
-            set_active_ise_by_uuid (_initial_ise.uuid, 0, 1);
+            set_active_ise (_initial_ise.uuid, 1);
 
         _active_ise = _initial_ise;
     } else {
@@ -2781,7 +2857,7 @@ static void change_hw_and_sw_keyboard (void)
             /* Currently active the hw ise directly */
             String uuid, name;
             isf_get_keyboard_ise (uuid, name, _config);
-            set_active_ise_by_uuid (uuid, 0, 1);
+            set_active_ise (uuid, 1);
             if (fixed) {
                 _ise_width  = 0;
                 _ise_height = 0;
@@ -2798,7 +2874,7 @@ static void change_hw_and_sw_keyboard (void)
             _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
         } else {
             String previous_helper = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, _initial_ise.uuid);
-            set_active_ise_by_uuid (previous_helper, 0, 1);
+            set_active_ise (previous_helper, 1);
             if (_candidate_window && _more_btn && _close_btn) {
                 edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
                 edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
@@ -3052,6 +3128,7 @@ int main (int argc, char *argv [])
         _candidate_items [i] = NULL;
         _seperate_0 [i]      = NULL;
         _seperate_items [i]  = NULL;
+        _line_0 [i]          = NULL;
         _line_items [i]      = NULL;
     }
 

@@ -1249,6 +1249,24 @@ HelperAgent::set_candidate_position (int left, int top) const
 }
 
 /**
+ * @brief Set candidate style.
+ *
+ * @param display_line - the displayed line number for portrait mode.
+ */
+void
+HelperAgent::set_candidate_style (int display_line) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (ISM_TRANS_CMD_SET_CANDIDATE_UI);
+        m_impl->send.put_data (display_line);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
  * @brief Request to hide candidate window.
  */
 void

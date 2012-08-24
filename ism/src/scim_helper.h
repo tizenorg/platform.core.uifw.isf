@@ -544,6 +544,13 @@ public:
      */
     void update_preedit_caret     (int                          caret) const;
 
+    /**
+     * @brief Set candidate style.
+     *
+     * @param display_line - the displayed line number for portrait mode.
+     */
+    void set_candidate_style      (int                          display_line) const;
+
 public:
     /**
      * @brief Connect a slot to Helper exit signal.

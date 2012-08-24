@@ -4100,13 +4100,11 @@ private:
 
     void socket_set_candidate_ui                (void)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_set_candidate_ui ()\n";
+        SCIM_DEBUG_MAIN(4) << __func__ << " \n";
 
-        uint32 style, mode;
-        if (m_recv_trans.get_data (style) && m_recv_trans.get_data (mode))
-        {
-            m_signal_set_candidate_ui (style, mode);
-        }
+        uint32 style;
+        if (m_recv_trans.get_data (style))
+            m_signal_set_candidate_ui (style, 0);
     }
 
     void socket_get_candidate_ui                (void)
