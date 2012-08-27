@@ -1,3 +1,7 @@
+ISF 2.3.5627 :
+  1. [immodule] fix bug not to call hide event callback when context is deleted.
+
+
 ISF 2.3.5624 :
   1. Add set_candidate_style () method for HelperAgent class
 

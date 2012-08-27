@@ -884,8 +884,6 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             _ic_list = _ic_list->next;
     }
 
-    isf_imf_context_input_panel_event_callback_clear(ctx);
-
     if (context_scim && context_scim->impl) {
         _panel_client.prepare (context_scim->id);
 
@@ -900,6 +898,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_input_panel_hide (ctx);
+                input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
         }
 
@@ -929,6 +928,8 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             context_scim->impl = 0;
         }
     }
+
+    isf_imf_context_input_panel_event_callback_clear (ctx);
 
     if (context_scim == _focused_ic)
         _focused_ic = 0;

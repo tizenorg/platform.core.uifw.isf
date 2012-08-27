@@ -1,3 +1,11 @@
+isf (2.3.5627-1slp2+1) unstable; urgency=low
+
+  * [immodule] fix bug not to call hide event callback when context is deleted
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5627-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Mon, 27 Aug 2012 16:18:44 +0900
+
 isf (2.3.5624-1slp2+1) unstable; urgency=low
 
   * Add set_candidate_style () for HelperAgent class

@@ -716,6 +716,11 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
     }
 }
 
+EAPI void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
+{
+    _event_callback_call (type, value);
+}
+
 /**
  * Get candidate window position and size, in screen coodinates of the candidate rectangle not the client area,
  * the represents the size and location of the candidate window
