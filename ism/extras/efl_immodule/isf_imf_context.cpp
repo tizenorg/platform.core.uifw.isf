@@ -416,7 +416,7 @@ key_press_cb (void *data, int type, void *event)
     if (!_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
     if (!strcmp (ev->keyname, KEY_END)) {
-        LOGD("END key is pressed\n");
+        LOGD ("END key is pressed\n");
 #ifdef ENABLE_BACKKEY
         isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
         return ECORE_CALLBACK_CANCEL;
@@ -482,15 +482,15 @@ autoperiod_insert(Ecore_IMF_Context *ctx)
     if ((ecore_time_get() - space_key_time) > DOUBLE_SPACE_INTERVAL)
         goto done;
 
-    ecore_imf_context_surrounding_get(ctx, &markup_str, &cursor_pos);
+    ecore_imf_context_surrounding_get (ctx, &markup_str, &cursor_pos);
     if (!markup_str) goto done;
 
     // Convert into plain string
-    plain_str = evas_textblock_text_markup_to_utf8(NULL, markup_str);
+    plain_str = evas_textblock_text_markup_to_utf8 (NULL, markup_str);
     if (!plain_str) goto done;
 
     // Convert string from UTF-8 to unicode
-    ustr = eina_unicode_utf8_to_unicode(plain_str, NULL);
+    ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
     if (!ustr) goto done;
 
     if (cursor_pos < 2) goto done;
@@ -502,18 +502,18 @@ autoperiod_insert(Ecore_IMF_Context *ctx)
         ev.ctx = ctx;
         ev.n_chars = 1;
         ev.offset = -1;
-        ecore_imf_context_delete_surrounding_event_add(ctx, -1, 1);
+        ecore_imf_context_delete_surrounding_event_add (ctx, -1, 1);
         ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, &ev);
 
-        ecore_imf_context_commit_event_add(ctx, ".");
+        ecore_imf_context_commit_event_add (ctx, ".");
         ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)".");
      }
 
 done:
-    if (markup_str) free(markup_str);
-    if (plain_str) free(plain_str);
-    if (ustr) free(ustr);
-    space_key_time = ecore_time_get();
+    if (markup_str) free (markup_str);
+    if (plain_str) free (plain_str);
+    if (ustr) free (ustr);
+    space_key_time = ecore_time_get ();
 }
 
 static Eina_Bool
@@ -527,7 +527,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
     int i = 0;
     Eina_Unicode *tail = NULL;
     Eina_Unicode *ustr = NULL;
-    const int punc_num = sizeof(puncs) / sizeof(puncs[0]);
+    const int punc_num = sizeof (puncs) / sizeof (puncs[0]);
     Eina_Unicode *uni_puncs[punc_num];
     EcoreIMFContextISF *context_scim;
 
@@ -546,10 +546,10 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
     }
 
     for (i = 0; i < punc_num; i++) {
-        uni_puncs[i] = eina_unicode_utf8_to_unicode(puncs[i], NULL);
+        uni_puncs[i] = eina_unicode_utf8_to_unicode (puncs[i], NULL);
     }
 
-    ecore_imf_context_surrounding_get(ctx, &markup_str, &cursor_pos);
+    ecore_imf_context_surrounding_get (ctx, &markup_str, &cursor_pos);
     if (!markup_str) goto done;
 
     if (cursor_pos == 0) {
@@ -558,11 +558,11 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
     }
 
     // Convert into plain string
-    plain_str = evas_textblock_text_markup_to_utf8(NULL, markup_str);
+    plain_str = evas_textblock_text_markup_to_utf8 (NULL, markup_str);
     if (!plain_str) goto done;
 
     // Convert string from UTF-8 to unicode
-    ustr = eina_unicode_utf8_to_unicode(plain_str, NULL);
+    ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
     if (!ustr) goto done;
 
     if (cursor_pos >= 1) {
@@ -582,7 +582,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
 
     // check punctuation
     if (cursor_pos >= 2) {
-        tail = eina_unicode_strndup(ustr+cursor_pos-2, 2);
+        tail = eina_unicode_strndup (ustr+cursor_pos-2, 2);
 
         if (tail) {
             for (i = 0; i < punc_num; i++) {
@@ -591,18 +591,18 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
                     break;
                 }
             }
-            free(tail);
+            free (tail);
             tail = NULL;
         }
     }
 
 done:
-    if (ustr) free(ustr);
-    if (markup_str) free(markup_str);
-    if (plain_str) free(plain_str);
+    if (ustr) free (ustr);
+    if (markup_str) free (markup_str);
+    if (plain_str) free (plain_str);
 
     for (i = 0; i < punc_num; i++) {
-        if (uni_puncs[i]) free(uni_puncs[i]);
+        if (uni_puncs[i]) free (uni_puncs[i]);
     }
 
     return ret;
@@ -617,7 +617,7 @@ caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
     if (!ctx) return EINA_FALSE;
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
-    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get(ctx);
+    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get (ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
         return EINA_FALSE;
 
@@ -625,7 +625,7 @@ caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
     if (!context_scim || !context_scim->impl)
         return EINA_FALSE;
 
-    if (ecore_imf_context_input_panel_caps_lock_mode_get(ctx)) {
+    if (ecore_imf_context_input_panel_caps_lock_mode_get (ctx)) {
         uppercase = EINA_TRUE;
     }
     else {
@@ -642,12 +642,12 @@ caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
     if (force) {
         context_scim->impl->uppercase = uppercase;
         if (noti)
-            isf_imf_context_input_panel_caps_mode_set(ctx, uppercase);
+            isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
     } else {
         if (context_scim->impl->uppercase != uppercase) {
             context_scim->impl->uppercase = uppercase;
             if (noti)
-                isf_imf_context_input_panel_caps_mode_set(ctx, uppercase);
+                isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
         }
     }
 
@@ -661,15 +661,15 @@ window_to_screen_geometry_get(Ecore_X_Window client_win, int *x, int *y)
    int win_x, win_y;
    int sum_x = 0, sum_y = 0;
 
-   root_window = ecore_x_window_root_get(client_win);
+   root_window = ecore_x_window_root_get (client_win);
    win = client_win;
 
    while (root_window != win)
      {
-        ecore_x_window_geometry_get(win, &win_x, &win_y, NULL, NULL);
+        ecore_x_window_geometry_get (win, &win_x, &win_y, NULL, NULL);
         sum_x += win_x;
         sum_y += win_y;
-        win = ecore_x_window_parent_get(win);
+        win = ecore_x_window_parent_get (win);
      }
 
    if (x)
@@ -685,10 +685,10 @@ evas_focus_out_cb(void *data, Evas *e, void *event_info)
 
     if (!ctx) return;
 
-    LOGD("[Canvas focus-out] ctx : %p\n", ctx);
+    LOGD ("[Canvas focus-out] ctx : %p\n", ctx);
 
     if (input_panel_ctx == ctx && _scim_initialized) {
-        isf_imf_context_input_panel_instant_hide(ctx);
+        isf_imf_context_input_panel_instant_hide (ctx);
     }
 }
 
@@ -696,14 +696,14 @@ static void autoperiod_allow_changed_cb (keynode_t *key, void* data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    autoperiod_allow = vconf_keynode_get_bool(key);
+    autoperiod_allow = vconf_keynode_get_bool (key);
 }
 
 static void autocapital_allow_changed_cb (keynode_t *key, void* data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    autocap_allow = vconf_keynode_get_bool(key);
+    autocap_allow = vconf_keynode_get_bool (key);
 }
 
 /* Public functions */
@@ -769,7 +769,7 @@ isf_imf_context_shutdown (void)
     if (_scim_initialized) {
         _scim_initialized = false;
 
-        LOGD("[immodule shutdown]\n");
+        LOGD ("[immodule shutdown]\n");
 
         vconf_ignore_key_changed (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, autoperiod_allow_changed_cb);
         vconf_ignore_key_changed (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb);
@@ -893,13 +893,13 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             context_scim->impl->si->focus_out ();
 
         if (context_scim->impl->client_canvas)
-            evas_event_callback_del_full(context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
+            evas_event_callback_del_full (context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
 
         if (input_panel_ctx == ctx && _scim_initialized) {
-            LOGD("[Context is deleted] ctx : %p\n", ctx);
+            LOGD ("[Context is deleted] ctx : %p\n", ctx);
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-                isf_imf_context_input_panel_hide(ctx);
+                isf_imf_context_input_panel_hide (ctx);
             }
         }
 
@@ -964,9 +964,9 @@ isf_imf_context_client_canvas_set (Ecore_IMF_Context *ctx, void *canvas)
     if (context_scim && context_scim->impl && context_scim->impl->client_canvas != (Evas*) canvas) {
         context_scim->impl->client_canvas = (Evas*)canvas;
 
-        LOGD("[client_canvas_set] ctx : %p, canvas : %p\n", ctx, canvas);
+        LOGD ("[client_canvas_set] ctx : %p, canvas : %p\n", ctx, canvas);
 
-        evas_event_callback_add(context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
+        evas_event_callback_add (context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
     }
 }
 
@@ -993,7 +993,7 @@ isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window)
     if (context_scim && context_scim->impl && context_scim->impl->client_window != (Ecore_X_Window)((Ecore_Window)window)) {
         context_scim->impl->client_window = (Ecore_X_Window)((Ecore_Window)window);
 
-        LOGD("[client_window_set] ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
+        LOGD ("[client_window_set] ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
 
         if ((context_scim->impl->client_window != 0) &&
                 (context_scim->impl->client_window != _client_window)) {
@@ -1107,7 +1107,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         _panel_client.send ();
     }
 
-    LOGD("[focus-in] ctx : %p\n", ctx);
+    LOGD ("[focus-in] ctx : %p\n", ctx);
 
     if (ecore_imf_context_input_panel_enabled_get (ctx))
         isf_imf_context_input_panel_show (ctx);
@@ -1134,7 +1134,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         WideString wstr = context_scim->impl->preedit_string;
 
-        LOGD("[focus-out] ctx : %p\n", ctx);
+        LOGD ("[focus-out] ctx : %p\n", ctx);
 
         if (ecore_imf_context_input_panel_enabled_get (ctx))
             isf_imf_context_input_panel_hide (ctx);
@@ -1218,12 +1218,12 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->cursor_pos != cursor_pos) {
-            caps_mode_check(ctx, EINA_FALSE, EINA_TRUE);
+            caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
 
             if (context_scim->impl->preedit_updating)
                 return;
 
-            LOGD("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            LOGD ("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
 
             context_scim->impl->cursor_pos = cursor_pos;
 
@@ -1261,14 +1261,14 @@ isf_imf_context_cursor_location_set (Ecore_IMF_Context *ctx, int cx, int cy, int
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->client_canvas) {
-            ee = ecore_evas_ecore_evas_get(context_scim->impl->client_canvas);
+            ee = ecore_evas_ecore_evas_get (context_scim->impl->client_canvas);
             if (!ee) return;
 
             ecore_evas_geometry_get (ee, &canvas_x, &canvas_y, NULL, NULL);
         }
         else {
             if (context_scim->impl->client_window)
-                window_to_screen_geometry_get(context_scim->impl->client_window, &canvas_x, &canvas_y);
+                window_to_screen_geometry_get (context_scim->impl->client_window, &canvas_x, &canvas_y);
             else
                 return;
         }
@@ -1380,7 +1380,7 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                 Ecore_IMF_Preedit_Attr *attr = NULL;
                 AttributeList::const_iterator i;
                 bool *attrs_flag = new bool [mbs.length ()];
-                memset (attrs_flag, 0, mbs.length () *sizeof (bool));
+                memset (attrs_flag, 0, mbs.length () * sizeof (bool));
                 for (i = context_scim->impl->preedit_attrlist.begin ();
                     i != context_scim->impl->preedit_attrlist.end (); ++i) {
                     start_index = i->get_start ();
@@ -1389,7 +1389,7 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                         start_index = g_utf8_offset_to_pointer (mbs.c_str (), i->get_start ()) - mbs.c_str ();
                         end_index = g_utf8_offset_to_pointer (mbs.c_str (), i->get_end ()) - mbs.c_str ();
                         if (i->get_type () == SCIM_ATTR_DECORATE) {
-                            attr = (Ecore_IMF_Preedit_Attr *)calloc(1, sizeof(Ecore_IMF_Preedit_Attr));
+                            attr = (Ecore_IMF_Preedit_Attr *)calloc(1, sizeof (Ecore_IMF_Preedit_Attr));
                             if (attr == NULL)
                                 continue;
                             attr->start_index = start_index;
@@ -1397,13 +1397,13 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
 
                             if (i->get_value () == SCIM_ATTR_DECORATE_UNDERLINE) {
                                 attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB1;
-                                *attrs = eina_list_append(*attrs, (void *)attr);
+                                *attrs = eina_list_append (*attrs, (void *)attr);
                             } else if (i->get_value () == SCIM_ATTR_DECORATE_REVERSE) {
                                 attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB2;
-                                *attrs = eina_list_append(*attrs, (void *)attr);
+                                *attrs = eina_list_append (*attrs, (void *)attr);
                             } else if (i->get_value () == SCIM_ATTR_DECORATE_HIGHLIGHT) {
                                 attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB3;
-                                *attrs = eina_list_append(*attrs, (void *)attr);
+                                *attrs = eina_list_append (*attrs, (void *)attr);
                             } else {
                                 free (attr);
                             }
@@ -1433,7 +1433,7 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                         while (pos < mbs.length () && !attrs_flag [pos])
                             ++pos;
                         // use REVERSE style as default
-                        attr = (Ecore_IMF_Preedit_Attr *)calloc(1, sizeof(Ecore_IMF_Preedit_Attr));
+                        attr = (Ecore_IMF_Preedit_Attr *)calloc (1, sizeof (Ecore_IMF_Preedit_Attr));
                         if (attr == NULL)
                             continue;
                         attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB2;
@@ -1613,7 +1613,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_NUM) key.mask |=SCIM_KEY_NumLockMask;
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get (ctx)) {
-            LOGD("[Mouse-up event] ctx : %p\n", ctx);
+            LOGD ("[Mouse-up event] ctx : %p\n", ctx);
             if (ic == _focused_ic)
                 isf_imf_context_input_panel_show (ctx);
         }
