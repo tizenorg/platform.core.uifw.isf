@@ -57,7 +57,7 @@ using namespace scim;
 #define PADDING_X                                 25
 
 #define SETTING_PACKAGE                           "isfsetting-efl"
-#define SETTING_LOCALEDIR                         "/opt/ug/res/locale"
+#define SETTING_LOCALEDIR                         "/usr/ug/res/locale"
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
 
 enum {

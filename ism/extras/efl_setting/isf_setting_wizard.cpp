@@ -51,7 +51,7 @@ using namespace scim;
 
 
 #define WIZARD_PACKAGE                             "keyboard-setting-wizard-efl"
-#define WIZARD_LOCALEDIR                           "/opt/ug/res/locale"
+#define WIZARD_LOCALEDIR                           "/usr/ug/res/locale"
 #define T_(s)                                      dgettext(WIZARD_PACKAGE, s)
 #define LOG_TAG                                    "isfsettingwizard"
 

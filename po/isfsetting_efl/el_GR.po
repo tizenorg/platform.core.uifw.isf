@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-10 15:02+0900\n"
+"POT-Creation-Date: 2012-08-27 10:55+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,41 +18,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Push the layout along with function buttons and title
-#: ism/extras/efl_setting/isf_setting_efl.cpp:638
-#: ism/extras/efl_setting/isf_setting_efl.cpp:824
+#: ism/extras/efl_setting/isf_setting_efl.cpp:623
+#: ism/extras/efl_setting/isf_setting_efl.cpp:810
 msgid "Selection"
 msgstr "Επιλογή"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:749
+#: ism/extras/efl_setting/isf_setting_efl.cpp:734
 msgid "No options"
 msgstr "Καμία επιλογή"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:756
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1023
+#: ism/extras/efl_setting/isf_setting_efl.cpp:741
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1072
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1134
 msgid "Keyboard settings"
 msgstr "Ρυθμίσεις πληκτρολογίου"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:943
+#: ism/extras/efl_setting/isf_setting_efl.cpp:939
 msgid "Auto capitalisation"
 msgstr "Αυτόματη κεφαλαιοποίηση"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:963
+#: ism/extras/efl_setting/isf_setting_efl.cpp:959
+#, fuzzy
+msgid "Auto capitalisation first letter in keyboard"
+msgstr "Αυτόματη κεφαλαιοποίηση"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:993
 msgid "Automatic full stop"
 msgstr "Αυτόματη εισαγωγή τελείας"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:979
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1010
+msgid ""
+"Automatically insert a full stop by tapping the space bar twice when using "
+"Qwerty keyboard"
+msgstr ""
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1028
 msgid "Software keyboard"
 msgstr "Πληκτρολόγιο οθόνης"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1002
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1066
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1051
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1115
 msgid "Select keyboard"
 msgstr "Επιλογή πληκτρολογίου"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1043
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1092
 msgid "Hardware keyboard"
 msgstr "Πληκτρολόγιο υλικού"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1088
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1154
 msgid "Keyboard"
 msgstr "Πληκτρολόγιο"
