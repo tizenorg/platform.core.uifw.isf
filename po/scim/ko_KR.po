@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SCIM\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-19 16:44+0900\n"
+"POT-Creation-Date: 2012-08-29 14:45+0900\n"
 "PO-Revision-Date: 2005-07-08 18:16+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: Korean <en@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ism/src/scim_compose_key.cpp:126 ism/src/scim_imengine.cpp:668
-#: ism/src/scim_panel_agent.cpp:341 ism/src/scim_panel_agent.cpp:4016
+#: ism/src/scim_compose_key.cpp:126 ism/src/scim_imengine.cpp:673
+#: ism/src/scim_panel_agent.cpp:348 ism/src/scim_panel_agent.cpp:4046
 #: ism/src/scim_utility.cpp:702
 #: ism/extras/gtk2_immodule/gtkimcontextscim.cpp:1715
 msgid "English/Keyboard"
@@ -1098,20 +1098,29 @@ msgstr ""
 msgid "click to enter NUMBERONLY"
 msgstr ""
 
-#: ism/demos/isf_layout_efl.cpp:230
+#. Password Layout
+#: ism/demos/isf_layout_efl.cpp:216
+msgid "PASSWORD LAYOUT"
+msgstr ""
+
+#: ism/demos/isf_layout_efl.cpp:216
+msgid "click to enter PASSWORD"
+msgstr ""
+
+#: ism/demos/isf_layout_efl.cpp:234
 msgid "Layout"
 msgstr ""
 
-#: ism/demos/isf_demo_efl.cpp:140
+#: ism/demos/isf_demo_efl.cpp:143
 msgid "Previous"
 msgstr "이전"
 
-#. bundle_add(ad->data, "navi_btn_left", NULL);
-#: ism/demos/isf_demo_efl.cpp:142
+#. service_add_extra_data(ad->data, "navi_btn_left", NULL);
+#: ism/demos/isf_demo_efl.cpp:145
 msgid "Next"
 msgstr "다음"
 
-#: ism/demos/isf_demo_efl.cpp:196
+#: ism/demos/isf_demo_efl.cpp:199
 msgid "ISF Demo"
 msgstr ""
 

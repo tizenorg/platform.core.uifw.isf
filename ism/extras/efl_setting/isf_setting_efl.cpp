@@ -956,7 +956,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[AUTO_CAPITALIZATION_TXT_ITEM] = item_data;
-            item_data->text = strdup(_T("Auto capitalisation first letter in keyboard"));
+            item_data->text = strdup(_T("Automatically capitalise first letter of sentence"));
             elm_genlist_item_append (
                     genlist,                // genlist object
                     &itcText,                  // item class
@@ -1007,7 +1007,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
             if (item_data != NULL) {
                 memset (item_data, 0, sizeof(ItemData));
                 p_items[AUTO_FULL_STOP_TXT_ITEM] = item_data;
-                item_data->text = strdup(_T("Automatically insert a full stop by tapping the space bar twice when using Qwerty keyboard"));
+                item_data->text = strdup(_T("Automatically insert a full stop by tapping the space bar twice"));
                 elm_genlist_item_append (
                         genlist,                // genlist object
                         &itcText,                  // item class

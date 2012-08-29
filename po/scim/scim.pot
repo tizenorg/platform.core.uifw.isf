@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-09 21:24+0900\n"
+"POT-Creation-Date: 2012-08-29 14:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ism/src/scim_compose_key.cpp:126 ism/src/scim_imengine.cpp:668
-#: ism/src/scim_panel_agent.cpp:341 ism/src/scim_panel_agent.cpp:3994
+#: ism/src/scim_compose_key.cpp:126 ism/src/scim_imengine.cpp:673
+#: ism/src/scim_panel_agent.cpp:348 ism/src/scim_panel_agent.cpp:4046
 #: ism/src/scim_utility.cpp:702
 #: ism/extras/gtk2_immodule/gtkimcontextscim.cpp:1715
 msgid "English/Keyboard"
@@ -96,7 +96,8 @@ msgstr ""
 msgid "Danish"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:720 ism/src/scim_keyboard_layout_data.h:4606
+#: ism/src/scim_utility.cpp:720 ism/src/scim_utility.cpp:825
+#: ism/src/scim_keyboard_layout_data.h:4606
 msgid "German"
 msgstr ""
 
@@ -160,7 +161,8 @@ msgstr ""
 msgid "Finnish"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:736 ism/src/scim_keyboard_layout_data.h:4603
+#: ism/src/scim_utility.cpp:736 ism/src/scim_utility.cpp:819
+#: ism/src/scim_keyboard_layout_data.h:4603
 msgid "French"
 msgstr ""
 
@@ -211,7 +213,8 @@ msgstr ""
 msgid "Icelandic"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:748 ism/src/scim_keyboard_layout_data.h:4611
+#: ism/src/scim_utility.cpp:748 ism/src/scim_utility.cpp:830
+#: ism/src/scim_keyboard_layout_data.h:4611
 msgid "Italian"
 msgstr ""
 
@@ -281,7 +284,8 @@ msgstr ""
 msgid "Nepali"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:766 ism/src/scim_keyboard_layout_data.h:4599
+#: ism/src/scim_utility.cpp:766 ism/src/scim_utility.cpp:805
+#: ism/src/scim_keyboard_layout_data.h:4599
 msgid "Dutch"
 msgstr ""
 
@@ -307,7 +311,7 @@ msgid "Polish"
 msgstr ""
 
 #: ism/src/scim_utility.cpp:772 ism/src/scim_utility.cpp:774
-#: ism/src/scim_keyboard_layout_data.h:4615
+#: ism/src/scim_utility.cpp:833 ism/src/scim_keyboard_layout_data.h:4615
 msgid "Portuguese"
 msgstr ""
 
@@ -418,10 +422,6 @@ msgstr ""
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:805
-msgid "Dutch (Standard)"
-msgstr ""
-
 #: ism/src/scim_utility.cpp:806
 msgid "Dutch (Belgian)"
 msgstr ""
@@ -466,10 +466,6 @@ msgstr ""
 msgid "English (Philippines)"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:819
-msgid "French (Standard)"
-msgstr ""
-
 #: ism/src/scim_utility.cpp:820
 msgid "French (Belgian)"
 msgstr ""
@@ -490,10 +486,6 @@ msgstr ""
 msgid "French (Monaco)"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:825
-msgid "German (Standard)"
-msgstr ""
-
 #: ism/src/scim_utility.cpp:826 ism/src/scim_keyboard_layout_data.h:4608
 msgid "German (Swiss)"
 msgstr ""
@@ -510,20 +502,12 @@ msgstr ""
 msgid "German (Liechtenstein)"
 msgstr ""
 
-#: ism/src/scim_utility.cpp:830
-msgid "Italian (Standard)"
-msgstr ""
-
 #: ism/src/scim_utility.cpp:831
 msgid "Italian (Swiss)"
 msgstr ""
 
 #: ism/src/scim_utility.cpp:832
 msgid "Portuguese (Brazilian)"
-msgstr ""
-
-#: ism/src/scim_utility.cpp:833
-msgid "Portuguese (Standard)"
 msgstr ""
 
 #: ism/src/scim_utility.cpp:834
@@ -1103,35 +1087,44 @@ msgstr ""
 msgid "click to enter NUMBERONLY"
 msgstr ""
 
-#: ism/demos/isf_layout_efl.cpp:230
+#. Password Layout
+#: ism/demos/isf_layout_efl.cpp:216
+msgid "PASSWORD LAYOUT"
+msgstr ""
+
+#: ism/demos/isf_layout_efl.cpp:216
+msgid "click to enter PASSWORD"
+msgstr ""
+
+#: ism/demos/isf_layout_efl.cpp:234
 msgid "Layout"
 msgstr ""
 
-#: ism/demos/isf_demo_efl.cpp:140
+#: ism/demos/isf_demo_efl.cpp:143
 msgid "Previous"
 msgstr ""
 
-#. bundle_add(ad->data, "navi_btn_left", NULL);
-#: ism/demos/isf_demo_efl.cpp:142
+#. service_add_extra_data(ad->data, "navi_btn_left", NULL);
+#: ism/demos/isf_demo_efl.cpp:145
 msgid "Next"
 msgstr ""
 
-#: ism/demos/isf_demo_efl.cpp:196
-msgid "isf demo"
+#: ism/demos/isf_demo_efl.cpp:199
+msgid "ISF Demo"
 msgstr ""
 
 #: ism/demos/isf_entry_event_efl.cpp:151
-msgid "entry event demo"
+msgid "Entry Event"
 msgstr ""
 
 #: ism/demos/isf_event_efl.cpp:232
-msgid "label event demo"
+msgid "Label Event"
 msgstr ""
 
 #: ism/demos/isf_event_efl.cpp:262
-msgid "ise event demo"
+msgid "Event"
 msgstr ""
 
 #: ism/demos/isf_imcontrol_efl.cpp:236
-msgid "isfimcontrol api"
+msgid "IM Control"
 msgstr ""
