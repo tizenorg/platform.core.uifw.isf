@@ -1477,6 +1477,7 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     Evas_Object *win = elm_win_add (NULL, strWinName, ELM_WIN_UTILITY);
+    elm_win_title_set (win, strWinName);
 
     /* set window properties */
     elm_win_autodel_set (win, EINA_TRUE);
