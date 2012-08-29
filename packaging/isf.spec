@@ -57,8 +57,8 @@ rm -rf %{buildroot}
 %post 
 /sbin/ldconfig
 
-/usr/bin/vconftool set -t string file/private/isf/autocapital_allow 0 -g 6514
-/usr/bin/vconftool set -t string file/private/isf/autoperiod_allow 0 -g 6514
+/usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 0 -g 6514
+/usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514
 
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc3.d/S42isf-panel-efl
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
