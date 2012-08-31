@@ -1112,6 +1112,8 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 
     if (ecore_imf_context_input_panel_enabled_get (ctx))
         isf_imf_context_input_panel_show (ctx);
+    else
+        LOGD ("[focus-in] ctx : %p input panel enable : FALSE\n", ctx);
 }
 
 /**
