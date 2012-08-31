@@ -1029,6 +1029,13 @@ public:
         return client >= 0;
     }
 
+    void send_longpress_event (int type, int index)
+    {
+        SCIM_DEBUG_MAIN(1) << __func__ << " (" << type << ", " << index << ")\n";
+
+        helper_longpress_candidate (index);
+    }
+
     bool trigger_property (const String  &property)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::trigger_property (" << property << ")\n";
@@ -5378,6 +5385,38 @@ private:
         return false;
     }
 
+    bool helper_longpress_candidate (uint32 index)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ()) {
+                int    client;
+                uint32 context;
+                Socket client_socket (it->second.id);
+                uint32 ctx;
+
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (ctx);
+                m_send_trans.put_data (m_current_helper_uuid);
+                m_send_trans.put_command (ISM_TRANS_CMD_LONGPRESS_CANDIDATE);
+                m_send_trans.put_data (index);
+                m_send_trans.write_to_socket (client_socket);
+
+                return true;
+            }
+        }
+
+        std::cerr << __func__ << " is failed!!!\n";
+        return false;
+    }
+
     void helper_all_update_spot_location (int x, int y)
     {
         SCIM_DEBUG_MAIN (5) << "PanelAgent::helper_all_update_spot_location (" << x << "," << y << ")\n";
@@ -5731,6 +5770,12 @@ bool
 PanelAgent::update_displayed_candidate_number (uint32        size)
 {
     return m_impl->update_displayed_candidate_number (size);
+}
+
+void
+PanelAgent::send_longpress_event           (int type, int index)
+{
+    m_impl->send_longpress_event (type, index);
 }
 
 bool

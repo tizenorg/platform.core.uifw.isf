@@ -1021,6 +1021,16 @@ public:
      * void update_displayed_candidate_number (const HelperAgent *, int ic, const String &uuid, int number);
      */
     Connection signal_connect_update_displayed_candidate_number (HelperAgentSlotInt                 *slot);
+
+    /**
+     * @brief Connect a slot to Helper longpress candidate signal.
+     *
+     * This signal is used to do something when candidate is longpress.
+     *
+     * The prototype of the slot is:
+     * void longpress_candidate (const HelperAgent *agent, int ic, const String &uuid, int index);
+     */
+    Connection signal_connect_longpress_candidate               (HelperAgentSlotInt                 *slot);
 };
 
 /**  @} */

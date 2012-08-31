@@ -632,11 +632,14 @@ public:
     int get_server_id                   (void);
 
     /**
-     * @brief Set the common ISE uuid.
+     * @brief Send candidate longpress event to ISE.
+     *
+     * @param type The candidate object type.
+     * @param index The candidate object index.
      *
      * @return none.
      */
-    void set_common_ise_uuid            (String &uuid);
+    void send_longpress_event           (int type, int index);
 
     /**
      * @brief Request to update ISE list.

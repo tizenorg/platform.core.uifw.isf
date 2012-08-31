@@ -257,6 +257,7 @@ static std::vector<Ecore_Fd_Handler *> _read_handler_list;
 static clock_t            _clock_start;
 
 static Ecore_Timer       *_check_size_timer                 = NULL;
+static Ecore_Timer       *_longpress_timer                  = NULL;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -786,6 +787,39 @@ static Eina_Bool ui_candidate_check_size_timeout (void *data)
 }
 
 /**
+ * @brief Delete longpress timer.
+ *
+ * @return void
+ */
+static void ui_candidate_delete_longpress_timer (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_longpress_timer != NULL) {
+        ecore_timer_del (_longpress_timer);
+        _longpress_timer = NULL;
+    }
+}
+
+/**
+ * @brief Callback function for candidate longpress timer.
+ *
+ * @param data Data to pass when it is called.
+ *
+ * @return ECORE_CALLBACK_CANCEL
+ */
+static Eina_Bool ui_candidate_longpress_timeout (void *data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    int index = (int)GPOINTER_TO_INT(data);
+    ui_candidate_delete_longpress_timer ();
+    _is_click = false;
+    _panel_agent->send_longpress_event (_click_object, index);
+    return ECORE_CALLBACK_CANCEL;
+}
+
+/**
  * @brief Show candidate window.
  */
 static void ui_candidate_show (void)
@@ -920,12 +954,18 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    _click_object = GPOINTER_TO_INT (data);
+    _click_object = GPOINTER_TO_INT (data) & 0xFF;
     _is_click     = true;
 
     Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
     _click_down_pos [0] = ev->canvas.x;
     _click_down_pos [1] = ev->canvas.y;
+
+    if (_click_object == ISF_EFL_CANDIDATE_0 || _click_object == ISF_EFL_CANDIDATE_ITEMS) {
+        int index = GPOINTER_TO_INT (data) >> 8;
+        ui_candidate_delete_longpress_timer ();
+        _longpress_timer = ecore_timer_add (1.0, ui_candidate_longpress_timeout, (void *)index);
+    }
 }
 
 /**
@@ -939,6 +979,8 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
 static void ui_mouse_button_released_cb (void *data, Evas *e, Evas_Object *button, void *event_info)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " index:" << GPOINTER_TO_INT (data) << "...\n";
+
+    ui_candidate_delete_longpress_timer ();
 
     int index = GPOINTER_TO_INT (data);
     if (_click_object == ISF_EFL_AUX && _is_click) {
@@ -991,6 +1033,7 @@ static void ui_mouse_moved_cb (void *data, Evas *e, Evas_Object *button, void *e
     if (abs (_click_up_pos [0] - _click_down_pos [0]) >= (int)(15 * _height_rate) ||
         abs (_click_up_pos [1] - _click_down_pos [1]) >= (int)(15 * _height_rate)) {
         _is_click = false;
+        ui_candidate_delete_longpress_timer ();
     }
 }
 
@@ -1959,7 +2002,7 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
         edje_object_text_class_set (aux_edje, "aux_text_class", _candidate_font_name.c_str (), _aux_font_size);
         edje_object_part_text_set (aux_edje, "aux", aux_list [i].c_str ());
         elm_table_pack (_aux_table, aux_edje, i, 0, 1, 1);
-        evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_AUX));
+        evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_AUX));
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_AUX));
         evas_object_show (aux_edje);
@@ -2091,7 +2134,7 @@ static void update_table (const int table_type, const LookupTable &table)
                 _candidate_0 [i] = edje_object_add (evas);
                 edje_object_file_set (_candidate_0 [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
                 edje_object_text_class_set (_candidate_0 [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
-                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_CANDIDATE_0));
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
                 evas_object_show (_candidate_0 [i]);
@@ -2145,7 +2188,7 @@ static void update_table (const int table_type, const LookupTable &table)
                 _candidate_items [i] = edje_object_add (evas);
                 edje_object_file_set (_candidate_items [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
                 edje_object_text_class_set (_candidate_items [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
-                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
+                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_CANDIDATE_ITEMS));
                 evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
                 evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
                 evas_object_show (_candidate_items [i]);
@@ -2719,7 +2762,7 @@ static void set_language_and_locale (void)
     if (lang_str) {
         setenv ("LANG", lang_str, 1);
         setlocale (LC_MESSAGES, lang_str);
-        free(lang_str);
+        free (lang_str);
     } else {
         setenv ("LANG", "en_US.utf8", 1);
         setlocale (LC_MESSAGES, "en_US.utf8");
@@ -3226,6 +3269,7 @@ int main (int argc, char *argv [])
 
 cleanup:
     ui_candidate_delete_check_size_timer ();
+    ui_candidate_delete_longpress_timer ();
 
     if (!_config.null ())
         _config.reset ();

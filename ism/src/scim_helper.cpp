@@ -148,6 +148,7 @@ public:
     HelperAgentSignalVoid               signal_reset_ise_context;
     HelperAgentSignalUintVoid           signal_turn_on_log;
     HelperAgentSignalInt                signal_update_displayed_candidate_number;
+    HelperAgentSignalInt                signal_longpress_candidate;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1) { }
@@ -735,6 +736,13 @@ HelperAgent::filter_event ()
                 uint32 size;
                 if (m_impl->recv.get_data (size))
                     m_impl->signal_update_displayed_candidate_number (this, ic, ic_uuid, size);
+                break;
+            }
+            case ISM_TRANS_CMD_LONGPRESS_CANDIDATE:
+            {
+                uint32 index;
+                if (m_impl->recv.get_data (index))
+                    m_impl->signal_longpress_candidate (this, ic, ic_uuid, index);
                 break;
             }
             default:
@@ -2033,6 +2041,20 @@ Connection
 HelperAgent::signal_connect_update_displayed_candidate_number (HelperAgentSlotInt *slot)
 {
     return m_impl->signal_update_displayed_candidate_number.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper longpress candidate signal.
+ *
+ * This signal is used to do something when candidate is longpress.
+ *
+ * The prototype of the slot is:
+ * void longpress_candidate (const HelperAgent *agent, int ic, const String &uuid, int index);
+ */
+Connection
+HelperAgent::signal_connect_longpress_candidate (HelperAgentSlotInt *slot)
+{
+    return m_impl->signal_longpress_candidate.connect (slot);
 }
 
 } /* namespace scim */
