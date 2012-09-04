@@ -1,3 +1,12 @@
+isf (2.3.5704-1slp2+1) unstable; urgency=low
+
+  * fix typo
+  * fix if no option for ise , disable the ise option item instead of popup
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5704-1slp2+1
+
+ -- Shuo Liu <shuo0805.liu@samsung.com>  Thu, 04 Sep 2012 15:00:00 +0900
+
 isf (2.3.5631-1slp2+1) unstable; urgency=low
 
   * [isf-panel-efl] Add longpress event for soft ISE

@@ -209,6 +209,32 @@ static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
     return naviframe;
 }
 
+static bool check_if_ise_option_exist(const char *isename)
+{
+    String mdl_name;
+    for (unsigned int i = 0; i < _names.size (); i++) {
+        if (_names[i] == String (isename)) {
+            if (_modes[i] == TOOLBAR_KEYBOARD_MODE)
+                mdl_name = _module_names[i] + String ("-imengine-setup");
+            else
+                mdl_name = _module_names[i] + String ("-setup");
+        }
+    }
+
+    if (mdl) {
+        delete mdl;
+        mdl = NULL;
+    }
+
+    if (mdl_name.length () > 0)
+        mdl = new SetupModule (String (mdl_name));
+
+    if (mdl == NULL || !mdl->valid ())
+        return false;
+    else
+        return true;
+}
+
 #ifndef SINGLE_SELECTION
 static void _ise_onoff_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -333,8 +359,16 @@ static void update_isf_setting_main_view(ug_data *ugd)
 {
     p_items[SW_KEYBOARD_SEL_ITEM]->sub_text = strdup(_active_ise_name);
     elm_object_item_data_set (ugd->sw_ise_item_tizen, p_items[SW_KEYBOARD_SEL_ITEM]);
+    if (is_hw_connected || !check_if_ise_option_exist((const char *)_active_ise_name))
+        elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
+    else
+        elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_FALSE);
     p_items[HW_KEYBOARD_SEL_ITEM]->sub_text = strdup(_active_hw_ise_name);
     elm_object_item_data_set (ugd->hw_ise_item_tizen, p_items[HW_KEYBOARD_SEL_ITEM]);
+    if (!is_hw_connected || !check_if_ise_option_exist((const char *)_active_hw_ise_name))
+        elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
+    else
+        elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
 }
 
 static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
@@ -675,12 +709,6 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
     }
 }
 
-static void response_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    if ((int)event_info != 5)
-        evas_object_del (obj);
-}
-
 //for naviframe l_btn
 static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -709,34 +737,8 @@ static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_in
 
 static void show_ise_option_module (ug_data *ugd, const char *isename)
 {
-    String mdl_name;
-    for (unsigned int i = 0; i < _names.size (); i++) {
-        if (_names[i] == String (isename)) {
-            if (_modes[i] == TOOLBAR_KEYBOARD_MODE)
-                mdl_name = _module_names[i] + String ("-imengine-setup");
-            else
-                mdl_name = _module_names[i] + String ("-setup");
-        }
-    }
-
-    if (mdl) {
-        delete mdl;
-        mdl = NULL;
-    }
-
-    if (mdl_name.length () > 0)
-        mdl = new SetupModule (String (mdl_name));
-
-    if (mdl == NULL || !mdl->valid ()) {
-        Evas_Object *popup = elm_popup_add (ugd->naviframe);
-        evas_object_size_hint_weight_set (popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        char tmp[256] = {'\0'};
-        snprintf (tmp, sizeof (tmp), "%s: %s", isename, _T("No options"));
-        elm_object_text_set (popup, tmp);
-        elm_popup_timeout_set (popup, 3.0);
-        evas_object_smart_callback_add (popup, "response", response_cb, NULL);
-        evas_object_show (popup);
-    } else {
+    if (check_if_ise_option_exist(isename))
+    {
         char title[256];
         snprintf (title, sizeof (title), _T("Keyboard settings"));
         ugd->opt_eo = mdl->create_ui (ugd->layout_main, ugd->naviframe);
@@ -936,7 +938,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
-            item_data->text = strdup(_T("Auto capitalisation"));
+            item_data->text = strdup(_T("Auto capitalization"));
             item_data->mode = AUTO_CAPITALIZATION_ITEM;
             ugd->autocapital_item = elm_genlist_item_append (
                     genlist,                // genlist object
@@ -956,7 +958,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof(ItemData));
             p_items[AUTO_CAPITALIZATION_TXT_ITEM] = item_data;
-            item_data->text = strdup(_T("Automatically capitalise first letter of sentence"));
+            item_data->text = strdup(_T("Automatically capitalize first letter of sentence"));
             elm_genlist_item_append (
                     genlist,                // genlist object
                     &itcText,                  // item class
@@ -1080,7 +1082,8 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_ise_option_sel,
                     (void *)ugd);
 
-            if (is_hw_connected)
+            if (is_hw_connected || !check_if_ise_option_exist((const char *)_active_ise_name))
+
                 elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
         }
 
@@ -1142,7 +1145,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_ise_option_sel,
                     (void *)ugd);
 
-            if (!is_hw_connected)
+            if (!is_hw_connected || !check_if_ise_option_exist((const char *)_active_hw_ise_name))
                elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
         }
 
