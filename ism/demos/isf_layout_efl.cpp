@@ -24,6 +24,7 @@
 
 #include "isf_demo_efl.h"
 #include "isf_layout_efl.h"
+#include <Ecore_X.h>
 
 static void _rotate_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -114,6 +115,29 @@ _key_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
     Evas_Event_Key_Up *ev = (Evas_Event_Key_Up *)event_info;
     printf ("[evas key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+}
+
+static Eina_Bool
+_prop_change(void *data, int type, void *event)
+{
+    Ecore_X_Event_Window_Property *ev;
+    int sx, sy, sw, sh;
+
+    ev = (Ecore_X_Event_Window_Property *)event;
+
+    if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY ||
+        ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
+        Ecore_X_Window zone;
+
+        zone = ecore_x_e_illume_zone_get (ev->win);
+
+        if (!ecore_x_e_illume_keyboard_geometry_get (zone, &sx, &sy, &sw, &sh))
+            sx = sy = sw = sh = 0;
+
+        printf ("Keyboard geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+    }
+
+    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text,Elm_Input_Panel_Layout layout)
@@ -224,6 +248,8 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (rotate_btn, EVAS_HINT_FILL, 0);
     evas_object_show (rotate_btn);
     elm_box_pack_end (bx, rotate_btn);
+
+    ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, NULL);
 
     return bx;
 }
