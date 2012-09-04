@@ -81,7 +81,7 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
     }
 
     hw_kbd_num = val;
-    LOGD("The number of connected H/W keyboard : %d\n", hw_kbd_num);
+    LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -146,13 +146,13 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                 switch (value)
                 {
                     case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
-                        LOGD("[input panel has been hidden] ctx : %p\n", fn->imf_context);
+                        LOGD ("[input panel has been hidden] ctx : %p\n", fn->imf_context);
                         break;
                     case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
-                        LOGD("[input panel has been shown] ctx : %p\n", fn->imf_context);
+                        LOGD ("[input panel has been shown] ctx : %p\n", fn->imf_context);
                         break;
                     case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
-                        LOGD("[input panel will be shown] ctx : %p\n", fn->imf_context);
+                        LOGD ("[input panel will be shown] ctx : %p\n", fn->imf_context);
                         break;
                 }
             }
@@ -180,7 +180,7 @@ static void _isf_imf_context_init (void)
 
 static Eina_Bool _hide_timer_handler (void *data)
 {
-    LOGD("[request to hide input panel] ctx : %p\n", data);
+    LOGD ("[request to hide input panel] ctx : %p\n", data);
     _isf_imf_context_input_panel_hide ();
 
     hide_timer = NULL;
@@ -211,7 +211,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
             hide_timer = NULL;
         }
 
-        LOGD("[request to hide input panel] ctx : %p\n", ctx);
+        LOGD ("[request to hide input panel] ctx : %p\n", ctx);
         _isf_imf_context_input_panel_hide ();
     } else {
         _input_panel_hide_timer_start (ctx);
@@ -272,7 +272,7 @@ EAPI void isf_imf_input_panel_init (void)
         return;
     }
 
-    LOGD("The number of connected H/W keyboard : %d\n", hw_kbd_num);
+    LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
 }
 
 EAPI void isf_imf_input_panel_shutdown (void)
@@ -350,30 +350,30 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     show_req_ic = ctx;
 
-    LOGD("===============================================================\n");
-    LOGD("[request to show input panel] ctx : %p\n", ctx);
-    LOGD(" - language : %d\n", iseContext.language);
-    LOGD(" - layout : %d\n", iseContext.layout);
+    LOGD ("===============================================================\n");
+    LOGD ("[request to show input panel] ctx : %p\n", ctx);
+    LOGD (" - language : %d\n", iseContext.language);
+    LOGD (" - layout : %d\n", iseContext.layout);
 
     /* set return key type */
     iseContext.return_key_type = ecore_imf_context_input_panel_return_key_type_get (ctx);
-    LOGD(" - return_key_type : %d\n", iseContext.return_key_type);
+    LOGD (" - return_key_type : %d\n", iseContext.return_key_type);
 
     /* set return key disabled */
     iseContext.return_key_disabled = ecore_imf_context_input_panel_return_key_disabled_get (ctx);
-    LOGD(" - return_key_disabled : %d\n", iseContext.return_key_disabled);
+    LOGD (" - return_key_disabled : %d\n", iseContext.return_key_disabled);
 
     /* set caps mode */
     iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
-    LOGD(" - caps mode : %d\n", iseContext.caps_mode);
+    LOGD (" - caps mode : %d\n", iseContext.caps_mode);
 
     iseContext.client_window = _client_window_id_get (ctx);
-    LOGD(" - client_window : %#x\n", iseContext.client_window);
+    LOGD (" - client_window : %#x\n", iseContext.client_window);
 
     ecore_imf_context_input_panel_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
 
-    LOGD(" - password mode : %d\n", iseContext.password_mode);
-    LOGD(" - prediction_allow : %d\n", iseContext.prediction_allow);
+    LOGD (" - password mode : %d\n", iseContext.password_mode);
+    LOGD (" - prediction_allow : %d\n", iseContext.prediction_allow);
 
     /* calculate packet size */
     length = sizeof (iseContext);
@@ -395,12 +395,12 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     free (packet);
 
     caps_mode_check(ctx, EINA_TRUE, EINA_TRUE);
-    LOGD("===============================================================\n");
+    LOGD ("===============================================================\n");
 }
 
 EAPI void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
 {
-    LOGD("[input panel hide is called] ctx : %p\n", ctx);
+    LOGD ("[input panel hide is called] ctx : %p\n", ctx);
 
     _input_panel_hide (ctx, EINA_FALSE);
 }
@@ -512,7 +512,7 @@ EAPI void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int 
         _isf_imf_context_init ();
     _isf_imf_context_input_panel_geometry_get (x, y, w, h);
 
-    LOGD("[input_panel_geometry_get] ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
+    LOGD ("[input_panel_geometry_get] ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
 }
 
 /**
@@ -666,7 +666,7 @@ EAPI void isf_imf_context_input_panel_event_callback_add (Ecore_IMF_Context *ctx
     if (!fn)
         return;
 
-    LOGD("[input_panel_event_callback_add] ctx : %p, type : %d, func : %p\n", ctx, type, func);
+    LOGD ("[input_panel_event_callback_add] ctx : %p, type : %d, func : %p\n", ctx, type, func);
 
     fn->func = func;
     fn->data = data;
@@ -684,7 +684,7 @@ EAPI void isf_imf_context_input_panel_event_callback_del (Ecore_IMF_Context *ctx
     EventCallbackNode *fn = NULL;
 
     IMFCONTROLUIDBG("[%s]\n", __func__);
-    LOGD("[input_panel_event_callback_del] ctx : %p, type : %d, func : %p\n", ctx, type, func);
+    LOGD ("[input_panel_event_callback_del] ctx : %p, type : %d, func : %p\n", ctx, type, func);
 
     for (l = EventCallbackList; l;) {
         fn = (EventCallbackNode *)l->data;
@@ -703,7 +703,7 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
     Eina_List *l;
     EventCallbackNode *fn;
 
-    LOGD("[input_panel_event_callback_clear] ctx : %p\n", ctx);
+    LOGD ("[input_panel_event_callback_clear] ctx : %p\n", ctx);
 
     for (l = EventCallbackList; l;) {
         fn = (EventCallbackNode *)l->data;
@@ -737,7 +737,7 @@ EAPI void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx,
         _isf_imf_context_init ();
     _isf_imf_context_candidate_window_geometry_get (x, y, w, h);
 
-    LOGD("[candidate_window_geometry_get] ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
+    LOGD ("[candidate_window_geometry_get] ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
 }
 
 /**
