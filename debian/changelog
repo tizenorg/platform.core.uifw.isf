@@ -1,3 +1,12 @@
+isf (2.3.5706-1slp2+1) unstable; urgency=low
+
+  * [immodule] add cursor position in Ise_Context structure
+  * [immodule] disable prediction in TERMINAL layout
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5706-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Thu, 06 Sep 2012 13:12:37 +0900
+
 isf (2.3.5704-1slp2+1) unstable; urgency=low
 
   * fix typo

@@ -1,3 +1,13 @@
+ISF 2.3.5706 :
+  1. [immodule] add cursor position in Ise_Context structure
+  2. [immodule] disable prediction in TERMINAL layout
+
+
+ISF 2.3.5704 :
+  1. fix if no option for ise , disable the ise option item instead of popup.
+  2. [setting] fix typo
+
+
 ISF 2.3.5631 :
   1. [isf-panel-efl] Add longpress event for soft ISE.
 
