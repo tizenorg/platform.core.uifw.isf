@@ -1,3 +1,7 @@
+ISF 2.3.5707 :
+  1. [isf-panel-efl] Fix input panel geometry defect when target is rotating
+
+
 ISF 2.3.5706 :
   1. [immodule] add cursor position in Ise_Context structure
   2. [immodule] disable prediction in TERMINAL layout

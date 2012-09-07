@@ -321,12 +321,21 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
     }
 
     int win_w = _screen_width, win_h = _screen_height;
-    int angle = efl_get_angle_for_root_window (NULL);
+    int angle = efl_get_angle_for_root_window (_candidate_window);
     if (angle == 90 || angle == 270) {
         win_w = _screen_height;
         win_h = _screen_width;
     }
-    info.pos_x = (win_w - info.width) / 2;
+
+    if (win_w != (int)info.width)
+        _panel_agent->get_current_ise_geometry (info);
+
+    if ((int)info.width > win_w) {
+        win_w = _screen_height;
+        win_h = _screen_width;
+    }
+
+    info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
     if (kbd_state == KEYBOARD_STATE_OFF)
         info.pos_y = win_h;
     else
@@ -356,7 +365,7 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
                 info.width  = _candidate_width;
                 info.height = _candidate_height;
             }
-            int angle = efl_get_angle_for_root_window (NULL);
+            int angle = efl_get_angle_for_root_window (_candidate_window);
             if (angle == 90 || angle == 270)
                 info.pos_y = _screen_width - info.height;
             else
@@ -2339,7 +2348,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
             info.width  = _candidate_width;
             info.height = _candidate_height;
         }
-        int angle = efl_get_angle_for_root_window (NULL);
+        int angle = efl_get_angle_for_root_window (_candidate_window);
         if (angle == 90 || angle == 270)
             info.pos_y = _screen_width - info.height;
         else
