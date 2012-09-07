@@ -45,6 +45,7 @@
 #include <utilX.h>
 #include <vconf.h>
 #include <vconf-keys.h>
+#include <syspopup_caller.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -2695,6 +2696,36 @@ finalize (void)
 }
 
 static void
+_popup_message(const char *_ptext)
+{
+    bundle *b = NULL;
+    int ret = -1;
+    if(_ptext == NULL)
+        return;
+    b = bundle_create();
+    do
+    {
+        ret = bundle_add(b, "0", "info");// "0" means tickernoti style
+        if (0 != ret)
+            break;
+        ret = bundle_add(b, "1", _ptext);
+        if (0 != ret)
+            break;
+        ret = bundle_add(b, "2", "0");// "2" means orientation of tickernoti
+        if (0 != ret)
+            break;
+        ret = bundle_add(b, "3", "2");// "3" means timeout(second) of tickernoti
+        if (0 != ret)
+            break;
+        ret = syspopup_launch("tickernoti-syspopup", b);
+        if (0 != ret)
+            break;
+    }
+    while(0);
+    ret = bundle_free(b);
+}
+
+static void
 open_next_factory (EcoreIMFContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
@@ -2716,6 +2747,7 @@ open_next_factory (EcoreIMFContextISF *ic)
             _default_instance = ic->impl->si;
             ic->impl->shared_si = true;
         }
+        _popup_message(utf8_wcstombs (sf->get_name ()).c_str());
     }
 }
 
@@ -2744,6 +2776,7 @@ open_previous_factory (EcoreIMFContextISF *ic)
             _default_instance = ic->impl->si;
             ic->impl->shared_si = true;
         }
+        _popup_message(utf8_wcstombs (sf->get_name ()).c_str());
     }
 }
 

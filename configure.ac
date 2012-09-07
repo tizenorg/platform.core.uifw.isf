@@ -251,6 +251,9 @@ PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 # Check privilege control library
 PKG_CHECK_MODULES(PRIVILEGE_CONTROL, [libprivilege-control >= 0])
 
+# Check syspopup-caller library
+PKG_CHECK_MODULES(SYSPOPUP, [syspopup-caller])
+
 # Check if we should build isf-setting-efl
 PKG_CHECK_MODULES(VCONF, [vconf],
                   [ISF_HAS_VCONF=yes],

@@ -1,4 +1,8 @@
 ISF 2.3.5707 :
+  1. Add notification of which keyboard ISE is selected by hotkey.
+
+
+ISF 2.3.5707 :
   1. [isf-panel-efl] Fix input panel geometry defect when target is rotating
 
 
