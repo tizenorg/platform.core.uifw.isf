@@ -1,3 +1,11 @@
+isf (2.3.5710-1slp2+1) unstable; urgency=low
+
+  * Restore file mode to 644.
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5710-1slp2+1
+
+ -- Li Zhang <li2012.zhang@samsung.com>  Mon, 10 Sep 2012 10:30:00 +0900
+
 isf (2.3.5707-1slp2+3) unstable; urgency=low
 
   * Add notification of which keyboard ISE is selected by hotkey

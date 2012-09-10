@@ -1,4 +1,4 @@
-ISF 2.3.5707 :
+ISF 2.3.5707-2 :
   1. Add notification of which keyboard ISE is selected by hotkey.
 
 
