@@ -32,7 +32,7 @@ using namespace scim;
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
 #define MAXLINE                         4096
-#define USER_ENGINE_LIST_PATH           "/opt/home/app/.scim"
+#define USER_ENGINE_LIST_PATH           "/home/app/.scim"
 
 #ifndef SCIM_SYSCONFDIR
   #define SCIM_SYSCONFDIR               "/usr/etc"
