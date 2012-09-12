@@ -175,6 +175,7 @@ static Evas_Object       *_line_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_window_show            = false;
+static bool               _candidate_window_always_show     = false;
 
 static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
@@ -258,6 +259,7 @@ static clock_t            _clock_start;
 
 static Ecore_Timer       *_check_size_timer                 = NULL;
 static Ecore_Timer       *_longpress_timer                  = NULL;
+static Ecore_Timer       *_destroy_timer                    = NULL;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -683,7 +685,7 @@ static void ui_candidate_window_adjust (void)
                 evas_object_move (_candidate_area_2, 0, _candidate_port_height_min);
                 evas_object_move (_scroller_bg, 0, _candidate_port_height_min);
             }
-        } else if (evas_object_visible_get (_candidate_area_1)) {
+        } else {
             evas_object_hide (_aux_line);
             evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
@@ -759,6 +761,8 @@ static bool ui_candidate_can_be_hide (void)
         evas_object_visible_get (_candidate_area_1) ||
         evas_object_visible_get (_candidate_area_2))
         return false;
+    else if (_candidate_window_always_show && _ise_show)
+        return false;
     else
         return true;
 }
@@ -829,6 +833,37 @@ static Eina_Bool ui_candidate_longpress_timeout (void *data)
 }
 
 /**
+ * @brief Delete destroy timer.
+ *
+ * @return void
+ */
+static void ui_candidate_delete_destroy_timer (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_destroy_timer != NULL) {
+        ecore_timer_del (_destroy_timer);
+        _destroy_timer = NULL;
+    }
+}
+
+/**
+ * @brief Callback function for destroy timer.
+ *
+ * @param data Data to pass when it is called.
+ *
+ * @return ECORE_CALLBACK_CANCEL
+ */
+static Eina_Bool ui_candidate_destroy_timeout (void *data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    ui_candidate_delete_destroy_timer ();
+    ui_destroy_candidate_window ();
+    return ECORE_CALLBACK_CANCEL;
+}
+
+/**
  * @brief Show candidate window.
  */
 static void ui_candidate_show (void)
@@ -874,11 +909,22 @@ static void ui_candidate_hide (bool bForce)
         return;
 
     if (bForce) {
-        evas_object_hide (_aux_area);
-        elm_scroller_region_show (_aux_area, 0, 0, 10, 10);
-        evas_object_hide (_candidate_area_1);
-        evas_object_hide (_candidate_area_2);
-        evas_object_hide (_scroller_bg);
+        if ((_aux_area && evas_object_visible_get (_aux_area)) ||
+            (_candidate_area_1 && evas_object_visible_get (_candidate_area_1)) ||
+            (_candidate_area_2 && evas_object_visible_get (_candidate_area_2))) {
+            evas_object_hide (_aux_area);
+            elm_scroller_region_show (_aux_area, 0, 0, 10, 10);
+            evas_object_hide (_candidate_area_1);
+            evas_object_hide (_more_btn);
+
+            if (_candidate_area_2 && evas_object_visible_get (_candidate_area_2)) {
+                evas_object_hide (_candidate_area_2);
+                evas_object_hide (_scroller_bg);
+                evas_object_hide (_close_btn);
+                _panel_agent->candidate_more_window_hide ();
+            }
+            ui_candidate_window_adjust ();
+        }
     }
 
     if (ui_candidate_can_be_hide () || bForce) {
@@ -937,12 +983,14 @@ static void ui_candidate_window_close_button_cb (void *data, Evas *e, Evas_Objec
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (evas_object_visible_get (_candidate_area_2)) {
-        evas_object_hide (_candidate_area_2);
-        evas_object_hide (_scroller_bg);
-        evas_object_hide (_close_btn);
-        _panel_agent->candidate_more_window_hide ();
-    }
+    if (_candidate_area_2 == NULL || !evas_object_visible_get (_candidate_area_2))
+        return;
+
+    evas_object_hide (_candidate_area_2);
+    evas_object_hide (_scroller_bg);
+    evas_object_hide (_close_btn);
+    _panel_agent->candidate_more_window_hide ();
+
     evas_object_show (_candidate_area_1);
     evas_object_show (_more_btn);
     ui_candidate_window_adjust ();
@@ -1696,6 +1744,7 @@ static void slot_focus_in (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    ui_candidate_delete_destroy_timer ();
     if (!_candidate_window) {
         ui_create_candidate_window ();
     }
@@ -1707,7 +1756,8 @@ static void slot_focus_in (void)
 static void slot_focus_out (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    ui_destroy_candidate_window ();
+    ui_candidate_delete_destroy_timer ();
+    _destroy_timer = ecore_timer_add (1.0, ui_candidate_destroy_timeout, NULL);
 }
 
 /**
@@ -1728,8 +1778,7 @@ static void slot_contract_candidate (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (_candidate_area_2 && evas_object_visible_get (_candidate_area_2))
-        ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
+    ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
 }
 
 /**
@@ -1803,9 +1852,12 @@ static void slot_update_input_context (int type, int value)
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
             _ise_show = false;
+            ui_candidate_hide (true);
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
         } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             _ise_show = true;
+            if (_candidate_window_always_show)
+                ui_candidate_show ();
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
         }
     }
@@ -2161,12 +2213,25 @@ static void update_table (const int table_type, const LookupTable &table)
 
                 // Add first item
                 if (i == 0) {
+                    if (item_num == 1) {
+                        if (_candidate_angle == 90 || _candidate_angle == 270)
+                            scroll_0_width = _candidate_land_width;
+                        else
+                            scroll_0_width = _candidate_port_width;
+                    }
                     item_0_width = item_0_width > scroll_0_width ? scroll_0_width : item_0_width;
                     evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                     elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, 0, item_0_width, _item_min_height);
                     total_width += item_0_width;
                     continue;
                 } else {
+                    if (i == item_num - 1) {
+                        if (_candidate_angle == 90 || _candidate_angle == 270)
+                            scroll_0_width = _candidate_land_width;
+                        else
+                            scroll_0_width = _candidate_port_width;
+                    }
+
                     total_width += (item_0_width + seperate_width);
                     if (total_width <= scroll_0_width) {
                         _seperate_0 [i] = edje_object_add (evas);
@@ -2273,8 +2338,12 @@ static void update_table (const int table_type, const LookupTable &table)
     }
 
     _panel_agent->update_displayed_candidate_number (item_num - more_item_count);
-    if (more_item_count == 0 && evas_object_visible_get (_candidate_area_2))
+    if (more_item_count == 0) {
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
+        evas_object_hide (_more_btn);
+    } else if (!evas_object_visible_get (_candidate_area_2)) {
+        evas_object_show (_more_btn);
+    }
     elm_scroller_region_show (_candidate_area_1, 0, 0, _candidate_scroll_width, _item_min_height);
     elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, _item_min_height);
     flush_memory ();
@@ -2923,6 +2992,7 @@ static void change_hw_and_sw_keyboard (void)
                 _ise_height = -1;
             }
             _ise_show = false;
+            _candidate_port_line = 1;
 
             _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
         } else {
@@ -3279,6 +3349,7 @@ int main (int argc, char *argv [])
 cleanup:
     ui_candidate_delete_check_size_timer ();
     ui_candidate_delete_longpress_timer ();
+    ui_candidate_delete_destroy_timer ();
 
     if (!_config.null ())
         _config.reset ();

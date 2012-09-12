@@ -1,3 +1,12 @@
+isf (2.3.5712-1slp2+1) unstable; urgency=low
+
+  * [isf-panel-efl] Hide "v" button when only one line candidates
+  * [isf-setting-efl] Add padding at bottom
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5712-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Wed, 12 Sep 2012 16:18:00 +0900
+
 isf (2.3.5710-1slp2+2) unstable; urgency=low
 
   * Upload again.
