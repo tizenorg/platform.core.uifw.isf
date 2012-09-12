@@ -1149,6 +1149,18 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
         }
 
+        //separator
+        item = elm_genlist_item_append(
+                    genlist,                // genlist object
+                    &itcSeparator,          // item class
+                    NULL,                   // data
+                    NULL,
+                    ELM_GENLIST_ITEM_NONE,
+                    NULL,
+                    NULL);
+        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+
 //==================================group end =========================
         Evas_Object *back_btn = elm_button_add(ugd->naviframe);
         elm_object_style_set (back_btn, "naviframe/back_btn/default");
