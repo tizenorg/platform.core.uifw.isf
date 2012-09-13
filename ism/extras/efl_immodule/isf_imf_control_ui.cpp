@@ -332,7 +332,13 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     /* Set the current XID of the active window into the root window property */
     _save_current_xid (ctx);
 
+    if (get_desktop_mode ()) {
+        LOGD ("IME will not appear in case of desktop mode.\n");
+        return;
+    }
+
     if (hw_kbd_num != 0) {
+        LOGD ("H/W keyboard is existed.\n");
         printf ("H/W keyboard is existed.\n");
         return;
     }
@@ -409,12 +415,18 @@ EAPI void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
 {
     LOGD ("[input panel hide is called] ctx : %p\n", ctx);
 
+    if (get_desktop_mode ())
+        return;
+
     _input_panel_hide (ctx, EINA_FALSE);
 }
 
 EAPI void isf_imf_context_input_panel_instant_hide (Ecore_IMF_Context *ctx)
 {
     IMFCONTROLUIDBG("[%s]\n", __func__);
+
+    if (get_desktop_mode ())
+        return;
 
     _input_panel_hide (ctx, EINA_TRUE);
 }

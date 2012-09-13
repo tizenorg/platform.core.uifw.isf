@@ -46,6 +46,7 @@ struct _EcoreIMFContextISF {
 int register_key_handler ();
 int unregister_key_handler ();
 
+Eina_Bool get_desktop_mode ();
 Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti);
 
 EcoreIMFContextISF *get_focused_ic ();
