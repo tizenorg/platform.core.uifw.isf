@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ISF 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 14:44+0900\n"
+"POT-Creation-Date: 2012-09-13 17:45+0900\n"
 "PO-Revision-Date: 2011-01-01 22:41+0800\n"
 "Last-Translator: Haifeng Deng <haifeng.deng@samsung.com>\n"
 "Language-Team: scim@freedesktop.org\n"
@@ -14,50 +14,50 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Push the layout along with function buttons and title
-#: ism/extras/efl_setting/isf_setting_efl.cpp:623
-#: ism/extras/efl_setting/isf_setting_efl.cpp:810
+#: ism/extras/efl_setting/isf_setting_efl.cpp:657
+#: ism/extras/efl_setting/isf_setting_efl.cpp:812
 msgid "Selection"
 msgstr "選擇"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:734
-msgid "No options"
-msgstr "無選項"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:741
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1072
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1134
+#: ism/extras/efl_setting/isf_setting_efl.cpp:743
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1074
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1137
 msgid "Keyboard settings"
 msgstr "鍵盤設定"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:939
-msgid "Auto capitalisation"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:941
+msgid "Auto capitalization"
 msgstr "首字母大寫"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:959
-msgid "Automatically capitalise first letter of sentence"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:961
+#, fuzzy
+msgid "Automatically capitalize first letter of sentence"
 msgstr "首字母大寫"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:993
+#: ism/extras/efl_setting/isf_setting_efl.cpp:995
 msgid "Automatic full stop"
 msgstr "自動句號"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1010
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1012
 msgid "Automatically insert a full stop by tapping the space bar twice"
 msgstr ""
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1028
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1030
 msgid "Software keyboard"
 msgstr "螢幕小鍵盤"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1051
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1115
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1053
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1118
 msgid "Select keyboard"
 msgstr "選擇鍵盤"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1092
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1095
 msgid "Hardware keyboard"
 msgstr "硬體鍵盤"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1154
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1157
 msgid "Keyboard"
 msgstr "鍵盤"
+
+#~ msgid "No options"
+#~ msgstr "無選項"
