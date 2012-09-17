@@ -1,3 +1,14 @@
+isf (2.3.5717-1slp2+1) unstable; urgency=low
+
+  * [immodule] do not show or hide ISE in case of desktop mode
+  * [setting] update po files to fix autocapital translation
+  * [setting] Change default mode of autocapital option
+  * [demo] add SIGNIN type
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5717-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Mon, 17 Sep 2012 09:51:45 +0900
+
 isf (2.3.5712-1slp2+1) unstable; urgency=low
 
   * [isf-panel-efl] Hide "v" button when only one line candidates

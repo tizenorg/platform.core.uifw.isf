@@ -1,3 +1,10 @@
+ISF 2.3.5717 :
+  1. [immodule] do not show or hide ISE in case of desktop mode
+  2. [setting] update po files to fix autocapital translation
+  3. [setting] Change default mode of autocapital option
+  4. [demo] add SIGNIN type
+
+
 ISF 2.3.5712 :
   1. [isf-panel-efl] Hide "v" button when only one line candidates
   2. [isf-setting-efl] Add padding at bottom
