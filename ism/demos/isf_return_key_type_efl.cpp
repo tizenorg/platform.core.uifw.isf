@@ -109,6 +109,10 @@ static Evas_Object * create_inner_layout (void *data)
     ef = _create_ef_layout (parent, _("SEND"), _("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_SEND);
     elm_box_pack_end (bx, ef);
 
+    /* SIGNIN */
+    ef = _create_ef_layout (parent, _("SIGNIN"), _("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN);
+    elm_box_pack_end (bx, ef);
+
     return bx;
 }
 
