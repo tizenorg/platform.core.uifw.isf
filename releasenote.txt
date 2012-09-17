@@ -3,6 +3,7 @@ ISF 2.3.5717 :
   2. [setting] update po files to fix autocapital translation
   3. [setting] Change default mode of autocapital option
   4. [demo] add SIGNIN type
+  5. [isf-panel-efl] Update candidate displaying
 
 
 ISF 2.3.5712 :

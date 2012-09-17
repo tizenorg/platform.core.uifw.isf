@@ -175,7 +175,6 @@ static Evas_Object       *_line_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_window_show            = false;
-static bool               _candidate_window_always_show     = false;
 
 static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
@@ -761,8 +760,6 @@ static bool ui_candidate_can_be_hide (void)
         evas_object_visible_get (_candidate_area_1) ||
         evas_object_visible_get (_candidate_area_2))
         return false;
-    else if (_candidate_window_always_show && _ise_show)
-        return false;
     else
         return true;
 }
@@ -869,7 +866,8 @@ static Eina_Bool ui_candidate_destroy_timeout (void *data)
 static void ui_candidate_show (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    if (!_candidate_window)
+    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+    if (!_candidate_window || (hw_kbd_detect == 0 && !_ise_show))
         return;
 
     int angle = efl_get_angle_for_root_window (_candidate_window);
@@ -909,20 +907,11 @@ static void ui_candidate_hide (bool bForce)
         return;
 
     if (bForce) {
-        if ((_aux_area && evas_object_visible_get (_aux_area)) ||
-            (_candidate_area_1 && evas_object_visible_get (_candidate_area_1)) ||
-            (_candidate_area_2 && evas_object_visible_get (_candidate_area_2))) {
-            evas_object_hide (_aux_area);
-            elm_scroller_region_show (_aux_area, 0, 0, 10, 10);
-            evas_object_hide (_candidate_area_1);
-            evas_object_hide (_more_btn);
-
-            if (_candidate_area_2 && evas_object_visible_get (_candidate_area_2)) {
-                evas_object_hide (_candidate_area_2);
-                evas_object_hide (_scroller_bg);
-                evas_object_hide (_close_btn);
-                _panel_agent->candidate_more_window_hide ();
-            }
+        if (_candidate_area_2 && evas_object_visible_get (_candidate_area_2)) {
+            evas_object_hide (_candidate_area_2);
+            evas_object_hide (_scroller_bg);
+            evas_object_hide (_close_btn);
+            _panel_agent->candidate_more_window_hide ();
             ui_candidate_window_adjust ();
         }
     }
@@ -1856,7 +1845,7 @@ static void slot_update_input_context (int type, int value)
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
         } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             _ise_show = true;
-            if (_candidate_window_always_show)
+            if (evas_object_visible_get (_candidate_area_1))
                 ui_candidate_show ();
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
         }
@@ -2121,7 +2110,7 @@ static void update_table (const int table_type, const LookupTable &table)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     int item_num = table.get_current_page_size ();
-    if (item_num <= 0)
+    if (item_num < 0)
         return;
 
     String     mbs;
@@ -2358,7 +2347,7 @@ static void slot_update_candidate_table (const LookupTable &table)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (!_candidate_window || table.get_current_page_size () <= 0)
+    if (!_candidate_window || table.get_current_page_size () < 0)
         return;
 
     if (!evas_object_visible_get (_candidate_area_1) &&

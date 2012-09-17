@@ -1,3 +1,11 @@
+isf (2.3.5717-1slp2+2) unstable; urgency=low
+
+  * [isf-panel-efl] Update candidate displaying
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5717-1slp2+2
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Mon, 17 Sep 2012 16:26:00 +0900
+
 isf (2.3.5717-1slp2+1) unstable; urgency=low
 
   * [immodule] do not show or hide ISE in case of desktop mode
