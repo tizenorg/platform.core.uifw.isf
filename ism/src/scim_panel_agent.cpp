@@ -643,7 +643,7 @@ public:
             m_send_trans.clear ();
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
             m_send_trans.put_data ((uint32) context);
-            m_send_trans.put_command (ISM_TRANS_CMD_PANEL_REQUEST_RESET_ISE);
+            m_send_trans.put_command (ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE);
             m_send_trans.write_to_socket (client_socket);
         }
 
@@ -3386,8 +3386,8 @@ private:
                     socket_hide_candidate ();
                 } else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY) {
                     socket_get_candidate_geometry ();
-                } else if (cmd == ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_NAME) {
-                    socket_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_NAME);
+                } else if (cmd == ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE) {
+                    reset_keyboard_ise ();
                 } else if (cmd == ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID) {
                     socket_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID);
                 } else if (cmd == ISM_TRANS_CMD_GET_KEYBOARD_ISE) {

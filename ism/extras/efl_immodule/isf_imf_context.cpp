@@ -365,7 +365,7 @@ delete_ic_impl (EcoreIMFContextISFImpl *impl)
             _free_ic_impl_list = rec;
 
             if (rec->imdata) {
-                free(rec->imdata);
+                free (rec->imdata);
                 rec->imdata = NULL;
             }
 
@@ -438,11 +438,11 @@ static void
 _check_desktop_mode (Ecore_X_Window win)
 {
     char *profile = ecore_x_e_window_profile_get (win);
-    if (profile && (strcmp(profile, "desktop") == 0)) {
+    if (profile && (strcmp (profile, "desktop") == 0)) {
         desktop_mode = EINA_TRUE;
-    }
-    else
+    } else {
         desktop_mode = EINA_FALSE;
+    }
 }
 
 static Eina_Bool
@@ -490,13 +490,12 @@ set_prediction_allow (IMEngineInstancePointer si, bool prediction)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (si) {
+    if (si)
         si->set_prediction_allow (prediction);
-    }
 }
 
 static void
-autoperiod_insert(Ecore_IMF_Context *ctx)
+autoperiod_insert (Ecore_IMF_Context *ctx)
 {
     char *plain_str = NULL;
     char *markup_str = NULL;
@@ -551,7 +550,7 @@ done:
 }
 
 static Eina_Bool
-analyze_surrounding_text(Ecore_IMF_Context *ctx)
+analyze_surrounding_text (Ecore_IMF_Context *ctx)
 {
     char *plain_str = NULL;
     char *markup_str = NULL;
@@ -620,7 +619,7 @@ analyze_surrounding_text(Ecore_IMF_Context *ctx)
 
         if (tail) {
             for (i = 0; i < punc_num; i++) {
-                if (!eina_unicode_strcmp(tail, uni_puncs[i])) {
+                if (!eina_unicode_strcmp (tail, uni_puncs[i])) {
                     ret = EINA_TRUE;
                     break;
                 }
@@ -643,7 +642,7 @@ done:
 }
 
 Eina_Bool
-caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
+caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 {
     Eina_Bool uppercase;
     EcoreIMFContextISF *context_scim;
@@ -661,12 +660,11 @@ caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 
     if (ecore_imf_context_input_panel_caps_lock_mode_get (ctx)) {
         uppercase = EINA_TRUE;
-    }
-    else {
+    } else {
         if (autocap_allow == EINA_FALSE)
             return EINA_FALSE;
 
-        if (analyze_surrounding_text(ctx)) {
+        if (analyze_surrounding_text (ctx)) {
             uppercase = EINA_TRUE;
         } else {
             uppercase = EINA_FALSE;
@@ -689,31 +687,30 @@ caps_mode_check(Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 }
 
 static void
-window_to_screen_geometry_get(Ecore_X_Window client_win, int *x, int *y)
+window_to_screen_geometry_get (Ecore_X_Window client_win, int *x, int *y)
 {
-   Ecore_X_Window root_window, win;
-   int win_x, win_y;
-   int sum_x = 0, sum_y = 0;
+    Ecore_X_Window root_window, win;
+    int win_x, win_y;
+    int sum_x = 0, sum_y = 0;
 
-   root_window = ecore_x_window_root_get (client_win);
-   win = client_win;
+    root_window = ecore_x_window_root_get (client_win);
+    win = client_win;
 
-   while (root_window != win)
-     {
+    while (root_window != win) {
         ecore_x_window_geometry_get (win, &win_x, &win_y, NULL, NULL);
         sum_x += win_x;
         sum_y += win_y;
         win = ecore_x_window_parent_get (win);
-     }
+    }
 
-   if (x)
-     *x = sum_x;
-   if (y)
-     *y = sum_y;
+    if (x)
+        *x = sum_x;
+    if (y)
+        *y = sum_y;
 }
 
 static void
-evas_focus_out_cb(void *data, Evas *e, void *event_info)
+evas_focus_out_cb (void *data, Evas *e, void *event_info)
 {
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
 
@@ -914,8 +911,9 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
                 pre = cur;
                 cur = cur->next;
             }
-        } else
+        } else {
             _ic_list = _ic_list->next;
+        }
     }
 
     if (context_scim && context_scim->impl) {
@@ -1185,7 +1183,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
             if (wstr.length ()) {
                 ecore_imf_context_commit_event_add (context_scim->ctx, utf8_wcstombs (wstr).c_str ());
-                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(wstr).c_str());
+                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
             }
             _panel_client.prepare (context_scim->id);
             _panel_client.reset_input_context (context_scim->id);
@@ -1231,7 +1229,7 @@ isf_imf_context_reset (Ecore_IMF_Context *ctx)
 
             if (wstr.length ()) {
                 ecore_imf_context_commit_event_add (context_scim->ctx, utf8_wcstombs (wstr).c_str ());
-                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(wstr).c_str());
+                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
             }
 
             _panel_client.prepare (context_scim->id);
@@ -1714,7 +1712,7 @@ EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context *ctx, const void* data, 
 
     if (context_scim && context_scim->impl) {
         if (context_scim->impl->imdata)
-            free(context_scim->impl->imdata);
+            free (context_scim->impl->imdata);
 
         context_scim->impl->imdata = calloc (1, length);
         memcpy (context_scim->impl->imdata, data, length);
@@ -1933,8 +1931,7 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
 
     if (strncmp (key_string, "Shift+", 6) == 0) {
         keysym_str = key_string + 6;
-    }
-    else {
+    } else {
         keysym_str = key_string;
     }
 
@@ -1953,9 +1950,9 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
             shift = 1;
         else
             keycode = 0;
-    }
-    else
+    } else {
         shift = 0;
+    }
 
     unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, scim_key.mask);
 
@@ -2037,7 +2034,7 @@ panel_slot_commit_string (int context, const WideString &wstr)
             return;
 
         ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (wstr).c_str ());
-        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(wstr).c_str());
+        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
     }
 }
 
@@ -2102,10 +2099,12 @@ panel_slot_reset_keyboard_ise (int context)
 
             if (wstr.length ()) {
                 ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (wstr).c_str ());
-                ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(wstr).c_str());
+                ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
             }
         }
+        _panel_client.prepare (ic->id);
         ic->impl->si->reset ();
+        _panel_client.send ();
     }
 }
 
@@ -2136,7 +2135,9 @@ panel_slot_show_preedit_string (int context)
                 ic->impl->need_commit_preedit = true;
             }
         } else {
+            _panel_client.prepare (ic->id);
             _panel_client.show_preedit_string (ic->id);
+            _panel_client.send ();
         }
     }
 }
@@ -2171,7 +2172,9 @@ panel_slot_hide_preedit_string (int context)
                 ic->impl->need_commit_preedit = false;
             }
         } else {
+            _panel_client.prepare (ic->id);
             _panel_client.hide_preedit_string (ic->id);
+            _panel_client.send ();
         }
     }
 }
@@ -2206,7 +2209,9 @@ panel_slot_update_preedit_string (int context,
                 ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, NULL);
                 ic->impl->preedit_updating = false;
             } else {
+                _panel_client.prepare (ic->id);
                 _panel_client.update_preedit_string (ic->id, str, attrs);
+                _panel_client.send ();
             }
         }
     }
@@ -2236,9 +2241,8 @@ panel_slot_delete_surrounding_text (int context, int offset, int len)
 
     EcoreIMFContextISF *ic = find_ic (context);
 
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si)
         slot_delete_surrounding_text (ic->impl->si, offset, len);
-    }
 }
 
 /* Panel Requestion functions. */
@@ -2733,33 +2737,30 @@ finalize (void)
 }
 
 static void
-_popup_message(const char *_ptext)
+_popup_message (const char *_ptext)
 {
-    bundle *b = NULL;
-    int ret = -1;
-    if(_ptext == NULL)
+    if (_ptext == NULL)
         return;
-    b = bundle_create();
-    do
-    {
-        ret = bundle_add(b, "0", "info");// "0" means tickernoti style
+
+    int     ret = -1;
+    bundle *b   = bundle_create ();
+    do {
+        ret = bundle_add (b, "0", "info");  // "0" means tickernoti style
         if (0 != ret)
             break;
-        ret = bundle_add(b, "1", _ptext);
+        ret = bundle_add (b, "1", _ptext);
         if (0 != ret)
             break;
-        ret = bundle_add(b, "2", "0");// "2" means orientation of tickernoti
+        ret = bundle_add (b, "2", "0");     // "2" means orientation of tickernoti
         if (0 != ret)
             break;
-        ret = bundle_add(b, "3", "2");// "3" means timeout(second) of tickernoti
+        ret = bundle_add (b, "3", "2");     // "3" means timeout(second) of tickernoti
         if (0 != ret)
             break;
-        ret = syspopup_launch("tickernoti-syspopup", b);
-        if (0 != ret)
-            break;
+        ret = syspopup_launch ((char *)"tickernoti-syspopup", b);
     }
-    while(0);
-    ret = bundle_free(b);
+    while (0);
+    bundle_free (b);
 }
 
 static void
@@ -2784,7 +2785,7 @@ open_next_factory (EcoreIMFContextISF *ic)
             _default_instance = ic->impl->si;
             ic->impl->shared_si = true;
         }
-        _popup_message(utf8_wcstombs (sf->get_name ()).c_str());
+        _popup_message (utf8_wcstombs (sf->get_name ()).c_str ());
     }
 }
 
@@ -2813,7 +2814,7 @@ open_previous_factory (EcoreIMFContextISF *ic)
             _default_instance = ic->impl->si;
             ic->impl->shared_si = true;
         }
-        _popup_message(utf8_wcstombs (sf->get_name ()).c_str());
+        _popup_message (utf8_wcstombs (sf->get_name ()).c_str ());
     }
 }
 
@@ -3048,16 +3049,15 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
         return;
     }
 
-    if (strncmp (key.get_key_string().c_str(), "KeyRelease+", 11) == 0) {
-        key_string = key.get_key_string().c_str() + 11;
+    if (strncmp (key.get_key_string ().c_str (), "KeyRelease+", 11) == 0) {
+        key_string = key.get_key_string ().c_str () + 11;
     } else {
-        key_string = key.get_key_string().c_str();
+        key_string = key.get_key_string ().c_str ();
     }
 
     if (strncmp (key_string, "Shift+", 6) == 0) {
         keysym_str = key_string + 6;
-    }
-    else {
+    } else {
         keysym_str = key_string;
     }
 
@@ -3072,9 +3072,9 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
             shift = 1;
         else
             keycode = 0;
-    }
-    else
+    } else {
         shift = 0;
+    }
 
     if (keycode == 0) {
         static int mod = 0;
@@ -3351,11 +3351,11 @@ slot_commit_string (IMEngineInstanceBase *si,
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
     if (ic && ic->ctx) {
-        if (strcmp(utf8_wcstombs (str).c_str (), " ") == 0)
-            autoperiod_insert(ic->ctx);
+        if (strcmp (utf8_wcstombs (str).c_str (), " ") == 0)
+            autoperiod_insert (ic->ctx);
 
         ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (str).c_str ());
-        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(str).c_str());
+        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (str).c_str ());
     }
 }
 
@@ -3485,10 +3485,12 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
             after =  after.substr (cursor_index, after.length () - cursor_index);
             if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
                 before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());
-            else if (maxlen_before == 0) before = WideString ();
+            else if (maxlen_before == 0)
+                before = WideString ();
             if (maxlen_after > 0 && ((unsigned int)maxlen_after) < after.length ())
                 after = WideString (after.begin (), after.begin () + maxlen_after);
-            else if (maxlen_after == 0) after = WideString ();
+            else if (maxlen_after == 0)
+                after = WideString ();
             text = before + after;
             cursor = before.length ();
             return true;
@@ -3527,12 +3529,11 @@ reload_config_callback (const ConfigPointer &config)
     _imengine_hotkey_matcher.load_hotkeys (config);
 
     KeyEvent key;
-
     scim_string_to_key (key,
                         config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_VALID_KEY_MASK),
                                       String ("Shift+Control+Alt+Lock")));
 
-    _valid_key_mask = (key.mask > 0)?(key.mask):0xFFFF;
+    _valid_key_mask = (key.mask > 0) ? (key.mask) : 0xFFFF;
     _valid_key_mask |= SCIM_KEY_ReleaseMask;
     // Special treatment for two backslash keys on jp106 keyboard.
     _valid_key_mask |= SCIM_KEY_QuirkKanaRoMask;
@@ -3555,7 +3556,7 @@ fallback_commit_string_cb (IMEngineInstanceBase  *si,
 
     if (_focused_ic && _focused_ic->impl) {
         ecore_imf_context_commit_event_add (_focused_ic->ctx, utf8_wcstombs (str).c_str ());
-        ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs(str).c_str());
+        ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (str).c_str ());
     }
 }
 

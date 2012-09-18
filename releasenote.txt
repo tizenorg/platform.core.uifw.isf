@@ -1,3 +1,7 @@
+ISF 2.3.5718 :
+  1. Add reset_keyboard_ise () in HelperAgent class
+
+
 ISF 2.3.5717 :
   1. [immodule] do not show or hide ISE in case of desktop mode
   2. [setting] update po files to fix autocapital translation

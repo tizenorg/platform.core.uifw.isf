@@ -1,3 +1,11 @@
+isf (2.3.5718-1slp2+1) unstable; urgency=low
+
+  * Add reset_keyboard_ise () in HelperAgent class
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5718-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Tue, 18 Sep 2012 16:54:00 +0900
+
 isf (2.3.5717-1slp2+2) unstable; urgency=low
 
   * [isf-panel-efl] Update candidate displaying

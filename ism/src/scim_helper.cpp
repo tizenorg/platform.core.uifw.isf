@@ -1398,6 +1398,21 @@ HelperAgent::contract_candidate (void) const
 }
 
 /**
+ * @brief Request to reset keyboard ISE.
+ */
+void
+HelperAgent::reset_keyboard_ise (void) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
  * @brief Connect a slot to Helper exit signal.
  *
  * This signal is used to let the Helper exit.

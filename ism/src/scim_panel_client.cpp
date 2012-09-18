@@ -312,7 +312,7 @@ public:
                             m_signal_change_factory ((int) context, sfid);
                     }
                     break;
-                case ISM_TRANS_CMD_PANEL_REQUEST_RESET_ISE:
+                case ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE:
                     {
                         m_signal_reset_keyboard_ise ((int) context);
                     }

@@ -551,6 +551,11 @@ public:
      */
     void set_candidate_style      (int                          display_line) const;
 
+    /**
+     * @brief Request to reset keyboard ISE.
+     */
+    void reset_keyboard_ise       (void) const;
+
 public:
     /**
      * @brief Connect a slot to Helper exit signal.
