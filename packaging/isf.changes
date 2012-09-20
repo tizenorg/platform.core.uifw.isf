@@ -1,0 +1,3 @@
+* Wed Sep 12 2012 Patrick McCarty <patrick.mccarty@linux.intel.com> b965032
+- Use /home for the datadir instead of /opt/home
+
