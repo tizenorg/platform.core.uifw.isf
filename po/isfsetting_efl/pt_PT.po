@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-13 17:45+0900\n"
+"POT-Creation-Date: 2012-09-21 14:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,9 +34,8 @@ msgid "Auto capitalization"
 msgstr "Capitalização automática"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:961
-#, fuzzy
 msgid "Automatically capitalize first letter of sentence"
-msgstr "Capitalização automática"
+msgstr "Aplicar automaticamente letra maiúscula no início da frase"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:995
 msgid "Automatic full stop"
@@ -44,7 +43,7 @@ msgstr "Ponto final automático"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1012
 msgid "Automatically insert a full stop by tapping the space bar twice"
-msgstr ""
+msgstr "Inserir automaticamente um ponto final tocando duas vezes na barra de espaços"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1030
 msgid "Software keyboard"
@@ -59,9 +58,6 @@ msgstr "Selecionar teclado"
 msgid "Hardware keyboard"
 msgstr "Teclado físico"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1157
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1169
 msgid "Keyboard"
 msgstr "Teclado"
-
-#~ msgid "No options"
-#~ msgstr "Sem opções"

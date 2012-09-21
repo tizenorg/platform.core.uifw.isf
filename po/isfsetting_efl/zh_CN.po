@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zh_CN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-13 17:45+0900\n"
+"POT-Creation-Date: 2012-09-21 14:01+0900\n"
 "PO-Revision-Date: 2011-01-01 14:57+0800\n"
 "Last-Translator: Haifeng Deng <haifeng.deng@samsung.com>\n"
 "Language-Team: Simplified Chinese <zh@li.org>\n"
@@ -31,9 +31,8 @@ msgid "Auto capitalization"
 msgstr "自动大写"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:961
-#, fuzzy
 msgid "Automatically capitalize first letter of sentence"
-msgstr "自动大写首字母"
+msgstr "句首字母自动大写"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:995
 msgid "Automatic full stop"
@@ -41,7 +40,7 @@ msgstr "自动插入句号"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1012
 msgid "Automatically insert a full stop by tapping the space bar twice"
-msgstr "双击空格键自动插入句号"
+msgstr "点击空格栏两次以自动插入句号"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1030
 msgid "Software keyboard"
@@ -56,9 +55,6 @@ msgstr "选择键盘"
 msgid "Hardware keyboard"
 msgstr "硬件键盘"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1157
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1169
 msgid "Keyboard"
 msgstr "键盘"
-
-#~ msgid "No options"
-#~ msgstr "无选项"

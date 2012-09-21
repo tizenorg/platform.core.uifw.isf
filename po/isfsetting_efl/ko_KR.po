@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SCIM\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-13 17:45+0900\n"
+"POT-Creation-Date: 2012-09-21 14:01+0900\n"
 "PO-Revision-Date: 2005-07-08 18:16+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: Korean <en@li.org>\n"
@@ -35,9 +35,8 @@ msgid "Auto capitalization"
 msgstr "자동 대문자 입력"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:961
-#, fuzzy
 msgid "Automatically capitalize first letter of sentence"
-msgstr "자동 대문자 입력"
+msgstr "문장의 첫 글자를 자동으로 대문자로 변환합니다"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:995
 msgid "Automatic full stop"
@@ -45,7 +44,7 @@ msgstr "자동 마침표"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1012
 msgid "Automatically insert a full stop by tapping the space bar twice"
-msgstr ""
+msgstr "스페이스 바를 두 번 누르면 마침표를 자동으로 삽입합니다"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1030
 msgid "Software keyboard"
@@ -60,9 +59,6 @@ msgstr "키보드 선택"
 msgid "Hardware keyboard"
 msgstr "하드웨어 키보드"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1157
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1169
 msgid "Keyboard"
 msgstr "키보드"
-
-#~ msgid "No options"
-#~ msgstr "옵션 없음"
