@@ -1,10 +1,10 @@
-#sbs-git:framework/uifw/isf isf 2.3.5718 07f2b65224e6cef5cd6799065bb01fa656bc115e
+#sbs-git:framework/uifw/isf isf 2.3.5721 07f2b65224e6cef5cd6799065bb01fa656bc115e
 %define _usrdir	/usr
 %define _ugdir	%{_usrdir}/ug
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.5718
+Version:    2.3.5721
 Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
@@ -61,7 +61,7 @@ rm -rf %{buildroot}
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514
 
-ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc3.d/S42isf-panel-efl
+ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc3.d/S47isf-panel-efl
 ln -sf /etc/init.d/isf-panel-efl /etc/rc.d/rc4.d/S81isf-panel-efl
 
 
