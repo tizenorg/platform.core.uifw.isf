@@ -1,3 +1,7 @@
+ISF 2.3.5723 :
+  1. Support candidate showing when target is rotated
+
+
 ISF 2.3.5721 :
   1. Change S42isf-panel-efl to S47isf-panel-efl
   2. [setting] update po files

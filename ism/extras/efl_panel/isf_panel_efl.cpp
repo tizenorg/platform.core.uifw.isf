@@ -93,6 +93,9 @@ extern std::vector<TOOLBAR_MODE_T>  _modes;
 
 extern std::vector<String>          _load_ise_list;
 
+extern CommonLookupTable            g_isf_candidate_table;
+
+
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal data types.
 /////////////////////////////////////////////////////////////////////////////
@@ -114,6 +117,8 @@ static int        ui_candidate_get_valid_height        (void);
 static void       ui_candidate_hide                    (bool bForce);
 static void       ui_destroy_candidate_window          (void);
 static void       ui_settle_candidate_window           (void);
+static void       ui_candidate_show                    (void);
+static void       update_table                         (int table_type, const LookupTable &table);
 
 /* PanelAgent related functions */
 static bool       initialize_panel_agent               (const String &config, const String &display, bool resident);
@@ -709,8 +714,8 @@ static void ui_candidate_window_rotate (int angle)
     if (!_candidate_window)
         return;
 
-    elm_win_rotation_set (_candidate_window, angle);
     ui_candidate_hide (true);
+    elm_win_rotation_set (_candidate_window, angle);
     if (angle == 90 || angle == 270) {
         _candidate_scroll_width = _candidate_scroll_width_max;
         ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
@@ -744,6 +749,11 @@ static void ui_candidate_window_rotate (int angle)
     }*/
 
     ui_settle_candidate_window ();
+    ui_candidate_window_adjust ();
+    if (evas_object_visible_get (_candidate_area_1)) {
+        update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
+        ui_candidate_show ();
+    }
     flush_memory ();
 }
 
@@ -916,7 +926,7 @@ static void ui_candidate_hide (bool bForce)
         }
     }
 
-    if (ui_candidate_can_be_hide () || bForce) {
+    if (bForce || ui_candidate_can_be_hide ()) {
         if (evas_object_visible_get (_candidate_window)) {
             evas_object_hide (_candidate_window);
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
@@ -1090,21 +1100,21 @@ static void ui_create_prediction_engine_candidate_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    _candidate_port_width        = 720 * _width_rate;
+    _candidate_port_width        = _screen_width;
     _candidate_port_height_min   = 84 * _height_rate * _candidate_port_line;
     _candidate_port_height_min_2 = 84 * _height_rate + _candidate_port_height_min;
     _candidate_port_height_max   = 426 * _height_rate + _candidate_port_height_min;
     _candidate_port_height_max_2 = 84 * _height_rate + _candidate_port_height_max;
-    _candidate_land_width        = 1280 * _height_rate;
+    _candidate_land_width        = _screen_height;
     _candidate_land_height_min   = 84 * _width_rate;
     _candidate_land_height_min_2 = 168 * _width_rate;
     _candidate_land_height_max   = 342 * _width_rate;
     _candidate_land_height_max_2 = 426 * _width_rate;
 
-    _candidate_scroll_0_width_min= 720 * _width_rate;
-    _candidate_scroll_0_width_max= 1176 * _height_rate;
-    _candidate_scroll_width_min  = 720 * _width_rate;
-    _candidate_scroll_width_max  = 1280 * _height_rate;
+    _candidate_scroll_0_width_min= _screen_width;
+    _candidate_scroll_0_width_max= _screen_height;
+    _candidate_scroll_width_min  = _screen_width;
+    _candidate_scroll_width_max  = _screen_height;
     _candidate_scroll_height_min = 252 * _width_rate;
     _candidate_scroll_height_max = 420 * _height_rate;
 
@@ -1120,8 +1130,8 @@ static void ui_create_prediction_engine_candidate_window (void)
     _close_btn_pos [3]           = 12 * _width_rate;
 
     _aux_height                  = 84 * _height_rate - 2;
-    _aux_port_width              = 720 * _width_rate;
-    _aux_land_width              = 1280 * _height_rate;
+    _aux_port_width              = _screen_width;
+    _aux_land_width              = _screen_height;
 
     _item_min_height             = 84 * _height_rate - 2;
 
@@ -1722,8 +1732,8 @@ static void slot_reload_config (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (!_config.null ())
-        _config->reload ();
+    //if (!_config.null ())
+    //    _config->reload ();
 }
 
 /**
@@ -2102,12 +2112,10 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
  *
  * @param table_type The table type.
  * @param table The lookup table for candidate or associate.
- * @param table_items The table items for candidate or associate.
- * @param seperator_items The seperator items for candidate or associate.
  */
-static void update_table (const int table_type, const LookupTable &table)
+static void update_table (int table_type, const LookupTable &table)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << table.get_current_page_size () << ")\n";
 
     int item_num = table.get_current_page_size ();
     if (item_num < 0)
@@ -2131,7 +2139,7 @@ static void update_table (const int table_type, const LookupTable &table)
     int scroll_0_width  = _candidate_scroll_0_width_min;
 
     if (_candidate_angle == 90 || _candidate_angle == 270)
-        scroll_0_width = _candidate_scroll_0_width_max;
+        scroll_0_width = 1176 * _height_rate;
     else
         scroll_0_width = 618 * _width_rate;
 

@@ -1,3 +1,11 @@
+isf (2.3.5723-1slp2+1) unstable; urgency=low
+
+  * [isf-panel-efl] Support candidate showing when target is rotated
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5723-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Sun, 23 Sep 2012 15:56:00 +0900
+
 isf (2.3.5721-1slp2+1) unstable; urgency=low
 
   * Change S42isf-panel-efl to S47isf-panel-efl
