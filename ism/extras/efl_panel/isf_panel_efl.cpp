@@ -2597,6 +2597,11 @@ static void slot_set_keyboard_ise (int type, const String &uuid)
     if (uuid.length () <= 0)
         return;
 
+    String ise_uuid, ise_name;
+    isf_get_keyboard_ise (ise_uuid, ise_name, _config);
+    if (ise_uuid == uuid)
+        return;
+
     String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
     _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
     _config->flush ();
