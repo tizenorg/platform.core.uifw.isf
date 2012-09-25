@@ -1259,13 +1259,11 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
         if (context_scim->impl->cursor_pos != cursor_pos) {
             caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
 
-            if (context_scim->impl->preedit_updating)
-                return;
-
             LOGD ("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
 
             context_scim->impl->cursor_pos = cursor_pos;
-
+            if (context_scim->impl->preedit_updating)
+                return;
             _panel_client.prepare (context_scim->id);
             panel_req_update_cursor_position (context_scim, cursor_pos);
             _panel_client.send ();
