@@ -65,6 +65,15 @@ enum ClientCapability
 };
 
 /**
+ * @brief Enum values of all IMEngine options bitmask.
+ *
+ */
+enum IMEngineOption
+{
+    SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD = (1 << 0),   /**< This option indicates IME could not support hardware keyboard */
+};
+
+/**
  * @brief An exception class to hold IMEngine related errors.
  *
  * scim::IMEngineBase and its derived classes must throw
@@ -331,6 +340,13 @@ public:
      * @return A comma separated encoding list.
      */
     String get_encodings () const;
+
+    /**
+     * @brief Get imengine option.
+     *
+     * @return The imengine option.
+     */
+    virtual unsigned int get_option () const;
 
 protected:
     /**

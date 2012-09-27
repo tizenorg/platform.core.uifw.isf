@@ -107,10 +107,12 @@ void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vec
 /**
  * @brief Get keyboard ISE
  *
+ * @param config The config pointer for loading keyboard ISE.
  * @param ise_uuid The keyboard ISE uuid.
  * @param ise_name The keyboard ISE name.
+ * @param ise_option The keyboard ISE option.
  */
-void isf_get_keyboard_ise (String &ise_uuid, String &ise_name, const ConfigPointer &config)
+void isf_get_keyboard_ise (const ConfigPointer &config, String &ise_uuid, String &ise_name, uint32 &ise_option)
 {
     String language = String ("~other");
     String uuid     = config->read (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, String ("d75857a5-4148-4745-89e2-1da7ddaf7999"));
@@ -118,8 +120,9 @@ void isf_get_keyboard_ise (String &ise_uuid, String &ise_name, const ConfigPoint
         uuid = ise_uuid;
     for (unsigned int i = 0; i < _uuids.size (); i++) {
         if (uuid == _uuids[i]) {
-            ise_name = _names[i];
-            ise_uuid = uuid;
+            ise_uuid   = _uuids[i];
+            ise_name   = _names[i];
+            ise_option = _options[i];
             return;
         }
     }
@@ -128,12 +131,17 @@ void isf_get_keyboard_ise (String &ise_uuid, String &ise_name, const ConfigPoint
 }
 
 /**
- * @brief Get all keyboard ISE names for the specific languages.
+ * @brief Get all keyboard ISEs for the specific languages.
  *
  * @param lang_list The specific languages list.
- * @param keyboard_names The list to store keyboard ISE names.
+ * @param uuid_list The list to store keyboard ISEs' UUID.
+ * @param name_list The list to store keyboard ISEs' name.
+ * @param bCheckOption The flag to check whether support hardware keyboard.
  */
-void isf_get_keyboard_names_in_languages (std::vector<String> lang_list, std::vector<String> &keyboard_names)
+void isf_get_keyboard_ises_in_languages (const std::vector<String> &lang_list,
+                                         std::vector<String>       &uuid_list,
+                                         std::vector<String>       &name_list,
+                                         bool                       bCheckOption)
 {
     String lang_name;
 
@@ -144,50 +152,28 @@ void isf_get_keyboard_names_in_languages (std::vector<String> lang_list, std::ve
             for (size_t i = 0; i < it->second.size (); i++) {
                 if (_modes[it->second[i]] != TOOLBAR_KEYBOARD_MODE)
                     continue;
+                if (bCheckOption && (_options[it->second[i]] & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
+                    continue;
                 if (_current_modules_list.size () > 0 &&
                         std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
                     continue;
-                if (std::find (keyboard_names.begin (), keyboard_names.end (), _names[it->second[i]]) == keyboard_names.end ())
-                    keyboard_names.push_back (_names[it->second[i]]);
+                if (std::find (uuid_list.begin (), uuid_list.end (), _uuids[it->second[i]]) == uuid_list.end ()) {
+                    uuid_list.push_back (_uuids[it->second[i]]);
+                    name_list.push_back (_names[it->second[i]]);
+                }
             }
         }
     }
 }
 
 /**
- * @brief Get all keyboard ISE uuids for the specific languages.
+ * @brief Get all helper ISEs for the specific languages.
  *
  * @param lang_list The specific languages list.
- * @param keyboard_uuids The list to store keyboard ISE uuids.
+ * @param uuid_list The list to store helper ISEs' UUID.
+ * @param name_list The list to store helper ISEs' name.
  */
-void isf_get_keyboard_uuids_in_languages (std::vector<String> lang_list, std::vector<String> &keyboard_uuids)
-{
-    String lang_name;
-
-    for (MapStringVectorSizeT::iterator it = _groups.begin (); it != _groups.end (); ++it) {
-        lang_name = scim_get_language_name_english (it->first);
-
-        if (std::find (lang_list.begin (), lang_list.end (), lang_name) != lang_list.end ()) {
-            for (size_t i = 0; i < it->second.size (); i++) {
-                if (_modes[it->second[i]] != TOOLBAR_KEYBOARD_MODE)
-                    continue;
-                if (_current_modules_list.size () > 0 &&
-                        std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
-                    continue;
-                if (std::find (keyboard_uuids.begin (), keyboard_uuids.end (), _uuids[it->second[i]]) == keyboard_uuids.end ())
-                    keyboard_uuids.push_back (_uuids[it->second[i]]);
-            }
-        }
-    }
-}
-
-/**
- * @brief Get enabled helper ISE names for the specific languages.
- *
- * @param lang_list The specific languages list.
- * @param helper_names The list to store helper ISE names.
- */
-void isf_get_helper_names_in_languages (std::vector<String> lang_list, std::vector<String> &helper_names)
+void isf_get_helper_ises_in_languages (const std::vector<String> &lang_list, std::vector<String> &uuid_list, std::vector<String> &name_list)
 {
     String lang_name;
 
@@ -202,8 +188,10 @@ void isf_get_helper_names_in_languages (std::vector<String> lang_list, std::vect
                         std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
                     continue;
                 // Avoid to add the same ISE
-                if (std::find (helper_names.begin (), helper_names.end (), _names[it->second[i]]) == helper_names.end ())
-                    helper_names.push_back (_names[it->second[i]]);
+                if (std::find (uuid_list.begin (), uuid_list.end (), _uuids[it->second[i]]) == uuid_list.end ()) {
+                    uuid_list.push_back (_uuids[it->second[i]]);
+                    name_list.push_back (_names[it->second[i]]);
+                }
             }
         }
     }
@@ -282,7 +270,7 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
         langs.push_back (isf_get_normalized_language (factory->get_language ()));
         icons.push_back (factory->get_icon_file ());
         modes.push_back (TOOLBAR_KEYBOARD_MODE);
-        options.push_back (0);
+        options.push_back (factory->get_option ());
         factory.reset ();
     }
 
@@ -317,7 +305,7 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
  * @param type The load ISE type.
  * @param config The config pointer for loading keyboard ISE.
  */
-void isf_load_ise_information (LOAD_ISE_TYPE  type, const ConfigPointer &config)
+void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config)
 {
     /* Load ISE engine info */
     isf_get_factory_list (type, config, _uuids, _names, _module_names, _langs, _icons, _modes, _options, _load_ise_list);
@@ -392,12 +380,12 @@ static bool add_keyboard_ise_module (const String module_name, const ConfigPoint
                     _langs.push_back (language);
                     _icons.push_back (icon);
                     _modes.push_back (TOOLBAR_KEYBOARD_MODE);
-                    _options.push_back (0);
+                    _options.push_back (factory->get_option ());
 
                     snprintf (mode, sizeof (mode), "%d", (int)TOOLBAR_KEYBOARD_MODE);
-                    snprintf (option, sizeof (option), "%d", 0);
+                    snprintf (option, sizeof (option), "%d", factory->get_option ());
 
-                    String line = isf_combine_ise_info_string (name, uuid, module_name, language, 
+                    String line = isf_combine_ise_info_string (name, uuid, module_name, language,
                                                                icon, String (mode), String (option), factory->get_locales ());
                     if (fputs (line.c_str (), engine_list_file) < 0) {
                         std::cerr << "write to ise cache file failed:" << line << "\n";

@@ -845,7 +845,7 @@ CommonBackEnd::add_imengine_module_info (const String module_name, const ConfigP
                 char option[12];
 
                 snprintf (mode, sizeof (mode), "%d", (int)TOOLBAR_KEYBOARD_MODE);
-                snprintf (option, sizeof (option), "%d", 0);
+                snprintf (option, sizeof (option), "%d", factory->get_option ());
 
                 String line = isf_combine_ise_info_string (name, uuid, module_name, language,
                                                            icon, String (mode), String (option), factory->get_locales ());

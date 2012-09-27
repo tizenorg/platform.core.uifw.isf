@@ -185,7 +185,7 @@ static void add_keyboard_info_to_list (std::vector<ISEINFO> &info_list, const ch
                 info.language = isf_get_normalized_language (factory->get_language ());
                 info.icon = factory->get_icon_file ();
                 info.mode = TOOLBAR_KEYBOARD_MODE;
-                info.option = 0;
+                info.option = factory->get_option ();
                 info.locales = factory->get_locales ();
 
                 info_list.push_back (info);

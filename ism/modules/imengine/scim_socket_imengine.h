@@ -47,6 +47,8 @@ class SocketFactory : public IMEngineFactoryBase
 
     bool       m_ok;
 
+    unsigned int m_option;
+
     friend class SocketInstance;
 
 public:
@@ -63,6 +65,7 @@ public:
     virtual String      get_uuid () const;
     virtual String      get_icon_file () const;
     virtual String      get_language () const;
+    virtual unsigned int get_option () const;
 
     virtual IMEngineInstancePointer create_instance (const String& encoding, int id = -1);
 

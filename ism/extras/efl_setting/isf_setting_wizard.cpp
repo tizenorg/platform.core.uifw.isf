@@ -319,16 +319,16 @@ static Evas_Object *isf_setting_main_view_tizen(ug_data * ugd)
     }
 
     if (navi_btn_l_lable!= NULL)
-        free(navi_btn_l_lable);
+        free (navi_btn_l_lable);
     if (navi_btn_r_lable!= NULL)
-        free(navi_btn_r_lable);
+        free (navi_btn_r_lable);
     unsigned int i = 0;
 
-    sw_iselist.clear();
-    std::vector<String> selected_langs, all_langs;
+    sw_iselist.clear ();
+    std::vector<String> selected_langs, all_langs, uuid_list;
 
     isf_get_all_languages (all_langs);
-    isf_get_helper_names_in_languages (all_langs, sw_iselist);
+    isf_get_helper_ises_in_languages (all_langs, uuid_list, sw_iselist);
     std::sort (sw_iselist.begin (), sw_iselist.end ());
 
     if (sw_iselist.size () > 0) {

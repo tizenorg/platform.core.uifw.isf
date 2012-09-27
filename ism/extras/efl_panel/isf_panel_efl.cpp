@@ -141,7 +141,7 @@ static void       slot_update_aux_string               (const String &str, const
 static void       slot_update_candidate_table          (const LookupTable &table);
 static void       slot_set_active_ise                  (const String &uuid, bool changeDefault);
 static bool       slot_get_ise_list                    (std::vector<String> &name);
-static bool       slot_get_keyboard_ise_list           (std::vector<String> &name);
+static bool       slot_get_keyboard_ise_list           (std::vector<String> &name_list);
 static void       slot_get_language_list               (std::vector<String> &name);
 static void       slot_get_all_language                (std::vector<String> &lang);
 static void       slot_get_ise_language                (char *name, std::vector<String> &list);
@@ -474,11 +474,10 @@ static bool activate_helper_ise (const String &uuid, bool changeDefault)
             return false;
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
-    } else if (TOOLBAR_KEYBOARD_MODE == mode) {
-        String ise_uuid, ise_name;
-        isf_get_keyboard_ise (ise_uuid, ise_name, _config);
-        _panel_agent->change_factory (ise_uuid);
     }
+
+    String ise_uuid = SCIM_COMPOSE_KEY_FACTORY_UUID;
+    slot_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID, ise_uuid);
 
     _ise_width  = -1;
     _ise_height = -1;
@@ -2484,7 +2483,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
  *
  * @return true if this operation is successful, otherwise return false.
  */
-static bool slot_get_keyboard_ise_list (std::vector<String> &list)
+static bool slot_get_keyboard_ise_list (std::vector<String> &name_list)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -2492,12 +2491,12 @@ static bool slot_get_keyboard_ise_list (std::vector<String> &list)
     isf_load_ise_information (ALL_ISE, _config);
     bool ret = isf_update_ise_list (ALL_ISE, _config);
 
-    std::vector<String> selected_lang;
-    isf_get_all_languages (selected_lang);
-    isf_get_keyboard_uuids_in_languages (selected_lang, list);
+    std::vector<String> lang_list, uuid_list;
+    isf_get_all_languages (lang_list);
+    isf_get_keyboard_ises_in_languages (lang_list, uuid_list, name_list, false);
 
     if (ret)
-        _panel_agent->update_ise_list (list);
+        _panel_agent->update_ise_list (name_list);
     return ret;
 }
 
@@ -2597,8 +2596,9 @@ static void slot_set_keyboard_ise (int type, const String &uuid)
     if (uuid.length () <= 0)
         return;
 
+    uint32 ise_option = 0;
     String ise_uuid, ise_name;
-    isf_get_keyboard_ise (ise_uuid, ise_name, _config);
+    isf_get_keyboard_ise (_config, ise_uuid, ise_name, ise_option);
     if (ise_uuid == uuid)
         return;
 
@@ -2619,7 +2619,8 @@ static void slot_get_keyboard_ise (String &ise_name, String &ise_uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    isf_get_keyboard_ise (ise_uuid, ise_name, _config);
+    uint32 ise_option = 0;
+    isf_get_keyboard_ise (_config, ise_uuid, ise_name, ise_option);
 }
 
 /**
@@ -2979,8 +2980,13 @@ static void change_hw_and_sw_keyboard (void)
     if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1)) {
         if (val != 0) {
             /* Currently active the hw ise directly */
+            uint32 option = 0;
             String uuid, name;
-            isf_get_keyboard_ise (uuid, name, _config);
+            isf_get_keyboard_ise (_config, uuid, name, option);
+            if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
+                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
+            }
             set_active_ise (uuid, 1);
             if (fixed) {
                 _ise_width  = 0;

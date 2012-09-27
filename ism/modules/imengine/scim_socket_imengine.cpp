@@ -410,7 +410,8 @@ SocketFactory::SocketFactory (const String &peer_uuid)
       m_language (String ("")),
       m_peer_uuid (peer_uuid),
       m_icon_file (String ("")),
-      m_ok (false)
+      m_ok (false),
+      m_option (0)
 {
     String locales;
     String iconfile;
@@ -427,6 +428,7 @@ SocketFactory::SocketFactory (const String &peer_uuid)
         m_language = iter->second.language;
         //m_icon_file = global->load_icon (iter->second.icon);
         m_ok = true;
+        m_option = iter->second.option;
     } else {
         m_language.clear ();
     }
@@ -551,6 +553,12 @@ SocketFactory::get_language () const
         return m_language;
     else
         return IMEngineFactoryBase::get_language ();
+}
+
+unsigned int
+SocketFactory::get_option () const
+{
+    return m_option;
 }
 
 IMEngineInstancePointer

@@ -29,6 +29,8 @@
 #define Uses_SCIM_PANEL_AGENT
 #define Uses_SCIM_CONFIG_PATH
 #define Uses_SCIM_HELPER_MODULE
+#define Uses_SCIM_IMENGINE_MODULE
+#define Uses_SCIM_COMPOSE_KEY
 
 #define SINGLE_SELECTION
 
@@ -661,11 +663,10 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
 
     unsigned int i = 0;
 
-    sw_iselist.clear();
-    std::vector<String> selected_langs, all_langs;
-
+    sw_iselist.clear ();
+    std::vector<String> all_langs, uuid_list;
     isf_get_all_languages (all_langs);
-    isf_get_helper_names_in_languages (all_langs, sw_iselist);
+    isf_get_helper_ises_in_languages (all_langs, uuid_list, sw_iselist);
     std::sort (sw_iselist.begin (), sw_iselist.end ());
 
     if (sw_iselist.size () > 0) {
@@ -678,7 +679,7 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
 
         //separator
         Elm_Object_Item *item;
-        item = elm_genlist_item_append(
+        item = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itcSeparator,          // item class
                     NULL,                   // data
@@ -780,6 +781,7 @@ static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
                 uuid = _uuids[i];
         }
         isf_control_set_active_ise_by_uuid (uuid.c_str ());
+        //printf ("    Set keyboard ISE: %s\n", _active_hw_ise_name);
         snprintf (hw_ise_bak, sizeof (hw_ise_bak), "%s", _active_hw_ise_name);
     }
 
@@ -816,11 +818,10 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
 
     unsigned int i = 0;
 
-    hw_iselist.clear();
-    std::vector<String> selected_langs, all_langs;
-
+    hw_iselist.clear ();
+    std::vector<String> all_langs, uuid_list;
     isf_get_all_languages (all_langs);
-    isf_get_keyboard_names_in_languages (all_langs, hw_iselist);
+    isf_get_keyboard_ises_in_languages (all_langs, uuid_list, hw_iselist);
 
     if (hw_iselist.size () > 0) {
         // Set item class for dialogue group seperator
@@ -832,9 +833,9 @@ static void hw_keyboard_selection_view_tizen(ug_data * ugd)
 
         //separator
         Elm_Object_Item *item;
-        item = elm_genlist_item_append(
+        item = elm_genlist_item_append (
                     genlist,                // genlist object
-                    &itcSeparator,                 // item class
+                    &itcSeparator,          // item class
                     NULL,                   // data
                     NULL,
                     ELM_GENLIST_ITEM_NONE,
@@ -1105,19 +1106,27 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         }
 
 //group3 item1
-        String uuid,name;
-        isf_get_keyboard_ise(uuid,name,_config);
-        snprintf(_active_hw_ise_name,sizeof(_active_hw_ise_name),"%s",name.c_str());
-
+        uint32 option = 0;
+        String uuid, name;
+        isf_get_keyboard_ise (_config, uuid, name, option);
+        snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", name.c_str ());
         snprintf (hw_ise_bak, sizeof (hw_ise_bak), "%s", _active_hw_ise_name);
 
-        item_data = (ItemData *)malloc(sizeof(ItemData));
+        if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
+            std::cerr << "    Keyboard ISE (" << _active_hw_ise_name << ") can not support hardware keyboard!!!\n";
+
+            uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+            isf_get_keyboard_ise (_config, uuid, name, option);
+            snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", name.c_str ());
+        }
+
+        item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
-            memset (item_data, 0, sizeof(ItemData));
+            memset (item_data, 0, sizeof (ItemData));
             p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
-            item_data->text = strdup(_T("Select keyboard"));
-            item_data->sub_text = strdup(_active_hw_ise_name);
-            ugd->hw_ise_item_tizen = elm_genlist_item_append(
+            item_data->text     = strdup (_T("Select keyboard"));
+            item_data->sub_text = strdup (_active_hw_ise_name);
+            ugd->hw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc2,                  // item class
                     item_data,              // data

@@ -179,6 +179,12 @@ IMEngineFactoryBase::load_resource ()
     return ;
 }
 
+unsigned int
+IMEngineFactoryBase::get_option () const
+{
+    return 0;
+}
+
 String
 IMEngineFactoryBase::get_encodings () const
 {

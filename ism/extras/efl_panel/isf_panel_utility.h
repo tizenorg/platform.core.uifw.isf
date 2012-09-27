@@ -57,11 +57,9 @@ typedef enum {
 void isf_get_all_languages (std::vector<String> &all_langs);
 void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vector<String> &ise_names);
 
-void isf_get_keyboard_ise (String &ise_uuid, String &ise_name, const ConfigPointer &config);
-void isf_get_keyboard_names_in_languages (std::vector<String> lang_list, std::vector<String> &keyboard_names);
-void isf_get_keyboard_uuids_in_languages (std::vector<String> lang_list, std::vector<String> &keyboard_uuids);
-
-void isf_get_helper_names_in_languages (std::vector<String> lang_list, std::vector<String> &helper_names);
+void isf_get_keyboard_ise (const ConfigPointer &config, String &ise_uuid, String &ise_name, uint32 &ise_option);
+void isf_get_keyboard_ises_in_languages (const std::vector<String> &lang_list, std::vector<String> &uuid_list, std::vector<String> &name_list, bool bCheckOption = true);
+void isf_get_helper_ises_in_languages (const std::vector<String> &lang_list, std::vector<String> &uuid_list, std::vector<String> &name_list);
 
 void isf_save_ise_information (void);
 void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config);
