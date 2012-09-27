@@ -554,7 +554,7 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
 {
     char *plain_str = NULL;
     char *markup_str = NULL;
-    const char *puncs[] = {". ", ".\302\240", "! ", "!\302\240", "? ", "?\302\240" };
+    const char *puncs[] = {". ", ".\302\240", "! ", "!\302\240", "? ", "?\302\240", "¿ ", "¿\302\240", "¡ ", "¡\302\240" };
     Eina_Bool ret = EINA_FALSE;
     int cursor_pos = 0;
     int i = 0;
