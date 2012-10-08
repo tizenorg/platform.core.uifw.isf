@@ -62,7 +62,7 @@ ln -sf ../isf-panel.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.
 # FIXME: remove initscripts after systemd is in
 mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc3.d
 mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc4.d
-ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc3.d/S42isf-panel-efl
+ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc3.d/S47isf-panel-efl
 ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
 
 %post 
@@ -76,7 +76,7 @@ ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-pan
 
 %files
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
-%{_sysconfdir}/rc.d/rc3.d/S42isf-panel-efl
+%{_sysconfdir}/rc.d/rc3.d/S47isf-panel-efl
 %{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
 %{_libdir}/systemd/user/core-efl.target.wants/isf-panel.service
 %{_libdir}/systemd/user/isf-panel.service
