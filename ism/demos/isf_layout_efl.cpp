@@ -104,37 +104,56 @@ static void _candidate_panel_geometry_changed_cb (void *data, Ecore_IMF_Context 
 }
 
 static void
-_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_key_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
     Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event_info;
     printf ("[evas key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 }
 
 static void
-_key_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_key_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
     Evas_Event_Key_Up *ev = (Evas_Event_Key_Up *)event_info;
     printf ("[evas key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 }
 
+static void
+_print_keyboard_geometry (Ecore_X_Window xwin)
+{
+    int sx, sy, sw, sh;
+    Ecore_X_Window zone;
+
+    zone = ecore_x_e_illume_zone_get (xwin);
+
+    if (!ecore_x_e_illume_keyboard_geometry_get (zone, &sx, &sy, &sw, &sh))
+        sx = sy = sw = sh = 0;
+
+    printf ("Keyboard geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+}
+
 static Eina_Bool
-_prop_change(void *data, int type, void *event)
+_prop_change (void *data, int type, void *event)
 {
     Ecore_X_Event_Window_Property *ev;
-    int sx, sy, sw, sh;
+    Ecore_X_Virtual_Keyboard_State vkb_state;
 
     ev = (Ecore_X_Event_Window_Property *)event;
 
-    if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY ||
-        ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
+    if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
         Ecore_X_Window zone;
 
         zone = ecore_x_e_illume_zone_get (ev->win);
+        vkb_state = ecore_x_e_virtual_keyboard_state_get (zone);
+        if (vkb_state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+            printf ("Keyboard state : OFF.\n");
+        else
+            printf ("Keyboard state : ON.\n");
 
-        if (!ecore_x_e_illume_keyboard_geometry_get (zone, &sx, &sy, &sw, &sh))
-            sx = sy = sw = sh = 0;
-
-        printf ("Keyboard geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+        _print_keyboard_geometry (ev->win);
+    }
+    else if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY) {
+        printf("Keyboard Geometry Changed\n");
+        _print_keyboard_geometry (ev->win);
     }
 
     return ECORE_CALLBACK_PASS_ON;
