@@ -1,3 +1,14 @@
+isf (2.3.5808-1slp2+1) unstable; urgency=low
+
+  * [immodule] add spanish punctuations
+  * Add IMEngineOption and get_option () for keyboard ISE
+  * Add/install a systemd service file; package initscript symlinks
+  * [demo] add code to use ecore_x_e_virtual_keyboard_state_get
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5808-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Mon, 08 Oct 2012 15:17:09 +0900
+
 isf (2.3.5725-1slp2+1) unstable; urgency=low
 
   * Fixed autocapital issue:signal_connect_set_caps_mode not call when prediction ON.

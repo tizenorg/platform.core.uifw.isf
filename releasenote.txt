@@ -1,3 +1,10 @@
+ISF 2.3.5808 :
+  1. [immodule] add spanish punctuations
+  2. Add IMEngineOption and get_option () for keyboard ISE
+  3. Add/install a systemd service file; package initscript symlinks
+  4. [demo] add code to use ecore_x_e_virtual_keyboard_state_get
+
+
 ISF 2.3.5725 :
   1. Fixed autocapital issue:signal_connect_set_caps_mode not call when prediction ON
 
