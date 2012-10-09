@@ -105,9 +105,8 @@ scim_get_module_list (std::vector <String>& mod_list, const String& type)
                 String absfn = *i + String (SCIM_PATH_DELIM_STRING) + file->d_name;
                 stat (absfn.c_str (), &filestat);
                 if (S_ISREG (filestat.st_mode)) {
-                    std::vector<String> vec;
-                    scim_split_string_list (vec, String (file->d_name), '.');
-                    mod_list.push_back (vec [0]);
+                    String mod_name = String(file->d_name);
+                    mod_list.push_back (mod_name.substr(0, mod_name.find_last_of('.')));
                 }
                 file = readdir (dir);
             }

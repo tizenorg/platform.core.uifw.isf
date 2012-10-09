@@ -99,6 +99,19 @@ typedef String (*HelperModuleGetHelperLangFunc)   (unsigned int idx);
  */
 typedef void (*HelperModuleRunHelperFunc)       (const String &uuid, const ConfigPointer &config, const String &display);
 
+/**
+ * @brief Deliver argc, argv arguments of scim-helper-launcher executable.
+ *
+ * In Tizen platform, there are cases that helper module requires pointer to
+ * argc, argv parameter variables of scim-helper-launcher executable, for manipulating them
+ * as if they are launched directly from command line without any help of scim-helper-launcher.
+ * This function delivers the necessary argc, argv variables to helper module,
+ * and should be removed when there is no need for these variables since this is only tizen-specific.
+ *
+ * @param argc The argc parameter passed to main() function of scim-helper-launcher
+ * @param argv The argv parameter passed to main() function of scim-helper-launcher
+ */
+typedef void (*HelperModuleSetArgInfoFunc)       (int argc, char *argv []);
 
 /**
  * @brief The class used to load a Helper module and run its Helpers.
@@ -113,6 +126,7 @@ class HelperModule
     HelperModuleGetHelperInfoFunc   m_get_helper_info;
     HelperModuleGetHelperLangFunc   m_get_helper_lang;
     HelperModuleRunHelperFunc       m_run_helper;
+    HelperModuleSetArgInfoFunc      m_set_arg_info;
 
     HelperModule (const HelperModule &);
     HelperModule & operator= (const HelperModule &);
@@ -184,6 +198,14 @@ public:
      * @param display The display in which this helper should run.
      */
     void run_helper (const String &uuid, const ConfigPointer &config, const String &display) const;
+
+    /**
+     * @brief Sets the argument information of scim-helper-launcher.
+     *
+     * @param argc The argc parameter passed to main() function of scim-helper-launcher
+     * @param argv The argv parameter passed to main() function of scim-helper-launcher
+     */
+    void set_arg_info (int argc, char *argv []) const;
 };
 
 /**

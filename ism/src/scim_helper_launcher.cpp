@@ -171,6 +171,7 @@ int main (int argc, char *argv [])
 
 //    if (daemon) scim_daemon ();
 
+    helper_module.set_arg_info(argc, argv);
     helper_module.run_helper (uuid, config_pointer, display);
 
     if (!config_pointer.null ())

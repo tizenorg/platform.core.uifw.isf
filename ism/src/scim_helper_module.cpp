@@ -47,7 +47,8 @@ HelperModule::HelperModule (const String &name)
     : m_number_of_helpers (0),
       m_get_helper_info (0),
       m_get_helper_lang (0),
-      m_run_helper (0)
+      m_run_helper (0),
+      m_set_arg_info (0)
 {
     if (name.length ()) load (name);
 }
@@ -70,6 +71,9 @@ HelperModule::load (const String &name)
 
         m_run_helper =
             (HelperModuleRunHelperFunc) m_module.symbol ("scim_helper_module_run_helper");
+
+        m_set_arg_info =
+            (HelperModuleSetArgInfoFunc) m_module.symbol ("scim_helper_module_set_arg_info");
 
         if (!m_number_of_helpers || !m_get_helper_info || !m_run_helper) {
             m_module.unload ();
@@ -138,6 +142,13 @@ void
 HelperModule::run_helper (const String &uuid, const ConfigPointer &config, const String &display) const
 {
     m_run_helper (uuid, config, display);
+}
+
+void
+HelperModule::set_arg_info (int argc, char *argv []) const
+{
+    if (m_module.valid () && m_set_arg_info)
+        m_set_arg_info (argc, argv);
 }
 
 int scim_get_helper_module_list (std::vector <String> &mod_list)
