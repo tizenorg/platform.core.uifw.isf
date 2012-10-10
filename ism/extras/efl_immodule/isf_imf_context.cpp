@@ -898,6 +898,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_input_panel_hide (ctx);
+                input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
         }
 
