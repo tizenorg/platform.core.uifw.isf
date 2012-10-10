@@ -1,10 +1,10 @@
-#sbs-git:framework/uifw/isf isf 2.3.5808 07f2b65224e6cef5cd6799065bb01fa656bc115e
+#sbs-git:framework/uifw/isf isf 2.3.5810 07f2b65224e6cef5cd6799065bb01fa656bc115e
 %define _usrdir	/usr
 %define _ugdir	%{_usrdir}/ug
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.5808
+Version:    2.3.5810
 Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
@@ -53,7 +53,11 @@ This package contains ISF header files for ISE development.
 make %{?_smp_mflags}
 
 %install
+rm -rf %{buildroot}
+
 %make_install
+mkdir -p %{buildroot}%{_datadir}/license
+install -m0644 %{_builddir}/%{buildsubdir}/COPYING %{buildroot}%{_datadir}/license/%{name}
 
 install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
@@ -102,6 +106,7 @@ ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-pan
 %{_ugdir}/res/locale/*
 %{_ugdir}/lib/libug-keyboard-setting-wizard-efl.so
 %{_ugdir}/lib/libug-isfsetting-efl.so
+%{_datadir}/license/%{name}
 
 %files devel
 %defattr(-,root,root,-)

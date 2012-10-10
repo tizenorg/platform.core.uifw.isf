@@ -1,3 +1,8 @@
+ISF 2.3.5810 :
+  1. Added urgent features that OSP applications need
+  2. install license file in /usr/share/license
+
+
 ISF 2.3.5808 :
   1. [immodule] add spanish punctuations
   2. Add IMEngineOption and get_option () for keyboard ISE
