@@ -294,7 +294,6 @@ static void       slot_update_aux_string               (const String &str, const
 static void       slot_update_candidate_table          (const LookupTable &table);
 static void       slot_update_associate_table          (const LookupTable &table);
 static void       slot_set_active_ise_by_uuid          (const String &uuid, bool);
-static void       slot_set_active_ise_by_name          (const String &name);
 static bool       slot_get_ise_list                    (std::vector<String> &name);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name);
 static void       slot_get_language_list               (std::vector<String> &name);
@@ -302,12 +301,11 @@ static void       slot_get_all_language                (std::vector<String> &lan
 static void       slot_get_ise_language                (char *, std::vector<String> &name);
 static void       slot_set_isf_language                (const String &language);
 static bool       slot_get_ise_info_by_uuid            (const String &uuid, ISE_INFO &info);
-static bool       slot_get_ise_info_by_name            (const String &name, ISE_INFO &info);
 static void       slot_set_candidate_ui                (int style, int mode);
 static void       slot_get_candidate_ui                (int &style, int &mode);
 static void       slot_set_candidate_position          (int left, int top);
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
-static void       slot_set_keyboard_ise                (int type, const String &ise);
+static void       slot_set_keyboard_ise                (const String &ise_uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_start_default_ise               ();
 static void       slot_send_key_event                  (const KeyEvent &key);
@@ -2415,54 +2413,6 @@ static bool set_active_ise_by_uuid (const String &ise_uuid, bool changeDefault)
 }
 
 /**
- * @brief Set active ISE by name.
- *
- * @param ise_name The ISE's name.
- *
- * @return false if ISE change is failed, otherwise return true.
- */
-static bool set_active_ise_by_name (const String &ise_name)
-{
-    if (ise_name.length () <= 0)
-        return false;
-
-    GtkTreePath *path = 0;
-    gchar       *name = 0;
-    gchar       *arg1 = 0;
-    GtkTreeIter  iter;
-
-    if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (_active_ise_list_store), &iter)) {
-        do {
-            gtk_tree_model_get (GTK_TREE_MODEL (_active_ise_list_store), &iter, ACTIVE_ISE_NAME, &name, -1);
-            if (name != NULL && !strcmp (name, ise_name.c_str ())) {
-                path = gtk_tree_model_get_path (GTK_TREE_MODEL (_active_ise_list_store), &iter);
-                arg1 = gtk_tree_path_to_string (path);
-                on_active_ise_enable_box_clicked (NULL, arg1, NULL);
-                if (path) {
-                    gtk_tree_path_free (path);
-                    path = 0;
-                }
-                if (arg1) {
-                    g_free (arg1);
-                    arg1 = 0;
-                }
-                if (name) {
-                    g_free (name);
-                    name = 0;
-                }
-                return true;
-            }
-            if (name) {
-                g_free (name);
-                name = 0;
-            }
-        } while (gtk_tree_model_iter_next (GTK_TREE_MODEL (_active_ise_list_store), &iter));
-    }
-
-    return false;
-}
-
-/**
  * @brief Reload config callback function for ISF panel.
  *
  * @param config The config pointer.
@@ -3277,7 +3227,6 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_update_lookup_table        (slot (slot_update_candidate_table));
     _panel_agent->signal_connect_update_associate_table     (slot (slot_update_associate_table));
     _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise_by_uuid));
-    _panel_agent->signal_connect_set_active_ise_by_name     (slot (slot_set_active_ise_by_name));
     _panel_agent->signal_connect_get_ise_list               (slot (slot_get_ise_list));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
@@ -3285,7 +3234,6 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_get_ise_language           (slot (slot_get_ise_language));
     _panel_agent->signal_connect_set_isf_language           (slot (slot_set_isf_language));
     _panel_agent->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info_by_uuid));
-    _panel_agent->signal_connect_get_ise_info_by_name       (slot (slot_get_ise_info_by_name));
     _panel_agent->signal_connect_send_key_event             (slot (slot_send_key_event));
     _panel_agent->signal_connect_lock                       (slot (slot_lock));
     _panel_agent->signal_connect_unlock                     (slot (slot_unlock));
@@ -4007,17 +3955,6 @@ static void slot_set_active_ise_by_uuid (const String &ise_uuid, bool changeDefa
 }
 
 /**
- * @brief Set active ISE slot function for PanelAgent.
- *
- * @param ise_name The active ISE's name.
- */
-static void slot_set_active_ise_by_name (const String &ise_name)
-{
-    set_active_ise_by_name (ise_name);
-    return;
-}
-
-/**
  * @brief Get all ISEs list slot function for PanelAgent.
  *
  * @param list The list is used to store all ISEs.
@@ -4172,31 +4109,6 @@ static bool slot_get_ise_info_by_uuid (const String &uuid, ISE_INFO &info)
 {
     for (unsigned int i = 0; i < _uuids.size (); i++) {
         if (!uuid.compare (_uuids[i])) {
-            info.uuid   = _uuids[i];
-            info.name   = _names[i];
-            info.icon   = _icons[i];
-            info.lang   = _langs[i];
-            info.option = _options[i];
-            info.type   = _modes[i];
-            return true;
-        }
-    }
-
-    return false;
-}
-
-/**
- * @brief Get ISE information slot function for PanelAgent.
- *
- * @param name The ISE name.
- * @param info The variable is used to store ISE information.
- *
- * @return true if this operation is successful, otherwise return false.
- */
-static bool slot_get_ise_info_by_name (const String &name, ISE_INFO &info)
-{
-    for (unsigned int i = 0; i < _names.size (); i++) {
-        if (!name.compare (_names[i])) {
             info.uuid   = _uuids[i];
             info.name   = _names[i];
             info.icon   = _icons[i];
@@ -4384,23 +4296,12 @@ static void slot_get_candidate_geometry (struct rectinfo &info)
 /**
  * @brief Set keyboard ISE slot function for PanelAgent.
  *
- * @param type The variable is ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_NAME
-               or ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID.
- * @param ise The variable is ISE name or ISE uuid.
+ * @param ise_uuid The variable is ISE uuid.
  */
-static void slot_set_keyboard_ise (int type, const String &ise)
+static void slot_set_keyboard_ise (const String &ise_uuid)
 {
-    if (ise.length () <= 0)
+    if (ise_uuid.length () <= 0)
         return;
-
-    String ise_name, ise_uuid;
-    if (type == ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_NAME) {
-        ise_name = ise;
-        ise_uuid = String ("");
-    } else {
-        ise_name = String ("");
-        ise_uuid = ise;
-    }
 
     bool   ret  = false;
     gchar *name = 0;
@@ -4412,7 +4313,7 @@ static void slot_set_keyboard_ise (int type, const String &ise)
             gtk_tree_model_get (GTK_TREE_MODEL (_active_ise_list_store), &iter,
                                 ACTIVE_ISE_NAME, &name,
                                 ACTIVE_ISE_UUID, &uuid, -1);
-            if ((name != NULL && !strcmp (ise_name.c_str (), name)) || (uuid != NULL && !strcmp (ise_uuid.c_str (), uuid))) {
+            if (uuid != NULL && !strcmp (ise_uuid.c_str (), uuid)) {
                 String language = String ("~other");//scim_get_locale_language (scim_get_current_locale ());
                 _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, String (uuid));
                 _config->flush ();

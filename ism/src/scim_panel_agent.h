@@ -427,13 +427,6 @@ public:
      */
     bool reset_keyboard_ise (void) const;
 
-    /**
-     * @brief Set whether ISE is changed.
-     *
-     * @param changing The indicator for ISE changing.
-     */
-    void set_ise_changing (bool changing);
-
 public:
     /**
      * @brief Let the focused IMEngineInstance object move the preedit caret.
@@ -758,9 +751,9 @@ public:
     /**
      * @brief Signal: Set keyboard ise.
      *
-     * slot prototype: void set_keyboard_ise (int type, const String &ise);
+     * slot prototype: void set_keyboard_ise (const String &uuid);
      */
-    Connection signal_connect_set_keyboard_ise           (PanelAgentSlotIntString           *slot);
+    Connection signal_connect_set_keyboard_ise           (PanelAgentSlotString              *slot);
 
     /**
      * @brief Signal: Get keyboard ise.
@@ -955,14 +948,6 @@ public:
     Connection signal_connect_set_active_ise_by_uuid     (PanelAgentSlotStringBool          *slot);
 
     /**
-     * @brief Signal: Start an ise with the speficied name
-     *
-     * slot prototype: void set_active_ise_by_name (const String& name);
-     * - name -- the name of the ise object
-     */
-    Connection signal_connect_set_active_ise_by_name     (PanelAgentSlotString              *slot);
-
-    /**
      * @brief Signal: Focus in panel.
      *
      * slot prototype: void focus_in (void);
@@ -1030,13 +1015,6 @@ public:
      * slot prototype: bool get_ise_info_by_uuid (const String &, ISE_INFO &);
      */
     Connection signal_connect_get_ise_info_by_uuid       (PanelAgentSlotStringISEINFO       *slot);
-
-    /**
-     * @brief Signal: Get the ise information by name.
-     *
-     * slot prototype: bool get_ise_info_by_name (const String &, ISE_INFO &);
-     */
-    Connection signal_connect_get_ise_info_by_name       (PanelAgentSlotStringISEINFO       *slot);
 
     /**
      * @brief Signal: send key event in panel.

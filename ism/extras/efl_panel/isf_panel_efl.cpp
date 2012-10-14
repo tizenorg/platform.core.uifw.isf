@@ -148,7 +148,7 @@ static void       slot_get_ise_language                (char *name, std::vector<
 static bool       slot_get_ise_info                    (const String &uuid, ISE_INFO &info);
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_get_input_panel_geometry        (struct rectinfo &info);
-static void       slot_set_keyboard_ise                (int type, const String &uuid);
+static void       slot_set_keyboard_ise                (const String &uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_start_default_ise               (void);
 static void       slot_accept_connection               (int fd);
@@ -449,7 +449,7 @@ static bool activate_keyboard_ise (const String &uuid, const String &name)
             return false;
     }
 
-    slot_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID, uuid);
+    slot_set_keyboard_ise (uuid);
 
     return true;
 }
@@ -477,7 +477,7 @@ static bool activate_helper_ise (const String &uuid, bool changeDefault)
     }
 
     String ise_uuid = SCIM_COMPOSE_KEY_FACTORY_UUID;
-    slot_set_keyboard_ise (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID, ise_uuid);
+    slot_set_keyboard_ise (ise_uuid);
 
     _ise_width  = -1;
     _ise_height = -1;
@@ -2586,10 +2586,9 @@ static bool slot_get_ise_info (const String &uuid, ISE_INFO &info)
 /**
  * @brief Set keyboard ISE slot function for PanelAgent.
  *
- * @param type The variable should be ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID.
  * @param uuid The variable is ISE uuid.
  */
-static void slot_set_keyboard_ise (int type, const String &uuid)
+static void slot_set_keyboard_ise (const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
