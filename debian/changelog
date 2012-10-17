@@ -1,3 +1,11 @@
+isf (2.3.5817-1slp2+1) unstable; urgency=low
+
+  * apply smack manifest
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5817-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Wed, 17 Oct 2012 15:29:44 +0900
+
 isf (2.3.5815-1slp2+1) unstable; urgency=low
 
   * [isf-panel-efl] Donot show candidate when update lookup table

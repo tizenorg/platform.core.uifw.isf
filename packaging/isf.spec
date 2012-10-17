@@ -1,10 +1,10 @@
-#sbs-git:framework/uifw/isf isf 2.3.5815 07f2b65224e6cef5cd6799065bb01fa656bc115e
+#sbs-git:framework/uifw/isf isf 2.3.5817 07f2b65224e6cef5cd6799065bb01fa656bc115e
 %define _usrdir	/usr
 %define _ugdir	%{_usrdir}/ug
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.5815
+Version:    2.3.5817
 Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
@@ -26,7 +26,7 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(syspopup-caller)
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
-
+requires:       e17, net-config
 
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
@@ -79,6 +79,8 @@ ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-pan
 
 
 %files
+%manifest isf.manifest
+%defattr(-,root,root,-)
 %attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
 %{_sysconfdir}/rc.d/rc3.d/S47isf-panel-efl
 %{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl

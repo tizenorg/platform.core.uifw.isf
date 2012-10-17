@@ -1,8 +1,27 @@
 <manifest>
-  <define>
-    <domain name="isf"/>
-  </define>
-  <request>
-    <domain name="isf"/>
-  </request>
+	<define>
+		<domain name="isf"/>
+		<request>
+			<smack request="system::vconf" type="rwx"/>
+			<smack request="drmfw" type="x"/>
+			<smack request="xorg" type="w"/>
+			<smack request="net-config" type="r"/>
+			<smack request="system::homedir" type="arwxt"/>
+			<smack request="e17" type="rx"/>
+			<smack request="syspopup" type="rx"/>
+			<smack request="system::app_logging" type="w"/>
+		</request>
+	</define>
+	<assign>
+		<filesystem path="/usr/lib/ecore/immodules/libisf-imf-module.so" label="_"/>
+		<filesystem path="/usr/lib/libscim-1.0.so" label="_"/>
+		<filesystem path="/usr/lib/libscim-1.0.so.8" label="_"/>
+		<filesystem path="/usr/lib/libscim-1.0.so.8.2.3" label="_"/>
+		<filesystem path="/usr/lib/libscim-x11utils-1.0.so" label="_"/>
+		<filesystem path="/usr/lib/libscim-x11utils-1.0.so.8" label="_"/>
+		<filesystem path="/usr/lib/libscim-x11utils-1.0.so.8.2.3" label="_"/>
+	</assign>
+	<request>
+		<domain name="isf"/>
+	</request>
 </manifest>
