@@ -154,7 +154,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:734
 msgid "Persian"
-msgstr ""
+msgstr "Farsi"
 
 #: ism/src/scim_utility.cpp:735 ism/src/scim_utility.cpp:858
 #: ism/src/scim_keyboard_layout_data.h:4602

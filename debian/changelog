@@ -1,3 +1,12 @@
+isf (2.3.5818-1slp2+1) unstable; urgency=low
+
+  * remove heynoti about hibernation
+  * fix po files
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5818-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Thu, 18 Oct 2012 19:32:34 +0900
+
 isf (2.3.5817-1slp2+1) unstable; urgency=low
 
   * apply smack manifest

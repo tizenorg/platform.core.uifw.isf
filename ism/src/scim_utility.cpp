@@ -701,7 +701,7 @@ struct __Language {
 static __Language __languages [] = {
     { "C",        NULL, N_("English/Keyboard"), NULL, NULL},
     { "am_ET",    NULL, N_("Amharic"), NULL, NULL },
-    { "ar",    "ar_EG", N_("Arabic"), NULL, NULL },
+    { "ar",       "ar", N_("Arabic"), NULL, NULL },
     { "ar_EG",    NULL, N_("Arabic (Egypt)"), NULL, NULL },
     { "ar_LB",    NULL, N_("Arabic (Lebanon)"), NULL, NULL },
     { "as_IN",    NULL, N_("Assamese"), NULL, NULL},
