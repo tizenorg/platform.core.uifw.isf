@@ -242,9 +242,6 @@ PKG_CHECK_MODULES(UTILX, [utilX])
 # Check appcore-efl library
 PKG_CHECK_MODULES(APPCORE_EFL, [appcore-efl])
 
-# Check HEYNOTI library
-PKG_CHECK_MODULES(HEYNOTI, [heynoti])
-
 # Check dlog library
 PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 

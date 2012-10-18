@@ -50,7 +50,6 @@
 #include "scim.h"
 #include "scim_stl_map.h"
 #if HAVE_VCONF
-#include <heynoti.h>
 #include <vconf.h>
 #include <vconf-keys.h>
 #endif
@@ -2881,55 +2880,6 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     String name = get_ise_name (_panel_agent->get_current_helper_uuid ());
     _panel_agent->set_current_ise_name (name);
 }
-
-/**
- * @brief Callback function for hibernation enter.
- *
- * @param data Data to pass when it is called.
- *
- * @return void
- */
-static void hibernation_enter_cb (void *data)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    /* Remove callback function for input language and display language */
-    vconf_ignore_key_changed (VCONFKEY_LANGSET, display_language_changed_cb);
-}
-
-/**
- * @brief Callback function for hibernation leave.
- *
- * @param data Data to pass when it is called.
- *
- * @return void
- */
-static void hibernation_leave_cb (void *data)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (data == NULL) {
-        if (!_config.null ())
-            _config->reload ();
-    }
-    /* Add callback function for input language and display language */
-    vconf_notify_key_changed (VCONFKEY_LANGSET, display_language_changed_cb, NULL);
-
-    scim_global_config_update ();
-    set_language_and_locale ();
-
-    try {
-        /* update ise list */
-        std::vector<String> list;
-        slot_get_ise_list (list);
-
-        /* Start default ISE */
-        slot_start_default_ise ();
-        change_hw_and_sw_keyboard ();
-    } catch (scim::Exception & e) {
-        std::cerr << e.what () << "\n";
-    }
-}
 #endif
 
 /**
@@ -3041,7 +2991,7 @@ int main (int argc, char *argv [])
     struct tms    tiks_buf;
     _clock_start = times (&tiks_buf);
 
-    int           i, ret1, hib_fd, fd;
+    int           i, fd;
 #ifdef WAIT_WM
     int           try_count       = 0;
 #endif
@@ -3206,14 +3156,6 @@ int main (int argc, char *argv [])
     elm_init (argc, argv);
     check_time ("elm_init");
 
-#if HAVE_VCONF
-    hib_fd = heynoti_init ();
-
-    /* register hibernation callback */
-    heynoti_subscribe (hib_fd, "HIBERNATION_ENTER", hibernation_enter_cb, NULL);
-    heynoti_subscribe (hib_fd, "HIBERNATION_LEAVE", hibernation_leave_cb, NULL);
-#endif
-
     /* Get current display. */
     {
         const char *p = getenv ("DISPLAY");
@@ -3301,13 +3243,22 @@ int main (int argc, char *argv [])
     check_time ("run_panel_agent");
 
 #if HAVE_VCONF
-    ret1 = heynoti_attach_handler (hib_fd);
-    if (ret1 == -1)
-        std::cerr << "heynoti_attach_handler () is failed!!!\n";
+    /* Add callback function for input language and display language */
+    vconf_notify_key_changed (VCONFKEY_LANGSET, display_language_changed_cb, NULL);
 
-    if (!ecore_file_exists ("/opt/etc/.hib_capturing")) {
-        /* in case of normal booting */
-        hibernation_leave_cb ((void *)1);
+    scim_global_config_update ();
+    set_language_and_locale ();
+
+    try {
+        /* update ise list */
+        std::vector<String> list;
+        slot_get_ise_list (list);
+
+        /* Start default ISE */
+        slot_start_default_ise ();
+        change_hw_and_sw_keyboard ();
+    } catch (scim::Exception & e) {
+        std::cerr << e.what () << "\n";
     }
 #endif
 
@@ -3345,8 +3296,8 @@ int main (int argc, char *argv [])
     if (helper_manager_handler)
         ecore_main_fd_handler_del (helper_manager_handler);
 #if HAVE_VCONF
-    hibernation_enter_cb (NULL);
-    heynoti_close (hib_fd);
+    /* Remove callback function for input language and display language */
+    vconf_ignore_key_changed (VCONFKEY_LANGSET, display_language_changed_cb);
 #endif
 
 cleanup:
