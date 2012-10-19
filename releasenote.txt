@@ -1,3 +1,7 @@
+ISF 2.3.5819 :
+  1. Remove request field in the manifest according to the security team's request
+
+
 ISF 2.3.5818 :
   1. Remove heynoti about hibernation
   2. Fix po files
