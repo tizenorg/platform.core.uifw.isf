@@ -1,5 +1,6 @@
 ISF 2.3.5819 :
   1. Remove request field in the manifest according to the security team's request
+  2. [isf-imf-context] Donot force to commit string in isf_imf_context_reset ()
 
 
 ISF 2.3.5818 :
