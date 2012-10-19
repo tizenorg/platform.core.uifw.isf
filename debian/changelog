@@ -1,3 +1,13 @@
+isf (2.3.5815-1slp2+1) unstable; urgency=low
+
+  * [isf-panel-efl] Donot show candidate when update lookup table
+  * Remove unused source codes
+  * Use /home for the datadir instead of /opt/home
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5815-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Mon, 15 Oct 2012 16:08:00 +0900
+
 isf (2.3.5810-1slp2+1) unstable; urgency=low
 
   * Added urgent features that OSP applications need

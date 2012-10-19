@@ -1924,7 +1924,9 @@ static void slot_show_candidate_table (void)
         return;
 
     evas_object_show (_candidate_area_1);
-    evas_object_show (_more_btn);
+    if (_candidate_0 [0] && evas_object_visible_get (_candidate_0 [0])) {
+        evas_object_show (_more_btn);
+    }
     evas_object_hide (_close_btn);
     ui_candidate_window_adjust ();
 
@@ -2356,12 +2358,6 @@ static void slot_update_candidate_table (const LookupTable &table)
 
     if (!_candidate_window || table.get_current_page_size () < 0)
         return;
-
-    if (!evas_object_visible_get (_candidate_area_1) &&
-        !evas_object_visible_get (_candidate_area_2)) {
-        ui_candidate_show ();
-        slot_show_candidate_table ();
-    }
 
     update_table (ISF_CANDIDATE_TABLE, table);
 }
