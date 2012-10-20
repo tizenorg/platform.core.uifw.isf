@@ -432,11 +432,12 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
         normal_langlist_str += ((scim_get_language_name(langlist_vec[i].c_str())).c_str());
     }
 
-    Evas_Object *scroller = elm_scroller_add(common_ugd->naviframe);
-    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_FALSE);
-
     Evas_Object* layout = elm_layout_add(common_ugd->naviframe);
     elm_layout_file_set (layout, ISF_SETTING_EDJ, "isfsetting/languageview");
+
+    Evas_Object *scroller = elm_scroller_add(layout);
+    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_FALSE);
+    evas_object_size_hint_weight_set (scroller, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
     Evas_Object *label = elm_label_add(layout);
     elm_label_line_wrap_set (label, ELM_WRAP_WORD);
@@ -445,11 +446,11 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
     ecore_x_window_size_get (ecore_x_window_root_first_get(), &win_w, &win_h);
     elm_label_wrap_width_set (label, win_w - PADDING_X * 2);
     elm_object_text_set (label, normal_langlist_str.c_str());
-    elm_object_part_content_set (layout, "content", label);
-    elm_object_content_set (scroller, layout);
+    elm_object_content_set (scroller, label);
+    elm_object_part_content_set (layout, "content", scroller);
 
     //Push the layout along with function buttons and title
-    Elm_Object_Item *it = elm_naviframe_item_push(common_ugd->naviframe, sw_iselist[index].c_str(), NULL, NULL, scroller, NULL);
+    Elm_Object_Item *it = elm_naviframe_item_push(common_ugd->naviframe, sw_iselist[index].c_str(), NULL, NULL,layout , NULL);
 
     Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", lang_view_back_cb, NULL);
