@@ -1433,6 +1433,18 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                             } else if (i->get_value () == SCIM_ATTR_DECORATE_HIGHLIGHT) {
                                 attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB3;
                                 *attrs = eina_list_append (*attrs, (void *)attr);
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR1) {
+                                attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB4;
+                                *attrs = eina_list_append (*attrs, (void *)attr);
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR2) {
+                                attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB5;
+                                *attrs = eina_list_append (*attrs, (void *)attr);
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR3) {
+                                attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB6;
+                                *attrs = eina_list_append (*attrs, (void *)attr);
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR4) {
+                                attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB7;
+                                *attrs = eina_list_append (*attrs, (void *)attr);
                             } else {
                                 free (attr);
                             }
@@ -1441,6 +1453,10 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
                                 case SCIM_ATTR_DECORATE_UNDERLINE:
                                 case SCIM_ATTR_DECORATE_REVERSE:
                                 case SCIM_ATTR_DECORATE_HIGHLIGHT:
+                                case SCIM_ATTR_DECORATE_BGCOLOR1:
+                                case SCIM_ATTR_DECORATE_BGCOLOR2:
+                                case SCIM_ATTR_DECORATE_BGCOLOR3:
+                                case SCIM_ATTR_DECORATE_BGCOLOR4:
                                     // Record which character has attribute.
                                     for (int pos = start_index; pos < end_index; ++pos)
                                         attrs_flag [pos] = 1;
