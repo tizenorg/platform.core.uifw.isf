@@ -1923,10 +1923,6 @@ static void slot_show_candidate_table (void)
         return;
 
     evas_object_show (_candidate_area_1);
-    if (_candidate_0 [0] && evas_object_visible_get (_candidate_0 [0])) {
-        evas_object_show (_more_btn);
-    }
-    evas_object_hide (_close_btn);
     ui_candidate_window_adjust ();
 
     ui_candidate_show ();
@@ -2340,6 +2336,10 @@ static void update_table (int table_type, const LookupTable &table)
         evas_object_hide (_more_btn);
     } else if (!evas_object_visible_get (_candidate_area_2)) {
         evas_object_show (_more_btn);
+        evas_object_hide (_close_btn);
+    } else {
+        evas_object_hide (_more_btn);
+        evas_object_show (_close_btn);
     }
     elm_scroller_region_show (_candidate_area_1, 0, 0, _candidate_scroll_width, _item_min_height);
     elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, _item_min_height);

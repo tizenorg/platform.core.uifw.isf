@@ -1,3 +1,7 @@
+ISF 2.3.5823 :
+  1. [isf-setting] Fix reset defect when hardware keyboard is connected
+
+
 ISF 2.3.5822 :
   1. Add color style of preedit feature
 

@@ -1447,7 +1447,7 @@ static void on_event (ui_gadget_h ug, enum ug_event event, service_h s, void *pr
 
 static void on_key_event(ui_gadget_h ug, enum ug_key_event event, service_h s, void *priv)
 {
-    if ( ug == NULL || priv == NULL)
+    if (ug == NULL || priv == NULL)
         return ;
 
     struct ug_data *ugd = (struct ug_data *)priv;
@@ -1518,7 +1518,16 @@ extern "C"
         load_config_data (_config);
         isf_load_ise_information (ALL_ISE, _config);
 
-        String uuid =  scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String ("b70bf6cc-ff77-47dc-a137-60acc32d1e0c"));
+        String uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
+        TOOLBAR_MODE_T type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), 0);
+        ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &hw_kbd_num, 1);
+        if (hw_kbd_num != 0) {
+            if (type != TOOLBAR_KEYBOARD_MODE) {
+                _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
+                _config->flush ();
+                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+            }
+        }
         isf_control_set_active_ise_by_uuid (uuid.c_str ());
 
         String mdl_name;
