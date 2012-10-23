@@ -3,6 +3,6 @@
     <domain name="isf"/>
   </define>
   <request>
-    <domain name="isf"/>
+    <domain name="_"/>
   </request>
 </manifest>
