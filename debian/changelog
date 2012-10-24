@@ -1,3 +1,12 @@
+isf (2.3.5824-1slp2+1) unstable; urgency=low
+
+  * [isf-imf-context] Hide preedit string when soft ISE commit string
+  * [isf-imf-context] Move reset () after panel_req_focus_in ()
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5824-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Wed, 24 Oct 2012 18:01:00 +0900
+
 isf (2.3.5823-1slp2+1) unstable; urgency=low
 
   * [isf-setting] Fix reset defect when hardware keyboard is connected

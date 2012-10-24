@@ -1227,6 +1227,11 @@ isf_imf_context_reset (Ecore_IMF_Context *ctx)
 
         if (context_scim->impl->need_commit_preedit) {
             panel_slot_hide_preedit_string (context_scim->id);
+
+            if (wstr.length ()) {
+                ecore_imf_context_commit_event_add (context_scim->ctx, utf8_wcstombs (wstr).c_str ());
+                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
+            }
         }
     }
 }
@@ -2039,6 +2044,8 @@ panel_slot_commit_string (int context, const WideString &wstr)
         if (_focused_ic != ic)
             return;
 
+        if (ic->impl->need_commit_preedit)
+            panel_slot_hide_preedit_string (ic->id);
         ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (wstr).c_str ());
         ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
     }
