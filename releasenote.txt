@@ -1,6 +1,7 @@
 ISF 2.3.5824 :
   1. [isf-imf-context] Hide preedit string when soft ISE commit string
   2. [isf-imf-context] Move reset () after panel_req_focus_in ()
+  3. fix Nabi issue N_SE-10561 and the setting part problem of N_SE-11100
 
 
 ISF 2.3.5823 :

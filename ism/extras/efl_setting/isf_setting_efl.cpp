@@ -1235,10 +1235,15 @@ static void hw_connection_change_cb(ug_data *ugd)
     //enable / disable switch
     elm_object_item_disabled_set (ugd->autocapital_item, !elm_object_item_disabled_get(ugd->autocapital_item));
     elm_object_item_disabled_set (ugd->sw_ise_item_tizen, !elm_object_item_disabled_get(ugd->sw_ise_item_tizen));
-    elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, !elm_object_item_disabled_get(ugd->sw_ise_opt_item_tizen));
     elm_object_item_disabled_set (ugd->hw_ise_item_tizen, !elm_object_item_disabled_get(ugd->hw_ise_item_tizen));
-    elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, !elm_object_item_disabled_get(ugd->hw_ise_opt_item_tizen));
-
+    if (is_hw_connected || !check_if_ise_option_exist((const char *)_active_ise_name))
+        elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
+    else
+        elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_FALSE);
+    if (!is_hw_connected || !check_if_ise_option_exist((const char *)_active_hw_ise_name))
+        elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
+    else
+        elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
     if (!is_hw_connected)
     {
         String uuid;
