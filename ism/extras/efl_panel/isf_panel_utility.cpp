@@ -114,8 +114,7 @@ void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vec
  */
 void isf_get_keyboard_ise (const ConfigPointer &config, String &ise_uuid, String &ise_name, uint32 &ise_option)
 {
-    String language = String ("~other");
-    String uuid     = config->read (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, String ("d75857a5-4148-4745-89e2-1da7ddaf7999"));
+    String uuid = config->read (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other"), String (""));
     if (ise_uuid.length () > 0)
         uuid = ise_uuid;
     for (unsigned int i = 0; i < _uuids.size (); i++) {

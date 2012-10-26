@@ -1,10 +1,10 @@
-#sbs-git:framework/uifw/isf isf 2.3.5824 07f2b65224e6cef5cd6799065bb01fa656bc115e
+#sbs-git:framework/uifw/isf isf 2.3.5826 07f2b65224e6cef5cd6799065bb01fa656bc115e
 %define _usrdir	/usr
 %define _ugdir	%{_usrdir}/ug
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.5824
+Version:    2.3.5826
 Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL

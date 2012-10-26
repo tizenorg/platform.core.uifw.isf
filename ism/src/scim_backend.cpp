@@ -261,6 +261,7 @@ public:
                 if ((*it)->get_uuid () == uuid) {
                     m_config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other"), uuid);
                     m_config->flush ();
+                    m_config->reload ();
                     return;
                 }
             }

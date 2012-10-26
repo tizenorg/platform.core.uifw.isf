@@ -78,6 +78,7 @@ using namespace scim;
 
 #define ISF_READY_FILE                                  "/tmp/hibernation/isf_ready"
 
+
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
 /////////////////////////////////////////////////////////////////////////////
@@ -155,7 +156,6 @@ static void       slot_close_connection                (int fd);
 static void       slot_exit                            (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
-static void       change_hw_and_sw_keyboard            (void);
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,6 @@ static int                _click_up_pos [2]                 = {0, 0};
 static bool               _is_click                         = true;
 
 static DEFAULT_ISE_T      _initial_ise;
-static DEFAULT_ISE_T      _active_ise;
 static ConfigPointer      _config;
 static PanelAgent        *_panel_agent                      = 0;
 static std::vector<Ecore_Fd_Handler *> _read_handler_list;
@@ -426,14 +425,14 @@ static String get_ise_name (const String uuid)
 }
 
 /**
- * @brief Change keyboard ISE.
+ * @brief Set keyboard ISE.
  *
  * @param uuid The keyboard ISE's uuid.
  * @param name The keyboard ISE's name.
  *
  * @return false if keyboard ISE change is failed, otherwise return true.
  */
-static bool activate_keyboard_ise (const String &uuid, const String &name)
+static bool set_keyboard_ise (const String &uuid, const String &name)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -454,14 +453,14 @@ static bool activate_keyboard_ise (const String &uuid, const String &name)
 }
 
 /**
- * @brief Change helper ISE.
+ * @brief Set helper ISE.
  *
  * @param uuid The helper ISE's uuid.
  * @param changeDefault The flag for change default ISE.
  *
  * @return false if helper ISE change is failed, otherwise return true.
  */
-static bool activate_helper_ise (const String &uuid, bool changeDefault)
+static bool set_helper_ise (const String &uuid, bool changeDefault)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -511,9 +510,9 @@ static bool set_active_ise (const String &uuid, bool changeDefault)
     for (unsigned int i = 0; i < _uuids.size (); i++) {
         if (!uuid.compare (_uuids[i])) {
             if (TOOLBAR_KEYBOARD_MODE == _modes[i])
-                ise_changed = activate_keyboard_ise (_uuids[i], _names[i]);
+                ise_changed = set_keyboard_ise (_uuids[i], _names[i]);
             else if (TOOLBAR_HELPER_MODE == _modes[i])
-                ise_changed = activate_helper_ise (_uuids[i], changeDefault);
+                ise_changed = set_helper_ise (_uuids[i], changeDefault);
 
             if (ise_changed) {
                 DEFAULT_ISE_T default_ise;
@@ -729,22 +728,6 @@ static void ui_candidate_window_rotate (int angle)
         evas_object_resize (_candidate_area_2, _candidate_scroll_width, _candidate_scroll_height_max);
         evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
     }
-
-    /* Delete old candidate items and popup lines */
-/*  for (int i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
-        if (_candidate_items [i]) {
-            evas_object_del (_candidate_items [i]);
-            _candidate_items [i] = NULL;
-        }
-        if (_seperate_items [i]) {
-            evas_object_del (_seperate_items [i]);
-            _seperate_items [i] = NULL;
-        }
-        if (_line_items [i]) {
-            evas_object_del (_line_items [i]);
-            _line_items [i] = NULL;
-        }
-    }*/
 
     ui_settle_candidate_window ();
     ui_candidate_window_adjust ();
@@ -1092,9 +1075,9 @@ static void ui_mouse_moved_cb (void *data, Evas *e, Evas_Object *button, void *e
 }
 
 /**
- * @brief Create prediction engine style candidate window.
+ * @brief Create native style candidate window.
  */
-static void ui_create_prediction_engine_candidate_window (void)
+static void ui_create_native_candidate_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -1250,7 +1233,7 @@ static void ui_create_candidate_window (void)
     _candidate_y     = 0;
     _candidate_angle = 0;
 
-    ui_create_prediction_engine_candidate_window ();
+    ui_create_native_candidate_window ();
 
     int angle = efl_get_angle_for_root_window (_candidate_window);
     if (_candidate_angle != angle) {
@@ -2322,7 +2305,6 @@ static void update_table (int table_type, const LookupTable &table)
                 evas_object_size_hint_min_set (_seperate_0 [nIndex], seperate_width, _item_min_height);
                 elm_table_pack (_candidate_0_table, _seperate_0 [nIndex],
                                 0, i*(_item_min_height+line_height), seperate_width, _item_min_height);
-                //evas_object_show (_seperate_0 [nIndex]);
             }
         } else if (_line_0 [i]) {
             evas_object_del (_line_0 [i]);
@@ -2599,6 +2581,7 @@ static void slot_set_keyboard_ise (const String &uuid)
     String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
     _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
     _config->flush ();
+    _config->reload ();
 
     _panel_agent->change_factory (uuid);
 }
@@ -2633,10 +2616,6 @@ static void slot_start_default_ise (void)
     if (!set_active_ise (default_ise.uuid, 1)) {
         if (default_ise.uuid != _initial_ise.uuid)
             set_active_ise (_initial_ise.uuid, 1);
-
-        _active_ise = _initial_ise;
-    } else {
-        _active_ise = default_ise;
     }
 
     return;
@@ -2722,12 +2701,12 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
 /**
  * @brief Handler function for HelperManager input.
  *
- * @param user_data Data to pass when it is called.
+ * @param data The data to pass to this callback.
  * @param fd_handler The Ecore Fd handler.
  *
  * @return ECORE_CALLBACK_RENEW
  */
-static Eina_Bool helper_manager_input_handler (void *user_data, Ecore_Fd_Handler *fd_handler)
+static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_handler)
 {
     if (_panel_agent->has_helper_manager_pending_event ()) {
         if (!_panel_agent->filter_helper_manager_event ()) {
@@ -2877,8 +2856,14 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     }
     isf_save_ise_information ();
 
-    String name = get_ise_name (_panel_agent->get_current_helper_uuid ());
-    _panel_agent->set_current_ise_name (name);
+    DEFAULT_ISE_T default_ise;
+    default_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)_initial_ise.type);
+    default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
+    default_ise.name = get_ise_name (default_ise.uuid);
+
+    _panel_agent->set_current_ise_name (default_ise.name);
+    _panel_agent->set_default_ise (default_ise);
+    _config->reload ();
 }
 #endif
 
@@ -2910,11 +2895,11 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
 }
 
 /**
- * @brief Change hw and sw keyboard.
+ * @brief Check hardware keyboard.
  *
  * @return void
  */
-static void change_hw_and_sw_keyboard (void)
+static void check_hardware_keyboard (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -2971,7 +2956,7 @@ static void change_hw_and_sw_keyboard (void)
  *
  * @return ECORE_CALLBACK_PASS_ON
  */
-static Eina_Bool x_event_property_change_cb (void *data, int ev_type, void *ev)
+static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -2980,7 +2965,7 @@ static Eina_Bool x_event_property_change_cb (void *data, int ev_type, void *ev)
     Ecore_X_Window rootwin = ecore_x_window_root_first_get ();
     if (event->win == rootwin && event->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-        change_hw_and_sw_keyboard ();
+        check_hardware_keyboard ();
     }
 
     return ECORE_CALLBACK_PASS_ON;
@@ -3007,9 +2992,9 @@ int main (int argc, char *argv [])
     String        display_name    = String ();
 
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
-    Ecore_Fd_Handler *helper_manager_handler = NULL;
-    Ecore_Event_Handler *xclient_msg_handler = NULL;
-    Ecore_Event_Handler *prop_change_handler = NULL;
+    Ecore_Fd_Handler *helper_manager_handler   = NULL;
+    Ecore_Event_Handler *xclient_message_handler  = NULL;
+    Ecore_Event_Handler *xwindow_property_handler = NULL;
 
     control_privilege ();
 
@@ -3256,7 +3241,7 @@ int main (int argc, char *argv [])
 
         /* Start default ISE */
         slot_start_default_ise ();
-        change_hw_and_sw_keyboard ();
+        check_hardware_keyboard ();
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }
@@ -3268,9 +3253,9 @@ int main (int argc, char *argv [])
     if (rfd)
         fclose (rfd);
 
-    xclient_msg_handler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, x_event_client_message_cb, NULL);
+    xclient_message_handler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, x_event_client_message_cb, NULL);
     ecore_x_event_mask_set (ecore_x_window_root_first_get (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
-    prop_change_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, x_event_property_change_cb, NULL);
+    xwindow_property_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, x_event_window_property_cb, NULL);
     fd = _panel_agent->get_helper_manager_id ();
     if (fd >= 0)
         helper_manager_handler = ecore_main_fd_handler_add (fd, ECORE_FD_READ, helper_manager_input_handler, NULL, NULL, NULL);
@@ -3291,10 +3276,15 @@ int main (int argc, char *argv [])
     _config->flush ();
     ret = 0;
 
-    ecore_event_handler_del (xclient_msg_handler);
-    ecore_event_handler_del (prop_change_handler);
+    ecore_event_handler_del (xclient_message_handler);
+    ecore_event_handler_del (xwindow_property_handler);
     if (helper_manager_handler)
         ecore_main_fd_handler_del (helper_manager_handler);
+    for (unsigned int ii = 0; ii < _read_handler_list.size (); ++ii) {
+        ecore_main_fd_handler_del (_read_handler_list[ii]);
+    }
+    _read_handler_list.clear ();
+
 #if HAVE_VCONF
     /* Remove callback function for input language and display language */
     vconf_ignore_key_changed (VCONFKEY_LANGSET, display_language_changed_cb);

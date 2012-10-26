@@ -131,6 +131,8 @@ static ConfigPointer _config;
 static char ise_bak[256] = {'\0'};
 static char _active_ise_name[256] = {'\0'};
 
+static Connection                   _reload_signal_connection;
+
 extern std::vector <String>         _names;
 extern std::vector <String>         _uuids;
 extern std::vector <String>         _module_names;
@@ -371,6 +373,9 @@ static void update_isf_setting_main_view(ug_data *ugd)
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
+
+    elm_genlist_item_update (ugd->sw_ise_item_tizen);
+    elm_genlist_item_update (ugd->hw_ise_item_tizen);
 }
 
 static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
@@ -711,17 +716,8 @@ static void sw_keyboard_selection_view_tizen(ug_data * ugd)
     }
 }
 
-//for naviframe l_btn
-static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_info)
+static void helper_ise_reload (void)
 {
-    if (!data)
-        return;
-
-    struct ug_data *ugd = (struct ug_data *)data;
-    ugd->key_end_cb = back_cb;
-    mdl->save_config (_config);
-    _config->reload ();
-
     String display_name = String (":13");
     const char *p = getenv ("DISPLAY");
     if (p != NULL)
@@ -735,6 +731,20 @@ static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_in
         helper_agent.reload_config ();
         helper_agent.close_connection ();
     }
+}
+
+//for naviframe l_btn
+static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    if (!data)
+        return;
+
+    struct ug_data *ugd = (struct ug_data *)data;
+    ugd->key_end_cb = back_cb;
+    mdl->save_config (_config);
+    _config->reload ();
+
+    helper_ise_reload ();
 }
 
 static void show_ise_option_module (ug_data *ugd, const char *isename)
@@ -1304,15 +1314,25 @@ static void init_hw_keyboard_listener(ug_data *ugd)
         is_hw_connected = false;
     else
         is_hw_connected = true;
-    return ;
+    return;
+}
+
+static void reload_config_cb (const ConfigPointer &config)
+{
+    uint32 option = 0;
+    String uuid, name;
+    isf_get_keyboard_ise (_config, uuid, name, option);
+    snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", name.c_str ());
+    update_isf_setting_main_view (common_ugd);
+    //std::cout << "    " << __func__ << " (keyboard ISE : " << name << ")\n";
 }
 
 static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *priv)
 {
-    Evas_Object *parent = NULL;
+    Evas_Object *parent  = NULL;
     Evas_Object *content = NULL;
 
-    if (ug == NULL|| priv == NULL)
+    if (ug == NULL || priv == NULL)
         return NULL;
 
     bindtextdomain (SETTING_PACKAGE, SETTING_LOCALEDIR);
@@ -1336,6 +1356,9 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
     sync_ise_list ();
     isf_load_ise_information (ALL_ISE, _config);
     init_hw_keyboard_listener (ugd);
+
+    _reload_signal_connection = _config->signal_connect_reload (slot (reload_config_cb));
+
     //-------------------------- ise infomation ----------------------------
 
     //construct the UI part of the isfsetting module
@@ -1422,6 +1445,8 @@ static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
     if (!_prop_change_handler) return;
     ecore_event_handler_del(_prop_change_handler);
     _prop_change_handler = NULL;
+
+    _reload_signal_connection.disconnect ();
 }
 
 static void on_message (ui_gadget_h ug, service_h msg, service_h data, void *priv)
@@ -1556,6 +1581,7 @@ extern "C"
         }
 
         _config->reload ();
+        helper_ise_reload ();
         return 0;
     }
 
