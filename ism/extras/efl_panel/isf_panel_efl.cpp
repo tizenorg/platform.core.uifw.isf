@@ -2584,6 +2584,7 @@ static void slot_set_keyboard_ise (const String &uuid)
     _config->reload ();
 
     _panel_agent->change_factory (uuid);
+    _panel_agent->reload_config ();
 }
 
 /**
