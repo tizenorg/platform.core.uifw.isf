@@ -1164,7 +1164,7 @@ public:
         }
     }
 
-    void show_helper (const String &uuid, char *data, size_t &len)
+    bool show_helper (const String &uuid, char *data, size_t &len)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1186,7 +1186,9 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_SHOW_ISE);
             m_send_trans.put_data (data, len);
             m_send_trans.write_to_socket (client_socket);
+            return true;
         }
+        return false;
     }
 
     void hide_helper (const String &uuid)
@@ -1487,12 +1489,14 @@ public:
         SCIM_DEBUG_MAIN(4) << "PanelAgent::show_ise_panel ()\n";
         char   *data = NULL;
         size_t  len;
-
+        bool ret = false;
+        Transaction trans;
+        Socket client_socket (client_id);
         m_current_active_imcontrol_id = client_id;
 
         if (m_recv_trans.get_data (&data, len)) {
             if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
-                show_helper (m_current_helper_uuid, data, len);
+                ret = show_helper (m_current_helper_uuid, data, len);
         }
 
         if (data != NULL) {
@@ -1500,7 +1504,13 @@ public:
                 delete [] m_ise_settings;
             m_ise_settings = data;
             m_ise_settings_len = len;
+
         }
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.put_data (ret);
+        trans.write_to_socket (client_socket);
     }
 
     void hide_ise_panel (int client_id)

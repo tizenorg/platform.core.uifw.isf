@@ -1,3 +1,11 @@
+isf (2.3.5830-1slp2+1) unstable; urgency=low
+
+  * [isf_imf_context] fix issue N_SE-11810: ise dose not show when H/W keyboard is connected
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5830-1slp2+1
+
+ -- Li Zhang <li2012.zhang@samsung.com>  Tue, 30 Oct 2012 17:20:00 +0900
+
 isf (2.3.5826-1slp2+2) unstable; urgency=low
 
   * [isf-panel-efl] Call reload_config () when set keyboard ISE

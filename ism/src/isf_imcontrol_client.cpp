@@ -131,9 +131,24 @@ public:
     }
 
 
-    void show_ise (void *data, int length) {
+    void show_ise (void *data, int length, int *input_panel_show) {
+        int cmd;
+        uint32 temp;
         m_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_PANEL);
         m_trans.put_data ((const char *)data, (size_t)length);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            IMCONTROLERR ("%s:: read_from_socket() may be timeout \n", __FUNCTION__);
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (temp)) {
+            if (input_panel_show)
+                *input_panel_show = temp;
+        } else {
+            IMCONTROLERR ("%s:: get_command() or get_data() may fail!!!\n", __FUNCTION__);
+            if (input_panel_show)
+                *input_panel_show = false;
+        }
     }
 
     void hide_ise (void) {
@@ -448,9 +463,9 @@ IMControlClient::send (void)
     return m_impl->send ();
 }
 
-void IMControlClient::show_ise (void *data, int length)
+void IMControlClient::show_ise (void *data, int length, int *input_panel_show)
 {
-    m_impl->show_ise (data,length);
+    m_impl->show_ise (data,length, input_panel_show);
 }
 
 void IMControlClient::hide_ise (void)

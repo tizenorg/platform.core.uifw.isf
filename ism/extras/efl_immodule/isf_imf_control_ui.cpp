@@ -298,7 +298,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     int length = -1;
     void *packet = NULL;
     char imdata[1024] = {0};
-
+    bool input_panel_show = false;
     input_panel_ctx = ctx;
 
     IMFCONTROLUIDBG("debug start --%s\n", __FUNCTION__);
@@ -401,10 +401,10 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
-    if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
-        input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
+    _isf_imf_context_input_panel_show (packet , length, input_panel_show);
 
-    _isf_imf_context_input_panel_show (packet ,length);
+    if (input_panel_show == true)
+        input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
     free (packet);
 
     caps_mode_check(ctx, EINA_TRUE, EINA_TRUE);

@@ -396,7 +396,7 @@ public:
      *
      * @param uuid The helper ISE uuid.
      */
-    void show_helper (const String &uuid);
+    bool show_helper (const String &uuid);
 
     /**
      * @brief Notice helper ISE to hide window.

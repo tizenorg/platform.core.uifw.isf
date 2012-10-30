@@ -1,3 +1,7 @@
+ISF 2.3.5830 :
+  1. [isf_imf_context] fix issue N_SE-11810: ise dose not show when H/W keyboard is connected
+
+
 ISF 2.3.5826 :
   1. [isf-setting] Update hardware keyboard after software keyboard is changed
 
