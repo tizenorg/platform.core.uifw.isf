@@ -1,6 +1,6 @@
 isf (2.3.5830-1slp2+1) unstable; urgency=low
 
-  * [isf_imf_context] fix issue N_SE-11810: ise dose not show when H/W keyboard is connected
+  * [isf_imf_context] fix issue N_SE-11810: ise dose not show when H/W keyboard is disconnected
   * Git: framework/uifw/isf
   * Tag: isf_2.3.5830-1slp2+1
 
