@@ -230,8 +230,6 @@ class PanelAgent::PanelAgentImpl
     IntIntRepository                    m_imcontrol_map;
     DEFAULT_ISE_T                       m_default_ise;
     bool                                m_should_shared_ise;
-    char *                              m_ise_settings;
-    size_t                              m_ise_settings_len;
     bool                                m_ise_exiting;
 
     int                                 m_last_socket_client;
@@ -338,7 +336,6 @@ public:
           m_current_ise_style (0),
           m_current_active_imcontrol_id (-1), m_pending_active_imcontrol_id (-1),
           m_should_shared_ise (false),
-          m_ise_settings (NULL), m_ise_settings_len (0),
           m_ise_exiting (false),
           m_last_socket_client (-1), m_last_client_context (0)
     {
@@ -1499,13 +1496,6 @@ public:
                 ret = show_helper (m_current_helper_uuid, data, len);
         }
 
-        if (data != NULL) {
-            if (m_ise_settings != NULL)
-                delete [] m_ise_settings;
-            m_ise_settings = data;
-            m_ise_settings_len = len;
-
-        }
         trans.clear ();
         trans.put_command (SCIM_TRANS_CMD_REPLY);
         trans.put_command (SCIM_TRANS_CMD_OK);

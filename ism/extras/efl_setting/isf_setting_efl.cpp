@@ -723,7 +723,7 @@ static void helper_ise_reload (void)
     if (p != NULL)
         display_name = String (p);
     HelperAgent helper_agent;
-    HelperInfo  helper_info ("ff110940-b8f0-4062-9ff6-a84f4f3setup", "ISF Setting", "", "", SCIM_HELPER_STAND_ALONE);
+    HelperInfo  helper_info ("fd491a70-22f5-11e2-89f3-eb5999be869e", "ISF Setting", "", "", SCIM_HELPER_STAND_ALONE);
     int id = helper_agent.open_connection (helper_info, display_name);
     if (id == -1) {
         std::cerr << "    open_connection failed!!!!!!\n";
