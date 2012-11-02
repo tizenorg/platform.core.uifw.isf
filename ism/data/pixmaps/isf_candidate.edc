@@ -1,8 +1,8 @@
 
-#define FONT_NAME               "Default"
+#define FONT_NAME               "SLP"
 #define FONT_SIZE               38
 
-#define AUX_FONT_NAME           "Default"
+#define AUX_FONT_NAME           "SLP"
 #define AUX_FONT_SIZE           38
 
 #define COLOR_NORMAL_BUTTON     0 0 0 0
