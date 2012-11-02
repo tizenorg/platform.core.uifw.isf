@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
     int isetype = 0;
     int uninstall = 0;
 
-    control_privilege ();
+    set_app_privilege ("isf", NULL, NULL);
 
     int i = 1;
     while (i < argc) {

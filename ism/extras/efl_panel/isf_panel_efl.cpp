@@ -2946,6 +2946,7 @@ static void check_hardware_keyboard (void)
     _config->write (ISF_CONFIG_PANEL_FIXED_FOR_HARDWARE_KBD, fixed);
     _config->flush ();
     _config->reload ();
+    _panel_agent->reload_config ();
 }
 
 /**
@@ -2997,7 +2998,7 @@ int main (int argc, char *argv [])
     Ecore_Event_Handler *xclient_message_handler  = NULL;
     Ecore_Event_Handler *xwindow_property_handler = NULL;
 
-    control_privilege ();
+    set_app_privilege ("isf", NULL, NULL);
 
     check_time ("\nStarting ISF Panel EFL...... ");
 

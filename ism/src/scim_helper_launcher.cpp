@@ -45,7 +45,7 @@ int main (int argc, char *argv [])
     String uuid;
     bool   daemon = false;
 
-    control_privilege ();
+    set_app_privilege ("isf", NULL, NULL);
 
     char *p =  getenv ("DISPLAY");
     if (p) display = String (p);
