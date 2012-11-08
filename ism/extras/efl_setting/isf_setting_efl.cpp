@@ -753,8 +753,8 @@ static void show_ise_option_module (ug_data *ugd, const char *isename)
     {
         char title[256];
         snprintf (title, sizeof (title), _T("Keyboard settings"));
-        ugd->opt_eo = mdl->create_ui (ugd->layout_main, ugd->naviframe);
         mdl->load_config (_config);
+        ugd->opt_eo = mdl->create_ui (ugd->layout_main, ugd->naviframe);
 
         Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, title, NULL, NULL, ugd->opt_eo, NULL);
 
