@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SCIM\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-21 14:01+0900\n"
+"POT-Creation-Date: 2012-11-13 16:23+0800\n"
 "PO-Revision-Date: 2005-07-08 18:16+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: Korean <en@li.org>\n"
@@ -19,46 +19,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Push the layout along with function buttons and title
-#: ism/extras/efl_setting/isf_setting_efl.cpp:657
-#: ism/extras/efl_setting/isf_setting_efl.cpp:812
-msgid "Selection"
-msgstr "선택"
+#: ism/extras/efl_setting/isf_setting_efl.cpp:567
+#: ism/extras/efl_setting/isf_setting_efl.cpp:721
+#: ism/extras/efl_setting/isf_setting_efl.cpp:957
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1029
+msgid "Keyboard selection"
+msgstr "키보드 선택"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:743
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1074
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1137
+#: ism/extras/efl_setting/isf_setting_efl.cpp:654
+#: ism/extras/efl_setting/isf_setting_efl.cpp:978
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1048
 msgid "Keyboard settings"
 msgstr "키보드 설정"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:941
+#: ism/extras/efl_setting/isf_setting_efl.cpp:846
 msgid "Auto capitalization"
 msgstr "자동 대문자 입력"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:961
+#: ism/extras/efl_setting/isf_setting_efl.cpp:866
 msgid "Automatically capitalize first letter of sentence"
 msgstr "문장의 첫 글자를 자동으로 대문자로 변환합니다"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:995
+#: ism/extras/efl_setting/isf_setting_efl.cpp:899
 msgid "Automatic full stop"
 msgstr "자동 마침표"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1012
+#: ism/extras/efl_setting/isf_setting_efl.cpp:916
 msgid "Automatically insert a full stop by tapping the space bar twice"
 msgstr "스페이스 바를 두 번 누르면 마침표를 자동으로 삽입합니다"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1030
+#: ism/extras/efl_setting/isf_setting_efl.cpp:934
 msgid "Software keyboard"
 msgstr "소프트웨어 키보드"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1053
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1118
-msgid "Select keyboard"
-msgstr "키보드 선택"
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1095
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
 msgid "Hardware keyboard"
 msgstr "하드웨어 키보드"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1169
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1079
 msgid "Keyboard"
 msgstr "키보드"
+

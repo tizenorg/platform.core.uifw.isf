@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.3.5908, isf@samsung.com)
+AC_INIT(isf, 2.3.5913, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
@@ -11,7 +11,7 @@ m4_pattern_allow([^AS_])
 # ISF version
 ISF_MAJOR_VERSION=2
 ISF_MINOR_VERSION=3
-ISF_MICRO_VERSION=5908
+ISF_MICRO_VERSION=5913
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -84,7 +84,7 @@ AM_CONFIG_HEADER([config.h])
 PLATFORM_INIT
 
 # Init gettext
-ALL_LINGUAS="de_DE el_GR en es_ES fr_FR it_IT ja_JP ko_KR nl_NL pt_PT ru_RU tr_TR zh_CN zh_HK zh_TW"
+ALL_LINGUAS="hy az eu bg ca zh_CN zh_HK zh_TW hr cs da nl_NL en en_US et fi fr_FR gl ka de_DE el_GR hu is ga it_IT ja_JP kk ko_KR lv lt mk nb pl pt_PT pt_BR ro ru_RU sr sk sl es_ES es_US sv tr_TR uk uz ar zh_SG hi en_PH fr_CA"
 AM_GNU_GETTEXT
 
 # Init libtool

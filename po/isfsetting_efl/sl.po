@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-21 14:01+0900\n"
+"POT-Creation-Date: 2012-11-13 16:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,46 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Push the layout along with function buttons and title
-#: ism/extras/efl_setting/isf_setting_efl.cpp:657
-#: ism/extras/efl_setting/isf_setting_efl.cpp:812
-msgid "Selection"
-msgstr ""
+#: ism/extras/efl_setting/isf_setting_efl.cpp:567
+#: ism/extras/efl_setting/isf_setting_efl.cpp:721
+#: ism/extras/efl_setting/isf_setting_efl.cpp:957
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1029
+msgid "Keyboard selection"
+msgstr "Izbira tipkovnice"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:743
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1074
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1137
+#: ism/extras/efl_setting/isf_setting_efl.cpp:654
+#: ism/extras/efl_setting/isf_setting_efl.cpp:978
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1048
 msgid "Keyboard settings"
-msgstr ""
+msgstr "Nastavitve tipkovnice"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:941
+#: ism/extras/efl_setting/isf_setting_efl.cpp:846
 msgid "Auto capitalization"
-msgstr ""
+msgstr "Samodejno pisanje z veliko začetnico"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:961
+#: ism/extras/efl_setting/isf_setting_efl.cpp:866
 msgid "Automatically capitalize first letter of sentence"
-msgstr ""
+msgstr "Samodejno popravi veliko začetnico na začetku stavka"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:995
+#: ism/extras/efl_setting/isf_setting_efl.cpp:899
 msgid "Automatic full stop"
-msgstr ""
+msgstr "Samodejno dodajanje pike"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1012
+#: ism/extras/efl_setting/isf_setting_efl.cpp:916
 msgid "Automatically insert a full stop by tapping the space bar twice"
-msgstr ""
+msgstr "Samodejno vnese piko, če dvakrat pritisnete preslednico"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1030
+#: ism/extras/efl_setting/isf_setting_efl.cpp:934
 msgid "Software keyboard"
-msgstr ""
+msgstr "Programska tipkovnica"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1053
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1118
-msgid "Select keyboard"
-msgstr ""
-
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1095
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
 msgid "Hardware keyboard"
-msgstr ""
+msgstr "Strojna tipkovnica"
 
-#: ism/extras/efl_setting/isf_setting_efl.cpp:1169
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1079
 msgid "Keyboard"
-msgstr ""
+msgstr "Tipkovnica"

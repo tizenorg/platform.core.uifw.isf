@@ -564,7 +564,7 @@ static void sw_keyboard_selection_view_tizen (ug_data * ugd)
     evas_object_show (genlist);
 
     // Push the layout along with function buttons and title
-    Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, _T("Selection"), NULL, NULL, genlist, NULL);
+    Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, _T("Keyboard selection"), NULL, NULL, genlist, NULL);
 
     Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", sw_keyboard_selection_view_set_cb, ugd);
@@ -718,7 +718,7 @@ static void hw_keyboard_selection_view_tizen (ug_data * ugd)
     evas_object_show (genlist);
 
     // Push the layout along with function buttons and title
-    Elm_Object_Item *nf_it = elm_naviframe_item_push (ugd->naviframe, _T("Selection"), NULL, NULL, genlist, NULL);
+    Elm_Object_Item *nf_it = elm_naviframe_item_push (ugd->naviframe, _T("Keyboard selection"), NULL, NULL, genlist, NULL);
 
     Evas_Object *back_btn = elm_object_item_part_content_get (nf_it, "prev_btn");
     evas_object_smart_callback_add (back_btn, "clicked", hw_keyboard_selection_view_set_cb, ugd);
@@ -954,7 +954,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
             p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
-            item_data->text = strdup (_T("Select keyboard"));
+            item_data->text = strdup (_T("Keyboard selection"));
             item_data->sub_text = strdup (_active_ise_name);
 
             ugd->sw_ise_item_tizen = elm_genlist_item_append (
@@ -1026,7 +1026,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
             p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
-            item_data->text     = strdup (_T("Select keyboard"));
+            item_data->text     = strdup (_T("Keyboard selection"));
             item_data->sub_text = strdup (_active_hw_ise_name);
             ugd->hw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
