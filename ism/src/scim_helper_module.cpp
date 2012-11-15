@@ -75,6 +75,9 @@ HelperModule::load (const String &name)
         m_set_arg_info =
             (HelperModuleSetArgInfoFunc) m_module.symbol ("scim_helper_module_set_arg_info");
 
+        m_set_path_info =
+            (HelperModuleSetPathInfoFunc) m_module.symbol ("scim_helper_module_set_path_info");
+
         if (!m_number_of_helpers || !m_get_helper_info || !m_run_helper) {
             m_module.unload ();
             m_number_of_helpers = 0;
@@ -82,6 +85,10 @@ HelperModule::load (const String &name)
             m_get_helper_lang = 0;
             m_run_helper = 0;
             return false;
+        }
+
+        if (m_set_path_info) {
+            m_set_path_info(m_module.get_path().c_str());
         }
     } catch (...) {
         m_module.unload ();

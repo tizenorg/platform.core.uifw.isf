@@ -114,6 +114,19 @@ typedef void (*HelperModuleRunHelperFunc)       (const String &uuid, const Confi
 typedef void (*HelperModuleSetArgInfoFunc)       (int argc, char *argv []);
 
 /**
+ * @brief Deliver the .so filepath to ISE currently being loaded.
+ *
+ * In Tizen platform, there are cases that helper module requires the filepath of .so file
+ * currently being loaded, since the binary does not contain any information such as ModuleName or UUID.
+ * This function delivers the filepath information to those applications,
+ * so that it can acquire the necessary information using the filepath information.
+ * This also should be removed when there is no need for the filepath since this is only tizen-specific.
+ *
+ * @param path The filepath of the .so file currently being loaded
+ */
+typedef void (*HelperModuleSetPathInfoFunc)       (const char *path);
+
+/**
  * @brief The class used to load a Helper module and run its Helpers.
  *
  * This class should not be used directly. HelperManager should be used instead.
@@ -127,6 +140,7 @@ class HelperModule
     HelperModuleGetHelperLangFunc   m_get_helper_lang;
     HelperModuleRunHelperFunc       m_run_helper;
     HelperModuleSetArgInfoFunc      m_set_arg_info;
+    HelperModuleSetPathInfoFunc     m_set_path_info;
 
     HelperModule (const HelperModule &);
     HelperModule & operator= (const HelperModule &);
