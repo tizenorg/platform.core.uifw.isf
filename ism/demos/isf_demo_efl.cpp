@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <Elementary.h>
 #include <Ecore_X.h>
+#include <privilege-control.h>
 #include "isf_demo_efl.h"
 #include "isf_imcontrol_efl.h"
 #include "isf_layout_efl.h"
@@ -37,6 +38,7 @@
 #include "isf_imdata_set_efl.h"
 
 #define BASE_THEME_WIDTH 720.0f
+
 
 static void _quit_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -99,7 +101,7 @@ static void result_cb (ui_gadget_h ug, service_h s, void *priv)
             free(desp);
     }
     if (name != NULL)
-        free(name);
+        free (name);
 }
 
 static void destroy_cb (ui_gadget_h ug, void *priv)
@@ -139,10 +141,10 @@ static void keyboard_setting_wizard_bt (void *data, Evas_Object *obj, void *even
     cbs.result_cb  = result_cb;
     cbs.destroy_cb = destroy_cb;
     cbs.priv       = ad;
-    service_create(&ad->data);
-    service_add_extra_data(ad->data, "navi_btn_left", _("Previous"));
-    //service_add_extra_data(ad->data, "navi_btn_left", NULL);
-    service_add_extra_data(ad->data, "navi_btn_right", _("Next"));
+    service_create (&ad->data);
+    service_add_extra_data (ad->data, "navi_btn_left", _("Previous"));
+    //service_add_extra_data (ad->data, "navi_btn_left", NULL);
+    service_add_extra_data (ad->data, "navi_btn_right", _("Next"));
     ad->ug = ug_create (NULL, "keyboard-setting-wizard-efl",
                         UG_MODE_FULLVIEW,
                         ad->data, &cbs);
@@ -273,9 +275,18 @@ static Evas_Object* create_layout_main (Evas_Object *parent)
     Evas_Object *layout = elm_layout_add (parent);
     elm_layout_theme_set (layout, "layout", "application", "default");
     evas_object_size_hint_weight_set (layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_win_resize_object_add (parent, layout);
-
+    evas_object_size_hint_align_set (layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
     evas_object_show (layout);
+
+    /* Put the layout inside conformant for drawing indicator in app side */
+    Evas_Object *conformant = elm_conformant_add (parent);
+    evas_object_size_hint_weight_set (conformant, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (conformant, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    elm_win_resize_object_add (parent, conformant);
+    elm_win_conformant_set (parent, EINA_TRUE);
+    evas_object_show (conformant);
+
+    elm_object_content_set (conformant, layout);
 
     return layout;
 }
@@ -305,8 +316,7 @@ static Eina_Bool _keydown_event (void *data, int type, void *event)
             bottom_it = elm_naviframe_top_item_get (ad->naviframe);
             if (top_it && bottom_it && (elm_object_item_content_get (top_it) == elm_object_item_content_get (bottom_it))) {
                 elm_exit ();
-            }
-            else {
+            } else {
                 elm_naviframe_item_pop (ad->naviframe);
             }
         }
@@ -399,6 +409,8 @@ static int app_resume (void *data)
 
 int main (int argc, char *argv[])
 {
+    set_app_privilege ("isf", NULL, NULL);
+
     struct appdata ad;
     struct appcore_ops ops;
 
@@ -420,7 +432,7 @@ static void _focused_cb(void *data, Evas_Object *obj, void *event_info)
     elm_object_signal_emit (ly, "elm,state,guidetext,hide", "elm");
 }
 
-static void _unfocused_cb(void *data, Evas_Object *obj, void *event_info)
+static void _unfocused_cb (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *ly = (Evas_Object *)data;
 
@@ -428,8 +440,8 @@ static void _unfocused_cb(void *data, Evas_Object *obj, void *event_info)
         elm_object_signal_emit (ly, "elm,state,guidetext,show", "elm");
 }
 
-//utility func
-Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *guide_text)
+// Utility functions
+Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text)
 {
     Evas_Object *ef = NULL;
     Evas_Object *en = NULL;
@@ -448,6 +460,18 @@ Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *gui
     evas_object_show (ef);
 
     return ef;
+}
+
+void add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title)
+{
+    struct appdata *ad = (struct appdata *) data;
+
+    Evas_Object *scroller = elm_scroller_add (ad->naviframe);
+    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_TRUE);
+    evas_object_show (scroller);
+
+    elm_object_content_set (scroller, lay_in);
+    elm_naviframe_item_push (ad->naviframe, title, NULL, NULL, scroller, NULL);
 }
 
 /*

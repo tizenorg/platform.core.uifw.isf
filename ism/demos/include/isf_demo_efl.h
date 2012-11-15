@@ -38,20 +38,22 @@ struct appdata {
 
     Evas *evas;
     Evas_Object *win_main;
-    Evas_Object *layout_main;     // layout widget based on EDJ
+    Evas_Object *layout_main;     // Layout widget based on EDJ
     Evas_Object *naviframe;
 
     ui_gadget_h ug;
     int is_frameview;
 
-    // add more variables here
+    // Add more variables here
     Evas_Object *li;
     Evas_Object *ev_li;
     service_h data;
 };
 
-//utility func
-Evas_Object *_create_ef (Evas_Object *parent, const char *label, const char *guide_text);
+// Utility functions
+Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text);
+void         add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title);
+
 #endif /* __ISF_DEMO_EFL_H */
 
 /*

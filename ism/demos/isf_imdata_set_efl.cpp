@@ -25,38 +25,10 @@
 #include "isf_demo_efl.h"
 #include "isf_imdata_set_efl.h"
 
-static void add_layout_to_conformant (void *data, Evas_Object *lay_in, const char *title)
-{
-    Evas_Object *scroller = NULL;
-    Evas_Object *win = NULL;
-    Evas_Object *conform = NULL;
-    struct appdata *ad = NULL;
-
-    ad = (struct appdata *) data;
-
-    win = ad->win_main;
-    // Enabling illume notification property for window
-    elm_win_conformant_set (win, EINA_TRUE);
-
-    // Creating conformant widget
-    conform = elm_conformant_add (win);
-    evas_object_size_hint_weight_set (conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_show (conform);
-
-    scroller = elm_scroller_add (ad->naviframe);
-
-    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_TRUE);
-    evas_object_show (scroller);
-
-    elm_object_content_set (scroller, lay_in);
-    elm_object_content_set (conform, scroller);
-    elm_naviframe_item_push (ad->naviframe, title, NULL, NULL, conform, NULL);
-}
 
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text)
 {
-    Evas_Object *ef = NULL;
-    ef = _create_ef (parent, label, guide_text);
+    Evas_Object *ef = create_ef (parent, label, guide_text);
     return ef;
 }
 
@@ -78,13 +50,13 @@ static Evas_Object * create_inner_layout (void *data)
 
     ef = _create_ef_layout (parent, _("ko_KR"), _("Korean Layout"));
     elm_box_pack_end (bx, ef);
-    en =  elm_object_part_content_get(ef, "elm.swallow.content");
-    elm_entry_input_panel_imdata_set (en, imdata_ko, strlen(imdata_ko));
+    en =  elm_object_part_content_get (ef, "elm.swallow.content");
+    elm_entry_input_panel_imdata_set (en, imdata_ko, strlen (imdata_ko));
 
     ef = _create_ef_layout (parent, _("en_US"), _("English layout"));
     elm_box_pack_end (bx, ef);
-    en =  elm_object_part_content_get(ef, "elm.swallow.content");
-    elm_entry_input_panel_imdata_set (en, imdata_en, strlen(imdata_en));
+    en =  elm_object_part_content_get (ef, "elm.swallow.content");
+    elm_entry_input_panel_imdata_set (en, imdata_en, strlen (imdata_en));
 
     return bx;
 }
@@ -92,7 +64,7 @@ static Evas_Object * create_inner_layout (void *data)
 void ise_imdata_set_bt (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *lay_inner = create_inner_layout (data);
-    add_layout_to_conformant (data, lay_inner, _("IM Data"));
+    add_layout_to_naviframe (data, lay_inner, _("IM Data"));
 }
 
 /*

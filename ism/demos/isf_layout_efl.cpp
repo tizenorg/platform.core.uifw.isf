@@ -150,8 +150,7 @@ _prop_change (void *data, int type, void *event)
             printf ("Keyboard state : ON.\n");
 
         _print_keyboard_geometry (ev->win);
-    }
-    else if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY) {
+    } else if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY) {
         printf("Keyboard Geometry Changed\n");
         _print_keyboard_geometry (ev->win);
     }
@@ -161,7 +160,7 @@ _prop_change (void *data, int type, void *event)
 
 static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text,Elm_Input_Panel_Layout layout)
 {
-    Evas_Object *ef =  _create_ef (parent, label, guide_text);
+    Evas_Object *ef = create_ef (parent, label, guide_text);
     Ecore_IMF_Context *ic = NULL;
     Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
     elm_entry_input_panel_layout_set (en, layout);
@@ -183,39 +182,11 @@ static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, co
     return ef;
 }
 
-static void add_layout_to_conformant (void *data, Evas_Object *lay_in, const char *title)
-{
-    Evas_Object *scroller = NULL;
-    Evas_Object *win = NULL;
-    Evas_Object *conform = NULL;
-    struct appdata *ad = NULL;
-
-    ad = (struct appdata *) data;
-
-    win = ad->win_main;
-    // Enabling illume notification property for window
-    elm_win_conformant_set (win, EINA_TRUE);
-
-    // Creating conformant widget
-    conform = elm_conformant_add (win);
-    evas_object_size_hint_weight_set (conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_show (conform);
-
-    scroller = elm_scroller_add (ad->naviframe);
-
-    elm_scroller_bounce_set (scroller, EINA_FALSE, EINA_TRUE);
-    evas_object_show (scroller);
-
-    elm_object_content_set (scroller, lay_in);
-    elm_object_content_set (conform, scroller);
-    elm_naviframe_item_push (ad->naviframe, title, NULL, NULL, conform, NULL);
-}
-
 static Evas_Object * create_inner_layout (void *data)
 {
     struct appdata *ad = (struct appdata *)data;
-    Evas_Object *bx = NULL ;
-    Evas_Object *ef = NULL ;
+    Evas_Object *bx = NULL;
+    Evas_Object *ef = NULL;
     Evas_Object *parent = ad->naviframe;
 
     bx = elm_box_add (parent);
@@ -280,7 +251,7 @@ static Evas_Object * create_inner_layout (void *data)
 void ise_layout_bt (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *lay_inner = create_inner_layout (data);
-    add_layout_to_conformant (data, lay_inner, _("Layout"));
+    add_layout_to_naviframe (data, lay_inner, _("Layout"));
 }
 
 /*

@@ -1,3 +1,12 @@
+isf (2.3.5915-1slp2+1) unstable; urgency=low
+
+  * Explicitly unload module before helper ISE process is finished
+  * [isf-demo-efl] Apply indicator change
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5915-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Thu, 15 Nov 2012 16:19:00 +0900
+
 isf (2.3.5913-1slp2+1) unstable; urgency=low
 
   * fix PLM P121107-5543 po problem 
