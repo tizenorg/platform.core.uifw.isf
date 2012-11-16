@@ -23,17 +23,17 @@ msgstr ""
 #: ism/extras/efl_setting/isf_setting_efl.cpp:957
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1029
 msgid "Keyboard selection"
-msgstr "キーボード​を​選択"
+msgstr "キーボードを選択"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:654
 #: ism/extras/efl_setting/isf_setting_efl.cpp:978
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1048
 msgid "Keyboard settings"
-msgstr "キーボード<200b>設定"
+msgstr "キーボード設定"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:846
 msgid "Auto capitalization"
-msgstr "自動<200b>大文字<200b>変換"
+msgstr "自動大文字変換"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:866
 msgid "Automatically capitalize first letter of sentence"
@@ -41,7 +41,7 @@ msgstr "文頭を大文字に自動変換します。"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:899
 msgid "Automatic full stop"
-msgstr "自動<200b>ピリオド"
+msgstr "自動ピリオド"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:916
 msgid "Automatically insert a full stop by tapping the space bar twice"

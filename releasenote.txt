@@ -1,3 +1,7 @@
+ISF 2.3.5916 :
+  1.update po
+
+
 ISF 2.3.5915 :
   1. Explicitly unload module before helper ISE process is finished
   2. [isf-demo-efl] Apply indicator change

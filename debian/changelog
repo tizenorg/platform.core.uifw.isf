@@ -1,3 +1,11 @@
+isf (2.3.5916-1slp2+1) unstable; urgency=low
+
+  * update po
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5916-1slp2+1
+
+ -- Shuo Liu <shuo0805.liu@samsung.com>  Fri, 16 Nov 2012 12:00:00 +0900
+
 isf (2.3.5915-1slp2+1) unstable; urgency=low
 
   * Explicitly unload module before helper ISE process is finished
@@ -9,7 +17,7 @@ isf (2.3.5915-1slp2+1) unstable; urgency=low
 
 isf (2.3.5913-1slp2+1) unstable; urgency=low
 
-  * fix PLM P121107-5543 po problem 
+  * fix PLM P121107-5543 po problem
   * Git: framework/uifw/isf
   * Tag: isf_2.3.5913-1slp2+1
 

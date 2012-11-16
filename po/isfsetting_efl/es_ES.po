@@ -58,9 +58,3 @@ msgstr "Teclado de hardware"
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1079
 msgid "Keyboard"
 msgstr "Teclado"
-
-#~ msgid "Selection"
-#~ msgstr "Selección"
-
-#~ msgid "Select keyboard"
-#~ msgstr "Seleccionar teclado"

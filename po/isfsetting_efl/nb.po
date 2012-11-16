@@ -23,38 +23,38 @@ msgstr ""
 #: ism/extras/efl_setting/isf_setting_efl.cpp:957
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1029
 msgid "Keyboard selection"
-msgstr ""
+msgstr "Tastaturvalg"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:654
 #: ism/extras/efl_setting/isf_setting_efl.cpp:978
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1048
 msgid "Keyboard settings"
-msgstr ""
+msgstr "Tastaturinnstillinger"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:846
 msgid "Auto capitalization"
-msgstr ""
+msgstr "Automatisk stor forbokstav"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:866
 msgid "Automatically capitalize first letter of sentence"
-msgstr ""
+msgstr "Bruk automatisk stor bokstav i første bokstav i setninger"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:899
 msgid "Automatic full stop"
-msgstr ""
+msgstr "Automatisk punktum"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:916
 msgid "Automatically insert a full stop by tapping the space bar twice"
-msgstr ""
+msgstr "Sett automatisk inn et punktum ved å trykke to ganger på mellomromstasten"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:934
 msgid "Software keyboard"
-msgstr ""
+msgstr "Programvaretastatur"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:998
 msgid "Hardware keyboard"
-msgstr ""
+msgstr "Maskinvaretastatur"
 
 #: ism/extras/efl_setting/isf_setting_efl.cpp:1079
 msgid "Keyboard"
-msgstr ""
+msgstr "Tastatur"
