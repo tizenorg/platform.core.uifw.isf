@@ -36,6 +36,7 @@
 #include "isf_return_key_type_efl.h"
 #include "isf_return_key_disable_efl.h"
 #include "isf_imdata_set_efl.h"
+#include "isf_focus_movement_efl.h"
 
 #define BASE_THEME_WIDTH 720.0f
 
@@ -188,10 +189,8 @@ static int create_demo_view (struct appdata *ad)
 
     elm_list_item_append (li, "ISF Event", NULL, NULL, isf_event_demo_bt, ad);
 
-    /*
-    ISF language selection
-    ISE selection
-    */
+    elm_list_item_append (li, "ISF Focus Movement", NULL, NULL, isf_focus_movement_bt, ad);
+
     elm_list_item_append (li, "ISF Setting", NULL, NULL, isfsetting_bt, ad);
     elm_list_item_append (li, "Keyboard Setting Wizard", NULL, NULL, keyboard_setting_wizard_bt, ad);
     // ISF preedit string and commit string on Label and Entry
@@ -448,6 +447,7 @@ Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guid
 
     ef = elm_layout_add (parent);
     elm_layout_theme_set (ef, "layout", "editfield", "title");
+
     en = elm_entry_add (parent);
     elm_object_part_content_set (ef, "elm.swallow.content", en);
 

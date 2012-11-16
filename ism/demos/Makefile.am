@@ -36,7 +36,8 @@ isf_demo_efl_SOURCES  = isf_demo_efl.cpp \
                         isf_prediction_efl.cpp \
                         isf_return_key_type_efl.cpp \
                         isf_return_key_disable_efl.cpp \
-                        isf_imdata_set_efl.cpp
+                        isf_imdata_set_efl.cpp \
+                        isf_focus_movement_efl.cpp
 
 isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @APPCORE_EFL_CFLAGS@ \
