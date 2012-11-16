@@ -5,7 +5,7 @@
 Name:       isf
 Summary:    Input Service Framework
 Version:    2.3.5916
-Release:    1
+Release:    2
 Group:      TO_BE/FILLED_IN
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz

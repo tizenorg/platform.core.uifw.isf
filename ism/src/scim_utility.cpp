@@ -1295,6 +1295,14 @@ void scim_daemon ()
 #endif
 }
 
+void isf_save_log (const char *str)
+{
+    String strLogFile = scim_get_user_data_dir () + String (SCIM_PATH_DELIM_STRING) + String ("isf.log");
+    std::ofstream isf_log_file (strLogFile.c_str (), std::ios::app);
+    isf_log_file << str;
+    isf_log_file.flush ();
+}
+
 static struct timeval _t0 = {0, 0};
 static struct timeval _t1;
 

@@ -1,5 +1,7 @@
 ISF 2.3.5916 :
-  1.update po
+  1. Update po
+  2. Add set_path_info function to HelperModule to support OSP based keyboard
+  3. Add ISF log file to record keyboard ISE and helper ISE load/unload
 
 
 ISF 2.3.5915 :

@@ -443,6 +443,14 @@ void scim_usleep (unsigned int usec);
  */
 void scim_daemon ();
 
+/**
+ * @brief Save string to ISF log file.
+ *
+ * @param str The string to be saved.
+ */
+void isf_save_log (const char *str);
+
+
 #ifdef ISF_PROF
 
 void ISF_PROF_DEBUG_TIME(char const* func, int line, char const* str);
@@ -485,22 +493,6 @@ typedef struct rectinfo
     uint32 width;
     uint32 height;
 } RECT_INFO;
-
-typedef enum
-{
-    SCIM_CANDIDATE_STYLE = 0,
-    PREDICTION_ENGINE_CANDIDATE_STYLE,
-} ISF_CANDIDATE_STYLE_T;
-
-typedef enum
-{
-    PORTRAIT_HORIZONTAL_CANDIDATE_MODE = 0,
-    PORTRAIT_VERTICAL_CANDIDATE_MODE,
-    LANDSCAPE_HORIZONTAL_CANDIDATE_MODE,
-    LANDSCAPE_VERTICAL_CANDIDATE_MODE,
-    PORTRAIT_MORE_CANDIDATE_MODE,
-    LANDSCAPE_MORE_CANDIDATE_MODE,
-} ISF_CANDIDATE_MODE_T;
 
 
 #define PROP_X_EXT_KEYBOARD_EXIST       "X External Keyboard Exist"

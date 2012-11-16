@@ -164,6 +164,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
         }
 
         HelperModule module;
+        std::ofstream engine_list_file (USER_ENGINE_FILE_NAME, std::ios::app);
 
         for (size_t i = 0; i < mod_list.size (); ++i) {
             if (std::find (tmp_list.begin (), tmp_list.end (), mod_list [i]) != tmp_list.end ())
@@ -180,6 +181,16 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
                     if (module.get_helper_info (j, info)) {
                         SCIM_DEBUG_MAIN (3) << "  " << info.uuid << ": " << info.name << "\n";
                         __helpers.push_back (std::make_pair (info, mod_list [i]));
+
+                        char mode[12];
+                        char option[12];
+                        snprintf (mode, sizeof (mode), "%d", (int)TOOLBAR_HELPER_MODE);
+                        snprintf (option, sizeof (option), "%d", info.option);
+
+                        String line = isf_combine_ise_info_string (info.name, info.uuid, mod_list [i], isf_get_normalized_language (module.get_helper_lang (j)),
+                                                                   info.icon, String (mode), String (option), String (""));
+                        engine_list_file << line;
+                        engine_list_file.flush ();
                     }
                 }
             }
