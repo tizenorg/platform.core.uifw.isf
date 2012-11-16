@@ -48,7 +48,8 @@ HelperModule::HelperModule (const String &name)
       m_get_helper_info (0),
       m_get_helper_lang (0),
       m_run_helper (0),
-      m_set_arg_info (0)
+      m_set_arg_info (0),
+      m_set_path_info (0)
 {
     if (name.length ()) load (name);
 }
