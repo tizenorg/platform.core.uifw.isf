@@ -349,6 +349,7 @@ ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_LOGIN<br>
 ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_NEXT<br>
 ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEARCH<br>
 ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEND<p>
+ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN<p>
 <b>Sample code</b>: Refer to the example of ecore_imf_context_input_panel_return_key_type_set () API
 
 <table>
@@ -356,28 +357,37 @@ ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEND<p>
     <th>DEFAULT type</th>
     <th>DONE type</th>
     <th>GO type</th>
-    <th>JOIN type</th>
 </tr>
 <tr>
     <td>@image html TIZEN_ISF_PG_return_default.png</td>
     <td>@image html TIZEN_ISF_PG_return_done.png</td>
     <td>@image html TIZEN_ISF_PG_return_go.png</td>
-    <td>@image html TIZEN_ISF_PG_return_join.png</td>
 </tr>
 </table>
 
 <table>
 <tr>
+    <th>JOIN type</th>
     <th>LOGIN type</th>
     <th>NEXT type</th>
-    <th>SEARCH type</th>
-    <th>SEND type</th>
 </tr>
 <tr>
+    <td>@image html TIZEN_ISF_PG_return_join.png</td>
     <td>@image html TIZEN_ISF_PG_return_login.png</td>
     <td>@image html TIZEN_ISF_PG_return_next.png</td>
+</tr>
+</table>
+
+<table>
+<tr>
+    <th>SEARCH type</th>
+    <th>SEND type</th>
+    <th>SIGNIN type</th>
+</tr>
+<tr>
     <td>@image html TIZEN_ISF_PG_return_search.png</td>
     <td>@image html TIZEN_ISF_PG_return_send.png</td>
+    <td>@image html TIZEN_ISF_PG_return_signin.png</td>
 </tr>
 </table>
 @code
