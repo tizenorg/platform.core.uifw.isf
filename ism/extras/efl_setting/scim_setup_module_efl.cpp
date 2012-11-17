@@ -41,7 +41,7 @@ SetupModule::SetupModule ()
       m_load_config (0),
       m_save_config (0),
       m_query_changed (0),
-      m_key_proceeding(0),
+      m_key_proceeding (0),
       m_option_reset (0)
 {
 }
@@ -96,7 +96,7 @@ SetupModule::load (const String &name)
 }
 
 bool
-SetupModule::unload()
+SetupModule::unload ()
 {
     m_module.unload ();
 
@@ -121,7 +121,7 @@ SetupModule::valid () const
 }
 
 Evas_Object*
-SetupModule::create_ui (Evas_Object *parent,Evas_Object *layout) const
+SetupModule::create_ui (Evas_Object *parent, Evas_Object *layout) const
 {
     if (valid ())
         return m_create_ui (parent,layout);
@@ -177,6 +177,7 @@ SetupModule::query_changed () const
         return m_query_changed ();
     return false;
 }
+
 bool
 SetupModule::key_proceeding (int key_type) const
 {
@@ -184,6 +185,7 @@ SetupModule::key_proceeding (int key_type) const
         return m_key_proceeding (key_type);
     return false;
 }
+
 bool
 SetupModule::option_reset (const ConfigPointer &config) const
 {
@@ -191,6 +193,7 @@ SetupModule::option_reset (const ConfigPointer &config) const
         return m_option_reset (config);
     return false;
 }
+
 int scim_get_setup_module_list (std::vector <String>& mod_list)
 {
     return scim_get_module_list (mod_list, "SetupUI");

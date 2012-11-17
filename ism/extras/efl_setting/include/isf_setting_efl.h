@@ -24,23 +24,24 @@
 
 #ifndef __ISF_SETTING_EFL_H
 #define __ISF_SETTING_EFL_H
+
 enum
 {
     TYPE_KEY_END = 0,
-    //add more here
+    // Add more here
 };
 
 struct ug_data {
-    Evas_Object *layout_main;
-    Evas_Object *naviframe;
-    Evas_Object *opt_eo;
-    Elm_Object_Item *autocapital_item; // autocapital option
-    Elm_Object_Item *sw_ise_item_tizen; //sw
-    Elm_Object_Item *hw_ise_item_tizen; //hw
-    Elm_Object_Item *sw_ise_opt_item_tizen; //sw opt
-    Elm_Object_Item *hw_ise_opt_item_tizen; //hw opt
+    Evas_Object     *layout_main;
+    Evas_Object     *naviframe;
+    Evas_Object     *opt_eo;
+    Elm_Object_Item *autocapital_item;      // Autocapital option
+    Elm_Object_Item *sw_ise_item_tizen;     // SW
+    Elm_Object_Item *hw_ise_item_tizen;     // HW
+    Elm_Object_Item *sw_ise_opt_item_tizen; // SW option
+    Elm_Object_Item *hw_ise_opt_item_tizen; // HW option
     void (*key_end_cb)(void *, Evas_Object *, void *);
-    ui_gadget_h ug;
+    ui_gadget_h      ug;
 };
 
 #endif /* __ISF_SETTING_EFL_H */

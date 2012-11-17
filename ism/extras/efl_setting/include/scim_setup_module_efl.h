@@ -21,7 +21,7 @@
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
  *
- * $Id: scim_setup_module.h,v 1.9 2005/01/10 08:30:45 suzhe Exp $
+ * $Id: scim_setup_module_efl.h,v 1.9 2005/01/10 08:30:45 suzhe Exp $
  */
 
 #if !defined (__SCIM_SETUP_MODULE_EFL_H)
@@ -32,7 +32,7 @@
 #include <string.h>
 
 using namespace scim;
-typedef Evas_Object * (*SetupModuleCreateUIFunc) (Evas_Object *parent,Evas_Object *layout);
+typedef Evas_Object * (*SetupModuleCreateUIFunc) (Evas_Object *parent, Evas_Object *layout);
 typedef String (*SetupModuleGetCategoryFunc) (void);
 typedef String (*SetupModuleGetNameFunc) (void);
 typedef String (*SetupModuleGetDescriptionFunc) (void);
@@ -53,8 +53,8 @@ class SetupModule
     SetupModuleLoadConfigFunc     m_load_config;
     SetupModuleSaveConfigFunc     m_save_config;
     SetupModuleQueryChangedFunc   m_query_changed;
-    SetupModuleKeyProceedingFunc   m_key_proceeding;
-    SetupModuleOptionResetFunc   m_option_reset;
+    SetupModuleKeyProceedingFunc  m_key_proceeding;
+    SetupModuleOptionResetFunc    m_option_reset;
 
     SetupModule (const SetupModule &);
     SetupModule & operator= (const SetupModule &);

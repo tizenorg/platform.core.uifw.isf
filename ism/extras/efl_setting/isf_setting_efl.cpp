@@ -61,6 +61,7 @@ using namespace scim;
 #define SETTING_LOCALEDIR                         "/usr/ug/res/locale"
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
 
+
 enum {
     F_CONNECTION_AUTO = 0,
     F_CONNECTION_ALWAYS_USED,
@@ -94,43 +95,47 @@ struct ItemData
     int   mode;
 };
 
-static struct ug_data              *common_ugd;
-static ItemData                    *p_items[ITEM_TOTAL_COUNT];
-static Elm_Genlist_Item_Class       itc1, itc2, itc3, itc4, itc5, itcText, itcTitle, itcSeparator;
-static int                          mark                      = 0;
-static int                          hw_mark                   = 0;
-static Ecore_Event_Handler          *_prop_change_handler     = NULL;
-static Ecore_X_Atom                 prop_x_ext_keyboard_exist = 0;
-static Ecore_X_Window               _rootwin;
-static unsigned int                 hw_kbd_num                = 0;
 
-static bool                         is_hw_connected           = false;
-static Evas_Object                 *hw_radio_grp              = NULL;
-static std::vector<String>          hw_iselist;
+static struct ug_data              *_common_ugd               = NULL;
+static ItemData                    *_p_items[ITEM_TOTAL_COUNT];
 
-static char                         hw_ise_bak[256]           = {'\0'};
-static char                         _active_hw_ise_name[256]  = {'\0'};
+static Ecore_X_Window               _root_win;
+static Ecore_X_Atom                 _prop_x_ext_keyboard_exist= 0;
+static Ecore_Event_Handler         *_prop_change_handler      = NULL;
 
-static Ecore_IMF_Context           *imf_context               = NULL;
-static SetupModule                 *mdl                       = NULL;
-static Evas_Object                 *sw_radio_grp              = NULL;
-static std::vector<String>          sw_iselist;
+static bool                         _hw_kbd_connected         = false;
+static unsigned int                 _hw_kbd_num               = 0;
 
-static Eina_Bool                    f_auto_capitalisation     = EINA_FALSE;
-static Eina_Bool                    f_auto_full_stop          = EINA_FALSE;
+static int                          _sw_ise_index             = 0;
+static int                          _hw_ise_index             = 0;
+static Evas_Object                 *_sw_radio_grp             = NULL;
+static Evas_Object                 *_hw_radio_grp             = NULL;
+static std::vector<String>          _sw_ise_list;
+static std::vector<String>          _hw_ise_list;
+
+static char                         _sw_ise_bak[256]          = {'\0'};
+static char                         _hw_ise_bak[256]          = {'\0'};
+static char                         _sw_ise_name[256]         = {'\0'};
+static char                         _hw_ise_name[256]         = {'\0'};
+
+static SetupModule                 *_mdl                      = NULL;
+static Ecore_IMF_Context           *_imf_context              = NULL;
+
+static Eina_Bool                    _auto_capitalisation      = EINA_FALSE;
+static Eina_Bool                    _auto_full_stop           = EINA_FALSE;
 
 static ConfigPointer                _config;
-static char                         ise_bak[256]              = {'\0'};
-static char                         _active_ise_name[256]     = {'\0'};
-static bool                         in_exit                   = false;
-
 static Connection                   _reload_signal_connection;
+
+static Elm_Genlist_Item_Class       itc1, itc2, itc3, itc4, itc5, itcText, itcTitle, itcSeparator;
+
 
 extern std::vector <String>         _names;
 extern std::vector <String>         _uuids;
 extern std::vector <String>         _module_names;
 extern std::vector <String>         _langs;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
+
 
 static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part);
 static char        *_gl_label_get (void *data, Evas_Object *obj, const char *part);
@@ -142,12 +147,12 @@ static void         _gl_hw_ise_sel (void *data, Evas_Object *obj, void *event_in
 static void         _gl_keyboard_sel (void *data, Evas_Object *obj, void *event_info);
 static char        *_gl_exp_sw_label_get (void *data, Evas_Object *obj, const char *part);
 static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const char *part);
-static void         sw_keyboard_selection_view_tizen (ug_data * ugd);
-static void         hw_keyboard_selection_view_tizen (ug_data * ugd);
-static void         show_ise_option_module (ug_data *ugd , const char *isename);
-static void         _hw_radio_cb (void *data, Evas_Object *obj, void *event_info);
 
-static Evas_Object *_create_bg (Evas_Object *win)
+static void         create_sw_keyboard_selection_view (ug_data *ugd);
+static void         create_hw_keyboard_selection_view (ug_data *ugd);
+
+
+static Evas_Object *create_bg (Evas_Object *win)
 {
     Evas_Object *bg = elm_bg_add (win);
     evas_object_size_hint_weight_set (bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -157,7 +162,7 @@ static Evas_Object *_create_bg (Evas_Object *win)
 
 static Evas_Object *create_fullview (Evas_Object *parent, struct ug_data *ugd)
 {
-    Evas_Object *bg = _create_bg (parent);
+    Evas_Object *bg = create_bg (parent);
     Evas_Object *layout_main = elm_layout_add (parent);
 
     if (layout_main == NULL)
@@ -172,7 +177,7 @@ static Evas_Object *create_fullview (Evas_Object *parent, struct ug_data *ugd)
 
 static Evas_Object *create_frameview (Evas_Object *parent, struct ug_data *ugd)
 {
-    Evas_Object *bg = _create_bg (parent);
+    Evas_Object *bg = create_bg (parent);
     Evas_Object *layout_main = elm_layout_add (parent);
     if (layout_main == NULL)
         return NULL;
@@ -183,19 +188,7 @@ static Evas_Object *create_frameview (Evas_Object *parent, struct ug_data *ugd)
     return layout_main;
 }
 
-static void back_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    if (in_exit)
-        return;
-    in_exit = true;
-
-    if (data == NULL)
-        return;
-   struct ug_data *ugd = (struct ug_data *)data;
-    ug_destroy_me (ugd->ug);
-}
-
-static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
+static Evas_Object *create_naviframe_layout (Evas_Object* parent)
 {
     Evas_Object *naviframe = elm_naviframe_add (parent);
     elm_object_part_content_set (parent, "elm.swallow.content", naviframe);
@@ -204,11 +197,25 @@ static Evas_Object* _create_naviframe_layout (Evas_Object* parent)
     return naviframe;
 }
 
-static bool check_if_ise_option_exist (const char *isename)
+static void back_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    static bool in_exit = false;
+
+    if (in_exit)
+        return;
+    in_exit = true;
+
+    if (data == NULL)
+        return;
+    struct ug_data *ugd = (struct ug_data *)data;
+    ug_destroy_me (ugd->ug);
+}
+
+static bool find_ise_option_module (const char *ise_name)
 {
     String mdl_name;
     for (unsigned int i = 0; i < _names.size (); i++) {
-        if (_names[i] == String (isename)) {
+        if (_names[i] == String (ise_name)) {
             if (_modes[i] == TOOLBAR_KEYBOARD_MODE)
                 mdl_name = _module_names[i] + String ("-imengine-setup");
             else
@@ -216,15 +223,15 @@ static bool check_if_ise_option_exist (const char *isename)
         }
     }
 
-    if (mdl) {
-        delete mdl;
-        mdl = NULL;
+    if (_mdl) {
+        delete _mdl;
+        _mdl = NULL;
     }
 
     if (mdl_name.length () > 0)
-        mdl = new SetupModule (String (mdl_name));
+        _mdl = new SetupModule (String (mdl_name));
 
-    if (mdl == NULL || !mdl->valid ())
+    if (_mdl == NULL || !_mdl->valid ())
         return false;
     else
         return true;
@@ -232,26 +239,26 @@ static bool check_if_ise_option_exist (const char *isename)
 
 static void set_autocap_mode (void)
 {
-    if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, f_auto_capitalisation) == -1)
+    if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, _auto_capitalisation) == -1)
         std::cerr << "Failed to set vconf autocapital\n";
 }
 
 static void set_auto_full_stop_mode (void)
 {
-    if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, f_auto_full_stop) == -1)
+    if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, _auto_full_stop) == -1)
         std::cerr << "Failed to set vconf autoperiod\n";
 }
 
 static String uuid_to_name (String uuid)
 {
-    String tmpName ("");
+    String strName ("");
     for (unsigned int i = 0; i < _uuids.size (); i++) {
         if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
-            tmpName = _names[i];
+            strName = _names[i];
             break;
         }
     }
-    return tmpName;
+    return strName;
 }
 
 static void sw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, void *event_info)
@@ -260,21 +267,21 @@ static void sw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, vo
         return;
 
     struct ug_data *ugd = (struct ug_data *)data;
-    snprintf (_active_ise_name, sizeof (_active_ise_name), "%s", ise_bak);
+    snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", _sw_ise_bak);
     ugd->key_end_cb = back_cb;
 }
 
-static void update_isf_setting_main_view (ug_data *ugd)
+static void update_setting_main_view (ug_data *ugd)
 {
-    p_items[SW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_active_ise_name);
-    elm_object_item_data_set (ugd->sw_ise_item_tizen, p_items[SW_KEYBOARD_SEL_ITEM]);
-    if (is_hw_connected || !check_if_ise_option_exist ((const char *)_active_ise_name))
+    _p_items[SW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_sw_ise_name);
+    elm_object_item_data_set (ugd->sw_ise_item_tizen, _p_items[SW_KEYBOARD_SEL_ITEM]);
+    if (_hw_kbd_connected || !find_ise_option_module ((const char *)_sw_ise_name))
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_FALSE);
-    p_items[HW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_active_hw_ise_name);
-    elm_object_item_data_set (ugd->hw_ise_item_tizen, p_items[HW_KEYBOARD_SEL_ITEM]);
-    if (!is_hw_connected || !check_if_ise_option_exist ((const char *)_active_hw_ise_name))
+    _p_items[HW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_hw_ise_name);
+    elm_object_item_data_set (ugd->hw_ise_item_tizen, _p_items[HW_KEYBOARD_SEL_ITEM]);
+    if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
@@ -290,48 +297,54 @@ static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
 
     struct ug_data *ugd = (struct ug_data *)data;
 
-    if (strcmp (ise_bak, _active_ise_name) != 0) {
-        // If _active_ise_name is changed, active _active_ise_name.
-        // Find the uuid of the active
+    if (strcmp (_sw_ise_bak, _sw_ise_name) != 0) {
+        // If ISE is changed, active it.
         String uuid;
         for (unsigned int i = 0; i < _names.size (); i++) {
-            if (strcmp (_names[i].c_str (), _active_ise_name) == 0)
+            if (strcmp (_names[i].c_str (), _sw_ise_name) == 0)
                 uuid = _uuids[i];
         }
         isf_control_set_active_ise_by_uuid (uuid.c_str ());
 
-        snprintf (ise_bak, sizeof (ise_bak), "%s", _active_ise_name);
+        snprintf (_sw_ise_bak, sizeof (_sw_ise_bak), "%s", _sw_ise_name);
     }
 
-    update_isf_setting_main_view (ugd);
+    update_setting_main_view (ugd);
 
     ugd->key_end_cb = back_cb;
 }
 
 static void set_active_ise (int index)
 {
-    snprintf (_active_ise_name, sizeof (_active_ise_name), "%s", sw_iselist[index].c_str ());
+    snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", _sw_ise_list[index].c_str ());
 }
 
-static void _sw_radio_cb (void *data, Evas_Object *obj, void *event_info)
+static void sw_keyboard_radio_cb (void *data, Evas_Object *obj, void *event_info)
 {
     int index = GPOINTER_TO_INT(data);
-    elm_radio_value_set (sw_radio_grp, index);
+    elm_radio_value_set (_sw_radio_grp, index);
     set_active_ise (index);
 }
 
-static void lang_view_back_cb (void *data, Evas_Object *obj, void *event_info)
+static void hw_keyboard_radio_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    common_ugd->key_end_cb = sw_keyboard_selection_view_set_cb;
+    int index = GPOINTER_TO_INT(data);
+    elm_radio_value_set (_hw_radio_grp, index);
+    snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", _hw_ise_list[index].c_str ());
 }
 
-static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
+static void language_view_back_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    _common_ugd->key_end_cb = sw_keyboard_selection_view_set_cb;
+}
+
+static void show_language_cb (void *data, Evas_Object *obj, void *event_info)
 {
     int index = GPOINTER_TO_INT(data);
     String langlist_str, normal_langlist_str;
 
     for (unsigned int i = 0; i < _names.size (); i++) {
-       if (strcmp (_names[i].c_str (), sw_iselist[index].c_str()) == 0)
+       if (strcmp (_names[i].c_str (), _sw_ise_list[index].c_str()) == 0)
           langlist_str = _langs[i];
     }
     std::vector<String> langlist_vec,normal_langlist_vec;
@@ -342,7 +355,7 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
         normal_langlist_str += ((scim_get_language_name (langlist_vec[i].c_str ())).c_str ());
     }
 
-    Evas_Object* layout = elm_layout_add (common_ugd->naviframe);
+    Evas_Object* layout = elm_layout_add (_common_ugd->naviframe);
     elm_layout_file_set (layout, ISF_SETTING_EDJ, "isfsetting/languageview");
 
     Evas_Object *scroller = elm_scroller_add (layout);
@@ -359,264 +372,16 @@ static void show_lang_cb (void *data, Evas_Object *obj, void *event_info)
     elm_object_content_set (scroller, label);
     elm_object_part_content_set (layout, "content", scroller);
 
-    //Push the layout along with function buttons and title
-    Elm_Object_Item *it = elm_naviframe_item_push (common_ugd->naviframe, sw_iselist[index].c_str (), NULL, NULL, layout, NULL);
-
-    Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
-    evas_object_smart_callback_add (back_btn, "clicked", lang_view_back_cb, NULL);
-
-    common_ugd->key_end_cb = lang_view_back_cb;
-}
-
-static char *_gl_text_get (void *data, Evas_Object *obj, const char *part)
-{
-    int index = (int)data;
-    return strdup(p_items[index]->text);
-}
-
-static char *_gl_label_get (void *data, Evas_Object *obj, const char *part)
-{
-    ItemData *item_data = (ItemData *)data;
-    if (!strcmp (part, "elm.text")) {
-        return strdup (item_data->text);
-    }
-    if (!strcmp (part,"elm.text.1")) {
-        return strdup (item_data->text);
-    }
-    if (!strcmp (part , "elm.text.2")) {
-        return strdup (item_data->sub_text);
-    }
-    return NULL;
-}
-
-static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part)
-{
-    ItemData *item_data = (ItemData *)data;
-
-    if (!strcmp (part, "elm.icon")) {
-        Evas_Object *onoff_ck = elm_check_add (obj);
-        elm_object_style_set (onoff_ck, "on&off");
-        if (item_data->mode == AUTO_CAPITALIZATION_ITEM) {
-            elm_check_state_set (onoff_ck,f_auto_capitalisation);
-        }
-        else if (item_data->mode == AUTO_FULL_STOP_ITEM) {
-            elm_check_state_set (onoff_ck,f_auto_full_stop);
-        }
-        return onoff_ck;
-    }
-
-    return NULL;
-}
-
-static Eina_Bool _gl_state_get (void *data, Evas_Object *obj, const char *part)
-{
-    return EINA_FALSE;
-}
-
-static void _gl_del (void *data, Evas_Object *obj)
-{
-    return;
-}
-
-static void _gl_sw_ise_sel (void *data, Evas_Object *obj, void *event_info)
-{
-    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-    elm_genlist_item_selected_set (item, EINA_FALSE);
-
-    mark = (int) (data);
-    set_active_ise (mark);
-
-    elm_genlist_item_update (item);
-
-    return;
-}
-
-static void _gl_hw_ise_sel (void *data, Evas_Object *obj, void *event_info)
-{
-    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-    elm_genlist_item_selected_set (item, EINA_FALSE);
-
-    hw_mark = (int) (data);
-    snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", hw_iselist[hw_mark].c_str ());
-
-    elm_genlist_item_update (item);
-    return;
-}
-
-static void _gl_sel (void *data, Evas_Object *obj, void *event_info)
-{
-    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-    elm_genlist_item_selected_set (item, EINA_FALSE);
-
-    int id = (int)(data);
-
-    if (id == AUTO_CAPITALIZATION_ITEM) {
-        f_auto_capitalisation = (f_auto_capitalisation == EINA_TRUE ? EINA_FALSE : EINA_TRUE);
-        set_autocap_mode ();
-    } else if (id == AUTO_FULL_STOP_ITEM) {
-        f_auto_full_stop = (f_auto_full_stop == EINA_TRUE ? EINA_FALSE : EINA_TRUE);
-        set_auto_full_stop_mode ();
-    }
-
-    elm_genlist_item_update (item);
-    return;
-}
-
-static void _gl_keyboard_sel (void *data, Evas_Object *obj, void *event_info)
-{
-    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-    ug_data *ugd = (ug_data *)data;
-    if (item == ugd->sw_ise_item_tizen)
-        sw_keyboard_selection_view_tizen (ugd);
-    if (item == ugd->hw_ise_item_tizen)
-        hw_keyboard_selection_view_tizen (ugd);
-    elm_genlist_item_selected_set (item, EINA_FALSE);
-    return;
-}
-
-static void _gl_ise_option_sel (void *data, Evas_Object *obj, void *event_info)
-{
-    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-    ug_data *ugd = (ug_data *)data;
-    const char *isename = NULL;
-    if (item == ugd->sw_ise_opt_item_tizen)
-        isename = _active_ise_name;
-    else
-        isename = _active_hw_ise_name;
-    show_ise_option_module (ugd, isename);
-    elm_genlist_item_selected_set (item, EINA_FALSE);
-}
-
-static char *_gl_exp_sw_label_get (void *data, Evas_Object *obj, const char *part)
-{
-    int index = (int)(data);
-    if (!strcmp (part, "elm.text")) {
-        return strdup (sw_iselist[index].c_str ());
-    }
-    return NULL;
-}
-
-static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const char *part)
-{
-    int index = (int)(data);
-    if (!strcmp (part, "elm.icon.1")) {
-        Evas_Object *radio  = elm_radio_add (obj);
-        elm_radio_state_value_set (radio, index);
-        if (sw_radio_grp == NULL)
-            sw_radio_grp = elm_radio_add (obj);
-        elm_radio_group_add (radio, sw_radio_grp);
-        evas_object_show (radio);
-        evas_object_smart_callback_add (radio, "changed", _sw_radio_cb, (void *) (index));
-        if (mark == index) {
-            elm_radio_value_set (sw_radio_grp, mark);
-        }
-        return radio;
-    }
-    if (!strcmp (part, "elm.icon.2")) {
-        Evas_Object *icon = elm_button_add (obj);
-        elm_object_style_set (icon, "reveal");
-        evas_object_smart_callback_add (icon, "clicked", show_lang_cb, (void *)(index));
-        evas_object_propagate_events_set (icon, EINA_FALSE); // Not propagate to genlist item.
-        return icon;
-    }
-    return NULL;
-}
-
-static char *_gl_exp_hw_label_get (void *data, Evas_Object *obj, const char *part)
-{
-    int index = (int)(data);
-    if (!strcmp (part, "elm.text")) {
-        return strdup (hw_iselist[index].c_str ());
-    }
-    return NULL;
-}
-
-static Evas_Object *_gl_exp_hw_icon_get (void *data, Evas_Object *obj, const char *part)
-{
-    if (!strcmp (part, "elm.icon")) {
-        int index = (int)(data);
-        Evas_Object *radio = elm_radio_add (obj);
-        elm_radio_state_value_set (radio, index);
-        if (hw_radio_grp == NULL)
-            hw_radio_grp = elm_radio_add (obj);
-        elm_radio_group_add (radio, hw_radio_grp);
-        evas_object_show (radio);
-        evas_object_smart_callback_add (radio, "changed", _hw_radio_cb, (void *) (index));
-        if (hw_mark == index) {
-            elm_radio_value_set (hw_radio_grp, hw_mark);
-        }
-        return radio;
-    }
-    return NULL;
-}
-
-static void sw_keyboard_selection_view_tizen (ug_data * ugd)
-{
-    ugd->key_end_cb = sw_keyboard_selection_view_back_cb;
-
-    if (sw_radio_grp != NULL) {
-        evas_object_del (sw_radio_grp);
-        sw_radio_grp = NULL;
-    }
-
-    Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
-    elm_object_style_set (genlist, "dialogue");
-    evas_object_show (genlist);
-
     // Push the layout along with function buttons and title
-    Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, _T("Keyboard selection"), NULL, NULL, genlist, NULL);
+    Elm_Object_Item *it = elm_naviframe_item_push (_common_ugd->naviframe, _sw_ise_list[index].c_str (), NULL, NULL, layout, NULL);
 
     Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
-    evas_object_smart_callback_add (back_btn, "clicked", sw_keyboard_selection_view_set_cb, ugd);
+    evas_object_smart_callback_add (back_btn, "clicked", language_view_back_cb, NULL);
 
-    unsigned int i = 0;
-
-    sw_iselist.clear ();
-    std::vector<String> all_langs, uuid_list;
-    isf_get_all_languages (all_langs);
-    isf_get_helper_ises_in_languages (all_langs, uuid_list, sw_iselist);
-    std::sort (sw_iselist.begin (), sw_iselist.end ());
-
-    if (sw_iselist.size () > 0) {
-        // Set item class for dialogue group seperator
-        itcSeparator.item_style       = "dialogue/separator/21/with_line";
-        itcSeparator.func.text_get    = NULL;
-        itcSeparator.func.content_get = NULL;
-        itcSeparator.func.state_get   = NULL;
-        itcSeparator.func.del         = NULL;
-
-        //separator
-        Elm_Object_Item *item;
-        item = elm_genlist_item_append (
-                    genlist,                // genlist object
-                    &itcSeparator,          // item class
-                    NULL,                   // data
-                    NULL,
-                    ELM_GENLIST_ITEM_NONE,
-                    NULL,
-                    NULL);
-        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-    }
-
-    for (i = 0; i < sw_iselist.size (); i++) {
-        if (strcmp (_active_ise_name, sw_iselist[i].c_str ()) == 0) {
-            mark = i;
-            break;
-        }
-    }
-
-    // Set item class for text + radio button
-    itc4.item_style       = "dialogue/1text.2icon.2";
-    itc4.func.text_get    = _gl_exp_sw_label_get;
-    itc4.func.content_get = _gl_exp_sw_icon_get;
-    itc4.func.state_get   = _gl_state_get;
-    itc4.func.del         = _gl_del;
-    for (i = 0; i < sw_iselist.size (); i++) {
-        elm_genlist_item_append (genlist, &itc4, (void *)(i), NULL, ELM_GENLIST_ITEM_NONE, _gl_sw_ise_sel, (void *)(i));
-    }
+    _common_ugd->key_end_cb = language_view_back_cb;
 }
 
-static void helper_ise_reload (void)
+static void helper_ise_reload_config (void)
 {
     String display_name = String (":13");
     const char *p = getenv ("DISPLAY");
@@ -633,7 +398,6 @@ static void helper_ise_reload (void)
     }
 }
 
-// For naviframe l_btn
 static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_info)
 {
     if (!data)
@@ -641,19 +405,19 @@ static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_in
 
     struct ug_data *ugd = (struct ug_data *)data;
     ugd->key_end_cb = back_cb;
-    mdl->save_config (_config);
+    _mdl->save_config (_config);
     _config->reload ();
 
-    helper_ise_reload ();
+    helper_ise_reload_config ();
 }
 
-static void show_ise_option_module (ug_data *ugd, const char *isename)
+static void ise_option_show (ug_data *ugd, const char *ise_name)
 {
-    if (check_if_ise_option_exist (isename)) {
+    if (find_ise_option_module (ise_name)) {
         char title[256];
         snprintf (title, sizeof (title), _T("Keyboard settings"));
-        mdl->load_config (_config);
-        ugd->opt_eo = mdl->create_ui (ugd->layout_main, ugd->naviframe);
+        _mdl->load_config (_config);
+        ugd->opt_eo = _mdl->create_ui (ugd->layout_main, ugd->naviframe);
 
         Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, title, NULL, NULL, ugd->opt_eo, NULL);
 
@@ -663,13 +427,254 @@ static void show_ise_option_module (ug_data *ugd, const char *isename)
     }
 }
 
+static char *_gl_text_get (void *data, Evas_Object *obj, const char *part)
+{
+    int index = (int)data;
+    return strdup (_p_items[index]->text);
+}
+
+static char *_gl_label_get (void *data, Evas_Object *obj, const char *part)
+{
+    ItemData *item_data = (ItemData *)data;
+    if (!strcmp (part, "elm.text")) {
+        return strdup (item_data->text);
+    }
+    if (!strcmp (part, "elm.text.1")) {
+        return strdup (item_data->text);
+    }
+    if (!strcmp (part, "elm.text.2")) {
+        return strdup (item_data->sub_text);
+    }
+    return NULL;
+}
+
+static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part)
+{
+    ItemData *item_data = (ItemData *)data;
+
+    if (!strcmp (part, "elm.icon")) {
+        Evas_Object *onoff_ck = elm_check_add (obj);
+        elm_object_style_set (onoff_ck, "on&off");
+        if (item_data->mode == AUTO_CAPITALIZATION_ITEM) {
+            elm_check_state_set (onoff_ck, _auto_capitalisation);
+        } else if (item_data->mode == AUTO_FULL_STOP_ITEM) {
+            elm_check_state_set (onoff_ck, _auto_full_stop);
+        }
+        return onoff_ck;
+    }
+
+    return NULL;
+}
+
+static Eina_Bool _gl_state_get (void *data, Evas_Object *obj, const char *part)
+{
+    return EINA_FALSE;
+}
+
+static void _gl_del (void *data, Evas_Object *obj)
+{
+}
+
+static void _gl_sw_ise_sel (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    elm_genlist_item_selected_set (item, EINA_FALSE);
+
+    _sw_ise_index = (int)(data);
+    set_active_ise (_sw_ise_index);
+
+    elm_genlist_item_update (item);
+}
+
+static void _gl_hw_ise_sel (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    elm_genlist_item_selected_set (item, EINA_FALSE);
+
+    _hw_ise_index = (int)(data);
+    snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", _hw_ise_list[_hw_ise_index].c_str ());
+
+    elm_genlist_item_update (item);
+}
+
+static void _gl_sel (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    elm_genlist_item_selected_set (item, EINA_FALSE);
+
+    int id = (int)(data);
+
+    if (id == AUTO_CAPITALIZATION_ITEM) {
+        _auto_capitalisation = (_auto_capitalisation == EINA_TRUE ? EINA_FALSE : EINA_TRUE);
+        set_autocap_mode ();
+    } else if (id == AUTO_FULL_STOP_ITEM) {
+        _auto_full_stop = (_auto_full_stop == EINA_TRUE ? EINA_FALSE : EINA_TRUE);
+        set_auto_full_stop_mode ();
+    }
+
+    elm_genlist_item_update (item);
+}
+
+static void _gl_keyboard_sel (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    ug_data *ugd = (ug_data *)data;
+    if (item == ugd->sw_ise_item_tizen)
+        create_sw_keyboard_selection_view (ugd);
+    if (item == ugd->hw_ise_item_tizen)
+        create_hw_keyboard_selection_view (ugd);
+    elm_genlist_item_selected_set (item, EINA_FALSE);
+}
+
+static void _gl_ise_option_sel (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+    ug_data *ugd = (ug_data *)data;
+    const char *ise_name = NULL;
+    if (item == ugd->sw_ise_opt_item_tizen)
+        ise_name = _sw_ise_name;
+    else
+        ise_name = _hw_ise_name;
+    ise_option_show (ugd, ise_name);
+    elm_genlist_item_selected_set (item, EINA_FALSE);
+}
+
+static char *_gl_exp_sw_label_get (void *data, Evas_Object *obj, const char *part)
+{
+    int index = (int)(data);
+    if (!strcmp (part, "elm.text")) {
+        return strdup (_sw_ise_list[index].c_str ());
+    }
+    return NULL;
+}
+
+static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const char *part)
+{
+    int index = (int)(data);
+    if (!strcmp (part, "elm.icon.1")) {
+        Evas_Object *radio = elm_radio_add (obj);
+        elm_radio_state_value_set (radio, index);
+        if (_sw_radio_grp == NULL)
+            _sw_radio_grp = elm_radio_add (obj);
+        elm_radio_group_add (radio, _sw_radio_grp);
+        evas_object_show (radio);
+        evas_object_smart_callback_add (radio, "changed", sw_keyboard_radio_cb, (void *) (index));
+        if (_sw_ise_index == index) {
+            elm_radio_value_set (_sw_radio_grp, _sw_ise_index);
+        }
+        return radio;
+    }
+    if (!strcmp (part, "elm.icon.2")) {
+        Evas_Object *icon = elm_button_add (obj);
+        elm_object_style_set (icon, "reveal");
+        evas_object_smart_callback_add (icon, "clicked", show_language_cb, (void *)(index));
+        evas_object_propagate_events_set (icon, EINA_FALSE); // Not propagate to genlist item.
+        return icon;
+    }
+    return NULL;
+}
+
+static char *_gl_exp_hw_label_get (void *data, Evas_Object *obj, const char *part)
+{
+    int index = (int)(data);
+    if (!strcmp (part, "elm.text")) {
+        return strdup (_hw_ise_list[index].c_str ());
+    }
+    return NULL;
+}
+
+static Evas_Object *_gl_exp_hw_icon_get (void *data, Evas_Object *obj, const char *part)
+{
+    if (!strcmp (part, "elm.icon")) {
+        int index = (int)(data);
+        Evas_Object *radio = elm_radio_add (obj);
+        elm_radio_state_value_set (radio, index);
+        if (_hw_radio_grp == NULL)
+            _hw_radio_grp = elm_radio_add (obj);
+        elm_radio_group_add (radio, _hw_radio_grp);
+        evas_object_show (radio);
+        evas_object_smart_callback_add (radio, "changed", hw_keyboard_radio_cb, (void *) (index));
+        if (_hw_ise_index == index) {
+            elm_radio_value_set (_hw_radio_grp, _hw_ise_index);
+        }
+        return radio;
+    }
+    return NULL;
+}
+
+static void create_sw_keyboard_selection_view (ug_data *ugd)
+{
+    ugd->key_end_cb = sw_keyboard_selection_view_back_cb;
+
+    if (_sw_radio_grp != NULL) {
+        evas_object_del (_sw_radio_grp);
+        _sw_radio_grp = NULL;
+    }
+
+    Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
+    elm_object_style_set (genlist, "dialogue");
+    evas_object_show (genlist);
+
+    // Push the layout along with function buttons and title
+    Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, _T("Keyboard selection"), NULL, NULL, genlist, NULL);
+
+    Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
+    evas_object_smart_callback_add (back_btn, "clicked", sw_keyboard_selection_view_set_cb, ugd);
+
+    unsigned int i = 0;
+
+    _sw_ise_list.clear ();
+    std::vector<String> all_langs, uuid_list;
+    isf_get_all_languages (all_langs);
+    isf_get_helper_ises_in_languages (all_langs, uuid_list, _sw_ise_list);
+    std::sort (_sw_ise_list.begin (), _sw_ise_list.end ());
+
+    if (_sw_ise_list.size () > 0) {
+        // Set item class for dialogue group seperator
+        itcSeparator.item_style       = "dialogue/separator/21/with_line";
+        itcSeparator.func.text_get    = NULL;
+        itcSeparator.func.content_get = NULL;
+        itcSeparator.func.state_get   = NULL;
+        itcSeparator.func.del         = NULL;
+
+        // Separator
+        Elm_Object_Item *item;
+        item = elm_genlist_item_append (
+                    genlist,                // genlist object
+                    &itcSeparator,          // item class
+                    NULL,                   // data
+                    NULL,
+                    ELM_GENLIST_ITEM_NONE,
+                    NULL,
+                    NULL);
+        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+    }
+
+    for (i = 0; i < _sw_ise_list.size (); i++) {
+        if (strcmp (_sw_ise_name, _sw_ise_list[i].c_str ()) == 0) {
+            _sw_ise_index = i;
+            break;
+        }
+    }
+
+    // Set item class for text + radio button
+    itc4.item_style       = "dialogue/1text.2icon.2";
+    itc4.func.text_get    = _gl_exp_sw_label_get;
+    itc4.func.content_get = _gl_exp_sw_icon_get;
+    itc4.func.state_get   = _gl_state_get;
+    itc4.func.del         = _gl_del;
+    for (i = 0; i < _sw_ise_list.size (); i++) {
+        elm_genlist_item_append (genlist, &itc4, (void *)(i), NULL, ELM_GENLIST_ITEM_NONE, _gl_sw_ise_sel, (void *)(i));
+    }
+}
+
 static void hw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, void *event_info)
 {
     if (!data)
         return;
 
     struct ug_data *ugd = (struct ug_data *)data;
-    snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", hw_ise_bak);
+    snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", _hw_ise_bak);
     ugd->key_end_cb = back_cb;
 }
 
@@ -679,38 +684,30 @@ static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
         return;
 
     struct ug_data *ugd = (struct ug_data *)data;
-    if (strcmp (hw_ise_bak, _active_hw_ise_name) != 0) {
-        // If _active_ise_name is changed, active _active_ise_name.
-        // Find the uuid of the active
+    if (strcmp (_hw_ise_bak, _hw_ise_name) != 0) {
+        // If ISE is changed, active it.
         String uuid;
         for (unsigned int i = 0; i < _names.size (); i++) {
-            if (strcmp (_names[i].c_str (), _active_hw_ise_name) == 0)
+            if (strcmp (_names[i].c_str (), _hw_ise_name) == 0)
                 uuid = _uuids[i];
         }
         isf_control_set_active_ise_by_uuid (uuid.c_str ());
-        //printf ("    Set keyboard ISE: %s\n", _active_hw_ise_name);
-        snprintf (hw_ise_bak, sizeof (hw_ise_bak), "%s", _active_hw_ise_name);
+        //printf ("    Set keyboard ISE: %s\n", _hw_ise_name);
+        snprintf (_hw_ise_bak, sizeof (_hw_ise_bak), "%s", _hw_ise_name);
     }
 
-    update_isf_setting_main_view (ugd);
+    update_setting_main_view (ugd);
 
     ugd->key_end_cb = back_cb;
 }
 
-static void _hw_radio_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    int index = GPOINTER_TO_INT(data);
-    elm_radio_value_set (hw_radio_grp, index);
-    snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", hw_iselist[index].c_str ());
-}
-
-static void hw_keyboard_selection_view_tizen (ug_data * ugd)
+static void create_hw_keyboard_selection_view (ug_data * ugd)
 {
     ugd->key_end_cb = hw_keyboard_selection_view_back_cb;
 
-    if (hw_radio_grp != NULL) {
-        evas_object_del (hw_radio_grp);
-        hw_radio_grp = NULL;
+    if (_hw_radio_grp != NULL) {
+        evas_object_del (_hw_radio_grp);
+        _hw_radio_grp = NULL;
     }
 
     Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
@@ -725,12 +722,12 @@ static void hw_keyboard_selection_view_tizen (ug_data * ugd)
 
     unsigned int i = 0;
 
-    hw_iselist.clear ();
+    _hw_ise_list.clear ();
     std::vector<String> all_langs, uuid_list;
     isf_get_all_languages (all_langs);
-    isf_get_keyboard_ises_in_languages (all_langs, uuid_list, hw_iselist);
+    isf_get_keyboard_ises_in_languages (all_langs, uuid_list, _hw_ise_list);
 
-    if (hw_iselist.size () > 0) {
+    if (_hw_ise_list.size () > 0) {
         // Set item class for dialogue group seperator
         itcSeparator.item_style       = "dialogue/separator/21/with_line";
         itcSeparator.func.text_get    = NULL;
@@ -738,7 +735,7 @@ static void hw_keyboard_selection_view_tizen (ug_data * ugd)
         itcSeparator.func.state_get   = NULL;
         itcSeparator.func.del         = NULL;
 
-        //separator
+        // Separator
         Elm_Object_Item *item;
         item = elm_genlist_item_append (
                     genlist,                // genlist object
@@ -751,11 +748,11 @@ static void hw_keyboard_selection_view_tizen (ug_data * ugd)
         elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
     }
 
-    std::sort (hw_iselist.begin (), hw_iselist.end ());
+    std::sort (_hw_ise_list.begin (), _hw_ise_list.end ());
 
-    for (i = 0; i < hw_iselist.size (); i++) {
-        if (strcmp (_active_hw_ise_name, hw_iselist[i].c_str ()) == 0) {
-            hw_mark = i;
+    for (i = 0; i < _hw_ise_list.size (); i++) {
+        if (strcmp (_hw_ise_name, _hw_ise_list[i].c_str ()) == 0) {
+            _hw_ise_index = i;
             break;
         }
     }
@@ -766,18 +763,18 @@ static void hw_keyboard_selection_view_tizen (ug_data * ugd)
     itc5.func.content_get = _gl_exp_hw_icon_get;
     itc5.func.state_get   = _gl_state_get;
     itc5.func.del         = _gl_del;
-    for (i = 0; i < hw_iselist.size (); i++) {
+    for (i = 0; i < _hw_ise_list.size (); i++) {
         elm_genlist_item_append (genlist, &itc5, (void *)(i), NULL, ELM_GENLIST_ITEM_NONE, _gl_hw_ise_sel, (void *)(i));
     }
 }
 
-static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
+static Evas_Object *create_setting_main_view (ug_data *ugd)
 {
     Elm_Object_Item *item     = NULL;
     Eina_Bool        fullstop = EINA_FALSE;
 
     if (ugd->naviframe == NULL) {
-        ugd->naviframe = _create_naviframe_layout (ugd->layout_main);
+        ugd->naviframe  = create_naviframe_layout (ugd->layout_main);
         ugd->key_end_cb = back_cb;
 
         Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
@@ -842,7 +839,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
+            _p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
             item_data->text = strdup(_T("Auto capitalization"));
             item_data->mode = AUTO_CAPITALIZATION_ITEM;
             ugd->autocapital_item = elm_genlist_item_append (
@@ -854,7 +851,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_sel,
                     (void *)(item_data->mode));
 
-            if (is_hw_connected)
+            if (_hw_kbd_connected)
                 elm_object_item_disabled_set (ugd->autocapital_item, EINA_TRUE);
         }
 
@@ -862,7 +859,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[AUTO_CAPITALIZATION_TXT_ITEM] = item_data;
+            _p_items[AUTO_CAPITALIZATION_TXT_ITEM] = item_data;
             item_data->text = strdup (_T("Automatically capitalize first letter of sentence"));
             elm_genlist_item_append (
                     genlist,                                // genlist object
@@ -895,7 +892,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
             item_data = (ItemData *)malloc (sizeof (ItemData));
             if (item_data != NULL) {
                 memset (item_data, 0, sizeof (ItemData));
-                p_items[AUTO_FULL_STOP_ITEM] = item_data;
+                _p_items[AUTO_FULL_STOP_ITEM] = item_data;
                 item_data->text = strdup (_T("Automatic full stop"));
                 item_data->mode = AUTO_FULL_STOP_ITEM;
                 elm_genlist_item_append (
@@ -912,8 +909,8 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
             item_data = (ItemData *)malloc (sizeof (ItemData));
             if (item_data != NULL) {
                 memset (item_data, 0, sizeof (ItemData));
-                p_items[AUTO_FULL_STOP_TXT_ITEM] = item_data;
-                item_data->text = strdup(_T("Automatically insert a full stop by tapping the space bar twice"));
+                _p_items[AUTO_FULL_STOP_TXT_ITEM] = item_data;
+                item_data->text = strdup (_T("Automatically insert a full stop by tapping the space bar twice"));
                 elm_genlist_item_append (
                         genlist,                            // genlist object
                         &itcText,                           // item class
@@ -930,7 +927,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[SW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
+            _p_items[SW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
             item_data->text = strdup (_T("Software keyboard"));
             item = elm_genlist_item_append (
                     genlist,                // genlist object
@@ -946,16 +943,16 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         // Group2 item1
         std::vector<String> ise_names;
 
-        String tmpStr = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String("b70bf6cc-ff77-47dc-a137-60acc32d1e0c"));
-        snprintf (_active_ise_name, sizeof (_active_ise_name), "%s", (uuid_to_name (tmpStr)).c_str ());
-        snprintf (ise_bak, sizeof (ise_bak), "%s", _active_ise_name);
+        String ise_uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+        snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", (uuid_to_name (ise_uuid)).c_str ());
+        snprintf (_sw_ise_bak, sizeof (_sw_ise_bak), "%s", _sw_ise_name);
 
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
+            _p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard selection"));
-            item_data->sub_text = strdup (_active_ise_name);
+            item_data->sub_text = strdup (_sw_ise_name);
 
             ugd->sw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
@@ -966,7 +963,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_keyboard_sel,
                     (void *)ugd);
 
-            if (is_hw_connected)
+            if (_hw_kbd_connected)
                 elm_object_item_disabled_set (ugd->sw_ise_item_tizen, EINA_TRUE);
         }
 
@@ -974,7 +971,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[SW_ISE_OPTION_ITEM] = item_data;
+            _p_items[SW_ISE_OPTION_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard settings"));
             item_data->mode = SW_ISE_OPTION_ITEM;
             ugd->sw_ise_opt_item_tizen = elm_genlist_item_append (
@@ -986,7 +983,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_ise_option_sel,
                     (void *)ugd);
 
-            if (is_hw_connected || !check_if_ise_option_exist ((const char *)_active_ise_name))
+            if (_hw_kbd_connected || !find_ise_option_module ((const char *)_sw_ise_name))
                 elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
         }
 
@@ -994,7 +991,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[HW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
+            _p_items[HW_KEYBOARD_GROUP_TITLE_ITEM] = item_data;
             item_data->text = strdup (_T("Hardware keyboard"));
             item = elm_genlist_item_append (
                     genlist,                // genlist object
@@ -1011,23 +1008,23 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
         uint32 option = 0;
         String uuid, name;
         isf_get_keyboard_ise (_config, uuid, name, option);
-        snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", name.c_str ());
-        snprintf (hw_ise_bak, sizeof (hw_ise_bak), "%s", _active_hw_ise_name);
+        snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", name.c_str ());
+        snprintf (_hw_ise_bak, sizeof (_hw_ise_bak), "%s", _hw_ise_name);
 
         if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
-            std::cerr << "    Keyboard ISE (" << _active_hw_ise_name << ") can not support hardware keyboard!!!\n";
+            std::cerr << "    Keyboard ISE (" << _hw_ise_name << ") can not support hardware keyboard!!!\n";
 
             uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
             isf_get_keyboard_ise (_config, uuid, name, option);
-            snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", name.c_str ());
+            snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", name.c_str ());
         }
 
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
+            _p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text     = strdup (_T("Keyboard selection"));
-            item_data->sub_text = strdup (_active_hw_ise_name);
+            item_data->sub_text = strdup (_hw_ise_name);
             ugd->hw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc2,                  // item class
@@ -1037,14 +1034,14 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_keyboard_sel,
                     (void *)ugd);
 
-            if (!is_hw_connected)
+            if (!_hw_kbd_connected)
                 elm_object_item_disabled_set (ugd->hw_ise_item_tizen,EINA_TRUE);
         }
         // Group3 item2
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
-            p_items[HW_ISE_OPTION_ITEM] = item_data;
+            _p_items[HW_ISE_OPTION_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard settings"));
             item_data->mode = HW_ISE_OPTION_ITEM;
             ugd->hw_ise_opt_item_tizen = elm_genlist_item_append (
@@ -1056,7 +1053,7 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
                     _gl_ise_option_sel,
                     (void *)ugd);
 
-            if (!is_hw_connected || !check_if_ise_option_exist ((const char *)_active_hw_ise_name))
+            if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
                elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
         }
 
@@ -1081,13 +1078,13 @@ static Evas_Object *isf_setting_main_view_tizen (ug_data *ugd)
     return ugd->naviframe;
 }
 
-static void sync_ise_list (void)
+static void update_ise_list (void)
 {
-    // Request ISF to update ISE list, below codes are very important, dont remove
+    // Request ISF to update ISE list, below codes are very important, donot remove
     char **iselist = NULL;
     int count = isf_control_get_ise_list (&iselist);
-    int i;
-    for (i = 0; i < count; i++) {
+
+    for (int i = 0; i < count; i++) {
         SCIM_DEBUG_MAIN (3) << " [" << i << " : " << iselist[i] << "] \n";
         delete [] (iselist[i]);
     }
@@ -1102,9 +1099,9 @@ static void load_config_data (ConfigPointer config)
     vconf_get_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, &tmp_cap);
     vconf_get_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, &tmp_period);
     if (tmp_cap == true)
-        f_auto_capitalisation = EINA_TRUE;
+        _auto_capitalisation = EINA_TRUE;
     if (tmp_period == true)
-        f_auto_full_stop = EINA_TRUE;
+        _auto_full_stop = EINA_TRUE;
 }
 
 ConfigPointer isf_imf_context_get_config (void);
@@ -1123,50 +1120,49 @@ static void load_config_module (void)
 
 static void hw_connection_change_cb (ug_data *ugd)
 {
-    //enable / disable switch
+    // enable/disable switch
     elm_object_item_disabled_set (ugd->autocapital_item, !elm_object_item_disabled_get (ugd->autocapital_item));
     elm_object_item_disabled_set (ugd->sw_ise_item_tizen, !elm_object_item_disabled_get (ugd->sw_ise_item_tizen));
     elm_object_item_disabled_set (ugd->hw_ise_item_tizen, !elm_object_item_disabled_get (ugd->hw_ise_item_tizen));
-    if (is_hw_connected || !check_if_ise_option_exist ((const char *)_active_ise_name))
+    if (_hw_kbd_connected || !find_ise_option_module ((const char *)_sw_ise_name))
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_FALSE);
 
-    if (!is_hw_connected || !check_if_ise_option_exist ((const char *)_active_hw_ise_name))
+    if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
 
-    if (!is_hw_connected) {
+    if (!_hw_kbd_connected) {
         String uuid;
         for (unsigned int i = 0; i < _names.size (); i++) {
-            if (strcmp (_names[i].c_str (), _active_ise_name) == 0)
+            if (strcmp (_names[i].c_str (), _sw_ise_name) == 0)
                 uuid = _uuids[i];
         }
-        isf_control_set_active_ise_by_uuid (uuid.c_str());
+        isf_control_set_active_ise_by_uuid (uuid.c_str ());
     }
 }
 
-static Eina_Bool
-_prop_change (void *data, int ev_type, void *ev)
+static Eina_Bool x_window_property_change_cb (void *data, int ev_type, void *ev)
 {
     Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
     unsigned int val = 0;
 
-    if (event->win != _rootwin || event->atom != prop_x_ext_keyboard_exist)
+    if (event->win != _root_win || event->atom != _prop_x_ext_keyboard_exist)
         return ECORE_CALLBACK_PASS_ON;
 
-    if (!ecore_x_window_prop_card32_get (event->win, prop_x_ext_keyboard_exist, &val, 1) > 0)
+    if (!ecore_x_window_prop_card32_get (event->win, _prop_x_ext_keyboard_exist, &val, 1) > 0)
         return ECORE_CALLBACK_PASS_ON;
 
     if (val != 0)
-        is_hw_connected = true;
+        _hw_kbd_connected = true;
     else
-        is_hw_connected = false;
+        _hw_kbd_connected = false;
 
     ug_data *ugd = (ug_data *)data;
     hw_connection_change_cb (ugd);
-    hw_kbd_num = val;
+    _hw_kbd_num = val;
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -1176,24 +1172,23 @@ static void init_hw_keyboard_listener (ug_data *ugd)
     if (_prop_change_handler)
         return;
 
-    _rootwin = ecore_x_window_root_first_get ();
-    ecore_x_event_mask_set (_rootwin, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+    _root_win = ecore_x_window_root_first_get ();
+    ecore_x_event_mask_set (_root_win, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 
-    _prop_change_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, (void *)ugd);
+    _prop_change_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, x_window_property_change_cb, (void *)ugd);
 
-    if (!prop_x_ext_keyboard_exist)
-        prop_x_ext_keyboard_exist = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST);
+    if (!_prop_x_ext_keyboard_exist)
+        _prop_x_ext_keyboard_exist = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST);
 
-    if (!ecore_x_window_prop_card32_get (_rootwin, prop_x_ext_keyboard_exist, &hw_kbd_num, 1)) {
-        std::cerr << "Error! cannot get hw_kbd_num\n";
+    if (!ecore_x_window_prop_card32_get (_root_win, _prop_x_ext_keyboard_exist, &_hw_kbd_num, 1)) {
+        std::cerr << "ecore_x_window_prop_card32_get () is failed!!!\n";
         return;
     }
 
-    if (hw_kbd_num == 0)
-        is_hw_connected = false;
+    if (_hw_kbd_num == 0)
+        _hw_kbd_connected = false;
     else
-        is_hw_connected = true;
-    return;
+        _hw_kbd_connected = true;
 }
 
 static void reload_config_cb (const ConfigPointer &config)
@@ -1201,8 +1196,8 @@ static void reload_config_cb (const ConfigPointer &config)
     uint32 option = 0;
     String uuid, name;
     isf_get_keyboard_ise (_config, uuid, name, option);
-    snprintf (_active_hw_ise_name, sizeof (_active_hw_ise_name), "%s", name.c_str ());
-    update_isf_setting_main_view (common_ugd);
+    snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", name.c_str ());
+    update_setting_main_view (_common_ugd);
     //std::cout << "    " << __func__ << " (keyboard ISE : " << name << ")\n";
 }
 
@@ -1221,18 +1216,16 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
     if (parent == NULL)
         return NULL;
 
-    if (imf_context == NULL) {
+    if (_imf_context == NULL) {
         const char *ctx_id = ecore_imf_context_default_id_get ();
         if (ctx_id) {
-            imf_context = ecore_imf_context_add (ctx_id);
+            _imf_context = ecore_imf_context_add (ctx_id);
         }
     }
 
     load_config_module ();
-
-    //only helper ISEs will be needed in isfsetting according to phone requirement.
     load_config_data (_config);
-    sync_ise_list ();
+    update_ise_list ();
     isf_load_ise_information (ALL_ISE, _config);
     init_hw_keyboard_listener (ugd);
 
@@ -1240,14 +1233,14 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
 
     //-------------------------- ise infomation ----------------------------
 
-    //construct the UI part of the isfsetting module
+    // Create keyboard setting UI
     if (mode == UG_MODE_FULLVIEW)
         ugd->layout_main = create_fullview (parent, ugd);
     else
         ugd->layout_main = create_frameview (parent, ugd);
 
     if (ugd->layout_main != NULL) {
-        content = isf_setting_main_view_tizen(ugd);
+        content = create_setting_main_view (ugd);
         elm_object_part_content_set (ugd->layout_main, "elm.swallow.content", content);
     }
     return (void *)ugd->layout_main;
@@ -1269,12 +1262,12 @@ static void on_resume (ui_gadget_h ug, service_h s, void *priv)
 
 static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
 {
-    if (ug == NULL|| priv == NULL)
+    if (ug == NULL || priv == NULL)
         return;
 
-    if (imf_context != NULL) {
-        ecore_imf_context_del(imf_context);
-        imf_context = NULL;
+    if (_imf_context != NULL) {
+        ecore_imf_context_del (_imf_context);
+        _imf_context = NULL;
     }
 
     struct ug_data *ugd = (struct ug_data *) priv;
@@ -1290,13 +1283,13 @@ static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
     }
 
     if (ugd->opt_eo != NULL) {
-        evas_object_del(ugd->opt_eo);
+        evas_object_del (ugd->opt_eo);
         ugd->opt_eo = NULL;
     }
 
-    if (mdl) {
-        delete mdl;
-        mdl = NULL;
+    if (_mdl) {
+        delete _mdl;
+        _mdl = NULL;
     }
 
     if (!_config.null ()) {
@@ -1305,17 +1298,17 @@ static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
     }
 
     for (int i = 0; i < ITEM_TOTAL_COUNT; i++) {
-        if (p_items[i]!= NULL) {
-            if (p_items[i]->text) {
-                free (p_items[i]->text);
-                p_items[i]->text = NULL;
+        if (_p_items[i] != NULL) {
+            if (_p_items[i]->text) {
+                free (_p_items[i]->text);
+                _p_items[i]->text = NULL;
             }
-            if (p_items[i]->sub_text) {
-                free (p_items[i]->sub_text);
-                p_items[i]->sub_text = NULL;
+            if (_p_items[i]->sub_text) {
+                free (_p_items[i]->sub_text);
+                _p_items[i]->sub_text = NULL;
             }
-            free (p_items[i]);
-            p_items[i] = NULL;
+            free (_p_items[i]);
+            _p_items[i] = NULL;
         }
     }
 
@@ -1356,7 +1349,7 @@ static void on_event (ui_gadget_h ug, enum ug_event event, service_h s, void *pr
 static void on_key_event (ui_gadget_h ug, enum ug_key_event event, service_h s, void *priv)
 {
     if (ug == NULL || priv == NULL)
-        return ;
+        return;
 
     struct ug_data *ugd = (struct ug_data *)priv;
     Elm_Object_Item *top_it;
@@ -1364,9 +1357,9 @@ static void on_key_event (ui_gadget_h ug, enum ug_key_event event, service_h s, 
     switch (event) {
         case UG_KEY_EVENT_END:
             top_it = elm_naviframe_top_item_get (ugd->naviframe);
-            // ise option maybe multiple layouts
+            // ISE option maybe multiple layouts
             if (top_it && (elm_object_item_content_get (top_it) != ugd->opt_eo) && (ugd->key_end_cb == ise_option_view_set_cb))
-                mdl->key_proceeding (TYPE_KEY_END);
+                _mdl->key_proceeding (TYPE_KEY_END);
             else
                 ugd->key_end_cb (priv, NULL, NULL);
 
@@ -1389,7 +1382,7 @@ extern "C"
         if (ugd == NULL)
             return -1;
 
-        common_ugd = ugd;
+        _common_ugd  = ugd;
         ops->create  = on_create;
         ops->start   = on_start;
         ops->pause   = on_pause;
@@ -1428,8 +1421,8 @@ extern "C"
 
         String uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         TOOLBAR_MODE_T type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), 0);
-        ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &hw_kbd_num, 1);
-        if (hw_kbd_num != 0) {
+        ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &_hw_kbd_num, 1);
+        if (_hw_kbd_num != 0) {
             if (type != TOOLBAR_KEYBOARD_MODE) {
                 _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
                 _config->flush ();
@@ -1445,21 +1438,21 @@ extern "C"
             else
                 mdl_name = _module_names[i] + String ("-setup");
 
-            mdl = new SetupModule (mdl_name);
-            if (mdl != NULL && mdl->valid ()) {
-                if (mdl->option_reset (_config) == false)
+            SetupModule *setup_module = new SetupModule (mdl_name);
+            if (setup_module != NULL && setup_module->valid ()) {
+                if (setup_module->option_reset (_config) == false)
                     std::cerr << mdl_name << " failed to reset option!\n";
             } else {
                 std::cerr << "Load " << mdl_name << " is failed!!!\n";
             }
-            if (mdl) {
-                delete mdl;
-                mdl = NULL;
+            if (setup_module) {
+                delete setup_module;
+                setup_module = NULL;
             }
         }
 
         _config->reload ();
-        helper_ise_reload ();
+        helper_ise_reload_config ();
         return 0;
     }
 
