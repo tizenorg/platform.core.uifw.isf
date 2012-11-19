@@ -1138,9 +1138,6 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
             _panel_client.turn_off (context_scim->id);
         }
 
-        if (!context_scim->impl->is_on)
-            turn_on_ic (context_scim);
-
         _panel_client.send ();
     }
 
