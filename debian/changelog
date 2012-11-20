@@ -1,3 +1,12 @@
+isf (2.3.5920-1slp2+1) unstable; urgency=low
+
+  * [demo] add focus movement on pressing 'next' button
+  * [isf-setting] format and clean source codes
+  * Add Hangul key as trigger event key
+  * [immodule] keep the lastest input method even though focus is changed
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Tue, 20 Nov 2012 09:39:27 +0900
+
 isf (2.3.5916-1slp2+2) unstable; urgency=low
 
   * Add set_path_info function to HelperModule to support OSP based keyboard
