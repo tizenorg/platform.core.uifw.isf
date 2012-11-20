@@ -1233,15 +1233,26 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
 
     //-------------------------- ise infomation ----------------------------
 
+    Evas_Object *parent_win = (Evas_Object *)ug_get_window();
+    Evas_Object *conform = elm_conformant_add(parent_win);
+
     // Create keyboard setting UI
     if (mode == UG_MODE_FULLVIEW)
-        ugd->layout_main = create_fullview (parent, ugd);
+        ugd->layout_main = create_fullview (conform, ugd);
     else
-        ugd->layout_main = create_frameview (parent, ugd);
+        ugd->layout_main = create_frameview (conform, ugd);
 
     if (ugd->layout_main != NULL) {
         content = create_setting_main_view (ugd);
         elm_object_part_content_set (ugd->layout_main, "elm.swallow.content", content);
+
+        evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_size_hint_align_set(conform, EVAS_HINT_FILL, EVAS_HINT_FILL);
+        elm_win_resize_object_add(parent_win, conform);
+        elm_object_content_set(conform, ugd->layout_main);
+
+        evas_object_show(conform);
+
     }
     return (void *)ugd->layout_main;
 }

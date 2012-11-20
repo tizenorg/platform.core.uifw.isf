@@ -1,6 +1,6 @@
 ISF 2.3.5920 :
   1. [demo] add focus movement on pressing 'next' button
-  2. [isf-setting] format and clean source codes
+  2. [isf-setting] format and clean source codes && fix information item layout problem
   3. Add Hangul key as trigger event key
   4. [immodule] keep the lastest input method even though focus is changed
   5. Add FLOATING_CANDIDATE_WINDOW in HelperAgent::set_candidate_style ()

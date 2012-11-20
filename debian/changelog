@@ -1,3 +1,10 @@
+isf (2.3.5920-1slp2+3) unstable; urgency=low
+  * [isf-setting] fix information item layout problem
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5920-1slp2+3
+
+ -- Shuo Liu <shuo0805.liu@samsung.com>  Tue, 20 Nov 2012 21:00:00 +0900
+
 isf (2.3.5920-1slp2+2) unstable; urgency=low
 
   * Add FLOATING_CANDIDATE_WINDOW in HelperAgent::set_candidate_style ()
