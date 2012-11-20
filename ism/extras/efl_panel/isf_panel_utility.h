@@ -31,7 +31,7 @@ using namespace scim;
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
-#define ENGLISH_KEYBOARD_MODULE                         "English/Keyboard"
+#define COMPOSE_KEY_MODULE                         "COMPOSE_KEY_MODULE"
 
 
 #if SCIM_USE_STL_EXT_HASH_MAP

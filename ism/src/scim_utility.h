@@ -494,6 +494,20 @@ typedef struct rectinfo
     uint32 height;
 } RECT_INFO;
 
+typedef enum
+{
+    FIXED_CANDIDATE_WINDOW = 0,
+    FLOATING_CANDIDATE_WINDOW,
+} ISF_CANDIDATE_MODE_T;
+
+typedef enum
+{
+    ONE_LINE_CANDIDATE = 1,
+    TWO_LINE_CANDIDATE,
+    THREE_LINE_CANDIDATE,
+    FOUR_LINE_CANDIDATE
+} ISF_CANDIDATE_PORTRAIT_LINE_T;
+
 
 #define PROP_X_EXT_KEYBOARD_EXIST       "X External Keyboard Exist"
 

@@ -208,7 +208,7 @@ void isf_save_ise_information (void)
 
     std::vector<ISEINFO> info_list;
     for (size_t i = 0; i < _module_names.size (); ++i) {
-        if (_module_names[i] == ENGLISH_KEYBOARD_MODULE)
+        if (_module_names[i] == COMPOSE_KEY_MODULE)
             continue;
         ISEINFO info;
         info.name     = _names[i];
@@ -261,11 +261,11 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
     _groups.clear ();
 
     if (type != HELPER_ONLY) {
-        /* Add "English/Keyboard" factory first. */
+        /* Add ComposeKeyFactory first. */
         IMEngineFactoryPointer factory = new ComposeKeyFactory ();
         uuids.push_back (factory->get_uuid ());
         names.push_back (utf8_wcstombs (factory->get_name ()));
-        module_names.push_back (ENGLISH_KEYBOARD_MODULE);
+        module_names.push_back (COMPOSE_KEY_MODULE);
         langs.push_back (isf_get_normalized_language (factory->get_language ()));
         icons.push_back (factory->get_icon_file ());
         modes.push_back (TOOLBAR_KEYBOARD_MODE);
@@ -313,7 +313,7 @@ void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config)
     scim_get_helper_module_list (_current_modules_list);
     /* Check keyboard ISEs */
     if (type != HELPER_ONLY) {
-        _current_modules_list.push_back (ENGLISH_KEYBOARD_MODULE);
+        _current_modules_list.push_back (COMPOSE_KEY_MODULE);
         std::vector<String> imengine_list;
         scim_get_imengine_module_list (imengine_list);
         for (size_t i = 0; i < imengine_list.size (); ++i)
@@ -475,7 +475,7 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
 
     /* Check keyboard ISEs */
     if (type != HELPER_ONLY) {
-        _current_modules_list.push_back (ENGLISH_KEYBOARD_MODULE);
+        _current_modules_list.push_back (COMPOSE_KEY_MODULE);
         std::vector<String> imengine_list;
         scim_get_imengine_module_list (imengine_list);
         for (size_t i = 0; i < imengine_list.size (); ++i) {

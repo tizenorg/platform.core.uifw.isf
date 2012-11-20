@@ -3724,9 +3724,9 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << " \n";
 
-        uint32 style;
-        if (m_recv_trans.get_data (style))
-            m_signal_set_candidate_ui (style, 0);
+        uint32 portrait_line, mode;
+        if (m_recv_trans.get_data (portrait_line) && m_recv_trans.get_data (mode))
+            m_signal_set_candidate_ui (portrait_line, mode);
     }
 
     void socket_get_candidate_ui                (void)

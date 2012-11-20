@@ -547,9 +547,11 @@ public:
     /**
      * @brief Set candidate style.
      *
-     * @param display_line - the displayed line number for portrait mode.
+     * @param portrait_line - the displayed line number for portrait.
+     * @param mode          - candidate window mode.
      */
-    void set_candidate_style      (int                          display_line) const;
+    void set_candidate_style      (ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line = ONE_LINE_CANDIDATE,
+                                   ISF_CANDIDATE_MODE_T          mode = FIXED_CANDIDATE_WINDOW) const;
 
     /**
      * @brief Request to reset keyboard ISE.

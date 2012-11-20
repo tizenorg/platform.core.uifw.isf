@@ -196,7 +196,7 @@ typedef enum
 {
     SCIM_CANDIDATE_STYLE = 0,
     PREDICTION_ENGINE_CANDIDATE_STYLE,
-} ISF_CANDIDATE_STYLE_T;
+} GTK_CANDIDATE_STYLE_T;
 
 typedef enum
 {
@@ -206,7 +206,7 @@ typedef enum
     LANDSCAPE_VERTICAL_CANDIDATE_MODE,
     PORTRAIT_MORE_CANDIDATE_MODE,
     LANDSCAPE_MORE_CANDIDATE_MODE,
-} ISF_CANDIDATE_MODE_T;
+} GTK_CANDIDATE_MODE_T;
 
 #if SCIM_USE_STL_EXT_HASH_MAP
 typedef __gnu_cxx::hash_map <String, std::vector <size_t>, scim_hash_string>    MapStringVectorSizeT;
@@ -411,8 +411,8 @@ static int                           _help_icon_height      = 0;
 
 
 static bool                          _candidate_is_showed   = false;
-static ISF_CANDIDATE_STYLE_T         _candidate_style       = PREDICTION_ENGINE_CANDIDATE_STYLE;
-static ISF_CANDIDATE_MODE_T          _candidate_mode        = PORTRAIT_HORIZONTAL_CANDIDATE_MODE;
+static GTK_CANDIDATE_STYLE_T         _candidate_style       = PREDICTION_ENGINE_CANDIDATE_STYLE;
+static GTK_CANDIDATE_MODE_T          _candidate_mode        = PORTRAIT_HORIZONTAL_CANDIDATE_MODE;
 static GtkWidget                    *_candidate_scroll      = 0;
 static GtkWidget                    *_associate_scroll      = 0;
 static GtkWidget                    *_candidate_separator   = 0;
@@ -2302,7 +2302,7 @@ static void create_prediction_engine_candidate_window (bool vertical)
  * @param style The candidate window style.
  * @param vertical An indicator for vertical window or horizontal window.
  */
-static void create_candidate_window (ISF_CANDIDATE_STYLE_T style, bool vertical)
+static void create_candidate_window (GTK_CANDIDATE_STYLE_T style, bool vertical)
 {
     check_time ("\nEnter create_candidate_window");
     SCIM_DEBUG_MAIN (1) << "Create candidate window...\n";
@@ -2484,8 +2484,8 @@ static void ui_load_config (void)
         gdk_color_parse (str.c_str (), &_active_text);
 
         _window_sticked        = _config->read (String (SCIM_CONFIG_PANEL_GTK_DEFAULT_STICKED), _window_sticked);
-        _candidate_style       = (ISF_CANDIDATE_STYLE_T)_config->read (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_STYLE), _candidate_style);
-        _candidate_mode        = (ISF_CANDIDATE_MODE_T)_config->read (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_MODE), _candidate_mode);
+        _candidate_style       = (GTK_CANDIDATE_STYLE_T)_config->read (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_STYLE), _candidate_style);
+        _candidate_mode        = (GTK_CANDIDATE_MODE_T)_config->read (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_MODE), _candidate_mode);
         _lookup_table_vertical = _config->read (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_VERTICAL), _lookup_table_vertical);
         shared_ise             = _config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), shared_ise);
         _panel_agent->set_should_shared_ise (shared_ise);
@@ -4179,12 +4179,12 @@ static void slot_set_candidate_ui (int style, int mode)
                     gtk_widget_set_size_request (GTK_WIDGET (_input_window), gdk_screen_width (), -1);
             }
         }
-        _candidate_mode = (ISF_CANDIDATE_MODE_T)mode;
+        _candidate_mode = (GTK_CANDIDATE_MODE_T)mode;
         _config->write (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_MODE), mode);
         _config->flush ();
     } else {
-        _candidate_style       = (ISF_CANDIDATE_STYLE_T)style;
-        _candidate_mode        = (ISF_CANDIDATE_MODE_T)mode;
+        _candidate_style       = (GTK_CANDIDATE_STYLE_T)style;
+        _candidate_mode        = (GTK_CANDIDATE_MODE_T)mode;
         _lookup_table_vertical = vertical;
 
         _config->write (String (SCIM_CONFIG_PANEL_GTK_LOOKUP_TABLE_STYLE), style);
@@ -4197,7 +4197,7 @@ static void slot_set_candidate_ui (int style, int mode)
         slot_hide_aux_string ();
         slot_hide_lookup_table ();
         slot_hide_associate_table ();
-        create_candidate_window ((ISF_CANDIDATE_STYLE_T)style, vertical);
+        create_candidate_window ((GTK_CANDIDATE_STYLE_T)style, vertical);
     }
 }
 

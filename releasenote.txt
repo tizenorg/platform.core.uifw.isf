@@ -3,6 +3,7 @@ ISF 2.3.5920 :
   2. [isf-setting] format and clean source codes
   3. Add Hangul key as trigger event key
   4. [immodule] keep the lastest input method even though focus is changed
+  5. Add FLOATING_CANDIDATE_WINDOW in HelperAgent::set_candidate_style ()
 
 
 ISF 2.3.5916 :
