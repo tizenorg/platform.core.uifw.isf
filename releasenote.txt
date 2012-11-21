@@ -1,3 +1,9 @@
+ISF 2.3.5921 :
+  1. [demo] Use virtualkeypad,state,* smart callback of conformant
+  2. [demo] add a variety of layout in focus movement for test
+  3. create /etc/scim/conf directory for CSC
+
+
 ISF 2.3.5920 :
   1. [demo] add focus movement on pressing 'next' button
   2. [isf-setting] format and clean source codes && fix information item layout problem
