@@ -31,6 +31,22 @@ _entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
     elm_object_focus_next (parent, ELM_FOCUS_NEXT);
 }
 
+static Evas_Object *create_entry (Evas_Object *parent, const char *text, Elm_Input_Panel_Layout layout)
+{
+    Evas_Object *en;
+    en = elm_entry_add (parent);
+    evas_object_size_hint_weight_set (en, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (en, EVAS_HINT_FILL, 0.5);
+    elm_entry_input_panel_layout_set (en, layout);
+    elm_entry_single_line_set (en, EINA_TRUE);
+    elm_entry_input_panel_return_key_type_set (en, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT);
+    elm_object_text_set (en, text);
+    evas_object_smart_callback_add (en, "activated", _entry_activated_cb, parent);
+    evas_object_show (en);
+
+    return en;
+}
+
 static Evas_Object * create_inner_layout (void *data)
 {
     struct appdata *ad = (struct appdata *)data;
@@ -44,39 +60,27 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (bx);
 
     /* First Name */
-    en = elm_entry_add (bx);
-    evas_object_size_hint_weight_set (en, EVAS_HINT_EXPAND, 0.0);
-    evas_object_size_hint_align_set (en, EVAS_HINT_FILL, 0.5);
-    elm_entry_input_panel_layout_set (en, ELM_INPUT_PANEL_LAYOUT_NORMAL);
-    elm_entry_single_line_set (en, EINA_TRUE);
-    elm_entry_input_panel_return_key_type_set (en, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT);
-    elm_object_text_set (en, "James");
-    evas_object_smart_callback_add (en, "activated", _entry_activated_cb, bx);
-    evas_object_show (en);
+    en = create_entry (bx, "James", ELM_INPUT_PANEL_LAYOUT_NORMAL);
     elm_box_pack_end (bx, en);
 
     /* Last Name */
-    en = elm_entry_add (bx);
-    evas_object_size_hint_weight_set (en, EVAS_HINT_EXPAND, 0.0);
-    evas_object_size_hint_align_set (en, EVAS_HINT_FILL, 0.5);
-    elm_entry_input_panel_layout_set (en, ELM_INPUT_PANEL_LAYOUT_NORMAL);
-    elm_entry_single_line_set (en, EINA_TRUE);
-    elm_entry_input_panel_return_key_type_set (en, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT);
-    elm_object_text_set (en, "Bond");
-    evas_object_smart_callback_add (en, "activated", _entry_activated_cb, parent);
-    evas_object_show (en);
+    en = create_entry (bx, "Bond", ELM_INPUT_PANEL_LAYOUT_NORMAL);
     elm_box_pack_end (bx, en);
 
     /* Phonenumber */
-    en = elm_entry_add (bx);
-    evas_object_size_hint_weight_set (en, EVAS_HINT_EXPAND, 0.0);
-    evas_object_size_hint_align_set (en, EVAS_HINT_FILL, 0.5);
-    elm_entry_input_panel_layout_set (en, ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
-    elm_entry_single_line_set (en, EINA_TRUE);
-    elm_entry_input_panel_return_key_type_set (en, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
-    elm_object_text_set (en, "010-1234-5678");
-    evas_object_smart_callback_add (en, "activated", _entry_activated_cb, parent);
-    evas_object_show (en);
+    en = create_entry (bx, "010-1234-5678", ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
+    elm_box_pack_end (bx, en);
+
+    /* Email */
+    en = create_entry (bx, "hell@hello.com", ELM_INPUT_PANEL_LAYOUT_EMAIL);
+    elm_box_pack_end (bx, en);
+
+    /* Birthday */
+    en = create_entry (bx, "801225", ELM_INPUT_PANEL_LAYOUT_NUMBER);
+    elm_box_pack_end (bx, en);
+
+    /* Homepage */
+    en = create_entry (bx, "hello.com", ELM_INPUT_PANEL_LAYOUT_URL);
     elm_box_pack_end (bx, en);
 
     return bx;
