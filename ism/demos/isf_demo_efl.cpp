@@ -269,6 +269,18 @@ static Evas_Object* create_win (const char *name)
     return eo;
 }
 
+static void
+_vkbd_state_on(void *data, Evas_Object *obj, void *event_info)
+{
+    printf("[%s] input panel is shown\n", __func__);
+}
+
+static void
+_vkbd_state_off(void *data, Evas_Object *obj, void *event_info)
+{
+    printf("[%s] input panel is hidden\n", __func__);
+}
+
 static Evas_Object* create_layout_main (Evas_Object *parent)
 {
     Evas_Object *layout = elm_layout_add (parent);
@@ -284,6 +296,9 @@ static Evas_Object* create_layout_main (Evas_Object *parent)
     elm_win_resize_object_add (parent, conformant);
     elm_win_conformant_set (parent, EINA_TRUE);
     evas_object_show (conformant);
+
+    evas_object_smart_callback_add(conformant, "virtualkeypad,state,on", _vkbd_state_on, NULL);
+    evas_object_smart_callback_add(conformant, "virtualkeypad,state,off", _vkbd_state_off, NULL);
 
     elm_object_content_set (conformant, layout);
 

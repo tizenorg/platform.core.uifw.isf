@@ -140,15 +140,6 @@ _prop_change (void *data, int type, void *event)
     ev = (Ecore_X_Event_Window_Property *)event;
 
     if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
-        Ecore_X_Window zone;
-
-        zone = ecore_x_e_illume_zone_get (ev->win);
-        vkb_state = ecore_x_e_virtual_keyboard_state_get (zone);
-        if (vkb_state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
-            printf ("Keyboard state : OFF.\n");
-        else
-            printf ("Keyboard state : ON.\n");
-
         _print_keyboard_geometry (ev->win);
     } else if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY) {
         printf("Keyboard Geometry Changed\n");
