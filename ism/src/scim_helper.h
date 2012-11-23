@@ -970,14 +970,6 @@ public:
     Connection signal_connect_update_candidate_table_page_size  (HelperAgentSlotInt                 *slot);
 
     /**
-     * @brief Connect a slot to Helper update candidate item layout signal.
-     *
-     * The prototype of the slot is:
-     * void update_candidate_item_layout (const HelperAgent *, const std::vector<uint32> &row_items);
-     */
-    Connection signal_connect_update_candidate_item_layout      (HelperAgentSlotUintVector          *slot);
-
-    /**
      * @brief Connect a slot to Helper select associate signal.
      *
      * This signal is used to do something when associate is selected.
@@ -1046,6 +1038,14 @@ public:
      * void longpress_candidate (const HelperAgent *agent, int ic, const String &uuid, int index);
      */
     Connection signal_connect_longpress_candidate               (HelperAgentSlotInt                 *slot);
+
+    /**
+     * @brief Connect a slot to Helper update candidate item layout signal.
+     *
+     * The prototype of the slot is:
+     * void update_candidate_item_layout (const HelperAgent *, const std::vector<uint32> &row_items);
+     */
+    Connection signal_connect_update_candidate_item_layout      (HelperAgentSlotUintVector          *slot);
 };
 
 /**  @} */

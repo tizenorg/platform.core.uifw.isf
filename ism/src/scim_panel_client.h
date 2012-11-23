@@ -239,13 +239,6 @@ public:
     Connection signal_connect_exit                          (PanelClientSlotVoid                    *slot);
 
     /**
-     * @brief Signal: update candidate item layout
-     *
-     * slot prototype: void update_candidate_item_layout (int context, const std::vector<uint32> &);
-     */
-    Connection signal_connect_update_candidate_item_layout (PanelClientSlotUintVector               *slot);
-
-    /**
      * @brief Signal: update lookup table page size
      *
      * slot prototype: void update_lookup_table_page_size (int context, int page_size);
@@ -409,6 +402,13 @@ public:
      * slot prototype: void delete_surrounding text (int context, int offset, int len);
      */
     Connection signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot);
+
+    /**
+     * @brief Signal: update candidate item layout
+     *
+     * slot prototype: void update_candidate_item_layout (int context, const std::vector<uint32> &);
+     */
+    Connection signal_connect_update_candidate_item_layout (PanelClientSlotUintVector               *slot);
 
     /** @} */
 };

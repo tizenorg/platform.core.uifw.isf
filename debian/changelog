@@ -1,3 +1,11 @@
+isf (2.3.5923-1slp2+2) unstable; urgency=low
+
+  * Update scim_helper.h for ABI issue
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5923-1slp2+2
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Fri, 23 Nov 2012 18:02:00 +0900
+
 isf (2.3.5923-1slp2+1) unstable; urgency=low
 
   * Add expand_candidate (), contract_candidate () and update_candidate_item_layout () for keyboard ISE
