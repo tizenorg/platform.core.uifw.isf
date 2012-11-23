@@ -64,6 +64,9 @@ typedef Signal2<void, int, const KeyEvent &>
 typedef Signal3<void, int, const WideString &, const AttributeList &>
         PanelClientSignalStringAttrs;
 
+typedef Signal2<void, int, const std::vector<uint32> &>
+        PanelClientSignalUintVector;
+
 class PanelClient::PanelClientImpl
 {
     SocketClient                                m_socket;
@@ -75,6 +78,7 @@ class PanelClient::PanelClientImpl
 
     PanelClientSignalVoid                       m_signal_reload_config;
     PanelClientSignalVoid                       m_signal_exit;
+    PanelClientSignalUintVector                 m_signal_update_candidate_item_layout;
     PanelClientSignalInt                        m_signal_update_lookup_table_page_size;
     PanelClientSignalVoid                       m_signal_lookup_table_page_up;
     PanelClientSignalVoid                       m_signal_lookup_table_page_down;
@@ -215,6 +219,13 @@ public:
 
         while (recv.get_command (cmd)) {
             switch (cmd) {
+                case ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT:
+                    {
+                        std::vector<uint32> row_items;
+                        if (recv.get_data (row_items))
+                            m_signal_update_candidate_item_layout ((int) context, row_items);
+                    }
+                    break;
                 case SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE_PAGE_SIZE:
                     {
                         uint32 size;
@@ -589,12 +600,6 @@ public:
             m_send_trans.put_data (property);
         }
     }
-    void start_default_ise      (int icid)
-    {
-        if (m_send_refcount > 0 && m_current_icid == icid) {
-            m_send_trans.put_command (ISM_TRANS_CMD_PANEL_START_DEFAULT_ISE);
-        }
-    }
     void start_helper           (int icid, const String &helper_uuid)
     {
         if (m_send_refcount > 0 && m_current_icid == icid) {
@@ -602,7 +607,6 @@ public:
             m_send_trans.put_data (helper_uuid);
         }
     }
-
     void stop_helper            (int icid, const String &helper_uuid)
     {
         if (m_send_refcount > 0 && m_current_icid == icid) {
@@ -640,12 +644,23 @@ public:
         m_send_trans.put_command (ISM_TRANS_CMD_TURN_ON_LOG);
         m_send_trans.put_data (isOn);
     }
+    void expand_candidate       (int icid)
+    {
+        if (m_send_refcount > 0 && m_current_icid == icid)
+            m_send_trans.put_command (ISM_TRANS_CMD_EXPAND_CANDIDATE);
+    }
+    void contract_candidate     (int icid)
+    {
+        if (m_send_refcount > 0 && m_current_icid == icid)
+            m_send_trans.put_command (ISM_TRANS_CMD_CONTRACT_CANDIDATE);
+    }
 
 public:
     void reset_signal_handler                               (void)
     {
         m_signal_reload_config.reset();
         m_signal_exit.reset();
+        m_signal_update_candidate_item_layout.reset();
         m_signal_update_lookup_table_page_size.reset();
         m_signal_lookup_table_page_up.reset();
         m_signal_lookup_table_page_down.reset();
@@ -678,6 +693,10 @@ public:
     Connection signal_connect_exit                          (PanelClientSlotVoid                    *slot)
     {
         return m_signal_exit.connect (slot);
+    }
+    Connection signal_connect_update_candidate_item_layout  (PanelClientSlotUintVector              *slot)
+    {
+        return m_signal_update_candidate_item_layout.connect (slot);
     }
     Connection signal_connect_update_lookup_table_page_size (PanelClientSlotInt                     *slot)
     {
@@ -960,11 +979,6 @@ PanelClient::update_property        (int icid, const Property &property)
     m_impl->update_property (icid, property);
 }
 void
-PanelClient::start_default_ise      (int icid)
-{
-    m_impl->start_default_ise (icid);
-}
-void
 PanelClient::start_helper           (int icid, const String &helper_uuid)
 {
     m_impl->start_helper (icid, helper_uuid);
@@ -1003,6 +1017,18 @@ PanelClient::turn_on_log            (int icid, uint32 isOn)
 }
 
 void
+PanelClient::expand_candidate       (int icid)
+{
+    m_impl->expand_candidate (icid);
+}
+
+void
+PanelClient::contract_candidate     (int icid)
+{
+    m_impl->contract_candidate (icid);
+}
+
+void
 PanelClient::reset_signal_handler                         (void)
 {
     m_impl->reset_signal_handler ();
@@ -1017,6 +1043,11 @@ Connection
 PanelClient::signal_connect_exit                          (PanelClientSlotVoid                    *slot)
 {
     return m_impl->signal_connect_exit (slot);
+}
+Connection
+PanelClient::signal_connect_update_candidate_item_layout  (PanelClientSlotUintVector              *slot)
+{
+    return m_impl->signal_connect_update_candidate_item_layout (slot);
 }
 Connection
 PanelClient::signal_connect_update_lookup_table_page_size (PanelClientSlotInt                     *slot)

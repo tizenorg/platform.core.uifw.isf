@@ -403,6 +403,13 @@ protected:
     void set_layout (int id, unsigned int layout) const;
 
     /**
+     * @brief update candidate items layout.
+     * @param id the IMEngine instance id.
+     * @param row_items the items of each row.
+     */
+    void update_candidate_item_layout (int id, const std::vector<unsigned int> &row_items) const;
+
+    /**
      * @brief reset a specific IMEngine option.
      * @param id the id of the IMEngine instance to be reset.
      */
@@ -628,6 +635,16 @@ protected:
      * @return true if the signal was handled.
      */
     virtual bool delete_surrounding_text  (int id, int offset, int len);
+
+    /**
+     * @brief Request to expand candidate window.
+     */
+    virtual void expand_candidate (int id);
+
+    /**
+     * @brief Request to contract candidate window.
+     */
+    virtual void contract_candidate (int id);
     /**
      * @}
      */

@@ -99,6 +99,8 @@ static EcoreIMFContextISF     *find_ic                  (int                    
 /* private functions */
 static void     panel_slot_reload_config                (int                     context);
 static void     panel_slot_exit                         (int                     context);
+static void     panel_slot_update_candidate_item_layout (int                     context,
+                                                         const std::vector<uint32> &row_items);
 static void     panel_slot_update_lookup_table_page_size(int                     context,
                                                          int                     page_size);
 static void     panel_slot_lookup_table_page_up         (int                     context);
@@ -219,6 +221,9 @@ static bool     slot_get_surrounding_text               (IMEngineInstanceBase   
 static bool     slot_delete_surrounding_text            (IMEngineInstanceBase   *si,
                                                          int                     offset,
                                                          int                     len);
+
+static void     slot_expand_candidate                   (IMEngineInstanceBase   *si);
+static void     slot_contract_candidate                 (IMEngineInstanceBase   *si);
 
 static void     reload_config_callback                  (const ConfigPointer    &config);
 
@@ -1765,6 +1770,18 @@ panel_slot_exit (int /* context */)
 }
 
 static void
+panel_slot_update_candidate_item_layout (int context, const std::vector<uint32> &row_items)
+{
+    EcoreIMFContextISF *ic = find_ic (context);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " row size=" << row_items.size () << " ic=" << ic << "\n";
+    if (ic && ic->impl) {
+        _panel_client.prepare (ic->id);
+        ic->impl->si->update_candidate_item_layout (row_items);
+        _panel_client.send ();
+    }
+}
+
+static void
 panel_slot_update_lookup_table_page_size (int context, int page_size)
 {
     EcoreIMFContextISF *ic = find_ic (context);
@@ -2675,6 +2692,7 @@ initialize (void)
     // Attach Panel Client signal.
     _panel_client.signal_connect_reload_config                 (slot (panel_slot_reload_config));
     _panel_client.signal_connect_exit                          (slot (panel_slot_exit));
+    _panel_client.signal_connect_update_candidate_item_layout  (slot (panel_slot_update_candidate_item_layout));
     _panel_client.signal_connect_update_lookup_table_page_size (slot (panel_slot_update_lookup_table_page_size));
     _panel_client.signal_connect_lookup_table_page_up          (slot (panel_slot_lookup_table_page_up));
     _panel_client.signal_connect_lookup_table_page_down        (slot (panel_slot_lookup_table_page_down));
@@ -3187,6 +3205,11 @@ attach_instance (const IMEngineInstancePointer &si)
 
     si->signal_connect_delete_surrounding_text (
         slot (slot_delete_surrounding_text));
+
+    si->signal_connect_expand_candidate (
+        slot (slot_expand_candidate));
+    si->signal_connect_contract_candidate (
+        slot (slot_contract_candidate));
 }
 
 // Implementation of slot functions
@@ -3528,6 +3551,28 @@ slot_delete_surrounding_text (IMEngineInstanceBase *si,
         return true;
     }
     return false;
+}
+
+static void
+slot_expand_candidate (IMEngineInstanceBase *si)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
+
+    if (ic && ic->impl && _focused_ic == ic)
+        _panel_client.expand_candidate (ic->id);
+}
+
+static void
+slot_contract_candidate (IMEngineInstanceBase *si)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
+
+    if (ic && ic->impl && _focused_ic == ic)
+        _panel_client.contract_candidate (ic->id);
 }
 
 static void

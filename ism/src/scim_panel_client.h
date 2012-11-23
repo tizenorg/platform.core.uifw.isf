@@ -70,6 +70,9 @@ typedef Slot2<void, int, const KeyEvent &>
 typedef Slot3<void, int, const WideString &, const AttributeList &>
         PanelClientSlotStringAttrs;
 
+typedef Slot2<void, int, const std::vector<uint32> &>
+        PanelClientSlotUintVector;
+
 /**
  * @brief PanelClient is used by FrontEnd to communicate with Panel daemon.
  *
@@ -191,7 +194,6 @@ public:
     void update_lookup_table    (int icid, const LookupTable &table);
     void register_properties    (int icid, const PropertyList &properties);
     void update_property        (int icid, const Property &property);
-    void start_default_ise      (int icid);
     void start_helper           (int icid, const String &helper_uuid);
     void stop_helper            (int icid, const String &helper_uuid);
     void send_helper_event      (int icid, const String &helper_uuid, const Transaction &trans);
@@ -199,6 +201,8 @@ public:
     void remove_input_context   (int icid);
     void reset_input_context    (int icid);
     void turn_on_log            (int icid, uint32 isOn);
+    void expand_candidate       (int icid);
+    void contract_candidate     (int icid);
     /** @} */
 
 public:
@@ -233,6 +237,13 @@ public:
      * The context parameter is useless here.
      */
     Connection signal_connect_exit                          (PanelClientSlotVoid                    *slot);
+
+    /**
+     * @brief Signal: update candidate item layout
+     *
+     * slot prototype: void update_candidate_item_layout (int context, const std::vector<uint32> &);
+     */
+    Connection signal_connect_update_candidate_item_layout (PanelClientSlotUintVector               *slot);
 
     /**
      * @brief Signal: update lookup table page size

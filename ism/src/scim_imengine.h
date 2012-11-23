@@ -491,6 +491,9 @@ public:
 
     Connection signal_connect_get_surrounding_text    (IMEngineSlotGetSurroundingText *slot);
     Connection signal_connect_delete_surrounding_text (IMEngineSlotDeleteSurroundingText *slot);
+
+    Connection signal_connect_expand_candidate        (IMEngineSlotVoid *slot);
+    Connection signal_connect_contract_candidate      (IMEngineSlotVoid *slot);
     /** @} */
 
 public:
@@ -653,6 +656,13 @@ public:
      * @param layout - the layout.
      */
     virtual void set_layout (unsigned int layout);
+
+    /**
+     * @brief Update candidate items layout.
+     *
+     * @param row_items - The items of each row.
+     */
+    virtual void update_candidate_item_layout (const std::vector<unsigned int> &row_items);
 
 protected:
     /**
@@ -848,6 +858,16 @@ protected:
      * @return true if the signal was handled.
      */
     bool delete_surrounding_text (int offset, int len);
+
+    /**
+     * @brief Request to expand candidate window.
+     */
+    void expand_candidate (void);
+
+    /**
+     * @brief Request to contract candidate window.
+     */
+    void contract_candidate (void);
     /** @} */
 };
 

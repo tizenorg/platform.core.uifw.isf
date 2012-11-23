@@ -92,6 +92,7 @@ public:
     virtual void lookup_table_page_down ();
     virtual void set_prediction_allow (bool allow);
     virtual void set_layout (unsigned int layout);
+    virtual void update_candidate_item_layout (const std::vector<unsigned int> &row_items);
     virtual void reset_option ();
     virtual void reset ();
     virtual void focus_in ();

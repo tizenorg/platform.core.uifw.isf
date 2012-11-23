@@ -494,14 +494,14 @@ const int SCIM_TRANS_CMD_FOCUS_OUT                        = 108;
 const int SCIM_TRANS_CMD_TRIGGER_PROPERTY                 = 109;
 const int SCIM_TRANS_CMD_PROCESS_HELPER_EVENT             = 110;
 const int SCIM_TRANS_CMD_UPDATE_CLIENT_CAPABILITIES       = 111;
-const int ISM_TRANS_CMD_SHOW_ISE                          = 112;
-const int ISM_TRANS_CMD_HIDE_ISE                          = 113;
-const int ISM_TRANS_CMD_SELECT_ASSOCIATE                  = 114;
-const int ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE_PAGE_SIZE  = 115;
-const int ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_UP           = 116;
-const int ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_DOWN         = 117;
-const int ISM_TRANS_CMD_SELECT_AUX                        = 118;
-const int ISM_TRANS_CMD_SET_PREDICTION_ALLOW              = 119;
+const int ISM_TRANS_CMD_SELECT_ASSOCIATE                  = 112;
+const int ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE_PAGE_SIZE  = 113;
+const int ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_UP           = 114;
+const int ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_DOWN         = 115;
+const int ISM_TRANS_CMD_SELECT_AUX                        = 116;
+const int ISM_TRANS_CMD_SET_PREDICTION_ALLOW              = 117;
+const int ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT      = 118;
+
 
 // Socket FrontEnd to Socket IMEngine
 // FrontEnds to Panel
@@ -566,10 +566,10 @@ const int SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION             = 401;
 const int ISM_TRANS_CMD_UPDATE_CURSOR_POSITION            = 402;
 const int ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT           = 403;
 
-//Privately used by panel.
+// Privately used by panel.
 const int SCIM_TRANS_CMD_PANEL_EXIT                       = 500;
 
-//FrontEnd Client to Panel
+// FrontEnd Client to Panel
 const int SCIM_TRANS_CMD_PANEL_TURN_ON                    = 501;
 const int SCIM_TRANS_CMD_PANEL_TURN_OFF                   = 502;
 const int SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO        = 503;
@@ -578,27 +578,26 @@ const int SCIM_TRANS_CMD_PANEL_SHOW_FACTORY_MENU          = 505;
 const int SCIM_TRANS_CMD_PANEL_REGISTER_INPUT_CONTEXT     = 506;
 const int SCIM_TRANS_CMD_PANEL_REMOVE_INPUT_CONTEXT       = 507;
 const int SCIM_TRANS_CMD_PANEL_RESET_INPUT_CONTEXT        = 508;
-const int ISM_TRANS_CMD_PANEL_START_DEFAULT_ISE           = 509;
 
-//Panel to FrontEnd Client
+// Panel to FrontEnd Client
 const int SCIM_TRANS_CMD_PANEL_REQUEST_HELP               = 520;
 const int SCIM_TRANS_CMD_PANEL_REQUEST_FACTORY_MENU       = 521;
 const int SCIM_TRANS_CMD_PANEL_CHANGE_FACTORY             = 522;
 const int ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE          = 523;
 const int ISM_TRANS_CMD_PANEL_UPDATE_KEYBOARD_ISE         = 524;
 
-//Helper Client To Panel
+// Helper Client To Panel
 const int SCIM_TRANS_CMD_PANEL_REGISTER_HELPER            = 540;
 const int SCIM_TRANS_CMD_PANEL_SEND_IMENGINE_EVENT        = 541;
 const int SCIM_TRANS_CMD_PANEL_SEND_KEY_EVENT             = 542;
 const int SCIM_TRANS_CMD_PANEL_REGISTER_ACTIVE_HELPER     = 543;
 
-//Panel to Helper Client
+// Panel to Helper Client
 const int SCIM_TRANS_CMD_HELPER_PROCESS_IMENGINE_EVENT    = 602;
 const int SCIM_TRANS_CMD_HELPER_ATTACH_INPUT_CONTEXT      = 603;
 const int SCIM_TRANS_CMD_HELPER_DETACH_INPUT_CONTEXT      = 604;
 
-//HelperManager Commands
+// HelperManager Commands
 const int SCIM_TRANS_CMD_HELPER_MANAGER_GET_HELPER_LIST   = 700;
 const int SCIM_TRANS_CMD_HELPER_MANAGER_RUN_HELPER        = 701;
 const int SCIM_TRANS_CMD_HELPER_MANAGER_STOP_HELPER       = 702;
@@ -608,80 +607,79 @@ const int SCIM_TRANS_CMD_HELPER_MANAGER_SEND_ISE_LIST     = 704;
 const int ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST               = 950;
 
 
-/* commands to send from IMControl to Control Panel*/
-#define ISM_TRANS_CMD_SHOW_ISE_PANEL                        1100
-#define ISM_TRANS_CMD_HIDE_ISE_PANEL                        1101
-#define ISM_TRANS_CMD_SHOW_ISF_CONTROL                      1102
-#define ISM_TRANS_CMD_HIDE_ISF_CONTROL                      1103
+/* IMControl to Panel */
+const int ISM_TRANS_CMD_SHOW_ISE_PANEL                    = 1100;
+const int ISM_TRANS_CMD_HIDE_ISE_PANEL                    = 1101;
+const int ISM_TRANS_CMD_SHOW_ISF_CONTROL                  = 1102;
+const int ISM_TRANS_CMD_HIDE_ISF_CONTROL                  = 1103;
 
-/* commands to send from Control Panel to IMControl */
-#define ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL            1105
-#define ISM_TRANS_CMD_UPDATE_ISE_STYLE                      1106
+/* Panel to IMControl */
+const int ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL        = 1105;
+const int ISM_TRANS_CMD_UPDATE_ISE_STYLE                  = 1106;
 
-/* commands to communicate between IMControl and Control Panel*/
-#define ISM_TRANS_CMD_SET_ISE_MODE                          1108
-#define ISM_TRANS_CMD_SET_ISE_LANGUAGE                      1109
-#define ISM_TRANS_CMD_SET_ISE_IMDATA                        1110
-#define ISM_TRANS_CMD_GET_ISE_IMDATA                        1111
-#define ISM_TRANS_CMD_GET_ACTIVE_ISE_NAME                   1112
-#define ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID                1113
-#define ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY               1114
-#define ISM_TRANS_CMD_ISE_CHANGED                           1115
-#define ISM_TRANS_CMD_SET_LAYOUT                            1116
-#define ISM_TRANS_CMD_GET_LAYOUT                            1117
-#define ISM_TRANS_CMD_SET_CAPS_MODE                         1118
-#define ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE               1119
+/* IMControl to ISE */
+const int ISM_TRANS_CMD_SET_ISE_MODE                      = 1108;
+const int ISM_TRANS_CMD_SET_ISE_LANGUAGE                  = 1109;
+const int ISM_TRANS_CMD_SET_ISE_IMDATA                    = 1110;
+const int ISM_TRANS_CMD_GET_ISE_IMDATA                    = 1111;
+const int ISM_TRANS_CMD_GET_ACTIVE_ISE_NAME               = 1112;
+const int ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID            = 1113;
+const int ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY           = 1114;
+const int ISM_TRANS_CMD_ISE_CHANGED                       = 1115;
+const int ISM_TRANS_CMD_SET_LAYOUT                        = 1116;
+const int ISM_TRANS_CMD_GET_LAYOUT                        = 1117;
+const int ISM_TRANS_CMD_SET_CAPS_MODE                     = 1118;
+const int ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE           = 1119;
 
-/* commands that ISE sends info to IMControl*/
-#define ISM_TRANS_CMD_UPDATE_ISE_HIDED                      1122
-#define ISM_TRANS_CMD_GET_ISE_LIST                          1123
-#define ISM_TRANS_CMD_GET_LANGUAGE_LIST                     1124
-#define ISM_TRANS_CMD_GET_ISE_LANGUAGE                      1125
-#define ISM_TRANS_CMD_SET_ISF_LANGUAGE                      1126
-#define ISM_TRANS_CMD_GET_ALL_LANGUAGE_LIST                 1127
-#define ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT              1128
-#define ISM_TRANS_CMD_RESET_ISE_OPTION                      1129
+/* ISE to IMControl */
+const int ISM_TRANS_CMD_UPDATE_ISE_HIDED                  = 1122;
+const int ISM_TRANS_CMD_GET_ISE_LIST                      = 1123;
+const int ISM_TRANS_CMD_GET_LANGUAGE_LIST                 = 1124;
+const int ISM_TRANS_CMD_GET_ISE_LANGUAGE                  = 1125;
+const int ISM_TRANS_CMD_SET_ISF_LANGUAGE                  = 1126;
+const int ISM_TRANS_CMD_GET_ALL_LANGUAGE_LIST             = 1127;
+const int ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT          = 1128;
+const int ISM_TRANS_CMD_RESET_ISE_OPTION                  = 1129;
 
-/* commands to send from Control Panel to IMControl*/
-#define ISM_TRANS_CMD_ISE_PANEL_SHOWED                      1130
-#define ISM_TRANS_CMD_ISE_PANEL_HIDED                       1131
-#define ISM_TRANS_CMD_ISF_CONTROL_SHOWED                    1132
-#define ISM_TRANS_CMD_ISF_CONTROL_HIDED                     1133
+/* Panel to IMControl */
+const int ISM_TRANS_CMD_ISE_PANEL_SHOWED                  = 1130;
+const int ISM_TRANS_CMD_ISE_PANEL_HIDED                   = 1131;
+const int ISM_TRANS_CMD_ISF_CONTROL_SHOWED                = 1132;
+const int ISM_TRANS_CMD_ISF_CONTROL_HIDED                 = 1133;
 
-#define ISM_TRANS_CMD_RESET_ISE_CONTEXT                     1135
-#define ISM_TRANS_CMD_GET_LAYOUT_LIST                       1136
-#define ISM_TRANS_CMD_SET_RETURN_KEY_TYPE                   1137
-#define ISM_TRANS_CMD_GET_RETURN_KEY_TYPE                   1138
-#define ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE                1139
-#define ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE                1140
+const int ISM_TRANS_CMD_RESET_ISE_CONTEXT                 = 1135;
+const int ISM_TRANS_CMD_SET_RETURN_KEY_TYPE               = 1136;
+const int ISM_TRANS_CMD_GET_RETURN_KEY_TYPE               = 1137;
+const int ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE            = 1138;
+const int ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE            = 1139;
 
 
-// ISE to Control Panel
-const int ISM_TRANS_CMD_SET_CANDIDATE_UI            = 1201;
-const int ISM_TRANS_CMD_GET_CANDIDATE_UI            = 1202;
-const int ISM_TRANS_CMD_UPDATE_CANDIDATE_UI         = 1203;
-const int ISM_TRANS_CMD_GET_KEYBOARD_ISE_LIST       = 1204;
-const int ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE_LIST    = 1205;
-const int ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID    = 1206;
-const int ISM_TRANS_CMD_GET_KEYBOARD_ISE            = 1207;
-const int ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE         = 1208;
-const int ISM_TRANS_CMD_SET_CANDIDATE_POSITION      = 1209;
-const int ISM_TRANS_CMD_HIDE_CANDIDATE              = 1210;
-const int ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY      = 1211;
-const int ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY   = 1212;
-const int ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY         = 1213;
-const int ISM_TRANS_CMD_EXPAND_CANDIDATE            = 1214;
-const int ISM_TRANS_CMD_CONTRACT_CANDIDATE          = 1215;
+/* ISE to Panel */
+const int ISM_TRANS_CMD_SET_CANDIDATE_UI                  = 1201;
+const int ISM_TRANS_CMD_GET_CANDIDATE_UI                  = 1202;
+const int ISM_TRANS_CMD_UPDATE_CANDIDATE_UI               = 1203;
+const int ISM_TRANS_CMD_GET_KEYBOARD_ISE_LIST             = 1204;
+const int ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE_LIST          = 1205;
+const int ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID          = 1206;
+const int ISM_TRANS_CMD_GET_KEYBOARD_ISE                  = 1207;
+const int ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE               = 1208;
+const int ISM_TRANS_CMD_SET_CANDIDATE_POSITION            = 1209;
+const int ISM_TRANS_CMD_HIDE_CANDIDATE                    = 1210;
+const int ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY            = 1211;
+const int ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY         = 1212;
+const int ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY               = 1213;
+const int ISM_TRANS_CMD_EXPAND_CANDIDATE                  = 1214;
+const int ISM_TRANS_CMD_CONTRACT_CANDIDATE                = 1215;
 
-// Candidate to Helper ISE
-const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW  = 1251;
-const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE  = 1252;
-const int ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE  = 1253;
-const int ISM_TRANS_CMD_LONGPRESS_CANDIDATE         = 1254;
+/* Panel to ISE */
+const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW        = 1251;
+const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE        = 1252;
+const int ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE        = 1253;
+const int ISM_TRANS_CMD_LONGPRESS_CANDIDATE               = 1254;
 
-const int ISM_TRANS_CMD_TURN_ON_LOG                 = 1301;
+const int ISM_TRANS_CMD_TURN_ON_LOG                       = 1301;
 
-const int SCIM_TRANS_CMD_USER_DEFINED               = 10000;
+const int SCIM_TRANS_CMD_USER_DEFINED                     = 10000;
 /**
  * @}
  */

@@ -175,19 +175,19 @@ typedef Slot2<void, const HelperAgent *, uint32 &>
 typedef Slot3<void, const HelperAgent *, int, uint32 &>
         HelperAgentSlotIntUint;
 
-typedef Slot3 <void, const HelperAgent *, char *, size_t &>
+typedef Slot3<void, const HelperAgent *, char *, size_t &>
         HelperAgentSlotRawVoid;
 
-typedef Slot3 <void, const HelperAgent *, char **, size_t &>
+typedef Slot3<void, const HelperAgent *, char **, size_t &>
         HelperAgentSlotGetRawVoid;
 
-typedef Slot4 <void, const HelperAgent *, int, char *, size_t &>
+typedef Slot4<void, const HelperAgent *, int, char *, size_t &>
         HelperAgentSlotIntRawVoid;
 
-typedef Slot3 <void, const HelperAgent *, int, char **>
+typedef Slot3<void, const HelperAgent *, int, char **>
         HelperAgentSlotIntGetStringVoid;
 
-typedef Slot2<void, const HelperAgent *, std::vector<uint32> &>
+typedef Slot2<void, const HelperAgent *, const std::vector<uint32> &>
         HelperAgentSlotUintVector;
 
 /**
@@ -855,7 +855,7 @@ public:
      * The prototype of the slot is:
      * void set_caps_mode (const HelperAgent *agent, uint32 &mode);
      */
-    Connection signal_connect_set_caps_mode               (HelperAgentSlotUintVoid            *slot);
+    Connection signal_connect_set_caps_mode                     (HelperAgentSlotUintVoid            *slot);
 
     /**
      * @brief Connect a slot to Helper reset input context signal.
@@ -968,6 +968,14 @@ public:
      * void update_candidate_table_page_size (const HelperAgent *, int ic, const String &uuid, int page_size);
      */
     Connection signal_connect_update_candidate_table_page_size  (HelperAgentSlotInt                 *slot);
+
+    /**
+     * @brief Connect a slot to Helper update candidate item layout signal.
+     *
+     * The prototype of the slot is:
+     * void update_candidate_item_layout (const HelperAgent *, const std::vector<uint32> &row_items);
+     */
+    Connection signal_connect_update_candidate_item_layout      (HelperAgentSlotUintVector          *slot);
 
     /**
      * @brief Connect a slot to Helper select associate signal.

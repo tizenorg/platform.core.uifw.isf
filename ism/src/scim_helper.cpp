@@ -87,7 +87,7 @@ typedef Signal4 <void, const HelperAgent *, int, char *, size_t &>
 typedef Signal3 <void, const HelperAgent *, int, char **>
         HelperAgentSignalIntGetStringVoid;
 
-typedef Signal2<void, const HelperAgent *, std::vector<uint32> &>
+typedef Signal2<void, const HelperAgent *, const std::vector<uint32> &>
         HelperAgentSignalUintVector;
 
 class HelperAgent::HelperAgentImpl
@@ -128,7 +128,6 @@ public:
     HelperAgentSignalUintVoid           signal_set_layout;
     HelperAgentSignalUintVoid           signal_get_layout;
     HelperAgentSignalUintVoid           signal_set_caps_mode;
-    HelperAgentSignalUintVector         signal_get_layout_list;
     HelperAgentSignalVoid               signal_reset_input_context;
     HelperAgentSignalIntInt             signal_update_candidate_ui;
     HelperAgentSignalRect               signal_update_candidate_geometry;
@@ -141,6 +140,7 @@ public:
     HelperAgentSignalVoid               signal_candidate_table_page_up;
     HelperAgentSignalVoid               signal_candidate_table_page_down;
     HelperAgentSignalInt                signal_update_candidate_table_page_size;
+    HelperAgentSignalUintVector         signal_update_candidate_item_layout;
     HelperAgentSignalInt                signal_select_associate;
     HelperAgentSignalVoid               signal_associate_table_page_up;
     HelperAgentSignalVoid               signal_associate_table_page_down;
@@ -452,7 +452,7 @@ HelperAgent::filter_event ()
                 m_impl->signal_focus_in (this, ic, ic_uuid);
                 break;
             }
-            case ISM_TRANS_CMD_SHOW_ISE:
+            case ISM_TRANS_CMD_SHOW_ISE_PANEL:
             {
                 char   *data = NULL;
                 size_t  len;
@@ -462,7 +462,7 @@ HelperAgent::filter_event ()
                     delete [] data;
                 break;
             }
-            case ISM_TRANS_CMD_HIDE_ISE:
+            case ISM_TRANS_CMD_HIDE_ISE_PANEL:
             {
                 m_impl->signal_ise_hide (this, ic, ic_uuid);
                 break;
@@ -576,18 +576,6 @@ HelperAgent::filter_event ()
                     m_impl->signal_set_layout (this, layout);
                 break;
             }
-            case ISM_TRANS_CMD_GET_LAYOUT_LIST:
-            {
-                std::vector<uint32> list;
-                list.clear();
-
-                m_impl->signal_get_layout_list (this, list);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (list);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
             case ISM_TRANS_CMD_GET_LAYOUT:
             {
                 uint32 layout = 0;
@@ -693,6 +681,13 @@ HelperAgent::filter_event ()
                 uint32 size;
                 if (m_impl->recv.get_data (size))
                     m_impl->signal_update_candidate_table_page_size (this, ic, ic_uuid, size);
+                break;
+            }
+            case ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT:
+            {
+                std::vector<uint32> row_items;
+                if (m_impl->recv.get_data (row_items))
+                    m_impl->signal_update_candidate_item_layout (this, row_items);
                 break;
             }
             case ISM_TRANS_CMD_SELECT_ASSOCIATE:
@@ -1975,6 +1970,18 @@ Connection
 HelperAgent::signal_connect_update_candidate_table_page_size (HelperAgentSlotInt *slot)
 {
     return m_impl->signal_update_candidate_table_page_size.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper update candidate item layout signal.
+ *
+ * The prototype of the slot is:
+ * void update_candidate_item_layout (const HelperAgent *, const std::vector<uint32> &row_items);
+ */
+Connection
+HelperAgent::signal_connect_update_candidate_item_layout (HelperAgentSlotUintVector *slot)
+{
+    return m_impl->signal_update_candidate_item_layout.connect (slot);
 }
 
 /**

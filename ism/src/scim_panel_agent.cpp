@@ -884,6 +884,34 @@ public:
         return client >= 0;
     }
 
+    bool update_candidate_item_layout (const std::vector<uint32> &row_items)
+    {
+        SCIM_DEBUG_MAIN(1) << __func__ << " (" << row_items.size () << ")\n";
+
+        int client;
+        uint32 context;
+
+        lock ();
+
+        get_focused_context (client, context);
+
+        if (client >= 0) {
+            Socket client_socket (client);
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data ((uint32) context);
+            m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT);
+            m_send_trans.put_data (row_items);
+            m_send_trans.write_to_socket (client_socket);
+        }
+
+        unlock ();
+
+        helper_update_candidate_item_layout (row_items);
+
+        return client >= 0;
+    }
+
     bool select_associate (uint32 item)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::select_associate (" << item << ")\n";
@@ -1180,7 +1208,7 @@ public:
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
             m_send_trans.put_data (ctx);
             m_send_trans.put_data (uuid);
-            m_send_trans.put_command (ISM_TRANS_CMD_SHOW_ISE);
+            m_send_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_PANEL);
             m_send_trans.put_data (data, len);
             m_send_trans.write_to_socket (client_socket);
             return true;
@@ -1207,7 +1235,7 @@ public:
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
             m_send_trans.put_data (ctx);
             m_send_trans.put_data (uuid);
-            m_send_trans.put_command (ISM_TRANS_CMD_HIDE_ISE);
+            m_send_trans.put_command (ISM_TRANS_CMD_HIDE_ISE_PANEL);
             m_send_trans.write_to_socket (client_socket);
         }
     }
@@ -1640,40 +1668,6 @@ public:
         return false;
     }
 
-    bool get_helper_layout_list (String &uuid, std::vector<uint32> &list)
-    {
-        HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
-
-        if (it != m_helper_client_index.end ()) {
-            int    client;
-            uint32 context;
-            Socket client_socket (it->second.id);
-            uint32 ctx;
-            Transaction trans;
-
-            get_focused_context (client, context);
-            ctx = get_helper_ic (client, context);
-
-            trans.clear ();
-            trans.put_command (SCIM_TRANS_CMD_REPLY);
-            trans.put_data (ctx);
-            trans.put_data (uuid);
-            trans.put_command (ISM_TRANS_CMD_GET_LAYOUT_LIST);
-
-            int cmd;
-            if (trans.write_to_socket (client_socket)
-                && trans.read_from_socket (client_socket, 500)
-                && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
-                && trans.get_data (list)) {
-                SCIM_DEBUG_MAIN (1) << "get_helper_layout_list success\n";
-                return true;
-            } else {
-                std::cerr << "get_helper_layout_list failed\n";
-            }
-        }
-        return false;
-    }
-
     void get_input_panel_geometry (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
@@ -1902,17 +1896,6 @@ public:
         }
 
         trans.write_to_socket (client_socket);
-    }
-
-    bool get_ise_layout_list (std::vector<uint32> &list)
-    {
-        bool           ret  = false;
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
-
-        if (TOOLBAR_HELPER_MODE == mode)
-            ret = get_helper_layout_list (m_current_helper_uuid, list);
-
-        return ret;
     }
 
     void get_active_ise_name (int client_id)
@@ -2798,16 +2781,6 @@ private:
                         continue;
                     }
 
-                    if (cmd == ISM_TRANS_CMD_PANEL_START_DEFAULT_ISE) {
-                        if ((m_default_ise.type == TOOLBAR_HELPER_MODE) && (m_default_ise.uuid.length () > 0)) {
-                            m_current_toolbar_mode = TOOLBAR_HELPER_MODE;
-                            start_helper (m_default_ise.uuid, client_id, context);
-                        } else if (m_default_ise.type == TOOLBAR_KEYBOARD_MODE) {
-                            m_current_toolbar_mode = TOOLBAR_KEYBOARD_MODE;
-                        }
-                        continue;
-                    }
-
                     if (cmd == SCIM_TRANS_CMD_PANEL_REMOVE_INPUT_CONTEXT) {
                         uint32 ctx = get_helper_ic (client_id, context);
                         m_client_context_uuids.erase (ctx);
@@ -2927,6 +2900,10 @@ private:
                         socket_update_cursor_position ();
                     else if (cmd == ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT)
                         socket_update_surrounding_text ();
+                    else if (cmd == ISM_TRANS_CMD_EXPAND_CANDIDATE)
+                        m_signal_expand_candidate ();
+                    else if (cmd == ISM_TRANS_CMD_CONTRACT_CANDIDATE)
+                        m_signal_contract_candidate ();
                     else if (cmd == SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO)
                         socket_update_factory_info ();
                     else if (cmd == SCIM_TRANS_CMD_SHOW_PREEDIT_STRING)
@@ -4757,6 +4734,37 @@ private:
         return false;
     }
 
+    bool helper_update_candidate_item_layout (const std::vector<uint32> &row_items)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ()) {
+                int    client;
+                uint32 context;
+                Socket client_socket (it->second.id);
+                uint32 ctx;
+
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (ctx);
+                m_send_trans.put_data (m_current_helper_uuid);
+                m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT);
+                m_send_trans.put_data (row_items);
+                m_send_trans.write_to_socket (client_socket);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool helper_select_associate (uint32 item)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_select_associate \n";
@@ -5265,6 +5273,12 @@ bool
 PanelAgent::update_lookup_table_page_size  (uint32         size)
 {
     return m_impl->update_lookup_table_page_size (size);
+}
+
+bool
+PanelAgent::update_candidate_item_layout   (const std::vector<uint32> &row_items)
+{
+    return m_impl->update_candidate_item_layout (row_items);
 }
 
 bool

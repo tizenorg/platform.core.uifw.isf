@@ -122,6 +122,9 @@ protected:
     virtual bool get_surrounding_text    (int id, WideString &text, int &cursor, int maxlen_before, int maxlen_after);
     virtual bool delete_surrounding_text (int id, int offset, int len);
 
+    virtual void expand_candidate        (int id);
+    virtual void contract_candidate      (int id);
+
 public:
     virtual void init (int argc, char **argv);
     virtual void run ();
@@ -169,6 +172,7 @@ private:
     void socket_lookup_table_page_down      (int client_id);
     void socket_set_prediction_allow        (int client_id);
     void socket_set_layout                  (int client_id);
+    void socket_update_candidate_item_layout (int client_id);
     void socket_reset_option                (int client_id);
     void socket_reset                       (int client_id);
     void socket_focus_in                    (int client_id);

@@ -118,6 +118,9 @@ public:
     IMEngineSignalGetSurroundingText      m_signal_get_surrounding_text;
     IMEngineSignalDeleteSurroundingText   m_signal_delete_surrounding_text;
 
+    IMEngineSignalVoid                    m_signal_expand_candidate;
+    IMEngineSignalVoid                    m_signal_contract_candidate;
+
 
     int    m_id;
     void * m_frontend_data;
@@ -378,6 +381,11 @@ IMEngineInstanceBase::set_layout (unsigned int layout)
 }
 
 void
+IMEngineInstanceBase::update_candidate_item_layout (const std::vector<unsigned int> &row_items)
+{
+}
+
+void
 IMEngineInstanceBase::reset_option ()
 {
 }
@@ -532,6 +540,18 @@ IMEngineInstanceBase::signal_connect_delete_surrounding_text (IMEngineSlotDelete
     return m_impl->m_signal_delete_surrounding_text.connect (slot);
 }
 
+Connection
+IMEngineInstanceBase::signal_connect_expand_candidate (IMEngineSlotVoid *slot)
+{
+    return m_impl->m_signal_expand_candidate.connect (slot);
+}
+
+Connection
+IMEngineInstanceBase::signal_connect_contract_candidate (IMEngineSlotVoid *slot)
+{
+    return m_impl->m_signal_contract_candidate.connect (slot);
+}
+
 void
 IMEngineInstanceBase::show_preedit_string ()
 {
@@ -661,6 +681,18 @@ bool
 IMEngineInstanceBase::delete_surrounding_text (int offset, int len)
 {
     return m_impl->m_signal_delete_surrounding_text (this, offset, len);
+}
+
+void
+IMEngineInstanceBase::expand_candidate (void)
+{
+    m_impl->m_signal_expand_candidate (this);
+}
+
+void
+IMEngineInstanceBase::contract_candidate (void)
+{
+    m_impl->m_signal_contract_candidate (this);
 }
 
 // implementation of DummyIMEngine

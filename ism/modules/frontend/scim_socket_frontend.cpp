@@ -552,6 +552,20 @@ SocketFrontEnd::delete_surrounding_text (int id, int offset, int len)
 }
 
 void
+SocketFrontEnd::expand_candidate (int id)
+{
+    if (m_current_instance == id)
+        m_send_trans.put_command (ISM_TRANS_CMD_EXPAND_CANDIDATE);
+}
+
+void
+SocketFrontEnd::contract_candidate (int id)
+{
+    if (m_current_instance == id)
+        m_send_trans.put_command (ISM_TRANS_CMD_CONTRACT_CANDIDATE);
+}
+
+void
 SocketFrontEnd::init (int argc, char **argv)
 {
     int max_clients = -1;
@@ -717,6 +731,8 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             socket_lookup_table_page_down (id);
         else if (cmd == ISM_TRANS_CMD_SET_PREDICTION_ALLOW)
             socket_set_prediction_allow (id);
+        else if (cmd == ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT)
+            socket_update_candidate_item_layout (id);
         else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
             socket_set_layout (id);
         else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
@@ -1316,6 +1332,28 @@ SocketFrontEnd::socket_set_layout (int /*client_id*/)
         m_current_instance = (int) siid;
 
         set_layout ((int) siid, layout);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_update_candidate_item_layout (int /*client_id*/)
+{
+    uint32 siid;
+    std::vector<unsigned int> row_items;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (row_items)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ") RowSize (" << row_items.size () << ").\n";
+
+        m_current_instance = (int) siid;
+
+        update_candidate_item_layout ((int) siid, row_items);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;

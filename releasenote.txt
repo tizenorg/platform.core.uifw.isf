@@ -1,3 +1,7 @@
+ISF 2.3.5923 :
+  1. Add expand_candidate (), contract_candidate () and update_candidate_item_layout () for keyboard ISE;
+
+
 ISF 2.3.5921 :
   1. [demo] Use virtualkeypad,state,* smart callback of conformant
   2. [demo] add a variety of layout in focus movement for test

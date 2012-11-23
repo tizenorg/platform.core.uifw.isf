@@ -141,6 +141,14 @@ public:
         return m_frontend->delete_surrounding_text (si->get_id (), offset, len);
     }
 
+    void slot_expand_candidate      (IMEngineInstanceBase * si) {
+        m_frontend->expand_candidate (si->get_id ());
+    }
+
+    void slot_contract_candidate    (IMEngineInstanceBase * si) {
+        m_frontend->contract_candidate (si->get_id ());
+    }
+
     void attach_instance (const IMEngineInstancePointer &si)
     {
         si->signal_connect_show_preedit_string (
@@ -195,6 +203,12 @@ public:
 
         si->signal_connect_delete_surrounding_text (
             slot (this, &FrontEndBase::FrontEndBaseImpl::slot_delete_surrounding_text));
+
+        si->signal_connect_expand_candidate (
+            slot (this, &FrontEndBase::FrontEndBaseImpl::slot_expand_candidate));
+
+        si->signal_connect_contract_candidate (
+            slot (this, &FrontEndBase::FrontEndBaseImpl::slot_contract_candidate));
     }
 };
 
@@ -658,6 +672,14 @@ FrontEndBase::set_layout (int id, unsigned int layout) const
 }
 
 void
+FrontEndBase::update_candidate_item_layout (int id, const std::vector<unsigned int> &row_items) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->update_candidate_item_layout (row_items);
+}
+
+void
 FrontEndBase::reset_option (int id) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);
@@ -770,6 +792,14 @@ bool
 FrontEndBase::delete_surrounding_text  (int id, int offset, int len)
 {
     return false;
+}
+void
+FrontEndBase::expand_candidate (int id)
+{
+}
+void
+FrontEndBase::contract_candidate (int id)
+{
 }
 void
 FrontEndBase::dump_instances (void)

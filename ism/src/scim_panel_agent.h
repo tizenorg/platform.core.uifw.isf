@@ -511,6 +511,15 @@ public:
 
     /**
      * @brief Let the focused IMEngineInstance object
+     *        update candidate items layout.
+     *
+     * @param row_items The items of each row.
+     * @return true if the command was sent correctly.
+     */
+    bool update_candidate_item_layout   (const std::vector<uint32> &row_items);
+
+    /**
+     * @brief Let the focused IMEngineInstance object
      *        select a associate in current associate table.
      *
      * @param item The index of the selected associate.

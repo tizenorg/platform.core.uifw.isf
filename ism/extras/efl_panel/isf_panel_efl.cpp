@@ -149,7 +149,6 @@ static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_get_input_panel_geometry        (struct rectinfo &info);
 static void       slot_set_keyboard_ise                (const String &uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
-static void       slot_start_default_ise               (void);
 static void       slot_accept_connection               (int fd);
 static void       slot_close_connection                (int fd);
 static void       slot_exit                            (void);
@@ -1710,7 +1709,6 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info));
     _panel_agent->signal_connect_set_keyboard_ise           (slot (slot_set_keyboard_ise));
     _panel_agent->signal_connect_get_keyboard_ise           (slot (slot_get_keyboard_ise));
-    _panel_agent->signal_connect_start_default_ise          (slot (slot_start_default_ise));
     _panel_agent->signal_connect_accept_connection          (slot (slot_accept_connection));
     _panel_agent->signal_connect_close_connection           (slot (slot_close_connection));
     _panel_agent->signal_connect_exit                       (slot (slot_exit));
@@ -2119,6 +2117,9 @@ static void update_table (int table_type, const LookupTable &table)
     AttributeList attrs;
     int i, x, y, width, height, item_0_width;
 
+    int nLast      = 0;
+    std::vector<uint32> row_items;
+
     int seperate_width  = 4;
     int seperate_height = 52 * _height_rate;
     int line_width      = _candidate_scroll_width;
@@ -2200,27 +2201,22 @@ static void update_table (int table_type, const LookupTable &table)
                     set_highlight_color (_candidate_0 [i], nForeGround, nBackGround, bSetBack);
                 }
 
-                // Add first item
+                /* Check whether this item is the last one */
+                if (i == item_num - 1) {
+                    if (_candidate_angle == 90 || _candidate_angle == 270)
+                        scroll_0_width = _candidate_land_width;
+                    else
+                        scroll_0_width = _candidate_port_width;
+                }
+
+                /* Add first item */
                 if (i == 0) {
-                    if (item_num == 1) {
-                        if (_candidate_angle == 90 || _candidate_angle == 270)
-                            scroll_0_width = _candidate_land_width;
-                        else
-                            scroll_0_width = _candidate_port_width;
-                    }
                     item_0_width = item_0_width > scroll_0_width ? scroll_0_width : item_0_width;
                     evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                     elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, 0, item_0_width, _item_min_height);
                     total_width += item_0_width;
                     continue;
                 } else {
-                    if (i == item_num - 1) {
-                        if (_candidate_angle == 90 || _candidate_angle == 270)
-                            scroll_0_width = _candidate_land_width;
-                        else
-                            scroll_0_width = _candidate_port_width;
-                    }
-
                     total_width += (item_0_width + seperate_width);
                     if (total_width <= scroll_0_width) {
                         _seperate_0 [i] = edje_object_add (evas);
@@ -2242,7 +2238,13 @@ static void update_table (int table_type, const LookupTable &table)
                         evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                         elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, line_0*(_item_min_height+line_height), item_0_width, _item_min_height);
                         total_width = item_0_width;
+
+                        row_items.push_back (i - nLast);
+                        nLast = i;
                         continue;
+                    } else {
+                        row_items.push_back (i - nLast);
+                        nLast = i;
                     }
                 }
             }
@@ -2269,6 +2271,9 @@ static void update_table (int table_type, const LookupTable &table)
             if (current_width > 0 && current_width + item_0_width > _candidate_scroll_width) {
                 current_width = 0;
                 line_count++;
+
+                row_items.push_back (i - nLast);
+                nLast = i;
             }
             if (current_width == 0 && !_line_items [i]) {
                 _line_items [i] = edje_object_add (evas);
@@ -2325,6 +2330,8 @@ static void update_table (int table_type, const LookupTable &table)
         }
     }
 
+    row_items.push_back (item_num - nLast);     /* Add the number of last row */
+    _panel_agent->update_candidate_item_layout (row_items);
     _panel_agent->update_displayed_candidate_number (item_num - more_item_count);
     if (more_item_count == 0) {
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
@@ -2618,27 +2625,6 @@ static void slot_get_keyboard_ise (String &ise_name, String &ise_uuid)
 }
 
 /**
- * @brief Start default ISE slot function for PanelAgent.
- */
-static void slot_start_default_ise (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    DEFAULT_ISE_T default_ise;
-
-    default_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)_initial_ise.type);
-    default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
-    default_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_NAME), _initial_ise.name);
-
-    if (!set_active_ise (default_ise.uuid)) {
-        if (default_ise.uuid != _initial_ise.uuid)
-            set_active_ise (_initial_ise.uuid);
-    }
-
-    return;
-}
-
-/**
  * @brief Accept connection slot function for PanelAgent.
  *
  * @param fd The file descriptor to connect.
@@ -2883,6 +2869,27 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     _config->reload ();
 }
 #endif
+
+/**
+ * @brief Start default ISE.
+ *
+ * @return void
+ */
+static void start_default_ise (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    DEFAULT_ISE_T default_ise;
+
+    default_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)_initial_ise.type);
+    default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
+    default_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_NAME), _initial_ise.name);
+
+    if (!set_active_ise (default_ise.uuid)) {
+        if (default_ise.uuid != _initial_ise.uuid)
+            set_active_ise (_initial_ise.uuid);
+    }
+}
 
 /**
  * @brief Check hardware keyboard.
@@ -3242,7 +3249,7 @@ int main (int argc, char *argv [])
         slot_get_ise_list (list);
 
         /* Start default ISE */
-        slot_start_default_ise ();
+        start_default_ise ();
         check_hardware_keyboard ();
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
