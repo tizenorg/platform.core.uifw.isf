@@ -573,8 +573,7 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
     if (!context_scim || !context_scim->impl) return EINA_FALSE;
 
-    switch (context_scim->impl->autocapital_type)
-    {
+    switch (context_scim->impl->autocapital_type) {
         case ECORE_IMF_AUTOCAPITAL_TYPE_NONE:
             return EINA_FALSE;
         case ECORE_IMF_AUTOCAPITAL_TYPE_ALLCHARACTER:
@@ -582,6 +581,9 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
         default:
             break;
     }
+
+    if (context_scim->impl->cursor_pos == 0)
+        return EINA_TRUE;
 
     for (i = 0; i < punc_num; i++) {
         uni_puncs[i] = eina_unicode_utf8_to_unicode (puncs[i], NULL);
@@ -1256,11 +1258,11 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->cursor_pos != cursor_pos) {
+            LOGD ("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            context_scim->impl->cursor_pos = cursor_pos;
+
             caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
 
-            LOGD ("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
-
-            context_scim->impl->cursor_pos = cursor_pos;
             if (context_scim->impl->preedit_updating)
                 return;
             _panel_client.prepare (context_scim->id);
