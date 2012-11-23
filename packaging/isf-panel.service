@@ -5,7 +5,9 @@ After=starter.service
 [Service]
 ExecStart=/usr/bin/isf-panel-efl
 Nice=5
-OOMScoreAdjust=100
+OOMScoreAdjust=-100
+Restart=always
+RestartSec=2
 
 [Install]
 WantedBy=core-efl.target
