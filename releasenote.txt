@@ -1,3 +1,7 @@
+ISF 2.3.5926 :
+  1. Donot create candidate window when focus in
+
+
 ISF 2.3.5923 :
   1. Add expand_candidate (), contract_candidate () and update_candidate_item_layout () for keyboard ISE;
 

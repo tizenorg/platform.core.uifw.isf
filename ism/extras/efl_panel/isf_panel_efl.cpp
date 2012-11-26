@@ -1736,9 +1736,6 @@ static void slot_focus_in (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     ui_candidate_delete_destroy_timer ();
-    if (!_candidate_window) {
-        ui_create_candidate_window ();
-    }
 }
 
 /**
@@ -1893,6 +1890,8 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 static void slot_show_aux_string (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if (_candidate_window == NULL)
+        ui_create_candidate_window ();
 
     if (_aux_area == NULL || evas_object_visible_get (_aux_area))
         return;
@@ -1910,6 +1909,8 @@ static void slot_show_aux_string (void)
 static void slot_show_candidate_table (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if (_candidate_window == NULL)
+        ui_create_candidate_window ();
 
     if (!_candidate_area_1 ||
         evas_object_visible_get (_candidate_area_1) ||
@@ -2005,6 +2006,8 @@ static void set_highlight_color (Evas_Object *item, uint32 nForeGround, uint32 n
 static void slot_update_aux_string (const String &str, const AttributeList &attrs)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if (_candidate_window == NULL)
+        ui_create_candidate_window ();
 
     if (!_aux_area || (str.length () <= 0))
         return;
@@ -2356,6 +2359,8 @@ static void update_table (int table_type, const LookupTable &table)
 static void slot_update_candidate_table (const LookupTable &table)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if (_candidate_window == NULL)
+        ui_create_candidate_window ();
 
     if (!_candidate_window || table.get_current_page_size () < 0)
         return;
