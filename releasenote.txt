@@ -1,5 +1,6 @@
 ISF 2.3.5926 :
   1. Donot create candidate window when focus in
+  2. [immodule] reduce time to process autocapital
 
 
 ISF 2.3.5923 :

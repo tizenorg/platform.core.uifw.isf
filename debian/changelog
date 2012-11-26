@@ -1,6 +1,7 @@
 isf (2.3.5926-1slp2+1) unstable; urgency=low
 
   * Donot create candidate window when focus in
+  * [immodule] reduce time to process autocapital
   * Git: framework/uifw/isf
   * Tag: isf_2.3.5926-1slp2+1
 
