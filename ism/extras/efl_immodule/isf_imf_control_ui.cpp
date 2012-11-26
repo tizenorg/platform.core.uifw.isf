@@ -127,7 +127,7 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
     void *list_data = NULL;
     EventCallbackNode *fn = NULL;
     Eina_List *l = NULL;
-    Ecore_IMF_Context *using_ic = show_req_ic;
+    Ecore_IMF_Context *using_ic = get_focused_ic() == NULL?show_req_ic:get_focused_ic()->ctx;
 
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT &&
         value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
