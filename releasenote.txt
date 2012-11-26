@@ -1,3 +1,6 @@
+ISF 2.3.5927 :
+  1. Disable check datasum feature for socket to reduce socket transmission delay
+
 ISF 2.3.5926 :
   1. Donot create candidate window when focus in
   2. [immodule] reduce time to process autocapital

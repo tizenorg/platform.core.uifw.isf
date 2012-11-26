@@ -40,11 +40,17 @@
 
 namespace scim {
 
+//#define ENABLE_CHECKMSG
+
 #define SCIM_TRANS_MIN_BUFSIZE 512
 #define SCIM_TRANS_MAX_BUFSIZE (1048576*16)
 #define SCIM_TRANS_MAGIC       0x4d494353
-#define SCIM_TRANS_HEADER_SIZE (sizeof (uint32) * 4)
 
+#ifdef ENABLE_CHECKMSG
+#define SCIM_TRANS_HEADER_SIZE (sizeof (uint32) * 4)
+#else
+#define SCIM_TRANS_HEADER_SIZE (sizeof (uint32) * 3)
+#endif
 class TransactionHolder
 {
     mutable int    m_ref;
@@ -150,7 +156,9 @@ Transaction::write_to_socket (const Socket &socket, uint32 signature) const
         scim_uint32tobytes (m_holder->m_buffer, signature);
         scim_uint32tobytes (m_holder->m_buffer + sizeof (uint32), SCIM_TRANS_MAGIC);
         scim_uint32tobytes (m_holder->m_buffer + sizeof (uint32) * 2, m_holder->m_write_pos - SCIM_TRANS_HEADER_SIZE);
+#ifdef ENABLE_CHECKMSG
         scim_uint32tobytes (m_holder->m_buffer + sizeof (uint32) * 3, m_holder->calc_checksum ());
+#endif
         return socket.write (m_holder->m_buffer, m_holder->m_write_pos) == (int) m_holder->m_write_pos;
     }
     return false;
@@ -184,13 +192,13 @@ Transaction::read_from_socket (const Socket &socket, int timeout)
         } else {
             size = (int) sign2;
         }
-
+#ifdef ENABLE_CHECKMSG
         nbytes = socket.read_with_timeout (buf, sizeof (uint32), timeout);
         if (((uint32)nbytes) < sizeof (uint32))
             return false;
 
         checksum = scim_bytestouint32 (buf);
-
+#endif
         if (size <= 0 || size > SCIM_TRANS_MAX_BUFSIZE)
             return false;
 
@@ -209,10 +217,12 @@ Transaction::read_from_socket (const Socket &socket, int timeout)
             m_holder->m_write_pos += nbytes;
         }
 
+#ifdef ENABLE_CHECKMSG
         if (checksum != m_holder->calc_checksum ()) {
             m_holder->m_write_pos = SCIM_TRANS_HEADER_SIZE;
             return false;
         }
+#endif
 
         return true;
     }
@@ -236,8 +246,9 @@ Transaction::write_to_buffer (void *buf, size_t bufsize) const
         scim_uint32tobytes (cbuf, 0);
         scim_uint32tobytes (cbuf + sizeof (uint32), SCIM_TRANS_MAGIC);
         scim_uint32tobytes (cbuf + sizeof (uint32) * 2, m_holder->m_write_pos - SCIM_TRANS_HEADER_SIZE);
+#ifdef ENABLE_CHECKMSG
         scim_uint32tobytes (cbuf + sizeof (uint32) * 3, m_holder->calc_checksum ());
-
+#endif
         return true;
     }
     return false;
@@ -254,17 +265,19 @@ Transaction::read_from_buffer (const void *buf, size_t bufsize)
         scim_bytestouint32 (cbuf + sizeof (uint32) * 2) <= bufsize - SCIM_TRANS_HEADER_SIZE) {
 
         uint32 size = scim_bytestouint32 (cbuf + sizeof (uint32) * 2) + SCIM_TRANS_HEADER_SIZE;
+#ifdef ENABLE_CHECKMSG
         uint32 checksum = scim_bytestouint32 (cbuf + sizeof (uint32) * 3);
-
+#endif
         if (m_holder->m_buffer_size < size)
             m_holder->request_buffer_size (size - m_holder->m_buffer_size);
 
         memcpy (m_holder->m_buffer, buf, size);
 
         m_holder->m_write_pos = SCIM_TRANS_HEADER_SIZE;
-
+#ifdef ENABLE_CHECKMSG
         if (checksum == m_holder->calc_checksum ())
             return true;
+#endif
     }
     return false;
 }

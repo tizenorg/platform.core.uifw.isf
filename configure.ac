@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.3.5926, isf@samsung.com)
+AC_INIT(isf, 2.3.5927, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
