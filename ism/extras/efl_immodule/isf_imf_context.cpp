@@ -38,7 +38,7 @@
 #include <Evas.h>
 #include <Ecore_Evas.h>
 #include <Ecore_X.h>
-#include <X11/Xlib.h>
+#include <X11/XKBlib.h>
 #include <X11/keysym.h>
 #include <X11/Xutil.h>
 #include <glib.h>
@@ -1969,12 +1969,12 @@ send_evas_key_event (Evas *evas, const KeyEvent &scim_key, bool fake)
         return;
 
     keycode = _keyname_to_keycode (keysym_str);
-    keyname = XKeysymToString (XKeycodeToKeysym (display, keycode, 0));
+    keyname = XKeysymToString (XkbKeycodeToKeysym (display, keycode, 0, 0));
     key = keysym_str;
 
     // check modifier
-    if (XKeycodeToKeysym (display, keycode, 0) != keysym) {
-        if (XKeycodeToKeysym (display, keycode, 1) == keysym)
+    if (XkbKeycodeToKeysym (display, keycode, 0, 0) != keysym) {
+        if (XkbKeycodeToKeysym (display, keycode, 0, 1) == keysym)
             shift = 1;
         else
             keycode = 0;
@@ -3098,8 +3098,8 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
         return;
 
     keycode = _keyname_to_keycode (keysym_str);
-    if (XKeycodeToKeysym (display, keycode, 0) != keysym) {
-        if (XKeycodeToKeysym (display, keycode, 1) == keysym)
+    if (XkbKeycodeToKeysym (display, keycode, 0, 0) != keysym) {
+        if (XkbKeycodeToKeysym (display, keycode, 0, 1) == keysym)
             shift = 1;
         else
             keycode = 0;
