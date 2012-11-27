@@ -1,18 +1,12 @@
 isf (2.3.5927-1slp2+1) unstable; urgency=low
 
+  * Add update_cursor_position () for keyboard ISE
+  * Fix issue N_SE-13248 candiate show inproperly when keyboard is connected
   * Fix issue N_SE-13430: Disable check datasum feature for socket to reduce socket transmission delay
   * Git: framework/uifw/isf
   * Tag: isf_2.3.5927-1slp2+1
 
- -- Li Zhang <li2012.zhang@samsung.com>  Tue, 27 Nov 2012 01:44:00 +0900
-
-isf (2.3.5926-1slp2+2) unstable; urgency=low
-
-  * Fix issue N_SE-13248 candiate show inproperly when keyboard is connected.
-  * Git: framework/uifw/isf
-  * Tag: isf_2.3.5926-1slp2+2
-
- -- Li Zhang <li2012.zhang@samsung.com>  Mon, 26 Nov 2012 23:30:00 +0900
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Tue, 27 Nov 2012 17:12:00 +0900
 
 isf (2.3.5926-1slp2+1) unstable; urgency=low
 

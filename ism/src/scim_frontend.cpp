@@ -680,6 +680,14 @@ FrontEndBase::update_candidate_item_layout (int id, const std::vector<unsigned i
 }
 
 void
+FrontEndBase::update_cursor_position (int id, unsigned int cursor_pos) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->update_cursor_position (cursor_pos);
+}
+
+void
 FrontEndBase::reset_option (int id) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);

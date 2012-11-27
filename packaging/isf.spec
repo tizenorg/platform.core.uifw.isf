@@ -1,4 +1,4 @@
-#sbs-git:framework/uifw/isf isf 2.3.5926 07f2b65224e6cef5cd6799065bb01fa656bc115e
+#sbs-git:framework/uifw/isf isf 2.3.5927 07f2b65224e6cef5cd6799065bb01fa656bc115e
 %define _usrdir	/usr
 %define _ugdir	%{_usrdir}/ug
 

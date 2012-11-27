@@ -664,6 +664,13 @@ public:
      */
     virtual void update_candidate_item_layout (const std::vector<unsigned int> &row_items);
 
+    /**
+     * @brief When cursor position is changed, this function will be called.
+     *
+     * @param cursor_pos - the new cursor position.
+     */
+    virtual void update_cursor_position (unsigned int cursor_pos);
+
 protected:
     /**
      * @name Signal activation functions

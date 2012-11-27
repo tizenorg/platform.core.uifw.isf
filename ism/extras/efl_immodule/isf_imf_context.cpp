@@ -1266,6 +1266,7 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
             if (context_scim->impl->preedit_updating)
                 return;
             _panel_client.prepare (context_scim->id);
+            context_scim->impl->si->update_cursor_position (cursor_pos);
             panel_req_update_cursor_position (context_scim, cursor_pos);
             _panel_client.send ();
         }

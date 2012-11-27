@@ -403,13 +403,6 @@ protected:
     void set_layout (int id, unsigned int layout) const;
 
     /**
-     * @brief update candidate items layout.
-     * @param id the IMEngine instance id.
-     * @param row_items the items of each row.
-     */
-    void update_candidate_item_layout (int id, const std::vector<unsigned int> &row_items) const;
-
-    /**
      * @brief reset a specific IMEngine option.
      * @param id the id of the IMEngine instance to be reset.
      */
@@ -454,6 +447,20 @@ protected:
      * @param cap the bitset of the capabilities which are supported by client.
      */
     void update_client_capabilities (int id, unsigned int cap) const;
+
+    /**
+     * @brief update candidate items layout.
+     * @param id the IMEngine instance id.
+     * @param row_items the items of each row.
+     */
+    void update_candidate_item_layout (int id, const std::vector<unsigned int> &row_items) const;
+
+    /**
+     * @brief update cursor position.
+     * @param id the IMEngine instance id.
+     * @param cursor_pos the new cursor position.
+     */
+    void update_cursor_position (int id, unsigned int cursor_pos) const;
 
     /**
      * @}

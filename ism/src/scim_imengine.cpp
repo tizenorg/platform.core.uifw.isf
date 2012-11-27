@@ -386,6 +386,11 @@ IMEngineInstanceBase::update_candidate_item_layout (const std::vector<unsigned i
 }
 
 void
+IMEngineInstanceBase::update_cursor_position (unsigned int cursor_pos)
+{
+}
+
+void
 IMEngineInstanceBase::reset_option ()
 {
 }

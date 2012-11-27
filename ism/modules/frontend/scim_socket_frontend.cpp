@@ -733,6 +733,8 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             socket_set_prediction_allow (id);
         else if (cmd == ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT)
             socket_update_candidate_item_layout (id);
+        else if (cmd == ISM_TRANS_CMD_UPDATE_CURSOR_POSITION)
+            socket_update_cursor_position (id);
         else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
             socket_set_layout (id);
         else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
@@ -1354,6 +1356,28 @@ SocketFrontEnd::socket_update_candidate_item_layout (int /*client_id*/)
         m_current_instance = (int) siid;
 
         update_candidate_item_layout ((int) siid, row_items);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_update_cursor_position (int /*client_id*/)
+{
+    uint32 siid;
+    unsigned int cursor_pos;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (cursor_pos)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ") New cursor (" << cursor_pos << ").\n";
+
+        m_current_instance = (int) siid;
+
+        update_cursor_position ((int) siid, cursor_pos);
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
         m_current_instance = -1;

@@ -172,7 +172,6 @@ private:
     void socket_lookup_table_page_down      (int client_id);
     void socket_set_prediction_allow        (int client_id);
     void socket_set_layout                  (int client_id);
-    void socket_update_candidate_item_layout (int client_id);
     void socket_reset_option                (int client_id);
     void socket_reset                       (int client_id);
     void socket_focus_in                    (int client_id);
@@ -203,6 +202,9 @@ private:
     void socket_turn_on_log                 (int client_id);
 
     void reload_config_callback (const ConfigPointer &config);
+
+    void socket_update_candidate_item_layout (int client_id);
+    void socket_update_cursor_position      (int client_id);
 };
 
 #endif

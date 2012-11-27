@@ -759,6 +759,22 @@ SocketInstance::update_candidate_item_layout (const std::vector<unsigned int> &r
 }
 
 void
+SocketInstance::update_cursor_position (unsigned int cursor_pos)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__ << " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_UPDATE_CURSOR_POSITION);
+    trans.put_data (m_peer_id);
+    trans.put_data (cursor_pos);
+
+    commit_transaction (trans);
+}
+
+void
 SocketInstance::reset_option ()
 {
     Transaction trans;
