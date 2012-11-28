@@ -112,6 +112,8 @@ static Evas_Object                 *_sw_radio_grp             = NULL;
 static Evas_Object                 *_hw_radio_grp             = NULL;
 static std::vector<String>          _sw_ise_list;
 static std::vector<String>          _hw_ise_list;
+static std::vector <String>         _setup_modules;
+static String                       _mdl_name;
 
 static char                         _sw_ise_bak[256]          = {'\0'};
 static char                         _hw_ise_bak[256]          = {'\0'};
@@ -222,19 +224,12 @@ static bool find_ise_option_module (const char *ise_name)
                 mdl_name = _module_names[i] + String ("-setup");
         }
     }
-
-    if (_mdl) {
-        delete _mdl;
-        _mdl = NULL;
+    _mdl_name = mdl_name;
+    for (unsigned int i = 0; i < _setup_modules.size (); i++) {
+        if (mdl_name == _setup_modules[i])
+            return true;
     }
-
-    if (mdl_name.length () > 0)
-        _mdl = new SetupModule (String (mdl_name));
-
-    if (_mdl == NULL || !_mdl->valid ())
-        return false;
-    else
-        return true;
+    return false;
 }
 
 static void set_autocap_mode (void)
@@ -416,14 +411,27 @@ static void ise_option_show (ug_data *ugd, const char *ise_name)
     if (find_ise_option_module (ise_name)) {
         char title[256];
         snprintf (title, sizeof (title), _T("Keyboard settings"));
-        _mdl->load_config (_config);
-        ugd->opt_eo = _mdl->create_ui (ugd->layout_main, ugd->naviframe);
 
-        Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, title, NULL, NULL, ugd->opt_eo, NULL);
+        if (_mdl) {
+            delete _mdl;
+            _mdl = NULL;
+        }
 
-        Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
-        evas_object_smart_callback_add (back_btn, "clicked", ise_option_view_set_cb, ugd);
-        ugd->key_end_cb = ise_option_view_set_cb;
+        if (_mdl_name.length () > 0)
+            _mdl = new SetupModule (String (_mdl_name));
+
+        if (_mdl == NULL || !_mdl->valid ()) return;
+        else
+        {
+            _mdl->load_config (_config);
+            ugd->opt_eo = _mdl->create_ui (ugd->layout_main, ugd->naviframe);
+
+            Elm_Object_Item *it = elm_naviframe_item_push (ugd->naviframe, title, NULL, NULL, ugd->opt_eo, NULL);
+
+            Evas_Object *back_btn = elm_object_item_part_content_get (it, "prev_btn");
+            evas_object_smart_callback_add (back_btn, "clicked", ise_option_view_set_cb, ugd);
+            ugd->key_end_cb = ise_option_view_set_cb;
+        }
     }
 }
 
@@ -1225,6 +1233,7 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
 
     load_config_module ();
     load_config_data (_config);
+    scim_get_setup_module_list(_setup_modules);
     update_ise_list ();
     isf_load_ise_information (ALL_ISE, _config);
     init_hw_keyboard_listener (ugd);
