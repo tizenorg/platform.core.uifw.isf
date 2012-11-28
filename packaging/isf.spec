@@ -71,6 +71,7 @@ ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-pan
 %post 
 /sbin/ldconfig
 mkdir -p /etc/scim/conf
+mkdir -p /opt/usr/apps/scim/lib/scim-1.0/1.4.0/Helper
 
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514 || :
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514 || :
