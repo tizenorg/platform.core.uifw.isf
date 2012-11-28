@@ -861,7 +861,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             memset (item_data, 0, sizeof (ItemData));
             _p_items[AUTO_CAPITALIZATION_TXT_ITEM] = item_data;
             item_data->text = strdup (_T("Automatically capitalize first letter of sentence"));
-            elm_genlist_item_append (
+            item = elm_genlist_item_append (
                     genlist,                                // genlist object
                     &itcText,                               // item class
                     (void *)(AUTO_CAPITALIZATION_TXT_ITEM), // data
@@ -911,7 +911,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                 memset (item_data, 0, sizeof (ItemData));
                 _p_items[AUTO_FULL_STOP_TXT_ITEM] = item_data;
                 item_data->text = strdup (_T("Automatically insert a full stop by tapping the space bar twice"));
-                elm_genlist_item_append (
+                item = elm_genlist_item_append (
                         genlist,                            // genlist object
                         &itcText,                           // item class
                         (void *)(AUTO_FULL_STOP_TXT_ITEM),  // data
