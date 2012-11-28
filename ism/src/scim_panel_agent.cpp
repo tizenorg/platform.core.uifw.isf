@@ -2869,12 +2869,10 @@ private:
                     if (cmd == SCIM_TRANS_CMD_START_HELPER) {
                         socket_start_helper (client_id, context, uuid);
                         continue;
-                    }
-                    else if (cmd == SCIM_TRANS_CMD_SEND_HELPER_EVENT) {
+                    } else if (cmd == SCIM_TRANS_CMD_SEND_HELPER_EVENT) {
                         socket_send_helper_event (client_id, context, uuid);
                         continue;
-                    }
-                    else if (cmd == SCIM_TRANS_CMD_STOP_HELPER) {
+                    } else if (cmd == SCIM_TRANS_CMD_STOP_HELPER) {
                         socket_stop_helper (client_id, context, uuid);
                         continue;
                     }

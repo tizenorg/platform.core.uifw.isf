@@ -57,10 +57,6 @@ HelperModule::HelperModule (const String &name)
 bool
 HelperModule::load (const String &name)
 {
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s (%s)\n", time (0), getpid (), __FILE__, __func__, name.c_str ());
-    isf_save_log (buf);
-
     try {
         if (!m_module.load (name, "Helper"))
             return false;
@@ -93,7 +89,7 @@ HelperModule::load (const String &name)
         }
 
         if (m_set_path_info) {
-            m_set_path_info(m_module.get_path().c_str());
+            m_set_path_info (m_module.get_path ().c_str ());
         }
     } catch (...) {
         m_module.unload ();
@@ -110,10 +106,6 @@ HelperModule::load (const String &name)
 bool
 HelperModule::unload ()
 {
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s ()\n", time (0), getpid (), __FILE__, __func__);
-    isf_save_log (buf);
-
     return m_module.unload ();
 }
 
