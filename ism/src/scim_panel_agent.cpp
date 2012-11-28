@@ -1529,6 +1529,8 @@ public:
         trans.put_command (SCIM_TRANS_CMD_OK);
         trans.put_data (ret);
         trans.write_to_socket (client_socket);
+        if (data != NULL)
+            delete[] data;
     }
 
     void hide_ise_panel (int client_id)
