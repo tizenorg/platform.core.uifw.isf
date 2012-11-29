@@ -420,9 +420,9 @@ static void ise_option_show (ug_data *ugd, const char *ise_name)
         if (_mdl_name.length () > 0)
             _mdl = new SetupModule (String (_mdl_name));
 
-        if (_mdl == NULL || !_mdl->valid ()) return;
-        else
-        {
+        if (_mdl == NULL || !_mdl->valid ()) {
+            return;
+        } else {
             _mdl->load_config (_config);
             ugd->opt_eo = _mdl->create_ui (ugd->layout_main, ugd->naviframe);
 
@@ -1233,7 +1233,7 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
 
     load_config_module ();
     load_config_data (_config);
-    scim_get_setup_module_list(_setup_modules);
+    scim_get_setup_module_list (_setup_modules);
     update_ise_list ();
     isf_load_ise_information (ALL_ISE, _config);
     init_hw_keyboard_listener (ugd);
@@ -1242,8 +1242,8 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
 
     //-------------------------- ise infomation ----------------------------
 
-    Evas_Object *parent_win = (Evas_Object *)ug_get_window();
-    Evas_Object *conform = elm_conformant_add(parent_win);
+    Evas_Object *parent_win = (Evas_Object *)ug_get_window ();
+    Evas_Object *conform = elm_conformant_add (parent_win);
 
     // Create keyboard setting UI
     if (mode == UG_MODE_FULLVIEW)
@@ -1255,13 +1255,11 @@ static void *on_create (ui_gadget_h ug, enum ug_mode mode, service_h s, void *pr
         content = create_setting_main_view (ugd);
         elm_object_part_content_set (ugd->layout_main, "elm.swallow.content", content);
 
-        evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        evas_object_size_hint_align_set(conform, EVAS_HINT_FILL, EVAS_HINT_FILL);
-        elm_win_resize_object_add(parent_win, conform);
-        elm_object_content_set(conform, ugd->layout_main);
-
-        evas_object_show(conform);
-
+        evas_object_size_hint_weight_set (conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+        evas_object_size_hint_align_set (conform, EVAS_HINT_FILL, EVAS_HINT_FILL);
+        elm_win_resize_object_add (parent_win, conform);
+        elm_object_content_set (conform, ugd->layout_main);
+        evas_object_show (conform);
     }
     return (void *)ugd->layout_main;
 }
@@ -1436,7 +1434,6 @@ extern "C"
             return -1;
 
         load_config_module ();
-        load_config_data (_config);
         isf_load_ise_information (ALL_ISE, _config);
 
         String uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
