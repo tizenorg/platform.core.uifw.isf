@@ -1,3 +1,17 @@
+isf (2.3.5929-1slp2+1) unstable; urgency=low
+
+  * Add set_imdata () for keyboard ISE
+  * Add update_displayed_candidate_number, candidate_more_window_show, candidate_more_window_hide for keyboard ISE
+  * [isf-setting] fix the setup module reload issue
+  * fix PLM P121127-0347: focusable description item
+  * Fix memory leak when show ISE panel
+  * Remove ISF log when load/unload ISE module
+  * [immodule] Replace XKeycodeToKeysym () with XkbKeycodeToKeysym ()
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.5929-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Thu, 29 Nov 2012 14:19:00 +0900
+
 isf (2.3.5927-1slp2+1) unstable; urgency=low
 
   * Add update_cursor_position () for keyboard ISE

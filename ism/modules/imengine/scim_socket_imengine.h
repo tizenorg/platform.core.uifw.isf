@@ -101,6 +101,11 @@ public:
     virtual void update_client_capabilities (unsigned int cap);
     virtual void update_candidate_item_layout (const std::vector<unsigned int> &row_items);
     virtual void update_cursor_position (unsigned int cursor_pos);
+    virtual void update_displayed_candidate_number (unsigned int number);
+    virtual void candidate_more_window_show (void);
+    virtual void candidate_more_window_hide (void);
+    virtual void longpress_candidate (unsigned int index);
+    virtual void set_imdata (const char *data, unsigned int len);
 
 private:
     bool commit_transaction (Transaction &trans);

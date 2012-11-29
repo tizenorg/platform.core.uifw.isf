@@ -775,6 +775,84 @@ SocketInstance::update_cursor_position (unsigned int cursor_pos)
 }
 
 void
+SocketInstance::update_displayed_candidate_number (unsigned int number)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__ << " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE);
+    trans.put_data (m_peer_id);
+    trans.put_data (number);
+
+    commit_transaction (trans);
+}
+
+void
+SocketInstance::candidate_more_window_show (void)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__ << " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW);
+    trans.put_data (m_peer_id);
+
+    commit_transaction (trans);
+}
+
+void
+SocketInstance::candidate_more_window_hide (void)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__ << " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE);
+    trans.put_data (m_peer_id);
+
+    commit_transaction (trans);
+}
+
+void
+SocketInstance::longpress_candidate (unsigned int index)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__ << " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_LONGPRESS_CANDIDATE);
+    trans.put_data (m_peer_id);
+    trans.put_data (index);
+
+    commit_transaction (trans);
+}
+
+void
+SocketInstance::set_imdata (const char *data, unsigned int len)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__ << " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_SET_ISE_IMDATA);
+    trans.put_data (m_peer_id);
+    trans.put_data (data, len);
+
+    commit_transaction (trans);
+}
+
+void
 SocketInstance::reset_option ()
 {
     Transaction trans;

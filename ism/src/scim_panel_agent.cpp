@@ -690,17 +690,25 @@ public:
     {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
 
+        int    client;
+        uint32 context;
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            Socket client_socket (client);
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data ((uint32) context);
+            m_send_trans.put_command (ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW);
+            m_send_trans.write_to_socket (client_socket);
+        }
+
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
-                int    client;
-                uint32 context;
                 Socket client_socket (it->second.id);
-                uint32 ctx;
-
-                get_focused_context (client, context);
-                ctx = get_helper_ic (client, context);
+                uint32 ctx = get_helper_ic (client, context);
 
                 m_send_trans.clear ();
                 m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -720,17 +728,25 @@ public:
     {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
 
+        int    client;
+        uint32 context;
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            Socket client_socket (client);
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data ((uint32) context);
+            m_send_trans.put_command (ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE);
+            m_send_trans.write_to_socket (client_socket);
+        }
+
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
-                int    client;
-                uint32 context;
                 Socket client_socket (it->second.id);
-                uint32 ctx;
-
-                get_focused_context (client, context);
-                ctx = get_helper_ic (client, context);
+                uint32 ctx = get_helper_ic (client, context);
 
                 m_send_trans.clear ();
                 m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -1031,6 +1047,15 @@ public:
 
         lock ();
         get_focused_context (client, context);
+        if (client >= 0) {
+            Socket client_socket (client);
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data ((uint32) context);
+            m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE);
+            m_send_trans.put_data (size);
+            m_send_trans.write_to_socket (client_socket);
+        }
         unlock ();
 
         helper_update_displayed_candidate_number (size);
@@ -1041,6 +1066,20 @@ public:
     void send_longpress_event (int type, int index)
     {
         SCIM_DEBUG_MAIN(1) << __func__ << " (" << type << ", " << index << ")\n";
+
+        int    client;
+        uint32 context;
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            Socket client_socket (client);
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data ((uint32) context);
+            m_send_trans.put_command (ISM_TRANS_CMD_LONGPRESS_CANDIDATE);
+            m_send_trans.put_data (index);
+            m_send_trans.write_to_socket (client_socket);
+        }
 
         helper_longpress_candidate (index);
     }

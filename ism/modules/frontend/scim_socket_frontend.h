@@ -205,6 +205,11 @@ private:
 
     void socket_update_candidate_item_layout (int client_id);
     void socket_update_cursor_position      (int client_id);
+    void socket_update_displayed_candidate_number (int client_id);
+    void socket_candidate_more_window_show  (int client_id);
+    void socket_candidate_more_window_hide  (int client_id);
+    void socket_longpress_candidate         (int client_id);
+    void socket_set_imdata                  (int client_id);
 };
 
 #endif

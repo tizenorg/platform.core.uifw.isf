@@ -735,6 +735,16 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             socket_update_candidate_item_layout (id);
         else if (cmd == ISM_TRANS_CMD_UPDATE_CURSOR_POSITION)
             socket_update_cursor_position (id);
+        else if (cmd == ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE)
+            socket_update_displayed_candidate_number (id);
+        else if (cmd == ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW)
+            socket_candidate_more_window_show (id);
+        else if (cmd == ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE)
+            socket_candidate_more_window_hide (id);
+        else if (cmd == ISM_TRANS_CMD_LONGPRESS_CANDIDATE)
+            socket_longpress_candidate (id);
+        else if (cmd == ISM_TRANS_CMD_SET_ISE_IMDATA)
+            socket_set_imdata (id);
         else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
             socket_set_layout (id);
         else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
@@ -1382,6 +1392,116 @@ SocketFrontEnd::socket_update_cursor_position (int /*client_id*/)
 
         m_current_instance = -1;
     }
+}
+
+void
+SocketFrontEnd::socket_update_displayed_candidate_number (int /*client_id*/)
+{
+    uint32 siid;
+    unsigned int number;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (number)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ") displayed candidate number (" << number << ").\n";
+
+        m_current_instance = (int) siid;
+
+        update_displayed_candidate_number ((int) siid, number);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_candidate_more_window_show (int /*client_id*/)
+{
+    uint32 siid;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ").\n";
+
+        m_current_instance = (int) siid;
+
+        candidate_more_window_show ((int) siid);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_candidate_more_window_hide (int /*client_id*/)
+{
+    uint32 siid;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ").\n";
+
+        m_current_instance = (int) siid;
+
+        candidate_more_window_hide ((int) siid);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_longpress_candidate (int /*client_id*/)
+{
+    uint32 siid;
+    unsigned int index;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (index)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ") index (" << index << ").\n";
+
+        m_current_instance = (int) siid;
+
+        longpress_candidate ((int) siid, index);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
+void
+SocketFrontEnd::socket_set_imdata (int /*client_id*/)
+{
+    uint32 siid;
+    char *imdata = NULL;
+    unsigned int length;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (&imdata, length)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ") length (" << length << ").\n";
+
+        m_current_instance = (int) siid;
+
+        set_imdata ((int) siid, imdata, length);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+
+    if (NULL != imdata)
+        delete [] imdata;
 }
 
 void

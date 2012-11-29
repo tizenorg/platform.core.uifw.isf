@@ -390,14 +390,14 @@ public:
     Connection signal_connect_update_preedit_string         (PanelClientSlotStringAttrs             *slot);
 
     /**
-     * @brief Signal: Request to get surrounding text
+     * @brief Signal: request to get surrounding text
      *
      * slot prototype: void get_surrounding text (int context, int maxlen_before, int maxlen_after);
      */
     Connection signal_connect_get_surrounding_text          (PanelClientSlotIntInt                  *slot);
 
     /**
-     * @brief Signal: Delete surrounding text
+     * @brief Signal: delete surrounding text
      *
      * slot prototype: void delete_surrounding text (int context, int offset, int len);
      */
@@ -408,7 +408,35 @@ public:
      *
      * slot prototype: void update_candidate_item_layout (int context, const std::vector<uint32> &);
      */
-    Connection signal_connect_update_candidate_item_layout (PanelClientSlotUintVector               *slot);
+    Connection signal_connect_update_candidate_item_layout  (PanelClientSlotUintVector              *slot);
+
+    /**
+     * @brief Signal: update displayed candidate number
+     *
+     * slot prototype: void update_displayed_candidate_number (int context, int number);
+     */
+    Connection signal_connect_update_displayed_candidate_number (PanelClientSlotInt                 *slot);
+
+    /**
+     * @brief Signal: candidate more window is shown
+     *
+     * slot prototype: void candidate_more_window_show (int context);
+     */
+    Connection signal_connect_candidate_more_window_show    (PanelClientSlotVoid                    *slot);
+
+    /**
+     * @brief Signal: candidate more window is hidden
+     *
+     * slot prototype: void candidate_more_window_hide (int context);
+     */
+    Connection signal_connect_candidate_more_window_hide    (PanelClientSlotVoid                    *slot);
+
+    /**
+     * @brief Signal: longpress candidate
+     *
+     * slot prototype: void longpress_candidate (int context, int index);
+     */
+    Connection signal_connect_longpress_candidate           (PanelClientSlotInt                     *slot);
 
     /** @} */
 };

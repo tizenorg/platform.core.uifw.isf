@@ -463,6 +463,40 @@ protected:
     void update_cursor_position (int id, unsigned int cursor_pos) const;
 
     /**
+     * @brief Update displayed candidate number
+     * @param id the IMEngine instance id.
+     * @param number - the number of displayed candidates.
+     */
+    void update_displayed_candidate_number (int id, unsigned int number) const;
+
+    /**
+     * @brief Candidate more window is shown
+     * @param id the IMEngine instance id.
+     */
+    void candidate_more_window_show (int id) const;
+
+    /**
+     * @brief Candidate more window is hidden
+     * @param id the IMEngine instance id.
+     */
+    void candidate_more_window_hide (int id) const;
+
+    /**
+     * @brief let a specific IMEngine instance longpress a candidate in its current lookup table.
+     * @param id the IMEngine instance id.
+     * @param index - the index in current page of the lookup table.
+     */
+    void longpress_candidate (int id, unsigned int index) const;
+
+    /**
+     * @brief Set IM data.
+     * @param id the IMEngine instance id.
+     * @param data - the buffer of data.
+     * @param len  - the length of data.
+     */
+    void set_imdata (int id, const char *data, unsigned int len) const;
+
+    /**
      * @}
      */
 

@@ -1,3 +1,13 @@
+ISF 2.3.5929 :
+  1. Add set_imdata () for keyboard ISE
+  2. Add update_displayed_candidate_number, candidate_more_window_show, candidate_more_window_hide for keyboard ISE
+  3. [isf-setting] fix the setup module reload issue
+  4. fix PLM P121127-0347: focusable description item
+  5. Fix memory leak when show ISE panel
+  6. Remove ISF log when load/unload ISE module
+  7. [immodule] Replace XKeycodeToKeysym () with XkbKeycodeToKeysym ()
+
+
 ISF 2.3.5927 :
   1. Add update_cursor_position () for keyboard ISE
   2. Disable check datasum feature for socket to reduce socket transmission delay

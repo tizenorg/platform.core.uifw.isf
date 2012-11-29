@@ -665,11 +665,43 @@ public:
     virtual void update_candidate_item_layout (const std::vector<unsigned int> &row_items);
 
     /**
-     * @brief When cursor position is changed, this function will be called.
+     * @brief When cursor position is changed, this method will be invoked by FrontEnd.
      *
      * @param cursor_pos - the new cursor position.
      */
     virtual void update_cursor_position (unsigned int cursor_pos);
+
+    /**
+     * @brief After lookup table is updated, this method will be invoked by FrontEnd.
+     *
+     * @param number - the number of displayed candidates.
+     */
+    virtual void update_displayed_candidate_number (unsigned int number);
+
+    /**
+     * @brief When candidate more window is shown, this method will be invoked by FrontEnd.
+     */
+    virtual void candidate_more_window_show (void);
+
+    /**
+     * @brief When candidate more window is hidden, this method will be invoked by FrontEnd.
+     */
+    virtual void candidate_more_window_hide (void);
+
+    /**
+     * @brief When user longpress a candidate, this method will be invoked by FrontEnd.
+     *
+     * @param index - the index in current page of the lookup table.
+     */
+    virtual void longpress_candidate (unsigned int index);
+
+    /**
+     * @brief Set IM data.
+     *
+     * @param data - the buffer of data.
+     * @param len  - the length of data.
+     */
+    virtual void set_imdata (const char *data, unsigned int len);
 
 protected:
     /**

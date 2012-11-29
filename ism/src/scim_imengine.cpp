@@ -391,6 +391,31 @@ IMEngineInstanceBase::update_cursor_position (unsigned int cursor_pos)
 }
 
 void
+IMEngineInstanceBase::update_displayed_candidate_number (unsigned int number)
+{
+}
+
+void
+IMEngineInstanceBase::candidate_more_window_show (void)
+{
+}
+
+void
+IMEngineInstanceBase::candidate_more_window_hide (void)
+{
+}
+
+void
+IMEngineInstanceBase::longpress_candidate (unsigned int index)
+{
+}
+
+void
+IMEngineInstanceBase::set_imdata (const char *data, unsigned int len)
+{
+}
+
+void
 IMEngineInstanceBase::reset_option ()
 {
 }

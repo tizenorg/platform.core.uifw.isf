@@ -1141,6 +1141,8 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
             context_scim->impl->si->focus_in ();
             context_scim->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ctx));
             set_prediction_allow (context_scim->impl->si, context_scim->impl->prediction_allow);
+            if (context_scim->impl->imdata)
+                context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
         } else {
             _panel_client.turn_off (context_scim->id);
         }
@@ -1724,7 +1726,11 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
  */
 EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context *ctx, const void* data, int length)
 {
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " data length ( " << length << ") ...\n";
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (context_scim == NULL || data == NULL || length <= 0)
+        return;
 
     if (context_scim && context_scim->impl) {
         if (context_scim->impl->imdata)
@@ -1733,6 +1739,12 @@ EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context *ctx, const void* data, 
         context_scim->impl->imdata = calloc (1, length);
         memcpy (context_scim->impl->imdata, data, length);
         context_scim->impl->imdata_size = length;
+
+        if (context_scim->impl->si && _focused_ic == context_scim) {
+            _panel_client.prepare (context_scim->id);
+            context_scim->impl->si->set_imdata ((const char *)data, length);
+            _panel_client.send ();
+        }
     }
 
     isf_imf_context_input_panel_imdata_set (ctx, data, length);
@@ -2275,6 +2287,54 @@ panel_slot_delete_surrounding_text (int context, int offset, int len)
         slot_delete_surrounding_text (ic->impl->si, offset, len);
 }
 
+static void
+panel_slot_update_displayed_candidate_number (int context, int number)
+{
+    EcoreIMFContextISF *ic = find_ic (context);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " number=" << number << " ic=" << ic << "\n";
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+        _panel_client.prepare (ic->id);
+        ic->impl->si->update_displayed_candidate_number (number);
+        _panel_client.send ();
+    }
+}
+
+static void
+panel_slot_candidate_more_window_show (int context)
+{
+    EcoreIMFContextISF *ic = find_ic (context);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+        _panel_client.prepare (ic->id);
+        ic->impl->si->candidate_more_window_show ();
+        _panel_client.send ();
+    }
+}
+
+static void
+panel_slot_candidate_more_window_hide (int context)
+{
+    EcoreIMFContextISF *ic = find_ic (context);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+        _panel_client.prepare (ic->id);
+        ic->impl->si->candidate_more_window_hide ();
+        _panel_client.send ();
+    }
+}
+
+static void
+panel_slot_longpress_candidate (int context, int index)
+{
+    EcoreIMFContextISF *ic = find_ic (context);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " index=" << index << " ic=" << ic << "\n";
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+        _panel_client.prepare (ic->id);
+        ic->impl->si->longpress_candidate (index);
+        _panel_client.send ();
+    }
+}
+
 /* Panel Requestion functions. */
 static void
 panel_req_show_help (EcoreIMFContextISF *ic)
@@ -2718,6 +2778,10 @@ initialize (void)
     _panel_client.signal_connect_update_preedit_string         (slot (panel_slot_update_preedit_string));
     _panel_client.signal_connect_get_surrounding_text          (slot (panel_slot_get_surrounding_text));
     _panel_client.signal_connect_delete_surrounding_text       (slot (panel_slot_delete_surrounding_text));
+    _panel_client.signal_connect_update_displayed_candidate_number (slot (panel_slot_update_displayed_candidate_number));
+    _panel_client.signal_connect_candidate_more_window_show    (slot (panel_slot_candidate_more_window_show));
+    _panel_client.signal_connect_candidate_more_window_hide    (slot (panel_slot_candidate_more_window_hide));
+    _panel_client.signal_connect_longpress_candidate           (slot (panel_slot_longpress_candidate));
 
     if (!panel_initialize ()) {
         std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";

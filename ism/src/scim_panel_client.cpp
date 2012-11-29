@@ -102,6 +102,10 @@ class PanelClient::PanelClientImpl
     PanelClientSignalStringAttrs                m_signal_update_preedit_string;
     PanelClientSignalIntInt                     m_signal_get_surrounding_text;
     PanelClientSignalIntInt                     m_signal_delete_surrounding_text;
+    PanelClientSignalInt                        m_signal_update_displayed_candidate_number;
+    PanelClientSignalVoid                       m_signal_candidate_more_window_show;
+    PanelClientSignalVoid                       m_signal_candidate_more_window_hide;
+    PanelClientSignalInt                        m_signal_longpress_candidate;
 
 public:
     PanelClientImpl ()
@@ -389,6 +393,30 @@ public:
                         uint32 len;
                         if (recv.get_data (offset) && recv.get_data (len))
                             m_signal_delete_surrounding_text ((int) context, (int)offset, (int)len);
+                    }
+                    break;
+                case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
+                    {
+                        uint32 number;
+                        if (recv.get_data (number))
+                            m_signal_update_displayed_candidate_number ((int) context, (int)number);
+                    }
+                    break;
+                case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW:
+                    {
+                        m_signal_candidate_more_window_show ((int) context);
+                    }
+                    break;
+                case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE:
+                    {
+                        m_signal_candidate_more_window_hide ((int) context);
+                    }
+                    break;
+                case ISM_TRANS_CMD_LONGPRESS_CANDIDATE:
+                    {
+                        uint32 index;
+                        if (recv.get_data (index))
+                            m_signal_longpress_candidate ((int) context, (int)index);
                     }
                     break;
                 default:
@@ -684,6 +712,10 @@ public:
         m_signal_update_preedit_string.reset();
         m_signal_get_surrounding_text.reset();
         m_signal_delete_surrounding_text.reset();
+        m_signal_update_displayed_candidate_number.reset();
+        m_signal_candidate_more_window_show.reset();
+        m_signal_candidate_more_window_hide.reset();
+        m_signal_longpress_candidate.reset();
     }
 
     Connection signal_connect_reload_config                 (PanelClientSlotVoid                    *slot)
@@ -796,6 +828,26 @@ public:
     Connection signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot)
     {
         return m_signal_delete_surrounding_text.connect (slot);
+    }
+
+    Connection signal_connect_update_displayed_candidate_number (PanelClientSlotInt                 *slot)
+    {
+        return m_signal_update_displayed_candidate_number.connect (slot);
+    }
+
+    Connection signal_connect_candidate_more_window_show    (PanelClientSlotVoid                    *slot)
+    {
+        return m_signal_candidate_more_window_show.connect (slot);
+    }
+
+    Connection signal_connect_candidate_more_window_hide    (PanelClientSlotVoid                    *slot)
+    {
+        return m_signal_candidate_more_window_hide.connect (slot);
+    }
+
+    Connection signal_connect_longpress_candidate           (PanelClientSlotInt                     *slot)
+    {
+        return m_signal_longpress_candidate.connect (slot);
     }
 
 private:
@@ -1170,6 +1222,30 @@ Connection
 PanelClient::signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot)
 {
     return m_impl->signal_connect_delete_surrounding_text (slot);
+}
+
+Connection
+PanelClient::signal_connect_update_displayed_candidate_number (PanelClientSlotInt                 *slot)
+{
+    return m_impl->signal_connect_update_displayed_candidate_number (slot);
+}
+
+Connection
+PanelClient::signal_connect_candidate_more_window_show    (PanelClientSlotVoid                    *slot)
+{
+    return m_impl->signal_connect_candidate_more_window_show (slot);
+}
+
+Connection
+PanelClient::signal_connect_candidate_more_window_hide    (PanelClientSlotVoid                    *slot)
+{
+    return m_impl->signal_connect_candidate_more_window_hide (slot);
+}
+
+Connection
+PanelClient::signal_connect_longpress_candidate           (PanelClientSlotInt                     *slot)
+{
+    return m_impl->signal_connect_longpress_candidate (slot);
 }
 
 } /* namespace scim */

@@ -688,6 +688,46 @@ FrontEndBase::update_cursor_position (int id, unsigned int cursor_pos) const
 }
 
 void
+FrontEndBase::update_displayed_candidate_number (int id, unsigned int number) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->update_displayed_candidate_number (number);
+}
+
+void
+FrontEndBase::candidate_more_window_show (int id) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->candidate_more_window_show ();
+}
+
+void
+FrontEndBase::candidate_more_window_hide (int id) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->candidate_more_window_hide ();
+}
+
+void
+FrontEndBase::longpress_candidate (int id, unsigned int index) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->longpress_candidate (index);
+}
+
+void
+FrontEndBase::set_imdata (int id, const char *data, unsigned int len) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->set_imdata (data, len);
+}
+
+void
 FrontEndBase::reset_option (int id) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);
