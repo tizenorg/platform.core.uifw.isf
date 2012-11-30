@@ -127,13 +127,18 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
     void *list_data = NULL;
     EventCallbackNode *fn = NULL;
     Eina_List *l = NULL;
-    Ecore_IMF_Context *using_ic = get_focused_ic() == NULL?show_req_ic:get_focused_ic()->ctx;
+    Ecore_IMF_Context *using_ic = NULL;
+
+    if (show_req_ic)
+        using_ic = show_req_ic;
+    else
+        using_ic = get_focused_ic()->ctx;
 
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT &&
         value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         if (hide_req_ic) {
             using_ic = hide_req_ic;
-            hide_req_ic = NULL;
+            //hide_req_ic = NULL;
         }
     }
 
@@ -142,11 +147,13 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 
         if ((fn) && (fn->imf_context == using_ic) &&
             (fn->type == type) && (fn->func)) {
+            fn->func (fn->data, fn->imf_context, value);
             if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
                 switch (value)
                 {
                     case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
                         LOGD ("[input panel has been hidden] ctx : %p\n", fn->imf_context);
+                        hide_req_ic = NULL;
                         break;
                     case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
                         LOGD ("[input panel has been shown] ctx : %p\n", fn->imf_context);
@@ -156,7 +163,6 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                         break;
                 }
             }
-            fn->func (fn->data, fn->imf_context, value);
         }
 
         IMFCONTROLUIDBG("\tFunc : %p\tType : %d\n", fn->func, fn->type);

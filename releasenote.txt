@@ -1,3 +1,7 @@
+ISF 2.3.5930 :
+  1. [immodule] Set using_ic in _event_callback_call
+
+
 ISF 2.3.5929 :
   1. Add set_imdata () for keyboard ISE
   2. Add update_displayed_candidate_number, candidate_more_window_show, candidate_more_window_hide for keyboard ISE
