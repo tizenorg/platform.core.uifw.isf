@@ -153,7 +153,11 @@ int main (int argc, char *argv [])
     HelperModule helper_module (helper);
 
     if (!helper_module.valid () || helper_module.number_of_helpers () == 0) {
-        std::cerr << "Unable to load Helper module: " << helper << "\n";
+        std::cerr << "Unable to load helper module(" << helper << ")\n";
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Unable to load helper module(%s)\n", time (0), getpid (), __FILE__, __func__, helper.c_str ());
+        isf_save_log (buf);
+
         return -1;
     }
 

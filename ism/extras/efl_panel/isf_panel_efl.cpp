@@ -485,8 +485,11 @@ static bool set_helper_ise (const String &uuid)
         _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, kbd_uuid);
     }
 
-    _panel_agent->start_helper (uuid);
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+    isf_save_log (buf);
 
+   _panel_agent->start_helper (uuid);
     _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
 
     return true;
@@ -2889,10 +2892,20 @@ static void start_default_ise (void)
     default_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)_initial_ise.type);
     default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
     default_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_NAME), _initial_ise.name);
-
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_ise.name.c_str ());
+    isf_save_log (buf);
     if (!set_active_ise (default_ise.uuid)) {
-        if (default_ise.uuid != _initial_ise.uuid)
+        std::cerr << __FUNCTION__ << "Failed to launch default ISE(" << default_ise.uuid << ")\n";
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_ise.name.c_str ());
+        isf_save_log (buf);
+
+        if (default_ise.uuid != _initial_ise.uuid) {
+            std::cerr << __FUNCTION__ << "Launch initial ISE(" << _initial_ise.uuid << ")\n";
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch initial ISE(%s)\n", time (0), getpid (), __FILE__, __func__, _initial_ise.name.c_str ());
+            isf_save_log (buf);
             set_active_ise (_initial_ise.uuid);
+        }
     }
 }
 
@@ -2924,6 +2937,10 @@ static void check_hardware_keyboard (void)
         } else {
             uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, _initial_ise.uuid);
         }
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch ISE(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+        isf_save_log (buf);
+
         set_active_ise (uuid);
     }
 }
@@ -3226,6 +3243,9 @@ int main (int argc, char *argv [])
         _initial_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), factory->get_uuid ());
         _initial_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_NAME), utf8_wcstombs (factory->get_name ()));
         factory.reset ();
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Initial ISE name(%s)\n", time (0), getpid (), __FILE__, __func__, _initial_ise.name.c_str ());
+        isf_save_log (buf);
     }
 
     if (daemon) {

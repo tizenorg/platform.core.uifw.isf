@@ -276,7 +276,10 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
     String user_file_name = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (user_file_name.c_str (), "r");
     if (engine_list_file == NULL) {
-        std::cerr <<  user_file_name << " doesn't exist.\n";
+        std::cerr << __func__ << " Failed to open(" << user_file_name << ")\n";
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, user_file_name.c_str ());
+        isf_save_log (buf);
         return;
     }
 
@@ -351,7 +354,10 @@ static bool add_keyboard_ise_module (const String module_name, const ConfigPoint
     String filename = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (filename.c_str (), "a");
     if (engine_list_file == NULL) {
-        std::cerr << "failed to open " << filename << "\n";
+        std::cerr << __func__ << " Failed to open(" << filename << ")\n";
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, filename.c_str ());
+        isf_save_log (buf);
         return false;
     }
 
@@ -420,7 +426,10 @@ static bool add_helper_ise_module (const String module_name)
     String filename = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (filename.c_str (), "a");
     if (engine_list_file == NULL) {
-        std::cerr << "failed to open " << filename << "\n";
+        std::cerr << __func__ << " Failed to open(" << filename << ")\n";
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, filename.c_str ());
+        isf_save_log (buf);
         return false;
     }
 

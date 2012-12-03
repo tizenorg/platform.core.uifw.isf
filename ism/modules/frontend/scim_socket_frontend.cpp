@@ -148,7 +148,13 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
         HelperInfo           info;
         std::vector<ISEINFO> info_list;
         std::vector<String>  tmp_list;
-        isf_read_ise_info_list (USER_ENGINE_FILE_NAME, info_list);
+        bool ret = isf_read_ise_info_list (USER_ENGINE_FILE_NAME, info_list);
+        if (!ret) {
+            std::cerr << __func__ << " Failed to read(" << USER_ENGINE_FILE_NAME << ")\n";
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to read(%s)\n", time (0), getpid (), __FILE__, __func__, USER_ENGINE_FILE_NAME);
+            isf_save_log (buf);
+        }
         for (size_t i = 0; i < info_list.size (); ++i) {
             if (info_list [i].mode != TOOLBAR_HELPER_MODE)
                 continue;
@@ -165,6 +171,12 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
 
         HelperModule module;
         std::ofstream engine_list_file (USER_ENGINE_FILE_NAME, std::ios::app);
+        if (!engine_list_file) {
+            std::cerr << __func__ << " Failed to open(" << USER_ENGINE_FILE_NAME << ")\n";
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, USER_ENGINE_FILE_NAME);
+            isf_save_log (buf);
+        }
 
         for (size_t i = 0; i < mod_list.size (); ++i) {
             if (std::find (tmp_list.begin (), tmp_list.end (), mod_list [i]) != tmp_list.end ())
@@ -182,15 +194,17 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
                         SCIM_DEBUG_MAIN (3) << "  " << info.uuid << ": " << info.name << "\n";
                         __helpers.push_back (std::make_pair (info, mod_list [i]));
 
-                        char mode[12];
-                        char option[12];
-                        snprintf (mode, sizeof (mode), "%d", (int)TOOLBAR_HELPER_MODE);
-                        snprintf (option, sizeof (option), "%d", info.option);
+                        if (engine_list_file) {
+                            char mode[12];
+                            char option[12];
+                            snprintf (mode, sizeof (mode), "%d", (int)TOOLBAR_HELPER_MODE);
+                            snprintf (option, sizeof (option), "%d", info.option);
 
-                        String line = isf_combine_ise_info_string (info.name, info.uuid, mod_list [i], isf_get_normalized_language (module.get_helper_lang (j)),
-                                                                   info.icon, String (mode), String (option), String (""));
-                        engine_list_file << line;
-                        engine_list_file.flush ();
+                            String line = isf_combine_ise_info_string (info.name, info.uuid, mod_list [i], isf_get_normalized_language (module.get_helper_lang (j)),
+                                                                       info.icon, String (mode), String (option), String (""));
+                            engine_list_file << line;
+                            engine_list_file.flush ();
+                        }
                     }
                 }
             }
@@ -234,6 +248,9 @@ void SocketFrontEnd::run_helper (const Socket &client)
         m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
         return;
     }
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  uuid(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+    isf_save_log (buf);
 
     for (size_t i = 0; i < __helpers.size (); ++i) {
         if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
@@ -259,6 +276,9 @@ void SocketFrontEnd::run_helper (const Socket &client)
                                    0};
 
                 SCIM_DEBUG_MAIN(2) << " Call scim-helper-launcher.\n";
+                char buf[256] = {0};
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Exec scim_helper_launcher(%s)\n", time (0), getpid (), __FILE__, __func__, __helpers [i].second.c_str ());
+                isf_save_log (buf);
 
                 execv (SCIM_HELPER_LAUNCHER_PROGRAM, (char **)argv);
                 exit (-1);

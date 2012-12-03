@@ -137,7 +137,10 @@ bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_l
 
     FILE *engine_list_file = fopen (filename, "w+");
     if (engine_list_file == NULL) {
-        std::cerr << "failed to open " << filename << "\n";
+        std::cerr << __func__ << " Failed to open(" << filename << ")\n";
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, filename);
+        isf_save_log (buf);
         return false;
     }
 
@@ -151,7 +154,10 @@ bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_l
         String line = isf_combine_ise_info_string (iter->name, iter->uuid, iter->module, iter->language,
                                                    iter->icon, String (mode), String (option), iter->locales);
         if (fputs (line.c_str (), engine_list_file) < 0) {
-            std::cerr << "write to ise cache file failed:" << line << "\n";
+            std::cerr << __func__ << " Failed to write(" << line << ")\n";
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to write(%s)\n", time (0), getpid (), __FILE__, __func__, line.c_str ());
+            isf_save_log (buf);
             break;
         }
     }

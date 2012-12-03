@@ -4,7 +4,7 @@
 
 /*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
  *
  *
@@ -56,7 +56,7 @@ extern "C" {
     {
         SCIM_DEBUG_CONFIG(1) << "Initializing Simple Config module...\n";
     }
-    
+
     void scim_module_exit (void)
     {
         SCIM_DEBUG_CONFIG(1) << "Exiting Simple Config module...\n";
@@ -176,7 +176,7 @@ bool
 SimpleConfig::read (const String& key, bool* val) const
 {
     if (!valid () || !val || key.empty()) return false;
-    
+
     KeyValueRepository::const_iterator i = m_new_config.find (key);
     KeyValueRepository::const_iterator end = m_new_config.end ();
 
@@ -206,7 +206,7 @@ bool
 SimpleConfig::read (const String& key, std::vector <String>* val) const
 {
     if (!valid () || !val || key.empty()) return false;
-    
+
     KeyValueRepository::const_iterator i = m_new_config.find (key);
     KeyValueRepository::const_iterator end = m_new_config.end ();
 
@@ -292,7 +292,7 @@ bool
 SimpleConfig::write (const String& key, double value)
 {
     if (!valid () || key.empty()) return false;
-    
+
     char buf [256];
 
     snprintf (buf, 255, "%lf", value);
@@ -554,7 +554,7 @@ SimpleConfig::parse_config (std::istream &is, KeyValueRepository &config)
                 if (i != config.end()) {
                     SCIM_DEBUG_CONFIG(2) << " Config entry " << normalized_line << " has been read.\n";
                 } else {
-                    String value = get_value_portion (normalized_line); 
+                    String value = get_value_portion (normalized_line);
                     config [param] = value;
                     SCIM_DEBUG_CONFIG(2) << " Config entry " << param << "=" << value << " is successfully read.\n";
                 }
@@ -598,6 +598,11 @@ SimpleConfig::load_all_config ()
                                  << sysconf << "\n";
             parse_config (is, config);
         }
+    } else {
+        std::cerr << __func__ << " Cannot open(" << sysconf << ")\n";
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Cannot open(%s)\n", time (0), getpid (), __FILE__, __func__, sysconf.c_str ());
+        isf_save_log (buf);
     }
 
     if (!m_config.size () || (m_update_timestamp.tv_sec == 0 && m_update_timestamp.tv_usec == 0)) {
