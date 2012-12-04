@@ -138,7 +138,6 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
         value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         if (hide_req_ic) {
             using_ic = hide_req_ic;
-            //hide_req_ic = NULL;
         }
     }
 
