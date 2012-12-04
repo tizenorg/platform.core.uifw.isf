@@ -62,6 +62,9 @@ extern "C"
     void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h);
     void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
 
+    void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx);
+    void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

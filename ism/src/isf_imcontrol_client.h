@@ -72,6 +72,8 @@ public:
     void get_ise_list (int* count, char*** iselist);
     void reset_ise_option (void);
     void set_caps_mode (int mode);
+    void focus_in (void);
+    void focus_out (void);
 };
 
 }

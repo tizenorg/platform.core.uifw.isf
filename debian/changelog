@@ -1,3 +1,12 @@
+isf (2.3.6004-1slp2+1) unstable; urgency=low
+
+  * [immodule] Add focus_in and focus_out for IMControl
+  * Add ISF logs for no-ise-launching-at-first-boot in emulator
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6004-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Tue, 04 Dec 2012 18:10:00 +0900
+
 isf (2.3.5930-1slp2+1) unstable; urgency=low
 
   * [immodule] Set using_ic in _event_callback_call

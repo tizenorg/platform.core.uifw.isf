@@ -56,6 +56,9 @@ extern "C"
 
     int _isf_imf_context_candidate_window_geometry_get (int *x, int *y, int *w, int *h);
 
+    int _isf_imf_context_control_focus_in (void);
+    int _isf_imf_context_control_focus_out (void);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

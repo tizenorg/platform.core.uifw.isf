@@ -406,13 +406,13 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
-    _isf_imf_context_input_panel_show (packet , length, input_panel_show);
+    _isf_imf_context_input_panel_show (packet, length, input_panel_show);
 
     if (input_panel_show == true)
         input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
     free (packet);
 
-    caps_mode_check(ctx, EINA_TRUE, EINA_TRUE);
+    caps_mode_check (ctx, EINA_TRUE, EINA_TRUE);
     LOGD ("===============================================================\n");
 }
 
@@ -453,7 +453,8 @@ EAPI void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecor
 EAPI Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx)
 {
     IMFCONTROLUIDBG("[%s] language : %d\n", __func__, iseContext.language);
-    if (!IfInitContext) _isf_imf_context_init();
+    if (!IfInitContext)
+        _isf_imf_context_init ();
     return iseContext.language;
 }
 
@@ -684,9 +685,7 @@ EAPI void isf_imf_context_input_panel_event_callback_add (Ecore_IMF_Context *ctx
                                                           void (*func) (void *data, Ecore_IMF_Context *ctx, int value),
                                                           void *data)
 {
-    EventCallbackNode *fn = NULL;
-
-    fn = (EventCallbackNode *)calloc (1, sizeof (EventCallbackNode));
+    EventCallbackNode *fn = (EventCallbackNode *)calloc (1, sizeof (EventCallbackNode));
     if (!fn)
         return;
 
@@ -762,6 +761,36 @@ EAPI void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx,
     _isf_imf_context_candidate_window_geometry_get (x, y, w, h);
 
     LOGD ("[candidate_window_geometry_get] ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
+}
+
+/**
+ * This method should be called when focus in
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ */
+EAPI void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx)
+{
+    IMFCONTROLUIDBG("[%s]\n", __FUNCTION__);
+
+    if (IfInitContext == false) {
+        _isf_imf_context_init ();
+    }
+    _isf_imf_context_control_focus_in ();
+}
+
+/**
+ * This method should be called when focus out
+ *
+ * @param[in] ctx a #Ecore_IMF_Context
+ */
+EAPI void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx)
+{
+    IMFCONTROLUIDBG("[%s]\n", __FUNCTION__);
+
+    if (IfInitContext == false) {
+        _isf_imf_context_init ();
+    }
+    _isf_imf_context_control_focus_out ();
 }
 
 /**

@@ -372,9 +372,7 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
                 info.pos_y = _screen_height - info.height;
         } else {
             get_ise_geometry (info, kbd_state);
-            if (_candidate_mode == FLOATING_CANDIDATE_WINDOW) {
-                ; // Floating style
-            } else {
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
                 if (_candidate_window && evas_object_visible_get (_candidate_window)) {
                     _candidate_valid_height = ui_candidate_get_valid_height ();
                     if ((_candidate_height - _candidate_valid_height) > _ise_height) {
@@ -634,7 +632,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
     if (evas_object_visible_get (_candidate_window))
         _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
 
-    if (evas_object_visible_get (_candidate_window)) {
+    if (evas_object_visible_get (_candidate_window) && _candidate_mode == FIXED_CANDIDATE_WINDOW) {
         height = ui_candidate_get_valid_height ();
         if ((_ise_width == 0 && _ise_height == 0) ||
             (_ise_height > 0 && _candidate_valid_height != height) ||
@@ -886,7 +884,10 @@ static void ui_candidate_show (void)
         evas_object_show (_candidate_window);
         _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
 
-        if (_candidate_mode != FLOATING_CANDIDATE_WINDOW) {
+        if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
+            if (!_ise_show)
+                _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
@@ -927,12 +928,14 @@ static void ui_candidate_hide (bool bForce)
             evas_object_hide (_candidate_window);
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
 
-            if (_candidate_mode != FLOATING_CANDIDATE_WINDOW) {
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-                if (_ise_show)
+                if (_ise_show) {
                     set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
-                else
+                } else {
                     set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+                    _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+                }
             }
         }
 
@@ -1423,8 +1426,11 @@ static void ui_settle_candidate_window (void)
         _candidate_x = spot_x;
         _candidate_y = spot_y;
         evas_object_move (_candidate_window, spot_x, spot_y);
-        if (evas_object_visible_get (_candidate_window))
+        if (evas_object_visible_get (_candidate_window)) {
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW)
+                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+        }
     }
 
     if (!_candidate_window_show)
@@ -2425,9 +2431,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
             info.pos_y = _screen_height - info.height;
     } else {
         get_ise_geometry (info, kbd_state);
-        if (_candidate_mode == FLOATING_CANDIDATE_WINDOW) {
-            ; // Floating style
-        } else {
+        if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
             if (_candidate_window && evas_object_visible_get (_candidate_window)) {
                 int height = ui_candidate_get_valid_height ();
                 if ((_candidate_height - height) > _ise_height) {

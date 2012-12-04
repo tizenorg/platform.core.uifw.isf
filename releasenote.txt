@@ -1,3 +1,8 @@
+ISF 2.3.6004 :
+  1. [immodule] Add focus_in and focus_out for IMControl
+  2. Add ISF logs for no-ise-launching-at-first-boot in emulator
+
+
 ISF 2.3.5930 :
   1. [immodule] Set using_ic in _event_callback_call
 

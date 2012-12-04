@@ -1081,6 +1081,8 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 
     if (context_scim && context_scim->impl) {
         _focused_ic = context_scim;
+        isf_imf_context_control_focus_in (ctx);
+
         _panel_client.prepare (context_scim->id);
 
         // Handle the "Shared Input Method" mode.

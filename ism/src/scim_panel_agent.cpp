@@ -2348,7 +2348,6 @@ public:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::set_ise_caps_mode ()\n";
         uint32 mode;
-        m_current_active_imcontrol_id = client_id;
         if (m_recv_trans.get_data (mode)) {
             if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
                 set_helper_caps_mode (m_current_helper_uuid, mode);
@@ -3150,6 +3149,8 @@ private:
                     set_isf_language (client_id);
                 else if (cmd == ISM_TRANS_CMD_RESET_ISE_CONTEXT)
                     reset_ise_context (client_id);
+                else if (cmd == SCIM_TRANS_CMD_FOCUS_IN)
+                    m_current_active_imcontrol_id = client_id;
             }
 
             socket_transaction_end ();

@@ -167,7 +167,7 @@ EAPI int _isf_imf_context_input_panel_hide (void)
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.hide_ise();
+    _imcontrol_client.hide_ise ();
     _imcontrol_client.send ();
     return 0;
 }
@@ -204,7 +204,7 @@ EAPI int _isf_imf_context_input_panel_language_set (Ecore_IMF_Input_Panel_Lang l
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.set_ise_language(lang);
+    _imcontrol_client.set_ise_language (lang);
     _imcontrol_client.send ();
     return 0;
 }
@@ -318,6 +318,24 @@ EAPI int _isf_imf_context_candidate_window_geometry_get (int *x, int *y, int *w,
     connect_panel ();
     _imcontrol_client.prepare ();
     _imcontrol_client.get_candidate_window_geometry (x, y, w, h);
+    return 0;
+}
+
+EAPI int _isf_imf_context_control_focus_in (void)
+{
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.focus_in ();
+    _imcontrol_client.send ();
+    return 0;
+}
+
+EAPI int _isf_imf_context_control_focus_out (void)
+{
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.focus_out ();
+    _imcontrol_client.send ();
     return 0;
 }
 

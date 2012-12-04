@@ -417,6 +417,14 @@ public:
         m_trans.put_command (ISM_TRANS_CMD_SET_CAPS_MODE);
         m_trans.put_data (mode);
     }
+
+    void focus_in (void) {
+        m_trans.put_command (SCIM_TRANS_CMD_FOCUS_IN);
+    }
+
+    void focus_out (void) {
+        m_trans.put_command (SCIM_TRANS_CMD_FOCUS_OUT);
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -566,6 +574,16 @@ void IMControlClient::reset_ise_option (void)
 void IMControlClient::set_caps_mode (int mode)
 {
     m_impl->set_caps_mode (mode);
+}
+
+void IMControlClient::focus_in (void)
+{
+    m_impl->focus_in ();
+}
+
+void IMControlClient::focus_out (void)
+{
+    m_impl->focus_out ();
 }
 
 };
