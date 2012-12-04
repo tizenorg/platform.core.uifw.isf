@@ -88,10 +88,10 @@ static void _candidate_panel_state_cb (void *data, Ecore_IMF_Context *ctx, int v
 
     if (value == ECORE_IMF_CANDIDATE_PANEL_SHOW) {
         ecore_imf_context_candidate_panel_geometry_get (ctx, &x, &y, &w, &h);
-        printf ("Candidate window is shown\n");
+        printf ("[%s] Candidate window is shown\n", __func__);
         printf ("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, x, y, w, h);
     } else if (value == ECORE_IMF_CANDIDATE_PANEL_HIDE) {
-        printf ("Candidate window is hidden\n");
+        printf ("[%s] Candidate window is hidden\n", __func__);
     }
 }
 
