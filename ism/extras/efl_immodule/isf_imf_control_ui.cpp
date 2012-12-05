@@ -131,7 +131,7 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 
     if (show_req_ic)
         using_ic = show_req_ic;
-    else
+    else if (get_focused_ic())
         using_ic = get_focused_ic()->ctx;
 
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT &&
