@@ -9,7 +9,7 @@ Release:    1
 Group:      TO_BE/FILLED_IN
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
-Source1:    isf-panel.service
+Source1:    scim.service
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
@@ -60,7 +60,7 @@ install -m0644 %{_builddir}/%{buildsubdir}/COPYING %{buildroot}%{_datadir}/licen
 
 install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
-ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/isf-panel.service
+ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/scim.service
 
 # FIXME: remove initscripts after systemd is in
 mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc3.d
