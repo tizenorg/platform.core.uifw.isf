@@ -3048,8 +3048,8 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     ::KeyCode keycode = 0;
     ::KeySym keysym = 0;
     int shift = 0;
-    const char *key_string;
-    const char *keysym_str;
+    char key_string[256] = {0};
+    char keysym_str[256] = {0};
 
     // Obtain the X11 display.
     Display *display = (Display *)ecore_x_display_get ();
@@ -3059,15 +3059,15 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     }
 
     if (strncmp (key.get_key_string ().c_str (), "KeyRelease+", 11) == 0) {
-        key_string = key.get_key_string ().c_str () + 11;
+        snprintf (key_string, sizeof (key_string), "%s", key.get_key_string ().c_str () + 11);
     } else {
-        key_string = key.get_key_string ().c_str ();
+        snprintf (key_string, sizeof (key_string), "%s", key.get_key_string ().c_str ());
     }
 
     if (strncmp (key_string, "Shift+", 6) == 0) {
-        keysym_str = key_string + 6;
+        snprintf (keysym_str, sizeof (keysym_str), "%s", key_string + 6);
     } else {
-        keysym_str = key_string;
+        snprintf (keysym_str, sizeof (keysym_str), "%s", key_string);
     }
 
     // get x keysym, keycode, keyname, and key
