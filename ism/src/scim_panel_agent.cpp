@@ -660,6 +660,24 @@ public:
         return client >= 0;
     }
 
+    bool update_client_id (int client_id)
+    {
+        SCIM_DEBUG_MAIN(1) << __func__ << " (" << client_id << ")\n";
+
+        if (client_id >= 0) {
+            uint32 context = 0;
+            Socket client_socket (client_id);
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data (context);
+            m_send_trans.put_command (ISM_TRANS_CMD_PANEL_UPDATE_CLIENT_ID);
+            m_send_trans.put_data ((uint32)client_id);
+            m_send_trans.write_to_socket (client_socket);
+        }
+
+        return client_id >= 0;
+    }
+
     bool change_factory (const String  &uuid)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::change_factory (" << uuid << ")\n";
@@ -1228,20 +1246,14 @@ public:
         }
     }
 
-    bool show_helper (const String &uuid, char *data, size_t &len)
+    bool show_helper (const String &uuid, char *data, size_t &len, uint32 ctx)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
         if (it != m_helper_client_index.end ()) {
-            int client;
-            uint32 context;
             Socket client_socket (it->second.id);
-            uint32 ctx;
 
             m_helper_uuid_state[uuid] = HELPER_SHOWED;
-
-            get_focused_context (client, context);
-            ctx = get_helper_ic (client, context);
 
             m_send_trans.clear ();
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -1255,7 +1267,7 @@ public:
         return false;
     }
 
-    void hide_helper (const String &uuid)
+    void hide_helper (const String &uuid, uint32 ctx = 0)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1263,12 +1275,13 @@ public:
             int client;
             uint32 context;
             Socket client_socket (it->second.id);
-            uint32 ctx;
 
             m_helper_uuid_state[uuid] = HELPER_HIDED;
 
-            get_focused_context (client, context);
-            ctx = get_helper_ic (client, context);
+            if (ctx == 0) {
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+            }
 
             m_send_trans.clear ();
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -1558,9 +1571,14 @@ public:
         Socket client_socket (client_id);
         m_current_active_imcontrol_id = client_id;
 
-        if (m_recv_trans.get_data (&data, len)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
-                ret = show_helper (m_current_helper_uuid, data, len);
+        uint32 client;
+        uint32 context;
+        if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context) && m_recv_trans.get_data (&data, len)) {
+            SCIM_DEBUG_MAIN(4) << __func__ << " (client:" << client << " context:" << context << ")\n";
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+                uint32 ctx = get_helper_ic (client, context);
+                ret = show_helper (m_current_helper_uuid, data, len, ctx);
+            }
         }
 
         trans.clear ();
@@ -1579,8 +1597,15 @@ public:
 
         mode = m_current_toolbar_mode;
 
-        if (client_id == m_current_active_imcontrol_id && TOOLBAR_HELPER_MODE == mode)
-            hide_helper (m_current_helper_uuid);
+        uint32 client;
+        uint32 context;
+        if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context)) {
+            SCIM_DEBUG_MAIN(4) << __func__ << " (client:" << client << " context:" << context << ")\n";
+            if (client_id == m_current_active_imcontrol_id && TOOLBAR_HELPER_MODE == mode) {
+                uint32 ctx = get_helper_ic (client, context);
+                hide_helper (m_current_helper_uuid, ctx);
+            }
+        }
     }
 
     void set_default_ise (const DEFAULT_ISE_T &ise)
@@ -2792,7 +2817,12 @@ private:
 
         /* If it's a new client, then request to open the connection first. */
         if (client_info.type == UNKNOWN_CLIENT) {
-            socket_open_connection (server, client);
+            bool bSuccess = socket_open_connection (server, client);
+            if (bSuccess) {
+                ClientInfo client_info = socket_get_client_info (client_id);
+                if (client_info.type == FRONTEND_CLIENT)
+                    update_client_id (client_id);
+            }
             return;
         }
 
@@ -2854,7 +2884,7 @@ private:
                     }
 
                     if (cmd == SCIM_TRANS_CMD_FOCUS_IN) {
-                        get_helper_ic (client_id, context);
+                        SCIM_DEBUG_MAIN(4) << "    SCIM_TRANS_CMD_FOCUS_IN (" << "client:" << client_id << " context:" << context << ")\n";
                         m_signal_focus_in ();
                         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
                             focus_in_helper (m_current_helper_uuid, client_id, context);

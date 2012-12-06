@@ -153,21 +153,21 @@ EAPI void _isf_imf_control_finalize (void)
     }
 }
 
-EAPI int _isf_imf_context_input_panel_show (void *data, int length, bool &input_panel_show)
+EAPI int _isf_imf_context_input_panel_show (int client_id, int context, void *data, int length, bool &input_panel_show)
 {
     int temp = 0;
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.show_ise (data, length, &temp);
+    _imcontrol_client.show_ise (client_id, context, data, length, &temp);
     input_panel_show = (bool)temp;
     return 0;
 }
 
-EAPI int _isf_imf_context_input_panel_hide (void)
+EAPI int _isf_imf_context_input_panel_hide (int client_id, int context)
 {
     connect_panel ();
     _imcontrol_client.prepare ();
-    _imcontrol_client.hide_ise ();
+    _imcontrol_client.hide_ise (client_id, context);
     _imcontrol_client.send ();
     return 0;
 }

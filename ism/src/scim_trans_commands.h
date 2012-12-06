@@ -585,6 +585,7 @@ const int SCIM_TRANS_CMD_PANEL_REQUEST_FACTORY_MENU       = 521;
 const int SCIM_TRANS_CMD_PANEL_CHANGE_FACTORY             = 522;
 const int ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE          = 523;
 const int ISM_TRANS_CMD_PANEL_UPDATE_KEYBOARD_ISE         = 524;
+const int ISM_TRANS_CMD_PANEL_UPDATE_CLIENT_ID            = 525;
 
 // Helper Client To Panel
 const int SCIM_TRANS_CMD_PANEL_REGISTER_HELPER            = 540;

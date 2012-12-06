@@ -258,6 +258,7 @@ static int                                              _context_count          
 static IMEngineFactoryPointer                           _fallback_factory;
 static IMEngineInstancePointer                          _fallback_instance;
 static PanelClient                                      _panel_client;
+static int                                              _panel_client_id            = 0;
 
 static Ecore_Fd_Handler                                *_panel_iochannel_read_handler = 0;
 static Ecore_Fd_Handler                                *_panel_iochannel_err_handler  = 0;
@@ -306,6 +307,12 @@ EcoreIMFContextISF *
 get_focused_ic ()
 {
     return _focused_ic;
+}
+
+int
+get_panel_client_id (void)
+{
+    return _panel_client_id;
 }
 
 Eina_Bool
@@ -2249,6 +2256,14 @@ panel_slot_longpress_candidate (int context, int index)
     }
 }
 
+static void
+panel_slot_update_client_id (int context, int client_id)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " client_id=" << client_id << "\n";
+
+    _panel_client_id = client_id;
+}
+
 /* Panel Requestion functions. */
 static void
 panel_req_show_help (EcoreIMFContextISF *ic)
@@ -2696,6 +2711,7 @@ initialize (void)
     _panel_client.signal_connect_candidate_more_window_show    (slot (panel_slot_candidate_more_window_show));
     _panel_client.signal_connect_candidate_more_window_hide    (slot (panel_slot_candidate_more_window_hide));
     _panel_client.signal_connect_longpress_candidate           (slot (panel_slot_longpress_candidate));
+    _panel_client.signal_connect_update_client_id              (slot (panel_slot_update_client_id));
 
     if (!panel_initialize ()) {
         std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";

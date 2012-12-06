@@ -50,8 +50,8 @@ public:
     bool prepare                (void);
     bool send                   (void);
 
-    void show_ise (void *data, int length, int *input_panel_show);
-    void hide_ise (void);
+    void show_ise (int client_id, int context, void *data, int length, int *input_panel_show);
+    void hide_ise (int client_id, int context);
     void show_control_panel (void);
     void hide_control_panel (void);
     void set_mode (int mode);

@@ -1,3 +1,13 @@
+isf (2.3.6006-1slp2+1) unstable; urgency=low
+
+  * [immodule] Set correct ic for input_panel_show () and input_panel_hide ()
+  * [immodule] Fix prevent issue. c_str() returns temporary pointer
+  * [immodule] Remove unused code
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6006-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Thu, 06 Dec 2012 16:00:00 +0900
+
 isf (2.3.6005-1slp2+1) unstable; urgency=low
 
   * [immodule] Fix BS issue
