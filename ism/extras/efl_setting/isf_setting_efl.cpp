@@ -1438,14 +1438,16 @@ extern "C"
 
         String uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         TOOLBAR_MODE_T type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), TOOLBAR_KEYBOARD_MODE);
-        ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &_hw_kbd_num, 1);
-        if (_hw_kbd_num != 0) {
-            if (type != TOOLBAR_KEYBOARD_MODE) {
-                _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
-                _config->flush ();
-                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+        if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &_hw_kbd_num, 1) > 0) {
+            if (_hw_kbd_num != 0) {
+                if (type != TOOLBAR_KEYBOARD_MODE) {
+                    _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
+                    _config->flush ();
+                    uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                }
             }
         }
+
         isf_control_set_active_ise_by_uuid (uuid.c_str ());
 
         String mdl_name;
