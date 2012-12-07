@@ -3448,7 +3448,7 @@ slot_beep (IMEngineInstanceBase *si)
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
     if (ic && ic->impl && _focused_ic == ic)
-        ;//gdk_beep ();
+        ecore_x_bell (0);
 }
 
 static void
