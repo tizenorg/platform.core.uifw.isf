@@ -91,18 +91,20 @@ static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
 static void result_cb (ui_gadget_h ug, service_h s, void *priv)
 {
     char *name = NULL;
-    service_get_extra_data (s, "name",&name);
-    printf("get key [ %s ]\n",name);
+    service_get_extra_data (s, "name", &name);
+    printf ("get key [ %s ]\n", name);
 
-    if (strcmp (name, "keyboard-setting-wizard-efl") == 0) {
-        char *desp = NULL;
-        service_get_extra_data (s, "description",&desp);
-        printf("====================\nresult:%s\n====================\n", desp);
-        if (desp != NULL)
-            free(desp);
-    }
-    if (name != NULL)
+    if (name) {
+        if (strcmp (name, "keyboard-setting-wizard-efl") == 0) {
+            char *desp = NULL;
+            service_get_extra_data (s, "description", &desp);
+            printf("====================\nresult:%s\n====================\n", desp);
+            if (desp != NULL)
+                free (desp);
+        }
+
         free (name);
+    }
 }
 
 static void destroy_cb (ui_gadget_h ug, void *priv)
