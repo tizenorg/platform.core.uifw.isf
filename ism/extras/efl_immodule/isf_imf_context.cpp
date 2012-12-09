@@ -1074,7 +1074,6 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
     if (_focused_ic) {
         if (_focused_ic == context_scim) {
             SCIM_DEBUG_FRONTEND(1) << "It's already focused.\n";
-            //isf_imf_context_cursor_position_set (ctx, 0);
             return;
         }
         SCIM_DEBUG_FRONTEND(1) << "Focus out previous IC first: " << _focused_ic->id << "\n";
