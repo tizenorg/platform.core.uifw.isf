@@ -618,7 +618,6 @@ CommonBackEnd::add_module (const ConfigPointer &config,
             }
         } else {
             std::cerr << __func__ << ": Failed to load " << module << " IMEngine module!!!\n";
-            engine_module->unload ();
         }
     }
 
