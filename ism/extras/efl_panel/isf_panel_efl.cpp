@@ -394,6 +394,9 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, 0, 0);
         }
     }
+
+    if (zone_lists)
+        free (zone_lists);
 }
 
 /**
