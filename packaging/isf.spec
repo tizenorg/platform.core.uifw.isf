@@ -62,12 +62,6 @@ install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
 ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/scim.service
 
-# FIXME: remove initscripts after systemd is in
-mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc3.d
-mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc4.d
-ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc3.d/S47isf-panel-efl
-ln -s /etc/init.d/isf-panel-efl %{buildroot}%{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
-
 %post 
 /sbin/ldconfig
 mkdir -p /etc/scim/conf
@@ -82,9 +76,6 @@ mkdir -p /opt/usr/apps/scim/lib/scim-1.0/1.4.0/Helper
 %files
 %manifest isf.manifest
 %defattr(-,root,root,-)
-%attr(755,root,root) %{_sysconfdir}/init.d/isf-panel-efl
-%{_sysconfdir}/rc.d/rc3.d/S47isf-panel-efl
-%{_sysconfdir}/rc.d/rc4.d/S81isf-panel-efl
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
