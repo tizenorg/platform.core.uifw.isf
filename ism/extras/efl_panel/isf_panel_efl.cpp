@@ -3338,7 +3338,11 @@ cleanup:
     if (config_module)
         delete config_module;
     if (_panel_agent) {
-        _panel_agent->stop ();
+        try {
+            _panel_agent->stop ();
+        } catch (scim::Exception & e) {
+            std::cerr << "Exception is thrown from _panel_agent->stop (), error is " << e.what () << "\n";
+        }
         delete _panel_agent;
     }
 
