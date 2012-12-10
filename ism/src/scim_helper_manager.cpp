@@ -68,7 +68,8 @@ public:
         : m_socket_key (0),
           m_socket_timeout (scim_get_default_socket_timeout ())
     {
-        open_connection ();
+        if (!open_connection ())
+            std::cerr << __func__ << " open_connection () is failed!!!\n";
     }
 
     ~HelperManagerImpl ()
