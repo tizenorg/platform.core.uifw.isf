@@ -2168,6 +2168,12 @@ public:
             return;
         }
 
+        if (buf == NULL) {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            return;
+        }
+
         String uuid (buf);
         ISE_INFO info;
 
