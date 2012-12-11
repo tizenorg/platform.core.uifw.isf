@@ -32,14 +32,14 @@ typedef struct {
     Ecore_IMF_Input_Panel_Lang language;
     Ecore_IMF_Input_Panel_Layout layout;
     Ecore_IMF_Input_Panel_Return_Key_Type return_key_type;
-    Eina_Bool return_key_disabled;
+    Ecore_X_Window client_window;
     int imdata_size;
+    int cursor_pos;
+    Eina_Bool return_key_disabled;
     Eina_Bool prediction_allow;
     Eina_Bool password_mode;
     Eina_Bool caps_mode;
-    Ecore_X_Window client_window;
-    int cursor_pos;
-    int reserved[13];
+    int reserved[249];
 } Ise_Context;
 
 #endif  /* __ISE_CONTEXT_H */
