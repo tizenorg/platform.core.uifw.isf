@@ -3511,8 +3511,10 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
             SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
             SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
             WideString before = utf8_mbstowcs (String (surrounding));
+            if (cursor_index > before.length())
+                return false;
+            WideString after = before;
             before = before.substr (0, cursor_index);
-            WideString after = utf8_mbstowcs (String (surrounding));
             after =  after.substr (cursor_index, after.length () - cursor_index);
             if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
                 before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());

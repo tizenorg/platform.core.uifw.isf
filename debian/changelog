@@ -1,3 +1,11 @@
+isf (2.3.6011-1slp2+1) unstable; urgency=low
+
+  * [immodule] Fix P121127-4709: Add cursor position checking
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6011-1slp2+1
+
+ -- Li Zhang <li2012.zhang@samsung.com>  Tue, 11 Dec 2012 19:43:00 +0900
+
 isf (2.3.6006-1slp2+1) unstable; urgency=low
 
   * [immodule] Set correct ic for input_panel_show () and input_panel_hide ()

@@ -1,3 +1,7 @@
+ISF 2.3.6011 :
+  1. [immodule] Fix P121127-4709: Add cursor position checking
+
+
 ISF 2.3.6006 :
   1. [immodule] Set correct ic for input_panel_show () and input_panel_hide ()
   2. [immodule] Fix prevent issue. c_str() returns temporary pointer
