@@ -22,7 +22,7 @@
  *
  */
 /**
- *  @ingroup SLP_PG
+ *  @ingroup TIZEN_PG
  *  @defgroup InputServiceFramework_PG InputServiceFW
  *  @{
 
