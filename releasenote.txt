@@ -1,3 +1,9 @@
+ISF 2.3.6013 :
+  1. [gtkimmodule] Fix the issue 'Unable to input Chinese characters in Firefox or Thunderbird.'
+  2. [gtkimmodule] Fix the issue 'can't type in password field of chromium browser'
+  3. fix gtk immodule build error
+
+
 ISF 2.3.6011 :
   1. [immodule] Fix P121127-4709: Add cursor position checking
 

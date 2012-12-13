@@ -1459,9 +1459,6 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     GtkIMContextSCIM *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << "panel_slot_process_key_event context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
-    if (_focused_ic != ic)
-        return;
-
     if (ic && ic->impl) {
         // Just send it to key_snooper and bypass to client directly (because send_event is set to TRUE).
         GdkEventKey gdkevent = keyevent_scim_to_gdk (ic, key, FALSE);
@@ -1487,9 +1484,6 @@ panel_slot_forward_key_event (int context, const KeyEvent &key)
 {
     GtkIMContextSCIM *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << "panel_slot_forward_key_event context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
-
-    if (_focused_ic != ic)
-        return;
 
     if (ic && ic->impl) {
         // Just send it to key_snooper and bypass to client directly (because send_event is set to TRUE).
