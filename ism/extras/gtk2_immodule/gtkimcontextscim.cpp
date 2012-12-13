@@ -642,7 +642,6 @@ gtk_im_context_scim_init (GtkIMContextSCIM      *context_scim,
 
     _panel_client.prepare (context_scim->id);
     _panel_client.register_input_context (context_scim->id, si->get_factory_uuid ());
-    _panel_client.start_default_ise (context_scim->id);
     set_ic_capabilities (context_scim);
     _panel_client.send ();
 
@@ -1812,7 +1811,6 @@ panel_initialize ()
         while (context_scim != NULL) {
             _panel_client.prepare (context_scim->id);
             _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
-            _panel_client.start_default_ise (context_scim->id);
             _panel_client.send ();
             context_scim = context_scim->next;
         }
