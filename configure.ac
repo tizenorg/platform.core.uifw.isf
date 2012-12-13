@@ -282,7 +282,7 @@ if test "$SCIM_HAS_GTK2" = "yes"; then
   if test -z "$GTK_LIBDIR)"; then
     GTK_LIBDIR="$libdir"
   fi
-  GTK_IM_MODULEDIR=$GTK_LIBDIR/gtk-2.0/immodules
+  GTK_IM_MODULEDIR=$GTK_LIBDIR/gtk-2.0/$GTK_BINARY_VERSION/immodules
   AC_SUBST(GTK_LIBDIR)
   AC_SUBST(GTK_IM_MODULEDIR)
   AC_SUBST(GTK_VERSION)
