@@ -730,7 +730,7 @@ evas_focus_out_cb (void *data, Evas *e, void *event_info)
 
     if (!ctx) return;
 
-    LOGD ("[Canvas focus-out] ctx : %p\n", ctx);
+    LOGD ("ctx : %p\n", ctx);
 
     if (input_panel_ctx == ctx && _scim_initialized) {
         isf_imf_context_input_panel_instant_hide (ctx);
@@ -814,7 +814,7 @@ isf_imf_context_shutdown (void)
     if (_scim_initialized) {
         _scim_initialized = false;
 
-        LOGD ("[immodule shutdown]\n");
+        LOGD ("immodule shutdown\n");
 
         vconf_ignore_key_changed (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, autoperiod_allow_changed_cb);
         vconf_ignore_key_changed (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb);
@@ -940,7 +940,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             evas_event_callback_del_full (context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
 
         if (input_panel_ctx == ctx && _scim_initialized) {
-            LOGD ("[Context is deleted] ctx : %p\n", ctx);
+            LOGD ("ctx : %p\n", ctx);
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_input_panel_hide (ctx);
@@ -1011,7 +1011,7 @@ isf_imf_context_client_canvas_set (Ecore_IMF_Context *ctx, void *canvas)
     if (context_scim && context_scim->impl && context_scim->impl->client_canvas != (Evas*) canvas) {
         context_scim->impl->client_canvas = (Evas*)canvas;
 
-        LOGD ("[client_canvas_set] ctx : %p, canvas : %p\n", ctx, canvas);
+        LOGD ("ctx : %p, canvas : %p\n", ctx, canvas);
 
         evas_event_callback_add (context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
     }
@@ -1040,7 +1040,7 @@ isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window)
     if (context_scim && context_scim->impl && context_scim->impl->client_window != (Ecore_X_Window)((Ecore_Window)window)) {
         context_scim->impl->client_window = (Ecore_X_Window)((Ecore_Window)window);
 
-        LOGD ("[client_window_set] ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
+        LOGD ("ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
 
         if ((context_scim->impl->client_window != 0) &&
                 (context_scim->impl->client_window != _client_window)) {
@@ -1158,12 +1158,12 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         _panel_client.send ();
     }
 
-    LOGD ("[focus-in] ctx : %p\n", ctx);
+    LOGD ("ctx : %p\n", ctx);
 
     if (ecore_imf_context_input_panel_enabled_get (ctx))
         isf_imf_context_input_panel_show (ctx);
     else
-        LOGD ("[focus-in] ctx : %p input panel enable : FALSE\n", ctx);
+        LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
 }
 
 /**
@@ -1187,7 +1187,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         WideString wstr = context_scim->impl->preedit_string;
 
-        LOGD ("[focus-out] ctx : %p\n", ctx);
+        LOGD ("ctx : %p\n", ctx);
 
         if (ecore_imf_context_input_panel_enabled_get (ctx))
             isf_imf_context_input_panel_hide (ctx);
@@ -1268,7 +1268,7 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->cursor_pos != cursor_pos) {
-            LOGD ("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            LOGD ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
             context_scim->impl->cursor_pos = cursor_pos;
 
             caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
