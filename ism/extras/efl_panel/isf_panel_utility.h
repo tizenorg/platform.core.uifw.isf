@@ -55,7 +55,7 @@ typedef enum {
 } LOAD_ISE_TYPE;
 
 void isf_get_all_languages (std::vector<String> &all_langs);
-void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vector<String> &ise_names);
+void isf_get_all_ises_in_languages (std::vector<String> lang_list, std::vector<String> &uuid_list, std::vector<String> &name_list);
 
 void isf_get_keyboard_ise (const ConfigPointer &config, String &ise_uuid, String &ise_name, uint32 &ise_option);
 void isf_get_keyboard_ises_in_languages (const std::vector<String> &lang_list, std::vector<String> &uuid_list, std::vector<String> &name_list, bool bCheckOption = true);

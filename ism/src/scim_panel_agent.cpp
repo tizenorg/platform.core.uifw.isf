@@ -128,6 +128,9 @@ typedef Signal1<void, const KeyEvent &>
 typedef Signal1<void, struct rectinfo &>
         PanelAgentSignalRect;
 
+typedef Signal5<bool, String, String &, String &, int &, int &>
+        PanelAgentSignalBoolString3int2;
+
 enum ClientType {
     UNKNOWN_CLIENT,
     FRONTEND_CLIENT,
@@ -228,7 +231,6 @@ class PanelAgent::PanelAgentImpl
     int                                 m_current_active_imcontrol_id;
     int                                 m_pending_active_imcontrol_id;
     IntIntRepository                    m_imcontrol_map;
-    DEFAULT_ISE_T                       m_default_ise;
     bool                                m_should_shared_ise;
     bool                                m_ise_exiting;
 
@@ -306,6 +308,7 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalVoid                m_signal_expand_candidate;
     PanelAgentSignalVoid                m_signal_contract_candidate;
     PanelAgentSignalBoolStringVector    m_signal_get_ise_list;
+    PanelAgentSignalBoolString3int2     m_signal_get_ise_information;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
     PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
     PanelAgentSignalStringVector        m_signal_get_language_list;
@@ -1610,13 +1613,7 @@ public:
 
     void set_default_ise (const DEFAULT_ISE_T &ise)
     {
-        m_default_ise.type = ise.type;
-        m_default_ise.uuid = ise.uuid;
-        m_default_ise.name = ise.name;
-
-        scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)m_default_ise.type);
-        scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), m_default_ise.uuid);
-        scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_NAME), m_default_ise.name);
+        scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), ise.uuid);
         scim_global_config_flush ();
     }
 
@@ -1964,18 +1961,17 @@ public:
         trans.write_to_socket (client_socket);
     }
 
-    void get_active_ise_name (int client_id)
+    void get_active_ise (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::get_active_ise_name ()\n";
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
         Transaction trans;
         Socket client_socket (client_id);
-        char *name = const_cast<char *> (m_current_ise_name.c_str ());
-        size_t len = strlen (name) + 1;
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
         trans.clear ();
         trans.put_command (SCIM_TRANS_CMD_REPLY);
         trans.put_command (SCIM_TRANS_CMD_OK);
-        trans.put_data (name, len);
+        trans.put_data (default_uuid);
         trans.write_to_socket (client_socket);
     }
 
@@ -2003,6 +1999,29 @@ public:
             trans.put_data (buf, len);
         }
 
+        trans.write_to_socket (client_socket);
+    }
+
+    void get_ise_information (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        String strUuid, strName, strLanguage;
+        int nType   = 0;
+        int nOption = 0;
+        if (m_recv_trans.get_data (strUuid)) {
+            m_signal_get_ise_information (strUuid, strName, strLanguage, nType, nOption);
+        }
+
+        Transaction trans;
+        Socket client_socket (client_id);
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.put_data (strName);
+        trans.put_data (strLanguage);
+        trans.put_data (nType);
+        trans.put_data (nOption);
         trans.write_to_socket (client_socket);
     }
 
@@ -2682,6 +2701,11 @@ public:
         return m_signal_get_ise_list.connect (slot);
     }
 
+    Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString3int2        *slot)
+    {
+        return m_signal_get_ise_information.connect (slot);
+    }
+
     Connection signal_connect_get_keyboard_ise_list      (PanelAgentSlotBoolStringVector       *slot)
     {
         return m_signal_get_keyboard_ise_list.connect (slot);
@@ -3153,8 +3177,8 @@ private:
                     set_ise_imdata (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_IMDATA)
                     get_ise_imdata (client_id);
-                else if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE_NAME)
-                    get_active_ise_name (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
+                    get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID)
                     set_active_ise_by_uuid (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_RETURN_KEY_TYPE)
@@ -3173,6 +3197,8 @@ private:
                     set_ise_caps_mode (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION)
+                    get_ise_information (client_id);
                 else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
                     reset_ise_option (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_LANGUAGE_LIST)
@@ -5765,6 +5791,12 @@ Connection
 PanelAgent::signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector    *slot)
 {
     return m_impl->signal_connect_get_ise_list (slot);
+}
+
+Connection
+PanelAgent::signal_connect_get_ise_information        (PanelAgentSlotBoolString3int2     *slot)
+{
+    return m_impl->signal_connect_get_ise_information (slot);
 }
 
 Connection

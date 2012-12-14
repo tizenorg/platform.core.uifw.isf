@@ -367,6 +367,24 @@ public:
         }
     }
 
+    void get_active_ise (String &uuid) {
+        int    cmd;
+        String strTemp;
+
+        m_trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            IMCONTROLERR ("%s:: read_from_socket() may be timeout \n", __FUNCTION__);
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (strTemp)) {
+            uuid = strTemp;
+        } else {
+            IMCONTROLERR ("%s:: get_command() or get_data() may fail!!!\n", __FUNCTION__);
+        }
+    }
+
     void get_ise_list (int* count, char*** iselist) {
         int cmd;
         uint32 count_temp = 0;
@@ -399,6 +417,31 @@ public:
             }
         }
         *iselist = buf;
+    }
+
+    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option)
+    {
+        int    cmd;
+        uint32 tmp_type, tmp_option;
+        String tmp_name, tmp_language;
+
+        m_trans.put_command (ISM_TRANS_CMD_GET_ISE_INFORMATION);
+        m_trans.put_data (String (uuid));
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            IMCONTROLERR ("%s:: read_from_socket() may be timeout \n", __FUNCTION__);
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (tmp_name) && m_trans.get_data (tmp_language) &&
+                m_trans.get_data (tmp_type) && m_trans.get_data (tmp_option)) {
+            name     = tmp_name;
+            language = tmp_language;
+            type     = tmp_type;
+            option   = tmp_option;
+        } else {
+            IMCONTROLERR ("%s:: get_command() or get_data() may fail!!!\n", __FUNCTION__);
+        }
     }
 
     void reset_ise_option (void) {
@@ -565,9 +608,19 @@ void IMControlClient::set_active_ise_by_uuid (const char* uuid)
     m_impl->set_active_ise_by_uuid (uuid);
 }
 
+void IMControlClient::get_active_ise (String &uuid)
+{
+    m_impl->get_active_ise (uuid);
+}
+
 void IMControlClient::get_ise_list (int* count, char*** iselist)
 {
     m_impl->get_ise_list (count, iselist);
+}
+
+void IMControlClient::get_ise_info (const char* uuid, String &name, String &language, int &type, int &option)
+{
+    m_impl->get_ise_info (uuid, name, language, type, option);
 }
 
 void IMControlClient::reset_ise_option (void)

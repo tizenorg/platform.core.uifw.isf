@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include "scim.h"
+#include "isf_control.h"
 
 
 namespace scim
@@ -35,6 +36,9 @@ namespace scim
 
 int isf_control_set_active_ise_by_uuid (const char *uuid)
 {
+    if (uuid == NULL)
+        return -1;
+
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
@@ -43,15 +47,58 @@ int isf_control_set_active_ise_by_uuid (const char *uuid)
     return 0;
 }
 
-int isf_control_get_ise_list (char ***iselist)
+int isf_control_get_active_ise (char **uuid)
 {
+    if (uuid == NULL)
+        return -1;
+
+    String strUuid;
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.get_active_ise (strUuid);
+    imcontrol_client.close_connection ();
+
+    *uuid = strUuid.length () ? strdup (strUuid.c_str ()) : strdup ("");
+
+    return strUuid.length ();
+}
+
+int isf_control_get_ise_list (char ***uuid_list)
+{
+    if (uuid_list == NULL)
+        return -1;
+
     int count;
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
-    imcontrol_client.get_ise_list (&count, iselist);
+    imcontrol_client.get_ise_list (&count, uuid_list);
     imcontrol_client.close_connection ();
     return count;
+}
+
+int isf_control_get_ise_info (const char *uuid, char** name, char** language, ISE_TYPE_T &type, int &option)
+{
+    if (uuid == NULL || name == NULL || language == NULL)
+        return -1;
+
+    int nType   = 0;
+    int nOption = 0;
+    String strName, strLanguage;
+
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption);
+    imcontrol_client.close_connection ();
+
+    *name     = strName.length () ? strdup (strName.c_str ()) : strdup ("");
+    *language = strLanguage.length () ? strdup (strLanguage.c_str ()) : strdup ("");
+    type      = (ISE_TYPE_T)nType;
+    option    = nOption;
+
+    return 0;
 }
 
 int isf_control_reset_ise_option (void)
