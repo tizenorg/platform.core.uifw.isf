@@ -183,18 +183,24 @@ static void _isf_imf_context_init (void)
     IMFCONTROLUIDBG("debug end\n");
 }
 
-static Eina_Bool _hide_timer_handler (void *data)
+static void _send_input_panel_hide_request (Ecore_IMF_Context *ctx)
 {
     int context_id = 0;
-    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
-    if (ctx) {
-        EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
-        if (context_scim)
-            context_id = context_scim->id;
-    }
+    EcoreIMFContextISF *context_scim = NULL;
+    if (!ctx) return;
 
-    LOGD ("[request to hide input panel] ctx : %p\n", data);
+    context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+    if (!context_scim) return;
+
+    LOGD ("[request to hide input panel] ctx : %p\n", ctx);
+    context_id = context_scim->id;
     _isf_imf_context_input_panel_hide (get_panel_client_id (), context_id);
+}
+
+static Eina_Bool _hide_timer_handler (void *data)
+{
+    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
+    _send_input_panel_hide_request (ctx);
 
     hide_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
@@ -224,15 +230,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
             hide_timer = NULL;
         }
 
-        int context_id = 0;
-        if (ctx) {
-            EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
-            if (context_scim)
-                context_id = context_scim->id;
-        }
-
-        LOGD ("[request to hide input panel] ctx : %p\n", ctx);
-        _isf_imf_context_input_panel_hide (get_panel_client_id (), context_id);
+        _send_input_panel_hide_request (ctx);
     } else {
         _input_panel_hide_timer_start (ctx);
     }
@@ -306,7 +304,6 @@ EAPI void isf_imf_input_panel_shutdown (void)
 
     if (hide_timer) {
         if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-            int context_id = 0;
             Ecore_IMF_Context *using_ic = NULL;
 
             if (show_req_ic)
@@ -314,13 +311,7 @@ EAPI void isf_imf_input_panel_shutdown (void)
             else if (get_focused_ic ())
                 using_ic = get_focused_ic ()->ctx;
 
-            if (using_ic) {
-                EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (using_ic);
-                if (context_scim)
-                    context_id = context_scim->id;
-            }
-
-            _isf_imf_context_input_panel_hide (get_panel_client_id (), context_id);
+            _send_input_panel_hide_request (using_ic);
         }
         ecore_timer_del (hide_timer);
         hide_timer = NULL;
