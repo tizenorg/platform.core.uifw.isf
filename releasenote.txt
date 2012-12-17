@@ -1,5 +1,6 @@
 ISF 2.3.6017 :
   1. Implement ISF control feature
+  2. fix PLM bug:isfsetting ug indicator problem
 
 
 ISF 2.3.6014 :

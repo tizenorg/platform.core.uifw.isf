@@ -1410,7 +1410,7 @@ extern "C"
         ops->event   = on_event;
         ops->key_event = on_key_event;
         ops->priv    = ugd;
-        ops->opt     = UG_OPT_INDICATOR_PORTRAIT_ONLY;
+        ops->opt     = UG_OPT_INDICATOR_ENABLE;
 
         return 0;
     }

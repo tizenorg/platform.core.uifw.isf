@@ -1,3 +1,11 @@
+isf (2.3.6017-1slp2+2) unstable; urgency=low
+
+  * fix PLM bug: isfsetting ug indicator problem
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6017-1slp2+2
+
+ -- Shuo Liu <shuo0805.liu@samsung.com>  Mon, 17 Dec 2012 17:40:00 +0900
+
 isf (2.3.6017-1slp2+1) unstable; urgency=low
 
   * Implement ISF control feature
