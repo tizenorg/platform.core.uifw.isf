@@ -112,10 +112,10 @@ static void       efl_set_transient_for_app_window     (Evas_Object *win_obj);
 static int        efl_get_angle_for_root_window        (Evas_Object *win_obj);
 
 static int        ui_candidate_get_valid_height        (void);
-static void       ui_candidate_hide                    (bool bForce);
+static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true);
 static void       ui_destroy_candidate_window          (void);
 static void       ui_settle_candidate_window           (void);
-static void       ui_candidate_show                    (void);
+static void       ui_candidate_show                    (bool bSetVirtualKbd = true);
 static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
 
@@ -868,8 +868,10 @@ static Eina_Bool ui_candidate_destroy_timeout (void *data)
 
 /**
  * @brief Show candidate window.
+ *
+ * @param bSetVirtualKbd The flag for set_keyboard_geometry_atom_info () calling.
  */
-static void ui_candidate_show (void)
+static void ui_candidate_show (bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
@@ -890,7 +892,8 @@ static void ui_candidate_show (void)
             if (!_ise_show)
                 _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
-            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+            if (bSetVirtualKbd)
+                set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
 
@@ -908,8 +911,9 @@ static void ui_candidate_show (void)
  * @brief Hide candidate window.
  *
  * @param bForce The flag to hide candidate window by force.
+ * @param bSetVirtualKbd The flag for set_keyboard_geometry_atom_info () calling.
  */
-static void ui_candidate_hide (bool bForce)
+static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     if (!_candidate_window)
@@ -935,7 +939,8 @@ static void ui_candidate_hide (bool bForce)
                 if (_ise_show) {
                     set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
                 } else {
-                    set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+                    if (bSetVirtualKbd)
+                        set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
                     _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
                 }
             }
@@ -1430,8 +1435,6 @@ static void ui_settle_candidate_window (void)
         evas_object_move (_candidate_window, spot_x, spot_y);
         if (evas_object_visible_get (_candidate_window)) {
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
-            if (_candidate_mode == FIXED_CANDIDATE_WINDOW)
-                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
     }
 
@@ -1852,12 +1855,12 @@ static void slot_update_input_context (int type, int value)
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
             _ise_show = false;
-            ui_candidate_hide (true);
+            ui_candidate_hide (true, false);
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
         } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             _ise_show = true;
             if (evas_object_visible_get (_candidate_area_1))
-                ui_candidate_show ();
+                ui_candidate_show (false);
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
         }
     }
