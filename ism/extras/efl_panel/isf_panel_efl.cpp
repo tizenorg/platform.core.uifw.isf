@@ -2953,12 +2953,12 @@ static void start_default_ise (void)
     snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_name.c_str ());
     isf_save_log (buf);
     if (!set_active_ise (default_uuid)) {
-        std::cerr << __FUNCTION__ << "Failed to launch default ISE(" << default_uuid << ")\n";
+        std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_name.c_str ());
         isf_save_log (buf);
 
         if (default_uuid != _initial_ise_uuid) {
-            std::cerr << __FUNCTION__ << "Launch initial ISE(" << _initial_ise_uuid << ")\n";
+            std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
             snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch initial ISE(%s)\n", time (0), getpid (), __FILE__, __func__, get_ise_name (_initial_ise_uuid).c_str ());
             isf_save_log (buf);
             set_active_ise (_initial_ise_uuid);
@@ -3319,7 +3319,7 @@ int main (int argc, char *argv [])
         slot_get_ise_list (list);
 
         /* Load initial ISE information */
-        _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), SCIM_COMPOSE_KEY_FACTORY_UUID);
+        _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Initial ISE name(%s)\n", time (0), getpid (), __FILE__, __func__, get_ise_name (_initial_ise_uuid).c_str ());
         isf_save_log (buf);

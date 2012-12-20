@@ -1,3 +1,11 @@
+isf (2.3.6020-1slp2+1) unstable; urgency=low
+
+  * Fix initial ISE reading issue
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6020-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Thu, 20 Dec 2012 14:38:00 +0900
+
 isf (2.3.6017-1slp2+2) unstable; urgency=low
 
   * fix PLM bug: isfsetting ug indicator problem
