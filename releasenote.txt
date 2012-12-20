@@ -1,5 +1,6 @@
 ISF 2.3.6020 :
   1. Fix initial ISE reading issue
+  2. Fix bug not to hide IME when ecore_imf_context_del is called
 
 
 ISF 2.3.6017 :

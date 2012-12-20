@@ -57,7 +57,7 @@ static Ecore_X_Window     _rootwin;
 static unsigned int       hw_kbd_num = 0;
 static Ecore_Timer       *hide_timer = NULL;
 static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
-
+static int                hide_context_id = -1;
 Ecore_IMF_Context        *input_panel_ctx = NULL;
 
 static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
@@ -174,24 +174,28 @@ static void _isf_imf_context_init (void)
     }
 }
 
-static void _send_input_panel_hide_request (Ecore_IMF_Context *ctx)
+static int get_context_id (Ecore_IMF_Context *ctx)
 {
-    int context_id = 0;
     EcoreIMFContextISF *context_scim = NULL;
-    if (!ctx) return;
+    if (!ctx) return -1;
 
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
-    if (!context_scim) return;
+    if (!context_scim) return -1;
 
-    LOGD ("ctx : %p\n", ctx);
-    context_id = context_scim->id;
-    _isf_imf_context_input_panel_hide (get_panel_client_id (), context_id);
+    return context_scim->id;
+}
+
+static void _send_input_panel_hide_request ()
+{
+    if (hide_context_id < 0) return;
+
+    _isf_imf_context_input_panel_hide (get_panel_client_id (), hide_context_id);
+    hide_context_id = -1;
 }
 
 static Eina_Bool _hide_timer_handler (void *data)
 {
-    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
-    _send_input_panel_hide_request (ctx);
+    _send_input_panel_hide_request ();
 
     hide_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
@@ -199,6 +203,9 @@ static Eina_Bool _hide_timer_handler (void *data)
 
 static void _input_panel_hide_timer_start (void *data)
 {
+    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
+    hide_context_id = get_context_id (ctx);
+
     if (!hide_timer)
         hide_timer = ecore_timer_add (0.05, _hide_timer_handler, data);
 }
@@ -219,7 +226,8 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
             hide_timer = NULL;
         }
 
-        _send_input_panel_hide_request (ctx);
+        hide_context_id = get_context_id (ctx);
+        _send_input_panel_hide_request ();
     } else {
         _input_panel_hide_timer_start (ctx);
     }
@@ -292,7 +300,8 @@ EAPI void isf_imf_input_panel_shutdown (void)
             else if (get_focused_ic ())
                 using_ic = get_focused_ic ()->ctx;
 
-            _send_input_panel_hide_request (using_ic);
+            hide_context_id = get_context_id (using_ic);
+            _send_input_panel_hide_request ();
         }
         ecore_timer_del (hide_timer);
         hide_timer = NULL;
