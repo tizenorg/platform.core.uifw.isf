@@ -1467,29 +1467,6 @@ static void efl_get_screen_size (int &width, int &height)
 }
 
 /**
- * @brief Disable focus for app window.
- *
- * @param win_obj The Evas_Object handler of app window.
- */
-static void efl_disable_focus_for_app_window (Evas_Object *win_obj)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    Eina_Bool accepts_focus;
-    Ecore_X_Window_State_Hint initial_state;
-    Ecore_X_Pixmap icon_pixmap;
-    Ecore_X_Pixmap icon_mask;
-    Ecore_X_Window icon_window;
-    Ecore_X_Window window_group;
-    Eina_Bool is_urgent;
-
-    ecore_x_icccm_hints_get (elm_win_xwindow_get (win_obj),
-                             &accepts_focus, &initial_state, &icon_pixmap, &icon_mask, &icon_window, &window_group, &is_urgent);
-    ecore_x_icccm_hints_set (elm_win_xwindow_get (win_obj),
-                             0, initial_state, icon_pixmap, icon_mask, icon_window, window_group, is_urgent);
-}
-
-/**
  * @brief Set transient for app window.
  *
  * @param win_obj The Evas_Object handler of app window.
@@ -1590,7 +1567,7 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     elm_object_focus_allow_set (win, EINA_FALSE);
     elm_win_borderless_set (win, EINA_TRUE);
     elm_win_alpha_set (win, EINA_TRUE);
-    efl_disable_focus_for_app_window (win);
+    elm_win_prop_focus_skip_set (win, EINA_TRUE);
     efl_set_showing_effect_for_app_window (win, strEffect);
 
     const char *szProfile[] = {"mobile", ""};
