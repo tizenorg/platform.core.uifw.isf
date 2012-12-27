@@ -1,3 +1,13 @@
+isf (2.3.6027-1slp2+1) unstable; urgency=low
+
+  * When target is rotated, donot show candidate window until ISE send ECORE_IMF_INPUT_PANEL_STATE_SHOW
+  * [isf-panel-efl] use elm_win_prop_focus_skip_set ()
+  * Fix H/W keyboard engine selection issue in case of Japanese IME
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6027-1slp2+1
+
+ -- Haifeng Deng <haifeng.deng@samsung.com>  Thu, 27 Dec 2012 17:50:00 +0900
+
 isf (2.3.6020-1slp2+2) unstable; urgency=low
 
   * Fix bug not to hide IME when ecore_imf_context_del is called

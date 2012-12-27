@@ -390,9 +390,12 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
         if (kbd_state == KEYBOARD_STATE_ON) {
             ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, info.width, info.height);
+            SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_ON x=" << info.pos_x << " y=" << info.pos_y
+                                << " width=" << info.width << " height=" << info.height << "\n";
         } else {
             ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, 0, 0);
+            SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_OFF x=" << info.pos_x << " y=" << info.pos_y << "\n";
         }
     }
 
@@ -420,6 +423,50 @@ static String get_ise_name (const String uuid)
     }
 
     return ise_name;
+}
+
+/**
+ * @brief Get ISE type according to uuid.
+ *
+ * @param uuid The ISE uuid.
+ *
+ * @return The ISE type
+ */
+TOOLBAR_MODE_T get_ise_type (const String uuid)
+{
+    TOOLBAR_MODE_T ise_type = TOOLBAR_KEYBOARD_MODE;
+    if (uuid.length () > 0) {
+        for (unsigned int i = 0; i < _uuids.size (); i++) {
+            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
+                ise_type = _modes[i];
+                break;
+            }
+        }
+    }
+
+    return ise_type;
+}
+
+/**
+ * @brief Get ISE language according to uuid.
+ *
+ * @param uuid The ISE uuid.
+ *
+ * @return The ISE language
+ */
+String get_ise_language (const String uuid)
+{
+    String ise_language;
+    if (uuid.length () > 0) {
+        for (unsigned int i = 0; i < _uuids.size (); i++) {
+            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
+                ise_language = _langs[i];
+                break;
+            }
+        }
+    }
+
+    return ise_language;
 }
 
 /**
@@ -726,7 +773,6 @@ static void ui_candidate_window_rotate (int angle)
     if (!_candidate_window)
         return;
 
-    ui_candidate_hide (true);
     elm_win_rotation_set (_candidate_window, angle);
     if (angle == 90 || angle == 270) {
         _candidate_scroll_width = _candidate_scroll_width_max;
@@ -748,7 +794,6 @@ static void ui_candidate_window_rotate (int angle)
     ui_candidate_window_adjust ();
     if (evas_object_visible_get (_candidate_area_1)) {
         update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
-        ui_candidate_show ();
     }
     flush_memory ();
 }
@@ -1827,7 +1872,7 @@ static void slot_update_spot_location (int x, int y, int top_y)
  */
 static void slot_update_input_context (int type, int value)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " type=" << type << " value=" << value << "\n";
 
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
@@ -1864,12 +1909,14 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
     _ise_width  = width;
     _ise_height = height;
 
-    int angle = efl_get_angle_for_root_window (_candidate_window);
-    if (_candidate_angle != angle) {
-        _candidate_angle = angle;
-        ui_candidate_window_rotate (angle);
-    } else if (old_height != height) {
-        ui_settle_candidate_window ();
+    if (_candidate_window) {
+        int angle = efl_get_angle_for_root_window (_candidate_window);
+        if (_candidate_angle != angle) {
+            _candidate_angle = angle;
+            ui_candidate_window_rotate (angle);
+        } else if (old_height != height) {
+            ui_settle_candidate_window ();
+        }
     }
 
     if (old_height != height && _ise_show)
@@ -1904,9 +1951,8 @@ static void slot_show_candidate_table (void)
     if (_candidate_window == NULL)
         ui_create_candidate_window ();
 
-    if (!_candidate_area_1 ||
-        evas_object_visible_get (_candidate_area_1) ||
-        evas_object_visible_get (_candidate_area_2))
+    if (evas_object_visible_get (_candidate_window) &&
+        (evas_object_visible_get (_candidate_area_1) || evas_object_visible_get (_candidate_area_2)))
         return;
 
     evas_object_show (_candidate_area_1);
@@ -2641,6 +2687,10 @@ static void slot_set_keyboard_ise (const String &uuid)
     if (uuid.length () <= 0)
         return;
 
+    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+    if (get_ise_type (default_uuid) == TOOLBAR_KEYBOARD_MODE)
+        return;
+
     uint32 ise_option = 0;
     String ise_uuid, ise_name;
     isf_get_keyboard_ise (_config, ise_uuid, ise_name, ise_option);
@@ -2958,18 +3008,39 @@ static void check_hardware_keyboard (void)
     if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1)) {
         uint32 option = 0;
         String uuid, name;
+        String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
         if (val != 0) {
             _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
 
-            /* Get the keyboard ISE */
-            isf_get_keyboard_ise (_config, uuid, name, option);
-            if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
-                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-                std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
+            if (get_ise_type (default_uuid) == TOOLBAR_HELPER_MODE) {
+                /* Get the keyboard ISE */
+                isf_get_keyboard_ise (_config, uuid, name, option);
+                if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
+                    uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                    std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
+                }
+                /* Try to find reasonable keyboard ISE according to helper ISE language */
+                if (uuid == String (SCIM_COMPOSE_KEY_FACTORY_UUID)) {
+                    String helper_language = get_ise_language (default_uuid);
+                    if (helper_language.length () > 0) {
+                        std::vector<String> ise_langs;
+                        scim_split_string_list (ise_langs, helper_language);
+                        for (size_t i = 0; i < _groups[ise_langs[0]].size (); ++i) {
+                            int j = _groups[ise_langs[0]][i];
+                            if (_uuids[j] != uuid && _modes[j] == TOOLBAR_KEYBOARD_MODE) {
+                                uuid = _uuids[j];
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                uuid = default_uuid;
             }
         } else {
-            uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, _initial_ise_uuid);
+            uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
         }
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch ISE(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
@@ -3024,6 +3095,9 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
         if (_candidate_window && _candidate_angle != angle) {
             _candidate_angle = angle;
             ui_candidate_window_rotate (angle);
+            int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+            if (hw_kbd_detect && evas_object_visible_get (_candidate_area_1))
+                ui_candidate_show ();
         }
     }
 

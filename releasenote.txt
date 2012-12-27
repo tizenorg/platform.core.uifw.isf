@@ -1,3 +1,9 @@
+ISF 2.3.6027 :
+  1. When target is rotated, donot show candidate window until ISE send ECORE_IMF_INPUT_PANEL_STATE_SHOW
+  2. [isf-panel-efl] use elm_win_prop_focus_skip_set ()
+  3. Fix H/W keyboard engine selection issue in case of Japanese IME
+
+
 ISF 2.3.6020 :
   1. Fix initial ISE reading issue
   2. Fix bug not to hide IME when ecore_imf_context_del is called
