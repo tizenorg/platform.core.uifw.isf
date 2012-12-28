@@ -46,7 +46,7 @@ This package contains ISF header files for ISE development.
 
 %build
 
-./bootstrap
+%autogen
 %configure --disable-static \
 		--disable-tray-icon --disable-filter-sctc
 make %{?_smp_mflags}
