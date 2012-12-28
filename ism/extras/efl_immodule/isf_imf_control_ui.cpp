@@ -360,8 +360,9 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     if (hide_timer) {
         ecore_timer_del(hide_timer);
         hide_timer = NULL;
-        hide_req_ic = NULL;
     }
+
+    hide_req_ic = NULL;
 
     if ((show_req_ic == ctx) &&
         (_compare_context (show_req_ic, ctx) == EINA_TRUE) &&

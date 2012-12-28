@@ -1,3 +1,10 @@
+ISF 2.3.6028 :
+  1. [panel] Change font name to 'Tizen'
+  2. [immodule] fix bug wrong context is used when IME is hidden by flick gesture
+  3. [setting] fix:pressing Home key while in setup module in keyboard setting ug, popup the window to the main page of the ug to avoid syncing ise option data issue
+  4. [setting] remove useless hw_keyboard_selection_view_back_cb() and sw_keyboard_selection_view_back_cb()fix:default value for auto capitalization is true
+
+
 ISF 2.3.6027 :
   1. When target is rotated, donot show candidate window until ISE send ECORE_IMF_INPUT_PANEL_STATE_SHOW
   2. [isf-panel-efl] use elm_win_prop_focus_skip_set ()

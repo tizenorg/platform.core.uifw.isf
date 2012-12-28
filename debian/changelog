@@ -1,3 +1,14 @@
+isf (2.3.6028-1slp2+1) unstable; urgency=low
+
+  * [panel] Change font name to 'Tizen'
+  * [immodule] fix bug wrong context is used when IME is hidden by flick gesture
+  * [setting] fix:pressing Home key while in setup module in keyboard setting ug, popup the window to the main page of the ug to avoid syncing ise option data issue
+  * [setting] remove useless hw_keyboard_selection_view_back_cb() and sw_keyboard_selection_view_back_cb()fix:default value for auto capitalization is true
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6028-1slp2+1
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Fri, 28 Dec 2012 15:01:25 +0900
+
 isf (2.3.6027-1slp2+1) unstable; urgency=low
 
   * When target is rotated, donot show candidate window until ISE send ECORE_IMF_INPUT_PANEL_STATE_SHOW
