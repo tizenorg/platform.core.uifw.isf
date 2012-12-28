@@ -60,6 +60,14 @@ static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STA
 static int                hide_context_id = -1;
 Ecore_IMF_Context        *input_panel_ctx = NULL;
 
+static void _clear_timer ()
+{
+    if (hide_timer) {
+        ecore_timer_del (hide_timer);
+        hide_timer = NULL;
+    }
+}
+
 static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 {
     Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
@@ -221,10 +229,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
     }
 
     if (instant) {
-        if (hide_timer) {
-            ecore_timer_del (hide_timer);
-            hide_timer = NULL;
-        }
+        _clear_timer ();
 
         hide_context_id = get_context_id (ctx);
         _send_input_panel_hide_request ();
@@ -303,9 +308,10 @@ EAPI void isf_imf_input_panel_shutdown (void)
             hide_context_id = get_context_id (using_ic);
             _send_input_panel_hide_request ();
         }
-        ecore_timer_del (hide_timer);
-        hide_timer = NULL;
     }
+
+    _clear_timer ();
+
     _isf_imf_control_finalize ();
 }
 
@@ -357,10 +363,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         return;
     }
 
-    if (hide_timer) {
-        ecore_timer_del(hide_timer);
-        hide_timer = NULL;
-    }
+    _clear_timer ();
 
     hide_req_ic = NULL;
 
