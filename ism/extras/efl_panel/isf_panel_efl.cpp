@@ -245,7 +245,7 @@ static int                _blank_width                      = 30;
 static String             _candidate_name                   = String ("candidate");
 static String             _candidate_edje_file              = String (EFL_CANDIDATE_THEME1);
 
-static String             _candidate_font_name              = String ("SLP");
+static String             _candidate_font_name              = String ("Tizen");
 static int                _candidate_font_size              = 38;
 static int                _aux_font_size                    = 38;
 static int                _click_object                     = 0;
