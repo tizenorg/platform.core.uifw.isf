@@ -949,7 +949,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
     _candidate_window_show = true;
     evas_object_show (_candidate_window);
-    efl_set_transient_for_app_window (_candidate_window);
+    //efl_set_transient_for_app_window (_candidate_window);
 }
 
 /**

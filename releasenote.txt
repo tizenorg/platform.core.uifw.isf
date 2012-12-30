@@ -1,3 +1,7 @@
+ISF 2.3.6031 :
+  1. [panel] Fix N_SE-17126: ecore_x_icccm_transient_for_set set wrong parent window id
+
+
 ISF 2.3.6028 :
   1. [panel] Change font name to 'Tizen'
   2. [immodule] fix bug wrong context is used when IME is hidden by flick gesture
@@ -543,9 +547,9 @@ ISF 2.3.4805 :
 
 
 ISF 2.3.4801 :
-  1. [isfsetting] add setting option reset 
-  2. [isf-panel-efl] elm api update 
-  3. [isfsetting] elm api update 
+  1. [isfsetting] add setting option reset
+  2. [isf-panel-efl] elm api update
+  3. [isfsetting] elm api update
 
 
 ISF 2.3.4721 :
@@ -593,7 +597,7 @@ ISF 2.3.4701 :
 
 
 ISF 2.3.4631 :
-  1. add wizard log file to analyze loading problem in 1st time booting 
+  1. add wizard log file to analyze loading problem in 1st time booting
 
 
 ISF 2.3.4628 :
@@ -871,7 +875,7 @@ ISF 2.2.3907 :
 
 ISF 2.2.3825 :
   1. Fix candidate dummy window defect; Fix ISE name defect when display language is changed;
-  2. modify h/w keyboard setting, apply title_ellipsize style 
+  2. modify h/w keyboard setting, apply title_ellipsize style
 
 
 ISF 2.2.3823 :
@@ -890,11 +894,11 @@ ISF 2.2.3816 :
 
 
 ISF 2.2.3807 :
-  1. [isfsetting] Rollback feature related to END KEY 
+  1. [isfsetting] Rollback feature related to END KEY
 
 
 ISF 2.2.3727 :
-  1. [isfsetting] fix isfsetting bs problem 
+  1. [isfsetting] fix isfsetting bs problem
   2. [isfsetting] fix KEY_END exit problem
   3. [isf-panel-efl] update locale info when display language is changed
   4. [scim-panel-agent] Fix reload command for IMControl
@@ -1050,7 +1054,7 @@ ISF 2.2.3508 :
   1. Modify ISF Programming guide
 
 
-ISF 2.2.3504 : 
+ISF 2.2.3504 :
   1. [isf-panel-efl] Modify hibernation_leave callback
 
 
@@ -1436,7 +1440,7 @@ ISF 2.0.2414 :
   2. Set input-pad ISE as default ISE;
   3. Fix one EFL IMModule's bug;
   4. Add EFL supporting in input-pad ISE;
-  5. Fix XT9 ISE error in Aquila simulator environment; 
+  5. Fix XT9 ISE error in Aquila simulator environment;
   6. Update ISF debian files;
 
 
