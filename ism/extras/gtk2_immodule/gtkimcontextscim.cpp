@@ -510,6 +510,7 @@ gtk_im_context_scim_register_type (GTypeModule *type_module)
                                          "GtkIMContextSCIM",
                                          &im_context_scim_info,
                                          (GTypeFlags) 0);
+        g_type_module_use (type_module);
     }
     print_time ("exit gtk_im_context_scim_register_type");
 }
@@ -641,7 +642,6 @@ gtk_im_context_scim_init (GtkIMContextSCIM      *context_scim,
 
     _panel_client.prepare (context_scim->id);
     _panel_client.register_input_context (context_scim->id, si->get_factory_uuid ());
-    _panel_client.start_default_ise (context_scim->id);
     set_ic_capabilities (context_scim);
     _panel_client.send ();
 
@@ -1459,9 +1459,6 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     GtkIMContextSCIM *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << "panel_slot_process_key_event context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
-    if (_focused_ic != ic)
-        return;
-
     if (ic && ic->impl) {
         // Just send it to key_snooper and bypass to client directly (because send_event is set to TRUE).
         GdkEventKey gdkevent = keyevent_scim_to_gdk (ic, key, FALSE);
@@ -1487,9 +1484,6 @@ panel_slot_forward_key_event (int context, const KeyEvent &key)
 {
     GtkIMContextSCIM *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << "panel_slot_forward_key_event context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
-
-    if (_focused_ic != ic)
-        return;
 
     if (ic && ic->impl) {
         // Just send it to key_snooper and bypass to client directly (because send_event is set to TRUE).
@@ -1811,7 +1805,6 @@ panel_initialize ()
         while (context_scim != NULL) {
             _panel_client.prepare (context_scim->id);
             _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
-            _panel_client.start_default_ise (context_scim->id);
             _panel_client.send ();
             context_scim = context_scim->next;
         }

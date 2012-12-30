@@ -27,10 +27,67 @@
 
 namespace scim
 {
+/////////////////////////////////////////////////////////////////////////////
+// Declaration of global data types.
+/////////////////////////////////////////////////////////////////////////////
+typedef enum
+{
+    HARDWARE_KEYBOARD_ISE = 0,  /* Hardware keyboard ISE */
+    SOFTWARE_KEYBOARD_ISE       /* Software keyboard ISE */
+} ISE_TYPE_T;
 
-    int isf_control_set_active_ise_by_uuid (const char *uuid);
-    int isf_control_get_ise_list (char ***iselist);
-    int isf_control_reset_ise_option (void);
+
+/////////////////////////////////////////////////////////////////////////////
+// Declaration of global functions.
+/////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Set active ISE by UUID.
+ *
+ * @param uuid The active ISE's UUID.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+int isf_control_set_active_ise_by_uuid (const char *uuid);
+
+/**
+ * @brief Get active ISE's UUID.
+ *
+ * @param uuid The parameter is used to store active ISE's UUID.
+ *             Applcation need free *uuid if it is not used.
+ *
+ * @return the length of UUID if successfully, otherwise return -1;
+ */
+int isf_control_get_active_ise (char **uuid);
+
+/**
+ * @brief Get the list of all ISEs' UUID.
+ *
+ * @param uuid_list The list is used to store all ISEs' UUID.
+ *                  Applcation need free **uuid_list if it is not used.
+ *
+ * @return the count of UUID list if successfully, otherwise return -1;
+ */
+int isf_control_get_ise_list (char ***uuid_list);
+
+/**
+ * @brief Get ISE's information according to ISE's UUID.
+ *
+ * @param uuid The ISE's UUID.
+ * @param name     The parameter is used to store ISE's name. Applcation need free *name if it is not used.
+ * @param language The parameter is used to store ISE's language. Applcation need free *language if it is not used.
+ * @param type     The parameter is used to store ISE's type.
+ * @param option   The parameter is used to store ISE's option.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+int isf_control_get_ise_info (const char *uuid, char** name, char** language, ISE_TYPE_T &type, int &option);
+
+/**
+ * @brief Reset all ISEs' options.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+int isf_control_reset_ise_option (void);
 
 }
 

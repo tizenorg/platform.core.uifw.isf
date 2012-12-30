@@ -80,12 +80,13 @@ void isf_get_all_languages (std::vector<String> &all_langs)
 }
 
 /**
- * @brief Get all ISE names for the specific languages.
+ * @brief Get all ISEs for the specific languages.
  *
  * @param lang_list The specific languages list.
- * @param ise_names The list to store ISE names .
+ * @param uuid_list The list to store ISEs' UUID.
+ * @param name_list The list to store ISEs' name.
  */
-void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vector<String> &ise_names)
+void isf_get_all_ises_in_languages (std::vector<String> lang_list, std::vector<String> &uuid_list, std::vector<String> &name_list)
 {
     String lang_name;
 
@@ -96,9 +97,11 @@ void isf_get_all_ise_names_in_languages (std::vector<String> lang_list, std::vec
                 if (_current_modules_list.size () > 0 &&
                         std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
                     continue;
-                // Avoid to add the same ise
-                if (std::find (ise_names.begin (), ise_names.end (), _names[it->second[i]]) == ise_names.end ())
-                    ise_names.push_back (_names[it->second[i]]);
+                // Avoid to add the same ISE
+                if (std::find (uuid_list.begin (), uuid_list.end (), _uuids[it->second[i]]) == uuid_list.end ()) {
+                    uuid_list.push_back (_uuids[it->second[i]]);
+                    name_list.push_back (_names[it->second[i]]);
+                }
             }
         }
     }

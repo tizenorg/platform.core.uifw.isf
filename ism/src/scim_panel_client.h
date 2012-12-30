@@ -438,6 +438,13 @@ public:
      */
     Connection signal_connect_longpress_candidate           (PanelClientSlotInt                     *slot);
 
+    /**
+     * @brief Signal: update client ID
+     *
+     * slot prototype: void update_client_id (int context, int client_id);
+     */
+    Connection signal_connect_update_client_id              (PanelClientSlotInt                     *slot);
+
     /** @} */
 };
 

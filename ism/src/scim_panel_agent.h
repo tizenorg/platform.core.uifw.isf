@@ -139,6 +139,9 @@ typedef Slot1<void, struct rectinfo &>
 typedef Slot2<void, const String &, bool>
         PanelAgentSlotStringBool;
 
+typedef Slot5<bool, String, String &, String &, int &, int &>
+        PanelAgentSlotBoolString3int2;
+
 typedef struct DefaultIse
 {
     TOOLBAR_MODE_T type;
@@ -990,6 +993,13 @@ public:
      * slot prototype: bool get_ise_list (std::vector<String> &);
      */
     Connection signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector    *slot);
+
+    /**
+     * @brief Signal: Get the ISE information according to UUID.
+     *
+     * slot prototype: bool get_ise_information (String, String &, String &, int &, int &);
+     */
+    Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString3int2     *slot);
 
     /**
      * @brief Signal: Get the list of selected language name.

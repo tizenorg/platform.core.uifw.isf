@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.3.6005, isf@samsung.com)
+AC_INIT(isf, 2.3.6031, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
@@ -11,7 +11,7 @@ m4_pattern_allow([^AS_])
 # ISF version
 ISF_MAJOR_VERSION=2
 ISF_MINOR_VERSION=3
-ISF_MICRO_VERSION=6004
+ISF_MICRO_VERSION=6031
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -282,7 +282,7 @@ if test "$SCIM_HAS_GTK2" = "yes"; then
   if test -z "$GTK_LIBDIR)"; then
     GTK_LIBDIR="$libdir"
   fi
-  GTK_IM_MODULEDIR=$GTK_LIBDIR/gtk-2.0/immodules
+  GTK_IM_MODULEDIR=$GTK_LIBDIR/gtk-2.0/$GTK_BINARY_VERSION/immodules
   AC_SUBST(GTK_LIBDIR)
   AC_SUBST(GTK_IM_MODULEDIR)
   AC_SUBST(GTK_VERSION)

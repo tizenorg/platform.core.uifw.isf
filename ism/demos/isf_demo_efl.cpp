@@ -91,18 +91,20 @@ static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
 static void result_cb (ui_gadget_h ug, service_h s, void *priv)
 {
     char *name = NULL;
-    service_get_extra_data (s, "name",&name);
-    printf("get key [ %s ]\n",name);
+    service_get_extra_data (s, "name", &name);
+    printf ("get key [ %s ]\n", name);
 
-    if (strcmp (name, "keyboard-setting-wizard-efl") == 0) {
-        char *desp = NULL;
-        service_get_extra_data (s, "description",&desp);
-        printf("====================\nresult:%s\n====================\n", desp);
-        if (desp != NULL)
-            free(desp);
-    }
-    if (name != NULL)
+    if (name) {
+        if (strcmp (name, "keyboard-setting-wizard-efl") == 0) {
+            char *desp = NULL;
+            service_get_extra_data (s, "description", &desp);
+            printf ("====================\nresult:%s\n====================\n", desp);
+            if (desp != NULL)
+                free (desp);
+        }
+
         free (name);
+    }
 }
 
 static void destroy_cb (ui_gadget_h ug, void *priv)
@@ -270,13 +272,13 @@ static Evas_Object* create_win (const char *name)
 }
 
 static void
-_vkbd_state_on(void *data, Evas_Object *obj, void *event_info)
+_vkbd_state_on (void *data, Evas_Object *obj, void *event_info)
 {
     printf("[%s] input panel is shown\n", __func__);
 }
 
 static void
-_vkbd_state_off(void *data, Evas_Object *obj, void *event_info)
+_vkbd_state_off (void *data, Evas_Object *obj, void *event_info)
 {
     printf("[%s] input panel is hidden\n", __func__);
 }
@@ -436,10 +438,18 @@ int main (int argc, char *argv[])
 
     memset (&ad, 0x0, sizeof (struct appdata));
     ops.data = &ad;
-    return appcore_efl_main ("isf-demo-efl", &argc, &argv, &ops);
+
+    int ret = -1;
+    try {
+        ret = appcore_efl_main ("isf-demo-efl", &argc, &argv, &ops);
+    } catch (...) {
+        printf ("Exception is thrown from appcore_efl_main ()!!!\n");
+    }
+
+    return ret;
 }
 
-static void _focused_cb(void *data, Evas_Object *obj, void *event_info)
+static void _focused_cb (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *ly = (Evas_Object *)data;
 

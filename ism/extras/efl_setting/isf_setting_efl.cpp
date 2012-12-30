@@ -256,16 +256,6 @@ static String uuid_to_name (String uuid)
     return strName;
 }
 
-static void sw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    if (data == NULL)
-        return;
-
-    struct ug_data *ugd = (struct ug_data *)data;
-    snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", _sw_ise_bak);
-    ugd->key_end_cb = back_cb;
-}
-
 static void update_setting_main_view (ug_data *ugd)
 {
     _p_items[SW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_sw_ise_name);
@@ -285,13 +275,8 @@ static void update_setting_main_view (ug_data *ugd)
     elm_genlist_item_update (ugd->hw_ise_item_tizen);
 }
 
-static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
+static void set_active_sw_ise()
 {
-    if (data == NULL)
-        return;
-
-    struct ug_data *ugd = (struct ug_data *)data;
-
     if (strcmp (_sw_ise_bak, _sw_ise_name) != 0) {
         // If ISE is changed, active it.
         String uuid;
@@ -303,22 +288,26 @@ static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
 
         snprintf (_sw_ise_bak, sizeof (_sw_ise_bak), "%s", _sw_ise_name);
     }
+}
+static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    if (data == NULL)
+        return;
+
+    struct ug_data *ugd = (struct ug_data *)data;
+
+    set_active_sw_ise();
 
     update_setting_main_view (ugd);
 
     ugd->key_end_cb = back_cb;
 }
 
-static void set_active_ise (int index)
-{
-    snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", _sw_ise_list[index].c_str ());
-}
-
 static void sw_keyboard_radio_cb (void *data, Evas_Object *obj, void *event_info)
 {
     int index = GPOINTER_TO_INT(data);
     elm_radio_value_set (_sw_radio_grp, index);
-    set_active_ise (index);
+    snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", _sw_ise_list[index].c_str ());
 }
 
 static void hw_keyboard_radio_cb (void *data, Evas_Object *obj, void *event_info)
@@ -339,8 +328,8 @@ static void show_language_cb (void *data, Evas_Object *obj, void *event_info)
     String langlist_str, normal_langlist_str;
 
     for (unsigned int i = 0; i < _names.size (); i++) {
-       if (strcmp (_names[i].c_str (), _sw_ise_list[index].c_str()) == 0)
-          langlist_str = _langs[i];
+        if (strcmp (_names[i].c_str (), _sw_ise_list[index].c_str()) == 0)
+            langlist_str = _langs[i];
     }
     std::vector<String> langlist_vec,normal_langlist_vec;
     scim_split_string_list (langlist_vec, langlist_str);
@@ -489,7 +478,7 @@ static void _gl_sw_ise_sel (void *data, Evas_Object *obj, void *event_info)
     elm_genlist_item_selected_set (item, EINA_FALSE);
 
     _sw_ise_index = (int)(data);
-    set_active_ise (_sw_ise_index);
+    snprintf (_sw_ise_name, sizeof (_sw_ise_name), "%s", _sw_ise_list[_sw_ise_index].c_str ());
 
     elm_genlist_item_update (item);
 }
@@ -612,7 +601,7 @@ static Evas_Object *_gl_exp_hw_icon_get (void *data, Evas_Object *obj, const cha
 
 static void create_sw_keyboard_selection_view (ug_data *ugd)
 {
-    ugd->key_end_cb = sw_keyboard_selection_view_back_cb;
+    ugd->key_end_cb = sw_keyboard_selection_view_set_cb;
 
     if (_sw_radio_grp != NULL) {
         evas_object_del (_sw_radio_grp);
@@ -648,13 +637,13 @@ static void create_sw_keyboard_selection_view (ug_data *ugd)
         // Separator
         Elm_Object_Item *item;
         item = elm_genlist_item_append (
-                    genlist,                // genlist object
-                    &itcSeparator,          // item class
-                    NULL,                   // data
-                    NULL,
-                    ELM_GENLIST_ITEM_NONE,
-                    NULL,
-                    NULL);
+                genlist,                // genlist object
+                &itcSeparator,          // item class
+                NULL,                   // data
+                NULL,
+                ELM_GENLIST_ITEM_NONE,
+                NULL,
+                NULL);
         elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
     }
 
@@ -676,22 +665,8 @@ static void create_sw_keyboard_selection_view (ug_data *ugd)
     }
 }
 
-static void hw_keyboard_selection_view_back_cb (void *data, Evas_Object *obj, void *event_info)
+static void set_active_hw_ise()
 {
-    if (!data)
-        return;
-
-    struct ug_data *ugd = (struct ug_data *)data;
-    snprintf (_hw_ise_name, sizeof (_hw_ise_name), "%s", _hw_ise_bak);
-    ugd->key_end_cb = back_cb;
-}
-
-static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    if (!data)
-        return;
-
-    struct ug_data *ugd = (struct ug_data *)data;
     if (strcmp (_hw_ise_bak, _hw_ise_name) != 0) {
         // If ISE is changed, active it.
         String uuid;
@@ -703,6 +678,16 @@ static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
         //printf ("    Set keyboard ISE: %s\n", _hw_ise_name);
         snprintf (_hw_ise_bak, sizeof (_hw_ise_bak), "%s", _hw_ise_name);
     }
+}
+
+static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    if (!data)
+        return;
+
+    struct ug_data *ugd = (struct ug_data *)data;
+
+    set_active_hw_ise();
 
     update_setting_main_view (ugd);
 
@@ -711,7 +696,7 @@ static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
 
 static void create_hw_keyboard_selection_view (ug_data * ugd)
 {
-    ugd->key_end_cb = hw_keyboard_selection_view_back_cb;
+    ugd->key_end_cb = hw_keyboard_selection_view_set_cb;
 
     if (_hw_radio_grp != NULL) {
         evas_object_del (_hw_radio_grp);
@@ -746,13 +731,13 @@ static void create_hw_keyboard_selection_view (ug_data * ugd)
         // Separator
         Elm_Object_Item *item;
         item = elm_genlist_item_append (
-                    genlist,                // genlist object
-                    &itcSeparator,          // item class
-                    NULL,                   // data
-                    NULL,
-                    ELM_GENLIST_ITEM_NONE,
-                    NULL,
-                    NULL);
+                genlist,                // genlist object
+                &itcSeparator,          // item class
+                NULL,                   // data
+                NULL,
+                ELM_GENLIST_ITEM_NONE,
+                NULL,
+                NULL);
         elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
     }
 
@@ -776,6 +761,7 @@ static void create_hw_keyboard_selection_view (ug_data * ugd)
     }
 }
 
+static Elm_Object_Item *nf_main_it = NULL;
 static Evas_Object *create_setting_main_view (ug_data *ugd)
 {
     Elm_Object_Item *item     = NULL;
@@ -834,13 +820,13 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
 
         // Separator
         item = elm_genlist_item_append(
-                    genlist,                // genlist object
-                    &itcSeparator,          // item class
-                    NULL,                   // data
-                    NULL,
-                    ELM_GENLIST_ITEM_NONE,
-                    NULL,
-                    NULL);
+                genlist,                // genlist object
+                &itcSeparator,          // item class
+                NULL,                   // data
+                NULL,
+                ELM_GENLIST_ITEM_NONE,
+                NULL,
+                NULL);
         elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
         // Group1 item1
@@ -1062,18 +1048,18 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                     (void *)ugd);
 
             if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
-               elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
+                elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
         }
 
         // Separator
         item = elm_genlist_item_append (
-                    genlist,                // genlist object
-                    &itcSeparator,          // item class
-                    NULL,                   // data
-                    NULL,
-                    ELM_GENLIST_ITEM_NONE,
-                    NULL,
-                    NULL);
+                genlist,                // genlist object
+                &itcSeparator,          // item class
+                NULL,                   // data
+                NULL,
+                ELM_GENLIST_ITEM_NONE,
+                NULL,
+                NULL);
         elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
         //==================================group end =========================
@@ -1081,7 +1067,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
         elm_object_style_set (back_btn, "naviframe/back_btn/default");
         evas_object_smart_callback_add (back_btn, "clicked", back_cb, ugd);
 
-        elm_naviframe_item_push (ugd->naviframe, _T("Keyboard"), back_btn, NULL, genlist, NULL);
+        nf_main_it = elm_naviframe_item_push (ugd->naviframe, _T("Keyboard"), back_btn, NULL, genlist, NULL);
     }
     return ugd->naviframe;
 }
@@ -1270,7 +1256,22 @@ static void on_start (ui_gadget_h ug, service_h s, void *priv)
 
 static void on_pause (ui_gadget_h ug, service_h s, void *priv)
 {
+    if (ug == NULL || priv == NULL)
+        return;
+    struct ug_data *ugd = (struct ug_data *) priv;
+    if (ugd->key_end_cb == ise_option_view_set_cb)
+    {//inside ise setup module
+        _mdl->save_config (_config);
+        _config->reload ();
 
+        helper_ise_reload_config ();
+        elm_naviframe_item_pop_to(nf_main_it);
+        ugd->key_end_cb = back_cb;
+    }
+    else if (ugd->key_end_cb == sw_keyboard_selection_view_set_cb)
+        set_active_sw_ise();
+    else if (ugd->key_end_cb == hw_keyboard_selection_view_set_cb)
+        set_active_hw_ise();
 }
 
 static void on_resume (ui_gadget_h ug, service_h s, void *priv)
@@ -1345,22 +1346,22 @@ static void on_message (ui_gadget_h ug, service_h msg, service_h data, void *pri
 static void on_event (ui_gadget_h ug, enum ug_event event, service_h s, void *priv)
 {
     switch (event) {
-    case UG_EVENT_LOW_MEMORY:
-        break;
-    case UG_EVENT_LOW_BATTERY:
-        break;
-    case UG_EVENT_LANG_CHANGE:
-        break;
-    case UG_EVENT_ROTATE_PORTRAIT:
-        break;
-    case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-        break;
-    case UG_EVENT_ROTATE_LANDSCAPE:
-        break;
-    case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-        break;
-    default:
-        break;
+        case UG_EVENT_LOW_MEMORY:
+            break;
+        case UG_EVENT_LOW_BATTERY:
+            break;
+        case UG_EVENT_LANG_CHANGE:
+            break;
+        case UG_EVENT_ROTATE_PORTRAIT:
+            break;
+        case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+            break;
+        case UG_EVENT_ROTATE_LANDSCAPE:
+            break;
+        case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+            break;
+        default:
+            break;
     }
 }
 
@@ -1410,7 +1411,7 @@ extern "C"
         ops->event   = on_event;
         ops->key_event = on_key_event;
         ops->priv    = ugd;
-        ops->opt     = UG_OPT_INDICATOR_PORTRAIT_ONLY;
+        ops->opt     = UG_OPT_INDICATOR_ENABLE;
 
         return 0;
     }
@@ -1428,7 +1429,7 @@ extern "C"
     // Reset keyboard setting
     UG_MODULE_API int setting_plugin_reset (service_h s, void *priv)
     {
-        if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, false) == -1)
+        if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, true) == -1)
             return -1;
         if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, false) == -1)
             return -1;
@@ -1438,14 +1439,16 @@ extern "C"
 
         String uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         TOOLBAR_MODE_T type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), TOOLBAR_KEYBOARD_MODE);
-        ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &_hw_kbd_num, 1);
-        if (_hw_kbd_num != 0) {
-            if (type != TOOLBAR_KEYBOARD_MODE) {
-                _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
-                _config->flush ();
-                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+        if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &_hw_kbd_num, 1) > 0) {
+            if (_hw_kbd_num != 0) {
+                if (type != TOOLBAR_KEYBOARD_MODE) {
+                    _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
+                    _config->flush ();
+                    uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                }
             }
         }
+
         isf_control_set_active_ise_by_uuid (uuid.c_str ());
 
         String mdl_name;
@@ -1479,4 +1482,4 @@ extern "C"
 
 /*
 vi:ts=4:ai:nowrap:expandtab
-*/
+ */

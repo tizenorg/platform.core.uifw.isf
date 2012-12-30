@@ -131,10 +131,12 @@ public:
     }
 
 
-    void show_ise (void *data, int length, int *input_panel_show) {
+    void show_ise (int client_id, int context, void *data, int length, int *input_panel_show) {
         int cmd;
         uint32 temp;
         m_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_PANEL);
+        m_trans.put_data ((uint32)client_id);
+        m_trans.put_data ((uint32)context);
         m_trans.put_data ((const char *)data, (size_t)length);
         m_trans.write_to_socket (m_socket_imclient2panel);
         if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
@@ -151,8 +153,10 @@ public:
         }
     }
 
-    void hide_ise (void) {
+    void hide_ise (int client_id, int context) {
         m_trans.put_command (ISM_TRANS_CMD_HIDE_ISE_PANEL);
+        m_trans.put_data ((uint32)client_id);
+        m_trans.put_data ((uint32)context);
     }
 
     void show_control_panel (void) {
@@ -363,6 +367,24 @@ public:
         }
     }
 
+    void get_active_ise (String &uuid) {
+        int    cmd;
+        String strTemp;
+
+        m_trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            IMCONTROLERR ("%s:: read_from_socket() may be timeout \n", __FUNCTION__);
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (strTemp)) {
+            uuid = strTemp;
+        } else {
+            IMCONTROLERR ("%s:: get_command() or get_data() may fail!!!\n", __FUNCTION__);
+        }
+    }
+
     void get_ise_list (int* count, char*** iselist) {
         int cmd;
         uint32 count_temp = 0;
@@ -395,6 +417,31 @@ public:
             }
         }
         *iselist = buf;
+    }
+
+    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option)
+    {
+        int    cmd;
+        uint32 tmp_type, tmp_option;
+        String tmp_name, tmp_language;
+
+        m_trans.put_command (ISM_TRANS_CMD_GET_ISE_INFORMATION);
+        m_trans.put_data (String (uuid));
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            IMCONTROLERR ("%s:: read_from_socket() may be timeout \n", __FUNCTION__);
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (tmp_name) && m_trans.get_data (tmp_language) &&
+                m_trans.get_data (tmp_type) && m_trans.get_data (tmp_option)) {
+            name     = tmp_name;
+            language = tmp_language;
+            type     = tmp_type;
+            option   = tmp_option;
+        } else {
+            IMCONTROLERR ("%s:: get_command() or get_data() may fail!!!\n", __FUNCTION__);
+        }
     }
 
     void reset_ise_option (void) {
@@ -471,14 +518,14 @@ IMControlClient::send (void)
     return m_impl->send ();
 }
 
-void IMControlClient::show_ise (void *data, int length, int *input_panel_show)
+void IMControlClient::show_ise (int client_id, int context, void *data, int length, int *input_panel_show)
 {
-    m_impl->show_ise (data,length, input_panel_show);
+    m_impl->show_ise (client_id, context, data,length, input_panel_show);
 }
 
-void IMControlClient::hide_ise (void)
+void IMControlClient::hide_ise (int client_id, int context)
 {
-    m_impl->hide_ise ();
+    m_impl->hide_ise (client_id, context);
 }
 
 void IMControlClient::show_control_panel (void)
@@ -561,9 +608,19 @@ void IMControlClient::set_active_ise_by_uuid (const char* uuid)
     m_impl->set_active_ise_by_uuid (uuid);
 }
 
+void IMControlClient::get_active_ise (String &uuid)
+{
+    m_impl->get_active_ise (uuid);
+}
+
 void IMControlClient::get_ise_list (int* count, char*** iselist)
 {
     m_impl->get_ise_list (count, iselist);
+}
+
+void IMControlClient::get_ise_info (const char* uuid, String &name, String &language, int &type, int &option)
+{
+    m_impl->get_ise_info (uuid, name, language, type, option);
 }
 
 void IMControlClient::reset_ise_option (void)

@@ -112,10 +112,10 @@ static void       efl_set_transient_for_app_window     (Evas_Object *win_obj);
 static int        efl_get_angle_for_root_window        (Evas_Object *win_obj);
 
 static int        ui_candidate_get_valid_height        (void);
-static void       ui_candidate_hide                    (bool bForce);
+static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true);
 static void       ui_destroy_candidate_window          (void);
 static void       ui_settle_candidate_window           (void);
-static void       ui_candidate_show                    (void);
+static void       ui_candidate_show                    (bool bSetVirtualKbd = true);
 static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
 
@@ -139,7 +139,8 @@ static void       slot_hide_candidate_table            (void);
 static void       slot_update_aux_string               (const String &str, const AttributeList &attrs);
 static void       slot_update_candidate_table          (const LookupTable &table);
 static void       slot_set_active_ise                  (const String &uuid, bool changeDefault);
-static bool       slot_get_ise_list                    (std::vector<String> &name);
+static bool       slot_get_ise_list                    (std::vector<String> &list);
+static bool       slot_get_ise_information             (String uuid, String &name, String &language, int &type, int &option);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name_list);
 static void       slot_get_language_list               (std::vector<String> &name);
 static void       slot_get_all_language                (std::vector<String> &lang);
@@ -244,7 +245,7 @@ static int                _blank_width                      = 30;
 static String             _candidate_name                   = String ("candidate");
 static String             _candidate_edje_file              = String (EFL_CANDIDATE_THEME1);
 
-static String             _candidate_font_name              = String ("SLP");
+static String             _candidate_font_name              = String ("Tizen");
 static int                _candidate_font_size              = 38;
 static int                _aux_font_size                    = 38;
 static int                _click_object                     = 0;
@@ -252,7 +253,7 @@ static int                _click_down_pos [2]               = {0, 0};
 static int                _click_up_pos [2]                 = {0, 0};
 static bool               _is_click                         = true;
 
-static DEFAULT_ISE_T      _initial_ise;
+static String             _initial_ise_uuid                 = String ("");
 static ConfigPointer      _config;
 static PanelAgent        *_panel_agent                      = 0;
 static std::vector<Ecore_Fd_Handler *> _read_handler_list;
@@ -389,11 +390,17 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
         if (kbd_state == KEYBOARD_STATE_ON) {
             ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, info.width, info.height);
+            SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_ON x=" << info.pos_x << " y=" << info.pos_y
+                                << " width=" << info.width << " height=" << info.height << "\n";
         } else {
             ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, 0, 0);
+            SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_OFF x=" << info.pos_x << " y=" << info.pos_y << "\n";
         }
     }
+
+    if (zone_lists)
+        free (zone_lists);
 }
 
 /**
@@ -416,6 +423,50 @@ static String get_ise_name (const String uuid)
     }
 
     return ise_name;
+}
+
+/**
+ * @brief Get ISE type according to uuid.
+ *
+ * @param uuid The ISE uuid.
+ *
+ * @return The ISE type
+ */
+TOOLBAR_MODE_T get_ise_type (const String uuid)
+{
+    TOOLBAR_MODE_T ise_type = TOOLBAR_KEYBOARD_MODE;
+    if (uuid.length () > 0) {
+        for (unsigned int i = 0; i < _uuids.size (); i++) {
+            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
+                ise_type = _modes[i];
+                break;
+            }
+        }
+    }
+
+    return ise_type;
+}
+
+/**
+ * @brief Get ISE language according to uuid.
+ *
+ * @param uuid The ISE uuid.
+ *
+ * @return The ISE language
+ */
+String get_ise_language (const String uuid)
+{
+    String ise_language;
+    if (uuid.length () > 0) {
+        for (unsigned int i = 0; i < _uuids.size (); i++) {
+            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
+                ise_language = _langs[i];
+                break;
+            }
+        }
+    }
+
+    return ise_language;
 }
 
 /**
@@ -517,13 +568,8 @@ static bool set_active_ise (const String &uuid)
                 ise_changed = set_helper_ise (_uuids[i]);
 
             if (ise_changed) {
-                DEFAULT_ISE_T default_ise;
-                default_ise.type = _modes[i];
-                default_ise.uuid = _uuids[i];
-                default_ise.name = _names[i];
-                _panel_agent->set_default_ise (default_ise);
-                _panel_agent->set_current_toolbar_mode (default_ise.type);
-                _panel_agent->set_current_ise_name (default_ise.name);
+                _panel_agent->set_current_toolbar_mode (_modes[i]);
+                _panel_agent->set_current_ise_name (_names[i]);
 
                 _ise_width  = 0;
                 _ise_height = 0;
@@ -532,6 +578,9 @@ static bool set_active_ise (const String &uuid)
                 _candidate_port_line = ONE_LINE_CANDIDATE;
                 if (_candidate_window)
                     ui_create_candidate_window ();
+
+                scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _uuids[i]);
+                scim_global_config_flush ();
 
                 _config->flush ();
                 _config->reload ();
@@ -724,7 +773,6 @@ static void ui_candidate_window_rotate (int angle)
     if (!_candidate_window)
         return;
 
-    ui_candidate_hide (true);
     elm_win_rotation_set (_candidate_window, angle);
     if (angle == 90 || angle == 270) {
         _candidate_scroll_width = _candidate_scroll_width_max;
@@ -746,7 +794,6 @@ static void ui_candidate_window_rotate (int angle)
     ui_candidate_window_adjust ();
     if (evas_object_visible_get (_candidate_area_1)) {
         update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
-        ui_candidate_show ();
     }
     flush_memory ();
 }
@@ -866,8 +913,10 @@ static Eina_Bool ui_candidate_destroy_timeout (void *data)
 
 /**
  * @brief Show candidate window.
+ *
+ * @param bSetVirtualKbd The flag for set_keyboard_geometry_atom_info () calling.
  */
-static void ui_candidate_show (void)
+static void ui_candidate_show (bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
@@ -888,7 +937,8 @@ static void ui_candidate_show (void)
             if (!_ise_show)
                 _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
-            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+            if (bSetVirtualKbd)
+                set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
 
@@ -906,8 +956,9 @@ static void ui_candidate_show (void)
  * @brief Hide candidate window.
  *
  * @param bForce The flag to hide candidate window by force.
+ * @param bSetVirtualKbd The flag for set_keyboard_geometry_atom_info () calling.
  */
-static void ui_candidate_hide (bool bForce)
+static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     if (!_candidate_window)
@@ -933,7 +984,8 @@ static void ui_candidate_hide (bool bForce)
                 if (_ise_show) {
                     set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
                 } else {
-                    set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+                    if (bSetVirtualKbd)
+                        set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
                     _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
                 }
             }
@@ -1428,8 +1480,6 @@ static void ui_settle_candidate_window (void)
         evas_object_move (_candidate_window, spot_x, spot_y);
         if (evas_object_visible_get (_candidate_window)) {
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
-            if (_candidate_mode == FIXED_CANDIDATE_WINDOW)
-                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
     }
 
@@ -1459,29 +1509,6 @@ static void efl_get_screen_size (int &width, int &height)
     } else {
         std::cerr << "ecore_x_display_get () is failed!!!\n";
     }
-}
-
-/**
- * @brief Disable focus for app window.
- *
- * @param win_obj The Evas_Object handler of app window.
- */
-static void efl_disable_focus_for_app_window (Evas_Object *win_obj)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    Eina_Bool accepts_focus;
-    Ecore_X_Window_State_Hint initial_state;
-    Ecore_X_Pixmap icon_pixmap;
-    Ecore_X_Pixmap icon_mask;
-    Ecore_X_Window icon_window;
-    Ecore_X_Window window_group;
-    Eina_Bool is_urgent;
-
-    ecore_x_icccm_hints_get (elm_win_xwindow_get (win_obj),
-                             &accepts_focus, &initial_state, &icon_pixmap, &icon_mask, &icon_window, &window_group, &is_urgent);
-    ecore_x_icccm_hints_set (elm_win_xwindow_get (win_obj),
-                             0, initial_state, icon_pixmap, icon_mask, icon_window, window_group, is_urgent);
 }
 
 /**
@@ -1585,7 +1612,7 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     elm_object_focus_allow_set (win, EINA_FALSE);
     elm_win_borderless_set (win, EINA_TRUE);
     elm_win_alpha_set (win, EINA_TRUE);
-    efl_disable_focus_for_app_window (win);
+    elm_win_prop_focus_skip_set (win, EINA_TRUE);
     efl_set_showing_effect_for_app_window (win, strEffect);
 
     const char *szProfile[] = {"mobile", ""};
@@ -1711,6 +1738,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_get_input_panel_geometry   (slot (slot_get_input_panel_geometry));
     _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise));
     _panel_agent->signal_connect_get_ise_list               (slot (slot_get_ise_list));
+    _panel_agent->signal_connect_get_ise_information        (slot (slot_get_ise_information));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
     _panel_agent->signal_connect_get_all_language           (slot (slot_get_all_language));
@@ -1844,17 +1872,17 @@ static void slot_update_spot_location (int x, int y, int top_y)
  */
 static void slot_update_input_context (int type, int value)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " type=" << type << " value=" << value << "\n";
 
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
             _ise_show = false;
-            ui_candidate_hide (true);
+            ui_candidate_hide (true, false);
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
         } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             _ise_show = true;
             if (evas_object_visible_get (_candidate_area_1))
-                ui_candidate_show ();
+                ui_candidate_show (false);
             set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
         }
     }
@@ -1881,12 +1909,14 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
     _ise_width  = width;
     _ise_height = height;
 
-    int angle = efl_get_angle_for_root_window (_candidate_window);
-    if (_candidate_angle != angle) {
-        _candidate_angle = angle;
-        ui_candidate_window_rotate (angle);
-    } else if (old_height != height) {
-        ui_settle_candidate_window ();
+    if (_candidate_window) {
+        int angle = efl_get_angle_for_root_window (_candidate_window);
+        if (_candidate_angle != angle) {
+            _candidate_angle = angle;
+            ui_candidate_window_rotate (angle);
+        } else if (old_height != height) {
+            ui_settle_candidate_window ();
+        }
     }
 
     if (old_height != height && _ise_show)
@@ -1921,9 +1951,8 @@ static void slot_show_candidate_table (void)
     if (_candidate_window == NULL)
         ui_create_candidate_window ();
 
-    if (!_candidate_area_1 ||
-        evas_object_visible_get (_candidate_area_1) ||
-        evas_object_visible_get (_candidate_area_2))
+    if (evas_object_visible_get (_candidate_window) &&
+        (evas_object_visible_get (_candidate_area_1) || evas_object_visible_get (_candidate_area_2)))
         return;
 
     evas_object_show (_candidate_area_1);
@@ -2142,6 +2171,8 @@ static void update_table (int table_type, const LookupTable &table)
     int line_count      = 0;
     int more_item_count = 0;
     int scroll_0_width  = _candidate_scroll_0_width_min;
+    int cursor_pos      = table.get_cursor_pos ();
+    int cursor_line     = 0;
 
     if (_candidate_angle == 90 || _candidate_angle == 270)
         scroll_0_width = 1176 * _height_rate;
@@ -2286,6 +2317,8 @@ static void update_table (int table_type, const LookupTable &table)
 
                 row_items.push_back (i - nLast);
                 nLast = i;
+                if (cursor_pos >= i)
+                    cursor_line++;
             }
             if (current_width == 0 && !_line_items [i]) {
                 _line_items [i] = edje_object_add (evas);
@@ -2355,8 +2388,18 @@ static void update_table (int table_type, const LookupTable &table)
         evas_object_hide (_more_btn);
         evas_object_show (_close_btn);
     }
-    elm_scroller_region_show (_candidate_area_1, 0, 0, _candidate_scroll_width, _item_min_height);
-    elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, _item_min_height);
+
+    int w, h;
+    elm_scroller_region_get (_candidate_area_2, &x, &y, &w, &h);
+
+    int line_h   = _item_min_height + _v_padding;
+    int cursor_y = cursor_line * line_h;
+    if (cursor_y < y) {
+        elm_scroller_region_show (_candidate_area_2, 0, cursor_y, w, h);
+    } else if (cursor_y >= y + h) {
+        elm_scroller_region_show (_candidate_area_2, 0, cursor_y + line_h - h, w, h);
+    }
+
     flush_memory ();
 }
 
@@ -2474,21 +2517,62 @@ static bool slot_get_ise_list (std::vector<String> &list)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     /* update ise list */
-    isf_load_ise_information (ALL_ISE, _config);
     bool ret = isf_update_ise_list (ALL_ISE, _config);
 
-    std::vector<String> langs;
+    std::vector<String> langs, name_list;
     isf_get_all_languages (langs);
-    isf_get_all_ise_names_in_languages (langs, list);
+    isf_get_all_ises_in_languages (langs, list, name_list);
 
     _panel_agent->update_ise_list (list);
     return ret;
 }
 
 /**
+ * @brief Get the ISE's information.
+ *
+ * @param uuid The ISE's uuid.
+ * @param name The ISE's name.
+ * @param language The ISE's language.
+ * @param type The ISE's type.
+ * @param option The ISE's option.
+ *
+ * @return true if this operation is successful, otherwise return false.
+ */
+static bool slot_get_ise_information (String uuid, String &name, String &language, int &type, int &option)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (uuid.length () > 0) {
+        for (unsigned int i = 0; i < _uuids.size (); i++) {
+            if (uuid == _uuids[i]) {
+                String normal_languange = String ("");
+                if (_langs[i].length () > 0) {
+                    std::vector<String> language_list;
+                    scim_split_string_list (language_list, _langs[i]);
+                    normal_languange = ((scim_get_language_name (language_list[0].c_str ())).c_str ());
+                    for (unsigned int i = 1; i < language_list.size (); i++) {
+                        normal_languange += String (", ");
+                        normal_languange += ((scim_get_language_name (language_list[i].c_str ())).c_str ());
+                    }
+                }
+
+                name     = _names[i];
+                language = normal_languange;
+                type     = _modes[i];
+                option   = _options[i];
+                return true;
+            }
+        }
+    }
+
+    std::cerr << __func__ << " is failed!!!\n";
+    return false;
+}
+
+/**
  * @brief Get keyboard ISEs list slot function for PanelAgent.
  *
- * @param list The list is used to store keyboard ISEs.
+ * @param name_list The list is used to store keyboard ISEs.
  *
  * @return true if this operation is successful, otherwise return false.
  */
@@ -2497,7 +2581,6 @@ static bool slot_get_keyboard_ise_list (std::vector<String> &name_list)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     /* update ise list */
-    isf_load_ise_information (ALL_ISE, _config);
     bool ret = isf_update_ise_list (ALL_ISE, _config);
 
     std::vector<String> lang_list, uuid_list;
@@ -2505,7 +2588,7 @@ static bool slot_get_keyboard_ise_list (std::vector<String> &name_list)
     isf_get_keyboard_ises_in_languages (lang_list, uuid_list, name_list, false);
 
     if (ret)
-        _panel_agent->update_ise_list (name_list);
+        _panel_agent->update_ise_list (uuid_list);
     return ret;
 }
 
@@ -2602,6 +2685,10 @@ static void slot_set_keyboard_ise (const String &uuid)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (uuid.length () <= 0)
+        return;
+
+    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+    if (get_ise_type (default_uuid) == TOOLBAR_KEYBOARD_MODE)
         return;
 
     uint32 ise_option = 0;
@@ -2871,13 +2958,9 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     }
     isf_save_ise_information ();
 
-    DEFAULT_ISE_T default_ise;
-    default_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)_initial_ise.type);
-    default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
-    default_ise.name = get_ise_name (default_ise.uuid);
-
-    _panel_agent->set_current_ise_name (default_ise.name);
-    _panel_agent->set_default_ise (default_ise);
+    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
+    String default_name = get_ise_name (default_uuid);
+    _panel_agent->set_current_ise_name (default_name);
     _config->reload ();
 }
 #endif
@@ -2891,24 +2974,21 @@ static void start_default_ise (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    DEFAULT_ISE_T default_ise;
-
-    default_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_TYPE), (int)_initial_ise.type);
-    default_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise.uuid);
-    default_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_NAME), _initial_ise.name);
+    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
+    String default_name = get_ise_name (default_uuid);
     char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_ise.name.c_str ());
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_name.c_str ());
     isf_save_log (buf);
-    if (!set_active_ise (default_ise.uuid)) {
-        std::cerr << __FUNCTION__ << "Failed to launch default ISE(" << default_ise.uuid << ")\n";
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_ise.name.c_str ());
+    if (!set_active_ise (default_uuid)) {
+        std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_name.c_str ());
         isf_save_log (buf);
 
-        if (default_ise.uuid != _initial_ise.uuid) {
-            std::cerr << __FUNCTION__ << "Launch initial ISE(" << _initial_ise.uuid << ")\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch initial ISE(%s)\n", time (0), getpid (), __FILE__, __func__, _initial_ise.name.c_str ());
+        if (default_uuid != _initial_ise_uuid) {
+            std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch initial ISE(%s)\n", time (0), getpid (), __FILE__, __func__, get_ise_name (_initial_ise_uuid).c_str ());
             isf_save_log (buf);
-            set_active_ise (_initial_ise.uuid);
+            set_active_ise (_initial_ise_uuid);
         }
     }
 }
@@ -2928,18 +3008,39 @@ static void check_hardware_keyboard (void)
     if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1)) {
         uint32 option = 0;
         String uuid, name;
+        String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
         if (val != 0) {
             _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
 
-            /* Get the keyboard ISE */
-            isf_get_keyboard_ise (_config, uuid, name, option);
-            if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
-                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-                std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
+            if (get_ise_type (default_uuid) == TOOLBAR_HELPER_MODE) {
+                /* Get the keyboard ISE */
+                isf_get_keyboard_ise (_config, uuid, name, option);
+                if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
+                    uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                    std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
+                }
+                /* Try to find reasonable keyboard ISE according to helper ISE language */
+                if (uuid == String (SCIM_COMPOSE_KEY_FACTORY_UUID)) {
+                    String helper_language = get_ise_language (default_uuid);
+                    if (helper_language.length () > 0) {
+                        std::vector<String> ise_langs;
+                        scim_split_string_list (ise_langs, helper_language);
+                        for (size_t i = 0; i < _groups[ise_langs[0]].size (); ++i) {
+                            int j = _groups[ise_langs[0]][i];
+                            if (_uuids[j] != uuid && _modes[j] == TOOLBAR_KEYBOARD_MODE) {
+                                uuid = _uuids[j];
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                uuid = default_uuid;
             }
         } else {
-            uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, _initial_ise.uuid);
+            uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
         }
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch ISE(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
@@ -2994,6 +3095,9 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
         if (_candidate_window && _candidate_angle != angle) {
             _candidate_angle = angle;
             ui_candidate_window_rotate (angle);
+            int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+            if (hw_kbd_detect && evas_object_visible_get (_candidate_area_1))
+                ui_candidate_show ();
         }
     }
 
@@ -3240,18 +3344,6 @@ int main (int argc, char *argv [])
         goto cleanup;
     }
 
-    /* Load initial ISE information */
-    {
-        IMEngineFactoryPointer factory = new ComposeKeyFactory ();
-        _initial_ise.type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), (int)TOOLBAR_KEYBOARD_MODE);
-        _initial_ise.uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), factory->get_uuid ());
-        _initial_ise.name = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_NAME), utf8_wcstombs (factory->get_name ()));
-        factory.reset ();
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Initial ISE name(%s)\n", time (0), getpid (), __FILE__, __func__, _initial_ise.name.c_str ());
-        isf_save_log (buf);
-    }
-
     if (daemon) {
         check_time ("ISF Panel EFL run as daemon");
         scim_daemon ();
@@ -3269,13 +3361,19 @@ int main (int argc, char *argv [])
     /* Add callback function for input language and display language */
     vconf_notify_key_changed (VCONFKEY_LANGSET, display_language_changed_cb, NULL);
 
-    scim_global_config_update ();
     set_language_and_locale ();
+#endif
 
     try {
         /* Update ISE list */
         std::vector<String> list;
         slot_get_ise_list (list);
+
+        /* Load initial ISE information */
+        _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Initial ISE name(%s)\n", time (0), getpid (), __FILE__, __func__, get_ise_name (_initial_ise_uuid).c_str ());
+        isf_save_log (buf);
 
         /* Start default ISE */
         start_default_ise ();
@@ -3283,7 +3381,6 @@ int main (int argc, char *argv [])
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }
-#endif
 
     /* Create hibernation ready file */
     FILE *rfd;
@@ -3335,7 +3432,11 @@ cleanup:
     if (config_module)
         delete config_module;
     if (_panel_agent) {
-        _panel_agent->stop ();
+        try {
+            _panel_agent->stop ();
+        } catch (scim::Exception & e) {
+            std::cerr << "Exception is thrown from _panel_agent->stop (), error is " << e.what () << "\n";
+        }
         delete _panel_agent;
     }
 

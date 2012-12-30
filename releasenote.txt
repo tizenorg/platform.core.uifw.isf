@@ -1,3 +1,46 @@
+ISF 2.3.6028 :
+  1. [panel] Change font name to 'Tizen'
+  2. [immodule] fix bug wrong context is used when IME is hidden by flick gesture
+  3. [setting] fix:pressing Home key while in setup module in keyboard setting ug, popup the window to the main page of the ug to avoid syncing ise option data issue
+  4. [setting] remove useless hw_keyboard_selection_view_back_cb() and sw_keyboard_selection_view_back_cb()fix:default value for auto capitalization is true
+
+
+ISF 2.3.6027 :
+  1. When target is rotated, donot show candidate window until ISE send ECORE_IMF_INPUT_PANEL_STATE_SHOW
+  2. [isf-panel-efl] use elm_win_prop_focus_skip_set ()
+  3. Fix H/W keyboard engine selection issue in case of Japanese IME
+
+
+ISF 2.3.6020 :
+  1. Fix initial ISE reading issue
+  2. Fix bug not to hide IME when ecore_imf_context_del is called
+
+
+ISF 2.3.6017 :
+  1. Implement ISF control feature
+  2. fix PLM bug:isfsetting ug indicator problem
+
+
+ISF 2.3.6014 :
+  1. [immodule] refine log format
+
+
+ISF 2.3.6013 :
+  1. [gtkimmodule] Fix the issue 'Unable to input Chinese characters in Firefox or Thunderbird.'
+  2. [gtkimmodule] Fix the issue 'can't type in password field of chromium browser'
+  3. fix gtk immodule build error
+
+
+ISF 2.3.6011 :
+  1. [immodule] Fix P121127-4709: Add cursor position checking
+
+
+ISF 2.3.6006 :
+  1. [immodule] Set correct ic for input_panel_show () and input_panel_hide ()
+  2. [immodule] Fix prevent issue. c_str() returns temporary pointer
+  3. [immodule] Remove unused code
+
+
 ISF 2.3.6005 :
   1. [immodule] Fix BS issue
 

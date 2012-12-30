@@ -258,6 +258,7 @@ static int                                              _context_count          
 static IMEngineFactoryPointer                           _fallback_factory;
 static IMEngineInstancePointer                          _fallback_instance;
 static PanelClient                                      _panel_client;
+static int                                              _panel_client_id            = 0;
 
 static Ecore_Fd_Handler                                *_panel_iochannel_read_handler = 0;
 static Ecore_Fd_Handler                                *_panel_iochannel_err_handler  = 0;
@@ -306,6 +307,12 @@ EcoreIMFContextISF *
 get_focused_ic ()
 {
     return _focused_ic;
+}
+
+int
+get_panel_client_id (void)
+{
+    return _panel_client_id;
 }
 
 Eina_Bool
@@ -723,7 +730,7 @@ evas_focus_out_cb (void *data, Evas *e, void *event_info)
 
     if (!ctx) return;
 
-    LOGD ("[Canvas focus-out] ctx : %p\n", ctx);
+    LOGD ("ctx : %p\n", ctx);
 
     if (input_panel_ctx == ctx && _scim_initialized) {
         isf_imf_context_input_panel_instant_hide (ctx);
@@ -807,7 +814,7 @@ isf_imf_context_shutdown (void)
     if (_scim_initialized) {
         _scim_initialized = false;
 
-        LOGD ("[immodule shutdown]\n");
+        LOGD ("immodule shutdown\n");
 
         vconf_ignore_key_changed (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, autoperiod_allow_changed_cb);
         vconf_ignore_key_changed (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb);
@@ -933,7 +940,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             evas_event_callback_del_full (context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
 
         if (input_panel_ctx == ctx && _scim_initialized) {
-            LOGD ("[Context is deleted] ctx : %p\n", ctx);
+            LOGD ("ctx : %p\n", ctx);
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_input_panel_hide (ctx);
@@ -1004,7 +1011,7 @@ isf_imf_context_client_canvas_set (Ecore_IMF_Context *ctx, void *canvas)
     if (context_scim && context_scim->impl && context_scim->impl->client_canvas != (Evas*) canvas) {
         context_scim->impl->client_canvas = (Evas*)canvas;
 
-        LOGD ("[client_canvas_set] ctx : %p, canvas : %p\n", ctx, canvas);
+        LOGD ("ctx : %p, canvas : %p\n", ctx, canvas);
 
         evas_event_callback_add (context_scim->impl->client_canvas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, evas_focus_out_cb, ctx);
     }
@@ -1033,7 +1040,7 @@ isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window)
     if (context_scim && context_scim->impl && context_scim->impl->client_window != (Ecore_X_Window)((Ecore_Window)window)) {
         context_scim->impl->client_window = (Ecore_X_Window)((Ecore_Window)window);
 
-        LOGD ("[client_window_set] ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
+        LOGD ("ctx : %p, client X win ID : %#x\n", ctx, context_scim->impl->client_window);
 
         if ((context_scim->impl->client_window != 0) &&
                 (context_scim->impl->client_window != _client_window)) {
@@ -1067,7 +1074,6 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
     if (_focused_ic) {
         if (_focused_ic == context_scim) {
             SCIM_DEBUG_FRONTEND(1) << "It's already focused.\n";
-            //isf_imf_context_cursor_position_set (ctx, 0);
             return;
         }
         SCIM_DEBUG_FRONTEND(1) << "Focus out previous IC first: " << _focused_ic->id << "\n";
@@ -1152,12 +1158,12 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         _panel_client.send ();
     }
 
-    LOGD ("[focus-in] ctx : %p\n", ctx);
+    LOGD ("ctx : %p\n", ctx);
 
     if (ecore_imf_context_input_panel_enabled_get (ctx))
         isf_imf_context_input_panel_show (ctx);
     else
-        LOGD ("[focus-in] ctx : %p input panel enable : FALSE\n", ctx);
+        LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
 }
 
 /**
@@ -1181,7 +1187,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         WideString wstr = context_scim->impl->preedit_string;
 
-        LOGD ("[focus-out] ctx : %p\n", ctx);
+        LOGD ("ctx : %p\n", ctx);
 
         if (ecore_imf_context_input_panel_enabled_get (ctx))
             isf_imf_context_input_panel_hide (ctx);
@@ -1262,7 +1268,7 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->cursor_pos != cursor_pos) {
-            LOGD ("[cursor_position_set] ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            LOGD ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
             context_scim->impl->cursor_pos = cursor_pos;
 
             caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
@@ -1658,6 +1664,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT) key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL) key.mask |=SCIM_KEY_ControlMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT) key.mask |=SCIM_KEY_AltMask;
+        if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALTGR) key.mask |=SCIM_KEY_Mod5Mask;
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_CAPS) key.mask |=SCIM_KEY_CapsLockMask;
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_NUM) key.mask |=SCIM_KEY_NumLockMask;
     } else if (type == ECORE_IMF_EVENT_KEY_UP) {
@@ -1668,6 +1675,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT) key.mask |=SCIM_KEY_ShiftMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL) key.mask |=SCIM_KEY_ControlMask;
         if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT) key.mask |=SCIM_KEY_AltMask;
+        if (ev->modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALTGR) key.mask |=SCIM_KEY_Mod5Mask;
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_CAPS) key.mask |=SCIM_KEY_CapsLockMask;
         if (ev->locks & ECORE_IMF_KEYBOARD_LOCK_NUM) key.mask |=SCIM_KEY_NumLockMask;
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
@@ -2249,6 +2257,14 @@ panel_slot_longpress_candidate (int context, int index)
     }
 }
 
+static void
+panel_slot_update_client_id (int context, int client_id)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " client_id=" << client_id << "\n";
+
+    _panel_client_id = client_id;
+}
+
 /* Panel Requestion functions. */
 static void
 panel_req_show_help (EcoreIMFContextISF *ic)
@@ -2696,6 +2712,7 @@ initialize (void)
     _panel_client.signal_connect_candidate_more_window_show    (slot (panel_slot_candidate_more_window_show));
     _panel_client.signal_connect_candidate_more_window_hide    (slot (panel_slot_candidate_more_window_hide));
     _panel_client.signal_connect_longpress_candidate           (slot (panel_slot_longpress_candidate));
+    _panel_client.signal_connect_update_client_id              (slot (panel_slot_update_client_id));
 
     if (!panel_initialize ()) {
         std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";
@@ -3048,8 +3065,8 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     ::KeyCode keycode = 0;
     ::KeySym keysym = 0;
     int shift = 0;
-    const char *key_string;
-    const char *keysym_str;
+    char key_string[256] = {0};
+    char keysym_str[256] = {0};
 
     // Obtain the X11 display.
     Display *display = (Display *)ecore_x_display_get ();
@@ -3059,15 +3076,15 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     }
 
     if (strncmp (key.get_key_string ().c_str (), "KeyRelease+", 11) == 0) {
-        key_string = key.get_key_string ().c_str () + 11;
+        snprintf (key_string, sizeof (key_string), "%s", key.get_key_string ().c_str () + 11);
     } else {
-        key_string = key.get_key_string ().c_str ();
+        snprintf (key_string, sizeof (key_string), "%s", key.get_key_string ().c_str ());
     }
 
     if (strncmp (key_string, "Shift+", 6) == 0) {
-        keysym_str = key_string + 6;
+        snprintf (keysym_str, sizeof (keysym_str), "%s", key_string + 6);
     } else {
-        keysym_str = key_string;
+        snprintf (keysym_str, sizeof (keysym_str), "%s", key_string);
     }
 
     // get x keysym, keycode, keyname, and key
@@ -3432,7 +3449,7 @@ slot_beep (IMEngineInstanceBase *si)
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
     if (ic && ic->impl && _focused_ic == ic)
-        ;//gdk_beep ();
+        ecore_x_bell (0);
 }
 
 static void
@@ -3494,8 +3511,10 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
             SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
             SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
             WideString before = utf8_mbstowcs (String (surrounding));
+            if (cursor_index > before.length())
+                return false;
+            WideString after = before;
             before = before.substr (0, cursor_index);
-            WideString after = utf8_mbstowcs (String (surrounding));
             after =  after.substr (cursor_index, after.length () - cursor_index);
             if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
                 before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());

@@ -106,6 +106,7 @@ class PanelClient::PanelClientImpl
     PanelClientSignalVoid                       m_signal_candidate_more_window_show;
     PanelClientSignalVoid                       m_signal_candidate_more_window_hide;
     PanelClientSignalInt                        m_signal_longpress_candidate;
+    PanelClientSignalInt                        m_signal_update_client_id;
 
 public:
     PanelClientImpl ()
@@ -419,6 +420,13 @@ public:
                             m_signal_longpress_candidate ((int) context, (int)index);
                     }
                     break;
+                case ISM_TRANS_CMD_PANEL_UPDATE_CLIENT_ID:
+                    {
+                        uint32 client_id;
+                        if (recv.get_data (client_id))
+                            m_signal_update_client_id ((int) context, (int)client_id);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -716,6 +724,7 @@ public:
         m_signal_candidate_more_window_show.reset();
         m_signal_candidate_more_window_hide.reset();
         m_signal_longpress_candidate.reset();
+        m_signal_update_client_id.reset();
     }
 
     Connection signal_connect_reload_config                 (PanelClientSlotVoid                    *slot)
@@ -848,6 +857,11 @@ public:
     Connection signal_connect_longpress_candidate           (PanelClientSlotInt                     *slot)
     {
         return m_signal_longpress_candidate.connect (slot);
+    }
+
+    Connection signal_connect_update_client_id              (PanelClientSlotInt                     *slot)
+    {
+        return m_signal_update_client_id.connect (slot);
     }
 
 private:
@@ -1246,6 +1260,12 @@ Connection
 PanelClient::signal_connect_longpress_candidate           (PanelClientSlotInt                     *slot)
 {
     return m_impl->signal_connect_longpress_candidate (slot);
+}
+
+Connection
+PanelClient::signal_connect_update_client_id              (PanelClientSlotInt                     *slot)
+{
+    return m_impl->signal_connect_update_client_id (slot);
 }
 
 } /* namespace scim */
