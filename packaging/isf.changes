@@ -1,3 +1,8 @@
+* Sun Dec 30 2012 Jihoon Kim <jihoon48.kim@samsung.com> submit/master/20121228.061947@732e71f
+- change CSC directory
+- [immodule] refactoring timer delete code
+- Support GBS --no-configure option for shortening build time
+
 * Sun Dec 30 2012 Jihoon Kim <jihoon48.kim@samsung.com> submit/trunk/20121228.062554@33cbfd0
 - fix bug wrong context is used when IME is hidden by flick gesture
 - fix:pressing Home key while in setup module in keyboard setting ug, popup the window to the main page of the ug to avoid syncing ise option data issue remove useless hw_keyboard_selection_view_back_cb() and sw_keyboard_selection_view_back_cb() fix:default value for auto capitalization is true

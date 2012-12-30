@@ -39,6 +39,8 @@
 #include "scim.h"
 #include "scim_stl_map.h"
 
+#define SCIM_CSCDIR "/opt/system/csc-default/usr/keyboard"
+
 namespace scim {
 
 #if SCIM_USE_STL_EXT_HASH_MAP
@@ -163,11 +165,9 @@ __initialize_config ()
     }
 
     // Load second system configure file for localization
-    String sys_conf_file2 = String (SCIM_SYSCONFDIR) +
+    String sys_conf_file2 = String (SCIM_CSCDIR) +
                             String (SCIM_PATH_DELIM_STRING) +
-                            String ("scim") +
-                            String (SCIM_PATH_DELIM_STRING) +
-                            String ("conf/global");
+                            String ("global");
     std::ifstream sys_is2 (sys_conf_file2.c_str ());
     if (sys_is2) {
         __parse_config (sys_is2, __config_repository.sys);
