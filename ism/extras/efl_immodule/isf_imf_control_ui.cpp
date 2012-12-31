@@ -182,7 +182,7 @@ static void _isf_imf_context_init (void)
     }
 }
 
-static int get_context_id (Ecore_IMF_Context *ctx)
+static int _get_context_id (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = NULL;
     if (!ctx) return -1;
@@ -212,7 +212,7 @@ static Eina_Bool _hide_timer_handler (void *data)
 static void _input_panel_hide_timer_start (void *data)
 {
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
-    hide_context_id = get_context_id (ctx);
+    hide_context_id = _get_context_id (ctx);
 
     if (!hide_timer)
         hide_timer = ecore_timer_add (0.05, _hide_timer_handler, data);
@@ -231,7 +231,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
     if (instant) {
         _clear_timer ();
 
-        hide_context_id = get_context_id (ctx);
+        hide_context_id = _get_context_id (ctx);
         _send_input_panel_hide_request ();
     } else {
         _input_panel_hide_timer_start (ctx);
@@ -251,6 +251,11 @@ static Eina_Bool _compare_context (Ecore_IMF_Context *ctx1, Ecore_IMF_Context *c
         return EINA_TRUE;
 
     return EINA_FALSE;
+}
+
+EAPI void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
+{
+    _event_callback_call (type, value);
 }
 
 EAPI void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
@@ -305,7 +310,7 @@ EAPI void isf_imf_input_panel_shutdown (void)
             else if (get_focused_ic ())
                 using_ic = get_focused_ic ()->ctx;
 
-            hide_context_id = get_context_id (using_ic);
+            hide_context_id = _get_context_id (using_ic);
             _send_input_panel_hide_request ();
         }
     }
@@ -728,11 +733,6 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
         }
         l = l->next;
     }
-}
-
-EAPI void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
-{
-    _event_callback_call (type, value);
 }
 
 /**
