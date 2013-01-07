@@ -1210,6 +1210,14 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                     contract_candidate ();
                     break;
                 }
+                case ISM_TRANS_CMD_SET_CANDIDATE_UI:
+                {
+                    SCIM_DEBUG_IMENGINE(3) << "  set_candidate_style ()\n";
+                    uint32 portrait_line, mode;
+                    if (trans.get_data (portrait_line) && trans.get_data (mode))
+                        set_candidate_style ((ISF_CANDIDATE_PORTRAIT_LINE_T)portrait_line, (ISF_CANDIDATE_MODE_T)mode);
+                    break;
+                }
                 default:
                     SCIM_DEBUG_IMENGINE(3) << "  Strange cmd: " << cmd << "\n";
             }

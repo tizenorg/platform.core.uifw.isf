@@ -142,6 +142,9 @@ typedef Slot5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
 typedef Slot3<bool, IMEngineInstanceBase*,int,int>
         IMEngineSlotDeleteSurroundingText;
 
+typedef Slot3<void, IMEngineInstanceBase*,ISF_CANDIDATE_PORTRAIT_LINE_T,ISF_CANDIDATE_MODE_T>
+        IMEngineSlotCandidateStyle;
+
 /**
  * @brief The base class of the real input methods' IMEngineFactory classes.
  *
@@ -494,6 +497,8 @@ public:
 
     Connection signal_connect_expand_candidate        (IMEngineSlotVoid *slot);
     Connection signal_connect_contract_candidate      (IMEngineSlotVoid *slot);
+
+    Connection signal_connect_set_candidate_style     (IMEngineSlotCandidateStyle *slot);
     /** @} */
 
 public:
@@ -907,6 +912,16 @@ protected:
      * @brief Request to contract candidate window.
      */
     void contract_candidate (void);
+
+    /**
+     * @brief Request to set candidate style.
+     *
+     * @param portrait_line the displayed line number for portrait.
+     * @param mode          candidate window mode.
+     */
+    void set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line = ONE_LINE_CANDIDATE,
+                              ISF_CANDIDATE_MODE_T          mode = FIXED_CANDIDATE_WINDOW);
+
     /** @} */
 };
 

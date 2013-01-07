@@ -76,6 +76,9 @@ typedef Signal5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
 typedef Signal3<bool, IMEngineInstanceBase*,int,int>
         IMEngineSignalDeleteSurroundingText;
 
+typedef Signal3<void, IMEngineInstanceBase*,ISF_CANDIDATE_PORTRAIT_LINE_T,ISF_CANDIDATE_MODE_T>
+        IMEngineSignalCandidateStyle;
+
 class IMEngineFactoryBase::IMEngineFactoryBaseImpl
 {
 public:
@@ -121,6 +124,7 @@ public:
     IMEngineSignalVoid                    m_signal_expand_candidate;
     IMEngineSignalVoid                    m_signal_contract_candidate;
 
+    IMEngineSignalCandidateStyle          m_signal_set_candidate_style;
 
     int    m_id;
     void * m_frontend_data;
@@ -582,6 +586,12 @@ IMEngineInstanceBase::signal_connect_contract_candidate (IMEngineSlotVoid *slot)
     return m_impl->m_signal_contract_candidate.connect (slot);
 }
 
+Connection
+IMEngineInstanceBase::signal_connect_set_candidate_style (IMEngineSlotCandidateStyle *slot)
+{
+    return m_impl->m_signal_set_candidate_style.connect (slot);
+}
+
 void
 IMEngineInstanceBase::show_preedit_string ()
 {
@@ -723,6 +733,13 @@ void
 IMEngineInstanceBase::contract_candidate (void)
 {
     m_impl->m_signal_contract_candidate (this);
+}
+
+void
+IMEngineInstanceBase::set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
+                                           ISF_CANDIDATE_MODE_T          mode)
+{
+    m_impl->m_signal_set_candidate_style (this, portrait_line, mode);
 }
 
 // implementation of DummyIMEngine

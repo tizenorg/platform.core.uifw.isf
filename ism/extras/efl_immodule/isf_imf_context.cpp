@@ -225,6 +225,10 @@ static bool     slot_delete_surrounding_text            (IMEngineInstanceBase   
 static void     slot_expand_candidate                   (IMEngineInstanceBase   *si);
 static void     slot_contract_candidate                 (IMEngineInstanceBase   *si);
 
+static void     slot_set_candidate_style                (IMEngineInstanceBase   *si,
+                                                         ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
+                                                         ISF_CANDIDATE_MODE_T    mode);
+
 static void     reload_config_callback                  (const ConfigPointer    &config);
 
 static void     fallback_commit_string_cb               (IMEngineInstanceBase   *si,
@@ -2804,6 +2808,7 @@ open_next_factory (EcoreIMFContextISF *ic)
         attach_instance (ic->impl->si);
         _backend->set_default_factory (_language, sf->get_uuid ());
         _panel_client.register_input_context (ic->id, sf->get_uuid ());
+        _panel_client.set_candidate_style (ic->id, ONE_LINE_CANDIDATE, FIXED_CANDIDATE_WINDOW);
         set_ic_capabilities (ic);
         turn_on_ic (ic);
 
@@ -2833,6 +2838,7 @@ open_previous_factory (EcoreIMFContextISF *ic)
         attach_instance (ic->impl->si);
         _backend->set_default_factory (_language, sf->get_uuid ());
         _panel_client.register_input_context (ic->id, sf->get_uuid ());
+        _panel_client.set_candidate_style (ic->id, ONE_LINE_CANDIDATE, FIXED_CANDIDATE_WINDOW);
         set_ic_capabilities (ic);
         turn_on_ic (ic);
 
@@ -3208,6 +3214,9 @@ attach_instance (const IMEngineInstancePointer &si)
         slot (slot_expand_candidate));
     si->signal_connect_contract_candidate (
         slot (slot_contract_candidate));
+
+    si->signal_connect_set_candidate_style (
+        slot (slot_set_candidate_style));
 }
 
 // Implementation of slot functions
@@ -3573,6 +3582,17 @@ slot_contract_candidate (IMEngineInstanceBase *si)
 
     if (ic && ic->impl && _focused_ic == ic)
         _panel_client.contract_candidate (ic->id);
+}
+
+static void
+slot_set_candidate_style (IMEngineInstanceBase *si, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
+
+    if (ic && ic->impl && _focused_ic == ic)
+        _panel_client.set_candidate_style (ic->id, portrait_line, mode);
 }
 
 static void

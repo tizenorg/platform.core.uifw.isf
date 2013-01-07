@@ -690,6 +690,14 @@ public:
         if (m_send_refcount > 0 && m_current_icid == icid)
             m_send_trans.put_command (ISM_TRANS_CMD_CONTRACT_CANDIDATE);
     }
+    void set_candidate_style    (int icid, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
+    {
+        if (m_send_refcount > 0 && m_current_icid == icid) {
+            m_send_trans.put_command (ISM_TRANS_CMD_SET_CANDIDATE_UI);
+            m_send_trans.put_data (portrait_line);
+            m_send_trans.put_data (mode);
+        }
+    }
 
 public:
     void reset_signal_handler                               (void)
@@ -1092,6 +1100,12 @@ void
 PanelClient::contract_candidate     (int icid)
 {
     m_impl->contract_candidate (icid);
+}
+
+void
+PanelClient::set_candidate_style    (int icid, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
+{
+    m_impl->set_candidate_style (icid, portrait_line, mode);
 }
 
 void

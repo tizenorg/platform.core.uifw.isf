@@ -3002,6 +3002,8 @@ private:
                         m_signal_expand_candidate ();
                     else if (cmd == ISM_TRANS_CMD_CONTRACT_CANDIDATE)
                         m_signal_contract_candidate ();
+                    else if (cmd == ISM_TRANS_CMD_SET_CANDIDATE_UI)
+                        socket_set_candidate_ui ();
                     else if (cmd == SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO)
                         socket_update_factory_info ();
                     else if (cmd == SCIM_TRANS_CMD_SHOW_PREEDIT_STRING)

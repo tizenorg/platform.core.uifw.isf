@@ -586,6 +586,18 @@ SocketFrontEnd::contract_candidate (int id)
 }
 
 void
+SocketFrontEnd::set_candidate_style (int                           id,
+                                     ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
+                                     ISF_CANDIDATE_MODE_T          mode)
+{
+    if (m_current_instance == id) {
+        m_send_trans.put_command (ISM_TRANS_CMD_SET_CANDIDATE_UI);
+        m_send_trans.put_data ((uint32) portrait_line);
+        m_send_trans.put_data ((uint32) mode);
+    }
+}
+
+void
 SocketFrontEnd::init (int argc, char **argv)
 {
     int max_clients = -1;

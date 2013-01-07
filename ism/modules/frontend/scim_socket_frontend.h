@@ -124,6 +124,9 @@ protected:
 
     virtual void expand_candidate        (int id);
     virtual void contract_candidate      (int id);
+    virtual void set_candidate_style     (int                           id,
+                                          ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
+                                          ISF_CANDIDATE_MODE_T          mode);
 
 public:
     virtual void init (int argc, char **argv);

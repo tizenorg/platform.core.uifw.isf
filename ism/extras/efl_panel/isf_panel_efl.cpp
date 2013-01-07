@@ -1835,6 +1835,14 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
     String ise_name = info.name;
     String ise_icon = info.icon;
 
+    String old_ise = _panel_agent->get_current_ise_name ();
+    if (old_ise != ise_name) {
+        int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+        if (hw_kbd_detect && _candidate_window) {
+            ui_destroy_candidate_window ();
+        }
+    }
+
     TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
 
     if (TOOLBAR_HELPER_MODE == mode)

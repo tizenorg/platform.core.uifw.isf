@@ -203,6 +203,7 @@ public:
     void turn_on_log            (int icid, uint32 isOn);
     void expand_candidate       (int icid);
     void contract_candidate     (int icid);
+    void set_candidate_style    (int icid, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode);
     /** @} */
 
 public:

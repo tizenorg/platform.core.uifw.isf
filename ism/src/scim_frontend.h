@@ -679,13 +679,28 @@ protected:
 
     /**
      * @brief Request to expand candidate window.
+     *
+     * @param id the id of the IMEngine instance. It must have been focused in.
      */
     virtual void expand_candidate (int id);
 
     /**
      * @brief Request to contract candidate window.
+     *
+     * @param id the id of the IMEngine instance. It must have been focused in.
      */
     virtual void contract_candidate (int id);
+
+    /**
+     * @brief Request to set candidate style.
+     *
+     * @param id            the id of the IMEngine instance. It must have been focused in.
+     * @param portrait_line the displayed line number for portrait.
+     * @param mode          candidate window mode.
+     */
+    virtual void set_candidate_style (int                           id,
+                                      ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
+                                      ISF_CANDIDATE_MODE_T          mode);
     /**
      * @}
      */

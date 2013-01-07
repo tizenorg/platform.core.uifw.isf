@@ -149,6 +149,10 @@ public:
         m_frontend->contract_candidate (si->get_id ());
     }
 
+    void slot_set_candidate_style   (IMEngineInstanceBase * si, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode) {
+        m_frontend->set_candidate_style (si->get_id (), portrait_line, mode);
+    }
+
     void attach_instance (const IMEngineInstancePointer &si)
     {
         si->signal_connect_show_preedit_string (
@@ -209,6 +213,9 @@ public:
 
         si->signal_connect_contract_candidate (
             slot (this, &FrontEndBase::FrontEndBaseImpl::slot_contract_candidate));
+
+        si->signal_connect_set_candidate_style (
+            slot (this, &FrontEndBase::FrontEndBaseImpl::slot_set_candidate_style));
     }
 };
 
@@ -847,6 +854,10 @@ FrontEndBase::expand_candidate (int id)
 }
 void
 FrontEndBase::contract_candidate (int id)
+{
+}
+void
+FrontEndBase::set_candidate_style (int id, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
 {
 }
 void

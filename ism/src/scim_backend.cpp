@@ -277,12 +277,16 @@ public:
             IMEngineFactoryPointerVector::iterator it, itl;
 
             for (it = factories.begin (); it != factories.end (); ++it) {
-                if ((language.length () == 0 || (*it)->get_language () == language) && lang_first.null ())
+                uint32 option = (*it)->get_option ();
+                if ((language.length () == 0 || (*it)->get_language () == language) && lang_first.null () &&
+                    !(option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
                     lang_first = *it;
 
                 if ((*it)->get_uuid () == cur_uuid) {
                     for (itl = it + 1; itl != factories.end (); ++itl) {
-                        if (language.length () == 0 || (*itl)->get_language () == language)
+                        option = (*itl)->get_option ();
+                        if ((language.length () == 0 || (*itl)->get_language () == language) &&
+                            !(option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
                             return *itl;
                     }
                     if (!lang_first.null ()) return lang_first;
@@ -303,15 +307,20 @@ public:
             IMEngineFactoryPointer lang_last;
             IMEngineFactoryPointerVector::iterator it, itl;
 
+            uint32 option = 0;
             for (it = factories.begin (); it != factories.end (); ++it) {
-                if ((language.length () == 0 || (*it)->get_language () == language))
+                option = (*it)->get_option ();
+                if ((language.length () == 0 || (*it)->get_language () == language) &&
+                    !(option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
                     lang_last = *it;
             }
 
             for (it = factories.begin (); it != factories.end (); ++it) {
                 if ((*it)->get_uuid () == cur_uuid) {
                     for (itl = it; itl != factories.begin (); --itl) {
-                        if (language.length () == 0 || (*(itl-1))->get_language () == language)
+                        option = (*(itl-1))->get_option ();
+                        if ((language.length () == 0 || (*(itl-1))->get_language () == language) &&
+                            !(option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
                             return *(itl-1);
                     }
 
