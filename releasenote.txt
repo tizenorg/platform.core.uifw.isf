@@ -1,5 +1,6 @@
 ISF 2.3.6107 :
   1. Add set_candidate_style () for keyboard ISE
+  2. Fix bug of ecore_imf_context_input_panel_imdata_get ()
 
 
 ISF 2.3.6031 :

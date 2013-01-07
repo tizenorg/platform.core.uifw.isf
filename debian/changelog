@@ -1,3 +1,11 @@
+isf (2.3.6107-1slp2+2) unstable; urgency=low
+
+  * Fix bug of ecore_imf_context_input_panel_imdata_get ()
+  * Git: framework/uifw/isf
+  * Tag: isf_2.3.6107-1slp2+2
+
+ -- Jihoon Kim <jihoon48.kim@samsung.com>  Mon, 07 Jan 2013 18:49:33 +0900
+
 isf (2.3.6107-1slp2+1) unstable; urgency=low
 
   * Add set_candidate_style () for keyboard ISE

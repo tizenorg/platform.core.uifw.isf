@@ -1773,12 +1773,9 @@ EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context *ctx, const void* data, 
  */
 EAPI void isf_imf_context_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length)
 {
-    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (data && context_scim->impl->imdata)
-        memcpy (data, context_scim->impl->imdata, context_scim->impl->imdata_size);
-
-    *length = context_scim->impl->imdata_size;
+    isf_imf_context_input_panel_imdata_get (ctx, data, length);
 }
 
 /* Panel Slot functions */
