@@ -2553,19 +2553,8 @@ static bool slot_get_ise_information (String uuid, String &name, String &languag
     if (uuid.length () > 0) {
         for (unsigned int i = 0; i < _uuids.size (); i++) {
             if (uuid == _uuids[i]) {
-                String normal_languange = String ("");
-                if (_langs[i].length () > 0) {
-                    std::vector<String> language_list;
-                    scim_split_string_list (language_list, _langs[i]);
-                    normal_languange = ((scim_get_language_name (language_list[0].c_str ())).c_str ());
-                    for (unsigned int i = 1; i < language_list.size (); i++) {
-                        normal_languange += String (", ");
-                        normal_languange += ((scim_get_language_name (language_list[i].c_str ())).c_str ());
-                    }
-                }
-
                 name     = _names[i];
-                language = normal_languange;
+                language = _langs[i];
                 type     = _modes[i];
                 option   = _options[i];
                 return true;
