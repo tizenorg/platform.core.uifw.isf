@@ -119,7 +119,6 @@ static void _save_current_xid (Ecore_IMF_Context *ctx)
         rootwin_xid = ecore_x_window_root_first_get ();
     else
         rootwin_xid = ecore_x_window_root_get (xid);
-
     Ecore_X_Atom isf_active_window_atom = ecore_x_atom_get ("_ISF_ACTIVE_WINDOW");
     ecore_x_window_prop_property_set (rootwin_xid, isf_active_window_atom, ((Ecore_X_Atom) 33), 32, &xid, 1);
     ecore_x_flush ();
@@ -353,7 +352,6 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         iseContext.prediction_allow = EINA_FALSE;
 
     isf_imf_context_prediction_allow_set (ctx, iseContext.prediction_allow);
-
     /* Set the current XID of the active window into the root window property */
     _save_current_xid (ctx);
 
@@ -764,6 +762,8 @@ EAPI void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx)
     if (IfInitContext == false) {
         _isf_imf_context_init ();
     }
+    /* Set the current XID of the active window into the root window property */
+    _save_current_xid (ctx);
     _isf_imf_context_control_focus_in ();
 }
 

@@ -1,3 +1,6 @@
+ISF 2.3.6109 :
+  1. Fix P130104-1615: toplevel window ID need be set when focus in
+
 ISF 2.3.6107 :
   1. Add set_candidate_style () for keyboard ISE
   2. Fix bug of ecore_imf_context_input_panel_imdata_get ()
