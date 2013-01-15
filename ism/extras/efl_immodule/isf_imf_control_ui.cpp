@@ -429,6 +429,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     if (input_panel_show == true && input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
         input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
+
     free (packet);
 
     caps_mode_check (ctx, EINA_TRUE, EINA_TRUE);

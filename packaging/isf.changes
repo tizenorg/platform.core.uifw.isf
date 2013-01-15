@@ -1,3 +1,11 @@
+* Mon Jan 14 2013 Jihoon Kim <jihoon48.kim@samsung.com> submit/master/20130110.033407@539fda6
+- Add interface to get imdata from isf_imf_context
+- [demo] Add changed and preedit,changed event
+- [immodule] fix bug state is changed to WILL_SHOW when ecore_imf_context_input_panel_show is called after IME is already shown
+- [immodule] refactoring
+- Hide IME in case of Search, Go, Login, Signin, Join Return key type
+- restore file mode to 644
+
 * Sun Dec 30 2012 Jihoon Kim <jihoon48.kim@samsung.com> submit/master/20121228.061947@732e71f
 - change CSC directory
 - [immodule] refactoring timer delete code

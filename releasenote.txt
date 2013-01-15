@@ -1,3 +1,11 @@
+ISF 2.3.6114 :
+ 1. [immodule] Add interface to get imdata from isf_imf_context
+ 2. [demo] Add changed and preedit,changed event
+ 3. [immodule] fix bug state is changed to WILL_SHOW when ecore_imf_context_input_panel_show is called after IME is already s
+ 4. [immodule] refactoring
+ 5. Hide IME in case of Search, Go, Login, Signin, Join Return key type
+
+
 ISF 2.3.6109 :
   1. Fix P130104-1615: toplevel window ID need be set when focus in
 
