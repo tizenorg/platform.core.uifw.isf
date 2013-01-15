@@ -52,6 +52,8 @@ Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool no
 
 EcoreIMFContextISF *get_focused_ic ();
 
+void context_scim_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length);
+
 void isf_imf_context_add (Ecore_IMF_Context *ctx);
 void isf_imf_context_del (Ecore_IMF_Context *ctx);
 void isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window);

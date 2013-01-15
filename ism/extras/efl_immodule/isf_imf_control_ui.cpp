@@ -401,7 +401,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     LOGD (" - client_window : %#x\n", iseContext.client_window);
 
     /* set the size of imdata */
-    ecore_imf_context_input_panel_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
+    context_scim_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
 
     LOGD (" - password mode : %d\n", iseContext.password_mode);
     LOGD (" - prediction_allow : %d\n", iseContext.prediction_allow);
