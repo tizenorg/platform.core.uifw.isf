@@ -3,7 +3,7 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.6114
+Version:    2.3.6115
 Release:    1
 Group:      System Environment/Libraries
 License:    LGPL
@@ -22,6 +22,7 @@ BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(syspopup-caller)
+BuildRequires:  pkgconfig(dlog)
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 requires:       e17, net-config

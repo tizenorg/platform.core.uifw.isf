@@ -27,10 +27,13 @@
 
 
 #include <string.h>
+#include <dlog.h>
 #include "scim.h"
 
+#define LOG_TAG "immodule"
+
 #define IMCONTROLDBG(str...)
-#define IMCONTROLERR(str...) printf(str)
+#define IMCONTROLERR(str...) LOGW(str)
 
 namespace scim
 {

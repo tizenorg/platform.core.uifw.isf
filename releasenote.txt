@@ -1,3 +1,8 @@
+ISF 2.3.6115 :
+ 1. change boilerplate
+ 2. [immodule] use dlog for printing error
+
+
 ISF 2.3.6114 :
  1. [immodule] Add interface to get imdata from isf_imf_context
  2. [demo] Add changed and preedit,changed event

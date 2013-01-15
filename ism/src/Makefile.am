@@ -137,12 +137,13 @@ libscim@SCIM_EPOCH@_la_SOURCES = scim_backend.cpp \
 			  isf_imcontrol_client.cpp \
 			  isf_query_utility.cpp
 
-libscim@SCIM_EPOCH@_la_CXXFLAGS = @GTK2_CFLAGS@
+libscim@SCIM_EPOCH@_la_CXXFLAGS = @GTK2_CFLAGS@ @DLOG_CFLAGS@
 
 libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
 			  -export-dynamic \
 			  -rpath $(libdir) \
 			  $(LD_VERSION_SCRIPT_OPTION) \
+			  @DLOG_LIBS@ \
 			  @LIBTOOL_EXPORT_OPTIONS@ \
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
