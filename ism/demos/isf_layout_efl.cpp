@@ -150,6 +150,16 @@ _prop_change (void *data, int type, void *event)
     return ECORE_CALLBACK_PASS_ON;
 }
 
+static void entry_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    printf("[%s]\n", __func__);
+}
+
+static void entry_preedit_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    printf("[%s]\n", __func__);
+}
+
 static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text,Elm_Input_Panel_Layout layout)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
@@ -158,6 +168,8 @@ static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, co
     elm_entry_input_panel_layout_set (en, layout);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_UP, _key_up_cb, NULL);
+    evas_object_smart_callback_add (en, "changed", entry_changed_cb, NULL);
+    evas_object_smart_callback_add (en, "preedit,changed", entry_preedit_changed_cb, NULL);
 
     ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (en);
 
