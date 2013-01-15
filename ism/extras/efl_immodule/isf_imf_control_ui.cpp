@@ -422,10 +422,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
-    int context_id = 0;
-    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
-    if (context_scim)
-        context_id = context_scim->id;
+    int context_id = _get_context_id (ctx);
 
     _isf_imf_context_input_panel_show (get_panel_client_id (), context_id, packet, length, input_panel_show);
 
