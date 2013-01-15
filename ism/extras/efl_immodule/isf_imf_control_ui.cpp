@@ -372,7 +372,8 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     if ((show_req_ic == ctx) &&
         (_compare_context (show_req_ic, ctx) == EINA_TRUE) &&
-        (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW)) {
+        (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
+         input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW)) {
         return;
     }
 
@@ -426,7 +427,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     _isf_imf_context_input_panel_show (get_panel_client_id (), context_id, packet, length, input_panel_show);
 
-    if (input_panel_show == true)
+    if (input_panel_show == true && input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
         input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
     free (packet);
 
