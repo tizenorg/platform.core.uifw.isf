@@ -81,7 +81,7 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 
     if (val != 0) {
         if (show_req_ic)
-            isf_imf_context_input_panel_hide (show_req_ic);
+            ecore_imf_context_input_panel_hide (show_req_ic);
     }
 
     hw_kbd_num = val;

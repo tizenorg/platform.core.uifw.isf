@@ -959,7 +959,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
             LOGD ("ctx : %p\n", ctx);
             if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-                isf_imf_context_input_panel_hide (ctx);
+                ecore_imf_context_input_panel_hide (ctx);
                 input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
         }
@@ -1177,7 +1177,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
     LOGD ("ctx : %p\n", ctx);
 
     if (ecore_imf_context_input_panel_enabled_get (ctx))
-        isf_imf_context_input_panel_show (ctx);
+        ecore_imf_context_input_panel_show (ctx);
     else
         LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
 }
@@ -1206,7 +1206,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
         LOGD ("ctx : %p\n", ctx);
 
         if (ecore_imf_context_input_panel_enabled_get (ctx))
-            isf_imf_context_input_panel_hide (ctx);
+            ecore_imf_context_input_panel_hide (ctx);
 
         if (context_scim->impl->need_commit_preedit) {
             panel_slot_hide_preedit_string (context_scim->id);
@@ -1698,7 +1698,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         if (ecore_imf_context_input_panel_enabled_get (ctx)) {
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
             if (ic == _focused_ic)
-                isf_imf_context_input_panel_show (ctx);
+                ecore_imf_context_input_panel_show (ctx);
         }
         return EINA_FALSE;
     } else {
