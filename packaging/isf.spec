@@ -1,9 +1,9 @@
-%define _usrdir	/usr
+%define _usrdir /usr
 %define _ugdir  %{_usrdir}/ug
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.6115
+Version:    2.3.6116
 Release:    1
 Group:      System Environment/Libraries
 License:    LGPL

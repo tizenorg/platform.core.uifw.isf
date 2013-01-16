@@ -997,6 +997,17 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd)
     }
 }
 
+static Eina_Bool _move_candidate_window_timer_cb (void *data)
+{
+    evas_object_hide (_more_btn);
+    evas_object_show (_close_btn);
+
+    ui_settle_candidate_window ();
+    flush_memory ();
+
+    return ECORE_CALLBACK_CANCEL;
+}
+
 /**
  * @brief Callback function for more button.
  *
@@ -1011,14 +1022,14 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
 
     _panel_agent->candidate_more_window_show ();
 
-    evas_object_hide (_more_btn);
     evas_object_show (_candidate_area_2);
     evas_object_show (_scroller_bg);
-    evas_object_show (_close_btn);
     ui_candidate_window_adjust ();
 
-    ui_settle_candidate_window ();
-    flush_memory ();
+    /* FIXME : use timer to move candidate window after rendering candidate window which is resized.
+               This code is added for avoiding a flickering problem changing the window size by the EVAS graphic rendering restriction(Retained mode)
+    */
+    ecore_timer_add (0.02, _move_candidate_window_timer_cb, NULL);
 }
 
 /**
