@@ -1024,6 +1024,7 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
 
     evas_object_show (_candidate_area_2);
     evas_object_show (_scroller_bg);
+    elm_win_raise (_candidate_window);
     ui_candidate_window_adjust ();
 
     /* FIXME : use timer to move candidate window after rendering candidate window which is resized.

@@ -1,3 +1,8 @@
+ISF 2.3.6117 :
+ 1. [panel] Call elm_win_raise () when expand button is clicked
+ 2. Update boilerplate
+
+
 ISF 2.3.6116 :
  1. [immodule] use ecore_imf API to show or hide for debugging easily.
  2. [panel] fix candidate window blink issue when candidate window is expanded.
