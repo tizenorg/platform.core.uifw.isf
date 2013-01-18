@@ -59,6 +59,7 @@ static Ecore_Timer       *hide_timer = NULL;
 static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 static int                hide_context_id = -1;
 Ecore_IMF_Context        *input_panel_ctx = NULL;
+static Ecore_Event_Handler *_win_focus_out_handler = NULL;
 
 static void _clear_timer ()
 {
@@ -119,6 +120,7 @@ static void _save_current_xid (Ecore_IMF_Context *ctx)
         rootwin_xid = ecore_x_window_root_first_get ();
     else
         rootwin_xid = ecore_x_window_root_get (xid);
+
     Ecore_X_Atom isf_active_window_atom = ecore_x_atom_get ("_ISF_ACTIVE_WINDOW");
     ecore_x_window_prop_property_set (rootwin_xid, isf_active_window_atom, ((Ecore_X_Atom) 33), 32, &xid, 1);
     ecore_x_flush ();
@@ -192,9 +194,19 @@ static int _get_context_id (Ecore_IMF_Context *ctx)
     return context_scim->id;
 }
 
+static void _win_focus_out_handler_del ()
+{
+    if (_win_focus_out_handler) {
+        ecore_event_handler_del (_win_focus_out_handler);
+        _win_focus_out_handler = NULL;
+    }
+}
+
 static void _send_input_panel_hide_request ()
 {
     if (hide_context_id < 0) return;
+
+    _win_focus_out_handler_del ();
 
     _isf_imf_context_input_panel_hide (get_panel_client_id (), hide_context_id);
     hide_context_id = -1;
@@ -252,6 +264,16 @@ static Eina_Bool _compare_context (Ecore_IMF_Context *ctx1, Ecore_IMF_Context *c
     return EINA_FALSE;
 }
 
+static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
+{
+    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
+    if (!ctx) return ECORE_CALLBACK_PASS_ON;
+
+    isf_imf_context_input_panel_instant_hide (ctx);
+
+    return ECORE_CALLBACK_PASS_ON;
+}
+
 EAPI void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 {
     _event_callback_call (type, value);
@@ -300,6 +322,8 @@ EAPI void isf_imf_input_panel_shutdown (void)
         _prop_change_handler = NULL;
     }
 
+    _win_focus_out_handler_del ();
+
     if (hide_timer) {
         if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
             Ecore_IMF_Context *using_ic = NULL;
@@ -331,6 +355,13 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         _isf_imf_context_init ();
     }
 
+    /* for X based application not to use evas */
+    if (ecore_imf_context_client_canvas_get(ctx) == NULL) {
+        _win_focus_out_handler_del ();
+
+        _win_focus_out_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_FOCUS_OUT, _client_window_focus_out_cb, ctx);
+    }
+
     /* set password mode */
     iseContext.password_mode = !!(ecore_imf_context_input_mode_get (ctx) & ECORE_IMF_INPUT_MODE_INVISIBLE);
 
@@ -352,6 +383,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         iseContext.prediction_allow = EINA_FALSE;
 
     isf_imf_context_prediction_allow_set (ctx, iseContext.prediction_allow);
+
     /* Set the current XID of the active window into the root window property */
     _save_current_xid (ctx);
 
