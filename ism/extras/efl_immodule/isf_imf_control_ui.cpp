@@ -58,8 +58,23 @@ static unsigned int       hw_kbd_num = 0;
 static Ecore_Timer       *hide_timer = NULL;
 static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 static int                hide_context_id = -1;
+static Ecore_X_Window     hide_context_window = -1;
+static Evas              *hide_context_canvas = NULL;
 Ecore_IMF_Context        *input_panel_ctx = NULL;
 static Ecore_Event_Handler *_win_focus_out_handler = NULL;
+Eina_Bool                 hiding_ise = EINA_FALSE;
+
+static void _send_input_panel_hide_request ();
+
+static void _render_post_cb (void *data, Evas *e, void *event_info)
+{
+    if (hiding_ise) {
+        _send_input_panel_hide_request ();
+        hiding_ise = EINA_FALSE;
+    }
+
+    evas_event_callback_del_full (e, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
+}
 
 static void _clear_timer ()
 {
@@ -69,24 +84,60 @@ static void _clear_timer ()
     }
 }
 
+static Eina_Bool _conformant_get ()
+{
+    return ecore_x_e_illume_conformant_get (hide_context_window);
+}
+
+static void _conformant_reset ()
+{
+    Ecore_X_Window zone = ecore_x_e_illume_zone_get (hide_context_window);
+    int scr_h;
+
+    hiding_ise = EINA_TRUE;
+
+    ecore_x_window_size_get (ecore_x_window_root_first_get (), NULL, &scr_h);
+
+    ecore_x_e_virtual_keyboard_state_set (zone, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+    ecore_x_e_illume_keyboard_geometry_set (zone, 0, scr_h, 0, 0);
+}
+
 static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 {
     Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
     unsigned int val = 0;
 
-    if (event->win != _rootwin) return ECORE_CALLBACK_PASS_ON;
-    if (event->atom != prop_x_ext_keyboard_exist) return ECORE_CALLBACK_PASS_ON;
+    if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
+        Ecore_X_Window zone = ecore_x_e_illume_zone_get (event->win);
+        Ecore_X_Virtual_Keyboard_State state = ecore_x_e_virtual_keyboard_state_get (zone);
 
-    if (!ecore_x_window_prop_card32_get (event->win, prop_x_ext_keyboard_exist, &val, 1) > 0)
-        return ECORE_CALLBACK_PASS_ON;
-
-    if (val != 0) {
-        if (show_req_ic)
-            ecore_imf_context_input_panel_hide (show_req_ic);
+        if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
+            if (hiding_ise) {
+                if (hide_context_canvas) {
+                    evas_event_callback_add (hide_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
+                    hide_context_canvas = NULL;
+                }
+                else {
+                    hiding_ise = EINA_FALSE;
+                }
+            }
+        }
     }
+    else {
+        if (event->win != _rootwin) return ECORE_CALLBACK_PASS_ON;
+        if (event->atom != prop_x_ext_keyboard_exist) return ECORE_CALLBACK_PASS_ON;
 
-    hw_kbd_num = val;
-    LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
+        if (!ecore_x_window_prop_card32_get (event->win, prop_x_ext_keyboard_exist, &val, 1) > 0)
+            return ECORE_CALLBACK_PASS_ON;
+
+        if (val != 0) {
+            if (show_req_ic)
+                ecore_imf_context_input_panel_hide (show_req_ic);
+        }
+
+        hw_kbd_num = val;
+        LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
+    }
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -194,6 +245,13 @@ static int _get_context_id (Ecore_IMF_Context *ctx)
     return context_scim->id;
 }
 
+static void _save_hide_context_info (Ecore_IMF_Context *ctx)
+{
+    hide_context_id = _get_context_id (ctx);
+    hide_context_window = _client_window_id_get (ctx);
+    hide_context_canvas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
+}
+
 static void _win_focus_out_handler_del ()
 {
     if (_win_focus_out_handler) {
@@ -214,7 +272,11 @@ static void _send_input_panel_hide_request ()
 
 static Eina_Bool _hide_timer_handler (void *data)
 {
-    _send_input_panel_hide_request ();
+    if (_conformant_get ())
+        _conformant_reset ();
+    else {
+        _send_input_panel_hide_request ();
+    }
 
     hide_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
@@ -223,7 +285,7 @@ static Eina_Bool _hide_timer_handler (void *data)
 static void _input_panel_hide_timer_start (void *data)
 {
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
-    hide_context_id = _get_context_id (ctx);
+    _save_hide_context_info (ctx);
 
     if (!hide_timer)
         hide_timer = ecore_timer_add (0.05, _hide_timer_handler, data);
@@ -242,8 +304,12 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
     if (instant) {
         _clear_timer ();
 
-        hide_context_id = _get_context_id (ctx);
-        _send_input_panel_hide_request ();
+        _save_hide_context_info (ctx);
+
+        if (_conformant_get ())
+            _conformant_reset ();
+        else
+            _send_input_panel_hide_request ();
     } else {
         _input_panel_hide_timer_start (ctx);
     }
@@ -308,7 +374,7 @@ EAPI void isf_imf_input_panel_init (void)
         prop_x_ext_keyboard_exist = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST);
 
     if (!ecore_x_window_prop_card32_get (_rootwin, prop_x_ext_keyboard_exist, &hw_kbd_num, 1)) {
-        printf ("Error! cannot get hw_kbd_num\n");
+        LOGW ("Error! cannot get hw_kbd_num\n");
         return;
     }
 
@@ -355,6 +421,8 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         _isf_imf_context_init ();
     }
 
+    hiding_ise = EINA_FALSE;
+
     /* for X based application not to use evas */
     if (ecore_imf_context_client_canvas_get(ctx) == NULL) {
         _win_focus_out_handler_del ();
@@ -394,7 +462,6 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     if (hw_kbd_num != 0) {
         LOGD ("H/W keyboard is existed.\n");
-        printf ("H/W keyboard is existed.\n");
         return;
     }
 
