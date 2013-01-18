@@ -14,6 +14,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -30,6 +31,14 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add new interface APIs for keyboard ISE
+ *    a. select_aux (), set_prediction_allow () and set_layout ()
+ *    b. update_candidate_item_layout (), update_cursor_position () and update_displayed_candidate_number ()
+ *    c. candidate_more_window_show (), candidate_more_window_hide () and longpress_candidate ()
+ *    d. set_imdata () and reset_option ()
+ * 2. Add get_option () in IMEngineFactoryBase class
  *
  * $Id: scim_imengine.h,v 1.19 2005/08/15 12:45:46 suzhe Exp $
  */

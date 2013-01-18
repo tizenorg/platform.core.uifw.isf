@@ -8,6 +8,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -24,6 +25,11 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Implement aux and preedit show/hide/update for helper ISE
+ *    a. panel_slot_select_aux ()
+ *    b. panel_slot_show_preedit_string (), panel_slot_hide_preedit_string () and panel_slot_update_preedit_string ()
  *
  * $Id: scim_x11_frontend.cpp,v 1.179.2.6 2007/06/16 06:23:38 suzhe Exp $
  *

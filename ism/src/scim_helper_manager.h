@@ -12,6 +12,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2004-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -28,6 +29,11 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Launch scim-launcher process when connection is failed
+ * 2. Replace helper manager server with socket frontend
+ * 3. Add some new interface APIs in HelperManager class
  *
  * $Id: scim_helper_manager.h,v 1.3 2005/05/17 06:45:15 suzhe Exp $
  */

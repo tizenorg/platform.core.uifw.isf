@@ -9,6 +9,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -25,6 +26,10 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add filter_event () and filter_exception_event () in SocketServer class
+ * 2. Add set_nonblock_mode () in Socket class
  *
  * $Id: scim_socket.h,v 1.25 2005/01/25 15:13:15 suzhe Exp $
  */

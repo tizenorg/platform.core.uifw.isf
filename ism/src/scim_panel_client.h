@@ -13,6 +13,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -29,6 +30,18 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add new signals
+ *    a. m_signal_select_aux, m_signal_reset_keyboard_ise and m_signal_update_client_id
+ *    b. m_signal_update_candidate_item_layout and m_signal_update_displayed_candidate_number
+ *    c. m_signal_get_surrounding_text and m_signal_delete_surrounding_text
+ *    d. m_signal_show_preedit_string, m_signal_hide_preedit_string, m_signal_update_preedit_string and m_signal_update_preedit_caret
+ *    e. m_signal_candidate_more_window_show, m_signal_candidate_more_window_hide, m_signal_longpress_candidate
+ * 2. Add new interface APIs in PanelClient class
+ *    a. update_cursor_position () and update_surrounding_text ()
+ *    b. expand_candidate (), contract_candidate () and set_candidate_style ()
+ *    c. reset_input_context () and turn_on_log
  *
  * $Id: scim_panel_client.h,v 1.4 2005/06/26 16:35:33 suzhe Exp $
  */

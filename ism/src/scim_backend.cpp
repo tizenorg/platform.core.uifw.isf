@@ -4,6 +4,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -20,6 +21,10 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Create and use ISE cache file
+ * 2. Dynamic load keyboard ISE
  *
  * $Id: scim_backend.cpp,v 1.38.2.1 2006/09/24 16:00:52 suzhe Exp $
  *

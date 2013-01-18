@@ -6,6 +6,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -22,6 +23,9 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Implement new candidate style, include portrait and landscape
  *
  * $Id: scim_panel_gtk.cpp,v 1.118.2.15 2007/04/11 11:30:31 suzhe Exp $
  */

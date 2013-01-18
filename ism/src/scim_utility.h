@@ -8,6 +8,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -24,6 +25,10 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add time and logs functions for performance profile
+ * 2. Define RECT_INFO, ISF_CANDIDATE_MODE_T and ISF_CANDIDATE_PORTRAIT_LINE_T
  *
  * $Id: scim_utility.h,v 1.36 2005/04/09 15:38:39 suzhe Exp $
  */

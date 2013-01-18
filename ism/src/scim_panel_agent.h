@@ -13,6 +13,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2004-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -29,6 +30,24 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add new signals
+ *    a. m_signal_set_keyboard_ise and m_signal_get_keyboard_ise
+ *    b. m_signal_focus_in and m_signal_focus_out
+ *    c. m_signal_expand_candidate, m_signal_contract_candidate and m_signal_set_candidate_ui
+ *    d. m_signal_get_ise_list, m_signal_get_keyboard_ise_list, m_signal_update_ise_geometry and m_signal_get_ise_information
+ *    e. m_signal_set_active_ise_by_uuid and m_signal_get_ise_info_by_uuid
+ *    f. m_signal_accept_connection, m_signal_close_connection and m_signal_exit
+ * 2. Add new interface APIs in PanelClient class
+ *    a. get_helper_manager_id (), has_helper_manager_pending_event () and filter_helper_manager_event ()
+ *    b. update_candidate_panel_event (), update_input_panel_event () and select_aux ()
+ *    c. candidate_more_window_show () and candidate_more_window_hide ()
+ *    d. update_displayed_candidate_number () and update_candidate_item_layout ()
+ *    e. stop_helper (), send_longpress_event () and update_ise_list ()
+ *    f. filter_event (), filter_exception_event () and get_server_id ()
+ * 3. Donot use thread to receive message
+ * 4. Monitor socket frontend for self-recovery function
  *
  * $Id: scim_panel_agent.h,v 1.2 2005/06/11 14:50:31 suzhe Exp $
  */

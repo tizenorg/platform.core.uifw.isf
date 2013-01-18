@@ -9,6 +9,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -25,6 +26,15 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Dynamic load keyboard ISE
+ * 2. Add new interface APIs for keyboard ISE
+ *    a. expand_candidate (), contract_candidate () and set_candidate_style ()
+ *    b. select_aux (), set_prediction_allow () and set_layout ()
+ *    c. update_candidate_item_layout (), update_cursor_position () and update_displayed_candidate_number ()
+ *    d. candidate_more_window_show (), candidate_more_window_hide () and longpress_candidate ()
+ *    e. set_imdata () and reset_option ()
  *
  * $Id: scim_frontend.h,v 1.42 2005/10/06 18:02:06 liuspider Exp $
  */

@@ -4,6 +4,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2004-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -20,6 +21,9 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add SCIM_CSCDIR for custom global file
  *
  * $Id: scim_global_config.cpp,v 1.7 2005/09/29 10:51:25 suzhe Exp $
  */

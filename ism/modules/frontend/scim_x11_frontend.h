@@ -3,10 +3,11 @@
  * @brief definition of X11FrontEnd related classes.
  */
 
-/* 
+/*
  * Smart Common Input Method
- * 
+ *
  * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -23,6 +24,11 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Implement aux and preedit show/hide/update for helper ISE
+ *    a. panel_slot_select_aux ()
+ *    b. panel_slot_show_preedit_string (), panel_slot_hide_preedit_string () and panel_slot_update_preedit_string ()
  *
  * $Id: scim_x11_frontend.h,v 1.56 2005/06/26 16:35:12 suzhe Exp $
  */
@@ -156,8 +162,8 @@ private:
     void ims_preedit_callback_draw (X11IC *ic, const WideString& str, const AttributeList & attrs = AttributeList ());
     void ims_preedit_callback_caret (X11IC *ic, int caret);
 
-    bool ims_string_conversion_callback_retrieval (X11IC *ic, WideString &text, int &cursor, int maxlen_before, int maxlen_after); 
-    bool ims_string_conversion_callback_substitution (X11IC *ic, int offset, int len); 
+    bool ims_string_conversion_callback_retrieval (X11IC *ic, WideString &text, int &cursor, int maxlen_before, int maxlen_after);
+    bool ims_string_conversion_callback_substitution (X11IC *ic, int offset, int len);
 
     void ims_turn_on_ic (X11IC *ic);
     void ims_turn_off_ic (X11IC *ic);

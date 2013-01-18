@@ -8,6 +8,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2004-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -24,6 +25,14 @@
  * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
+ *
+ * Modifications by Samsung Electronics Co., Ltd.
+ * 1. Add new interface APIs for keyboard ISE
+ *    a. expand_candidate (), contract_candidate () and set_candidate_style ()
+ *    b. set_keyboard_ise_by_uuid () and reset_keyboard_ise ()
+ *    c. get_surrounding_text () and delete_surrounding_text ()
+ *    d. show_preedit_string (), hide_preedit_string (), update_preedit_string () and update_preedit_caret ()
+ *    e. show_candidate_string (), hide_candidate_string () and update_candidate_string ()
  *
  * $Id: scim_helper.cpp,v 1.13 2005/05/24 12:22:51 suzhe Exp $
  *
