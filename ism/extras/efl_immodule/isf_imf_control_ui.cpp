@@ -94,7 +94,8 @@ static void _conformant_reset ()
     Ecore_X_Window zone = ecore_x_e_illume_zone_get (hide_context_window);
     int scr_h;
 
-    hiding_ise = EINA_TRUE;
+    if (hide_context_canvas)
+        hiding_ise = EINA_TRUE;
 
     ecore_x_window_size_get (ecore_x_window_root_first_get (), NULL, &scr_h);
 
@@ -116,9 +117,6 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                 if (hide_context_canvas) {
                     evas_event_callback_add (hide_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
                     hide_context_canvas = NULL;
-                }
-                else {
-                    hiding_ise = EINA_FALSE;
                 }
             }
         }
@@ -303,13 +301,8 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
 
     if (instant) {
         _clear_timer ();
-
         _save_hide_context_info (ctx);
-
-        if (_conformant_get ())
-            _conformant_reset ();
-        else
-            _send_input_panel_hide_request ();
+        _send_input_panel_hide_request ();
     } else {
         _input_panel_hide_timer_start (ctx);
     }
