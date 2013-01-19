@@ -1,3 +1,7 @@
+ISF 2.3.6119 :
+ 1. [immodule] Compare window ID in X window focus out callback function
+
+
 ISF 2.3.6118 :
  1. [immodule] Hide IME after rendering conformant area
  2. [immodule] add X window focus out handler for X based application

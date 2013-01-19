@@ -332,8 +332,11 @@ static Eina_Bool _compare_context (Ecore_IMF_Context *ctx1, Ecore_IMF_Context *c
 
 static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
 {
+    Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out *)ev;
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
-    if (!ctx) return ECORE_CALLBACK_PASS_ON;
+
+    if (!ctx || !e) return ECORE_CALLBACK_PASS_ON;
+    if (e->win != (Ecore_X_Window)ecore_imf_context_client_window_get (ctx)) return ECORE_CALLBACK_PASS_ON;
 
     isf_imf_context_input_panel_instant_hide (ctx);
 
