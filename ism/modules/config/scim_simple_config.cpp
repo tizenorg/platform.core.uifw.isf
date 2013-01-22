@@ -600,9 +600,6 @@ SimpleConfig::load_all_config ()
         }
     } else {
         std::cerr << __func__ << " Cannot open(" << sysconf << ")\n";
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Cannot open(%s)\n", time (0), getpid (), __FILE__, __func__, sysconf.c_str ());
-        isf_save_log (buf);
     }
 
     if (!m_config.size () || (m_update_timestamp.tv_sec == 0 && m_update_timestamp.tv_usec == 0)) {

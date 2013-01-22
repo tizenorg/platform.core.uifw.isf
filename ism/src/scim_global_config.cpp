@@ -158,9 +158,6 @@ __initialize_config ()
         __config_repository.initialized = true;
     } else {
         std::cerr << __func__ << " Cannot open(" << sys_conf_file << ")\n";
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Cannot open(%s)\n", time (0), getpid (), __FILE__, __func__, sys_conf_file.c_str ());
-        isf_save_log (buf);
     }
 
     if (usr_is) {

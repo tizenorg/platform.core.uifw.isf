@@ -278,9 +278,6 @@ SocketIMEngineGlobal::get_ise_info_map (const char *filename)
     FILE *engine_list_file = fopen (filename, "r");
     if (engine_list_file == NULL) {
         std::cerr << __func__ << " Failed to open(" << filename << ")\n";
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, filename);
-        isf_save_log (buf);
         return;
     }
 

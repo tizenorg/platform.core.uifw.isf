@@ -775,9 +775,6 @@ CommonBackEnd::add_module_info_from_cache_file (const ConfigPointer &config, std
         user_engine_file = fopen (user_file_name.c_str (), "a");
         if (user_engine_file == NULL) {
             std::cerr << __func__ << " Failed to open(" << user_file_name << ")\n";
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, user_file_name.c_str ());
-            isf_save_log (buf);
         }
     }
 
@@ -841,9 +838,6 @@ CommonBackEnd::add_imengine_module_info (const String module_name, const ConfigP
     FILE *engine_list_file = fopen (filename.c_str (), "a");
     if (engine_list_file == NULL) {
         std::cerr << __func__ << " Failed to open(" << filename << ")\n";
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to open(%s)\n", time (0), getpid (), __FILE__, __func__, filename.c_str ());
-        isf_save_log (buf);
         return;
     }
 

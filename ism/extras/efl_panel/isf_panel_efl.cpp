@@ -534,10 +534,6 @@ static bool set_helper_ise (const String &uuid)
         _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, kbd_uuid);
     }
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-    isf_save_log (buf);
-
    _panel_agent->start_helper (uuid);
     _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
 
@@ -2985,18 +2981,11 @@ static void start_default_ise (void)
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
     String default_name = get_ise_name (default_uuid);
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_name.c_str ());
-    isf_save_log (buf);
     if (!set_active_ise (default_uuid)) {
         std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to launch default ISE(%s)\n", time (0), getpid (), __FILE__, __func__, default_name.c_str ());
-        isf_save_log (buf);
 
         if (default_uuid != _initial_ise_uuid) {
             std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch initial ISE(%s)\n", time (0), getpid (), __FILE__, __func__, get_ise_name (_initial_ise_uuid).c_str ());
-            isf_save_log (buf);
             set_active_ise (_initial_ise_uuid);
         }
     }
@@ -3051,9 +3040,6 @@ static void check_hardware_keyboard (void)
         } else {
             uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
         }
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Launch ISE(%s)\n", time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-        isf_save_log (buf);
 
         set_active_ise (uuid);
     }
@@ -3380,9 +3366,6 @@ int main (int argc, char *argv [])
 
         /* Load initial ISE information */
         _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Initial ISE name(%s)\n", time (0), getpid (), __FILE__, __func__, get_ise_name (_initial_ise_uuid).c_str ());
-        isf_save_log (buf);
 
         /* Start default ISE */
         start_default_ise ();
