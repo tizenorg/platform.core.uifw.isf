@@ -459,6 +459,9 @@ _check_desktop_mode (Ecore_X_Window win)
     } else {
         desktop_mode = EINA_FALSE;
     }
+
+    if (profile)
+        free (profile);
 }
 
 static Eina_Bool
