@@ -31,6 +31,9 @@
 
 #define LOG_TAG "immodule"
 
+const double DOUBLE_SPACE_INTERVAL = 1.0;
+const double HIDE_TIMER_INTERVAL = 0.05;
+
 typedef struct _EcoreIMFContextISF      EcoreIMFContextISF;
 typedef struct _EcoreIMFContextISFImpl  EcoreIMFContextISFImpl;
 

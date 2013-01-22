@@ -56,8 +56,6 @@
 # define CODESET "INVALID"
 #endif
 
-const double DOUBLE_SPACE_INTERVAL = 1.0;
-
 using namespace scim;
 
 struct _EcoreIMFContextISFImpl {

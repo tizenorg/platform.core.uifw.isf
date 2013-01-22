@@ -286,7 +286,7 @@ static void _input_panel_hide_timer_start (void *data)
     _save_hide_context_info (ctx);
 
     if (!hide_timer)
-        hide_timer = ecore_timer_add (0.05, _hide_timer_handler, data);
+        hide_timer = ecore_timer_add (HIDE_TIMER_INTERVAL, _hide_timer_handler, data);
 }
 
 static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)

@@ -1,3 +1,8 @@
+ISF 2.3.6122 :
+ 1. Remove unused ISF logs
+ 2. fix memory leak related to ecore_x_e_window_profile_get
+
+
 ISF 2.3.6119 :
  1. [immodule] Compare window ID in X window focus out callback function
 
