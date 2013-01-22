@@ -1889,6 +1889,9 @@ static void slot_update_spot_location (int x, int y, int top_y)
 static void slot_update_input_context (int type, int value)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " type=" << type << " value=" << value << "\n";
+    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+    if (hw_kbd_detect)
+        return;
 
     if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
@@ -3064,6 +3067,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
     if (event->win == rootwin && event->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
         check_hardware_keyboard ();
+        set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
     }
 
     return ECORE_CALLBACK_PASS_ON;
