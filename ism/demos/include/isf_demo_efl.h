@@ -51,7 +51,7 @@ struct appdata {
 };
 
 struct _menu_item {
-    char *name;
+    const char *name;
     void (*func)(void *data, Evas_Object *obj, void *event_info);
 };
 
