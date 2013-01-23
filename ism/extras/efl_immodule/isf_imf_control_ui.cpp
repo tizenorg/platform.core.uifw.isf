@@ -124,10 +124,10 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                 }
             }
 
-            LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d", sx, sy, sw, sh);
+            LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
         }
         else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
-            LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_ON] geometry x : %d, y : %d, w : %d, h : %d", sx, sy, sw, sh);
+            LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_ON] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
     }
     else {
         if (event->win != _rootwin) return ECORE_CALLBACK_PASS_ON;

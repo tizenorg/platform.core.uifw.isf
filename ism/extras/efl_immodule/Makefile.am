@@ -37,7 +37,7 @@ libisf_imf_module_la_CXXFLAGS = @EFL_CFLAGS@ \
                                 @UTILX_CFLAGS@ \
                                 @VCONF_CFLAGS@ \
                                 @DLOG_CFLAGS@\
-                                @SYSPOPUP_CFLAGS@
+                                @NOTIFICATION_CFLAGS@
 
 libisf_imf_module_la_LDFLAGS  = -rpath $(moduledir) \
                                 -avoid-version \
@@ -49,5 +49,5 @@ libisf_imf_module_la_LIBADD  =  -lstdc++ \
                                 @UTILX_LIBS@ \
                                 @VCONF_LIBS@ \
                                 @DLOG_LIBS@ \
-                                @SYSPOPUP_LIBS@\
+                                @NOTIFICATION_LIBS@\
                                 $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

@@ -1,3 +1,9 @@
+ISF 2.3.6123 :
+ 1. ignore input panel event when hardware keyboard is connected.
+ 2. [immodule] Add dlog related to conformant status and geometry information
+ 3. [immodule] Use notification library instead of syspopup
+
+
 ISF 2.3.6122 :
  1. Remove unused ISF logs
  2. fix memory leak related to ecore_x_e_window_profile_get

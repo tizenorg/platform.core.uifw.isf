@@ -45,7 +45,7 @@
 #include <utilX.h>
 #include <vconf.h>
 #include <vconf-keys.h>
-#include <syspopup_caller.h>
+#include <notification.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -2801,25 +2801,7 @@ _popup_message (const char *_ptext)
     if (_ptext == NULL)
         return;
 
-    int     ret = -1;
-    bundle *b   = bundle_create ();
-    do {
-        ret = bundle_add (b, "0", "info");  // "0" means tickernoti style
-        if (0 != ret)
-            break;
-        ret = bundle_add (b, "1", _ptext);
-        if (0 != ret)
-            break;
-        ret = bundle_add (b, "2", "0");     // "2" means orientation of tickernoti
-        if (0 != ret)
-            break;
-        ret = bundle_add (b, "3", "2");     // "3" means timeout(second) of tickernoti
-        if (0 != ret)
-            break;
-        ret = syspopup_launch ((char *)"tickernoti-syspopup", b);
-    }
-    while (0);
-    bundle_free (b);
+    notification_status_message_post(_ptext);
 }
 
 static void

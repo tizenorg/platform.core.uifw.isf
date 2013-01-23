@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.3.6122, isf@samsung.com)
+AC_INIT(isf, 2.3.6123, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
@@ -11,7 +11,7 @@ m4_pattern_allow([^AS_])
 # ISF version
 ISF_MAJOR_VERSION=2
 ISF_MINOR_VERSION=3
-ISF_MICRO_VERSION=6122
+ISF_MICRO_VERSION=6123
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -248,8 +248,8 @@ PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 # Check privilege control library
 PKG_CHECK_MODULES(PRIVILEGE_CONTROL, [libprivilege-control >= 0])
 
-# Check syspopup-caller library
-PKG_CHECK_MODULES(SYSPOPUP, [syspopup-caller])
+# Check notification library
+PKG_CHECK_MODULES(NOTIFICATION, [notification])
 
 # Check if we should build isf-setting-efl
 PKG_CHECK_MODULES(VCONF, [vconf],
