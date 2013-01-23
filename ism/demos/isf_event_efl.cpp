@@ -121,8 +121,7 @@ static void nf_back_event_cb (void *data, Evas_Object *obj, void *event_info)
     evas_object_event_callback_del (_label1, EVAS_CALLBACK_KEY_UP, NULL);
     evas_object_event_callback_del (_label2, EVAS_CALLBACK_KEY_UP, NULL);
 
-    for(int i = 0; i < 2; i++)
-    {
+    for (int i = 0; i < 2; i++) {
         if (_imf_context[i]) {
             ecore_imf_context_del(_imf_context[i]);
             _imf_context[i] = NULL;
@@ -151,8 +150,8 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     evas_object_size_hint_weight_set (layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_show (layout);
 
-    evas = evas_object_evas_get(ad->win_main);
-    ecore_win = ecore_evas_window_get(ecore_evas_ecore_evas_get(evas));
+    evas = evas_object_evas_get (ad->win_main);
+    ecore_win = ecore_evas_window_get (ecore_evas_ecore_evas_get (evas));
 
     const char *ctx_id = ecore_imf_context_default_id_get ();
 

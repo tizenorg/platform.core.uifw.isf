@@ -50,6 +50,11 @@ struct appdata {
     service_h data;
 };
 
+struct _menu_item {
+    char *name;
+    void (*func)(void *data, Evas_Object *obj, void *event_info);
+};
+
 // Utility functions
 Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text);
 void         add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title);

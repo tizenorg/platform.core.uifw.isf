@@ -40,6 +40,25 @@
 
 #define BASE_THEME_WIDTH 720.0f
 
+static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info);
+static void keyboard_setting_wizard_bt (void *data, Evas_Object *obj, void *event_info);
+
+static struct _menu_item isf_demo_menu_its[] = {
+    { "ISF IM Control", imcontrolapi_bt },
+    { "ISF Layout", ise_layout_bt },
+    { "ISF Autocapital", ise_autocapital_bt },
+    { "ISF Prediction Allow", ise_prediction_bt },
+    { "ISF Return Key Type", ise_return_key_type_bt },
+    { "ISF Return Key Disable", ise_return_key_disable_bt },
+    { "ISF IM Data", ise_imdata_set_bt },
+    { "ISF Event", isf_event_demo_bt },
+    { "ISF Focus Movement", isf_focus_movement_bt },
+    { "ISF Setting", isfsetting_bt },
+    { "Keyboard Setting Wizard", keyboard_setting_wizard_bt },
+
+    /* do not delete below */
+    { NULL, NULL }
+};
 
 static void _quit_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -158,6 +177,7 @@ static void keyboard_setting_wizard_bt (void *data, Evas_Object *obj, void *even
 static int create_demo_view (struct appdata *ad)
 {
     Evas_Object *li = NULL;
+    int idx = 0;
 
     Evas_Object *l_button = elm_button_add (ad->naviframe);
     elm_object_style_set (l_button, "naviframe/end_btn/default");
@@ -168,34 +188,10 @@ static int create_demo_view (struct appdata *ad)
     elm_list_mode_set (li, ELM_LIST_COMPRESS);
     evas_object_smart_callback_add (ad->li, "selected", _list_click, ad);
 
-    // Test ISF imcontrol API
-    elm_list_item_append (li, "ISF IM Control", NULL, NULL, imcontrolapi_bt, ad);
-
-    // test ISF layout
-    elm_list_item_append (li, "ISF Layout", NULL, NULL, ise_layout_bt, ad);
-
-    // Test autocapital type
-    elm_list_item_append (li, "ISF Autocapital", NULL, NULL, ise_autocapital_bt, ad);
-
-    // Test prediction allow
-    elm_list_item_append (li, "ISF Prediction Allow", NULL, NULL, ise_prediction_bt, ad);
-
-    // Test return key type
-    elm_list_item_append (li, "ISF Return Key Type", NULL, NULL, ise_return_key_type_bt, ad);
-
-    // Test return key disable
-    elm_list_item_append (li, "ISF Return Key Disable", NULL, NULL, ise_return_key_disable_bt, ad);
-
-    // Test imdata setting
-    elm_list_item_append (li, "ISF IM Data", NULL, NULL, ise_imdata_set_bt, ad);
-
-    elm_list_item_append (li, "ISF Event", NULL, NULL, isf_event_demo_bt, ad);
-
-    elm_list_item_append (li, "ISF Focus Movement", NULL, NULL, isf_focus_movement_bt, ad);
-
-    elm_list_item_append (li, "ISF Setting", NULL, NULL, isfsetting_bt, ad);
-    elm_list_item_append (li, "Keyboard Setting Wizard", NULL, NULL, keyboard_setting_wizard_bt, ad);
-    // ISF preedit string and commit string on Label and Entry
+    while (isf_demo_menu_its[idx].name != NULL) {
+        elm_list_item_append(li, isf_demo_menu_its[idx].name, NULL, NULL, isf_demo_menu_its[idx].func, ad);
+        ++idx;
+    }
 
     elm_list_go (li);
 
@@ -398,17 +394,25 @@ static int app_create (void *data)
 static int app_exit (void *data)
 {
     struct appdata *ad = (struct appdata *)data;
-    if (ad->li != NULL)
+    if (ad->li != NULL) {
         evas_object_del (ad->li);
+        ad->li = NULL;
+    }
 
-    if (ad->ev_li != NULL)
+    if (ad->ev_li != NULL) {
         evas_object_del (ad->ev_li);
+        ad->ev_li = NULL;
+    }
 
-    if (ad->layout_main != NULL)
+    if (ad->layout_main != NULL) {
         evas_object_del (ad->layout_main);
+        ad->layout_main = NULL;
+    }
 
-    if (ad->win_main != NULL)
+    if (ad->win_main != NULL) {
         evas_object_del (ad->win_main);
+        ad->win_main = NULL;
+    }
 
     return 0;
 }
