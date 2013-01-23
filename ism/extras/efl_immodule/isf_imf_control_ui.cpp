@@ -107,10 +107,14 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 {
     Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
     unsigned int val = 0;
+    int sx = -1, sy = -1, sw = -1, sh = -1;
 
     if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
         Ecore_X_Window zone = ecore_x_e_illume_zone_get (event->win);
         Ecore_X_Virtual_Keyboard_State state = ecore_x_e_virtual_keyboard_state_get (zone);
+
+        if (!ecore_x_e_illume_keyboard_geometry_get (zone, &sx, &sy, &sw, &sh))
+            sx = sy = sw = sh = 0;
 
         if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
             if (hiding_ise) {
@@ -119,7 +123,11 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                     hide_context_canvas = NULL;
                 }
             }
+
+            LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d", sx, sy, sw, sh);
         }
+        else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
+            LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_ON] geometry x : %d, y : %d, w : %d, h : %d", sx, sy, sw, sh);
     }
     else {
         if (event->win != _rootwin) return ECORE_CALLBACK_PASS_ON;
