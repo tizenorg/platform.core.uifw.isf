@@ -209,20 +209,39 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
         if ((fn) && (fn->imf_context == using_ic) &&
             (fn->type == type) && (fn->func)) {
             fn->func (fn->data, fn->imf_context, value);
-            if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
-                switch (value)
-                {
-                    case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
-                        LOGD ("[input panel has been hidden] ctx : %p\n", fn->imf_context);
-                        hide_req_ic = NULL;
-                        break;
-                    case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
-                        LOGD ("[input panel has been shown] ctx : %p\n", fn->imf_context);
-                        break;
-                    case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
-                        LOGD ("[input panel will be shown] ctx : %p\n", fn->imf_context);
-                        break;
-                }
+
+            switch (type) {
+                case ECORE_IMF_INPUT_PANEL_STATE_EVENT:
+                    switch (value) {
+                        case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
+                            LOGD ("[input panel has been hidden] ctx : %p\n", fn->imf_context);
+                            hide_req_ic = NULL;
+                            break;
+                        case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
+                            LOGD ("[input panel has been shown] ctx : %p\n", fn->imf_context);
+                            break;
+                        case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
+                            LOGD ("[input panel will be shown] ctx : %p\n", fn->imf_context);
+                            break;
+                    }
+                    break;
+                case ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT:
+                    LOGD ("[language is changed] ctx : %p\n", fn->imf_context);
+                    break;
+                case ECORE_IMF_INPUT_PANEL_SHIFT_MODE_EVENT:
+                    LOGD ("[shift mode is changed] ctx : %p\n", fn->imf_context);
+                    break;
+                case ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT:
+                    LOGD ("[input panel geometry is changed] ctx : %p\n", fn->imf_context);
+                    break;
+                case ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT:
+                    LOGD ("[candidate state is changed] ctx : %p\n", fn->imf_context);
+                    break;
+                case ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT:
+                    LOGD ("[candidate geometry is changed] ctx : %p\n", fn->imf_context);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -926,8 +945,7 @@ static bool _process_update_input_context (Transaction &trans)
         return false;
 
     if (type == (uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
-        switch(value)
-        {
+        switch (value) {
             case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
                 _process_ise_panel_hided ();
                 return true;
