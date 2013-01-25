@@ -190,16 +190,6 @@ EAPI int _isf_imf_context_control_panel_hide (void)
     return 0;
 }
 
-/*
-EAPI int _isf_imf_context_ise_set_mode (ISE_MODE mode)
-{
-    connect_panel ();
-    _imcontrol_client.prepare ();
-    _imcontrol_client.set_mode (mode);
-    _imcontrol_client.send ();
-}
-*/
-
 EAPI int _isf_imf_context_input_panel_language_set (Ecore_IMF_Input_Panel_Lang lang)
 {
     connect_panel ();
