@@ -1,3 +1,10 @@
+ISF 2.3.6128 :
+ 1. [immodule] display a variety of event logs in dlog
+ 2. [immodule] change input panel state when root window property is changed
+ 3. [immodule] fix bug that language information hasn't be transfered in ISE Context.
+ 4. [demo] Add language demo
+
+
 ISF 2.3.6123 :
  1. ignore input panel event when hardware keyboard is connected.
  2. [immodule] Add dlog related to conformant status and geometry information
