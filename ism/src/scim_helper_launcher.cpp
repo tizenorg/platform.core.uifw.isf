@@ -181,8 +181,6 @@ int main (int argc, char *argv [])
 
     if (!config_pointer.null ())
         config_pointer.reset ();
-
-    exit (0);
 }
 
 /*
