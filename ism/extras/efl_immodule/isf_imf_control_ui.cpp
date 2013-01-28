@@ -449,7 +449,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     hiding_ise = EINA_FALSE;
 
     /* for X based application not to use evas */
-    if (ecore_imf_context_client_canvas_get(ctx) == NULL) {
+    if (ecore_imf_context_client_canvas_get (ctx) == NULL) {
         _win_focus_out_handler_del ();
 
         _win_focus_out_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_FOCUS_OUT, _client_window_focus_out_cb, ctx);
@@ -457,6 +457,9 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     /* set password mode */
     iseContext.password_mode = !!(ecore_imf_context_input_mode_get (ctx) & ECORE_IMF_INPUT_MODE_INVISIBLE);
+
+    /* set language */
+    iseContext.language = ecore_imf_context_input_panel_language_get (ctx);
 
     /* set layout in ise context info */
     iseContext.layout = ecore_imf_context_input_panel_layout_get (ctx);
@@ -544,7 +547,6 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         return;
 
     memcpy (packet, (void *)&iseContext, sizeof (iseContext));
-
     memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
     int context_id = _get_context_id (ctx);
