@@ -37,6 +37,7 @@
 #include "isf_return_key_disable_efl.h"
 #include "isf_imdata_set_efl.h"
 #include "isf_focus_movement_efl.h"
+#include "isf_language_efl.h"
 
 #define BASE_THEME_WIDTH 720.0f
 
@@ -48,6 +49,7 @@ static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Layout", ise_layout_bt },
     { "ISF Autocapital", ise_autocapital_bt },
     { "ISF Prediction Allow", ise_prediction_bt },
+    { "ISF Language", ise_language_bt },
     { "ISF Return Key Type", ise_return_key_type_bt },
     { "ISF Return Key Disable", ise_return_key_disable_bt },
     { "ISF IM Data", ise_imdata_set_bt },
