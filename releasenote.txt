@@ -3,6 +3,7 @@ ISF 2.3.6128 :
  2. [immodule] change input panel state when root window property is changed
  3. [immodule] fix bug that language information hasn't be transfered in ISE Context.
  4. [demo] Add language demo
+ 5. fix for GCC 4.7 build
 
 
 ISF 2.3.6123 :

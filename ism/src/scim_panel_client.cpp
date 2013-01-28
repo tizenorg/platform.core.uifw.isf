@@ -51,6 +51,8 @@
 #include "scim_private.h"
 #include "scim.h"
 
+#include <unistd.h>
+
 namespace scim {
 
 typedef Signal1<void, int>

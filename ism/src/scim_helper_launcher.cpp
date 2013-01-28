@@ -36,6 +36,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include <privilege-control.h>
+#include <unistd.h>
 
 using namespace scim;
 

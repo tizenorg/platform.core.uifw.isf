@@ -41,6 +41,7 @@
 
 #include <malloc.h>
 #include <string.h>
+#include <unistd.h>
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
