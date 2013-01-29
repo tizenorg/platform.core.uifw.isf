@@ -118,8 +118,6 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                 evas_event_callback_add (active_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
             }
 
-            input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
-
             LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
         }
         else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
