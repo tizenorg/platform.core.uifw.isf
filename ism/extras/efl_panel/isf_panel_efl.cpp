@@ -3215,7 +3215,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
     if (event->win == rootwin && event->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
         check_hardware_keyboard ();
-        set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+        set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_OFF);
     } else if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
         /* WMSYNC, #6 The keyboard window is displayed fully so set the conformant geometry */
         LOGD("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE\n");
