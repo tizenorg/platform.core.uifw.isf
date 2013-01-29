@@ -2297,6 +2297,14 @@ struct KeyEvent
 
 };
 
+
+enum InputPanelStateEvent
+{
+    SCIM_INPUT_PANEL_STATE_SHOW,
+    SCIM_INPUT_PANEL_STATE_HIDE,
+    SCIM_INPUT_PANEL_STATE_WILL_SHOW,
+    SCIM_INPUT_PANEL_STATE_WILL_HIDE
+};
 /** @} */
 
 } // namespace scim

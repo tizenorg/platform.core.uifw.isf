@@ -45,6 +45,7 @@
 #include <Ecore_File.h>
 #include <Elementary.h>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 #include <malloc.h>
 #include "scim_private.h"
 #include "scim.h"
@@ -55,6 +56,7 @@
 #endif
 #include <privilege-control.h>
 #include "isf_panel_utility.h"
+#include <dlog.h>
 
 
 using namespace scim;
@@ -76,6 +78,7 @@ using namespace scim;
 
 #define ISF_READY_FILE                                  "/tmp/hibernation/isf_ready"
 
+#define LOG_TAG                                         "ISF_PANEL_EFL"
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
@@ -108,8 +111,8 @@ typedef enum _VIRTUAL_KEYBOARD_STATE {
 // Declaration of internal functions.
 /////////////////////////////////////////////////////////////////////////////
 static Evas_Object *efl_create_window                  (const char *strWinName, const char *strEffect);
-static void       efl_set_transient_for_app_window     (Evas_Object *win_obj);
-static int        efl_get_angle_for_root_window        (Evas_Object *win_obj);
+static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
+static int        efl_get_angle_for_app_window         (void);
 
 static int        ui_candidate_get_valid_height        (void);
 static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true);
@@ -154,8 +157,16 @@ static void       slot_accept_connection               (int fd);
 static void       slot_close_connection                (int fd);
 static void       slot_exit                            (void);
 
+static void       slot_register_helper_properties      (int id, const PropertyList &props);
+static void       slot_show_ise                        (void);
+
+static void       slot_will_show_ack                   (void);
+static void       slot_will_hide_ack                   (void);
+
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
+static Evas_Object *efl_create_control_window          (const char *strWinName);
+static Ecore_X_Window efl_get_app_window               (void);
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -178,6 +189,8 @@ static Evas_Object       *_line_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_window_show            = false;
+static bool               _candidate_window_pending         = false;
+
 
 static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
@@ -264,6 +277,9 @@ static Ecore_Timer       *_check_size_timer                 = NULL;
 static Ecore_Timer       *_longpress_timer                  = NULL;
 static Ecore_Timer       *_destroy_timer                    = NULL;
 
+static Ecore_X_Window    _ise_window                        = 0;
+static Ecore_X_Window    _app_window                        = 0;
+static Ecore_X_Window    _control_window                    = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of internal functions.
@@ -322,25 +338,39 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
     info.height = _ise_height;
 
     int win_w = _screen_width, win_h = _screen_height;
-    int angle = efl_get_angle_for_root_window (_candidate_window);
+    int angle = _candidate_angle;
     if (angle == 90 || angle == 270) {
         win_w = _screen_height;
         win_h = _screen_width;
     }
 
-    if (win_w != (int)info.width)
-        _panel_agent->get_current_ise_geometry (info);
+    /* READ ISE's SIZE HINT HERE */
+    int pos_x, pos_y, width, height;
+    ecore_x_e_window_rotation_geometry_get(_ise_window, _candidate_angle,
+            &pos_x, &pos_y, &width, &height);
+    info.pos_x = pos_x;
+    info.pos_y = pos_y;
 
-    if ((int)info.width > win_w) {
-        win_w = _screen_height;
-        win_h = _screen_width;
+    if (angle == 90 || angle == 270) {
+        info.width = height;
+        info.height = width;
+    } else {
+        info.width = width;
+        info.height = height;
     }
 
+    LOGD("Geometry : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
+
     info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
-    if (kbd_state == KEYBOARD_STATE_OFF)
+    if (kbd_state == KEYBOARD_STATE_OFF) {
         info.pos_y = win_h;
-    else
+        _ise_width  = 0;
+        _ise_height = 0;
+    } else {
         info.pos_y = win_h - info.height;
+        _ise_width  = info.width;
+        _ise_height = info.height;
+    }
 }
 
 /**
@@ -348,7 +378,7 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
  *
  * @param kbd_state The keyboard state.
  */
-static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
+static void set_keyboard_geometry_atom_info (Ecore_X_Window window, VIRTUAL_KEYBOARD_STATE kbd_state)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -360,19 +390,19 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
             ECORE_X_ATOM_E_ILLUME_ZONE_LIST, &zone_lists) > 0) {
 
         struct rectinfo info = {0, 0, 0, 0};
+        get_ise_geometry (info, kbd_state);
         if (_ise_width == 0 && _ise_height == 0) {
             info.pos_x = 0;
             if (_candidate_window && evas_object_visible_get (_candidate_window)) {
                 info.width  = _candidate_width;
                 info.height = _candidate_height;
             }
-            int angle = efl_get_angle_for_root_window (_candidate_window);
+            int angle = efl_get_angle_for_app_window ();
             if (angle == 90 || angle == 270)
                 info.pos_y = _screen_width - info.height;
             else
                 info.pos_y = _screen_height - info.height;
         } else {
-            get_ise_geometry (info, kbd_state);
             if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
                 if (_candidate_window && evas_object_visible_get (_candidate_window)) {
                     _candidate_valid_height = ui_candidate_get_valid_height ();
@@ -388,14 +418,20 @@ static void set_keyboard_geometry_atom_info (VIRTUAL_KEYBOARD_STATE kbd_state)
             }
         }
         if (kbd_state == KEYBOARD_STATE_ON) {
-            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+            ecore_x_e_illume_keyboard_geometry_set (window, info.pos_x, info.pos_y, info.width, info.height);
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, info.width, info.height);
+            ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
             SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_ON x=" << info.pos_x << " y=" << info.pos_y
                                 << " width=" << info.width << " height=" << info.height << "\n";
+            LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
         } else {
-            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+            ecore_x_e_illume_keyboard_geometry_set (window, info.pos_x, info.pos_y, 0, 0);
             ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, 0, 0);
+            ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
             SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_OFF x=" << info.pos_x << " y=" << info.pos_y << "\n";
+            LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, 0, 0);
         }
     }
 
@@ -633,7 +669,7 @@ static int ui_candidate_get_valid_height (void)
 
     int height = 0;
     if (_candidate_window) {
-        int angle = efl_get_angle_for_root_window (_candidate_window);
+        int angle = efl_get_angle_for_app_window ();
 
         if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
             if (angle == 90 || angle == 270)
@@ -664,13 +700,8 @@ static void ui_candidate_window_resize (int new_width, int new_height)
         return;
 
     int x, y, width, height;
-    evas_object_geometry_get (_candidate_window, &x, &y, &width, &height);
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " old width:" << width << " old height:" << height << "\n";
 
-    if (width == new_width && height == new_height)
-        return;
-
-    evas_object_resize (_candidate_window, new_width, new_height);
+    LOGD("evas_object_resize (_candidate_window, %d, %d\n", new_width, new_height);
     evas_object_resize (_aux_line, new_width, 2);
     _candidate_width  = new_width;
     _candidate_height = new_height;
@@ -682,10 +713,28 @@ static void ui_candidate_window_resize (int new_width, int new_height)
         if ((_ise_width == 0 && _ise_height == 0) ||
             (_ise_height > 0 && _candidate_valid_height != height) ||
             (_ise_height > 0 && (_candidate_height - height) > _ise_height)) {
-            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+            set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
     }
+
+    if (_candidate_angle == 90 || _candidate_angle == 270) {
+        int temp = new_width;
+        new_width = new_height;
+        new_height = temp;
+    }
+
+    LOGD("ecore_x_e_window_rotation_geometry_set (_candidate_window, %d %d)\n",
+            new_width, new_height);
+
+    ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+            0, 0, 0, new_width, new_height);
+    ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+            90, 0, 0, new_width, new_height);
+    ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+            180, 0, 0, new_width, new_height);
+    ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+            270, 0, 0, new_width, new_height);
 }
 
 /**
@@ -701,7 +750,13 @@ static void ui_candidate_window_adjust (void)
     int x, y, width, height;
 
     /* Get candidate window size */
-    evas_object_geometry_get (_candidate_window, &x, &y, &width, &height);
+    if (_candidate_angle == 90 || _candidate_angle == 270) {
+        ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
+                &x, &y, &height, &width);
+    } else {
+        ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
+                &x, &y, &width, &height);
+    }
     {
         if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
             evas_object_show (_aux_line);
@@ -769,7 +824,8 @@ static void ui_candidate_window_rotate (int angle)
     if (!_candidate_window)
         return;
 
-    elm_win_rotation_set (_candidate_window, angle);
+    LOGD ("angle : %d\n", angle);
+
     if (angle == 90 || angle == 270) {
         _candidate_scroll_width = _candidate_scroll_width_max;
         ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
@@ -786,12 +842,14 @@ static void ui_candidate_window_rotate (int angle)
         evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
     }
 
-    ui_settle_candidate_window ();
     ui_candidate_window_adjust ();
     if (evas_object_visible_get (_candidate_area_1)) {
         update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
     }
     flush_memory ();
+
+    LOGD("elm_win_rotation_with_resize_set (%p, %d)\n", _candidate_window, angle);
+    elm_win_rotation_with_resize_set (_candidate_window, angle);
 }
 
 /**
@@ -916,14 +974,15 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-    if (!_candidate_window || (hw_kbd_detect == 0 && !_ise_show))
+    if (!_candidate_window || (hw_kbd_detect == 0 && !_ise_show)) {
+        if (hw_kbd_detect == 0 && !_ise_show) {
+            _candidate_window_pending = true;
+        }
         return;
-
-    int angle = efl_get_angle_for_root_window (_candidate_window);
-    if (_candidate_angle != angle) {
-        _candidate_angle = angle;
-        ui_candidate_window_rotate (angle);
     }
+
+    int angle = _candidate_angle;
+    ui_candidate_window_rotate (angle);
 
     if (!evas_object_visible_get (_candidate_window)) {
         evas_object_show (_candidate_window);
@@ -934,7 +993,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
                 _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
             if (bSetVirtualKbd)
-                set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+                set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
 
@@ -944,8 +1003,9 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 
     SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
     _candidate_window_show = true;
+    LOGD("evas_object_show (_candidate_window, %p)\n", elm_win_xwindow_get ( _candidate_window));
     evas_object_show (_candidate_window);
-    efl_set_transient_for_app_window (_candidate_window);
+    efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
 }
 
 /**
@@ -957,6 +1017,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    _candidate_window_pending = false;
     if (!_candidate_window)
         return;
 
@@ -978,10 +1039,10 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd)
             if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
                 if (_ise_show) {
-                    set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+                    set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
                 } else {
                     if (bSetVirtualKbd)
-                        set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+                        set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_OFF);
                     _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
                 }
             }
@@ -1197,9 +1258,21 @@ static void ui_create_native_candidate_window (void)
     /* Create candidate window */
     if (_candidate_window == NULL) {
         _candidate_window = efl_create_window ("candidate", "Prediction Window");
-        evas_object_resize (_candidate_window, _candidate_port_width, _candidate_port_height_min);
-        _candidate_width  = _candidate_port_width;
-        _candidate_height = _candidate_port_height_min;
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            _candidate_width  = _candidate_land_width;
+            _candidate_height = _candidate_land_height_min;
+        } else {
+            _candidate_width  = _candidate_port_width;
+            _candidate_height = _candidate_port_height_min;
+        }
+        ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+                0, 0, 0, _candidate_width, _candidate_height);
+        ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+                90, 0, 0, _candidate_width, _candidate_height);
+        ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+                180, 0, 0, _candidate_width, _candidate_height);
+        ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
+                270, 0, 0, _candidate_width, _candidate_height);
 
         /* Add background */
         _candidate_bg = edje_object_add (evas_object_evas_get (_candidate_window));
@@ -1313,7 +1386,12 @@ static void ui_create_candidate_window (void)
 
     ui_create_native_candidate_window ();
 
-    int angle = efl_get_angle_for_root_window (_candidate_window);
+    unsigned int set = 1;
+    ecore_x_window_prop_card32_set (elm_win_xwindow_get (_candidate_window),
+            ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
+            &set, 1);
+
+    int angle = efl_get_angle_for_app_window ();
     if (_candidate_angle != angle) {
         _candidate_angle = angle;
         ui_candidate_window_rotate (angle);
@@ -1522,39 +1600,17 @@ static void efl_get_screen_size (int &width, int &height)
 /**
  * @brief Set transient for app window.
  *
- * @param win_obj The Evas_Object handler of app window.
+ * @param window The Ecore_X_Window handler of app window.
  */
-static void efl_set_transient_for_app_window (Evas_Object *win_obj)
+static void efl_set_transient_for_app_window (Ecore_X_Window window)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     /* Set a transient window for window stack */
-    /* Gets the current XID of the active window into the root window property */
-    int  ret = 0;
-    Atom type_return;
-    int  format_return;
-    unsigned long    nitems_return;
-    unsigned long    bytes_after_return;
-    unsigned char   *data = NULL;
-    Ecore_X_Window   xAppWindow;
-    Ecore_X_Window   xKeypadWin = elm_win_xwindow_get (win_obj);
+    Ecore_X_Window   xAppWindow = efl_get_app_window ();
+    ecore_x_icccm_transient_for_set (window, xAppWindow);
 
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get (), ecore_x_window_root_get (xKeypadWin),
-                              ecore_x_atom_get ("_ISF_ACTIVE_WINDOW"),
-                              0, G_MAXLONG, False, ((Atom) 33), &type_return,
-                              &format_return, &nitems_return, &bytes_after_return,
-                              &data);
-
-    if (ret == Success) {
-        if ((type_return == ((Atom) 33)) && (format_return == 32) && (data)) {
-            xAppWindow = *(Window *)data;
-            ecore_x_icccm_transient_for_set (xKeypadWin, xAppWindow);
-            if (data)
-                XFree (data);
-        }
-    } else {
-        std::cerr << "XGetWindowProperty () is failed!!!\n";
-    }
+    LOGD("%x %x\n", window, xAppWindow);
 }
 
 /**
@@ -1564,7 +1620,7 @@ static void efl_set_transient_for_app_window (Evas_Object *win_obj)
  *
  * @return The angle of root window.
  */
-static int efl_get_angle_for_root_window (Evas_Object *win_obj)
+static int efl_get_angle_for_app_window ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -1572,11 +1628,9 @@ static int efl_get_angle_for_root_window (Evas_Object *win_obj)
     int count;
     int angle = 0;
     unsigned char *prop_data = NULL;
-    Ecore_X_Window root_win  = ecore_x_window_root_first_get ();
-    if (win_obj)
-        root_win = ecore_x_window_root_get (elm_win_xwindow_get (win_obj));
 
-    ret = ecore_x_window_prop_property_get (root_win, ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
+    ret = ecore_x_window_prop_property_get (efl_get_app_window(),
+            ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
     if (ret && prop_data) {
         memcpy (&angle, prop_data, sizeof (int));
     } else {
@@ -1629,6 +1683,62 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     return win;
 }
 
+/**
+ * @brief Create elementary control window.
+ *
+ * @param strWinName The window name.
+ *
+ * @return The window pointer
+ */
+static Evas_Object *efl_create_control_window (const char *strWinName)
+{
+    /* WMSYNC, #1 Creating and registering control window */
+   Evas_Object *win = elm_win_add (NULL, strWinName, ELM_WIN_UTILITY);
+   Ecore_X_Window root = ecore_x_window_root_get (elm_win_xwindow_get (win));
+   _control_window = ecore_x_window_input_new (root, -100, -100, 1, 1);
+   ecore_x_e_virtual_keyboard_control_window_set (root, _control_window, 0, EINA_TRUE);
+   evas_object_del (win);
+
+    return win;
+}
+
+/**
+ * @brief Get app window's x window id.
+ *
+ * @param win_obj The Evas_Object handler of app window.
+ */
+static Ecore_X_Window efl_get_app_window (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    /* Gets the current XID of the active window from the root window property */
+    int  ret = 0;
+    Atom type_return;
+    int  format_return;
+    unsigned long    nitems_return;
+    unsigned long    bytes_after_return;
+    unsigned char   *data = NULL;
+    Ecore_X_Window   xAppWindow;
+
+    ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
+                              ecore_x_window_root_get (_control_window),
+                              ecore_x_atom_get ("_ISF_ACTIVE_WINDOW"),
+                              0, G_MAXLONG, False, XA_WINDOW, &type_return,
+                              &format_return, &nitems_return, &bytes_after_return,
+                              &data);
+
+    if (ret == Success) {
+        if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
+            xAppWindow = *(Window *)data;
+            if (data)
+                XFree (data);
+        }
+    } else {
+        std::cerr << "XGetWindowProperty () is failed!!!\n";
+    }
+
+    return xAppWindow;
+}
 /**
  * @brief Get default zone geometry.
  *
@@ -1703,7 +1813,6 @@ static void efl_get_screen_resolution (int &width, int &height)
     height = scr_h;
 }
 
-
 //////////////////////////////////////////////////////////////////////
 // Start of PanelAgent Functions
 //////////////////////////////////////////////////////////////////////
@@ -1757,7 +1866,16 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_accept_connection          (slot (slot_accept_connection));
     _panel_agent->signal_connect_close_connection           (slot (slot_close_connection));
     _panel_agent->signal_connect_exit                       (slot (slot_exit));
+
+    _panel_agent->signal_connect_register_helper_properties (slot (slot_register_helper_properties));
+    _panel_agent->signal_connect_show_ise                   (slot (slot_show_ise));
+
+    _panel_agent->signal_connect_will_show_ack              (slot (slot_will_show_ack));
+    _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
+
     _panel_agent->get_active_ise_list (_load_ise_list);
+
+    efl_create_control_window ("Control Window");
 
     return true;
 }
@@ -1888,23 +2006,6 @@ static void slot_update_spot_location (int x, int y, int top_y)
  */
 static void slot_update_input_context (int type, int value)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " type=" << type << " value=" << value << "\n";
-    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-    if (hw_kbd_detect)
-        return;
-
-    if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
-        if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-            _ise_show = false;
-            ui_candidate_hide (true, false);
-            set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
-        } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-            _ise_show = true;
-            if (evas_object_visible_get (_candidate_area_1))
-                ui_candidate_show (false);
-            set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
-        }
-    }
 }
 
 /**
@@ -1929,7 +2030,7 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
     _ise_height = height;
 
     if (_candidate_window) {
-        int angle = efl_get_angle_for_root_window (_candidate_window);
+        int angle = efl_get_angle_for_app_window ();
         if (_candidate_angle != angle) {
             _candidate_angle = angle;
             ui_candidate_window_rotate (angle);
@@ -1939,7 +2040,7 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
     }
 
     if (old_height != height && _ise_show)
-        set_keyboard_geometry_atom_info (KEYBOARD_STATE_ON);
+        set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
 }
 
 /**
@@ -2486,7 +2587,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
             info.width  = _candidate_width;
             info.height = _candidate_height;
         }
-        int angle = efl_get_angle_for_root_window (_candidate_window);
+        int angle = efl_get_angle_for_app_window ();
         if (angle == 90 || angle == 270)
             info.pos_y = _screen_width - info.height;
         else
@@ -2772,6 +2873,53 @@ static void slot_exit (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     elm_exit ();
+}
+
+static void slot_register_helper_properties (int id, const PropertyList &props)
+{
+    /* WMSYNC, #2 Receiving X window ID from ISE */
+    /* FIXME : We should add an API to set window id of ISE */
+    Property prop = props[0];
+    if (prop.get_label ().compare ("XID") == 0) {
+        Ecore_X_Window xwindow = atoi (prop.get_key ().c_str ());
+        _ise_window = xwindow;
+        LOGD("ISE XID : %x\n", _ise_window);
+    }
+}
+
+static void slot_show_ise (void)
+{
+    /* WMSYNC, #3 Clear the existing application's conformant area and set tansient_for */
+    // Unset conformant area
+    Ecore_X_Window current_app_window = efl_get_app_window();
+    if (_app_window != current_app_window) {
+        set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_OFF);
+        LOGD("Conformant reset for window %x\n", _app_window);
+        _app_window = current_app_window;
+    }
+
+    _candidate_angle = efl_get_angle_for_app_window();
+    efl_set_transient_for_app_window (_ise_window);
+}
+
+static void slot_will_show_ack (void)
+{
+    /* WMSYNC, #5 Let the Window Manager to actually show keyboard window */
+    // WILL_SHOW_REQUEST_DONE Ack to WM
+    Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
+    ecore_x_e_virtual_keyboard_on_prepare_done_send(root_window, _control_window);
+    LOGD("_ecore_x_e_virtual_keyboard_on_prepare_done_send(%x, %x)\n",
+            root_window, _control_window);
+}
+
+static void slot_will_hide_ack (void)
+{
+    /* WMSYNC, #8 Let the Window Manager to actually hide keyboard window */
+    // WILL_HIDE_REQUEST_DONE Ack to WM
+    Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
+    ecore_x_e_virtual_keyboard_off_prepare_done_send(root_window, _control_window);
+    LOGD("_ecore_x_e_virtual_keyboard_off_prepare_done_send(%x, %x)\n",
+            root_window, _control_window);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -3068,6 +3216,34 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
         check_hardware_keyboard ();
         set_keyboard_geometry_atom_info (KEYBOARD_STATE_OFF);
+    } else if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
+        /* WMSYNC, #6 The keyboard window is displayed fully so set the conformant geometry */
+        LOGD("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE\n");
+        Ecore_X_Virtual_Keyboard_State state;
+        state = ecore_x_e_virtual_keyboard_state_get(event->win);
+        if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
+            LOGD("ECORE_X_VIRTUAL_KEYBOARD_STATE_ON\n");
+            _ise_show = true;
+            if (_candidate_window_pending) {
+                _candidate_window_pending = false;
+                ui_candidate_show (true);
+            } else {
+                if (evas_object_visible_get (_candidate_area_1))
+                    ui_candidate_show (false);
+            }
+            set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
+            _panel_agent->update_input_panel_event(
+                ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+        }
+        else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
+            /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
+            LOGD("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
+            // For now don't send HIDE signal here
+            //_panel_agent->update_input_panel_event(
+            //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+            _ise_show = false;
+            ui_candidate_hide (true, false);
+        }
     }
 
     return ECORE_CALLBACK_PASS_ON;
@@ -3087,16 +3263,55 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
-    if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE) {
-        int angle = ev->data.l[0];
-        SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << angle << ")\n";
-        ui_candidate_hide (true);
-        if (_candidate_window && _candidate_angle != angle) {
+    if ((ev->win == _control_window)) {
+        if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST) {
+            /* WMSYNC, #4 Send WILL_SHOW event when the keyboard window is about to displayed */
+            LOGD("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST\n");
+            _panel_agent->update_input_panel_event(
+                    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
+        } else if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST) {
+            /* WMSYNC, #7 Send WILL_HIDE event when the keyboard window is about to hidden */
+            LOGD("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST\n");
+            // Clear conformant geometry information first
+            set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_OFF);
+            _panel_agent->update_input_panel_event(
+                    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+            // For now don't send WILL_HIDE signal here
+            //_panel_agent->update_input_panel_event(
+            //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_HIDE);
+            // Instead send HIDE signal
+            _ise_show = false;
+        } else if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE) {
+            /* WMSYNC, #10 Register size hints for candidate window and set conformant geometry */
+            // PRE_ROTATE_DONE Ack to WM
+            int window_resize = (int)ev->data.l[2];
+            int window_w = (int)ev->data.l[3];
+            int window_h = (int)ev->data.l[4];
+
+            _candidate_angle = ev->data.l[1];
+            LOGD("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE : %d\n", _candidate_angle);
+            if (_candidate_angle == 90 || _candidate_angle == 270) {
+                ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
+            } else {
+                ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
+            }
+            if (_ise_show) {
+                set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
+            }
+            ui_settle_candidate_window();
+            Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
+            LOGD("ecore_x_e_window_rotation_change_prepare_done_send(%d)\n", _candidate_angle);
+            ecore_x_e_window_rotation_change_prepare_done_send(root_window,
+                    _control_window, _candidate_angle);
+        }
+    } else if (ev->win == elm_win_xwindow_get(_candidate_window)) {
+        if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
+            /* WMSYNC, #11 Actuall rotate the candidate window */
+            int angle = ev->data.l[1];
+            LOGD("_ECORE_X_ATOM_E_WINDOW_ROTATION_REQUEST : %d\n", angle);
+            SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << angle << ")\n";
             _candidate_angle = angle;
             ui_candidate_window_rotate (angle);
-            int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-            if (hw_kbd_detect && evas_object_visible_get (_candidate_area_1))
-                ui_candidate_show ();
         }
     }
 

@@ -64,6 +64,8 @@ extern "C"
 
     void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx);
     void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx);
+    void isf_imf_context_input_panel_send_will_show_ack ();
+    void isf_imf_context_input_panel_send_will_hide_ack ();
 
 #ifdef __cplusplus
 }

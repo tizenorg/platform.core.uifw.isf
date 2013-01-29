@@ -621,6 +621,9 @@ const int ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID            = 1009;
 const int ISM_TRANS_CMD_GET_ACTIVE_ISE                    = 1010;
 const int ISM_TRANS_CMD_GET_ISE_LIST                      = 1011;
 const int ISM_TRANS_CMD_GET_ISE_INFORMATION               = 1012;
+const int ISM_TRANS_CMD_SEND_WILL_SHOW_ACK                = 1013;
+const int ISM_TRANS_CMD_SEND_WILL_HIDE_ACK                = 1014;
+
 
 /* IMControl to ISE */
 const int ISM_TRANS_CMD_SET_ISE_MODE                      = 1108;

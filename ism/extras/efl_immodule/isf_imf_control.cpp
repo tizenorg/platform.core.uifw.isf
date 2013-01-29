@@ -329,6 +329,24 @@ EAPI int _isf_imf_context_control_focus_out (void)
     return 0;
 }
 
+EAPI int _isf_imf_context_input_panel_send_will_show_ack (void)
+{
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.send_will_show_ack ();
+    _imcontrol_client.send ();
+    return 0;
+}
+
+EAPI int _isf_imf_context_input_panel_send_will_hide_ack (void)
+{
+    connect_panel ();
+    _imcontrol_client.prepare ();
+    _imcontrol_client.send_will_hide_ack ();
+    _imcontrol_client.send ();
+    return 0;
+}
+
 /*
 vi:ts=4:expandtab:nowrap
 */

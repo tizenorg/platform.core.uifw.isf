@@ -58,22 +58,20 @@ static unsigned int       hw_kbd_num = 0;
 static Ecore_Timer       *hide_timer = NULL;
 static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 static int                hide_context_id = -1;
-static Ecore_X_Window     hide_context_window = -1;
-static Evas              *hide_context_canvas = NULL;
+static Evas              *active_context_canvas = NULL;
+static Ecore_X_Window     active_context_window = -1;
 Ecore_IMF_Context        *input_panel_ctx = NULL;
 static Ecore_Event_Handler *_win_focus_out_handler = NULL;
-Eina_Bool                 hiding_ise = EINA_FALSE;
+static Eina_Bool          conformant_reset_done = EINA_FALSE;
+static Eina_Bool          received_will_hide_event = EINA_FALSE;
 
 static void _send_input_panel_hide_request ();
 
 static void _render_post_cb (void *data, Evas *e, void *event_info)
 {
-    if (hiding_ise) {
-        _send_input_panel_hide_request ();
-        hiding_ise = EINA_FALSE;
-    }
-
     evas_event_callback_del_full (e, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
+    conformant_reset_done = EINA_TRUE;
+    isf_imf_context_input_panel_send_will_hide_ack ();
 }
 
 static Eina_Bool _clear_timer ()
@@ -89,16 +87,13 @@ static Eina_Bool _clear_timer ()
 
 static Eina_Bool _conformant_get ()
 {
-    return ecore_x_e_illume_conformant_get (hide_context_window);
+    return ecore_x_e_illume_conformant_get (active_context_window);
 }
 
 static void _conformant_reset ()
 {
-    Ecore_X_Window zone = ecore_x_e_illume_zone_get (hide_context_window);
+    Ecore_X_Window zone = ecore_x_e_illume_zone_get (active_context_window);
     int scr_h;
-
-    if (hide_context_canvas)
-        hiding_ise = EINA_TRUE;
 
     ecore_x_window_size_get (ecore_x_window_root_first_get (), NULL, &scr_h);
 
@@ -113,26 +108,24 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
     int sx = -1, sy = -1, sw = -1, sh = -1;
 
     if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
-        Ecore_X_Window zone = ecore_x_e_illume_zone_get (event->win);
-        Ecore_X_Virtual_Keyboard_State state = ecore_x_e_virtual_keyboard_state_get (zone);
+        Ecore_X_Virtual_Keyboard_State state = ecore_x_e_virtual_keyboard_state_get (event->win);
 
-        if (!ecore_x_e_illume_keyboard_geometry_get (zone, &sx, &sy, &sw, &sh))
+        if (!ecore_x_e_illume_keyboard_geometry_get (event->win, &sx, &sy, &sw, &sh))
             sx = sy = sw = sh = 0;
 
         if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
-            if (hiding_ise) {
-                if (hide_context_canvas) {
-                    evas_event_callback_add (hide_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
-                    hide_context_canvas = NULL;
-                }
+            if (active_context_canvas && _conformant_get ()) {
+                evas_event_callback_add (active_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
             }
 
             input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 
             LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
         }
-        else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
+        else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
+            conformant_reset_done = EINA_FALSE;
             LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_ON] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+        }
     }
     else {
         if (event->win != _rootwin) return ECORE_CALLBACK_PASS_ON;
@@ -183,6 +176,8 @@ static void _save_current_xid (Ecore_IMF_Context *ctx)
     else
         rootwin_xid = ecore_x_window_root_get (xid);
 
+    active_context_window = xid;
+
     Ecore_X_Atom isf_active_window_atom = ecore_x_atom_get ("_ISF_ACTIVE_WINDOW");
     ecore_x_window_prop_property_set (rootwin_xid, isf_active_window_atom, ((Ecore_X_Atom) 33), 32, &xid, 1);
     ecore_x_flush ();
@@ -228,6 +223,7 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                             break;
                         case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
                             LOGD ("[input panel will be shown] ctx : %p\n", fn->imf_context);
+                            isf_imf_context_input_panel_send_will_show_ack ();
                             break;
                     }
                     break;
@@ -281,8 +277,8 @@ static int _get_context_id (Ecore_IMF_Context *ctx)
 static void _save_hide_context_info (Ecore_IMF_Context *ctx)
 {
     hide_context_id = _get_context_id (ctx);
-    hide_context_window = _client_window_id_get (ctx);
-    hide_context_canvas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
+    active_context_window = _client_window_id_get (ctx);
+    active_context_canvas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
 }
 
 static void _win_focus_out_handler_del ()
@@ -305,11 +301,7 @@ static void _send_input_panel_hide_request ()
 
 static Eina_Bool _hide_timer_handler (void *data)
 {
-    if (_conformant_get ())
-        _conformant_reset ();
-    else {
-        _send_input_panel_hide_request ();
-    }
+    _send_input_panel_hide_request ();
 
     hide_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
@@ -452,8 +444,6 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         _isf_imf_context_init ();
     }
 
-    hiding_ise = EINA_FALSE;
-
     /* for X based application not to use evas */
     if (ecore_imf_context_client_canvas_get (ctx) == NULL) {
         _win_focus_out_handler_del ();
@@ -485,6 +475,8 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         iseContext.prediction_allow = EINA_FALSE;
 
     isf_imf_context_prediction_allow_set (ctx, iseContext.prediction_allow);
+
+    active_context_canvas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
 
     /* Set the current XID of the active window into the root window property */
     _save_current_xid (ctx);
@@ -914,6 +906,33 @@ EAPI void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx)
     _isf_imf_context_control_focus_out ();
 }
 
+EAPI void isf_imf_context_input_panel_send_will_show_ack ()
+{
+    if (IfInitContext == false) {
+        _isf_imf_context_init ();
+    }
+
+    _isf_imf_context_input_panel_send_will_show_ack ();
+}
+
+EAPI void isf_imf_context_input_panel_send_will_hide_ack ()
+{
+    if (IfInitContext == false) {
+        _isf_imf_context_init ();
+    }
+
+    if (_conformant_get()) {
+        if (conformant_reset_done && received_will_hide_event) {
+            _isf_imf_context_input_panel_send_will_hide_ack ();
+            conformant_reset_done = EINA_FALSE;
+            received_will_hide_event = EINA_FALSE;
+        }
+    }
+    else {
+        _isf_imf_context_input_panel_send_will_hide_ack ();
+    }
+}
+
 /**
  * process command message, ISM_TRANS_CMD_ISE_PANEL_SHOWED of ecore_ise_process_event()
  */
@@ -925,6 +944,8 @@ static bool _process_ise_panel_showed (void)
 
     /* Notify that ISE status has changed */
     _event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+
+    received_will_hide_event = EINA_FALSE;
 
     return true;
 }
@@ -942,6 +963,9 @@ static bool _process_ise_panel_hided (void)
 
     /* Notify that ISE status has changed */
     _event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+
+    received_will_hide_event = EINA_TRUE;
+    isf_imf_context_input_panel_send_will_hide_ack ();
 
     return true;
 }
@@ -968,12 +992,19 @@ static bool _process_update_input_context (Transaction &trans)
             case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
                 input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
                 break;
+            case SCIM_INPUT_PANEL_STATE_WILL_HIDE:
+                break;
             default:
                 break;
         }
     }
 
     _event_callback_call ((Ecore_IMF_Input_Panel_Event)type, (int)value);
+
+    if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT &&
+        value == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) {
+        isf_imf_context_input_panel_send_will_show_ack ();
+    }
 
     return true;
 }
