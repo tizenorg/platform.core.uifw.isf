@@ -10,6 +10,7 @@
 /Hotkeys/FrontEnd/ShowFactoryMenu = Control+Alt+Right
 /Hotkeys/FrontEnd/Trigger = Control+space,Hangul
 /Hotkeys/FrontEnd/ValidKeyMask = Shift+Control+Alt+CapsLock+Meta+QuirkKanaRo
+/IMEngine/Hangul/AutoReorder = false
 /Panel/Gtk/Color/ActiveBackground = light sky blue
 /Panel/Gtk/Color/ActiveText = black
 /Panel/Gtk/Color/NormalBackground = #DDDDFF
