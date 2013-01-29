@@ -1,5 +1,6 @@
 ISF 2.3.6129 :
- 1. [setting]fix: reset couldn't work well
+ 1. [setting] fix: reset couldn't work well
+ 2. The feature for synchronization with window manager newly added
 
 
 ISF 2.3.6128 :
