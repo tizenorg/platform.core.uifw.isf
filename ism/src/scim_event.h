@@ -2297,7 +2297,6 @@ struct KeyEvent
 
 };
 
-
 enum InputPanelStateEvent
 {
     SCIM_INPUT_PANEL_STATE_SHOW,
