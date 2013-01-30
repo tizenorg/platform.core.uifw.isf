@@ -665,7 +665,7 @@ static void create_sw_keyboard_selection_view (ug_data *ugd)
     }
 }
 
-static void set_active_hw_ise()
+static void set_active_hw_ise (void)
 {
     if (strcmp (_hw_ise_bak, _hw_ise_name) != 0) {
         // If ISE is changed, active it.
@@ -687,7 +687,7 @@ static void hw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, voi
 
     struct ug_data *ugd = (struct ug_data *)data;
 
-    set_active_hw_ise();
+    set_active_hw_ise ();
 
     update_setting_main_view (ugd);
 
@@ -819,7 +819,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
         ItemData *item_data = NULL;
 
         // Separator
-        item = elm_genlist_item_append(
+        item = elm_genlist_item_append (
                 genlist,                // genlist object
                 &itcSeparator,          // item class
                 NULL,                   // data
@@ -1259,19 +1259,18 @@ static void on_pause (ui_gadget_h ug, service_h s, void *priv)
     if (ug == NULL || priv == NULL)
         return;
     struct ug_data *ugd = (struct ug_data *) priv;
-    if (ugd->key_end_cb == ise_option_view_set_cb)
-    {//inside ise setup module
+    if (ugd->key_end_cb == ise_option_view_set_cb) {    //inside ise setup module
         _mdl->save_config (_config);
         _config->reload ();
 
         helper_ise_reload_config ();
-        elm_naviframe_item_pop_to(nf_main_it);
+        elm_naviframe_item_pop_to (nf_main_it);
         ugd->key_end_cb = back_cb;
+    } else if (ugd->key_end_cb == sw_keyboard_selection_view_set_cb) {
+        set_active_sw_ise ();
+    } else if (ugd->key_end_cb == hw_keyboard_selection_view_set_cb) {
+        set_active_hw_ise ();
     }
-    else if (ugd->key_end_cb == sw_keyboard_selection_view_set_cb)
-        set_active_sw_ise();
-    else if (ugd->key_end_cb == hw_keyboard_selection_view_set_cb)
-        set_active_hw_ise();
 }
 
 static void on_resume (ui_gadget_h ug, service_h s, void *priv)
