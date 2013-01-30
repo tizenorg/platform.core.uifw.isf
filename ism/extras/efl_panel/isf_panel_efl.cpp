@@ -165,7 +165,7 @@ static void       slot_will_hide_ack                   (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
-static Evas_Object *efl_create_control_window          (const char *strWinName);
+static void       efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1686,20 +1686,14 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
 /**
  * @brief Create elementary control window.
  *
- * @param strWinName The window name.
- *
  * @return The window pointer
  */
-static Evas_Object *efl_create_control_window (const char *strWinName)
+static void efl_create_control_window (void)
 {
     /* WMSYNC, #1 Creating and registering control window */
-    Evas_Object *win = elm_win_add (NULL, strWinName, ELM_WIN_UTILITY);
-    Ecore_X_Window root = ecore_x_window_root_get (elm_win_xwindow_get (win));
+    Ecore_X_Window root = ecore_x_window_root_first_get ();
     _control_window = ecore_x_window_input_new (root, -100, -100, 1, 1);
     ecore_x_e_virtual_keyboard_control_window_set (root, _control_window, 0, EINA_TRUE);
-    evas_object_del (win);
-
-    return win;
 }
 
 /**
@@ -1718,7 +1712,7 @@ static Ecore_X_Window efl_get_app_window (void)
     unsigned long    nitems_return;
     unsigned long    bytes_after_return;
     unsigned char   *data = NULL;
-    Ecore_X_Window   xAppWindow;
+    Ecore_X_Window   xAppWindow = 0;
 
     ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
                               ecore_x_window_root_get (_control_window),
@@ -1875,7 +1869,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent->get_active_ise_list (_load_ise_list);
 
-    efl_create_control_window ("Control Window");
+    efl_create_control_window ();
 
     return true;
 }
