@@ -1,3 +1,8 @@
+ISF 2.3.6131 :
+ 1. [panel] fix logic to create control window
+ 2. [immodule] fix bug preedit doesn't appear sometimes
+
+
 ISF 2.3.6130 :
  1. [immodule] fix bug not to send will hide ack
 

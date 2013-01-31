@@ -2522,8 +2522,10 @@ turn_on_ic (EcoreIMFContextISF *ic)
         }
 
         //Record the IC on/off status
-        if (_shared_input_method)
+        if (_shared_input_method) {
             _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), true);
+            _config->flush ();
+        }
 
         if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
             ecore_imf_context_preedit_start_event_add (ic->ctx);
@@ -2551,8 +2553,10 @@ turn_off_ic (EcoreIMFContextISF *ic)
         }
 
         //Record the IC on/off status
-        if (_shared_input_method)
+        if (_shared_input_method) {
             _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
+            _config->flush ();
+        }
 
         if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
             ecore_imf_context_preedit_changed_event_add (ic->ctx);
@@ -2901,8 +2905,10 @@ open_specific_factory (EcoreIMFContextISF *ic,
             }
 
             //Record the IC on/off status
-            if (_shared_input_method)
+            if (_shared_input_method) {
                 _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
+                _config->flush ();
+            }
 
             if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
                 ecore_imf_context_preedit_changed_event_add (ic->ctx);
