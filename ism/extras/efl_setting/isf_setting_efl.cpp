@@ -328,7 +328,7 @@ static void show_language_cb (void *data, Evas_Object *obj, void *event_info)
     String langlist_str, normal_langlist_str;
 
     for (unsigned int i = 0; i < _names.size (); i++) {
-        if (strcmp (_names[i].c_str (), _sw_ise_list[index].c_str()) == 0)
+        if (strcmp (_names[i].c_str (), _sw_ise_list[index].c_str ()) == 0)
             langlist_str = _langs[i];
     }
     std::vector<String> langlist_vec,normal_langlist_vec;
@@ -390,7 +390,6 @@ static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_in
     struct ug_data *ugd = (struct ug_data *)data;
     ugd->key_end_cb = back_cb;
     _mdl->save_config (_config);
-    _config->reload ();
 
     helper_ise_reload_config ();
 }
@@ -1261,7 +1260,6 @@ static void on_pause (ui_gadget_h ug, service_h s, void *priv)
     struct ug_data *ugd = (struct ug_data *) priv;
     if (ugd->key_end_cb == ise_option_view_set_cb) {    //inside ise setup module
         _mdl->save_config (_config);
-        _config->reload ();
 
         helper_ise_reload_config ();
         elm_naviframe_item_pop_to (nf_main_it);
@@ -1477,7 +1475,6 @@ extern "C"
             }
         }
 
-        _config->reload ();
         helper_ise_reload_config ();
 
         if (_imf_context != NULL) {

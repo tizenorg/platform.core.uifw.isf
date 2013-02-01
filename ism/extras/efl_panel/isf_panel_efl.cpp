@@ -1881,8 +1881,8 @@ static void slot_reload_config (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    //if (!_config.null ())
-    //    _config->reload ();
+    if (!_config.null ())
+        _config->reload ();
 }
 
 /**
@@ -3125,7 +3125,6 @@ static void start_default_ise (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-    String default_name = get_ise_name (default_uuid);
     if (!set_active_ise (default_uuid)) {
         std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
 
