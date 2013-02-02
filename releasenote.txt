@@ -1,3 +1,7 @@
+ISF 2.4.6202 :
+ 1. [isf-panel-efl] Call config->reload () in PanelAgent reload slot fucntion
+
+
 ISF 2.3.6131 :
  1. [panel] fix logic to create control window
  2. [immodule] fix bug preedit doesn't appear sometimes

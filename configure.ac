@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.3.6130, isf@samsung.com)
+AC_INIT(isf, 2.4.6202, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
@@ -10,8 +10,8 @@ m4_pattern_allow([^AS_])
 
 # ISF version
 ISF_MAJOR_VERSION=2
-ISF_MINOR_VERSION=3
-ISF_MICRO_VERSION=6130
+ISF_MINOR_VERSION=4
+ISF_MICRO_VERSION=6202
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
