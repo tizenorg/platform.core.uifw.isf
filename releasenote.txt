@@ -1,3 +1,7 @@
+ISF 2.4.6205 :
+ 1. Launch initial ISE when active soft ISE is removed
+
+
 ISF 2.4.6202 :
  1. [isf-panel-efl] Call config->reload () in PanelAgent reload slot fucntion
 

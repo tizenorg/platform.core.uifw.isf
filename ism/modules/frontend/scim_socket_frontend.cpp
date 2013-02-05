@@ -1754,7 +1754,7 @@ void
 SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
 {
     String strName;
-    //std::vector<String> name_list;
+    std::vector<String> install_modules;
     std::vector<String> imengine_list;
     std::vector<String> helper_list;
 
@@ -1766,6 +1766,7 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
         scim_get_helper_module_list (helper_list);
 
         for (size_t i = 0; i < imengine_list.size (); ++i) {
+            install_modules.push_back (imengine_list [i]);
             if (std::find (__load_engine_list.begin (), __load_engine_list.end (), imengine_list [i]) == __load_engine_list.end ()) {
                 SCIM_DEBUG_FRONTEND (3) << "add_module " << imengine_list [i]  << " in " << __FUNCTION__ << "\n";
                 //add_module (m_config, imengine_list [i], true);
@@ -1777,6 +1778,7 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
         HelperModule module;
         HelperInfo   info;
         for (size_t i = 0; i < helper_list.size (); ++i) {
+            install_modules.push_back (helper_list [i]);
             if (std::find (__load_engine_list.begin (), __load_engine_list.end (), helper_list [i]) == __load_engine_list.end ()) {
                 if (module.load (helper_list [i]) && module.valid ()) {
                     size_t num = module.number_of_helpers ();
@@ -1787,6 +1789,20 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
                     __load_engine_list.push_back (helper_list [i]);
                 }
                 module.unload ();
+            }
+        }
+
+        /* Try to find uninstall ISEs */
+        for (size_t i = 0; i < __load_engine_list.size (); ++i) {
+            if (std::find (install_modules.begin (), install_modules.end (), __load_engine_list [i]) == install_modules.end ()) {
+                HelperRepository tmp_helpers = __helpers;
+                __helpers.clear ();
+                for (size_t i = 0; i < tmp_helpers.size (); ++i) {
+                    if (std::find (install_modules.begin (), install_modules.end (), tmp_helpers [i].second) != install_modules.end ())
+                        __helpers.push_back (tmp_helpers [i]);
+                }
+                __load_engine_list = install_modules;
+                break;
             }
         }
     }

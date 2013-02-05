@@ -49,13 +49,10 @@ std::vector<String>          _icons;
 std::vector<uint32>          _options;
 std::vector<TOOLBAR_MODE_T>  _modes;
 
-std::vector<String>          _load_ise_list;
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
 /////////////////////////////////////////////////////////////////////////////
-static std::vector<String>   _current_modules_list;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -95,9 +92,6 @@ void isf_get_all_ises_in_languages (std::vector<String> lang_list, std::vector<S
         lang_name = scim_get_language_name_english (it->first);
         if (std::find (lang_list.begin (), lang_list.end (), lang_name) != lang_list.end ()) {
             for (size_t i = 0; i < it->second.size (); i++) {
-                if (_current_modules_list.size () > 0 &&
-                        std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
-                    continue;
                 // Avoid to add the same ISE
                 if (std::find (uuid_list.begin (), uuid_list.end (), _uuids[it->second[i]]) == uuid_list.end ()) {
                     uuid_list.push_back (_uuids[it->second[i]]);
@@ -157,9 +151,6 @@ void isf_get_keyboard_ises_in_languages (const std::vector<String> &lang_list,
                     continue;
                 if (bCheckOption && (_options[it->second[i]] & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
                     continue;
-                if (_current_modules_list.size () > 0 &&
-                        std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
-                    continue;
                 if (std::find (uuid_list.begin (), uuid_list.end (), _uuids[it->second[i]]) == uuid_list.end ()) {
                     uuid_list.push_back (_uuids[it->second[i]]);
                     name_list.push_back (_names[it->second[i]]);
@@ -186,9 +177,6 @@ void isf_get_helper_ises_in_languages (const std::vector<String> &lang_list, std
             for (size_t i = 0; i < it->second.size (); i++) {
 
                 if (_modes[it->second[i]]!= TOOLBAR_HELPER_MODE)
-                    continue;
-                if (_current_modules_list.size () > 0 &&
-                        std::find (_current_modules_list.begin (), _current_modules_list.end (), _module_names[it->second[i]]) == _current_modules_list.end ())
                     continue;
                 // Avoid to add the same ISE
                 if (std::find (uuid_list.begin (), uuid_list.end (), _uuids[it->second[i]]) == uuid_list.end ()) {
@@ -242,7 +230,6 @@ void isf_save_ise_information (void)
  * @param icons The ISE icon list.
  * @param modes The ISE type list.
  * @param options The ISE option list.
- * @param ise_list The already loaded ISE list.
  */
 void isf_get_factory_list (LOAD_ISE_TYPE  type,
                            const ConfigPointer &config,
@@ -252,8 +239,7 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
                            std::vector<String> &langs,
                            std::vector<String> &icons,
                            std::vector<TOOLBAR_MODE_T> &modes,
-                           std::vector<uint32> &options,
-                           const std::vector<String> &ise_list)
+                           std::vector<uint32> &options)
 {
     uuids.clear ();
     names.clear ();
@@ -311,18 +297,7 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
 void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config)
 {
     /* Load ISE engine info */
-    isf_get_factory_list (type, config, _uuids, _names, _module_names, _langs, _icons, _modes, _options, _load_ise_list);
-
-    _current_modules_list.clear ();
-    scim_get_helper_module_list (_current_modules_list);
-    /* Check keyboard ISEs */
-    if (type != HELPER_ONLY) {
-        _current_modules_list.push_back (COMPOSE_KEY_MODULE);
-        std::vector<String> imengine_list;
-        scim_get_imengine_module_list (imengine_list);
-        for (size_t i = 0; i < imengine_list.size (); ++i)
-            _current_modules_list.push_back (imengine_list [i]);
-    }
+    isf_get_factory_list (type, config, _uuids, _names, _module_names, _langs, _icons, _modes, _options);
 
     /* Update _groups */
     std::vector<String> ise_langs;
@@ -475,15 +450,15 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
     std::vector<String> helper_list;
     scim_get_helper_module_list (helper_list);
 
-    _current_modules_list.clear ();
+    std::vector<String> install_modules, uninstall_modules;
 
     /* Check keyboard ISEs */
     if (type != HELPER_ONLY) {
-        _current_modules_list.push_back (COMPOSE_KEY_MODULE);
+        install_modules.push_back (COMPOSE_KEY_MODULE);
         std::vector<String> imengine_list;
         scim_get_imengine_module_list (imengine_list);
         for (size_t i = 0; i < imengine_list.size (); ++i) {
-            _current_modules_list.push_back (imengine_list [i]);
+            install_modules.push_back (imengine_list [i]);
             if (std::find (_module_names.begin (), _module_names.end (), imengine_list [i]) == _module_names.end ()) {
                 if (add_keyboard_ise_module (imengine_list [i], config))
                     ret = true;
@@ -493,10 +468,55 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
 
     /* Check helper ISEs */
     for (size_t i = 0; i < helper_list.size (); ++i) {
-        _current_modules_list.push_back (helper_list [i]);
+        install_modules.push_back (helper_list [i]);
         if (std::find (_module_names.begin (), _module_names.end (), helper_list [i]) == _module_names.end ()) {
             if (add_helper_ise_module (helper_list [i]))
                 ret = true;
+        }
+    }
+
+    /* Try to find uninstall ISEs */
+    bool bFindUninstall = false;
+    for (size_t i = 0; i < _module_names.size (); ++i) {
+        if (std::find (install_modules.begin (), install_modules.end (), _module_names [i]) == install_modules.end ()) {
+            ret = true;
+            bFindUninstall = true;
+            /* Avoid to add the same module */
+            if (std::find (uninstall_modules.begin (), uninstall_modules.end (), _module_names [i]) == uninstall_modules.end ()) {
+                uninstall_modules.push_back (_module_names [i]);
+                String filename = String (USER_ENGINE_FILE_NAME);
+                isf_remove_ise_info_from_file (filename.c_str (), _module_names [i].c_str ());
+            }
+        }
+    }
+    if (bFindUninstall) {
+        std::vector<String>          tmp_uuids        = _uuids;
+        std::vector<String>          tmp_names        = _names;
+        std::vector<String>          tmp_module_names = _module_names;
+        std::vector<String>          tmp_langs        = _langs;
+        std::vector<String>          tmp_icons        = _icons;
+        std::vector<uint32>          tmp_options      = _options;
+        std::vector<TOOLBAR_MODE_T>  tmp_modes        = _modes;
+
+        _uuids.clear ();
+        _names.clear ();
+        _module_names.clear ();
+        _langs.clear ();
+        _icons.clear ();
+        _options.clear ();
+        _modes.clear ();
+        _groups.clear ();
+
+        for (size_t i = 0; i < tmp_module_names.size (); ++i) {
+            if (std::find (uninstall_modules.begin (), uninstall_modules.end (), tmp_module_names [i]) == uninstall_modules.end ()) {
+                _uuids.push_back (tmp_uuids [i]);
+                _names.push_back (tmp_names [i]);
+                _module_names.push_back (tmp_module_names [i]);
+                _langs.push_back (tmp_langs [i]);
+                _icons.push_back (tmp_icons [i]);
+                _options.push_back (tmp_options [i]);
+                _modes.push_back (tmp_modes [i]);
+            }
         }
     }
 
@@ -513,8 +533,6 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
         }
     }
 
-    /* When load ise list is empty, all ISEs can be loaded. */
-    _load_ise_list.clear ();
     return ret;
 }
 

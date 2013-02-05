@@ -92,8 +92,6 @@ extern std::vector<String>          _icons;
 extern std::vector<uint32>          _options;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
 
-extern std::vector<String>          _load_ise_list;
-
 extern CommonLookupTable            g_isf_candidate_table;
 
 
@@ -1867,7 +1865,8 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_will_show_ack              (slot (slot_will_show_ack));
     _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
 
-    _panel_agent->get_active_ise_list (_load_ise_list);
+    std::vector<String> load_ise_list;
+    _panel_agent->get_active_ise_list (load_ise_list);
 
     efl_create_control_window ();
 
@@ -2638,6 +2637,24 @@ static bool slot_get_ise_list (std::vector<String> &list)
     isf_get_all_ises_in_languages (langs, list, name_list);
 
     _panel_agent->update_ise_list (list);
+
+    if (ret && _initial_ise_uuid.length () > 0) {
+        int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+        if (!hw_kbd_detect) {
+            bool bFind = false;
+            String helper_uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+            if (helper_uuid.length () > 0) {
+                for (unsigned int i = 0; i < _uuids.size (); i++) {
+                    if (helper_uuid == _uuids[i]) {
+                        bFind = true;
+                        break;
+                    }
+                }
+            }
+            if (!bFind)
+                set_active_ise (_initial_ise_uuid);
+        }
+    }
     return ret;
 }
 
