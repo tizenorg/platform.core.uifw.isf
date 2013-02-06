@@ -2632,27 +2632,29 @@ static bool slot_get_ise_list (std::vector<String> &list)
     /* update ise list */
     bool ret = isf_update_ise_list (ALL_ISE, _config);
 
-    std::vector<String> langs, name_list;
-    isf_get_all_languages (langs);
-    isf_get_all_ises_in_languages (langs, list, name_list);
+    list.clear ();
+    list = _uuids;
 
     _panel_agent->update_ise_list (list);
 
     if (ret && _initial_ise_uuid.length () > 0) {
-        int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-        if (!hw_kbd_detect) {
-            bool bFind = false;
-            String helper_uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
-            if (helper_uuid.length () > 0) {
-                for (unsigned int i = 0; i < _uuids.size (); i++) {
-                    if (helper_uuid == _uuids[i]) {
-                        bFind = true;
-                        break;
-                    }
-                }
+        String active_uuid   = _initial_ise_uuid;
+        String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+        int    hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+        if (std::find (_uuids.begin (), _uuids.end (), default_uuid) == _uuids.end ()) {
+            if (hw_kbd_detect && get_ise_type (_initial_ise_uuid) != TOOLBAR_KEYBOARD_MODE) {
+                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
             }
-            if (!bFind)
-                set_active_ise (_initial_ise_uuid);
+            set_active_ise (active_uuid);
+        } else if (!hw_kbd_detect) {    // Check whether keyboard engine is installed
+            String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
+            String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
+            if (std::find (_uuids.begin (), _uuids.end (), keyboard_uuid) == _uuids.end ()) {
+                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                _panel_agent->change_factory (active_uuid);
+                _config->write (IMENGINE_KEY, active_uuid);
+                _config->flush ();
+            }
         }
     }
     return ret;
@@ -2804,7 +2806,7 @@ static void slot_set_keyboard_ise (const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (uuid.length () <= 0)
+    if (uuid.length () <= 0 || std::find (_uuids.begin (), _uuids.end (), uuid) == _uuids.end ())
         return;
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
