@@ -1260,10 +1260,7 @@ static void on_pause (ui_gadget_h ug, service_h s, void *priv)
     struct ug_data *ugd = (struct ug_data *) priv;
     if (ugd->key_end_cb == ise_option_view_set_cb) {    //inside ise setup module
         _mdl->save_config (_config);
-
         helper_ise_reload_config ();
-        elm_naviframe_item_pop_to (nf_main_it);
-        ugd->key_end_cb = back_cb;
     } else if (ugd->key_end_cb == sw_keyboard_selection_view_set_cb) {
         set_active_sw_ise ();
     } else if (ugd->key_end_cb == hw_keyboard_selection_view_set_cb) {
@@ -1273,7 +1270,13 @@ static void on_pause (ui_gadget_h ug, service_h s, void *priv)
 
 static void on_resume (ui_gadget_h ug, service_h s, void *priv)
 {
-
+    if (ug == NULL || priv == NULL)
+        return;
+    struct ug_data *ugd = (struct ug_data *) priv;
+    if (_mdl != NULL)
+    {
+        _mdl->query_changed();
+    }
 }
 
 static void on_destroy (ui_gadget_h ug, service_h s, void *priv)
