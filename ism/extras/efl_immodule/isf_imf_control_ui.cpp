@@ -90,17 +90,6 @@ static Eina_Bool _conformant_get ()
     return ecore_x_e_illume_conformant_get (active_context_window);
 }
 
-static void _conformant_reset ()
-{
-    Ecore_X_Window zone = ecore_x_e_illume_zone_get (active_context_window);
-    int scr_h;
-
-    ecore_x_window_size_get (ecore_x_window_root_first_get (), NULL, &scr_h);
-
-    ecore_x_e_virtual_keyboard_state_set (zone, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-    ecore_x_e_illume_keyboard_geometry_set (zone, 0, scr_h, 0, 0);
-}
-
 static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 {
     Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
