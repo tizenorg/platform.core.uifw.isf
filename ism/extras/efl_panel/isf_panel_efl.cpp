@@ -716,23 +716,42 @@ static void ui_candidate_window_resize (int new_width, int new_height)
         }
     }
 
+    /* Get height for portrait and landscape */
+    int port_width  = _candidate_port_width;
+    int port_height = _candidate_port_height_min;
+    int land_width  = _candidate_land_width;
+    int land_height = _candidate_land_height_min;
     if (_candidate_angle == 90 || _candidate_angle == 270) {
-        int temp = new_width;
-        new_width = new_height;
-        new_height = temp;
+        land_height = new_height;
+        if (land_height == _candidate_land_height_min_2) {
+            port_height = _candidate_port_height_min_2;
+        } else if (land_height == _candidate_land_height_max) {
+            port_height = _candidate_port_height_max;
+        } else if (land_height == _candidate_land_height_max_2) {
+            port_height = _candidate_port_height_max_2;
+        }
+    } else {
+        port_height = new_height;
+        if (port_height == _candidate_port_height_min_2) {
+            land_height = _candidate_land_height_min_2;
+        } else if (port_height == _candidate_port_height_max) {
+            land_height = _candidate_land_height_max;
+        } else if (port_height == _candidate_port_height_max_2) {
+            land_height = _candidate_land_height_max_2;
+        }
     }
 
-    LOGD ("ecore_x_e_window_rotation_geometry_set (_candidate_window, %d %d)\n",
-            new_width, new_height);
+    LOGD ("ecore_x_e_window_rotation_geometry_set (_candidate_window), port (%d, %d), land (%d, %d)\n",
+            port_width, port_height, land_width, land_height);
 
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-            0, 0, 0, new_width, new_height);
+            0, 0, 0, port_width, port_height);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-            90, 0, 0, new_width, new_height);
+            90, 0, 0, land_height, land_width);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-            180, 0, 0, new_width, new_height);
+            180, 0, 0, port_width, port_height);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-            270, 0, 0, new_width, new_height);
+            270, 0, 0, land_height, land_width);
 }
 
 /**
@@ -979,8 +998,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         return;
     }
 
-    int angle = _candidate_angle;
-    ui_candidate_window_rotate (angle);
+    ui_candidate_window_rotate (_candidate_angle);
 
     if (!evas_object_visible_get (_candidate_window)) {
         evas_object_show (_candidate_window);
@@ -1264,13 +1282,13 @@ static void ui_create_native_candidate_window (void)
             _candidate_height = _candidate_port_height_min;
         }
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-                0, 0, 0, _candidate_width, _candidate_height);
+                0, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-                90, 0, 0, _candidate_width, _candidate_height);
+                90, 0, 0, _candidate_land_height_min, _candidate_land_width);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-                180, 0, 0, _candidate_width, _candidate_height);
+                180, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
-                270, 0, 0, _candidate_width, _candidate_height);
+                270, 0, 0, _candidate_land_height_min, _candidate_land_width);
 
         /* Add background */
         _candidate_bg = edje_object_add (evas_object_evas_get (_candidate_window));
