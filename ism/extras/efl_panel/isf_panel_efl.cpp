@@ -431,6 +431,7 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, VIRTUAL_KEYB
             SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_OFF x=" << info.pos_x << " y=" << info.pos_y << "\n";
             LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, 0, 0);
         }
+        _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
     }
 
     if (zone_lists)
