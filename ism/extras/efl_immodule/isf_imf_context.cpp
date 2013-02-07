@@ -231,6 +231,7 @@ static void     reload_config_callback                  (const ConfigPointer    
 
 static void     fallback_commit_string_cb               (IMEngineInstanceBase   *si,
                                                          const WideString       &str);
+static void     _display_input_language                 (EcoreIMFContextISF *ic);
 
 /* Local variables declaration */
 static String                                           _language;
@@ -2391,17 +2392,20 @@ filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
             LOGE ("SCIM_FRONTEND_HOTKEY_TRIGGER. Turn off input context");
             turn_off_ic (ic);
         }
+        _display_input_language (ic);
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_ON) {
         if (!ic->impl->is_on) {
             LOGE ("SCIM_FRONTEND_HOTKEY_ON. Turn on input context");
             turn_on_ic (ic);
+            _display_input_language (ic);
         }
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_OFF) {
         if (ic->impl->is_on) {
             LOGE ("SCIM_FRONTEND_HOTKEY_OFF. Turn off input context");
             turn_off_ic (ic);
+            _display_input_language (ic);
         }
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_NEXT_FACTORY) {
@@ -2795,6 +2799,22 @@ _popup_message (const char *_ptext)
         return;
 
     notification_status_message_post(_ptext);
+}
+
+static void
+_display_input_language (EcoreIMFContextISF *ic)
+{
+    IMEngineFactoryPointer sf;
+
+    if (ic && ic->impl) {
+        if (ic->impl->is_on) {
+            sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
+            _popup_message (scim_get_language_name (sf->get_language ()).c_str ());
+        }
+        else {
+            _popup_message (scim_get_language_name ("en").c_str());
+        }
+    }
 }
 
 static void

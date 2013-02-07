@@ -1,3 +1,13 @@
+ISF 2.4.6207 :
+ 1. [setting] on_pause on_resume function update
+ 2. Set app privilege for scim process
+ 3. change trigger hotkey to shift+space according to H/W keyboard UI guide
+ 4. Check hardware keyboard when update ISE information
+ 5. [isf-panel-efl] Update candidate window resize
+ 6. [isf-panel-efl ] Added code for sending GEOMETRY_EVENT when there is a change
+ 7. [immodule] display the language on the notification bar when trigger key is pressed.
+
+
 ISF 2.4.6205 :
  1. Launch initial ISE when active soft ISE is removed
 
