@@ -332,9 +332,6 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    info.width  = _ise_width;
-    info.height = _ise_height;
-
     int win_w = _screen_width, win_h = _screen_height;
     int angle = _candidate_angle;
     if (angle == 90 || angle == 270) {
@@ -362,13 +359,11 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
     info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
     if (kbd_state == KEYBOARD_STATE_OFF) {
         info.pos_y = win_h;
-        _ise_width  = 0;
-        _ise_height = 0;
     } else {
         info.pos_y = win_h - info.height;
-        _ise_width  = info.width;
-        _ise_height = info.height;
     }
+    _ise_width  = info.width;
+    _ise_height = info.height;
 }
 
 /**
@@ -700,7 +695,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
 
     int height;
 
-    LOGD ("evas_object_resize (_candidate_window, %d, %d\n", new_width, new_height);
+    LOGD ("%s (%d, %d)\n", __func__, new_width, new_height);
     evas_object_resize (_aux_line, new_width, 2);
     _candidate_width  = new_width;
     _candidate_height = new_height;
@@ -775,58 +770,57 @@ static void ui_candidate_window_adjust (void)
         ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
                 &x, &y, &width, &height);
     }
-    {
-        if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
-            evas_object_show (_aux_line);
-            evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (width, _candidate_land_height_max_2);
-                evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
-                evas_object_move (_candidate_area_2, 0, _candidate_land_height_min_2);
-                evas_object_move (_scroller_bg, 0, _candidate_land_height_min_2);
-            } else {
-                ui_candidate_window_resize (width, _candidate_port_height_max_2);
-                evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-                evas_object_move (_candidate_area_2, 0, _candidate_port_height_min_2);
-                evas_object_move (_scroller_bg, 0, _candidate_port_height_min_2);
-            }
-        } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
-            evas_object_show (_aux_line);
-            evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (width, _candidate_land_height_min_2);
-                evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            } else {
-                ui_candidate_window_resize (width, _candidate_port_height_min_2);
-                evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
-            }
-        } else if (evas_object_visible_get (_aux_area)) {
-            evas_object_hide (_aux_line);
-            ui_candidate_window_resize (width, _aux_height + 2);
-        } else if (evas_object_visible_get (_candidate_area_2)) {
-            evas_object_hide (_aux_line);
-            evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (width, _candidate_land_height_max);
-                evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3]);
-                evas_object_move (_candidate_area_2, 0, _candidate_land_height_min);
-                evas_object_move (_scroller_bg, 0, _candidate_land_height_min);
-            } else {
-                ui_candidate_window_resize (width, _candidate_port_height_max);
-                evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
-                evas_object_move (_candidate_area_2, 0, _candidate_port_height_min);
-                evas_object_move (_scroller_bg, 0, _candidate_port_height_min);
-            }
+
+    if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
+        evas_object_show (_aux_line);
+        evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            ui_candidate_window_resize (width, _candidate_land_height_max_2);
+            evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            evas_object_move (_candidate_area_2, 0, _candidate_land_height_min_2);
+            evas_object_move (_scroller_bg, 0, _candidate_land_height_min_2);
         } else {
-            evas_object_hide (_aux_line);
-            evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
-            if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (width, _candidate_land_height_min);
-                evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3]);
-            } else {
-                ui_candidate_window_resize (width, _candidate_port_height_min);
-                evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
-            }
+            ui_candidate_window_resize (width, _candidate_port_height_max_2);
+            evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            evas_object_move (_candidate_area_2, 0, _candidate_port_height_min_2);
+            evas_object_move (_scroller_bg, 0, _candidate_port_height_min_2);
+        }
+    } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
+        evas_object_show (_aux_line);
+        evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            ui_candidate_window_resize (width, _candidate_land_height_min_2);
+            evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
+        } else {
+            ui_candidate_window_resize (width, _candidate_port_height_min_2);
+            evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+        }
+    } else if (evas_object_visible_get (_aux_area)) {
+        evas_object_hide (_aux_line);
+        ui_candidate_window_resize (width, _aux_height + 2);
+    } else if (evas_object_visible_get (_candidate_area_2)) {
+        evas_object_hide (_aux_line);
+        evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            ui_candidate_window_resize (width, _candidate_land_height_max);
+            evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3]);
+            evas_object_move (_candidate_area_2, 0, _candidate_land_height_min);
+            evas_object_move (_scroller_bg, 0, _candidate_land_height_min);
+        } else {
+            ui_candidate_window_resize (width, _candidate_port_height_max);
+            evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
+            evas_object_move (_candidate_area_2, 0, _candidate_port_height_min);
+            evas_object_move (_scroller_bg, 0, _candidate_port_height_min);
+        }
+    } else {
+        evas_object_hide (_aux_line);
+        evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            ui_candidate_window_resize (width, _candidate_land_height_min);
+            evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3]);
+        } else {
+            ui_candidate_window_resize (width, _candidate_port_height_min);
+            evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
         }
     }
 }
@@ -841,8 +835,6 @@ static void ui_candidate_window_rotate (int angle)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     if (!_candidate_window)
         return;
-
-    LOGD ("angle : %d\n", angle);
 
     if (angle == 90 || angle == 270) {
         _candidate_scroll_width = _candidate_scroll_width_max;
@@ -1513,8 +1505,7 @@ static void ui_settle_candidate_window (void)
         spot_x = _spot_location_x;
         spot_y = _spot_location_y;
 
-        rectinfo ise_rect;
-        _panel_agent->get_current_ise_geometry (ise_rect);
+        rectinfo ise_rect = {0, 0, _ise_width, _ise_height};
         if (_candidate_angle == 90 || _candidate_angle == 270) {
             if (ise_rect.height <= (uint32)0 || ise_rect.height >= (uint32)_screen_width)
                 ise_rect.height = ISE_DEFAULT_HEIGHT_LANDSCAPE * _width_rate;
