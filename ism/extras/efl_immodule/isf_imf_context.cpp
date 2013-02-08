@@ -1701,6 +1701,8 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
             if (ic == _focused_ic)
                 ecore_imf_context_input_panel_show (ctx);
+            else
+                LOGW ("Can't show IME because there is no focus. ctx : %p\n", ctx);
         }
         return EINA_FALSE;
     } else {
