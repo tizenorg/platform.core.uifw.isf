@@ -76,12 +76,15 @@ static void _render_post_cb (void *data, Evas *e, void *event_info)
     evas_event_callback_del_full (e, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
 }
 
-static void _clear_timer ()
+static Eina_Bool _clear_timer ()
 {
     if (hide_timer) {
         ecore_timer_del (hide_timer);
         hide_timer = NULL;
+        return EINA_TRUE;
     }
+
+    return EINA_FALSE;
 }
 
 static Eina_Bool _conformant_get ()
@@ -493,9 +496,9 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         return;
     }
 
-    _clear_timer ();
-
-    hide_req_ic = NULL;
+    if (_clear_timer ()) {
+        hide_req_ic = NULL;
+    }
 
     if ((show_req_ic == ctx) &&
         (_compare_context (show_req_ic, ctx) == EINA_TRUE) &&
