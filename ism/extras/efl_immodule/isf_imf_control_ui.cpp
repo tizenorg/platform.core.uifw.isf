@@ -213,8 +213,6 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 
         if ((fn) && (fn->imf_context == using_ic) &&
             (fn->type == type) && (fn->func)) {
-            fn->func (fn->data, fn->imf_context, value);
-
             switch (type) {
                 case ECORE_IMF_INPUT_PANEL_STATE_EVENT:
                     switch (value) {
@@ -248,6 +246,8 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                 default:
                     break;
             }
+
+            fn->func (fn->data, fn->imf_context, value);
         }
     }
 }
@@ -327,15 +327,15 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
         _isf_imf_context_init ();
     }
 
-    if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-        hide_req_ic = ctx;
-    }
-
     if (instant) {
-        _clear_timer ();
-        _save_hide_context_info (ctx);
-        _send_input_panel_hide_request ();
+        if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+            hide_req_ic = ctx;
+            _clear_timer ();
+            _save_hide_context_info (ctx);
+            _send_input_panel_hide_request ();
+        }
     } else {
+        hide_req_ic = ctx;
         _input_panel_hide_timer_start (ctx);
     }
 }
