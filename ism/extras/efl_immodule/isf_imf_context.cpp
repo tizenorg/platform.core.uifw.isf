@@ -1741,25 +1741,6 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
 
     _panel_client.send ();
 
-    /* Hide IME in case of Search, Go, Login, Signin, Join Return key type */
-    if (type == ECORE_IMF_EVENT_KEY_UP) {
-        Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
-        Ecore_IMF_Input_Panel_Return_Key_Type return_key_type = ecore_imf_context_input_panel_return_key_type_get (ctx);
-        switch (return_key_type) {
-            case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SEARCH:
-            case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_GO:
-            case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_LOGIN:
-            case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN:
-            case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_JOIN:
-            case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DONE:
-                if (!strcmp (ev->keyname, "KP_Enter") || !strcmp (ev->keyname, "Return"))
-                    ecore_imf_context_input_panel_hide (ctx);
-                break;
-            default:
-                break;
-        }
-    }
-
     return ret;
 }
 
