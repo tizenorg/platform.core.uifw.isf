@@ -135,8 +135,6 @@ static Eina_Bool
 _prop_change (void *data, int type, void *event)
 {
     Ecore_X_Event_Window_Property *ev;
-    Ecore_X_Virtual_Keyboard_State vkb_state;
-
     ev = (Ecore_X_Event_Window_Property *)event;
 
     if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
