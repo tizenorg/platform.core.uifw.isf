@@ -2386,26 +2386,21 @@ filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
     FrontEndHotkeyAction hotkey_action = _frontend_hotkey_matcher.get_match_result ();
 
     if (hotkey_action == SCIM_FRONTEND_HOTKEY_TRIGGER) {
-        if (!ic->impl->is_on) {
-            LOGE ("SCIM_FRONTEND_HOTKEY_TRIGGER. Turn on input context");
+        if (!ic->impl->is_on)
             turn_on_ic (ic);
-        }
-        else {
-            LOGE ("SCIM_FRONTEND_HOTKEY_TRIGGER. Turn off input context");
+        else
             turn_off_ic (ic);
-        }
+
         _display_input_language (ic);
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_ON) {
         if (!ic->impl->is_on) {
-            LOGE ("SCIM_FRONTEND_HOTKEY_ON. Turn on input context");
             turn_on_ic (ic);
             _display_input_language (ic);
         }
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_OFF) {
         if (ic->impl->is_on) {
-            LOGE ("SCIM_FRONTEND_HOTKEY_OFF. Turn off input context");
             turn_off_ic (ic);
             _display_input_language (ic);
         }
@@ -2894,7 +2889,6 @@ open_specific_factory (EcoreIMFContextISF *ic,
     IMEngineFactoryPointer sf = _backend->get_factory (uuid);
 
     if (uuid.length () && !sf.null ()) {
-        LOGE ("open_specific_factory () succeeds. ic : %x uuid : %s", ic->id, uuid.c_str());
         turn_off_ic (ic);
         ic->impl->si = sf->create_instance ("UTF-8", ic->impl->si->get_id ());
         ic->impl->si->set_frontend_data (static_cast <void*> (ic));
