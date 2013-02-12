@@ -29,6 +29,8 @@
 #define Uses_SCIM_IMENGINE_MODULE
 #define WAIT_WM
 
+#define VCONFKEY_PM_SIP_STATUS  "memory/pm/sip_status"
+
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/time.h>
@@ -3258,6 +3260,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
             set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
             _panel_agent->update_input_panel_event(
                 ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+
+            vconf_set_int (VCONFKEY_PM_SIP_STATUS, 1);
         }
         else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
             /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
@@ -3267,6 +3271,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
             //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             _ise_show = false;
             ui_candidate_hide (true, false);
+
+            vconf_set_int (VCONFKEY_PM_SIP_STATUS, 0);
         }
     }
 
