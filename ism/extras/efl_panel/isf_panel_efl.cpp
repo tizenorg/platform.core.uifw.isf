@@ -1015,8 +1015,8 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
     _candidate_window_show = true;
     LOGD ("evas_object_show (_candidate_window, %p)\n", elm_win_xwindow_get ( _candidate_window));
-    evas_object_show (_candidate_window);
     efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
+    evas_object_show (_candidate_window);
 }
 
 /**

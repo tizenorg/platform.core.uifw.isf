@@ -1,3 +1,11 @@
+ISF 2.4.6213 :
+ 1. [isf-panel-efl] Fix 'v' button issue
+ 2. [immodule] display warning in case that mouse up event occurs without focus
+ 3. [immodule] fix bug hide event callback is delivered when canvas lost focus and IME is already hidden state
+ 4. [panel] set vconf value for power management
+ 5. [panel] set transient_for before showing window
+
+
 ISF 2.4.6207 :
  1. [setting] on_pause on_resume function update
  2. Set app privilege for scim process
