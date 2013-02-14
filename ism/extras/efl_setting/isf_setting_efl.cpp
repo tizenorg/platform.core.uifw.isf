@@ -32,7 +32,6 @@
 #define Uses_SCIM_IMENGINE_MODULE
 #define Uses_SCIM_COMPOSE_KEY
 
-
 #include <stdio.h>
 #include <Elementary.h>
 #include <Ecore_IMF.h>
@@ -50,7 +49,6 @@
 #include "scim_setup_module_efl.h"
 #include "isf_control.h"
 
-
 using namespace scim;
 
 #define _EDJ(x)                                   elm_layout_edje_get(x)
@@ -60,7 +58,6 @@ using namespace scim;
 #define SETTING_PACKAGE                           "isfsetting-efl"
 #define SETTING_LOCALEDIR                         "/usr/ug/res/locale"
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
-
 
 enum {
     F_CONNECTION_AUTO = 0,
@@ -94,7 +91,6 @@ struct ItemData
     char *sub_text;
     int   mode;
 };
-
 
 static struct ug_data              *_common_ugd               = NULL;
 static ItemData                    *_p_items[ITEM_TOTAL_COUNT];
@@ -131,13 +127,11 @@ static Connection                   _reload_signal_connection;
 
 static Elm_Genlist_Item_Class       itc1, itc2, itc3, itc4, itc5, itcText, itcTitle, itcSeparator;
 
-
 extern std::vector <String>         _names;
 extern std::vector <String>         _uuids;
 extern std::vector <String>         _module_names;
 extern std::vector <String>         _langs;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
-
 
 static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part);
 static char        *_gl_label_get (void *data, Evas_Object *obj, const char *part);
@@ -152,7 +146,6 @@ static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const cha
 
 static void         create_sw_keyboard_selection_view (ug_data *ugd);
 static void         create_hw_keyboard_selection_view (ug_data *ugd);
-
 
 static Evas_Object *create_bg (Evas_Object *win)
 {
@@ -1272,9 +1265,8 @@ static void on_resume (ui_gadget_h ug, service_h s, void *priv)
 {
     if (ug == NULL || priv == NULL)
         return;
-    struct ug_data *ugd = (struct ug_data *) priv;
-    if (_mdl != NULL)
-    {
+
+    if (_mdl != NULL) {
         _mdl->query_changed();
     }
 }
