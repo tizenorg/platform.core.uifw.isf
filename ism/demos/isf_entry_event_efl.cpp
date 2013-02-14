@@ -25,7 +25,6 @@
 #include <Ecore_IMF.h>
 #include "isf_demo_efl.h"
 
-
 static Evas_Object * _entry1                 = NULL;
 static Evas_Object * _entry2                 = NULL;
 static Evas_Object * _key_event_label        = NULL;
@@ -34,13 +33,12 @@ static Evas_Object * _commit_event_label     = NULL;
 static Ecore_Event_Handler *_preedit_handler = NULL;
 static Ecore_Event_Handler *_commit_handler  = NULL;
 
-
 static void _input_panel_event_callback (void *data, Ecore_IMF_Context *ctx, int value)
 {
     if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-        printf("[%s] ECORE_IMF_INPUT_PANEL_STATE_SHOW\n", __func__);
+        printf ("[%s] ECORE_IMF_INPUT_PANEL_STATE_SHOW\n", __func__);
     } else if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        printf("[%s] ECORE_IMF_INPUT_PANEL_STATE_HIDE\n", __func__);
+        printf ("[%s] ECORE_IMF_INPUT_PANEL_STATE_HIDE\n", __func__);
     }
 }
 
@@ -86,10 +84,10 @@ static Eina_Bool _ecore_imf_event_commit_cb (void *data, int type, void *event)
     Ecore_IMF_Event_Commit *ev = (Ecore_IMF_Event_Commit *) event;
 
     if (elm_object_focus_get (_entry1) == EINA_TRUE) {
-        snprintf (str,sizeof(str), "entry 1 get commit string: %s",(char *)( ev->str));
+        snprintf (str, sizeof(str), "entry 1 get commit string: %s", (char *)( ev->str));
         elm_object_text_set (_commit_event_label, str);
     } else if (elm_object_focus_get (_entry2) == EINA_TRUE) {
-        snprintf (str,sizeof(str), "entry 2 get commit string: %s", (char *)(ev->str));
+        snprintf (str, sizeof(str), "entry 2 get commit string: %s",  (char *)(ev->str));
         elm_object_text_set (_commit_event_label, str);
     }
     return ECORE_CALLBACK_RENEW;

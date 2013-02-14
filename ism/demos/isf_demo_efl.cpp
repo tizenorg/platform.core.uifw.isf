@@ -102,7 +102,7 @@ static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
         evas_object_show (base);
         break;
     case UG_MODE_FRAMEVIEW:
-        printf("please set ug mode to UG_MODE_FULLVIEW!\n");
+        printf ("please set ug mode to UG_MODE_FULLVIEW!\n");
         break;
     default:
         break;
@@ -272,13 +272,13 @@ static Evas_Object* create_win (const char *name)
 static void
 _vkbd_state_on (void *data, Evas_Object *obj, void *event_info)
 {
-    printf("[%s] input panel is shown\n", __func__);
+    printf ("[%s] input panel is shown\n", __func__);
 }
 
 static void
 _vkbd_state_off (void *data, Evas_Object *obj, void *event_info)
 {
-    printf("[%s] input panel is hidden\n", __func__);
+    printf ("[%s] input panel is hidden\n", __func__);
 }
 
 static Evas_Object* create_layout_main (Evas_Object *parent)

@@ -191,7 +191,7 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
 static void _nf_back_event (void *data, Evas_Object *obj, void *event_info)
 {
     if (imf_context) {
-        ecore_imf_context_del(imf_context);
+        ecore_imf_context_del (imf_context);
         imf_context = NULL;
     }
 }

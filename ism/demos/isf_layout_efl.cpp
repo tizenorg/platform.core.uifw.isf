@@ -150,15 +150,15 @@ _prop_change (void *data, int type, void *event)
 
 static void entry_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    printf("[%s]\n", __func__);
+    printf ("[%s]\n", __func__);
 }
 
 static void entry_preedit_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    printf("[%s]\n", __func__);
+    printf ("[%s]\n", __func__);
 }
 
-static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text,Elm_Input_Panel_Layout layout)
+static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
     Ecore_IMF_Context *ic = NULL;
