@@ -1,3 +1,7 @@
+ISF 2.4.6214 :
+ 1. modify isf.manifest to give permission for the executable files
+
+
 ISF 2.4.6213 :
  1. [isf-panel-efl] Fix 'v' button issue
  2. [immodule] display warning in case that mouse up event occurs without focus
