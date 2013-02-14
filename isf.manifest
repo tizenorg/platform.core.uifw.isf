@@ -18,6 +18,10 @@
 		<filesystem path="/usr/lib/libscim-x11utils-1.0.so" label="_"/>
 		<filesystem path="/usr/lib/libscim-x11utils-1.0.so.8" label="_"/>
 		<filesystem path="/usr/lib/libscim-x11utils-1.0.so.8.2.3" label="_"/>
+		<filesystem path="/usr/bin/isf-demo-efl" label="_"/>
+		<filesystem path="/usr/bin/isf-panel-efl" label="_"/>
+		<filesystem path="/usr/bin/isf-log" label="_"/>
+		<filesystem path="/usr/bin/isf-query-engines" label="_"/>
 	</assign>
 	<request>
 		<domain name="isf"/>
