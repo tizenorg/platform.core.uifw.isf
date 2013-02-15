@@ -862,6 +862,9 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
         }
         l = l->next;
     }
+
+    if (hide_req_ic == ctx)
+        hide_req_ic = NULL;
 }
 
 /**
