@@ -218,6 +218,9 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                     switch (value) {
                         case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
                             LOGD ("[input panel has been hidden] ctx : %p\n", fn->imf_context);
+                            if (hide_req_ic == show_req_ic)
+                                show_req_ic = NULL;
+
                             hide_req_ic = NULL;
                             break;
                         case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
