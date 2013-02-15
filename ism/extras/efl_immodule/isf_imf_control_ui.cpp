@@ -662,7 +662,7 @@ EAPI void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* 
 }
 
 /**
- * Get ISE's position and size, in screen coodinates of the ISE rectangle not the client area,
+ * Get ISE's position and size, in screen coordinates of the ISE rectangle not the client area,
  * the represents the size and location of the ISE
  *
  * @param[in] ctx a #Ecore_IMF_Context
@@ -758,7 +758,7 @@ EAPI Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Co
 }
 
 /**
- * Sets up the layout infomation of active ISE
+ * Sets up the layout information of active ISE
  *
  * @param[in] ctx a #Ecore_IMF_Context
  * @param[in] layout sets a layout ID to be shown. The layout ID will define by the configuration of selected ISE.
@@ -865,7 +865,7 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
 }
 
 /**
- * Get candidate window position and size, in screen coodinates of the candidate rectangle not the client area,
+ * Get candidate window position and size, in screen coordinates of the candidate rectangle not the client area,
  * the represents the size and location of the candidate window
  *
  * @param[in] ctx a #Ecore_IMF_Context
