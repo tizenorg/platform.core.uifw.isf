@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-13 16:23+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Push the layout along with function buttons and title
+#: ism/extras/efl_setting/isf_setting_efl.cpp:567
+#: ism/extras/efl_setting/isf_setting_efl.cpp:721
+#: ism/extras/efl_setting/isf_setting_efl.cpp:957
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1029
+msgid "Keyboard selection"
+msgstr "Selección de teclado"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:654
+#: ism/extras/efl_setting/isf_setting_efl.cpp:978
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1048
+msgid "Keyboard settings"
+msgstr "Configuración del teclado"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:846
+msgid "Auto capitalization"
+msgstr "Uso de mayúsculas automático"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:866
+msgid "Automatically capitalize first letter of sentence"
+msgstr "Poner en mayúscula automáticamente la primera letra de las oraciones"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:899
+msgid "Automatic full stop"
+msgstr "Detención completa automática"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:916
+msgid "Automatically insert a full stop by tapping the space bar twice"
+msgstr "Introduzca manualmente una detención completa punteando la barra espaciadora dos veces"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:934
+msgid "Software keyboard"
+msgstr "Teclado de software"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:998
+msgid "Hardware keyboard"
+msgstr "Teclado de hardware"
+
+#: ism/extras/efl_setting/isf_setting_efl.cpp:1079
+msgid "Keyboard"
+msgstr "Teclado"
