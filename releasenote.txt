@@ -1,3 +1,7 @@
+ISF 2.4.6218 :
+ 1.add po for es_MX
+
+
 ISF 2.4.6214 :
  1. modify isf.manifest to give permission for the executable files
 
