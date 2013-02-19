@@ -327,7 +327,7 @@ static Eina_Bool _keydown_event (void *data, int type, void *event)
     if (strcmp (ev->keyname, "XF86Stop") == 0) {
         if (ug_send_key_event (UG_KEY_EVENT_END) == -1) {
             top_it = elm_naviframe_top_item_get (ad->naviframe);
-            bottom_it = elm_naviframe_top_item_get (ad->naviframe);
+            bottom_it = elm_naviframe_bottom_item_get (ad->naviframe);
             if (top_it && bottom_it && (elm_object_item_content_get (top_it) == elm_object_item_content_get (bottom_it))) {
                 elm_exit ();
             } else {
