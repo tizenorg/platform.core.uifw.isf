@@ -437,6 +437,19 @@ static char *_gl_label_get (void *data, Evas_Object *obj, const char *part)
     return NULL;
 }
 
+static void onoff_check_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    int id = (int)(data);
+
+    if (id == AUTO_CAPITALIZATION_ITEM) {
+        _auto_capitalisation = (_auto_capitalisation == EINA_TRUE ? EINA_FALSE : EINA_TRUE);
+        set_autocap_mode ();
+    } else if (id == AUTO_FULL_STOP_ITEM) {
+        _auto_full_stop = (_auto_full_stop == EINA_TRUE ? EINA_FALSE : EINA_TRUE);
+        set_auto_full_stop_mode ();
+    }
+}
+
 static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part)
 {
     ItemData *item_data = (ItemData *)data;
@@ -444,6 +457,7 @@ static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part
     if (!strcmp (part, "elm.icon")) {
         Evas_Object *onoff_ck = elm_check_add (obj);
         elm_object_style_set (onoff_ck, "on&off");
+        evas_object_smart_callback_add (onoff_ck, "changed", onoff_check_cb, (void *) (item_data->mode));
         if (item_data->mode == AUTO_CAPITALIZATION_ITEM) {
             elm_check_state_set (onoff_ck, _auto_capitalisation);
         } else if (item_data->mode == AUTO_FULL_STOP_ITEM) {
