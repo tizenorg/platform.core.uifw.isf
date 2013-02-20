@@ -1434,6 +1434,13 @@ extern "C"
         if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, false) == -1)
             return -1;
 
+        if (_imf_context == NULL) {
+            const char *ctx_id = ecore_imf_context_default_id_get ();
+            if (ctx_id) {
+                _imf_context = ecore_imf_context_add (ctx_id);
+            }
+        }
+
         load_config_module ();
         isf_load_ise_information (ALL_ISE, _config);
 
@@ -1473,6 +1480,11 @@ extern "C"
 
         _config->reload ();
         helper_ise_reload_config ();
+
+        if (_imf_context != NULL) {
+            ecore_imf_context_del (_imf_context);
+            _imf_context = NULL;
+        }
         return 0;
     }
 
