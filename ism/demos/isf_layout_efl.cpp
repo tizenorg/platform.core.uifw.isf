@@ -25,6 +25,12 @@
 #include "isf_demo_efl.h"
 #include "isf_layout_efl.h"
 #include <Ecore_X.h>
+#include <utilX.h>
+
+static void _back_key_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    ecore_x_test_fake_key_press(KEY_END);
+}
 
 static void _rotate_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -235,6 +241,16 @@ static Evas_Object * create_inner_layout (void *data)
     /* Terminal Layout */
     ef = _create_ef_layout (parent, _("TERMINAL LAYOUT"), _("click to enter TERMINAL"), ELM_INPUT_PANEL_LAYOUT_TERMINAL);
     elm_box_pack_end (bx, ef);
+
+    /* create back key event generation button */
+    Evas_Object *back_key_btn = elm_button_add (parent);
+    elm_object_text_set (back_key_btn, "Generate BACK key");
+    evas_object_smart_callback_add (back_key_btn, "clicked", _back_key_cb, (void *)ad);
+    evas_object_size_hint_weight_set (back_key_btn, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (back_key_btn, EVAS_HINT_FILL, 0);
+    evas_object_show (back_key_btn);
+    elm_box_pack_end (bx, back_key_btn);
+    elm_object_focus_allow_set(back_key_btn, EINA_FALSE);
 
     /* Click to rotate button */
     Evas_Object *rotate_btn = elm_button_add (parent);

@@ -56,6 +56,8 @@
 # define CODESET "INVALID"
 #endif
 
+#define ENABLE_BACKKEY 1
+
 using namespace scim;
 
 struct _EcoreIMFContextISFImpl {
@@ -267,7 +269,8 @@ static Ecore_Fd_Handler                                *_panel_iochannel_read_ha
 static Ecore_Fd_Handler                                *_panel_iochannel_err_handler  = 0;
 
 static Ecore_X_Window                                   _client_window              = 0;
-static Ecore_Event_Handler                             *_key_handler                = 0;
+static Ecore_Event_Handler                             *_key_down_handler           = 0;
+static Ecore_Event_Handler                             *_key_up_handler             = 0;
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
@@ -430,20 +433,35 @@ find_ic (int id)
 }
 
 static Eina_Bool
-key_press_cb (void *data, int type, void *event)
+_key_down_cb (void *data, int type, void *event)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
+    if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
-    if (!_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
-
-    if (!strcmp (ev->keyname, KEY_END)) {
+    if (!strcmp (ev->keyname, KEY_END) &&
+        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         LOGD ("END key is pressed\n");
-#ifdef ENABLE_BACKKEY
+        return ECORE_CALLBACK_CANCEL;
+    }
+
+    return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_key_up_cb (void *data, int type, void *event)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
+    if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
+
+    if (!strcmp (ev->keyname, KEY_END) &&
+        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        LOGD ("END key is released\n");
         isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
         return ECORE_CALLBACK_CANCEL;
-#endif
     }
 
     return ECORE_CALLBACK_RENEW;
@@ -483,9 +501,13 @@ register_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (!_key_handler) {
-        _key_handler = ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, key_press_cb, NULL);
-    }
+#ifdef ENABLE_BACKKEY
+    if (!_key_down_handler)
+        _key_down_handler = ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _key_down_cb, NULL);
+
+    if (!_key_up_handler)
+        _key_up_handler = ecore_event_handler_add (ECORE_EVENT_KEY_UP, _key_up_cb, NULL);
+#endif
 
     return EXIT_SUCCESS;
 }
@@ -495,9 +517,14 @@ unregister_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (_key_handler) {
-        ecore_event_handler_del (_key_handler);
-        _key_handler = NULL;
+    if (_key_down_handler) {
+        ecore_event_handler_del (_key_down_handler);
+        _key_down_handler = NULL;
+    }
+
+    if (_key_up_handler) {
+        ecore_event_handler_del (_key_up_handler);
+        _key_up_handler = NULL;
     }
 
     return EXIT_SUCCESS;

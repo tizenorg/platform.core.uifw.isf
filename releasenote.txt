@@ -1,3 +1,8 @@
+ISF 2.4.6221 :
+ 1. fix: "onoff" style genlist item, drag the check button to enable/disable
+ 2. IME will be hidden when END_KEY is released.
+
+
 ISF 2.4.6218 :
  1.add po for es_MX
 
