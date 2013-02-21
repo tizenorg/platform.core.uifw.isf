@@ -174,7 +174,6 @@ Transaction::read_from_socket (const Socket &socket, int timeout)
     if (socket.valid () && valid ()) {
         unsigned char buf [sizeof (uint32) * 2];
         uint32 sign1, sign2;
-        uint32 checksum;
         int size;
         int nbytes;
 
@@ -201,7 +200,7 @@ Transaction::read_from_socket (const Socket &socket, int timeout)
         if (((uint32)nbytes) < sizeof (uint32))
             return false;
 
-        checksum = scim_bytestouint32 (buf);
+        uint32 checksum = scim_bytestouint32 (buf);
 #endif
         if (size <= 0 || size > SCIM_TRANS_MAX_BUFSIZE)
             return false;
