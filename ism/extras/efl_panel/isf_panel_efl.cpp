@@ -1588,26 +1588,6 @@ static void ui_settle_candidate_window (void)
 //////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Get screen width and height.
- *
- * @param width The screen width.
- * @param height The screen height.
- */
-static void efl_get_screen_size (int &width, int &height)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    Display *d = (Display *)ecore_x_display_get ();
-    if (d) {
-        int screen_num = DefaultScreen (d);
-        width  = DisplayWidth (d, screen_num);
-        height = DisplayHeight (d, screen_num);
-    } else {
-        std::cerr << "ecore_x_display_get () is failed!!!\n";
-    }
-}
-
-/**
  * @brief Set transient for app window.
  *
  * @param window The Ecore_X_Window handler of app window.
