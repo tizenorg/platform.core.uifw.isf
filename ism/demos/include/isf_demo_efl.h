@@ -48,6 +48,7 @@ struct appdata {
     Evas_Object *li;
     Evas_Object *ev_li;
     service_h data;
+    Eina_Bool vkbd_state;
 };
 
 struct _menu_item {

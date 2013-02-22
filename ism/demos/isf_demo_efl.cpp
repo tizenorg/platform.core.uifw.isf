@@ -272,33 +272,42 @@ static Evas_Object* create_win (const char *name)
 static void
 _vkbd_state_on (void *data, Evas_Object *obj, void *event_info)
 {
+    struct appdata *ad = (struct appdata *)data;
+
     printf ("[%s] input panel is shown\n", __func__);
+    ad->vkbd_state = EINA_TRUE;
 }
 
 static void
 _vkbd_state_off (void *data, Evas_Object *obj, void *event_info)
 {
+    struct appdata *ad = (struct appdata *)data;
+
     printf ("[%s] input panel is hidden\n", __func__);
+    ad->vkbd_state = EINA_FALSE;
 }
 
-static Evas_Object* create_layout_main (Evas_Object *parent)
+static Evas_Object* create_layout_main (struct appdata *ad)
 {
-    Evas_Object *layout = elm_layout_add (parent);
+    Evas_Object *win_main = ad->win_main;
+
+    Evas_Object *layout = elm_layout_add (win_main);
     elm_layout_theme_set (layout, "layout", "application", "default");
     evas_object_size_hint_weight_set (layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set (layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
     evas_object_show (layout);
 
     /* Put the layout inside conformant for drawing indicator in app side */
-    Evas_Object *conformant = elm_conformant_add (parent);
+    Evas_Object *conformant = elm_conformant_add (win_main);
     evas_object_size_hint_weight_set (conformant, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set (conformant, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_win_resize_object_add (parent, conformant);
-    elm_win_conformant_set (parent, EINA_TRUE);
+    elm_win_resize_object_add (win_main, conformant);
     evas_object_show (conformant);
 
-    evas_object_smart_callback_add(conformant, "virtualkeypad,state,on", _vkbd_state_on, NULL);
-    evas_object_smart_callback_add(conformant, "virtualkeypad,state,off", _vkbd_state_off, NULL);
+    evas_object_smart_callback_add (conformant, "virtualkeypad,state,on", _vkbd_state_on, ad);
+    evas_object_smart_callback_add (conformant, "virtualkeypad,state,off", _vkbd_state_off, ad);
+
+    elm_win_conformant_set (win_main, EINA_TRUE);
 
     elm_object_content_set (conformant, layout);
 
@@ -364,7 +373,7 @@ static int app_create (void *data)
         elm_config_scale_set (ad->root_w / BASE_THEME_WIDTH);
     }
 
-    ad->layout_main = create_layout_main (ad->win_main);
+    ad->layout_main = create_layout_main (ad);
 
     // Indicator
     elm_win_indicator_mode_set (ad->win_main, ELM_WIN_INDICATOR_SHOW);
@@ -493,6 +502,15 @@ Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guid
     return ef;
 }
 
+static void _back_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    struct appdata *ad = (struct appdata *)data;
+
+    if (!ad->vkbd_state) {
+        elm_naviframe_item_pop (ad->naviframe);
+    }
+}
+
 void add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title)
 {
     struct appdata *ad = (struct appdata *) data;
@@ -502,7 +520,13 @@ void add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title
     evas_object_show (scroller);
 
     elm_object_content_set (scroller, lay_in);
-    elm_naviframe_item_push (ad->naviframe, title, NULL, NULL, scroller, NULL);
+
+    // create back key
+    Evas_Object *back_btn = elm_button_add (ad->naviframe);
+    elm_object_style_set (back_btn, "naviframe/end_btn/default");
+    evas_object_smart_callback_add (back_btn, "clicked",  _back_btn_clicked_cb, ad);
+
+    elm_naviframe_item_push (ad->naviframe, title, back_btn, NULL, scroller, NULL);
 }
 
 /*
