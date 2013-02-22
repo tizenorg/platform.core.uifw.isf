@@ -71,8 +71,8 @@ extern "C"
         isf_imf_context_input_panel_caps_lock_mode_set,
         isf_imf_context_input_panel_geometry_get,
         isf_imf_context_input_panel_state_get,
-        isf_imf_context_input_panel_event_callback_add,
-        isf_imf_context_input_panel_event_callback_del,
+        NULL, /* input_panel_event_callback_add */
+        NULL, /* input_panel_event_callback_del */
         isf_imf_context_input_panel_language_locale_get,
         isf_imf_context_candidate_window_geometry_get
     };

@@ -38,17 +38,9 @@
 
 using namespace scim;
 
-typedef struct {
-    void (*func)(void *data, Ecore_IMF_Context *ctx, int value);
-    void *data;
-    Ecore_IMF_Input_Panel_Event type;
-    Ecore_IMF_Context *imf_context;
-} EventCallbackNode;
-
 /* IM control related variables */
 static Ise_Context        iseContext;
 static bool               IfInitContext     = false;
-static Eina_List         *EventCallbackList = NULL;
 static Ecore_IMF_Context *show_req_ic       = NULL;
 static Ecore_IMF_Context *hide_req_ic       = NULL;
 static Ecore_Event_Handler *_prop_change_handler = NULL;
@@ -173,9 +165,6 @@ static void _save_current_xid (Ecore_IMF_Context *ctx)
 
 static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 {
-    void *list_data = NULL;
-    EventCallbackNode *fn = NULL;
-    Eina_List *l = NULL;
     Ecore_IMF_Context *using_ic = NULL;
 
     if (show_req_ic)
@@ -190,51 +179,49 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
         }
     }
 
-    EINA_LIST_FOREACH(EventCallbackList, l, list_data) {
-        fn = (EventCallbackNode *)list_data;
+    switch (type) {
+        case ECORE_IMF_INPUT_PANEL_STATE_EVENT:
+            switch (value) {
+                case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
+                    LOGD ("[input panel has been hidden] ctx : %p\n", using_ic);
+                    if (hide_req_ic == show_req_ic)
+                        show_req_ic = NULL;
 
-        if ((fn) && (fn->imf_context == using_ic) &&
-            (fn->type == type) && (fn->func)) {
-            switch (type) {
-                case ECORE_IMF_INPUT_PANEL_STATE_EVENT:
-                    switch (value) {
-                        case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
-                            LOGD ("[input panel has been hidden] ctx : %p\n", fn->imf_context);
-                            if (hide_req_ic == show_req_ic)
-                                show_req_ic = NULL;
-
-                            hide_req_ic = NULL;
-                            break;
-                        case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
-                            LOGD ("[input panel has been shown] ctx : %p\n", fn->imf_context);
-                            break;
-                        case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
-                            LOGD ("[input panel will be shown] ctx : %p\n", fn->imf_context);
-                            isf_imf_context_input_panel_send_will_show_ack ();
-                            break;
-                    }
+                    hide_req_ic = NULL;
                     break;
-                case ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT:
-                    LOGD ("[language is changed] ctx : %p\n", fn->imf_context);
+                case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
+                    LOGD ("[input panel has been shown] ctx : %p\n", using_ic);
                     break;
-                case ECORE_IMF_INPUT_PANEL_SHIFT_MODE_EVENT:
-                    LOGD ("[shift mode is changed] ctx : %p\n", fn->imf_context);
-                    break;
-                case ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT:
-                    LOGD ("[input panel geometry is changed] ctx : %p\n", fn->imf_context);
-                    break;
-                case ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT:
-                    LOGD ("[candidate state is changed] ctx : %p\n", fn->imf_context);
-                    break;
-                case ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT:
-                    LOGD ("[candidate geometry is changed] ctx : %p\n", fn->imf_context);
-                    break;
-                default:
+                case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
+                    LOGD ("[input panel will be shown] ctx : %p\n", using_ic);
                     break;
             }
+            break;
+        case ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT:
+            LOGD ("[language is changed] ctx : %p\n", using_ic);
+            break;
+        case ECORE_IMF_INPUT_PANEL_SHIFT_MODE_EVENT:
+            LOGD ("[shift mode is changed] ctx : %p\n", using_ic);
+            break;
+        case ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT:
+            LOGD ("[input panel geometry is changed] ctx : %p\n", using_ic);
+            break;
+        case ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT:
+            LOGD ("[candidate state is changed] ctx : %p\n", using_ic);
+            break;
+        case ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT:
+            LOGD ("[candidate geometry is changed] ctx : %p\n", using_ic);
+            break;
+        default:
+            break;
+    }
 
-            fn->func (fn->data, fn->imf_context, value);
-        }
+    if (using_ic)
+        ecore_imf_context_input_panel_event_callback_call (using_ic, type, value);
+
+    if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT &&
+        value == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) {
+        isf_imf_context_input_panel_send_will_show_ack ();
     }
 }
 
@@ -785,62 +772,9 @@ EAPI Ecore_IMF_Input_Panel_State isf_imf_context_input_panel_state_get (Ecore_IM
     return input_panel_state;
 }
 
-EAPI void isf_imf_context_input_panel_event_callback_add (Ecore_IMF_Context *ctx,
-                                                          Ecore_IMF_Input_Panel_Event type,
-                                                          void (*func) (void *data, Ecore_IMF_Context *ctx, int value),
-                                                          void *data)
-{
-    EventCallbackNode *fn = (EventCallbackNode *)calloc (1, sizeof (EventCallbackNode));
-    if (!fn)
-        return;
-
-    LOGD ("ctx : %p, type : %d, func : %p\n", ctx, type, func);
-
-    fn->func = func;
-    fn->data = data;
-    fn->type = type;
-    fn->imf_context = ctx;
-
-    EventCallbackList = eina_list_append (EventCallbackList, fn);
-}
-
-EAPI void isf_imf_context_input_panel_event_callback_del (Ecore_IMF_Context *ctx,
-                                                          Ecore_IMF_Input_Panel_Event type,
-                                                          void (*func) (void *data, Ecore_IMF_Context *ctx, int value))
-{
-    Eina_List *l = NULL;
-    EventCallbackNode *fn = NULL;
-
-    LOGD ("ctx : %p, type : %d, func : %p\n", ctx, type, func);
-
-    for (l = EventCallbackList; l;) {
-        fn = (EventCallbackNode *)l->data;
-
-        if ((fn) && (fn->func == func) && (fn->type == type) && (fn->imf_context == ctx)) {
-            EventCallbackList = eina_list_remove (EventCallbackList, fn);
-            free (fn);
-            break;
-        }
-        l = l->next;
-    }
-}
-
 EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *ctx)
 {
-    Eina_List *l;
-    EventCallbackNode *fn;
-
-    LOGD ("ctx : %p\n", ctx);
-
-    for (l = EventCallbackList; l;) {
-        fn = (EventCallbackNode *)l->data;
-
-        if ((fn) && (fn->imf_context == ctx)) {
-            EventCallbackList = eina_list_remove (EventCallbackList, fn);
-            free (fn);
-        }
-        l = l->next;
-    }
+    ecore_imf_context_input_panel_event_callback_clear (ctx);
 
     if (hide_req_ic == ctx)
         hide_req_ic = NULL;

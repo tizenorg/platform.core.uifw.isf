@@ -1,6 +1,12 @@
+ISF 2.4.6222 :
+ 1. [demo] IME will be hidden when back key in naviframe is pressed
+ 2. add smack rule for shared library
+ 3. [immodule] input panel event callback is moved into ecore_imf
+
+
 ISF 2.4.6221 :
  1. fix: "onoff" style genlist item, drag the check button to enable/disable
- 2. IME will be hidden when END_KEY is released.
+ 2. [immodule] IME will be hidden when END_KEY is released.
 
 
 ISF 2.4.6218 :
