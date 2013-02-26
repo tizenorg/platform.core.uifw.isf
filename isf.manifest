@@ -7,7 +7,7 @@
 			<smack request="xorg" type="w"/>
 			<smack request="system::use_internet" type="r"/>
 			<smack request="e17" type="r"/>
-			<smack request="system::app_logging" type="w"/>
+			<smack request="device::app_logging" type="w"/>
 		</request>
 	</define>
 	<assign>
