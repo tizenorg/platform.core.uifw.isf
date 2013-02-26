@@ -8,6 +8,9 @@
 			<smack request="system::use_internet" type="r"/>
 			<smack request="e17" type="r"/>
 			<smack request="device::app_logging" type="w"/>
+			<smack request="svi-data" type="rx"/>
+			<smack request="sound_server" type="w"/>
+			<smack request="sys-assert::core" type="arwxt"/>
 		</request>
 	</define>
 	<assign>

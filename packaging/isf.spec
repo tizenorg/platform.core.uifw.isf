@@ -3,7 +3,7 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.4.6222
+Version:    2.4.6226
 Release:    1
 Group:      System Environment/Libraries
 License:    LGPL
@@ -25,7 +25,7 @@ BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
-requires:       e17, net-config
+requires:       e17, net-config, libmm-sound
 
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
