@@ -25,8 +25,10 @@
 #ifndef __ISF_CONTROL_H
 #define __ISF_CONTROL_H
 
-namespace scim
-{
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of global data types.
 /////////////////////////////////////////////////////////////////////////////
@@ -80,7 +82,7 @@ int isf_control_get_ise_list (char ***uuid_list);
  *
  * @return 0 if successfully, otherwise return -1;
  */
-int isf_control_get_ise_info (const char *uuid, char** name, char** language, ISE_TYPE_T &type, int &option);
+int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
 
 /**
  * @brief Reset all ISEs' options.
@@ -89,7 +91,9 @@ int isf_control_get_ise_info (const char *uuid, char** name, char** language, IS
  */
 int isf_control_reset_ise_option (void);
 
+#ifdef __cplusplus
 }
+#endif /* __cplusplus */
 
 #endif /* __ISF_CONTROL_H */
 

@@ -1,5 +1,7 @@
 ISF 2.4.6227 :
  1. [panel] Add timer for system status check function, move elm_init() position
+ 2. Update control APIs for C application
+
 
 ISF 2.4.6226 :
  1. change smack label about app_loging
