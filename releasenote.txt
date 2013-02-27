@@ -1,3 +1,6 @@
+ISF 2.4.6227 :
+ 1. [panel] Add timer for system status check function, move elm_init() position
+
 ISF 2.4.6226 :
  1. change smack label about app_loging
  2. add svi-data, sound_server, sys-assert rule in manifest

@@ -80,6 +80,11 @@ using namespace scim;
 
 #define ISF_READY_FILE                                  "/tmp/hibernation/isf_ready"
 
+#define ISF_SYSTEM_WM_READY_FILE			"/tmp/.wm_ready"
+#define ISF_SYSTEM_APPSERVICE_READY_VCONF		"memory/appservice/status"
+#define ISF_SYSTEM_WAIT_COUNT				150
+#define ISF_SYSTEM_WAIT_DELAY				100 * 1000
+
 #define LOG_TAG                                         "ISF_PANEL_EFL"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1860,8 +1865,6 @@ static bool initialize_panel_agent (const String &config, const String &display,
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
 
-    efl_create_control_window ();
-
     return true;
 }
 
@@ -3324,15 +3327,52 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     return ECORE_CALLBACK_RENEW;
 }
 
+
+bool check_system_ready()
+{
+#ifdef WAIT_WM
+    int try_count = 0;
+    int ret = 0;
+    int val = 0;
+
+    for(;;)
+    {
+        if (check_file (ISF_SYSTEM_WM_READY_FILE))
+        {
+            try_count = 0;
+            for(;;)
+            {
+                ret = vconf_get_int(ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
+                if(val == 2)
+                {
+                    return true;
+                }
+
+                if(try_count == ISF_SYSTEM_WAIT_COUNT)
+                    return false;
+
+                try_count++;
+                usleep(ISF_SYSTEM_WAIT_DELAY);
+            }
+
+            if (try_count == ISF_SYSTEM_WAIT_COUNT)
+                return false;
+
+            try_count++;
+            usleep (ISF_SYSTEM_WAIT_DELAY);
+        }
+    }
+#endif
+        return true;
+}
+
+
 int main (int argc, char *argv [])
 {
     struct tms    tiks_buf;
     _clock_start = times (&tiks_buf);
 
     int           i;
-#ifdef WAIT_WM
-    int           try_count       = 0;
-#endif
     int           ret             = 0;
 
     bool          daemon          = false;
@@ -3476,24 +3516,6 @@ int main (int argc, char *argv [])
     setenv ("ELM_ENGINE", "software_x11", 1); /* Avoid the inheritance of ELM_ENGINE */
     set_language_and_locale ();
 
-#ifdef WAIT_WM
-    while (1) {
-        if (check_file ("/tmp/.wm_ready"))
-            break;
-
-        if (try_count == 6000) {
-            std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of window manager....\n";
-            break;
-        }
-
-        try_count++;
-        usleep (50000);
-    }
-#endif
-
-    elm_init (argc, argv);
-    check_time ("elm_init");
-
     /* Get current display. */
     {
         const char *p = getenv ("DISPLAY");
@@ -3538,6 +3560,33 @@ int main (int argc, char *argv [])
         _line_items [i]      = NULL;
     }
 
+    try {
+        _panel_agent->send_display_name (display_name);
+    } catch (scim::Exception & e) {
+        std::cerr << e.what() << "\n";
+        ret = -1;
+        goto cleanup;
+    }
+
+    if (daemon) {
+        check_time ("ISF Panel EFL run as daemon");
+        scim_daemon ();
+    }
+
+    /* Connect the configuration reload signal. */
+    _config->signal_connect_reload (slot (config_reload_cb));
+
+    if(!check_system_ready())
+    {
+            std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of system....\n";
+    }
+
+
+    elm_init (argc, argv);
+    check_time ("elm_init");
+
+    efl_create_control_window();
+
     efl_get_screen_resolution (_screen_width, _screen_height);
 
     _width_rate       = (float)(_screen_width / 720.0);
@@ -3555,22 +3604,6 @@ int main (int argc, char *argv [])
     /* Load ISF configuration */
     load_config ();
     check_time ("load_config");
-
-    try {
-        _panel_agent->send_display_name (display_name);
-    } catch (scim::Exception & e) {
-        std::cerr << e.what() << "\n";
-        ret = -1;
-        goto cleanup;
-    }
-
-    if (daemon) {
-        check_time ("ISF Panel EFL run as daemon");
-        scim_daemon ();
-    }
-
-    /* Connect the configuration reload signal. */
-    _config->signal_connect_reload (slot (config_reload_cb));
 
     helper_manager_handler   = ecore_main_fd_handler_add (_panel_agent->get_helper_manager_id (), ECORE_FD_READ, helper_manager_input_handler, NULL, NULL, NULL);
     panel_agent_read_handler = ecore_main_fd_handler_add (_panel_agent->get_server_id (), ECORE_FD_READ, panel_agent_handler, NULL, NULL, NULL);
