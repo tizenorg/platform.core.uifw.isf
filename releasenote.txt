@@ -1,3 +1,7 @@
+ISF 2.4.6228 :
+ 1. [panel] Add monitor for active ISE file
+
+
 ISF 2.4.6227 :
  1. [panel] Add timer for system status check function, move elm_init() position
  2. Update control APIs for C application
