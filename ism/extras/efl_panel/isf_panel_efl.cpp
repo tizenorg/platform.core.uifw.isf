@@ -80,10 +80,10 @@ using namespace scim;
 
 #define ISF_READY_FILE                                  "/tmp/hibernation/isf_ready"
 
-#define ISF_SYSTEM_WM_READY_FILE			"/tmp/.wm_ready"
-#define ISF_SYSTEM_APPSERVICE_READY_VCONF		"memory/appservice/status"
-#define ISF_SYSTEM_WAIT_COUNT				150
-#define ISF_SYSTEM_WAIT_DELAY				100 * 1000
+#define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
+#define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
+#define ISF_SYSTEM_WAIT_COUNT                           150
+#define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 
 #define LOG_TAG                                         "ISF_PANEL_EFL"
 
@@ -286,6 +286,9 @@ static Ecore_X_Window    _ise_window                        = 0;
 static Ecore_X_Window    _app_window                        = 0;
 static Ecore_X_Window    _control_window                    = 0;
 
+static Ecore_File_Monitor *_helper_ise_em                   = NULL;
+static Ecore_File_Monitor *_keyboard_ise_em                 = NULL;
+
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of internal functions.
 /////////////////////////////////////////////////////////////////////////////
@@ -443,79 +446,145 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, VIRTUAL_KEYB
 }
 
 /**
- * @brief Get ISE name according to uuid.
+ * @brief Get ISE index according to uuid.
  *
  * @param uuid The ISE uuid.
  *
- * @return The ISE name
+ * @return The ISE index
  */
-static String get_ise_name (const String uuid)
+static int get_ise_index (const String uuid)
 {
-    String ise_name;
+    int index = 0;
     if (uuid.length () > 0) {
         for (unsigned int i = 0; i < _uuids.size (); i++) {
-            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
-                ise_name = _names[i];
+            if (uuid == _uuids[i]) {
+                index = i;
                 break;
             }
         }
     }
 
-    return ise_name;
+    return index;
 }
 
 /**
- * @brief Get ISE type according to uuid.
+ * @brief Get ISE module file path.
  *
- * @param uuid The ISE uuid.
+ * @param module_name The ISE's module name.
+ * @param type The ISE's type.
  *
- * @return The ISE type
+ * @return ISE module file path if successfully, otherwise return empty string.
  */
-TOOLBAR_MODE_T get_ise_type (const String uuid)
+static String get_module_file_path (const String &module_name, const String &type)
 {
-    TOOLBAR_MODE_T ise_type = TOOLBAR_KEYBOARD_MODE;
-    if (uuid.length () > 0) {
-        for (unsigned int i = 0; i < _uuids.size (); i++) {
-            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
-                ise_type = _modes[i];
-                break;
-            }
-        }
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    String strFile;
+    if (module_name.substr (0, 1) == String ("/")) {
+        strFile = module_name + ".so";
+        if (access (strFile.c_str (), R_OK) == 0)
+            return strFile.substr (0, strFile.find_last_of ('/') + 1);
     }
 
-    return ise_type;
+    /* Check inhouse path */
+    strFile = String (SCIM_MODULE_PATH) +
+              String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION) +
+              String (SCIM_PATH_DELIM_STRING) + type +
+              String (SCIM_PATH_DELIM_STRING) + module_name + ".so";
+    if (access (strFile.c_str (), R_OK) == 0)
+        return strFile.substr (0, strFile.find_last_of ('/') + 1);
+
+    const char *module_path_env = getenv ("SCIM_MODULE_PATH");
+    if (module_path_env) {
+        strFile = String (module_path_env) +
+                  String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION) +
+                  String (SCIM_PATH_DELIM_STRING) + type +
+                  String (SCIM_PATH_DELIM_STRING) + module_name + ".so";
+        if (access (strFile.c_str (), R_OK) == 0)
+            return strFile.substr (0, strFile.find_last_of ('/') + 1);
+    }
+
+    return String ("");
 }
 
 /**
- * @brief Get ISE language according to uuid.
+ * @brief Callback function for ISE file monitor.
  *
- * @param uuid The ISE uuid.
- *
- * @return The ISE language
+ * @param data Data to pass when it is called.
+ * @param em The handle of Ecore_File_Monitor.
+ * @param event The event type.
+ * @param path The path for current event.
  */
-String get_ise_language (const String uuid)
+static void ise_file_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
 {
-    String ise_language;
-    if (uuid.length () > 0) {
-        for (unsigned int i = 0; i < _uuids.size (); i++) {
-            if (strcmp (uuid.c_str (), _uuids[i].c_str ()) == 0) {
-                ise_language = _langs[i];
-                break;
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (event == ECORE_FILE_EVENT_DELETED_FILE || event == ECORE_FILE_EVENT_CLOSED) {
+        int    index   = GPOINTER_TO_INT (data);
+        String strFile = String (ecore_file_monitor_path_get (em)) +
+                         String (SCIM_PATH_DELIM_STRING) + _module_names[index] + String (".so");
+
+        if (String (path) == strFile) {
+            if (event == ECORE_FILE_EVENT_DELETED_FILE) {
+                /* Update ISE list */
+                std::vector<String> list;
+                slot_get_ise_list (list);
+            } else if (event == ECORE_FILE_EVENT_CLOSED) {
+                if (_modes[index] == TOOLBAR_HELPER_MODE) {
+                    /* Restart helper ISE */
+                    _panel_agent->hide_helper (_uuids[index]);
+                    _panel_agent->stop_helper (_uuids[index]);
+                    _panel_agent->start_helper (_uuids[index]);
+                }
             }
         }
     }
+}
 
-    return ise_language;
+/**
+ * @brief Delete keyboard ISE file monitor.
+ */
+static void delete_keyboard_ise_em (void) {
+    if (_keyboard_ise_em) {
+        ecore_file_monitor_del (_keyboard_ise_em);
+        _keyboard_ise_em = NULL;
+    }
+}
+
+/**
+ * @brief Delete helper ISE file monitor.
+ */
+static void delete_helper_ise_em (void) {
+    if (_helper_ise_em) {
+        ecore_file_monitor_del (_helper_ise_em);
+        _helper_ise_em = NULL;
+    }
+}
+
+/**
+ * @brief Add keyboard ISE file monitor.
+ *
+ * @param module_name The keyboard ISE's module name.
+ */
+static void add_keyboard_ise_em (const String &uuid, const String &module_name) {
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    String path = get_module_file_path (module_name, "IMEngine");
+    if (path.length () > 0 && access (path.c_str (), R_OK) == 0) {
+        delete_keyboard_ise_em ();
+        _keyboard_ise_em = ecore_file_monitor_add (path.c_str (), ise_file_monitor_cb, GINT_TO_POINTER(get_ise_index (uuid)));
+    }
 }
 
 /**
  * @brief Set keyboard ISE.
  *
  * @param uuid The keyboard ISE's uuid.
+ * @param module_name The keyboard ISE's module name.
  *
  * @return false if keyboard ISE change is failed, otherwise return true.
  */
-static bool set_keyboard_ise (const String &uuid)
+static bool set_keyboard_ise (const String &uuid, const String &module_name)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -528,14 +597,23 @@ static bool set_keyboard_ise (const String &uuid)
         uint32 kbd_option = 0;
         String kbd_uuid, kbd_name;
         isf_get_keyboard_ise (_config, kbd_uuid, kbd_name, kbd_option);
-        if (kbd_uuid == uuid)
+        if (kbd_uuid == uuid) {
+            if (_keyboard_ise_em == NULL) {
+                add_keyboard_ise_em (uuid, module_name);
+                delete_helper_ise_em ();
+            }
             return false;
+        }
     }
 
     _panel_agent->change_factory (uuid);
 
     String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
     _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
+
+    /* Add directory monitor for keyboard ISE */
+    add_keyboard_ise_em (uuid, module_name);
+    delete_helper_ise_em ();
 
     return true;
 }
@@ -544,10 +622,11 @@ static bool set_keyboard_ise (const String &uuid)
  * @brief Set helper ISE.
  *
  * @param uuid The helper ISE's uuid.
+ * @param module_name The helper ISE's module name.
  *
  * @return false if helper ISE change is failed, otherwise return true.
  */
-static bool set_helper_ise (const String &uuid)
+static bool set_helper_ise (const String &uuid, const String &module_name)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -555,7 +634,7 @@ static bool set_helper_ise (const String &uuid)
 
     if (TOOLBAR_HELPER_MODE == mode) {
         String pre_uuid = _panel_agent->get_current_helper_uuid ();
-        if (!pre_uuid.compare (uuid))
+        if (pre_uuid == uuid)
             return false;
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
@@ -571,10 +650,18 @@ static bool set_helper_ise (const String &uuid)
 
         String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
         _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, kbd_uuid);
+        delete_keyboard_ise_em ();
     }
 
-   _panel_agent->start_helper (uuid);
+    _panel_agent->start_helper (uuid);
     _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
+
+    /* Add directory monitor for helper ISE */
+    String path = get_module_file_path (module_name, "Helper");
+    if (path.length () > 0 && access (path.c_str (), R_OK) == 0) {
+        delete_helper_ise_em ();
+        _helper_ise_em = ecore_file_monitor_add (path.c_str (), ise_file_monitor_cb, GINT_TO_POINTER(get_ise_index (uuid)));
+    }
 
     return true;
 }
@@ -598,9 +685,9 @@ static bool set_active_ise (const String &uuid)
     for (unsigned int i = 0; i < _uuids.size (); i++) {
         if (!uuid.compare (_uuids[i])) {
             if (TOOLBAR_KEYBOARD_MODE == _modes[i])
-                ise_changed = set_keyboard_ise (_uuids[i]);
+                ise_changed = set_keyboard_ise (_uuids[i], _module_names[i]);
             else if (TOOLBAR_HELPER_MODE == _modes[i])
-                ise_changed = set_helper_ise (_uuids[i]);
+                ise_changed = set_helper_ise (_uuids[i], _module_names[i]);
 
             if (ise_changed) {
                 _panel_agent->set_current_toolbar_mode (_modes[i]);
@@ -1962,7 +2049,7 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
     TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
 
     if (TOOLBAR_HELPER_MODE == mode)
-        ise_name = get_ise_name (_panel_agent->get_current_helper_uuid ());
+        ise_name = _names[get_ise_index (_panel_agent->get_current_helper_uuid ())];
 
     if (ise_name.length () > 0)
         _panel_agent->set_current_ise_name (ise_name);
@@ -2639,7 +2726,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
         String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
         int    hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
         if (std::find (_uuids.begin (), _uuids.end (), default_uuid) == _uuids.end ()) {
-            if (hw_kbd_detect && get_ise_type (_initial_ise_uuid) != TOOLBAR_KEYBOARD_MODE) {
+            if (hw_kbd_detect && _modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE) {
                 active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
             }
             set_active_ise (active_uuid);
@@ -2651,6 +2738,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
                 _panel_agent->change_factory (active_uuid);
                 _config->write (IMENGINE_KEY, active_uuid);
                 _config->flush ();
+                delete_keyboard_ise_em ();
             }
         }
     }
@@ -2807,14 +2895,18 @@ static void slot_set_keyboard_ise (const String &uuid)
         return;
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-    if (get_ise_type (default_uuid) == TOOLBAR_KEYBOARD_MODE)
+    if (_modes[get_ise_index (default_uuid)] == TOOLBAR_KEYBOARD_MODE)
         return;
 
     uint32 ise_option = 0;
     String ise_uuid, ise_name;
     isf_get_keyboard_ise (_config, ise_uuid, ise_name, ise_option);
-    if (ise_uuid == uuid)
+    if (ise_uuid == uuid) {
+        if (_keyboard_ise_em == NULL) {
+            add_keyboard_ise_em (uuid, _module_names[get_ise_index (uuid)]);
+        }
         return;
+    }
 
     String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
     _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
@@ -2823,6 +2915,11 @@ static void slot_set_keyboard_ise (const String &uuid)
 
     _panel_agent->change_factory (uuid);
     _panel_agent->reload_config ();
+
+    /* Add directory monitor for keyboard ISE */
+    if (_keyboard_ise_em == NULL) {
+        add_keyboard_ise_em (uuid, _module_names[get_ise_index (uuid)]);
+    }
 
     if (_candidate_window)
         ui_create_candidate_window ();
@@ -3125,7 +3222,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     isf_save_ise_information ();
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-    String default_name = get_ise_name (default_uuid);
+    String default_name = _names[get_ise_index (default_uuid)];
     _panel_agent->set_current_ise_name (default_name);
     _config->reload ();
 }
@@ -3172,7 +3269,7 @@ static void check_hardware_keyboard (void)
         if (val != 0) {
             _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
 
-            if (get_ise_type (default_uuid) == TOOLBAR_HELPER_MODE) {
+            if (_modes[get_ise_index (default_uuid)] == TOOLBAR_HELPER_MODE) {
                 /* Get the keyboard ISE */
                 isf_get_keyboard_ise (_config, uuid, name, option);
                 if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
@@ -3181,7 +3278,7 @@ static void check_hardware_keyboard (void)
                 }
                 /* Try to find reasonable keyboard ISE according to helper ISE language */
                 if (uuid == String (SCIM_COMPOSE_KEY_FACTORY_UUID)) {
-                    String helper_language = get_ise_language (default_uuid);
+                    String helper_language = _langs [get_ise_index (default_uuid)];
                     if (helper_language.length () > 0) {
                         std::vector<String> ise_langs;
                         scim_split_string_list (ise_langs, helper_language);
@@ -3678,6 +3775,8 @@ cleanup:
     ui_candidate_delete_check_size_timer ();
     ui_candidate_delete_longpress_timer ();
     ui_candidate_delete_destroy_timer ();
+    delete_keyboard_ise_em ();
+    delete_helper_ise_em ();
 
     if (!_config.null ())
         _config.reset ();

@@ -1198,7 +1198,7 @@ public:
 
         lock ();
 
-        if (m_current_toolbar_mode != TOOLBAR_HELPER_MODE || m_current_helper_uuid.compare (uuid) != 0) {
+        /*if (m_current_toolbar_mode != TOOLBAR_HELPER_MODE || m_current_helper_uuid.compare (uuid) != 0)*/ {
             SCIM_DEBUG_MAIN(1) << "Run_helper\n";
             m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
         }
