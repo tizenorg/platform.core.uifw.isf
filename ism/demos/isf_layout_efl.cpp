@@ -138,7 +138,7 @@ _print_keyboard_geometry (Ecore_X_Window xwin)
 }
 
 static Eina_Bool
-_prop_change (void *data, int type, void *event)
+_prop_change_cb (void *data, int type, void *event)
 {
     Ecore_X_Event_Window_Property *ev;
     ev = (Ecore_X_Event_Window_Property *)event;
@@ -261,7 +261,7 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (rotate_btn);
     elm_box_pack_end (bx, rotate_btn);
 
-    ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, NULL);
+    ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change_cb, NULL);
 
     return bx;
 }
