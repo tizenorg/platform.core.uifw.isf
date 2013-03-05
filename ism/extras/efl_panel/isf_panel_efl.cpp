@@ -366,6 +366,8 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
     info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
     if (kbd_state == KEYBOARD_STATE_OFF) {
         info.pos_y = win_h;
+        info.width = 0;
+        info.height = 0;
     } else {
         info.pos_y = win_h - info.height;
     }
@@ -3283,6 +3285,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             _panel_agent->update_input_panel_event (
                     ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
         } else if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST) {
+            _ise_show = false;
             /* WMSYNC, #7 Send WILL_HIDE event when the keyboard window is about to hidden */
             LOGD ("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST\n");
             // Clear conformant geometry information first
@@ -3293,7 +3296,6 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             //_panel_agent->update_input_panel_event(
             //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_HIDE);
             // Instead send HIDE signal
-            _ise_show = false;
         } else if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE) {
             /* WMSYNC, #10 Register size hints for candidate window and set conformant geometry */
             // PRE_ROTATE_DONE Ack to WM
