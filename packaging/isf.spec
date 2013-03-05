@@ -23,9 +23,8 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
-Requires(post): /sbin/ldconfig /usr/bin/vconftool
+Requires(post): /sbin/ldconfig /usr/bin/vconftool e17 net-config libmm-sound
 Requires(postun): /sbin/ldconfig
-requires:       e17, net-config, libmm-sound
 
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
