@@ -85,6 +85,13 @@ int isf_control_get_ise_list (char ***uuid_list);
 int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
 
 /**
+ * @brief Set active ISE to default ISE.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+int isf_control_set_active_ise_to_default (void);
+
+/**
  * @brief Reset all ISEs' options.
  *
  * @return 0 if successfully, otherwise return -1;
