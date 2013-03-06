@@ -390,59 +390,48 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, VIRTUAL_KEYB
     if (kbd_state == KEYBOARD_STATE_UNKNOWN)
         return;
 
-    Ecore_X_Window* zone_lists;
-    if (ecore_x_window_prop_window_list_get (ecore_x_window_root_first_get (),
-            ECORE_X_ATOM_E_ILLUME_ZONE_LIST, &zone_lists) > 0) {
-
-        struct rectinfo info = {0, 0, 0, 0};
-        get_ise_geometry (info, kbd_state);
-        if (_ise_width == 0 && _ise_height == 0) {
-            info.pos_x = 0;
+    struct rectinfo info = {0, 0, 0, 0};
+    get_ise_geometry (info, kbd_state);
+    if (_ise_width == 0 && _ise_height == 0) {
+        info.pos_x = 0;
+        if (_candidate_window && evas_object_visible_get (_candidate_window)) {
+            info.width  = _candidate_width;
+            info.height = _candidate_height;
+        }
+        int angle = efl_get_angle_for_app_window ();
+        if (angle == 90 || angle == 270)
+            info.pos_y = _screen_width - info.height;
+        else
+            info.pos_y = _screen_height - info.height;
+    } else {
+        if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
             if (_candidate_window && evas_object_visible_get (_candidate_window)) {
-                info.width  = _candidate_width;
-                info.height = _candidate_height;
-            }
-            int angle = efl_get_angle_for_app_window ();
-            if (angle == 90 || angle == 270)
-                info.pos_y = _screen_width - info.height;
-            else
-                info.pos_y = _screen_height - info.height;
-        } else {
-            if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-                if (_candidate_window && evas_object_visible_get (_candidate_window)) {
-                    _candidate_valid_height = ui_candidate_get_valid_height ();
-                    if ((_candidate_height - _candidate_valid_height) > _ise_height) {
-                        _candidate_valid_height = _candidate_height;
-                        info.pos_y  = info.pos_y + info.height - _candidate_height;
-                        info.height = _candidate_height;
-                    } else {
-                        info.pos_y  -= _candidate_valid_height;
-                        info.height += _candidate_valid_height;
-                    }
+                _candidate_valid_height = ui_candidate_get_valid_height ();
+                if ((_candidate_height - _candidate_valid_height) > _ise_height) {
+                    _candidate_valid_height = _candidate_height;
+                    info.pos_y  = info.pos_y + info.height - _candidate_height;
+                    info.height = _candidate_height;
+                } else {
+                    info.pos_y  -= _candidate_valid_height;
+                    info.height += _candidate_valid_height;
                 }
             }
         }
-        if (kbd_state == KEYBOARD_STATE_ON) {
-            ecore_x_e_illume_keyboard_geometry_set (window, info.pos_x, info.pos_y, info.width, info.height);
-            ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, info.width, info.height);
-            ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-            SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_ON x=" << info.pos_x << " y=" << info.pos_y
-                                << " width=" << info.width << " height=" << info.height << "\n";
-            LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
-        } else {
-            ecore_x_e_illume_keyboard_geometry_set (window, info.pos_x, info.pos_y, 0, 0);
-            ecore_x_e_illume_keyboard_geometry_set (zone_lists[0], info.pos_x, info.pos_y, 0, 0);
-            ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-            ecore_x_e_virtual_keyboard_state_set (zone_lists[0], ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-            SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_OFF x=" << info.pos_x << " y=" << info.pos_y << "\n";
-            LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, 0, 0);
-        }
-        _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
     }
 
-    if (zone_lists)
-        free (zone_lists);
+    if (kbd_state == KEYBOARD_STATE_ON) {
+        ecore_x_e_illume_keyboard_geometry_set (window, info.pos_x, info.pos_y, info.width, info.height);
+        ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+        SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_ON x=" << info.pos_x << " y=" << info.pos_y
+                            << " width=" << info.width << " height=" << info.height << "\n";
+        LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
+    } else {
+        ecore_x_e_illume_keyboard_geometry_set (window, info.pos_x, info.pos_y, 0, 0);
+        ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+        SCIM_DEBUG_MAIN (3) << "    KEYBOARD_STATE_OFF x=" << info.pos_x << " y=" << info.pos_y << "\n";
+        LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", info.pos_x, info.pos_y, 0, 0);
+    }
+    _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
 }
 
 /**
