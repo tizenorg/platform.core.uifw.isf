@@ -73,7 +73,8 @@ mkdir -p /opt/usr/apps/scim/lib/scim-1.0/1.4.0/Helper
 
 
 %files
-%manifest isf.manifest
+%manifest %{name}.manifest
+/etc/smack/accesses2.d/%{name}.rule
 %defattr(-,root,root,-)
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service
