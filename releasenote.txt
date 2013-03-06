@@ -1,3 +1,12 @@
+ISF 2.4.6306 :
+ 1. [systemd] Fix Smack labels for systemd units
+ 2. [isfcontrol] Add isf_control_set_active_ise_to_default API
+ 3. [panel] Modified the keyboard size to be 0 when OFF mode specified
+ 4. [panel] set keyboard state and geometry in only window not zone
+ 5. Add Esperanto and Sindhi language.
+ 6. IME won't be hidden when lockscreen appears
+
+
 ISF 2.4.6228 :
  1. [panel] Add monitor for active ISE file
 

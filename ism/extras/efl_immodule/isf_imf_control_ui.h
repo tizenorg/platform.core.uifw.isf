@@ -31,6 +31,8 @@
 extern "C"
 {
 #endif /* __cplusplus */
+    Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx);
+    void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
 
     /* non UI related works */
     void isf_imf_input_panel_init ();
@@ -58,7 +60,6 @@ extern "C"
     Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_caps_lock_mode_set (Ecore_IMF_Context *ctx, Eina_Bool mode);
     void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h);
-    void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
 
     void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx);
     void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx);
