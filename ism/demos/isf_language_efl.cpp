@@ -28,7 +28,7 @@
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Lang lang)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
+    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_language_set (en, lang);
 
     return ef;

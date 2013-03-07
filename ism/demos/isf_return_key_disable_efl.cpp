@@ -43,7 +43,7 @@ _cursor_changed_cb(void *data, Evas_Object *obj, void *event_info)
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
+    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     evas_object_smart_callback_add (en, "cursor,changed", _cursor_changed_cb, NULL);
 
     return ef;

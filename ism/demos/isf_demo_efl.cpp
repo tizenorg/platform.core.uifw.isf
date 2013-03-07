@@ -464,39 +464,71 @@ int main (int argc, char *argv[])
     return ret;
 }
 
+static void _changed_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *ly = (Evas_Object *)data;
+
+    if (elm_object_focus_get (obj)) {
+        if (elm_entry_is_empty (obj))
+            elm_object_signal_emit (ly, "elm,state,eraser,hide", "");
+        else
+            elm_object_signal_emit (ly, "elm,state,eraser,show", "");
+    }
+}
+
 static void _focused_cb (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *ly = (Evas_Object *)data;
 
-    elm_object_signal_emit (ly, "elm,state,guidetext,hide", "elm");
+    if (!elm_entry_is_empty (obj))
+        elm_object_signal_emit (ly, "elm,state,eraser,show", "");
+
+    elm_object_signal_emit (ly, "elm,state,rename,hide", "");
 }
 
 static void _unfocused_cb (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *ly = (Evas_Object *)data;
 
-    if (elm_entry_is_empty (obj))
-        elm_object_signal_emit (ly, "elm,state,guidetext,show", "elm");
+    elm_object_signal_emit (ly, "elm,state,eraser,hide", "");
+    elm_object_signal_emit (ly, "elm,state,rename,show", "");
+}
+
+static void _eraser_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    // When X marked button clicked, string should be empty.
+    Evas_Object *en = (Evas_Object *)data;
+
+    elm_object_focus_set (en, EINA_TRUE); // After button is clicked, entry should get focus again.
+    elm_entry_entry_set (en, "");
 }
 
 // Utility functions
 Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text)
 {
-    Evas_Object *ef = NULL;
-    Evas_Object *en = NULL;
+    Evas_Object *ef, *en, *btn;
 
     ef = elm_layout_add (parent);
-    elm_layout_theme_set (ef, "layout", "editfield", "title");
+    elm_layout_theme_set (ef, "layout", "dialogue/editfield/title", "default");
 
     en = elm_entry_add (parent);
-    elm_object_part_content_set (ef, "elm.swallow.content", en);
+    elm_object_part_content_set (ef, "elm.icon.entry", en);
 
     elm_object_part_text_set (ef, "elm.text", label);
-    elm_object_part_text_set (ef, "elm.guidetext", guide_text);
+    elm_object_part_text_set (ef, "elm.guide", guide_text);
     evas_object_size_hint_weight_set (ef, EVAS_HINT_EXPAND, 0);
     evas_object_size_hint_align_set (ef, EVAS_HINT_FILL, 0);
+
+    evas_object_smart_callback_add (en, "changed", _changed_cb, ef);
+    evas_object_smart_callback_add (en, "preedit,changed", _changed_cb, ef);
     evas_object_smart_callback_add (en, "focused", _focused_cb, ef);
     evas_object_smart_callback_add (en, "unfocused", _unfocused_cb, ef);
+
+    btn = elm_button_add (parent);
+    elm_object_style_set (btn, "editfield_clear");   // Make "X" marked button by changing style.
+    elm_object_part_content_set (ef, "elm.icon.eraser", btn); // Add eraser button to current editfield layout.
+    evas_object_smart_callback_add (btn, "clicked", _eraser_btn_clicked_cb, en);
+
     evas_object_show (ef);
 
     return ef;

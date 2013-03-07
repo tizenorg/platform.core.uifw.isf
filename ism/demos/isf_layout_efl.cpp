@@ -168,7 +168,7 @@ static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, co
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
     Ecore_IMF_Context *ic = NULL;
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
+    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_layout_set (en, layout);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_UP, _key_up_cb, NULL);

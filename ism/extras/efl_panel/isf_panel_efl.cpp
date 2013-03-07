@@ -3664,7 +3664,7 @@ int main (int argc, char *argv [])
     _config->signal_connect_reload (slot (config_reload_cb));
 
     if (!check_system_ready ()) {
-            std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of system....\n";
+        std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of system....\n";
     }
 
     elm_init (argc, argv);
