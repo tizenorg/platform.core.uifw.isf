@@ -5,5 +5,5 @@ isf system::use_internet r
 isf e17 r
 isf device::app_logging w
 isf svi-data rx
-isf sound_server w
+isf sound_server rw
 isf sys-assert::core arwxt
