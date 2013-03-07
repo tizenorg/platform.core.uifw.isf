@@ -1,3 +1,9 @@
+ISF 2.4.6307 :
+ 1. Split SMACK rule from manifest file
+ 2. Add SMACK rule
+ 3. [panel] Check X display to avoid crash
+
+
 ISF 2.4.6306 :
  1. [systemd] Fix Smack labels for systemd units
  2. [isfcontrol] Add isf_control_set_active_ise_to_default API

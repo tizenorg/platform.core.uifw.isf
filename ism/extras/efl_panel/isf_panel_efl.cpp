@@ -170,7 +170,7 @@ static void       slot_will_hide_ack                   (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
-static void       efl_create_control_window            (void);
+static Eina_Bool  efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1759,14 +1759,19 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
 /**
  * @brief Create elementary control window.
  *
- * @return The window pointer
+ * @return EINA_TRUE if successful, otherwise return EINA_FALSE
  */
-static void efl_create_control_window (void)
+static Eina_Bool efl_create_control_window (void)
 {
     /* WMSYNC, #1 Creating and registering control window */
+    if (ecore_x_display_get () == NULL)
+        return EINA_FALSE;
+
     Ecore_X_Window root = ecore_x_window_root_first_get ();
     _control_window = ecore_x_window_input_new (root, -100, -100, 1, 1);
     ecore_x_e_virtual_keyboard_control_window_set (root, _control_window, 0, EINA_TRUE);
+
+    return EINA_TRUE;
 }
 
 /**
@@ -3658,15 +3663,15 @@ int main (int argc, char *argv [])
     /* Connect the configuration reload signal. */
     _config->signal_connect_reload (slot (config_reload_cb));
 
-    if (!check_system_ready ())
-    {
+    if (!check_system_ready ()) {
             std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of system....\n";
     }
 
     elm_init (argc, argv);
     check_time ("elm_init");
 
-    efl_create_control_window();
+    if (!efl_create_control_window ())
+        goto cleanup;
 
     efl_get_screen_resolution (_screen_width, _screen_height);
 
