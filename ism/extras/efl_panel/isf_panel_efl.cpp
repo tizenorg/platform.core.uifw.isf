@@ -3415,32 +3415,27 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     return ECORE_CALLBACK_RENEW;
 }
 
-
-bool check_system_ready()
+bool check_system_ready ()
 {
 #ifdef WAIT_WM
     int try_count = 0;
     int ret = 0;
     int val = 0;
 
-    for(;;)
-    {
-        if (check_file (ISF_SYSTEM_WM_READY_FILE))
-        {
+    for (;;) {
+        if (check_file (ISF_SYSTEM_WM_READY_FILE)) {
             try_count = 0;
-            for(;;)
-            {
-                ret = vconf_get_int(ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
-                if(val == 2)
-                {
+            for (;;) {
+                ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
+                if (val == 2) {
                     return true;
                 }
 
-                if(try_count == ISF_SYSTEM_WAIT_COUNT)
+                if (try_count == ISF_SYSTEM_WAIT_COUNT)
                     return false;
 
                 try_count++;
-                usleep(ISF_SYSTEM_WAIT_DELAY);
+                usleep (ISF_SYSTEM_WAIT_DELAY);
             }
 
             if (try_count == ISF_SYSTEM_WAIT_COUNT)
@@ -3451,9 +3446,8 @@ bool check_system_ready()
         }
     }
 #endif
-        return true;
+    return true;
 }
-
 
 int main (int argc, char *argv [])
 {
@@ -3664,11 +3658,10 @@ int main (int argc, char *argv [])
     /* Connect the configuration reload signal. */
     _config->signal_connect_reload (slot (config_reload_cb));
 
-    if(!check_system_ready())
+    if (!check_system_ready ())
     {
             std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of system....\n";
     }
-
 
     elm_init (argc, argv);
     check_time ("elm_init");
