@@ -80,6 +80,7 @@ using namespace scim;
 
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
+#define ISF_SYSTEM_APPSERVICE_READY_STATE               2
 #define ISF_SYSTEM_WAIT_COUNT                           150
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 
@@ -124,6 +125,10 @@ static void       ui_settle_candidate_window           (void);
 static void       ui_candidate_show                    (bool bSetVirtualKbd = true);
 static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
+
+static bool       check_wm_ready ();
+static bool       check_system_ready ();
+static void       launch_default_soft_keyboard (keynode_t *key = NULL, void* data = NULL);
 
 /* PanelAgent related functions */
 static bool       initialize_panel_agent               (const String &config, const String &display, bool resident);
@@ -268,7 +273,7 @@ static int                _click_object                     = 0;
 static int                _click_down_pos [2]               = {0, 0};
 static int                _click_up_pos [2]                 = {0, 0};
 static bool               _is_click                         = true;
-
+static bool               _appsvc_callback_regist           = false;
 static String             _initial_ise_uuid                 = String ("");
 static ConfigPointer      _config;
 static PanelAgent        *_panel_agent                      = 0;
@@ -286,6 +291,9 @@ static Ecore_X_Window    _control_window                    = 0;
 
 static Ecore_File_Monitor *_helper_ise_em                   = NULL;
 static Ecore_File_Monitor *_keyboard_ise_em                 = NULL;
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of internal functions.
@@ -2912,10 +2920,6 @@ static void slot_set_keyboard_ise (const String &uuid)
     if (_keyboard_ise_em == NULL) {
         add_keyboard_ise_em (uuid, _module_names[get_ise_index (uuid)]);
     }
-
-    // Do not create new candidate window for set_keyboard_ise
-    //if (_candidate_window)
-    //    ui_create_candidate_window ();
 }
 
 /**
@@ -3419,38 +3423,60 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     return ECORE_CALLBACK_RENEW;
 }
 
-bool check_system_ready ()
+/**
+ * @brief : Checks whether the window manager is launched or not
+ * @return true if window manager launched, else false
+ */
+static bool check_wm_ready ()
 {
 #ifdef WAIT_WM
     int try_count = 0;
-    int ret = 0;
-    int val = 0;
-
-    for (;;) {
-        if (check_file (ISF_SYSTEM_WM_READY_FILE)) {
-            try_count = 0;
-            for (;;) {
-                ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
-                if (val == 2) {
-                    return true;
-                }
-
-                if (try_count == ISF_SYSTEM_WAIT_COUNT)
-                    return false;
-
-                try_count++;
-                usleep (ISF_SYSTEM_WAIT_DELAY);
-            }
-
-            if (try_count == ISF_SYSTEM_WAIT_COUNT)
-                return false;
-
-            try_count++;
-            usleep (ISF_SYSTEM_WAIT_DELAY);
-        }
+    while (check_file (ISF_SYSTEM_WM_READY_FILE) == false) {
+        if (ISF_SYSTEM_WAIT_COUNT >= (try_count++)) return false;
     }
 #endif
+
     return true;
+}
+
+/**
+ * @brief : Checks whether the system service is ready or not
+ * @return true if all system service are ready, else false
+ */
+static bool check_system_ready ()
+{
+    int ret = 0;
+    int val = 0;
+    ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
+
+    if (ret == 0 && val == ISF_SYSTEM_APPSERVICE_READY_STATE) {
+        return true;
+    } else {
+        /* Register a call back function for checking system ready */
+        if (!_appsvc_callback_regist) {
+            if (vconf_notify_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard, NULL)) {
+                _appsvc_callback_regist = true;
+            }
+        }
+
+        return false;
+    }
+}
+
+/**
+ * @brief : Launches default soft keyboard for performance enhancement (It's not mandatory)
+ */
+static void launch_default_soft_keyboard (keynode_t *key, void* data)
+{
+    /* Soft keyboard will be started when all system service are ready */
+    if (check_system_ready ()) {
+        if (_appsvc_callback_regist)
+            vconf_ignore_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard);
+
+        /* Start default ISE */
+        start_default_ise ();
+        check_hardware_keyboard ();
+    }
 }
 
 int main (int argc, char *argv [])
@@ -3662,8 +3688,8 @@ int main (int argc, char *argv [])
     /* Connect the configuration reload signal. */
     _config->signal_connect_reload (slot (config_reload_cb));
 
-    if (!check_system_ready ()) {
-        std::cerr << "[ISF-PANEL-EFL] Timeout. cannot check the state of system....\n";
+    if (!check_wm_ready ()) {
+        std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
     }
 
     elm_init (argc, argv);
@@ -3710,9 +3736,8 @@ int main (int argc, char *argv [])
         /* Load initial ISE information */
         _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
 
-        /* Start default ISE */
-        start_default_ise ();
-        check_hardware_keyboard ();
+        /* Launches default soft keyboard when all conditions are satisfied */
+        launch_default_soft_keyboard();
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }

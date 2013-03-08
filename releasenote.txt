@@ -1,5 +1,6 @@
 ISF 2.4.6309 :
  1. [isf-panel-efl] remove ui_create_candidate_window() in slot_set_keyboard_ise
+ 2. [panel] fix bug panel hasn't handled onnection during booting
 
 
 ISF 2.4.6308 :
