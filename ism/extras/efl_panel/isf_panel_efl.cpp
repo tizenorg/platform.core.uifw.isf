@@ -78,8 +78,6 @@ using namespace scim;
 #define ISE_DEFAULT_HEIGHT_PORTRAIT                     444
 #define ISE_DEFAULT_HEIGHT_LANDSCAPE                    316
 
-#define ISF_READY_FILE                                  "/tmp/hibernation/isf_ready"
-
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
 #define ISF_SYSTEM_WAIT_COUNT                           150
@@ -3718,12 +3716,6 @@ int main (int argc, char *argv [])
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }
-
-    /* Create hibernation ready file */
-    FILE *rfd;
-    rfd = fopen (ISF_READY_FILE, "w+");
-    if (rfd)
-        fclose (rfd);
 
     xclient_message_handler  = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, x_event_client_message_cb, NULL);
     ecore_x_event_mask_set (ecore_x_window_root_first_get (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
