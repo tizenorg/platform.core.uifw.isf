@@ -2915,8 +2915,9 @@ static void slot_set_keyboard_ise (const String &uuid)
         add_keyboard_ise_em (uuid, _module_names[get_ise_index (uuid)]);
     }
 
-    if (_candidate_window)
-        ui_create_candidate_window ();
+    // Do not create new candidate window for set_keyboard_ise
+    //if (_candidate_window)
+    //    ui_create_candidate_window ();
 }
 
 /**
