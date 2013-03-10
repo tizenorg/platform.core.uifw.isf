@@ -50,4 +50,4 @@ isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @APPCORE_EFL_LIBS@ \
                         @UIGADGET_LIBS@ @PRIVILEGE_CONTROL_LIBS@
 
-#isf_demo_efl_LDADD    = -lui-gadget
+isf_demo_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
