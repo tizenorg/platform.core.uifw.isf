@@ -60,18 +60,6 @@ using namespace scim;
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
 
 enum {
-    F_CONNECTION_AUTO = 0,
-    F_CONNECTION_ALWAYS_USED,
-    F_CONNECTION_END,
-};
-
-enum {
-    TYPE_PHONEPAD = 0,
-    TYPE_QWERTY,
-    TYPE_KEYBOARD_END,
-};
-
-enum {
     AUTO_CAPITALIZATION_ITEM = 0,
     AUTO_CAPITALIZATION_TXT_ITEM,
     AUTO_FULL_STOP_ITEM,
