@@ -528,6 +528,7 @@ const int SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT          = 169;
 const int ISM_TRANS_CMD_SHOW_ASSOCIATE_TABLE              = 170;
 const int ISM_TRANS_CMD_HIDE_ASSOCIATE_TABLE              = 171;
 const int ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE            = 172;
+const int ISM_TRANS_CMD_TRANSACTION_CONTINUE              = 173;
 
 // Socket IMEngine to Socket FrontEnd
 const int SCIM_TRANS_CMD_NEW_INSTANCE                     = 200;

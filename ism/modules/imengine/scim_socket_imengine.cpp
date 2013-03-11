@@ -1225,6 +1225,10 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                         set_candidate_style ((ISF_CANDIDATE_PORTRAIT_LINE_T)portrait_line, (ISF_CANDIDATE_MODE_T)mode);
                     break;
                 }
+                case ISM_TRANS_CMD_TRANSACTION_CONTINUE:
+                {
+                    cont = true;
+                }
                 default:
                     SCIM_DEBUG_IMENGINE(3) << "  Strange cmd: " << cmd << "\n";
             }

@@ -510,20 +510,26 @@ SocketFrontEnd::send_helper_event (int id, const String &helper_uuid, const Tran
 bool
 SocketFrontEnd::get_surrounding_text (int id, WideString &text, int &cursor, int maxlen_before, int maxlen_after)
 {
+    bool ret = false;
     text.clear ();
     cursor = 0;
 
     if (m_current_instance == id && m_current_socket_client >= 0 && (maxlen_before != 0 || maxlen_after != 0)) {
+        bool cont = false;
         if (maxlen_before < 0) maxlen_before = -1;
         if (maxlen_after < 0) maxlen_after = -1;
+        Socket socket_client (m_current_socket_client);
+        if ( m_send_trans.get_data_type () != SCIM_TRANS_DATA_UNKNOWN) {
+            m_send_trans.put_command (ISM_TRANS_CMD_TRANSACTION_CONTINUE);
+            m_send_trans.write_to_socket (socket_client);
+            cont = true;
+        }
 
         m_temp_trans.clear ();
         m_temp_trans.put_command (SCIM_TRANS_CMD_REPLY);
         m_temp_trans.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT);
         m_temp_trans.put_data ((uint32) maxlen_before);
         m_temp_trans.put_data ((uint32) maxlen_after);
-
-        Socket socket_client (m_current_socket_client);
 
         if (m_temp_trans.write_to_socket (socket_client) &&
             m_temp_trans.read_from_socket (socket_client, m_socket_timeout)) {
@@ -537,24 +543,40 @@ SocketFrontEnd::get_surrounding_text (int id, WideString &text, int &cursor, int
                 m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_GET_SURROUNDING_TEXT &&
                 m_temp_trans.get_data (text) && m_temp_trans.get_data (cur)) {
                 cursor = (int) cur;
-                return true;
+                ret = true;
             }
         }
+        if (cont) {
+            int cmd;
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+            // Move the read ptr to the end.
+            m_send_trans.get_command (cmd);
+        }
     }
-    return false;
+    return ret;
+
 }
 
 bool
 SocketFrontEnd::delete_surrounding_text (int id, int offset, int len)
 {
+    bool ret = false;
     if (m_current_instance == id && m_current_socket_client >= 0 && len > 0) {
+        bool cont = false;
+
+        Socket socket_client (m_current_socket_client);
+        if (m_send_trans.get_data_type () != SCIM_TRANS_DATA_UNKNOWN) {
+            m_send_trans.put_command (ISM_TRANS_CMD_TRANSACTION_CONTINUE);
+            m_send_trans.write_to_socket (socket_client);
+            cont = true;
+        }
         m_temp_trans.clear ();
         m_temp_trans.put_command (SCIM_TRANS_CMD_REPLY);
         m_temp_trans.put_command (SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT);
         m_temp_trans.put_data ((uint32) offset);
         m_temp_trans.put_data ((uint32) len);
-
-        Socket socket_client (m_current_socket_client);
 
         if (m_temp_trans.write_to_socket (socket_client) &&
             m_temp_trans.read_from_socket (socket_client, m_socket_timeout)) {
@@ -566,10 +588,18 @@ SocketFrontEnd::delete_surrounding_text (int id, int offset, int len)
                 m_temp_trans.get_data (key) && key == m_current_socket_client_key &&
                 m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT &&
                 m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
+                ret = true;
+        }
+        if (cont) {
+            int cmd;
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+            // Move the read ptr to the end.
+            m_send_trans.get_command (cmd);
         }
     }
-    return false;
+    return ret;
 }
 
 void

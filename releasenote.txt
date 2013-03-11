@@ -1,3 +1,7 @@
+ISF 2.4.6311 :
+ 1. fix delete/get_surrounding_text call sequence problem
+
+
 ISF 2.4.6309 :
  1. [isf-panel-efl] remove ui_create_candidate_window() in slot_set_keyboard_ise
  2. [panel] fix bug panel hasn't handled onnection during booting
