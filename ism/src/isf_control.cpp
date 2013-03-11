@@ -104,15 +104,14 @@ int isf_control_get_ise_info (const char *uuid, char **name, char **language, IS
 
 int isf_control_set_active_ise_to_default (void)
 {
-    int ret = -1;
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.set_active_ise_to_default ();
+    imcontrol_client.send ();
+    imcontrol_client.close_connection ();
 
-    String initial_ise = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
-    if (initial_ise.length () > 0)
-        ret = isf_control_set_active_ise_by_uuid (initial_ise.c_str ());
-    else
-        printf ("Read initial ISE is failed!!!\n");
-
-    return ret;
+    return 0;
 }
 
 int isf_control_reset_ise_option (void)

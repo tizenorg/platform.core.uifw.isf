@@ -2528,6 +2528,17 @@ public:
         m_signal_will_hide_ack ();
     }
 
+    void reset_default_ise (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        String initial_ise = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
+        if (initial_ise.length () > 0)
+            m_signal_set_active_ise_by_uuid (initial_ise.c_str (), 1);
+        else
+            std::cerr << "Read SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID is failed!!!\n";
+    }
+
     Connection signal_connect_reload_config              (PanelAgentSlotVoid                *slot)
     {
         return m_signal_reload_config.connect (slot);
@@ -3280,6 +3291,8 @@ private:
                     will_show_ack (client_id);
                 else if (cmd == ISM_TRANS_CMD_SEND_WILL_HIDE_ACK)
                     will_hide_ack (client_id);
+                else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE)
+                    reset_default_ise (client_id);
             }
 
             socket_transaction_end ();
