@@ -126,9 +126,9 @@ static void       ui_candidate_show                    (bool bSetVirtualKbd = tr
 static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
 
-static bool       check_wm_ready ();
-static bool       check_system_ready ();
-static void       launch_default_soft_keyboard (keynode_t *key = NULL, void* data = NULL);
+static bool       check_wm_ready                       (void);
+static bool       check_system_ready                   (void);
+static void       launch_default_soft_keyboard         (keynode_t *key = NULL, void* data = NULL);
 
 /* PanelAgent related functions */
 static bool       initialize_panel_agent               (const String &config, const String &display, bool resident);
@@ -243,6 +243,7 @@ static int                _aux_height                       = 0;
 static int                _aux_port_width                   = 444;
 static int                _aux_land_width                   = 764;
 static std::vector<Evas_Object *> _aux_items;
+static std::vector<Evas_Object *> _aux_seperates;
 
 static Evas_Object       *_tmp_aux_text                     = 0;
 static Evas_Object       *_tmp_candidate_text               = 0;
@@ -291,8 +292,6 @@ static Ecore_X_Window    _control_window                    = 0;
 
 static Ecore_File_Monitor *_helper_ise_em                   = NULL;
 static Ecore_File_Monitor *_keyboard_ise_em                 = NULL;
-
-
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -375,8 +374,6 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
     info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
     if (kbd_state == KEYBOARD_STATE_OFF) {
         info.pos_y = win_h;
-        info.width = 0;
-        info.height = 0;
     } else {
         info.pos_y = win_h - info.height;
     }
@@ -1447,11 +1444,11 @@ static void ui_create_native_candidate_window (void)
         elm_scroller_bounce_set (_aux_area, 1, 0);
         elm_scroller_policy_set (_aux_area, ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_OFF);
         evas_object_resize (_aux_area, _aux_port_width, _aux_height);
-        evas_object_move (_aux_area, 0, 2);
+        evas_object_move (_aux_area, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
 
         _aux_table = elm_table_add (_candidate_window);
         elm_object_content_set (_aux_area, _aux_table);
-        elm_table_padding_set (_aux_table, 4, 0);
+        elm_table_padding_set (_aux_table, 0, 0);
         evas_object_size_hint_weight_set (_aux_table, 0.0, 0.0);
         evas_object_size_hint_align_set (_aux_table, 0.0, 0.0);
         evas_object_show (_aux_table);
@@ -1543,6 +1540,7 @@ static void ui_destroy_candidate_window (void)
     }
 
     _aux_items.clear ();
+    _aux_seperates.clear ();
     /* Delete candidate window */
     if (_candidate_window) {
         ui_candidate_hide (true);
@@ -2282,14 +2280,31 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
             evas_object_del (_aux_items [i]);
         _aux_items.clear ();
     }
+    if (_aux_seperates.size () > 0) {
+        for (i = 0; i < _aux_seperates.size (); i++)
+            evas_object_del (_aux_seperates [i]);
+        _aux_seperates.clear ();
+    }
 
+    int   seperate_width  = 4;
+    int   seperate_height = 52 * _height_rate;
+    Evas *evas = evas_object_evas_get (_candidate_window);
     for (i = 0; i < aux_list.size (); i++) {
+        if (i > 0) {
+            Evas_Object *seperate_item = edje_object_add (evas);
+            edje_object_file_set (seperate_item, _candidate_edje_file.c_str (), "seperate_line");
+            evas_object_size_hint_min_set (seperate_item, seperate_width, seperate_height);
+            elm_table_pack (_aux_table, seperate_item, 2 * i - 1, 0, 1, 1);
+            evas_object_show (seperate_item);
+            _aux_seperates.push_back (seperate_item);
+        }
+
         count++;
-        aux_edje = edje_object_add (evas_object_evas_get (_candidate_window));
+        aux_edje = edje_object_add (evas);
         edje_object_file_set (aux_edje, _candidate_edje_file.c_str (), "aux");
         edje_object_text_class_set (aux_edje, "aux_text_class", _candidate_font_name.c_str (), _aux_font_size);
         edje_object_part_text_set (aux_edje, "aux", aux_list [i].c_str ());
-        elm_table_pack (_aux_table, aux_edje, i, 0, 1, 1);
+        elm_table_pack (_aux_table, aux_edje, 2 * i, 0, 1, 1);
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_AUX));
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_AUX));
@@ -3427,7 +3442,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
  * @brief : Checks whether the window manager is launched or not
  * @return true if window manager launched, else false
  */
-static bool check_wm_ready ()
+static bool check_wm_ready (void)
 {
 #ifdef WAIT_WM
     int try_count = 0;
@@ -3443,7 +3458,7 @@ static bool check_wm_ready ()
  * @brief : Checks whether the system service is ready or not
  * @return true if all system service are ready, else false
  */
-static bool check_system_ready ()
+static bool check_system_ready (void)
 {
     int ret = 0;
     int val = 0;
@@ -3737,7 +3752,7 @@ int main (int argc, char *argv [])
         _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
 
         /* Launches default soft keyboard when all conditions are satisfied */
-        launch_default_soft_keyboard();
+        launch_default_soft_keyboard ();
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }
