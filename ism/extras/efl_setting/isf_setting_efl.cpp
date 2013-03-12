@@ -73,6 +73,11 @@ enum {
     ITEM_TOTAL_COUNT
 };
 
+typedef enum {
+    SEPARATOR_TYPE1,
+    SEPARATOR_TYPE2
+} separator_type;
+
 struct ItemData
 {
     char *text;
@@ -113,7 +118,7 @@ static Eina_Bool                    _auto_full_stop           = EINA_FALSE;
 static ConfigPointer                _config;
 static Connection                   _reload_signal_connection;
 
-static Elm_Genlist_Item_Class       itc1, itc2, itc3, itc4, itc5, itcText, itcTitle, itcSeparator;
+static Elm_Genlist_Item_Class       itc1, itc2, itc3, itc4, itc5, itcText, itcTitle, itcSeparator[2];
 
 extern std::vector <String>         _names;
 extern std::vector <String>         _uuids;
@@ -134,6 +139,21 @@ static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const cha
 
 static void         create_sw_keyboard_selection_view (ug_data *ugd);
 static void         create_hw_keyboard_selection_view (ug_data *ugd);
+
+static void append_separator (Evas_Object *genlist, separator_type style_type)
+{
+    // Separator
+    Elm_Object_Item *item;
+    item = elm_genlist_item_append (
+            genlist,                // genlist object
+            &itcSeparator[style_type], // item class
+            NULL,                   // data
+            NULL,
+            ELM_GENLIST_ITEM_NONE,
+            NULL,
+            NULL);
+    elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+}
 
 static Evas_Object *create_bg (Evas_Object *win)
 {
@@ -270,6 +290,7 @@ static void set_active_sw_ise()
         snprintf (_sw_ise_bak, sizeof (_sw_ise_bak), "%s", _sw_ise_name);
     }
 }
+
 static void sw_keyboard_selection_view_set_cb (void *data, Evas_Object *obj, void *event_info)
 {
     if (data == NULL)
@@ -621,24 +642,8 @@ static void create_sw_keyboard_selection_view (ug_data *ugd)
     std::sort (_sw_ise_list.begin (), _sw_ise_list.end ());
 
     if (_sw_ise_list.size () > 0) {
-        // Set item class for dialogue group seperator
-        itcSeparator.item_style       = "dialogue/separator/21/with_line";
-        itcSeparator.func.text_get    = NULL;
-        itcSeparator.func.content_get = NULL;
-        itcSeparator.func.state_get   = NULL;
-        itcSeparator.func.del         = NULL;
-
         // Separator
-        Elm_Object_Item *item;
-        item = elm_genlist_item_append (
-                genlist,                // genlist object
-                &itcSeparator,          // item class
-                NULL,                   // data
-                NULL,
-                ELM_GENLIST_ITEM_NONE,
-                NULL,
-                NULL);
-        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+        append_separator (genlist, SEPARATOR_TYPE1);
     }
 
     for (i = 0; i < _sw_ise_list.size (); i++) {
@@ -715,24 +720,8 @@ static void create_hw_keyboard_selection_view (ug_data * ugd)
     isf_get_keyboard_ises_in_languages (all_langs, uuid_list, _hw_ise_list);
 
     if (_hw_ise_list.size () > 0) {
-        // Set item class for dialogue group seperator
-        itcSeparator.item_style       = "dialogue/separator/21/with_line";
-        itcSeparator.func.text_get    = NULL;
-        itcSeparator.func.content_get = NULL;
-        itcSeparator.func.state_get   = NULL;
-        itcSeparator.func.del         = NULL;
-
-        // Separator
-        Elm_Object_Item *item;
-        item = elm_genlist_item_append (
-                genlist,                // genlist object
-                &itcSeparator,          // item class
-                NULL,                   // data
-                NULL,
-                ELM_GENLIST_ITEM_NONE,
-                NULL,
-                NULL);
-        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+        // Seperator
+        append_separator (genlist, SEPARATOR_TYPE1);
     }
 
     std::sort (_hw_ise_list.begin (), _hw_ise_list.end ());
@@ -790,14 +779,20 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
         itc3.func.del         = _gl_del;
 
         // Set item class for dialogue group seperator
-        itcSeparator.item_style       = "dialogue/separator/21/with_line";
-        itcSeparator.func.text_get    = NULL;
-        itcSeparator.func.content_get = NULL;
-        itcSeparator.func.state_get   = NULL;
-        itcSeparator.func.del         = NULL;
+        itcSeparator[SEPARATOR_TYPE1].item_style       = "dialogue/separator";
+        itcSeparator[SEPARATOR_TYPE1].func.text_get    = NULL;
+        itcSeparator[SEPARATOR_TYPE1].func.content_get = NULL;
+        itcSeparator[SEPARATOR_TYPE1].func.state_get   = NULL;
+        itcSeparator[SEPARATOR_TYPE1].func.del         = NULL;
+
+        itcSeparator[SEPARATOR_TYPE2].item_style       = "dialogue/separator.2";
+        itcSeparator[SEPARATOR_TYPE2].func.text_get    = NULL;
+        itcSeparator[SEPARATOR_TYPE2].func.content_get = NULL;
+        itcSeparator[SEPARATOR_TYPE2].func.state_get   = NULL;
+        itcSeparator[SEPARATOR_TYPE2].func.del         = NULL;
 
         // Set item class for dialogue group title
-        itcTitle.item_style       = "dialogue/title";
+        itcTitle.item_style       = "dialogue/grouptitle";
         itcTitle.func.text_get    = _gl_label_get;
         itcTitle.func.content_get = NULL;
         itcTitle.func.state_get   = _gl_state_get;
@@ -813,15 +808,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
         ItemData *item_data = NULL;
 
         // Separator
-        item = elm_genlist_item_append (
-                genlist,                // genlist object
-                &itcSeparator,          // item class
-                NULL,                   // data
-                NULL,
-                ELM_GENLIST_ITEM_NONE,
-                NULL,
-                NULL);
-        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+        append_separator (genlist, SEPARATOR_TYPE1);
 
         // Group1 item1
         item_data = (ItemData *)malloc (sizeof (ItemData));
@@ -842,6 +829,9 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             if (_hw_kbd_connected)
                 elm_object_item_disabled_set (ugd->autocapital_item, EINA_TRUE);
         }
+
+        // Separator
+        append_separator (genlist, SEPARATOR_TYPE2);
 
         // Text
         item_data = (ItemData *)malloc (sizeof (ItemData));
@@ -866,15 +856,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
 
         if (fullstop) {
             // Separator
-            item = elm_genlist_item_append (
-                    genlist,                // genlist object
-                    &itcSeparator,          // item class
-                    NULL,                   // data
-                    NULL,
-                    ELM_GENLIST_ITEM_NONE,
-                    NULL,
-                    NULL);
-            elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+            append_separator (genlist, SEPARATOR_TYPE1);
 
             // Group1 item2
             item_data = (ItemData *)malloc (sizeof (ItemData));
@@ -893,6 +875,9 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                         (void *)(item_data->mode));
             }
 
+            // Separator
+            append_separator (genlist, SEPARATOR_TYPE2);
+
             // Text
             item_data = (ItemData *)malloc (sizeof (ItemData));
             if (item_data != NULL) {
@@ -910,6 +895,9 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                 elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
             }
         }
+
+        // Separator
+        append_separator (genlist, SEPARATOR_TYPE1);
 
         // Group2 title
         item_data = (ItemData *)malloc (sizeof (ItemData));
@@ -975,6 +963,9 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                 elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
         }
 
+        // Separator
+        append_separator (genlist, SEPARATOR_TYPE1);
+
         // Group3 title
         item_data = (ItemData *)malloc (sizeof (ItemData));
         if (item_data != NULL) {
@@ -1023,7 +1014,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                     (void *)ugd);
 
             if (!_hw_kbd_connected)
-                elm_object_item_disabled_set (ugd->hw_ise_item_tizen,EINA_TRUE);
+                elm_object_item_disabled_set (ugd->hw_ise_item_tizen, EINA_TRUE);
         }
         // Group3 item2
         item_data = (ItemData *)malloc (sizeof (ItemData));
@@ -1046,15 +1037,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
         }
 
         // Separator
-        item = elm_genlist_item_append (
-                genlist,                // genlist object
-                &itcSeparator,          // item class
-                NULL,                   // data
-                NULL,
-                ELM_GENLIST_ITEM_NONE,
-                NULL,
-                NULL);
-        elm_genlist_item_select_mode_set (item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+        append_separator (genlist, SEPARATOR_TYPE1);
 
         //==================================group end =========================
         Evas_Object *back_btn = elm_button_add (ugd->naviframe);
