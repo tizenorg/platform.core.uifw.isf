@@ -1,3 +1,7 @@
+ISF 2.4.6312 :
+ 1. [setting] change separate and dialogue style
+
+
 ISF 2.4.6311 :
  1. fix delete/get_surrounding_text call sequence problem
 

@@ -78,11 +78,19 @@ typedef enum {
     SEPARATOR_TYPE2
 } separator_type;
 
+enum {
+    ITEM_STYLE_NONE,
+    ITEM_STYLE_TOP,
+    ITEM_STYLE_CENTER,
+    ITEM_STYLE_BOTTOM
+};
+
 struct ItemData
 {
     char *text;
     char *sub_text;
     int   mode;
+    int   item_style_type;
 };
 
 static struct ug_data              *_common_ugd               = NULL;
@@ -427,8 +435,12 @@ static void ise_option_show (ug_data *ugd, const char *ise_name)
 
 static char *_gl_text_get (void *data, Evas_Object *obj, const char *part)
 {
-    int index = (int)data;
-    return strdup (_p_items[index]->text);
+    ItemData *item_data = (ItemData *)data;
+
+    if (item_data)
+        return strdup (item_data->text);
+    else
+        return strdup ("");
 }
 
 static char *_gl_label_get (void *data, Evas_Object *obj, const char *part)
@@ -586,6 +598,26 @@ static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const cha
     return NULL;
 }
 
+static void _gl_exp_sw_realized (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item *)event_info;
+    int index;
+
+    if (!it) return;
+
+    index = (int)elm_object_item_data_get (it);
+
+    if (_sw_ise_list.size () < 2)
+        return;
+
+    if (index == 0)
+        elm_object_item_signal_emit (it, "elm,state,top", "");
+    else if (index == (int)(_sw_ise_list.size () - 1))
+        elm_object_item_signal_emit (it, "elm,state,bottom", "");
+    else
+        elm_object_item_signal_emit (it, "elm,state,center", "");
+}
+
 static char *_gl_exp_hw_label_get (void *data, Evas_Object *obj, const char *part)
 {
     int index = (int)(data);
@@ -614,6 +646,51 @@ static Evas_Object *_gl_exp_hw_icon_get (void *data, Evas_Object *obj, const cha
     return NULL;
 }
 
+static void _gl_exp_hw_realized (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item *)event_info;
+    int index;
+
+    if (!it) return;
+
+    index = (int)elm_object_item_data_get (it);
+
+    if (_hw_ise_list.size () < 2)
+        return;
+
+    if (index == 0)
+        elm_object_item_signal_emit (it, "elm,state,top", "");
+    else if (index == (int)(_hw_ise_list.size () - 1))
+        elm_object_item_signal_emit (it, "elm,state,bottom", "");
+    else
+        elm_object_item_signal_emit (it, "elm,state,center", "");
+}
+
+static void _gl_realized (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item *)event_info;
+    ItemData *item_data;
+
+    if (!it) return;
+
+    item_data = (ItemData *)elm_object_item_data_get (it);
+    if (!item_data) return;
+
+    switch (item_data->item_style_type) {
+        case ITEM_STYLE_TOP:
+            elm_object_item_signal_emit (it, "elm,state,top", "");
+            break;
+        case ITEM_STYLE_BOTTOM:
+            elm_object_item_signal_emit (it, "elm,state,bottom", "");
+            break;
+        case ITEM_STYLE_CENTER:
+            elm_object_item_signal_emit (it, "elm,state,center", "");
+            break;
+        default:
+            break;
+    }
+}
+
 static void create_sw_keyboard_selection_view (ug_data *ugd)
 {
     ugd->key_end_cb = sw_keyboard_selection_view_set_cb;
@@ -624,6 +701,7 @@ static void create_sw_keyboard_selection_view (ug_data *ugd)
     }
 
     Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
+    evas_object_smart_callback_add (genlist, "realized", _gl_exp_sw_realized, NULL);
     elm_object_style_set (genlist, "dialogue");
     evas_object_show (genlist);
 
@@ -704,6 +782,7 @@ static void create_hw_keyboard_selection_view (ug_data * ugd)
 
     Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
     elm_object_style_set (genlist, "dialogue");
+    evas_object_smart_callback_add (genlist, "realized", _gl_exp_hw_realized, NULL);
     evas_object_show (genlist);
 
     // Push the layout along with function buttons and title
@@ -756,6 +835,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
 
         Evas_Object *genlist = elm_genlist_add (ugd->naviframe);
         elm_object_style_set (genlist, "dialogue");
+        evas_object_smart_callback_add (genlist, "realized", _gl_realized, NULL);
         elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
         // Set item class for 1text.1icon(text+radiobutton)
         itc1.item_style       = "dialogue/1text.1icon";
@@ -842,7 +922,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             item = elm_genlist_item_append (
                     genlist,                                // genlist object
                     &itcText,                               // item class
-                    (void *)(AUTO_CAPITALIZATION_TXT_ITEM), // data
+                    item_data,                              // data
                     NULL,
                     ELM_GENLIST_ITEM_NONE,
                     NULL,
@@ -887,7 +967,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                 item = elm_genlist_item_append (
                         genlist,                            // genlist object
                         &itcText,                           // item class
-                        (void *)(AUTO_FULL_STOP_TXT_ITEM),  // data
+                        item_data,                          // data
                         NULL,
                         ELM_GENLIST_ITEM_NONE,
                         NULL,
@@ -929,6 +1009,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             _p_items[SW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard selection"));
             item_data->sub_text = strdup (_sw_ise_name);
+            item_data->item_style_type = ITEM_STYLE_TOP;
 
             ugd->sw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
@@ -950,6 +1031,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             _p_items[SW_ISE_OPTION_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard settings"));
             item_data->mode = SW_ISE_OPTION_ITEM;
+            item_data->item_style_type = ITEM_STYLE_BOTTOM;
             ugd->sw_ise_opt_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc3,                  // item class
@@ -1004,6 +1086,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             _p_items[HW_KEYBOARD_SEL_ITEM] = item_data;
             item_data->text     = strdup (_T("Keyboard selection"));
             item_data->sub_text = strdup (_hw_ise_name);
+            item_data->item_style_type = ITEM_STYLE_TOP;
             ugd->hw_ise_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc2,                  // item class
@@ -1023,6 +1106,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
             _p_items[HW_ISE_OPTION_ITEM] = item_data;
             item_data->text = strdup (_T("Keyboard settings"));
             item_data->mode = HW_ISE_OPTION_ITEM;
+            item_data->item_style_type = ITEM_STYLE_BOTTOM;
             ugd->hw_ise_opt_item_tizen = elm_genlist_item_append (
                     genlist,                // genlist object
                     &itc3,                  // item class
