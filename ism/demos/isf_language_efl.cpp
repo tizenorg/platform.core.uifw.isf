@@ -2,9 +2,9 @@
  * ISF(Input Service Framework)
  *
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
- * Copyright (c) 2012-2013 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2013 Samsung Electronics Co., Ltd.
  *
- * Contact: Shuo Liu <shuo0805.liu@samsung.com>, Jihoon Kim <jihoon48.kim@samsung.com>
+ * Contact: Jihoon Kim <jihoon48.kim@samsung.com>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -23,13 +23,13 @@
  */
 
 #include "isf_demo_efl.h"
-#include "isf_prediction_efl.h"
+#include "isf_language_efl.h"
 
-static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Eina_Bool allow)
+static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Lang lang)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
     Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
-    elm_entry_prediction_allow_set (en, allow);
+    elm_entry_input_panel_language_set (en, lang);
 
     return ef;
 }
@@ -47,21 +47,21 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    /* Prediction allow : TRUE */
-    ef = _create_ef_layout (parent, _("Prediction Allow : TRUE"), _("click to enter"), EINA_TRUE);
+    /* Automatic */
+    ef = _create_ef_layout (parent, _("Automatic"), _("click to enter"), ELM_INPUT_PANEL_LANG_AUTOMATIC);
     elm_box_pack_end (bx, ef);
 
-    /* Prediction allow : FALSE */
-    ef = _create_ef_layout (parent, _("Prediction Allow : FALSE"), _("click to enter"), EINA_FALSE);
+    /* Alphabet */
+    ef = _create_ef_layout (parent, _("Alphabet"), _("click to enter"), ELM_INPUT_PANEL_LANG_ALPHABET);
     elm_box_pack_end (bx, ef);
 
     return bx;
 }
 
-void ise_prediction_bt (void *data, Evas_Object *obj, void *event_info)
+void ise_language_bt (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *lay_inner = create_inner_layout (data);
-    add_layout_to_naviframe (data, lay_inner, _("Prediction Allow"));
+    add_layout_to_naviframe (data, lay_inner, _("Language"));
 }
 
 /*

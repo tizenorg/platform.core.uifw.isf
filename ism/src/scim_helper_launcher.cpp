@@ -36,6 +36,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include <privilege-control.h>
+#include <unistd.h>
 
 using namespace scim;
 
@@ -181,8 +182,6 @@ int main (int argc, char *argv [])
 
     if (!config_pointer.null ())
         config_pointer.reset ();
-
-    exit (0);
 }
 
 /*

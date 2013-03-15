@@ -155,8 +155,9 @@ libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 bin_PROGRAMS		= scim isf-log isf-query-engines
 
 scim_SOURCES	 	= scim.cpp
+scim_CXXFLAGS           = @PRIVILEGE_CONTROL_CFLAGS@
 scim_LDADD		= libscim@SCIM_EPOCH@.la
-scim_LDFLAGS		= @LTLIBINTL@
+scim_LDFLAGS		= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@
 
 isf_log_SOURCES	 	= isf_log.cpp
 isf_log_LDADD		= libscim@SCIM_EPOCH@.la

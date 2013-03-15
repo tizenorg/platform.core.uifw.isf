@@ -3,8 +3,8 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.3.6117
-Release:    5
+Version:    2.4.6312
+Release:    1
 Group:      System Environment/Libraries
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
@@ -21,11 +21,10 @@ BuildRequires:  pkgconfig(ui-gadget-1)
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(syspopup-caller)
+BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
-Requires(post): /sbin/ldconfig /usr/bin/vconftool
+Requires(post): /sbin/ldconfig /usr/bin/vconftool e17 net-config libmm-sound
 Requires(postun): /sbin/ldconfig
-requires:       e17, net-config
 
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
@@ -74,7 +73,8 @@ mkdir -p /opt/usr/apps/scim/lib/scim-1.0/1.4.0/Helper
 
 
 %files
-%manifest isf.manifest
+%manifest %{name}.manifest
+/etc/smack/accesses2.d/%{name}.rule
 %defattr(-,root,root,-)
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service

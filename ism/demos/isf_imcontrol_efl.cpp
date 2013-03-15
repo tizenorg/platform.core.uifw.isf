@@ -23,6 +23,7 @@
  */
 
 #include "isf_demo_efl.h"
+#include "isf_control.h"
 
 static Ecore_IMF_Context *imf_context = NULL;
 static Elm_Genlist_Item_Class itci;
@@ -36,8 +37,10 @@ enum {
     INPUT_PANEL_LAYOUT_SET,
     INPUT_PANEL_LAYOUT_GET,
     INPUT_PANEL_STATE_GET,
-    CONTROL_PANEL_SHOW,
-    CONTROL_PANEL_HIDE,
+    GET_ACTIVE_ISE,
+    GET_ISE_INFO,
+    GET_ISE_LIST,
+    RESET_DEFAULT_ISE
 };
 
 const char *api_list[]={
@@ -49,8 +52,10 @@ const char *api_list[]={
     "INPUT PANEL LAYOUT SET",
     "INPUT PANEL LAYOUT GET",
     "INPUT PANEL STATE GET",
-    "CTRL PANEL SHOW",
-    "CTRL PANEL HIDE",
+    "GET ACTIVE ISE",
+    "GET ACTIVE ISE INFO",
+    "GET ISE LIST",
+    "RESET DEFAULT ISE"
 };
 
 static void test_input_panel_geometry_get (void *data, Evas_Object *obj, void *event_info)
@@ -129,18 +134,60 @@ void test_input_panel_state_get (void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-void test_control_panel_show (void *data, Evas_Object *obj, void *event_info)
+void test_get_active_ise (void *data, Evas_Object *obj, void *event_info)
 {
-    if (imf_context != NULL) {
-        ecore_imf_context_control_panel_show (imf_context);
-    }
+    char *uuid = NULL;
+    int ret = isf_control_get_active_ise (&uuid);
+    if (ret > 0 && uuid)
+        printf (" Get active ISE: %s\n", uuid);
+    if (uuid)
+        free (uuid);
 }
 
-void test_control_panel_hide (void *data, Evas_Object *obj, void *event_info)
+void test_get_ise_list (void *data, Evas_Object *obj, void *event_info)
 {
-    if (imf_context != NULL) {
-        ecore_imf_context_control_panel_hide (imf_context);
+    char **iselist = NULL;
+    int count = isf_control_get_ise_list (&iselist);
+
+    for (int i = 0; i < count; i++) {
+        if (iselist[i]) {
+            printf (" [%d : %s]\n", i, iselist[i]);
+            free (iselist[i]);
+        }
     }
+    if (iselist)
+        free (iselist);
+}
+
+void test_get_ise_info (void *data, Evas_Object *obj, void *event_info)
+{
+    char *uuid = NULL;
+    int ret = isf_control_get_active_ise (&uuid);
+    if (ret > 0 && uuid) {
+        char *name      = NULL;
+        char *language  = NULL;
+        ISE_TYPE_T type = HARDWARE_KEYBOARD_ISE;
+        int   option    = 0;
+        ret = isf_control_get_ise_info (uuid, &name, &language, &type, &option);
+        if (ret == 0 && name && language) {
+            printf (" Active ISE: uuid[%s], name[%s], language[%s], type[%d], option[%d]\n", uuid, name, language, type, option);
+        }
+        if (name)
+            free (name);
+        if (language)
+            free (language);
+    }
+    if (uuid)
+        free (uuid);
+}
+
+void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info)
+{
+    int ret = isf_control_set_active_ise_to_default ();
+    if (ret == 0)
+        printf (" Reset default ISE is successful!\n");
+    else
+        printf (" Reset default ISE is failed!!!\n");
 }
 
 char *gli_label_get (void *data, Evas_Object *obj, const char *part)
@@ -177,11 +224,17 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
     case INPUT_PANEL_STATE_GET:
         test_input_panel_state_get (NULL, obj, event_info);
         break;
-    case CONTROL_PANEL_SHOW:
-        test_control_panel_show (NULL, obj, event_info);
+    case GET_ACTIVE_ISE:
+        test_get_active_ise (NULL, obj, event_info);
         break;
-    case CONTROL_PANEL_HIDE:
-        test_control_panel_hide (NULL, obj, event_info);
+    case GET_ISE_LIST:
+        test_get_ise_list (NULL, obj, event_info);
+        break;
+    case GET_ISE_INFO:
+        test_get_ise_info (NULL, obj, event_info);
+        break;
+    case RESET_DEFAULT_ISE:
+        test_reset_default_ise (NULL, obj, event_info);
         break;
     default:
         break;
@@ -191,7 +244,7 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
 static void _nf_back_event (void *data, Evas_Object *obj, void *event_info)
 {
     if (imf_context) {
-        ecore_imf_context_del(imf_context);
+        ecore_imf_context_del (imf_context);
         imf_context = NULL;
     }
 }

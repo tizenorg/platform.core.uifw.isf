@@ -403,12 +403,6 @@ scim_global_config_reset (const String &key)
     }
 }
 
-void
-scim_global_config_update ()
-{
-    __initialize_config ();
-}
-
 bool
 scim_global_config_flush ()
 {

@@ -48,6 +48,12 @@ struct appdata {
     Evas_Object *li;
     Evas_Object *ev_li;
     service_h data;
+    Eina_Bool vkbd_state;
+};
+
+struct _menu_item {
+    const char *name;
+    void (*func)(void *data, Evas_Object *obj, void *event_info);
 };
 
 // Utility functions

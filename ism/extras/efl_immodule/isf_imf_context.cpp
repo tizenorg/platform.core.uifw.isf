@@ -45,7 +45,7 @@
 #include <utilX.h>
 #include <vconf.h>
 #include <vconf-keys.h>
-#include <syspopup_caller.h>
+#include <notification.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -56,7 +56,7 @@
 # define CODESET "INVALID"
 #endif
 
-const double DOUBLE_SPACE_INTERVAL = 1.0;
+#define ENABLE_BACKKEY 1
 
 using namespace scim;
 
@@ -233,6 +233,7 @@ static void     reload_config_callback                  (const ConfigPointer    
 
 static void     fallback_commit_string_cb               (IMEngineInstanceBase   *si,
                                                          const WideString       &str);
+static void     _display_input_language                 (EcoreIMFContextISF *ic);
 
 /* Local variables declaration */
 static String                                           _language;
@@ -268,7 +269,8 @@ static Ecore_Fd_Handler                                *_panel_iochannel_read_ha
 static Ecore_Fd_Handler                                *_panel_iochannel_err_handler  = 0;
 
 static Ecore_X_Window                                   _client_window              = 0;
-static Ecore_Event_Handler                             *_key_handler                = 0;
+static Ecore_Event_Handler                             *_key_down_handler           = 0;
+static Ecore_Event_Handler                             *_key_up_handler             = 0;
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
@@ -431,20 +433,35 @@ find_ic (int id)
 }
 
 static Eina_Bool
-key_press_cb (void *data, int type, void *event)
+_key_down_cb (void *data, int type, void *event)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
+    if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
-    if (!_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
-
-    if (!strcmp (ev->keyname, KEY_END)) {
+    if (!strcmp (ev->keyname, KEY_END) &&
+        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         LOGD ("END key is pressed\n");
-#ifdef ENABLE_BACKKEY
+        return ECORE_CALLBACK_CANCEL;
+    }
+
+    return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_key_up_cb (void *data, int type, void *event)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
+    if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
+
+    if (!strcmp (ev->keyname, KEY_END) &&
+        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        LOGD ("END key is released\n");
         isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
         return ECORE_CALLBACK_CANCEL;
-#endif
     }
 
     return ECORE_CALLBACK_RENEW;
@@ -484,9 +501,13 @@ register_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (!_key_handler) {
-        _key_handler = ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, key_press_cb, NULL);
-    }
+#ifdef ENABLE_BACKKEY
+    if (!_key_down_handler)
+        _key_down_handler = ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _key_down_cb, NULL);
+
+    if (!_key_up_handler)
+        _key_up_handler = ecore_event_handler_add (ECORE_EVENT_KEY_UP, _key_up_cb, NULL);
+#endif
 
     return EXIT_SUCCESS;
 }
@@ -496,9 +517,14 @@ unregister_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (_key_handler) {
-        ecore_event_handler_del (_key_handler);
-        _key_handler = NULL;
+    if (_key_down_handler) {
+        ecore_event_handler_del (_key_down_handler);
+        _key_down_handler = NULL;
+    }
+
+    if (_key_up_handler) {
+        ecore_event_handler_del (_key_up_handler);
+        _key_up_handler = NULL;
     }
 
     return EXIT_SUCCESS;
@@ -1197,6 +1223,7 @@ EAPI void
 isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+    Eina_Bool lock_scr;
 
     if (!context_scim) return;
 
@@ -1223,12 +1250,19 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
             _panel_client.send ();
         }
 
-        _panel_client.prepare (context_scim->id);
+        lock_scr = check_focus_out_by_lockscreen (ctx);
+
+        if (!lock_scr)
+            _panel_client.prepare (context_scim->id);
+
         context_scim->impl->si->focus_out ();
         context_scim->impl->si->reset ();
-//        if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
-        _panel_client.focus_out (context_scim->id);
-        _panel_client.send ();
+
+        if (!lock_scr) {
+//          if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
+            _panel_client.focus_out (context_scim->id);
+            _panel_client.send ();
+        }
         _focused_ic = 0;
     }
 }
@@ -1702,6 +1736,8 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
             if (ic == _focused_ic)
                 ecore_imf_context_input_panel_show (ctx);
+            else
+                LOGW ("Can't show IME because there is no focus. ctx : %p\n", ctx);
         }
         return EINA_FALSE;
     } else {
@@ -2389,14 +2425,20 @@ filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
             turn_on_ic (ic);
         else
             turn_off_ic (ic);
+
+        _display_input_language (ic);
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_ON) {
-        if (!ic->impl->is_on)
+        if (!ic->impl->is_on) {
             turn_on_ic (ic);
+            _display_input_language (ic);
+        }
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_OFF) {
-        if (ic->impl->is_on)
+        if (ic->impl->is_on) {
             turn_off_ic (ic);
+            _display_input_language (ic);
+        }
         ret = true;
     } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_NEXT_FACTORY) {
         open_next_factory (ic);
@@ -2516,8 +2558,10 @@ turn_on_ic (EcoreIMFContextISF *ic)
         }
 
         //Record the IC on/off status
-        if (_shared_input_method)
+        if (_shared_input_method) {
             _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), true);
+            _config->flush ();
+        }
 
         if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
             ecore_imf_context_preedit_start_event_add (ic->ctx);
@@ -2545,8 +2589,10 @@ turn_off_ic (EcoreIMFContextISF *ic)
         }
 
         //Record the IC on/off status
-        if (_shared_input_method)
+        if (_shared_input_method) {
             _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
+            _config->flush ();
+        }
 
         if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
             ecore_imf_context_preedit_changed_event_add (ic->ctx);
@@ -2784,25 +2830,23 @@ _popup_message (const char *_ptext)
     if (_ptext == NULL)
         return;
 
-    int     ret = -1;
-    bundle *b   = bundle_create ();
-    do {
-        ret = bundle_add (b, "0", "info");  // "0" means tickernoti style
-        if (0 != ret)
-            break;
-        ret = bundle_add (b, "1", _ptext);
-        if (0 != ret)
-            break;
-        ret = bundle_add (b, "2", "0");     // "2" means orientation of tickernoti
-        if (0 != ret)
-            break;
-        ret = bundle_add (b, "3", "2");     // "3" means timeout(second) of tickernoti
-        if (0 != ret)
-            break;
-        ret = syspopup_launch ((char *)"tickernoti-syspopup", b);
+    notification_status_message_post(_ptext);
+}
+
+static void
+_display_input_language (EcoreIMFContextISF *ic)
+{
+    IMEngineFactoryPointer sf;
+
+    if (ic && ic->impl) {
+        if (ic->impl->is_on) {
+            sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
+            _popup_message (scim_get_language_name (sf->get_language ()).c_str ());
+        }
+        else {
+            _popup_message (scim_get_language_name ("en").c_str());
+        }
     }
-    while (0);
-    bundle_free (b);
 }
 
 static void
@@ -2897,6 +2941,8 @@ open_specific_factory (EcoreIMFContextISF *ic,
         }
     } else {
         std::cerr << "open_specific_factory () is failed!!!!!!\n";
+        LOGE ("open_specific_factory () is failed. ic : %x uuid : %s", ic->id, uuid.c_str());
+
         // turn_off_ic comment out panel_req_update_factory_info ()
         //turn_off_ic (ic);
         if (ic && ic->impl->is_on) {
@@ -2910,8 +2956,10 @@ open_specific_factory (EcoreIMFContextISF *ic,
             }
 
             //Record the IC on/off status
-            if (_shared_input_method)
+            if (_shared_input_method) {
                 _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
+                _config->flush ();
+            }
 
             if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
                 ecore_imf_context_preedit_changed_event_add (ic->ctx);
@@ -3532,7 +3580,7 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
             SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
             SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
             WideString before = utf8_mbstowcs (String (surrounding));
-            if (cursor_index > before.length())
+            if (cursor_index > (int)before.length())
                 return false;
             WideString after = before;
             before = before.substr (0, cursor_index);

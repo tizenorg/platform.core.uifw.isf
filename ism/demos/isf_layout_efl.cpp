@@ -25,6 +25,12 @@
 #include "isf_demo_efl.h"
 #include "isf_layout_efl.h"
 #include <Ecore_X.h>
+#include <utilX.h>
+
+static void _back_key_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    ecore_x_test_fake_key_press(KEY_END);
+}
 
 static void _rotate_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -132,11 +138,9 @@ _print_keyboard_geometry (Ecore_X_Window xwin)
 }
 
 static Eina_Bool
-_prop_change (void *data, int type, void *event)
+_prop_change_cb (void *data, int type, void *event)
 {
     Ecore_X_Event_Window_Property *ev;
-    Ecore_X_Virtual_Keyboard_State vkb_state;
-
     ev = (Ecore_X_Event_Window_Property *)event;
 
     if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
@@ -152,19 +156,19 @@ _prop_change (void *data, int type, void *event)
 
 static void entry_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    printf("[%s]\n", __func__);
+    printf ("[%s]\n", __func__);
 }
 
 static void entry_preedit_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    printf("[%s]\n", __func__);
+    printf ("[%s]\n", __func__);
 }
 
-static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text,Elm_Input_Panel_Layout layout)
+static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
     Ecore_IMF_Context *ic = NULL;
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
+    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_layout_set (en, layout);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_UP, _key_up_cb, NULL);
@@ -238,6 +242,16 @@ static Evas_Object * create_inner_layout (void *data)
     ef = _create_ef_layout (parent, _("TERMINAL LAYOUT"), _("click to enter TERMINAL"), ELM_INPUT_PANEL_LAYOUT_TERMINAL);
     elm_box_pack_end (bx, ef);
 
+    /* create back key event generation button */
+    Evas_Object *back_key_btn = elm_button_add (parent);
+    elm_object_text_set (back_key_btn, "Generate BACK key");
+    evas_object_smart_callback_add (back_key_btn, "clicked", _back_key_cb, (void *)ad);
+    evas_object_size_hint_weight_set (back_key_btn, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (back_key_btn, EVAS_HINT_FILL, 0);
+    evas_object_show (back_key_btn);
+    elm_box_pack_end (bx, back_key_btn);
+    elm_object_focus_allow_set(back_key_btn, EINA_FALSE);
+
     /* Click to rotate button */
     Evas_Object *rotate_btn = elm_button_add (parent);
     elm_object_text_set (rotate_btn, "rotate");
@@ -247,7 +261,7 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (rotate_btn);
     elm_box_pack_end (bx, rotate_btn);
 
-    ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, NULL);
+    ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change_cb, NULL);
 
     return bx;
 }

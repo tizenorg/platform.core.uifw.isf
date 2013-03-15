@@ -31,6 +31,8 @@
 extern "C"
 {
 #endif /* __cplusplus */
+    Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx);
+    void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
 
     /* non UI related works */
     void isf_imf_input_panel_init ();
@@ -50,8 +52,6 @@ extern "C"
     Ecore_IMF_Input_Panel_Layout isf_imf_context_input_panel_layout_get (Ecore_IMF_Context *ctx);
     Ecore_IMF_Input_Panel_State isf_imf_context_input_panel_state_get (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, unsigned int mode);
-    void isf_imf_context_input_panel_event_callback_add (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Event type, void (*func) (void *data, Ecore_IMF_Context *ctx, int value), void *data);
-    void isf_imf_context_input_panel_event_callback_del (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Event type, void (*func) (void *data, Ecore_IMF_Context *ctx, int value));
     void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *ctx);
 
     void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Return_Key_Type type);
@@ -60,10 +60,11 @@ extern "C"
     Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_caps_lock_mode_set (Ecore_IMF_Context *ctx, Eina_Bool mode);
     void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h);
-    void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
 
     void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx);
     void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx);
+    void isf_imf_context_input_panel_send_will_show_ack ();
+    void isf_imf_context_input_panel_send_will_hide_ack ();
 
 #ifdef __cplusplus
 }

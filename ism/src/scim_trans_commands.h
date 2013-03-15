@@ -528,6 +528,7 @@ const int SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT          = 169;
 const int ISM_TRANS_CMD_SHOW_ASSOCIATE_TABLE              = 170;
 const int ISM_TRANS_CMD_HIDE_ASSOCIATE_TABLE              = 171;
 const int ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE            = 172;
+const int ISM_TRANS_CMD_TRANSACTION_CONTINUE              = 173;
 
 // Socket IMEngine to Socket FrontEnd
 const int SCIM_TRANS_CMD_NEW_INSTANCE                     = 200;
@@ -621,6 +622,10 @@ const int ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID            = 1009;
 const int ISM_TRANS_CMD_GET_ACTIVE_ISE                    = 1010;
 const int ISM_TRANS_CMD_GET_ISE_LIST                      = 1011;
 const int ISM_TRANS_CMD_GET_ISE_INFORMATION               = 1012;
+const int ISM_TRANS_CMD_SEND_WILL_SHOW_ACK                = 1013;
+const int ISM_TRANS_CMD_SEND_WILL_HIDE_ACK                = 1014;
+const int ISM_TRANS_CMD_RESET_DEFAULT_ISE                 = 1015;
+
 
 /* IMControl to ISE */
 const int ISM_TRANS_CMD_SET_ISE_MODE                      = 1108;

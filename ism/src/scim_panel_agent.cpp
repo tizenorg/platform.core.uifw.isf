@@ -347,6 +347,11 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalVoid                m_signal_lock;
     PanelAgentSignalVoid                m_signal_unlock;
 
+    PanelAgentSignalVoid                m_signal_show_ise;
+    PanelAgentSignalVoid                m_signal_hide_ise;
+
+    PanelAgentSignalVoid                m_signal_will_show_ack;
+    PanelAgentSignalVoid                m_signal_will_hide_ack;
 public:
     PanelAgentImpl ()
         : m_should_exit (false),
@@ -1193,7 +1198,7 @@ public:
 
         lock ();
 
-        if (m_current_toolbar_mode != TOOLBAR_HELPER_MODE || m_current_helper_uuid.compare (uuid) != 0) {
+        /*if (m_current_toolbar_mode != TOOLBAR_HELPER_MODE || m_current_helper_uuid.compare (uuid) != 0)*/ {
             SCIM_DEBUG_MAIN(1) << "Run_helper\n";
             m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
         }
@@ -1610,6 +1615,8 @@ public:
         trans.write_to_socket (client_socket);
         if (data != NULL)
             delete[] data;
+
+        m_signal_show_ise ();
     }
 
     void hide_ise_panel (int client_id)
@@ -1628,6 +1635,8 @@ public:
                 hide_helper (m_current_helper_uuid, ctx);
             }
         }
+
+        m_signal_hide_ise ();
     }
 
     void set_default_ise (const DEFAULT_ISE_T &ise)
@@ -2505,6 +2514,31 @@ public:
         update_keyboard_ise_list ();
     }
 
+    void will_show_ack (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::will_show_ack ()\n";
+
+        m_signal_will_show_ack ();
+    }
+
+    void will_hide_ack (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::will_hide_ack ()\n";
+
+        m_signal_will_hide_ack ();
+    }
+
+    void reset_default_ise (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        String initial_ise = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
+        if (initial_ise.length () > 0)
+            m_signal_set_active_ise_by_uuid (initial_ise.c_str (), 1);
+        else
+            std::cerr << "Read SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID is failed!!!\n";
+    }
+
     Connection signal_connect_reload_config              (PanelAgentSlotVoid                *slot)
     {
         return m_signal_reload_config.connect (slot);
@@ -2805,6 +2839,25 @@ public:
         return m_signal_update_input_context.connect (slot);
     }
 
+    Connection signal_connect_show_ise                   (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_show_ise.connect (slot);
+    }
+
+    Connection signal_connect_hide_ise                   (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_hide_ise.connect (slot);
+    }
+
+    Connection signal_connect_will_show_ack              (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_will_show_ack.connect (slot);
+    }
+
+    Connection signal_connect_will_hide_ack              (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_will_hide_ack.connect (slot);
+    }
 private:
     bool socket_check_client_connection (const Socket &client)
     {
@@ -3234,6 +3287,12 @@ private:
                     reset_ise_context (client_id);
                 else if (cmd == SCIM_TRANS_CMD_FOCUS_IN)
                     m_current_active_imcontrol_id = client_id;
+                else if (cmd == ISM_TRANS_CMD_SEND_WILL_SHOW_ACK)
+                    will_show_ack (client_id);
+                else if (cmd == ISM_TRANS_CMD_SEND_WILL_HIDE_ACK)
+                    will_hide_ack (client_id);
+                else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE)
+                    reset_default_ise (client_id);
             }
 
             socket_transaction_end ();
@@ -5914,6 +5973,30 @@ Connection
 PanelAgent::signal_connect_update_input_context       (PanelAgentSlotIntInt              *slot)
 {
     return m_impl->signal_connect_update_input_context (slot);
+}
+
+Connection
+PanelAgent::signal_connect_show_ise                   (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_show_ise (slot);
+}
+
+Connection
+PanelAgent::signal_connect_hide_ise                   (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_hide_ise (slot);
+}
+
+Connection
+PanelAgent::signal_connect_will_show_ack              (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_will_show_ack (slot);
+}
+
+Connection
+PanelAgent::signal_connect_will_hide_ack              (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_will_hide_ack (slot);
 }
 
 } /* namespace scim */

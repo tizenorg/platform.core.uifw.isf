@@ -162,10 +162,6 @@ void scim_global_config_write (const String &key, const std::vector <int> &val);
 void scim_global_config_reset (const String &key);
 
 /**
-* @brief update the global config
-*/
-void scim_global_config_update();
-/**
  * @brief Flush the updated global config into user global config file.
  * @return true if success.
  */

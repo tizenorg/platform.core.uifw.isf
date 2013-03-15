@@ -76,6 +76,9 @@ public:
     void set_caps_mode (int mode);
     void focus_in (void);
     void focus_out (void);
+    void send_will_show_ack (void);
+    void send_will_hide_ack (void);
+    void set_active_ise_to_default (void);
 };
 
 }

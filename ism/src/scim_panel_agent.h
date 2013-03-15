@@ -1126,6 +1126,34 @@ public:
      * slot prototype: void update_input_context (int type, int value);
      */
     Connection signal_connect_update_input_context       (PanelAgentSlotIntInt              *slot);
+
+    /**
+     * @brief Signal: Show ISE.
+     *
+     * slot prototype: void show_ise (void);
+     */
+    Connection signal_connect_show_ise                   (PanelAgentSlotVoid                *slot);
+
+    /**
+     * @brief Signal: Hide ISE.
+     *
+     * slot prototype: void hide_ise (void);
+     */
+    Connection signal_connect_hide_ise                   (PanelAgentSlotVoid                *slot);
+
+    /**
+     * @brief Signal: Notifies the client finished handling WILL_SHOW event
+     *
+     * slot prototype: void will_show_ack (void);
+     */
+    Connection signal_connect_will_show_ack              (PanelAgentSlotVoid                *slot);
+
+    /**
+     * @brief Signal: Notifies the client finished handling WILL_HIDE event
+     *
+     * slot prototype: void will_hide_ack (void);
+     */
+    Connection signal_connect_will_hide_ack              (PanelAgentSlotVoid                *slot);
 };
 
 /**  @} */

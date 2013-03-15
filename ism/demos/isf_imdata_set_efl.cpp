@@ -50,12 +50,12 @@ static Evas_Object * create_inner_layout (void *data)
 
     ef = _create_ef_layout (parent, _("ko_KR"), _("Korean Layout"));
     elm_box_pack_end (bx, ef);
-    en =  elm_object_part_content_get (ef, "elm.swallow.content");
+    en =  elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_imdata_set (en, imdata_ko, strlen (imdata_ko));
 
     ef = _create_ef_layout (parent, _("en_US"), _("English layout"));
     elm_box_pack_end (bx, ef);
-    en =  elm_object_part_content_get (ef, "elm.swallow.content");
+    en =  elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_imdata_set (en, imdata_en, strlen (imdata_en));
 
     return bx;

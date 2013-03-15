@@ -22,6 +22,7 @@
  *
  */
 
+#define Uses_SCIM_CONFIG_PATH
 #define Uses_SCIM_TRANSACTION
 #define Uses_ISF_IMCONTROL_CLIENT
 
@@ -31,8 +32,8 @@
 #include "isf_control.h"
 
 
-namespace scim
-{
+using namespace scim;
+
 
 int isf_control_set_active_ise_by_uuid (const char *uuid)
 {
@@ -78,7 +79,7 @@ int isf_control_get_ise_list (char ***uuid_list)
     return count;
 }
 
-int isf_control_get_ise_info (const char *uuid, char** name, char** language, ISE_TYPE_T &type, int &option)
+int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option)
 {
     if (uuid == NULL || name == NULL || language == NULL)
         return -1;
@@ -95,8 +96,20 @@ int isf_control_get_ise_info (const char *uuid, char** name, char** language, IS
 
     *name     = strName.length () ? strdup (strName.c_str ()) : strdup ("");
     *language = strLanguage.length () ? strdup (strLanguage.c_str ()) : strdup ("");
-    type      = (ISE_TYPE_T)nType;
-    option    = nOption;
+    *type     = (ISE_TYPE_T)nType;
+    *option   = nOption;
+
+    return 0;
+}
+
+int isf_control_set_active_ise_to_default (void)
+{
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.set_active_ise_to_default ();
+    imcontrol_client.send ();
+    imcontrol_client.close_connection ();
 
     return 0;
 }
@@ -110,8 +123,6 @@ int isf_control_reset_ise_option (void)
     imcontrol_client.close_connection ();
     return 0;
 }
-
-};
 
 /*
 vi:ts=4:nowrap:ai:expandtab

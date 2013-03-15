@@ -475,6 +475,18 @@ public:
     void focus_out (void) {
         m_trans.put_command (SCIM_TRANS_CMD_FOCUS_OUT);
     }
+
+    void send_will_show_ack (void) {
+        m_trans.put_command (ISM_TRANS_CMD_SEND_WILL_SHOW_ACK);
+    }
+
+    void send_will_hide_ack (void) {
+        m_trans.put_command (ISM_TRANS_CMD_SEND_WILL_HIDE_ACK);
+    }
+
+    void set_active_ise_to_default (void) {
+        m_trans.put_command (ISM_TRANS_CMD_RESET_DEFAULT_ISE);
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -644,6 +656,21 @@ void IMControlClient::focus_in (void)
 void IMControlClient::focus_out (void)
 {
     m_impl->focus_out ();
+}
+
+void IMControlClient::send_will_show_ack (void)
+{
+    m_impl->send_will_show_ack ();
+}
+
+void IMControlClient::send_will_hide_ack (void)
+{
+    m_impl->send_will_hide_ack ();
+}
+
+void IMControlClient::set_active_ise_to_default (void)
+{
+    m_impl->set_active_ise_to_default ();
 }
 
 };

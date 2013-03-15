@@ -37,7 +37,8 @@ isf_demo_efl_SOURCES  = isf_demo_efl.cpp \
                         isf_return_key_type_efl.cpp \
                         isf_return_key_disable_efl.cpp \
                         isf_imdata_set_efl.cpp \
-                        isf_focus_movement_efl.cpp
+                        isf_focus_movement_efl.cpp \
+                        isf_language_efl.cpp
 
 isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @APPCORE_EFL_CFLAGS@ \
@@ -49,4 +50,4 @@ isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @APPCORE_EFL_LIBS@ \
                         @UIGADGET_LIBS@ @PRIVILEGE_CONTROL_LIBS@
 
-#isf_demo_efl_LDADD    = -lui-gadget
+isf_demo_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

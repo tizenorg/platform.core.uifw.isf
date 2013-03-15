@@ -1,3 +1,136 @@
+ISF 2.4.6312 :
+ 1. [setting] change separate and dialogue style
+
+
+ISF 2.4.6311 :
+ 1. fix delete/get_surrounding_text call sequence problem
+
+
+ISF 2.4.6309 :
+ 1. [isf-panel-efl] remove ui_create_candidate_window() in slot_set_keyboard_ise
+ 2. [panel] fix bug panel hasn't handled onnection during booting
+
+
+ISF 2.4.6308 :
+ 1. [demo] change code for implementing editfield
+
+
+ISF 2.4.6307 :
+ 1. Split SMACK rule from manifest file
+ 2. Add SMACK rule
+ 3. [panel] Check X display to avoid crash
+
+
+ISF 2.4.6306 :
+ 1. [systemd] Fix Smack labels for systemd units
+ 2. [isfcontrol] Add isf_control_set_active_ise_to_default API
+ 3. [panel] Modified the keyboard size to be 0 when OFF mode specified
+ 4. [panel] set keyboard state and geometry in only window not zone
+ 5. Add Esperanto and Sindhi language.
+ 6. IME won't be hidden when lockscreen appears
+
+
+ISF 2.4.6228 :
+ 1. [panel] Add monitor for active ISE file
+
+
+ISF 2.4.6227 :
+ 1. [panel] Add timer for system status check function, move elm_init() position
+ 2. Update control APIs for C application
+
+
+ISF 2.4.6226 :
+ 1. change smack label about app_loging
+ 2. add svi-data, sound_server, sys-assert rule in manifest
+
+
+ISF 2.4.6222 :
+ 1. [demo] IME will be hidden when back key in naviframe is pressed
+ 2. add smack rule for shared library
+ 3. [immodule] input panel event callback is moved into ecore_imf
+
+
+ISF 2.4.6221 :
+ 1. fix: "onoff" style genlist item, drag the check button to enable/disable
+ 2. [immodule] IME will be hidden when END_KEY is released.
+
+
+ISF 2.4.6218 :
+ 1.add po for es_MX
+
+
+ISF 2.4.6214 :
+ 1. modify isf.manifest to give permission for the executable files
+
+
+ISF 2.4.6213 :
+ 1. [isf-panel-efl] Fix 'v' button issue
+ 2. [immodule] display warning in case that mouse up event occurs without focus
+ 3. [immodule] fix bug hide event callback is delivered when canvas lost focus and IME is already hidden state
+ 4. [panel] set vconf value for power management
+ 5. [panel] set transient_for before showing window
+
+
+ISF 2.4.6207 :
+ 1. [setting] on_pause on_resume function update
+ 2. Set app privilege for scim process
+ 3. change trigger hotkey to shift+space according to H/W keyboard UI guide
+ 4. Check hardware keyboard when update ISE information
+ 5. [isf-panel-efl] Update candidate window resize
+ 6. [isf-panel-efl ] Added code for sending GEOMETRY_EVENT when there is a change
+ 7. [immodule] display the language on the notification bar when trigger key is pressed.
+
+
+ISF 2.4.6205 :
+ 1. Launch initial ISE when active soft ISE is removed
+
+
+ISF 2.4.6202 :
+ 1. [isf-panel-efl] Call config->reload () in PanelAgent reload slot fucntion
+
+
+ISF 2.3.6131 :
+ 1. [panel] fix logic to create control window
+ 2. [immodule] fix bug preedit doesn't appear sometimes
+
+
+ISF 2.3.6130 :
+ 1. [immodule] fix bug not to send will hide ack
+
+
+ISF 2.3.6129 :
+ 1. [setting] fix: reset couldn't work well
+ 2. The feature for synchronization with window manager newly added
+
+
+ISF 2.3.6128 :
+ 1. [immodule] display a variety of event logs in dlog
+ 2. [immodule] change input panel state when root window property is changed
+ 3. [immodule] fix bug that language information hasn't be transfered in ISE Context.
+ 4. [demo] Add language demo
+ 5. fix for GCC 4.7 build
+
+
+ISF 2.3.6123 :
+ 1. ignore input panel event when hardware keyboard is connected.
+ 2. [immodule] Add dlog related to conformant status and geometry information
+ 3. [immodule] Use notification library instead of syspopup
+
+
+ISF 2.3.6122 :
+ 1. Remove unused ISF logs
+ 2. fix memory leak related to ecore_x_e_window_profile_get
+
+
+ISF 2.3.6119 :
+ 1. [immodule] Compare window ID in X window focus out callback function
+
+
+ISF 2.3.6118 :
+ 1. [immodule] Hide IME after rendering conformant area
+ 2. [immodule] add X window focus out handler for X based application
+
+
 ISF 2.3.6117 :
  1. [panel] Call elm_win_raise () when expand button is clicked
  2. Update boilerplate

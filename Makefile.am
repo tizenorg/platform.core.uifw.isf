@@ -56,6 +56,9 @@ endif
 pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
+smackdir = /etc/smack/accesses2.d/
+smack_DATA = isf.rule
+
 ACLOCAL_AMFLAGS = -I ism/m4
 
 .PHONY: update-ChangeLog

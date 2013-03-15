@@ -28,7 +28,7 @@
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Autocapital_Type autocap, Eina_Bool caps_lock_mode)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.swallow.content");
+    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_autocapital_type_set (en, autocap);
 
     Ecore_IMF_Context *ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (en);

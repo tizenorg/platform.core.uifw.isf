@@ -1,3 +1,47 @@
+* Thu Jan 31 2013 Jihoon Kim <jihoon48.kim@samsung.com> submit/master/20130130.000238@1871df6
+- Remove code to hide IME in case of Search, go return key type
+- Remove debian directory
+- [setting] code format
+- [panel] fix logic to create control window
+- [panel] code cleanup
+- [immodule] fix bug not to send will hide ack
+- [immodule] add dlog for debugging
+- disable autoreorder in hangul engine
+- Fixed build break
+- upload isf-2.3.6129-2
+- The feature for synchronization with window manager newly added
+- [setting]fix : reset option couldn't work well
+- fix for GCC 4.7 build
+- Upload isf-2.3.6128
+- [demo] add language demo
+- [immodule] fix bug that language information hasn't be transfered in ISE Context.
+- Remove exit (0) from scim_helper_launcher.cpp
+- [immodule] change input panel state when root window property is changed
+- [immodule] display a variety of event logs in dlog
+- [immodule] remove unused code
+- [immodule] Use notification library instead of syspopup.
+- [demo] fix build warning
+- [immodule] Add dlog related to conformant status and geometry information
+- [demo] code refactoring
+- ignore input panel event when hardware keyboard is connected.
+- upload isf-2.3.6122
+- fix memory leak related to ecore_x_e_window_profile_get
+- Remove unused ISF logs
+- [immodule] fix IME issue not to hide IME in account
+- [immodule] Compare window ID in X window focus out callback function
+- change file permission to 644
+- [immodule] Hide IME after rendering conformant area
+- Add modifications in boilerplate
+- add X window focus out handler for X based application
+- [panel] Call elm_win_raise () when expand button is clicked
+- Update boilerplate
+- [panel] fix candidate window blink issue when candidate window is expanded.
+- [immodule] use ecore_imf API to show or hide for debugging easily
+- [isf-demo-efl] Remove "ocr_ug_api.h" header file
+- [immodule] use dlog for printing error
+- change boilerplate
+- upload isf-2.3.6114
+
 * Mon Jan 14 2013 Jihoon Kim <jihoon48.kim@samsung.com> submit/master/20130110.033407@539fda6
 - Add interface to get imdata from isf_imf_context
 - [demo] Add changed and preedit,changed event
