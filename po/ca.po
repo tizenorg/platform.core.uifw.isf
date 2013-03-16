@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Esborrar espai"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "Error de reconeixement de veu"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Escriptura manual"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Color del llapis"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Gruix de llapis"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Espai"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Vermell"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "La meva llista de paraules"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "Sobre"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Reconeixement complet"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Esborrar (1 caràcter)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Esborrar (Paraula o frase)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Retorn (Reconeixement de línia)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Ajustaments d'escriptura manual"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "Selecció de teclat"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Temps de reconeixement"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Tipus de reconeixement"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "Parli ara"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Reconeixement de línia"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Enviar (Reconeixement complet)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "Intentant reconèixer..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Programa d'aprenentatge"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Blau"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Marró"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Verd"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "S'esborraran totes les paraules"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Introdueixi text desplaçant el dit pel teclat"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "Les meves paraules estan plenes. Per afegir una paraula, esborri'n alguns elements"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "S'esborraran %d paraules"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "Seleccionar paraules"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "Afegir paraules"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "Teclat 3x4"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 píxel"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d píxels"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "S'esborrarà la paraula"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "Afegir automàticament"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "Introduir paraula"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "Predicció de paraula següent"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "Sense paraules"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "Tornar a capturar"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "Correcció regional"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "Llista substitució auto"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Introdueixi un punt automàticament en prémer dos cops la barra espaiadora"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "Habilitar recomanacions XT9"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "Recomanar paraules completes en funció dels caràcters introduïts fins el moment"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "Recomanar conjunt alternatiu de paraules"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "Punt de compleció de paraula"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Posar en majúscula la primera lletra de cada frase automàticament"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Idiomes d'escriptura"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "Diccionari dels contactes"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "Predicció d'anglès"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "Diccionari d'usuari d'anglès"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Entrada contínua"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Teclat"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "Compleció de paraules"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "Sobre XT9"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "Punt automàtic"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Majúscula inicial automàticament"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "Substitució automàtica"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "Basc"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "Búlgar"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Vista prèvia de caràcter"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "Rep. Txeca"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "Anglès (Estats Units)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "Estonià"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "Ràpid"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "Cerca d'informació"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "Japonès"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Tipus de teclat"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "Opcions d'introducció horitzontal"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "Letó"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "Macedoni"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "Malay"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "S'ha excedit la longitud màxima de paraula (%d)"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "Consell MoAKey"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Compleció de paraules amb toc múltiple"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "Sense opcions"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "Opcions d'introducció vertical"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "Predicció"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Text predictiu"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "Processant..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "Entrada regional"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "Selecció"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "Accés directe"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "Correcció ortogràfica"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "Substitució"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "Toqui iniciar per tornar a escoltar"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "Tema"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "To"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "Paraules no reconegudes. Torni-ho a intentar, parlant a poc a poc i clarament"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "ajuda XT9"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "opcions XT9"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "Paraules noves"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Teclat 3 x 4"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "Després d'1 lletra"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "Després de %d lletres"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Negre"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Chunjiyin"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "Color"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "No mostrar"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Introduir"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "Teclat Qwerty complet"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Anar"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Alta"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "In ses"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "Teclat Qwerty mini"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "Teclat MoAKey"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "Menú emergent de MoAKey"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Teclat Qwerty"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "Tons de gris"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "Mostrar durant 0,1 s"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "Mostrar durant 0,2 s"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "Mostrar durant 0,3 s"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "Lent"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "Velocitat"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "Gruixut"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "Blanc"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "Escriure utilitzant el tauler de dibuix"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "Escriure utilitzant pantalla completa"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 àrab (Egipte)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 xinès Cangjie"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 xinès PinYin"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 anglès"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 francès"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 alemany"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 italià"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 portuguès"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 rus"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 castellà"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Cal que seleccioni almenys un idioma als ajustaments del teclat"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "Teclat de hardware"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Ajustaments del teclat"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "Teclat de software"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "Dutch"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "Català"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

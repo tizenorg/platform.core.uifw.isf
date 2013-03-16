@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="720" height="490" magnifier="true" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>textinput_panel_bg.png</button_normal>
+  </image_path>
+  <row x="4" y="28" key_width="64" key_height="91">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="4" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="76" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="148" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="220" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="292" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="364" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="436" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="508" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="580" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="652" y="28" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="40" y="150" popup_type="auto_popup" hit_left="40" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="112" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="184" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="256" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="328" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="400" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="472" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="544" y="150" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="616" y="150" popup_type="auto_popup" hit_right="40" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="4" y="272" hit_left="4" hit_right="16" hit_top="16" hit_bottom="15" label_type="label_name_9" width="88"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="112" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="184" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="256" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="328" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="400" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="472" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="544" y="272" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9"/>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="628" y="272" hit_left="16" hit_right="4" hit_top="16" hit_bottom="15" use_repeat_key="true" label_type="label_name_9" width="88">
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+    <key key_type="modechange" use_magnifier="true" longkey_magnifier="true" x="4" y="394" long_key_value="Keypad" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_9" popup_offset_y="-225" width="88"/>
+    <key key_type="modechange" use_magnifier="true" longkey_magnifier="true" x="100" y="394" long_key_value="OptionWindow" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE"/>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="172" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" popup_offset_y="-168">
+      <image_label>
+        <rec button="normal">textinput_icon_space.png</rec>
+        <rec button="pressed">textinput_icon_space_press.png</rec>
+      </image_label>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="string" use_magnifier="true" longkey_magnifier="true" x="244" y="394" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_0" width="280">
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <key_value>
+        <rec shift="off" multichar_state="0">.</rec>
+        <rec shift="on" multichar_state="0">.</rec>
+        <rec shift="off" multichar_state="1">,</rec>
+        <rec shift="on" multichar_state="1">,</rec>
+      </key_value>
+      <key_event>
+        <rec shift="off" multichar_state="0">.</rec>
+        <rec shift="off" multichar_state="1">,</rec>
+        <rec shift="on" multichar_state="0">.</rec>
+        <rec shift="on" multichar_state="1">,</rec>
+      </key_event>
+    </key>
+    <key key_type="char" use_magnifier="true" longkey_magnifier="true" x="4" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_9" popup_offset_y="-225" width="88"/>
+  </row>
+</layout>

@@ -1,0 +1,276 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Slett mellomrom"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Håndskrift"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Pennefarge"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pennebevegelsesveiledning"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Pennetykkelse"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Mellomrom"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Skrivespråk"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Rød"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Fullstendig gjenkjenning"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Slett (1 tegn)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Slett (Ord eller setning)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Angi (Berøringsgjenkjenning)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Håndskriftinnstillinger"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Gjenkjenningstid"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Gjenkjenningstype"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Berøringsgjenkjenning"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Send (Fullstendig gjenkjenning)"
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Læreprogram"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Blå"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Brown"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Grønn"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Fortløpende inndata"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Skriv inn tekst ved å skyve fingeren over tastaturet"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Tastaturtype"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Ordforslag"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9-alternativer"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 piksel"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Tastaturinnstillinger"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d piksler"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Tastatur"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4-tastatur"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Svart"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Angi"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Gå"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Bli med"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Qwerty-tastatur"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Du må velge minst ett språk i tastaturinnstillinger"
+
+msgid "IDS_IME_BODY_LOG_IN"
+msgstr "Logg inn"
+

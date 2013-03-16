@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="466" height="133" style="popup" key_width="76" key_height="133" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_popup_bg.png</button_normal>
+  </image_path>
+  <row x="5" y="2">
+    <key key_type="control">
+      <image_label>
+        <rec button="normal">B09_popup_icon_setting.png</rec>
+        <rec button="pressed">B09_popup_icon_setting.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>OptionWindow</rec>
+      </key_value>
+    </key>
+    <key key_type="control">
+      <image_label>
+        <rec button="normal">B09_popup_icon_mike.png</rec>
+        <rec button="pressed">B09_popup_icon_mike.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>0x19</rec>
+      </key_value>
+    </key>
+    <key key_type="control">
+      <image_label>
+        <rec button="normal">B09_popup_icon_handwriting.png</rec>
+        <rec button="pressed">B09_popup_icon_handwriting.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>0x1a</rec>
+      </key_value>
+    </key>
+    <key key_type="control">
+      <image_label>
+        <rec button="normal">B09_popup_icon_clipboard.png</rec>
+        <rec button="pressed">B09_popup_icon_clipboard.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>0x1b</rec>
+      </key_value>
+    </key>
+    <key key_type="control">
+      <image_label>
+        <rec button="normal">B09_popup_icon_ocr.png</rec>
+        <rec button="pressed">B09_popup_icon_ocr.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>0x1c</rec>
+      </key_value>
+    </key>
+    <key key_type="control">
+      <image_label>
+        <rec button="normal">B09_popup_icon_qrcode.png</rec>
+        <rec button="pressed">B09_popup_icon_qrcode.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>0x1d</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

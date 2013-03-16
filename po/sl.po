@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Izbriši presledek"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "Prepoznavanje glasu ni uspelo"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Rokopis"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Barva pisala"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Debelina pisala"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Prostor"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Rdeče"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "Moj seznam besed"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "O"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Popolno prepoznavanje"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Izbriši (1 znak)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Izbriši (Beseda ali stavek)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Vnos (Hitro prepoznavanje)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Nastavitve za rokopis"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "Izbira tipkovnice"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Čas prepoznavanja"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Vrsta prepoznavanja"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "Začnite govoriti"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Hitro prepoznavanje"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Pošlji (Popolno prepoznavanje)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "Poskus prepoznavanja ..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Vodnik"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Modro"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Brown"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Zelena"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "Vse besede bodo izbrisane"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Vnesite besedilo tako, da s prstom podrsate po tipkovnici"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "Seznam mojih besed je poln. Če želite dodati besedo, izbrišite nekaj elementov"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "%d besed bo izbrisanih"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "Izberite besede"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "Dodaj besede"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "Tipkovnica 3x4"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 sl. pika"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d sl. pik"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "Beseda bo izbrisana"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "Samodejno pripenjanje"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "Vnesite besedo"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "Napovedovanje nove besede"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "Brez besed"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "Ponovno zajemi"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "Regionalno popravljanje"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "Seznam samodej. zamenjav"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Samodejno vnese piko, če dvakrat pritisnete preslednico"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "Omogoči priporočila XT9"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "Predlagaj celotne besede na podlagi do zdaj vnesenih znakov"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "Predlagaj nabor nadomestnih besed"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "Točka zaključevanja besed"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Samodejno popravi veliko začetnico na začetku stavka"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Jeziki pisanja"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "Slovar iz stikov"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "Angleško napovedovanje"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "Slovar za angleške uporabnike"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Neprekinjen vnos"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Tipkovnica"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "Zaključevanje besed"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "Vizitka XT9"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "Samodejno dodajanje pike"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Samodejno pisanje z veliko začetnico"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "Samodejna zamenjava"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "Baskovščina"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "Bolgarščina"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "Katalonščina"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Predogled znakov"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "Češčina"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "Danščina"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "Angleščina (Združene države)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "Estonščina"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "Hitro"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "Pregled podatkov"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "Japonščina"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Vrsta tipkovnice"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "Možnosti ležečega vnosa"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "Latvijščina"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "Makedonščina"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "Malajščina"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "Največja dovoljena dolžina besede (%d) je presežena"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "Nasvet za MoAKey"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Zaključevanje besed z večkratnim pritiskanjem"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "Ni možnosti"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "Možnosti pokončnega vnosa"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "Napovedovanje"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Predvidevanje besedila"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "Obdelujem..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "Lokalni vnos"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "Izbira"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "Bližnjica"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "Popravljanje črkovanja"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "Zamenjava"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "Pritisnite, da začnete znova poslušati"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "Tema"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "Ton"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "Besed ni mogoče prepoznati. Poskusite znova, govorite počasi in razločno"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "Pomoč XT9"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "Možnosti XT9"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "Nove besede"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Tipkovnica 3 x 4"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "Po 1 črki"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "Po %d črkah"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Črna"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Chunjiyin"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "Barva"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "Ne prikaži"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Vnos"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "Celotna tipkovnica qwerty"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Pojdi"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Pridruži se"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "Prij."
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "Mini tipkovnica qwerty"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "Tipkovnica MoAKey"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "Pojavno okno MoAKey"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Tipkovnica qwerty"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "Odtenki sive"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "Pokaži za 0,1 s"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "Pokaži za 0,2 s"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "Pokaži za 0,3 s"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "Počasi"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "Hitrost"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "Tanek"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "Bela"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "Pisanje z uporabo risalne plošče"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "Pisanje z uporabo celotnega zaslona"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 arabščina (Egipt)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 kitajščina Cangjie"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 kitajščina Pindžin"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 angleščina"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 francoščina"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 nemščina"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 italijanščina"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 portugalščina"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 ruščina"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 španščina"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "V nastavitvah tipkovnice morate izbrati vsaj en jezik"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "Strojna tipkovnica"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Nastavitve tipkovnice"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "Programska tipkovnica"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "nizozemščina"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "angleščina"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<autopopup_configure>
+  <background_image_path>B09_bubble_bg.png</background_image_path>
+  <background_color>
+    <r>0</r>
+    <g>128</g>
+    <b>0</b>
+    <a>255</a>
+  </background_color>
+  <background_line_width>2</background_line_width>
+  <background_line_color>
+    <r>0</r>
+    <g>60</g>
+    <b>0</b>
+    <a>255</a>
+  </background_line_color>
+  <background_padding>0</background_padding>
+  <button_image_path>
+    <image button_state="normal">B09_btn_bubble.png</image>
+    <image button_state="pressed">B09_btn_bubble_press.png</image>
+    <image button_state="disabled">B09_btn_bubble.png</image>
+  </button_image_path>
+  <sw_button_style>0</sw_button_style>
+  <button_size>
+    <width>76</width>
+    <height>133</height>
+  </button_size>
+  <button_spacing>0</button_spacing>
+  <label_type>AUTOPOPUP</label_type >
+  <window_decorator size="0">
+    <image direction="top_left"></image>
+    <image direction="top_center"></image>
+    <image direction="top_right"></image>
+    <image direction="middle_left"></image>
+    <image direction="middle_right"></image>
+    <image direction="bottom_left"></image>
+    <image direction="bottom_center"></image>
+    <image direction="bottom_right"></image>
+  </window_decorator>
+  <max_column>6</max_column>
+  <grab_area>
+    <bottom>100</bottom>
+  </grab_area>
+</autopopup_configure>

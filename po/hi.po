@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "स्‍पेस हटाएँ"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "वॉइस पहचानने में विफल"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "हस्‍तलेखन"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "पेन रंग"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "पेन मोटाई"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "स्‍पेस"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "लाल"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "मेरी शब्द सूची"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "बारे में"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "पूर्ण पहचान"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "हटाएँ (1 वर्ण)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "हटाएँ (शब्द या वाक्य)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "दर्ज करें (स्ट्रोक पहचान)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "हस्‍तलेखन सेटिंग्स"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "कीबोर्ड चयन"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "पहचान समय"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "पहचान प्रकार"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "अभी बात करें"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "स्‍ट्रोक पहचान"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "सबमिट करें (पूर्ण पहचान)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "पहचानने का प्रयास कर रहा है..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "शैक्षिक"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "नीला"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "ब्राउन"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "हरा"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "सभी शब्द हटाए जाएँगे"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "कीबोर्ड पर ऊँगली स्लाइड करके टेक्‍स्‍ट दर्ज करें"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "मेरे शब्द पूरे है। कोई शब्द जोड़ने के लिए, कुछ मदें हटाएँ"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "%d शब्द हटाए जाएँगे"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "शब्द चुनें"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "शब्द जोड़ें"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "3x4 कीबोर्ड"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 पिक्‍सेल"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d पिक्सेल्स"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "शब्‍द हटाया जाएगा"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "स्वयं-संलग्न करें"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "शब्‍द दर्ज करें"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "अगले शब्द की पूर्वसूचना"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "कोई शब्‍द नहीं"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "रीकैप्चर"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "प्रादेशिक सुधार"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "स्वत: प्रतिस्थापन सूची"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "दो बार अन्तरक टैप करने से स्वचालित रूप से पूर्ण विराम लगाएं"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "XT9 सिफारिश सक्षम करें"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "अभी तक दर्ज किए वर्ण पर आधारित पूर्ण शब्दों की अनुशंसा करें"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "वैकल्पिक शब्दों के समूह की अनुशंसा करें"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "शब्द पूर्णत्व बिंदु"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "स्वचालित रूप से वाक्य का पहला अक्षर कॅपिटल करें"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "लेखन भाषाएँ"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "संपर्कों से शब्दकोश"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "अंग्रेज़ी पूर्वसूचना"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "अंग्रेजी उपभोक्ता शब्दकोश"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "निरंतर इनपुट"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "की-बोर्ड"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "शब्द पूर्णत्व"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "XT9 के बारे में"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "स्वचालित पूर्ण विराम"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "ऑटो कैपिटैलाइझेशन"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "स्वचालित प्रतिस्थापन"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "बास्क"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "बल्गेरियाई"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "कैटालान"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "वर्ण प्रिव्यू"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "चेक"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "डैनिश"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "अंग्रेजी (युनाइटेड स्टेट्स)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "एस्तोनियाई"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "तेज़"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "जानकारी स्कैन करें"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "जपानी"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "कीबोर्ड प्रकार"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "लैंडस्केप इनपुट विकल्प"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "लैटवियन"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "मैसिडोनियाई"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "मलय"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "अधिकतम शब्‍द लंबाई (%d) सीमा से अधिक हुई"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "MoAKey टिप"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "बहुविध टैप शब्द पूर्णत्व"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "कोई विकल्प नहीं"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "पोर्ट्रेट इनपुट विकल्प"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "पूर्वानुमान"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "पूर्वसूचक टेक्स्ट"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "प्रोसेस हो रहा है…"
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "क्षेत्रीय इनपुट"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "चयन"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "शॉर्टकट"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "स्पेलिंग सुधारे"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "प्रतिस्थापन"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "फिर से सुनना प्रारंभ करने के लिए टैप करें"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "थीम"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "स्वर"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "शब्द पहचाने नहीं गएँ। धीरे से और साफ तरह से बात करते हुए, फिर से प्रयास करें"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "XT9 मदद"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9 विकल्प"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "नए शब्द"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 कीबोर्ड"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "1 अक्षर के बाद"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "%d अक्षरों के बाद"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "काला"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Chunjiyin"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "रंग"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "न दिखाएँ"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "दर्ज करें"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "फुल qwerty कीबोर्ड"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "जाएँ"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "शामिल हों"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "लॉग-इन"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "मिनी qwerty कीबोर्ड"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "MoAKey कीबोर्ड"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "MoAKey पॉप-अप"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "क्वेर्टी कीबोर्ड"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "ग्रे के शेड्स"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "0.1 सेकंड के लिए दिखाएँ"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "0.2 सेकंड के लिए दिखाएँ"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "0.3 सेकंड के लिए दिखाएँ"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "धीमा"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "गति"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "मोटा"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "सफेद"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "ड्रॉईंग पैनल का उपयोग कर लिखें"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "पूर्ण स्क्रीन का उपयोग कर लिखें"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 अरबी (इजिप्ट)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 चीनी Cangjie"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 चीनी PinYin"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 अंग्रेजी"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 फ्रेंच"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 जर्मन"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 इतालियन"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 पोर्तुगीज"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 रूसी"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 स्‍पेनिश"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "आपको कीबोर्ड सेटिंग्स में कम से कम एक भाषा चुनना आवश्यक है"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "हार्डवेयर कीबोर्ड"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "कीबोर्ड सेटिंग"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "सॉफ़्टवेयर कीबोर्ड"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "Dutch"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout direction="landscape" width="1280" height="316" magnifier="true" key_width="118" key_height="68" key_spacing="8" row_spacing="10" hit_left="9" hit_right="9" hit_top="7" hit_bottom="7" label_type="QTY_LAND_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_panel_h.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
+    <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+    <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
+  </background_image>
+  <row x="14" y="10">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">q</rec>
+        <rec multi="1">1</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="2" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">w</rec>
+        <rec multi="1">2</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">e</rec>
+        <rec multi="1">3</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">3</label>
+        <label shift="off" autopopup="1">è</label>
+        <label shift="off" autopopup="2">é</label>
+        <label shift="off" autopopup="3">ê</label>
+        <label shift="off" autopopup="4">ë</label>
+        <label shift="off" autopopup="5">ē</label>
+        <label shift="off" autopopup="6">ė</label>
+        <label shift="off" autopopup="7">ę</label>
+        <label shift="off" autopopup="8">ě</label>
+        <label shift="off" autopopup="9">ə</label>
+        <label shift="on" autopopup="0">3</label>
+        <label shift="on" autopopup="1">È</label>
+        <label shift="on" autopopup="2">É</label>
+        <label shift="on" autopopup="3">Ê</label>
+        <label shift="on" autopopup="4">Ë</label>
+        <label shift="on" autopopup="5">Ē</label>
+        <label shift="on" autopopup="6">Ė</label>
+        <label shift="on" autopopup="7">Ę</label>
+        <label shift="on" autopopup="8">Ě</label>
+        <label shift="on" autopopup="9">Ə</label>
+        <label shift="loc" autopopup="0">3</label>
+        <label shift="loc" autopopup="1">È</label>
+        <label shift="loc" autopopup="2">É</label>
+        <label shift="loc" autopopup="3">Ê</label>
+        <label shift="loc" autopopup="4">Ë</label>
+        <label shift="loc" autopopup="5">Ē</label>
+        <label shift="loc" autopopup="6">Ė</label>
+        <label shift="loc" autopopup="7">Ę</label>
+        <label shift="loc" autopopup="8">Ě</label>
+        <label shift="loc" autopopup="9">Ə</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">r</rec>
+        <rec multi="1">4</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">4</label>
+        <label shift="off" autopopup="1">ŕ</label>
+        <label shift="off" autopopup="2">ř</label>
+        <label shift="on" autopopup="0">4</label>
+        <label shift="on" autopopup="1">Ŕ</label>
+        <label shift="on" autopopup="2">Ř</label>
+        <label shift="loc" autopopup="0">4</label>
+        <label shift="loc" autopopup="1">Ŕ</label>
+        <label shift="loc" autopopup="2">Ř</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">t</rec>
+        <rec multi="1">5</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">5</label>
+        <label shift="off" autopopup="1">þ</label>
+        <label shift="off" autopopup="2">ť</label>
+        <label shift="off" autopopup="3">ț</label>
+        <label shift="on" autopopup="0">5</label>
+        <label shift="on" autopopup="1">Þ</label>
+        <label shift="on" autopopup="2">Ť</label>
+        <label shift="on" autopopup="3">Ț</label>
+        <label shift="loc" autopopup="0">5</label>
+        <label shift="loc" autopopup="1">Þ</label>
+        <label shift="loc" autopopup="2">Ť</label>
+        <label shift="loc" autopopup="3">Ț</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">z</rec>
+        <rec multi="1">6</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">ź</label>
+        <label shift="off" autopopup="1">ż</label>
+        <label shift="off" autopopup="2">ž</label>
+        <label shift="off" autopopup="3">6</label>
+        <label shift="on" autopopup="0">Ź</label>
+        <label shift="on" autopopup="1">Ż</label>
+        <label shift="on" autopopup="2">Ž</label>
+        <label shift="on" autopopup="3">6</label>
+        <label shift="loc" autopopup="0">Ź</label>
+        <label shift="loc" autopopup="1">Ż</label>
+        <label shift="loc" autopopup="2">Ž</label>
+        <label shift="loc" autopopup="3">6</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">u</rec>
+        <rec multi="1">7</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">ü</label>
+        <label shift="off" autopopup="1">û</label>
+        <label shift="off" autopopup="2">ú</label>
+        <label shift="off" autopopup="3">ù</label>
+        <label shift="off" autopopup="4">7</label>
+        <label shift="off" autopopup="5">ų</label>
+        <label shift="off" autopopup="6">ű</label>
+        <label shift="off" autopopup="7">ů</label>
+        <label shift="off" autopopup="8">ū</label>
+        <label shift="on" autopopup="0">Ü</label>
+        <label shift="on" autopopup="1">Û</label>
+        <label shift="on" autopopup="2">Ú</label>
+        <label shift="on" autopopup="3">Ù</label>
+        <label shift="on" autopopup="4">7</label>
+        <label shift="on" autopopup="5">Ų</label>
+        <label shift="on" autopopup="6">Ű</label>
+        <label shift="on" autopopup="7">Ů</label>
+        <label shift="on" autopopup="8">Ū</label>
+        <label shift="loc" autopopup="0">Ü</label>
+        <label shift="loc" autopopup="1">Û</label>
+        <label shift="loc" autopopup="2">Ú</label>
+        <label shift="loc" autopopup="3">Ù</label>
+        <label shift="loc" autopopup="4">7</label>
+        <label shift="loc" autopopup="5">Ų</label>
+        <label shift="loc" autopopup="6">Ű</label>
+        <label shift="loc" autopopup="7">Ů</label>
+        <label shift="loc" autopopup="8">Ū</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">i</rec>
+        <rec multi="1">8</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">î</label>
+        <label shift="off" autopopup="1">í</label>
+        <label shift="off" autopopup="2">ì</label>
+        <label shift="off" autopopup="3">8</label>
+        <label shift="off" autopopup="4">ı</label>
+        <label shift="off" autopopup="5">į</label>
+        <label shift="off" autopopup="6">ī</label>
+        <label shift="off" autopopup="7">ï</label>
+        <label shift="on" autopopup="0">Î</label>
+        <label shift="on" autopopup="1">Í</label>
+        <label shift="on" autopopup="2">Ì</label>
+        <label shift="on" autopopup="3">8</label>
+        <label shift="on" autopopup="4">İ</label>
+        <label shift="on" autopopup="5">Į</label>
+        <label shift="on" autopopup="6">Ī</label>
+        <label shift="on" autopopup="7">Ï</label>
+        <label shift="loc" autopopup="0">Î</label>
+        <label shift="loc" autopopup="1">Í</label>
+        <label shift="loc" autopopup="2">Ì</label>
+        <label shift="loc" autopopup="3">8</label>
+        <label shift="loc" autopopup="4">İ</label>
+        <label shift="loc" autopopup="5">Į</label>
+        <label shift="loc" autopopup="6">Ī</label>
+        <label shift="loc" autopopup="7">Ï</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">o</rec>
+        <rec multi="1">9</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">õ</label>
+        <label shift="off" autopopup="1">ô</label>
+        <label shift="off" autopopup="2">ó</label>
+        <label shift="off" autopopup="3">ò</label>
+        <label shift="off" autopopup="4">9</label>
+        <label shift="off" autopopup="5">œ</label>
+        <label shift="off" autopopup="6">ő</label>
+        <label shift="off" autopopup="7">ø</label>
+        <label shift="off" autopopup="8">ö</label>
+        <label shift="on" autopopup="0">Õ</label>
+        <label shift="on" autopopup="1">Ô</label>
+        <label shift="on" autopopup="2">Ó</label>
+        <label shift="on" autopopup="3">Ò</label>
+        <label shift="on" autopopup="4">9</label>
+        <label shift="on" autopopup="5">Œ</label>
+        <label shift="on" autopopup="6">Ő</label>
+        <label shift="on" autopopup="7">Ø</label>
+        <label shift="on" autopopup="8">Ö</label>
+        <label shift="loc" autopopup="0">Õ</label>
+        <label shift="loc" autopopup="1">Ô</label>
+        <label shift="loc" autopopup="2">Ó</label>
+        <label shift="loc" autopopup="3">Ò</label>
+        <label shift="loc" autopopup="4">9</label>
+        <label shift="loc" autopopup="5">Œ</label>
+        <label shift="loc" autopopup="6">Ő</label>
+        <label shift="loc" autopopup="7">Ø</label>
+        <label shift="loc" autopopup="8">Ö</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="0" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">p</rec>
+        <rec multi="1">0</rec>
+      </label>
+    </key>
+  </row>
+  <row x="77">
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="77">
+      <label>
+        <rec auto_upper="true">a</rec>
+        <rec multi="1">-</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">-</label>
+        <label shift="off" autopopup="1">à</label>
+        <label shift="off" autopopup="2">á</label>
+        <label shift="off" autopopup="3">â</label>
+        <label shift="off" autopopup="4">ã</label>
+        <label shift="off" autopopup="5">ä</label>
+        <label shift="off" autopopup="6">å</label>
+        <label shift="off" autopopup="7">æ</label>
+        <label shift="off" autopopup="8">ā</label>
+        <label shift="off" autopopup="9">ă</label>
+        <label shift="off" autopopup="10">ą</label>
+        <label shift="on" autopopup="0">-</label>
+        <label shift="on" autopopup="1">À</label>
+        <label shift="on" autopopup="2">Á</label>
+        <label shift="on" autopopup="3">Â</label>
+        <label shift="on" autopopup="4">Ã</label>
+        <label shift="on" autopopup="5">Ä</label>
+        <label shift="on" autopopup="6">Å</label>
+        <label shift="on" autopopup="7">Æ</label>
+        <label shift="on" autopopup="8">Ā</label>
+        <label shift="on" autopopup="9">Ă</label>
+        <label shift="on" autopopup="10">Ą</label>
+        <label shift="loc" autopopup="0">-</label>
+        <label shift="loc" autopopup="1">À</label>
+        <label shift="loc" autopopup="2">Á</label>
+        <label shift="loc" autopopup="3">Â</label>
+        <label shift="loc" autopopup="4">Ã</label>
+        <label shift="loc" autopopup="5">Ä</label>
+        <label shift="loc" autopopup="6">Å</label>
+        <label shift="loc" autopopup="7">Æ</label>
+        <label shift="loc" autopopup="8">Ā</label>
+        <label shift="loc" autopopup="9">Ă</label>
+        <label shift="loc" autopopup="10">Ą</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">s</rec>
+        <rec multi="1">@</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">@</label>
+        <label shift="off" autopopup="1">ß</label>
+        <label shift="off" autopopup="2">ś</label>
+        <label shift="off" autopopup="3">š</label>
+        <label shift="off" autopopup="4">ş</label>
+        <label shift="on" autopopup="0">@</label>
+        <label shift="on" autopopup="1">ß</label>
+        <label shift="on" autopopup="2">Ś</label>
+        <label shift="on" autopopup="3">Š</label>
+        <label shift="on" autopopup="4">Ş</label>
+        <label shift="loc" autopopup="0">@</label>
+        <label shift="loc" autopopup="1">ß</label>
+        <label shift="loc" autopopup="2">Ś</label>
+        <label shift="loc" autopopup="3">Š</label>
+        <label shift="loc" autopopup="4">Ş</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">d</rec>
+        <rec multi="1">*</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">*</label>
+        <label shift="off" autopopup="1">ď</label>
+        <label shift="off" autopopup="2">đ</label>
+        <label shift="on" autopopup="0">*</label>
+        <label shift="on" autopopup="1">Ď</label>
+        <label shift="on" autopopup="2">Đ</label>
+        <label shift="loc" autopopup="0">*</label>
+        <label shift="loc" autopopup="1">Ď</label>
+        <label shift="loc" autopopup="2">Đ</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="^" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">f</rec>
+        <rec multi="1">^</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">g</rec>
+        <rec multi="1">:</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">:</label>
+        <label shift="off" autopopup="1">ģ</label>
+        <label shift="off" autopopup="2">ğ</label>
+        <label shift="on" autopopup="0">:</label>
+        <label shift="on" autopopup="1">Ģ</label>
+        <label shift="on" autopopup="2">Ğ</label>
+        <label shift="loc" autopopup="0">:</label>
+        <label shift="loc" autopopup="1">Ģ</label>
+        <label shift="loc" autopopup="2">Ğ</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value=";" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">h</rec>
+        <rec multi="1">;</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="(" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">j</rec>
+        <rec multi="1">(</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">k</rec>
+        <rec multi="1">)</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">ķ</label>
+        <label shift="off" autopopup="1">)</label>
+        <label shift="on" autopopup="0">Ķ</label>
+        <label shift="on" autopopup="1">)</label>
+        <label shift="loc" autopopup="0">Ķ</label>
+        <label shift="loc" autopopup="1">)</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup" hit_right="77">
+      <label>
+        <rec auto_upper="true">l</rec>
+        <rec multi="1">~</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">ł</label>
+        <label shift="off" autopopup="1">ľ</label>
+        <label shift="off" autopopup="2">ļ</label>
+        <label shift="off" autopopup="3">ĺ</label>
+        <label shift="off" autopopup="4">~</label>
+        <label shift="on" autopopup="0">Ł</label>
+        <label shift="on" autopopup="1">Ľ</label>
+        <label shift="on" autopopup="2">Ļ</label>
+        <label shift="on" autopopup="3">Ĺ</label>
+        <label shift="on" autopopup="4">~</label>
+        <label shift="loc" autopopup="0">Ł</label>
+        <label shift="loc" autopopup="1">Ľ</label>
+        <label shift="loc" autopopup="2">Ļ</label>
+        <label shift="loc" autopopup="3">Ĺ</label>
+        <label shift="loc" autopopup="4">~</label>
+      </auto_popup_keys>
+    </key>
+  </row>
+  <row x="18">
+    <key button_type="selfish" key_type="control" key_spacing="45" width="140">
+      <image_label>
+        <rec shift="off" button="normal">B09_icon_shift.png</rec>
+        <rec shift="on" button="normal">B09_icon_shift_on.png</rec>
+        <rec shift="loc" button="normal">B09_icon_shift_loc.png</rec>
+        <rec button="pressed">B09_icon_shift_press.png</rec>
+        <rec button="disabled">B09_icon_shift_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Shift</rec>
+      </key_value>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">y</rec>
+        <rec multi="1">/</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">/</label>
+        <label shift="off" autopopup="1">ý</label>
+        <label shift="on" autopopup="0">/</label>
+        <label shift="on" autopopup="1">Ý</label>
+        <label shift="loc" autopopup="0">/</label>
+        <label shift="loc" autopopup="1">Ý</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="'" multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">x</rec>
+        <rec multi="1">'</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">c</rec>
+        <rec multi="1">"</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">"</label>
+        <label shift="off" autopopup="1">ć</label>
+        <label shift="off" autopopup="2">č</label>
+        <label shift="off" autopopup="3">ç</label>
+        <label shift="on" autopopup="0">"</label>
+        <label shift="on" autopopup="1">Ç</label>
+        <label shift="on" autopopup="2">Ć</label>
+        <label shift="on" autopopup="3">Č</label>
+        <label shift="loc" autopopup="0">"</label>
+        <label shift="loc" autopopup="1">Ç</label>
+        <label shift="loc" autopopup="2">Ć</label>
+        <label shift="loc" autopopup="3">Č</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="." multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">v</rec>
+        <rec multi="1">.</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="," multitouch_type="settle_previous">
+      <label>
+        <rec auto_upper="true">b</rec>
+        <rec multi="1">,</rec>
+      </label>
+    </key>
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+      <label>
+        <rec auto_upper="true">n</rec>
+        <rec multi="1">?</rec>
+      </label>
+      <magnifier_label>
+        <rec multi="1">...</rec>
+      </magnifier_label>
+      <auto_popup_keys>
+        <label shift="off" autopopup="0">ň</label>
+        <label shift="off" autopopup="1">ņ</label>
+        <label shift="off" autopopup="2">ń</label>
+        <label shift="off" autopopup="3">ñ</label>
+        <label shift="off" autopopup="4">?</label>
+        <label shift="on" autopopup="0">Ň</label>
+        <label shift="on" autopopup="1">Ņ</label>
+        <label shift="on" autopopup="2">Ń</label>
+        <label shift="on" autopopup="3">Ñ</label>
+        <label shift="on" autopopup="4">?</label>
+        <label shift="loc" autopopup="0">Ň</label>
+        <label shift="loc" autopopup="1">Ņ</label>
+        <label shift="loc" autopopup="2">Ń</label>
+        <label shift="loc" autopopup="3">Ñ</label>
+        <label shift="loc" autopopup="4">?</label>
+      </auto_popup_keys>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="!" multitouch_type="settle_previous" key_spacing="45">
+      <label>
+        <rec auto_upper="true">m</rec>
+        <rec multi="1">!</rec>
+      </label>
+    </key>
+    <key key_type="control" use_magnifier="true" use_repeat_key="true" width="140">
+      <image_label>
+        <rec button="normal">B09_icon_back.png</rec>
+        <rec button="pressed">B09_icon_back_press.png</rec>
+        <rec button="disabled">B09_icon_back_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="18" sub_layout="DEFAULT" key_width="108">
+    <key button_type="selfish" key_type="modechange" popup_type="longpress_popup_once" label_type="QTY_?123" image_label_type="IMAGE_CUE" popup_offset_y="-224" width="140">
+      <label>
+        <rec>?123</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_cue.png</rec>
+        <rec button="pressed">B09_icon_cue.png</rec>
+        <rec button="disabled">B09_icon_cue.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>SYM_QTY_1</rec>
+      </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
+      </popup_input_mode_record>
+    </key>
+    <key key_type="user" key_spacing="50">
+      <image_label>
+        <rec button="normal">setting icon/B09_icon_setting.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="IMAGE_SPACE" width="612">
+      <label>
+        <rec>_LANGUAGE_</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_space.png</rec>
+        <rec button="pressed">B09_icon_space_press.png</rec>
+        <rec button="disabled">B09_icon_space_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-472" popup_offset_y="-326">
+      <label>
+        <rec>.</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_cue.png</rec>
+        <rec button="pressed">B09_icon_cue.png</rec>
+        <rec button="disabled">B09_icon_cue.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <popup_input_mode_record>
+        <popup_input_mode>PUNCTUATION_POPUP</popup_input_mode>
+      </popup_input_mode_record>
+    </key>
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="140">
+      <image_label>
+        <rec button="normal">B09_icon_enter.png</rec>
+        <rec button="pressed">B09_icon_enter_press.png</rec>
+        <rec button="disabled">B09_icon_enter_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="18" sub_layout="URL" key_width="108" key_spacing="18">
+    <key button_type="selfish" key_type="modechange" popup_type="longpress_popup_once" label_type="QTY_?123" image_label_type="IMAGE_CUE" popup_offset_y="-224" width="140">
+      <label>
+        <rec>?123</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_cue.png</rec>
+        <rec button="pressed">B09_icon_cue.png</rec>
+        <rec button="disabled">B09_icon_cue.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>SYM_QTY_1</rec>
+      </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
+      </popup_input_mode_record>
+    </key>
+    <key key_type="user" key_spacing="50">
+      <image_label>
+        <rec button="normal">setting icon/B09_icon_setting.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="IMAGE_SPACE" width="358">
+      <label>
+        <rec>_LANGUAGE_</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_space.png</rec>
+        <rec button="pressed">B09_icon_space_press.png</rec>
+        <rec button="disabled">B09_icon_space_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="string" label_type="QTY_ATSLASH">
+      <label>
+        <rec>@</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" label_type="QTY_DOT">
+      <label>
+        <rec>.</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-100" popup_offset_y="-264" width="108">
+      <label>
+        <rec>www.</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <popup_input_mode_record>
+        <popup_input_mode>URL_POPUP</popup_input_mode>
+      </popup_input_mode_record>
+    </key>
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="140">
+      <image_label>
+        <rec button="normal">B09_icon_enter.png</rec>
+        <rec button="pressed">B09_icon_enter_press.png</rec>
+        <rec button="disabled">B09_icon_enter_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="18" sub_layout="EMAIL" key_width="108" key_spacing="18">
+    <key button_type="selfish" key_type="modechange" popup_type="longpress_popup_once" label_type="QTY_?123" image_label_type="IMAGE_CUE" popup_offset_y="-224" width="140">
+      <label>
+        <rec>?123</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_cue.png</rec>
+        <rec button="pressed">B09_icon_cue.png</rec>
+        <rec button="disabled">B09_icon_cue.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>SYM_QTY_1</rec>
+      </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
+      </popup_input_mode_record>
+    </key>
+    <key key_type="user" key_spacing="50">
+      <image_label>
+        <rec button="normal">setting icon/B09_icon_setting.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="IMAGE_SPACE" width="358">
+      <label>
+        <rec>_LANGUAGE_</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_space.png</rec>
+        <rec button="pressed">B09_icon_space_press.png</rec>
+        <rec button="disabled">B09_icon_space_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="string" label_type="QTY_ATSLASH">
+      <label>
+        <rec>@</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" label_type="QTY_DOT">
+      <label>
+        <rec>.</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-100" popup_offset_y="-264" width="108">
+      <label>
+        <rec>.com</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <popup_input_mode_record>
+        <popup_input_mode>URL_POPUP</popup_input_mode>
+      </popup_input_mode_record>
+    </key>
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="140">
+      <image_label>
+        <rec button="normal">B09_icon_enter.png</rec>
+        <rec button="pressed">B09_icon_enter_press.png</rec>
+        <rec button="disabled">B09_icon_enter_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

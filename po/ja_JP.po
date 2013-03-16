@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "スペース​を​削除"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "音声の​認識に​失敗​しました。"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "手書き"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "ペンの色"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "ペンの​太さ"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Space"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "レッド"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "マイ​ワード​リスト"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "概要"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "完全認識"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "削除​（1文字）"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "削除​（単語​また​は​文章）"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "入力​（ストローク​認証）"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "手書き設定"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "キーボード​を​選択"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "入力可能な時間"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "認識タイプ"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "音声入力"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "一文字認識"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "送信​（完全​認証）"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "認識​中..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "チュートリアル"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "ブルー"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Brown"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "グリーン"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "全ての単語を削除します。"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "キー​ボード​上​で​指​を​スライド​させ​て、​テキスト​を​入力​し​ます。"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "マイ​単語​が​いっぱい​です。​単語​を​追加​する​には、​いくつか​の​アイテム​を​削除​して​ください。"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "%d​の​文字​が​削除​されます"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "単語​を​選択"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "単語​を​追加"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "テンキー"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1秒"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "0.1秒"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1ピクセル"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2秒"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "0.3秒"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "0.5秒"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%dピクセル"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 （新加坡）"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體​中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "単語が​削除され​ました。"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "自動​付加"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "単語​を​入力​して​ください"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "次​の​単語​を​予測"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "単語がありません。"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "再取得"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "地域補正"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "自動置換リスト"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "スペースバーを2回タップして、句点を自動入力"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "XT9推奨を有効にする"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "これまでに入力した文字をもとに単語を推奨"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "代替の単語を推奨"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "単語​補完​の​タイミング"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "文頭を大文字に自動変換します。"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "入力言語"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "学習​辞書の​削除"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "電話帳からの​辞書"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "英語​予測"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "英語​ユーザー​辞書"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "フリック​入力"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "入力​単語​学習"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "日本語​ユーザー​辞書"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "切り替え​入力"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "入力​エラー​訂正"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "ワイルド​カード​予測"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "連続​入力"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "キーボード"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "単語完成"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "XT9​について"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "自動​ピリオド"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "自動​大文字​変換"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "自動​校正"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "バスク語"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "ブルガリア語"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "カタロニア語"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "文字プレビュー"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "チェコ"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "デンマーク語"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "英語​（アメリカ）"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "エストニア語"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "速い"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "インフォスキャン"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "キーボード​設定"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "横長入力オプション"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "ラトビア語"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "マケドニア語"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "マレー語"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "単語の最大長（%d）を超えました。"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "MoAKeyのヒント"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Multitap​ワード​完了"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "オプションはありません。"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "縦長入力オプション"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "予測入力"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "予測テキスト"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "処理中..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "地域​入力"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "選択"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "ショートカット"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "スペルチェック"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "置換"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "リスニングを再開するには、タップしてください。"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "テーマ"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "アラーム音を設定"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "単語​が​認識​され​ません​でした。もう一度、​ゆっくり、​はっきり​話して​​ください"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "XT9　​ヘルプ"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9　​オプション"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "新しい単語"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "テンキー"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "1文字​後"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "%d​文字​後"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "黒"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "天地人方式"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "色"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "表示しない"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "入力"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "フルQwertyキーボード"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "移動する"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "参加"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "ログイン"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "ミニQwertyキーボード"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "MoAKeyキーボード"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "MoAKeyポップアップ"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Qwerty keyboard"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "グレースケール"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "0.1秒間表示"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "0.2秒間表示"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "0.3秒間表示"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "遅い"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "スピード"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "字体"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "厚め"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "白"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "スケッチパネルで手書き入力"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "全画面表示で手書き入力"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9アラビア語（エジプト）"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9中国語倉頡"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9中国語ピンイン"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9英語"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9フランス語"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9ドイツ語"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9イタリア語"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9ポルトガル語"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9ロシア語"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9スペイン語"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "キーボード設定では、少なくとも1言語を選択する必要があります。"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "ハードウェアキーボード"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "キーボード​設定"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "ソフトウェアキーボード"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "オランダ語"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "英語"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "QWERTYキー"
+

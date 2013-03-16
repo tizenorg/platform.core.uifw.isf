@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Ištrinti tarpą"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "Nepavyko atpažinti balso"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Rankraštis"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Rašiklio spalva"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Rašiklio storis"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Tarpas"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Raudona"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "Mano žodžių sąrašas"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "Apie"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Išsamus atpažinimas"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Ištrinti (1 ženklas)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Ištrinti (Žodis ar sakinys)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Įvesti (Brūkšnio atpažinimas)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Rašymo ranka nustatymai"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "Klaviatūros pasirinkimas"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Atpažinimo laikas"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Atpažinimo tipas"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "Kalbėkite"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Brūkšnio atpažinimas"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Pateikti (Visiškas atpažinimas)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "Bandoma atpažinti..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Vadovas"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Mėlyna"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Ruda"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Žalia"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "Bus ištrinti visi žodžiai"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Įveskite tekstą slinkdami pirštu klaviatūra"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "Mano žodžiai pilni. Norėdami pridėti žodį, panaikinkite keletą elementų"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "Bus ištrinta žodžių: %d"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "Pasirinkite žodžius"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "Pridėkite žodžius"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "3x4 klaviatūra"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 pikselis"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d piks."
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "Žodis bus ištrintas"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "Automatinis pridėjimas"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "Įvesti žodį"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "Kito žodžio spėjimas"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "Nėra žodžių"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "Rodyti dar kartą"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "Regioninis taisymas"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "Autom. keitinių sąrašas"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Automatiškai įterpti tašką dukart bakstelėjus tarpo mygtuką"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "Įjungia XT9 rekomendacijas"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "Rekomenduoja užbaigti žodžius pagal įvestus ženklus"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "Rekomenduoja nustatyti pakaitinius žodžius"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "Žodžio baigimo taškas"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Automatiškai pradėti sakinį didžiąja raide"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Rašymo kalbos"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "Žodynas iš adresatų"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "Anglų k. numatymas"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "Anglų kalbos žodynas"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Nuolatinė įvestis"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Klaviatūra"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "Žodžių užbaigimas"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "Apie XT9"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "Automatinis taškas"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Automatinis rašymas iš didžiosios raidės"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "Automatinis pakeitimas"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "Baskų"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "Bulgarų"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "Katalonų"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Simbolių peržiūra"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "Čekija"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "Anglų k. (JAV)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "Estų"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "Greitas"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "Informacijos paieška"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "Japonų"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Klaviatūros tipas"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "Gulsčios įvesties parinktys"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "Latvių"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "Macedonian"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "Malay"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "Viršytas maksimalus žodžių ilgis (%d)"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "Patarimas dėl „MoAKey“"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Žodžio baigimas keliais paspaudimais"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "Parinkčių nėra"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "Stačios įvesties parinktys"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "Numatymas"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Nuspėjamasis tekstas"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "Apdorojama..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "Įvedimas pagal regioną"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "Pasirinkimas"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "Trumpinys"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "Rašybos taisymas"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "Keitinys"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "Bakstelėkite norėdami pradėti klausytis dar kartą"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "Tema"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "Tonas"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "Žodžiai neatpažinti. Bandykite dar kartą. Sakykite lėčiau ir aiškiau"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "XT9 žinynas"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9 parinktys"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "Nauji žodžiai"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 klaviatūra"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "Po 1 raidės"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "Po %d raidžių"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Juoda"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Chunjiyin"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "Spalva"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "Nerodyti"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Įeiti"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "Visa „Qwerty“ klaviatūra"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Eiti"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Prisijungti"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "Jungti"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "„Qwerty“ miniklaviatūra"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "„MoAKey“ klaviatūra"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "„MoAKey“ iššokantysis langas"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "„Qwerty“ klaviatūra"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "Pilki atspalviai"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "Rodyti 0.1 sek."
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "Rodyti 0.2 sek."
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "Rodyti 0.3 sek."
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "Lėtas"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "Greitis"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "Storas"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "Balta"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "Rašyti naudojant piešimo skydą"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "Rašyti viso ekrano režimu"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 arabų (Egipto)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 kinų „Cangjie“"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 kinų „PinYin“"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 anglų"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 prancūzų"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 vokiečių"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 italų"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 portugalų"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 rusų"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 ispanų"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Klaviatūros nustatymuose turite pasirinkti bent vieną kalbą"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "Aparatinė klaviatūra"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Klaviatūros nustatymai"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "Programinės įrangos klaviatūra"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "Olandų"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "Anglų"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

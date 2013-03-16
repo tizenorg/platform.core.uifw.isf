@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Изтриване на интервал"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "Неуспешно гласово разпознаване"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Ръкопис"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Цвят на перото"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Дебелина на перото"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Интервал"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Червен"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "Моят списък с думи"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "Oтносно"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Цялостно разпознаване"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Изтриване (1 знак)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Изтриване (Дума или изречение)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Въвеждане (Разпознаване на щрих)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Настройки на ръкопис"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "Избор на клавиатура"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Време на разпознаване"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Тип разпознаване"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "Говорете сега"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Разпознаване на щрих"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Подаване (Цялостно разпознаване)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "Опитва се да разпознае..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Самоучител"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Син"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Кафяво"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Зелен"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "Всички думи ще бъдат изтрити"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Въведете текст, като плъзгате пръста си по клавиатурата"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "Списъкът с Моите думи е пълен. За да добавите дума, изтрийте някои елементи"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "%d думи ще бъдат изтрити"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "Избор на думи"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "Добавяне на думи"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "3x4 клавиатура"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 пиксел"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d пиксела"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "Думата ще бъде изтрита"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "Авто-добавяне"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "Въведете дума"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "Предвиждане на следваща дума"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "Няма думи"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "Повторно прихващане"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "Регионална корекция"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "Списък с авто-заместване"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Автоматично вмъкване на точка с двукратно чукване на клавиша за интервал"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "Активиране на препоръки от XT9"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "Препоръчване на цели думи на базата на вече въведените знаци"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "Препоръчване на набор от алтернативни думи"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "Точка за завършване на дума"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Автоматично главна първа буква в изречението"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Езици за писане"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "Речник от Записи"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "Предсказване за английски"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "Английски потребителски речник"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Непрекъснато въвеждане"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Клавиатура"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "Завършване на дума"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "За XT9"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "Автоматична точка"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Автоматично преобразуване в главни"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "Авто-заместване"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "Баски"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "Каталонски"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Визуализация на символа"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "Чешки"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "Датски"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "Английски (САЩ)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "Естонски"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "Бърз"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "Инфо сканиране"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "Японски"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Тип клавиатура"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "Опции за пейзажно въвеждане"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "Латвийски"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "Малайски"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "Превишена максимална дължина на думата (%d)"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "MoAKey съвет"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Многоударно завършване на дума"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "Няма опции"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "Опции за портретно въвеждане"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "Предсказване"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Текст с предвиждане"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "Обработване..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "Регионално въвеждане"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "Избор"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "Бърз клавиш"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "Правописна корекция"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "Заместване"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "Чукнете, за да започнете да слушате отново"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "Тема"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "Тон"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "Думите не са разпознати. Опитайте отново, като говорите по-бавно и по-ясно"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "Помощ за XT9"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "Опции за XT9"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "Нови думи"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 х 4 клавиатура"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "След 1 буква"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "След %d букви"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Черно"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Чунджин"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "Цвят"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "Не показвай"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Въведи"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "Пълна qwerty клавиатура"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Напред"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Включи се"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "Влиз."
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "Мини qwerty клавиатура"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "MoAKey клавиатура"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "Изскачащ MoAKey"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Qwerty клавиатура"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "Скала на сивото"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "Покажи за 0,1 секунди"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "Покажи за 0,2 секунди"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "Покажи за 0,3 секунди"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "Бавно"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "Скорост"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "Дебела"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "Бял"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "Писане с екрана за рисуване"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "Писане на цял екран"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 арабски (Египет)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 китайски канджи"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 китайски пинйин"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 английски"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 френски"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 немски"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 италиански"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 португалски"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 руски"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 испански"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Трябва да изберете поне един език в настройките на клавиатурата"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "Хардуерна клавиатура"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Настройки на клавиатурата"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "Софтуерна клавиатура"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "Холандски"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

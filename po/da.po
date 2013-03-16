@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Slet mellemrum"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "Kunne ikke genkende stemme"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Håndskrift"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Penfarve"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Pentykkelse"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Mellemrum"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Rød"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "Min ordliste"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "Om"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Afslut genkendelse"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Slet (1 tegn)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Slet (Ord eller sætning)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Indtast (Bevægelsesgenkendelse)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Indstillinger for håndskrift"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "Valg af tastatur"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Genkendelsestid"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Genkendelsestype"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "Tal nu"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Bevægelsesgenkendelse"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Send (Afslut genkendelse)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "Prøver at genkende ..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Selvstudium"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Blå"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Brun"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Grøn"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "Alle ord bliver slettet"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Angiv tekst ved at køre fingeren over tastaturet"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "Min ordliste er fyldt. Slet nogle elementer for at tilføje et ord"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "%d ord bliver slettet"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "Vælg ord"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "Tilføj ord"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "3x4-tastatur"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 ms"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 ms"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 pixel"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 ms"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 ms"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 ms"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d pixels"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "Ord vil blive slettet"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "Automatisk tilføjelse"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "Indtast ord"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "Forudsigelse af næste ord"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "Ingen ord"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "Tilbageregulere"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "Regional korrektur"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "Liste over aut. udsk."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Indsæt automatisk et punktum ved at tappe to gange på mellemrumstasten"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "Aktivér XT9-anbefalinger"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "Anbefalet fuldførelse af ord er baseret på de indtil nu indtastede tegn"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "Anbefalet sæt med alternative ord"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "Punkt for fuldførelse af ord"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Automatisk stort første bogstav i sætning"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Indtastningssprog"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "Ordbog fra kontakter"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "Engelsk forudsigelse"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "Engelsk brugerordbog"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Kontinuerligt input"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Tastatur"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "Fuldførelse af ord"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "Om XT9"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "Automatisk indsættelse af punktum"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Automatiske store bogstaver"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "Automatisk udskiftning"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "Baskisk"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "Bulgarsk"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "Catalansk"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Tegneksempel"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "Tjekkisk"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "Engelsk (USA)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "Estisk"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "Hurtig"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "Scanning af oplysninger"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "Japansk"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Tastaturtype"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "Indstillinger for liggende input"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "Lettisk"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "Makedonsk"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "Malay"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "Maksimal ordlængde (%d) overskredet"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "MoAKey-tips"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Multitapfuldførelse af ord"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "Ingen funktioner"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "Indstillinger for stående input"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "Forudsigelse"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Ordbog"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "Behandler ..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "Regional indtastning"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "Valg"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "Genvej"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "Korrektur"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "Udskiftning"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "Tap for at begynde at lytte igen"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "Tema"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "Tone"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "Ordene kunne ikke genkendes. Prøv igen, og tal langsomt og tydeligt"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "XT9-hjælp"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9-indstillinger"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "Nye ord"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3x4-tastatur"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "Efter 1 bogstav"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "Efter %d bogstaver"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Sort"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Chunjiyin"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "Farve"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "Vis ikke"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Tast"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "Fuldt qwerty-tastatur"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Gå til"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Tilmeld"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "Log ind"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "Mini qwerty-tastatur"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "MoAKey-tastatur"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "MoAKey popup"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Qwerty-tastatur"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "Gråtoner"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "Vis i 0,1 sekund"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "Vis i 0,2 sekunder"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "Vis i 0,3 sekunder"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "Langsom"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "Hastighed"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "Tykt"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "Hvid"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "Skriv ved hjælp af tegnepanel"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "Skriv ved hjælp af fuld skærm"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 Arabisk (Ægypten)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 Kinesisk Cangjie"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 Kinesisk PinYin"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 Engelsk"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 Fransk"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 Tysk"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 Italiensk"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 Portugisisk"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 Russisk"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 Spansk"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Du skal vælge mindst ét sprog under tastaturindstillinger"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "Hardwaretastatur"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Tastaturindstillinger"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "Softwaretastatur"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "Hollandsk"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

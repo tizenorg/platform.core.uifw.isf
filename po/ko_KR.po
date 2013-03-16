@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "공백 삭제"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "음성을 인식하지 못하였습니다"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "손글씨"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "펜 색상"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "펜 굵기"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Space"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "빨간색"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "내 단어 목록"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "상세정보"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "전체 인식"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "삭제(1자)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "삭제(단어 또는 문장)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "입력(획 인식)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "손글씨 모드 설정"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "키보드 선택"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "인식 시간"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "인식 유형"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "지금 말하세요"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "획 인식"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "전송(전체 인식)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "인식 중..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "가이드"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "파란색"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "브라운"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "초록색"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "단어가 모두 삭제됩니다"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "키보드에서 손가락을 움직여 텍스트를 입력하세요"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "내 단어장이 가득 찼습니다. 단어를 추가하려면 일부 항목을 삭제하세요"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "단어 %d개가 삭제됩니다"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "단어 선택"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "단어 추가"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "3x4 키보드"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1 초"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "0.1 초"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1픽셀"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2 초"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "0.3 초"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "0.5 초"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d픽셀"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "단어가 삭제됩니다"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "자동 첨부"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "단어를 입력하세요"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "다음 단어 예상"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "단어가 없습니다"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "추천단어 다시 보기"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "지역에 맞게 자동 수정"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "자동 교체 목록"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "스페이스 바를 두 번 누르면 마침표를 자동으로 삽입합니다"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "XT9 단어 추천을 활성화합니다"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "입력된 글자에 기초하여 완성된 단어를 추천합니다"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "대체 단어를 추천합니다"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "단어 완성 시점"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "문장의 첫 글자를 자동으로 대문자로 변환합니다"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "입력 언어"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "학습 사전 삭제"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "연락처에서 가져온 사전"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "영어 예측"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "영어 사용자 사전"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "드래그 입력"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "입력 단어 학습"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "일어 사용자 사전"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "전환 입력"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "입력 오류 교정"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "와일드카드 예측"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "연속 입력"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "키보드"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "단어 완성"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "XT9 정보"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "자동 마침표"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "자동 대문자 입력"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "자동 교체"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "바스크어"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "불가리아어"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "카탈루냐어"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "문자 미리보기"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "체코"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "덴마크어"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "영어(미국)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "에스토니아어"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "빠르게"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "정보 스캔"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "일본어"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "키보드 형식"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "가로 입력 옵션"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "라트비아어"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "마케도니아어"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "말레이어"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "최대 단어 길이(%d)를 초과하였습니다"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "MoAKey 팁"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "자동 완성"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "옵션 없음"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "세로 입력 옵션"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "예측"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "자동 완성 기능"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "처리 중..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "지역별 입력"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "선택"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "단축어"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "철자 교정"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "교체"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "다시 듣기를 시작하려면 누르세요"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "테마"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "소리"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "단어가 인식되지 않았습니다. 천천히 또박또박 다시 말하세요"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "XT9 도움말"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9 옵션"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "새 단어"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3x4 키보드"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "한 글자 뒤"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "%d자 뒤"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "검은색"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "천지인"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "색상"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "표시하지 않음"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "줄 바꿈"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "전체 쿼티 키보드"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "이동"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "회원 가입"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "로그인"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "미니 쿼티 키보드"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "MoAKey 키보드"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "MoAKey 팝업"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "쿼티 키보드"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "회색 음영"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "0.1초 동안 보여주기"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "0.2초 동안 보여주기"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "0.3초 동안 보여주기"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "느리게"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "속도"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "두꺼운"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "흰색"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "그림판에서 입력"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "전체화면에서 입력"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 아랍어(이집트)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 중국어 창힐"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 중국어 병음"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 영어"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 프랑스어"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 독일어"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 이탈리아어"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 포르투갈어"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 러시아어"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 스페인어"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "키보드 설정에서 하나 이상의 언어를 선택해야 합니다"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "하드웨어 키보드"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "키보드 설정"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "소프트웨어 키보드"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "네덜란드어"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "영어"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "쿼티"
+

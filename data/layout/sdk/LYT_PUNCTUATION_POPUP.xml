@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="638" height="314" style="popup" key_width="88" key_height="100" key_spacing="2" row_spacing="2" hit_left="1" hit_right="1" hit_top="1" hit_bottom="1" label_type="AUTOPOPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_popup_bg.png</button_normal>
+  </image_path>
+  <row x="5">
+    <key key_type="string">
+      <label>
+        <rec>,</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>?</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>!</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>'</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>@</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>-</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>/</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+  </row>
+  <row x="5">
+    <key key_type="string">
+      <label>
+        <rec>^</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>+</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>%</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>#</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>:</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>;</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>=</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+  </row>
+  <row x="5">
+    <key key_type="control" use_repeat_key="true" donot_close_popup="true" width="155">
+      <image_label>
+        <rec button="normal">B09_icon_arrow_left.png</rec>
+        <rec button="pressed">B09_icon_arrow_left_press.png</rec>
+        <rec button="disabled">B09_icon_arrow_left.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Left</rec>
+      </key_value>
+    </key>
+    <key key_type="control" use_repeat_key="true" donot_close_popup="true" width="155">
+      <image_label>
+        <rec button="normal">B09_icon_arrow_right.png</rec>
+        <rec button="pressed">B09_icon_arrow_right_press.png</rec>
+        <rec button="disabled">B09_icon_arrow_right.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Right</rec>
+      </key_value>
+    </key>
+    <key key_type="control" use_repeat_key="true" donot_close_popup="true" width="155">
+      <image_label>
+        <rec button="normal">B09_icon_arrow_up.png</rec>
+        <rec button="pressed">B09_icon_arrow_up_press.png</rec>
+        <rec button="disabled">B09_icon_arrow_up.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Up</rec>
+      </key_value>
+    </key>
+    <key key_type="control" use_repeat_key="true" donot_close_popup="true" width="155">
+      <image_label>
+        <rec button="normal">B09_icon_arrow_down.png</rec>
+        <rec button="pressed">B09_icon_arrow_down_press.png</rec>
+        <rec button="disabled">B09_icon_arrow_down.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Down</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

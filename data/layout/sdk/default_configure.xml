@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<default_configure>
+  <display>portrait</display>
+  <inputMode>QTY_ENGLISH</inputMode>
+  <base_screen_width>720</base_screen_width>
+  <base_screen_height>1280</base_screen_height>
+  <auto_detect_landscape>true</auto_detect_landscape>
+  <use_magnifier>true</use_magnifier>
+  <use_autopopup>true</use_autopopup>
+  <use_zoomwindow>true</use_zoomwindow>
+  <use_error_sound>true</use_error_sound>
+  <use_word_deletion>false</use_word_deletion>
+  <touchOffsetLevel>0</touchOffsetLevel>
+  <touch_offset>
+    <portrait>
+      <x>0</x>
+      <y>0</y>
+    </portrait>
+    <landscape>
+      <x>0</x>
+      <y>0</y>
+    </landscape>
+  </touch_offset>
+  <default_sub_layout>DEFAULT</default_sub_layout>
+  <dim_use_window_flag>true</dim_use_window_flag>
+  <dim_color>
+    <r>0</r>
+    <g>0</g>
+    <b>0</b>
+    <a>102</a>
+  </dim_color>
+  <use_lazy_loading>true</use_lazy_loading>
+</default_configure>

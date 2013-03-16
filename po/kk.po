@@ -1,0 +1,666 @@
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Бос орынды жою"
+
+msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
+msgstr "Дауысы танылмады"
+
+msgid "IDS_IME_BODY_HANDWRITING"
+msgstr "Қолмен жазу"
+
+msgid "IDS_IME_BODY_PEN_COLOUR"
+msgstr "Қаламның түсі"
+
+msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
+msgstr "Pen gesture guide"
+
+msgid "IDS_IME_BODY_PEN_THICKNESS"
+msgstr "Қаламның қалыңдығы"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Бос орын"
+
+msgid "IDS_IME_OPT_RED"
+msgstr "Қызыл"
+
+msgid "IDS_IME_BODY_MY_WORD_LIST"
+msgstr "Менің сөз тізімім"
+
+msgid "IDS_IME_BODY_ABOUT"
+msgstr "Бағдарлама туралы"
+
+msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
+msgstr "Тануды аяқтау"
+
+msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
+msgstr "Жою (1 таңба)"
+
+msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
+msgstr "Жою (сөз немесе сөйлем)"
+
+msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
+msgstr "Енгізу (соққы тану)"
+
+msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
+msgstr "Қолжазба параметрлері"
+
+msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
+msgstr "Пернетақта таңдау"
+
+msgid "IDS_IME_BODY_RECOGNITION_TIME"
+msgstr "Тану уақыты"
+
+msgid "IDS_IME_BODY_RECOGNITION_TYPE"
+msgstr "Тану үлгісі"
+
+msgid "IDS_IME_BODY_SPEAK_NOW"
+msgstr "Қазір сөйлеңіз"
+
+msgid "IDS_IME_BODY_STROKE_RECOGNITION"
+msgstr "Соққы тану"
+
+msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
+msgstr "Жіберу (тануды аяқтау)"
+
+msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
+msgstr "Тануға әрекет етуде..."
+
+msgid "IDS_IME_BODY_TUTORIAL"
+msgstr "Оқулық"
+
+msgid "IDS_IME_OPT_BLUE"
+msgstr "Көк"
+
+msgid "IDS_IME_OPT_BROWN"
+msgstr "Қоңыр"
+
+msgid "IDS_IME_OPT_GREEN"
+msgstr "Жасыл"
+
+msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
+msgstr "Барлық сөздер жойылады"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Пернетақтада саусағыңызды сырғытып, мәтін енгізіңіз"
+
+msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
+msgstr "Сөздерім толы. Сөз қосу үшін кейбір элементтерді жойыңыз"
+
+msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
+msgstr "%d сөз жойылады"
+
+msgid "IDS_IME_BODY_SELECT_WORDS"
+msgstr "Сөздер таңдау"
+
+msgid "IDS_IME_HEADER_ADD_WORDS"
+msgstr "Сөздер қосу"
+
+msgid "IDS_IME_MBODY_3X4_KEYBOARD"
+msgstr "3x4 пернетақта"
+
+msgid "IDS_IME_OPT_1000_MS_ABB"
+msgstr "1000 мсек"
+
+msgid "IDS_IME_OPT_100_MS_ABB"
+msgstr "100 мсек"
+
+msgid "IDS_IME_OPT_1_PIXEL_ABB"
+msgstr "1 пиксел"
+
+msgid "IDS_IME_OPT_2000_MS_ABB"
+msgstr "2000 мсек"
+
+msgid "IDS_IME_OPT_300_MS_ABB"
+msgstr "300 мсек"
+
+msgid "IDS_IME_OPT_500_MS_ABB"
+msgstr "500 мсек"
+
+msgid "IDS_IME_OPT_PD_PIXELS_ABB"
+msgstr "%d пиксел"
+
+msgid "IDS_IME_BODY_LANG_BULGARIAN"
+msgstr "Български"
+
+msgid "IDS_IME_BODY_LANG_JAPANESE"
+msgstr "日本語"
+
+msgid "IDS_IME_BODY_ARABIC"
+msgstr "عربي"
+
+msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
+msgstr "简体中文"
+
+msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
+msgstr "简体中文 (新加坡)"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
+msgstr "繁體中文"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
+msgstr "香港繁體"
+
+msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
+msgstr "台灣繁體"
+
+msgid "IDS_IME_BODY_FARSI"
+msgstr "فارسی"
+
+msgid "IDS_IME_BODY_HEBREW"
+msgstr "עברית"
+
+msgid "IDS_IME_BODY_INDONESIAN"
+msgstr "Bahasa Indonesia"
+
+msgid "IDS_IME_BODY_THAI"
+msgstr "ภาษาไทย"
+
+msgid "IDS_IME_BODY_URDU"
+msgstr "اردو"
+
+msgid "IDS_IME_BODY_UZBEK"
+msgstr "o'zbek tili"
+
+msgid "IDS_IME_BODY_VIETNAMESE"
+msgstr "Tiếng Việt"
+
+msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
+msgstr "Сөз жойылады"
+
+msgid "IDS_IME_BODY_ARMENIAN"
+msgstr "Հայերեն"
+
+msgid "IDS_IME_MBODY_AUTO_APPEND"
+msgstr "Автоматты тіркеу"
+
+msgid "IDS_IME_OPT_LANG_ALBANIAN"
+msgstr "shqip"
+
+msgid "IDS_IME_OPT_LANG_CROATIAN"
+msgstr "Hrvatski"
+
+msgid "IDS_IME_BODY_ENTER_WORD"
+msgstr "Сөз енгізіңіз"
+
+msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
+msgstr "Келесі сөзді болжау"
+
+msgid "IDS_IME_BODY_NO_WORDS"
+msgstr "Сөздер жоқ"
+
+msgid "IDS_IME_BODY_RECAPTURE"
+msgstr "Қайта қолдану"
+
+msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
+msgstr "Аймақтық түзету"
+
+msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
+msgstr "Авто ауыстыру тізімі"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Бос орны пернесін екі рет түрту арқылы автоматты түрде нүкте енгізіңіз"
+
+msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
+msgstr "XT9 ұсыныстарын қосу"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
+msgstr "English (UK)"
+
+msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
+msgstr "English (US)"
+
+msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
+msgstr "Қазірге дейін енгізілген таңбаларға қарай толық сөздерді ұсыныңыз"
+
+msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
+msgstr "Бірқатар ұқсас сөздерді ұсыныңыз"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
+msgstr "Сөз аяқталатын нүкте"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Сөйлемнің бірінші әрпін автоматты түрде бас әріппен жазу"
+
+msgid "IDS_IME_BODY_WRITING_LANGUAGES"
+msgstr "Жазу тілдері"
+
+msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
+msgstr "Clear learning dictionary"
+
+msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
+msgstr "Контактілердегі сөздік"
+
+msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
+msgstr "Ағылшынша болжам"
+
+msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
+msgstr "Ағылшынша пайдаланушы сөздігі"
+
+msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
+msgstr "Input word learning"
+
+msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
+msgstr "Japanese user dictionary"
+
+msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
+msgstr "Toggle input"
+
+msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
+msgstr "Typing error correction"
+
+msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
+msgstr "Wildcard prediction"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Созылмалы енгізу"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Пернетақта"
+
+msgid "IDS_IME_BODY_WORD_COMPLETION"
+msgstr "Сөз аяқтау"
+
+msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
+msgstr "Bahasa Malaysia"
+
+msgid "IDS_IME_BODY_ABOUT_XT9"
+msgstr "XT9 туралы"
+
+msgid "IDS_IME_BODY_ASSAMESE"
+msgstr "অসমীয়া"
+
+msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
+msgstr "Автоматты нүкте"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Бас әріптерді автоматты қолдану"
+
+msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
+msgstr "Авто алмастыру"
+
+msgid "IDS_IME_BODY_BASQUE"
+msgstr "Баск"
+
+msgid "IDS_IME_BODY_BULGARIAN"
+msgstr "Болгар"
+
+msgid "IDS_IME_BODY_CATALAN"
+msgstr "Каталан"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Таңбаларды қарап шығу"
+
+msgid "IDS_IME_BODY_CZECH"
+msgstr "Чех"
+
+msgid "IDS_IME_BODY_DANISH"
+msgstr "Дат"
+
+msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
+msgstr "Ағылшын (Америка Құрама Штаттары)"
+
+msgid "IDS_IME_BODY_ESTONIAN"
+msgstr "Эстон"
+
+msgid "IDS_IME_BODY_FAST"
+msgstr "Жылдам"
+
+msgid "IDS_IME_BODY_INFO_SCAN"
+msgstr "Ақпарат іздеу"
+
+msgid "IDS_IME_BODY_JAPANESE"
+msgstr "Жапон"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Пернетақта түрі"
+
+msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
+msgstr "Көлденеңінен енгізу параметрлері"
+
+msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
+msgstr "Azərbaycan"
+
+msgid "IDS_IME_BODY_LANG_BASQUE"
+msgstr "Euskara"
+
+msgid "IDS_IME_BODY_LANG_BENGALI"
+msgstr "বাংলা"
+
+msgid "IDS_IME_BODY_LANG_CATALAN"
+msgstr "Català"
+
+msgid "IDS_IME_BODY_LANG_GALICIAN"
+msgstr "Galego"
+
+msgid "IDS_IME_BODY_LANG_GEORGIAN"
+msgstr "ქართული"
+
+msgid "IDS_IME_BODY_LANG_GUJARATI"
+msgstr "ગુજરાતી"
+
+msgid "IDS_IME_BODY_LANG_HINDI"
+msgstr "हिन्दी"
+
+msgid "IDS_IME_BODY_LANG_KANNADA"
+msgstr "ಕನ್ನಡ"
+
+msgid "IDS_IME_BODY_LANG_MALAYALAM"
+msgstr "മലയാളം"
+
+msgid "IDS_IME_BODY_LANG_MARATHI"
+msgstr "मराठी"
+
+msgid "IDS_IME_BODY_LANG_NEPALI"
+msgstr "नेपाली"
+
+msgid "IDS_IME_BODY_LANG_PUNJABI"
+msgstr "ਪੰਜਾਬੀ"
+
+msgid "IDS_IME_BODY_LANG_ROMANIAN"
+msgstr "Română"
+
+msgid "IDS_IME_BODY_LANG_SINHALA"
+msgstr "සිංහල"
+
+msgid "IDS_IME_BODY_LANG_TAMIL"
+msgstr "தமிழ்"
+
+msgid "IDS_IME_BODY_LANG_TELUGU"
+msgstr "తెలుగు"
+
+msgid "IDS_IME_BODY_LATVIAN"
+msgstr "Латыш"
+
+msgid "IDS_IME_BODY_MACEDONIAN"
+msgstr "Македон"
+
+msgid "IDS_IME_BODY_MALAY"
+msgstr "малаккалық"
+
+msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
+msgstr "Ең ұзын сөз ұзындығынан (%d) асып кетті"
+
+msgid "IDS_IME_BODY_MOAKEY"
+msgstr "MoAKey"
+
+msgid "IDS_IME_BODY_MOAKEY_TIP"
+msgstr "MoAKey кеңесі"
+
+msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
+msgstr "Көп мәнді сөзді аяқтау"
+
+msgid "IDS_IME_BODY_NO_OPTIONS"
+msgstr "Опциялар жоқ"
+
+msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
+msgstr "Тігінен енгізу параметрлері"
+
+msgid "IDS_IME_BODY_PREDICTION"
+msgstr "Болжам"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Болжайтын мәтін"
+
+msgid "IDS_IME_BODY_PROCESSING_ING"
+msgstr "Өңделуде..."
+
+msgid "IDS_IME_BODY_REGIONAL_INPUT"
+msgstr "Аймақтық енгізу"
+
+msgid "IDS_IME_BODY_SELECTION"
+msgstr "Таңдау"
+
+msgid "IDS_IME_BODY_SHORTCUT"
+msgstr "Тіркесім"
+
+msgid "IDS_IME_BODY_SPELL_CORRECTION"
+msgstr "Емлені түзету"
+
+msgid "IDS_IME_BODY_SUBSTITUTION"
+msgstr "Алмастыру"
+
+msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
+msgstr "Қайтадан тыңдай бастау үшін түртіңіз"
+
+msgid "IDS_IME_BODY_THEME"
+msgstr "Тақырып"
+
+msgid "IDS_IME_BODY_TONE"
+msgstr "Дыбыс"
+
+msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
+msgstr "Сөздер танылмады. Баяу әрі анық айтып, әрекетті қайталаңыз"
+
+msgid "IDS_IME_BODY_XT9_HELP"
+msgstr "XT9 анықтамасы"
+
+msgid "IDS_IME_BODY_XT9_OPTIONS"
+msgstr "XT9 опциялары"
+
+msgid "IDS_IME_HEADER_NEW_WORDS"
+msgstr "Жаңа сөздер"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 пернетақтасы"
+
+msgid "IDS_IME_OPT_AFTER_1_LETTER"
+msgstr "1 әріптен кейін"
+
+msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
+msgstr "%d әріптен кейін"
+
+msgid "IDS_IME_OPT_BLACK"
+msgstr "Қара"
+
+msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
+msgstr "Chunjiyin"
+
+msgid "IDS_IME_OPT_COLOUR"
+msgstr "Түс"
+
+msgid "IDS_IME_OPT_DO_NOT_SHOW"
+msgstr "Көрсетпеу"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Енгізу"
+
+msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
+msgstr "Толық \"Qwerty\" пернетақтасы"
+
+msgid "IDS_IME_OPT_GO_ABB"
+msgstr "Өту"
+
+msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
+msgstr "Қосылу"
+
+msgid "IDS_IME_OPT_LANG_CZECH"
+msgstr "Čeština"
+
+msgid "IDS_IME_OPT_LANG_DANISH"
+msgstr "Dansk"
+
+msgid "IDS_IME_OPT_LANG_FINNISH"
+msgstr "Suomi"
+
+msgid "IDS_IME_OPT_LANG_HUNGARIAN"
+msgstr "Magyar"
+
+msgid "IDS_IME_OPT_LANG_IRISH"
+msgstr "Gaeilge"
+
+msgid "IDS_IME_OPT_LANG_KAZAKH"
+msgstr "Қазақ"
+
+msgid "IDS_IME_OPT_LANG_KOREAN"
+msgstr "한국어"
+
+msgid "IDS_IME_OPT_LANG_POLISH"
+msgstr "Polski"
+
+msgid "IDS_IME_OPT_LANG_SLOVAK"
+msgstr "Slovenčina"
+
+msgid "IDS_IME_OPT_LANG_UKRAINIAN"
+msgstr "Українська"
+
+msgid "IDS_IME_OPT_LANG_WELSH"
+msgstr "Cymraeg"
+
+msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgstr "Кіру"
+
+msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
+msgstr "Шағын \"Qwerty\" пернетақтасы"
+
+msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
+msgstr "MoAKey пернетақтасы"
+
+msgid "IDS_IME_OPT_MOAKEY_POP_UP"
+msgstr "MoAKey қалқымалы терезесі"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
+msgstr "Qwerty пернетақтасы"
+
+msgid "IDS_IME_OPT_SHADES_OF_GREY"
+msgstr "Сұр түсті көлеңкелер"
+
+msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
+msgstr "0.1 секундқа көрсету"
+
+msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
+msgstr "0.2 секундқа көрсету"
+
+msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
+msgstr "0.3 секундқа көрсету"
+
+msgid "IDS_IME_OPT_SLOW"
+msgstr "Баяу"
+
+msgid "IDS_IME_OPT_SPEED"
+msgstr "Жылдамдық"
+
+msgid "IDS_IME_OPT_STROKE_CHN"
+msgstr "Stroke"
+
+msgid "IDS_IME_OPT_THICK"
+msgstr "Қалың"
+
+msgid "IDS_IME_OPT_WHITE"
+msgstr "Ақ"
+
+msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
+msgstr "Сызба тақтасымен жазыңыз"
+
+msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
+msgstr "Толық экран арқылы жазу"
+
+msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
+msgstr "XT9 арабша (Мысыр)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
+msgstr "XT9 қытайша (Cangjie)"
+
+msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
+msgstr "XT9 қытайша (PinYin)"
+
+msgid "IDS_IME_OPT_XT9_ENGLISH"
+msgstr "XT9 ағылшынша"
+
+msgid "IDS_IME_OPT_XT9_FRENCH"
+msgstr "XT9 французша"
+
+msgid "IDS_IME_OPT_XT9_GERMAN"
+msgstr "XT9 немісше"
+
+msgid "IDS_IME_OPT_XT9_ITALIAN"
+msgstr "XT9 италянша"
+
+msgid "IDS_IME_OPT_XT9_PORTUGUESE"
+msgstr "XT9 португалша"
+
+msgid "IDS_IME_OPT_XT9_RUSSIAN"
+msgstr "XT9 орысша"
+
+msgid "IDS_IME_OPT_XT9_SPANISH"
+msgstr "XT9 испанша"
+
+msgid "IDS_IME_POP_LANG_ESTONIAN"
+msgstr "Eesti"
+
+msgid "IDS_IME_POP_LANG_ICELANDIC"
+msgstr "íslenska"
+
+msgid "IDS_IME_POP_LANG_LATVIAN"
+msgstr "Latviešu"
+
+msgid "IDS_IME_POP_LANG_LITHUANIAN"
+msgstr "Lietuvių"
+
+msgid "IDS_IME_POP_LANG_MACEDONIAN"
+msgstr "Македонски"
+
+msgid "IDS_IME_POP_LANG_NORWEGIAN"
+msgstr "Norsk"
+
+msgid "IDS_IME_POP_LANG_SERBIAN"
+msgstr "Srpski"
+
+msgid "IDS_IME_POP_LANG_SLOVENIAN"
+msgstr "Slovenščina"
+
+msgid "IDS_IME_POP_LANG_SWEDISH"
+msgstr "Svenska"
+
+msgid "IDS_IME_OPT_LANG_DUTCH"
+msgstr "Nederlands"
+
+msgid "IDS_IME_OPT_LANG_ENGLISH"
+msgstr "English"
+
+msgid "IDS_IME_OPT_LANG_FRENCH"
+msgstr "Français"
+
+msgid "IDS_IME_OPT_LANG_GERMAN"
+msgstr "Deutsch"
+
+msgid "IDS_IME_OPT_LANG_GREEK"
+msgstr "Ελληνικά"
+
+msgid "IDS_IME_OPT_LANG_RUSSIAN"
+msgstr "Русский"
+
+msgid "IDS_IME_OPT_LANG_SPANISH"
+msgstr "Español"
+
+msgid "IDS_IME_OPT_LANG_TURKISH"
+msgstr "Türkçe"
+
+msgid "IDS_IME_POP_LANG_ITALIAN"
+msgstr "Italiano"
+
+msgid "IDS_IME_POP_LANG_PORTUGUESE"
+msgstr "Português"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Пернетақта параметрлерінде кемінде бір тіл таңдау керек"
+
+msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
+msgstr "Аппараттық құрал пернетақтасы"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Пернетақта параметрлері"
+
+msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
+msgstr "Бағдарламалық құрал пернетақтасы"
+
+msgid "IDS_IME_BODY_DUTCH"
+msgstr "Dutch"
+
+msgid "IDS_IME_BODY_ENGLISH"
+msgstr "Ағылшын тілі"
+
+msgid "IDS_IME_OPT_QWERTY"
+msgstr "Qwerty"
+

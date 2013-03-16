@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="290" height="252" style="popup" key_width="140" key_height="56" label_type="AUTOPOPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_popup_bg.png</button_normal>
+  </image_path>
+  <row x="5" y="5">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.co.us</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.co.us</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.or.us</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.or.us</rec>
+      </key_value>
+    </key>
+  </row>
+  <row>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.ac.us</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.ac.us</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.go.us</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.go.us</rec>
+      </key_value>
+    </key>
+  </row>
+  <row>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.net</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.net</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.org</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.org</rec>
+      </key_value>
+    </key>
+  </row>
+  <row>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.edu</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.edu</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.gov</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_bg_Popup.png</rec>
+        <rec button="pressed">B09_bubble_popup_press.png</rec>
+        <rec button="disabled">B09_bg_Popup.png</rec>
+      </background_image>
+      <key_value>
+        <rec>.gov</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="314" height="152" style="popup" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>textinput_popup_bg7.png</button_normal>
+  </image_path>
+  <row x="5" y="5" key_width="76" key_height="142">
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="5" y="5" label_type="PUNCTUATION_POPUP">
+      <image_label>
+        <rec button="normal">B09_popup_icon_setting.png</rec>
+        <rec button="pressed">B09_popup_icon_setting_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>OptionWindow</rec>
+      </key_value>
+      <key_event>
+        <rec>0x18</rec>
+      </key_event>
+    </key>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="81" y="5" label_type="PUNCTUATION_POPUP">
+      <image_label>
+        <rec button="normal">B09_popup_icon_mike.png</rec>
+        <rec button="pressed">B09_popup_icon_mike_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x19</rec>
+      </key_event>
+    </key>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="157" y="5" label_type="PUNCTUATION_POPUP">
+      <image_label>
+        <rec button="normal">B09_popup_icon_handwriting.png</rec>
+        <rec button="pressed">B09_popup_icon_handwriting_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x1a</rec>
+      </key_event>
+    </key>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="233" y="5" label_type="PUNCTUATION_POPUP">
+      <image_label>
+        <rec button="normal">B09_popup_icon_clipboard.png</rec>
+        <rec button="pressed">B09_popup_icon_clipboard_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x1b</rec>
+      </key_event>
+    </key>
+  </row>
+</layout>
