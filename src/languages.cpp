@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@
  *
  */
 
-#include "scl.h"
+#include <scl.h>
 #include "utils.h"
 #include "config.h"
 #include "languages.h"
+using namespace scl;
 
 extern CONFIG_VALUES g_config_values;
 
@@ -128,8 +129,12 @@ sclboolean ISELanguageManager::select_current_language()
 {
     sclboolean ret = FALSE;
 
-    if (!(ret = select_language(current_language.c_str()))) {
-        ret = select_next_language();
+    if (temporary_language.empty()) {
+        if (!(ret = select_language(current_language.c_str()))) {
+            ret = select_next_language();
+        }
+    } else {
+        ret = select_language(temporary_language.c_str(), TRUE);
     }
 
     return ret;
@@ -140,6 +145,7 @@ sclboolean ISELanguageManager::select_next_language()
     sclboolean ret = FALSE;
 
     if (!(temporary_language.empty())) {
+        temporary_language.clear();
         return select_current_language();
     } else {
         LANGUAGE_INFO *info = get_language_info(current_language.c_str());
@@ -148,7 +154,6 @@ sclboolean ISELanguageManager::select_next_language()
                 info->callback->on_language_unselected(current_language.c_str(), info->selected_input_mode.c_str());
             }
         }
-        temporary_language.clear();
 
         /* Look for the next language, after we find the current language */
         sclboolean found_current = FALSE;
@@ -216,6 +221,7 @@ sclboolean ISELanguageManager::select_previous_language()
     sclboolean ret = FALSE;
 
     if (!(temporary_language.empty())) {
+        temporary_language.clear();
         return select_current_language();
     } else {
         LANGUAGE_INFO *info = get_language_info(current_language.c_str());
@@ -224,7 +230,6 @@ sclboolean ISELanguageManager::select_previous_language()
                 info->callback->on_language_unselected(current_language.c_str(), info->selected_input_mode.c_str());
             }
         }
-        temporary_language.clear();
 
         /* Look for the next language, after we find the current language */
         sclboolean found_current = FALSE;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
 #ifndef _SDK_H_
 #define _SDK_H_
 
-#include "scl.h"
-#include "ise_lang_table.h"
 #define MVK_BackSpace 0xff08
 #define MVK_Left 0xff51
 #define MVK_Right 0xff53

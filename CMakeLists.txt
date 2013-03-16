@@ -90,7 +90,9 @@ pkg_check_modules(SETUP_PKGS REQUIRED
         elementary
         sensor
         dlog
+        libscl-ui
         ecore-imf
+        libxml-2.0
         isf
         )
 

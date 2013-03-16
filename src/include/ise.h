@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@
 #ifndef _ISE_H_
 #define _ISE_H_
 
-#include "scl.h"
-#include "languages.h"
-
+#include <scl.h>
 #include <Ecore.h>
 #include <Evas.h>
 #include <Ecore_Evas.h>
@@ -29,10 +27,10 @@
 #include <config.h>
 #endif  /*  */
 
-using namespace scl;
+#include "languages.h"
 
-#define ISE_VERSION "0.6.6-1"
-#define LOCALEDIR 		"/usr/share/locale"
+#define ISE_VERSION "0.6.9-1"
+#define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry.xml"

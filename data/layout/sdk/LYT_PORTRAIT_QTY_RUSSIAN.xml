@@ -3,6 +3,11 @@
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
+    <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+    <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
+  </background_image>
   <row x="14" y="10">
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -10,11 +15,6 @@
         <rec shift="on">Й</rec>
         <rec shift="loc">Й</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -22,11 +22,6 @@
         <rec shift="on">Ц</rec>
         <rec shift="loc">Ц</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -34,11 +29,6 @@
         <rec shift="on">У</rec>
         <rec shift="loc">У</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -46,11 +36,6 @@
         <rec shift="on">К</rec>
         <rec shift="loc">К</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -58,11 +43,6 @@
         <rec shift="on">Е</rec>
         <rec shift="loc">Е</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -70,11 +50,6 @@
         <rec shift="on">Н</rec>
         <rec shift="loc">Н</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -82,11 +57,6 @@
         <rec shift="on">Г</rec>
         <rec shift="loc">Г</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -94,11 +64,6 @@
         <rec shift="on">Ш</rec>
         <rec shift="loc">Ш</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -106,11 +71,6 @@
         <rec shift="on">Щ</rec>
         <rec shift="loc">Щ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -118,11 +78,6 @@
         <rec shift="on">З</rec>
         <rec shift="loc">З</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -130,11 +85,6 @@
         <rec shift="on">Х</rec>
         <rec shift="loc">Х</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="14">
       <label>
@@ -142,11 +92,6 @@
         <rec shift="on">Ъ</rec>
         <rec shift="loc">Ъ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
   </row>
   <row x="44">
@@ -156,11 +101,6 @@
         <rec shift="on">Ф</rec>
         <rec shift="loc">Ф</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -168,11 +108,6 @@
         <rec shift="on">Ы</rec>
         <rec shift="loc">Ы</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -180,11 +115,6 @@
         <rec shift="on">В</rec>
         <rec shift="loc">В</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -192,11 +122,6 @@
         <rec shift="on">А</rec>
         <rec shift="loc">А</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -204,11 +129,6 @@
         <rec shift="on">П</rec>
         <rec shift="loc">П</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -216,11 +136,6 @@
         <rec shift="on">Р</rec>
         <rec shift="loc">Р</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -228,11 +143,6 @@
         <rec shift="on">О</rec>
         <rec shift="loc">О</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -240,11 +150,6 @@
         <rec shift="on">Л</rec>
         <rec shift="loc">Л</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -252,11 +157,6 @@
         <rec shift="on">Д</rec>
         <rec shift="loc">Д</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -264,11 +164,6 @@
         <rec shift="on">Ж</rec>
         <rec shift="loc">Ж</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="42">
       <label>
@@ -276,11 +171,6 @@
         <rec shift="on">Э</rec>
         <rec shift="loc">Э</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
   </row>
   <row x="14">
@@ -309,11 +199,6 @@
         <rec shift="on">Я</rec>
         <rec shift="loc">Я</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -321,11 +206,6 @@
         <rec shift="on">Ч</rec>
         <rec shift="loc">Ч</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -333,11 +213,6 @@
         <rec shift="on">С</rec>
         <rec shift="loc">С</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -345,11 +220,6 @@
         <rec shift="on">М</rec>
         <rec shift="loc">М</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -357,11 +227,6 @@
         <rec shift="on">И</rec>
         <rec shift="loc">И</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -369,11 +234,6 @@
         <rec shift="on">Т</rec>
         <rec shift="loc">Т</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -381,11 +241,6 @@
         <rec shift="on">Ь</rec>
         <rec shift="loc">Ь</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -393,11 +248,6 @@
         <rec shift="on">Б</rec>
         <rec shift="loc">Б</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -405,11 +255,6 @@
         <rec shift="on">Ю</rec>
         <rec shift="loc">Ю</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -417,11 +262,6 @@
         <rec shift="on">Ë</rec>
         <rec shift="loc">Ë</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="control" hit_right="14" use_repeat_key="true">
       <image_label>

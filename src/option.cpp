@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 #include <string.h>
-
+#include <scl.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
@@ -28,6 +28,8 @@
 
 #include "option.h"
 #include "languages.h"
+
+using namespace scl;
 
 #define OPTION_MAX_LANGUAGES 255
 
@@ -127,10 +129,6 @@ create_main_window(int degree)
 
     const char *szProfile[] = {"mobile", ""};
     elm_win_profiles_set(window, szProfile, 1);
-
-#ifndef APPLY_WINDOW_MANAGER_CHANGE
-    ecore_x_icccm_name_class_set(elm_win_xwindow_get(static_cast<Evas_Object*>(window)), "Options", "ISF");
-#endif
 
     elm_win_borderless_set(window, EINA_TRUE);
     elm_win_rotation_with_resize_set(window, degree);

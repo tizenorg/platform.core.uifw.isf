@@ -3,6 +3,11 @@
   <image_path>
     <button_normal>B09_panel_h.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
+    <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
+    <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
+  </background_image>
   <row x="14" y="10">
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -10,11 +15,6 @@
         <rec shift="on">ق</rec>
         <rec shift="loc">ق</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -22,11 +22,6 @@
         <rec shift="on">و</rec>
         <rec shift="loc">و</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -34,11 +29,6 @@
         <rec shift="on">ع</rec>
         <rec shift="loc">ع</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ڑ" multitouch_type="settle_previous">
       <label>
@@ -47,11 +37,6 @@
         <rec shift="loc">ڑ</rec>
         <rec shift="off" multi="1">ڑ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ٹ" multitouch_type="settle_previous">
       <label>
@@ -60,11 +45,6 @@
         <rec shift="loc">ٹ</rec>
         <rec shift="off" multi="1">ٹ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -72,11 +52,6 @@
         <rec shift="on">ے</rec>
         <rec shift="loc">ے</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ء" multitouch_type="settle_previous">
       <label>
@@ -85,11 +60,6 @@
         <rec shift="loc">ء</rec>
         <rec shift="off" multi="1">ء</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -97,11 +67,6 @@
         <rec shift="on">ى</rec>
         <rec shift="loc">ى</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -109,11 +74,6 @@
         <rec shift="on">ە</rec>
         <rec shift="loc">ە</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -121,11 +81,6 @@
         <rec shift="on">پ</rec>
         <rec shift="loc">پ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
   </row>
   <row x="14">
@@ -136,11 +91,6 @@
         <rec shift="loc">آ</rec>
         <rec shift="off" multi="1">آ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ش" multitouch_type="settle_previous">
       <label>
@@ -149,11 +99,6 @@
         <rec shift="loc">ش</rec>
         <rec shift="off" multi="1">ش</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ڈ" multitouch_type="settle_previous">
       <label>
@@ -162,11 +107,6 @@
         <rec shift="loc">ڈ</rec>
         <rec shift="off" multi="1">ڈ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -174,11 +114,6 @@
         <rec shift="on">ف</rec>
         <rec shift="loc">ف</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="غ" multitouch_type="settle_previous">
       <label>
@@ -187,11 +122,6 @@
         <rec shift="loc">غ</rec>
         <rec shift="off" multi="1">غ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ح" multitouch_type="settle_previous">
       <label>
@@ -200,11 +130,6 @@
         <rec shift="loc">ح</rec>
         <rec shift="off" multi="1">ح</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ژ" multitouch_type="settle_previous">
       <label>
@@ -213,11 +138,6 @@
         <rec shift="loc">ژ</rec>
         <rec shift="off" multi="1">ژ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -225,11 +145,6 @@
         <rec shift="on">خ</rec>
         <rec shift="loc">خ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -237,11 +152,6 @@
         <rec shift="on">ک</rec>
         <rec shift="loc">ک</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -249,11 +159,6 @@
         <rec shift="on">ل</rec>
         <rec shift="loc">ل</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
   </row>
   <row x="18">
@@ -281,11 +186,6 @@
         <rec shift="loc">ذ</rec>
         <rec shift="off" multi="1">ذ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ض" multitouch_type="settle_previous">
       <label>
@@ -294,11 +194,6 @@
         <rec shift="loc">ض</rec>
         <rec shift="off" multi="1">ض</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ث" multitouch_type="settle_previous">
       <label>
@@ -307,11 +202,6 @@
         <rec shift="loc">ث</rec>
         <rec shift="off" multi="1">ث</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ظ" multitouch_type="settle_previous">
       <label>
@@ -320,11 +210,6 @@
         <rec shift="loc">ظ</rec>
         <rec shift="off" multi="1">ظ</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
@@ -332,11 +217,6 @@
         <rec shift="on">ب</rec>
         <rec shift="loc">ب</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ں" multitouch_type="settle_previous">
       <label>
@@ -345,11 +225,6 @@
         <rec shift="loc">ں</rec>
         <rec shift="off" multi="1">ں</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" key_spacing="45">
       <label>
@@ -357,11 +232,6 @@
         <rec shift="on">م</rec>
         <rec shift="loc">م</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="control" use_repeat_key="true" width="140">
       <image_label>
@@ -416,7 +286,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="IMAGE_SPACE" width="612">
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="612">
       <label>
         <rec>ﺍﺭﺩﻭ</rec>
       </label>
@@ -505,7 +375,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="IMAGE_SPACE" width="358">
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="358">
       <label>
         <rec>ﺍﺭﺩﻭ</rec>
       </label>
@@ -609,7 +479,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="IMAGE_SPACE" width="358">
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="358">
       <label>
         <rec>ﺍﺭﺩﻭ</rec>
       </label>

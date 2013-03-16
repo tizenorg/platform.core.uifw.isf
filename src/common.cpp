@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,40 +40,6 @@ void signal_handler(int sig);
 
 /* Internal input handler function */
 Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler);
-
-#ifndef APPLY_WINDOW_MANAGER_CHANGE
-static void
-set_transient_for_app_window(Evas_Object *keypad_win)
-{
-    /* Set a transient window for window stack */
-    /* Gets the current XID of the active window into the root window property  */
-    Atom type_return;
-    unsigned long nitems_return;
-    unsigned long bytes_after_return;
-    int format_return;
-    unsigned char *data = NULL;
-    Ecore_X_Window xAppWindow;
-    Ecore_X_Window xKeypadWin = elm_win_xwindow_get(keypad_win);
-    gint ret = 0;
-
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get(), ecore_x_window_root_get(xKeypadWin),
-        ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
-        0, G_MAXLONG, False, XA_WINDOW, &type_return,
-        &format_return, &nitems_return, &bytes_after_return,
-        &data);
-
-    if (ret == Success) {
-        if (data) {
-            if (type_return == XA_WINDOW) {
-                xAppWindow = *(Window *)data;
-                LOGD("TRANSIENT_FOR SET : %x , %x", xAppWindow, xKeypadWin);
-                ecore_x_icccm_transient_for_set(xKeypadWin, xAppWindow);
-            }
-            XFree(data);
-        }
-    }
-}
-#endif
 
 static int get_root_window_degree(Evas_Object *keypad_win)
 {
@@ -177,43 +143,14 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
     int angle;
 
     IISECommonEventCallback *callback = NULL;
-    CISECommon *impl = CISECommon::get_instance();
-    if (impl) {
-        callback = impl->get_core_event_callback();
+    CISECommon *common = CISECommon::get_instance();
+    Evas_Object *main_window = NULL;
+    if (common) {
+        callback = common->get_core_event_callback();
+        main_window = common->get_main_window();
     }
 
 #ifndef APPLY_WINDOW_MANAGER_CHANGE
-    Evas_Object *keypad_win = reinterpret_cast<Evas_Object*>(data);
-    const sclint MAX_TRANSIENT_FOR_CHECK_NUM = 100;
-    if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE) {
-        angle = ev->data.l[0];
-        sclint count = 0;
-        sclboolean found_active = FALSE;
-        Ecore_X_Window active_window = ev->data.l[1];
-        Ecore_X_Window current_window = elm_win_xwindow_get(keypad_win);
-        do {
-            count++; /* Just in case for transient_for loop */
-            Ecore_X_Window transient_for = ecore_x_icccm_transient_for_get(current_window);
-            if (transient_for) {
-                if (transient_for == active_window) {
-                    found_active = TRUE;
-                }
-                if (transient_for == current_window) {
-                    transient_for = 0;
-                }
-            }
-            current_window = transient_for;
-        } while (current_window && !found_active && count < MAX_TRANSIENT_FOR_CHECK_NUM);
-        LOGD("ROOT_ANGLE : activewin %x currentwin %x found %d angle %d", active_window, current_window, found_active, angle);
-        if (found_active) {
-            if (callback) {
-                callback->set_rotation_degree(angle);
-            }
-            if (impl) {
-                impl->update_input_context(ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
-            }
-        }
-    }
 #else
     if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE) {
         printf("ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE , %d %d\n", ev->data.l[0], gFHiddenState);
@@ -230,6 +167,16 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
         gFHiddenState = !(ev->data.l[0]);
     }
 #endif
+
+    if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
+        if (ev->win == elm_win_xwindow_get(main_window)) {
+            int angle = ev->data.l[1];
+            LOGD("_ECORE_X_ATOM_E_WINDOW_ROTATION_REQUEST, %d\n", angle);
+            if (callback) {
+                callback->set_rotation_degree(angle);
+            }
+        }
+    }
 
     return ECORE_CALLBACK_RENEW;
 }
@@ -286,18 +233,26 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     elm_init(argc, argv);
 
-    m_main_window = elm_win_add(NULL, "KEYBOARD_WINDOW", ELM_WIN_BASIC);
+    m_main_window = elm_win_add(NULL, "KEYBOARD_WINDOW", ELM_WIN_UTILITY);
+
     elm_win_alpha_set(m_main_window, EINA_TRUE);
     elm_win_borderless_set(m_main_window, EINA_TRUE);
     elm_win_keyboard_win_set(m_main_window, EINA_TRUE);
     elm_win_autodel_set(m_main_window, EINA_TRUE);
 
+    unsigned int set = 1;
+    ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
+        ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
+        &set, 1);
+
 #ifdef FULL_SCREEN_TEST
     elm_win_fullscreen_set(m_main_window, EINA_TRUE);
 #endif
 
-    Evas_Object *box = elm_box_add(m_main_window);
-    elm_win_resize_object_add(m_main_window, box);
+    /*Evas_Object *box = elm_box_add(m_main_window);
+    evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    elm_win_resize_object_add(m_main_window, box);*/
 
     if (m_event_callback) {
         m_event_callback->init();
@@ -316,6 +271,14 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     int fd = m_helper_agent.get_connection_number();
 
     if (fd >= 0) {
+        Ecore_X_Window xwindow = elm_win_xwindow_get(m_main_window);
+        char xid[255];
+        snprintf(xid, 255, "%d", xwindow);
+        scim::Property prop (xid, "XID", "ICON", "TIP");
+        scim::PropertyList props;
+        props.push_back (prop);
+        m_helper_agent.register_properties (props);
+
         ecore_main_fd_handler_add(fd, ECORE_FD_READ, input_handler, NULL, NULL, NULL);
     }
 
@@ -378,17 +341,13 @@ Evas_Object* CISECommon::get_main_window()
     return m_main_window;
 }
 
-void CISECommon::update_keyboard_geometry(SclRectangle rect)
+void CISECommon::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
-    /*Ecore_X_Window zone, xwin;
-
-    xwin = elm_win_xwindow_get(get_main_window());
-    zone = ecore_x_e_illume_zone_get(xwin);
-
-    ecore_x_e_illume_keyboard_geometry_set(zone, rect.x, rect.y, rect.width, rect.height);*/
-
-    m_helper_agent.update_geometry(rect.x, rect.y, rect.width, rect.height);
-    m_helper_agent.update_input_context (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+    /* Temporary code, this should be automatically calculated when changing input mode */
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),   0, 0, 0, portrait.width, portrait.height);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),  90, 0, 0, landscape.height, landscape.width);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 180, 0, 0, portrait.width, portrait.height);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 270, 0, 0, landscape.height, landscape.width);
 }
 
 scim::String CISECommon::get_keyboard_ise_uuid()
@@ -527,25 +486,12 @@ void CISECommon::update_aux_string(const sclchar *str)
 
 void CISECommon::update_input_context(sclu32 type, sclu32 value)
 {
-    if (type == ECORE_IMF_INPUT_PANEL_STATE_EVENT) {
-        Ecore_X_Window zone, xwin;
-
-        xwin = elm_win_xwindow_get(get_main_window());
-        zone = ecore_x_e_illume_zone_get(xwin);
-
-        if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-            ecore_x_e_virtual_keyboard_state_set(zone,ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-        } else {
-            ecore_x_e_virtual_keyboard_state_set(zone,ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-        }
-    }
-
     m_helper_agent.update_input_context(type, value);
 }
 
 void CISECommon::set_candidate_position(sclint left, sclint top)
 {
-    m_helper_agent.update_input_context(left, top);
+    m_helper_agent.set_candidate_position(left, top);
 }
 
 void CISECommon::candidate_hide(void)
@@ -691,10 +637,6 @@ void slot_focus_in (const scim::HelperAgent *agent, int ic, const scim::String &
 void slot_ise_show (const scim::HelperAgent *agent, int ic, char *buf, size_t &len) {
     CISECommon *impl = CISECommon::get_instance();
     if (impl) {
-#ifndef APPLY_WINDOW_MANAGER_CHANGE
-        /* Set a transient window for window stack */
-        set_transient_for_app_window(impl->get_main_window());
-#endif
         /* Make sure the appropriate keyboard ise was selected -> is this really necessary? */
         //impl->set_keyboard_ise_by_uuid(impl->get_keyboard_ise_uuid().c_str());
 

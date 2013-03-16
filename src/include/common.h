@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,9 @@
 
 #include <scim.h>
 #include <Evas.h>
-
+#include <scl.h>
 #include <ise_context.h>
 
-#include "scl.h"
 
 //SCL_BEGIN_DECLS
 
@@ -157,12 +156,10 @@ public:
      */
     Evas_Object* get_main_window();
 
-    /* Maybe we would need this kind of API someday.. */
     /**
      * @brief This API updates the keyboard window's geometry information
-     * @param[in] rect The rectangle information of keyboard window
      */
-    void update_keyboard_geometry(SclRectangle rect);
+    void set_keyboard_size_hints(SclSize portrait, SclSize landscape);
 
     /**
      * @brief This API returns the uuid of keyboard ise that was previously set.

@@ -3,116 +3,71 @@
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
+    <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+    <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
+  </background_image>
   <row x="4" y="10">
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="#" multitouch_type="settle_previous">
       <label>
         <rec multi="0">1</rec>
         <rec multi="1">#</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="&amp;" multitouch_type="settle_previous">
       <label>
         <rec multi="0">2</rec>
         <rec multi="1">&amp;</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="%" multitouch_type="settle_previous">
       <label>
         <rec multi="0">3</rec>
         <rec multi="1">%</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="+" multitouch_type="settle_previous">
       <label>
         <rec multi="0">4</rec>
         <rec multi="1">+</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="=" multitouch_type="settle_previous">
       <label>
         <rec multi="0">5</rec>
         <rec multi="1">=</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="_" multitouch_type="settle_previous">
       <label>
         <rec multi="0">6</rec>
         <rec multi="1">_</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="\" multitouch_type="settle_previous">
       <label>
         <rec multi="0">7</rec>
         <rec multi="1">\</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="|" multitouch_type="settle_previous">
       <label>
         <rec multi="0">8</rec>
         <rec multi="1">|</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="&lt;" multitouch_type="settle_previous">
       <label>
         <rec multi="0">9</rec>
         <rec multi="1">&lt;</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="&gt;" multitouch_type="settle_previous">
       <label>
         <rec multi="0">0</rec>
         <rec multi="1">&gt;</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
   </row>
   <row x="40">
@@ -121,99 +76,54 @@
         <rec multi="0">-</rec>
         <rec multi="1">{</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="}" multitouch_type="settle_previous">
       <label>
         <rec multi="0">@</rec>
         <rec multi="1">}</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="[" multitouch_type="settle_previous">
       <label>
         <rec multi="0">*</rec>
         <rec multi="1">[</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="]" multitouch_type="settle_previous">
       <label>
         <rec multi="0">^</rec>
         <rec multi="1">]</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="$" multitouch_type="settle_previous">
       <label>
         <rec multi="0">:</rec>
         <rec multi="1">$</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="£" multitouch_type="settle_previous">
       <label>
         <rec multi="0">;</rec>
         <rec multi="1">£</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="¥" multitouch_type="settle_previous">
       <label>
         <rec multi="0">(</rec>
         <rec multi="1">¥</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="€" multitouch_type="settle_previous">
       <label>
         <rec multi="0">)</rec>
         <rec multi="1">€</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="₩" multitouch_type="settle_previous" hit_right="42">
       <label>
         <rec multi="0">~</rec>
         <rec multi="1">₩</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
   </row>
   <row x="4">
@@ -235,77 +145,42 @@
         <rec multi="0">/</rec>
         <rec multi="1">¢</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="`" multitouch_type="settle_previous">
       <label>
         <rec multi="0">'</rec>
         <rec multi="1">`</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="°" multitouch_type="settle_previous">
       <label>
         <rec multi="0">"</rec>
         <rec multi="1">°</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="·" multitouch_type="settle_previous">
       <label>
         <rec multi="0">.</rec>
         <rec multi="1">·</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="®" multitouch_type="settle_previous">
       <label>
         <rec multi="0">,</rec>
         <rec multi="1">®</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="©" multitouch_type="settle_previous">
       <label>
         <rec multi="0">?</rec>
         <rec multi="1">©</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_type="string" long_key_value="¿" multitouch_type="settle_previous" key_spacing="22">
       <label>
         <rec multi="0">!</rec>
         <rec multi="1">¿</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="control" use_magnifier="true" longkey_magnifier="true" hit_right="6" use_repeat_key="true" width="86">
       <image_label>

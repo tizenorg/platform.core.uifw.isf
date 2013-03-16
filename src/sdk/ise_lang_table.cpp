@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
  *
  */
 
-#include "scl.h"
-#include "ise_lang_table.h"
+#include <scl.h> // scl structures need
 #include <libxml/parser.h>
 #include <vector>
 #include <assert.h>
 #include <memory.h>
 #include <string.h>
 
+#include "ise_lang_table.h"
 using namespace std;
+using namespace scl;
 
 #define LANG_TABLE_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/ise_lang_table.xml"
 
@@ -51,6 +52,7 @@ Ise_Lang::~Ise_Lang() {
         free(m_table[i].language_name);
         free(m_table[i].inputmode_QTY);
         free(m_table[i].inputmode_QTY_name);
+        free(m_table[i].main_keyboard_name);
         free(m_table[i].keyboard_ise_uuid);
         free(m_table[i].country_code_URL);
     }
@@ -222,6 +224,13 @@ Ise_Lang::parsing_lang_table(const xmlNodePtr p_node) {
 
             xmlChar* inputmode_QTY_name = xmlGetProp(cur_node, (const xmlChar*)"inputmode_QTY_name");
             m_table[m_size].inputmode_QTY_name = (sclchar*)inputmode_QTY_name;
+
+            xmlChar* main_keyboard_name = xmlGetProp(cur_node, (const xmlChar*)"main_keyboard_name");
+            if (main_keyboard_name) {
+                m_table[m_size].main_keyboard_name = (sclchar*)main_keyboard_name;
+            } else {
+                m_table[m_size].main_keyboard_name = (sclchar *)strdup("abc");
+            }
 
             string uuid = find_uuid(vec_keyboard_uuid, get_prop_str(cur_node, "keyboard_ise_uuid"));
             m_table[m_size].keyboard_ise_uuid = get_str(uuid);

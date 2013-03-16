@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ typedef struct SDK_ISE_LANG_TABLE {
         inputmode_QTY = NULL;
         inputmode_QTY_name = NULL;
         keyboard_ise_uuid = NULL;
+        main_keyboard_name = NULL;
         country_code_URL = NULL;
         language_code = 0;
         language_command = 0;
@@ -47,6 +48,12 @@ typedef struct SDK_ISE_LANG_TABLE {
 
     /* The keyboard ISE's uuid, since each language might have to use different IMEngines. ise-engine-hangul for korean, ise-engine-sunpinyin for chinese,... */
     sclchar *keyboard_ise_uuid;
+
+    /* Click "?123" button, ISE will show SYM keyboard, and the "?123" button changes the label to main_keyboard_name,
+     * then click on the button will back to main_keyboard
+     * the main_keyboard_name may be "abc" in English, "汉" in Chinese and so on
+     */
+    sclchar *main_keyboard_name;
 
     /* URL country code */
     sclchar *country_code_URL;

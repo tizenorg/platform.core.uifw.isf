@@ -3,6 +3,11 @@
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
+    <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+    <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
+  </background_image>
   <row x="4" y="10">
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous">
       <label>
@@ -11,11 +16,6 @@
         <rec shift="loc" multi="0">ㅃ</rec>
         <rec multi="1">1</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">q</rec>
       </key_value>
@@ -27,11 +27,6 @@
         <rec shift="loc" multi="0">ㅉ</rec>
         <rec multi="1">2</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">w</rec>
       </key_value>
@@ -43,11 +38,6 @@
         <rec shift="loc" multi="0">ㄸ</rec>
         <rec multi="1">3</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">e</rec>
       </key_value>
@@ -59,11 +49,6 @@
         <rec shift="loc" multi="0">ㄲ</rec>
         <rec multi="1">4</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">r</rec>
       </key_value>
@@ -75,11 +60,6 @@
         <rec shift="loc" multi="0">ㅆ</rec>
         <rec multi="1">5</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">t</rec>
       </key_value>
@@ -89,11 +69,6 @@
         <rec multi="0">ㅛ</rec>
         <rec multi="1">6</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">y</rec>
       </key_value>
@@ -103,11 +78,6 @@
         <rec multi="0">ㅕ</rec>
         <rec multi="1">7</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">u</rec>
       </key_value>
@@ -117,11 +87,6 @@
         <rec multi="0">ㅑ</rec>
         <rec multi="1">8</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">i</rec>
       </key_value>
@@ -133,11 +98,6 @@
         <rec shift="loc" multi="0">ㅒ</rec>
         <rec multi="1">9</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">o</rec>
       </key_value>
@@ -149,11 +109,6 @@
         <rec shift="loc" multi="0">ㅖ</rec>
         <rec multi="1">0</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">p</rec>
       </key_value>
@@ -165,11 +120,6 @@
         <rec multi="0">ㅁ</rec>
         <rec multi="1">-</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">a</rec>
       </key_value>
@@ -179,11 +129,6 @@
         <rec multi="0">ㄴ</rec>
         <rec multi="1">@</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">s</rec>
       </key_value>
@@ -193,11 +138,6 @@
         <rec multi="0">ㅇ</rec>
         <rec multi="1">*</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">d</rec>
       </key_value>
@@ -207,11 +147,6 @@
         <rec multi="0">ㄹ</rec>
         <rec multi="1">^</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">f</rec>
       </key_value>
@@ -221,11 +156,6 @@
         <rec multi="0">ㅎ</rec>
         <rec multi="1">:</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">g</rec>
       </key_value>
@@ -235,11 +165,6 @@
         <rec multi="0">ㅗ</rec>
         <rec multi="1">;</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">h</rec>
       </key_value>
@@ -249,11 +174,6 @@
         <rec multi="0">ㅓ</rec>
         <rec multi="1">(</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">j</rec>
       </key_value>
@@ -263,11 +183,6 @@
         <rec multi="0">ㅏ</rec>
         <rec multi="1">)</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">k</rec>
       </key_value>
@@ -277,11 +192,6 @@
         <rec multi="0">ㅣ</rec>
         <rec multi="1">~</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">l</rec>
       </key_value>
@@ -312,11 +222,6 @@
         <rec multi="0">ㅋ</rec>
         <rec multi="1">/</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">z</rec>
       </key_value>
@@ -326,11 +231,6 @@
         <rec multi="0">ㅌ</rec>
         <rec multi="1">'</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">x</rec>
       </key_value>
@@ -340,11 +240,6 @@
         <rec multi="0">ㅊ</rec>
         <rec multi="1">"</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">c</rec>
       </key_value>
@@ -354,11 +249,6 @@
         <rec multi="0">ㅍ</rec>
         <rec multi="1">.</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">v</rec>
       </key_value>
@@ -368,11 +258,6 @@
         <rec multi="0">ㅠ</rec>
         <rec multi="1">,</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">b</rec>
       </key_value>
@@ -382,11 +267,6 @@
         <rec multi="0">ㅜ</rec>
         <rec multi="1">?</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">n</rec>
       </key_value>
@@ -396,11 +276,6 @@
         <rec multi="0">ㅡ</rec>
         <rec multi="1">!</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec auto_upper="true">m</rec>
       </key_value>

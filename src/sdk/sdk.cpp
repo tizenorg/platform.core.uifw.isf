@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
  *
  */
 
-#include "scleventcallback.h"
+#include <scl.h>
 #include "ise.h"
 #include "sdk.h"
 #include "option.h"
 #include "common.h"
+
+#include "ise_lang_table.h"
 
 using namespace scl;
 
@@ -27,6 +29,8 @@ using namespace scl;
  * This callback class will receive all response events from SCL
  * So you should perform desired tasks in this class.
  */
+
+const sclchar *PLACEHOLDER_MAIN_KEYBOARD_NAME = "abc";
 
 class CSDKISE : public ISCLUIEventCallback, public ILanguageCallback
 {
@@ -168,17 +172,21 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
         sclint loop;
         for (loop = 0;loop < get_lang_table_size();loop++) {
             if (strcmp(language, get_lang_table()[loop].language) == 0) {
-                if (g_ise_common) {
+                if (g_ise_common && gSCLUI) {
                     if (get_lang_table()[loop].keyboard_ise_uuid) {
                         g_ise_common->set_keyboard_ise_by_uuid(get_lang_table()[loop].keyboard_ise_uuid);
                         g_ise_common->send_imengine_event(-1, get_lang_table()[loop].keyboard_ise_uuid,
                             get_lang_table()[loop].language_command, get_lang_table()[loop].language_code);
                     }
-                }
-                if (gSCLUI) {
+
                     /* This is to update the screen only for once, not everytime we request a UI update  */
                     gSCLUI->set_update_pending(TRUE);
                     gSCLUI->set_input_mode(input_mode);
+
+                    SclSize size_portrait = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_PORTRAIT);
+                    SclSize size_landscape = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+                    g_ise_common->set_keyboard_size_hints(size_portrait, size_landscape);
+
                     /* Check if we need to turn on the shift key */
                     if (g_keyboard_state.caps_mode) {
                         LANGUAGE_INFO *info = ISELanguageManager::get_language_info(language);
@@ -202,6 +210,10 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
 
                     /* Replace LANGUAGE_STRING with localized language name */
                     gSCLUI->set_string_substitution(LANGUAGE_STRING, get_lang_table()[loop].language_name);
+                    /* Change main_keyboard_name with localized language name */
+                    if (get_lang_table()[loop].main_keyboard_name) {
+                        gSCLUI->set_string_substitution(PLACEHOLDER_MAIN_KEYBOARD_NAME, get_lang_table()[loop].main_keyboard_name);
+                    }
 
                     /* Now we update the whole screen */
                     gSCLUI->set_update_pending(FALSE);

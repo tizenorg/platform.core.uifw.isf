@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <Elementary.h>
+#include <scl.h>
 #include "common.h"
-
 #include "ise.h"
 
 using namespace scim;
@@ -58,7 +58,7 @@ class CCoreEventCallback : public IISECommonEventCallback
 
 void CCoreEventCallback::init()
 {
-    printf("CCoreEventCallback::init()\n");
+    LOGD("CCoreEventCallback::init()\n");
     ise_create();
 }
 
@@ -73,7 +73,6 @@ void CCoreEventCallback::ise_show(sclint ic, const sclint degree, Ise_Context co
     //g_ise_common->set_keyboard_ise_by_uuid(KEYBD_ISE_UUID);
 
     ise_reset_context(); // reset ISE
-    ise_set_screen_rotation(degree);
 
     /*if (context.language == ECORE_IMF_INPUT_PANEL_LANG_ALPHABET) {
         ise_explictly_set_language(PRIMARY_LATIN_LANGUAGE_INDEX);
@@ -88,6 +87,8 @@ void CCoreEventCallback::ise_show(sclint ic, const sclint degree, Ise_Context co
     ise_update_cursor_position(context.cursor_pos);
 
     ::ise_show(ic);
+
+    ise_set_screen_rotation(degree);
 }
 
 void CCoreEventCallback::ise_hide(sclint ic, const sclchar *ic_uuid)
@@ -134,7 +135,7 @@ void CCoreEventCallback::set_return_key_disable (sclu32 disabled)
     ise_set_return_key_disable(disabled);
 }
 
-CCoreEventCallback g_core_event_callback;
+static CCoreEventCallback g_core_event_callback;
 
 extern "C"
 {

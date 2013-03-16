@@ -8,8 +8,8 @@
     <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
     <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
   </background_image>
-  <row x="5" y="10">
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous" hit_left="5">
+  <row x="4" y="10">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">q</rec>
         <rec multi="1">1</rec>
@@ -240,9 +240,8 @@
       </label>
     </key>
   </row>
-  <row x="5">
-    <key use_magnifier="true" multitouch_type="settle_previous" hit_left="5"/>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+  <row x="40">
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="40">
       <label>
         <rec auto_upper="true">a</rec>
         <rec multi="1">-</rec>
@@ -415,7 +414,7 @@
     </key>
   </row>
   <row x="4">
-    <key button_type="selfish" key_type="control" key_spacing="23" width="86">
+    <key button_type="selfish" key_type="control" key_spacing="22" width="86">
       <image_label>
         <rec shift="off" button="normal">B09_icon_shift_50x50.png</rec>
         <rec shift="on" button="normal">B09_icon_shift_on_50x50.png</rec>
@@ -524,13 +523,13 @@
         <label shift="loc" autopopup="4">?</label>
       </auto_popup_keys>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="!" multitouch_type="settle_previous" key_spacing="23">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="!" multitouch_type="settle_previous" key_spacing="22">
       <label>
         <rec auto_upper="true">m</rec>
         <rec multi="1">!</rec>
       </label>
     </key>
-    <key key_type="control" use_magnifier="true" longkey_magnifier="true" hit_right="6" use_repeat_key="true" width="86">
+    <key key_type="control" use_magnifier="true" hit_right="6" use_repeat_key="true" width="86">
       <image_label>
         <rec button="normal">B09_icon_back_50x50.png</rec>
         <rec button="pressed">B09_icon_back_50x50_press.png</rec>
@@ -601,7 +600,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-472" popup_offset_y="-326">
+    <key popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-472" popup_offset_y="-326">
       <label>
         <rec>.</rec>
       </label>

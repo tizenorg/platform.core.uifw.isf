@@ -25,9 +25,8 @@
   <rec language="Icelandic" language_name="íslenska" inputmode_QTY="ICELANDIC_QTY" inputmode_QTY_name="Icelandic Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="is" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Estonia" language_name="Eesti" inputmode_QTY="ESTONIAN_QTY" inputmode_QTY_name="Estonian Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="ee" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Romanian" language_name="Română" inputmode_QTY="ROMANIAN_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="es" is_latin_language="true" accepts_caps_mode="true"/>
-  <!--
   <rec language="Latvian" language_name="Latviešu" inputmode_QTY="LATVIAN_QTY" inputmode_QTY_name="Latvian Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="lv" is_latin_language="true" accepts_caps_mode="true"/>
-  //-->
+  <rec language="Lithuanian" language_name="lietuvių kalba‎" inputmode_QTY="LITHUANIAN_QTY" inputmode_QTY_name="Lithaunian Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="ltu" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Slovak" language_name="Slovenčina" inputmode_QTY="SLOVAK_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="sk" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Turkish" language_name="Türkçe" inputmode_QTY="TURKISH_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="tr" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Azerbaijan" language_name="Azərbaycan" inputmode_QTY="AZERBAIJAN_QTY" inputmode_QTY_name="Azerbaijan" keyboard_ise_uuid="uuid_default" country_code_URL="az" is_latin_language="true" accepts_caps_mode="true"/>
@@ -35,20 +34,38 @@
   <rec language="German" language_name="Deutsch" inputmode_QTY="GERMAN_QTY" inputmode_QTY_name="QWERTZ-Tastatur" keyboard_ise_uuid="uuid_default" country_code_URL="de" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Czech" language_name="Čeština" inputmode_QTY="CZECH_QTY" inputmode_QTY_name="Qwertz" keyboard_ise_uuid="uuid_default" country_code_URL="cs" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Croatian" language_name="Hrvatski" inputmode_QTY="CROATIAN_QTY" inputmode_QTY_name="Qwertz" keyboard_ise_uuid="uuid_default" country_code_URL="hr" is_latin_language="true" accepts_caps_mode="true"/>
+  <rec language="Slovenian" language_name="slovenščina" inputmode_QTY="SLOVENIAN_QTY" inputmode_QTY_name="Qwertz" keyboard_ise_uuid="uuid_default" country_code_URL="si" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Hungarian" language_name="Magyar" inputmode_QTY="HUNGARIAN_QTY" inputmode_QTY_name="Qwertz" keyboard_ise_uuid="uuid_default" country_code_URL="hu" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Serbian" language_name="Srpski" inputmode_QTY="SERBIAN_QTY" inputmode_QTY_name="Qwertz" keyboard_ise_uuid="uuid_default" country_code_URL="de" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="French" language_name="Français" inputmode_QTY="FRENCH_QTY" inputmode_QTY_name="Clavier Azerty" keyboard_ise_uuid="uuid_default" country_code_URL="fr" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Russian" language_name="Русский" inputmode_QTY="RUSSIAN_QTY" inputmode_QTY_name="Клавиатура" keyboard_ise_uuid="uuid_default" country_code_URL="ru" accepts_caps_mode="true"/>
-  <!--
+  <rec language="Bulgarian" language_name="Български език" inputmode_QTY="BULGARIAN_QTY" inputmode_QTY_name="Bulgarian" keyboard_ise_uuid="uuid_default" country_code_URL="bg" accepts_caps_mode="true"/>
+  <rec language="Ukrainian" language_name="укра нськамова" inputmode_QTY="UKRAINIAN_QTY" inputmode_QTY_name="Ukrainian" keyboard_ise_uuid="uuid_default" country_code_URL="ua" accepts_caps_mode="true"/>
+  <rec language="Kazakh" language_name="Kazakh" inputmode_QTY="KAZAKH_QTY" inputmode_QTY_name="Kazakh" keyboard_ise_uuid="uuid_default" country_code_URL="kz" accepts_caps_mode="true"/>
+  <rec language="Georgian" language_name="ქართული" inputmode_QTY="GEORGIAN_QTY" inputmode_QTY_name="Georgian" keyboard_ise_uuid="uuid_default" country_code_URL="ge" accepts_caps_mode="true"/>
+  <rec language="Greek" language_name="Ελληνικά" inputmode_QTY="GREEK_QTY" inputmode_QTY_name="Greek" keyboard_ise_uuid="uuid_default" country_code_URL="gr" accepts_caps_mode="true"/>
+  <rec language="Macedonian" language_name="Македонски" inputmode_QTY="MACEDONIAN_QTY" inputmode_QTY_name="Macedonian" keyboard_ise_uuid="uuid_default" country_code_URL="mk" accepts_caps_mode="true"/>
+  <rec language="Armenian" language_name="Հայերէն" inputmode_QTY="ARMENIAN_QTY" inputmode_QTY_name="Armenian" keyboard_ise_uuid="uuid_default" country_code_URL="am" accepts_caps_mode="true"/>
   <rec language="Arabic" language_name="ﻉﺮﺒﻳ" inputmode_QTY="ARABIC_QTY" inputmode_QTY_name="ﻝﻮﺣﺓ ﻢﻓﺎﺘﻴﺣ" keyboard_ise_uuid="uuid_default" country_code_URL="eg"/>
   <rec language="Farsi" language_name="فارسی" inputmode_QTY="FARSI_QTY" inputmode_QTY_name="Farsi" keyboard_ise_uuid="uuid_default" country_code_URL="ir"/>
   <rec language="Urdu" language_name="اردو" inputmode_QTY="URDU_QTY" inputmode_QTY_name="Urdu" keyboard_ise_uuid="uuid_default" country_code_URL="in"/>
   <rec language="Hebrew" language_name="עברית" inputmode_QTY="HEBREW_QTY" inputmode_QTY_name="Hebrew" keyboard_ise_uuid="uuid_default" country_code_URL="il"/>
-  //-->
   <rec language="Korean" language_name="한글" inputmode_QTY="KOREAN_QTY" inputmode_QTY_name="쿼티" keyboard_ise_uuid="uuid_korean" country_code_URL="kr"/>
-  <rec language="Chinese" language_name="中文" inputmode_QTY="CHINESE_QTY" inputmode_QTY_name="Qwerty键盘" keyboard_ise_uuid="uuid_sunpinyin" country_code_URL="cn"/>
-  <rec language="Taiwan" language_name="繁体中文(TW)" inputmode_QTY="ZHUYIN_QTY" inputmode_QTY_name="注音" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw"/>
-  <rec language="Hongkong" language_name="繁体中文(HK)" inputmode_QTY="CANGJIE_QTY" inputmode_QTY_name="仓颉" keyboard_ise_uuid="uuid_cangjie_3" country_code_URL="hk"/>
+  <rec language="Chinese" language_name="简体中文" inputmode_QTY="CHINESE_QTY" inputmode_QTY_name="Qwerty键盘" main_keyboard_name="汉" keyboard_ise_uuid="uuid_sunpinyin" country_code_URL="cn"/>
+  <rec language="Taiwan" language_name="繁體中文-註音" inputmode_QTY="ZHUYIN_QTY" inputmode_QTY_name="註音" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw"/>
+  <rec language="Hongkong" language_name="繁體中文-倉頡" inputmode_QTY="CANGJIE_QTY" inputmode_QTY_name="倉頡" keyboard_ise_uuid="uuid_cangjie_3" country_code_URL="hk"/>
   <rec language="Japanese" language_name="にほんご" inputmode_QTY="JAPANESE_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_anthy" country_code_URL="jp"/>
+  <rec language="Vietnamese" language_name="Tiếng Việt" inputmode_QTY="VIETNAMESE_QTY" inputmode_QTY_name="Vietnamese Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="vn" is_latin_language="true" accepts_caps_mode="true"/>
+  <rec language="Thai" language_name="ภาษาไทย" inputmode_QTY="THAI_QTY" inputmode_QTY_name="Thai" keyboard_ise_uuid="uuid_default" country_code_URL="th"/>
+  <rec language="Hindi" language_name="हिन्दी" inputmode_QTY="HINDI_QTY" inputmode_QTY_name="Hindi" keyboard_ise_uuid="uuid_default" country_code_URL="in"/>
+  <rec language="Tamil" language_name="தமிழ்" inputmode_QTY="TAMIL_QTY" inputmode_QTY_name="Tamil" keyboard_ise_uuid="uuid_default" country_code_URL="tn"/>
+  <rec language="Kananda" language_name="ಕನ್ನಡ" inputmode_QTY="KANANDA_QTY" inputmode_QTY_name="Kananda" keyboard_ise_uuid="uuid_default" country_code_URL="kananda"/>
+  <rec language="Gujarati" language_name="﻿ગુજરાતી" inputmode_QTY="GUJARATI_QTY" inputmode_QTY_name="Gujarati" keyboard_ise_uuid="uuid_default" country_code_URL="gujarati"/>
+  <rec language="Telugu" language_name="﻿తెలుగు" inputmode_QTY="TELUGU_QTY" inputmode_QTY_name="Telugu" keyboard_ise_uuid="uuid_default" country_code_URL="telugu"/>
+  <rec language="Malayalam" language_name="﻿മലയാളം" inputmode_QTY="MALAYALAM_QTY" inputmode_QTY_name="Malayalam" keyboard_ise_uuid="uuid_default" country_code_URL="malayalam"/>
+  <rec language="Bengali" language_name="﻿বাংলা" inputmode_QTY="BENGALI_QTY" inputmode_QTY_name="Bengali" keyboard_ise_uuid="uuid_default" country_code_URL="bengali"/>
+  <rec language="Assamese" language_name="অসমীয়া" inputmode_QTY="ASSAMESE_QTY" inputmode_QTY_name="Assamese" keyboard_ise_uuid="uuid_default" country_code_URL="assamese"/>
+  <rec language="Punjabi" language_name="﻿ਪੰਜਾਬੀ" inputmode_QTY="PUNJABI_QTY" inputmode_QTY_name="Punjabi" keyboard_ise_uuid="uuid_default" country_code_URL="punjabi"/>
+  <rec language="Sinhala" language_name="﻿සිංහල" inputmode_QTY="SINHALA_QTY" inputmode_QTY_name="Sinhala" keyboard_ise_uuid="uuid_default" country_code_URL="lk"/>
 </language_table>
 </languages>

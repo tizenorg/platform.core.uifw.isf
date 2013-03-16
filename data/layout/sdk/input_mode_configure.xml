@@ -101,6 +101,12 @@
       <landscape>LYT_LANDSCAPE_QTY_CROATIAN.xml</landscape>
     </layouts>
   </mode>
+  <mode name="SLOVENIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SLOVENIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SLOVENIAN.xml</landscape>
+    </layouts>
+  </mode>
   <!--Hungarian same as GERMAN -->
   <mode name="HUNGARIAN_QTY">
     <layouts>
@@ -222,6 +228,120 @@
       <landscape>LYT_LANDSCAPE_QTY_RUSSIAN.xml</landscape>
     </layouts>
   </mode>
+  <mode name="BULGARIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_BULGARIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_BULGARIAN.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="UKRAINIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_UKRAINIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_UKRAINIAN.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="KAZAKH_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_KAZAKH.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_KAZAKH.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="GEORGIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_GEORGIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_GEORGIAN.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="GREEK_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_GREEK.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_GREEK.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="MACEDONIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_MACEDONIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_MACEDONIAN.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="ARMENIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_ARMENIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_ARMENIAN.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="VIETNAMESE_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_VIETNAMESE.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_VIETNAMESE.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="THAI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_THAI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_THAI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="HINDI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_HINDI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_HINDI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="TAMIL_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_TAMIL.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_TAMIL.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="KANANDA_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_KANANDA.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_KANANDA.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="GUJARATI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_GUJARATI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_GUJARATI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="TELUGU_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_TELUGU.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_TELUGU.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="MALAYALAM_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_MALAYALAM.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_MALAYALAM.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="BENGALI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_BENGALI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_BENGALI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="ASSAMESE_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_ASSAMESE.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_ASSAMESE.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="PUNJABI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_PUNJABI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_PUNJABI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SINHALA_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SINHALA.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SINHALA.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="JAPANESE_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_JAPANESE.xml</portrait>
@@ -238,6 +358,12 @@
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_ZHUYIN.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_ZHUYIN.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="LITHUANIAN_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_LITHUANIAN.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_LITHUANIAN.xml</landscape>
     </layouts>
   </mode>
   <mode name="SYM_QTY_1">

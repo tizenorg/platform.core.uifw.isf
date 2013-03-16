@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@
 #include "common.h"
 #include "languages.h"
 
+using namespace scl;
 CSCLUI *gSCLUI = NULL;
 extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
@@ -285,6 +286,10 @@ void ise_show(int ic)
                 /* If this layout requires specific input mode, set it */
                 if (strlen(g_ise_default_values[g_keyboard_state.layout].input_mode) > 0) {
                     gSCLUI->set_input_mode(g_ise_default_values[g_keyboard_state.layout].input_mode);
+
+                    SclSize size_portrait = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_PORTRAIT);
+                    SclSize size_landscape = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+                    g_ise_common->set_keyboard_size_hints(size_portrait, size_landscape);
                 } else {
                     if (force_primary_latin) {
                         ISELanguageManager::select_language(PRIMARY_LATIN_LANGUAGE, TRUE);
@@ -300,12 +305,6 @@ void ise_show(int ic)
 
         gSCLUI->show();
         gSCLUI->disable_input_events(FALSE);
-
-        SclRectangle rect;
-        gSCLUI->get_window_rect(&rect);
-        g_ise_common->update_keyboard_geometry(rect);
-
-        g_ise_common->update_input_context(ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     }
 
     g_keyboard_state.ic = ic;
@@ -320,10 +319,6 @@ ise_set_screen_rotation(int degree)
 {
     if (gSCLUI) {
         gSCLUI->set_rotation(DEGREE_TO_SCLROTATION(degree));
-
-        SclRectangle rect;
-        gSCLUI->get_window_rect(&rect);
-        g_ise_common->update_keyboard_geometry(rect);
     }
 }
 
@@ -333,8 +328,6 @@ ise_hide()
     if (gSCLUI && g_ise_common) {
         gSCLUI->disable_input_events(TRUE);
         gSCLUI->hide();
-
-        g_ise_common->update_input_context(ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
     }
 }
 
@@ -396,6 +389,10 @@ ise_create()
             ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages, TRUE);
             ISELanguageManager::select_language(g_config_values.selected_language.c_str());
         }
+
+        SclSize size_portrait = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_PORTRAIT);
+        SclSize size_landscape = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+        g_ise_common->set_keyboard_size_hints(size_portrait, size_landscape);
     }
 }
 

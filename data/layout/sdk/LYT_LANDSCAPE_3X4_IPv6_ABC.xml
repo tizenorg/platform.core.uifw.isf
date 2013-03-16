@@ -3,16 +3,16 @@
   <image_path>
     <button_normal>textinput_panel_bg.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">B09_key_btn_01.png</rec>
+    <rec button="pressed">B09_key_btn_press.png</rec>
+    <rec button="disabled">B09_key_btn_01.png</rec>
+  </background_image>
   <row x="14" y="28" key_width="170" key_height="139">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="5" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="10" label_type="label_name_6">
       <label>
         <rec>a</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>a</rec>
       </key_value>
@@ -21,11 +21,6 @@
       <label>
         <rec>b</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>b</rec>
       </key_value>
@@ -34,11 +29,6 @@
       <label>
         <rec>c</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>c</rec>
       </key_value>
@@ -61,11 +51,6 @@
       <label>
         <rec>d</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>d</rec>
       </key_value>
@@ -74,11 +59,6 @@
       <label>
         <rec>e</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>e</rec>
       </key_value>
@@ -87,11 +67,6 @@
       <label>
         <rec>f</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>f</rec>
       </key_value>
@@ -113,28 +88,13 @@
       <label>
         <rec>.</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
     </key>
     <key button_type="uiitem" key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="185" y="348" hit_left="5" hit_right="5" hit_top="10" hit_bottom="3" label_type="label_name_6">
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="365" y="348" hit_left="5" hit_right="5" hit_top="10" hit_bottom="3" label_type="label_name_6">
       <label>
         <rec>:</rec>
       </label>
-      <background_image>
-        <rec button="normal">B09_key_btn_01.png</rec>
-        <rec button="pressed">B09_key_btn_press.png</rec>
-        <rec button="disabled">B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>:</rec>
       </key_value>

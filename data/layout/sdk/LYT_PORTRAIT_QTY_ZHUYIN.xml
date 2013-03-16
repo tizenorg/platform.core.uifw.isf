@@ -470,7 +470,7 @@
         <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="user" key_spacing="22">
+    <key button_type="selfish" key_type="user" key_spacing="12">
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
@@ -485,7 +485,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" hit_left="17" hit_right="17" key_spacing="22" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="88">
+    <key button_type="direction" key_type="control" hit_left="7" hit_right="7" key_spacing="12" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="108">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
@@ -589,7 +589,7 @@
         <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="user" key_spacing="22">
+    <key button_type="selfish" key_type="user" key_spacing="12">
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
@@ -604,7 +604,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" hit_left="17" hit_right="17" key_spacing="22" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="88">
+    <key button_type="direction" key_type="control" hit_left="7" hit_right="7" key_spacing="12" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="108">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>

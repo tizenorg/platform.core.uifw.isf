@@ -3,16 +3,16 @@
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">button/B09_key_btn_01.png</rec>
+    <rec button="pressed">button/B09_key_btn_press.png</rec>
+    <rec button="disabled">button/B09_key_btn_01.png</rec>
+  </background_image>
   <row x="8" y="12">
     <key key_type="string">
       <label>
         <rec> 1 Jan</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>1</rec>
       </key_value>
@@ -21,11 +21,6 @@
       <label>
         <rec> 2 Feb</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>2</rec>
       </key_value>
@@ -34,11 +29,6 @@
       <label>
         <rec> 3 Mar</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>3</rec>
       </key_value>
@@ -49,11 +39,6 @@
       <label>
         <rec> 4 Apr</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>4</rec>
       </key_value>
@@ -62,11 +47,6 @@
       <label>
         <rec> 5 May</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>5</rec>
       </key_value>
@@ -75,11 +55,6 @@
       <label>
         <rec> 6 Jun</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>6</rec>
       </key_value>
@@ -90,11 +65,6 @@
       <label>
         <rec> 7 Jul</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>7</rec>
       </key_value>
@@ -103,11 +73,6 @@
       <label>
         <rec> 8 Aug</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>8</rec>
       </key_value>
@@ -116,11 +81,6 @@
       <label>
         <rec> 9 Sep</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>9</rec>
       </key_value>
@@ -131,11 +91,6 @@
       <label>
         <rec>10 Oct</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>10</rec>
       </key_value>
@@ -144,11 +99,6 @@
       <label>
         <rec>11 Nov</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>11</rec>
       </key_value>
@@ -157,11 +107,6 @@
       <label>
         <rec>12 Dec</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>12</rec>
       </key_value>

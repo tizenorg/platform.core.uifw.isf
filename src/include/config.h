@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Samsung Electronics Co., Ltd.
+ * Copyright 2012-2013 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Flora License, Version 1.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@
 #include <string>
 #include <vector>
 
-#include "scl.h"
-
-using namespace scl;
+#include <scl.h>
 
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
