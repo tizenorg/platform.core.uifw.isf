@@ -1,3 +1,11 @@
+ISF 2.4.6319 :
+ 1. [isf-panel-efl] Update aux style
+ 2. Fix path for 3rd ISE development
+ 3. [immodule] Update context counter in order to avoid same ic for different app
+ 4. [immodule] Allow prediction as default in case of EMAIL and URL layout
+ 5. [panel] launch default IME when appservice is equal to 1
+
+
 ISF 2.4.6312 :
  1. [setting] change separate and dialogue style
 
