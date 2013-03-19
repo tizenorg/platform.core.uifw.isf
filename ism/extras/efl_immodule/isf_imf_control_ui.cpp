@@ -463,9 +463,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     if (iseContext.password_mode)
         iseContext.prediction_allow = EINA_FALSE;
 
-    if (iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_EMAIL ||
-        iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_URL ||
-        iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL)
+    if (iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL)
         iseContext.prediction_allow = EINA_FALSE;
 
     isf_imf_context_prediction_allow_set (ctx, iseContext.prediction_allow);
