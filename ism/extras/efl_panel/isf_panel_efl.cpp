@@ -80,7 +80,7 @@ using namespace scim;
 
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
-#define ISF_SYSTEM_APPSERVICE_READY_STATE               2
+#define ISF_SYSTEM_APPSERVICE_READY_STATE               1
 #define ISF_SYSTEM_WAIT_COUNT                           150
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 
