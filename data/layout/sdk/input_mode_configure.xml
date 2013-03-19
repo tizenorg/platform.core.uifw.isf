@@ -288,10 +288,22 @@
       <landscape>LYT_LANDSCAPE_QTY_HINDI.xml</landscape>
     </layouts>
   </mode>
+  <mode name="HINDI_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_HINDI_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_HINDI_MODI.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="TAMIL_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_TAMIL.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_TAMIL.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="TAMIL_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_TAMIL_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_TAMIL_MODI.xml</landscape>
     </layouts>
   </mode>
   <mode name="KANANDA_QTY">
@@ -300,10 +312,22 @@
       <landscape>LYT_LANDSCAPE_QTY_KANANDA.xml</landscape>
     </layouts>
   </mode>
+  <mode name="KANANDA_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_KANANDA_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_KANANDA_MODI.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="GUJARATI_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_GUJARATI.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_GUJARATI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="GUJARATI_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_GUJARATI_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_GUJARATI_MODI.xml</landscape>
     </layouts>
   </mode>
   <mode name="TELUGU_QTY">
@@ -312,10 +336,22 @@
       <landscape>LYT_LANDSCAPE_QTY_TELUGU.xml</landscape>
     </layouts>
   </mode>
+  <mode name="TELUGU_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_TELUGU_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_TELUGU_MODI.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="MALAYALAM_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_MALAYALAM.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_MALAYALAM.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="MALAYALAM_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_MALAYALAM_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_MALAYALAM_MODI.xml</landscape>
     </layouts>
   </mode>
   <mode name="BENGALI_QTY">
@@ -324,10 +360,22 @@
       <landscape>LYT_LANDSCAPE_QTY_BENGALI.xml</landscape>
     </layouts>
   </mode>
+  <mode name="BENGALI_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_BENGALI_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_BENGALI_MODI.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="ASSAMESE_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_ASSAMESE.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_ASSAMESE.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="ASSAMESE_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_ASSAMESE_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_ASSAMESE_MODI.xml</landscape>
     </layouts>
   </mode>
   <mode name="PUNJABI_QTY">
@@ -336,10 +384,22 @@
       <landscape>LYT_LANDSCAPE_QTY_PUNJABI.xml</landscape>
     </layouts>
   </mode>
+  <mode name="PUNJABI_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_PUNJABI_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_PUNJABI_MODI.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="SINHALA_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_SINHALA.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_SINHALA.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SINHALA_MODI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SINHALA_MODI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SINHALA_MODI.xml</landscape>
     </layouts>
   </mode>
   <mode name="JAPANESE_QTY">
@@ -376,6 +436,66 @@
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_SYM_2.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_SYM_2.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_HINDI_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_HINDI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_HINDI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_ASSAMESE_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_ASSAMESE.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_ASSAMESE.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_BENGALI_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_BENGALI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_BENGALI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_MALAYALAM_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_MALAYALAM.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_MALAYALAM.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_TAMIL_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_TAMIL.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_TAMIL.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_GUJARATI_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_GUJARATI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_GUJARATI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_KANANDA_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_KANANDA.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_KANANDA.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_SINHALA_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_SINHALA.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_SINHALA.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_TELUGU_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_TELUGU.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_TELUGU.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="SYM_PUNJABI_QTY_1">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_SYM_PUNJABI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_SYM_PUNJABI.xml</landscape>
     </layouts>
   </mode>
   <mode name="PHONE_3X4">

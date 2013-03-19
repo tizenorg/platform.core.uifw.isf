@@ -3,49 +3,28 @@
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
+  <background_image>
+    <rec button="normal">button/B09_key_btn_01.png</rec>
+    <rec button="pressed">button/B09_key_btn_press.png</rec>
+    <rec button="disabled">button/B09_key_btn_01.png</rec>
+  </background_image>
   <row x="8" y="12">
     <key>
       <label>
-        <rec multi="0">1</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>1</rec>
-      </key_value>
+      </label>
     </key>
     <key>
       <label>
-        <rec multi="0">2</rec>
-        <rec multi="1">abc</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>2</rec>
-      </key_value>
+      </label>
     </key>
     <key>
       <label>
-        <rec multi="0">3</rec>
-        <rec multi="1">def</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>3</rec>
-      </key_value>
+      </label>
     </key>
-    <key key_type="control">
+    <key key_type="control" use_magnifier="true" use_repeat_key="true">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>
@@ -63,45 +42,18 @@
   <row x="8">
     <key>
       <label>
-        <rec multi="0">4</rec>
-        <rec multi="1">ghi</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>4</rec>
-      </key_value>
+      </label>
     </key>
     <key>
       <label>
-        <rec multi="0">5</rec>
-        <rec multi="1">jkl</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>5</rec>
-      </key_value>
+      </label>
     </key>
     <key>
       <label>
-        <rec multi="0">6</rec>
-        <rec multi="1">mno</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>6</rec>
-      </key_value>
+      </label>
     </key>
     <key key_type="control" custom_id="Enter">
       <image_label>
@@ -122,45 +74,18 @@
   <row x="8">
     <key>
       <label>
-        <rec multi="0">7</rec>
-        <rec multi="1">pqrs</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>7</rec>
-      </key_value>
+      </label>
     </key>
     <key>
       <label>
-        <rec multi="0">8</rec>
-        <rec multi="1">tuv</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>8</rec>
-      </key_value>
+      </label>
     </key>
     <key>
       <label>
-        <rec multi="0">9</rec>
-        <rec multi="1">wxyz</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>9</rec>
-      </key_value>
+      </label>
     </key>
     <key button_type="uiitem">
       <label>
@@ -176,39 +101,20 @@
   <row x="8">
     <key long_key_value="P">
       <label>
-        <rec>* p</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>*</rec>
-      </key_value>
+        <rec multi="1">P</rec>
+      </label>
     </key>
     <key long_key_value="+">
       <label>
-        <rec multi="0">0 +</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
-      <key_value>
         <rec>0</rec>
-      </key_value>
+        <rec multi="1">+</rec>
+      </label>
     </key>
     <key>
       <label>
         <rec>#</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_01.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_01.png</rec>
-      </background_image>
       <key_value>
         <rec>#</rec>
       </key_value>

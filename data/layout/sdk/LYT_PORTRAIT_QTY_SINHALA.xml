@@ -9,51 +9,57 @@
     <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
   </background_image>
   <row x="14" y="10">
-    <key button_type="selfish" key_type="control" use_magnifier="true" multitouch_type="settle_previous" hit_left="14">
-      <image_label>
-        <rec shift="off" button="normal">B09_icon_shift_50x50.png</rec>
-        <rec shift="on" button="normal">B09_icon_shift_on_50x50.png</rec>
-        <rec shift="loc" button="normal">B09_icon_shift_loc_50x50.png</rec>
-        <rec button="pressed">B09_icon_shift_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_shift_50x50_dim.png</rec>
-      </image_label>
+    <key button_type="selfish" key_type="modechange" hit_left="14">
       <background_image>
-        <rec shift="off" button="normal">button/B09_Qwerty_btn_02.png</rec>
-        <rec shift="on" button="normal">button/B09_Qwerty_btn_02.png</rec>
-        <rec shift="loc" button="normal">button/B09_Qwerty_btn_doubletab.png</rec>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
         <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
         <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
       </background_image>
+      <label>
+        <rec>◌–|</rec>
+      </label>
       <key_value>
-        <rec>Shift</rec>
+        <rec>SINHALA_MODI_QTY</rec>
       </key_value>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">අ</rec>
-        <rec shift="on">්</rec>
-        <rec shift="loc">්</rec>
+        <rec>අ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ආ</rec>
-        <rec shift="on">ා</rec>
-        <rec shift="loc">ා</rec>
+        <rec>ආ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඇ</rec>
-        <rec shift="on">ැ</rec>
-        <rec shift="loc">ැ</rec>
+        <rec>ඇ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඈ</rec>
-        <rec shift="on">ෑ</rec>
-        <rec shift="loc">ෑ</rec>
+        <rec>ඈ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
@@ -84,38 +90,53 @@
   </row>
   <row x="14">
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="14">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඉ</rec>
-        <rec shift="on">ි</rec>
-        <rec shift="loc">ි</rec>
+        <rec>ඉ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඊ</rec>
-        <rec shift="on">ී</rec>
-        <rec shift="loc">ී</rec>
+        <rec>ඊ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">උ</rec>
-        <rec shift="on">ු</rec>
-        <rec shift="loc">ු</rec>
+        <rec>උ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඌ</rec>
-        <rec shift="on">ූ</rec>
-        <rec shift="loc">ූ</rec>
+        <rec>ඌ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">එ</rec>
-        <rec shift="on">ෙ</rec>
-        <rec shift="loc">ෙ</rec>
+        <rec>එ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
@@ -146,38 +167,53 @@
   </row>
   <row x="14">
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="14">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඒ</rec>
-        <rec shift="on">ෙ◌්</rec>
-        <rec shift="loc">ෙ◌්</rec>
+        <rec>ඒ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඔ</rec>
-        <rec shift="on">ෙ◌ා</rec>
-        <rec shift="loc">ෙ◌ා</rec>
+        <rec>ඔ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඕ</rec>
-        <rec shift="on">ෙ◌ා◌්</rec>
-        <rec shift="loc">ෙ◌ා◌්</rec>
+        <rec>ඕ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">ඖ</rec>
-        <rec shift="on">ෙ◌ෘ</rec>
-        <rec shift="loc">ෙ◌ෘ</rec>
+        <rec>ඖ</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
       <label>
-        <rec shift="off">අං</rec>
-        <rec shift="on">ං</rec>
-        <rec shift="loc">ං</rec>
+        <rec>අං</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
@@ -331,7 +367,7 @@
         <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
       </background_image>
       <key_value>
-        <rec>SYM_QTY_1</rec>
+        <rec>SYM_SINHALA_QTY_1</rec>
       </key_value>
       <popup_input_mode_record>
         <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
@@ -420,7 +456,7 @@
         <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
       </background_image>
       <key_value>
-        <rec>SYM_QTY_1</rec>
+        <rec>SYM_SINHALA_QTY_1</rec>
       </key_value>
       <popup_input_mode_record>
         <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
@@ -524,7 +560,7 @@
         <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
       </background_image>
       <key_value>
-        <rec>SYM_QTY_1</rec>
+        <rec>SYM_SINHALA_QTY_1</rec>
       </key_value>
       <popup_input_mode_record>
         <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
