@@ -422,16 +422,18 @@
   <row x="18">
     <key button_type="selfish" key_type="control" key_spacing="45" width="140">
       <image_label>
-        <rec shift="off" button="normal">B09_icon_shift.png</rec>
-        <rec shift="on" button="normal">B09_icon_shift_on.png</rec>
-        <rec shift="loc" button="normal">B09_icon_shift_loc.png</rec>
-        <rec button="pressed">B09_icon_shift_press.png</rec>
-        <rec button="disabled">B09_icon_shift_dim.png</rec>
+        <rec shift="off" button="normal">B09_icon_shift_50x50.png</rec>
+        <rec shift="on" button="normal">B09_icon_shift_on_50x50.png</rec>
+        <rec shift="loc" button="normal">B09_icon_shift_loc_50x50.png</rec>
+        <rec button="pressed">B09_icon_shift_50x50_press.png</rec>
+        <rec button="disabled">B09_icon_shift_50x50_dim.png</rec>
       </image_label>
       <background_image>
-        <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
-        <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
+        <rec shift="off" button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec shift="on" button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec shift="loc" button="normal">button/B09_Qwerty_btn_doubletab.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
       </background_image>
       <key_value>
         <rec>Shift</rec>

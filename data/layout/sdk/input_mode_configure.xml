@@ -501,7 +501,7 @@
   <mode name="PHONE_3X4">
     <layouts>
       <portrait>LYT_PORTRAIT_3X4_TELEPHONE.xml</portrait>
-      <landscape>LYT_LANDSCAPE_QTY_SYM_1.xml</landscape>
+      <landscape>LYT_LANDSCAPE_3X4_TELEPHONE.xml</landscape>
     </layouts>
   </mode>
   <mode name="IPv6_3X4_123">
