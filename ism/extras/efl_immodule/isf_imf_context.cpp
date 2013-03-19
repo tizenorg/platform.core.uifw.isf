@@ -818,6 +818,9 @@ isf_imf_context_new (void)
         return NULL;
     }
 
+    if (_context_count == 0) {
+        _context_count = getpid () % 50000;
+    }
     context_scim->id = _context_count++;
 
     if (!_scim_initialized) {

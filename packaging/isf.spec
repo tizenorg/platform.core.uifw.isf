@@ -64,7 +64,10 @@ ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
 %post 
 /sbin/ldconfig
 mkdir -p /etc/scim/conf
-mkdir -p /opt/usr/apps/scim/lib/scim-1.0/1.4.0/Helper
+mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
+mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
+mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
+
 
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514 || :
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514 || :
