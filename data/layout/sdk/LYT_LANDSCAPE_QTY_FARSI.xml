@@ -48,9 +48,9 @@
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
-        <rec shift="off">ھ</rec>
-        <rec shift="on">ھ</rec>
-        <rec shift="loc">ھ</rec>
+        <rec shift="off">ه</rec>
+        <rec shift="on">ه</rec>
+        <rec shift="loc">ه</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">

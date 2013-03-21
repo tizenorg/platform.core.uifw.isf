@@ -125,7 +125,7 @@
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="ح" multitouch_type="settle_previous">
       <label>
-        <rec shift="off">ھ</rec>
+        <rec shift="off">ه</rec>
         <rec shift="on">ح</rec>
         <rec shift="loc">ح</rec>
         <rec shift="off" multi="1">ح</rec>
