@@ -99,9 +99,9 @@
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
-        <rec shift="off">ى</rec>
-        <rec shift="on">ى</rec>
-        <rec shift="loc">ى</rec>
+        <rec shift="off">ی</rec>
+        <rec shift="on">ی</rec>
+        <rec shift="loc">ی</rec>
       </label>
     </key>
     <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="1280" height="316" key_width="310" key_height="68" key_spacing="8" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_PHONE" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="1280" height="490" key_width="310" key_height="112" key_spacing="8" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_PHONE" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>

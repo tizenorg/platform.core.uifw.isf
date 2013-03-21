@@ -236,7 +236,7 @@
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true" long_key_value="آ" multitouch_type="settle_previous">
       <label>
-        <rec shift="off">ى</rec>
+        <rec shift="off">ی</rec>
         <rec shift="on">آ</rec>
         <rec shift="loc">آ</rec>
         <rec shift="off" multi="1">آ</rec>
