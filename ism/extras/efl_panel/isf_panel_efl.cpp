@@ -584,6 +584,7 @@ static bool set_keyboard_ise (const String &uuid, const String &module_name)
 
     if (TOOLBAR_HELPER_MODE == mode) {
         String pre_uuid = _panel_agent->get_current_helper_uuid ();
+        _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
     } else if (TOOLBAR_KEYBOARD_MODE == mode) {
         uint32 kbd_option = 0;
