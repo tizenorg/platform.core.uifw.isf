@@ -32,7 +32,8 @@ INCLUDES             = -I$(top_builddir) \
                        -DSCIM_SYSCONFDIR=\"@SCIM_SYSCONFDIR@\" \
                        -DSCIM_LIBEXECDIR=\"@SCIM_LIBEXECDIR@\" \
                        -DSCIM_ICONDIR=\"@SCIM_ICONDIR@\" \
-                       -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\"
+                       -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\" \
+                       @ISF_BUILDING_DLL@
 
 if SCIM_BUILD_FRONTEND_X11
 CONFIG_FRONTEND_X11_MODULE    = x11.la

@@ -340,12 +340,12 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
     return ECORE_CALLBACK_PASS_ON;
 }
 
-EAPI void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
+void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 {
     _event_callback_call (type, value);
 }
 
-EAPI Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx)
+Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx)
 {
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
     Eina_Bool ret = EINA_FALSE;
@@ -362,7 +362,7 @@ EAPI Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx)
     return ret;
 }
 
-EAPI void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
+void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();
@@ -370,7 +370,7 @@ EAPI void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
     _isf_imf_context_control_panel_show ();
 }
 
-EAPI void isf_imf_context_control_panel_hide (Ecore_IMF_Context *ctx)
+void isf_imf_context_control_panel_hide (Ecore_IMF_Context *ctx)
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();
@@ -378,7 +378,7 @@ EAPI void isf_imf_context_control_panel_hide (Ecore_IMF_Context *ctx)
     _isf_imf_context_control_panel_hide ();
 }
 
-EAPI void isf_imf_input_panel_init (void)
+void isf_imf_input_panel_init (void)
 {
     if (_prop_change_handler) return;
 
@@ -398,7 +398,7 @@ EAPI void isf_imf_input_panel_init (void)
     LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
 }
 
-EAPI void isf_imf_input_panel_shutdown (void)
+void isf_imf_input_panel_shutdown (void)
 {
     if (_prop_change_handler) {
         ecore_event_handler_del (_prop_change_handler);
@@ -426,7 +426,7 @@ EAPI void isf_imf_input_panel_shutdown (void)
     _isf_imf_control_finalize ();
 }
 
-EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
+void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 {
     int length = -1;
     void *packet = NULL;
@@ -552,7 +552,7 @@ EAPI void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     LOGD ("===============================================================\n");
 }
 
-EAPI void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
+void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
 {
     LOGD ("ctx : %p\n", ctx);
 
@@ -562,7 +562,7 @@ EAPI void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
     _input_panel_hide (ctx, EINA_FALSE);
 }
 
-EAPI void isf_imf_context_input_panel_instant_hide (Ecore_IMF_Context *ctx)
+void isf_imf_context_input_panel_instant_hide (Ecore_IMF_Context *ctx)
 {
     if (get_desktop_mode ())
         return;
@@ -570,7 +570,7 @@ EAPI void isf_imf_context_input_panel_instant_hide (Ecore_IMF_Context *ctx)
     _input_panel_hide (ctx, EINA_TRUE);
 }
 
-EAPI void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Lang language)
+void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Lang language)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -582,14 +582,14 @@ EAPI void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecor
         _isf_imf_context_input_panel_language_set (language);
 }
 
-EAPI Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx)
+Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
     return iseContext.language;
 }
 
-EAPI void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ctx, char **locale)
+void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ctx, char **locale)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
@@ -598,14 +598,14 @@ EAPI void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ct
         _isf_imf_context_input_panel_language_locale_get (locale);
 }
 
-EAPI void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, unsigned int mode)
+void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, unsigned int mode)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
     _isf_imf_context_input_panel_caps_mode_set (mode);
 }
 
-EAPI void isf_imf_context_input_panel_caps_lock_mode_set (Ecore_IMF_Context *ctx, Eina_Bool mode)
+void isf_imf_context_input_panel_caps_lock_mode_set (Ecore_IMF_Context *ctx, Eina_Bool mode)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -623,7 +623,7 @@ EAPI void isf_imf_context_input_panel_caps_lock_mode_set (Ecore_IMF_Context *ctx
  * @param[in] data pointer of data to sets up to ISE
  * @param[in] length length of data
  */
-EAPI void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const void* data, int length)
+void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const void* data, int length)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -638,7 +638,7 @@ EAPI void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const 
  * @param[out] data pointer of data to return
  * @param[out] length length of data
  */
-EAPI void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length)
+void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
@@ -655,7 +655,7 @@ EAPI void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* 
  * @param[out] w the width of ISE window
  * @param[out] h the height of ISE window
  */
-EAPI void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h)
+void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
@@ -670,7 +670,7 @@ EAPI void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int 
  * @param[in] ctx a #Ecore_IMF_Context
  * @param[in] type the type of return key
  */
-EAPI void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Return_Key_Type type)
+void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Return_Key_Type type)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -689,7 +689,7 @@ EAPI void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ct
  *
  * @return the type of return key.
  */
-EAPI Ecore_IMF_Input_Panel_Return_Key_Type isf_imf_context_input_panel_return_key_type_get (Ecore_IMF_Context *ctx)
+Ecore_IMF_Input_Panel_Return_Key_Type isf_imf_context_input_panel_return_key_type_get (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -709,7 +709,7 @@ EAPI Ecore_IMF_Input_Panel_Return_Key_Type isf_imf_context_input_panel_return_ke
  * @param[in] ctx a #Ecore_IMF_Context
  * @param[in] disabled the state
  */
-EAPI void isf_imf_context_input_panel_return_key_disabled_set (Ecore_IMF_Context *ctx, Eina_Bool disabled)
+void isf_imf_context_input_panel_return_key_disabled_set (Ecore_IMF_Context *ctx, Eina_Bool disabled)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -727,7 +727,7 @@ EAPI void isf_imf_context_input_panel_return_key_disabled_set (Ecore_IMF_Context
  *
  * @return the disable state of return key.
  */
-EAPI Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Context *ctx)
+Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
@@ -747,7 +747,7 @@ EAPI Eina_Bool isf_imf_context_input_panel_return_key_disabled_get (Ecore_IMF_Co
  * @param[in] ctx a #Ecore_IMF_Context
  * @param[in] layout sets a layout ID to be shown. The layout ID will define by the configuration of selected ISE.
  */
-EAPI void
+void
 isf_imf_context_input_panel_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
@@ -766,7 +766,7 @@ isf_imf_context_input_panel_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_
 *
 * @return the layout of current ISE.
 */
-EAPI Ecore_IMF_Input_Panel_Layout isf_imf_context_input_panel_layout_get (Ecore_IMF_Context *ctx)
+Ecore_IMF_Input_Panel_Layout isf_imf_context_input_panel_layout_get (Ecore_IMF_Context *ctx)
 {
     Ecore_IMF_Input_Panel_Layout layout;
     if (!IfInitContext)
@@ -783,14 +783,14 @@ EAPI Ecore_IMF_Input_Panel_Layout isf_imf_context_input_panel_layout_get (Ecore_
  *
  * @return the state of current ISE.
  */
-EAPI Ecore_IMF_Input_Panel_State isf_imf_context_input_panel_state_get (Ecore_IMF_Context *ctx)
+Ecore_IMF_Input_Panel_State isf_imf_context_input_panel_state_get (Ecore_IMF_Context *ctx)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
     return input_panel_state;
 }
 
-EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *ctx)
+void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *ctx)
 {
     ecore_imf_context_input_panel_event_callback_clear (ctx);
 
@@ -808,7 +808,7 @@ EAPI void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *c
  * @param[out] w the width of candidate window
  * @param[out] h the height of candidate window
  */
-EAPI void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h)
+void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int *x, int *y, int *w, int *h)
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
@@ -822,7 +822,7 @@ EAPI void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx,
  *
  * @param[in] ctx a #Ecore_IMF_Context
  */
-EAPI void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx)
+void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx)
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();
@@ -837,7 +837,7 @@ EAPI void isf_imf_context_control_focus_in (Ecore_IMF_Context *ctx)
  *
  * @param[in] ctx a #Ecore_IMF_Context
  */
-EAPI void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx)
+void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx)
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();
@@ -845,7 +845,7 @@ EAPI void isf_imf_context_control_focus_out (Ecore_IMF_Context *ctx)
     _isf_imf_context_control_focus_out ();
 }
 
-EAPI void isf_imf_context_input_panel_send_will_show_ack ()
+void isf_imf_context_input_panel_send_will_show_ack ()
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();
@@ -854,7 +854,7 @@ EAPI void isf_imf_context_input_panel_send_will_show_ack ()
     _isf_imf_context_input_panel_send_will_show_ack ();
 }
 
-EAPI void isf_imf_context_input_panel_send_will_hide_ack ()
+void isf_imf_context_input_panel_send_will_hide_ack ()
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();

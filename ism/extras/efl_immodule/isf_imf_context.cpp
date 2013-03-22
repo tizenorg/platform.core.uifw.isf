@@ -304,24 +304,24 @@ public:
 
 static FinalizeHandler                                  _finalize_handler;
 
-ConfigPointer isf_imf_context_get_config (void)
+EAPI ConfigPointer isf_imf_context_get_config (void)
 {
     return _config;
 }
 
-EcoreIMFContextISF *
+EAPI EcoreIMFContextISF *
 get_focused_ic ()
 {
     return _focused_ic;
 }
 
-int
+EAPI int
 get_panel_client_id (void)
 {
     return _panel_client_id;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 get_desktop_mode ()
 {
     return desktop_mode;
@@ -496,7 +496,7 @@ _x_prop_change (void *data, int type, void *event)
     return ECORE_CALLBACK_PASS_ON;
 }
 
-int
+EAPI int
 register_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -512,7 +512,7 @@ register_key_handler ()
     return EXIT_SUCCESS;
 }
 
-int
+EAPI int
 unregister_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -688,7 +688,7 @@ done:
     return ret;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 {
     Eina_Bool uppercase;

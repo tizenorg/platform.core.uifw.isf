@@ -38,7 +38,6 @@ typedef enum
     SOFTWARE_KEYBOARD_ISE       /* Software keyboard ISE */
 } ISE_TYPE_T;
 
-
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of global functions.
 /////////////////////////////////////////////////////////////////////////////
@@ -49,7 +48,7 @@ typedef enum
  *
  * @return 0 if successfully, otherwise return -1;
  */
-int isf_control_set_active_ise_by_uuid (const char *uuid);
+EAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
 
 /**
  * @brief Get active ISE's UUID.
@@ -59,7 +58,7 @@ int isf_control_set_active_ise_by_uuid (const char *uuid);
  *
  * @return the length of UUID if successfully, otherwise return -1;
  */
-int isf_control_get_active_ise (char **uuid);
+EAPI int isf_control_get_active_ise (char **uuid);
 
 /**
  * @brief Get the list of all ISEs' UUID.
@@ -69,7 +68,7 @@ int isf_control_get_active_ise (char **uuid);
  *
  * @return the count of UUID list if successfully, otherwise return -1;
  */
-int isf_control_get_ise_list (char ***uuid_list);
+EAPI int isf_control_get_ise_list (char ***uuid_list);
 
 /**
  * @brief Get ISE's information according to ISE's UUID.
@@ -82,21 +81,21 @@ int isf_control_get_ise_list (char ***uuid_list);
  *
  * @return 0 if successfully, otherwise return -1;
  */
-int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
+EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
 
 /**
  * @brief Set active ISE to default ISE.
  *
  * @return 0 if successfully, otherwise return -1;
  */
-int isf_control_set_active_ise_to_default (void);
+EAPI int isf_control_set_active_ise_to_default (void);
 
 /**
  * @brief Reset all ISEs' options.
  *
  * @return 0 if successfully, otherwise return -1;
  */
-int isf_control_reset_ise_option (void);
+EAPI int isf_control_reset_ise_option (void);
 
 #ifdef __cplusplus
 }

@@ -165,7 +165,7 @@ HelperModule::set_arg_info (int argc, char *argv []) const
         m_set_arg_info (argc, argv);
 }
 
-int scim_get_helper_module_list (std::vector <String> &mod_list)
+EAPI int scim_get_helper_module_list (std::vector <String> &mod_list)
 {
     return scim_get_module_list (mod_list, "Helper");
 }

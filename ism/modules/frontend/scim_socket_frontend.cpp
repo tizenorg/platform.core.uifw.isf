@@ -85,18 +85,18 @@ static char   **_argv = NULL;
 
 //Module Interface
 extern "C" {
-    void scim_module_init (void)
+    EAPI void scim_module_init (void)
     {
         SCIM_DEBUG_FRONTEND(1) << "Initializing Socket FrontEnd module...\n";
     }
 
-    void scim_module_exit (void)
+    EAPI void scim_module_exit (void)
     {
         SCIM_DEBUG_FRONTEND(1) << "Exiting Socket FrontEnd module...\n";
         _scim_frontend.reset ();
     }
 
-    void scim_frontend_module_init (const BackEndPointer &backend,
+    EAPI void scim_frontend_module_init (const BackEndPointer &backend,
                                     const ConfigPointer &config,
                                     int argc,
                                     char **argv)
@@ -109,7 +109,7 @@ extern "C" {
         }
     }
 
-    void scim_frontend_module_run (void)
+    EAPI void scim_frontend_module_run (void)
     {
         struct tms tiks_buf;
         clock_t start = times (&tiks_buf);

@@ -3,7 +3,7 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.4.6319
+Version:    2.4.6322
 Release:    1
 Group:      System Environment/Libraries
 License:    LGPL
@@ -44,6 +44,8 @@ This package contains ISF header files for ISE development.
 %setup -q
 
 %build
+CFLAGS+=" -fvisibility=hidden "; export CFLAGS
+CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ";export CXXFLAGS
 
 %autogen
 %configure --disable-static \

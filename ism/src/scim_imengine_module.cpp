@@ -121,7 +121,7 @@ IMEngineModule::get_module_name () const
     return m_module_name;
 }
 
-int scim_get_imengine_module_list (std::vector <String>& engine_list)
+EAPI int scim_get_imengine_module_list (std::vector <String>& engine_list)
 {
     return scim_get_module_list (engine_list, "IMEngine");
 }

@@ -72,7 +72,7 @@ enum TransactionDataType
  * scim::Transaction and its related classes must throw
  * scim::TransactionError object when error.
  */
-class TransactionError: public Exception
+class EAPI TransactionError: public Exception
 {
 public:
     TransactionError (const String& what_arg)
@@ -86,7 +86,7 @@ class TransactionReader;
  * @brief This class is used to pack up many data and commands into one package
  *        and send them via socket.
  */
-class Transaction
+class EAPI Transaction
 {
     friend class TransactionReader;
 
@@ -338,7 +338,7 @@ public:
 /**
  * @brief This class is used to read data from a transaction without changing it.
  */
-class TransactionReader
+class EAPI TransactionReader
 {
     class TransactionReaderImpl;
 

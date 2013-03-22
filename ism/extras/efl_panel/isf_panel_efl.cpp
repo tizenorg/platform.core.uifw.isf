@@ -98,7 +98,7 @@ extern std::vector<String>          _icons;
 extern std::vector<uint32>          _options;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
 
-extern CommonLookupTable            g_isf_candidate_table;
+extern EAPI CommonLookupTable            g_isf_candidate_table;
 
 
 /////////////////////////////////////////////////////////////////////////////

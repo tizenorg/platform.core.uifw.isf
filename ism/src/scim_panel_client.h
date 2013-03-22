@@ -93,7 +93,7 @@ typedef Slot2<void, int, const std::vector<uint32> &>
  * FrontEnd may just register some slots to the corresponding signals to handle
  * the events sent from Panel.
  */
-class PanelClient
+class EAPI PanelClient
 {
     class PanelClientImpl;
     PanelClientImpl *m_impl;

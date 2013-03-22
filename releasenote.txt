@@ -1,3 +1,7 @@
+ISF 2.4.6322 :
+ 1. Add visibility gcc options
+
+
 ISF 2.4.6319 :
  1. [isf-panel-efl] Update aux style
  2. Fix path for 3rd ISE development

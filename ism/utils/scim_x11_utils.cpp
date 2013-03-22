@@ -125,7 +125,7 @@ initialize_modifier_bits (Display *display)
     XFreeModifiermap (mods);
 }
 
-KeyEvent
+EAPI KeyEvent
 scim_x11_keyevent_x11_to_scim (Display *display, const XKeyEvent &xkey)
 {
     KeyEvent  scimkey;
@@ -157,7 +157,7 @@ scim_x11_keyevent_x11_to_scim (Display *display, const XKeyEvent &xkey)
     return scimkey;
 }
 
-XKeyEvent
+EAPI XKeyEvent
 scim_x11_keyevent_scim_to_x11 (Display *display, const KeyEvent &scimkey)
 {
     XKeyEvent xkey;
@@ -187,7 +187,7 @@ scim_x11_keyevent_scim_to_x11 (Display *display, const KeyEvent &scimkey)
     return xkey;
 }
 
-uint16
+EAPI uint16
 scim_x11_keymask_x11_to_scim (Display *display, unsigned int xkeystate)
 {
     uint16 mask = 0;
@@ -237,7 +237,7 @@ scim_x11_keymask_x11_to_scim (Display *display, unsigned int xkeystate)
     return mask;
 }
 
-unsigned int scim_x11_keymask_scim_to_x11 (Display *display, uint16 scimkeymask)
+EAPI unsigned int scim_x11_keymask_scim_to_x11 (Display *display, uint16 scimkeymask)
 {
     unsigned int state = 0;
 

@@ -53,16 +53,16 @@ typedef struct {
     String locales;
 } ISEINFO;
 
-String isf_get_normalized_language (String src_str);
-String isf_combine_ise_info_string (String name, String uuid, String module, String language,
+EAPI String isf_get_normalized_language (String src_str);
+EAPI String isf_combine_ise_info_string (String name, String uuid, String module, String language,
                                     String icon, String mode, String option, String locales);
-void isf_get_ise_info_from_string (const char *str, ISEINFO &info);
-bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
-bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
-bool isf_add_keyboard_info_to_file (const char *filename, const char *module_name, const ConfigPointer &config);
-bool isf_add_helper_info_to_file (const char *filename, const char *module_name);
-void isf_remove_ise_info_from_file (const char *filename, const char *module_name);
-void isf_update_ise_info_to_file (const char *filename, const ConfigPointer &config);
+EAPI void isf_get_ise_info_from_string (const char *str, ISEINFO &info);
+EAPI bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
+EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
+EAPI bool isf_add_keyboard_info_to_file (const char *filename, const char *module_name, const ConfigPointer &config);
+EAPI bool isf_add_helper_info_to_file (const char *filename, const char *module_name);
+EAPI void isf_remove_ise_info_from_file (const char *filename, const char *module_name);
+EAPI void isf_update_ise_info_to_file (const char *filename, const ConfigPointer &config);
 
 #endif /* __ISF_QUERY_UTILITY_H */
 

@@ -54,7 +54,7 @@ namespace scim {
  * The accessory classes to help develop and manage Client Helper objects.
  * @{
  */
-class HelperError: public Exception
+class EAPI HelperError: public Exception
 {
 public:
     HelperError (const String& what_arg)
@@ -205,7 +205,7 @@ typedef Slot2<void, const HelperAgent *, const std::vector<uint32> &>
  * This class implements all Socket Transaction protocol between
  * Helper object and Panel.
  */
-class HelperAgent
+class EAPI HelperAgent
 {
     class HelperAgentImpl;
     HelperAgentImpl *m_impl;

@@ -33,7 +33,8 @@ INCLUDES		= -I$(top_builddir) \
 			  -DSCIM_SYSCONFDIR=\"@SCIM_SYSCONFDIR@\" \
 			  -DSCIM_LIBEXECDIR=\"@SCIM_LIBEXECDIR@\" \
 			  -DSCIM_ICONDIR=\"@SCIM_ICONDIR@\" \
-			  -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\"
+			  -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\" \
+			  @ISF_BUILDING_DLL@
 
 
 noinst_HEADERS		= ltdl.h \
@@ -88,7 +89,8 @@ libsciminclude_HEADERS 	= scim.h \
 			  scim_utility.h \
 			  isf_control.h \
 			  isf_imcontrol_client.h \
-			  ise_context.h
+			  ise_context.h \
+			  scim_visibility.h
 
 noinst_LTLIBRARIES	= libltdlc.la
 

@@ -184,7 +184,7 @@ typedef struct DefaultIse
  * two signals are used to provide a thread lock to PanelAgent, so that PanelAgent
  * can run correctly within a multi-threading Panel program.
  */
-class PanelAgent
+class EAPI PanelAgent
 {
     class PanelAgentImpl;
     PanelAgentImpl *m_impl;
