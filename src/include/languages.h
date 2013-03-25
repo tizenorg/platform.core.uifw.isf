@@ -99,7 +99,7 @@ public:
 
     static sclboolean set_language_enabled(const sclchar *name, sclboolean enabled);
     static sclboolean set_language_enabled_temporarily(const sclchar *name, sclboolean enabled_temporarily);
-    static sclboolean set_enabled_languages(std::vector<std::string> languages, sclboolean enabled);
+    static sclboolean set_enabled_languages(const std::vector<std::string> &languages, sclboolean enabled);
     static sclboolean set_all_languages_enabled(sclboolean enabled);
 
     static const sclchar* get_current_language();

@@ -330,7 +330,7 @@ sclboolean ISELanguageManager::set_language_enabled_temporarily(const sclchar *n
     return ret;
 }
 
-sclboolean ISELanguageManager::set_enabled_languages(std::vector<std::string> languages, sclboolean enabled)
+sclboolean ISELanguageManager::set_enabled_languages(const std::vector<std::string> &languages, sclboolean enabled)
 {
     sclboolean ret = FALSE;
 
@@ -341,9 +341,10 @@ sclboolean ISELanguageManager::set_enabled_languages(std::vector<std::string> la
         /* Otherwise, disable all languages and enable only those described in the config file */
         set_all_languages_enabled(FALSE);
 
-        for (std::vector<std::string>::iterator iter = languages.begin();
-            iter != languages.end() ;std::advance(iter, 1)) {
-                set_language_enabled(iter->c_str(), enabled);
+        std::vector<std::string>::const_iterator citer;
+        for (citer = languages.begin();
+            citer != languages.end(); citer++) {
+                set_language_enabled(citer->c_str(), enabled);
         }
     }
 
