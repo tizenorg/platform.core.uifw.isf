@@ -441,7 +441,7 @@ _key_down_cb (void *data, int type, void *event)
     if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
     if (!strcmp (ev->keyname, KEY_END) &&
-        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        ecore_imf_context_input_panel_state_get (_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         LOGD ("END key is pressed\n");
         return ECORE_CALLBACK_CANCEL;
     }
@@ -458,7 +458,7 @@ _key_up_cb (void *data, int type, void *event)
     if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
     if (!strcmp (ev->keyname, KEY_END) &&
-        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        ecore_imf_context_input_panel_state_get (_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         LOGD ("END key is released\n");
         isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
         return ECORE_CALLBACK_CANCEL;
@@ -550,14 +550,14 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
 
     if (!ctx) return;
 
-    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get(ctx);
+    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get (ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
         return;
 
     if (autoperiod_allow == EINA_FALSE)
         return;
 
-    if ((ecore_time_get() - space_key_time) > DOUBLE_SPACE_INTERVAL)
+    if ((ecore_time_get () - space_key_time) > DOUBLE_SPACE_INTERVAL)
         goto done;
 
     ecore_imf_context_surrounding_get (ctx, &markup_str, &cursor_pos);

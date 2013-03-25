@@ -860,7 +860,7 @@ void isf_imf_context_input_panel_send_will_hide_ack ()
         _isf_imf_context_init ();
     }
 
-    if (_conformant_get()) {
+    if (_conformant_get ()) {
         if (conformant_reset_done && received_will_hide_event) {
             _isf_imf_context_input_panel_send_will_hide_ack ();
             conformant_reset_done = EINA_FALSE;
@@ -873,7 +873,7 @@ void isf_imf_context_input_panel_send_will_hide_ack ()
 }
 
 /**
- * process command message, ISM_TRANS_CMD_ISE_PANEL_SHOWED of ecore_ise_process_event()
+ * process command message, ISM_TRANS_CMD_ISE_PANEL_SHOWED of ecore_ise_process_event ()
  */
 static bool _process_ise_panel_showed (void)
 {
@@ -890,7 +890,7 @@ static bool _process_ise_panel_showed (void)
 }
 
 /**
- * process command message, ISM_TRANS_CMD_ISE_PANEL_HIDED of ecore_ise_process_event()
+ * process command message, ISM_TRANS_CMD_ISE_PANEL_HIDED of ecore_ise_process_event ()
  */
 static bool _process_ise_panel_hided (void)
 {
@@ -910,7 +910,7 @@ static bool _process_ise_panel_hided (void)
 }
 
 /**
- * process command message, ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT of gtk_ise_process_event()
+ * process command message, ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT of gtk_ise_process_event ()
  */
 static bool _process_update_input_context (Transaction &trans)
 {
