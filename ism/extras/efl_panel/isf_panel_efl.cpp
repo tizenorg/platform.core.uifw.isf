@@ -3465,7 +3465,7 @@ static bool check_system_ready (void)
     int val = 0;
     ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
 
-    if (ret == 0 && val == ISF_SYSTEM_APPSERVICE_READY_STATE) {
+    if (ret == 0 && val >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
         return true;
     } else {
         /* Register a call back function for checking system ready */
