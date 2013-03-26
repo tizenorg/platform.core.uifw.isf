@@ -99,10 +99,10 @@
     </key>
   </row>
   <row x="8">
-    <key long_key_value="P">
+    <key long_key_value="p">
       <label>
         <rec>*</rec>
-        <rec multi="1">P</rec>
+        <rec multi="1">p</rec>
       </label>
     </key>
     <key long_key_value="+">
