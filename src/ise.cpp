@@ -283,6 +283,10 @@ void ise_show(int ic)
 
             ise_reset_context();
 
+            /* Turn the shift state off if we need to reset our input mode, only when auto-capitaluzation is not set  */
+            if (!(g_keyboard_state.caps_mode)) {
+                gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
+            }
             if (g_keyboard_state.layout < ISE_LAYOUT_STYLE_MAX) {
                 /* If this layout requires specific input mode, set it */
                 if (strlen(g_ise_default_values[g_keyboard_state.layout].input_mode) > 0) {
