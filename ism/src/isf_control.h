@@ -25,6 +25,8 @@
 #ifndef __ISF_CONTROL_H
 #define __ISF_CONTROL_H
 
+#include <scim_visibility.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
