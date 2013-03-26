@@ -1,3 +1,10 @@
+ISF 2.4.6326 :
+ 1. [panel] Request to hide ISE before stop helper ISE
+ 2. [panel] fix default ISE launching issue
+ 3. [panel] add log in booting time
+ 4. set default input language in vconf
+
+
 ISF 2.4.6322 :
  1. Add visibility gcc options
 
