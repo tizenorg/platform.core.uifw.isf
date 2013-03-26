@@ -30,7 +30,7 @@ INCLUDES		= -I$(top_builddir) \
 			  -DSCIM_LIBEXECDIR=\"@SCIM_LIBEXECDIR@\" \
 			  -DSCIM_ICONDIR=\"@SCIM_ICONDIR@\" \
 			  -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\" \
-              @ISF_BUILDING_DLL@
+			  @ISF_BUILDING_DLL@
 
 moduledir		= @SCIM_MODULE_PATH@/$(SCIM_BINARY_VERSION)/Config
 
