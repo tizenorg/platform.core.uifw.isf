@@ -3253,11 +3253,20 @@ static void start_default_ise (void)
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
     if (!set_active_ise (default_uuid)) {
         std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
+        LOGE ("Failed to launch default ISE (%s)\n", default_uuid.c_str ());
 
         if (default_uuid != _initial_ise_uuid) {
             std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
-            set_active_ise (_initial_ise_uuid);
+            if (!set_active_ise (_initial_ise_uuid)) {
+                LOGE ("Failed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
+            }
+            else {
+                LOGD ("Succeed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
+            }
         }
+    }
+    else {
+        LOGD ("Succeed to launch default ISE (%s)\n", default_uuid.c_str ());
     }
 }
 
@@ -3466,6 +3475,7 @@ static bool check_system_ready (void)
     ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
 
     if (ret == 0 && val >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
+        LOGD ("Appservice was ready\n");
         return true;
     } else {
         /* Register a call back function for checking system ready */
@@ -3706,13 +3716,19 @@ int main (int argc, char *argv [])
 
     if (!check_wm_ready ()) {
         std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
+        LOGE ("Window Manager ready timeout\n");
+    }
+    else {
+        LOGD ("Window Manager is in ready state\n");
     }
 
     elm_init (argc, argv);
     check_time ("elm_init");
 
-    if (!efl_create_control_window ())
+    if (!efl_create_control_window ()) {
+        LOGE ("Failed to create control window\n");
         goto cleanup;
+    }
 
     efl_get_screen_resolution (_screen_width, _screen_height);
 
