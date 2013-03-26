@@ -194,6 +194,15 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_LAND_SPACE">
+    <label_properties font_name="Tizen:style=medium" font_size="20" label_alignment="center_top" padding_X="0" padding_Y="3" inner_width="0" inner_height="28">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="QTY_LAND_SPACE_RIGHT">
     <label_properties font_name="Tizen:style=medium" font_size="20" label_alignment="center_middle" padding_X="60" padding_Y="0" inner_width="0" inner_height="28">
       <font_color_record>
         <color button="normal">0x171717ff</color>
@@ -248,6 +257,10 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="LAND_IMAGE_SPACE">
+    <label_properties label_alignment="center_bottom" padding_X="0" padding_Y="10">
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="LAND_IMAGE_SPACE_LEFT">
     <label_properties label_alignment="center_middle" padding_X="-60" padding_Y="0">
     </label_properties>
   </label_properties_table>

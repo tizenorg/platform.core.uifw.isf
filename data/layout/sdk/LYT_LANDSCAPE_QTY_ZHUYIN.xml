@@ -381,7 +381,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="462">
+    <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE_RIGHT" image_label_type="LAND_IMAGE_SPACE_LEFT" width="462">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
@@ -485,7 +485,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" key_spacing="8" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="288">
+    <key button_type="direction" key_type="control" key_spacing="8" label_type="QTY_LAND_SPACE_RIGHT" image_label_type="LAND_IMAGE_SPACE_LEFT" width="288">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
@@ -604,7 +604,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key button_type="direction" key_type="control" key_spacing="8" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="288">
+    <key button_type="direction" key_type="control" key_spacing="8" label_type="QTY_LAND_SPACE_RIGHT" image_label_type="LAND_IMAGE_SPACE_LEFT" width="288">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
