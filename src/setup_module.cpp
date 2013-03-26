@@ -112,7 +112,8 @@ static void load_config (const ConfigPointer &config)
 
         read_ise_config_values();
 
-        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages, TRUE);
+        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+
         ISELanguageManager::select_language(g_config_values.selected_language.c_str());
     }
 }

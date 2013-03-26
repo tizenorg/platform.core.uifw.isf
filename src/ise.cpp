@@ -249,7 +249,8 @@ void ise_show(int ic)
     if (gSCLUI && g_ise_common) {
 
         read_ise_config_values();
-        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages, TRUE);
+
+        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
 
         /* Reset input mode if the input context value has changed */
         if (ic != g_keyboard_state.ic) {
@@ -386,7 +387,8 @@ ise_create()
             }
 
             read_ise_config_values();
-            ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages, TRUE);
+            ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+
             ISELanguageManager::select_language(g_config_values.selected_language.c_str());
         }
 

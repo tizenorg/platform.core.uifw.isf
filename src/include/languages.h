@@ -99,7 +99,8 @@ public:
 
     static sclboolean set_language_enabled(const sclchar *name, sclboolean enabled);
     static sclboolean set_language_enabled_temporarily(const sclchar *name, sclboolean enabled_temporarily);
-    static sclboolean set_enabled_languages(const std::vector<std::string> &languages, sclboolean enabled);
+    /* if languages num is 0, enable default language, othewise enable languages assigned */
+    static sclboolean set_enabled_languages(const std::vector<std::string> &languages);
     static sclboolean set_all_languages_enabled(sclboolean enabled);
 
     static const sclchar* get_current_language();
@@ -109,6 +110,11 @@ public:
     static LANGUAGE_INFO* get_language_info(int index);
 
     static const sclchar* get_resource_file_path();
+private:
+    /* enable languages, if languages num is 0, return false */
+    static sclboolean enable_languages(const std::vector<std::string> &languages);
+    /* enable default language, regards the 1st language in the language_vector is the default language*/
+    static sclboolean enable_default_language();
 
 protected:
     static std::vector<LANGUAGE_INFO> language_vector;

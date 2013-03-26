@@ -28,6 +28,20 @@ std::string ISELanguageManager::current_language;
 std::string ISELanguageManager::temporary_language;
 std::string ISELanguageManager::default_resource_file;
 
+sclboolean
+ISELanguageManager::set_all_languages_enabled(sclboolean enabled)
+{
+    sclboolean ret = TRUE;
+
+    std::vector<LANGUAGE_INFO>::iterator iter;
+    for (iter = language_vector.begin(); iter != language_vector.end(); ++iter) {
+            iter->enabled = enabled;
+            iter->enabled_temporarily = FALSE;
+    }
+
+    return ret;
+}
+
 /* Each language-specific source files should put their callback information in the following vectors */
 sclboolean ISELanguageManager::add_language(LANGUAGE_INFO language)
 {
@@ -330,35 +344,42 @@ sclboolean ISELanguageManager::set_language_enabled_temporarily(const sclchar *n
     return ret;
 }
 
-sclboolean ISELanguageManager::set_enabled_languages(const std::vector<std::string> &languages, sclboolean enabled)
+sclboolean ISELanguageManager::enable_languages(const std::vector<std::string> &vec_language_id)
 {
     sclboolean ret = FALSE;
 
-    if (languages.size() == 0) {
-        /* If there is NO language currently enabled, just enable ALL of them */
-        set_all_languages_enabled(TRUE);
-    } else {
-        /* Otherwise, disable all languages and enable only those described in the config file */
-        set_all_languages_enabled(FALSE);
+    if (vec_language_id.size() != 0) {
+        ret = set_all_languages_enabled(FALSE);
+
+        if (ret == FALSE) return ret;
 
         std::vector<std::string>::const_iterator citer;
-        for (citer = languages.begin();
-            citer != languages.end(); citer++) {
-                set_language_enabled(citer->c_str(), enabled);
+        for (citer = vec_language_id.begin(); citer != vec_language_id.end(); ++citer) {
+            ret = set_language_enabled(citer->c_str(), TRUE);
+            if (ret == FALSE) return FALSE;
         }
     }
 
     return ret;
 }
 
-sclboolean ISELanguageManager::set_all_languages_enabled(sclboolean enabled)
-{
-    sclboolean ret = TRUE;
+/* FIXME A temporaty way for enable default language */
+sclboolean ISELanguageManager::enable_default_language() {
+    if (language_vector.size()) {
+        LANGUAGE_INFO &default_language = language_vector.at(0);
+        default_language.enabled = TRUE;
+        default_language.enabled_temporarily = FALSE;
+        return TRUE;
+    }
 
-    for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-        iter != language_vector.end();std::advance(iter, 1)) {
-            iter->enabled = enabled;
-            iter->enabled_temporarily = FALSE;
+    return FALSE;
+}
+
+sclboolean ISELanguageManager::set_enabled_languages(const std::vector<std::string> &vec_language_id) {
+    sclboolean ret = FALSE;
+
+    if (vec_language_id.size() == 0 || FALSE == enable_languages(vec_language_id)) {
+        ret = enable_default_language();
     }
 
     return ret;

@@ -506,7 +506,7 @@ language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
 {
     if (ISELanguageManager::get_enabled_languages_num() == 0) {
         read_ise_config_values();
-        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages, TRUE);
+        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
     }
     std::string languages = compose_selected_languages_string();
     strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
@@ -740,7 +740,7 @@ open_option_window(Evas_Object *parent, sclint degree)
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */
-    ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages, TRUE);
+    ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
 
     set_option_values();
 
