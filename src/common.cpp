@@ -212,11 +212,6 @@ void CISECommon::init(const sclchar *name, const sclchar *uuid, const sclchar *l
 
 void CISECommon::exit()
 {
-    /*if (m_event_callback) {
-        m_event_callback->exit()
-    }*/
-
-    elm_exit ();
 }
 
 void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, const sclchar *display)
