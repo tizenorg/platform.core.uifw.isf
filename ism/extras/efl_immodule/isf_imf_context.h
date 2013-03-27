@@ -33,6 +33,7 @@
 
 const double DOUBLE_SPACE_INTERVAL = 1.0;
 const double HIDE_TIMER_INTERVAL = 0.05;
+const double WILL_SHOW_TIMER_INTERVAL = 5.0;
 
 typedef struct _EcoreIMFContextISF      EcoreIMFContextISF;
 typedef struct _EcoreIMFContextISFImpl  EcoreIMFContextISFImpl;

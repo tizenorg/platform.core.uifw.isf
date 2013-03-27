@@ -48,6 +48,7 @@ static Ecore_X_Atom       prop_x_ext_keyboard_exist = 0;
 static Ecore_X_Window     _rootwin;
 static unsigned int       hw_kbd_num = 0;
 static Ecore_Timer       *hide_timer = NULL;
+static Ecore_Timer       *will_show_timer = NULL;
 static Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
 static int                hide_context_id = -1;
 static Evas              *active_context_canvas = NULL;
@@ -281,6 +282,15 @@ static Eina_Bool _hide_timer_handler (void *data)
     return ECORE_CALLBACK_CANCEL;
 }
 
+static Eina_Bool _will_show_timer_handler (void *data)
+{
+    LOGD ("reset input panel state as HIDE");
+
+    input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
+    will_show_timer = NULL;
+    return ECORE_CALLBACK_CANCEL;
+}
+
 static void _input_panel_hide_timer_start (void *data)
 {
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
@@ -406,6 +416,11 @@ void isf_imf_input_panel_shutdown (void)
     }
 
     _win_focus_out_handler_del ();
+
+    if (will_show_timer) {
+        ecore_timer_del (will_show_timer);
+        will_show_timer = NULL;
+    }
 
     if (hide_timer) {
         if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
@@ -543,8 +558,14 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     _isf_imf_context_input_panel_show (get_panel_client_id (), context_id, packet, length, input_panel_show);
 
-    if (input_panel_show == true && input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+    if (input_panel_show == true && input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
+
+        if (will_show_timer)
+            ecore_timer_del (will_show_timer);
+
+        will_show_timer = ecore_timer_add (WILL_SHOW_TIMER_INTERVAL, _will_show_timer_handler, NULL);
+    }
 
     free (packet);
 
@@ -930,6 +951,10 @@ static bool _process_update_input_context (Transaction &trans)
                 return true;
             case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
                 input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
+                if (will_show_timer) {
+                    ecore_timer_del (will_show_timer);
+                    will_show_timer = NULL;
+                }
                 break;
             case SCIM_INPUT_PANEL_STATE_WILL_HIDE:
                 break;
