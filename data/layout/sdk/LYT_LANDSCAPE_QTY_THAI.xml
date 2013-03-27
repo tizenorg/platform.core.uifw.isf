@@ -397,7 +397,7 @@
     </key>
     <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE_RIGHT" image_label_type="LAND_IMAGE_SPACE_LEFT" width="612">
       <label>
-        <rec>Русский</rec>
+        <rec>_LANGUAGE_</rec>
       </label>
       <image_label>
         <rec button="normal">B09_icon_space.png</rec>
@@ -486,7 +486,7 @@
     </key>
     <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE_RIGHT" image_label_type="LAND_IMAGE_SPACE_LEFT" width="358">
       <label>
-        <rec>Русский</rec>
+        <rec>_LANGUAGE_</rec>
       </label>
       <image_label>
         <rec button="normal">B09_icon_space.png</rec>
@@ -590,7 +590,7 @@
     </key>
     <key button_type="direction" key_type="control" hit_left="32" hit_right="30" key_spacing="48" label_type="QTY_LAND_SPACE_RIGHT" image_label_type="LAND_IMAGE_SPACE_LEFT" width="358">
       <label>
-        <rec>Русский</rec>
+        <rec>_LANGUAGE_</rec>
       </label>
       <image_label>
         <rec button="normal">B09_icon_space.png</rec>
