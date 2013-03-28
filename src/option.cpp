@@ -25,6 +25,7 @@
 #include <glib.h>
 #include <Elementary.h>
 #include <sensor.h>
+#include <vconf.h>
 
 #include "option.h"
 #include "languages.h"
@@ -106,6 +107,11 @@ static void rotation_callback_func(unsigned int event_type, sensor_event_data_t 
     };
 
     int *my_event_data = NULL;
+
+    int lock=0;
+    vconf_get_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, &lock);
+    if(!lock)
+        return;
 
     if (event_type != ACCELEROMETER_EVENT_ROTATION_CHECK || event == NULL) {
         return;
