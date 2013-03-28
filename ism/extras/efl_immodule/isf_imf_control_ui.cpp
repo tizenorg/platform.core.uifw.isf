@@ -469,6 +469,9 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     /* set layout in ise context info */
     iseContext.layout = ecore_imf_context_input_panel_layout_get (ctx);
 
+    /* set layout variation in ise context info */
+    iseContext.layout_variation = ecore_imf_context_input_panel_layout_variation_get (ctx);
+
     /* set prediction allow */
     iseContext.prediction_allow = ecore_imf_context_prediction_allow_get (ctx);
 
@@ -515,6 +518,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     LOGD ("[request to show input panel] ctx : %p\n", ctx);
     LOGD (" - language : %d\n", iseContext.language);
     LOGD (" - layout : %d\n", iseContext.layout);
+    LOGD (" - layout variation : %d\n", iseContext.layout_variation);
 
     /* set return key type */
     iseContext.return_key_type = ecore_imf_context_input_panel_return_key_type_get (ctx);
