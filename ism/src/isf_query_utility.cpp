@@ -53,7 +53,7 @@ using namespace scim;
  *
  * @return normalized language name.
  */
-String isf_get_normalized_language (String src_str)
+EAPI String isf_get_normalized_language (String src_str)
 {
     std::vector<String> str_list, dst_list;
     scim_split_string_list (str_list, src_str);
@@ -66,7 +66,7 @@ String isf_get_normalized_language (String src_str)
     return dst_str;
 }
 
-void isf_get_ise_info_from_string (const char *str, ISEINFO &info)
+EAPI void isf_get_ise_info_from_string (const char *str, ISEINFO &info)
 {
     if (str == NULL || strlen (str) == 0)
         return;
@@ -101,7 +101,7 @@ void isf_get_ise_info_from_string (const char *str, ISEINFO &info)
     free (buf);
 }
 
-String isf_combine_ise_info_string (String name, String uuid, String module, String language,
+EAPI String isf_combine_ise_info_string (String name, String uuid, String module, String language,
                                     String icon, String mode, String option, String locales)
 {
         String line = name + String (":") + uuid + String (":") + module + String (":") + language + String (":") +
@@ -109,7 +109,7 @@ String isf_combine_ise_info_string (String name, String uuid, String module, Str
         return line;
 }
 
-bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list)
+EAPI bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list)
 {
     info_list.clear ();
     FILE *engine_list_file = fopen (filename, "r");
@@ -130,7 +130,7 @@ bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_li
     return true;
 }
 
-bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list)
+EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list)
 {
     if (info_list.size () <= 0)
         return false;
@@ -242,7 +242,7 @@ static void remove_ise_info_from_list (std::vector<ISEINFO> &info_list, const ch
     }
 }
 
-bool isf_add_keyboard_info_to_file (const char *filename, const char *module_name, const ConfigPointer &config)
+EAPI bool isf_add_keyboard_info_to_file (const char *filename, const char *module_name, const ConfigPointer &config)
 {
     std::vector<ISEINFO> info_list;
     std::vector<ISEINFO>::iterator iter;
@@ -256,7 +256,7 @@ bool isf_add_keyboard_info_to_file (const char *filename, const char *module_nam
     return isf_write_ise_info_list (filename, info_list);
 }
 
-bool isf_add_helper_info_to_file (const char *filename, const char *module_name)
+EAPI bool isf_add_helper_info_to_file (const char *filename, const char *module_name)
 {
     std::vector<ISEINFO> info_list;
     std::vector<ISEINFO>::iterator iter;
@@ -270,7 +270,7 @@ bool isf_add_helper_info_to_file (const char *filename, const char *module_name)
     return isf_write_ise_info_list (filename, info_list);
 }
 
-void isf_remove_ise_info_from_file (const char *filename, const char *module_name)
+EAPI void isf_remove_ise_info_from_file (const char *filename, const char *module_name)
 {
     std::vector<ISEINFO> info_list;
     std::vector<ISEINFO>::iterator iter;
@@ -281,7 +281,7 @@ void isf_remove_ise_info_from_file (const char *filename, const char *module_nam
     isf_write_ise_info_list (filename, info_list);
 }
 
-void isf_update_ise_info_to_file (const char *filename, const ConfigPointer &config)
+EAPI void isf_update_ise_info_to_file (const char *filename, const ConfigPointer &config)
 {
     if (filename == NULL)
         return;

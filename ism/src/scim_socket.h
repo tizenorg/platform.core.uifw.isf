@@ -62,7 +62,7 @@ typedef Signal2<void, SocketServer *, const Socket &>
  * scim::Socket and its derived classes must throw
  * scim::SocketError object when error.
  */
-class SocketError: public Exception
+class EAPI SocketError: public Exception
 {
 public:
     SocketError (const String& what_arg)
@@ -99,7 +99,7 @@ enum SocketFamily
  *    A unix or local socket address. It's a full path of a socket file.
  *    For example: local:/tmp/scim-socket-frontend
  */
-class SocketAddress
+class EAPI SocketAddress
 {
     class SocketAddressImpl;
     SocketAddressImpl *m_impl;
@@ -183,7 +183,7 @@ public:
  * Only the object of its derived classes SocketServer and SocketClient
  * can be created directly.
  */
-class Socket
+class EAPI Socket
 {
     class SocketImpl;
 
@@ -339,7 +339,7 @@ protected:
  * Class SocketServer provides basic operations to create a Socket Server,
  * such as create, run etc.
  */
-class SocketServer : public Socket
+class EAPI SocketServer : public Socket
 {
     class SocketServerImpl;
 
@@ -504,7 +504,7 @@ public:
  * Class SocketClient provides basic operations to create a Socket Client,
  * such as connect, read, write, etc.
  */
-class SocketClient : public Socket
+class EAPI SocketClient : public Socket
 {
     bool m_connected;
 
@@ -553,21 +553,21 @@ public:
  *
  * SocketFrontEnd should listen on this address by default.
  */
-String scim_get_default_socket_frontend_address ();
+EAPI String scim_get_default_socket_frontend_address ();
 
 /**
  * @brief Get the default socket address of SocketIMEngine
  *
  * SocketIMEngine should connect to this address by default.
  */
-String scim_get_default_socket_imengine_address ();
+EAPI String scim_get_default_socket_imengine_address ();
 
 /**
  * @brief Get the default socket address of SocketConfig
  *
  * SocketConfig should connect to this address by default.
  */
-String scim_get_default_socket_config_address ();
+EAPI String scim_get_default_socket_config_address ();
 
 /**
  * @brief Get the default socket address of the Panel running on localhost.
@@ -575,19 +575,19 @@ String scim_get_default_socket_config_address ();
  * The panel running on local host should listen on this address by default.
  * All FrontEnds which need panel should connect to this address by default.
  */
-String scim_get_default_panel_socket_address (const String &display);
+EAPI String scim_get_default_panel_socket_address (const String &display);
 
 /**
  * @brief Get the default socket address of Helper Manager Server running on localhost.
  */
-String scim_get_default_helper_manager_socket_address ();
+EAPI String scim_get_default_helper_manager_socket_address ();
 
 /**
  * @brief Get the default socket timeout value.
  *
  * All socket connection should use this timeout value.
  */
-int    scim_get_default_socket_timeout ();
+EAPI int    scim_get_default_socket_timeout ();
 
 /**
  * @brief Helper function to open a connection to a socket server
@@ -615,7 +615,7 @@ int    scim_get_default_socket_timeout ();
  * @return true if the connection was established successfully, otherwise
  *         return false, and the client should close the socket.
  */
-bool   scim_socket_open_connection   (uint32       &key,
+EAPI bool   scim_socket_open_connection   (uint32       &key,
                                       const String &client_type,
                                       const String &server_type,
                                       const Socket &socket,
@@ -645,7 +645,7 @@ bool   scim_socket_open_connection   (uint32       &key,
  * @return The type of the accepted socket client, or an empty string if the
  *         connection could not be established.
  */
-String scim_socket_accept_connection (uint32       &key,
+EAPI String scim_socket_accept_connection (uint32       &key,
                                       const String &server_types,
                                       const String &client_types,
                                       const Socket &socket,

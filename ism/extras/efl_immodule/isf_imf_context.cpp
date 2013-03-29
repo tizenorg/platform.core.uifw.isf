@@ -304,24 +304,24 @@ public:
 
 static FinalizeHandler                                  _finalize_handler;
 
-ConfigPointer isf_imf_context_get_config (void)
+EAPI ConfigPointer isf_imf_context_get_config (void)
 {
     return _config;
 }
 
-EcoreIMFContextISF *
+EAPI EcoreIMFContextISF *
 get_focused_ic ()
 {
     return _focused_ic;
 }
 
-int
+EAPI int
 get_panel_client_id (void)
 {
     return _panel_client_id;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 get_desktop_mode ()
 {
     return desktop_mode;
@@ -441,7 +441,7 @@ _key_down_cb (void *data, int type, void *event)
     if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
     if (!strcmp (ev->keyname, KEY_END) &&
-        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        ecore_imf_context_input_panel_state_get (_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         LOGD ("END key is pressed\n");
         return ECORE_CALLBACK_CANCEL;
     }
@@ -458,7 +458,7 @@ _key_up_cb (void *data, int type, void *event)
     if (!ev || !_focused_ic || !_focused_ic->ctx) return ECORE_CALLBACK_RENEW;
 
     if (!strcmp (ev->keyname, KEY_END) &&
-        ecore_imf_context_input_panel_state_get(_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        ecore_imf_context_input_panel_state_get (_focused_ic->ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         LOGD ("END key is released\n");
         isf_imf_context_input_panel_instant_hide (_focused_ic->ctx);
         return ECORE_CALLBACK_CANCEL;
@@ -496,7 +496,7 @@ _x_prop_change (void *data, int type, void *event)
     return ECORE_CALLBACK_PASS_ON;
 }
 
-int
+EAPI int
 register_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -512,7 +512,7 @@ register_key_handler ()
     return EXIT_SUCCESS;
 }
 
-int
+EAPI int
 unregister_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -550,14 +550,14 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
 
     if (!ctx) return;
 
-    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get(ctx);
+    Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get (ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
         return;
 
     if (autoperiod_allow == EINA_FALSE)
         return;
 
-    if ((ecore_time_get() - space_key_time) > DOUBLE_SPACE_INTERVAL)
+    if ((ecore_time_get () - space_key_time) > DOUBLE_SPACE_INTERVAL)
         goto done;
 
     ecore_imf_context_surrounding_get (ctx, &markup_str, &cursor_pos);
@@ -688,7 +688,7 @@ done:
     return ret;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 {
     Eina_Bool uppercase;
@@ -2526,7 +2526,7 @@ panel_iochannel_handler (void *data, Ecore_Fd_Handler *fd_handler)
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     if (fd_handler == _panel_iochannel_read_handler) {
-        if (!_panel_client.filter_event ()) {
+        if (_panel_client.has_pending_event () && !_panel_client.filter_event ()) {
             panel_finalize ();
             panel_initialize ();
             return ECORE_CALLBACK_CANCEL;

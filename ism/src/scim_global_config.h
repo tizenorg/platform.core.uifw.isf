@@ -54,7 +54,7 @@ namespace scim {
  *
  * @return the value string of the key.
  */
-String scim_global_config_read (const String &key, const String &defVal = String ());
+EAPI String scim_global_config_read (const String &key, const String &defVal = String ());
 
 /**
  * @brief Read an int value from the global configuration file.
@@ -64,7 +64,7 @@ String scim_global_config_read (const String &key, const String &defVal = String
  *
  * @return the value of the key.
  */
-int    scim_global_config_read (const String &key, int defVal);
+EAPI int    scim_global_config_read (const String &key, int defVal);
 
 /**
  * @brief Read a bool value from the global configuration file.
@@ -74,7 +74,7 @@ int    scim_global_config_read (const String &key, int defVal);
  *
  * @return the value of the key.
  */
-bool   scim_global_config_read (const String &key, bool defVal);
+EAPI bool   scim_global_config_read (const String &key, bool defVal);
 
 /**
  * @brief Read a double value from the global configuration file.
@@ -84,7 +84,7 @@ bool   scim_global_config_read (const String &key, bool defVal);
  *
  * @return the value of the key.
  */
-double scim_global_config_read (const String &key, double defVal);
+EAPI double scim_global_config_read (const String &key, double defVal);
 
 /**
  * @brief Read a string list from the global configuration file.
@@ -94,7 +94,7 @@ double scim_global_config_read (const String &key, double defVal);
  *
  * @return the value of the key.
  */
-std::vector <String> scim_global_config_read (const String &key, const std::vector <String> &defVal);
+EAPI std::vector <String> scim_global_config_read (const String &key, const std::vector <String> &defVal);
 
 /**
  * @brief Read an int list from the global configuration file.
@@ -104,7 +104,7 @@ std::vector <String> scim_global_config_read (const String &key, const std::vect
  *
  * @return the value of the key.
  */
-std::vector <int>    scim_global_config_read (const String &key, const std::vector <int> &defVal);
+EAPI std::vector <int>    scim_global_config_read (const String &key, const std::vector <int> &defVal);
 
 /**
  * @brief Write a string value into the user global config.
@@ -112,7 +112,7 @@ std::vector <int>    scim_global_config_read (const String &key, const std::vect
  * @param key The key to be associated.
  * @param val The string value to be written.
  */
-void scim_global_config_write (const String &key, const String &val);
+EAPI void scim_global_config_write (const String &key, const String &val);
 
 /**
  * @brief Write an int value into the user global config.
@@ -120,7 +120,7 @@ void scim_global_config_write (const String &key, const String &val);
  * @param key The key to be associated.
  * @param val The int value to be written.
  */
-void scim_global_config_write (const String &key, int val);
+EAPI void scim_global_config_write (const String &key, int val);
 
 /**
  * @brief Write a bool value into the user global config.
@@ -128,7 +128,7 @@ void scim_global_config_write (const String &key, int val);
  * @param key The key to be associated.
  * @param val The bool value to be written.
  */
-void scim_global_config_write (const String &key, bool val);
+EAPI void scim_global_config_write (const String &key, bool val);
 
 /**
  * @brief Write a double value into the user global config.
@@ -136,7 +136,7 @@ void scim_global_config_write (const String &key, bool val);
  * @param key The key to be associated.
  * @param val The double value to be written.
  */
-void scim_global_config_write (const String &key, double val);
+EAPI void scim_global_config_write (const String &key, double val);
 
 /**
  * @brief Write a string list into the user global config.
@@ -144,7 +144,7 @@ void scim_global_config_write (const String &key, double val);
  * @param key The key to be associated.
  * @param val The string list to be written.
  */
-void scim_global_config_write (const String &key, const std::vector <String> &val);
+EAPI void scim_global_config_write (const String &key, const std::vector <String> &val);
 
 /**
  * @brief Write an int list into the user global config.
@@ -152,20 +152,20 @@ void scim_global_config_write (const String &key, const std::vector <String> &va
  * @param key The key to be associated.
  * @param val The int list to be written.
  */
-void scim_global_config_write (const String &key, const std::vector <int> &val);
+EAPI void scim_global_config_write (const String &key, const std::vector <int> &val);
 
 /**
  * @brief Reset the value associated to the specified key to its default value.
  *
  * @param key The key to be reset.
  */
-void scim_global_config_reset (const String &key);
+EAPI void scim_global_config_reset (const String &key);
 
 /**
  * @brief Flush the updated global config into user global config file.
  * @return true if success.
  */
-bool scim_global_config_flush ();
+EAPI bool scim_global_config_flush ();
 
 /** @} */
 } // namespace scim

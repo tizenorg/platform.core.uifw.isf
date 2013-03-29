@@ -31,7 +31,7 @@ namespace scim
 typedef Slot1<void, int> IMControlClientSlotVoid;
 
 
-class IMControlClient
+class EAPI IMControlClient
 {
     class IMControlClientImpl;
     IMControlClientImpl *m_impl;

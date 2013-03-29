@@ -67,7 +67,7 @@
 #include "scim_stl_map.h"
 
 
-scim::CommonLookupTable g_isf_candidate_table;
+EAPI scim::CommonLookupTable g_isf_candidate_table;
 
 
 namespace scim {

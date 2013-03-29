@@ -98,7 +98,7 @@ extern std::vector<String>          _icons;
 extern std::vector<uint32>          _options;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
 
-extern CommonLookupTable            g_isf_candidate_table;
+extern EAPI CommonLookupTable            g_isf_candidate_table;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -119,6 +119,7 @@ static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
 static int        efl_get_angle_for_app_window         (void);
 
 static int        ui_candidate_get_valid_height        (void);
+static void       ui_candidate_window_resize_height    (int *height);
 static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true);
 static void       ui_destroy_candidate_window          (void);
 static void       ui_settle_candidate_window           (void);
@@ -297,6 +298,43 @@ static Ecore_File_Monitor *_keyboard_ise_em                 = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of internal functions.
 /////////////////////////////////////////////////////////////////////////////
+/*
+ * @brief return resized height
+ *
+ * @param height resized height
+ *
+ */
+static void ui_candidate_window_resize_height (int *height)
+{
+    if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            *height = _candidate_land_height_max_2;
+        } else {
+            *height = _candidate_port_height_max_2;
+        }
+    } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            *height = _candidate_land_height_min_2;
+        } else {
+            *height = _candidate_port_height_min_2;
+        }
+    } else if (evas_object_visible_get (_aux_area)) {
+        *height = _aux_height + 2;
+    } else if (evas_object_visible_get (_candidate_area_2)) {
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            *height = _candidate_land_height_max;
+        } else {
+            *height = _candidate_port_height_max;
+        }
+    } else {
+        if (_candidate_angle == 90 || _candidate_angle == 270) {
+            *height = _candidate_land_height_min;
+        } else {
+            *height = _candidate_port_height_min;
+        }
+    }
+}
+
 /**
  * @brief Print system time point for panel performance.
  *
@@ -584,6 +622,7 @@ static bool set_keyboard_ise (const String &uuid, const String &module_name)
 
     if (TOOLBAR_HELPER_MODE == mode) {
         String pre_uuid = _panel_agent->get_current_helper_uuid ();
+        _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
     } else if (TOOLBAR_KEYBOARD_MODE == mode) {
         uint32 kbd_option = 0;
@@ -750,8 +789,13 @@ static int ui_candidate_get_valid_height (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "\n";
 
     int height = 0;
+    int angle = 0;
+
     if (_candidate_window) {
-        int angle = efl_get_angle_for_app_window ();
+        if (_candidate_window_show)
+            angle = _candidate_angle;
+        else
+            angle = efl_get_angle_for_app_window ();
 
         if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
             if (angle == 90 || angle == 270)
@@ -3017,7 +3061,9 @@ static void slot_show_ise (void)
         _app_window = current_app_window;
     }
 
-    _candidate_angle = efl_get_angle_for_app_window ();
+    if (!_candidate_window_show)
+        _candidate_angle = efl_get_angle_for_app_window ();
+
     efl_set_transient_for_app_window (_ise_window);
 }
 
@@ -3252,11 +3298,20 @@ static void start_default_ise (void)
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
     if (!set_active_ise (default_uuid)) {
         std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
+        LOGE ("Failed to launch default ISE (%s)\n", default_uuid.c_str ());
 
         if (default_uuid != _initial_ise_uuid) {
             std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
-            set_active_ise (_initial_ise_uuid);
+            if (!set_active_ise (_initial_ise_uuid)) {
+                LOGE ("Failed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
+            }
+            else {
+                LOGD ("Succeed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
+            }
         }
+    }
+    else {
+        LOGD ("Succeed to launch default ISE (%s)\n", default_uuid.c_str ());
     }
 }
 
@@ -3332,6 +3387,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
     Ecore_X_Window rootwin = ecore_x_window_root_first_get ();
     if (event->win == rootwin && event->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+        LOGD("keyboard connected");
         check_hardware_keyboard ();
         set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_OFF);
     } else if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
@@ -3410,10 +3466,13 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             // PRE_ROTATE_DONE Ack to WM
             _candidate_angle = ev->data.l[1];
             LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE : %d\n", _candidate_angle);
+
+            int height = 0;
+            ui_candidate_window_resize_height (&height);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
+                ui_candidate_window_resize (_candidate_land_width, height);
             } else {
-                ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
+                ui_candidate_window_resize (_candidate_port_width, height);
             }
             if (_ise_show) {
                 set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
@@ -3464,7 +3523,8 @@ static bool check_system_ready (void)
     int val = 0;
     ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
 
-    if (ret == 0 && val == ISF_SYSTEM_APPSERVICE_READY_STATE) {
+    if (ret == 0 && val >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
+        LOGD ("Appservice was ready\n");
         return true;
     } else {
         /* Register a call back function for checking system ready */
@@ -3705,13 +3765,19 @@ int main (int argc, char *argv [])
 
     if (!check_wm_ready ()) {
         std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
+        LOGE ("Window Manager ready timeout\n");
+    }
+    else {
+        LOGD ("Window Manager is in ready state\n");
     }
 
     elm_init (argc, argv);
     check_time ("elm_init");
 
-    if (!efl_create_control_window ())
+    if (!efl_create_control_window ()) {
+        LOGE ("Failed to create control window\n");
         goto cleanup;
+    }
 
     efl_get_screen_resolution (_screen_width, _screen_height);
 

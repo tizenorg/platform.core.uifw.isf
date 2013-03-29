@@ -3,7 +3,7 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.4.6319
+Version:    2.4.6329
 Release:    1
 Group:      System Environment/Libraries
 License:    LGPL
@@ -44,6 +44,8 @@ This package contains ISF header files for ISE development.
 %setup -q
 
 %build
+CFLAGS+=" -fvisibility=hidden "; export CFLAGS
+CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ";export CXXFLAGS
 
 %autogen
 %configure --disable-static \
@@ -71,6 +73,7 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514 || :
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514 || :
+/usr/bin/vconftool set -t string db/isf/input_language "en_US" -g 5000 || :
 
 %postun -p /sbin/ldconfig
 

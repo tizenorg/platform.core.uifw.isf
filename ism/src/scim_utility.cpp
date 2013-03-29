@@ -54,7 +54,7 @@
 
 namespace scim {
 
-int
+EAPI int
 utf8_mbtowc (ucs4_t *pwc, const unsigned char *src, int src_len)
 {
     if (!pwc)
@@ -129,7 +129,7 @@ utf8_mbtowc (ucs4_t *pwc, const unsigned char *src, int src_len)
         return RET_ILSEQ;
 }
 
-int
+EAPI int
 utf8_wctomb (unsigned char *dest, ucs4_t wc, int dest_size)
 {
     if (!dest)
@@ -163,7 +163,7 @@ utf8_wctomb (unsigned char *dest, ucs4_t wc, int dest_size)
     return count;
 }
 
-ucs4_t
+EAPI ucs4_t
 utf8_read_wchar (std::istream &is)
 {
     unsigned char utf8[6];
@@ -181,7 +181,7 @@ utf8_read_wchar (std::istream &is)
     return 0;
 }
 
-WideString
+EAPI WideString
 utf8_read_wstring (std::istream &is, ucs4_t delim, bool rm_delim)
 {
     WideString str;
@@ -198,7 +198,7 @@ utf8_read_wstring (std::istream &is, ucs4_t delim, bool rm_delim)
     return str;
 }
 
-std::ostream &
+EAPI std::ostream &
 utf8_write_wchar (std::ostream &os, ucs4_t wc)
 {
     unsigned char utf8[6];
@@ -210,7 +210,7 @@ utf8_write_wchar (std::ostream &os, ucs4_t wc)
     return os;
 }
 
-std::ostream &
+EAPI std::ostream &
 utf8_write_wstring (std::ostream &os, const WideString & wstr)
 {
     for (unsigned int i=0; i<wstr.size (); ++i)
@@ -219,7 +219,7 @@ utf8_write_wstring (std::ostream &os, const WideString & wstr)
     return os;
 }
 
-WideString
+EAPI WideString
 utf8_mbstowcs (const String & str)
 {
     WideString wstr;
@@ -238,7 +238,7 @@ utf8_mbstowcs (const String & str)
     return wstr;
 }
 
-WideString
+EAPI WideString
 utf8_mbstowcs (const char *str, int len)
 {
     WideString wstr;
@@ -260,7 +260,7 @@ utf8_mbstowcs (const char *str, int len)
     return wstr;
 }
 
-String
+EAPI String
 utf8_wcstombs (const WideString & wstr)
 {
     String str;
@@ -275,7 +275,7 @@ utf8_wcstombs (const WideString & wstr)
     return str;
 }
 
-String
+EAPI String
 utf8_wcstombs (const ucs4_t *wstr, int len)
 {
     String str;
@@ -298,7 +298,7 @@ utf8_wcstombs (const ucs4_t *wstr, int len)
     return str;
 }
 
-String
+EAPI String
 scim_validate_locale (const String& locale)
 {
     String good;
@@ -328,7 +328,7 @@ scim_validate_locale (const String& locale)
     return good;
 }
 
-String
+EAPI String
 scim_get_locale_encoding (const String& locale)
 {
     String last = String (setlocale (LC_CTYPE, 0));
@@ -357,7 +357,7 @@ scim_get_locale_encoding (const String& locale)
     return encoding;
 }
 
-int
+EAPI int
 scim_get_locale_maxlen (const String& locale)
 {
     int maxlen;
@@ -373,7 +373,7 @@ scim_get_locale_maxlen (const String& locale)
     return maxlen;
 }
 
-int
+EAPI int
 scim_split_string_list (std::vector<String>& vec, const String& str, char delim)
 {
     int count = 0;
@@ -401,7 +401,7 @@ scim_split_string_list (std::vector<String>& vec, const String& str, char delim)
     return count;
 }
 
-String
+EAPI String
 scim_combine_string_list (const std::vector<String>& vec, char delim)
 {
     String result;
@@ -413,7 +413,7 @@ scim_combine_string_list (const std::vector<String>& vec, char delim)
     return result;
 }
 
-bool
+EAPI bool
 scim_if_wchar_ucs4_equal ()
 {
     if (sizeof (wchar_t) != sizeof (ucs4_t))
@@ -520,7 +520,7 @@ static struct {
 /**
  * convert a half width unicode char to full width char
  */
-ucs4_t
+EAPI ucs4_t
 scim_wchar_to_full_width (ucs4_t code)
 {
     int i=0;
@@ -538,7 +538,7 @@ scim_wchar_to_full_width (ucs4_t code)
 /**
  * convert a full width unicode char to half width char
  */
-ucs4_t
+EAPI ucs4_t
 scim_wchar_to_half_width (ucs4_t code)
 {
     int i=0;
@@ -553,7 +553,7 @@ scim_wchar_to_half_width (ucs4_t code)
     return code;
 }
 
-String
+EAPI String
 scim_get_home_dir ()
 {
     const char * home_dir = 0;
@@ -575,7 +575,7 @@ scim_get_home_dir ()
     return String (home_dir);
 }
 
-String
+EAPI String
 scim_get_user_name ()
 {
     struct passwd *pw;
@@ -597,7 +597,7 @@ scim_get_user_name ()
     return String (uid_str);
 }
 
-String
+EAPI String
 scim_get_user_data_dir ()
 {
     String dir = scim_get_home_dir () + String ("/.scim");
@@ -605,7 +605,7 @@ scim_get_user_data_dir ()
     return dir;
 }
 
-String
+EAPI String
 scim_get_current_locale ()
 {
     char *locale = setlocale (LC_CTYPE, 0);
@@ -614,19 +614,19 @@ scim_get_current_locale ()
     return String ();
 }
 
-String scim_get_current_language ()
+EAPI String scim_get_current_language ()
 {
     return scim_get_locale_language (scim_get_current_locale ());
 }
 
-bool
+EAPI bool
 scim_is_little_endian ()
 {
     short endian = 1;
     return (*((char *)&endian) != 0);
 }
 
-size_t
+EAPI size_t
 scim_load_file (const String &filename, char **bufptr)
 {
     if (!filename.length ())
@@ -673,7 +673,7 @@ scim_load_file (const String &filename, char **bufptr)
     return size;
 }
 
-bool
+EAPI bool
 scim_make_dir (const String &dir)
 {
     std::vector <String> paths;
@@ -1000,13 +1000,13 @@ __find_language (const String &lang)
     return NULL;
 }
 
-String
+EAPI String
 scim_get_language_name (const String &lang)
 {
     return String (_(scim_get_language_name_english (lang).c_str ()));
 }
 
-String
+EAPI String
 scim_get_language_name_english (const String &lang)
 {
     __Language *result = __find_language (lang);
@@ -1017,7 +1017,7 @@ scim_get_language_name_english (const String &lang)
     return String ("Other");
 }
 
-String
+EAPI String
 scim_get_language_name_untranslated (const String &lang)
 {
     __Language *result = __find_language (lang);
@@ -1032,7 +1032,7 @@ scim_get_language_name_untranslated (const String &lang)
     return String (_("Other"));
 }
 
-String
+EAPI String
 scim_get_language_locales (const String &lang)
 {
     __Language *result = __find_language (lang);
@@ -1069,7 +1069,7 @@ scim_get_language_locales (const String &lang)
     return scim_combine_string_list (locales, ',');
 }
 
-String
+EAPI String
 scim_get_locale_language (const String &locale)
 {
     if (locale.length () == 0) return String ();
@@ -1078,7 +1078,7 @@ scim_get_locale_language (const String &locale)
     return scim_validate_language (str.substr (0, str.find ('@')));
 }
 
-String
+EAPI String
 scim_validate_language (const String &lang)
 {
     __Language *result = __find_language (lang);
@@ -1090,7 +1090,7 @@ scim_validate_language (const String &lang)
     return String ("~other");
 }
 
-String
+EAPI String
 scim_get_normalized_language (const String &lang)
 {
     __Language *result = __find_language (lang);
@@ -1109,7 +1109,7 @@ scim_get_normalized_language (const String &lang)
  #define SCIM_LAUNCHER  (SCIM_LIBEXECDIR "/scim-launcher")
 #endif
 
-int  scim_launch (bool          daemon,
+EAPI int  scim_launch (bool          daemon,
                   const String &config,
                   const String &imengines,
                   const String &frontend,
@@ -1172,7 +1172,7 @@ int  scim_launch (bool          daemon,
   #define SCIM_PANEL_PROGRAM  (SCIM_BINDIR "/scim-panel-gtk")
 #endif
 
-int scim_launch_panel (bool          daemon,
+EAPI int scim_launch_panel (bool          daemon,
                        const String &config,
                        const String &display,
                        char * const  argv [])
@@ -1244,7 +1244,7 @@ int scim_launch_panel (bool          daemon,
     return -1;
 }
 
-void
+EAPI void
 scim_usleep (unsigned int usec)
 {
     if (usec == 0) return;
@@ -1272,7 +1272,7 @@ scim_usleep (unsigned int usec)
 #endif
 }
 
-void scim_daemon ()
+EAPI void scim_daemon ()
 {
 #if HAVE_DAEMON
     if (daemon (0, 0) == -1)
@@ -1367,7 +1367,7 @@ void ISF_PROF_DEBUG_TIME (char const* func, int line, char const* str)
     return;
 }
 
-void gettime (clock_t clock_start, const char* str)
+EAPI void gettime (clock_t clock_start, const char* str)
 {
 #ifdef ISF_PROF
     struct  tms tiks_buf;

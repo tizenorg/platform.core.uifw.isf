@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.4.6319, isf@samsung.com)
+AC_INIT(isf, 2.4.6329, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 m4_pattern_allow([^AS_])
 
@@ -11,7 +11,7 @@ m4_pattern_allow([^AS_])
 # ISF version
 ISF_MAJOR_VERSION=2
 ISF_MINOR_VERSION=4
-ISF_MICRO_VERSION=6319
+ISF_MICRO_VERSION=6329
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -615,6 +615,9 @@ AC_SUBST(ISF_BUILD_EFL_IMMODULE)
 AC_SUBST(ISF_BUILD_PANEL_EFL)
 AC_SUBST(ISF_BUILD_SETTING_EFL)
 AC_SUBST(ISF_BUILD_WITH_GCONF)
+
+ISF_BUILDING_DLL="-DISF_BUILDING_DLL"
+AC_SUBST(ISF_BUILDING_DLL)
 
 # Output All necessary Paths.
 SCIM_BINDIR="$prefix/bin"

@@ -42,7 +42,7 @@ namespace scim {
  * @{
  */
 
-class PanelError: public Exception
+class EAPI PanelError: public Exception
 {
 public:
     PanelError (const String& what_arg)

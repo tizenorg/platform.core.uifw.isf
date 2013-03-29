@@ -35,7 +35,7 @@
 using namespace scim;
 
 
-int isf_control_set_active_ise_by_uuid (const char *uuid)
+EAPI int isf_control_set_active_ise_by_uuid (const char *uuid)
 {
     if (uuid == NULL)
         return -1;
@@ -48,7 +48,7 @@ int isf_control_set_active_ise_by_uuid (const char *uuid)
     return 0;
 }
 
-int isf_control_get_active_ise (char **uuid)
+EAPI int isf_control_get_active_ise (char **uuid)
 {
     if (uuid == NULL)
         return -1;
@@ -65,7 +65,7 @@ int isf_control_get_active_ise (char **uuid)
     return strUuid.length ();
 }
 
-int isf_control_get_ise_list (char ***uuid_list)
+EAPI int isf_control_get_ise_list (char ***uuid_list)
 {
     if (uuid_list == NULL)
         return -1;
@@ -79,7 +79,7 @@ int isf_control_get_ise_list (char ***uuid_list)
     return count;
 }
 
-int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option)
+EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option)
 {
     if (uuid == NULL || name == NULL || language == NULL)
         return -1;
@@ -102,7 +102,7 @@ int isf_control_get_ise_info (const char *uuid, char **name, char **language, IS
     return 0;
 }
 
-int isf_control_set_active_ise_to_default (void)
+EAPI int isf_control_set_active_ise_to_default (void)
 {
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
@@ -114,7 +114,7 @@ int isf_control_set_active_ise_to_default (void)
     return 0;
 }
 
-int isf_control_reset_ise_option (void)
+EAPI int isf_control_reset_ise_option (void)
 {
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();

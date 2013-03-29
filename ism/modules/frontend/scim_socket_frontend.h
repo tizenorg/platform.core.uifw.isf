@@ -49,7 +49,7 @@
 
 using namespace scim;
 
-class SocketFrontEnd : public FrontEndBase
+class EAPI SocketFrontEnd : public FrontEndBase
 {
     enum ClientType {
         UNKNOWN_CLIENT,

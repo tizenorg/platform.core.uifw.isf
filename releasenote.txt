@@ -1,3 +1,20 @@
+ISF 2.4.6329 :
+ 1. [immodule] reset input panel state if state callback will not be called in 5 seconds
+ 2. [panel] fix rotation error of candidate window
+ 3. Fix socket read timeout
+
+
+ISF 2.4.6326 :
+ 1. [panel] Request to hide ISE before stop helper ISE
+ 2. [panel] fix default ISE launching issue
+ 3. [panel] add log in booting time
+ 4. set default input language in vconf
+
+
+ISF 2.4.6322 :
+ 1. Add visibility gcc options
+
+
 ISF 2.4.6319 :
  1. [isf-panel-efl] Update aux style
  2. Fix path for 3rd ISE development

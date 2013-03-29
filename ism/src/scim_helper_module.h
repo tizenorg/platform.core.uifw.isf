@@ -137,7 +137,7 @@ typedef void (*HelperModuleSetPathInfoFunc)       (const char *path);
  *
  * This class should not be used directly. HelperManager should be used instead.
  */
-class HelperModule
+class EAPI HelperModule
 {
     Module                          m_module;
 
@@ -233,7 +233,7 @@ public:
  * @param mod_list - the result list will be stored here.
  * @return the number of the modules, equal to mod_list.size ().
  */
-int scim_get_helper_module_list (std::vector <String> &mod_list);
+EAPI int scim_get_helper_module_list (std::vector <String> &mod_list);
 /**  @} */
 
 } // namespace scim

@@ -56,7 +56,7 @@ namespace scim {
  * IMEngine should use its derivation class.
  * This class is the interface that uses within FrontEnd class.
  */
-class LookupTable
+class EAPI LookupTable
 {
     class LookupTableImpl;
 
@@ -251,7 +251,7 @@ public:
  * This class implements the LookupTable interface in a common way.
  *
  */
-class CommonLookupTable : public LookupTable
+class EAPI CommonLookupTable : public LookupTable
 {
     class CommonLookupTableImpl;
 
