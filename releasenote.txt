@@ -1,3 +1,9 @@
+ISF 2.4.6329 :
+ 1. [immodule] reset input panel state if state callback will not be called in 5 seconds
+ 2. [panel] fix rotation error of candidate window
+ 3. Fix socket read timeout
+
+
 ISF 2.4.6326 :
  1. [panel] Request to hide ISE before stop helper ISE
  2. [panel] fix default ISE launching issue

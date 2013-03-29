@@ -2526,7 +2526,7 @@ panel_iochannel_handler (void *data, Ecore_Fd_Handler *fd_handler)
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     if (fd_handler == _panel_iochannel_read_handler) {
-        if (!_panel_client.filter_event ()) {
+        if (_panel_client.has_pending_event () && !_panel_client.filter_event ()) {
             panel_finalize ();
             panel_initialize ();
             return ECORE_CALLBACK_CANCEL;
