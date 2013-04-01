@@ -55,7 +55,7 @@ typedef struct {
 
 EAPI String isf_get_normalized_language (String src_str);
 EAPI String isf_combine_ise_info_string (String name, String uuid, String module, String language,
-                                    String icon, String mode, String option, String locales);
+                                         String icon, String mode, String option, String locales);
 EAPI void isf_get_ise_info_from_string (const char *str, ISEINFO &info);
 EAPI bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
 EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);

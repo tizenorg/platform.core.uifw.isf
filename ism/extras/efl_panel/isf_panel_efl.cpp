@@ -98,7 +98,7 @@ extern std::vector<String>          _icons;
 extern std::vector<uint32>          _options;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
 
-extern EAPI CommonLookupTable            g_isf_candidate_table;
+extern EAPI CommonLookupTable       g_isf_candidate_table;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3304,13 +3304,11 @@ static void start_default_ise (void)
             std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
             if (!set_active_ise (_initial_ise_uuid)) {
                 LOGE ("Failed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
-            }
-            else {
+            } else {
                 LOGD ("Succeed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
             }
         }
-    }
-    else {
+    } else {
         LOGD ("Succeed to launch default ISE (%s)\n", default_uuid.c_str ());
     }
 }
@@ -3766,8 +3764,7 @@ int main (int argc, char *argv [])
     if (!check_wm_ready ()) {
         std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
         LOGE ("Window Manager ready timeout\n");
-    }
-    else {
+    } else {
         LOGD ("Window Manager is in ready state\n");
     }
 
