@@ -145,7 +145,7 @@ extern std::vector < String >       _isf_app_list;
 extern gboolean                     _ise_list_changed;
 extern gboolean                     _setup_enable_changed;
 
-extern EAPI CommonLookupTable            g_isf_candidate_table;
+extern EAPI CommonLookupTable       g_isf_candidate_table;
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal data types.

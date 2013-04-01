@@ -39,7 +39,8 @@ typedef struct {
     Eina_Bool prediction_allow;
     Eina_Bool password_mode;
     Eina_Bool caps_mode;
-    int reserved[249];
+    int layout_variation;
+    int reserved[248];
 } Ise_Context;
 
 #endif  /* __ISE_CONTEXT_H */

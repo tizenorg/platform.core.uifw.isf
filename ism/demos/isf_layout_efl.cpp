@@ -154,22 +154,23 @@ _prop_change_cb (void *data, int type, void *event)
     return ECORE_CALLBACK_PASS_ON;
 }
 
-static void entry_changed_cb(void *data, Evas_Object *obj, void *event_info)
+static void entry_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
     printf ("[%s]\n", __func__);
 }
 
-static void entry_preedit_changed_cb(void *data, Evas_Object *obj, void *event_info)
+static void entry_preedit_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
     printf ("[%s]\n", __func__);
 }
 
-static Evas_Object *_create_ef_layout(Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout)
+static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout, int layout_variation = 0)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
     Ecore_IMF_Context *ic = NULL;
     Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_layout_set (en, layout);
+    elm_entry_input_panel_layout_variation_set (en, layout_variation);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_UP, _key_up_cb, NULL);
     evas_object_smart_callback_add (en, "changed", entry_changed_cb, NULL);
@@ -231,7 +232,19 @@ static Evas_Object * create_inner_layout (void *data)
     elm_box_pack_end (bx, ef);
 
     /* Number Only Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY LAYOUT"), _("click to enter NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY);
+    ef = _create_ef_layout (parent, _("NUMBERONLY LAYOUT"), _("click to enter NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_NORMAL);
+    elm_box_pack_end (bx, ef);
+
+    /* Number Only with signed Layout */
+    ef = _create_ef_layout (parent, _("NUMBERONLY WITH SIGNED LAYOUT"), _("click to enter NUMBERONLY WITH SIGNED"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED);
+    elm_box_pack_end (bx, ef);
+
+    /* Number Only with decimal Layout */
+    ef = _create_ef_layout (parent, _("NUMBERONLY WITH DECIMAL LAYOUT"), _("click to enter NUMBERONLY WITH DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL);
+    elm_box_pack_end (bx, ef);
+
+    /* Number Only with signed and decimal Layout */
+    ef = _create_ef_layout (parent, _("NUMBERONLY WITH SIGNED AND DECIMAL LAYOUT"), _("click to enter NUMBERONLY WITH SIGNED AND DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL);
     elm_box_pack_end (bx, ef);
 
     /* Password Layout */

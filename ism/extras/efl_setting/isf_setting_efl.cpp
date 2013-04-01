@@ -479,6 +479,7 @@ static Evas_Object *_gl_icon_get (void *data, Evas_Object *obj, const char *part
         Evas_Object *onoff_ck = elm_check_add (obj);
         elm_object_style_set (onoff_ck, "on&off");
         evas_object_smart_callback_add (onoff_ck, "changed", onoff_check_cb, (void *) (item_data->mode));
+        evas_object_propagate_events_set (onoff_ck, EINA_FALSE);
         if (item_data->mode == AUTO_CAPITALIZATION_ITEM) {
             elm_check_state_set (onoff_ck, _auto_capitalisation);
         } else if (item_data->mode == AUTO_FULL_STOP_ITEM) {

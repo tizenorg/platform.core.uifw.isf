@@ -1,3 +1,9 @@
+ISF 2.4.6401 :
+ 1. [immodule] support layout variation
+ 2. [demo] Add demo for a variety of layout variations
+ 3. [setting] item should not be highlighted on dragging
+
+
 ISF 2.4.6329 :
  1. [immodule] reset input panel state if state callback will not be called in 5 seconds
  2. [panel] fix rotation error of candidate window
