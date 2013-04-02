@@ -51,6 +51,9 @@ KEYBOARD_STATE g_keyboard_state = {
 
 #define MVK_Shift_L 0xffe1
 #define MVK_Caps_Lock 0xffe5
+#define MVK_Shift_Off 0xffe1
+#define MVK_Shift_On 0xffe2
+#define MVK_Shift_Lock 0xffe6
 
 #define USER_KEYSTRING_OPTION "OPTION"
 
@@ -138,13 +141,19 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
         }
     }
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
-        if (g_keyboard_state.caps_mode) {
-            LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
-            if (info) {
-                if (info->accepts_caps_mode) {
-                    /* Do not change the shift state of OFF, by not calling the default SCL event handler */
-                    ret = SCL_EVENT_DONE;
+        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+        if (info) {
+            if (info->accepts_caps_mode) {
+                if (etc_info == SCL_SHIFT_STATE_OFF) {
+                    ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
                 }
+                else if (etc_info == SCL_SHIFT_STATE_ON) {
+                    ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
+                }
+                else if (etc_info == SCL_SHIFT_STATE_LOCK) {
+                    ise_send_event(MVK_Shift_Lock, scim::SCIM_KEY_NullMask);
+                }
+                ret = SCL_EVENT_PASS_ON;
             }
         }
     }
@@ -422,9 +431,7 @@ ise_set_caps_mode(unsigned int mode)
     LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
     if (info) {
         if (info->accepts_caps_mode) {
-            if (gSCLUI->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
-                gSCLUI->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
-            }
+            gSCLUI->set_caps_mode(mode);
         }
     }
 }
