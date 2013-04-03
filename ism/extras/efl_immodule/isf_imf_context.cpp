@@ -82,8 +82,8 @@ struct _EcoreIMFContextISFImpl {
     bool                     preedit_started;
     bool                     preedit_updating;
     bool                     need_commit_preedit;
-    bool                     uppercase;
     bool                     prediction_allow;
+    int                      next_shift_status;
 
     EcoreIMFContextISFImpl  *next;
 };
@@ -287,6 +287,10 @@ static int      __current_super_mask   = 0;
 static int      __current_hyper_mask   = 0;
 static int      __current_numlock_mask = Mod2Mask;
 
+#define SHIFT_MODE_OFF  0xffe1
+#define SHIFT_MODE_ON   0xffe2
+#define SHIFT_MODE_LOCK 0xffe6
+
 extern Ecore_IMF_Context *input_panel_ctx;
 
 // A hack to shutdown the immodule cleanly even if im_module_exit () is not called when exiting.
@@ -355,8 +359,8 @@ new_ic_impl (EcoreIMFContextISF *parent)
             return NULL;
     }
 
-    impl->uppercase = false;
     impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
+    impl->next_shift_status = 0;
     impl->next = _used_ic_impl_list;
     _used_ic_impl_list = impl;
 
@@ -696,6 +700,7 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 
     if (!ctx) return EINA_FALSE;
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+    if (context_scim->impl->next_shift_status == SHIFT_MODE_LOCK) return EINA_TRUE;
 
     Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get (ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
@@ -719,12 +724,12 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
     }
 
     if (force) {
-        context_scim->impl->uppercase = uppercase;
+        context_scim->impl->next_shift_status = uppercase?SHIFT_MODE_ON:SHIFT_MODE_OFF;
         if (noti)
             isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
     } else {
-        if (context_scim->impl->uppercase != uppercase) {
-            context_scim->impl->uppercase = uppercase;
+        if (context_scim->impl->next_shift_status != (uppercase?SHIFT_MODE_ON:SHIFT_MODE_OFF)) {
+            context_scim->impl->next_shift_status = uppercase?SHIFT_MODE_ON:SHIFT_MODE_OFF;
             if (noti)
                 isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
         }
@@ -2024,21 +2029,57 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
-
-    if (feed_key_event (ic, key, false) == EINA_TRUE) return;
-
-    if (ic && ic->impl) {
-        _panel_client.prepare (ic->id);
-
-        if (!filter_hotkeys (ic, key)) {
-            if (!_focused_ic || !_focused_ic->impl->is_on ||
-                !_focused_ic->impl->si->process_key_event (key)) {
-                _fallback_instance->process_key_event (key);
+    if (!(ic && ic->impl))
+        return;
+    KeyEvent _key = key;
+    if (key.is_key_press() &&
+        ecore_imf_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL) {
+        if (key.code == SHIFT_MODE_OFF /*Shift_OFF*/ ||
+            key.code == SHIFT_MODE_ON /*Shift_ON*/ ||
+            key.code == SHIFT_MODE_LOCK /*Shift_Lock*/) {
+            ic->impl->next_shift_status = _key.code;
+        } else if ((key.code >= 'a' && key.code <= 'z') ||
+            (key.code >= 'A' && key.code <= 'Z')) {
+            Eina_Bool uppercase;
+            switch (ic->impl->next_shift_status) {
+                case 0:
+                    uppercase = caps_mode_check(ic->ctx,EINA_FALSE,EINA_FALSE);
+                    break;
+                case SHIFT_MODE_OFF: /*Shift_OFF*/
+                    uppercase = EINA_FALSE;
+                    ic->impl->next_shift_status = 0;
+                    break;
+                case SHIFT_MODE_ON: /*Shift_ON*/
+                    uppercase = EINA_TRUE;
+                    ic->impl->next_shift_status = 0;
+                    break;
+                case SHIFT_MODE_LOCK: /*Shift_Lock*/
+                    uppercase = EINA_TRUE;
+                    break;
+                default:
+                    uppercase = EINA_FALSE;
+            }
+            if (uppercase) {
+                if(key.code >= 'a' && key.code <= 'z')
+                    _key.code -= 32;
+            } else {
+                if(key.code >= 'A' && key.code <= 'Z')
+                    _key.code += 32;
             }
         }
-
-        _panel_client.send ();
     }
+    if (feed_key_event (ic, _key, false) == EINA_TRUE) return;
+
+    _panel_client.prepare (ic->id);
+
+    if (!filter_hotkeys (ic, _key)) {
+        if (!_focused_ic || !_focused_ic->impl->is_on ||
+            !_focused_ic->impl->si->process_key_event (_key)) {
+            _fallback_instance->process_key_event (_key);
+        }
+    }
+
+    _panel_client.send ();
 }
 
 static void

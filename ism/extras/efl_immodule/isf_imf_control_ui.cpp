@@ -509,6 +509,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         (_compare_context (show_req_ic, ctx) == EINA_TRUE) &&
         (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
          input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW)) {
+        LOGD ("already show");
         return;
     }
 
@@ -627,6 +628,7 @@ void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, unsigned
 {
     if (!IfInitContext)
         _isf_imf_context_init ();
+    LOGD ("ctx : %p, mode : %d\n", ctx, mode);
     _isf_imf_context_input_panel_caps_mode_set (mode);
 }
 
