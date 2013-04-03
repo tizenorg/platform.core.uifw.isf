@@ -59,6 +59,12 @@ pkgconfig_DATA          = isf.pc scim.pc \
 smackdir = /etc/smack/accesses2.d/
 smack_DATA = isf.rule
 
+ugxmldir = /opt/share/packages/
+ugxml_DATA = ug-isfsetting-efl.xml
+
+ugsmackdir = /etc/smack/accesses2.d/
+ugsmack_DATA = ug.isfsetting-efl.include
+
 ACLOCAL_AMFLAGS = -I ism/m4
 
 .PHONY: update-ChangeLog

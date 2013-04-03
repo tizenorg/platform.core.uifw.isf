@@ -1228,6 +1228,7 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                 case ISM_TRANS_CMD_TRANSACTION_CONTINUE:
                 {
                     cont = true;
+                    break;
                 }
                 default:
                     SCIM_DEBUG_IMENGINE(3) << "  Strange cmd: " << cmd << "\n";
