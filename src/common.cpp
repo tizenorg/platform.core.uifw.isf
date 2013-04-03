@@ -228,12 +228,13 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     elm_init(argc, argv);
 
-    m_main_window = elm_win_add(NULL, "KEYBOARD_WINDOW", ELM_WIN_UTILITY);
+    m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
 
     elm_win_alpha_set(m_main_window, EINA_TRUE);
     elm_win_borderless_set(m_main_window, EINA_TRUE);
     elm_win_keyboard_win_set(m_main_window, EINA_TRUE);
     elm_win_autodel_set(m_main_window, EINA_TRUE);
+    elm_win_title_set(m_main_window, "Tizen Keyboard");
 
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
