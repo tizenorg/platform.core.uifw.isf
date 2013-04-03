@@ -1,7 +1,13 @@
+ISF 2.4.6403 :
+ 1. Fix defects according to prevent report
+ 2. [setting] separate ug package to support osp setting
+
+
 ISF 2.4.6401 :
  1. [immodule] support layout variation
  2. [demo] Add demo for a variety of layout variations
  3. [setting] item should not be highlighted on dragging
+ 4. [immodule] avoid to send focus-in in the input panel disabled context
 
 
 ISF 2.4.6329 :
