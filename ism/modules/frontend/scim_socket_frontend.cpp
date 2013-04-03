@@ -552,7 +552,8 @@ SocketFrontEnd::get_surrounding_text (int id, WideString &text, int &cursor, int
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
 
             // Move the read ptr to the end.
-            m_send_trans.get_command (cmd);
+            if (!m_send_trans.get_command (cmd))
+                SCIM_DEBUG_FRONTEND (1) << __func__ << " Get command is failed!!!\n";
         }
     }
     return ret;
@@ -596,7 +597,8 @@ SocketFrontEnd::delete_surrounding_text (int id, int offset, int len)
             m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
 
             // Move the read ptr to the end.
-            m_send_trans.get_command (cmd);
+            if (!m_send_trans.get_command (cmd))
+                SCIM_DEBUG_FRONTEND (1) << __func__ << " Get command is failed!!!\n";
         }
     }
     return ret;
