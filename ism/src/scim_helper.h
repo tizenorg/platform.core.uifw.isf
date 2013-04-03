@@ -547,6 +547,11 @@ public:
     void contract_candidate       (void) const;
 
     /**
+     * @brief Update ise exit status
+     */
+    void update_ise_exit          (void) const;
+
+    /**
      * @brief Update the preedit caret position in the preedit string.
      *
      * @param caret - the new position of the preedit caret.

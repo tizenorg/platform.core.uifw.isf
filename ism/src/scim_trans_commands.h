@@ -673,6 +673,7 @@ const int ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY         = 1212;
 const int ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY               = 1213;
 const int ISM_TRANS_CMD_EXPAND_CANDIDATE                  = 1214;
 const int ISM_TRANS_CMD_CONTRACT_CANDIDATE                = 1215;
+const int ISM_TRANS_CMD_UPDATE_ISE_EXIT                   = 1216;
 
 /* Panel to ISE */
 const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW        = 1251;

@@ -3222,6 +3222,17 @@ private:
                     socket_helper_get_surrounding_text (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT) {
                     socket_helper_delete_surrounding_text (client_id);
+                } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_EXIT) {
+                    HelperInfoRepository::iterator hiit = m_helper_active_info_repository.find (client.get_id ());
+                    if (hiit != m_helper_active_info_repository.end ()) {
+                        String uuid = hiit->second.uuid;
+                        HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
+                        if (it != m_helper_client_index.end ()) {
+                            Socket client_socket (it->second.id);
+                            socket_close_connection (server, client_socket);
+                        }
+                    }
+                    socket_close_connection (server, client);
                 }
             }
             socket_transaction_end ();
