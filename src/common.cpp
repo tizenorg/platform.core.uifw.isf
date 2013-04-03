@@ -514,9 +514,14 @@ void slot_exit (const scim::HelperAgent *agent, int ic, const scim::String &ic_u
         if (callback) {
             callback->ise_hide(ic, ic_uuid.c_str());
             callback->exit(ic, ic_uuid.c_str());
-            elm_exit ();
+        }
+        scim::HelperAgent *helper_agent = impl->get_helper_agent();
+        if (helper_agent) {
+            helper_agent->update_ise_exit();
+            helper_agent->close_connection();
         }
     }
+    elm_exit ();
 }
 
 void slot_attach_input_context (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
