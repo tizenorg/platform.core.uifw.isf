@@ -603,12 +603,19 @@ close_option_window()
     }
 
     if (sensor_handle >= 0) {
-        sf_unregister_event(sensor_handle, ACCELEROMETER_EVENT_ROTATION_CHECK);
-        if (sensor_handle < 0) {
-            LOGD("sensor_unregister_cb fail\n");
+        int ret = 0;
+        ret = sf_unregister_event(sensor_handle, ACCELEROMETER_EVENT_ROTATION_CHECK);
+        if (ret < 0) {
+            LOGD("sf_unregister_event() has failed.\n");
         }
-        sf_stop(sensor_handle);
-        sf_disconnect(sensor_handle);
+        ret = sf_stop(sensor_handle);
+        if (ret < 0) {
+            LOGD("sf_stop() has failed.\n");
+        }
+        ret = sf_disconnect(sensor_handle);
+        if (ret < 0) {
+            LOGD("sf_disconnect() has failed.\n");
+        }
         sensor_handle = -1;
     }
     destroy_genlist_item_classes();
