@@ -1406,6 +1406,21 @@ HelperAgent::contract_candidate (void) const
 }
 
 /**
+ * @brief Update our ISE is exiting.
+ */
+void
+HelperAgent::update_ise_exit (void) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (ISM_TRANS_CMD_UPDATE_ISE_EXIT);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
  * @brief Request to reset keyboard ISE.
  */
 void
