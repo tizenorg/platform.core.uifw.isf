@@ -1,3 +1,9 @@
+ISF 2.4.6404 :
+ 1. [panel] settle candidate window when keyboard state is changed
+ 2. [immodule] Fix bug shift key event for autocapital is generated.
+ 3. Added update_ise_exit
+
+
 ISF 2.4.6403 :
  1. Fix defects according to prevent report
  2. [setting] separate ug package to support osp setting
