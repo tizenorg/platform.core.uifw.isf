@@ -119,7 +119,6 @@ static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
 static int        efl_get_angle_for_app_window         (void);
 
 static int        ui_candidate_get_valid_height        (void);
-static void       ui_candidate_window_resize_height    (int *height);
 static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true);
 static void       ui_destroy_candidate_window          (void);
 static void       ui_settle_candidate_window           (void);
@@ -298,43 +297,6 @@ static Ecore_File_Monitor *_keyboard_ise_em                 = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of internal functions.
 /////////////////////////////////////////////////////////////////////////////
-/*
- * @brief return resized height
- *
- * @param height resized height
- *
- */
-static void ui_candidate_window_resize_height (int *height)
-{
-    if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_2)) {
-        if (_candidate_angle == 90 || _candidate_angle == 270) {
-            *height = _candidate_land_height_max_2;
-        } else {
-            *height = _candidate_port_height_max_2;
-        }
-    } else if (evas_object_visible_get (_aux_area) && evas_object_visible_get (_candidate_area_1)) {
-        if (_candidate_angle == 90 || _candidate_angle == 270) {
-            *height = _candidate_land_height_min_2;
-        } else {
-            *height = _candidate_port_height_min_2;
-        }
-    } else if (evas_object_visible_get (_aux_area)) {
-        *height = _aux_height + 2;
-    } else if (evas_object_visible_get (_candidate_area_2)) {
-        if (_candidate_angle == 90 || _candidate_angle == 270) {
-            *height = _candidate_land_height_max;
-        } else {
-            *height = _candidate_port_height_max;
-        }
-    } else {
-        if (_candidate_angle == 90 || _candidate_angle == 270) {
-            *height = _candidate_land_height_min;
-        } else {
-            *height = _candidate_port_height_min;
-        }
-    }
-}
-
 /**
  * @brief Print system time point for panel performance.
  *
@@ -3422,6 +3384,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
 
             vconf_set_int (VCONFKEY_PM_SIP_STATUS, 0);
         }
+        ui_settle_candidate_window ();
     }
 
     return ECORE_CALLBACK_PASS_ON;
@@ -3465,12 +3428,10 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             _candidate_angle = ev->data.l[1];
             LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE : %d\n", _candidate_angle);
 
-            int height = 0;
-            ui_candidate_window_resize_height (&height);
             if (_candidate_angle == 90 || _candidate_angle == 270) {
-                ui_candidate_window_resize (_candidate_land_width, height);
+                ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
             } else {
-                ui_candidate_window_resize (_candidate_port_width, height);
+                ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
             }
             if (_ise_show) {
                 set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
