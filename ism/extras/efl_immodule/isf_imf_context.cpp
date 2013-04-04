@@ -2028,6 +2028,7 @@ static void
 panel_slot_process_key_event (int context, const KeyEvent &key)
 {
     EcoreIMFContextISF *ic = find_ic (context);
+    Eina_Bool keygen = EINA_TRUE;
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
     if (!(ic && ic->impl))
         return;
@@ -2069,7 +2070,15 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
             }
         }
     }
-    if (feed_key_event (ic, _key, false) == EINA_TRUE) return;
+
+    if (key.code == SHIFT_MODE_OFF ||
+        key.code == SHIFT_MODE_ON ||
+        key.code == SHIFT_MODE_LOCK) {
+        keygen = EINA_FALSE;
+    }
+
+    if (keygen)
+        if (feed_key_event (ic, _key, false) == EINA_TRUE) return;
 
     _panel_client.prepare (ic->id);
 
