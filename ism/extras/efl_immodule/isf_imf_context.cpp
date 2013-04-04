@@ -724,12 +724,12 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
     }
 
     if (force) {
-        context_scim->impl->next_shift_status = uppercase?SHIFT_MODE_ON:SHIFT_MODE_OFF;
+        context_scim->impl->next_shift_status = uppercase ? SHIFT_MODE_ON : SHIFT_MODE_OFF;
         if (noti)
             isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
     } else {
-        if (context_scim->impl->next_shift_status != (uppercase?SHIFT_MODE_ON:SHIFT_MODE_OFF)) {
-            context_scim->impl->next_shift_status = uppercase?SHIFT_MODE_ON:SHIFT_MODE_OFF;
+        if (context_scim->impl->next_shift_status != (uppercase ? SHIFT_MODE_ON : SHIFT_MODE_OFF)) {
+            context_scim->impl->next_shift_status = uppercase ? SHIFT_MODE_ON : SHIFT_MODE_OFF;
             if (noti)
                 isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
         }
@@ -2032,33 +2032,34 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     if (!(ic && ic->impl))
         return;
     KeyEvent _key = key;
-    if (key.is_key_press() &&
+    if (key.is_key_press () &&
         ecore_imf_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL) {
-        if (key.code == SHIFT_MODE_OFF /*Shift_OFF*/ ||
-            key.code == SHIFT_MODE_ON /*Shift_ON*/ ||
-            key.code == SHIFT_MODE_LOCK /*Shift_Lock*/) {
+        if (key.code == SHIFT_MODE_OFF ||
+            key.code == SHIFT_MODE_ON ||
+            key.code == SHIFT_MODE_LOCK) {
             ic->impl->next_shift_status = _key.code;
         } else if ((key.code >= 'a' && key.code <= 'z') ||
             (key.code >= 'A' && key.code <= 'Z')) {
             Eina_Bool uppercase;
             switch (ic->impl->next_shift_status) {
                 case 0:
-                    uppercase = caps_mode_check(ic->ctx,EINA_FALSE,EINA_FALSE);
+                    uppercase = caps_mode_check (ic->ctx, EINA_FALSE, EINA_FALSE);
                     break;
-                case SHIFT_MODE_OFF: /*Shift_OFF*/
+                case SHIFT_MODE_OFF:
                     uppercase = EINA_FALSE;
                     ic->impl->next_shift_status = 0;
                     break;
-                case SHIFT_MODE_ON: /*Shift_ON*/
+                case SHIFT_MODE_ON:
                     uppercase = EINA_TRUE;
                     ic->impl->next_shift_status = 0;
                     break;
-                case SHIFT_MODE_LOCK: /*Shift_Lock*/
+                case SHIFT_MODE_LOCK:
                     uppercase = EINA_TRUE;
                     break;
                 default:
                     uppercase = EINA_FALSE;
             }
+
             if (uppercase) {
                 if(key.code >= 'a' && key.code <= 'z')
                     _key.code -= 32;
