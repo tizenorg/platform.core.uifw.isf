@@ -167,6 +167,7 @@ static void       slot_exit                            (void);
 
 static void       slot_register_helper_properties      (int id, const PropertyList &props);
 static void       slot_show_ise                        (void);
+static void       slot_hide_ise                        (void);
 
 static void       slot_will_show_ack                   (void);
 static void       slot_will_hide_ack                   (void);
@@ -1962,6 +1963,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent->signal_connect_register_helper_properties (slot (slot_register_helper_properties));
     _panel_agent->signal_connect_show_ise                   (slot (slot_show_ise));
+    _panel_agent->signal_connect_hide_ise                   (slot (slot_hide_ise));
 
     _panel_agent->signal_connect_will_show_ack              (slot (slot_will_show_ack));
     _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
@@ -2690,8 +2692,11 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
 {
     VIRTUAL_KEYBOARD_STATE kbd_state = _ise_show ? KEYBOARD_STATE_ON : KEYBOARD_STATE_OFF;
 
-    if (_ise_width == 0 && _ise_height == 0) {
+    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+    if (hw_kbd_detect) {
         info.pos_x = 0;
+        info.width = 0;
+        info.height = 0;
         if (_candidate_window && evas_object_visible_get (_candidate_window)) {
             info.width  = _candidate_width;
             info.height = _candidate_height;
@@ -2703,6 +2708,10 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
             info.pos_y = _screen_height - info.height;
     } else {
         get_ise_geometry (info, kbd_state);
+        if (_ise_show == false) {
+            info.width = 0;
+            info.height = 0;
+        }
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
             if (_candidate_window && evas_object_visible_get (_candidate_window)) {
                 int height = ui_candidate_get_valid_height ();
@@ -3038,6 +3047,12 @@ static void slot_show_ise (void)
         _candidate_angle = efl_get_angle_for_app_window ();
 
     efl_set_transient_for_app_window (_ise_window);
+}
+
+static void slot_hide_ise (void)
+{
+    // From this point, slot_get_input_panel_geometry should return hidden state geometry
+    _ise_show = false;
 }
 
 static void slot_will_show_ack (void)
