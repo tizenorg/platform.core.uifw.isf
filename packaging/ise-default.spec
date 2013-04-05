@@ -51,5 +51,6 @@ rm -rf %{buildroot}
 %{_libdir}/scim-1.0/1.4.0/Helper/ise-default.so
 %{_libdir}/scim-1.0/1.4.0/SetupUI/ise-default-setup.so
 %{_datadir}/isf/ise/ise-default/*
+%{_datadir}/packages/*
 %{_datadir}/locale/*
 
