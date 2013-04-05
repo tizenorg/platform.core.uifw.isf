@@ -604,8 +604,10 @@ void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF
         _isf_imf_context_init ();
     iseContext.language = language;
 
-    if (context_scim == get_focused_ic ())
+    if (context_scim == get_focused_ic ()) {
+        LOGD ("language mode : %d\n", language);
         _isf_imf_context_input_panel_language_set (language);
+    }
 }
 
 Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx)
@@ -705,6 +707,7 @@ void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ctx, Ec
         _isf_imf_context_init ();
 
     if (context_scim == get_focused_ic ()) {
+        LOGD ("Return key type : %d\n", type);
         _isf_imf_context_input_panel_return_key_type_set (type);
     }
 }
@@ -743,8 +746,10 @@ void isf_imf_context_input_panel_return_key_disabled_set (Ecore_IMF_Context *ctx
     if (!IfInitContext)
         _isf_imf_context_init ();
 
-    if (context_scim == get_focused_ic ())
+    if (context_scim == get_focused_ic ()) {
+        LOGD ("Return key disabled : %d\n", disabled);
         _isf_imf_context_input_panel_return_key_disabled_set (disabled);
+    }
 }
 
 /**
@@ -782,8 +787,10 @@ isf_imf_context_input_panel_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_
     if (!IfInitContext)
         _isf_imf_context_init ();
 
-    if (context_scim == get_focused_ic ())
+    if (context_scim == get_focused_ic ()) {
+        LOGD ("layout type : %d\n", layout);
         _isf_imf_context_input_panel_layout_set (layout);
+    }
 }
 
 /**
