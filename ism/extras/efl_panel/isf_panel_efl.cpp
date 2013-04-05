@@ -3047,6 +3047,7 @@ static void slot_will_hide_ack (void)
     ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
     LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send(%x, %x)\n",
             root_window, _control_window);
+    ui_candidate_hide (true, false);
 }
 
 //////////////////////////////////////////////////////////////////////
