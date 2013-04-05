@@ -953,6 +953,10 @@ static bool _process_update_input_context (Transaction &trans)
                 _process_ise_panel_hided ();
                 return true;
             case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
+                if (will_show_timer) {
+                    ecore_timer_del (will_show_timer);
+                    will_show_timer = NULL;
+                }
                 _process_ise_panel_showed ();
                 return true;
             case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
