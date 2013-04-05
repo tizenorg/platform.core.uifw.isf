@@ -81,7 +81,7 @@ using namespace scim;
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
 #define ISF_SYSTEM_APPSERVICE_READY_STATE               1
-#define ISF_SYSTEM_WAIT_COUNT                           150
+#define ISF_SYSTEM_WM_WAIT_COUNT                        200
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 
 #define LOG_TAG                                         "ISF_PANEL_EFL"
@@ -198,7 +198,6 @@ static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_window_show            = false;
 static bool               _candidate_window_pending         = false;
-
 
 static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
@@ -3466,7 +3465,8 @@ static bool check_wm_ready (void)
 #ifdef WAIT_WM
     int try_count = 0;
     while (check_file (ISF_SYSTEM_WM_READY_FILE) == false) {
-        if (ISF_SYSTEM_WAIT_COUNT >= (try_count++)) return false;
+        if (ISF_SYSTEM_WM_WAIT_COUNT >= (try_count++)) return false;
+        usleep (ISF_SYSTEM_WAIT_DELAY);
     }
 #endif
 
