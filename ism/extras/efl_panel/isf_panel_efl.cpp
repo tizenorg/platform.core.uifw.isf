@@ -81,7 +81,7 @@ using namespace scim;
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
 #define ISF_SYSTEM_APPSERVICE_READY_STATE               1
-#define ISF_SYSTEM_WAIT_COUNT                           150
+#define ISF_SYSTEM_WM_WAIT_COUNT                        200
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 
 #define LOG_TAG                                         "ISF_PANEL_EFL"
@@ -175,6 +175,7 @@ static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Han
 
 static Eina_Bool  efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
+static void       _launch_default_soft_keyboard        (void);
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -198,7 +199,6 @@ static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_window_show            = false;
 static bool               _candidate_window_pending         = false;
-
 
 static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
@@ -285,6 +285,7 @@ static clock_t            _clock_start;
 static Ecore_Timer       *_check_size_timer                 = NULL;
 static Ecore_Timer       *_longpress_timer                  = NULL;
 static Ecore_Timer       *_destroy_timer                    = NULL;
+static Ecore_Timer       *_system_ready_timer               = NULL;
 
 static Ecore_X_Window    _ise_window                        = 0;
 static Ecore_X_Window    _app_window                        = 0;
@@ -737,6 +738,16 @@ static void config_reload_cb (const ConfigPointer &config)
     /* load_config (); */
 }
 
+static Eina_Bool system_ready_timeout_cb (void *data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    LOGW ("Launching IME because of appservice ready timeout\n");
+
+    _launch_default_soft_keyboard ();
+
+    return ECORE_CALLBACK_CANCEL;
+}
 
 //////////////////////////////////////////////////////////////////////
 // Start of Candidate Functions
@@ -3466,7 +3477,8 @@ static bool check_wm_ready (void)
 #ifdef WAIT_WM
     int try_count = 0;
     while (check_file (ISF_SYSTEM_WM_READY_FILE) == false) {
-        if (ISF_SYSTEM_WAIT_COUNT >= (try_count++)) return false;
+        if (ISF_SYSTEM_WM_WAIT_COUNT >= (try_count++)) return false;
+        usleep (ISF_SYSTEM_WAIT_DELAY);
     }
 #endif
 
@@ -3483,6 +3495,8 @@ static bool check_system_ready (void)
     int val = 0;
     ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
 
+    LOGD ("ret : %d, val : %d\n", ret, val);
+
     if (ret == 0 && val >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
         LOGD ("Appservice was ready\n");
         return true;
@@ -3492,10 +3506,29 @@ static bool check_system_ready (void)
             if (vconf_notify_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard, NULL)) {
                 _appsvc_callback_regist = true;
             }
+
+            if (!_system_ready_timer) {
+                _system_ready_timer = ecore_timer_add (5.0, system_ready_timeout_cb, NULL);
+            }
         }
 
         return false;
     }
+}
+
+static void _launch_default_soft_keyboard (void)
+{
+    if (_appsvc_callback_regist)
+        vconf_ignore_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard);
+
+    if (_system_ready_timer) {
+        ecore_timer_del (_system_ready_timer);
+        _system_ready_timer = NULL;
+    }
+
+    /* Start default ISE */
+    start_default_ise ();
+    check_hardware_keyboard ();
 }
 
 /**
@@ -3505,12 +3538,7 @@ static void launch_default_soft_keyboard (keynode_t *key, void* data)
 {
     /* Soft keyboard will be started when all system service are ready */
     if (check_system_ready ()) {
-        if (_appsvc_callback_regist)
-            vconf_ignore_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard);
-
-        /* Start default ISE */
-        start_default_ise ();
-        check_hardware_keyboard ();
+        _launch_default_soft_keyboard ();
     }
 }
 
@@ -3539,6 +3567,7 @@ int main (int argc, char *argv [])
     set_app_privilege ("isf", NULL, NULL);
 
     check_time ("\nStarting ISF Panel EFL...... ");
+    LOGD ("Starting ISF Panel EFL...... \n");
 
     DebugOutput::disable_debug (SCIM_DEBUG_AllMask);
     DebugOutput::enable_debug (SCIM_DEBUG_MainMask);

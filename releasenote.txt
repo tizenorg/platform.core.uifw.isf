@@ -1,3 +1,13 @@
+ISF 2.4.6406 :
+ 1. [immodule] Added extra will_show timer deletion code
+
+
+ISF 2.4.6405 :
+ 1. [panel] hide candidate window when will_hide_ack received
+ 2. [immodule] add log for some input panel APIs
+ 3. [panel] add usleep to wait for Window Manager ready
+
+
 ISF 2.4.6404 :
  1. [panel] settle candidate window when keyboard state is changed
  2. [immodule] Fix bug shift key event for autocapital is generated.
