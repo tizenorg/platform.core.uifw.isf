@@ -1,3 +1,7 @@
+ISF 2.4.6406 :
+ 1. [immodule] Added extra will_show timer deletion code
+
+
 ISF 2.4.6405 :
  1. [panel] hide candidate window when will_hide_ack received
  2. [immodule] add log for some input panel APIs
