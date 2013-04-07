@@ -41,29 +41,51 @@ void signal_handler(int sig);
 /* Internal input handler function */
 Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler);
 
-static int get_root_window_degree(Evas_Object *keypad_win)
+static int get_app_window_degree(Evas_Object *keypad_win)
 {
+    int  ret = 0;
     Atom type_return;
-    unsigned long nitems_return;
-    unsigned long bytes_after_return;
-    int format_return;
-    unsigned char *data = NULL;
-    gint ret = 0;
+    int  format_return;
+    unsigned long    nitems_return;
+    unsigned long    bytes_after_return;
+    unsigned char   *data_window = NULL;
+    unsigned char   *data_angle = NULL;
+
     int retVal = 0;
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get(), ecore_x_window_root_get(elm_win_xwindow_get(keypad_win)),
-        ecore_x_atom_get("_E_ILLUME_ROTATE_ROOT_ANGLE"),
-        0, G_MAXLONG, False, XA_CARDINAL, &type_return,
+    Ecore_X_Window app_window = 0;
+
+    Ecore_X_Window win = elm_win_xwindow_get(static_cast<Evas_Object*>(keypad_win));
+    ret = XGetWindowProperty((Display *)ecore_x_display_get (),
+        ecore_x_window_root_get(win),
+        ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
+        0, G_MAXLONG, False, XA_WINDOW, &type_return,
         &format_return, &nitems_return, &bytes_after_return,
-        &data);
+        &data_window);
 
     if (ret == Success) {
-        if (data) {
-            if (type_return == XA_CARDINAL) {
-                retVal = *(unsigned int*)data;
+        if ((type_return == XA_WINDOW) && (format_return == 32) && (data_window)) {
+            app_window = *(Window *)data_window;
+
+            ret = XGetWindowProperty((Display *)ecore_x_display_get(), app_window,
+                ecore_x_atom_get("_E_ILLUME_ROTATE_WINDOW_ANGLE"),
+                0, G_MAXLONG, False, XA_CARDINAL, &type_return,
+                &format_return, &nitems_return, &bytes_after_return,
+                &data_angle);
+
+            if (ret == Success) {
+                if (data_angle) {
+                    if (type_return == XA_CARDINAL) {
+                        retVal = *(unsigned int*)data_angle;
+                        LOGD("current rotation angle is %p %d\n", app_window, retVal);
+                    }
+                    XFree(data_angle);
+                }
             }
-            XFree(data);
         }
+        if (data_window)
+            XFree(data_window);
     }
+
 
     return retVal;
 }
@@ -652,7 +674,7 @@ void slot_ise_show (const scim::HelperAgent *agent, int ic, char *buf, size_t &l
             } else {
                 LOGD("\n-=-= WARNING - buf %p len %d size %d \n", buf, len, sizeof(ise_context));
             }
-            callback->ise_show(ic, get_root_window_degree(impl->get_main_window()), ise_context);
+            callback->ise_show(ic, get_app_window_degree(impl->get_main_window()), ise_context);
         }
     }
 }
