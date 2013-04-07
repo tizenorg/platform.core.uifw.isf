@@ -54,6 +54,8 @@ KEYBOARD_STATE g_keyboard_state = {
 #define MVK_Shift_Off 0xffe1
 #define MVK_Shift_On 0xffe2
 #define MVK_Shift_Lock 0xffe6
+#define MVK_Shift_Enable 0x9fe7
+#define MVK_Shift_Disable 0x9fe8
 
 #define USER_KEYSTRING_OPTION "OPTION"
 
@@ -118,10 +120,18 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
     if (gSCLUI) {
         if (key_value) {
             if (strcmp(key_value, "CUR_LANG") == 0) {
-                return ISELanguageManager::select_current_language();
+                ret = ISELanguageManager::select_current_language();
             }
             if (strcmp(key_value, "NEXT_LANG") == 0) {
-                return ISELanguageManager::select_next_language();
+                ret = ISELanguageManager::select_next_language();
+            }
+        }
+        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+        if (info) {
+            if (info->accepts_caps_mode) {
+                ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+            } else {
+                ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
             }
         }
     }
@@ -432,6 +442,9 @@ ise_set_caps_mode(unsigned int mode)
     if (info) {
         if (info->accepts_caps_mode) {
             gSCLUI->set_caps_mode(mode);
+            ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+        } else {
+            ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
         }
     }
 }

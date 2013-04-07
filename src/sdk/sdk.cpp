@@ -25,6 +25,14 @@
 
 using namespace scl;
 
+#define MVK_Shift_L 0xffe1
+#define MVK_Caps_Lock 0xffe5
+#define MVK_Shift_Off 0xffe1
+#define MVK_Shift_On 0xffe2
+#define MVK_Shift_Lock 0xffe6
+#define MVK_Shift_Enable 0x9fe7
+#define MVK_Shift_Disable 0x9fe8
+
 /*
  * This callback class will receive all response events from SCL
  * So you should perform desired tasks in this class.
@@ -136,6 +144,14 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                     /* If flick event upon space key was detected, perform a language change and don't proceed anymore */
                     ISELanguageManager::select_next_language();
                     ret = SCL_EVENT_DONE;
+                }
+                LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+                if (info) {
+                    if (info->accepts_caps_mode) {
+                        ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+                    } else {
+                        ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
+                    }
                 }
             } else {
                 if (event_desc.key_modifier == KEY_MODIFIER_DIRECTION_LEFT ||
