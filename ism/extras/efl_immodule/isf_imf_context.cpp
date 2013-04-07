@@ -84,6 +84,7 @@ struct _EcoreIMFContextISFImpl {
     bool                     need_commit_preedit;
     bool                     prediction_allow;
     int                      next_shift_status;
+    int                      shift_mode_enabled;
 
     EcoreIMFContextISFImpl  *next;
 };
@@ -290,6 +291,8 @@ static int      __current_numlock_mask = Mod2Mask;
 #define SHIFT_MODE_OFF  0xffe1
 #define SHIFT_MODE_ON   0xffe2
 #define SHIFT_MODE_LOCK 0xffe6
+#define SHIFT_MODE_ENABLE 0x9fe7
+#define SHIFT_MODE_DISABLE 0x9fe8
 
 extern Ecore_IMF_Context *input_panel_ctx;
 
@@ -361,6 +364,7 @@ new_ic_impl (EcoreIMFContextISF *parent)
 
     impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
     impl->next_shift_status = 0;
+    impl->shift_mode_enabled = 0;
     impl->next = _used_ic_impl_list;
     _used_ic_impl_list = impl;
 
@@ -2029,6 +2033,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     Eina_Bool keygen = EINA_TRUE;
+    Eina_Bool process_key = EINA_TRUE;
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
     if (!(ic && ic->impl))
         return;
@@ -2039,6 +2044,10 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
             key.code == SHIFT_MODE_ON ||
             key.code == SHIFT_MODE_LOCK) {
             ic->impl->next_shift_status = _key.code;
+        } else if (key.code == SHIFT_MODE_ENABLE ) {
+            ic->impl->shift_mode_enabled = true;
+        } else if (key.code == SHIFT_MODE_DISABLE ) {
+            ic->impl->shift_mode_enabled = false;
         } else if ((key.code >= 'a' && key.code <= 'z') ||
             (key.code >= 'A' && key.code <= 'Z')) {
             Eina_Bool uppercase;
@@ -2061,12 +2070,14 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
                     uppercase = EINA_FALSE;
             }
 
-            if (uppercase) {
-                if(key.code >= 'a' && key.code <= 'z')
-                    _key.code -= 32;
-            } else {
-                if(key.code >= 'A' && key.code <= 'Z')
-                    _key.code += 32;
+            if (ic->impl->shift_mode_enabled) {
+                if (uppercase) {
+                    if(key.code >= 'a' && key.code <= 'z')
+                        _key.code -= 32;
+                } else {
+                    if(key.code >= 'A' && key.code <= 'Z')
+                        _key.code += 32;
+                }
             }
         }
     }
@@ -2076,6 +2087,11 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
         key.code == SHIFT_MODE_LOCK) {
         keygen = EINA_FALSE;
     }
+    if (key.code == SHIFT_MODE_ENABLE ||
+        key.code == SHIFT_MODE_DISABLE) {
+        keygen = EINA_FALSE;
+        process_key = EINA_FALSE;
+    }
 
     if (keygen)
         if (feed_key_event (ic, _key, false) == EINA_TRUE) return;
@@ -2083,9 +2099,11 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     _panel_client.prepare (ic->id);
 
     if (!filter_hotkeys (ic, _key)) {
-        if (!_focused_ic || !_focused_ic->impl->is_on ||
-            !_focused_ic->impl->si->process_key_event (_key)) {
-            _fallback_instance->process_key_event (_key);
+        if (process_key) {
+            if (!_focused_ic || !_focused_ic->impl->is_on ||
+                    !_focused_ic->impl->si->process_key_event (_key)) {
+                _fallback_instance->process_key_event (_key);
+            }
         }
     }
 
