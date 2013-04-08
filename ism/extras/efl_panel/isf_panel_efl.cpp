@@ -2717,16 +2717,17 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
         if (_ise_show == false) {
             info.width = 0;
             info.height = 0;
-        }
-        if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-            if (_candidate_window && evas_object_visible_get (_candidate_window)) {
-                int height = ui_candidate_get_valid_height ();
-                if ((_candidate_height - height) > _ise_height) {
-                    info.pos_y  = info.pos_y + info.height - _candidate_height;
-                    info.height = _candidate_height;
-                } else {
-                    info.pos_y  -= height;
-                    info.height += height;
+        } else {
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
+                if (_candidate_window && evas_object_visible_get (_candidate_window)) {
+                    int height = ui_candidate_get_valid_height ();
+                    if ((_candidate_height - height) > _ise_height) {
+                        info.pos_y  = info.pos_y + info.height - _candidate_height;
+                        info.height = _candidate_height;
+                    } else {
+                        info.pos_y  -= height;
+                        info.height += height;
+                    }
                 }
             }
         }
