@@ -358,26 +358,32 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
 
     /* READ ISE's SIZE HINT HERE */
     int pos_x, pos_y, width, height;
-    ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle,
-            &pos_x, &pos_y, &width, &height);
-    info.pos_x = pos_x;
-    info.pos_y = pos_y;
+    if (ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle,
+            &pos_x, &pos_y, &width, &height)) {
+        info.pos_x = pos_x;
+        info.pos_y = pos_y;
 
-    if (angle == 90 || angle == 270) {
-        info.width = height;
-        info.height = width;
+        if (angle == 90 || angle == 270) {
+            info.width = height;
+            info.height = width;
+        } else {
+            info.width = width;
+            info.height = height;
+        }
+
+        LOGD ("Geometry : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
+
+        info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
+        if (kbd_state == KEYBOARD_STATE_OFF) {
+            info.pos_y = win_h;
+        } else {
+            info.pos_y = win_h - info.height;
+        }
     } else {
-        info.width = width;
-        info.height = height;
-    }
-
-    LOGD ("Geometry : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
-
-    info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
-    if (kbd_state == KEYBOARD_STATE_OFF) {
-        info.pos_y = win_h;
-    } else {
-        info.pos_y = win_h - info.height;
+        pos_x = 0;
+        pos_y = 0;
+        width = 0;
+        height = 0;
     }
     _ise_width  = info.width;
     _ise_height = info.height;
