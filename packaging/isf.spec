@@ -121,7 +121,7 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %{_libdir}/pkgconfig/scim.pc
 
 %post -n ug-isfsetting-efl
-mkdir -p /usr/ug/bin/
+mkdir -p /opt/ug/bin/
 ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 
 %files -n ug-isfsetting-efl

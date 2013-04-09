@@ -7,5 +7,8 @@
                 <icon>ug-isfsetting-efl.png</icon>
                 <label>isfsetting Appcontrol</label>
                 <label xml:lang="en-us">isfsetting</label>
+                <application-service>
+                    <operation name="http://tizen.org/appcontrol/operation/setting/ime"/>
+                </application-service>
        </ui-application>
 </manifest>
