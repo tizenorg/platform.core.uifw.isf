@@ -2032,7 +2032,6 @@ static void
 panel_slot_process_key_event (int context, const KeyEvent &key)
 {
     EcoreIMFContextISF *ic = find_ic (context);
-    Eina_Bool keygen = EINA_TRUE;
     Eina_Bool process_key = EINA_TRUE;
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
     if (!(ic && ic->impl))
@@ -2082,19 +2081,18 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
         }
     }
 
-    if (key.code == SHIFT_MODE_OFF ||
-        key.code == SHIFT_MODE_ON ||
-        key.code == SHIFT_MODE_LOCK) {
-        keygen = EINA_FALSE;
-    }
-    if (key.code == SHIFT_MODE_ENABLE ||
-        key.code == SHIFT_MODE_DISABLE) {
-        keygen = EINA_FALSE;
-        process_key = EINA_FALSE;
+    if (key.code != SHIFT_MODE_OFF &&
+        key.code != SHIFT_MODE_ON &&
+        key.code != SHIFT_MODE_LOCK &&
+        key.code != SHIFT_MODE_ENABLE &&
+        key.code != SHIFT_MODE_DISABLE) {
+        if (feed_key_event (ic, _key, false)) return;
     }
 
-    if (keygen)
-        if (feed_key_event (ic, _key, false) == EINA_TRUE) return;
+    if (key.code == SHIFT_MODE_ENABLE ||
+        key.code == SHIFT_MODE_DISABLE) {
+        process_key = EINA_FALSE;
+    }
 
     _panel_client.prepare (ic->id);
 
