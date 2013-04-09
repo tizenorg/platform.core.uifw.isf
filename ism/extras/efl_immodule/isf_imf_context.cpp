@@ -844,6 +844,7 @@ isf_imf_context_new (void)
     context_scim->id = _context_count++;
 
     if (!_scim_initialized) {
+        ecore_x_init(NULL);
         initialize ();
         _scim_initialized = true;
         isf_imf_input_panel_init ();
@@ -889,6 +890,7 @@ isf_imf_context_shutdown (void)
 
         isf_imf_input_panel_shutdown ();
         finalize ();
+        ecore_x_shutdown();
     }
 }
 
