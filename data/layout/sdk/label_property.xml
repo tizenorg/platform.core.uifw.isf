@@ -70,6 +70,22 @@
       </font_color_record>
     </label_properties>
   </label_properties_table>
+  <label_properties_table label_type="MAGNIFIER_DEFAULT">
+    <label_properties font_name="Tizen:style=medium" font_size="94" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x293d5eff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x293d5e33</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="right_bottom" padding_X="12" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x293d5eff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x293d5e33</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
   <label_properties_table label_type="MAGNIFIER">
     <label_properties font_name="Tizen:style=medium" font_size="94" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
