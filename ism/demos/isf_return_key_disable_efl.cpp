@@ -40,10 +40,13 @@ _cursor_changed_cb(void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text)
+static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout, Elm_Input_Panel_Return_Key_Type return_key_type)
 {
     Evas_Object *ef = create_ef (parent, label, guide_text);
     Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
+    elm_entry_input_panel_layout_set (en, layout);
+    elm_entry_input_panel_return_key_type_set (en, return_key_type);
+
     evas_object_smart_callback_add (en, "cursor,changed", _cursor_changed_cb, NULL);
 
     return ef;
@@ -54,6 +57,11 @@ static Evas_Object * create_inner_layout (void *data)
     struct appdata *ad = (struct appdata *)data;
     Evas_Object *bx = NULL;
     Evas_Object *ef = NULL;
+    int i,j;
+    char title[128];
+
+    const char* title_layout[] = {"NORMAL", "NUMBER", "EMAIL", "URL", "PHONENUMBER", "IP", "MONTH", "NUMBERONLY", "INVALID", "HEX", "TERMINAL", "PASSWORD"};
+    const char* title_key[] = {"DEFAULT", "DONE", "GO", "JOIN", "LOGIN", "NEXT", "SEARCH", "SEND"};
 
     Evas_Object *parent = ad->naviframe;
 
@@ -62,10 +70,14 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    /* Prediction allow : TRUE */
-    ef = _create_ef_layout (parent, _("Return Key Disable"), _("Return Key will be activated when any key is pressed"));
-    elm_box_pack_end (bx, ef);
-
+    for (i = (int)ELM_INPUT_PANEL_LAYOUT_NORMAL; i <= (int)ELM_INPUT_PANEL_LAYOUT_PASSWORD; i++) {
+        if (i == (int)ELM_INPUT_PANEL_LAYOUT_INVALID) continue;
+        for (j = (int)ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT; j <= (int)ELM_INPUT_PANEL_RETURN_KEY_TYPE_SEND; j++) {
+            snprintf (title, sizeof (title), "%s - %s", title_layout[i], title_key[j]);
+            ef = _create_ef_layout (parent, _(title), _("Return Key will be activated when any key is pressed"), (Elm_Input_Panel_Layout)i, (Elm_Input_Panel_Return_Key_Type)j);
+            elm_box_pack_end (bx, ef);
+        }
+    }
     return bx;
 }
 
