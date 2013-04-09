@@ -130,8 +130,10 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if (info) {
             if (info->accepts_caps_mode) {
                 ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+                gSCLUI->set_caps_mode(g_keyboard_state.caps_mode);
             } else {
                 ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
+                gSCLUI->set_caps_mode(0);
             }
         }
     }
@@ -441,10 +443,11 @@ ise_set_caps_mode(unsigned int mode)
     LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
     if (info) {
         if (info->accepts_caps_mode) {
-            gSCLUI->set_caps_mode(mode);
             ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+            gSCLUI->set_caps_mode(g_keyboard_state.caps_mode);
         } else {
             ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
+            gSCLUI->set_caps_mode(0);
         }
     }
 }
