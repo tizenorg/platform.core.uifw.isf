@@ -1799,6 +1799,9 @@ static Eina_Bool efl_create_control_window (void)
     _control_window = ecore_x_window_input_new (root, -100, -100, 1, 1);
     ecore_x_e_virtual_keyboard_control_window_set (root, _control_window, 0, EINA_TRUE);
 
+    Ecore_X_Atom atom = ecore_x_atom_get ("_ISF_CONTROL_WINDOW");
+    ecore_x_window_prop_xid_set(root, atom, ECORE_X_ATOM_WINDOW, &_control_window, 1);
+
     return EINA_TRUE;
 }
 
