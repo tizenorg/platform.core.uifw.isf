@@ -3375,53 +3375,57 @@ static void check_hardware_keyboard (void)
  *
  * @return ECORE_CALLBACK_PASS_ON
  */
-static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *ev)
+static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *event)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    Ecore_X_Event_Window_Property *event = (Ecore_X_Event_Window_Property *)ev;
+    Ecore_X_Event_Window_Property *ev = (Ecore_X_Event_Window_Property *)event;
+
+    if (ev == NULL)
+        return ECORE_CALLBACK_PASS_ON;
 
     Ecore_X_Window rootwin = ecore_x_window_root_first_get ();
-    if (event->win == rootwin && event->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
+    if (ev->win == rootwin && ev->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
         LOGD("keyboard connected");
         check_hardware_keyboard ();
         set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_OFF);
-    } else if (event->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
-        /* WMSYNC, #6 The keyboard window is displayed fully so set the conformant geometry */
-        LOGD ("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE\n");
-        Ecore_X_Virtual_Keyboard_State state;
-        state = ecore_x_e_virtual_keyboard_state_get (event->win);
-        if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
-            LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_ON\n");
-            _ise_show = true;
+    } else if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
+        if (ev->win == _control_window) {
+            /* WMSYNC, #6 The keyboard window is displayed fully so set the conformant geometry */
+            LOGD ("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE : %p %d\n", ev->win, ev->atom);
+            Ecore_X_Virtual_Keyboard_State state;
+            state = ecore_x_e_virtual_keyboard_state_get (ev->win);
+            if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
+                LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_ON\n");
+                _ise_show = true;
 
-            if (_candidate_window_pending) {
-                _candidate_window_pending = false;
-                ui_candidate_show (true);
-            } else {
-                if (evas_object_visible_get (_candidate_area_1))
-                    ui_candidate_show (false);
+                if (_candidate_window_pending) {
+                    _candidate_window_pending = false;
+                    ui_candidate_show (true);
+                } else {
+                    if (evas_object_visible_get (_candidate_area_1))
+                        ui_candidate_show (false);
+                }
+
+                set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
+                _panel_agent->update_input_panel_event(
+                        ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+
+                vconf_set_int (VCONFKEY_PM_SIP_STATUS, 1);
+            } else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
+                /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
+                LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
+                // For now don't send HIDE signal here
+                //_panel_agent->update_input_panel_event (
+                //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+                _ise_show = false;
+                ui_candidate_hide (true, false);
+
+                vconf_set_int (VCONFKEY_PM_SIP_STATUS, 0);
             }
-
-            set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
-            _panel_agent->update_input_panel_event(
-                ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
-
-            vconf_set_int (VCONFKEY_PM_SIP_STATUS, 1);
+            ui_settle_candidate_window ();
         }
-        else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
-            /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
-            LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
-            // For now don't send HIDE signal here
-            //_panel_agent->update_input_panel_event (
-            //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
-            _ise_show = false;
-            ui_candidate_hide (true, false);
-
-            vconf_set_int (VCONFKEY_PM_SIP_STATUS, 0);
-        }
-        ui_settle_candidate_window ();
     }
 
     return ECORE_CALLBACK_PASS_ON;
@@ -3441,6 +3445,10 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
+
+    if (ev == NULL)
+        return ECORE_CALLBACK_RENEW;
+
     if ((ev->win == _control_window)) {
         if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST) {
             /* WMSYNC, #4 Send WILL_SHOW event when the keyboard window is about to displayed */
