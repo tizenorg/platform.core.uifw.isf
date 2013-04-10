@@ -57,6 +57,7 @@ EAPI Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bo
 EAPI EcoreIMFContextISF *get_focused_ic ();
 
 EAPI void context_scim_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length);
+EAPI void imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout);
 
 EAPI void isf_imf_context_add (Ecore_IMF_Context *ctx);
 EAPI void isf_imf_context_del (Ecore_IMF_Context *ctx);

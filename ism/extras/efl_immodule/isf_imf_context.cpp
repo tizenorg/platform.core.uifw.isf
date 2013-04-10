@@ -805,6 +805,16 @@ EAPI void context_scim_imdata_get (Ecore_IMF_Context *ctx, void* data, int* leng
     *length = context_scim->impl->imdata_size;
 }
 
+EAPI void
+imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout)
+{
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (context_scim && context_scim->impl) {
+        context_scim->impl->si->set_layout (layout);
+    }
+}
+
 /* Public functions */
 /**
  * isf_imf_context_new
@@ -1205,7 +1215,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 //            _panel_client.hide_aux_string (context_scim->id);
 //            _panel_client.hide_lookup_table (context_scim->id);
             context_scim->impl->si->focus_in ();
-            context_scim->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ctx));
+            imengine_layout_set (ctx, ecore_imf_context_input_panel_layout_get (ctx));
             set_prediction_allow (context_scim->impl->si, context_scim->impl->prediction_allow);
             if (context_scim->impl->imdata)
                 context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
