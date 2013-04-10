@@ -33,6 +33,8 @@
 #define Uses_SCIM_COMPOSE_KEY
 
 #include <stdio.h>
+#include <fstream>
+#include <iostream>
 #include <Elementary.h>
 #include <Ecore_IMF.h>
 #include <Ecore_X.h>
@@ -50,6 +52,7 @@
 #include "isf_control.h"
 
 using namespace scim;
+using namespace std;
 
 #define _EDJ(x)                                   elm_layout_edje_get(x)
 #define ISF_SETTING_EDJ                           (SCIM_DATADIR "/isfsetting.edj")
@@ -58,6 +61,8 @@ using namespace scim;
 #define SETTING_PACKAGE                           "isfsetting-efl"
 #define SETTING_LOCALEDIR                         "/usr/ug/res/locale"
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
+
+#define CSC_FILEPATH                              "/opt/system/csc-default/preset/csc-preset-keyboard.ini"
 
 enum {
     AUTO_CAPITALIZATION_ITEM = 0,
@@ -147,6 +152,19 @@ static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const cha
 
 static void         create_sw_keyboard_selection_view (ug_data *ugd);
 static void         create_hw_keyboard_selection_view (ug_data *ugd);
+
+static void remove_cr (char *str)
+{
+    char *cr = NULL;
+    int idx;
+
+    if (!str) return;
+    cr = strchr (str, '\r');
+    if (cr) {
+        idx = cr - str;
+        str[idx] = '\0';
+    }
+}
 
 static void append_separator (Evas_Object *genlist, separator_type style_type)
 {
@@ -1491,6 +1509,9 @@ extern "C"
     // Reset keyboard setting
     UG_MODULE_API int setting_plugin_reset (service_h s, void *priv)
     {
+        const int BUFF_MAX = 1024;
+        char readbuf[BUFF_MAX] = {0,};
+
         if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, true) == -1)
             return -1;
         if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, false) == -1)
@@ -1507,6 +1528,40 @@ extern "C"
         isf_load_ise_information (ALL_ISE, _config);
 
         String uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
+
+        // Read and parse CSC data
+        ifstream csc_file (CSC_FILEPATH);
+
+        if (csc_file.is_open ()) {
+            while (1) {
+                if (csc_file.getline (readbuf, BUFF_MAX) == NULL)
+                    break;
+
+                char **items = eina_str_split (readbuf, "=", 2);
+                if (items) {
+                    if (!strcmp (items[0], "uuid")) {
+                        if (items[1]) {
+                            remove_cr (items[1]);
+                            uuid = String (items[1]);
+                        }
+                    }
+                    else if (!strcmp (items[0], "lang")) {
+                        if (items[1]) {
+                            remove_cr (items[1]);
+                            vconf_set_str (VCONFKEY_ISF_INPUT_LANGUAGE, items[1]);
+                        }
+                    }
+
+                    if (items[0])
+                        free (items[0]);
+
+                    free (items);
+                }
+            }
+
+            csc_file.close ();
+        }
+
         TOOLBAR_MODE_T type = (TOOLBAR_MODE_T)scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE), TOOLBAR_KEYBOARD_MODE);
         if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &_hw_kbd_num, 1) > 0) {
             if (_hw_kbd_num != 0) {
@@ -1534,6 +1589,7 @@ extern "C"
             } else {
                 std::cerr << "Load " << mdl_name << " is failed!!!\n";
             }
+
             if (setup_module) {
                 delete setup_module;
                 setup_module = NULL;
