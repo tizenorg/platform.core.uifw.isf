@@ -29,11 +29,13 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "0.7.5-1"
+#define ISE_VERSION "0.7.6-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry.xml"
+
+#define DEFAULT_KEYBOARD_ISE_UUID "d75857a5-4148-4745-89e2-1da7ddaf7999"
 
 //#define INPUT_MODE_NATIVE	MAX_INPUT_MODE /* Native mode. It will distinguish to the current user language */
 

@@ -292,7 +292,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
         Ecore_X_Window xwindow = elm_win_xwindow_get(m_main_window);
         char xid[255];
         snprintf(xid, 255, "%d", xwindow);
-        scim::Property prop (xid, "XID", "ICON", "TIP");
+        scim::Property prop (xid, "XID", "", "");
         scim::PropertyList props;
         props.push_back (prop);
         m_helper_agent.register_properties (props);

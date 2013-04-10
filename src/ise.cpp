@@ -251,6 +251,15 @@ ise_set_layout(sclu32 layout)
             g_keyboard_state.need_reset = TRUE;
         }
         g_keyboard_state.layout = layout;
+
+        if (layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
+                layout == ISE_LAYOUT_STYLE_IP ||
+                layout == ISE_LAYOUT_STYLE_MONTH ||
+                layout == ISE_LAYOUT_STYLE_NUMBERONLY) {
+            if (g_ise_common) {
+                g_ise_common->set_keyboard_ise_by_uuid(DEFAULT_KEYBOARD_ISE_UUID);
+            }
+        }
     }
 }
 
