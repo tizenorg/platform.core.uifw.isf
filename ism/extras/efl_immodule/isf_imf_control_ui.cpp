@@ -309,15 +309,16 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
     if (check_focus_out_by_lockscreen (ctx))
         return;
 
+    if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+        return;
+
+    hide_req_ic = ctx;
+
     if (instant) {
-        if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-            hide_req_ic = ctx;
-            _clear_timer ();
-            _save_hide_context_info (ctx);
-            _send_input_panel_hide_request ();
-        }
+        _clear_timer ();
+        _save_hide_context_info (ctx);
+        _send_input_panel_hide_request ();
     } else {
-        hide_req_ic = ctx;
         _input_panel_hide_timer_start (ctx);
     }
 }
