@@ -29,9 +29,19 @@ using std::vector;
 extern CONFIG_VALUES g_config_values;
 
 vector<LANGUAGE_INFO> ISELanguageManager::language_vector;
-string ISELanguageManager::current_language;
-string ISELanguageManager::temporary_language;
+int ISELanguageManager::m_current_language = -1;
 string ISELanguageManager::default_resource_file;
+
+// A class function that is used for algorithm std::find_if
+class _language_info_finder {
+public:
+    _language_info_finder(const string &language_name): m_name(language_name) {}
+    bool operator() (const LANGUAGE_INFO &info) {
+        return info.name == m_name;
+    }
+private:
+    string m_name;
+};
 
 sclboolean
 ISELanguageManager::set_all_languages_enabled(sclboolean enabled)
@@ -48,60 +58,47 @@ ISELanguageManager::set_all_languages_enabled(sclboolean enabled)
 }
 
 /* Each language-specific source files should put their callback information in the following vectors */
-sclboolean ISELanguageManager::add_language(LANGUAGE_INFO language)
+sclboolean
+ISELanguageManager::add_language(LANGUAGE_INFO language)
 {
     sclboolean ret = FALSE;
 
-    if (language.name.length() > 0) {
-        sclboolean found = FALSE;
-        for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-            iter != language_vector.end() && !ret;advance(iter, 1)) {
-                if (iter->name.length() > 0) {
-                    if (iter->name.compare(language.name) == 0) {
-                        found = TRUE;
-                        /* If the new language has the SPECIALIZED priority, overwrite existing callback */
-                        if (language.priority == LANGUAGE_PRIORITY_SPECIALIZED) {
-                            *iter = language;
-                        }
-                    }
-                }
-        }
-        if (!found) {
-            language_vector.push_back(language);
-        }
+    int language_id = -1;
 
-        if (current_language.empty()) {
-            /* If there is no default language set currently, assume this to be a default language */
-            current_language = language.name;
+    // check whether there is an language_info has the same name with "language" in the vector
+    vector<LANGUAGE_INFO>::iterator it;
+    it = std::find_if(language_vector.begin(), language_vector.end(), _language_info_finder(language.name));
+    if (it != language_vector.end()) {
+        // if the assigned one has the priority "LANGUAGE_PRIORITY_SPECIALIZED" - which means high priority,
+        // then the assigned one will replace with the origianl one
+        if (language.priority == LANGUAGE_PRIORITY_SPECIALIZED) {
+            *it = language;
+            language_id = it - language_vector.begin();
+        }
+    } else {
+        language_vector.push_back(language);
+        language_id = language_vector.size() -1;
+    }
+
+    if (m_current_language == -1) {
+        /* If there is no default language set currently, assume this to be a default language */
+        m_current_language = language_id;
+    } else if (language.priority == LANGUAGE_PRIORITY_SPECIALIZED) {
+        /* If this language has the SPECIALIZED priority, assume this to be a default language */
+        m_current_language = language_id;
+    }
+    if (language.resource_file.length() > 0) {
+        if (default_resource_file.empty()) {
+            /* If we don't have default resource file, set this resource file information as default */
+            default_resource_file = language.resource_file;
         } else if (language.priority == LANGUAGE_PRIORITY_SPECIALIZED) {
-            /* If this language has the SPECIALIZED priority, assume this to be a default language */
-            current_language = language.name;
+            /* Or if this has SPECIALIZED priority, overwrite the existing default resource file information */
+            default_resource_file = language.resource_file;
         }
-        if (language.resource_file.length() > 0) {
-            if (default_resource_file.empty()) {
-                /* If we don't have default resource file, set this resource file information as default */
-                default_resource_file = language.resource_file;
-            } else if (language.priority == LANGUAGE_PRIORITY_SPECIALIZED) {
-                /* Or if this has SPECIALIZED priority, overwrite the existing default resource file information */
-                default_resource_file = language.resource_file;
-            }
-        }
-
-        ret = TRUE;
     }
 
-    return ret;
+    return TRUE;
 }
-
-class _language_info_finder {
-public:
-    _language_info_finder(const string &language_name): m_name(language_name) {}
-    bool operator() (const LANGUAGE_INFO &info) {
-        return info.name == m_name;
-    }
-private:
-    string m_name;
-};
 
 int
  _find_language_info(const string &language_name, const vector<LANGUAGE_INFO>& vec_language_info) {
@@ -114,29 +111,21 @@ int
     return -1;
 }
 
+// normal routine of select language
 sclboolean
-ISELanguageManager::do_select_language(const string &language_name, sclboolean temporarily/* = FALSE*/) {
-
-    int pos = _find_language_info(language_name, language_vector);
-
-    // the assigned language could not be found in the language info vector
-    if (pos < 0 || pos >= language_vector.size()) {
-        return FALSE;
-    }
-
-    LANGUAGE_INFO &info = language_vector.at(pos);
-    info.enabled_temporarily = temporarily;
-    return do_select_language(language_vector.at(pos));
-}
-
-sclboolean
-ISELanguageManager::do_select_language(LANGUAGE_INFO &language_info) {
+ISELanguageManager::do_select_language(int language_info_index) {
     sclboolean ret = FALSE;
 
+    if (language_info_index < 0 || language_info_index >= language_vector.size()) {
+        return FALSE;
+    }
+    LANGUAGE_INFO &language_info = language_vector.at(language_info_index);
     // if not enabled and not temporary, return false
     if (!language_info.enabled && !language_info.enabled_temporarily) {
         return FALSE;
     }
+
+    // run the callback function
     ILanguageCallback *callback = language_info.callback;
     if (callback) {
         ret = callback->on_language_selected(language_info.name.c_str(), language_info.selected_input_mode.c_str());
@@ -145,37 +134,50 @@ ISELanguageManager::do_select_language(LANGUAGE_INFO &language_info) {
         return ret;
     }
 
-    if (language_info.enabled_temporarily) {
-        temporary_language = language_info.name;
-    } else {
-        current_language = language_info.name;
+    m_current_language = language_info_index;
+    if (!language_info.enabled_temporarily) {
         /* Save the selected language */
-        g_config_values.selected_language = current_language;
+        g_config_values.selected_language = language_info.name;
         write_ise_config_values();
     }
 
     return ret;
 }
 
-sclboolean ISELanguageManager::select_language(const sclchar *language, sclboolean temporarily)
+// normal routine of select language
+sclboolean
+ISELanguageManager::do_unselect_language(int language_info_index) {
+    sclboolean ret = FALSE;
+    if (language_info_index < 0 || language_info_index >= language_vector.size()) {
+        return FALSE;
+    }
+
+    LANGUAGE_INFO &language_info = language_vector.at(language_info_index);
+    if (language_info.callback) {
+        ret = language_info.callback->on_language_unselected(language_info.name.c_str(), language_info.selected_input_mode.c_str());
+    }
+
+    return ret;
+}
+
+// interface function, call do_select_language actually
+sclboolean
+ISELanguageManager::select_language(const sclchar *language, sclboolean temporarily)
 {
     sclboolean ret = FALSE;
 
     if (language == NULL) return FALSE;
+    int pos = _find_language_info(language, language_vector);
 
-    string unselected_language = current_language;
-    if (!(temporary_language.empty())) {
-        unselected_language = temporary_language;
+    // the assigned language could not be found in the language info vector
+    if (pos < 0 || pos >= language_vector.size()) {
+        return FALSE;
     }
-    LANGUAGE_INFO *info = get_language_info(unselected_language.c_str());
-    if (info) {
-        if (info->callback) {
-            info->callback->on_language_unselected(unselected_language.c_str(), info->selected_input_mode.c_str());
-        }
-    }
-    temporary_language.clear();
 
-    ret = do_select_language(language, temporarily);
+    LANGUAGE_INFO &info = language_vector.at(pos);
+    info.enabled_temporarily = temporarily;
+
+    ret = do_select_language(pos);
 
     if (ret == FALSE) {
         ret = select_next_language();
@@ -183,118 +185,105 @@ sclboolean ISELanguageManager::select_language(const sclchar *language, sclboole
     return ret;
 }
 
-sclboolean ISELanguageManager::select_current_language()
+sclboolean
+ISELanguageManager::select_current_language()
 {
     sclboolean ret = FALSE;
-
-    if (temporary_language.empty()) {
-        if (!(ret = select_language(current_language.c_str()))) {
-            ret = select_next_language();
-        }
-    } else {
-        ret = select_language(temporary_language.c_str(), TRUE);
-    }
+    ret = do_select_language(m_current_language);
 
     return ret;
 }
 
-sclboolean ISELanguageManager::select_next_language()
+sclboolean
+ISELanguageManager::select_next_language()
 {
     sclboolean ret = FALSE;
 
-    if (!(temporary_language.empty())) {
-        int pos = _find_language_info(temporary_language, language_vector);
-        if (pos >= 0) {
-            language_vector.at(pos).enabled_temporarily = FALSE;
-        }
-        temporary_language.clear();
-        return select_current_language();
+    // do some work before change to next language
+    // eg: commit predit string...
+    ret = do_unselect_language(m_current_language);
+    if (ret == FALSE) {
+        return FALSE;
+    }
+
+    // get next position
+    int next_pos = -1;
+    if (m_current_language == language_vector.size() -1){
+        next_pos = 0;
     } else {
-        LANGUAGE_INFO *info = get_language_info(current_language.c_str());
-        if (info) {
-            if (info->callback) {
-                info->callback->on_language_unselected(current_language.c_str(), info->selected_input_mode.c_str());
-            }
-        }
+        next_pos = m_current_language + 1;
+    }
+    assert(next_pos >= 0 && next_pos < language_vector.size());
 
-        int next_pos = -1;
-        int pos = _find_language_info(current_language, language_vector);
-        if (pos < 0) {
-            next_pos = 0;
-        } else if (pos >= language_vector.size() -1){
-            next_pos = 0;
-        } else {
-            next_pos = pos + 1;
+    // select next language
+    // the next one may be not enabled, so the loop below is to search afterwards
+    // continually until find an enabled one
+    // example: if current index is 5, the search order is:
+    // 5, 6, 7, 8, max, 0, 1, 2, 3, 4
+    sclboolean b_select_ok = FALSE;
+    for (int i = next_pos; i < language_vector.size(); ++i) {
+        b_select_ok = do_select_language(i);
+        if (b_select_ok == TRUE) {
+            break;
         }
-        assert(next_pos >= 0 && next_pos < language_vector.size());
+    }
 
-        sclboolean b_select_ok = FALSE;
-        for (int i = next_pos; i < language_vector.size(); ++i) {
-            b_select_ok = do_select_language(language_vector.at(i));
+    if (b_select_ok == FALSE) {
+        for (int i = 0; i < next_pos; ++i) {
+            b_select_ok = do_select_language(i);
             if (b_select_ok == TRUE) {
                 break;
             }
         }
-
-        if (b_select_ok == FALSE) {
-            for (int i = 0; i < next_pos; ++i) {
-                b_select_ok = do_select_language(language_vector.at(i));
-                if (b_select_ok == TRUE) {
-                    break;
-                }
-            }
-        }
-        ret = b_select_ok;
     }
+    ret = b_select_ok;
 
     return ret;
 }
 
-sclboolean ISELanguageManager::select_previous_language()
+sclboolean
+ISELanguageManager::select_previous_language()
 {
     sclboolean ret = FALSE;
 
-    if (!(temporary_language.empty())) {
-        temporary_language.clear();
-        return select_current_language();
+    // do some work before change to previous language
+    // eg: commit predit string...
+    ret = do_unselect_language(m_current_language);
+    if (ret == FALSE) {
+        return FALSE;
+    }
+
+    // get previous position
+    int pre_pos = -1;
+    assert(m_current_language >= 0 && m_current_language < language_vector.size());
+    if (m_current_language == 0) {
+        pre_pos = language_vector.size() -1;
     } else {
-        LANGUAGE_INFO *info = get_language_info(current_language.c_str());
-        if (info) {
-            if (info->callback) {
-                info->callback->on_language_unselected(current_language.c_str(), info->selected_input_mode.c_str());
-            }
-        }
+        pre_pos = m_current_language -1;
+    }
+    assert(pre_pos >= 0 && pre_pos < language_vector.size());
 
-        int pre_pos = -1;
-        int pos = _find_language_info(current_language, language_vector);
-        if (pos < 0) {
-            pre_pos = 0;
+    // select previous language
+    // the previous one may be not enabled, so the loop below is to search forwards
+    // continually until find an enabled one
+    // example: if current index is 5, the search order is:
+    // 5, 4, 3, 2, 1, 0, max, max-1, ...4
+    sclboolean b_select_ok = FALSE;
+    for (int i = pre_pos; i >= 0; --i) {
+        b_select_ok = do_select_language(i);
+        if (b_select_ok == TRUE) {
+            break;
         }
-        else if (pos == 0) {
-            pre_pos = language_vector.size() -1;
-        } else {
-            pre_pos = pos -1;
-        }
-
-        assert(pre_pos >= 0 && pre_pos < language_vector.size());
-
-        sclboolean b_select_ok = FALSE;
-        for (int i = pre_pos; i >= 0; --i) {
-            b_select_ok = do_select_language(language_vector.at(i));
+    }
+    if (b_select_ok == FALSE) {
+        for (int i = language_vector.size() -1; i > pre_pos; --i) {
+            b_select_ok = do_select_language(i);
             if (b_select_ok == TRUE) {
                 break;
             }
         }
-        if (b_select_ok == FALSE) {
-            for (int i = language_vector.size() -1; i > pre_pos; --i) {
-                b_select_ok = do_select_language(language_vector.at(i));
-                if (b_select_ok == TRUE) {
-                    break;
-                }
-            }
-        }
-        ret = b_select_ok;
     }
+    ret = b_select_ok;
 
     return ret;
 }
@@ -337,7 +326,8 @@ sclboolean ISELanguageManager::set_language_enabled_temporarily(const sclchar *n
     return ret;
 }
 
-sclboolean ISELanguageManager::enable_languages(const vector<string> &vec_language_id)
+sclboolean
+ISELanguageManager::enable_languages(const vector<string> &vec_language_id)
 {
     sclboolean ret = FALSE;
 
@@ -380,7 +370,10 @@ sclboolean ISELanguageManager::set_enabled_languages(const vector<string> &vec_l
 
 const sclchar* ISELanguageManager::get_current_language()
 {
-    return current_language.c_str();
+    if (m_current_language >= 0 && m_current_language < language_vector.size()) {
+        return language_vector.at(m_current_language).name.c_str();
+    }
+    return NULL;
 }
 
 const sclchar* ISELanguageManager::get_resource_file_path()
@@ -407,20 +400,16 @@ scluint ISELanguageManager::get_enabled_languages_num()
     return ret;
 }
 
-LANGUAGE_INFO* ISELanguageManager::get_language_info(const sclchar *language)
+LANGUAGE_INFO* ISELanguageManager::get_language_info(const sclchar *language_name)
 {
-    LANGUAGE_INFO *ret = NULL;
+    vector<LANGUAGE_INFO>::iterator it;
 
-    for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-        iter != language_vector.end() && !ret;advance(iter, 1)) {
-            if (iter->name.length() > 0) {
-                if (iter->name.compare(current_language) == 0) {
-                    ret = &(*iter);
-                }
-            }
+    it = std::find_if(language_vector.begin(), language_vector.end(), _language_info_finder(language_name));
+
+    if (it != language_vector.end()) {
+        return &(*it);
     }
-
-    return ret;
+    return NULL;
 }
 LANGUAGE_INFO* ISELanguageManager::get_language_info(int index)
 {

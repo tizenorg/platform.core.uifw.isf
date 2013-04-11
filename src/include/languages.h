@@ -115,13 +115,12 @@ private:
     static sclboolean enable_languages(const std::vector<std::string> &languages);
     /* enable default language, regards the 1st language in the language_vector is the default language*/
     static sclboolean enable_default_language();
-    static sclboolean do_select_language(const std::string &language_name, sclboolean temporarily = FALSE);
-    static sclboolean do_select_language(LANGUAGE_INFO &language_info);
+    static sclboolean do_select_language(int language_info_idx);
+    static sclboolean do_unselect_language(int language_info_idx);
 protected:
     static std::vector<LANGUAGE_INFO> language_vector;
 
-    static std::string current_language;
-    static std::string temporary_language;
+    static int m_current_language;
     static std::string default_resource_file;
 };
 
