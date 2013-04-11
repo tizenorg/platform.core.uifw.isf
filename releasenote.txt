@@ -1,3 +1,25 @@
+ISF 2.4.6411 :
+ 1. [panel] Added else statement to ensure the geometry excludes candidate window when hidden
+ 2. [panel] Added return value checking routine for rotation_geometry_get
+ 3. [immodule] Added shift_mode_en/disable
+ 4. [iimmodule] Added extra will_show timer deletion code
+ 5. [demo] add a variety of layout and return key type in return key disable test case
+ 6. [panel] Modified to register the control window's xid to root window
+ 7. [panel] Added NULL check, window param check and unified parameter names
+ 8. [panel] use enum for setting SIP status
+ 9. [immodule] set layout into imengine even though ecore_imf_context_input_panel_layout_set() is called after ecore_imf_context_focus_in()
+10. [setting] set default ISE and input language based on CSC information
+11. [immodule] don't save hide request context in the IME hide state
+
+
+ISF 2.4.6409 :
+ 1. fix:add <application-service> item in ug-isfsetting-efl.xml
+
+
+ISF 2.4.6408 :
+ 1. fix symbolic link for isfsetting ug
+
+
 ISF 2.4.6406 :
  1. [immodule] Added extra will_show timer deletion code
 
