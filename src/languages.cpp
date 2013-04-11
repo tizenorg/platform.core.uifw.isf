@@ -16,24 +16,29 @@
  */
 
 #include <scl.h>
+#include <stdio.h>
+#include <algorithm>
+#include <assert.h>
 #include "utils.h"
 #include "config.h"
 #include "languages.h"
 using namespace scl;
+using std::string;
+using std::vector;
 
 extern CONFIG_VALUES g_config_values;
 
-std::vector<LANGUAGE_INFO> ISELanguageManager::language_vector;
-std::string ISELanguageManager::current_language;
-std::string ISELanguageManager::temporary_language;
-std::string ISELanguageManager::default_resource_file;
+vector<LANGUAGE_INFO> ISELanguageManager::language_vector;
+string ISELanguageManager::current_language;
+string ISELanguageManager::temporary_language;
+string ISELanguageManager::default_resource_file;
 
 sclboolean
 ISELanguageManager::set_all_languages_enabled(sclboolean enabled)
 {
     sclboolean ret = TRUE;
 
-    std::vector<LANGUAGE_INFO>::iterator iter;
+    vector<LANGUAGE_INFO>::iterator iter;
     for (iter = language_vector.begin(); iter != language_vector.end(); ++iter) {
             iter->enabled = enabled;
             iter->enabled_temporarily = FALSE;
@@ -49,8 +54,8 @@ sclboolean ISELanguageManager::add_language(LANGUAGE_INFO language)
 
     if (language.name.length() > 0) {
         sclboolean found = FALSE;
-        for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-            iter != language_vector.end() && !ret;std::advance(iter, 1)) {
+        for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
+            iter != language_vector.end() && !ret;advance(iter, 1)) {
                 if (iter->name.length() > 0) {
                     if (iter->name.compare(language.name) == 0) {
                         found = TRUE;
@@ -88,11 +93,77 @@ sclboolean ISELanguageManager::add_language(LANGUAGE_INFO language)
     return ret;
 }
 
+class _language_info_finder {
+public:
+    _language_info_finder(const string &language_name): m_name(language_name) {}
+    bool operator() (const LANGUAGE_INFO &info) {
+        return info.name == m_name;
+    }
+private:
+    string m_name;
+};
+
+int
+ _find_language_info(const string &language_name, const vector<LANGUAGE_INFO>& vec_language_info) {
+    vector<LANGUAGE_INFO>::const_iterator it;
+
+    it = std::find_if(vec_language_info.begin(), vec_language_info.end(), _language_info_finder(language_name));
+    if (it != vec_language_info.end()) {
+        return it - vec_language_info.begin();
+    }
+    return -1;
+}
+
+sclboolean
+ISELanguageManager::do_select_language(const string &language_name, sclboolean temporarily/* = FALSE*/) {
+
+    int pos = _find_language_info(language_name, language_vector);
+
+    // the assigned language could not be found in the language info vector
+    if (pos < 0 || pos >= language_vector.size()) {
+        return FALSE;
+    }
+
+    LANGUAGE_INFO &info = language_vector.at(pos);
+    info.enabled_temporarily = temporarily;
+    return do_select_language(language_vector.at(pos));
+}
+
+sclboolean
+ISELanguageManager::do_select_language(LANGUAGE_INFO &language_info) {
+    sclboolean ret = FALSE;
+
+    // if not enabled and not temporary, return false
+    if (!language_info.enabled && !language_info.enabled_temporarily) {
+        return FALSE;
+    }
+    ILanguageCallback *callback = language_info.callback;
+    if (callback) {
+        ret = callback->on_language_selected(language_info.name.c_str(), language_info.selected_input_mode.c_str());
+    }
+    if (ret == FALSE) {
+        return ret;
+    }
+
+    if (language_info.enabled_temporarily) {
+        temporary_language = language_info.name;
+    } else {
+        current_language = language_info.name;
+        /* Save the selected language */
+        g_config_values.selected_language = current_language;
+        write_ise_config_values();
+    }
+
+    return ret;
+}
+
 sclboolean ISELanguageManager::select_language(const sclchar *language, sclboolean temporarily)
 {
     sclboolean ret = FALSE;
 
-    std::string unselected_language = current_language;
+    if (language == NULL) return FALSE;
+
+    string unselected_language = current_language;
     if (!(temporary_language.empty())) {
         unselected_language = temporary_language;
     }
@@ -104,38 +175,11 @@ sclboolean ISELanguageManager::select_language(const sclchar *language, sclboole
     }
     temporary_language.clear();
 
-    if (language) {
-        for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-            iter != language_vector.end() && !ret;std::advance(iter, 1)) {
-                if (iter->name.length() > 0) {
-                    if (iter->name.compare(language) == 0) {
-                        /* If this language is not enabled and also not a temporary selection, select next language */
-                        if (!(iter->enabled) && !(iter->enabled_temporarily) && !temporarily) {
-                            ret = select_next_language();
-                        } else {
-                            ILanguageCallback *callback = iter->callback;
-                            if (callback) {
-                                ret = callback->on_language_selected(iter->name.c_str(), iter->selected_input_mode.c_str());
-                            }
-                            if (ret) {
-                                if (temporarily || iter->enabled_temporarily) {
-                                    temporary_language = language;
-                                } else {
-                                    current_language = language;
-                                }
-                            }
-                        }
-                    }
-                }
-        }
-    }
+    ret = do_select_language(language, temporarily);
 
-    if (ret) {
-        /* Save the selected language */
-        g_config_values.selected_language = current_language;
-        write_ise_config_values();
+    if (ret == FALSE) {
+        ret = select_next_language();
     }
-
     return ret;
 }
 
@@ -159,6 +203,10 @@ sclboolean ISELanguageManager::select_next_language()
     sclboolean ret = FALSE;
 
     if (!(temporary_language.empty())) {
+        int pos = _find_language_info(temporary_language, language_vector);
+        if (pos >= 0) {
+            language_vector.at(pos).enabled_temporarily = FALSE;
+        }
         temporary_language.clear();
         return select_current_language();
     } else {
@@ -169,62 +217,34 @@ sclboolean ISELanguageManager::select_next_language()
             }
         }
 
-        /* Look for the next language, after we find the current language */
-        sclboolean found_current = FALSE;
-        for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-            iter != language_vector.end() && !ret;std::advance(iter, 1)) {
-                if (found_current) {
-                    if ((iter->enabled || iter->enabled_temporarily) && iter->name.length() > 0) {
-                        ILanguageCallback *callback = iter->callback;
-                        if (iter->enabled) {
-                            current_language = iter->name;
-                        } else {
-                            temporary_language = iter->name;
-                        }
-                        if (callback) {
-                            ret = callback->on_language_selected(iter->name.c_str(), iter->selected_input_mode.c_str());
-                        }
-                    }
-                } else {
-                    if (iter->name.length() > 0) {
-                        if (iter->name.compare(current_language) == 0) {
-                            found_current = TRUE;
-                        }
-                    }
-                }
+        int next_pos = -1;
+        int pos = _find_language_info(current_language, language_vector);
+        if (pos < 0) {
+            next_pos = 0;
+        } else if (pos >= language_vector.size() -1){
+            next_pos = 0;
+        } else {
+            next_pos = pos + 1;
         }
+        assert(next_pos >= 0 && next_pos < language_vector.size());
 
-        /* If we could not find a appropriate next language, restart from the beginning one more time.. */
-        if (!ret) {
-            for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-                iter != language_vector.end() && !ret;std::advance(iter, 1)) {
-                    if ((iter->enabled || iter->enabled_temporarily) && iter->name.length() > 0) {
-                        ILanguageCallback *callback = iter->callback;
-                        if (iter->enabled) {
-                            current_language = iter->name;
-                        } else {
-                            temporary_language = iter->name;
-                        }
-                        if (callback) {
-                            ret = callback->on_language_selected(iter->name.c_str(), iter->selected_input_mode.c_str());
-                        }
-                    }
+        sclboolean b_select_ok = FALSE;
+        for (int i = next_pos; i < language_vector.size(); ++i) {
+            b_select_ok = do_select_language(language_vector.at(i));
+            if (b_select_ok == TRUE) {
+                break;
             }
         }
 
-        /* If no language can be selected, just select the previous one */
-        if (!ret) {
-            if (info) {
-                if (info->callback) {
-                    info->callback->on_language_selected(current_language.c_str(), info->selected_input_mode.c_str());
-                    current_language = info->name;
+        if (b_select_ok == FALSE) {
+            for (int i = 0; i < next_pos; ++i) {
+                b_select_ok = do_select_language(language_vector.at(i));
+                if (b_select_ok == TRUE) {
+                    break;
                 }
             }
         }
-
-        /* Save the selected language */
-        g_config_values.selected_language = current_language;
-        write_ise_config_values();
+        ret = b_select_ok;
     }
 
     return ret;
@@ -245,62 +265,35 @@ sclboolean ISELanguageManager::select_previous_language()
             }
         }
 
-        /* Look for the next language, after we find the current language */
-        sclboolean found_current = FALSE;
-        for (std::vector<LANGUAGE_INFO>::reverse_iterator riter = language_vector.rbegin();
-            riter != language_vector.rend() && !ret;std::advance(riter, 1)) {
-                if (found_current) {
-                    if ((riter->enabled || riter->enabled_temporarily) && riter->name.length() > 0) {
-                        ILanguageCallback *callback = riter->callback;
-                        if (riter->enabled) {
-                            current_language = riter->name;
-                        } else {
-                            temporary_language = riter->name;
-                        }
-                        if (callback) {
-                            ret = callback->on_language_selected(riter->name.c_str(), riter->selected_input_mode.c_str());
-                        }
-                    }
-                } else {
-                    if (riter->name.length() > 0) {
-                        if (riter->name.compare(current_language) == 0) {
-                            found_current = TRUE;
-                        }
-                    }
-                }
+        int pre_pos = -1;
+        int pos = _find_language_info(current_language, language_vector);
+        if (pos < 0) {
+            pre_pos = 0;
+        }
+        else if (pos == 0) {
+            pre_pos = language_vector.size() -1;
+        } else {
+            pre_pos = pos -1;
         }
 
-        /* If we could not find a appropriate next language, restart from the beginning one more time.. */
-        if (!ret) {
-            for (std::vector<LANGUAGE_INFO>::reverse_iterator riter = language_vector.rbegin();
-                riter != language_vector.rend() && !ret;std::advance(riter, 1)) {
-                    if ((riter->enabled || riter->enabled_temporarily) && riter->name.length() > 0) {
-                        ILanguageCallback *callback = riter->callback;
-                        if (riter->enabled) {
-                            current_language = riter->name;
-                        } else {
-                            temporary_language = riter->name;
-                        }
-                        if (callback) {
-                            ret = callback->on_language_selected(riter->name.c_str(), riter->selected_input_mode.c_str());
-                        }
-                    }
+        assert(pre_pos >= 0 && pre_pos < language_vector.size());
+
+        sclboolean b_select_ok = FALSE;
+        for (int i = pre_pos; i >= 0; --i) {
+            b_select_ok = do_select_language(language_vector.at(i));
+            if (b_select_ok == TRUE) {
+                break;
             }
         }
-
-        /* If no language can be selected, just select the previous one */
-        if (!ret) {
-            if (info) {
-                if (info->callback) {
-                    info->callback->on_language_selected(current_language.c_str(), info->selected_input_mode.c_str());
-                    current_language = info->name;
+        if (b_select_ok == FALSE) {
+            for (int i = language_vector.size() -1; i > pre_pos; --i) {
+                b_select_ok = do_select_language(language_vector.at(i));
+                if (b_select_ok == TRUE) {
+                    break;
                 }
             }
         }
-
-        /* Save the selected language */
-        g_config_values.selected_language = current_language;
-        write_ise_config_values();
+        ret = b_select_ok;
     }
 
     return ret;
@@ -311,8 +304,8 @@ sclboolean ISELanguageManager::set_language_enabled(const sclchar *name, sclbool
     sclboolean ret = FALSE;
 
     if (name) {
-        for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-            iter != language_vector.end() && !ret;std::advance(iter, 1)) {
+        for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
+            iter != language_vector.end() && !ret;advance(iter, 1)) {
                 if (iter->name.length() > 0) {
                     if (iter->name.compare(name) == 0) {
                         iter->enabled = enabled;
@@ -330,8 +323,8 @@ sclboolean ISELanguageManager::set_language_enabled_temporarily(const sclchar *n
     sclboolean ret = FALSE;
 
     if (name) {
-        for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-            iter != language_vector.end() && !ret;std::advance(iter, 1)) {
+        for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
+            iter != language_vector.end() && !ret;advance(iter, 1)) {
                 if (iter->name.length() > 0) {
                     if (iter->name.compare(name) == 0) {
                         iter->enabled_temporarily = enabled_temporarily;
@@ -344,7 +337,7 @@ sclboolean ISELanguageManager::set_language_enabled_temporarily(const sclchar *n
     return ret;
 }
 
-sclboolean ISELanguageManager::enable_languages(const std::vector<std::string> &vec_language_id)
+sclboolean ISELanguageManager::enable_languages(const vector<string> &vec_language_id)
 {
     sclboolean ret = FALSE;
 
@@ -353,7 +346,7 @@ sclboolean ISELanguageManager::enable_languages(const std::vector<std::string> &
 
         if (ret == FALSE) return ret;
 
-        std::vector<std::string>::const_iterator citer;
+        vector<string>::const_iterator citer;
         for (citer = vec_language_id.begin(); citer != vec_language_id.end(); ++citer) {
             ret = set_language_enabled(citer->c_str(), TRUE);
             if (ret == FALSE) return FALSE;
@@ -375,7 +368,7 @@ sclboolean ISELanguageManager::enable_default_language() {
     return FALSE;
 }
 
-sclboolean ISELanguageManager::set_enabled_languages(const std::vector<std::string> &vec_language_id) {
+sclboolean ISELanguageManager::set_enabled_languages(const vector<string> &vec_language_id) {
     sclboolean ret = FALSE;
 
     if (vec_language_id.size() == 0 || FALSE == enable_languages(vec_language_id)) {
@@ -404,8 +397,8 @@ scluint ISELanguageManager::get_enabled_languages_num()
 {
     scluint ret = 0;
 
-    for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-        iter != language_vector.end();std::advance(iter, 1)) {
+    for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
+        iter != language_vector.end();advance(iter, 1)) {
             if (iter->enabled || iter->enabled_temporarily) {
                 ret++;
             }
@@ -418,8 +411,8 @@ LANGUAGE_INFO* ISELanguageManager::get_language_info(const sclchar *language)
 {
     LANGUAGE_INFO *ret = NULL;
 
-    for (std::vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
-        iter != language_vector.end() && !ret;std::advance(iter, 1)) {
+    for (vector<LANGUAGE_INFO>::iterator iter = language_vector.begin();
+        iter != language_vector.end() && !ret;advance(iter, 1)) {
             if (iter->name.length() > 0) {
                 if (iter->name.compare(current_language) == 0) {
                     ret = &(*iter);
