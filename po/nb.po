@@ -79,9 +79,6 @@ msgstr "1000 ms"
 msgid "IDS_IME_OPT_100_MS_ABB"
 msgstr "100 ms"
 
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9-alternativer"
-
 msgid "IDS_IME_OPT_1_PIXEL_ABB"
 msgstr "1 piksel"
 

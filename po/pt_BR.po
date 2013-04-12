@@ -199,9 +199,6 @@ msgstr "Lista substituição autom."
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Inserir automaticamente um ponto final tocando duas vezes na barra de espaços"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Ativar recomendações XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Conclusão de palavras"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Sobre o T9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Tom"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Palavras não reconhecidas. Tente novamente, falando lenta e claramente"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "Ajuda T9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "Opções T9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Novas palavras"
 
@@ -555,36 +543,6 @@ msgstr "Escrever usando o painel de desenho"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Escrever usando a tela inteira"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 em Árabe (Egito)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 em Cangjie Chinês"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 em PinYin Chinês"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 em Inglês"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 em Francês"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 em Alemão"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 em Italiano"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 em Português"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 em Russo"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 em Espanhol"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

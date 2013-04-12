@@ -199,9 +199,6 @@ msgstr "ავტომატური გამოწერის სია"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "ინტერვალის ზოლზე ორჯერ დაკაკუნებით ავტომატურად დასვამთ წერტილს"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "XT9 შემოთავაზების ჩართვა"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "სიტყვის შევსება"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "XT9–ის შესახებ"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "მელოდია"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "სიტყვების ამოცნობა ვერ მოხდა. ისევ ცადეთ, წარმოთქვით ნელა და მკაფიოდ"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 დახმარება"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 ოფციები"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "ახალი სიტყვები"
 
@@ -555,36 +543,6 @@ msgstr "დაწერეთ სახატავი დაფის გამ
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "დაწერეთ მთელი ეკრანზე გაშლის გამოყენებით"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 არაბული (ეგვიპტე)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 ჩინური Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 ჩინური PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 ინგლისური"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 ფრანგული"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 გერმანული"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 იტალიური"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 პორტუგალიური"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 რუსული"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 ესპანური"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

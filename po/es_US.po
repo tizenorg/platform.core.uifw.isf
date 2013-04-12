@@ -199,9 +199,6 @@ msgstr "Lista de sustitución automática"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Introducir manualmente una detención completa punteando la barra espaciadora dos veces"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Habilitar recomendaciones XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Completar palabras"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Acerca de XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Tono"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Palabras no reconocidas. Inténtelo de nuevo hablando de forma lenta y clara"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "Ayuda de XT9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "Opciones de XT9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Palabras nuevas"
 
@@ -555,36 +543,6 @@ msgstr "Escribir usando un panel de escritura"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Escribir usando la pantalla completa"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 Árabe (Egipto)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Cangjie chino"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 PinYin chino"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 inglés"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 francés"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 alemán"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 italiano"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 portugués"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 ruso"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 español"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

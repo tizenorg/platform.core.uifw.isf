@@ -199,9 +199,6 @@ msgstr "Liste over aut. udsk."
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Indsæt automatisk et punktum ved at tappe to gange på mellemrumstasten"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Aktivér XT9-anbefalinger"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Fuldførelse af ord"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Om XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Tone"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Ordene kunne ikke genkendes. Prøv igen, og tal langsomt og tydeligt"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9-hjælp"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9-indstillinger"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Nye ord"
 
@@ -555,36 +543,6 @@ msgstr "Skriv ved hjælp af tegnepanel"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Skriv ved hjælp af fuld skærm"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 Arabisk (Ægypten)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Kinesisk Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 Kinesisk PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 Engelsk"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 Fransk"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 Tysk"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 Italiensk"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 Portugisisk"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 Russisk"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 Spansk"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

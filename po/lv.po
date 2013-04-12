@@ -199,9 +199,6 @@ msgstr "Aut. aizstāšanas saraksts"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Pieskaroties divas reizes atstarpes taustiņam, automātiski ievietot punktu"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Aktivizēt XT9 ieteikumus"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Vārdu pabeigšana"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Par XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Signāls"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Vārdi nav atpazīti. Mēģiniet vēlreiz, runājot lēni un skaidri"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 palīdzība"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 iespējas"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Jauni vārdi"
 
@@ -555,36 +543,6 @@ msgstr "Rakstīt, izmantojot zīmēšanas paneli"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Rakstīt pilnekrāna režīmā"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 arābu (Ēģipte)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 ķīniešu Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 ķīniešu PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 angļu"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 franču"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 vācu"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 itāļu"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 portugāļu"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 krievu"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 spāņu"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

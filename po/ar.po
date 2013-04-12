@@ -199,9 +199,6 @@ msgstr "قائمة الاستبدال التلقائي"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "إدخال نقطة توقف تلقائيا عبر لمس شريط المسافة لمرتين"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "تفعيل توصيات XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "استكمال الكلمات"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "حول XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "النغمة"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "لم يتم التعرف على الكلمات. حاول ثانية، تحدث ببطء وبوضوح"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "تعليمات XT9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "خيارات XT9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "كلمات جديدة"
 
@@ -555,36 +543,6 @@ msgstr "الكتابة باستخدام لوحة الرسم"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "الكتابة باستخدام ملء الشاشة"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 العربية (مصر)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 الصينية Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 الصينية PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 الإنجليزية"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 الفرنسية"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 الألمانية"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 الإيطالية"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 البرتغالية"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 الروسية"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 الإسبانية"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

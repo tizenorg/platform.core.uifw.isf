@@ -199,9 +199,6 @@ msgstr "自動置換リスト"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "スペースバーを2回タップして、句点を自動入力"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "XT9推奨を有効にする"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "単語完成"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "XT9​について"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "アラーム音を設定"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "単語​が​認識​され​ません​でした。もう一度、​ゆっくり、​はっきり​話して​​ください"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9　​ヘルプ"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9　​オプション"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "新しい単語"
 
@@ -555,36 +543,6 @@ msgstr "スケッチパネルで手書き入力"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "全画面表示で手書き入力"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9アラビア語（エジプト）"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9中国語倉頡"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9中国語ピンイン"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9英語"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9フランス語"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9ドイツ語"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9イタリア語"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9ポルトガル語"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9ロシア語"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9スペイン語"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

@@ -199,9 +199,6 @@ msgstr "Lista auto. zamjena"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Auto. umetanje točke dvostrukim dodirom tipke za razmak"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "XT9 preporuke"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Dovršavanje riječi"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "O XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Ton"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Riječi nisu prepoznate. Pokušajte ponovno, izgovarajte polagano i jasno"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 upute"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 opcije"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Nove riječi"
 
@@ -555,36 +543,6 @@ msgstr "Pišite pomoću ploče za crtanje"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Pišite koristeći cijeli zaslon"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 arapski (Egipat)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 kineski Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 kineski PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 engleski"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 francuski"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 njemački"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 talijanski"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 portugalski"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 ruski"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 španjolski"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"
