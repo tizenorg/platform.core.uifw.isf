@@ -704,6 +704,10 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
 
     if (!ctx) return EINA_FALSE;
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (!context_scim || !context_scim->impl)
+        return EINA_FALSE;
+
     if (context_scim->impl->next_shift_status == SHIFT_MODE_LOCK) return EINA_TRUE;
 
     Ecore_IMF_Input_Panel_Layout layout = ecore_imf_context_input_panel_layout_get (ctx);
@@ -711,9 +715,6 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
         return EINA_FALSE;
 
     // Check autocapital type
-    if (!context_scim || !context_scim->impl)
-        return EINA_FALSE;
-
     if (ecore_imf_context_input_panel_caps_lock_mode_get (ctx)) {
         uppercase = EINA_TRUE;
     } else {
