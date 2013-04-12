@@ -35,6 +35,8 @@
 
 using namespace scim;
 
+static ISELanguageManager _language_manager;
+
 static Evas_Object* create_ise_setup_eo (Evas_Object *parent, Evas_Object *naviframe);
 static void load_config (const ConfigPointer &config);
 static void save_config (const ConfigPointer &config);
@@ -112,9 +114,9 @@ static void load_config (const ConfigPointer &config)
 
         read_ise_config_values();
 
-        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+        _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
-        ISELanguageManager::select_language(g_config_values.selected_language.c_str());
+        _language_manager.select_language(g_config_values.selected_language.c_str());
     }
 }
 

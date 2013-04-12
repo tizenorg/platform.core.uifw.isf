@@ -49,6 +49,7 @@ KEYBOARD_STATE g_keyboard_state = {
     TRUE,
 };
 
+static ISELanguageManager _language_manager;
 #define MVK_Shift_L 0xffe1
 #define MVK_Caps_Lock 0xffe5
 #define MVK_Shift_Off 0xffe1
@@ -120,13 +121,13 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
     if (gSCLUI) {
         if (key_value) {
             if (strcmp(key_value, "CUR_LANG") == 0) {
-                ret = ISELanguageManager::select_current_language();
+                ret = _language_manager.select_current_language();
             }
             if (strcmp(key_value, "NEXT_LANG") == 0) {
-                ret = ISELanguageManager::select_next_language();
+                ret = _language_manager.select_next_language();
             }
         }
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+        LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
         if (info) {
             if (info->accepts_caps_mode) {
                 ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
@@ -153,7 +154,7 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
         }
     }
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+        LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
         if (info) {
             if (info->accepts_caps_mode) {
                 if (etc_info == SCL_SHIFT_STATE_OFF) {
@@ -280,7 +281,7 @@ void ise_show(int ic)
 
         read_ise_config_values();
 
-        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+        _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
         /* Reset input mode if the input context value has changed */
         if (ic != g_keyboard_state.ic) {
@@ -288,7 +289,7 @@ void ise_show(int ic)
         }
         /* Reset input mode if the current language is not the selected language */
         if (g_config_values.selected_language.compare(
-                    ISELanguageManager::get_current_language()) != 0) {
+                    _language_manager.get_current_language()) != 0) {
             reset_inputmode = TRUE;
         }
         /* No matter what, just reset the inputmode if it needs to */
@@ -298,14 +299,14 @@ void ise_show(int ic)
 
         /* If the current layout requires latin language and current our language is not latin, enable the primary latin */
         sclboolean force_primary_latin = FALSE;
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(g_config_values.selected_language.c_str());
+        LANGUAGE_INFO *info = _language_manager.get_language_info(g_config_values.selected_language.c_str());
         if (info) {
             if (g_ise_default_values[g_keyboard_state.layout].force_latin && !(info->is_latin_language)) {
                 force_primary_latin = TRUE;
             }
         }
         if (force_primary_latin) {
-            ISELanguageManager::set_language_enabled_temporarily(PRIMARY_LATIN_LANGUAGE, TRUE);
+            _language_manager.set_language_enabled_temporarily(PRIMARY_LATIN_LANGUAGE, TRUE);
         }
 
         if (reset_inputmode) {
@@ -327,10 +328,10 @@ void ise_show(int ic)
                     g_ise_common->set_keyboard_size_hints(size_portrait, size_landscape);
                 } else {
                     if (force_primary_latin) {
-                        ISELanguageManager::select_language(PRIMARY_LATIN_LANGUAGE, TRUE);
+                        _language_manager.select_language(PRIMARY_LATIN_LANGUAGE, TRUE);
                     } else {
-                        if (!(ISELanguageManager::select_language(g_config_values.selected_language.c_str()))) {
-                            ISELanguageManager::select_language(PRIMARY_LATIN_LANGUAGE);
+                        if (!(_language_manager.select_language(g_config_values.selected_language.c_str()))) {
+                            _language_manager.select_language(PRIMARY_LATIN_LANGUAGE);
                         }
                     }
                 }
@@ -393,7 +394,7 @@ ise_create()
         if (g_ise_common->get_main_window()) {
             sclboolean succeeded = FALSE;
 
-            const sclchar *resource_file_path = ISELanguageManager::get_resource_file_path();
+            const sclchar *resource_file_path = _language_manager.get_resource_file_path();
 
             if (resource_file_path) {
                 if (strlen(resource_file_path) > 0) {
@@ -409,8 +410,8 @@ ise_create()
             gSCLUI->set_ui_event_callback(&callback);
 
             /* Accumulated customized ISE callbacks, depending on the input modes */
-            for (scluint loop = 0;loop < ISELanguageManager::get_languages_num();loop++) {
-                LANGUAGE_INFO *language = ISELanguageManager::get_language_info(loop);
+            for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {
+                LANGUAGE_INFO *language = _language_manager.get_language_info(loop);
                 if (language) {
                     for (scluint inner_loop = 0;inner_loop < language->input_modes.size();inner_loop++) {
                         INPUT_MODE_INFO &info = language->input_modes.at(inner_loop);
@@ -421,9 +422,9 @@ ise_create()
             }
 
             read_ise_config_values();
-            ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+            _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
-            ISELanguageManager::select_language(g_config_values.selected_language.c_str());
+            _language_manager.select_language(g_config_values.selected_language.c_str());
         }
 
         SclSize size_portrait = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_PORTRAIT);
@@ -477,7 +478,7 @@ ise_set_caps_mode(unsigned int mode)
     } else {
         g_keyboard_state.caps_mode = FALSE;
     }
-    LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+    LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
     if (info) {
         if (info->accepts_caps_mode) {
             ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);

@@ -33,6 +33,8 @@ using namespace scl;
 #define MVK_Shift_Enable 0x9fe7
 #define MVK_Shift_Disable 0x9fe8
 
+static ISELanguageManager _language_manager;
+
 /*
  * This callback class will receive all response events from SCL
  * So you should perform desired tasks in this class.
@@ -65,7 +67,7 @@ public :
             language.enabled = TRUE;
             language.selected_input_mode = input_mode_QTY.name;
 
-            ISELanguageManager::add_language(language);
+            _language_manager.add_language(language);
         }
     }
     SCLEventReturnType on_event_key_clicked(SclUIEventDesc event_desc);
@@ -91,7 +93,7 @@ CSDKISE::process_key_type_char(const SclUIEventDesc& event_desc)
     // patch for Chinese symbol ^
     // Chinese engine will regards ^ as ……
     // this patch is to avoid this
-    if (0 == strcmp(ISELanguageManager::get_current_language(), "Chinese")) {
+    if (0 == strcmp(_language_manager.get_current_language(), "Chinese")) {
         if (event_desc.key_event == '^') {
             ise_forward_key_event(event_desc.key_event);
             return SCL_EVENT_DONE;
@@ -100,7 +102,7 @@ CSDKISE::process_key_type_char(const SclUIEventDesc& event_desc)
     // patch for Chinese symbol ^ end
     /* If longkey symbol was pressed, let's flush the preedit buffer */
     if (event_desc.key_modifier == KEY_MODIFIER_LONGKEY) {
-        flush_imengine(ISELanguageManager::get_current_language());
+        flush_imengine(_language_manager.get_current_language());
     }
 
 
@@ -116,11 +118,11 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
             ret = process_key_type_char(event_desc);
             break;
         case KEY_TYPE_STRING:
-            flush_imengine(ISELanguageManager::get_current_language());
+            flush_imengine(_language_manager.get_current_language());
             break;
         case KEY_TYPE_MODECHANGE:
             {
-                flush_imengine(ISELanguageManager::get_current_language());
+                flush_imengine(_language_manager.get_current_language());
             }
             break;
         case KEY_TYPE_CONTROL:
@@ -131,21 +133,21 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
             event_desc.key_event != MVK_Shift_Lock &&
             event_desc.key_event != MVK_space &&
             event_desc.key_event != MVK_Return) {
-            flush_imengine(ISELanguageManager::get_current_language());
+            flush_imengine(_language_manager.get_current_language());
         }
         if (event_desc.key_event == MVK_space) {
-            if (ISELanguageManager::get_enabled_languages_num() > 1) {
+            if (_language_manager.get_enabled_languages_num() > 1) {
                 if (event_desc.key_modifier == KEY_MODIFIER_DIRECTION_LEFT) {
                     /* If flick event upon space key was detected, perform a language change and don't proceed anymore */
-                    ISELanguageManager::select_previous_language();
+                    _language_manager.select_previous_language();
                     ret = SCL_EVENT_DONE;
                 }
                 if (event_desc.key_modifier == KEY_MODIFIER_DIRECTION_RIGHT) {
                     /* If flick event upon space key was detected, perform a language change and don't proceed anymore */
-                    ISELanguageManager::select_next_language();
+                    _language_manager.select_next_language();
                     ret = SCL_EVENT_DONE;
                 }
-                LANGUAGE_INFO *info = ISELanguageManager::get_language_info(ISELanguageManager::get_current_language());
+                LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
                 if (info) {
                     if (info->accepts_caps_mode) {
                         ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
@@ -207,7 +209,7 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
 
                     /* Check if we need to turn on the shift key */
                     if (g_keyboard_state.caps_mode) {
-                        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(language);
+                        LANGUAGE_INFO *info = _language_manager.get_language_info(language);
                         if (info) {
                             if (info->accepts_caps_mode) {
                                 gSCLUI->set_shift_state(SCL_SHIFT_STATE_ON);

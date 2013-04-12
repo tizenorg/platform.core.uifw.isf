@@ -90,39 +90,34 @@ typedef struct _LANGUAGE_INFO{
 
 class ISELanguageManager {
 public:
-    static sclboolean add_language(LANGUAGE_INFO language);
+    sclboolean add_language(LANGUAGE_INFO language);
 
-    static sclboolean select_language(const sclchar *name, sclboolean temporarily = FALSE);
-    static sclboolean select_current_language();
-    static sclboolean select_next_language();
-    static sclboolean select_previous_language();
+    sclboolean select_language(const sclchar *name, sclboolean temporarily = FALSE);
+    sclboolean select_current_language();
+    sclboolean select_next_language();
+    sclboolean select_previous_language();
 
-    static sclboolean set_language_enabled(const sclchar *name, sclboolean enabled);
-    static sclboolean set_language_enabled_temporarily(const sclchar *name, sclboolean enabled_temporarily);
+    sclboolean set_language_enabled(const sclchar *name, sclboolean enabled);
+    sclboolean set_language_enabled_temporarily(const sclchar *name, sclboolean enabled_temporarily);
     /* if languages num is 0, enable default language, othewise enable languages assigned */
-    static sclboolean set_enabled_languages(const std::vector<std::string> &languages);
-    static sclboolean set_all_languages_enabled(sclboolean enabled);
+    sclboolean set_enabled_languages(const std::vector<std::string> &languages);
+    sclboolean set_all_languages_enabled(sclboolean enabled);
 
-    static const sclchar* get_current_language();
-    static scluint get_languages_num();
-    static scluint get_enabled_languages_num();
-    static LANGUAGE_INFO* get_language_info(const sclchar *name);
-    static LANGUAGE_INFO* get_language_info(int index);
+    const sclchar* get_current_language();
+    scluint get_languages_num();
+    scluint get_enabled_languages_num();
+    LANGUAGE_INFO* get_language_info(const sclchar *name);
+    LANGUAGE_INFO* get_language_info(int index);
 
-    static LANGUAGE_INFO* get_current_language_info();
-    static const sclchar* get_resource_file_path();
+    LANGUAGE_INFO* get_current_language_info();
+    const sclchar* get_resource_file_path();
 private:
     /* enable languages, if languages num is 0, return false */
-    static sclboolean enable_languages(const std::vector<std::string> &languages);
+    sclboolean enable_languages(const std::vector<std::string> &languages);
     /* enable default language, regards the 1st language in the language_vector is the default language*/
-    static sclboolean enable_default_language();
-    static sclboolean do_select_language(int language_info_idx);
-    static sclboolean do_unselect_language(int language_info_idx);
-protected:
-    static std::vector<LANGUAGE_INFO> language_vector;
-
-    static int m_current_language;
-    static std::string default_resource_file;
+    sclboolean enable_default_language();
+    sclboolean do_select_language(int language_info_idx);
+    sclboolean do_unselect_language(int language_info_idx);
 };
 
 #endif

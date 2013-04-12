@@ -32,6 +32,8 @@
 
 using namespace scl;
 
+static ISELanguageManager _language_manager;
+
 #define OPTION_MAX_LANGUAGES 255
 
 enum SETTING_ITEM_ID {
@@ -217,8 +219,8 @@ static void _main_gl_exp(void *data, Evas_Object *obj, void *event_info)
 static char *_input_mode_gl_text_get(void *data, Evas_Object *obj, const char *part)
 {
     if (data) {
-        for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num();loop++) {
-            LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+        for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info) {
                 for (unsigned int inner_loop = 0;inner_loop < info->input_modes.size();inner_loop++) {
                     if (info->input_modes.at(inner_loop).name.compare((const char*)data) == 0) {
@@ -237,8 +239,8 @@ static Evas_Object *_input_mode_gl_content_get(void *data, Evas_Object *obj, con
 
     if (data) {
         if (strcmp(part, "elm.icon") == 0) {
-            for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num();loop++) {
-                LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+            for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+                LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
                 if (info) {
                     for (unsigned int inner_loop = 0;inner_loop < info->input_modes.size();inner_loop++) {
                         if (info->input_modes.at(inner_loop).name.compare((const char*)data) == 0) {
@@ -264,8 +266,8 @@ static void _input_mode_gl_sel(void *data, Evas_Object *obj, void *event_info)
     Elm_Object_Item *item = (Elm_Object_Item*)event_info;
 
     if (data) {
-        for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num();loop++) {
-            LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+        for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info) {
                 for (unsigned int inner_loop = 0;inner_loop < info->input_modes.size();inner_loop++) {
                     if (info->input_modes.at(inner_loop).name.compare((const char*)data) == 0) {
@@ -316,7 +318,7 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
 
     if (item_data) {
         if (strcmp(part, "elm.icon") == 0) {
-            LANGUAGE_INFO *info = ISELanguageManager::get_language_info(item_data->mode);
+            LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
             if (info) {
                 Evas_Object *ck = elm_check_add(obj);
                 evas_object_propagate_events_set(ck, EINA_FALSE);
@@ -368,8 +370,8 @@ static void _language_gl_exp(void *data, Evas_Object *obj, void *event_info)
     Elm_Object_Item *it = (Elm_Object_Item*)event_info;
     Evas_Object *gl =  elm_object_item_widget_get(it);
 
-    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num();loop++) {
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info && it == ad.language_item[loop]) {
             int selected = 0;
             for (unsigned int inner_loop = 0;inner_loop < info->input_modes.size();inner_loop++) {
@@ -453,8 +455,8 @@ static std::string compose_selected_languages_string()
     std::string languages;
     int num_languages = 0;
 
-    for (scluint loop = 0;loop < ISELanguageManager::get_languages_num();loop++) {
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+    for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info) {
             if (info->enabled) {
                 num_languages++;
@@ -491,7 +493,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         ELM_GENLIST_ITEM_NONE, NULL, NULL);
     elm_genlist_item_select_mode_set(separator, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-    if (ISELanguageManager::get_languages_num() > 1) {
+    if (_language_manager.get_languages_num() > 1) {
         std::string languages = compose_selected_languages_string();
 
         strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].main_text, LANGUAGE, ITEM_DATA_STRING_LEN - 1);
@@ -510,9 +512,9 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 static void
 language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    if (ISELanguageManager::get_enabled_languages_num() == 0) {
+    if (_language_manager.get_enabled_languages_num() == 0) {
         read_ise_config_values();
-        ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+        _language_manager.set_enabled_languages(g_config_values.enabled_languages);
     }
     std::string languages = compose_selected_languages_string();
     strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
@@ -522,8 +524,8 @@ language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
     sclboolean selected_language_found = FALSE;
     std::vector<std::string> enabled_languages;
 
-    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num();loop++) {
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info) {
             if (info->enabled) {
                 enabled_languages.push_back(info->name);
@@ -554,9 +556,9 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
         ELM_GENLIST_ITEM_NONE, NULL, NULL);
     elm_genlist_item_select_mode_set(separator, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num(); loop++)
+    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
     {
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info) {
             strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
             strncpy(language_itemdata[loop].sub_text, "", ITEM_DATA_STRING_LEN - 1);
@@ -630,8 +632,8 @@ static void set_option_values()
 static void input_mode_selected(void *data, Evas_Object *obj, void *event_info)
 {
     if (data) {
-        for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < ISELanguageManager::get_languages_num();loop++) {
-            LANGUAGE_INFO *info = ISELanguageManager::get_language_info(loop);
+        for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info) {
                 for (unsigned int inner_loop = 0;inner_loop < info->input_modes.size();inner_loop++) {
                     if (info->input_modes.at(inner_loop).name.compare((const char*)data) == 0) {
@@ -659,11 +661,11 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
 {
     ITEMDATA *item_data = (ITEMDATA*)data;
     if (item_data) {
-        LANGUAGE_INFO *info = ISELanguageManager::get_language_info(item_data->mode);
+        LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
         if (info) {
             info->enabled = elm_check_state_get(obj);
             if (!elm_check_state_get(obj)) {
-                if (ISELanguageManager::get_enabled_languages_num() == 0) {
+                if (_language_manager.get_enabled_languages_num() == 0) {
                     info->enabled = TRUE;
                     elm_check_state_set(obj, EINA_TRUE);
 
@@ -753,7 +755,7 @@ open_option_window(Evas_Object *parent, sclint degree)
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */
-    ISELanguageManager::set_enabled_languages(g_config_values.enabled_languages);
+    _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
     set_option_values();
 

@@ -20,6 +20,7 @@
 #include "ise_lang_table.h"
 using namespace scl;
 
+static ISELanguageManager _language_manager;
 /*
  * This class customizes option windows based on languages
  * So you should perform desired tasks in this class.
@@ -50,7 +51,7 @@ public :
             language.enabled = TRUE;
             language.selected_input_mode = input_mode_QTY.name;
 
-            ISELanguageManager::add_language(language);
+            _language_manager.add_language(language);
 
             printf("Adding Language : %s\n", get_lang_table()[loop].language);
         }
