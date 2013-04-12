@@ -62,7 +62,7 @@ using namespace std;
 #define SETTING_LOCALEDIR                         "/usr/ug/res/locale"
 #define _T(s)                                     dgettext(SETTING_PACKAGE, s)
 
-#define CSC_FILEPATH                              "/opt/system/csc-default/preset/csc-preset-keyboard.ini"
+#define CSC_FILEPATH                              "/opt/system/csc-default/preset/csc-default-preset.ini"
 
 enum {
     AUTO_CAPITALIZATION_ITEM = 0,
@@ -153,17 +153,21 @@ static Evas_Object *_gl_exp_sw_icon_get (void *data, Evas_Object *obj, const cha
 static void         create_sw_keyboard_selection_view (ug_data *ugd);
 static void         create_hw_keyboard_selection_view (ug_data *ugd);
 
-static void remove_cr (char *str)
+static char* trim_string (const char *str)
 {
-    char *cr = NULL;
-    int idx;
+    Eina_Strbuf *buf = eina_strbuf_new ();
+    char *result;
 
-    if (!str) return;
-    cr = strchr (str, '\r');
-    if (cr) {
-        idx = cr - str;
-        str[idx] = '\0';
-    }
+    eina_strbuf_append (buf, str);
+    eina_strbuf_replace_all (buf, "\r", "");
+    eina_strbuf_replace_all (buf, "\"", "");
+    eina_strbuf_replace_all (buf, " ", "");
+
+    result = strdup (eina_strbuf_string_get (buf));
+
+    eina_strbuf_free (buf);
+
+    return result;
 }
 
 static void append_separator (Evas_Object *genlist, separator_type style_type)
@@ -1511,6 +1515,8 @@ extern "C"
     {
         const int BUFF_MAX = 1024;
         char readbuf[BUFF_MAX] = {0,};
+        char *value_str = NULL;
+        char *key = NULL;
 
         if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, true) == -1)
             return -1;
@@ -1538,25 +1544,29 @@ extern "C"
                     break;
 
                 char **items = eina_str_split (readbuf, "=", 2);
-                if (items) {
-                    if (!strcmp (items[0], "uuid")) {
-                        if (items[1]) {
-                            remove_cr (items[1]);
-                            uuid = String (items[1]);
-                        }
-                    }
-                    else if (!strcmp (items[0], "lang")) {
-                        if (items[1]) {
-                            remove_cr (items[1]);
-                            vconf_set_str (VCONFKEY_ISF_INPUT_LANGUAGE, items[1]);
-                        }
-                    }
+                if (!items || !items[0]) continue;
 
-                    if (items[0])
-                        free (items[0]);
+                key = trim_string (items[0]);
+                if (!key) continue;
 
-                    free (items);
+                if (!strcmp (key, "keyboard_uuid")) {
+                    if (items[1]) {
+                        value_str = trim_string (items[1]);
+                        uuid = String (value_str);
+                        free (value_str);
+                    }
                 }
+                else if (!strcmp (key, "keyboard_lang")) {
+                    if (items[1]) {
+                        value_str = trim_string (items[1]);
+                        vconf_set_str (VCONFKEY_ISF_INPUT_LANGUAGE, value_str);
+                        free (value_str);
+                    }
+                }
+
+                free (key);
+                free (items[0]);
+                free (items);
             }
 
             csc_file.close ();
