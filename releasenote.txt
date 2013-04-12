@@ -1,3 +1,8 @@
+ISF 2.4.6412 :
+ 1. [immodule] fix prevent issue
+ 2. [setting] modify CSC filename and keyname
+
+
 ISF 2.4.6411 :
  1. [panel] Added else statement to ensure the geometry excludes candidate window when hidden
  2. [panel] Added return value checking routine for rotation_geometry_get
