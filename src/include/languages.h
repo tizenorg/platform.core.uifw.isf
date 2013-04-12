@@ -109,6 +109,7 @@ public:
     static LANGUAGE_INFO* get_language_info(const sclchar *name);
     static LANGUAGE_INFO* get_language_info(int index);
 
+    static LANGUAGE_INFO* get_current_language_info();
     static const sclchar* get_resource_file_path();
 private:
     /* enable languages, if languages num is 0, return false */

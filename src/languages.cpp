@@ -411,6 +411,7 @@ LANGUAGE_INFO* ISELanguageManager::get_language_info(const sclchar *language_nam
     }
     return NULL;
 }
+
 LANGUAGE_INFO* ISELanguageManager::get_language_info(int index)
 {
     LANGUAGE_INFO *ret = NULL;
@@ -420,4 +421,9 @@ LANGUAGE_INFO* ISELanguageManager::get_language_info(int index)
     }
 
     return ret;
+}
+
+LANGUAGE_INFO* ISELanguageManager::get_current_language_info()
+{
+    return get_language_info(m_current_language);
 }

@@ -441,6 +441,34 @@ ise_destroy()
     }
 }
 
+// when it is the time to auto_cap, the
+// ise_set_caps_mode is called.
+// -------------------------------------------------------
+// For example: [How are you. Fine.], the
+// auto-captital process is as below:
+// Note: "["<--this is the beginning,
+// "|"<--this is the cursor position
+// 1) call ise_set_caps_mode, auto_cap = on
+//    input: "H",
+//    result: [H|
+// 2) call ise_set_caps_mode, auto_cap = off
+//    input: "o"
+//    result: [Ho|
+// 3) input: "w are you. "
+//    result: [How are you. |
+// 4) call ise_set_caps_mode, auto_cap = on
+//    input: "F"
+//    result: [How are you. F
+// 5) input: "ine."
+//    result: [How are you. Fine.|
+// --------------------------------------------------------
+// If we want to change the auto_cap, eg,
+// if we want to input [How Are you.]
+// Note the "Are" is not use auto-capital rule.
+// we should use:
+//    ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
+// when we are want to input "A"
+// following input still has the auto_cap rule.
 void
 ise_set_caps_mode(unsigned int mode)
 {
