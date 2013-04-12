@@ -199,9 +199,6 @@ msgstr "Liosta uath-ionadaíochta"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Ionsáigh lánstad go huathoibríoch trí thapáil faoi dhó ar an spásbharra"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Cumasaigh moltaí XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Críochnú focal"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Eolas faoi XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Ton"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Ní aithnítear an focal. Triail arís, ag labhairt go mall agus go soiléir"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "cabhair XT9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "Roghanna XT9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Focail nua"
 
@@ -555,36 +543,6 @@ msgstr "Scríobh ag úsáid an phainéil líníochta"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Scríobh ag úsáid an lánscáileáin"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 Araibis (an Éigipt)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Cangjie Sínise"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 PinYin Sínise"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 Béarla"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 Fraincis"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 Gearmáinis"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 Iodáilis"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 Portaingéilis"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 Rúisis"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 Spáinnis"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

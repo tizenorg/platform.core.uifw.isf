@@ -199,9 +199,6 @@ msgstr "Listi sjálfvirkra orðask."
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Setja sjálfkrafa inn punkt með því að pikka tvisvar á bilstöngina"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Ræsa XT9-flýtiritun"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Orðakennsl"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Um XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Tónn"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Orðin greindust ekki. Reyndu aftur og talaðu hægt og skýrt"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9-hjálp"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9-valkostir"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Ný orð"
 
@@ -555,36 +543,6 @@ msgstr "Skrifa með teiknispjaldi"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Skrifa á öllum skjánum"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 Arabíska (Egyptaland)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Kínverska Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 Kínverska PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 Enska"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 Franska"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 Þýska"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 Ítalska"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 Portúgalska"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 Rússneska"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 Spænska"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

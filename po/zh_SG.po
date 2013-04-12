@@ -199,9 +199,6 @@ msgstr "自动替换列表"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "点击空格栏两次以自动插入句号"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "启动XT9推荐"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "单词自动补全"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "关于 XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "提示音"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "未识别字词。请重试，缓慢且清晰地说"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9帮助"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9选项"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "新词语"
 
@@ -555,36 +543,6 @@ msgstr "使用画图板书写"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "使用全屏书写"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 阿拉伯语（埃及）"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 中文仓颉输入法"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 中文拼音输入法"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 英语"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 法语"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 德语"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 意大利语"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 葡萄牙语"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 俄语"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 西班牙语"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

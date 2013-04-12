@@ -199,9 +199,6 @@ msgstr "Oto yerine koyma listesi"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Boşluk tuşuna iki kez basarak otomatik olarak bir nokta gir"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "XT9 önerilerini etkinleştir"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Kelime tamamlama"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "XT9 Hakkında"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Ton"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Kelimeler tanınmadı. Yavaş ve anlaşılır bir şekilde konuşarak tekrar deneyin"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 yardımı"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 seçenekleri"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Yeni kelimeler"
 
@@ -555,36 +543,6 @@ msgstr "Çizim panelini kullanarak yaz"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Tam ekran kullanarak yaz"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 Arapça (Mısır)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Çince Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 Çince PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 İngilizce"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 Fransızca"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 Almanca"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 İtalyanca"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 Portekizce"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 Rusça"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 İspanyolca"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

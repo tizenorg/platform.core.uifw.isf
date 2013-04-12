@@ -199,9 +199,6 @@ msgstr "Ordez. automatiko zerrenda"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Puntua automatikoki gehitzeko, ukitu zuriune barra bi aldiz"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Gaitu XT9 gomendioak"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Hitzak osatzea"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "XT9ri buruz"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Doinua"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Errekonozitu gabeko hitzak. Saiatu berriz, poliki eta argi hitz egiten"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 laguntza"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 aukerak"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Hitz berriak"
 
@@ -555,36 +543,6 @@ msgstr "Idatzi marrazteko panela erabiliz"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Idatzi pantaila osoa erabiliz"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 arabiera (Egipto)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Cangjie txinera"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 PinYin txinera"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 ingelesa"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 frantsesa"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 alemana"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 italiera"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 portugesa"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 errusiera"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 espainiera"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

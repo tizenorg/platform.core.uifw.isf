@@ -199,9 +199,6 @@ msgstr "Zoznam aut. nahrádzania"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Automaticky vložiť bodku dvojitým ťuknutím na medzerník"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Povoliť odporúčania XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Dokončovanie slov"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "XT9 – informácie"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Tón"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Slová neboli rozpoznané. Skúste to znova, pričom hovorte pomaly a zrozumiteľne"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 – pomocník"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 – možnosti"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Nové slová"
 
@@ -555,36 +543,6 @@ msgstr "Písať použitím panela kreslenia"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Písať použitím celej obrazovky"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "Arabská XT9 (Egypt)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "Čínska XT9 Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "Čínska XT9 PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "Anglická XT9"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "Francúzska XT9"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "Nemecká XT9"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "Talianska XT9"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "Portugalská XT9"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "Ruská XT9"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "Španielska XT9"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

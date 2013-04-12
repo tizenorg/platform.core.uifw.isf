@@ -199,9 +199,6 @@ msgstr "Lista substitución auto."
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Insire un punto final automaticamente pulsando a barra espazadora dúas veces"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Permite activar as recomendacións de XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Rematar palabra"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Acerca de XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Ton"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Non se recoñecen as palabras. Inténtao de novo, falando amodo e claro"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "Axuda de XT9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "Opcións de XT9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Palabras novas"
 
@@ -555,36 +543,6 @@ msgstr "Escribir empregando o panel de debuxo"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Escribir empregando a pantalla completa"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "Árabe XT9 (Exipto)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "Cangjie chinés XT9"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "PinYin chinés XT9"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "Inglés XT9"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "Francés XT9"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "Alemán XT9"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "Italiano XT9"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "Portugués XT9"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "Ruso XT9"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "Español XT9"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

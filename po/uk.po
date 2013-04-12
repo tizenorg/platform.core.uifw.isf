@@ -199,9 +199,6 @@ msgstr "Список автозаміни"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Автоматичне вставлення крапки після подвійного натискання пробілу"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Увімкнути рекомендації XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Завершення слова"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Про XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Звук"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Слова не розпізнано. Спробуйте ще раз, промовляючи їх повільно та чітко"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "Довідка XT9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "Параметри XT9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Нові слова"
 
@@ -555,36 +543,6 @@ msgstr "Написання в режимі панелі малювання"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Написання в повноекранному режимі"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 арабська (Єгипет)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 китайська Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 китайська PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 англійська"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 французька"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 німецька"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 італійська"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 португальська"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 російська"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 іспанська"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

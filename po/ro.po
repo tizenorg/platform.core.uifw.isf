@@ -199,9 +199,6 @@ msgstr "Listă substituire autom."
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Introduceţi automat semnul punct atingând de două ori bara de spaţiu"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Activare recomandări XT9"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Completare cuvinte"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "Despre XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Ton"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Cuvinte nerecunoscute. Încercaţi din nou, vorbind încet şi clar"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "Ajutor XT9"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "Opţiuni XT9"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "Cuvinte noi"
 
@@ -555,36 +543,6 @@ msgstr "Scriere pe şevalet"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Scriere pe ecran complet"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "Arabă (Egipt) XT9"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "Chineză Kanji XT9"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "Chineză PinYin XT9"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "Engleză XT9"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "Franceză XT9"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "Germană XT9"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "Italiană XT9"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "Portugheză XT9"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "Rusă XT9"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "Spaniolă XT9"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"

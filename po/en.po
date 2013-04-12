@@ -199,9 +199,6 @@ msgstr "Auto substitution list"
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Automatically insert a full stop by tapping the space bar twice"
 
-msgid "IDS_IME_BODY_ENABLE_XT9_RECOMMENDATIONS"
-msgstr "Enable XT9 recommendations"
-
 msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
 msgstr "English (UK)"
 
@@ -264,9 +261,6 @@ msgstr "Word completion"
 
 msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
 msgstr "Bahasa Malaysia"
-
-msgid "IDS_IME_BODY_ABOUT_XT9"
-msgstr "About XT9"
 
 msgid "IDS_IME_BODY_ASSAMESE"
 msgstr "অসমীয়া"
@@ -433,12 +427,6 @@ msgstr "Tone"
 msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
 msgstr "Words not recognised. Try again, speaking slowly and clearly"
 
-msgid "IDS_IME_BODY_XT9_HELP"
-msgstr "XT9 help"
-
-msgid "IDS_IME_BODY_XT9_OPTIONS"
-msgstr "XT9 options"
-
 msgid "IDS_IME_HEADER_NEW_WORDS"
 msgstr "New words"
 
@@ -555,36 +543,6 @@ msgstr "Write using drawing panel"
 
 msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
 msgstr "Write using full screen"
-
-msgid "IDS_IME_OPT_XT9_ARABIC_HEGYPT"
-msgstr "XT9 Arabic (Egypt)"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_CANGJIE"
-msgstr "XT9 Chinese Cangjie"
-
-msgid "IDS_IME_OPT_XT9_CHINESE_PINYIN"
-msgstr "XT9 Chinese PinYin"
-
-msgid "IDS_IME_OPT_XT9_ENGLISH"
-msgstr "XT9 English"
-
-msgid "IDS_IME_OPT_XT9_FRENCH"
-msgstr "XT9 French"
-
-msgid "IDS_IME_OPT_XT9_GERMAN"
-msgstr "XT9 German"
-
-msgid "IDS_IME_OPT_XT9_ITALIAN"
-msgstr "XT9 Italian"
-
-msgid "IDS_IME_OPT_XT9_PORTUGUESE"
-msgstr "XT9 Portuguese"
-
-msgid "IDS_IME_OPT_XT9_RUSSIAN"
-msgstr "XT9 Russian"
-
-msgid "IDS_IME_OPT_XT9_SPANISH"
-msgstr "XT9 Spanish"
 
 msgid "IDS_IME_POP_LANG_ESTONIAN"
 msgstr "Eesti"
