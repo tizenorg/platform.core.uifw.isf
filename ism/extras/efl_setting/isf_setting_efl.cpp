@@ -161,7 +161,7 @@ static char* trim_string (const char *str)
     eina_strbuf_append (buf, str);
     eina_strbuf_replace_all (buf, "\r", "");
     eina_strbuf_replace_all (buf, "\"", "");
-    eina_strbuf_replace_all (buf, " ", "");
+    eina_strbuf_trim (buf);
 
     result = strdup (eina_strbuf_string_get (buf));
 
