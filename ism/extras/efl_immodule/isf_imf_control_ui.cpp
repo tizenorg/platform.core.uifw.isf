@@ -425,14 +425,6 @@ void isf_imf_input_panel_shutdown (void)
 
     if (hide_timer) {
         if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-            Ecore_IMF_Context *using_ic = NULL;
-
-            if (show_req_ic)
-                using_ic = show_req_ic;
-            else if (get_focused_ic ())
-                using_ic = get_focused_ic ()->ctx;
-
-            hide_context_id = _get_context_id (using_ic);
             _send_input_panel_hide_request ();
         }
     }
