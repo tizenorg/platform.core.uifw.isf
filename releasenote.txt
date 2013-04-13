@@ -1,3 +1,8 @@
+ISF 2.4.6413 :
+ 1. [setting] use eina_strbuf_trim instead of eina_strbuf_replace_all
+ 2. [panel] fix prevent issue
+
+
 ISF 2.4.6412 :
  1. [immodule] fix prevent issue
  2. [setting] modify CSC filename and keyname
