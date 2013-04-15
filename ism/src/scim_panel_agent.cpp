@@ -1630,7 +1630,7 @@ public:
         uint32 context;
         if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context)) {
             SCIM_DEBUG_MAIN(4) << __func__ << " (client:" << client << " context:" << context << ")\n";
-            if (TOOLBAR_HELPER_MODE == mode) {
+            if (client_id == m_current_active_imcontrol_id && TOOLBAR_HELPER_MODE == mode) {
                 uint32 ctx = get_helper_ic (client, context);
                 hide_helper (m_current_helper_uuid, ctx);
             }
