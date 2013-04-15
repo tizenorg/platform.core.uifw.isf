@@ -241,7 +241,7 @@
     </key>
   </row>
   <row x="14">
-    <key button_type="selfish" key_type="control" popup_type="auto_popup" hit_left="14">
+    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="14">
       <label>
         <rec auto_upper="true">a</rec>
         <rec multi="1">-</rec>
