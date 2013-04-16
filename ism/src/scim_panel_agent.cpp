@@ -249,6 +249,7 @@ class PanelAgent::PanelAgentImpl
     uint32                              m_current_ise_style;
     int                                 m_current_active_imcontrol_id;
     int                                 m_pending_active_imcontrol_id;
+    int                                 m_show_request_imcontrol_id;
     IntIntRepository                    m_imcontrol_map;
     bool                                m_should_shared_ise;
     bool                                m_ise_exiting;
@@ -1597,6 +1598,7 @@ public:
         Transaction trans;
         Socket client_socket (client_id);
         m_current_active_imcontrol_id = client_id;
+        m_show_request_imcontrol_id = client_id;
 
         uint32 client;
         uint32 context;
@@ -1630,7 +1632,7 @@ public:
         uint32 context;
         if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context)) {
             SCIM_DEBUG_MAIN(4) << __func__ << " (client:" << client << " context:" << context << ")\n";
-            if (client_id == m_current_active_imcontrol_id && TOOLBAR_HELPER_MODE == mode) {
+            if ((client_id == m_current_active_imcontrol_id || client_id == m_show_request_imcontrol_id) && TOOLBAR_HELPER_MODE == mode) {
                 uint32 ctx = get_helper_ic (client, context);
                 hide_helper (m_current_helper_uuid, ctx);
             }
