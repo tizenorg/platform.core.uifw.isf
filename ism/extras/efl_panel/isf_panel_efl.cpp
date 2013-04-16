@@ -3487,13 +3487,27 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                     _control_window, _candidate_angle);
         }
     } else if (ev->win == elm_win_xwindow_get (_candidate_window)) {
-        if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
+        if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST || ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE) {
             /* WMSYNC, #11 Actual rotate the candidate window */
-            int angle = ev->data.l[1];
-            LOGD ("_ECORE_X_ATOM_E_WINDOW_ROTATION_REQUEST : %d\n", angle);
-            SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << angle << ")\n";
-            _candidate_angle = angle;
-            ui_candidate_window_rotate (angle);
+            if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
+                _candidate_angle = (int)ev->data.l[1];
+                ui_candidate_window_rotate (_candidate_angle);
+                LOGD("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST : %d\n", _candidate_angle);
+            }
+            else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE) {
+                _candidate_angle = (int)ev->data.l[0];
+                ui_candidate_window_rotate (_candidate_angle);
+                if (_candidate_angle == 90 || _candidate_angle == 270) {
+                    ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
+                    evas_object_resize (_candidate_window, _candidate_land_width,_candidate_land_height_min);
+                } else {
+                    ui_candidate_window_resize (_candidate_port_width, _candidate_port_height_min);
+                    evas_object_resize (_candidate_window, _candidate_port_width,_candidate_port_height_min);
+                }
+                ui_settle_candidate_window ();
+                LOGD("ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE : %d\n", _candidate_angle);
+            }
+            SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << _candidate_angle << ")\n";
         }
     }
 
