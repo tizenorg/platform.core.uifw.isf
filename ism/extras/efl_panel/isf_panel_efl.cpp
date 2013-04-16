@@ -81,6 +81,7 @@ using namespace scim;
 #define ISF_SYSTEM_APPSERVICE_READY_STATE               1
 #define ISF_SYSTEM_WM_WAIT_COUNT                        200
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
+#define ISF_CANDIDATE_DESTROY_DELAY                     0.2
 
 #define LOG_TAG                                         "ISF_PANEL_EFL"
 
@@ -2009,7 +2010,7 @@ static void slot_focus_out (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     ui_candidate_delete_destroy_timer ();
-    _destroy_timer = ecore_timer_add (1.0, ui_candidate_destroy_timeout, NULL);
+    _destroy_timer = ecore_timer_add (ISF_CANDIDATE_DESTROY_DELAY, ui_candidate_destroy_timeout, NULL);
 }
 
 /**
