@@ -25,6 +25,9 @@
 #ifndef __ISF_SETTING_EFL_H
 #define __ISF_SETTING_EFL_H
 
+#include <dlog.h>
+#define ISFUG_DEBUG(msg, args...) SLOG(LOG_DEBUG, "ISFSETTING", "[%5d][%s] "msg, __LINE__, __func__, ##args)
+
 enum
 {
     TYPE_KEY_END = 0,

@@ -236,6 +236,9 @@ PKG_CHECK_MODULES(X11, [x11])
 # Check ui-gadget library
 PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1])
 
+# Check pkgmgr-info library
+PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info])
+
 # Check utilX library
 PKG_CHECK_MODULES(UTILX, [utilX])
 
