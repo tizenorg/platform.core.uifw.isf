@@ -1,3 +1,9 @@
+ISF 2.4.6417 :
+ 1. [immodule] Make sure we call ecore_x_init/shutdown when we use ecore_x functions.
+ 2. [setting] add searching ime app setup module for osp
+ 3. [panel] change more and close button image when ui_candidate_show called
+
+
 ISF 2.4.6416 :
  1. manage show request control id for comparing hide request
  2. [panel] reduce timeout for destroying candidate window
