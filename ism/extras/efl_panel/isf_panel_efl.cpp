@@ -1125,6 +1125,14 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     _candidate_window_show = true;
     LOGD ("evas_object_show (_candidate_window, %p)\n", elm_win_xwindow_get ( _candidate_window));
     efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
+    if (_ise_show) {
+        edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
+        edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
+    } else {
+        edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "close_button");
+        edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "more_button");
+    }
+
     evas_object_show (_candidate_window);
 }
 
