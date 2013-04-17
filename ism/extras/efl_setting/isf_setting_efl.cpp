@@ -50,6 +50,7 @@
 #include "../efl_panel/isf_panel_utility.h"
 #include "scim_setup_module_efl.h"
 #include "isf_control.h"
+#include <pkgmgr-info.h>
 
 using namespace scim;
 using namespace std;
@@ -90,6 +91,13 @@ enum {
     ITEM_STYLE_BOTTOM
 };
 
+typedef enum {
+    ISE_OPTION_MODULE_EXIST_SO = 0,
+    ISE_OPTION_MODULE_EXIST_XML,
+    ISE_OPTION_MODULE_NO_EXIST
+}ISE_OPTION_MODULE_STATE;
+
+
 struct ItemData
 {
     char *text;
@@ -98,6 +106,7 @@ struct ItemData
     int   item_style_type;
 };
 
+static ISE_OPTION_MODULE_STATE      _ise_option_module_stat   = ISE_OPTION_MODULE_NO_EXIST;
 static struct ug_data              *_common_ugd               = NULL;
 static ItemData                    *_p_items[ITEM_TOTAL_COUNT];
 
@@ -244,9 +253,96 @@ static void back_cb (void *data, Evas_Object *obj, void *event_info)
     ug_destroy_me (ugd->ug);
 }
 
-static bool find_ise_option_module (const char *ise_name)
+static void imeug_destroy_cb (ui_gadget_h ug, void *data)
 {
+    if (!ug) return;
+
+    if (ug)
+        ug_destroy (ug);
+}
+
+static void imeug_layout_cb(ui_gadget_h ug, enum ug_mode mode,
+        void *priv)
+{
+    if (!ug) return;
+
+    Evas_Object *base;
+
+    base = (Evas_Object *) ug_get_layout(ug);
+    if (!base)
+        return;
+
+    switch (mode) {
+        case UG_MODE_FULLVIEW:
+            evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+                    EVAS_HINT_EXPAND);
+            evas_object_show(base);
+            break;
+        default:
+            break;
+    }
+}
+
+static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
+{
+    char *pkgname;
     String mdl_name;
+    for (unsigned int i = 0; i < _names.size (); i++) {
+        if (_names[i] == String (ise_name)) {
+            mdl_name = _module_names[i];
+            ISFUG_DEBUG("module name:%s",mdl_name.c_str());
+            unsigned int elements;
+            char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
+            ISFUG_DEBUG("osp ime pkgid : %s", result[0]);
+            pkgname = result[0];
+        }
+    }
+
+    struct ug_cbs *cbs = (struct ug_cbs *)calloc(1,sizeof(struct ug_cbs));
+    cbs->layout_cb  = imeug_layout_cb;
+    cbs->result_cb  = NULL;
+    cbs->destroy_cb = imeug_destroy_cb;
+    cbs->priv = NULL;
+
+    service_h service = NULL;
+    service_create (&service);
+    service_add_extra_data (service, "pkgname", pkgname);
+    ui_gadget_h ug = ug_create (NULL, "setting-plugin-efl", UG_MODE_FULLVIEW, service, cbs);
+    if (ug == NULL)
+    {
+        ISFUG_DEBUG("fail to load setting-plugin-efl ug ");
+    }
+    else
+        ISFUG_DEBUG("load setting-plugin-efl ug successfully");
+
+    service_destroy (service);
+    service = NULL;
+
+}
+
+static int pkg_list_cb(pkgmgrinfo_appinfo_h handle, void *user_data)
+{
+    char *id = (char *)user_data;
+    char *pkgid = NULL;
+    pkgmgrinfo_pkginfo_get_pkgid(handle, &pkgid);
+    if (strcmp(pkgid , id) == 0) {
+        _ise_option_module_stat = ISE_OPTION_MODULE_EXIST_XML;
+        ISFUG_DEBUG("pkgid : %s\n", pkgid);
+        return -1;
+    }
+    else
+    {
+        ISFUG_DEBUG("%s", pkgid);
+        return 0;
+    }
+}
+
+static ISE_OPTION_MODULE_STATE find_ise_option_module (const char *ise_name)
+{
+    ISFUG_DEBUG("%s", ise_name);
+
+    String mdl_name;
+
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
             if (_modes[i] == TOOLBAR_KEYBOARD_MODE)
@@ -257,10 +353,50 @@ static bool find_ise_option_module (const char *ise_name)
     }
     _mdl_name = mdl_name;
     for (unsigned int i = 0; i < _setup_modules.size (); i++) {
-        if (mdl_name == _setup_modules[i])
-            return true;
+        if (mdl_name == _setup_modules[i]) {
+            _ise_option_module_stat = ISE_OPTION_MODULE_EXIST_SO;
+            goto result;
+        }
     }
-    return false;
+
+    //if not found , check if there's osp ime directory for it
+    for (unsigned int i = 0; i < _names.size (); i++) {
+        if (_names[i] == String (ise_name)) {
+            mdl_name = _module_names[i];
+            //mdl name is equal the ime appid due to name rule, appid = pkgid.pkgname
+            unsigned int elements;
+            char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
+            char *pkgid = result[0];
+            int ret = 0;
+            pkgmgrinfo_pkginfo_filter_h handle;
+            ret = pkgmgrinfo_pkginfo_filter_create(&handle);
+            if (ret != PMINFO_R_OK)
+            {
+                ISFUG_DEBUG("pkgmgrinfo_appinfo_filter_create FAIL");
+                goto result;
+            }
+
+            const bool support_appsetting = true;
+
+            ret = pkgmgrinfo_pkginfo_filter_add_bool(handle, PMINFO_PKGINFO_PROP_PACKAGE_APPSETTING, support_appsetting);
+            if (ret != PMINFO_R_OK) {
+                pkgmgrinfo_pkginfo_filter_destroy(handle);
+                ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_add_bool FAIL");
+                goto result;
+            }
+            ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(handle, pkg_list_cb, (void *)(pkgid));
+            if (ret != PMINFO_R_OK) {
+                pkgmgrinfo_pkginfo_filter_destroy(handle);
+                ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_foreach_appinfo FAIL");
+                goto result;
+            }
+
+            pkgmgrinfo_pkginfo_filter_destroy(handle);
+        }
+    }
+
+result:
+    return _ise_option_module_stat;
 }
 
 static void set_autocap_mode (void)
@@ -291,13 +427,13 @@ static void update_setting_main_view (ug_data *ugd)
 {
     _p_items[SW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_sw_ise_name);
     elm_object_item_data_set (ugd->sw_ise_item_tizen, _p_items[SW_KEYBOARD_SEL_ITEM]);
-    if (_hw_kbd_connected || !find_ise_option_module ((const char *)_sw_ise_name))
+    if (_hw_kbd_connected || ISE_OPTION_MODULE_NO_EXIST == find_ise_option_module ((const char *)_sw_ise_name))
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_FALSE);
     _p_items[HW_KEYBOARD_SEL_ITEM]->sub_text = strdup (_hw_ise_name);
     elm_object_item_data_set (ugd->hw_ise_item_tizen, _p_items[HW_KEYBOARD_SEL_ITEM]);
-    if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
+    if (!_hw_kbd_connected ||ISE_OPTION_MODULE_NO_EXIST == find_ise_option_module ((const char *)_hw_ise_name))
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
@@ -428,7 +564,7 @@ static void ise_option_view_set_cb (void *data, Evas_Object *obj, void *event_in
 
 static void ise_option_show (ug_data *ugd, const char *ise_name)
 {
-    if (find_ise_option_module (ise_name)) {
+    if (ISE_OPTION_MODULE_EXIST_SO == find_ise_option_module (ise_name)) {
         char title[256];
         snprintf (title, sizeof (title), _T("Keyboard settings"));
 
@@ -452,6 +588,10 @@ static void ise_option_show (ug_data *ugd, const char *ise_name)
             evas_object_smart_callback_add (back_btn, "clicked", ise_option_view_set_cb, ugd);
             ugd->key_end_cb = ise_option_view_set_cb;
         }
+    }
+    else if (ISE_OPTION_MODULE_EXIST_XML == find_ise_option_module (ise_name))
+    {
+        launch_setting_plugin_ug_for_ime_setting(ise_name);
     }
 }
 
@@ -1064,7 +1204,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                     _gl_ise_option_sel,
                     (void *)ugd);
 
-            if (_hw_kbd_connected || !find_ise_option_module ((const char *)_sw_ise_name))
+            if (_hw_kbd_connected ||ISE_OPTION_MODULE_NO_EXIST == find_ise_option_module ((const char *)_sw_ise_name))
                 elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
         }
 
@@ -1139,7 +1279,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
                     _gl_ise_option_sel,
                     (void *)ugd);
 
-            if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
+            if (!_hw_kbd_connected || ISE_OPTION_MODULE_NO_EXIST == find_ise_option_module ((const char *)_hw_ise_name))
                 elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
         }
 
@@ -1202,12 +1342,12 @@ static void hw_connection_change_cb (ug_data *ugd)
     elm_object_item_disabled_set (ugd->autocapital_item, !elm_object_item_disabled_get (ugd->autocapital_item));
     elm_object_item_disabled_set (ugd->sw_ise_item_tizen, !elm_object_item_disabled_get (ugd->sw_ise_item_tizen));
     elm_object_item_disabled_set (ugd->hw_ise_item_tizen, !elm_object_item_disabled_get (ugd->hw_ise_item_tizen));
-    if (_hw_kbd_connected || !find_ise_option_module ((const char *)_sw_ise_name))
+    if (_hw_kbd_connected || ISE_OPTION_MODULE_NO_EXIST == find_ise_option_module ((const char *)_sw_ise_name))
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->sw_ise_opt_item_tizen, EINA_FALSE);
 
-    if (!_hw_kbd_connected || !find_ise_option_module ((const char *)_hw_ise_name))
+    if (!_hw_kbd_connected || ISE_OPTION_MODULE_NO_EXIST == find_ise_option_module ((const char *)_hw_ise_name))
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_TRUE);
     else
         elm_object_item_disabled_set (ugd->hw_ise_opt_item_tizen, EINA_FALSE);
