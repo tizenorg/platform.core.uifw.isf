@@ -1791,6 +1791,11 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
                         ret = EINA_TRUE;
                     }
                 }
+                else {
+                    if (key.code == SCIM_KEY_space ||
+                        key.code == SCIM_KEY_KP_Space)
+                        autoperiod_insert (ctx);
+                }
             }
             _panel_client.send ();
             return ret;
