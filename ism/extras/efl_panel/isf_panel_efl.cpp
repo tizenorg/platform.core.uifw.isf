@@ -963,6 +963,7 @@ static void ui_candidate_window_rotate (int angle)
         evas_object_resize (_scroller_bg, _candidate_scroll_width, _candidate_scroll_height_max + 6);
     }
 
+    evas_object_hide (_candidate_area_2);
     ui_candidate_window_adjust ();
     if (evas_object_visible_get (_candidate_area_1)) {
         update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
