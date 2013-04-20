@@ -342,6 +342,7 @@ static ISE_OPTION_MODULE_STATE find_ise_option_module (const char *ise_name)
     ISFUG_DEBUG("%s", ise_name);
 
     String mdl_name;
+    _ise_option_module_stat = ISE_OPTION_MODULE_NO_EXIST;
 
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
