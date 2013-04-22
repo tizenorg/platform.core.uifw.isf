@@ -285,7 +285,7 @@ static void imeug_layout_cb(ui_gadget_h ug, enum ug_mode mode,
 
 static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
 {
-    char *pkgname;
+    char *pkgname = NULL;
     String mdl_name;
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
@@ -294,7 +294,15 @@ static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
             unsigned int elements;
             char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
             ISFUG_DEBUG("osp ime pkgid : %s", result[0]);
-            pkgname = result[0];
+            pkgname = strdup(result[0]);
+            if (result[0]!= NULL) {
+                free(result[0]);
+                result[0] = NULL;
+            }
+            if (result != NULL ) {
+                free(result);
+                result = NULL;
+            }
         }
     }
 
@@ -317,7 +325,14 @@ static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
 
     service_destroy (service);
     service = NULL;
-
+    if (pkgname != NULL) {
+        free(pkgname);
+        pkgname = NULL;
+    }
+    if (cbs != NULL) {
+        free(cbs);
+        cbs = NULL;
+    }
 }
 
 static int pkg_list_cb(pkgmgrinfo_appinfo_h handle, void *user_data)
@@ -363,16 +378,11 @@ static ISE_OPTION_MODULE_STATE find_ise_option_module (const char *ise_name)
     //if not found , check if there's osp ime directory for it
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
-            mdl_name = _module_names[i];
-            //mdl name is equal the ime appid due to name rule, appid = pkgid.pkgname
-            unsigned int elements;
-            char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
-            char *pkgid = result[0];
+
             int ret = 0;
             pkgmgrinfo_pkginfo_filter_h handle;
             ret = pkgmgrinfo_pkginfo_filter_create(&handle);
-            if (ret != PMINFO_R_OK)
-            {
+            if (ret != PMINFO_R_OK) {
                 ISFUG_DEBUG("pkgmgrinfo_appinfo_filter_create FAIL");
                 goto result;
             }
@@ -385,7 +395,25 @@ static ISE_OPTION_MODULE_STATE find_ise_option_module (const char *ise_name)
                 ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_add_bool FAIL");
                 goto result;
             }
+
+            //mdl name is equal the ime appid due to name rule, appid = pkgid.pkgname
+            mdl_name = _module_names[i];
+            unsigned int elements;
+            char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
+            char *pkgid = strdup(result[0]);
+            if (result[0] != NULL) {
+                free(result[0]);
+                result[0] = NULL;
+            }
+            if (result != NULL) {
+                free(result);
+                result = NULL;
+            }
             ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(handle, pkg_list_cb, (void *)(pkgid));
+            if (pkgid != NULL) {
+                free(pkgid);
+                pkgid = NULL;
+            }
             if (ret != PMINFO_R_OK) {
                 pkgmgrinfo_pkginfo_filter_destroy(handle);
                 ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_foreach_appinfo FAIL");
