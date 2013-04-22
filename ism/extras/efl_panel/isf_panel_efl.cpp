@@ -116,6 +116,7 @@ typedef enum _VIRTUAL_KEYBOARD_STATE {
 static Evas_Object *efl_create_window                  (const char *strWinName, const char *strEffect);
 static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
 static int        efl_get_angle_for_app_window         (void);
+static int        efl_get_angle_for_ise_window         (void);
 
 static int        ui_candidate_get_valid_height        (void);
 static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true);
@@ -370,7 +371,8 @@ static void get_ise_geometry (RECT_INFO &info, VIRTUAL_KEYBOARD_STATE kbd_state)
             info.height = height;
         }
 
-        LOGD ("Geometry : %d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
+        LOGD ("Geometry : %d, %d %d %d %d\n", _candidate_angle,
+            info.pos_x, info.pos_y, info.width, info.height);
 
         info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
         if (kbd_state == KEYBOARD_STATE_OFF) {
@@ -1723,11 +1725,11 @@ static void efl_set_transient_for_app_window (Ecore_X_Window window)
 }
 
 /**
- * @brief Get angle for root window.
+ * @brief Get angle for app window.
  *
  * @param win_obj The Evas_Object handler of application window.
  *
- * @return The angle of root window.
+ * @return The angle of app window.
  */
 static int efl_get_angle_for_app_window ()
 {
@@ -1739,6 +1741,35 @@ static int efl_get_angle_for_app_window ()
     unsigned char *prop_data = NULL;
 
     ret = ecore_x_window_prop_property_get (efl_get_app_window (),
+            ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
+    if (ret && prop_data) {
+        memcpy (&angle, prop_data, sizeof (int));
+    } else {
+        std::cerr << "ecore_x_window_prop_property_get () is failed!!!\n";
+    }
+    if (prop_data)
+        XFree (prop_data);
+
+    return angle;
+}
+
+/**
+ * @brief Get angle for ise window.
+ *
+ * @param win_obj The Evas_Object handler of ise window.
+ *
+ * @return The angle of ise window.
+ */
+static int efl_get_angle_for_ise_window ()
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    int ret;
+    int count;
+    int angle = 0;
+    unsigned char *prop_data = NULL;
+
+    ret = ecore_x_window_prop_property_get (_ise_window,
             ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
     if (ret && prop_data) {
         memcpy (&angle, prop_data, sizeof (int));
@@ -3407,6 +3438,10 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
             if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
                 LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_ON\n");
                 _ise_show = true;
+
+                /* Make sure that we have the same rotation angle with the keyboard window */
+                if (_ise_window)
+                    _candidate_angle = efl_get_angle_for_ise_window();
 
                 if (_candidate_window_pending) {
                     _candidate_window_pending = false;
