@@ -95,8 +95,7 @@ typedef enum {
     ISE_OPTION_MODULE_EXIST_SO = 0,
     ISE_OPTION_MODULE_EXIST_XML,
     ISE_OPTION_MODULE_NO_EXIST
-}ISE_OPTION_MODULE_STATE;
-
+} ISE_OPTION_MODULE_STATE;
 
 struct ItemData
 {
@@ -290,7 +289,7 @@ static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
             mdl_name = _module_names[i];
-            ISFUG_DEBUG("module name:%s",mdl_name.c_str());
+            ISFUG_DEBUG ("module name:%s", mdl_name.c_str());
             pkgname = mdl_name.substr (0, mdl_name.find_first_of ('.'));
             break;
         }
@@ -306,31 +305,29 @@ static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
     service_create (&service);
     service_add_extra_data (service, "pkgname", pkgname.c_str ());
     ui_gadget_h ug = ug_create (NULL, "setting-plugin-efl", UG_MODE_FULLVIEW, service, &cbs);
-    if (ug == NULL)
-    {
-        ISFUG_DEBUG("fail to load setting-plugin-efl ug ");
+    if (ug == NULL) {
+        ISFUG_DEBUG ("fail to load setting-plugin-efl ug ");
     }
     else
-        ISFUG_DEBUG("load setting-plugin-efl ug successfully");
+        ISFUG_DEBUG ("load setting-plugin-efl ug successfully");
 
     service_destroy (service);
     service = NULL;
 
 }
 
-static int pkg_list_cb(pkgmgrinfo_appinfo_h handle, void *user_data)
+static int pkg_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
 {
     char *id = (char *)user_data;
     char *pkgid = NULL;
-    pkgmgrinfo_pkginfo_get_pkgid(handle, &pkgid);
-    if (strcmp(pkgid , id) == 0) {
+    pkgmgrinfo_pkginfo_get_pkgid (handle, &pkgid);
+    if (strcmp (pkgid , id) == 0) {
         _ise_option_module_stat = ISE_OPTION_MODULE_EXIST_XML;
-        ISFUG_DEBUG("pkgid : %s\n", pkgid);
+        ISFUG_DEBUG ("pkgid : %s\n", pkgid);
         return -1;
     }
-    else
-    {
-        ISFUG_DEBUG("%s", pkgid);
+    else {
+        ISFUG_DEBUG ("%s", pkgid);
         return 0;
     }
 }
@@ -361,32 +358,31 @@ static ISE_OPTION_MODULE_STATE find_ise_option_module (const char *ise_name)
     //if not found , check if there's osp ime directory for it
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
-
             int ret = 0;
             pkgmgrinfo_pkginfo_filter_h handle;
-            ret = pkgmgrinfo_pkginfo_filter_create(&handle);
+            ret = pkgmgrinfo_pkginfo_filter_create (&handle);
             if (ret != PMINFO_R_OK) {
-                ISFUG_DEBUG("pkgmgrinfo_appinfo_filter_create FAIL");
+                ISFUG_DEBUG ("pkgmgrinfo_appinfo_filter_create FAIL");
                 goto result;
             }
 
             const bool support_appsetting = true;
 
-            ret = pkgmgrinfo_pkginfo_filter_add_bool(handle, PMINFO_PKGINFO_PROP_PACKAGE_APPSETTING, support_appsetting);
+            ret = pkgmgrinfo_pkginfo_filter_add_bool (handle, PMINFO_PKGINFO_PROP_PACKAGE_APPSETTING, support_appsetting);
             if (ret != PMINFO_R_OK) {
-                pkgmgrinfo_pkginfo_filter_destroy(handle);
-                ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_add_bool FAIL");
+                pkgmgrinfo_pkginfo_filter_destroy (handle);
+                ISFUG_DEBUG ("pkgmgrinfo_pkginfo_filter_add_bool FAIL");
                 goto result;
             }
 
             //mdl name is equal the ime appid due to name rule, appid = pkgid.pkgname
             mdl_name = _module_names[i];
             String pkgid = mdl_name.substr (0, mdl_name.find_first_of ('.'));
-            ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(handle, pkg_list_cb, (void *)(pkgid.c_str()));
+            ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo (handle, pkg_list_cb, (void *)(pkgid.c_str ()));
 
             if (ret != PMINFO_R_OK) {
-                pkgmgrinfo_pkginfo_filter_destroy(handle);
-                ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_foreach_appinfo FAIL");
+                pkgmgrinfo_pkginfo_filter_destroy (handle);
+                ISFUG_DEBUG ("pkgmgrinfo_pkginfo_filter_foreach_appinfo FAIL");
                 goto result;
             }
 
@@ -588,9 +584,8 @@ static void ise_option_show (ug_data *ugd, const char *ise_name)
             ugd->key_end_cb = ise_option_view_set_cb;
         }
     }
-    else if (ISE_OPTION_MODULE_EXIST_XML == find_ise_option_module (ise_name))
-    {
-        launch_setting_plugin_ug_for_ime_setting(ise_name);
+    else if (ISE_OPTION_MODULE_EXIST_XML == find_ise_option_module (ise_name)) {
+        launch_setting_plugin_ug_for_ime_setting (ise_name);
     }
 }
 
@@ -1057,7 +1052,7 @@ static Evas_Object *create_setting_main_view (ug_data *ugd)
         if (item_data != NULL) {
             memset (item_data, 0, sizeof (ItemData));
             _p_items[AUTO_CAPITALIZATION_ITEM] = item_data;
-            item_data->text = strdup(_T("Auto capitalization"));
+            item_data->text = strdup (_T("Auto capitalization"));
             item_data->mode = AUTO_CAPITALIZATION_ITEM;
             ugd->autocapital_item = elm_genlist_item_append (
                     genlist,                // genlist object
