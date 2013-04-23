@@ -2057,6 +2057,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
             ic->impl->next_shift_status = _key.code;
         } else if (key.code == SHIFT_MODE_ENABLE ) {
             ic->impl->shift_mode_enabled = true;
+            caps_mode_check (ic->ctx, EINA_TRUE, EINA_TRUE);
         } else if (key.code == SHIFT_MODE_DISABLE ) {
             ic->impl->shift_mode_enabled = false;
         } else if ((key.code >= 'a' && key.code <= 'z') ||
