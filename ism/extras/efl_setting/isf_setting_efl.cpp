@@ -285,37 +285,27 @@ static void imeug_layout_cb(ui_gadget_h ug, enum ug_mode mode,
 
 static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
 {
-    char *pkgname = NULL;
-    String mdl_name;
+    String pkgname = String ("");
+    String mdl_name = String("");
     for (unsigned int i = 0; i < _names.size (); i++) {
         if (_names[i] == String (ise_name)) {
             mdl_name = _module_names[i];
             ISFUG_DEBUG("module name:%s",mdl_name.c_str());
-            unsigned int elements;
-            char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
-            ISFUG_DEBUG("osp ime pkgid : %s", result[0]);
-            pkgname = strdup(result[0]);
-            if (result[0]!= NULL) {
-                free(result[0]);
-                result[0] = NULL;
-            }
-            if (result != NULL ) {
-                free(result);
-                result = NULL;
-            }
+            pkgname = mdl_name.substr (0, mdl_name.find_first_of ('.'));
+            break;
         }
     }
 
-    struct ug_cbs *cbs = (struct ug_cbs *)calloc(1,sizeof(struct ug_cbs));
-    cbs->layout_cb  = imeug_layout_cb;
-    cbs->result_cb  = NULL;
-    cbs->destroy_cb = imeug_destroy_cb;
-    cbs->priv = NULL;
+    struct ug_cbs cbs = {0,};
+    cbs.layout_cb  = imeug_layout_cb;
+    cbs.result_cb  = NULL;
+    cbs.destroy_cb = imeug_destroy_cb;
+    cbs.priv = NULL;
 
     service_h service = NULL;
     service_create (&service);
-    service_add_extra_data (service, "pkgname", pkgname);
-    ui_gadget_h ug = ug_create (NULL, "setting-plugin-efl", UG_MODE_FULLVIEW, service, cbs);
+    service_add_extra_data (service, "pkgname", pkgname.c_str ());
+    ui_gadget_h ug = ug_create (NULL, "setting-plugin-efl", UG_MODE_FULLVIEW, service, &cbs);
     if (ug == NULL)
     {
         ISFUG_DEBUG("fail to load setting-plugin-efl ug ");
@@ -325,14 +315,7 @@ static void launch_setting_plugin_ug_for_ime_setting(const char *ise_name)
 
     service_destroy (service);
     service = NULL;
-    if (pkgname != NULL) {
-        free(pkgname);
-        pkgname = NULL;
-    }
-    if (cbs != NULL) {
-        free(cbs);
-        cbs = NULL;
-    }
+
 }
 
 static int pkg_list_cb(pkgmgrinfo_appinfo_h handle, void *user_data)
@@ -398,22 +381,9 @@ static ISE_OPTION_MODULE_STATE find_ise_option_module (const char *ise_name)
 
             //mdl name is equal the ime appid due to name rule, appid = pkgid.pkgname
             mdl_name = _module_names[i];
-            unsigned int elements;
-            char **result = eina_str_split_full((const char *)(mdl_name.c_str()), ".", -1, &elements);
-            char *pkgid = strdup(result[0]);
-            if (result[0] != NULL) {
-                free(result[0]);
-                result[0] = NULL;
-            }
-            if (result != NULL) {
-                free(result);
-                result = NULL;
-            }
-            ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(handle, pkg_list_cb, (void *)(pkgid));
-            if (pkgid != NULL) {
-                free(pkgid);
-                pkgid = NULL;
-            }
+            String pkgid = mdl_name.substr (0, mdl_name.find_first_of ('.'));
+            ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(handle, pkg_list_cb, (void *)(pkgid.c_str()));
+
             if (ret != PMINFO_R_OK) {
                 pkgmgrinfo_pkginfo_filter_destroy(handle);
                 ISFUG_DEBUG("pkgmgrinfo_pkginfo_filter_foreach_appinfo FAIL");
