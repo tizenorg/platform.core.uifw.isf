@@ -1,3 +1,7 @@
+ISF 2.4.6423 :
+ 1. [immodule] Notify shift mode when shift mode enabled.
+
+
 ISF 2.4.6417 :
  1. [immodule] Make sure we call ecore_x_init/shutdown when we use ecore_x functions.
  2. [setting] add searching ime app setup module for osp
