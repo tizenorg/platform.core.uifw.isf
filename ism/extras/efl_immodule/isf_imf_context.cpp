@@ -653,6 +653,8 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
     ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
     if (!ustr) goto done;
 
+    if (eina_unicode_strlen (ustr) < cursor_pos) goto done;
+
     if (cursor_pos >= 1) {
         if (context_scim->impl->autocapital_type == ECORE_IMF_AUTOCAPITAL_TYPE_WORD) {
             if (ustr[cursor_pos-1] == ' ' || ustr[cursor_pos-1] == '\302\240') {
