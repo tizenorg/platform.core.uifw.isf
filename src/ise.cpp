@@ -41,6 +41,7 @@ using namespace scl;
 CSCLUI *gSCLUI = NULL;
 extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
+static sclboolean g_need_send_shift_event = FALSE;
 
 KEYBOARD_STATE g_keyboard_state = {
     -1,
@@ -154,20 +155,23 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
         }
     }
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
-        LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
-        if (info) {
-            if (info->accepts_caps_mode) {
-                if (etc_info == SCL_SHIFT_STATE_OFF) {
-                    ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
+        if (g_need_send_shift_event) {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
+            if (info) {
+                if (info->accepts_caps_mode) {
+                    if (etc_info == SCL_SHIFT_STATE_OFF) {
+                        ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
+                    }
+                    else if (etc_info == SCL_SHIFT_STATE_ON) {
+                        ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
+                    }
+                    else if (etc_info == SCL_SHIFT_STATE_LOCK) {
+                        ise_send_event(MVK_Shift_Lock, scim::SCIM_KEY_NullMask);
+                    }
+                    ret = SCL_EVENT_PASS_ON;
                 }
-                else if (etc_info == SCL_SHIFT_STATE_ON) {
-                    ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
-                }
-                else if (etc_info == SCL_SHIFT_STATE_LOCK) {
-                    ise_send_event(MVK_Shift_Lock, scim::SCIM_KEY_NullMask);
-                }
-                ret = SCL_EVENT_PASS_ON;
             }
+            g_need_send_shift_event = FALSE;
         }
     }
 
@@ -221,6 +225,9 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
         case KEY_TYPE_CONTROL: {
                 if (event_desc.key_event) {
                     ise_send_event(event_desc.key_event, scim::SCIM_KEY_NullMask);
+                    if (event_desc.key_event == MVK_Shift_L) {
+                        g_need_send_shift_event = TRUE;
+                    }
                }
                break;
            }
@@ -337,6 +344,13 @@ void ise_show(int ic)
                 }
                 gSCLUI->set_cur_sublayout(g_ise_default_values[g_keyboard_state.layout].sublayout_name);
             }
+        }
+
+        if (info->accepts_caps_mode) {
+            ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+        } else {
+            ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
+            gSCLUI->set_caps_mode(0);
         }
 
         gSCLUI->show();
@@ -481,10 +495,8 @@ ise_set_caps_mode(unsigned int mode)
     LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
     if (info) {
         if (info->accepts_caps_mode) {
-            ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
             gSCLUI->set_caps_mode(g_keyboard_state.caps_mode);
         } else {
-            ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
             gSCLUI->set_caps_mode(0);
         }
     }
