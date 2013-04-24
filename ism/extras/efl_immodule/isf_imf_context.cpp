@@ -364,7 +364,8 @@ new_ic_impl (EcoreIMFContextISF *parent)
 
     impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
     impl->next_shift_status = 0;
-    impl->shift_mode_enabled = 0;
+    impl->shift_mode_enabled = 1;
+    LOGD ("Resetting next_shift_status to %d, %p", impl->shift_mode_enabled, impl);
     impl->next = _used_ic_impl_list;
     _used_ic_impl_list = impl;
 
@@ -739,6 +740,8 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
                 isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
         }
     }
+    LOGD("next_shift_status : %d, force %d",
+        context_scim->impl->next_shift_status, force);
 
     return uppercase;
 }
@@ -2055,42 +2058,14 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
             key.code == SHIFT_MODE_ON ||
             key.code == SHIFT_MODE_LOCK) {
             ic->impl->next_shift_status = _key.code;
+            LOGD("next_shift_status : %d, by shift mode key event", _key.code);
         } else if (key.code == SHIFT_MODE_ENABLE ) {
             ic->impl->shift_mode_enabled = true;
             caps_mode_check (ic->ctx, EINA_TRUE, EINA_TRUE);
+            LOGD("SHIFT_MODE_ENABLED received");
         } else if (key.code == SHIFT_MODE_DISABLE ) {
             ic->impl->shift_mode_enabled = false;
-        } else if ((key.code >= 'a' && key.code <= 'z') ||
-            (key.code >= 'A' && key.code <= 'Z')) {
-            Eina_Bool uppercase;
-            switch (ic->impl->next_shift_status) {
-                case 0:
-                    uppercase = caps_mode_check (ic->ctx, EINA_FALSE, EINA_FALSE);
-                    break;
-                case SHIFT_MODE_OFF:
-                    uppercase = EINA_FALSE;
-                    ic->impl->next_shift_status = 0;
-                    break;
-                case SHIFT_MODE_ON:
-                    uppercase = EINA_TRUE;
-                    ic->impl->next_shift_status = 0;
-                    break;
-                case SHIFT_MODE_LOCK:
-                    uppercase = EINA_TRUE;
-                    break;
-                default:
-                    uppercase = EINA_FALSE;
-            }
-
-            if (ic->impl->shift_mode_enabled) {
-                if (uppercase) {
-                    if(key.code >= 'a' && key.code <= 'z')
-                        _key.code -= 32;
-                } else {
-                    if(key.code >= 'A' && key.code <= 'Z')
-                        _key.code += 32;
-                }
-            }
+            LOGD("SHIFT_MODE_DISABLED received");
         }
     }
 
@@ -3538,8 +3513,58 @@ slot_commit_string (IMEngineInstanceBase *si,
         if (strcmp (utf8_wcstombs (str).c_str (), " ") == 0)
             autoperiod_insert (ic->ctx);
 
-        ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (str).c_str ());
-        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (str).c_str ());
+        Eina_Bool auto_capitalized = EINA_FALSE;
+
+        if (ic->impl) {
+            LOGD("shift_mode_enabled : %d, cursorpos : %d, string : %s",
+                    ic->impl->shift_mode_enabled, ic->impl->cursor_pos, utf8_wcstombs (str).c_str ());
+            if (ic->impl->shift_mode_enabled) {
+                const char *c_str = utf8_wcstombs (str).c_str ();
+                char converted[2] = {'\0'};
+                if (c_str) {
+                    if (strlen (c_str) == 1) {
+                        Eina_Bool uppercase;
+                        switch (ic->impl->next_shift_status) {
+                            case 0:
+                                uppercase = caps_mode_check (ic->ctx, EINA_FALSE, EINA_FALSE);
+                                break;
+                            case SHIFT_MODE_OFF:
+                                uppercase = EINA_FALSE;
+                                ic->impl->next_shift_status = 0;
+                                break;
+                            case SHIFT_MODE_ON:
+                                uppercase = EINA_TRUE;
+                                ic->impl->next_shift_status = 0;
+                                break;
+                            case SHIFT_MODE_LOCK:
+                                uppercase = EINA_TRUE;
+                                break;
+                            default:
+                                uppercase = EINA_FALSE;
+                        }
+                        converted[0] = c_str[0];
+                        if (uppercase) {
+                            if(converted[0] >= 'a' && converted[0] <= 'z')
+                                converted[0] -= 32;
+                        } else {
+                            if(converted[0] >= 'A' && converted[0] <= 'Z')
+                                converted[0] += 32;
+                        }
+                        LOGD("converted char : %c, uppercase : %d", converted[0], uppercase);
+
+                        ecore_imf_context_commit_event_add (ic->ctx, converted);
+                        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)converted);
+
+                        auto_capitalized = EINA_TRUE;
+                    }
+                }
+            }
+        }
+
+        if (!auto_capitalized) {
+            ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (str).c_str ());
+            ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (str).c_str ());
+        }
     }
 }
 
