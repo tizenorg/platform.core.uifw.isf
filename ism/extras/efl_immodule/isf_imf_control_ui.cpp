@@ -306,9 +306,6 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
         _isf_imf_context_init ();
     }
 
-    if (check_focus_out_by_lockscreen (ctx))
-        return;
-
     if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
         return;
 
