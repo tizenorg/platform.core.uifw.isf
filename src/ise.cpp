@@ -346,11 +346,13 @@ void ise_show(int ic)
             }
         }
 
-        if (info->accepts_caps_mode) {
-            ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
-        } else {
-            ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
-            gSCLUI->set_caps_mode(0);
+        if (info) {
+            if (info->accepts_caps_mode) {
+                ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+            } else {
+                ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
+                gSCLUI->set_caps_mode(0);
+            }
         }
 
         gSCLUI->show();
