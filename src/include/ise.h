@@ -29,7 +29,7 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "0.8.0-1"
+#define ISE_VERSION "0.8.1-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
@@ -94,6 +94,7 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
 
 typedef struct {
     int ic;
+    int focused_ic;
     sclu32 layout;
     sclboolean caps_mode;
     sclboolean need_reset;
@@ -104,6 +105,8 @@ void ise_update_preedit_string(const sclchar *str);
 void ise_send_event(sclulong key_event, sclulong key_mask);
 void ise_forward_key_event(sclulong key_event);
 
+void ise_focus_in(int ic);
+void ise_focus_out(int ic);
 void ise_show(int ic);
 void ise_hide();
 void ise_create();
