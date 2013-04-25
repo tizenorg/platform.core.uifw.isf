@@ -3518,7 +3518,8 @@ slot_commit_string (IMEngineInstanceBase *si,
         if (ic->impl) {
             LOGD("shift_mode_enabled : %d, cursorpos : %d, string : %s",
                     ic->impl->shift_mode_enabled, ic->impl->cursor_pos, utf8_wcstombs (str).c_str ());
-            if (ic->impl->shift_mode_enabled) {
+            if (ic->impl->shift_mode_enabled &&
+                ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE) {
                 const char *c_str = utf8_wcstombs (str).c_str ();
                 char converted[2] = {'\0'};
                 if (c_str) {
