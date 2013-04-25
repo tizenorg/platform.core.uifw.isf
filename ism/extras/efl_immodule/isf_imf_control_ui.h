@@ -31,7 +31,6 @@
 extern "C"
 {
 #endif /* __cplusplus */
-    Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx);
     void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
 
     /* non UI related works */

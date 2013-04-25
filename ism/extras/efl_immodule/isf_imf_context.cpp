@@ -1251,7 +1251,6 @@ EAPI void
 isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
-    Eina_Bool lock_scr;
 
     if (!context_scim) return;
 
@@ -1278,19 +1277,15 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
             _panel_client.send ();
         }
 
-        lock_scr = check_focus_out_by_lockscreen (ctx);
-
-        if (!lock_scr)
-            _panel_client.prepare (context_scim->id);
+        _panel_client.prepare (context_scim->id);
 
         context_scim->impl->si->focus_out ();
         context_scim->impl->si->reset ();
 
-        if (!lock_scr) {
 //          if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
-            _panel_client.focus_out (context_scim->id);
-            _panel_client.send ();
-        }
+
+        _panel_client.focus_out (context_scim->id);
+        _panel_client.send ();
         _focused_ic = 0;
     }
 }

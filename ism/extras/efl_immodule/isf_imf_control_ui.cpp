@@ -353,23 +353,6 @@ void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int valu
     _event_callback_call (type, value);
 }
 
-Eina_Bool check_focus_out_by_lockscreen (Ecore_IMF_Context *ctx)
-{
-    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
-    Eina_Bool ret = EINA_FALSE;
-    char *class_name = NULL;
-    ecore_x_icccm_name_class_get (focus_win, NULL, &class_name);
-
-    if (class_name && strncmp (class_name, "LOCK_SCREEN", 11) == 0)
-        if (_client_window_id_get (ctx) != focus_win)
-            ret = EINA_TRUE;
-
-    if (class_name)
-        free (class_name);
-
-    return ret;
-}
-
 void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
 {
     if (IfInitContext == false) {
