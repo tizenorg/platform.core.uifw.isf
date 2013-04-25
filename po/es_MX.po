@@ -5,13 +5,13 @@ msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
 msgstr "Error de reconocimiento de voz"
 
 msgid "IDS_IME_BODY_HANDWRITING"
-msgstr "Escritura manual"
+msgstr "Escritura a mano"
 
 msgid "IDS_IME_BODY_PEN_COLOUR"
 msgstr "Color de lápiz"
 
 msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
-msgstr "Pen gesture guide"
+msgstr "Guía de gestos de lápiz"
 
 msgid "IDS_IME_BODY_PEN_THICKNESS"
 msgstr "Grosor del lápiz"
@@ -35,10 +35,10 @@ msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
 msgstr "Eliminar (1 carácter)"
 
 msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
-msgstr "Eliminar (Palabra o frase)"
+msgstr "Eliminar (Palabra u oración)"
 
 msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
-msgstr "Intro (Reconocimiento de línea)"
+msgstr "Introducir (Reconocimiento de trazo)"
 
 msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
 msgstr "Configuración de escritura a mano"
@@ -71,7 +71,7 @@ msgid "IDS_IME_OPT_BLUE"
 msgstr "Azul"
 
 msgid "IDS_IME_OPT_BROWN"
-msgstr "Brown"
+msgstr "Castaño"
 
 msgid "IDS_IME_OPT_GREEN"
 msgstr "Verde"
@@ -80,7 +80,7 @@ msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
 msgstr "Se eliminarán todas las palabras"
 
 msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Introduzca texto desplazando el dedo por el teclado"
+msgstr "Introduzca el texto deslizando su dedo por el teclado"
 
 msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
 msgstr "Mis palabras está llena. Para añadir una palabra, elimine algunos elementos"
