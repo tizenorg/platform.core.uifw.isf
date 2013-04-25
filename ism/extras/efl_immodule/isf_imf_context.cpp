@@ -3520,44 +3520,40 @@ slot_commit_string (IMEngineInstanceBase *si,
                     ic->impl->shift_mode_enabled, ic->impl->cursor_pos, utf8_wcstombs (str).c_str ());
             if (ic->impl->shift_mode_enabled &&
                 ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE) {
-                const char *c_str = utf8_wcstombs (str).c_str ();
                 char converted[2] = {'\0'};
-                if (c_str) {
-                    if (strlen (c_str) == 1) {
-                        Eina_Bool uppercase;
-                        switch (ic->impl->next_shift_status) {
-                            case 0:
-                                uppercase = caps_mode_check (ic->ctx, EINA_FALSE, EINA_FALSE);
-                                break;
-                            case SHIFT_MODE_OFF:
-                                uppercase = EINA_FALSE;
-                                ic->impl->next_shift_status = 0;
-                                break;
-                            case SHIFT_MODE_ON:
-                                uppercase = EINA_TRUE;
-                                ic->impl->next_shift_status = 0;
-                                break;
-                            case SHIFT_MODE_LOCK:
-                                uppercase = EINA_TRUE;
-                                break;
-                            default:
-                                uppercase = EINA_FALSE;
-                        }
-                        converted[0] = c_str[0];
-                        if (uppercase) {
-                            if(converted[0] >= 'a' && converted[0] <= 'z')
-                                converted[0] -= 32;
-                        } else {
-                            if(converted[0] >= 'A' && converted[0] <= 'Z')
-                                converted[0] += 32;
-                        }
-                        LOGD("converted char : %c, uppercase : %d", converted[0], uppercase);
-
-                        ecore_imf_context_commit_event_add (ic->ctx, converted);
-                        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)converted);
-
-                        auto_capitalized = EINA_TRUE;
+                if (utf8_wcstombs (str).length () == 1) {
+                    Eina_Bool uppercase;
+                    switch (ic->impl->next_shift_status) {
+                        case 0:
+                            uppercase = caps_mode_check (ic->ctx, EINA_FALSE, EINA_FALSE);
+                            break;
+                        case SHIFT_MODE_OFF:
+                            uppercase = EINA_FALSE;
+                            ic->impl->next_shift_status = 0;
+                            break;
+                        case SHIFT_MODE_ON:
+                            uppercase = EINA_TRUE;
+                            ic->impl->next_shift_status = 0;
+                            break;
+                        case SHIFT_MODE_LOCK:
+                            uppercase = EINA_TRUE;
+                            break;
+                        default:
+                            uppercase = EINA_FALSE;
                     }
+                    converted[0] = utf8_wcstombs (str).at (0);
+                    if (uppercase) {
+                        if(converted[0] >= 'a' && converted[0] <= 'z')
+                            converted[0] -= 32;
+                    } else {
+                        if(converted[0] >= 'A' && converted[0] <= 'Z')
+                            converted[0] += 32;
+                    }
+
+                    ecore_imf_context_commit_event_add (ic->ctx, converted);
+                    ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)converted);
+
+                    auto_capitalized = EINA_TRUE;
                 }
             }
         }
