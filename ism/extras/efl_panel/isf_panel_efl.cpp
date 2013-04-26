@@ -1773,6 +1773,7 @@ static int efl_get_angle_for_ise_window ()
             ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
     if (ret && prop_data) {
         memcpy (&angle, prop_data, sizeof (int));
+        LOGD ("WINDOW angle for %p is %d", _ise_window, angle);
     } else {
         std::cerr << "ecore_x_window_prop_property_get () is failed!!!\n";
     }
@@ -3529,6 +3530,15 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             LOGD ("ecore_x_e_window_rotation_change_prepare_done_send(%d)\n", _candidate_angle);
             ecore_x_e_window_rotation_change_prepare_done_send (root_window,
                     _control_window, _candidate_angle);
+        } else if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
+            int ise_angle = (int)ev->data.l[1];
+            LOGD("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST for ISE WINDOW : %d %d\n", ise_angle, _candidate_angle);
+            if (ise_angle != _candidate_angle) {
+                _candidate_angle = ise_angle;
+                if (_ise_show) {
+                    set_keyboard_geometry_atom_info (_app_window, KEYBOARD_STATE_ON);
+                }
+            }
         }
     } else if (ev->win == elm_win_xwindow_get (_candidate_window)) {
         if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST || ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE) {
