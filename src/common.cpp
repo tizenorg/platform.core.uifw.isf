@@ -30,10 +30,13 @@
 #include <vconf-keys.h>
 
 #include "common.h"
+#include "ise.h"
 
 using namespace scl;
 
 CISECommon* CISECommon::m_instance = NULL; /* For singleton */
+
+extern KEYBOARD_STATE g_keyboard_state;
 
 /* Internal signal handler function */
 void signal_handler(int sig);
@@ -520,7 +523,9 @@ void CISECommon::candidate_hide(void)
 void CISECommon::set_keyboard_ise_by_uuid(const sclchar *uuid)
 {
     m_uuid_keyboard_ise = scim::String(uuid);
-    m_helper_agent.set_keyboard_ise_by_uuid(m_uuid_keyboard_ise);
+    if (g_keyboard_state.ic == g_keyboard_state.focused_ic) {
+        m_helper_agent.set_keyboard_ise_by_uuid(m_uuid_keyboard_ise);
+    }
 }
 
 void CISECommon::get_keyboard_ise(const sclchar *uuid)

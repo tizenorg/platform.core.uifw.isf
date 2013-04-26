@@ -259,15 +259,6 @@ ise_set_layout(sclu32 layout)
             g_keyboard_state.need_reset = TRUE;
         }
         g_keyboard_state.layout = layout;
-
-        if (layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
-                layout == ISE_LAYOUT_STYLE_IP ||
-                layout == ISE_LAYOUT_STYLE_MONTH ||
-                layout == ISE_LAYOUT_STYLE_NUMBERONLY) {
-            if (g_ise_common) {
-                g_ise_common->set_keyboard_ise_by_uuid(DEFAULT_KEYBOARD_ISE_UUID);
-            }
-        }
     }
 }
 
@@ -281,6 +272,30 @@ ise_reset_input_context()
 {
 }
 
+void
+ise_focus_in(int ic)
+{
+    if (ic == g_keyboard_state.ic) {
+        if (g_ise_common) {
+            if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
+                    g_keyboard_state.layout == ISE_LAYOUT_STYLE_IP ||
+                    g_keyboard_state.layout == ISE_LAYOUT_STYLE_MONTH ||
+                    g_keyboard_state.layout == ISE_LAYOUT_STYLE_NUMBERONLY) {
+                g_ise_common->set_keyboard_ise_by_uuid(DEFAULT_KEYBOARD_ISE_UUID);
+            } else {
+                g_ise_common->set_keyboard_ise_by_uuid(g_ise_common->get_keyboard_ise_uuid().c_str());
+            }
+        }
+    }
+    g_keyboard_state.focused_ic = ic;
+}
+
+void
+ise_focus_out(int ic)
+{
+    g_keyboard_state.focused_ic = 0;
+}
+
 void ise_show(int ic)
 {
     sclboolean reset_inputmode = FALSE;
@@ -290,10 +305,20 @@ void ise_show(int ic)
 
         _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
+        if (ic == g_keyboard_state.focused_ic) {
+            if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
+                    g_keyboard_state.layout == ISE_LAYOUT_STYLE_IP ||
+                    g_keyboard_state.layout == ISE_LAYOUT_STYLE_MONTH ||
+                    g_keyboard_state.layout == ISE_LAYOUT_STYLE_NUMBERONLY) {
+                g_ise_common->set_keyboard_ise_by_uuid(DEFAULT_KEYBOARD_ISE_UUID);
+            }
+        }
+
         /* Reset input mode if the input context value has changed */
         if (ic != g_keyboard_state.ic) {
             reset_inputmode = TRUE;
         }
+        g_keyboard_state.ic = ic;
         /* Reset input mode if the current language is not the selected language */
         if (g_config_values.selected_language.compare(
                     _language_manager.get_current_language()) != 0) {
@@ -303,6 +328,7 @@ void ise_show(int ic)
         if (g_keyboard_state.need_reset) {
             reset_inputmode = TRUE;
         }
+        g_keyboard_state.need_reset = FALSE;
 
         /* If the current layout requires latin language and current our language is not latin, enable the primary latin */
         sclboolean force_primary_latin = FALSE;
@@ -358,9 +384,6 @@ void ise_show(int ic)
         gSCLUI->show();
         gSCLUI->disable_input_events(FALSE);
     }
-
-    g_keyboard_state.ic = ic;
-    g_keyboard_state.need_reset = FALSE;
 }
 
 /**
