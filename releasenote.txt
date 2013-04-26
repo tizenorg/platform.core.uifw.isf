@@ -1,3 +1,8 @@
+ISF 2.4.6426 :
+ 1. [immodule] fix prevent issue
+ 2. [immodule] Fix capslock bug in USB keyboard
+
+
 ISF 2.4.6424 :
  1. [immodule] Moved the autocapital code to commit_string from process_key
  2. [immodule] remove code to check lock screen
