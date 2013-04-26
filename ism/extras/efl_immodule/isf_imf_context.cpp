@@ -365,7 +365,6 @@ new_ic_impl (EcoreIMFContextISF *parent)
     impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
     impl->next_shift_status = 0;
     impl->shift_mode_enabled = 1;
-    LOGD ("Resetting next_shift_status to %d, %p", impl->shift_mode_enabled, impl);
     impl->next = _used_ic_impl_list;
     _used_ic_impl_list = impl;
 
@@ -740,8 +739,6 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
                 isf_imf_context_input_panel_caps_mode_set (ctx, uppercase);
         }
     }
-    LOGD("next_shift_status : %d, force %d",
-        context_scim->impl->next_shift_status, force);
 
     return uppercase;
 }
@@ -2053,14 +2050,11 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
             key.code == SHIFT_MODE_ON ||
             key.code == SHIFT_MODE_LOCK) {
             ic->impl->next_shift_status = _key.code;
-            LOGD("next_shift_status : %d, by shift mode key event", _key.code);
         } else if (key.code == SHIFT_MODE_ENABLE ) {
             ic->impl->shift_mode_enabled = true;
             caps_mode_check (ic->ctx, EINA_TRUE, EINA_TRUE);
-            LOGD("SHIFT_MODE_ENABLED received");
         } else if (key.code == SHIFT_MODE_DISABLE ) {
             ic->impl->shift_mode_enabled = false;
-            LOGD("SHIFT_MODE_DISABLED received");
         }
     }
 
@@ -3511,8 +3505,6 @@ slot_commit_string (IMEngineInstanceBase *si,
         Eina_Bool auto_capitalized = EINA_FALSE;
 
         if (ic->impl) {
-            LOGD("shift_mode_enabled : %d, cursorpos : %d, string : %s",
-                    ic->impl->shift_mode_enabled, ic->impl->cursor_pos, utf8_wcstombs (str).c_str ());
             if (ic->impl->shift_mode_enabled &&
                 ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
                 hw_keyboard_num_get() == 0) {
