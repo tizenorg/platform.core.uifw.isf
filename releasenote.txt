@@ -1,6 +1,7 @@
 ISF 2.4.6426 :
  1. [immodule] fix prevent issue
  2. [immodule] Fix capslock bug in USB keyboard
+ 3. [panel] Adjust the rotation angle when ISE delivers its ROT_CHANGE_REQ
 
 
 ISF 2.4.6424 :
