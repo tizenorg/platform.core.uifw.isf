@@ -32,6 +32,7 @@ extern "C"
 {
 #endif /* __cplusplus */
     void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value);
+    int hw_keyboard_num_get ();
 
     /* non UI related works */
     void isf_imf_input_panel_init ();

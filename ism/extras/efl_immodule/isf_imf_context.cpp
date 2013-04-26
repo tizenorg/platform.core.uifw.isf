@@ -3514,7 +3514,8 @@ slot_commit_string (IMEngineInstanceBase *si,
             LOGD("shift_mode_enabled : %d, cursorpos : %d, string : %s",
                     ic->impl->shift_mode_enabled, ic->impl->cursor_pos, utf8_wcstombs (str).c_str ());
             if (ic->impl->shift_mode_enabled &&
-                ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE) {
+                ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
+                hw_keyboard_num_get() == 0) {
                 char converted[2] = {'\0'};
                 if (utf8_wcstombs (str).length () == 1) {
                     Eina_Bool uppercase;

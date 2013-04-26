@@ -353,6 +353,11 @@ void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int valu
     _event_callback_call (type, value);
 }
 
+int hw_keyboard_num_get ()
+{
+    return hw_kbd_num;
+}
+
 void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
 {
     if (IfInitContext == false) {
