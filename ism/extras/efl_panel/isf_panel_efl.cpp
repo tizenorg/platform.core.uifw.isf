@@ -3923,6 +3923,7 @@ int main (int argc, char *argv [])
     signal (SIGTERM, signalhandler);
     signal (SIGINT,  signalhandler);
     signal (SIGHUP,  signalhandler);
+    signal (SIGABRT, signalhandler);
 
     check_time ("EFL Panel launch time");
 
