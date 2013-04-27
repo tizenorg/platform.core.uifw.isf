@@ -3505,7 +3505,8 @@ slot_commit_string (IMEngineInstanceBase *si,
         Eina_Bool auto_capitalized = EINA_FALSE;
 
         if (ic->impl) {
-            if (ic->impl->shift_mode_enabled &&
+            if (ecore_imf_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL &&
+                ic->impl->shift_mode_enabled &&
                 ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
                 hw_keyboard_num_get() == 0) {
                 char converted[2] = {'\0'};
