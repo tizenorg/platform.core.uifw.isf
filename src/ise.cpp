@@ -44,7 +44,8 @@ extern CONFIG_VALUES g_config_values;
 static sclboolean g_need_send_shift_event = FALSE;
 
 KEYBOARD_STATE g_keyboard_state = {
-    -1,
+    0,
+    0,
     ISE_LAYOUT_STYLE_NORMAL,
     FALSE,
     TRUE,
@@ -272,9 +273,20 @@ ise_reset_input_context()
 {
 }
 
+sclboolean check_ic_temporary(int ic)
+{
+    if ((ic & 0xFFFF) == 0) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 void
 ise_focus_in(int ic)
 {
+    if (check_ic_temporary(g_keyboard_state.ic) && !check_ic_temporary(ic)) {
+        g_keyboard_state.ic = ic;
+    }
     if (ic == g_keyboard_state.ic) {
         if (g_ise_common) {
             if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
@@ -305,6 +317,9 @@ void ise_show(int ic)
 
         _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
+        if (check_ic_temporary(ic) && !check_ic_temporary(g_keyboard_state.focused_ic)) {
+            ic = g_keyboard_state.focused_ic;
+        }
         if (ic == g_keyboard_state.focused_ic) {
             if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
                     g_keyboard_state.layout == ISE_LAYOUT_STYLE_IP ||
