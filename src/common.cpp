@@ -203,11 +203,11 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
             Ecore_X_Window control_window = 0;
             Ecore_X_Atom atom = ecore_x_atom_get ("_ISF_CONTROL_WINDOW");
             Ecore_X_Window root = ecore_x_window_root_first_get ();
-            ecore_x_window_prop_xid_get(root, atom, ECORE_X_ATOM_WINDOW, &control_window, 1);
-
-            ecore_x_client_message32_send(control_window, ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST,
-                ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
-                ev->data.l[0], ev->data.l[1], ev->data.l[2], ev->data.l[3], ev->data.l[4]);
+            if (ecore_x_window_prop_xid_get(root, atom, ECORE_X_ATOM_WINDOW, &control_window, 1) == 1) {
+                ecore_x_client_message32_send(control_window, ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST,
+                    ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
+                    ev->data.l[0], ev->data.l[1], ev->data.l[2], ev->data.l[3], ev->data.l[4]);
+            }
         }
     }
 
