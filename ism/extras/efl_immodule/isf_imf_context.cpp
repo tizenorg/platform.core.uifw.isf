@@ -1226,6 +1226,9 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         }
 
         _panel_client.send ();
+        if (caps_mode_check (ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
+            context_scim->impl->next_shift_status = 0;
+        }
     }
 
     LOGD ("ctx : %p\n", ctx);
