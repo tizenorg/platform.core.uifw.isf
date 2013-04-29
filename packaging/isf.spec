@@ -128,7 +128,7 @@ ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 %files -n ug-isfsetting-efl
 %manifest ug-isfsetting-efl.manifest
 /etc/smack/accesses2.d/ug.isfsetting-efl.include
-/opt/share/packages/ug-isfsetting-efl.xml
+/usr/share/packages/ug-isfsetting-efl.xml
 %{_ugdir}/lib/libug-isfsetting-efl.so
 %{_ugdir}/res/locale/*/LC_MESSAGES/isfsetting-efl.*
 %{_datadir}/scim/isfsetting.edj
