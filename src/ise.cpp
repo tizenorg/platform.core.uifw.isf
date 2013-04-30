@@ -273,7 +273,8 @@ ise_reset_input_context()
 {
 }
 
-sclboolean check_ic_temporary(int ic)
+sclboolean
+check_ic_temporary(int ic)
 {
     if ((ic & 0xFFFF) == 0) {
         return TRUE;
@@ -284,6 +285,9 @@ sclboolean check_ic_temporary(int ic)
 void
 ise_focus_in(int ic)
 {
+    LOGD("ic : %d , %d , g_ic : %d , %d, g_focused_ic : %d , %d", ic, check_ic_temporary(ic),
+            g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
+            g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
     if (check_ic_temporary(g_keyboard_state.ic) && !check_ic_temporary(ic)) {
         g_keyboard_state.ic = ic;
     }
@@ -308,7 +312,22 @@ ise_focus_out(int ic)
     g_keyboard_state.focused_ic = 0;
 }
 
-void ise_show(int ic)
+void
+ise_attach_input_context(int ic)
+{
+    LOGD("attaching, ic : %d , %d , g_ic : %d , %d, g_focused_ic : %d , %d", ic, check_ic_temporary(ic),
+            g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
+            g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
+    ise_focus_in(ic);
+}
+void
+ise_detach_input_context(int ic)
+{
+    ise_focus_out(ic);
+}
+
+void
+ise_show(int ic)
 {
     sclboolean reset_inputmode = FALSE;
     if (gSCLUI && g_ise_common) {
@@ -317,8 +336,14 @@ void ise_show(int ic)
 
         _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
+    LOGD("ic : %d , %d , g_ic : %d , %d, g_focused_ic : %d , %d", ic, check_ic_temporary(ic),
+            g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
+            g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
         if (check_ic_temporary(ic) && !check_ic_temporary(g_keyboard_state.focused_ic)) {
             ic = g_keyboard_state.focused_ic;
+        }
+        if (!check_ic_temporary(ic) && check_ic_temporary(g_keyboard_state.focused_ic)) {
+            g_keyboard_state.focused_ic = ic;
         }
         if (ic == g_keyboard_state.focused_ic) {
             if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PHONENUMBER ||

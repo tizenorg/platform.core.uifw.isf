@@ -564,7 +564,7 @@ void slot_attach_input_context (const scim::HelperAgent *agent, int ic, const sc
     if (impl) {
         IISECommonEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
-            //callback->attach_input_context(ic, ic_uuid.c_str());
+            callback->attach_input_context(ic, ic_uuid.c_str());
         }
     }
 }
@@ -574,7 +574,7 @@ void slot_detach_input_context (const scim::HelperAgent *agent, int ic, const sc
     if (impl) {
         IISECommonEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
-            //callback->detach_input_context(ic, ic_uuid.c_str());
+            callback->detach_input_context(ic, ic_uuid.c_str());
         }
     }
 }

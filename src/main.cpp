@@ -41,6 +41,9 @@ class CCoreEventCallback : public IISECommonEventCallback
     void init();
     void exit(sclint ic, const sclchar *ic_uuid);
 
+    void attach_input_context(sclint ic, const sclchar *ic_uuid);
+    void detach_input_context(sclint ic, const sclchar *ic_uuid);
+
     void focus_out (sclint ic, const sclchar *ic_uuid);
     void focus_in (sclint ic, const sclchar *ic_uuid);
 
@@ -71,14 +74,24 @@ void CCoreEventCallback::exit(sclint ic, const sclchar *ic_uuid)
     ::ise_hide();
 }
 
+void CCoreEventCallback::attach_input_context(sclint ic, const sclchar *ic_uuid)
+{
+    ise_attach_input_context(ic);
+}
+
+void CCoreEventCallback::detach_input_context(sclint ic, const sclchar *ic_uuid)
+{
+    ise_detach_input_context(ic);
+}
+
 void CCoreEventCallback::focus_in(sclint ic, const sclchar *ic_uuid)
 {
-    ::ise_focus_in(ic);
+    ise_focus_in(ic);
 }
 
 void CCoreEventCallback::focus_out(sclint ic, const sclchar *ic_uuid)
 {
-    ::ise_focus_out(ic);
+    ise_focus_out(ic);
 }
 
 void CCoreEventCallback::ise_show(sclint ic, const sclint degree, Ise_Context context)

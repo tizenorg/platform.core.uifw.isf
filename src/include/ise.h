@@ -29,7 +29,7 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "0.8.4-1"
+#define ISE_VERSION "0.8.5-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
@@ -107,6 +107,8 @@ void ise_forward_key_event(sclulong key_event);
 
 void ise_focus_in(int ic);
 void ise_focus_out(int ic);
+void ise_attach_input_context(int ic);
+void ise_detach_input_context(int ic);
 void ise_show(int ic);
 void ise_hide();
 void ise_create();

@@ -36,6 +36,8 @@
 struct IISECommonEventCallback {
     virtual void init () {}
     virtual void exit (sclint ic, const sclchar *ic_uuid) {}
+    virtual void attach_input_context(sclint ic, const sclchar *ic_uuid) {}
+    virtual void detach_input_context(sclint ic, const sclchar *ic_uuid) {}
     virtual void reload_config (sclint ic, const sclchar *ic_uuid) {}
     virtual void update_spot_location (sclint ic, const sclchar *ic_uuid, sclint x, sclint y) {}
     virtual void update_cursor_position (sclint ic, const sclchar *ic_uuid, sclint cursor_pos) {}
