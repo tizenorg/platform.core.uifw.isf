@@ -4613,6 +4613,11 @@ private:
                         m_send_trans.put_data (icit->second [i].second);
                     }
                     m_start_helper_ic_index.erase (icit);
+                } else {
+                    m_send_trans.put_command (SCIM_TRANS_CMD_HELPER_ATTACH_INPUT_CONTEXT);
+                    uint32 ctx = get_helper_ic (m_current_socket_client, m_current_client_context);
+                    m_send_trans.put_data (ctx);
+                    m_send_trans.put_data (info.uuid);
                 }
 
                 m_send_trans.put_command (SCIM_TRANS_CMD_UPDATE_SCREEN);
