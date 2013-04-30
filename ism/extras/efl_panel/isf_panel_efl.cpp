@@ -2661,6 +2661,7 @@ static void update_table (int table_type, const LookupTable &table)
     if (more_item_count == 0) {
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
         evas_object_hide (_more_btn);
+        evas_object_hide (_close_btn);
     } else if (!evas_object_visible_get (_candidate_area_2)) {
         evas_object_show (_more_btn);
         evas_object_hide (_close_btn);
