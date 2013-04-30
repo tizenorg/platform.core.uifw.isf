@@ -1107,6 +1107,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 
     ui_candidate_window_rotate (_candidate_angle);
 
+    efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
     if (!evas_object_visible_get (_candidate_window)) {
         evas_object_show (_candidate_window);
         _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
@@ -1126,8 +1127,6 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 
     SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
     _candidate_window_show = true;
-    LOGD ("evas_object_show (_candidate_window, %p)\n", elm_win_xwindow_get ( _candidate_window));
-    efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
     if (_ise_show) {
         edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
         edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
@@ -1136,6 +1135,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "more_button");
     }
 
+    LOGD ("evas_object_show (_candidate_window, %p)\n", elm_win_xwindow_get ( _candidate_window));
     evas_object_show (_candidate_window);
 }
 
