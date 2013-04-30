@@ -530,9 +530,12 @@ void CISECommon::candidate_hide(void)
 
 void CISECommon::set_keyboard_ise_by_uuid(const sclchar *uuid)
 {
-    m_uuid_keyboard_ise = scim::String(uuid);
-    if (g_keyboard_state.ic == g_keyboard_state.focused_ic) {
-        m_helper_agent.set_keyboard_ise_by_uuid(m_uuid_keyboard_ise);
+    if (uuid) {
+        m_uuid_keyboard_ise = scim::String(uuid);
+        if (g_keyboard_state.ic == g_keyboard_state.focused_ic) {
+            LOGD("Calling helper_agent.set_keyboard_ise_by_uuid() : %s", uuid);
+            m_helper_agent.set_keyboard_ise_by_uuid(m_uuid_keyboard_ise);
+        }
     }
 }
 

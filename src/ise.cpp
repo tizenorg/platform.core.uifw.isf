@@ -291,6 +291,7 @@ ise_focus_in(int ic)
     if (check_ic_temporary(g_keyboard_state.ic) && !check_ic_temporary(ic)) {
         g_keyboard_state.ic = ic;
     }
+    g_keyboard_state.focused_ic = ic;
     if (ic == g_keyboard_state.ic) {
         if (g_ise_common) {
             if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PHONENUMBER ||
@@ -303,7 +304,6 @@ ise_focus_in(int ic)
             }
         }
     }
-    g_keyboard_state.focused_ic = ic;
 }
 
 void
@@ -320,6 +320,7 @@ ise_attach_input_context(int ic)
             g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
     ise_focus_in(ic);
 }
+
 void
 ise_detach_input_context(int ic)
 {
