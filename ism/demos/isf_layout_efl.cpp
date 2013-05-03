@@ -29,7 +29,7 @@
 
 static void _back_key_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    ecore_x_test_fake_key_press(KEY_END);
+    ecore_x_test_fake_key_press (KEY_END);
 }
 
 static void _rotate_cb (void *data, Evas_Object *obj, void *event_info)
@@ -80,7 +80,7 @@ static void _language_changed_cb (void *data, Ecore_IMF_Context *ctx, int value)
 {
     char *locale;
 
-    ecore_imf_context_input_panel_language_locale_get(ctx, &locale);
+    ecore_imf_context_input_panel_language_locale_get (ctx, &locale);
 
     printf ("[%s] language : %s\n", __func__, locale);
 
@@ -263,7 +263,7 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (back_key_btn, EVAS_HINT_FILL, 0);
     evas_object_show (back_key_btn);
     elm_box_pack_end (bx, back_key_btn);
-    elm_object_focus_allow_set(back_key_btn, EINA_FALSE);
+    elm_object_focus_allow_set (back_key_btn, EINA_FALSE);
 
     /* Click to rotate button */
     Evas_Object *rotate_btn = elm_button_add (parent);

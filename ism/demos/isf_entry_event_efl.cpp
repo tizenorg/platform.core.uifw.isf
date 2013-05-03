@@ -71,7 +71,7 @@ static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
     } else if (elm_object_focus_get (_entry2) == EINA_TRUE) {
         imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry2);
         ecore_imf_context_preedit_string_get (imf_context, &preedit_string, &len);
-        snprintf (str, sizeof(str),"entry 2 get preedit string: %s", preedit_string);
+        snprintf (str, sizeof(str), "entry 2 get preedit string: %s", preedit_string);
         elm_object_text_set (_preedit_event_label, str);
     }
 
@@ -84,10 +84,10 @@ static Eina_Bool _ecore_imf_event_commit_cb (void *data, int type, void *event)
     Ecore_IMF_Event_Commit *ev = (Ecore_IMF_Event_Commit *) event;
 
     if (elm_object_focus_get (_entry1) == EINA_TRUE) {
-        snprintf (str, sizeof(str), "entry 1 get commit string: %s", (char *)( ev->str));
+        snprintf (str, sizeof(str), "entry 1 get commit string: %s", (char *)(ev->str));
         elm_object_text_set (_commit_event_label, str);
     } else if (elm_object_focus_get (_entry2) == EINA_TRUE) {
-        snprintf (str, sizeof(str), "entry 2 get commit string: %s",  (char *)(ev->str));
+        snprintf (str, sizeof(str), "entry 2 get commit string: %s", (char *)(ev->str));
         elm_object_text_set (_commit_event_label, str);
     }
     return ECORE_CALLBACK_RENEW;

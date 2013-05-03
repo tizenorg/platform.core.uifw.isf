@@ -52,8 +52,6 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    /* Caps lock mode off */
-
     /* NONE type */
     ef = _create_ef_layout (parent, _("NONE type"), _("click to enter"), ELM_AUTOCAPITAL_TYPE_NONE, EINA_FALSE);
     elm_box_pack_end (bx, ef);

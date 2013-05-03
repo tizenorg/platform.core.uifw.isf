@@ -38,9 +38,7 @@ static Ecore_Event_Handler *_preedit_handler = NULL;
 static Ecore_Event_Handler *_commit_handler  = NULL;
 static int focus_label_idx = 1;
 
-
 void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info);
-
 
 static void _set_focus_button_bt (void *data, Evas_Object *obj, void *event_info)
 {
@@ -63,10 +61,10 @@ static void _key_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
     Evas_Event_Key_Up *ev = (Evas_Event_Key_Up *) event_info;
 
     if (obj == _label1) {
-        snprintf (str, sizeof(str),"label 1  get key up event: %s", (char *)(ev->keyname));
+        snprintf (str, sizeof(str), "label 1  get key up event: %s", (char *)(ev->keyname));
         elm_object_text_set (_key_event_label, str);
     } else if (obj == _label2) {
-        snprintf (str,sizeof(str), "label 2  get key up event: %s", (char *)(ev->keyname));
+        snprintf (str, sizeof(str), "label 2  get key up event: %s", (char *)(ev->keyname));
         elm_object_text_set (_key_event_label, str);
     }
 }
@@ -80,7 +78,7 @@ static void _key_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_inf
         snprintf (str, sizeof(str), "label 1  get key down event: %s", (char *)(ev->keyname));
         elm_object_text_set (_key_event_label, str);
     } else if (obj == _label2) {
-        snprintf (str, sizeof(str),"label 2  get key down event: %s", (char *)(ev->keyname));
+        snprintf (str, sizeof(str), "label 2  get key down event: %s", (char *)(ev->keyname));
         elm_object_text_set (_key_event_label, str);
     }
 }
@@ -98,7 +96,7 @@ static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
     if (preedit_string == NULL)
         return ECORE_CALLBACK_CANCEL;
 
-    snprintf (str,sizeof(str), "label %d get preedit string: %s", focus_label_idx, preedit_string);
+    snprintf (str, sizeof(str), "label %d get preedit string: %s", focus_label_idx, preedit_string);
 
     free (preedit_string);
     elm_object_text_set (_preedit_event_label, str);

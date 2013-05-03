@@ -25,7 +25,7 @@
 #include "isf_demo_efl.h"
 
 static void
-_entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
+_entry_activated_cb (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *parent = (Evas_Object *)data;
     elm_object_focus_next (parent, ELM_FOCUS_NEXT);
