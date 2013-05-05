@@ -607,14 +607,13 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
 {
     char *plain_str = NULL;
     char *markup_str = NULL;
-    const char *puncs[] = {". ", ".\302\240", "! ", "!\302\240", "? ", "?\302\240", "¿ ", "¿\302\240", "¡ ", "¡\302\240" };
-    Eina_Bool ret = EINA_FALSE;
-    int cursor_pos = 0;
-    int i = 0;
-    Eina_Unicode *tail = NULL;
+    Eina_Unicode puncs[] = {'.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */};
     Eina_Unicode *ustr = NULL;
+    Eina_Bool ret = EINA_FALSE;
+    Eina_Bool detect_space = EINA_FALSE;
+    int cursor_pos = 0;
+    int i = 0, j = 0;
     const int punc_num = sizeof (puncs) / sizeof (puncs[0]);
-    Eina_Unicode *uni_puncs[punc_num];
     EcoreIMFContextISF *context_scim;
 
     if (!ctx) return EINA_FALSE;
@@ -633,10 +632,6 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
     if (context_scim->impl->cursor_pos == 0)
         return EINA_TRUE;
 
-    for (i = 0; i < punc_num; i++) {
-        uni_puncs[i] = eina_unicode_utf8_to_unicode (puncs[i], NULL);
-    }
-
     ecore_imf_context_surrounding_get (ctx, &markup_str, &cursor_pos);
     if (!markup_str) goto done;
 
@@ -653,36 +648,48 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
     ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
     if (!ustr) goto done;
 
-    if (eina_unicode_strlen (ustr) < cursor_pos) goto done;
+    if (eina_unicode_strlen (ustr) < (size_t)cursor_pos) goto done;
 
     if (cursor_pos >= 1) {
         if (context_scim->impl->autocapital_type == ECORE_IMF_AUTOCAPITAL_TYPE_WORD) {
-            if (ustr[cursor_pos-1] == ' ' || ustr[cursor_pos-1] == '\302\240') {
+            // Check space or no-break space
+            if (ustr[cursor_pos-1] == ' ' || ustr[cursor_pos-1] == 0x00A0) {
                 ret = EINA_TRUE;
                 goto done;
             }
         }
 
-        // Check paragraph separator <PS> and carriage return  <br>
+        // Check paragraph separator <PS> or carriage return  <br>
         if ((ustr[cursor_pos-1] == 0x2029) || (ustr[cursor_pos-1] == '\n')) {
             ret = EINA_TRUE;
             goto done;
         }
-    }
 
-    // check punctuation
-    if (cursor_pos >= 2) {
-        tail = eina_unicode_strndup (ustr+cursor_pos-2, 2);
+        for (i = cursor_pos; i > 0; i--) {
+            // Check space or no-break space
+            if (ustr[i-1] == ' ' || ustr[i-1] == 0x00A0) {
+                detect_space = EINA_TRUE;
+                continue;
+            }
 
-        if (tail) {
-            for (i = 0; i < punc_num; i++) {
-                if (!eina_unicode_strcmp (tail, uni_puncs[i])) {
+            for (j = 0; j < punc_num; j++) {
+                // Check punctuation and following the continuous space(s)
+                if ((ustr[i-1] == puncs[j]) && (detect_space == EINA_TRUE)) {
                     ret = EINA_TRUE;
-                    break;
+                    goto done;
                 }
             }
-            free (tail);
-            tail = NULL;
+
+            if (j == punc_num) {
+                // other character
+                break;
+            }
+        }
+
+        if ((i == 0) && (detect_space == EINA_TRUE)) {
+            // continuous space(s) without any character
+            ret = EINA_TRUE;
+            goto done;
         }
     }
 
@@ -690,10 +697,6 @@ done:
     if (ustr) free (ustr);
     if (markup_str) free (markup_str);
     if (plain_str) free (plain_str);
-
-    for (i = 0; i < punc_num; i++) {
-        if (uni_puncs[i]) free (uni_puncs[i]);
-    }
 
     return ret;
 }
