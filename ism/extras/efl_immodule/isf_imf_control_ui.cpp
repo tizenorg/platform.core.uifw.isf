@@ -67,11 +67,19 @@ static void _render_post_cb (void *data, Evas *e, void *event_info)
     isf_imf_context_input_panel_send_will_hide_ack ();
 }
 
-static Eina_Bool _clear_timer (Ecore_Timer *timer)
+static void _clear_will_show_timer ()
 {
-    if (timer) {
-        ecore_timer_del (timer);
-        timer = NULL;
+    if (will_show_timer) {
+        ecore_timer_del (will_show_timer);
+        will_show_timer = NULL;
+    }
+}
+
+static Eina_Bool _clear_hide_timer ()
+{
+    if (hide_timer) {
+        ecore_timer_del (hide_timer);
+        hide_timer = NULL;
         return EINA_TRUE;
     }
 
@@ -312,7 +320,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
     hide_req_ic = ctx;
 
     if (instant) {
-        _clear_timer (hide_timer);
+        _clear_hide_timer ();
         _save_hide_context_info (ctx);
         _send_input_panel_hide_request ();
     } else {
@@ -403,7 +411,7 @@ void isf_imf_input_panel_shutdown (void)
 
     _win_focus_out_handler_del ();
 
-    _clear_timer (will_show_timer);
+    _clear_will_show_timer ();
 
     if (hide_timer) {
         if (input_panel_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
@@ -411,7 +419,7 @@ void isf_imf_input_panel_shutdown (void)
         }
     }
 
-    _clear_timer (hide_timer);
+    _clear_hide_timer ();
 
     _isf_imf_control_finalize ();
 }
@@ -476,7 +484,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         return;
     }
 
-    if (_clear_timer (hide_timer)) {
+    if (_clear_hide_timer ()) {
         hide_req_ic = NULL;
     }
 
@@ -541,7 +549,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     if (input_panel_show == true && input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
         input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
 
-        _clear_timer (will_show_timer);
+        _clear_will_show_timer ();
         will_show_timer = ecore_timer_add (WILL_SHOW_TIMER_INTERVAL, _will_show_timer_handler, NULL);
     }
 
@@ -934,12 +942,12 @@ static bool _process_update_input_context (Transaction &trans)
                 _process_ise_panel_hided ();
                 return true;
             case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
-                _clear_timer (will_show_timer);
+                _clear_will_show_timer ();
                 _process_ise_panel_showed ();
                 return true;
             case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
                 input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
-                _clear_timer (will_show_timer);
+                _clear_will_show_timer ();
                 break;
             case SCIM_INPUT_PANEL_STATE_WILL_HIDE:
                 break;
