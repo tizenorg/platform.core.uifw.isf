@@ -2468,7 +2468,7 @@ static void ui_load_config (void)
 
         if (str != String ("default")) {
 #if HAVE_GCONF
-            snprintf (font_description_string, sizeof (font_description_string), "Vodafone Rg Bold %d", FONT_SIZE_OF_CANDIDATE_WIDGET);
+            snprintf (font_description_string, sizeof (font_description_string), "TizenSans %d", FONT_SIZE_OF_CANDIDATE_WIDGET);
 #endif
         } else {
             snprintf (font_description_string, sizeof (font_description_string), "default");

@@ -16,7 +16,7 @@
 /Panel/Gtk/Color/NormalBackground = #DDDDFF
 /Panel/Gtk/Color/NormalText = black
 /Panel/Gtk/Color/HighlightText = #88BB09
-/Panel/Gtk/Font = Vodafone Rg Bold 22
+/Panel/Gtk/Font = TizenSans 22
 /Panel/Gtk/DefaultSticked = false
 /Panel/Gtk/LookupTableEmbedded = true
 /Panel/Gtk/LookupTableVertical = true
