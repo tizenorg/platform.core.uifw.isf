@@ -56,9 +56,6 @@ endif
 pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
-smackdir = /etc/smack/accesses2.d/
-smack_DATA = isf.rule
-
 ugxmldir = /usr/share/packages/
 ugxml_DATA = ug-isfsetting-efl.xml
 

@@ -4,7 +4,7 @@
 Name:       isf
 Summary:    Input Service Framework
 Version:    2.4.6506
-Release:    1
+Release:    2
 Group:      System Environment/Libraries
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
@@ -87,7 +87,6 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 %files
 %manifest %{name}.manifest
-/etc/smack/accesses2.d/%{name}.rule
 %defattr(-,root,root,-)
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service
