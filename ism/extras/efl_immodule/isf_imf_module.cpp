@@ -23,6 +23,7 @@
  */
 
 #include <stdio.h>
+#include <dlog.h>
 #include "isf_imf_context.h"
 #include "isf_imf_control_ui.h"
 
@@ -97,7 +98,7 @@ extern "C"
 
         ctxd = isf_imf_context_new ();
         if (!ctxd) {
-            printf ("isf_imf_context_new () failed!!!\n");
+            LOGE ("isf_imf_context_new () failed!!!\n");
             return NULL;
         }
 
