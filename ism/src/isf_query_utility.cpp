@@ -55,6 +55,9 @@ using namespace scim;
  */
 EAPI String isf_get_normalized_language (String src_str)
 {
+    if (src_str.length () == 0)
+        return String ("en");
+
     std::vector<String> str_list, dst_list;
     scim_split_string_list (str_list, src_str);
 
