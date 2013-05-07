@@ -57,6 +57,7 @@ Ecore_IMF_Context        *input_panel_ctx = NULL;
 static Ecore_Event_Handler *_win_focus_out_handler = NULL;
 static Eina_Bool          conformant_reset_done = EINA_FALSE;
 static Eina_Bool          received_will_hide_event = EINA_FALSE;
+static Eina_Bool          will_hide = EINA_FALSE;
 
 static void _send_input_panel_hide_request ();
 
@@ -197,6 +198,7 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                         show_req_ic = NULL;
 
                     hide_req_ic = NULL;
+                    will_hide = EINA_FALSE;
                     break;
                 case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
                     LOGD ("[input panel has been shown] ctx : %p\n", using_ic);
@@ -317,6 +319,7 @@ static void _input_panel_hide (Ecore_IMF_Context *ctx, Eina_Bool instant)
     if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
         return;
 
+    will_hide = EINA_TRUE;
     hide_req_ic = ctx;
 
     if (instant) {
@@ -491,11 +494,13 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     if ((show_req_ic == ctx) &&
         (_compare_context (show_req_ic, ctx) == EINA_TRUE) &&
         (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
-         input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW)) {
+         input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) &&
+        (!will_hide)) {
         LOGD ("already show");
         return;
     }
 
+    will_hide = EINA_FALSE;
     show_req_ic = ctx;
 
     LOGD ("===============================================================\n");
