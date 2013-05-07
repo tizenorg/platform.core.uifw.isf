@@ -15,6 +15,9 @@
  *
  */
 
+#include <dlog.h>
+#undef LOG_TAG
+#define LOG_TAG "ISE_DEFAULT"
 #include "sdk.h"
 #include "option.h"
 #include "ise_lang_table.h"
@@ -53,7 +56,7 @@ public :
 
             _language_manager.add_language(language);
 
-            printf("Adding Language : %s\n", get_lang_table()[loop].language);
+            LOGD("Adding Language : %s\n", get_lang_table()[loop].language);
         }
 #endif // SETUP_MODULE
 

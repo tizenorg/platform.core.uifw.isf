@@ -15,6 +15,9 @@
  *
  */
 
+#include <dlog.h>
+#undef LOG_TAG
+#define LOG_TAG "ISE_DEFAULT"
 #include <scl.h> // scl structures need
 #include <libxml/parser.h>
 #include <vector>
@@ -123,19 +126,19 @@ Ise_Lang::parsing_languages() {
 
     doc = xmlReadFile(LANG_TABLE_XML_PATH, NULL, 0);
     if (doc == NULL) {
-        printf("Could not load file.\n");
+        LOGD("Could not load file.\n");
         exit(1);
     }
 
     cur_node = xmlDocGetRootElement(doc);
     if (cur_node == NULL) {
-        printf("empty document.\n");
+        LOGD("empty document.\n");
         xmlFreeDoc(doc);
         exit(1);
     }
     if (0 != xmlStrcmp(cur_node->name, (const xmlChar*)"languages"))
     {
-        printf("root name %s error!\n", cur_node->name);
+        LOGD("root name %s error!\n", cur_node->name);
         xmlFreeDoc(doc);
         exit(1);
     }
@@ -159,7 +162,7 @@ void
 Ise_Lang::parsing_keyboard_uuid_table(const xmlNodePtr p_node) {
     assert(p_node != NULL);
     if (0 != xmlStrcmp(p_node->name, (const xmlChar *)"keyboard_uuid_table")) {
-        printf("parsing-keyboard_uuid_table error.\n");
+        LOGD("parsing-keyboard_uuid_table error.\n");
         return;
     }
     xmlNodePtr cur_node = p_node->xmlChildrenNode;
@@ -207,7 +210,7 @@ Ise_Lang::parsing_lang_table(const xmlNodePtr p_node) {
     assert(p_node != NULL);
 
     if (0 != xmlStrcmp(p_node->name, (const xmlChar *)"language_table")) {
-        printf("parsing language_table error.\n");
+        LOGD("parsing language_table error.\n");
         return;
     }
     xmlNodePtr cur_node = p_node->xmlChildrenNode;

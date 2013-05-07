@@ -495,7 +495,7 @@ ise_create()
                 if (language) {
                     for (scluint inner_loop = 0;inner_loop < language->input_modes.size();inner_loop++) {
                         INPUT_MODE_INFO &info = language->input_modes.at(inner_loop);
-                        printf("Registering callback for input mode %s : %p\n", info.name.c_str(), language->callback);
+                        LOGD("Registering callback for input mode %s : %p\n", info.name.c_str(), language->callback);
                         gSCLUI->set_ui_event_callback(language->callback, info.name.c_str());
                     }
                 }

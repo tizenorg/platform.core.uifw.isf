@@ -178,7 +178,6 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
 #ifndef APPLY_WINDOW_MANAGER_CHANGE
 #else
     if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE) {
-        printf("ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE , %d %d\n", ev->data.l[0], gFHiddenState);
         LOGD("ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE , %d %d\n", ev->data.l[0], gFHiddenState);
         angle = ev->data.l[0];
         ise_set_screen_direction(angle);
@@ -186,7 +185,6 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
             ise_show(gLastIC);
         }
     } else if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
-        printf("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE , %d\n", ev->data.l[0]);
         LOGD("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE , %d\n", ev->data.l[0]);
         elm_win_keyboard_mode_set(main_window, (Elm_Win_Keyboard_Mode)(ev->data.l[0]));
         gFHiddenState = !(ev->data.l[0]);
@@ -1010,11 +1008,11 @@ Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler)
         if (agent) {
             if (agent->has_pending_event()) {
                 if (!(agent->filter_event())) {
-                    printf("helper_agent.filter_event() failed!!!\n");
+                    LOGD("helper_agent.filter_event() failed!!!\n");
                     elm_exit();
                 }
             } else {
-                printf("helper_agent.has_pending_event() failed!!!\n");
+                LOGD("helper_agent.has_pending_event() failed!!!\n");
                 elm_exit();
             }
         }
