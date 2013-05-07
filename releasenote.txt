@@ -1,3 +1,7 @@
+ISF 2.4.6507 :
+ 1. [immodule] fix bug show request was ignored after input panel hide is called but hide state callback wasn't called
+
+
 ISF 2.4.6506 :
  1. [immodule] fix crash issue if cursor position value is more than the length of surrounding text
  2. [immodule] fix autoperiod bug
