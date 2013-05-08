@@ -1,3 +1,8 @@
+ISF 2.4.6508 :
+ 1. Set default language for isf_get_normalized_language ()
+ 2. check cursor index of ecore_imf_context_surrounding_get
+
+
 ISF 2.4.6507 :
  1. [immodule] fix bug show request was ignored after input panel hide is called but hide state callback wasn't called
 
