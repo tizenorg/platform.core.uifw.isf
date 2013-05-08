@@ -3687,6 +3687,8 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
         if (ecore_imf_context_surrounding_get (_focused_ic->ctx, &surrounding, &cursor_index)) {
             SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
             SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
+            if (cursor_index < 0)
+                return false;
             WideString before = utf8_mbstowcs (String (surrounding));
             if (cursor_index > (int)before.length())
                 return false;
