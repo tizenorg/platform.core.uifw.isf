@@ -29,7 +29,7 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "0.8.6-1"
+#define ISE_VERSION "0.8.7-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"

@@ -208,11 +208,17 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                     g_ise_common->set_keyboard_size_hints(size_portrait, size_landscape);
 
                     /* Check if we need to turn on the shift key */
-                    if (g_keyboard_state.caps_mode) {
-                        LANGUAGE_INFO *info = _language_manager.get_language_info(language);
-                        if (info) {
-                            if (info->accepts_caps_mode) {
+                    LANGUAGE_INFO *info = _language_manager.get_language_info(language);
+                    if (info) {
+                        if (info->accepts_caps_mode) {
+                            if (g_keyboard_state.caps_mode) {
                                 gSCLUI->set_shift_state(SCL_SHIFT_STATE_ON);
+                                ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
+                                g_keyboard_state.caps_mode = TRUE;
+                            } else {
+                                gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
+                                ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
+                                g_keyboard_state.caps_mode = FALSE;
                             }
                         }
                     }
