@@ -81,8 +81,6 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 static void input_mode_selected(void *data, Evas_Object *obj, void *event_info);
 static void language_selected(void *data, Evas_Object *obj, void *event_info);
 
-static void set_the_selected_language();
-
 static void navi_back_cb(void *data, Evas_Object *obj, void *event_info);
 
 std::vector<ILanguageOption*> LanguageOptionManager::language_option_vector;

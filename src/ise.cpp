@@ -115,6 +115,11 @@ ise_forward_key_event(sclulong key_event)
     g_ise_common->forward_key_event(-1, "", key_event, scim::SCIM_KEY_ReleaseMask);
 }
 
+static void set_caps_mode(sclint mode) {
+    if (gSCLUI->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
+        gSCLUI->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
+    }
+}
 static sclboolean
 on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_type)
 {
@@ -133,10 +138,10 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if (info) {
             if (info->accepts_caps_mode) {
                 ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
-                gSCLUI->set_caps_mode(g_keyboard_state.caps_mode);
+                set_caps_mode(g_keyboard_state.caps_mode);
             } else {
                 ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
-                gSCLUI->set_caps_mode(0);
+                gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
             }
         }
     }
@@ -415,11 +420,23 @@ ise_show(int ic)
 
         if (info) {
             if (info->accepts_caps_mode) {
-                ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+                // FIXME this if condition means the AC is off
+                if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
+                    gSCLUI->set_autocapital_shift_state(TRUE);
+                    gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
+                }
+                // normal layout means the AC is on
+                else {
+                    ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+                    gSCLUI->set_autocapital_shift_state(FALSE);
+                }
             } else {
+                gSCLUI->set_autocapital_shift_state(TRUE);
                 ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
-                gSCLUI->set_caps_mode(0);
+                gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
             }
+        } else {
+            gSCLUI->set_autocapital_shift_state(TRUE);
         }
 
         gSCLUI->show();
@@ -561,9 +578,9 @@ ise_set_caps_mode(unsigned int mode)
     LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
     if (info) {
         if (info->accepts_caps_mode) {
-            gSCLUI->set_caps_mode(g_keyboard_state.caps_mode);
+            set_caps_mode(g_keyboard_state.caps_mode);
         } else {
-            gSCLUI->set_caps_mode(0);
+            gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
         }
     }
 }

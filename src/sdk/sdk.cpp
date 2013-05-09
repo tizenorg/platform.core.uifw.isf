@@ -87,6 +87,11 @@ extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
 extern KEYBOARD_STATE g_keyboard_state;
 
+static void set_caps_mode(sclint mode) {
+    if (gSCLUI->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
+        gSCLUI->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
+    }
+}
 SCLEventReturnType
 CSDKISE::process_key_type_char(const SclUIEventDesc& event_desc)
 {
@@ -150,11 +155,22 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                 LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
                 if (info) {
                     if (info->accepts_caps_mode) {
-                        ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
-                        gSCLUI->set_caps_mode(g_keyboard_state.caps_mode);
+                        // FIXME this if condition means the AC is off
+                        if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
+                            gSCLUI->set_autocapital_shift_state(TRUE);
+                            gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
+                        }
+
+                        // normal layout means the AC is on
+                        else {
+                            gSCLUI->set_autocapital_shift_state(FALSE);
+                            ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+                            set_caps_mode(g_keyboard_state.caps_mode);
+                        }
                     } else {
+                        gSCLUI->set_autocapital_shift_state(TRUE);
                         ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
-                        gSCLUI->set_caps_mode(0);
+                        gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
                     }
                 }
             } else {
@@ -220,7 +236,13 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                                 ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
                                 g_keyboard_state.caps_mode = FALSE;
                             }
+                            // not allow the SCL auto capital shift state
+                            gSCLUI->set_autocapital_shift_state(FALSE);
+                        } else {
+                            gSCLUI->set_autocapital_shift_state(TRUE);
                         }
+                    } else {
+                        gSCLUI->set_autocapital_shift_state(TRUE);
                     }
                     /* And set the url postfixes */
                     for (sclint inner_loop = 0;inner_loop < (sizeof(url_postfixes) / sizeof (const char *));inner_loop++) {
