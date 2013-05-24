@@ -74,7 +74,6 @@ extern CONFIG_VALUES g_config_values;
 
 static Evas_Object* create_main_window();
 static Evas_Object* create_option_language_view(Evas_Object *naviframe);
-static Evas_Object* create_naviframe(Evas_Object *ly);
 
 /* This function is called by setup_module.cpp : create_ise_setup_eo() also */
 Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe);
