@@ -51,7 +51,9 @@
   -->
   <rec language="Farsi" language_name="فارسی" inputmode_QTY="FARSI_QTY" inputmode_QTY_name="Farsi" keyboard_ise_uuid="uuid_default" country_code_URL="ir"/>
   <rec language="Urdu" language_name="اردو" inputmode_QTY="URDU_QTY" inputmode_QTY_name="Urdu" keyboard_ise_uuid="uuid_default" country_code_URL="in"/>
+  <!--
   <rec language="Hebrew" language_name="עברית" inputmode_QTY="HEBREW_QTY" inputmode_QTY_name="Hebrew" keyboard_ise_uuid="uuid_default" country_code_URL="il"/>
+  -->
   <rec language="Korean" language_name="한글" inputmode_QTY="KOREAN_QTY" inputmode_QTY_name="쿼티" main_keyboard_name="쿼티" keyboard_ise_uuid="uuid_korean" country_code_URL="kr"/>
   <rec language="Chinese" language_name="简体中文" inputmode_QTY="CHINESE_QTY" inputmode_QTY_name="Qwerty键盘" main_keyboard_name="中" keyboard_ise_uuid="uuid_sunpinyin" country_code_URL="cn"/>
   <rec language="Taiwan" language_name="繁體中文-註音" inputmode_QTY="ZHUYIN_QTY" inputmode_QTY_name="註音" main_keyboard_name="中" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw"/>
