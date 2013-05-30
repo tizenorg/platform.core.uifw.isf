@@ -261,7 +261,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
 
-    elm_win_alpha_set(m_main_window, EINA_TRUE);
+    //elm_win_alpha_set(m_main_window, EINA_TRUE);
     elm_win_borderless_set(m_main_window, EINA_TRUE);
     elm_win_keyboard_win_set(m_main_window, EINA_TRUE);
     elm_win_autodel_set(m_main_window, EINA_TRUE);
