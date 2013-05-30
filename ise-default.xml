@@ -5,7 +5,7 @@
 <description/>
 <label>Tizen keyboard</label>
 <icon/>
-<ui-application appid="PRIVTISE01.ise-default" exec="/usr/lib/scim-1.0/1.4.0/Helper/ise-default.so" nodisplay="true" taskmanage="false" multiple="false" type="capp" hw-acceleration="use-system-setting" mainapp="true">
+<ui-application appid="PRIVTISE01.ise-default" exec="/usr/lib/scim-1.0/scim-helper-launcher" nodisplay="true" taskmanage="false" multiple="false" type="capp" hw-acceleration="use-system-setting" mainapp="true">
         <category name="http://tizen.org/category/ime"/>
         <label>Tizen Keyboard</label>
         <label xml:lang="en-us">Tizen Keyboard</label>
