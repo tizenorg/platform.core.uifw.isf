@@ -199,6 +199,7 @@
       <landscape>LYT_LANDSCAPE_QTY_ARABIC.xml</landscape>
     </layouts>
   </mode>
+  -->
   <mode name="FARSI_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_FARSI.xml</portrait>
@@ -211,6 +212,7 @@
       <landscape>LYT_LANDSCAPE_QTY_URDU.xml</landscape>
     </layouts>
   </mode>
+  <!--
   <mode name="HEBREW_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_HEBREW.xml</portrait>
@@ -278,13 +280,13 @@
       <landscape>LYT_LANDSCAPE_QTY_VIETNAMESE.xml</landscape>
     </layouts>
   </mode>
-  <!--
   <mode name="THAI_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_THAI.xml</portrait>
       <landscape>LYT_LANDSCAPE_QTY_THAI.xml</landscape>
     </layouts>
   </mode>
+  <!--
   <mode name="HINDI_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_HINDI.xml</portrait>
