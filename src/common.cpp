@@ -164,7 +164,7 @@ void theme_changed_cb(keynode_t *key, void* data)
 void accessibility_changed_cb(keynode_t *key, void* data)
 {
     int vconf_value = 0;
-    if(vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &vconf_value) == 0) {
+    if (vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &vconf_value) == 0) {
         LOGD("accessbility state : %d\n", vconf_value);
 
         CISECommon *impl = CISECommon::get_instance();
@@ -311,35 +311,35 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     register_slot_functions();
 
-    m_helper_agent.open_connection (m_helper_info, display);
+    m_helper_agent.open_connection(m_helper_info, display);
     int fd = m_helper_agent.get_connection_number();
 
     if (fd >= 0) {
         Ecore_X_Window xwindow = elm_win_xwindow_get(m_main_window);
         char xid[255];
         snprintf(xid, 255, "%d", xwindow);
-        scim::Property prop (xid, "XID", "", "");
+        scim::Property prop(xid, "XID", "", "");
         scim::PropertyList props;
-        props.push_back (prop);
-        m_helper_agent.register_properties (props);
+        props.push_back(prop);
+        m_helper_agent.register_properties(props);
 
         ecore_main_fd_handler_add(fd, ECORE_FD_READ, input_handler, NULL, NULL, NULL);
     }
 
     Ecore_Event_Handler *XClientMsgHandler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, m_main_window);
 
-    signal (SIGQUIT, signal_handler);
-    signal (SIGTERM, signal_handler);
-    signal (SIGINT,  signal_handler);
-    signal (SIGHUP,  signal_handler);
+    signal(SIGQUIT, signal_handler);
+    signal(SIGTERM, signal_handler);
+    signal(SIGINT,  signal_handler);
+    signal(SIGHUP,  signal_handler);
 
     elm_run();
 
-    vconf_ignore_key_changed (VCONFKEY_LANGSET, language_changed_cb);
-    vconf_ignore_key_changed (VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb);
-    vconf_ignore_key_changed (VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
+    vconf_ignore_key_changed(VCONFKEY_LANGSET, language_changed_cb);
+    vconf_ignore_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb);
+    vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
-    ecore_event_handler_del (XClientMsgHandler);
+    ecore_event_handler_del(XClientMsgHandler);
 
     /* Would the below code needed? */
     /*
