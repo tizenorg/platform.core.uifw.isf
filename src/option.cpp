@@ -516,7 +516,9 @@ language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
     std::string languages = compose_selected_languages_string();
     strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
 
-    evas_object_smart_callback_del(obj, "clicked", language_selection_finished_cb);
+    if (obj) {
+        evas_object_smart_callback_del(obj, "clicked", language_selection_finished_cb);
+    }
 
     sclboolean selected_language_found = FALSE;
     std::vector<std::string> enabled_languages;
@@ -679,6 +681,7 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
 
 static Eina_Bool focus_out_cb(void *data, int type, void *event)
 {
+    language_selection_finished_cb(NULL, NULL, NULL);
     close_option_window();
     return ECORE_CALLBACK_CANCEL;
 }
