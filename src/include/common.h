@@ -78,6 +78,7 @@ struct IISECommonEventCallback {
     virtual void set_display_language(const sclchar *language) {}
     virtual void set_theme_name(const sclchar *name) {}
     virtual void set_rotation_degree(sclint degree) {}
+    virtual void set_accessibility_state(sclboolean state) {}
 };
 
 /**

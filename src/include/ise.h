@@ -29,7 +29,7 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "0.9.0-1"
+#define ISE_VERSION "0.9.1-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
@@ -117,6 +117,7 @@ void ise_reset_context();
 void ise_reset_input_context();
 void ise_set_layout(sclu32 layout);
 void ise_set_screen_rotation(int degree);
+void ise_set_accessibility_state(bool state);
 void ise_set_caps_mode(unsigned int mode);
 void ise_update_cursor_position(int position);
 void ise_set_return_key_type(unsigned int type);

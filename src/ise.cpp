@@ -456,6 +456,14 @@ ise_set_screen_rotation(int degree)
 }
 
 void
+ise_set_accessibility_state(bool state)
+{
+    if (gSCLUI) {
+        gSCLUI->enable_tts(state);
+    }
+}
+
+void
 ise_hide()
 {
     if (gSCLUI && g_ise_common) {

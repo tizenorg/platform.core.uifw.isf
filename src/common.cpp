@@ -161,6 +161,21 @@ void theme_changed_cb(keynode_t *key, void* data)
     }
 }
 
+void accessibility_changed_cb(keynode_t *key, void* data)
+{
+    int vconf_value = 0;
+    if(vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &vconf_value) == 0) {
+        LOGD("accessbility state : %d\n", vconf_value);
+
+        CISECommon *impl = CISECommon::get_instance();
+        if (impl) {
+            IISECommonEventCallback *callback = impl->get_core_event_callback();
+            if (callback) {
+                callback->set_accessibility_state(vconf_value);
+            }
+        }
+    }
+}
 
 static Eina_Bool _client_message_cb (void *data, int type, void *event)
 {
@@ -287,10 +302,12 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     vconf_notify_key_changed(VCONFKEY_LANGSET, language_changed_cb, NULL);
     vconf_notify_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb, NULL);
+    vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb, NULL);
 
     /* Should we call these callback functions here? */
     language_changed_cb(NULL, NULL);
     theme_changed_cb(NULL, NULL);
+    accessibility_changed_cb(NULL, NULL);
 
     register_slot_functions();
 
@@ -320,6 +337,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     vconf_ignore_key_changed (VCONFKEY_LANGSET, language_changed_cb);
     vconf_ignore_key_changed (VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb);
+    vconf_ignore_key_changed (VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
     ecore_event_handler_del (XClientMsgHandler);
 

@@ -53,6 +53,7 @@ class CCoreEventCallback : public IISECommonEventCallback
     void reset_input_context(sclint ic, const sclchar *uuid);
 
     void set_display_language(const sclchar *language);
+    void set_accessibility_state(const sclboolean state);
     void set_rotation_degree(sclint degree);
 
     void set_caps_mode(sclu32 mode);
@@ -134,6 +135,11 @@ void CCoreEventCallback::set_display_language(const sclchar *language)
     textdomain(PACKAGE);
 
     LOGD("Language : %s\n", (language ? language : "NULL"));
+}
+
+void CCoreEventCallback::set_accessibility_state(const sclboolean state)
+{
+    ise_set_accessibility_state(state);
 }
 
 void CCoreEventCallback::set_rotation_degree(sclint degree)
