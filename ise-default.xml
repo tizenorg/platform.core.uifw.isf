@@ -7,14 +7,14 @@
 <icon/>
 <ui-application appid="PRIVTISE01.ise-default" exec="/usr/lib/scim-1.0/scim-helper-launcher" nodisplay="true" taskmanage="false" multiple="false" type="capp" hw-acceleration="use-system-setting" mainapp="true">
         <category name="http://tizen.org/category/ime"/>
-        <label>Tizen Keyboard</label>
-        <label xml:lang="en-us">Tizen Keyboard</label>
+        <label>Tizen keyboard</label>
+        <label xml:lang="en-us">Tizen keyboard</label>
         <icon/>
 </ui-application>
 <ime appid="PRIVTISE01.ise-default">
         <uuid>12aa3425-f88d-45f4-a509-cee8dfe904e3</uuid>
-        <label>Tizen Keyboard</label>
-        <label xml:lang="en-us">Tizen Keyboard</label>
+        <label>Tizen keyboard</label>
+        <label xml:lang="en-us">Tizen keyboard</label>
         <languages>
                 <language>en-us</language>
         </languages>
