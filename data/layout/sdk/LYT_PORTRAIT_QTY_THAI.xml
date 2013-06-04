@@ -342,7 +342,7 @@
         <rec shift="loc">ฦ</rec>
       </label>
     </key>
-    <key key_type="control" hit_right="14" use_repeat_key="true" width="54">
+    <key button_type="selfish" key_type="control" hit_right="14" use_repeat_key="true" width="54">
       <image_label>
         <rec button="normal">B09_icon_back_50x50.png</rec>
         <rec button="pressed">B09_icon_back_50x50_press.png</rec>

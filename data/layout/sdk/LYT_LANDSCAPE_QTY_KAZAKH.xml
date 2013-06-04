@@ -328,7 +328,7 @@
         <rec shift="loc">Ё</rec>
       </label>
     </key>
-    <key key_type="control" use_magnifier="true" hit_right="98" use_repeat_key="true" width="98">
+    <key button_type="selfish" key_type="control" use_magnifier="true" hit_right="98" use_repeat_key="true" width="98">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>

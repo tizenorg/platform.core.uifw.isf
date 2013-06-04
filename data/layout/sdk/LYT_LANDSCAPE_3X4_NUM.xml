@@ -33,7 +33,7 @@
         <rec>3</rec>
       </key_value>
     </key>
-    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="545" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="9" use_repeat_key="true" label_type="label_name_3">
+    <key button_type="selfish" key_type="control" use_magnifier="true" longkey_magnifier="true" x="545" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="9" use_repeat_key="true" label_type="label_name_3">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>

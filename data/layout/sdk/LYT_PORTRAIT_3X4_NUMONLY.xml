@@ -87,7 +87,7 @@
     </key>
   </row>
   <row x="8">
-    <key key_type="control" use_repeat_key="true">
+    <key button_type="selfish" key_type="control" use_repeat_key="true">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>

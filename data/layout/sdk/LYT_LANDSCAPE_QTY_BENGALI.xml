@@ -335,7 +335,7 @@
         <rec>হ</rec>
       </label>
     </key>
-    <key key_type="control" use_magnifier="true" use_repeat_key="true" width="140">
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" width="140">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>

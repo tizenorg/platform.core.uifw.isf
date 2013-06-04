@@ -185,7 +185,7 @@
     <key/>
     <key/>
     <key key_spacing="106"/>
-    <key key_type="control" use_magnifier="true" use_repeat_key="true" width="140">
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" width="140">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>
@@ -195,7 +195,6 @@
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
         <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
         <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
-
       </background_image>
       <key_value>
         <rec>BackSpace</rec>

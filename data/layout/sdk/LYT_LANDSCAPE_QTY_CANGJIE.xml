@@ -255,7 +255,7 @@
         <rec>,</rec>
       </key_value>
     </key>
-    <key key_type="control" use_magnifier="true" hit_right="77" use_repeat_key="true">
+    <key button_type="selfish" key_type="control" use_magnifier="true" hit_right="77" use_repeat_key="true">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>
