@@ -69,10 +69,9 @@ mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 %find_lang isfsetting-efl
-%find_lang keyboard-setting-wizard-efl
 %find_lang scim
 
-cat keyboard-setting-wizard-efl.lang scim.lang > isf.lang
+cat scim.lang > isf.lang
 
 %post
 /sbin/ldconfig
@@ -115,7 +114,6 @@ ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 %{_libdir}/scim-1.0/scim-launcher
 %{_libdir}/scim-1.0/scim-helper-launcher
 %{_libdir}/libscim-*.so*
-%{_ugdir}/lib/libug-keyboard-setting-wizard-efl.so
 %license COPYING
 
 %files devel
