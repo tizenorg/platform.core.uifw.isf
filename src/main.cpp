@@ -36,6 +36,8 @@ using namespace scl;
 CISECommon *g_ise_common = NULL;
 ConfigPointer _scim_config (0);
 
+extern KEYBOARD_STATE g_keyboard_state;
+
 class CCoreEventCallback : public IISECommonEventCallback
 {
     void init();
@@ -113,9 +115,15 @@ void CCoreEventCallback::ise_show(sclint ic, const sclint degree, Ise_Context co
     ise_set_caps_mode(context.caps_mode);
     ise_update_cursor_position(context.cursor_pos);
 
-    ::ise_show(ic);
+    /* Do not follow the application's rotation angle if we are already in visible state,
+       since in that case we will receive the angle through ROTATION_CHANGE_REQUEST message */
+    if (!(g_keyboard_state.visible_state)) {
+        ise_set_screen_rotation(degree);
+    } else {
+        LOGD("Skipping rotation angle , %d", degree);
+    }
 
-    ise_set_screen_rotation(degree);
+    ::ise_show(ic);
 }
 
 void CCoreEventCallback::ise_hide(sclint ic, const sclchar *ic_uuid)

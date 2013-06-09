@@ -29,7 +29,7 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "0.9.2-1"
+#define ISE_VERSION "0.9.3-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
@@ -98,6 +98,7 @@ typedef struct {
     sclu32 layout;
     sclboolean caps_mode;
     sclboolean need_reset;
+    sclboolean visible_state;
 } KEYBOARD_STATE;
 
 void ise_send_string(const sclchar *key_value);

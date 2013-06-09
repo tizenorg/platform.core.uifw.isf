@@ -49,6 +49,7 @@ KEYBOARD_STATE g_keyboard_state = {
     ISE_LAYOUT_STYLE_NORMAL,
     FALSE,
     TRUE,
+    FALSE,
 };
 
 static ISELanguageManager _language_manager;
@@ -442,6 +443,8 @@ ise_show(int ic)
         gSCLUI->show();
         gSCLUI->disable_input_events(FALSE);
     }
+
+    g_keyboard_state.visible_state = TRUE;
 }
 
 /**
@@ -470,6 +473,7 @@ ise_hide()
         gSCLUI->disable_input_events(TRUE);
         gSCLUI->hide();
     }
+    g_keyboard_state.visible_state = FALSE;
 }
 
 void
