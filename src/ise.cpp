@@ -77,14 +77,28 @@ public :
 
 static CUIEventCallback callback;
 
+sclboolean
+check_ic_temporary(int ic)
+{
+    if ((ic & 0xFFFF) == 0) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 /**
  * Send the given string to input framework
  */
 void
 ise_send_string(const sclchar *key_value)
 {
-    g_ise_common->hide_preedit_string(-1, "");
-    g_ise_common->commit_string(-1, "", key_value);
+    int ic = -1;
+    if (!check_ic_temporary(g_keyboard_state.ic)) {
+        ic = g_keyboard_state.ic;
+    }
+    g_ise_common->hide_preedit_string(ic, "");
+    g_ise_common->commit_string(ic, "", key_value);
+    LOGD("ic : %x, %s", ic, key_value);
 }
 
 /**
@@ -93,7 +107,12 @@ ise_send_string(const sclchar *key_value)
 void
 ise_update_preedit_string(const sclchar *str)
 {
-    g_ise_common->update_preedit_string(-1, "", str);
+    int ic = -1;
+    if (!check_ic_temporary(g_keyboard_state.ic)) {
+        ic = g_keyboard_state.ic;
+    }
+    g_ise_common->update_preedit_string(ic, "", str);
+    LOGD("ic : %x, %s", ic, str);
 }
 
 /**
@@ -102,8 +121,13 @@ ise_update_preedit_string(const sclchar *str)
 void
 ise_send_event(sclulong key_event, sclulong key_mask)
 {
-    g_ise_common->send_key_event(-1, "", key_event, scim::SCIM_KEY_NullMask);
-    g_ise_common->send_key_event(-1, "", key_event, scim::SCIM_KEY_ReleaseMask);
+    int ic = -1;
+    if (!check_ic_temporary(g_keyboard_state.ic)) {
+        ic = g_keyboard_state.ic;
+    }
+    g_ise_common->send_key_event(ic, "", key_event, scim::SCIM_KEY_NullMask);
+    g_ise_common->send_key_event(ic, "", key_event, scim::SCIM_KEY_ReleaseMask);
+    LOGD("ic : %x, %x", ic, key_event);
 }
 
 /**
@@ -112,8 +136,13 @@ ise_send_event(sclulong key_event, sclulong key_mask)
 void
 ise_forward_key_event(sclulong key_event)
 {
-    g_ise_common->forward_key_event(-1, "", key_event, scim::SCIM_KEY_NullMask);
-    g_ise_common->forward_key_event(-1, "", key_event, scim::SCIM_KEY_ReleaseMask);
+    int ic = -1;
+    if (!check_ic_temporary(g_keyboard_state.ic)) {
+        ic = g_keyboard_state.ic;
+    }
+    g_ise_common->forward_key_event(ic, "", key_event, scim::SCIM_KEY_NullMask);
+    g_ise_common->forward_key_event(ic, "", key_event, scim::SCIM_KEY_ReleaseMask);
+    LOGD("ic : %x, %x", ic, key_event);
 }
 
 static void set_caps_mode(sclint mode) {
@@ -279,19 +308,10 @@ ise_reset_input_context()
 {
 }
 
-sclboolean
-check_ic_temporary(int ic)
-{
-    if ((ic & 0xFFFF) == 0) {
-        return TRUE;
-    }
-    return FALSE;
-}
-
 void
 ise_focus_in(int ic)
 {
-    LOGD("ic : %d , %d , g_ic : %d , %d, g_focused_ic : %d , %d", ic, check_ic_temporary(ic),
+    LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
             g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
             g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
     if (check_ic_temporary(g_keyboard_state.ic) && !check_ic_temporary(ic)) {
@@ -321,7 +341,7 @@ ise_focus_out(int ic)
 void
 ise_attach_input_context(int ic)
 {
-    LOGD("attaching, ic : %d , %d , g_ic : %d , %d, g_focused_ic : %d , %d", ic, check_ic_temporary(ic),
+    LOGD("attaching, ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
             g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
             g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
     ise_focus_in(ic);
@@ -343,7 +363,7 @@ ise_show(int ic)
 
         _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
-    LOGD("ic : %d , %d , g_ic : %d , %d, g_focused_ic : %d , %d", ic, check_ic_temporary(ic),
+    LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
             g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
             g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
         if (check_ic_temporary(ic) && !check_ic_temporary(g_keyboard_state.focused_ic)) {
