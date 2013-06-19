@@ -1,3 +1,6 @@
+* Wed Jun 19 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130619.143358@6b9f91e
+- do not depend on e17 in %post
+
 * Thu Jan 31 2013 Jihoon Kim <jihoon48.kim@samsung.com> submit/master/20130130.000238@1871df6
 - Remove code to hide IME in case of Search, go return key type
 - Remove debian directory

@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
-Requires(post): /sbin/ldconfig /usr/bin/vconftool e17 net-config libmm-sound
+Requires(post): /sbin/ldconfig /usr/bin/vconftool 
 Requires(postun): /sbin/ldconfig
 
 %description
