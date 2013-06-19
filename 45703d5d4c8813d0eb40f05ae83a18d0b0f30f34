@@ -1,0 +1,8 @@
+Change-Id: I45703d5d4c8813d0eb40f05ae83a18d0b0f30f34
+Verified+1: Junfeng Dong <junfeng.dong@intel.com>
+Code-Review+2: Anas Nashif <anas.nashif@intel.com>
+Submitted-by: Anas Nashif <anas.nashif@intel.com>
+Submitted-at: Wed, 19 Jun 2013 06:38:52 -0700
+Reviewed-on: https://review.tizen.org/gerrit/4085
+Project: platform/core/uifw/isf
+Branch: refs/heads/tizen
