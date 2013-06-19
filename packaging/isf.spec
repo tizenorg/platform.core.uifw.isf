@@ -90,6 +90,7 @@ ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 
 %files -f isf.lang
 %manifest %{name}.manifest
+/etc/smack/accesses.d/%{name}.rule
 %defattr(-,root,root,-)
 %dir /etc/scim/conf
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
@@ -127,7 +128,7 @@ ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 
 %files -n ug-isfsetting-efl -f isfsetting-efl.lang
 %manifest ug-isfsetting-efl.manifest
-/etc/smack/accesses2.d/ug.isfsetting-efl.include
+/etc/smack/accesses.d/ug.isfsetting-efl.include
 /usr/share/packages/ug-isfsetting-efl.xml
 %{_ugdir}/lib/libug-isfsetting-efl.so
 %{_datadir}/scim/isfsetting.edj
