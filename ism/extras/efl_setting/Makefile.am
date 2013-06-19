@@ -31,7 +31,8 @@ libug_isfsetting_efl_la_CXXFLAGS = @EFL_CFLAGS@ \
                                    @VCONF_CFLAGS@ \
                                    @UIGADGET_CFLAGS@ \
                                    @DLOG_CFLAGS@ \
-                                   @PKGMGR_INFO_CFLAGS@
+                                   @PKGMGR_INFO_CFLAGS@ \
+                                   @EFL_ASSIST_CFLAGS@
 
 libug_isfsetting_efl_la_LDFLAGS  = -avoid-version \
                                    -export-dynamic \
@@ -44,6 +45,7 @@ libug_isfsetting_efl_la_LIBADD  =  @LIBTOOL_EXPORT_OPTIONS@ \
                                    @DLOG_LIBS@ \
                                    @UIGADGET_LIBS@ \
                                    @PKGMGR_INFO_LIBS@ \
+                                   @EFL_ASSIST_LIBS@ \
                                    $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la \
                                    $(top_builddir)/ism/extras/efl_immodule/libisf-imf-module.la
 
