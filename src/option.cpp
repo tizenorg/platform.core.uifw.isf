@@ -315,18 +315,23 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
 
     if (item_data) {
         if (strcmp(part, "elm.icon") == 0) {
-            LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
-            if (info) {
-                Evas_Object *ck = elm_check_add(obj);
-                evas_object_propagate_events_set(ck, EINA_FALSE);
-                if (info->enabled) {
-                    elm_check_state_set(ck, TRUE);
-                } else {
-                    elm_check_state_set(ck, FALSE);
+            if (item_data->mode >= 0 && item_data->mode < OPTION_MAX_LANGUAGES) {
+                LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
+                if (info) {
+                    Evas_Object *ck = elm_check_add(obj);
+                    elm_object_style_set(ck, "default/genlist");
+                    //elm_check_state_pointer_set(ck, &(g_language_state[item_data->mode]));
+                    evas_object_repeat_events_set(ck, EINA_TRUE);
+                    evas_object_propagate_events_set(ck, EINA_FALSE);
+                    if (info->enabled) {
+                        elm_check_state_set(ck, TRUE);
+                    } else {
+                        elm_check_state_set(ck, FALSE);
+                    }
+                    evas_object_smart_callback_add(ck, "changed", language_selected, data);
+                    evas_object_show(ck);
+                    item = ck;
                 }
-                evas_object_smart_callback_add(ck, "changed", language_selected, data);
-                evas_object_show(ck);
-                item = ck;
             }
         }
     }
@@ -340,9 +345,12 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
     ITEMDATA * item_data = (ITEMDATA*)elm_object_item_data_get(item);
     if (item) {
         elm_genlist_item_selected_set(item, EINA_FALSE);
-    }
-    if (item_data) {
-        elm_genlist_item_expanded_set(item, !elm_genlist_item_expanded_get(item));
+
+        // Update check button
+        Evas_Object *ck = elm_object_item_part_content_get(item, "elm.icon");
+        Eina_Bool state = elm_check_state_get(ck);
+        elm_check_state_set(ck, !state);
+        language_selected(item_data, ck, NULL);
     }
 }
 
@@ -425,11 +433,9 @@ create_genlist_item_classes() {
 
     ad.itc_language_subitems = elm_genlist_item_class_new();
     if (ad.itc_language_subitems) {
-        ad.itc_language_subitems->item_style = "dialogue/2text.1icon/expandable";
+        ad.itc_language_subitems->item_style = "dialogue/1text.1icon.3";
         ad.itc_language_subitems->func.text_get = _language_gl_text_get;
         ad.itc_language_subitems->func.content_get = _language_gl_content_get;
-        ad.itc_language_subitems->func.state_get = _language_gl_state_get;
-        ad.itc_language_subitems->func.del = _language_gl_del;
     }
 
     ad.itc_language_radio = elm_genlist_item_class_new();
@@ -560,26 +566,15 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
         LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info) {
             strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
-            strncpy(language_itemdata[loop].sub_text, "", ITEM_DATA_STRING_LEN - 1);
-
-            for (unsigned int inner_loop = 0;inner_loop < info->input_modes.size();inner_loop++) {
-                if (info->selected_input_mode.compare(info->input_modes.at(inner_loop).name) == 0) {
-                    strncpy(language_itemdata[loop].sub_text,
-                        info->input_modes.at(inner_loop).display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
-                }
-            }
             language_itemdata[loop].mode = loop;
             ad.language_item[loop] = elm_genlist_item_append(genlist, ad.itc_language_subitems, &language_itemdata[loop], NULL,
-                ELM_GENLIST_ITEM_TREE, _language_gl_sel, (void*)(language_itemdata[loop].mode));
+                ELM_GENLIST_ITEM_NONE, _language_gl_sel, (void*)(language_itemdata[loop].mode));
         } else {
             ad.language_item[loop] = NULL;
         }
     }
 
     evas_object_show(genlist);
-
-    evas_object_smart_callback_add(genlist, "expanded", _language_gl_exp, genlist);
-    evas_object_smart_callback_add(genlist, "contracted", _language_gl_con, genlist);
 
     Elm_Object_Item *navi_it = elm_naviframe_item_push(ad.naviframe, LANGUAGE, NULL, NULL, genlist,NULL);
     Evas_Object *back_btn = elm_object_item_part_content_get(navi_it, "elm.swallow.prev_btn");
