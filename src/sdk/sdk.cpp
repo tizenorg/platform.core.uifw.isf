@@ -236,8 +236,10 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                                 ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
                                 g_keyboard_state.caps_mode = FALSE;
                             }
-                            // not allow the SCL auto capital shift state
-                            gSCLUI->set_autocapital_shift_state(FALSE);
+                            if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_NORMAL) {
+                                // not allow the SCL auto capital shift state
+                                gSCLUI->set_autocapital_shift_state(FALSE);
+                            }
                         } else {
                             gSCLUI->set_autocapital_shift_state(TRUE);
                         }
