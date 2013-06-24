@@ -1,6 +1,6 @@
 Name:       ise-default
 Summary:    Tizen keyboard
-Version:    0.9.5
+Version:    0.9.6
 Release:    1
 Group:      TO BE / FILLED IN
 License:    TO BE / FILLED IN
@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(libscl-ui)
 BuildRequires:  pkgconfig(ecore-imf)
 BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(efl-assist)
 
 
 

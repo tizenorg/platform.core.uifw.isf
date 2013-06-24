@@ -31,6 +31,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/include
 INCLUDE(FindPkgConfig)
 pkg_check_modules(ISE_PKGS REQUIRED
         elementary
+        efl-assist
         sensor
         dlog
         libscl-ui
@@ -91,6 +92,7 @@ MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 INCLUDE(FindPkgConfig)
 pkg_check_modules(SETUP_PKGS REQUIRED
         elementary
+        efl-assist
         sensor
         dlog
         libscl-ui

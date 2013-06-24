@@ -24,6 +24,7 @@
 
 #include <glib.h>
 #include <Elementary.h>
+#include <efl_assist.h>
 #include <sensor.h>
 #include <vconf.h>
 
@@ -684,9 +685,8 @@ static Eina_Bool focus_out_cb(void *data, int type, void *event)
 static void
 navi_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    close_option_window();
-
     evas_object_smart_callback_del(obj, "clicked", navi_back_cb);
+    close_option_window();
 }
 
 #ifndef APPLY_WINDOW_MANAGER_CHANGE
@@ -722,6 +722,20 @@ set_transient_for_app_window(Evas_Object *window)
     }
 }
 #endif
+
+static void
+_naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *top_it = elm_naviframe_top_item_get(obj);
+    Elm_Object_Item *bottom_it = elm_naviframe_bottom_item_get(obj);
+    language_selection_finished_cb(NULL, NULL, NULL);
+    if (top_it && bottom_it &&
+            (elm_object_item_content_get(top_it) == elm_object_item_content_get(bottom_it))) {
+        close_option_window();
+    } else {
+        elm_naviframe_item_pop(obj);
+    }
+}
 
 void
 open_option_window(Evas_Object *parent, sclint degree)
@@ -786,6 +800,8 @@ open_option_window(Evas_Object *parent, sclint degree)
         elm_object_content_set(conformant, layout);
 
         Evas_Object *naviframe = elm_naviframe_add(layout);
+        elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
+        ea_object_event_callback_add(naviframe, EA_CALLBACK_BACK, _naviframe_back_cb, NULL);
         evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
