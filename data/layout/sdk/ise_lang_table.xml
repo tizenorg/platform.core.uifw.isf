@@ -9,7 +9,7 @@
     <rec name="uuid_cangjie_3" uuid="5da9d4ff-ccdd-45af-b1a5-7bd4ac0aeb5f"/>
 </keyboard_uuid_table>
 <language_table>
-  <rec language="English" language_name="English" inputmode_QTY="ENGLISH_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="us" is_latin_language="true" accepts_caps_mode="true"/>
+  <rec language="English" language_name="English" inputmode_QTY="ENGLISH_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="uk" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Italian" language_name="Italiano" inputmode_QTY="ITALIAN_QTY" inputmode_QTY_name="Tastiera Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="it" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Spanish" language_name="Español" inputmode_QTY="SPANISH_QTY" inputmode_QTY_name="Teclado Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="es" is_latin_language="true" accepts_caps_mode="true"/>
   <rec language="Galician" language_name="Galego" inputmode_QTY="GALICIAN_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="galician" is_latin_language="true" accepts_caps_mode="true"/>
