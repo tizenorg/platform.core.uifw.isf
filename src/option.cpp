@@ -416,7 +416,7 @@ static void
 create_genlist_item_classes() {
     ad.itc_main_separator = elm_genlist_item_class_new();
     if (ad.itc_main_separator) {
-        ad.itc_main_separator->item_style = "dialogue/separator/21/with_line";
+        ad.itc_main_separator->item_style = "dialogue/separator";
         ad.itc_main_separator->func.text_get = NULL;
         ad.itc_main_separator->func.content_get = NULL;
         ad.itc_main_separator->func.state_get = NULL;
