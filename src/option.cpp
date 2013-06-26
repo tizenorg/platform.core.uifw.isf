@@ -482,37 +482,6 @@ static std::string compose_selected_languages_string()
     return std::string(szTemp);
 }
 
-Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe)
-{
-    create_genlist_item_classes();
-    ad.naviframe = naviframe;
-
-    Evas_Object *genlist = elm_genlist_add(naviframe);
-    evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_style_set(genlist, "dialogue");
-    elm_genlist_tree_effect_enabled_set(genlist, EINA_FALSE);
-
-    Elm_Object_Item *separator = elm_genlist_item_append(genlist, ad.itc_main_separator, NULL, NULL,
-        ELM_GENLIST_ITEM_NONE, NULL, NULL);
-    elm_genlist_item_select_mode_set(separator, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
-    if (_language_manager.get_languages_num() > 1) {
-        std::string languages = compose_selected_languages_string();
-
-        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].main_text, LANGUAGE, ITEM_DATA_STRING_LEN - 1);
-        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
-        main_itemdata[SETTING_ITEM_ID_LANGUAGE].mode = SETTING_ITEM_ID_LANGUAGE;
-        ad.languages_item = elm_genlist_item_append(genlist, ad.itc_main_text_only, &main_itemdata[SETTING_ITEM_ID_LANGUAGE],
-            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void*)(main_itemdata[SETTING_ITEM_ID_LANGUAGE].mode));
-    }
-
-    evas_object_smart_callback_add(genlist, "expanded", _main_gl_exp, genlist);
-    evas_object_smart_callback_add(genlist, "contracted", _main_gl_con, genlist);
-
-    return genlist;
-}
-
 static void
 language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -551,6 +520,54 @@ language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
 
         write_ise_config_values();
     }
+}
+
+static void
+_naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *top_it = elm_naviframe_top_item_get(obj);
+    Elm_Object_Item *bottom_it = elm_naviframe_bottom_item_get(obj);
+    language_selection_finished_cb(NULL, NULL, NULL);
+    if (top_it && bottom_it &&
+            (elm_object_item_content_get(top_it) == elm_object_item_content_get(bottom_it))) {
+        close_option_window();
+    } else {
+        elm_naviframe_item_pop(obj);
+    }
+}
+
+Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe)
+{
+    create_genlist_item_classes();
+    ad.naviframe = naviframe;
+
+    elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
+    ea_object_event_callback_add(naviframe, EA_CALLBACK_BACK, _naviframe_back_cb, NULL);
+
+    Evas_Object *genlist = elm_genlist_add(naviframe);
+    evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    elm_object_style_set(genlist, "dialogue");
+    elm_genlist_tree_effect_enabled_set(genlist, EINA_FALSE);
+
+    Elm_Object_Item *separator = elm_genlist_item_append(genlist, ad.itc_main_separator, NULL, NULL,
+        ELM_GENLIST_ITEM_NONE, NULL, NULL);
+    elm_genlist_item_select_mode_set(separator, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+    if (_language_manager.get_languages_num() > 1) {
+        std::string languages = compose_selected_languages_string();
+
+        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].main_text, LANGUAGE, ITEM_DATA_STRING_LEN - 1);
+        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_LANGUAGE].mode = SETTING_ITEM_ID_LANGUAGE;
+        ad.languages_item = elm_genlist_item_append(genlist, ad.itc_main_text_only, &main_itemdata[SETTING_ITEM_ID_LANGUAGE],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void*)(main_itemdata[SETTING_ITEM_ID_LANGUAGE].mode));
+    }
+
+    evas_object_smart_callback_add(genlist, "expanded", _main_gl_exp, genlist);
+    evas_object_smart_callback_add(genlist, "contracted", _main_gl_con, genlist);
+
+    return genlist;
 }
 
 static Evas_Object* create_option_language_view(Evas_Object *naviframe)
@@ -723,20 +740,6 @@ set_transient_for_app_window(Evas_Object *window)
 }
 #endif
 
-static void
-_naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    Elm_Object_Item *top_it = elm_naviframe_top_item_get(obj);
-    Elm_Object_Item *bottom_it = elm_naviframe_bottom_item_get(obj);
-    language_selection_finished_cb(NULL, NULL, NULL);
-    if (top_it && bottom_it &&
-            (elm_object_item_content_get(top_it) == elm_object_item_content_get(bottom_it))) {
-        close_option_window();
-    } else {
-        elm_naviframe_item_pop(obj);
-    }
-}
-
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
@@ -800,8 +803,6 @@ open_option_window(Evas_Object *parent, sclint degree)
         elm_object_content_set(conformant, layout);
 
         Evas_Object *naviframe = elm_naviframe_add(layout);
-        elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
-        ea_object_event_callback_add(naviframe, EA_CALLBACK_BACK, _naviframe_back_cb, NULL);
         evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
