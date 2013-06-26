@@ -314,6 +314,8 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     m_helper_agent.open_connection(m_helper_info, display);
     int fd = m_helper_agent.get_connection_number();
 
+    Ecore_Fd_Handler *fd_handler = NULL;
+
     if (fd >= 0) {
         Ecore_X_Window xwindow = elm_win_xwindow_get(m_main_window);
         char xid[255];
@@ -323,7 +325,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
         props.push_back(prop);
         m_helper_agent.register_properties(props);
 
-        ecore_main_fd_handler_add(fd, ECORE_FD_READ, input_handler, NULL, NULL, NULL);
+        fd_handler = ecore_main_fd_handler_add(fd, ECORE_FD_READ, input_handler, NULL, NULL, NULL);
     }
 
     Ecore_Event_Handler *XClientMsgHandler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, m_main_window);
@@ -340,6 +342,10 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
     ecore_event_handler_del(XClientMsgHandler);
+
+    if (fd_handler) {
+        ecore_main_fd_handler_del(fd_handler);
+    }
 
     /* Would the below code needed? */
     /*
