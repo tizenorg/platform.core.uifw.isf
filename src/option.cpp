@@ -25,7 +25,6 @@
 #include <glib.h>
 #include <Elementary.h>
 #include <efl_assist.h>
-#include <sensor.h>
 #include <vconf.h>
 
 #include "option.h"
@@ -95,39 +94,6 @@ ILanguageOption* LanguageOptionManager::get_language_option_info(scluint index) 
     return ((index < language_option_vector.size()) ? language_option_vector.at(index) : NULL);
 }
 
-static int sensor_handle = -1;
-static void rotation_callback_func(unsigned int event_type, sensor_event_data_t *event, void *data)
-{
-    const int MAX_MANIPULATED_ANGLES = 4;
-    const int manipulated_angles[MAX_MANIPULATED_ANGLES][2] = {
-        {ROTATION_EVENT_0, PORTRAIT_DEGREE_0},
-        {ROTATION_EVENT_90, LANDSCAPE_DEGREE_270},
-        {ROTATION_EVENT_180, PORTRAIT_DEGREE_180},
-        {ROTATION_EVENT_270, LANDSCAPE_DEGREE_90},
-    };
-
-    int *my_event_data = NULL;
-
-    int lock=0;
-    vconf_get_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, &lock);
-    if(!lock)
-        return;
-
-    if (event_type != ACCELEROMETER_EVENT_ROTATION_CHECK || event == NULL) {
-        return;
-    }
-    my_event_data = (int *)(event->event_data);
-
-    if (my_event_data) {
-        LOGD("*my_event_data : %d\n", *my_event_data);
-        for (int loop = 0;loop < MAX_MANIPULATED_ANGLES;loop++) {
-            if (*my_event_data == manipulated_angles[loop][0]) {
-                elm_win_rotation_with_resize_set(ad.option_window, manipulated_angles[loop][1]);
-            }
-        }
-    }
-}
-
 static Evas_Object*
 create_main_window(int degree)
 {
@@ -138,6 +104,9 @@ create_main_window(int degree)
 
     elm_win_borderless_set(window, EINA_TRUE);
     elm_win_rotation_with_resize_set(window, degree);
+
+    int rots[] = { 0, 90, 180, 270 };
+    elm_win_wm_rotation_available_rotations_set(window, rots, (sizeof(rots) / sizeof(int)));
 
     evas_object_show(window);
 
@@ -530,6 +499,7 @@ _naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
     language_selection_finished_cb(NULL, NULL, NULL);
     if (top_it && bottom_it &&
             (elm_object_item_content_get(top_it) == elm_object_item_content_get(bottom_it))) {
+        //ea_object_event_callback_del(ad.naviframe, EA_CALLBACK_BACK, _naviframe_back_cb);
         close_option_window();
     } else {
         elm_naviframe_item_pop(obj);
@@ -616,22 +586,6 @@ close_option_window()
         ad.event_handler = NULL;
     }
 
-    if (sensor_handle >= 0) {
-        int ret = 0;
-        ret = sf_unregister_event(sensor_handle, ACCELEROMETER_EVENT_ROTATION_CHECK);
-        if (ret < 0) {
-            LOGD("sf_unregister_event() has failed.\n");
-        }
-        ret = sf_stop(sensor_handle);
-        if (ret < 0) {
-            LOGD("sf_stop() has failed.\n");
-        }
-        ret = sf_disconnect(sensor_handle);
-        if (ret < 0) {
-            LOGD("sf_disconnect() has failed.\n");
-        }
-        sensor_handle = -1;
-    }
     destroy_genlist_item_classes();
 }
 
@@ -747,22 +701,6 @@ open_option_window(Evas_Object *parent, sclint degree)
     ///* Do not open option window if our ISE was called by option window itself (XT9 dictionary) */
     //Ecore_X_Window xAppWindow = get_isf_active_window();
     //if (ad.option_window && elm_win_xwindow_get(ad.option_window) == xAppWindow) return;
-
-    sensor_handle = sf_connect(ACCELEROMETER_SENSOR);
-    if (sensor_handle < 0) {
-        LOGD("sensor attach fail\n");
-
-    } else {
-        int state = sf_register_event(sensor_handle, ACCELEROMETER_EVENT_ROTATION_CHECK, NULL , rotation_callback_func, NULL);
-        if (state < 0) {
-            LOGD("sensor_register_cb fail\n");
-        }
-
-        state = sf_start(sensor_handle, 0);
-        if (state < 0) {
-            LOGD("SLP_sensor_start fail\n");
-        }
-    }
 
     read_ise_config_values();
 

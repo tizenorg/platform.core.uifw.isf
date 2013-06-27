@@ -32,7 +32,6 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(ISE_PKGS REQUIRED
         elementary
         efl-assist
-        sensor
         dlog
         libscl-ui
         ecore-imf
@@ -93,7 +92,6 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(SETUP_PKGS REQUIRED
         elementary
         efl-assist
-        sensor
         dlog
         libscl-ui
         ecore-imf
