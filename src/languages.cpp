@@ -70,7 +70,7 @@ ISELanguageManager::add_language(LANGUAGE_INFO language)
     it = std::find_if(_language_vector.begin(), _language_vector.end(), _language_info_finder(language.name));
     if (it != _language_vector.end()) {
         // if the assigned one has the priority "LANGUAGE_PRIORITY_SPECIALIZED" - which means high priority,
-        // then the assigned one will replace with the origianl one
+        // then the assigned one will replace with the original one
         if (language.priority == LANGUAGE_PRIORITY_SPECIALIZED) {
             *it = language;
             language_id = it - _language_vector.begin();
@@ -200,7 +200,7 @@ ISELanguageManager::select_next_language()
     sclboolean ret = FALSE;
 
     // do some work before change to next language
-    // eg: commit predit string...
+    // eg: commit preedit string...
     ret = do_unselect_language(_current_language);
     if (ret == FALSE) {
         return FALSE;
@@ -346,7 +346,7 @@ ISELanguageManager::enable_languages(const vector<string> &vec_language_id)
     return ret;
 }
 
-/* FIXME A temporaty way for enable default language */
+/* FIXME A temporary way for enable default language */
 sclboolean ISELanguageManager::enable_default_language() {
     if (_language_vector.size()) {
         LANGUAGE_INFO &default_language = _language_vector.at(0);

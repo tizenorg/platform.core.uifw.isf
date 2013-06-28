@@ -414,7 +414,7 @@ ise_show(int ic)
 
             ise_reset_context();
 
-            /* Turn the shift state off if we need to reset our input mode, only when auto-capitaluzation is not set  */
+            /* Turn the shift state off if we need to reset our input mode, only when auto-capitalization is not set  */
             if (!(g_keyboard_state.caps_mode)) {
                 gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
             }
@@ -575,7 +575,7 @@ ise_destroy()
 // ise_set_caps_mode is called.
 // -------------------------------------------------------
 // For example: [How are you. Fine.], the
-// auto-captital process is as below:
+// auto-capital process is as below:
 // Note: "["<--this is the beginning,
 // "|"<--this is the cursor position
 // 1) call ise_set_caps_mode, auto_cap = on

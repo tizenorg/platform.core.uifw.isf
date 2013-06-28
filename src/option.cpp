@@ -697,7 +697,7 @@ set_transient_for_app_window(Evas_Object *window)
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
-    /* FIXME : The resolution below for recusively calling ISE inside option window need to be handled differently */
+    /* FIXME : The resolution below for recursively calling ISE inside option window need to be handled differently */
     ///* Do not open option window if our ISE was called by option window itself (XT9 dictionary) */
     //Ecore_X_Window xAppWindow = get_isf_active_window();
     //if (ad.option_window && elm_win_xwindow_get(ad.option_window) == xAppWindow) return;
@@ -746,7 +746,7 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         Evas_Object *list = create_option_main_view(layout, naviframe);
 
-        /* add a back buttonn to naviframe */
+        /* add a back button to naviframe */
         Evas_Object *back_btn = elm_button_add(naviframe);
         elm_object_style_set(back_btn, "naviframe/back_btn/default");
         evas_object_smart_callback_add (back_btn, "clicked", navi_back_cb, NULL);
