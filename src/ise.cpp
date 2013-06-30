@@ -184,12 +184,6 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
 
-    if (noti_type == SCL_UINOTITYPE_GESTURE_FLICK) {
-        if (etc_info == DRAG_DOWN) {
-            ise_hide();
-            ret = SCL_EVENT_DONE;
-        }
-    }
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
         if (g_need_send_shift_event) {
             LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
