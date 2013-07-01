@@ -69,6 +69,8 @@ typedef struct _LANGUAGE_INFO{
     std::string display_name;
     /* The name of currently selected input mode, since we allow only 1 input mode selected per language */
     std::string selected_input_mode;
+    /* The locale string of this language, such as en_US or fr_FR */
+    std::string locale_string;
 
     /* Indicated what input modes are available in this language */
     INPUT_MODE_VECTOR input_modes;

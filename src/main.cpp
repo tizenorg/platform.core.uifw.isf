@@ -38,6 +38,9 @@ ConfigPointer _scim_config (0);
 
 extern KEYBOARD_STATE g_keyboard_state;
 
+/* A temporary function for setting imdata for supporting legacy language setting API */
+extern void set_ise_imdata(const char * buf, size_t &len);
+
 class CCoreEventCallback : public IISECommonEventCallback
 {
     void init();
@@ -63,6 +66,9 @@ class CCoreEventCallback : public IISECommonEventCallback
 
     void set_return_key_type (sclu32 type);
     void set_return_key_disable (sclu32 disabled);
+
+    void set_imdata (sclchar *buf, sclu32 len);
+    void get_language_locale (sclint ic, sclchar **locale);
 };
 
 void CCoreEventCallback::init()
@@ -174,6 +180,17 @@ void CCoreEventCallback::set_return_key_disable (sclu32 disabled)
 {
     ise_set_return_key_disable(disabled);
 }
+
+void CCoreEventCallback::set_imdata(sclchar *buf, sclu32 len)
+{
+    set_ise_imdata(buf, len);
+}
+
+void CCoreEventCallback::get_language_locale(sclint ic, sclchar **locale)
+{
+    ise_get_language_locale(locale);
+}
+
 
 static CCoreEventCallback g_core_event_callback;
 

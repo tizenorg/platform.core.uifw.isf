@@ -24,6 +24,7 @@ typedef struct SDK_ISE_LANG_TABLE {
     SDK_ISE_LANG_TABLE() {
         language = NULL;
         language_name = NULL;
+        locale_string = NULL;
         inputmode_QTY = NULL;
         inputmode_QTY_name = NULL;
         keyboard_ise_uuid = NULL;
@@ -40,6 +41,8 @@ typedef struct SDK_ISE_LANG_TABLE {
     sclchar *language;
     /* The translated UTF8 string of this language in its own language. */
     sclchar *language_name;
+    /* A locale string such as 'en_US' to let the application know what language the keyboard currently selected */
+    sclchar *locale_string;
 
     /* The QWERTY input mode of this language. This is used for passing as parameter of SCLUI::set_input_mode(), so has to be same with the name in input_mode_configure.xml file's mode name */
     sclchar *inputmode_QTY;

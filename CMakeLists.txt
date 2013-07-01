@@ -8,6 +8,7 @@ SET(ISE_SRCS
     src/languages.cpp
     src/config.cpp
     src/option.cpp
+    src/imdata.cpp
     src/sdk/ise_lang_table.cpp
     src/sdk/sdk.cpp
     src/sdk/sdk_option.cpp

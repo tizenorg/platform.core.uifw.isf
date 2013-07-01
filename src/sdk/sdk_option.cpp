@@ -43,6 +43,9 @@ public :
             LANGUAGE_INFO language;
             language.name = get_lang_table()[loop].language;
             language.display_name = get_lang_table()[loop].language_name;
+            if (get_lang_table()[loop].locale_string) {
+                language.locale_string = get_lang_table()[loop].locale_string;
+            }
             language.callback = NULL;
             language.input_modes.push_back(input_mode_QTY);
             language.priority = LANGAUGE_PRIORITY_DEFAULT;

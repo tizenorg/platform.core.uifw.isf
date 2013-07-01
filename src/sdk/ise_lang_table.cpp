@@ -53,6 +53,7 @@ Ise_Lang::~Ise_Lang() {
     for (int i = 0; i < m_size; ++i) {
         free(m_table[i].language);
         free(m_table[i].language_name);
+        free(m_table[i].locale_string);
         free(m_table[i].inputmode_QTY);
         free(m_table[i].inputmode_QTY_name);
         free(m_table[i].main_keyboard_name);
@@ -222,6 +223,8 @@ Ise_Lang::parsing_lang_table(const xmlNodePtr p_node) {
             m_table[m_size].language = (sclchar*)language;
             xmlChar* language_name = xmlGetProp(cur_node, (const xmlChar*)"language_name");
             m_table[m_size].language_name = (sclchar*)language_name;
+            xmlChar* locale_string = xmlGetProp(cur_node, (const xmlChar*)"locale_string");
+            m_table[m_size].locale_string = (sclchar*)locale_string;
             xmlChar* inputmode_QTY = xmlGetProp(cur_node, (const xmlChar*)"inputmode_QTY");
             m_table[m_size].inputmode_QTY = (sclchar*)inputmode_QTY;
 

@@ -123,5 +123,6 @@ void ise_set_caps_mode(unsigned int mode);
 void ise_update_cursor_position(int position);
 void ise_set_return_key_type(unsigned int type);
 void ise_set_return_key_disable(unsigned int disabled);
+void ise_get_language_locale(char **locale);
 
 #endif

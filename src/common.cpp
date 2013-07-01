@@ -32,11 +32,16 @@
 #include "common.h"
 #include "ise.h"
 
+#define IMDATA_STRING_MAX_LEN 256
+
 using namespace scl;
 
 CISECommon* CISECommon::m_instance = NULL; /* For singleton */
 
 extern KEYBOARD_STATE g_keyboard_state;
+
+/* A temporary function for setting imdata for supporting legacy language setting API */
+extern void set_ise_imdata(const char * buf, size_t &len);
 
 /* Internal signal handler function */
 void signal_handler(int sig);
@@ -709,6 +714,12 @@ void slot_ise_show (const scim::HelperAgent *agent, int ic, char *buf, size_t &l
 
             if (len >= sizeof(Ise_Context)) {
                 memcpy(&ise_context, buf, sizeof(ise_context));
+
+                char imdata[IMDATA_STRING_MAX_LEN] = {0,};
+                if (ise_context.imdata_size > 0 && ise_context.imdata_size < IMDATA_STRING_MAX_LEN) {
+                    memcpy((void *)imdata, buf+sizeof(ise_context), ise_context.imdata_size);
+                    set_ise_imdata(imdata, (size_t&)ise_context.imdata_size);
+                }
             } else {
                 LOGD("\n-=-= WARNING - buf %p len %d size %d \n", buf, len, sizeof(ise_context));
             }
