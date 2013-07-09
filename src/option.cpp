@@ -54,6 +54,7 @@ struct OPTION_ELEMENTS
 {
     Evas_Object *option_window;
     Evas_Object *naviframe;
+    Evas_Object *lang_popup;
 
     Ecore_Event_Handler *event_handler;
 
@@ -491,9 +492,22 @@ language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-Eina_Bool  _pop_cb(void *data, Elm_Object_Item *it)
+static void _popup_timeout_cb(void *data, Evas_Object * obj, void *event_info)
+{
+    if (obj) {
+        evas_object_smart_callback_del(obj, "timeout", _popup_timeout_cb);
+        evas_object_del(obj);
+        ad.lang_popup = NULL;
+    }
+}
+
+
+Eina_Bool _pop_cb(void *data, Elm_Object_Item *it)
 {
     language_selection_finished_cb(NULL, NULL, NULL);
+    if (ad.lang_popup) {
+        _popup_timeout_cb(NULL, ad.lang_popup, NULL);
+    }
     return EINA_TRUE;
 }
 
@@ -577,8 +591,7 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 void
 close_option_window()
 {
-    if (ad.option_window)
-    {
+    if (ad.option_window) {
         evas_object_del(ad.option_window);
         ad.option_window = NULL;
     }
@@ -619,12 +632,6 @@ static void input_mode_selected(void *data, Evas_Object *obj, void *event_info)
     strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
 }
 
-static void _response_cb(void *data, Evas_Object * obj, void *event_info)
-{
-    if (obj)
-        evas_object_del(obj);
-}
-
 static void language_selected(void *data, Evas_Object *obj, void *event_info)
 {
     ITEMDATA *item_data = (ITEMDATA*)data;
@@ -637,11 +644,11 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
                     info->enabled = TRUE;
                     elm_check_state_set(obj, EINA_TRUE);
 
-                    Evas_Object *lang_popup = elm_popup_add(ad.naviframe);
-                    elm_object_text_set(lang_popup, MSG_NONE_SELECTED);
-                    elm_popup_timeout_set(lang_popup, 3.0);
-                    evas_object_smart_callback_add(lang_popup, "response", _response_cb, ad.naviframe);
-                    evas_object_show(lang_popup);
+                    ad.lang_popup = elm_popup_add(ad.naviframe);
+                    elm_object_text_set(ad.lang_popup, MSG_NONE_SELECTED);
+                    elm_popup_timeout_set(ad.lang_popup, 3.0);
+                    evas_object_smart_callback_add(ad.lang_popup, "timeout", _popup_timeout_cb, ad.naviframe);
+                    evas_object_show(ad.lang_popup);
                 }
             }
         }

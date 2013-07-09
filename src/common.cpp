@@ -62,6 +62,7 @@ static int get_app_window_degree(Evas_Object *keypad_win)
     int retVal = 0;
     Ecore_X_Window app_window = 0;
 
+    LOGD("Trying to get app window degree for %p\n", keypad_win);
     Ecore_X_Window win = elm_win_xwindow_get(static_cast<Evas_Object*>(keypad_win));
     ret = XGetWindowProperty((Display *)ecore_x_display_get (),
         ecore_x_window_root_get(win),
@@ -80,6 +81,7 @@ static int get_app_window_degree(Evas_Object *keypad_win)
                 &format_return, &nitems_return, &bytes_after_return,
                 &data_angle);
 
+            LOGD("app_window : %p, ret %d, %d, %p\n", app_window, ret, type_return, data_angle);
             if (ret == Success) {
                 if (data_angle) {
                     if (type_return == XA_CARDINAL) {
