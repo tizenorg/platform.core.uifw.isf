@@ -70,60 +70,59 @@
       </label>
     </key>
   </row>
-  <row x="77">
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="-" multitouch_type="settle_previous" hit_left="77">
+  <row x="14">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous" hit_left="14">
       <label>
         <rec auto_upper="true">a</rec>
-        <rec multi="1">ー</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="@" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">s</rec>
-        <rec multi="1">＠</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="*" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">d</rec>
-        <rec multi="1">＊</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="^" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">f</rec>
-        <rec multi="1">＾</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value=":" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">g</rec>
-        <rec multi="1">：</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value=";" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">h</rec>
-        <rec multi="1">；</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="(" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">j</rec>
-        <rec multi="1">（</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value=")" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">k</rec>
-        <rec multi="1">）</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="~" multitouch_type="settle_previous" hit_right="77">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">l</rec>
-        <rec multi="1">〜</rec>
       </label>
+    </key>
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous" hit_right="6">
+      <label>
+        <rec auto_upper="true">ー</rec>
+      </label>
+      <key_value>
+        <rec>-</rec>
+      </key_value>
     </key>
   </row>
   <row x="77">
@@ -132,46 +131,39 @@
         <rec>，</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="/" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">z</rec>
-        <rec multi="1">・</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="'" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">x</rec>
-        <rec multi="1">’</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="&quot;" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">c</rec>
-        <rec multi="1">”</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="." multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">v</rec>
-        <rec multi="1">。</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="," multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">b</rec>
-        <rec multi="1">、</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="?" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">n</rec>
-        <rec multi="1">？</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="!" multitouch_type="settle_previous">
+    <key use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">m</rec>
-        <rec multi="1">！</rec>
       </label>
     </key>
     <key button_type="selfish" key_type="control" use_magnifier="true" hit_right="77" use_repeat_key="true">
