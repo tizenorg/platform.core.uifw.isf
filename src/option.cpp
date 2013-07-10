@@ -703,6 +703,17 @@ set_transient_for_app_window(Evas_Object *window)
 }
 #endif
 
+static void
+_rot_changed_cb(void *data, Evas_Object *obj, void *event)
+{
+    int changed_ang = elm_win_rotation_get(obj);
+    if (changed_ang == 90 || changed_ang == 270) {
+        elm_win_indicator_mode_set (obj, ELM_WIN_INDICATOR_HIDE);
+    } else {
+        elm_win_indicator_mode_set (obj, ELM_WIN_INDICATOR_SHOW);
+    }
+}
+
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
@@ -730,7 +741,7 @@ open_option_window(Evas_Object *parent, sclint degree)
         Evas_Object *window = create_main_window(degree);
         ad.option_window = window;
 
-        elm_win_indicator_mode_set (window, ELM_WIN_INDICATOR_SHOW);
+        evas_object_smart_callback_add(window, "wm,rotation,changed", _rot_changed_cb, NULL);
 
         Evas_Object *layout = elm_layout_add(window);
         elm_layout_theme_set (layout, "layout", "application", "default");
@@ -773,6 +784,7 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         ad.option_window = window;
 
+        _rot_changed_cb(NULL, window, NULL);
         ad.event_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, NULL);
     }
 }
