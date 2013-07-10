@@ -676,7 +676,7 @@ void ise_get_language_locale(char **locale)
     LANGUAGE_INFO *info = _language_manager.get_current_language_info();
     if(info) {
         if(!(info->locale_string.empty())) {
-            *locale = *locale = strdup(info->locale_string.c_str());
+            *locale = strdup(info->locale_string.c_str());
         }
     }
 }
