@@ -104,7 +104,14 @@ create_main_window(int degree)
     elm_win_profiles_set(window, szProfile, 1);
 
     elm_win_borderless_set(window, EINA_TRUE);
-    elm_win_rotation_with_resize_set(window, degree);
+
+    Evas_Coord win_w = 0, win_h = 0;
+    ecore_x_window_size_get(ecore_x_window_root_first_get(), &win_w, &win_h);
+    if(degree == 90 || degree == 270){
+        evas_object_resize(window, win_h, win_w);
+    }else{
+        evas_object_resize(window, win_w, win_h);
+    }
 
     int rots[] = { 0, 90, 180, 270 };
     elm_win_wm_rotation_available_rotations_set(window, rots, (sizeof(rots) / sizeof(int)));
@@ -703,25 +710,9 @@ set_transient_for_app_window(Evas_Object *window)
 }
 #endif
 
-static void
-_rot_changed_cb(void *data, Evas_Object *obj, void *event)
-{
-    int changed_ang = elm_win_rotation_get(obj);
-    if (changed_ang == 90 || changed_ang == 270) {
-        elm_win_indicator_mode_set (obj, ELM_WIN_INDICATOR_HIDE);
-    } else {
-        elm_win_indicator_mode_set (obj, ELM_WIN_INDICATOR_SHOW);
-    }
-}
-
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
-    /* FIXME : The resolution below for recursively calling ISE inside option window need to be handled differently */
-    ///* Do not open option window if our ISE was called by option window itself (XT9 dictionary) */
-    //Ecore_X_Window xAppWindow = get_isf_active_window();
-    //if (ad.option_window && elm_win_xwindow_get(ad.option_window) == xAppWindow) return;
-
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */
@@ -741,7 +732,7 @@ open_option_window(Evas_Object *parent, sclint degree)
         Evas_Object *window = create_main_window(degree);
         ad.option_window = window;
 
-        evas_object_smart_callback_add(window, "wm,rotation,changed", _rot_changed_cb, NULL);
+        elm_win_indicator_mode_set (window, ELM_WIN_INDICATOR_SHOW);
 
         Evas_Object *layout = elm_layout_add(window);
         elm_layout_theme_set (layout, "layout", "application", "default");
@@ -751,7 +742,6 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         /* put the layout inside conformant for drawing indicator in app side */
         Evas_Object *conformant = elm_conformant_add(window);
-        elm_object_style_set(conformant, "nokeypad");
         evas_object_size_hint_weight_set(conformant, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(conformant, EVAS_HINT_FILL, EVAS_HINT_FILL);
         elm_win_resize_object_add(window, conformant);
@@ -784,7 +774,6 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         ad.option_window = window;
 
-        _rot_changed_cb(NULL, window, NULL);
         ad.event_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, NULL);
     }
 }
