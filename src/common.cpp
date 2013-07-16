@@ -321,6 +321,10 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     m_helper_agent.open_connection(m_helper_info, display);
     int fd = m_helper_agent.get_connection_number();
 
+    if (!m_uuid_keyboard_ise.empty()) {
+        m_helper_agent.set_keyboard_ise_by_uuid(m_uuid_keyboard_ise);
+    }
+
     Ecore_Fd_Handler *fd_handler = NULL;
 
     if (fd >= 0) {

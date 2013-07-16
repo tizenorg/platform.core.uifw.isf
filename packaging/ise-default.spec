@@ -1,6 +1,6 @@
 Name:       ise-default
 Summary:    Tizen keyboard
-Version:    1.0.3
+Version:    1.0.4
 Release:    1
 Group:      TO BE / FILLED IN
 License:    TO BE / FILLED IN
