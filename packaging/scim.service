@@ -6,7 +6,6 @@ After=e17.service
 Type=forking
 ExecStart=/usr/bin/scim -d
 Nice=5
-OOMScoreAdjust=-100
 Restart=always
 RestartSec=2
 
