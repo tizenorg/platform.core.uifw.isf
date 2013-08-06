@@ -29,7 +29,7 @@
 
 #include "languages.h"
 
-#define ISE_VERSION "1.0.4-1"
+#define ISE_VERSION "1.0.5-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
@@ -58,6 +58,7 @@ enum ISE_LAYOUT{
     ISE_LAYOUT_STYLE_HEX,
     ISE_LAYOUT_STYLE_TERMINAL,
     ISE_LAYOUT_STYLE_PASSWORD,
+    ISE_LAYOUT_STYLE_DATETIME,
 
     ISE_LAYOUT_STYLE_MAX
 };
@@ -81,6 +82,7 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
     {"SYM_QTY_1",	"DEFAULT",		FALSE },	/* ISE_LAYOUT_STYLE_HEX */
     {"",			"DEFAULT",		TRUE },	/* ISE_LAYOUT_STYLE_TERMINAL */
     {"",			"DEFAULT",		TRUE },	/* ISE_LAYOUT_STYLE_PASSWORD */
+    {"NUMONLY_3X4",	"DEFAULT",		FALSE },	/* ISE_LAYOUT_STYLE_DATETIME */
 };
 
 #define ISE_RETURN_KEY_LABEL_DONE dgettext("sys_string", "IDS_COM_BODY_DONE")
