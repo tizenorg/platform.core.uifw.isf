@@ -655,7 +655,9 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
                     elm_object_text_set(ad.lang_popup, MSG_NONE_SELECTED);
                     elm_popup_timeout_set(ad.lang_popup, 3.0);
                     evas_object_smart_callback_add(ad.lang_popup, "timeout", _popup_timeout_cb, ad.naviframe);
+                    elm_object_focus_allow_set(ad.lang_popup, EINA_TRUE);
                     evas_object_show(ad.lang_popup);
+                    ea_object_event_callback_add(ad.lang_popup, EA_CALLBACK_BACK, _popup_timeout_cb, NULL);
                 }
             }
         }
