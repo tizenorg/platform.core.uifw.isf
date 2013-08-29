@@ -1050,10 +1050,12 @@ Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler)
             if (agent->has_pending_event()) {
                 if (!(agent->filter_event())) {
                     LOGD("helper_agent.filter_event() failed!!!\n");
+                    impl->exit();
                     elm_exit();
                 }
             } else {
                 LOGD("helper_agent.has_pending_event() failed!!!\n");
+                impl->exit();
                 elm_exit();
             }
         }

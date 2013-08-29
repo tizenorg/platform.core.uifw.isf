@@ -560,6 +560,7 @@ void
 ise_destroy()
 {
     if (gSCLUI) {
+        gSCLUI->fini();
         delete gSCLUI;
         gSCLUI = NULL;
     }

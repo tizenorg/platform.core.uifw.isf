@@ -79,8 +79,8 @@ void CCoreEventCallback::init()
 
 void CCoreEventCallback::exit(sclint ic, const sclchar *ic_uuid)
 {
-    ise_destroy();
     ::ise_hide();
+    ise_destroy();
 }
 
 void CCoreEventCallback::attach_input_context(sclint ic, const sclchar *ic_uuid)
