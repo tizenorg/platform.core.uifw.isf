@@ -83,6 +83,7 @@ cat scim.lang > isf.lang
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514 || :
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -g 6514 || :
 /usr/bin/vconftool set -t string db/isf/input_language "en_US" -g 5000 || :
+/usr/bin/vconftool set -t int memory/isf/input_panel_state 0 -i -g 5000 || :
 
 %postun -p /sbin/ldconfig
 
