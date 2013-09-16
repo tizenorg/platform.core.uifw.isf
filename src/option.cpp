@@ -611,6 +611,21 @@ close_option_window()
     destroy_genlist_item_classes();
 }
 
+void read_options()
+{
+    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
+        if (info) {
+            elm_genlist_item_update(ad.language_item[loop]);
+        }
+    }
+}
+
+void write_options()
+{
+    language_selection_finished_cb(NULL, NULL, NULL);
+}
+
 static void set_option_values()
 {
     std::string languages = compose_selected_languages_string();

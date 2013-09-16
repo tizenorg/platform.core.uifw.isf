@@ -119,10 +119,14 @@ static void load_config (const ConfigPointer &config)
 
         _language_manager.select_language(g_config_values.selected_language.c_str());
     }
+
+    read_options();
 }
 
 static void save_config (const ConfigPointer &config)
 {
+    write_options();
+
     if (!config.null ()) {
         _scim_config = config;
         write_ise_config_values();

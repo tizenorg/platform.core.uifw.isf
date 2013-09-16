@@ -78,4 +78,10 @@ open_option_window(Evas_Object *parent, sclint degree);
 void
 close_option_window();
 
+void
+read_options();
+
+void
+write_options();
+
 #endif
