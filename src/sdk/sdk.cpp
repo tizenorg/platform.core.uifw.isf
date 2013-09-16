@@ -74,6 +74,7 @@ public :
         }
     }
     SCLEventReturnType on_event_key_clicked(SclUIEventDesc event_desc);
+    SCLEventReturnType on_event_drag_state_changed(SclUIEventDesc event_desc);
 
     sclboolean on_language_selected(const sclchar *language, const sclchar *input_mode);
     sclboolean on_language_unselected(const sclchar *language, const sclchar *input_mode);
@@ -194,6 +195,24 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
         break;
     default:
         break;
+    }
+
+    return ret;
+}
+
+SCLEventReturnType CSDKISE::on_event_drag_state_changed(SclUIEventDesc event_desc)
+{
+    SCLEventReturnType ret = SCL_EVENT_PASS_ON;
+
+    if (event_desc.event_type == EVENT_TYPE_LONGPRESS) {
+        const char *www_string = "www.";
+        if (event_desc.key_value) {
+            if (strncmp(event_desc.key_value, www_string, strlen(www_string)) == 0) {
+                /* Let's not do anything when the "www." button is longpressed,
+                   instead of displaying ".ac.uk" or "co.uk" popup window */
+                ret = SCL_EVENT_DONE;
+            }
+        }
     }
 
     return ret;
