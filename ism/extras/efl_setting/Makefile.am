@@ -30,6 +30,7 @@ libug_isfsetting_efl_la_SOURCES = isf_setting_efl.cpp \
 libug_isfsetting_efl_la_CXXFLAGS = @EFL_CFLAGS@ \
                                    @VCONF_CFLAGS@ \
                                    @UIGADGET_CFLAGS@ \
+                                   @DLOG_CFLAGS@ \
                                    @PKGMGR_INFO_CFLAGS@
 
 libug_isfsetting_efl_la_LDFLAGS  = -avoid-version \
@@ -40,6 +41,7 @@ libug_isfsetting_efl_la_LIBADD  =  @LIBTOOL_EXPORT_OPTIONS@ \
                                    @LTLIBINTL@ \
                                    @EFL_LIBS@ \
                                    @VCONF_LIBS@ \
+                                   @DLOG_LIBS@ \
                                    @UIGADGET_LIBS@ \
                                    @PKGMGR_INFO_LIBS@ \
                                    $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la \
