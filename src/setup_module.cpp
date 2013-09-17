@@ -119,8 +119,6 @@ static void load_config (const ConfigPointer &config)
 
         _language_manager.select_language(g_config_values.selected_language.c_str());
     }
-
-    read_options();
 }
 
 static void save_config (const ConfigPointer &config)
@@ -143,7 +141,9 @@ static void reset_config (const ConfigPointer &config)
 
 static bool query_changed ()
 {
-    return EINA_FALSE;
+    load_config(_scim_config);
+    read_options();
+    return EINA_TRUE;
 }
 
 void

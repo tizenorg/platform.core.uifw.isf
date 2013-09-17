@@ -613,10 +613,15 @@ close_option_window()
 
 void read_options()
 {
-    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
-        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
-        if (info) {
-            elm_genlist_item_update(ad.language_item[loop]);
+    Elm_Object_Item *top_it;
+    top_it = elm_naviframe_top_item_get (ad.naviframe);
+    Evas_Object *content;
+    content = elm_object_item_content_get (top_it);
+    if (content) {
+        Elm_Object_Item *item = elm_genlist_first_item_get (content);
+        while (item) {
+            elm_genlist_item_update (item);
+            item = elm_genlist_item_next_get (item);
         }
     }
 }
