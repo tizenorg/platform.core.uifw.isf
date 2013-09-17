@@ -5,10 +5,11 @@ Name:       isf
 Summary:    Input Service Framework
 Version:    2.4.6508
 Release:    1
-Group:      System Environment/Libraries
-License:    LGPL
+Group:      Graphics & UI Framework/Input
+License:    LGPL-2.1
 Source0:    %{name}-%{version}.tar.gz
 Source1:    scim.service
+Source1001: isf.manifest
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
@@ -24,16 +25,15 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
-Requires(post): /sbin/ldconfig /usr/bin/vconftool 
+Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 
 %description
-Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
-
+Input Service Framewok (ISF) is an input method (IM) platform,
+and it has been derived from SCIM.
 
 %package devel
 Summary:    ISF header files
-Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
 
 %description devel
@@ -41,7 +41,6 @@ This package contains ISF header files for ISE development.
 
 %package -n ug-isfsetting-efl
 Summary:    ISF setting ug
-Group:      Application
 Requires:   %{name} = %{version}-%{release}
 
 %description -n ug-isfsetting-efl
@@ -49,6 +48,7 @@ ISF setting UI Gadget
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 CFLAGS+=" -fvisibility=hidden "; export CFLAGS
@@ -56,26 +56,30 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ";export CXXFLAGS
 
 %autogen
 %configure --disable-static \
-		--disable-tray-icon --disable-filter-sctc
+            --disable-tray-icon \
+            --disable-filter-sctc
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 
 %make_install
-mkdir -p %{buildroot}%{_datadir}/license
-install -m0644 %{_builddir}/%{buildsubdir}/COPYING %{buildroot}%{_datadir}/license/%{name}
 
 install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
 ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/scim.service
+mkdir -p %{buildroot}/etc/scim/conf
+mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
+mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
+mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
+
+%find_lang isfsetting-efl
+%find_lang keyboard-setting-wizard-efl
+%find_lang scim
+
+cat keyboard-setting-wizard-efl.lang scim.lang > isf.lang
 
 %post
 /sbin/ldconfig
-mkdir -p /etc/scim/conf
-mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
-mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
-mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -g 6514 || :
@@ -84,10 +88,17 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 %postun -p /sbin/ldconfig
 
+%post -n ug-isfsetting-efl
+mkdir -p /opt/ug/bin/
+ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 
-%files
+%files -f isf.lang
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
+%dir /etc/scim/conf
+%dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
+%dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
+%dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
@@ -95,7 +106,6 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %{_sysconfdir}/scim/config
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
-%{_datadir}/locale/*
 %{_bindir}/isf-demo-efl
 %{_bindir}/scim
 %{_bindir}/isf-log
@@ -109,9 +119,8 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %{_libdir}/scim-1.0/scim-launcher
 %{_libdir}/scim-1.0/scim-helper-launcher
 %{_libdir}/libscim-*.so*
-%{_ugdir}/res/locale/*/LC_MESSAGES/keyboard-setting-wizard-efl.*
 %{_ugdir}/lib/libug-keyboard-setting-wizard-efl.so
-%{_datadir}/license/%{name}
+%license COPYING
 
 %files devel
 %defattr(-,root,root,-)
@@ -120,14 +129,10 @@ mkdir -p /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %{_libdir}/pkgconfig/isf.pc
 %{_libdir}/pkgconfig/scim.pc
 
-%post -n ug-isfsetting-efl
-mkdir -p /opt/ug/bin/
-ln -sf /usr/bin/ug-client /opt/ug/bin/isfsetting-efl
 
-%files -n ug-isfsetting-efl
+%files -n ug-isfsetting-efl -f isfsetting-efl.lang
 %manifest ug-isfsetting-efl.manifest
 /etc/smack/accesses2.d/ug.isfsetting-efl.include
 /usr/share/packages/ug-isfsetting-efl.xml
 %{_ugdir}/lib/libug-isfsetting-efl.so
-%{_ugdir}/res/locale/*/LC_MESSAGES/isfsetting-efl.*
 %{_datadir}/scim/isfsetting.edj
