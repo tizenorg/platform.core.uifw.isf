@@ -1,3 +1,6 @@
+* Wed Sep 18 2013 Chengwei yang <chengwei.yang@intel.com>
+- Fix activate scim.service failed
+
 * Wed Jun 19 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130619.143358@6b9f91e
 - do not depend on e17 in %post
 
