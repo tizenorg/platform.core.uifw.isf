@@ -8,7 +8,6 @@ Release:    1
 Group:      System Environment/Libraries
 License:    LGPL
 Source0:    %{name}-%{version}.tar.gz
-Source1:    scim.service
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
@@ -65,10 +64,6 @@ rm -rf %{buildroot}
 %make_install
 mkdir -p %{buildroot}%{_datadir}/license
 install -m0644 %{_builddir}/%{buildsubdir}/COPYING %{buildroot}%{_datadir}/license/%{name}
-
-install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
-install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
-ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/scim.service
 
 %post
 /sbin/ldconfig
