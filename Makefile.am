@@ -62,6 +62,10 @@ ugxml_DATA = ug-isfsetting-efl.xml
 ugsmackdir = /etc/smack/accesses2.d/
 ugsmack_DATA = ug.isfsetting-efl.include
 
+# $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
+systemduserunitdir = /usr/lib/systemd/user
+systemduserunit_DATA = scim.service
+
 ACLOCAL_AMFLAGS = -I ism/m4
 
 .PHONY: update-ChangeLog
@@ -71,3 +75,7 @@ update-ChangeLog:
 
 uninstall-local:
 	rm -rf @SCIM_MODULE_PATH@
+
+install-data-hook:
+	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants
+	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants/scim.service
