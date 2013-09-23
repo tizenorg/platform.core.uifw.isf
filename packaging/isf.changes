@@ -1,3 +1,9 @@
+* Mon Sep 23 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130918.203111@8f611b9
+- do not install service file in spec
+- Cleanup packaging and reset manifest
+- compile with dlog headers and libs
+- Make systemd unit file as part of source code
+
 * Thu Sep 19 2013 Chengwei yang <chengwei.yang@intel.com>
 - Now systemd unit file is part of source code
 
