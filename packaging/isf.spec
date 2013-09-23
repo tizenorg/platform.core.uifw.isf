@@ -63,9 +63,6 @@ make %{?_smp_mflags}
 
 %make_install
 
-install -d %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants
-install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/user/
-ln -sf ../scim.service %{buildroot}%{_libdir}/systemd/user/core-efl.target.wants/scim.service
 mkdir -p %{buildroot}/etc/scim/conf
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
