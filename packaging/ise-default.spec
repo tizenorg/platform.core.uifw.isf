@@ -39,6 +39,8 @@ make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/license
+cp LICENSE.Flora %{buildroot}/usr/share/license/%{name}
 
 %make_install
 
@@ -53,4 +55,5 @@ rm -rf %{buildroot}
 %{_datadir}/isf/ise/ise-default/*
 %{_datadir}/packages/*
 %{_datadir}/locale/*
+/usr/share/license/%{name}
 
