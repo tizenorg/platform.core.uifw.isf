@@ -3,7 +3,7 @@
 
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.4.6924
+Version:    2.4.6925
 Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1
