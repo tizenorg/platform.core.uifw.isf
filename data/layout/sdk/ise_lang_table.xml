@@ -56,7 +56,7 @@
   <rec language="Chinese" language_name="简体中文" inputmode_QTY="CHINESE_QTY" inputmode_QTY_name="Qwerty键盘" main_keyboard_name="中" keyboard_ise_uuid="uuid_sunpinyin" country_code_URL="cn" locale_string="zh_CN"/>
   <rec language="Taiwan" language_name="繁體中文-註音" inputmode_QTY="ZHUYIN_QTY" inputmode_QTY_name="註音" main_keyboard_name="中" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw" locale_string="zh_TW"/>
   <rec language="Hongkong" language_name="繁體中文-倉頡" inputmode_QTY="CANGJIE_QTY" inputmode_QTY_name="倉頡" main_keyboard_name="中" keyboard_ise_uuid="uuid_cangjie_3" country_code_URL="hk" locale_string="zh_HK"/>
-  <rec language="Japanese" language_name="にほんご" inputmode_QTY="JAPANESE_QTY" inputmode_QTY_name="Qwerty" main_keyboard_name="あ" keyboard_ise_uuid="uuid_anthy" country_code_URL="jp" locale_string="ja_JP"/>
+  <rec language="Japanese" language_name="日本語" inputmode_QTY="JAPANESE_QTY" inputmode_QTY_name="Qwerty" main_keyboard_name="あ" keyboard_ise_uuid="uuid_anthy" country_code_URL="jp" locale_string="ja_JP"/>
   <rec language="Vietnamese" language_name="Tiếng Việt" inputmode_QTY="VIETNAMESE_QTY" inputmode_QTY_name="Vietnamese Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="vn" is_latin_language="true" accepts_caps_mode="true" locale_string="vi_VN"/>
   <!--
   <rec language="Thai" language_name="ภาษาไทย" inputmode_QTY="THAI_QTY" inputmode_QTY_name="Thai" keyboard_ise_uuid="uuid_default" country_code_URL="th"/>
