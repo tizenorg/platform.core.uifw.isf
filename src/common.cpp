@@ -37,7 +37,6 @@
 using namespace scl;
 
 CISECommon* CISECommon::m_instance = NULL; /* For singleton */
-Ise_Context g_ise_context;
 
 extern KEYBOARD_STATE g_keyboard_state;
 
@@ -716,20 +715,21 @@ void slot_ise_show (const scim::HelperAgent *agent, int ic, char *buf, size_t &l
         IISECommonEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
             /* Check if effect is enabled */
-            memset(&g_ise_context, 0x00, sizeof(Ise_Context));
+            Ise_Context ise_context;
+            memset(&ise_context, 0x00, sizeof(ise_context));
 
             if (len >= sizeof(Ise_Context)) {
-                memcpy(&g_ise_context, buf, sizeof(Ise_Context));
+                memcpy(&ise_context, buf, sizeof(ise_context));
 
                 char imdata[IMDATA_STRING_MAX_LEN] = {0,};
-                if (g_ise_context.imdata_size > 0 && g_ise_context.imdata_size < IMDATA_STRING_MAX_LEN) {
-                    memcpy((void *)imdata, buf+sizeof(g_ise_context), g_ise_context.imdata_size);
-                    set_ise_imdata(imdata, (size_t&)g_ise_context.imdata_size);
+                if (ise_context.imdata_size > 0 && ise_context.imdata_size < IMDATA_STRING_MAX_LEN) {
+                    memcpy((void *)imdata, buf+sizeof(ise_context), ise_context.imdata_size);
+                    set_ise_imdata(imdata, (size_t&)ise_context.imdata_size);
                 }
             } else {
-                LOGD("\n-=-= WARNING - buf %p len %d size %d \n", buf, len, sizeof(g_ise_context));
+                LOGD("\n-=-= WARNING - buf %p len %d size %d \n", buf, len, sizeof(ise_context));
             }
-            callback->ise_show(ic, get_app_window_degree(impl->get_main_window()), g_ise_context);
+            callback->ise_show(ic, get_app_window_degree(impl->get_main_window()), ise_context);
         }
     }
 }

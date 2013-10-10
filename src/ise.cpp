@@ -41,8 +41,6 @@ using namespace scl;
 CSCLUI *gSCLUI = NULL;
 extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
-extern Ise_Context g_ise_context;
-
 static sclboolean g_need_send_shift_event = FALSE;
 
 KEYBOARD_STATE g_keyboard_state = {
@@ -445,12 +443,7 @@ ise_show(int ic)
                 // normal layout means the AC is on
                 else {
                     ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
-                    if (g_ise_context.autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE) {
-                        gSCLUI->set_autocapital_shift_state(FALSE);
-                    } else {
-                        /* recovery to use default set */
-                        gSCLUI->set_autocapital_shift_state(TRUE);
-                    }
+                    gSCLUI->set_autocapital_shift_state(FALSE);
                 }
             } else {
                 gSCLUI->set_autocapital_shift_state(TRUE);

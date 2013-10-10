@@ -90,7 +90,6 @@ extern CSCLUI *gSCLUI;
 extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
 extern KEYBOARD_STATE g_keyboard_state;
-extern Ise_Context g_ise_context;
 
 static void set_caps_mode(sclint mode) {
     if (gSCLUI->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
@@ -168,11 +167,7 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
 
                         // normal layout means the AC is on
                         else {
-                            if (g_ise_context.autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE) {
-                                gSCLUI->set_autocapital_shift_state(FALSE);
-                            } else {
-                                gSCLUI->set_autocapital_shift_state(TRUE);
-                            }
+                            gSCLUI->set_autocapital_shift_state(FALSE);
                             ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
                             set_caps_mode(g_keyboard_state.caps_mode);
                         }
@@ -265,11 +260,7 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                             }
                             if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_NORMAL) {
                                 // not allow the SCL auto capital shift state
-                                if (g_ise_context.autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE) {
-                                    gSCLUI->set_autocapital_shift_state(FALSE);
-                                } else {
-                                    gSCLUI->set_autocapital_shift_state(TRUE);
-                                }
+                                gSCLUI->set_autocapital_shift_state(FALSE);
                             }
                         } else {
                             gSCLUI->set_autocapital_shift_state(TRUE);
