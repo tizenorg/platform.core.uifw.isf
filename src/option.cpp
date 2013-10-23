@@ -613,6 +613,9 @@ close_option_window()
 
 void read_options()
 {
+    std::string languages = compose_selected_languages_string();
+    strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
+
     Elm_Object_Item *top_it;
     top_it = elm_naviframe_top_item_get (ad.naviframe);
     Evas_Object *content;
