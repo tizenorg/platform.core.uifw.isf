@@ -26,6 +26,7 @@ BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(feedback)
+BuildRequires:  pkgconfig(ail)
 BuildRequires:  efl-assist-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
