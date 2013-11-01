@@ -298,7 +298,7 @@ int ise_preexec(const char *helper)
     /* Set new session ID & new process group ID*/
     /* In linux, child can set new session ID without check permission */
     /* TODO : should be add to check permission in the kernel*/
-    setsid();
+    //setsid();
 
     __preexec_init();
     __preexec_run(info.package_type.c_str(), info.package_name.c_str(), info.app_path.c_str());
