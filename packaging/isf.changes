@@ -1,3 +1,6 @@
+* Sat Nov 02 2013 Ji-hoon Lee <dalton.lee@samsung.com> accepted/tizen_2.2/20131101.010032@7ede534
+- Removed setsid() function from ise_preexec
+
 * Thu Oct 31 2013 Haifeng Deng <haifeng.deng@samsung.com> accepted/tizen_2.2/20131029.090101@21432c5
 - [isf-panel-efl] Fix load OSP IME crash issue
 - Add monitor for OSP IME

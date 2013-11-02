@@ -1,3 +1,7 @@
+isf 2.4.7102 :
+ 1. Removed setsid() function from ise_preexec
+
+
 ISF 2.4.7031 :
  1. Add monitor for OSP IME
 
