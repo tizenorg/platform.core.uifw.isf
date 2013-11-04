@@ -1,3 +1,6 @@
+* Mon Nov 04 2013 Jihoon Kim <jihoon48.kim@samsung.com> accepted/tizen_2.2/20131101.010032@b1e5aa2
+- increase retry count to to call XOpenDisplay in X11 frontend
+
 * Sat Nov 02 2013 Ji-hoon Lee <dalton.lee@samsung.com> accepted/tizen_2.2/20131101.010032@7ede534
 - Removed setsid() function from ise_preexec
 

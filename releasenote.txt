@@ -1,3 +1,7 @@
+isf 2.4.7104 :
+ 1. increase retry count to to call XOpenDisplay in X11 frontend
+
+
 isf 2.4.7102 :
  1. Removed setsid() function from ise_preexec
 
