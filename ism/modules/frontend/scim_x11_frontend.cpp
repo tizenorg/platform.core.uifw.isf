@@ -605,7 +605,7 @@ X11FrontEnd::init_ims (void)
     m_display = XOpenDisplay (NULL);
 
     /* Let's try several more times until X server gets available... */
-    while (!m_display && retry++ < 10) {
+    while (!m_display && retry++ < 30) {
         sleep (1);
         m_display = XOpenDisplay (NULL);
     }
