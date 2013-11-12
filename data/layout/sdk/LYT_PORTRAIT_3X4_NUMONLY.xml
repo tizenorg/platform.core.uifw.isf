@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="720" height="444" key_width="226" key_height="100" key_spacing="8" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_MONTH" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="720" height="444" key_width="233" key_height="100" key_spacing="4" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_MONTH" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -8,7 +8,7 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="8" y="12">
+  <row x="6" y="12">
     <key>
       <label>
         <rec>1</rec>
@@ -34,7 +34,7 @@
       </key_value>
     </key>
   </row>
-  <row x="8">
+  <row x="6">
     <key>
       <label>
         <rec multi="0">4</rec>
@@ -60,7 +60,7 @@
       </key_value>
     </key>
   </row>
-  <row x="8">
+  <row x="6">
     <key>
       <label>
         <rec multi="0">7</rec>
@@ -86,7 +86,7 @@
       </key_value>
     </key>
   </row>
-  <row x="8">
+  <row x="6">
     <key button_type="selfish" key_type="control" use_repeat_key="true">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
