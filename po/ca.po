@@ -22,6 +22,9 @@ msgstr "Espai"
 msgid "IDS_IME_OPT_RED"
 msgstr "Vermell"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Fin."
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "La meva llista de paraules"
 

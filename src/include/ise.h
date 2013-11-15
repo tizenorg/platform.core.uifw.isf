@@ -85,13 +85,13 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
     {"NUMONLY_3X4",	"DEFAULT",		FALSE },	/* ISE_LAYOUT_STYLE_DATETIME */
 };
 
-#define ISE_RETURN_KEY_LABEL_DONE dgettext("sys_string", "IDS_COM_BODY_DONE")
-#define ISE_RETURN_KEY_LABEL_GO gettext("IDS_IME_OPT_GO_ABB")
-#define ISE_RETURN_KEY_LABEL_JOIN gettext("IDS_IME_OPT_JOIN_M_SIGN_IN")
-#define ISE_RETURN_KEY_LABEL_LOGIN gettext("IDS_IME_OPT_LOG_IN_ABB")
-#define ISE_RETURN_KEY_LABEL_NEXT dgettext("sys_string", "IDS_COM_SK_NEXT")
+#define ISE_RETURN_KEY_LABEL_DONE   gettext("IDS_IME_SK_DONE_ABB")
+#define ISE_RETURN_KEY_LABEL_GO     gettext("IDS_IME_OPT_GO_ABB")
+#define ISE_RETURN_KEY_LABEL_JOIN   gettext("IDS_IME_OPT_JOIN_M_SIGN_IN")
+#define ISE_RETURN_KEY_LABEL_LOGIN  gettext("IDS_IME_OPT_LOG_IN_ABB")
+#define ISE_RETURN_KEY_LABEL_NEXT   dgettext("sys_string", "IDS_COM_SK_NEXT")
 #define ISE_RETURN_KEY_LABEL_SEARCH dgettext("sys_string", "IDS_COM_BODY_SEARCH")
-#define ISE_RETURN_KEY_LABEL_SEND dgettext("sys_string", "IDS_COM_SK_SEND")
+#define ISE_RETURN_KEY_LABEL_SEND   dgettext("sys_string", "IDS_COM_SK_SEND")
 #define ISE_RETURN_KEY_LABEL_SIGNIN dgettext("sys_string", "IDS_COM_HEADER_SIGN_IN")
 
 typedef struct {

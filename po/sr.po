@@ -22,6 +22,9 @@ msgstr "Razmak"
 msgid "IDS_IME_OPT_RED"
 msgstr "Crvena"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Kraj"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Moja lista reči"
 

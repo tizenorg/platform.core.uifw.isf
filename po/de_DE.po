@@ -22,6 +22,9 @@ msgstr "Zwischenraum"
 msgid "IDS_IME_OPT_RED"
 msgstr "Rot"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "OK"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Meine Wortliste"
 

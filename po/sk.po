@@ -22,6 +22,9 @@ msgstr "Medzera"
 msgid "IDS_IME_OPT_RED"
 msgstr "Červená"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Hot."
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Môj zoznam slov"
 

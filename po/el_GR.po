@@ -22,6 +22,9 @@ msgstr "Διάστημα"
 msgid "IDS_IME_OPT_RED"
 msgstr "Κόκκινο"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Ok"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Η δική μου λίστα λέξεων"
 

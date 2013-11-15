@@ -22,6 +22,9 @@ msgstr "Skrivespråk"
 msgid "IDS_IME_OPT_RED"
 msgstr "Rød"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Utf."
+
 msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
 msgstr "Fullstendig gjenkjenning"
 

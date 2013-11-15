@@ -22,6 +22,9 @@ msgstr "مسافة"
 msgid "IDS_IME_OPT_RED"
 msgstr "أحمر"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "تمت"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "قائمة كلماتي"
 

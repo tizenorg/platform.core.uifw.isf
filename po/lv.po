@@ -22,6 +22,9 @@ msgstr "Atst."
 msgid "IDS_IME_OPT_RED"
 msgstr "Sarkans"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Gat."
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Mans vārdu saraksts"
 

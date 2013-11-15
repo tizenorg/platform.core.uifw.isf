@@ -22,6 +22,9 @@ msgstr "Празно место"
 msgid "IDS_IME_OPT_RED"
 msgstr "Црвено"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "ГОТОВ"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Моја листа на зборови"
 

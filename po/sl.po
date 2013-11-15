@@ -22,6 +22,9 @@ msgstr "Prostor"
 msgid "IDS_IME_OPT_RED"
 msgstr "Rdeče"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Konč."
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Moj seznam besed"
 

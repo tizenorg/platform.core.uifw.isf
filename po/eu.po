@@ -22,6 +22,9 @@ msgstr "Espazioa"
 msgid "IDS_IME_OPT_RED"
 msgstr "Gorria"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Amait"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Nire hitzen zerrenda"
 

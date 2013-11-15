@@ -22,6 +22,9 @@ msgstr "Space"
 msgid "IDS_IME_OPT_RED"
 msgstr "Red"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Done"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "My word list"
 

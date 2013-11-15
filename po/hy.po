@@ -22,6 +22,9 @@ msgstr "Տարածություն"
 msgid "IDS_IME_OPT_RED"
 msgstr "Կարմիր"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Պտրստ"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Իմ բառերի ցանկ"
 

@@ -22,6 +22,9 @@ msgstr "Szóköz"
 msgid "IDS_IME_OPT_RED"
 msgstr "Piros"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Kész"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Saját szavak listája"
 

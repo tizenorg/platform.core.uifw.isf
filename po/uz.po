@@ -22,6 +22,9 @@ msgstr "Yozish tillari"
 msgid "IDS_IME_OPT_RED"
 msgstr "Qizil"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Baj."
+
 msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
 msgstr "To‘la aniqlash"
 

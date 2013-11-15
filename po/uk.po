@@ -22,6 +22,9 @@ msgstr "Простір"
 msgid "IDS_IME_OPT_RED"
 msgstr "Червоний"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Гот."
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Мій список слів"
 

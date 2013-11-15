@@ -22,6 +22,9 @@ msgstr "Spatie"
 msgid "IDS_IME_OPT_RED"
 msgstr "Rood"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Klaar"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Mijn woordenlijst"
 

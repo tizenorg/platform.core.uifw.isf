@@ -22,6 +22,9 @@ msgstr "Espaço"
 msgid "IDS_IME_OPT_RED"
 msgstr "Vermelho"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Conc."
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Minha lista de palavras"
 

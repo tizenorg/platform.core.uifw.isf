@@ -22,6 +22,9 @@ msgstr "Rými"
 msgid "IDS_IME_OPT_RED"
 msgstr "Rautt"
 
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Lokið"
+
 msgid "IDS_IME_BODY_MY_WORD_LIST"
 msgstr "Orðalisti"
 
