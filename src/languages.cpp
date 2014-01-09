@@ -61,8 +61,6 @@ ISELanguageManager::set_all_languages_enabled(sclboolean enabled)
 sclboolean
 ISELanguageManager::add_language(LANGUAGE_INFO language)
 {
-    sclboolean ret = FALSE;
-
     int language_id = -1;
 
     // check whether there is an language_info has the same name with "language" in the vector
@@ -116,7 +114,7 @@ sclboolean
 ISELanguageManager::do_select_language(int language_info_index) {
     sclboolean ret = FALSE;
 
-    if (language_info_index < 0 || language_info_index >= _language_vector.size()) {
+    if (language_info_index < 0 || language_info_index >= (int)_language_vector.size()) {
         return FALSE;
     }
     LANGUAGE_INFO &language_info = _language_vector.at(language_info_index);
@@ -148,7 +146,7 @@ ISELanguageManager::do_select_language(int language_info_index) {
 sclboolean
 ISELanguageManager::do_unselect_language(int language_info_index) {
     sclboolean ret = FALSE;
-    if (language_info_index < 0 || language_info_index >= _language_vector.size()) {
+    if (language_info_index < 0 || language_info_index >= (int)_language_vector.size()) {
         return FALSE;
     }
 
@@ -170,7 +168,7 @@ ISELanguageManager::select_language(const sclchar *language, sclboolean temporar
     int pos = _find_language_info(language, _language_vector);
 
     // the assigned language could not be found in the language info vector
-    if (pos < 0 || pos >= _language_vector.size()) {
+    if (pos < 0 || pos >= (int)_language_vector.size()) {
         return FALSE;
     }
 
@@ -208,12 +206,12 @@ ISELanguageManager::select_next_language()
 
     // get next position
     int next_pos = -1;
-    if (_current_language == _language_vector.size() -1){
+    if (_current_language == (int)_language_vector.size() -1){
         next_pos = 0;
     } else {
         next_pos = _current_language + 1;
     }
-    assert(next_pos >= 0 && next_pos < _language_vector.size());
+    assert(next_pos >= 0 && next_pos < (int)_language_vector.size());
 
     // select next language
     // the next one may be not enabled, so the loop below is to search afterwards
@@ -221,7 +219,7 @@ ISELanguageManager::select_next_language()
     // example: if current index is 5, the search order is:
     // 5, 6, 7, 8, max, 0, 1, 2, 3, 4
     sclboolean b_select_ok = FALSE;
-    for (int i = next_pos; i < _language_vector.size(); ++i) {
+    for (int i = next_pos; i < (int)_language_vector.size(); ++i) {
         b_select_ok = do_select_language(i);
         if (b_select_ok == TRUE) {
             break;
@@ -255,13 +253,13 @@ ISELanguageManager::select_previous_language()
 
     // get previous position
     int pre_pos = -1;
-    assert(_current_language >= 0 && _current_language < _language_vector.size());
+    assert(_current_language >= 0 && _current_language < (int)_language_vector.size());
     if (_current_language == 0) {
         pre_pos = _language_vector.size() -1;
     } else {
         pre_pos = _current_language -1;
     }
-    assert(pre_pos >= 0 && pre_pos < _language_vector.size());
+    assert(pre_pos >= 0 && pre_pos < (int)_language_vector.size());
 
     // select previous language
     // the previous one may be not enabled, so the loop below is to search forwards
@@ -370,7 +368,7 @@ sclboolean ISELanguageManager::set_enabled_languages(const vector<string> &vec_l
 
 const sclchar* ISELanguageManager::get_current_language()
 {
-    if (_current_language >= 0 && _current_language < _language_vector.size()) {
+    if (_current_language >= 0 && _current_language < (int)_language_vector.size()) {
         return _language_vector.at(_current_language).name.c_str();
     }
     return NULL;
@@ -416,7 +414,7 @@ LANGUAGE_INFO* ISELanguageManager::get_language_info(int index)
 {
     LANGUAGE_INFO *ret = NULL;
 
-    if (CHECK_ARRAY_INDEX(index, _language_vector.size())) {
+    if (index >= 0 && index < (int)_language_vector.size()) {
         ret = &(_language_vector.at(index));
     }
 

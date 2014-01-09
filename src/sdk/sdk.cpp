@@ -42,7 +42,7 @@ static ISELanguageManager _language_manager;
 
 const sclchar *PLACEHOLDER_MAIN_KEYBOARD_NAME = "abc";
 
-class CSDKISE : public ISCLUIEventCallback, public ILanguageCallback
+class CSDKISE : public ILanguageCallback
 {
 public :
     CSDKISE() {
@@ -269,7 +269,7 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                         gSCLUI->set_autocapital_shift_state(TRUE);
                     }
                     /* And set the url postfixes */
-                    for (sclint inner_loop = 0;inner_loop < (sizeof(url_postfixes) / sizeof (const char *));inner_loop++) {
+                    for (size_t inner_loop = 0; inner_loop < (sizeof(url_postfixes) / sizeof (const char *)); inner_loop++) {
                         std::string postfix = url_postfixes[inner_loop];
                         std::string::size_type offset = postfix.find(replace_target, 0);
 
@@ -337,7 +337,6 @@ sclboolean CSDKISE::flush_imengine(const sclchar *language)
 {
     bool bRet = false;
 
-    sclint loop;
     if (g_ise_common) {
         int lang_id = get_lang_id(language);
         if (lang_id != -1) {

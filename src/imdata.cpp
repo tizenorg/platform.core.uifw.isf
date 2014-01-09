@@ -26,7 +26,6 @@ static void safe_release_splitted_eina_str(char **string_array)
 
 static void process_imdata_string_language(const char *language_string)
 {
-    int loop;
     bool found = FALSE;
     if(language_string) {
         for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {

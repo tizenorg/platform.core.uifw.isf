@@ -47,8 +47,8 @@ enum LANGUAGE_VIEW_MODE {
     LANGUAGE_VIEW_MODE_INPUT_MODE,
 };
 
-static ITEMDATA main_itemdata[SETTING_ITEM_ID_MAX] = { 0 };
-static ITEMDATA language_itemdata[OPTION_MAX_LANGUAGES] = { 0 };
+static ITEMDATA main_itemdata[SETTING_ITEM_ID_MAX];
+static ITEMDATA language_itemdata[OPTION_MAX_LANGUAGES];
 
 struct OPTION_ELEMENTS
 {
@@ -73,7 +73,7 @@ struct OPTION_ELEMENTS
 static OPTION_ELEMENTS ad = {NULL, };
 extern CONFIG_VALUES g_config_values;
 
-static Evas_Object* create_main_window();
+//static Evas_Object* create_main_window();
 static Evas_Object* create_option_language_view(Evas_Object *naviframe);
 
 /* This function is called by setup_module.cpp : create_ise_setup_eo() also */
@@ -236,7 +236,7 @@ static Evas_Object *_input_mode_gl_content_get(void *data, Evas_Object *obj, con
     return item;
 }
 
-static void _input_mode_gl_sel(void *data, Evas_Object *obj, void *event_info)
+/*static void _input_mode_gl_sel(void *data, Evas_Object *obj, void *event_info)
 {
     Elm_Object_Item *item = (Elm_Object_Item*)event_info;
 
@@ -257,7 +257,7 @@ static void _input_mode_gl_sel(void *data, Evas_Object *obj, void *event_info)
     if (item) {
         elm_genlist_item_selected_set(item, EINA_FALSE);
     }
-}
+}*/
 
 static Eina_Bool _input_mode_gl_state_get(void *data, Evas_Object *obj, const char *part)
 {
@@ -332,6 +332,7 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
     }
 }
 
+#if 0
 static Eina_Bool _language_gl_state_get(void *data, Evas_Object *obj, const char *part)
 {
     return EINA_FALSE;
@@ -368,7 +369,7 @@ static void _language_gl_exp(void *data, Evas_Object *obj, void *event_info)
         }
     }
 }
-
+#endif
 static void
 destroy_genlist_item_classes() {
     if (ad.itc_main_separator) {

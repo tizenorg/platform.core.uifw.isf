@@ -43,6 +43,12 @@ struct ITEMDATA
     sclchar main_text[ITEM_DATA_STRING_LEN];
     sclchar sub_text[ITEM_DATA_STRING_LEN];
     sclint mode;
+    ITEMDATA()
+    {
+        memset(main_text, 0, sizeof(sclchar)*ITEM_DATA_STRING_LEN);
+        memset(sub_text, 0, sizeof(sclchar)*ITEM_DATA_STRING_LEN);
+        mode = 0;
+    }
 };
 
 class ILanguageOption {

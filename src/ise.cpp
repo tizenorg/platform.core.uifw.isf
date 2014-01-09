@@ -661,7 +661,7 @@ void ise_set_return_key_type(unsigned int type)
         gSCLUI->unset_private_key("Enter");
     } else {
         static sclchar *imagelabel[SCL_BUTTON_STATE_MAX] = {
-            " ", " ", " "
+           " ", " ", " "
         };
         gSCLUI->set_private_key("Enter", buf, imagelabel, NULL, 0, "Enter", TRUE);
     }

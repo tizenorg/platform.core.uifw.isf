@@ -187,7 +187,6 @@ void accessibility_changed_cb(keynode_t *key, void* data)
 static Eina_Bool _client_message_cb (void *data, int type, void *event)
 {
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
-    int angle;
 
     IISECommonEventCallback *callback = NULL;
     CISECommon *common = CISECommon::get_instance();
