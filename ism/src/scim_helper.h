@@ -1176,7 +1176,7 @@ public:
      * @brief Connect a slot to Helper process key event signal.
      *
      * The prototype of the slot is:
-     * void process_key_event (const HelperAgent *, uint32 &ret);
+     * void process_key_event (const HelperAgent *, KeyEvent &key, uint32 &ret);
      */
     Connection signal_connect_process_key_event (HelperAgentSlotKeyEventUint *slot);
 };
