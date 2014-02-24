@@ -3072,10 +3072,12 @@ static void ui_destroy_candidate_window (void)
         _tts_focus_rect   = NULL;
     }
 
-    if (_preedit_window) {
+    if (_preedit_text) {
         evas_object_del (_preedit_text);
         _preedit_text = NULL;
+    }
 
+    if (_preedit_window) {
         evas_object_hide (_preedit_window);
         evas_object_del (_preedit_window);
         _preedit_window = NULL;
