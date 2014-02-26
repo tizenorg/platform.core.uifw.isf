@@ -3,6 +3,9 @@ ISF 2.4.7426 :
  2. Fix API description error
  3. Remove unused config path
  4. Commented out the code leaving isf file logs
+ 5. update the translated word for the supporting language
+ 6. fix memset buffer size of 0 issue detected by prevent
+ 7. fix smack label issue of some locale directories such as es_US, fa, th, and ur
 
 
 ISF 2.4.7424 :
