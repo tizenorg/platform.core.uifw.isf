@@ -786,6 +786,7 @@ static __Language __languages [] = {
     { "ar",       "ar", N_("Arabic"), "العربية", NULL },
     { "ar_EG",    NULL, N_("Arabic (Egypt)"), NULL, NULL },
     { "ar_LB",    NULL, N_("Arabic (Lebanon)"), NULL, NULL },
+    { "ar_IL",    NULL, N_("Arabic (Israel)"), NULL, NULL },
     { "as_IN",    NULL, N_("Assamese"), NULL, NULL},
     { "az_AZ",    NULL, N_("Azerbaijani"), NULL, NULL },
     { "be_BY",    NULL, N_("Belarusian"), "Беларуская мова", NULL },
@@ -837,6 +838,7 @@ static __Language __languages [] = {
     { "km",       NULL, N_("Cambodian"), NULL, NULL },
     { "kn_IN",    NULL, N_("Kannada"), "﻿ಕನ್ನಡ", NULL },
     { "ko_KR",    NULL, N_("Korean"), "한국어", ".EUC-KR,.eucKR" },
+    { "lo",       NULL, N_("Lao"), "ລາວ", NULL },
     { "lo_LA",    NULL, N_("Laothian"), NULL, NULL },
     { "lt_LT",    NULL, N_("Lithuanian"), "Lietuvių", NULL },
     { "lv_LV",    NULL, N_("Latvian"), "Latviešu", NULL },
@@ -885,8 +887,8 @@ static __Language __languages [] = {
     { "zh",    "zh_CN", N_("Chinese"), "中文", NULL },
     { "zh_CN",    NULL, N_("Chinese (Simplified)"), "中文 (简体)", ".GB18030,.GBK,.GB2312,.eucCN" },
     { "zh_HK", NULL, N_("Chinese (Hongkong)"), "中文 (香港)", NULL },
-    { "zh_SG", "zh_CN", N_("Chinese (Simplified)"), "中文 (简体)", ".GBK" },
-    { "zh_TW",    NULL, N_("Chinese (Traditional)"), "中文 (繁體)", ".eucTW" },
+    { "zh_SG", "zh_CN", N_("Chinese (Singapore)"), "中文 (新加坡)", ".GBK" },
+    { "zh_TW",    NULL, N_("Chinese (Traditional_Taiwan)"), "中文 (台湾)", ".eucTW" },
 
     { "nl_BE",    NULL, N_("Dutch (Belgian)"), "Dutch (Belgian)", NULL },
     { "en_NZ",    NULL, N_("English (New Zealand)"), "English (New Zealand)", NULL },
@@ -955,6 +957,9 @@ static __Language __languages [] = {
     { "af_ZA",    NULL, N_("Afrikaans"), "Afrikaans", NULL },
     { "jv_ID",    NULL, N_("Javanese"), "Basa Jawa", NULL },
     { "km_KH",    NULL, N_("Khmer"), "ភាសាខ្មែរ", NULL },
+    { "fil",    NULL, N_("Filipino"), "Filipino", NULL },
+    { "my",    NULL, N_("Myanmar"), "ျမန္မာ", NULL },
+    { "or",    NULL, N_("Odia"), "ଓଡ଼ିଆ", NULL },
     { "es_LA",    NULL, N_("Spanish (Latin America)"), "Español (América Latina)", NULL },
 
     { "", "", "", NULL, NULL }
