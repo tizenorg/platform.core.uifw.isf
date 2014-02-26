@@ -1,3 +1,10 @@
+ISF 2.4.7426 :
+ 1. [panel] check NULL or not before deleting object
+ 2. Fix API description error
+ 3. Remove unused config path
+ 4. Commented out the code leaving isf file logs
+
+
 ISF 2.4.7424 :
  1. Add bt-service in isf.rule
  2. [panel] initialize variable after calling edbus del and close
