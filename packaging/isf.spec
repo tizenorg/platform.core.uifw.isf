@@ -4,7 +4,7 @@
 Name:       isf
 Summary:    Input Service Framework
 Version:    2.4.6508
-Release:    1
+Release:    0
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1
 Source0:    %{name}-%{version}.tar.gz
@@ -24,6 +24,7 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
+BuildRequires:  pkgconfig(libtzplatform-config)
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 
