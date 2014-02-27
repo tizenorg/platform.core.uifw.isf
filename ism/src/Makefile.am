@@ -149,7 +149,8 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBTOOL_EXPORT_OPTIONS@ \
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
-			  -lstdc++
+			  -lstdc++ \
+			  -ltzplatform-config-1.0
 
 libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 
