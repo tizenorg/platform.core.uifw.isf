@@ -367,7 +367,7 @@ public:
                                  const WideString   &wstr) const;
 
     /**
-     * @brief Commit a WideString to client application directly.
+     * @brief Commit a UTF-8 String to client application directly.
      *
      * @param ic The handle of the client Input Context to receive the commit string.
      *        -1 means the currently focused Input Context.
@@ -448,6 +448,17 @@ public:
                                  const WideString   &wstr,
                                  const AttributeList &attrs) const;
 
+    /**
+     * @brief Update a new UTF-8 string for preedit.
+     *
+     * @param ic The handle of the client Input Context to receive the UTF-8 String.
+     *        -1 means the currently focused Input Context.
+     * @param ic_uuid The UUID of the IMEngine used by the Input Context.
+     *        Empty means don't match.
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buf size in bytes.
+     * @param attrs The attribute list for preedit string.
+     */
     void update_preedit_string  (int                 ic,
                                  const String       &ic_uuid,
                                  const char         *buf,
@@ -471,6 +482,18 @@ public:
                                  const AttributeList &attrs,
                                  int                 caret) const;
 
+    /**
+     * @brief Update a new UTF-8 string and caret for preedit.
+     *
+     * @param ic The handle of the client Input Context to receive the UTF-8 String.
+     *        -1 means the currently focused Input Context.
+     * @param ic_uuid The UUID of the IMEngine used by the Input Context.
+     *        Empty means don't match.
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buf size in bytes.
+     * @param attrs The attribute list for preedit string.
+     * @param caret The caret position in preedit string.
+     */
     void update_preedit_string  (int                 ic,
                                  const String       &ic_uuid,
                                  const char         *buf,
