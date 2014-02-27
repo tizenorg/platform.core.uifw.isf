@@ -1548,7 +1548,7 @@ SocketFrontEnd::socket_set_imdata (int /*client_id*/)
 {
     uint32 siid;
     char *imdata = NULL;
-    unsigned int length;
+    size_t length;
 
     SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
 
