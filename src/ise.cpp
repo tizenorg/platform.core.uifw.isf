@@ -72,7 +72,7 @@ class CUIEventCallback : public ISCLUIEventCallback
 public :
     SCLEventReturnType on_event_key_clicked(SclUIEventDesc event_desc);
     SCLEventReturnType on_event_drag_state_changed(SclUIEventDesc event_desc);
-    SCLEventReturnType on_event_notification(SCLUINotiType notiType, sclint etcInfo);
+    SCLEventReturnType on_event_notification(SCLUINotiType noti_type, SclNotiDesc *etc_info);
 };
 
 static CUIEventCallback callback;
@@ -180,22 +180,23 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
 }
 
 
-SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_type, sclint etc_info)
+SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_type, SclNotiDesc *etc_info)
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
 
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
         if (g_need_send_shift_event) {
             LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
-            if (info) {
+            SclNotiShiftStateChangeDesc *desc = static_cast<SclNotiShiftStateChangeDesc*>(etc_info);
+            if (info && desc) {
                 if (info->accepts_caps_mode) {
-                    if (etc_info == SCL_SHIFT_STATE_OFF) {
+                    if (desc->shift_state == SCL_SHIFT_STATE_OFF) {
                         ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
                     }
-                    else if (etc_info == SCL_SHIFT_STATE_ON) {
+                    else if (desc->shift_state == SCL_SHIFT_STATE_ON) {
                         ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
                     }
-                    else if (etc_info == SCL_SHIFT_STATE_LOCK) {
+                    else if (desc->shift_state == SCL_SHIFT_STATE_LOCK) {
                         ise_send_event(MVK_Shift_Lock, scim::SCIM_KEY_NullMask);
                     }
                     ret = SCL_EVENT_PASS_ON;
@@ -258,8 +259,8 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                     if (event_desc.key_event == MVK_Shift_L) {
                         g_need_send_shift_event = TRUE;
                     }
-               }
-               break;
+                }
+                break;
            }
         case KEY_TYPE_MODECHANGE:
             if (on_input_mode_changed(event_desc.key_value, event_desc.key_event, event_desc.key_type)) {
@@ -527,6 +528,7 @@ ise_create()
             if (!succeeded) {
                 gSCLUI->init((sclwindow)g_ise_common->get_main_window(), scl_parser_type, MAIN_ENTRY_XML_PATH);
             }
+
             gSCLUI->set_longkey_duration(elm_config_longpress_timeout_get() * 1000);
 
             /* Default ISE callback */
@@ -560,7 +562,9 @@ void
 ise_destroy()
 {
     if (gSCLUI) {
+        LOGD("calling gSCLUI->fini()");
         gSCLUI->fini();
+        LOGD("deleting gSCLUI");
         delete gSCLUI;
         gSCLUI = NULL;
     }
