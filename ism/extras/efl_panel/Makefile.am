@@ -26,11 +26,11 @@ endif
 bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
-                         isf_panel_utility.cpp \
-                         center_popup.cpp
+                         isf_panel_utility.cpp
 
 if ISF_BUILD_MINICONTROL
-isf_panel_efl_SOURCES  += minicontrol.cpp
+isf_panel_efl_SOURCES  += minicontrol.cpp \
+                          center_popup.cpp
 endif
 
 isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ @ECOREX_CFLAGS@ @EFL_ASSIST_CFLAGS@ @VCONF_CFLAGS@ @X11_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ @DLOG_CFLAGS@ \
