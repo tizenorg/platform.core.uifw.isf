@@ -608,7 +608,7 @@ const int SCIM_TRANS_CMD_HELPER_MANAGER_STOP_HELPER       = 702;
 const int SCIM_TRANS_CMD_HELPER_MANAGER_SEND_DISPLAY      = 703;
 const int SCIM_TRANS_CMD_HELPER_MANAGER_SEND_ISE_LIST     = 704;
 const int ISM_TRANS_CMD_GET_ACTIVE_ISE_LIST               = 705;
-
+const int ISM_TRANS_CMD_PRELOAD_KEYBOARD_ISE              = 706;
 
 /* IMControl to Panel */
 const int ISM_TRANS_CMD_SHOW_ISE_PANEL                    = 1000;

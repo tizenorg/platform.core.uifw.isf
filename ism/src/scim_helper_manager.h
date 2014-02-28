@@ -124,6 +124,8 @@ public:
     int send_display_name (String &name) const;
     int send_ise_list (String &ise_list) const;
     int turn_on_log (uint32 isOn) const;
+
+    void preload_keyboard_ise (const String &uuid) const;
 };
 
 /** @} */

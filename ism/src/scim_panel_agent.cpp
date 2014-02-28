@@ -711,7 +711,8 @@ public:
 
         int client;
         uint32 context;
-
+        if (scim_global_config_read (SCIM_GLOBAL_CONFIG_PRELOAD_KEYBOARD_ISE, false))
+            m_helper_manager.preload_keyboard_ise (uuid);
         lock ();
 
         get_focused_context (client, context);

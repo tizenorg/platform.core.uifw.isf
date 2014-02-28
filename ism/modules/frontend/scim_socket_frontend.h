@@ -99,6 +99,8 @@ class EAPI SocketFrontEnd : public FrontEndBase
 
     int    m_current_socket_client;
 
+    int    m_preload_keyboard_ise_id;
+
     uint32 m_current_socket_client_key;
 
 public:
@@ -154,6 +156,7 @@ private:
     void run_helper (const Socket &client);
 
     void get_active_ise_list (int client_id);
+    void preload_keyboard_ise (const String &uuid);
     void unregister_helper ();
 
     uint32 generate_key () const;

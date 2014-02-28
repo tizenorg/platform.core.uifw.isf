@@ -926,7 +926,9 @@ FrontEndBase::dump_instances (void)
     IMEngineInstanceRepository::iterator it = m_impl->m_instance_repository.begin ();
     for (; it != m_impl->m_instance_repository.end (); it++) {
         String name = get_instance_uuid (it->first);
-        SCIM_DEBUG_FRONTEND(1) << "\t" << name << "-----" << it->first << "\n";
+        IMEngineInstanceRefCount::iterator it_ref = m_impl->m_instance_ref_count.find(it->first);
+        SCIM_DEBUG_FRONTEND(1) << "\t" << name << "--- id->" << it->first << " ref->"
+            << (it_ref==m_impl->m_instance_ref_count.end ()?0:it_ref->second) << "\n";
     }
 
     return;

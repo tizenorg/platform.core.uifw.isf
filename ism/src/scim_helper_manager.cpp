@@ -265,6 +265,35 @@ public:
         return -1;
     }
 
+    void preload_keyboard_ise (const String &uuid)
+    {
+        SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
+        if (!uuid.length ())
+            return;
+        if (!m_socket_client.is_connected () && !open_connection ())
+            return;
+
+        Transaction trans;
+        for (int i = 0; i < 3; ++i) {
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REQUEST);
+            trans.put_data (m_socket_key);
+            trans.put_command (ISM_TRANS_CMD_PRELOAD_KEYBOARD_ISE);
+            trans.put_data (uuid);
+
+            int cmd;
+            if (trans.write_to_socket (m_socket_client) &&
+                trans.read_from_socket (m_socket_client) &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
+                return;
+
+            m_socket_client.close ();
+            if (!open_connection ())
+                break;
+        }
+    }
+
     bool open_connection (void)
     {
         SCIM_DEBUG_MAIN(1) << __FUNCTION__ << "...\n";
@@ -469,6 +498,12 @@ int
 HelperManager::turn_on_log (uint32 isOn) const
 {
     return m_impl->turn_on_log (isOn);
+}
+
+void
+HelperManager::preload_keyboard_ise (const String &uuid) const
+{
+    m_impl->preload_keyboard_ise (uuid);
 }
 
 } // namespace scim

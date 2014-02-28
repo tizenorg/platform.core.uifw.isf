@@ -331,6 +331,24 @@ SocketFrontEnd::get_active_ise_list (int clientid)
 }
 
 void
+SocketFrontEnd::preload_keyboard_ise (const String &uuid)
+{
+    SCIM_DEBUG_MAIN (1) << "preload_keyboard_ise ()\n";
+
+    if (uuid.length () == 0)
+        return;
+
+    if (m_preload_keyboard_ise_id != -1)
+    {
+        if (get_instance_uuid (m_preload_keyboard_ise_id) == uuid)
+            return;
+        delete_instance (m_preload_keyboard_ise_id);
+    }
+
+    m_preload_keyboard_ise_id = new_instance (m_config, uuid, "UTF-8");
+}
+
+void
 SocketFrontEnd::unregister_helper ()
 {
     String name;
@@ -359,6 +377,7 @@ SocketFrontEnd::SocketFrontEnd (const BackEndPointer &backend,
       m_socket_timeout (scim_get_default_socket_timeout ()),
       m_current_instance (-1),
       m_current_socket_client (-1),
+      m_preload_keyboard_ise_id (-1),
       m_current_socket_client_key (0)
 {
     SCIM_DEBUG_FRONTEND (2) << " Constructing SocketFrontEnd object...\n";
@@ -797,6 +816,12 @@ SocketFrontEnd::init (int argc, char **argv)
     }
 
     load_helper_modules (engine_list);
+    if (scim_global_config_read (SCIM_GLOBAL_CONFIG_PRELOAD_KEYBOARD_ISE, false)) {
+        String def_uuid = m_config->read (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) +
+                                       String ("/") + String ("~other"),
+                                       String (""));
+        preload_keyboard_ise (def_uuid);
+    }
 
     /**
      * initialize the random number generator.
@@ -1019,6 +1044,12 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             SCIM_DEBUG_FRONTEND (1) << "receive cmd SCIM_TRANS_CMD_HELPER_MANAGER_SEND_ISE_LIST\n";
             reply = false;
             socket_update_ise_list (id);
+        } else if (cmd == ISM_TRANS_CMD_PRELOAD_KEYBOARD_ISE) {
+            SCIM_DEBUG_FRONTEND (1) << "receive cmd ISM_TRANS_CMD_PRELOAD_KEYBOARD_ISE\n";
+            String uuid;
+            if (m_receive_trans.get_data (uuid) && uuid.length ())
+                preload_keyboard_ise (uuid);
+            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
         } else if (cmd == ISM_TRANS_CMD_TURN_ON_LOG) {
             SCIM_DEBUG_FRONTEND (1) << "receive cmd ISM_TRANS_CMD_TURN_ON_LOG\n";
             socket_turn_on_log (id);
