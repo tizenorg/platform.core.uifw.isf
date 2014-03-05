@@ -225,6 +225,8 @@ static void       slot_candidate_will_hide_ack         (void);
 
 static void       slot_set_hardware_keyboard_mode      (void);
 static void       slot_get_ise_state                   (int &state);
+static void       slot_start_default_ise               (void);
+static void       slot_stop_default_ise                (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
@@ -233,7 +235,7 @@ static Ecore_X_Window efl_get_app_window               (void);
 static Ecore_X_Window efl_get_quickpanel_window        (void);
 static void       check_hardware_keyboard              (KEYBOARD_MODE mode);
 static unsigned int get_ise_index                      (const String uuid);
-static bool       set_active_ise                       (const String &uuid);
+static bool       set_active_ise                       (const String &uuid, bool launch_ise);
 
 static void       minictrl_clicked_cb                  (void *data, Evas_Object *o, const char *emission, const char *source);
 #ifdef HAVE_MINICONTROL
@@ -387,6 +389,10 @@ static Ecore_File_Monitor *_osp_helper_ise_em               = NULL;
 static Ecore_File_Monitor *_osp_keyboard_ise_em             = NULL;
 static OSPEmRepository     _osp_bin_em;
 static OSPEmRepository     _osp_info_em;
+
+static bool               _launch_ise_on_request            = false;
+static bool               _soft_keyboard_launched           = false;
+static bool               _focus_in                         = false;
 
 static bool               candidate_expanded                = false;
 static int                _candidate_image_count            = 0;
@@ -620,7 +626,7 @@ static void gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
 
     LOGD ("Set active ISE : %s\n", _uuids[index].c_str ());
 
-    set_active_ise (_uuids[index]);
+    set_active_ise (_uuids[index], _soft_keyboard_launched);
     _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
 }
 
@@ -1271,10 +1277,12 @@ static void osp_engine_dir_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore
                 if (_modes[index] == TOOLBAR_HELPER_MODE) {
                     String active_module = get_module_file_path (_module_names[index], String ("Helper"));
                     if (String (module_path) == active_module) {
-                        /* Restart helper ISE */
-                        _panel_agent->hide_helper (uuid);
-                        _panel_agent->stop_helper (uuid);
-                        _panel_agent->start_helper (uuid);
+                        if (_soft_keyboard_launched) {
+                            /* Restart helper ISE */
+                            _panel_agent->hide_helper (uuid);
+                            _panel_agent->stop_helper (uuid);
+                            _panel_agent->start_helper (uuid);
+                        }
                     }
                 }
             }
@@ -1375,10 +1383,12 @@ static void ise_file_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore_File_
                              String (SCIM_PATH_DELIM_STRING) + _module_names[index] + String (".so");
 
             if (String (path) == strFile && _modes[index] == TOOLBAR_HELPER_MODE) {
-                /* Restart helper ISE */
-                _panel_agent->hide_helper (uuid);
-                _panel_agent->stop_helper (uuid);
-                _panel_agent->start_helper (uuid);
+                if (_soft_keyboard_launched) {
+                    /* Restart helper ISE */
+                    _panel_agent->hide_helper (uuid);
+                    _panel_agent->stop_helper (uuid);
+                    _panel_agent->start_helper (uuid);
+                }
             }
 
             /* add osp monitor */
@@ -1501,6 +1511,7 @@ static bool set_keyboard_ise (const String &uuid, const String &module_name)
         String pre_uuid = _panel_agent->get_current_helper_uuid ();
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
+        _soft_keyboard_launched = false;
     } else if (TOOLBAR_KEYBOARD_MODE == mode) {
         uint32 kbd_option = 0;
         String kbd_uuid, kbd_name;
@@ -1522,19 +1533,20 @@ static bool set_keyboard_ise (const String &uuid, const String &module_name)
  *
  * @param uuid The helper ISE's uuid.
  * @param module_name The helper ISE's module name.
+ * @param launch_ise The flag for launching helper ISE.
  *
  * @return false if helper ISE change is failed, otherwise return true.
  */
-static bool set_helper_ise (const String &uuid, const String &module_name)
+static bool set_helper_ise (const String &uuid, const String &module_name, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
     String pre_uuid = _panel_agent->get_current_helper_uuid ();
-    if (pre_uuid == uuid)
+    if (pre_uuid == uuid && _soft_keyboard_launched)
         return false;
 
-    if (TOOLBAR_HELPER_MODE == mode) {
+    if (TOOLBAR_HELPER_MODE == mode && pre_uuid.length () > 0 && _soft_keyboard_launched) {
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
         char buf[256] = {0};
@@ -1543,12 +1555,15 @@ static bool set_helper_ise (const String &uuid, const String &module_name)
         isf_save_log (buf);
     }
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
-        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-    isf_save_log (buf);
+    if (launch_ise) {
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
+            time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+        isf_save_log (buf);
 
-    _panel_agent->start_helper (uuid);
+        if (_panel_agent->start_helper (uuid))
+            _soft_keyboard_launched = true;
+    }
     _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
 
     return true;
@@ -1558,10 +1573,11 @@ static bool set_helper_ise (const String &uuid, const String &module_name)
  * @brief Set active ISE.
  *
  * @param uuid The ISE's uuid.
+ * @param launch_ise The flag for launching helper ISE.
  *
  * @return false if ISE change is failed, otherwise return true.
  */
-static bool set_active_ise (const String &uuid)
+static bool set_active_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     char buf[256] = {0};
@@ -1579,7 +1595,7 @@ static bool set_active_ise (const String &uuid)
             if (TOOLBAR_KEYBOARD_MODE == _modes[i])
                 ise_changed = set_keyboard_ise (_uuids[i], _module_names[i]);
             else if (TOOLBAR_HELPER_MODE == _modes[i])
-                ise_changed = set_helper_ise (_uuids[i], _module_names[i]);
+                ise_changed = set_helper_ise (_uuids[i], _module_names[i], launch_ise);
             _panel_agent->set_current_toolbar_mode (_modes[i]);
             if (ise_changed) {
                 _panel_agent->set_current_helper_option (_options[i]);
@@ -1619,6 +1635,7 @@ static void load_config (void)
         bool shared_ise = _config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), false);
         _panel_agent->set_should_shared_ise (shared_ise);
     }
+    _launch_ise_on_request = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_LAUNCH_ISE_ON_REQUEST), _launch_ise_on_request);
 
     isf_load_ise_information (ALL_ISE, _config);
 }
@@ -3574,6 +3591,8 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent->signal_connect_candidate_will_hide_ack    (slot (slot_candidate_will_hide_ack));
     _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
+    _panel_agent->signal_connect_start_default_ise          (slot (slot_start_default_ise));
+    _panel_agent->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
 
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
@@ -3603,6 +3622,22 @@ static void slot_focus_in (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    _focus_in = true;
+    if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
+        if (_launch_ise_on_request && !_soft_keyboard_launched) {
+            String uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+            if (uuid.length () > 0 && (_options[get_ise_index (uuid)] & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
+                char buf[256] = {0};
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
+                    time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+                isf_save_log (buf);
+
+                if (_panel_agent->start_helper (uuid))
+                    _soft_keyboard_launched = true;
+            }
+        }
+    }
+
     ui_candidate_delete_destroy_timer ();
 }
 
@@ -3612,6 +3647,9 @@ static void slot_focus_in (void)
 static void slot_focus_out (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    _focus_in = false;
+
     ui_candidate_delete_destroy_timer ();
     _destroy_timer = ecore_timer_add (ISF_CANDIDATE_DESTROY_DELAY, ui_candidate_destroy_timeout, NULL);
 }
@@ -4607,7 +4645,7 @@ static void slot_set_active_ise (const String &uuid, bool changeDefault)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << uuid << ")\n";
 
-    set_active_ise (uuid);
+    set_active_ise (uuid, _soft_keyboard_launched);
 }
 
 /**
@@ -4636,7 +4674,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
             if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
                 active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
             }
-            set_active_ise (active_uuid);
+            set_active_ise (active_uuid, _soft_keyboard_launched);
         } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
             String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
             String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
@@ -5046,6 +5084,43 @@ static void slot_get_ise_state (int &state)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " state = " << state << "\n";
 }
 
+static void slot_start_default_ise (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE)) {
+        if (_launch_ise_on_request && !_soft_keyboard_launched) {
+            String uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
+                time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+            isf_save_log (buf);
+
+            if (_panel_agent->start_helper (uuid))
+                _soft_keyboard_launched = true;
+        }
+    }
+}
+
+static void slot_stop_default_ise (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_launch_ise_on_request && _soft_keyboard_launched) {
+        String uuid = _panel_agent->get_current_helper_uuid ();
+
+        if (uuid.length () > 0) {
+            _panel_agent->hide_helper (uuid);
+            _panel_agent->stop_helper (uuid);
+            _soft_keyboard_launched = false;
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  stop helper (%s)\n",
+                time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+            isf_save_log (buf);
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////////////////
 // End of PanelAgent-Functions
 //////////////////////////////////////////////////////////////////////
@@ -5277,6 +5352,8 @@ static void display_language_changed_cb (keynode_t *key, void* data)
 /**
  * @brief Check hardware keyboard.
  *
+ * @param mode The keyboard mode.
+ *
  * @return void
  */
 static void check_hardware_keyboard (KEYBOARD_MODE mode)
@@ -5329,6 +5406,15 @@ static void check_hardware_keyboard (KEYBOARD_MODE mode)
         _panel_agent->hide_helper (helper_uuid);
         _panel_agent->reload_config ();
 
+        /* Check whether stop soft keyboard */
+        if (_focus_in && (_options[get_ise_index (helper_uuid)] & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
+            /* If focus in and soft keyboard can support hardware key event, then don't stop it */
+            ;
+        } else if (_launch_ise_on_request && _soft_keyboard_launched) {
+            _panel_agent->stop_helper (helper_uuid);
+            _soft_keyboard_launched = false;
+        }
+
         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 
 #ifdef HAVE_MINICONTROL
@@ -5353,7 +5439,10 @@ static void check_hardware_keyboard (KEYBOARD_MODE mode)
         _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
-            set_active_ise (uuid);
+            if (_launch_ise_on_request)
+                set_active_ise (uuid, false);
+            else
+                set_active_ise (uuid, true);
         }
 
 #ifdef HAVE_MINICONTROL
@@ -5825,7 +5914,7 @@ static void launch_default_soft_keyboard (keynode_t *key, void* data)
     check_hardware_keyboard (SOFTWARE_KEYBOARD_MODE);
 }
 
-static String sanitize_string(const char *str, int maxlen = 32)
+static String sanitize_string (const char *str, int maxlen = 32)
 {
     String ret;
     static char acceptables[] =
@@ -5842,7 +5931,7 @@ static String sanitize_string(const char *str, int maxlen = 32)
         memset (newstr, 0x00, sizeof(char) * (maxlen + 1));
 
         if (str) {
-            while (len < maxlen && str[len] != '\0' && strchr(acceptables, str[len]) != NULL) {
+            while (len < maxlen && str[len] != '\0' && strchr (acceptables, str[len]) != NULL) {
                 newstr[len] = str[len];
                 len++;
             }

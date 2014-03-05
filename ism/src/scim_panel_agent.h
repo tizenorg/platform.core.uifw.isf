@@ -726,6 +726,13 @@ public:
     Connection signal_connect_start_default_ise          (PanelAgentSlotVoid                *slot);
 
     /**
+     * @brief Signal: stop default ise.
+     *
+     * slot prototype: void stop_default_ise (void);
+     */
+    Connection signal_connect_stop_default_ise           (PanelAgentSlotVoid                *slot);
+
+    /**
      * @brief Signal: Get the list of keyboard ise name.
      *
      * slot prototype: bool get_keyboard_ise_list (std::vector<String> &);

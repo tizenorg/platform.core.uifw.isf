@@ -87,6 +87,7 @@ namespace scim {
 #define SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID                         "/InitialIseUuid"
 #define SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID                         "/DefaultIseUuid"
 #define SCIM_GLOBAL_CONFIG_PRELOAD_KEYBOARD_ISE                     "/PreloadKeyboardIse"
+#define SCIM_GLOBAL_CONFIG_LAUNCH_ISE_ON_REQUEST                    "/LaunchIseOnRequest"
 
 #define ISF_CONFIG_HARDWARE_KEYBOARD_DETECT                         "/isf/hw_keyboard_detect"
 

@@ -305,6 +305,7 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalIntIntInt           m_signal_update_spot_location;
     PanelAgentSignalFactoryInfo         m_signal_update_factory_info;
     PanelAgentSignalVoid                m_signal_start_default_ise;
+    PanelAgentSignalVoid                m_signal_stop_default_ise;
     PanelAgentSignalIntInt              m_signal_update_input_context;
     PanelAgentSignalIntInt              m_signal_set_candidate_ui;
     PanelAgentSignalIntInt2             m_signal_get_candidate_ui;
@@ -1771,6 +1772,8 @@ public:
 
         if (ret) {
             m_signal_show_ise ();
+        } else {
+            m_signal_start_default_ise ();
         }
     }
 
@@ -2846,6 +2849,11 @@ public:
         return m_signal_start_default_ise.connect (slot);
     }
 
+    Connection signal_connect_stop_default_ise           (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_stop_default_ise.connect (slot);
+    }
+
     Connection signal_connect_set_candidate_ui           (PanelAgentSlotIntInt              *slot)
     {
         return m_signal_set_candidate_ui.connect (slot);
@@ -3260,6 +3268,8 @@ private:
                             m_last_context_uuid   = String ("");
                             unlock ();
                         }
+                        if (m_client_context_uuids.size () == 0)
+                            m_signal_stop_default_ise ();
                         continue;
                     }
 
@@ -6111,6 +6121,12 @@ Connection
 PanelAgent::signal_connect_start_default_ise          (PanelAgentSlotVoid                *slot)
 {
     return m_impl->signal_connect_start_default_ise (slot);
+}
+
+Connection
+PanelAgent::signal_connect_stop_default_ise           (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_stop_default_ise (slot);
 }
 
 Connection
