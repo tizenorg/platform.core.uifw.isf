@@ -1,3 +1,14 @@
+ISF 2.4.7510 :
+ 1. Support conditional build about minicontrol
+ 2. Writing description about some APIs in scim_helper.h
+ 3. Add preload keyboard ise feature
+ 4. Use appropriate return value enum type of callback func registered by ecore_event_handler_add
+ 5. Allow NULL pointer in isf_control_get_ise_info_and_module_name if programmer is not interested in
+ 6. Launch ISE on request
+ 7. fix event type in ecore key event handler
+ 8. Add aul in smack rule
+
+
 ISF 2.4.7426 :
  1. [panel] check NULL or not before deleting object
  2. Fix API description error
