@@ -491,7 +491,7 @@ _key_down_cb (void *data, int type, void *event)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
+    Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
@@ -512,7 +512,7 @@ _key_up_cb (void *data, int type, void *event)
     unsigned int val = 0;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
-    Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
+    Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
     if ((!strcmp (ev->keyname, "Escape")  || !strcmp (ev->keyname, KEY_END)) &&
