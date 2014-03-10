@@ -56,6 +56,7 @@ namespace scim {
 #define SCIM_CONFIG_HOTKEYS_FRONTEND_PREVIOUS_FACTORY               "/Hotkeys/FrontEnd/PreviousFactory"
 #define SCIM_CONFIG_HOTKEYS_FRONTEND_SHOW_FACTORY_MENU              "/Hotkeys/FrontEnd/ShowFactoryMenu"
 #define SCIM_CONFIG_HOTKEYS_FRONTEND_VALID_KEY_MASK                 "/Hotkeys/FrontEnd/ValidKeyMask"
+#define SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE                       "/Hotkeys/FrontEnd/HideISE"
 
 #define SCIM_CONFIG_HOTKEYS_IMENGINE                                "/Hotkeys/IMEngine"
 #define SCIM_CONFIG_HOTKEYS_IMENGINE_LIST                           "/Hotkeys/IMEngine/List"

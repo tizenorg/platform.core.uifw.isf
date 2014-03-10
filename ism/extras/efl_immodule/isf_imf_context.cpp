@@ -495,13 +495,19 @@ _key_down_cb (void *data, int type, void *event)
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    if ((!strcmp (ev->keyname, "Escape") || !strcmp (ev->keyname, KEY_END)) &&
-        ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        LOGD ("%s key is pressed.\n", ev->keyname);
-        return ECORE_CALLBACK_CANCEL;
+    std::vector <String> hide_ise_keys;
+    scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
+
+    if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        for (int i = 0; i < hide_ise_keys.size (); ++i) {
+            if (!strcmp (ev->keyname, hide_ise_keys [i].c_str ())) {
+                LOGD ("%s key is pressed.\n", ev->keyname);
+                return ECORE_CALLBACK_DONE;
+            }
+        }
     }
 
-    return ECORE_CALLBACK_RENEW;
+    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
@@ -515,13 +521,20 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    if ((!strcmp (ev->keyname, "Escape")  || !strcmp (ev->keyname, KEY_END)) &&
-        ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        LOGD ("%s key is released.\n", ev->keyname);
-        isf_imf_context_reset (active_ctx);
-        isf_imf_context_input_panel_instant_hide (active_ctx);
-        return ECORE_CALLBACK_CANCEL;
-    } else if (!strcmp (ev->keyname, "XF86MenuKB")) {
+    std::vector <String> hide_ise_keys;
+    scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
+
+    if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+        for (int i = 0; i < hide_ise_keys.size (); ++i) {
+            if (!strcmp (ev->keyname, hide_ise_keys [i].c_str ())) {
+                LOGD ("%s key is released.\n", ev->keyname);
+                isf_imf_context_reset (active_ctx);
+                isf_imf_context_input_panel_instant_hide (active_ctx);
+                return ECORE_CALLBACK_DONE;
+            }
+        }
+    }
+    if (!strcmp (ev->keyname, "XF86MenuKB")) {
         if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             ecore_imf_context_input_panel_hide (active_ctx);
         } else {
