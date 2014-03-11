@@ -87,6 +87,18 @@
 * Mon Sep 23 2013 Jihoon Kim <jihoon48.kim@samsung.com> submit/tizen_2.2/20130916.225857@e64feee
 - initialize current helper uuid when stop_helper () is called
 
+* Mon Sep 23 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130918.203111@8f611b9
+- do not install service file in spec
+- Cleanup packaging and reset manifest
+- compile with dlog headers and libs
+- Make systemd unit file as part of source code
+
+* Thu Sep 19 2013 Chengwei yang <chengwei.yang@intel.com>
+- Now systemd unit file is part of source code
+
+* Wed Sep 18 2013 Chengwei yang <chengwei.yang@intel.com>
+- Fix activate scim.service failed
+
 * Tue Sep 17 2013 Jihoon Kim <jihoon48.kim@samsung.com> submit/tizen_2.2/20130916.060443@132356a
 - [isfsetting] fix N_SE-52363
 - fix bug hide event callback wasn't called when context is deleted
@@ -270,18 +282,6 @@
 - Solve aux/candidate selection event broadcast issue
 - Remove gtk_panel source codes
 - fix back space issue in MBE
-
-* Mon Sep 23 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130918.203111@8f611b9
-- do not install service file in spec
-- Cleanup packaging and reset manifest
-- compile with dlog headers and libs
-- Make systemd unit file as part of source code
-
-* Thu Sep 19 2013 Chengwei yang <chengwei.yang@intel.com>
-- Now systemd unit file is part of source code
-
-* Wed Sep 18 2013 Chengwei yang <chengwei.yang@intel.com>
-- Fix activate scim.service failed
 
 * Wed Jun 19 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130619.143358@6b9f91e
 - do not depend on e17 in %post
