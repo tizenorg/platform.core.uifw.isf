@@ -1,3 +1,8 @@
+* Tue Mar 11 2014 Jihoon Kim <jihoon48.kim@samsung.com> accepted/tizen/mobile/20140311.005458@4062333
+- Remove smack rule file
+- fix build error due to %changelog not in descending chronological order
+- upload isf-2.4.7104
+
 * Mon Nov 04 2013 Jihoon Kim <jihoon48.kim@samsung.com> accepted/tizen_2.2/20131101.010032@b1e5aa2
 - increase retry count to to call XOpenDisplay in X11 frontend
 
