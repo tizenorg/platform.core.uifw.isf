@@ -3696,6 +3696,8 @@ private:
                     reset_ise_option (client_id);
                 else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE)
                     reset_default_ise (client_id);
+                else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL)
+                    show_isf_panel (client_id);
             }
 
             socket_transaction_end ();

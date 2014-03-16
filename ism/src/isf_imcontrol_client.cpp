@@ -258,6 +258,10 @@ public:
     void set_active_ise_to_default (void) {
         m_trans.put_command (ISM_TRANS_CMD_RESET_DEFAULT_ISE);
     }
+
+    void show_ise_selector (void) {
+        m_trans.put_command (ISM_TRANS_CMD_SHOW_ISF_CONTROL);
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -337,6 +341,11 @@ void IMControlClient::reset_ise_option (void)
 void IMControlClient::set_active_ise_to_default (void)
 {
     m_impl->set_active_ise_to_default ();
+}
+
+void IMControlClient::show_ise_selector (void)
+{
+    m_impl->show_ise_selector ();
 }
 };
 

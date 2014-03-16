@@ -40,7 +40,8 @@ enum {
     GET_ACTIVE_ISE,
     GET_ISE_INFO,
     GET_ISE_LIST,
-    RESET_DEFAULT_ISE
+    RESET_DEFAULT_ISE,
+    SHOW_ISE_SELECTOR
 };
 
 const char *api_list[]={
@@ -55,7 +56,8 @@ const char *api_list[]={
     "GET ACTIVE ISE",
     "GET ACTIVE ISE INFO",
     "GET ISE LIST",
-    "RESET DEFAULT ISE"
+    "RESET DEFAULT ISE",
+    "SHOW_ISE_SELECTOR"
 };
 
 static void test_input_panel_geometry_get (void *data, Evas_Object *obj, void *event_info)
@@ -190,6 +192,15 @@ void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info)
         printf (" Reset default ISE is failed!!!\n");
 }
 
+void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info)
+{
+    int ret = isf_control_show_ise_selector ();
+    if (ret == 0)
+        printf (" Show ISE selector is successful!\n");
+    else
+        printf (" Show ISE selector is failed!!!\n");
+}
+
 char *gli_label_get (void *data, Evas_Object *obj, const char *part)
 {
     int j = (int)data;
@@ -235,6 +246,9 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
         break;
     case RESET_DEFAULT_ISE:
         test_reset_default_ise (NULL, obj, event_info);
+        break;
+    case SHOW_ISE_SELECTOR:
+        test_show_ise_selector (NULL, obj, event_info);
         break;
     default:
         break;

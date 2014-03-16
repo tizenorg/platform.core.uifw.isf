@@ -122,6 +122,13 @@ EAPI int isf_control_reset_ise_option (void);
  */
 EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
 
+/**
+ * @brief Show ISE selector.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_show_ise_selector ();
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

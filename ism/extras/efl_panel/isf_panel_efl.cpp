@@ -227,6 +227,7 @@ static void       slot_set_hardware_keyboard_mode      (void);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
+static void       slot_show_ise_selector               (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
@@ -241,6 +242,13 @@ static void       minictrl_clicked_cb                  (void *data, Evas_Object 
 #ifdef HAVE_MINICONTROL
 static void       ise_selector_minictrl_clicked_cb     (void *data, Evas_Object *o, const char *emission, const char *source);
 #endif
+static void       ise_selector_popup_del_cb (void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void       ise_selector_block_clicked_cb (void *data, Evas_Object *obj, void *event_info);
+static void       isf_setting_cb (void *data, Evas_Object *obj, void *event_info);
+static char      *gl_ise_name_get (void *data, Evas_Object *obj, const char *part);
+static Evas_Object *gl_icon_get (void *data, Evas_Object *obj, const char *part);
+static void       gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info);
+static void       ise_selector_focus_out_cb (void *data, Evas *e, void *event_info);
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -557,6 +565,73 @@ static void destroy_ise_selector ()
     }
 }
 
+static void create_ise_selector ()
+{
+    unsigned int index;
+    Evas_Object *genlist;
+    Evas_Object *btn;
+    Evas_Object *box;
+    int height;
+    unsigned int item_count;
+
+    destroy_ise_selector ();
+
+    /* Create center popup */
+    _ise_selector = center_popup_add (NULL, "IMESelector", "IMESelector");
+    evas_object_event_callback_add (_ise_selector, EVAS_CALLBACK_DEL, ise_selector_popup_del_cb, NULL);
+    ea_object_event_callback_add (_ise_selector, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+    evas_object_smart_callback_add (_ise_selector, "block,clicked", ise_selector_block_clicked_cb, NULL);
+    elm_object_part_text_set (_ise_selector, "title,text", _("Select input method"));
+
+    /* Create "Set up input methods" button */
+    btn = elm_button_add (_ise_selector);
+    elm_object_style_set (btn, "popup");
+    elm_object_text_set (btn, _("Set up input methods"));
+    elm_object_part_content_set (_ise_selector, "button1", btn);
+    evas_object_smart_callback_add (btn, "clicked", isf_setting_cb, _ise_selector);
+
+    /* Create box for adjusting the height of list */
+    box = elm_box_add (_ise_selector);
+    evas_object_size_hint_weight_set (box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+    itc.item_style = "1text.1icon/popup";
+    itc.func.text_get = gl_ise_name_get;
+    itc.func.content_get = gl_icon_get;
+    itc.func.state_get = NULL;
+    itc.func.del = NULL;
+
+    genlist = elm_genlist_add (box);
+    evas_object_size_hint_weight_set (genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+    for (index = 0; index < _uuids.size (); index++) {
+        if (_modes[index] ==  _panel_agent->get_current_toolbar_mode ())
+            elm_genlist_item_append (genlist, &itc, (void *) index, NULL, ELM_GENLIST_ITEM_NONE, gl_ise_selected_cb, (void *)index);
+    }
+
+    elm_box_pack_end (box, genlist);
+    evas_object_show (genlist);
+
+    /* The height of popup being adjusted by application here based on app requirement */
+    item_count = elm_genlist_items_count (genlist);
+
+    if (item_count > MAX_SELECT_IME_ITEM)
+        height = SELECT_IME_ITEM_HEIGHT * MAX_SELECT_IME_ITEM;
+    else
+        height = SELECT_IME_ITEM_HEIGHT*item_count;
+
+    evas_object_size_hint_min_set (box, 618, height);
+    evas_object_show (box);
+
+    elm_object_content_set (_ise_selector, box);
+    evas_object_show (_ise_selector);
+
+    Evas_Object *center_popup_win = center_popup_win_get (_ise_selector);
+    evas_event_callback_add (evas_object_evas_get (center_popup_win), EVAS_CALLBACK_CANVAS_FOCUS_OUT, ise_selector_focus_out_cb, NULL);
+
+    efl_set_transient_for_app_window (elm_win_xwindow_get (center_popup_win));
+}
+
 static Eina_Bool delete_ise_launch_timer ()
 {
     if (_ise_launch_timer) {
@@ -659,61 +734,7 @@ static void ise_selector_minictrl_clicked_cb (void *data, Evas_Object *o, const 
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    unsigned int index;
-    Evas_Object *genlist;
-    Evas_Object *box;
-    int height;
-    unsigned int item_count;
-
-    destroy_ise_selector ();
-
-    /* Create center popup */
-    _ise_selector = center_popup_add (NULL, "IMESelector", "IMESelector");
-    evas_object_event_callback_add (_ise_selector, EVAS_CALLBACK_DEL, ise_selector_popup_del_cb, NULL);
-    ea_object_event_callback_add (_ise_selector, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
-    evas_object_smart_callback_add (_ise_selector, "block,clicked", ise_selector_block_clicked_cb, NULL);
-    elm_object_part_text_set (_ise_selector, "title,text", _("Select input method"));
-
-    /* Create box for adjusting the height of list */
-    box = elm_box_add (_ise_selector);
-    evas_object_size_hint_weight_set (box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-    itc.item_style = "1text.1icon/popup";
-    itc.func.text_get = gl_ise_name_get;
-    itc.func.content_get = gl_icon_get;
-    itc.func.state_get = NULL;
-    itc.func.del = NULL;
-
-    genlist = elm_genlist_add (box);
-    evas_object_size_hint_weight_set (genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set (genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
-    for (index = 0; index < _uuids.size (); index++) {
-        if (_modes[index] ==  _panel_agent->get_current_toolbar_mode ())
-            elm_genlist_item_append (genlist, &itc, (void *) index, NULL, ELM_GENLIST_ITEM_NONE, gl_ise_selected_cb, (void *)index);
-    }
-
-    elm_box_pack_end (box, genlist);
-    evas_object_show (genlist);
-
-    /* The height of popup being adjusted by application here based on app requirement */
-    item_count = elm_genlist_items_count (genlist);
-
-    if (item_count > MAX_SELECT_IME_ITEM)
-        height = SELECT_IME_ITEM_HEIGHT * MAX_SELECT_IME_ITEM;
-    else
-        height = SELECT_IME_ITEM_HEIGHT*item_count;
-
-    evas_object_size_hint_min_set (box, 618, height);
-    evas_object_show (box);
-
-    elm_object_content_set (_ise_selector, box);
-    evas_object_show (_ise_selector);
-
-    Evas_Object *center_popup_win = center_popup_win_get (_ise_selector);
-    evas_event_callback_add (evas_object_evas_get (center_popup_win), EVAS_CALLBACK_CANVAS_FOCUS_OUT, ise_selector_focus_out_cb, NULL);
-
-    efl_set_transient_for_app_window (elm_win_xwindow_get (center_popup_win));
+    create_ise_selector ();
 }
 #endif
 
@@ -3593,6 +3614,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
     _panel_agent->signal_connect_start_default_ise          (slot (slot_start_default_ise));
     _panel_agent->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
+    _panel_agent->signal_connect_show_panel                 (slot (slot_show_ise_selector));
 
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
@@ -4942,6 +4964,13 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
             destroy_ise_selector ();
         }
     }
+}
+
+static void slot_show_ise_selector (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    create_ise_selector ();
 }
 
 static void slot_show_ise (void)

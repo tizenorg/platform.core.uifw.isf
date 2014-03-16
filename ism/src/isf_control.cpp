@@ -152,6 +152,17 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
     return 0;
 }
 
+EAPI int isf_control_show_ise_selector (void)
+{
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.show_ise_selector ();
+    imcontrol_client.send ();
+    imcontrol_client.close_connection ();
+    return 0;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */

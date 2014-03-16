@@ -57,6 +57,7 @@ public:
     void reset_ise_option (void);
     void set_active_ise_to_default (void);
     void set_initial_ise_by_uuid (const char* uuid);
+    void show_ise_selector ();
 };
 
 }
