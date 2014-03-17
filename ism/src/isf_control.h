@@ -129,6 +129,15 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
  */
 EAPI int isf_control_show_ise_selector ();
 
+/**
+ * @brief Get the number of S/W or H/W keyboard ISEs
+ *
+ * @param type     ISE's type.
+ *
+ * @return the count of ISEs if successfully, otherwise return -1;
+ */
+EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

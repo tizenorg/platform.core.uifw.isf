@@ -163,6 +163,33 @@ EAPI int isf_control_show_ise_selector (void)
     return 0;
 }
 
+EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
+{
+    char **iselist = NULL;
+    int all_ise_count, ise_count = 0;
+    ISE_TYPE_T isetype;
+
+    all_ise_count = isf_control_get_ise_list (&iselist);
+    if (all_ise_count < 0)
+        return -1;
+
+    for (int i = 0; i < all_ise_count; i++) {
+        if (iselist[i]) {
+            isf_control_get_ise_info (iselist[i], NULL, NULL, &isetype, NULL);
+            if (isetype == type) {
+                ise_count++;
+            }
+
+            free (iselist[i]);
+        }
+    }
+
+    if (iselist)
+        free (iselist);
+
+    return ise_count;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */

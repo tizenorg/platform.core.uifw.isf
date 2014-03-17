@@ -40,6 +40,7 @@ enum {
     GET_ACTIVE_ISE,
     GET_ISE_INFO,
     GET_ISE_LIST,
+    GET_ISE_COUNT,
     RESET_DEFAULT_ISE,
     SHOW_ISE_SELECTOR
 };
@@ -56,6 +57,7 @@ const char *api_list[]={
     "GET ACTIVE ISE",
     "GET ACTIVE ISE INFO",
     "GET ISE LIST",
+    "GET ISE COUNT",
     "RESET DEFAULT ISE",
     "SHOW_ISE_SELECTOR"
 };
@@ -183,6 +185,11 @@ void test_get_ise_info (void *data, Evas_Object *obj, void *event_info)
         free (uuid);
 }
 
+void test_get_ise_count (void *data, Evas_Object *obj, void *event_info)
+{
+    printf ("S/W keyboard : %d, H/W keyboard : %d\n", isf_control_get_ise_count (SOFTWARE_KEYBOARD_ISE), isf_control_get_ise_count (HARDWARE_KEYBOARD_ISE));
+}
+
 void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info)
 {
     int ret = isf_control_set_active_ise_to_default ();
@@ -247,6 +254,9 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
         break;
     case GET_ISE_INFO:
         test_get_ise_info (NULL, obj, event_info);
+        break;
+    case GET_ISE_COUNT:
+        test_get_ise_count (NULL, obj, event_info);
         break;
     case RESET_DEFAULT_ISE:
         test_reset_default_ise (NULL, obj, event_info);
