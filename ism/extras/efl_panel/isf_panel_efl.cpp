@@ -52,6 +52,7 @@
 #include "scim_stl_map.h"
 #include "center_popup.h"
 #include "minicontrol.h"
+#include "iseselector.h"
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -242,13 +243,8 @@ static void       minictrl_clicked_cb                  (void *data, Evas_Object 
 #ifdef HAVE_MINICONTROL
 static void       ise_selector_minictrl_clicked_cb     (void *data, Evas_Object *o, const char *emission, const char *source);
 #endif
-static void       ise_selector_popup_del_cb (void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void       ise_selector_block_clicked_cb (void *data, Evas_Object *obj, void *event_info);
-static void       isf_setting_cb (void *data, Evas_Object *obj, void *event_info);
-static char      *gl_ise_name_get (void *data, Evas_Object *obj, const char *part);
-static Evas_Object *gl_icon_get (void *data, Evas_Object *obj, const char *part);
-static void       gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info);
-static void       ise_selector_focus_out_cb (void *data, Evas *e, void *event_info);
+static Eina_Bool  ise_launch_timeout (void *data);
+static Eina_Bool  delete_ise_launch_timer ();
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -341,8 +337,6 @@ static std::vector<Evas_Object *> _aux_seperates;
 static Evas_Object       *_tmp_preedit_text                 = 0;
 static Evas_Object       *_tmp_aux_text                     = 0;
 static Evas_Object       *_tmp_candidate_text               = 0;
-static Evas_Object       *_ise_selector                     = NULL;
-static Evas_Object       *_ise_selector_radio_grp           = NULL;
 
 static int                _spot_location_x                  = -1;
 static int                _spot_location_y                  = -1;
@@ -410,15 +404,11 @@ static int                candidate_image_height            = 38;
 static int                candidate_play_image_width_height = 19;
 
 static const int          CANDIDATE_TEXT_OFFSET             = 2;
-static const unsigned int SELECT_IME_ITEM_HEIGHT            = 114;
-static const unsigned int MAX_SELECT_IME_ITEM               = 4;
 
 #ifdef HAVE_MINICONTROL
 static MiniControl        input_detect_minictrl;
 static MiniControl        ise_selector_minictrl;
 #endif
-
-static Elm_Genlist_Item_Class itc;
 
 #if HAVE_TTS
 static tts_h              _tts                              = NULL;
@@ -552,85 +542,20 @@ static void minictrl_clicked_cb (void *data, Evas_Object *o, const char *emissio
     }
 }
 
-static void destroy_ise_selector ()
+static void ise_selected_cb (unsigned int index)
 {
-    if (_ise_selector_radio_grp) {
-         evas_object_del (_ise_selector_radio_grp);
-         _ise_selector_radio_grp = NULL;
-    }
-
-    if (_ise_selector) {
-        evas_object_del (_ise_selector);
-        _ise_selector = NULL;
-    }
+    set_active_ise (_uuids[index], _soft_keyboard_launched);
+    _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
 }
 
-static void create_ise_selector ()
+#ifdef HAVE_MINICONTROL
+static void ise_selector_minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
 {
-    unsigned int index;
-    Evas_Object *genlist;
-    Evas_Object *btn;
-    Evas_Object *box;
-    int height;
-    unsigned int item_count;
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    destroy_ise_selector ();
-
-    /* Create center popup */
-    _ise_selector = center_popup_add (NULL, "IMESelector", "IMESelector");
-    evas_object_event_callback_add (_ise_selector, EVAS_CALLBACK_DEL, ise_selector_popup_del_cb, NULL);
-    ea_object_event_callback_add (_ise_selector, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
-    evas_object_smart_callback_add (_ise_selector, "block,clicked", ise_selector_block_clicked_cb, NULL);
-    elm_object_part_text_set (_ise_selector, "title,text", _("Select input method"));
-
-    /* Create "Set up input methods" button */
-    btn = elm_button_add (_ise_selector);
-    elm_object_style_set (btn, "popup");
-    elm_object_text_set (btn, _("Set up input methods"));
-    elm_object_part_content_set (_ise_selector, "button1", btn);
-    evas_object_smart_callback_add (btn, "clicked", isf_setting_cb, _ise_selector);
-
-    /* Create box for adjusting the height of list */
-    box = elm_box_add (_ise_selector);
-    evas_object_size_hint_weight_set (box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-    itc.item_style = "1text.1icon/popup";
-    itc.func.text_get = gl_ise_name_get;
-    itc.func.content_get = gl_icon_get;
-    itc.func.state_get = NULL;
-    itc.func.del = NULL;
-
-    genlist = elm_genlist_add (box);
-    evas_object_size_hint_weight_set (genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set (genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
-    for (index = 0; index < _uuids.size (); index++) {
-        if (_modes[index] ==  _panel_agent->get_current_toolbar_mode ())
-            elm_genlist_item_append (genlist, &itc, (void *) index, NULL, ELM_GENLIST_ITEM_NONE, gl_ise_selected_cb, (void *)index);
-    }
-
-    elm_box_pack_end (box, genlist);
-    evas_object_show (genlist);
-
-    /* The height of popup being adjusted by application here based on app requirement */
-    item_count = elm_genlist_items_count (genlist);
-
-    if (item_count > MAX_SELECT_IME_ITEM)
-        height = SELECT_IME_ITEM_HEIGHT * MAX_SELECT_IME_ITEM;
-    else
-        height = SELECT_IME_ITEM_HEIGHT*item_count;
-
-    evas_object_size_hint_min_set (box, 618, height);
-    evas_object_show (box);
-
-    elm_object_content_set (_ise_selector, box);
-    evas_object_show (_ise_selector);
-
-    Evas_Object *center_popup_win = center_popup_win_get (_ise_selector);
-    evas_event_callback_add (evas_object_evas_get (center_popup_win), EVAS_CALLBACK_CANVAS_FOCUS_OUT, ise_selector_focus_out_cb, NULL);
-
-    efl_set_transient_for_app_window (elm_win_xwindow_get (center_popup_win));
+    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb);
 }
+#endif
 
 static Eina_Bool delete_ise_launch_timer ()
 {
@@ -649,94 +574,9 @@ static Eina_Bool ise_launch_timeout (void *data)
 
     LOGW ("ISE launching timeout\n");
 
-    destroy_ise_selector ();
+    ise_selector_destroy ();
     return ECORE_CALLBACK_CANCEL;
 }
-
-static char *gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
-{
-    int index = (int) data;
-    if (index < 0 || index >= (int)_names.size ())
-        return NULL;
-
-    return strdup (_names[index].c_str ());
-}
-
-static Evas_Object *gl_icon_get (void *data, Evas_Object *obj, const char *part)
-{
-    unsigned int index = (unsigned int)(data);
-
-    if (index >= _uuids.size ())
-        return NULL;
-
-    Evas_Object *radio = elm_radio_add (obj);
-    elm_radio_state_value_set (radio, index);
-    if (_ise_selector_radio_grp == NULL)
-        _ise_selector_radio_grp = elm_radio_add (obj);
-    elm_radio_group_add (radio, _ise_selector_radio_grp);
-    evas_object_show (radio);
-
-    if (get_ise_index (_panel_agent->get_current_helper_uuid ()) == index)
-        elm_radio_value_set (_ise_selector_radio_grp, index);
-
-    return radio;
-}
-
-static void gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    int index = (int)(data);
-
-    if (index < 0 || index >= (int)_uuids.size ())
-        return;
-
-    if (_ise_selector_radio_grp)
-        elm_radio_value_set (_ise_selector_radio_grp, index);
-
-    if (TOOLBAR_HELPER_MODE == _panel_agent->get_current_toolbar_mode ()) {
-        if (_uuids[index] == _panel_agent->get_current_helper_uuid ()) {
-            destroy_ise_selector ();
-            return;
-        }
-    }
-
-    LOGD ("Set active ISE : %s\n", _uuids[index].c_str ());
-
-    set_active_ise (_uuids[index], _soft_keyboard_launched);
-    _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
-}
-
-static void ise_selector_block_clicked_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    destroy_ise_selector ();
-}
-
-static void ise_selector_popup_del_cb (void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-    LOGD ("IME Selector is deleted\n");
-
-    if (_ise_selector_radio_grp) {
-         evas_object_del (_ise_selector_radio_grp);
-         _ise_selector_radio_grp = NULL;
-    }
-
-    _ise_selector = NULL;
-}
-
-static void
-ise_selector_focus_out_cb (void *data, Evas *e, void *event_info)
-{
-    LOGD ("ISE selector window focus out\n");
-    destroy_ise_selector ();
-}
-
-#ifdef HAVE_MINICONTROL
-static void ise_selector_minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    create_ise_selector ();
-}
-#endif
 
 static bool tokenize_tag (const String& str, struct image *image_token)
 {
@@ -4960,9 +4800,7 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
             efl_set_transient_for_app_window (_ise_window);
         }
 
-        if (delete_ise_launch_timer ()) {
-            destroy_ise_selector ();
-        }
+        ise_selector_destroy ();
     }
 }
 
@@ -4970,7 +4808,7 @@ static void slot_show_ise_selector (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    create_ise_selector ();
+    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb);
 }
 
 static void slot_show_ise (void)
@@ -6329,7 +6167,7 @@ cleanup:
     ui_candidate_delete_longpress_timer ();
     ui_candidate_delete_destroy_timer ();
     delete_ise_directory_em ();
-    destroy_ise_selector ();
+    ise_selector_destroy ();
     delete_ise_launch_timer ();
     ui_close_tts ();
 

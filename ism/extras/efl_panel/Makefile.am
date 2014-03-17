@@ -26,7 +26,8 @@ endif
 bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
-                         isf_panel_utility.cpp
+                         isf_panel_utility.cpp \
+                         iseselector.cpp
 
 if ISF_BUILD_MINICONTROL
 isf_panel_efl_SOURCES  += minicontrol.cpp \
