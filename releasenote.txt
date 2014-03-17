@@ -1,3 +1,12 @@
+ISF 2.4.7517 :
+ 1. Add API to get the number of S/W or H/W keyboard ISEs
+ 2. [demo] unselect menu item when pressing menu
+ 3. Refactoring ise selector code
+ 4. Add isf_control_show_ise_selector API
+ 5. Correct build error
+ 6. added hotkeys in the config file for hiding ise
+
+
 ISF 2.4.7510 :
  1. Support conditional build about minicontrol
  2. Writing description about some APIs in scim_helper.h
