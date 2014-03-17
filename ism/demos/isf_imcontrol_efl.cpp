@@ -210,6 +210,10 @@ char *gli_label_get (void *data, Evas_Object *obj, const char *part)
 static void test_api (void *data, Evas_Object *obj, void *event_info)
 {
     int j = (int)data;
+    Elm_Object_Item *it = (Elm_Object_Item *)event_info;
+    if (it)
+        elm_genlist_item_selected_set (it, EINA_FALSE);
+
     switch (j) {
     case INPUT_PANEL_GEOMETRY_GET:
         test_input_panel_geometry_get (NULL, obj, event_info);
