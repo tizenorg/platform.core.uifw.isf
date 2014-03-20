@@ -67,12 +67,6 @@ namespace scim {
  * @{
  */
 
-typedef enum
-{
-    TOOLBAR_KEYBOARD_MODE = 0,  /* Hardware keyboard ISE */
-    TOOLBAR_HELPER_MODE         /* Software keyboard ISE */
-} TOOLBAR_MODE_T;
-
 typedef struct _ISE_INFO
 {
     String uuid;
@@ -1153,9 +1147,9 @@ public:
     /**
      * @brief Signal: Set hardware mode
      *
-     * slot prototype: void set_hardware_keyboard_mode (void);
+     * slot prototype: void set_keyboard_mode (void);
      */
-    Connection signal_connect_set_hardware_keyboard_mode (PanelAgentSlotVoid                *slot);
+    Connection signal_connect_set_keyboard_mode (PanelAgentSlotInt                *slot);
 
     /**
      * @brief Signal: Notifies the client finished handling WILL_HIDE event for candidate

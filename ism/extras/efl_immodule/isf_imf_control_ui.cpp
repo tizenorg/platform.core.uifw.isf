@@ -46,7 +46,7 @@ static Ecore_IMF_Context *hide_req_ic       = NULL;
 static Ecore_Event_Handler *_prop_change_handler = NULL;
 static Ecore_X_Atom       prop_x_keyboard_input_detected = 0;
 static Ecore_X_Window     _control_win;
-static Eina_Bool          hw_kbd_mode = EINA_FALSE;
+static TOOLBAR_MODE_T    kbd_mode = TOOLBAR_HELPER_MODE;
 static Ecore_Timer       *hide_timer = NULL;
 static Ecore_Timer       *will_show_timer = NULL;
 Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
@@ -179,8 +179,8 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
             return ECORE_CALLBACK_PASS_ON;
 
         if (val == 0) {
-            hw_kbd_mode = EINA_FALSE;
-            LOGD ("H/W keyboard mode : %d\n", hw_kbd_mode);
+            kbd_mode = TOOLBAR_HELPER_MODE;
+            LOGD ("keyboard mode(0:H/W Keyboard, 1:S/W Keyboard): %d\n", kbd_mode);
         }
     }
 
@@ -411,9 +411,9 @@ void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int valu
     _event_callback_call (type, value);
 }
 
-Eina_Bool get_hardware_keyboard_mode ()
+TOOLBAR_MODE_T get_keyboard_mode ()
 {
-    return hw_kbd_mode;
+    return kbd_mode;
 }
 
 void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx)
@@ -448,14 +448,14 @@ void isf_imf_input_panel_init (void)
 
     if (ecore_x_window_prop_card32_get (_control_win, prop_x_keyboard_input_detected, &val, 1) > 0){
         if (val == 1){
-            hw_kbd_mode = EINA_TRUE;
+            kbd_mode = TOOLBAR_KEYBOARD_MODE;
         } else {
-            hw_kbd_mode = EINA_FALSE;
+            kbd_mode = TOOLBAR_HELPER_MODE;
         }
     } else {
-        hw_kbd_mode = EINA_FALSE;
+        kbd_mode = TOOLBAR_HELPER_MODE;
     }
-    LOGD ("H/W keyboard mode : %d\n", hw_kbd_mode);
+    LOGD ("keyboard mode(0:H/W Keyboard, 1:S/W Keyboard): %d\n", kbd_mode);
 }
 
 void isf_imf_input_panel_shutdown (void)
@@ -536,7 +536,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         return;
     }
 
-    if (hw_kbd_mode) {
+    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
         LOGD ("H/W keyboard is existed.\n");
         return;
     }
@@ -931,15 +931,15 @@ void isf_imf_context_input_panel_send_will_hide_ack (Ecore_IMF_Context *ctx)
     }
 }
 
-void isf_imf_context_set_hardware_keyboard_mode (Ecore_IMF_Context *ctx)
+void isf_imf_context_set_keyboard_mode (Ecore_IMF_Context *ctx, TOOLBAR_MODE_T mode)
 {
     if (IfInitContext == false) {
         _isf_imf_context_init ();
     }
 
-    hw_kbd_mode = EINA_TRUE;
-    SECURE_LOGD ("H/W keyboard mode : %d\n", hw_kbd_mode);
-    _isf_imf_context_set_hardware_keyboard_mode (_get_context_id (ctx));
+    kbd_mode = mode;
+    SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
+    _isf_imf_context_set_keyboard_mode (_get_context_id (ctx), mode);
 }
 
 void isf_imf_context_input_panel_send_candidate_will_hide_ack (Ecore_IMF_Context *ctx)

@@ -1084,9 +1084,11 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_SEND_WILL_HIDE_ACK);
     }
 
-    void set_hardware_keyboard_mode (void) {
+    void set_keyboard_mode (int mode) {
         if (m_send_refcount > 0)
             m_send_trans.put_command (ISM_TRANS_CMD_SET_HARDWARE_KEYBOARD_MODE);
+            m_send_trans.put_data (mode);
+
     }
 
     void send_candidate_will_hide_ack (void) {
@@ -1727,9 +1729,9 @@ PanelClient::send_will_hide_ack     (void)
 }
 
 void
-PanelClient::set_hardware_keyboard_mode (void)
+PanelClient::set_keyboard_mode (int mode)
 {
-    m_impl->set_hardware_keyboard_mode ();
+    m_impl->set_keyboard_mode (mode);
 }
 
 void

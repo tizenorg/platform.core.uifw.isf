@@ -207,10 +207,10 @@ int _isf_wsc_context_input_panel_send_will_hide_ack (int context)
     return 0;
 }
 
-int _isf_wsc_context_set_hardware_keyboard_mode (int context)
+int _isf_wsc_context_set_keyboard_mode (int context, TOOLBAR_MODE_T mode)
 {
     _panel_client.prepare (context);
-    _panel_client.set_hardware_keyboard_mode ();
+    _panel_client.set_keyboard_mode (mode);
     _panel_client.send ();
     return 0;
 }

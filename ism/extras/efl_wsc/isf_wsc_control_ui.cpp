@@ -174,7 +174,7 @@ void isf_wsc_context_input_panel_hide (WSCContextISF *ctx)
     _isf_wsc_context_input_panel_hide (get_panel_client_id (), context_id);
 }
 
-void isf_wsc_context_set_hardware_keyboard_mode (WSCContextISF *ctx)
+void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, TOOLBAR_MODE_T mode)
 {
     if (IfInitContext == false) {
         _isf_wsc_context_init ();
@@ -182,7 +182,7 @@ void isf_wsc_context_set_hardware_keyboard_mode (WSCContextISF *ctx)
 
     hw_kbd_num = 1;
     SECURE_LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
-    _isf_wsc_context_set_hardware_keyboard_mode (_get_context_id (ctx));
+    _isf_wsc_context_set_keyboard_mode (_get_context_id (ctx), mode);
 }
 
 void

@@ -143,11 +143,6 @@ typedef enum _WINDOW_STATE {
     WINDOW_STATE_ON,
 } WINDOW_STATE;
 
-typedef enum _KEYBOARD_MODE {
-    SOFTWARE_KEYBOARD_MODE = 0,
-    HARDWARE_KEYBOARD_MODE,
-} KEYBOARD_MODE;
-
 typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
 
 
@@ -224,7 +219,7 @@ static void       slot_hide_ise                        (void);
 static void       slot_will_hide_ack                   (void);
 static void       slot_candidate_will_hide_ack         (void);
 
-static void       slot_set_hardware_keyboard_mode      (void);
+static void       slot_set_keyboard_mode               (int mode);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
@@ -235,7 +230,7 @@ static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Han
 static Eina_Bool  efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
 static Ecore_X_Window efl_get_quickpanel_window        (void);
-static void       check_hardware_keyboard              (KEYBOARD_MODE mode);
+static void       check_hardware_keyboard              (TOOLBAR_MODE_T mode);
 static unsigned int get_ise_index                      (const String uuid);
 static bool       set_active_ise                       (const String &uuid, bool launch_ise);
 
@@ -3448,7 +3443,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
 
-    _panel_agent->signal_connect_set_hardware_keyboard_mode (slot (slot_set_hardware_keyboard_mode));
+    _panel_agent->signal_connect_set_keyboard_mode (slot (slot_set_keyboard_mode));
 
     _panel_agent->signal_connect_candidate_will_hide_ack    (slot (slot_candidate_will_hide_ack));
     _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
@@ -4917,10 +4912,11 @@ static void slot_candidate_will_hide_ack (void)
     }
 }
 
-static void slot_set_hardware_keyboard_mode (void)
+static void slot_set_keyboard_mode (int mode)
 {
-    LOGD ("slot_set_hardware_keyboard_mode called");
-    check_hardware_keyboard (HARDWARE_KEYBOARD_MODE);
+    LOGD ("slot_set_keyboard_mode called (TOOLBAR_MODE : %d)\n",mode);
+
+    check_hardware_keyboard ((TOOLBAR_MODE_T)mode);
 }
 
 static void slot_get_ise_state (int &state)
@@ -5223,7 +5219,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
  *
  * @return void
  */
-static void check_hardware_keyboard (KEYBOARD_MODE mode)
+static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -5234,7 +5230,7 @@ static void check_hardware_keyboard (KEYBOARD_MODE mode)
     String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
-    if (mode == HARDWARE_KEYBOARD_MODE) {
+    if (mode == TOOLBAR_KEYBOARD_MODE) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             LOGD ("HARDWARE_KEYBOARD_MODE return");
             return;
@@ -5295,10 +5291,10 @@ static void check_hardware_keyboard (KEYBOARD_MODE mode)
         notification_status_message_post (_("Input detected from hardware keyboard"));
 
         /* Set input detected property for isf setting */
-        val = (unsigned int)HARDWARE_KEYBOARD_MODE;
+        val = 1;
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
-    } else if (mode == SOFTWARE_KEYBOARD_MODE) {
+    } else if (mode == TOOLBAR_HELPER_MODE) {
         LOGD ("SOFTWARE KEYBOARD MODE");
         /* When switching back to S/W keyboard mode, let's hide candidate window first */
         LOGD ("calling ui_candidate_hide (true, true, true)");
@@ -5318,7 +5314,7 @@ static void check_hardware_keyboard (KEYBOARD_MODE mode)
 #endif
 
         /* Set input detected property for isf setting */
-        val = (unsigned int)SOFTWARE_KEYBOARD_MODE;
+        val = 0;
         ecore_x_test_fake_key_press ("XF86MenuKB");
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
@@ -5370,7 +5366,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
         if (ecore_x_window_prop_card32_get (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1) > 0) {
             if (val == 0) {
                 _panel_agent->reset_keyboard_ise ();
-                check_hardware_keyboard (SOFTWARE_KEYBOARD_MODE);
+                check_hardware_keyboard (TOOLBAR_HELPER_MODE);
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
             }
@@ -5778,7 +5774,7 @@ static void launch_default_soft_keyboard (keynode_t *key, void* data)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     /* Start default ISE */
-    check_hardware_keyboard (SOFTWARE_KEYBOARD_MODE);
+    check_hardware_keyboard (TOOLBAR_HELPER_MODE);
 }
 
 static String sanitize_string (const char *str, int maxlen = 32)

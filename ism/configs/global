@@ -13,3 +13,4 @@
 /InitialIseName = Tizen Keyboard
 /PreloadKeyboardIse = true
 /LaunchIseOnRequest = false
+/ChangeKeyboardModeByTouch = false

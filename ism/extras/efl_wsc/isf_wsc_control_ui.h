@@ -25,8 +25,11 @@
 #ifndef __ISF_IMF_CONTROL_UI_H
 #define __ISF_IMF_CONTROL_UI_H
 
+#define Uses_SCIM_PANEL_CLIENT
+
 #include "isf_wsc_context.h"
 #include <Ecore_IMF.h>
+#include "scim.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -46,7 +49,7 @@ extern "C"
     Ecore_IMF_Input_Panel_Layout isf_wsc_context_input_panel_layout_get (WSCContextISF *ctx);
     void isf_wsc_context_input_panel_caps_mode_set (WSCContextISF *ctx, unsigned int mode);
     void isf_wsc_context_input_panel_caps_lock_mode_set (WSCContextISF *ctx, Eina_Bool mode);
-    void isf_wsc_context_set_hardware_keyboard_mode (WSCContextISF *ctx);
+    void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, scim::TOOLBAR_MODE_T mode);
 
 #ifdef __cplusplus
 }

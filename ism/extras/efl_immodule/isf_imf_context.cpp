@@ -291,6 +291,8 @@ static Ecore_Event_Handler                             *_key_up_handler         
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
+static bool                                             _change_keyboard_mode_by_touch = false;
+
 static double                                           space_key_time              = 0.0;
 
 static Eina_Bool                                        autoperiod_allow            = EINA_FALSE;
@@ -539,7 +541,7 @@ _key_up_cb (void *data, int type, void *event)
             ecore_imf_context_input_panel_hide (active_ctx);
         } else {
             if (_click_timer == NULL) {
-                if (get_hardware_keyboard_mode ()) {
+                if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) {
                     ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
                     ecore_timer_add (0.1, _panel_show, NULL);
                 } else {
@@ -819,7 +821,7 @@ caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti)
     Eina_Bool uppercase;
     EcoreIMFContextISF *context_scim;
 
-    if (get_hardware_keyboard_mode ()) return EINA_FALSE;
+    if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) return EINA_FALSE;
 
     if (!ctx) return EINA_FALSE;
     context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
@@ -1429,7 +1431,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
     else
         LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
 
-    if (get_hardware_keyboard_mode ())
+    if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE)
         clear_hide_request ();
 }
 
@@ -1932,10 +1934,10 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
     /* Hardware input detect code */
     if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
-        if (ev->timestamp > 1 && get_hardware_keyboard_mode () == EINA_FALSE &&
+        if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE &&
             scim_string_to_key (key, ev->key) &&
             key.code != 0xFF69 /* Cancel (Power + Volume down) key */) {
-            isf_imf_context_set_hardware_keyboard_mode (ctx);
+            isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_KEYBOARD_MODE);
             _panel_client.prepare (ic->id);
             _panel_client.get_active_helper_option (&_active_helper_option);
             _panel_client.send ();
@@ -1976,8 +1978,14 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get (ctx)) {
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
-            if (ic == _focused_ic)
-                ecore_imf_context_input_panel_show (ctx);
+            if (ic == _focused_ic) {
+                if (_change_keyboard_mode_by_touch && get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) {
+                    isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
+                    LOGD("S/W keyboard mode by enabling ChangeKeyboardModeByTouch");
+                } else {
+                    ecore_imf_context_input_panel_show (ctx);
+                }
+            }
             else
                 LOGE ("Can't show IME because there is no focus. ctx : %p\n", ctx);
         }
@@ -2018,7 +2026,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         }
         if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
             ret = EINA_FALSE;
-        } else if (get_hardware_keyboard_mode () && (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
+        } else if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE && (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
             _panel_client.process_key_event (key, (int*)&ret);
         } else {
             ret = _focused_ic->impl->si->process_key_event (key);
@@ -3922,7 +3930,7 @@ slot_commit_string (IMEngineInstanceBase *si,
             if (ecore_imf_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL &&
                 ic->impl->shift_mode_enabled &&
                 ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
-                get_hardware_keyboard_mode () == EINA_FALSE) {
+                get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 char converted[2] = {'\0'};
                 if (utf8_wcstombs (str).length () == 1) {
                     Eina_Bool uppercase;
@@ -4246,6 +4254,7 @@ reload_config_callback (const ConfigPointer &config)
 
     _on_the_spot = config->read (String (SCIM_CONFIG_FRONTEND_ON_THE_SPOT), _on_the_spot);
     _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
+    _change_keyboard_mode_by_touch = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_TOUCH), _change_keyboard_mode_by_touch);
 
     // Get keyboard layout setting
     // Flush the global config first, in order to load the new configs from disk.

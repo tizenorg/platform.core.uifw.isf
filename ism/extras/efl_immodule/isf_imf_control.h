@@ -25,7 +25,10 @@
 #ifndef __ISF_IMF_CONTROL_H
 #define __ISF_IMF_CONTROL_H
 
+#define Uses_SCIM_PANEL_CLIENT
+
 #include <Ecore_IMF.h>
+#include "scim.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -57,7 +60,7 @@ extern "C"
     int _isf_imf_context_input_panel_send_will_show_ack (int context);
     int _isf_imf_context_input_panel_send_will_hide_ack (int context);
 
-    int _isf_imf_context_set_hardware_keyboard_mode (int context);
+    int _isf_imf_context_set_keyboard_mode (int context, scim::TOOLBAR_MODE_T mode);
 
     int _isf_imf_context_input_panel_send_candidate_will_hide_ack (int context);
 

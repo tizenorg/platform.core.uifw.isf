@@ -54,7 +54,6 @@
 #include <scim_panel_common.h>
 
 namespace scim {
-
 /**
  * @addtogroup Panel
  * @ingroup InputServiceFramework
@@ -239,7 +238,7 @@ public:
     void set_caps_mode          (int mode);
     void send_will_show_ack     (void);
     void send_will_hide_ack     (void);
-    void set_hardware_keyboard_mode (void);
+    void set_keyboard_mode      (int mode);
     void send_candidate_will_hide_ack (void);
     bool get_client_id          (int &client_id);
     void register_client        (int client_id);

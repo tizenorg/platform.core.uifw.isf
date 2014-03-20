@@ -367,7 +367,7 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalVoid                m_signal_will_show_ack;
     PanelAgentSignalVoid                m_signal_will_hide_ack;
 
-    PanelAgentSignalVoid                m_signal_set_hardware_keyboard_mode;
+    PanelAgentSignalInt                 m_signal_set_keyboard_mode;
 
     PanelAgentSignalVoid                m_signal_candidate_will_hide_ack;
     PanelAgentSignalInt2                m_signal_get_ise_state;
@@ -2748,11 +2748,15 @@ public:
             std::cerr << "Read SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID is failed!!!\n";
     }
 
-    void set_hardware_keyboard_mode (int client_id)
+    void set_keyboard_mode (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_hardware_keyboard_mode ()\n";
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_keyboard_mode ()\n";
+        uint32 mode;
+        if (m_recv_trans.get_data (mode)) {
+            m_signal_set_keyboard_mode (mode);
+        }
 
-        m_signal_set_hardware_keyboard_mode ();
+
     }
 
     void candidate_will_hide_ack (int client_id)
@@ -3129,9 +3133,9 @@ public:
         return m_signal_will_hide_ack.connect (slot);
     }
 
-    Connection signal_connect_set_hardware_keyboard_mode (PanelAgentSlotVoid                *slot)
+    Connection signal_connect_set_keyboard_mode (PanelAgentSlotInt                *slot)
     {
-        return m_signal_set_hardware_keyboard_mode.connect (slot);
+        return m_signal_set_keyboard_mode.connect (slot);
     }
 
     Connection signal_connect_candidate_will_hide_ack    (PanelAgentSlotVoid                *slot)
@@ -3362,7 +3366,7 @@ private:
                         will_hide_ack (client_id);
                         continue;
                     } else if (cmd == ISM_TRANS_CMD_SET_HARDWARE_KEYBOARD_MODE) {
-                        set_hardware_keyboard_mode (client_id);
+                        set_keyboard_mode (client_id);
                         continue;
                     } else if (cmd == ISM_TRANS_CMD_SEND_CANDIDATE_WILL_HIDE_ACK) {
                         candidate_will_hide_ack (client_id);
@@ -6462,9 +6466,9 @@ PanelAgent::signal_connect_will_hide_ack              (PanelAgentSlotVoid       
 }
 
 Connection
-PanelAgent::signal_connect_set_hardware_keyboard_mode (PanelAgentSlotVoid                *slot)
+PanelAgent::signal_connect_set_keyboard_mode (PanelAgentSlotInt                *slot)
 {
-    return m_impl->signal_connect_set_hardware_keyboard_mode (slot);
+    return m_impl->signal_connect_set_keyboard_mode (slot);
 }
 
 Connection
