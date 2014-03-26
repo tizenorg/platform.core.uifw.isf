@@ -3612,7 +3612,7 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
                 snprintf (noti_msg, sizeof (noti_msg), _("%s selected"), ise_name.c_str ());
            }
             else if (keyboard_ise_count == 1) {
-                snprintf (noti_msg, sizeof (noti_msg), _("Only %s is available"), ise_name.c_str ());
+                snprintf (noti_msg, sizeof (noti_msg), _("Only %s available"), ise_name.c_str ());
             }
 
             notification_status_message_post (noti_msg);

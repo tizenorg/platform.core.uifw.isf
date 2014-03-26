@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ism/src/scim_compose_key.cpp:128 ism/src/scim_imengine.cpp:812
@@ -47,7 +47,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:789
 msgid "Arabic (Israel)"
-msgstr "العربية"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:790
 msgid "Assamese"
@@ -79,7 +79,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:798
 msgid "Bosnian"
-msgstr "Bosanski"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:799
 msgid "Catalan"
@@ -91,7 +91,7 @@ msgstr "Čeština"
 
 #: ism/src/scim_utility.cpp:801 ism/src/scim_utility.cpp:950
 msgid "Welsh"
-msgstr "Cymraeg"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:802 ism/src/scim_keyboard_layout_data.h:4598
 msgid "Danish"
@@ -111,19 +111,19 @@ msgstr "Ελληνικά"
 
 #: ism/src/scim_utility.cpp:806
 msgid "English"
-msgstr "English"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:807
 msgid "English (Australian)"
-msgstr "English (Australian)"
+msgstr "English (Australia)"
 
 #: ism/src/scim_utility.cpp:808
 msgid "English (Canadian)"
-msgstr "English (Canadian)"
+msgstr "English (Canada)"
 
 #: ism/src/scim_utility.cpp:809
 msgid "English (United Kingdom)"
-msgstr "English (United Kingdom)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:810
 msgid "English (Ireland)"
@@ -131,7 +131,7 @@ msgstr "English (Ireland)"
 
 #: ism/src/scim_utility.cpp:811
 msgid "English (United States)"
-msgstr "English (United States)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:812
 msgid "Esperanto"
@@ -140,15 +140,15 @@ msgstr ""
 #: ism/src/scim_utility.cpp:813 ism/src/scim_utility.cpp:814
 #: ism/src/scim_keyboard_layout_data.h:4622
 msgid "Spanish"
-msgstr "Español"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:815
 msgid "Spanish (Mexico)"
-msgstr "Español (México)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:816
 msgid "Spanish (United States)"
-msgstr "Español (Estados Unidos)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:817 ism/src/scim_keyboard_layout_data.h:4601
 msgid "Estonian"
@@ -168,7 +168,7 @@ msgstr "Suomi"
 
 #: ism/src/scim_utility.cpp:821 ism/src/scim_keyboard_layout_data.h:4603
 msgid "French"
-msgstr "Français"
+msgstr "français"
 
 #: ism/src/scim_utility.cpp:822
 msgid "Irish"
@@ -176,7 +176,7 @@ msgstr "Gaeilge"
 
 #: ism/src/scim_utility.cpp:823
 msgid "Galician"
-msgstr "Galego"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:824
 msgid "Gujarati"
@@ -248,7 +248,7 @@ msgstr "ພາສາລາວ"
 
 #: ism/src/scim_utility.cpp:842
 msgid "Laothian"
-msgstr "ລາວ"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:843 ism/src/scim_keyboard_layout_data.h:4629
 msgid "Lithuanian"
@@ -280,7 +280,7 @@ msgstr "Bahasa Malaysia"
 
 #: ism/src/scim_utility.cpp:850
 msgid "Burmese"
-msgstr "မြန်မာဘာသာ"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:851
 msgid "Nepali"
@@ -296,7 +296,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:854
 msgid "Norwegian (Bokmal)"
-msgstr "Norsk (Bokmål)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:855
 msgid "Oriya"
@@ -313,7 +313,7 @@ msgstr "Polski"
 #: ism/src/scim_utility.cpp:858 ism/src/scim_utility.cpp:860
 #: ism/src/scim_keyboard_layout_data.h:4615
 msgid "Portuguese"
-msgstr "Português"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:859 ism/src/scim_keyboard_layout_data.h:4616
 msgid "Portuguese (Brazil)"
@@ -407,7 +407,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:887
 msgid "Chinese"
-msgstr "中文"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:888
 msgid "Chinese (Simplified)"
@@ -415,19 +415,19 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:889
 msgid "Chinese (Hongkong)"
-msgstr "中文 (香港)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:890
 msgid "Chinese (Singapore)"
-msgstr "中文 (香港)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:891
 msgid "Chinese (Traditional_Taiwan)"
-msgstr "中文 (香港)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:893
 msgid "Dutch (Belgian)"
-msgstr "Nederlands (België)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:894
 msgid "English (New Zealand)"
@@ -463,7 +463,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:902 ism/src/scim_keyboard_layout_data.h:4604
 msgid "French (Canadian)"
-msgstr "Français (Canada)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:903
 msgid "French (Swiss)"
@@ -479,7 +479,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:906 ism/src/scim_keyboard_layout_data.h:4608
 msgid "German (Swiss)"
-msgstr "Deutsch (Schweiz)"
+msgstr "Deutsch (Schweiz)Deutsch (Schweiz)"
 
 #: ism/src/scim_utility.cpp:907
 msgid "German (Austrian)"
@@ -567,7 +567,7 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:928 ism/src/scim_utility.cpp:957
 msgid "Afrikaans"
-msgstr "Afrikaans"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:929
 msgid "Malay (Brunei Darussalam)"
@@ -579,7 +579,7 @@ msgstr "Norsk"
 
 #: ism/src/scim_utility.cpp:931
 msgid "Serbian (Latin)"
-msgstr "Srpski (latinica)"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:932
 msgid "Serbian (Cyrillic)"
@@ -663,19 +663,19 @@ msgstr ""
 
 #: ism/src/scim_utility.cpp:954
 msgid "Hinglish"
-msgstr "Hinglish"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:955
 msgid "Sundanese"
-msgstr "Basa Sunda"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:956
 msgid "Tagalog"
-msgstr "Tagalog"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:958
 msgid "Javanese"
-msgstr "Basa Jawa"
+msgstr ""
 
 #: ism/src/scim_utility.cpp:959
 msgid "Khmer"
@@ -695,7 +695,7 @@ msgstr "ଓଡ଼ିଆ"
 
 #: ism/src/scim_utility.cpp:963 ism/src/scim_keyboard_layout_data.h:4624
 msgid "Spanish (Latin America)"
-msgstr "Español (América Latina)"
+msgstr "Español (Estados Unidos)"
 
 #: ism/src/scim_utility.cpp:1061
 msgid "Other"
@@ -711,7 +711,7 @@ msgstr ""
 
 #: ism/src/scim_keyboard_layout_data.h:4593
 msgid "English (US)"
-msgstr ""
+msgstr "English (United States)"
 
 #: ism/src/scim_keyboard_layout_data.h:4594
 msgid "Belgian"
@@ -747,7 +747,7 @@ msgstr ""
 
 #: ism/src/scim_keyboard_layout_data.h:4627
 msgid "English (UK)"
-msgstr ""
+msgstr "English (United Kingdom)"
 
 #: ism/modules/filter/scim_sctc_filter.cpp:57
 msgid "Simplified-Traditional Chinese Conversion"
@@ -838,33 +838,33 @@ msgstr ""
 #: ism/extras/efl_panel/isf_panel_efl.cpp:3609
 #, c-format
 msgid "%s selected"
-msgstr "Вибрано %s"
+msgstr "%s c chn"
 
 #: ism/extras/efl_panel/isf_panel_efl.cpp:3612
-#, fuzzy, c-format
+#, c-format
 msgid "Only %s available"
-msgstr "Доступно лише %s"
+msgstr "Chỉ có %s khả dụng"
 
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5199
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5283
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5288
 msgid "Input detected from hardware keyboard"
-msgstr "Визначено введення з апаратної клавіатури."
+msgstr "Phát hiện đầu vào từ bàn phím thật."
 
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5199
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5283
 msgid "Tap to use virtual keyboard"
-msgstr "Натисніть, щоб скористатися віртуальною клавіатурою."
+msgstr "Chm  dng bn phm o."
 
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5206
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5416
 #: ism/extras/efl_panel/iseselector.cpp:190
 msgid "Select input method"
-msgstr "Виб. методу введення"
+msgstr "Chn cch nhp"
 
 #: ism/extras/efl_panel/iseselector.cpp:195
 msgid "Set up input methods"
-msgstr "Настроювання способів введення"
+msgstr "Thit lp phng php nhp"
 
 #: ism/utils/scimstringview.c:201
 msgid "Cursor Position"
@@ -1182,6 +1182,3 @@ msgstr ""
 #: ism/demos/isf_imcontrol_efl.cpp:275
 msgid "IM Control"
 msgstr ""
-
-#~ msgid "Virtual keyboard is on"
-#~ msgstr "Віртуальну клавіатуру увімкнено"
