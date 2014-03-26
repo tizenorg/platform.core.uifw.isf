@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-26 17:38+0900\n"
+"POT-Creation-Date: 2014-03-26 17:08+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ism/src/scim_compose_key.cpp:128 ism/src/scim_imengine.cpp:812
-#: ism/src/scim_panel_agent.cpp:389 ism/src/scim_panel_agent.cpp:4257
+#: ism/src/scim_panel_agent.cpp:390 ism/src/scim_panel_agent.cpp:4274
 #: ism/src/scim_utility.cpp:784
 #: ism/extras/gtk2_immodule/gtkimcontextscim.cpp:1730
 msgid "English Keyboard"
@@ -51,11 +51,11 @@ msgstr "العربية"
 
 #: ism/src/scim_utility.cpp:790
 msgid "Assamese"
-msgstr "অসমীয়া"
+msgstr "অসমীয়া"
 
 #: ism/src/scim_utility.cpp:791 ism/src/scim_utility.cpp:948
 msgid "Azerbaijani"
-msgstr "Azərbaycanca"
+msgstr "Azərbaycan"
 
 #: ism/src/scim_utility.cpp:792
 msgid "Belarusian"
@@ -87,7 +87,7 @@ msgstr "Català"
 
 #: ism/src/scim_utility.cpp:800 ism/src/scim_keyboard_layout_data.h:4596
 msgid "Czech"
-msgstr "Český"
+msgstr "Čeština"
 
 #: ism/src/scim_utility.cpp:801 ism/src/scim_utility.cpp:950
 msgid "Welsh"
@@ -244,7 +244,7 @@ msgstr "한국어"
 
 #: ism/src/scim_utility.cpp:841
 msgid "Lao"
-msgstr "ລາວ"
+msgstr "ພາສາລາວ"
 
 #: ism/src/scim_utility.cpp:842
 msgid "Laothian"
@@ -284,7 +284,7 @@ msgstr "မြန်မာဘာသာ"
 
 #: ism/src/scim_utility.cpp:851
 msgid "Nepali"
-msgstr ""
+msgstr "नेपाली"
 
 #: ism/src/scim_utility.cpp:852 ism/src/scim_keyboard_layout_data.h:4599
 msgid "Dutch"
@@ -679,7 +679,7 @@ msgstr "Basa Jawa"
 
 #: ism/src/scim_utility.cpp:959
 msgid "Khmer"
-msgstr "ភាសាខ្មែរ"
+msgstr "ខ្មែរ"
 
 #: ism/src/scim_utility.cpp:960
 msgid "Filipino"
@@ -691,7 +691,7 @@ msgstr "ျမန္မာ"
 
 #: ism/src/scim_utility.cpp:962
 msgid "Odia"
-msgstr "ଓଡ଼ିଆ"
+msgstr "ଓଡ଼ିଆ"
 
 #: ism/src/scim_utility.cpp:963 ism/src/scim_keyboard_layout_data.h:4624
 msgid "Spanish (Latin America)"
@@ -825,46 +825,46 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ism/extras/efl_panel/isf_panel_efl.cpp:683
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5290
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5480
-msgid "Select input method"
-msgstr "Vælg indtastningsmetode"
-
-#: ism/extras/efl_panel/isf_panel_efl.cpp:688
-msgid "Set up input methods"
-msgstr "Konfigurér indtastningsmetoder"
-
-#: ism/extras/efl_panel/isf_panel_efl.cpp:2762
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5758
+#: ism/extras/efl_panel/isf_panel_efl.cpp:2612
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5699
 msgid "close button"
 msgstr ""
 
-#: ism/extras/efl_panel/isf_panel_efl.cpp:2769
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5755
+#: ism/extras/efl_panel/isf_panel_efl.cpp:2619
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5696
 msgid "more button"
 msgstr ""
 
-#: ism/extras/efl_panel/isf_panel_efl.cpp:3737
+#: ism/extras/efl_panel/isf_panel_efl.cpp:3609
 #, c-format
 msgid "%s selected"
-msgstr "%s valgt"
+msgstr "%s valgt."
 
-#: ism/extras/efl_panel/isf_panel_efl.cpp:3740
-#, c-format
-msgid "Only %s is available"
-msgstr "Kun %s tilgængelig"
+#: ism/extras/efl_panel/isf_panel_efl.cpp:3612
+#, fuzzy, c-format
+msgid "Only %s available"
+msgstr "Kun %s tilgængelig."
 
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5199
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5283
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5354
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5358
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5288
 msgid "Input detected from hardware keyboard"
-msgstr "Input registreret fra hardwaretastatur"
+msgstr "Input registreret fra hardwaretastatur."
 
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5199
 #: ism/extras/efl_panel/isf_panel_efl.cpp:5283
-#: ism/extras/efl_panel/isf_panel_efl.cpp:5354
 msgid "Tap to use virtual keyboard"
-msgstr "Tryk for at bruge virtuelt tastatur"
+msgstr "Tryk for at bruge virtuelt tastatur."
+
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5206
+#: ism/extras/efl_panel/isf_panel_efl.cpp:5416
+#: ism/extras/efl_panel/iseselector.cpp:190
+msgid "Select input method"
+msgstr "Vælg indtastningsmetode"
+
+#: ism/extras/efl_panel/iseselector.cpp:195
+msgid "Set up input methods"
+msgstr "Konfigurér indtastningsmetoder"
 
 #: ism/utils/scimstringview.c:201
 msgid "Cursor Position"
@@ -1179,7 +1179,7 @@ msgstr ""
 msgid "Event"
 msgstr ""
 
-#: ism/demos/isf_imcontrol_efl.cpp:291
+#: ism/demos/isf_imcontrol_efl.cpp:275
 msgid "IM Control"
 msgstr ""
 
