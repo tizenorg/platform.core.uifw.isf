@@ -1085,9 +1085,8 @@ msgid "Please enter a Key Code first."
 msgstr "Inserisci prima un codice del tasto."
 
 #: ism/utils/scimkeyselection.cpp:391
-msgid ""##, fuzzy
+##, fuzzy
 msgid ""
-msgstr ""
 "Press a key (or a key combination).\n"
 "This dialog will be closed \n"
 "when the key is released."
