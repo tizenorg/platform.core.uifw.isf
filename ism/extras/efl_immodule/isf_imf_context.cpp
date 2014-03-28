@@ -501,7 +501,7 @@ _key_down_cb (void *data, int type, void *event)
     scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
 
     if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        for (int i = 0; i < hide_ise_keys.size (); ++i) {
+        for (unsigned int i = 0; i < hide_ise_keys.size (); ++i) {
             if (!strcmp (ev->keyname, hide_ise_keys [i].c_str ())) {
                 LOGD ("%s key is pressed.\n", ev->keyname);
                 return ECORE_CALLBACK_DONE;
@@ -527,7 +527,7 @@ _key_up_cb (void *data, int type, void *event)
     scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
 
     if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        for (int i = 0; i < hide_ise_keys.size (); ++i) {
+        for (unsigned int i = 0; i < hide_ise_keys.size (); ++i) {
             if (!strcmp (ev->keyname, hide_ise_keys [i].c_str ())) {
                 LOGD ("%s key is released.\n", ev->keyname);
                 isf_imf_context_reset (active_ctx);
