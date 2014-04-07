@@ -211,7 +211,7 @@ static void __set_oom()
 
 static inline int __set_dac()
 {
-    return control_privilege();
+    return perm_app_set_privilege("isf", NULL, NULL);
 }
 
 static inline int __set_smack(char* path)
@@ -311,7 +311,7 @@ int ise_preexec(const char *helper)
     __set_smack((char*)(info.app_path.c_str()));
 
     /* SET DAC*/
-    if (__set_dac() < 0) {
+    if (__set_dac() != PC_OPERATION_SUCCESS) {
         _D("fail to set DAC - check your package's credential\n");
         return -1;
     }
