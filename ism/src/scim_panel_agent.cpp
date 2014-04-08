@@ -1785,8 +1785,6 @@ public:
             time (0), getpid (), __FILE__, __func__, client_id, m_show_request_client_id);
         isf_save_log (buf);
 
-        bool ret = false;
-
         uint32 client;
         uint32 context;
         if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context)) {
@@ -1801,17 +1799,10 @@ public:
                     focused_context = 0;
                 }
 
-                uint32 ctx = get_helper_ic (focused_client, focused_context);
-                hide_helper (m_current_helper_uuid, ctx);
-
-                ret = true;
+                m_signal_hide_ise ();
             }
             /* Release ISE context buffer */
             delete_ise_context_buffer ();
-        }
-
-        if (ret) {
-            m_signal_hide_ise ();
         }
     }
 
@@ -2015,7 +2006,6 @@ public:
 
         size_t  len;
         char   *data = NULL;
-        bool    ret  = false;
         Transaction trans;
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
@@ -2040,7 +2030,6 @@ public:
                     && trans.read_from_socket (client_socket)
                     && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
                     && trans.get_data (&data, len)) {
-                    ret = true;
                 } else {
                     std::cerr << "Get ISE language locale is failed!!!\n";
                 }

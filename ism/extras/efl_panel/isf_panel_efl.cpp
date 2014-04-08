@@ -94,6 +94,7 @@ using namespace scim;
 #define ISF_SYSTEM_WM_WAIT_COUNT                        200
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 #define ISF_CANDIDATE_DESTROY_DELAY                     3
+#define ISF_ISE_HIDE_DELAY                              0.12
 
 #define ISF_PREEDIT_BORDER                              16
 #define ISE_LAUNCH_TIMEOUT                              2.0
@@ -374,6 +375,7 @@ static Ecore_Timer       *_destroy_timer                    = NULL;
 static Ecore_Timer       *_off_prepare_done_timer           = NULL;
 static Ecore_Timer       *_candidate_hide_timer             = NULL;
 static Ecore_Timer       *_ise_launch_timer                 = NULL;
+static Ecore_Timer       *_ise_hide_timer                   = NULL;
 
 static Ecore_X_Window     _ise_window                       = 0;
 static Ecore_X_Window     _app_window                       = 0;
@@ -3461,6 +3463,48 @@ static bool initialize_panel_agent (const String &config, const String &display,
     return true;
 }
 
+static void delete_ise_hide_timer (void)
+{
+    LOGD ("deleting ise_hide_timer");
+    if (_ise_hide_timer) {
+        ecore_timer_del (_ise_hide_timer);
+        _ise_hide_timer = NULL;
+    }
+}
+
+static void hide_ise ()
+{
+    LOGD ("send request to hide helper\n");
+    String uuid = _panel_agent->get_current_helper_uuid ();
+    _panel_agent->hide_helper (uuid);
+
+    /* Only if we are not already in HIDE state */
+    if (_ise_state != WINDOW_STATE_HIDE) {
+        /* From this point, slot_get_input_panel_geometry should return hidden state geometry */
+        _ise_state = WINDOW_STATE_WILL_HIDE;
+
+        _updated_hide_state_geometry = false;
+    }
+    _ise_angle = -1;
+
+    ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_VISIBILITY);
+
+    if (_candidate_window) {
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
+            ui_candidate_hide (true, true, true);
+    }
+}
+
+static Eina_Bool ise_hide_timeout (void *data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    delete_ise_hide_timer ();
+    hide_ise ();
+
+    return ECORE_CALLBACK_CANCEL;
+}
+
 /**
  * @brief Reload config slot function for PanelAgent.
  */
@@ -4817,6 +4861,10 @@ static void slot_show_ise (void)
         return;
     }
 
+    LOGD ("slot_show_ise ()\n");
+
+    delete_ise_hide_timer ();
+
     /* WMSYNC, #3 Clear the existing application's conformant area and set transient_for */
     // Unset conformant area
     Ecore_X_Window current_app_window = efl_get_app_window ();
@@ -4858,21 +4906,10 @@ static void slot_hide_ise (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    /* Only if we are not already in HIDE state */
-    if (_ise_state != WINDOW_STATE_HIDE) {
-        /* From this point, slot_get_input_panel_geometry should return hidden state geometry */
-        _ise_state = WINDOW_STATE_WILL_HIDE;
+    LOGD ("slot_hide_ise ()");
 
-        _updated_hide_state_geometry = false;
-    }
-    _ise_angle = -1;
-
-    ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
-
-    if (_candidate_window) {
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
-            ui_candidate_hide (true, true, true);
-    }
+    if (!_ise_hide_timer)
+        hide_ise ();
 }
 
 static void slot_will_hide_ack (void)
@@ -5733,14 +5770,30 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
 static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *event)
 {
     Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out*)event;
+    unsigned int layout = 0;
 
     if (e && e->win == _app_window) {
-
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
-            LOGD ("Application window focus OUT! Panel hides ISE");
-            _panel_agent->hide_helper (_panel_agent->get_current_helper_uuid ());
-            slot_hide_ise ();
-            ui_candidate_hide (true, false, false);
+            LOGD ("Application window focus OUT!\n");
+            delete_ise_hide_timer ();
+
+            // Check multi window mode
+            if (ecore_x_window_prop_card32_get (efl_get_app_window (), ECORE_X_ATOM_E_WINDOW_DESKTOP_LAYOUT, &layout, 1) != -1) {
+                if (layout == 0 || layout == 1) {
+                    // Split mode
+                    LOGD ("Multi window mode. start timer to hide IME\n");
+
+                    // Use timer not to hide and show IME again in focus-out and focus-in event between applications
+                    _ise_hide_timer = ecore_timer_add (ISF_ISE_HIDE_DELAY, ise_hide_timeout, NULL);
+                }
+            }
+
+            if (!_ise_hide_timer) {
+                LOGD ("Panel hides ISE\n");
+                _panel_agent->hide_helper (_panel_agent->get_current_helper_uuid ());
+                slot_hide_ise ();
+                ui_candidate_hide (true, false, false);
+            }
         }
     }
 
