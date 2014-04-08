@@ -94,7 +94,7 @@ using namespace scim;
 #define ISF_SYSTEM_WM_WAIT_COUNT                        200
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 #define ISF_CANDIDATE_DESTROY_DELAY                     3
-#define ISF_ISE_HIDE_DELAY                              0.12
+#define ISF_ISE_HIDE_DELAY                              0.15
 
 #define ISF_PREEDIT_BORDER                              16
 #define ISE_LAUNCH_TIMEOUT                              2.0
