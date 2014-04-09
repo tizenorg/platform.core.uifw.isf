@@ -28,11 +28,13 @@
 #include <Ecore_X.h>
 #include <efl_assist.h>
 #include <dlog.h>
-#include <ui-gadget.h>
 #include "scim_private.h"
 #include "scim.h"
 #include "iseselector.h"
 #include "center_popup.h"
+#if HAVE_UIGADGET
+#include <ui-gadget.h>
+#endif
 
 using namespace scim;
 
@@ -144,6 +146,7 @@ ise_selector_focus_out_cb (void *data, Evas *e, void *event_info)
     ise_selector_destroy ();
 }
 
+#if HAVE_UIGADGET
 static void
 isf_setting_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -163,12 +166,12 @@ isf_setting_cb (void *data, Evas_Object *obj, void *event_info)
     if (service)
         service_destroy (service);
 }
+#endif
 
 void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb func)
 {
     unsigned int index;
     Evas_Object *genlist;
-    Evas_Object *btn;
     Evas_Object *box;
     int height;
     unsigned int item_count;
@@ -189,13 +192,15 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb 
     evas_object_smart_callback_add (_ise_selector_popup, "block,clicked", ise_selector_block_clicked_cb, NULL);
     elm_object_part_text_set (_ise_selector_popup, "title,text", _("Select input method"));
 
+#if HAVE_UIGADGET
     /* Create "Set up input methods" button */
-    btn = elm_button_add (_ise_selector_popup);
+    Evas_Object *btn = elm_button_add (_ise_selector_popup);
     elm_object_style_set (btn, "popup");
     elm_object_text_set (btn, _("Set up input methods"));
     elm_object_part_content_set (_ise_selector_popup, "button1", btn);
 
     evas_object_smart_callback_add (btn, "clicked", isf_setting_cb, _ise_selector_popup);
+#endif
 
     /* Create box for adjusting the height of list */
     box = elm_box_add (_ise_selector_popup);
