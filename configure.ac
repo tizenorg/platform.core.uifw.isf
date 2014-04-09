@@ -276,7 +276,9 @@ PKG_CHECK_MODULES(MINICONTROL_PROVIDER, [minicontrol-provider],
 PKG_CHECK_MODULES(AIL, [ail >= 0])
 
 # Check notification library
-PKG_CHECK_MODULES(NOTIFICATION, [notification])
+PKG_CHECK_MODULES(NOTIFICATION, [notification],
+                  [ISF_HAS_NOTIFICATION=yes],
+                  [ISF_HAS_NOTIFICATION=no])
 
 # Check tts library
 PKG_CHECK_MODULES(TTS, [tts],
@@ -329,6 +331,10 @@ if test "$ISF_HAS_UIGADGET" = "yes"; then
 fi
 
 AM_CONDITIONAL([MOBILE_ENV], [test x$ISF_HAS_UIGADGET = xyes])
+
+if test "$ISF_HAS_NOTIFICATION" = "yes"; then
+  AC_DEFINE(HAVE_NOTIFICATION,1,[Have Notification functions.])
+fi
 
 # Check GTK2 library
 PKG_CHECK_MODULES(GTK2, [gtk+-2.0 >= 2.4.0 pango >= 1.1.0 gdk-pixbuf-2.0 >= 2.4.0],

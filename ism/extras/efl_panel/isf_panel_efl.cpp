@@ -60,7 +60,9 @@
 #include <privilege-control.h>
 #include "isf_panel_utility.h"
 #include <dlog.h>
+#if HAVE_NOTIFICATION
 #include <notification.h>
+#endif
 #include <efl_assist.h>
 #if HAVE_TTS
 #include <tts.h>
@@ -3627,7 +3629,6 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
 
     String ise_name = info.name;
     String ise_icon = info.icon;
-    unsigned int keyboard_ise_count = 0;
 
     String old_ise = _panel_agent->get_current_ise_name ();
     if (old_ise != ise_name) {
@@ -3644,17 +3645,18 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
     if (ise_name.length () > 0)
         _panel_agent->set_current_ise_name (ise_name);
 
+#ifdef HAVE_NOTIFICATION
     if (old_ise != ise_name) {
         if (TOOLBAR_KEYBOARD_MODE == mode) {
             char noti_msg[256] = {0};
-            keyboard_ise_count = get_ise_size (TOOLBAR_KEYBOARD_MODE);
+            unsigned int keyboard_ise_count = get_ise_size (TOOLBAR_KEYBOARD_MODE);
             if (keyboard_ise_count == 0) {
                 LOGD ("the number of keyboard ise is %d\n", keyboard_ise_count);
                 return;
             }
             else if (keyboard_ise_count >= 2) {
                 snprintf (noti_msg, sizeof (noti_msg), _("%s selected"), ise_name.c_str ());
-           }
+            }
             else if (keyboard_ise_count == 1) {
                 snprintf (noti_msg, sizeof (noti_msg), _("Only %s available"), ise_name.c_str ());
             }
@@ -3663,7 +3665,7 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
             LOGD ("%s\n", noti_msg);
         }
     }
-
+#endif
 }
 
 /**
@@ -5325,7 +5327,9 @@ static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
         input_detect_minictrl.show ();
 #endif
 
+#ifdef HAVE_NOTIFICATION
         notification_status_message_post (_("Input detected from hardware keyboard"));
+#endif
 
         /* Set input detected property for isf setting */
         val = 1;
