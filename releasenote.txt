@@ -7,6 +7,7 @@ ISF 2.4.7609 :
  6. Add return value in Transaction::read_from_buffer
  7. [demo] remove code to set scale
  8. fix build warning
+ 9. [panel] Fix inappropriate X event mask
 
 
 ISF 2.4.7528 :
