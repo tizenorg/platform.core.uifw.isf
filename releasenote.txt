@@ -1,3 +1,14 @@
+ISF 2.4.7609 :
+ 1. Support conditional build related to ui-gadget library
+ 2. Support conditional build about notification library
+ 3. Replace deprecated ail_package prefix () API with new one
+ 4. adjust the timer value of hiding ISE
+ 5. Use timer not to hide and show IME again in focus-out and focus-in event between applications
+ 6. Add return value in Transaction::read_from_buffer
+ 7. [demo] remove code to set scale
+ 8. fix build warning
+
+
 ISF 2.4.7528 :
  1. removed wrong syntax and words in the po_file
  2. modified translated words and added vi.po, mn_mn.po
