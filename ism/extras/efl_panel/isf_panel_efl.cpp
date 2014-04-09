@@ -3489,7 +3489,7 @@ static void hide_ise ()
     }
     _ise_angle = -1;
 
-    ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_VISIBILITY);
+    ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
 
     if (_candidate_window) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
