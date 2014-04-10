@@ -1,3 +1,7 @@
+ISF 2.4.7610 :
+ 1. changed the obtaining time of input window
+
+
 ISF 2.4.7609 :
  1. Support conditional build related to ui-gadget library
  2. Support conditional build about notification library
