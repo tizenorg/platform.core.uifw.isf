@@ -446,6 +446,22 @@ struct GeometryCache
 };
 static struct GeometryCache _ise_reported_geometry          = {0};
 
+static void get_input_window (void)
+{
+    int win_ret = -1;
+    Ecore_X_Atom atom = 0;
+
+    if (_input_win == 0) {
+        atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
+        win_ret = ecore_x_window_prop_window_get(ecore_x_window_root_first_get (), atom, &_input_win, 1);
+        if (_input_win == 0 || win_ret < 1) {
+            LOGW ("Input window is NULL!\n");
+        } else {
+            ecore_x_event_mask_set (_input_win, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+        }
+    }
+}
+
 static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
 {
     DBusError err;
@@ -536,6 +552,7 @@ static void minictrl_clicked_cb (void *data, Evas_Object *o, const char *emissio
     input_detect_minictrl.destroy ();
 #endif
 
+    get_input_window();
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
     }
@@ -4788,6 +4805,8 @@ static void slot_accept_connection (int fd)
 
     Ecore_Fd_Handler *panel_agent_read_handler = ecore_main_fd_handler_add (fd, ECORE_FD_READ, panel_agent_handler, NULL, NULL, NULL);
     _read_handler_list.push_back (panel_agent_read_handler);
+
+    get_input_window ();
 }
 
 /**
@@ -6090,20 +6109,6 @@ int main (int argc, char *argv [])
     check_time ("elm_init");
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
-
-    /* get the input window */
-    atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
-    win_ret = ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_input_win, 1);
-    if (_input_win == 0 || win_ret < 1) {
-        LOGW ("Input window is NULL!\n");
-    } else {
-        ecore_x_event_mask_set (_input_win, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
-
-        unsigned int val = 0;
-        Ecore_X_Window root_window = ecore_x_window_root_get (_input_win);
-        ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
-        ecore_x_window_prop_card32_set (root_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
-    }
 
     if (!efl_create_control_window ()) {
         LOGW ("Failed to create control window\n");
