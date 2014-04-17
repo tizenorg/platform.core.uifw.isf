@@ -5888,7 +5888,6 @@ int main (int argc, char *argv [])
 
     int           i;
     int           ret             = 0;
-    int           win_ret         = -1;
 
     bool          daemon          = false;
     bool          should_resident = true;
@@ -5898,7 +5897,6 @@ int main (int argc, char *argv [])
     ConfigModule *config_module   = NULL;
     String        config_name     = String ("socket");
     String        display_name    = String ();
-    Ecore_X_Atom  atom            = 0;
 
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
     Ecore_Fd_Handler *helper_manager_handler   = NULL;
