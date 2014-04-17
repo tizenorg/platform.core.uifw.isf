@@ -1,4 +1,4 @@
-#define MC_BG_COLOR             0 0 0 255
+#define MC_BG_COLOR             0 0 0 0
 
 #define MC_TITLE_TEXT_FONT      "Tizen:style=Regular"
 #define MC_TITLE_TEXT_CLASS     "tizen"

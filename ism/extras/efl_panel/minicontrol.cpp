@@ -56,20 +56,13 @@ MiniControl::create (const char *name, const char *file, int angle)
         return false;
     }
 
+    elm_win_alpha_set (win, EINA_TRUE);
+
     double scale = elm_config_scale_get ();
     if (angle == 90 || angle == 270)
         evas_object_resize (win, MINI_CONTROLLER_WIDTH_LANDSCAPE * scale, MINI_CONTROLLER_HEIGHT * scale);
     else
         evas_object_resize (win, MINI_CONTROLLER_WIDTH * scale, MINI_CONTROLLER_HEIGHT * scale);
-
-    /* create bg */
-    Evas_Object *bg;
-    bg = elm_bg_add (win);
-    evas_object_size_hint_weight_set (bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set (bg, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_win_resize_object_add (win, bg);
-    elm_bg_color_set (bg, 0, 0, 0);
-    evas_object_show (bg);
 
     /* load layout */
     layout = elm_layout_add (win);
