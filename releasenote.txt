@@ -1,3 +1,8 @@
+ISF 2.4.7618 :
+ 1. [panel] Make minicontrol be transparent
+ 2. [panel] remove unused variables
+
+
 ISF 2.4.7610 :
  1. changed the obtaining time of input window
 
