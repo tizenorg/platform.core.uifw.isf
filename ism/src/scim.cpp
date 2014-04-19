@@ -269,7 +269,7 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
     }
 
     char buffer[_POSIX_PATH_MAX + 1] = {0};
-    strncpy (buffer, (char*)(e->data), _POSIX_PATH_MAX);
+    strncpy (buffer, (char*)(e->data), (e->size > _POSIX_PATH_MAX) ? _POSIX_PATH_MAX : e->size);
 
     int blank_index = 0;
     for (int loop = 0; loop < (int)strlen (buffer); loop++) {

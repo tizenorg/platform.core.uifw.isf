@@ -57,7 +57,7 @@
 #endif
 #define LOG_TAG "ISE_PREEXEC"
 
-/* The broker for launching OSP based IMEs */
+/* The broker for launching OSP or Web based IMEs */
 // {
 
 #include <pwd.h>
@@ -308,7 +308,7 @@ static inline int __set_smack (char* path)
     int fd = 0;
     int result = -1;
 
-    result = getxattr (path, "security.SMACK64EXEC", label, LABEL_LEN);
+    result = lgetxattr (path, "security.SMACK64EXEC", label, LABEL_LEN);
     if (result < 0)  // fail to get extended attribute
         return 0;   // ignore error
 
@@ -332,30 +332,57 @@ typedef struct {
     std::string app_path;
 } PKGINFO;
 
-static void get_pkginfo (const char *helper, PKGINFO *info)
+static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
 {
-    if (helper && info) {
+    if (helper && uuid && info) {
         ail_appinfo_h handle;
         ail_error_e r;
         char *value;
-        r = ail_get_appinfo (helper, &handle);
+        const char *app_id;
+
+        if (!strcmp (helper, "ise-web-helper-agent")) {
+            // Web IME
+            app_id = uuid;
+        }
+        else {
+            app_id = helper;
+        }
+
+        // get ail handle
+        r = ail_get_appinfo (app_id, &handle);
         if (r != AIL_ERROR_OK) {
-            LOGW ("ail_get_appinfo failed %s %d \n", helper, r);
+            LOGW ("ail_get_appinfo failed %s %d \n", app_id, r);
             /* Let's try with appid once more */
-            r = ail_get_appinfo (helper, &handle);
+            r = ail_get_appinfo (app_id, &handle);
             if (r != AIL_ERROR_OK) {
-                LOGW ("ail_get_appinfo failed %s %d \n", helper, r);
+                LOGW ("ail_get_appinfo failed %s %d \n", app_id, r);
                 return;
             }
         }
 
-        info->package_name = helper;
+        // get package name
+        if (!strcmp (helper, "ise-web-helper-agent")) {
+            // Web IME
+            r = ail_appinfo_get_str (handle, AIL_PROP_X_SLP_PKGID_STR, &value);
+            if (r != AIL_ERROR_OK) {
+                LOGW ("ail_appinfo_get_str () failed : %s %s %d\n", app_id, AIL_PROP_X_SLP_PKGID_STR, r);
+            } else {
+                info->package_name = value;
+                LOGD ("[web] app id : %s, package name : %s\n", app_id, info->package_name.c_str ());
+            }
+        }
+        else {
+            // OSP IME
+            info->package_name = helper;
+            LOGD ("[osp] app id : %s, package name : %s\n", app_id, info->package_name.c_str ());
+        }
 
         r = ail_appinfo_get_str (handle, AIL_PROP_X_SLP_PACKAGETYPE_STR, &value);
         if (r != AIL_ERROR_OK) {
             LOGW ("ail_appinfo_get_str () failed : %s %s %d\n", helper, AIL_PROP_X_SLP_PACKAGETYPE_STR, r);
         } else {
             info->package_type = value;
+            LOGD ("package type : %s\n", info->package_type.c_str());
         }
 
         r = ail_appinfo_get_str (handle, AIL_PROP_EXEC_STR, &value);
@@ -363,6 +390,7 @@ static void get_pkginfo (const char *helper, PKGINFO *info)
             LOGW ("ail_appinfo_get_str () failed : %s %s %d\n", helper, AIL_PROP_EXEC_STR, r);
         } else {
             info->app_path = value;
+            LOGD ("app path : %s\n", info->app_path.c_str());
         }
 
         ail_destroy_appinfo (handle);
@@ -381,9 +409,9 @@ int ise_preexec (const char *helper, const char *uuid)
 
     LOGD ("starting\n");
 
-    get_pkginfo (helper, &info);
+    get_pkginfo (helper, uuid, &info);
 
-    /* In case of OSP IME, request scim process to re-launch this ISE if we are not ROOT! */
+    /* In case of OSP or Web IME, request scim process to re-launch this ISE if we are not ROOT! */
     struct passwd *lpwd;
     lpwd = getpwuid (getuid ());
     if (lpwd && lpwd->pw_name) {
