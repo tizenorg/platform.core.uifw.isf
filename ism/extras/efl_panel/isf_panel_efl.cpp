@@ -74,6 +74,7 @@
 #if HAVE_BLUETOOTH
 #include <bluetooth.h>
 #endif
+#include <package_manager.h>
 
 using namespace scim;
 
@@ -390,6 +391,7 @@ static Ecore_File_Monitor *_osp_helper_ise_em               = NULL;
 static Ecore_File_Monitor *_osp_keyboard_ise_em             = NULL;
 static OSPEmRepository     _osp_bin_em;
 static OSPEmRepository     _osp_info_em;
+static package_manager_h   pkgmgr                           = NULL;
 
 static bool               _launch_ise_on_request            = false;
 static bool               _soft_keyboard_launched           = false;
@@ -421,6 +423,8 @@ static E_DBus_Connection     *edbus_conn;
 static E_DBus_Signal_Handler *edbus_handler;
 
 static Ecore_Event_Handler *_candidate_show_handler         = NULL;
+
+static HelperInfo         remove_helper_info;
 
 enum {
     EMOJI_IMAGE_WIDTH = 0,
@@ -1013,6 +1017,120 @@ static unsigned int get_ise_index (const String uuid)
     return index;
 }
 
+static bool
+app_info_cb (package_info_app_component_type_e comp_type, const char *app_id, void *user_data)
+{
+    HelperInfo *helper_info = (HelperInfo *)user_data;
+    if (!helper_info) return false;
+
+    /* FIXME : need to use generated UUID */
+    helper_info->uuid = String (app_id);
+
+    return true;
+}
+
+static bool get_helper_ise_info (const char *type, const char *package, HelperInfo *helper_info)
+{
+    package_info_h pkg_info;
+    char *pkg_label = NULL;
+    char *pkg_icon_path = NULL;
+    bool result = false;
+
+    if (!type)
+        return false;
+
+    if (strncmp (type, "wgt", 3) != 0)
+        return false;
+
+    package_manager_get_package_info (package, &pkg_info);
+    if (!pkg_info)
+        return false;
+
+    package_info_get_label (pkg_info, &pkg_label);
+    package_info_get_icon (pkg_info, &pkg_icon_path);
+
+    if (pkg_label && (strcasestr (pkg_label, "ime"))) {
+        package_info_foreach_app_from_package (pkg_info, PACKAGE_INFO_UIAPP, app_info_cb, helper_info);
+        helper_info->name = String (pkg_label);
+        helper_info->icon = String (pkg_icon_path);
+        helper_info->option = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | SCIM_HELPER_AUTO_RESTART;
+
+        if (pkg_label)
+            free (pkg_label);
+
+        if (pkg_icon_path)
+            free (pkg_icon_path);
+
+        result = true;
+    }
+
+    package_info_destroy (pkg_info);
+
+    return result;
+}
+
+static void _package_manager_event_cb (const char *type, const char *package, package_manager_event_type_e event_type, package_manager_event_state_e event_state, int progress, package_manager_error_e error, void *user_data)
+{
+    if (!package || !type) return;
+
+    if (event_type == PACKAGE_MANAGER_EVENT_TYPE_INSTALL ||
+        event_type == PACKAGE_MANAGER_EVENT_TYPE_UPDATE) {
+        HelperInfo helper_info;
+
+        if (event_state != PACKAGE_MANAGER_EVENT_STATE_COMPLETED)
+            return;
+
+        if (get_helper_ise_info (type, package, &helper_info)) {
+            /* update engine list */
+            if (isf_remove_helper_ise (helper_info.uuid.c_str (), _config))
+                LOGD ("remove helper info. uuid : %s\n", helper_info.uuid.c_str ());
+
+            if (isf_add_helper_ise (helper_info, String ("ise-web-helper-agent"))) {
+                LOGD ("add helper info. uuid : %s\n", helper_info.uuid.c_str ());
+                _panel_agent->update_ise_list (_uuids);
+            }
+        }
+    } else if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL) {
+        switch (event_state) {
+            case PACKAGE_MANAGER_EVENT_STATE_STARTED:
+                /* get package information and check whether the type of package is Web IME */
+                /* In COMPLETED status, it is impossible to get the package information,
+                   therefore it is necessary to get package information in the START status in advance */
+                if (get_helper_ise_info (type, package, &remove_helper_info)) {
+                    LOGD ("'%s' package has been uninstalled", remove_helper_info.name.c_str ());
+                }
+                break;
+            case PACKAGE_MANAGER_EVENT_STATE_COMPLETED:
+                if (remove_helper_info.uuid.length () == 0)
+                    return;
+
+                /* update engine list */
+                if (isf_remove_helper_ise (remove_helper_info.uuid.c_str (), _config)) {
+                    LOGD ("Completed to remove IME uuid : %s\n", remove_helper_info.uuid.c_str ());
+
+                    _panel_agent->update_ise_list (_uuids);
+
+                    String uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
+                    if (uuid == remove_helper_info.uuid) {
+                        /* switching to initial ISE */
+                        if (_soft_keyboard_launched) {
+                            _panel_agent->hide_helper (uuid);
+                            _panel_agent->stop_helper (uuid);
+                            _panel_agent->start_helper (_initial_ise_uuid);
+                        }
+                    }
+                }
+                remove_helper_info.uuid = String ("");
+                break;
+            case PACKAGE_MANAGER_EVENT_STATE_FAILED:
+                remove_helper_info.uuid = String ("");
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 /**
  * @brief Get ISE module file path.
  *
@@ -1314,6 +1432,11 @@ static void delete_ise_directory_em (void) {
     }
     _osp_bin_em.clear ();
     _osp_info_em.clear ();
+
+    if (pkgmgr) {
+        package_manager_destroy (pkgmgr);
+        pkgmgr = NULL;
+    }
 }
 
 /**
@@ -1368,6 +1491,11 @@ static void add_ise_directory_em (void) {
     }
 
     add_monitor_for_all_osp_modules ();
+
+    if (!pkgmgr) {
+        package_manager_create (&pkgmgr);
+        package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
+    }
 }
 
 /**
