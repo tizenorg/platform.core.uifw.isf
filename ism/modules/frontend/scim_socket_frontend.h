@@ -46,13 +46,15 @@
 #define __SCIM_SOCKET_FRONTEND_H
 
 #include "scim_stl_map.h"
+#include <Ecore.h>
 
 using namespace scim;
 
 class EAPI SocketFrontEnd : public FrontEndBase
 {
     enum ClientType {
-        UNKNOWN_CLIENT,
+        NONE_CLIENT             = -1, //Client does not find in SocketClientRepository
+        UNKNOWN_CLIENT          =  0, //Connecting client, never receive any data
         IMENGINE_CLIENT,
         CONFIG_CLIENT,
         HELPER_MANAGER_CLIENT
@@ -61,6 +63,7 @@ class EAPI SocketFrontEnd : public FrontEndBase
     struct ClientInfo {
         uint32     key;
         ClientType type;
+        Ecore_Fd_Handler *handler;
     };
 
     /**

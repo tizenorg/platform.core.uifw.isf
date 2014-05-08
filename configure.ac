@@ -214,6 +214,9 @@ if test "$ISF_HAS_GCONF" = "yes"; then
   AC_DEFINE(HAVE_GCONF,1,[Have GConf functions.])
 fi
 
+# Check ECORE
+PKG_CHECK_MODULES(ECORE, [ecore])
+
 # Check EFL library
 PKG_CHECK_MODULES(EFL, [elementary evas ecore ecore-evas ecore-file edje ecore-input ecore-ipc ecore-imf],
                   [ISF_HAS_EFL=yes],

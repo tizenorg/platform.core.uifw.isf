@@ -831,11 +831,45 @@ SocketFrontEnd::init (int argc, char **argv)
     signal (SIGCHLD, SIG_IGN);
 }
 
+/**
+ * @brief Callback function for ecore fd handler.
+ *
+ * @param data The data to pass to this callback.
+ * @param fd_handler The ecore fd handler.
+ *
+ * @return ECORE_CALLBACK_RENEW
+ */
+static Eina_Bool
+frontend_handler (void *data, Ecore_Fd_Handler *fd_handler)
+{
+    if (data == NULL || fd_handler == NULL)
+        return ECORE_CALLBACK_RENEW;
+    SocketServer *_socket_server = (SocketServer*)data;
+    int _fd = ecore_main_fd_handler_fd_get (fd_handler);
+    SCIM_DEBUG_FRONTEND (1) << "frontend_handler (" << _fd << ").\n";
+    if (!_socket_server->filter_event (_fd)) {
+        _socket_server->filter_exception_event (_fd);
+    }
+    return ECORE_CALLBACK_RENEW;
+}
+
 void
 SocketFrontEnd::run ()
 {
     if (m_socket_server.valid ())
-        m_socket_server.run ();
+    {
+        ecore_init ();
+        ecore_main_loop_glib_integrate ();
+        Ecore_Fd_Handler *_server_read_handler = ecore_main_fd_handler_add (m_socket_server.get_id (),
+                ECORE_FD_READ, frontend_handler, &m_socket_server, NULL, NULL);
+        if (_server_read_handler != NULL) {
+            ecore_main_loop_begin ();
+            ecore_main_fd_handler_del (_server_read_handler);
+        } else {
+            SCIM_DEBUG_FRONTEND (1) << "Error occurred when calling ecore_main_fd_handler_add(server_fd)" << "\n";
+        }
+        ecore_shutdown ();
+    }
 }
 
 uint32
@@ -871,6 +905,22 @@ void
 SocketFrontEnd::socket_accept_callback (SocketServer *server, const Socket &client)
 {
     SCIM_DEBUG_FRONTEND (1) << "socket_accept_callback (" << client.get_id () << ").\n";
+    ClientInfo client_info = socket_get_client_info (client);
+
+    // If it's a new client, then request to open the connection first.
+    if (client_info.type == NONE_CLIENT) {
+        client_info.type = UNKNOWN_CLIENT;
+        client_info.handler = ecore_main_fd_handler_add (client.get_id (),
+                ECORE_FD_READ, frontend_handler, &m_socket_server, NULL, NULL);
+        if (client_info.handler == NULL) {
+            SCIM_DEBUG_FRONTEND (1) << "Error occurred when calling ecore_main_fd_handler_add("
+                << client.get_id () << ")\n";
+            server->close_connection (client);
+        } else {
+            //Insert new ClientInfo into repository with type UNKNOWN_CLIENT.
+            m_socket_client_repository [client.get_id ()] = client_info;
+        }
+    }
 }
 
 void
@@ -1072,7 +1122,8 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
 bool
 SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &client)
 {
-    SCIM_DEBUG_FRONTEND (2) << " Open socket connection for client " << client.get_id () << "  number of clients=" << m_socket_client_repository.size () << ".\n";
+    SCIM_DEBUG_FRONTEND (2) << " Open socket connection for client " << client.get_id () 
+        << "  number of clients=" << m_socket_client_repository.size () << ".\n";
 
     uint32 key;
     String type = scim_socket_accept_connection (key,
@@ -1080,48 +1131,53 @@ SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &clie
                                                  String ("SocketIMEngine,SocketConfig,HelperManager"),
                                                  client,
                                                  m_socket_timeout);
+    ClientInfo info = socket_get_client_info (client);
 
-    if (type.length ()) {
-        ClientInfo info;
+    if (type.length () && info.type == UNKNOWN_CLIENT) {
         info.key = key;
         info.type = ((type == "SocketIMEngine") ? IMENGINE_CLIENT
                         : ((type == "SocketConfig") ? CONFIG_CLIENT : HELPER_MANAGER_CLIENT));
-
         SCIM_DEBUG_MAIN (2) << " Add client to repository. Type=" << type << " key=" << key << "\n";
+        // Overwrite ClientInfo
         m_socket_client_repository [client.get_id ()] = info;
         return true;
     }
 
     // Client did not pass the registration process, close it.
-    SCIM_DEBUG_FRONTEND (2) << " Failed to create new connection.\n";
-    server->close_connection (client);
+    SCIM_DEBUG_FRONTEND (2) << " Failed to create new connection. type(" << type.c_str () << "," << info.type << ")\n";
+    socket_close_connection (server, client);
     return false;
 }
 
 void
 SocketFrontEnd::socket_close_connection (SocketServer *server, const Socket &client)
 {
-    SCIM_DEBUG_FRONTEND (2) << " Close client connection " << client.get_id () << "  number of clients=" << m_socket_client_repository.size () << ".\n";
+    SCIM_DEBUG_FRONTEND (2) << " Close client connection " << client.get_id () << " number of clients="
+        << m_socket_client_repository.size () << ".\n";
 
     ClientInfo client_info = socket_get_client_info (client);
 
     server->close_connection (client);
 
-    if (client_info.type != UNKNOWN_CLIENT) {
+    if (client_info.type != NONE_CLIENT) {
+        ecore_main_fd_handler_del (client_info.handler);
         m_socket_client_repository.erase (client.get_id ());
 
         if (client_info.type == IMENGINE_CLIENT)
             socket_delete_all_instances (client.get_id ());
 
-        if (!m_socket_client_repository.size () && !m_stay)
+        if (!m_socket_client_repository.size () && !m_stay) {
+            SCIM_DEBUG_FRONTEND (1) << "All clients are close, FrontEnd is exiting." << "\n";
             server->shutdown ();
+            ecore_main_loop_quit ();
+        }
     }
 }
 
 SocketFrontEnd::ClientInfo
 SocketFrontEnd::socket_get_client_info (const Socket &client)
 {
-    static ClientInfo null_client = { 0, UNKNOWN_CLIENT };
+    static ClientInfo null_client = { 0, NONE_CLIENT, 0};
     SocketClientRepository::iterator it = m_socket_client_repository.find (client.get_id ());
 
     if (it != m_socket_client_repository.end ())
