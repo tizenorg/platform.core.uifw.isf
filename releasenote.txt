@@ -1,3 +1,15 @@
+ISF 2.4.7709 :
+ 1. fix build error in no minicontrol library environment
+ 2. Set smack for Web IME
+ 3. Fix minicontrol layout
+ 4. Monitor Web IME install/uninstall/update and update engine list
+ 5. Fix _default_instance double free bug
+ 6. Fix bug infinite connection logs are found in no helper module
+ 7. Remove unnecessary repetition if the size of helpers is equal to 0
+ 8. Add ecore loop into frontend
+ 9. Set FD_CLOEXEC to release FD on exec
+
+
 ISF 2.4.7618 :
  1. [panel] Make minicontrol be transparent
  2. [panel] remove unused variables
