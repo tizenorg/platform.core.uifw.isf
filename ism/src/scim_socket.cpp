@@ -632,7 +632,10 @@ public:
 
         if (ret < 0 && addrlen > 0)
             m_err = errno;
-
+        else {
+            int flag = fcntl (ret, F_GETFD, 0);
+            fcntl (ret, F_SETFD, flag|FD_CLOEXEC);
+        }
         SCIM_DEBUG_SOCKET(1) << "Socket: Accept connection, ret: " << ret << "\n";
 
         return ret;
@@ -657,6 +660,8 @@ public:
             m_err = 0;
             m_family = family;
             m_id = ret;
+            int flag = fcntl (ret, F_GETFD, 0);
+            fcntl (ret, F_SETFD, flag|FD_CLOEXEC);
         } else {
             m_err = errno;
         }

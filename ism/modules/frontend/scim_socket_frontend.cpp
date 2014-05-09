@@ -287,8 +287,6 @@ void SocketFrontEnd::run_helper (const Socket &client)
             if (pid < 0) return;
 
             if (pid == 0) {
-                if (m_socket_server.is_running ())
-                    m_socket_server.shutdown ();
 
                 const char *argv [] = { SCIM_HELPER_LAUNCHER_PROGRAM,
                                    "--daemon",
