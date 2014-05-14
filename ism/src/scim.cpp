@@ -195,17 +195,22 @@ static bool check_appservice_ready ()
         time (0), getpid (), __FILE__, __func__, ret, val);
     isf_save_log (buf);
 
-    if (ret == 0 && val >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
-        return true;
-    } else {
-        /* Register a call back function for checking system ready */
-        if (!_appsvc_callback_regist) {
-            if (vconf_notify_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, vconf_appservice_ready_changed, NULL)) {
-                _appsvc_callback_regist = true;
+    if (ret == 0) {
+        if (val >= ISF_SYSTEM_APPSERVICE_READY_STATE)
+            return true;
+        else {
+            /* Register a call back function for checking system ready */
+            if (!_appsvc_callback_regist) {
+                if (vconf_notify_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, vconf_appservice_ready_changed, NULL)) {
+                    _appsvc_callback_regist = true;
+                }
             }
-        }
 
-        return false;
+            return false;
+        }
+    } else {
+        /* No OSP support environment */
+        return true;
     }
 }
 

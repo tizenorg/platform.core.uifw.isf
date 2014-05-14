@@ -49,9 +49,6 @@
 #define DEFAULT_PACKAGE_NAME "libisf-bin"
 #define DEFAULT_APPLICATION_PATH "/usr/lib/scim-1.0/scim-helper-launcher"
 
-#define _E(fmt, arg...) printf("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
-#define _D(fmt, arg...) printf("[%s,%d] "fmt, __FUNCTION__, __LINE__, ##arg)
-
 #ifdef LOG_TAG
 # undef LOG_TAG
 #endif
@@ -175,11 +172,11 @@ static inline void __preexec_init ()
 
     preexec_file = fopen (PREEXEC_FILE, "rt");
     if (preexec_file == NULL) {
-        _E("no preexec\n");
+        LOGW("no preexec\n");
         return;
     }
 
-    _D("preexec start\n");
+    LOGD("preexec start\n");
 
     while (fgets (line, MAX_LOCAL_BUFSZ, preexec_file) > 0) {
         /* Parse each line */
@@ -198,7 +195,7 @@ static inline void __preexec_init ()
 
         type_t = (preexec_list_t *) calloc (1, sizeof (preexec_list_t));
         if (type_t == NULL) {
-            _E("no available memory\n");
+            LOGE("no available memory\n");
             __preexec_list_free ();
             fclose (preexec_file);
             return;
@@ -209,11 +206,11 @@ static inline void __preexec_init ()
             free (type_t);
             continue;
         }
-        _D("preexec %s %s# - handle : %x\n", type, sopath, type_t->handle);
+        LOGD("preexec %s %s# - handle : %x\n", type, sopath, type_t->handle);
 
         func = (int (*)(char*, char*))dlsym (type_t->handle, symbol);
         if (func == NULL) {
-            _E("failed to get symbol type:%s path:%s\n",
+            LOGE("failed to get symbol type:%s path:%s\n",
                type, sopath);
             dlclose (type_t->handle);
             free (type_t);
@@ -222,7 +219,7 @@ static inline void __preexec_init ()
 
         type_t->pkg_type = strdup (type);
         if (type_t->pkg_type == NULL) {
-            _E("no available memory\n");
+            LOGE("no available memory\n");
             dlclose (type_t->handle);
             free (type_t);
             __preexec_list_free ();
@@ -231,7 +228,7 @@ static inline void __preexec_init ()
         }
         type_t->so_path = strdup (sopath);
         if (type_t->so_path == NULL) {
-            _E("no available memory\n");
+            LOGE("no available memory\n");
             dlclose (type_t->handle);
             free (type_t->pkg_type);
             free (type_t);
@@ -264,9 +261,9 @@ static inline void __preexec_run (const char *pkg_type, const char *pkg_name,
                 if (type_t->dl_do_pre_exe != NULL) {
                     type_t->dl_do_pre_exe ((char *)pkg_name,
                         (char *)app_path);
-                    _D("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
+                    LOGD("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
                 } else {
-                    _E("no symbol for this type: %s",
+                    LOGE("no symbol for this type: %s",
                         pkg_type);
                 }
             }
@@ -449,7 +446,7 @@ int ise_preexec (const char *helper, const char *uuid)
 
     /* SET DAC*/
     if (__set_dac() != PC_OPERATION_SUCCESS) {
-       _D("fail to set DAC - check your package's credential\n");
+        LOGW("fail to set DAC - check your package's credential\n");
         return -2;
     }
     /* SET DUMPABLE - for coredump*/
@@ -457,12 +454,12 @@ int ise_preexec (const char *helper, const char *uuid)
 
     /* SET PROCESS NAME*/
     if (info.app_path.empty ()) {
-        _D("app_path should not be NULL - check menu db");
+        LOGW("app_path should not be NULL - check menu db");
         return -3;
     }
     file_name = strrchr (info.app_path.c_str (), '/') + 1;
     if (file_name == NULL) {
-        _D("can't locate file name to execute");
+        LOGW("can't locate file name to execute");
         return -4;
     }
     memset (process_name, '\0', AUL_PR_NAME);
