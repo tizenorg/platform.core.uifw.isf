@@ -75,6 +75,7 @@
 #include <bluetooth.h>
 #endif
 #include <package_manager.h>
+#include <pkgmgr-info.h>
 
 using namespace scim;
 
@@ -1021,10 +1022,22 @@ static bool
 app_info_cb (package_info_app_component_type_e comp_type, const char *app_id, void *user_data)
 {
     HelperInfo *helper_info = (HelperInfo *)user_data;
+    pkgmgrinfo_appinfo_h appinfo_handle;
+    bool exist = false;
+    int ret;
     if (!helper_info) return false;
 
-    /* FIXME : need to use generated UUID */
-    helper_info->uuid = String (app_id);
+    if (pkgmgrinfo_appinfo_get_appinfo (app_id, &appinfo_handle) != PMINFO_R_OK)
+        return true;
+
+    pkgmgrinfo_appinfo_is_category_exist (appinfo_handle, "http://tizen.org/category/ime", &exist);
+
+    if (exist) {
+        /* FIXME : need to use generated UUID */
+        helper_info->uuid = String (app_id);
+    }
+
+    pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
 
     return true;
 }
@@ -1049,8 +1062,9 @@ static bool get_helper_ise_info (const char *type, const char *package, HelperIn
     package_info_get_label (pkg_info, &pkg_label);
     package_info_get_icon (pkg_info, &pkg_icon_path);
 
-    if (pkg_label && (strcasestr (pkg_label, "ime"))) {
-        package_info_foreach_app_from_package (pkg_info, PACKAGE_INFO_UIAPP, app_info_cb, helper_info);
+    package_info_foreach_app_from_package (pkg_info, PACKAGE_INFO_UIAPP, app_info_cb, helper_info);
+
+    if (helper_info->uuid.length ()  > 0) {
         helper_info->name = String (pkg_label);
         helper_info->icon = String (pkg_icon_path);
         helper_info->option = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | SCIM_HELPER_AUTO_RESTART;

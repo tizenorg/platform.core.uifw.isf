@@ -47,7 +47,8 @@ isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
                          @BLUETOOTH_CFLAGS@ \
                          @FEEDBACK_CFLAGS@ \
                          @UIGADGET_CFLAGS@ \
-                         @PACKAGE_MANAGER_CFLAGS@
+                         @PACKAGE_MANAGER_CFLAGS@ \
+                         @PKGMGR_INFO_CFLAGS@
 
 isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @ECOREX_LIBS@ \
@@ -62,7 +63,8 @@ isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @EDBUS_LIBS@ \
                          @BLUETOOTH_LIBS@ \
                          @UIGADGET_LIBS@ \
-                         @PACKAGE_MANAGER_LIBS@
+                         @PACKAGE_MANAGER_LIBS@ \
+                         @PKGMGR_INFO_LIBS@
 
 isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
 
