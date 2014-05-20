@@ -68,7 +68,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <dlog.h>
-
+#if HAVE_PKGMGR_INFO
+#include <pkgmgr-info.h>
+#endif
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -310,6 +312,10 @@ void SocketFrontEnd::run_helper (const Socket &client)
             //waitpid (pid, &status, 0);
 
             break;
+        } else {
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Can't find and exec scim_helper_launcher uuid : %s\n",
+                time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+            isf_save_log (buf);
         }
     }
 
@@ -1982,6 +1988,72 @@ SocketFrontEnd::socket_set_display_name (int /*client_id*/)
     m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 }
 
+#if HAVE_PKGMGR_INFO
+int app_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
+{
+    int ret;
+    char *app_id = NULL;
+    char *pkg_id = NULL, *pkg_label = NULL, *pkg_type = NULL, *pkg_root_path = NULL, *pkg_icon_path = NULL;
+    pkgmgrinfo_appinfo_h appinfo_handle;
+    pkgmgrinfo_pkginfo_h pkginfo_handle;
+    HelperInfo helper_info;
+    size_t i;
+
+    /* Get appid */
+    ret = pkgmgrinfo_appinfo_get_appid (handle, &app_id);
+    if (ret != PMINFO_R_OK)
+        return 0;
+
+    ret = pkgmgrinfo_appinfo_get_appinfo (app_id, &appinfo_handle);
+    if (ret != PMINFO_R_OK)
+        return 0;
+
+    /* Get package id */
+    pkgmgrinfo_appinfo_get_pkgname (appinfo_handle, &pkg_id);
+
+    /* Get package info handle */
+    ret = pkgmgrinfo_pkginfo_get_pkginfo (pkg_id, &pkginfo_handle);
+    if (ret != PMINFO_R_OK) {
+        pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
+        return 0;
+    }
+
+    /* Get the label of package */
+    pkgmgrinfo_pkginfo_get_label (pkginfo_handle, &pkg_label);
+
+    /* Get the type of package */
+    pkgmgrinfo_pkginfo_get_type (pkginfo_handle, &pkg_type);
+
+    /* Get the root path of package */
+    pkgmgrinfo_pkginfo_get_root_path (pkginfo_handle, &pkg_root_path);
+
+    /* Get the icon path of package */
+    pkgmgrinfo_pkginfo_get_icon (pkginfo_handle, &pkg_icon_path);
+
+    if (pkg_type && !strncmp (pkg_type, "wgt", 3)) {
+        // FIXME : need to get UUID
+        helper_info.uuid = scim::String (app_id);
+        helper_info.name = scim::String (pkg_label);
+        helper_info.icon = scim::String (pkg_icon_path);
+        helper_info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
+            scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART;
+
+        for (i = 0; i < __helpers.size (); ++i) {
+            if (__helpers [i].first.uuid == helper_info.uuid)
+                break;
+        }
+
+        if (i == __helpers.size ())
+            __helpers.push_back (std::make_pair (helper_info, String ("ise-web-helper-agent")));
+    }
+
+    pkgmgrinfo_pkginfo_destroy_pkginfo (pkginfo_handle);
+    pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
+
+    return 0;
+}
+#endif
+
 void
 SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
 {
@@ -2037,6 +2109,22 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
                 break;
             }
         }
+
+        /* Get the information of Web IMEs */
+#if HAVE_PKGMGR_INFO
+        int ret;
+        pkgmgrinfo_appinfo_filter_h handle;
+        ret = pkgmgrinfo_appinfo_filter_create (&handle);
+        if (ret != PMINFO_R_OK)
+            return;
+
+        ret = pkgmgrinfo_appinfo_filter_add_string (handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime");
+        if (ret == PMINFO_R_OK) {
+            pkgmgrinfo_appinfo_filter_foreach_appinfo (handle, app_list_cb, NULL);
+        }
+
+        pkgmgrinfo_appinfo_filter_destroy (handle);
+#endif
     }
 
     m_send_trans.put_command (SCIM_TRANS_CMD_OK);

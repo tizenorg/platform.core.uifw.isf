@@ -2744,8 +2744,6 @@ public:
         if (m_recv_trans.get_data (mode)) {
             m_signal_set_keyboard_mode (mode);
         }
-
-
     }
 
     void candidate_will_hide_ack (int client_id)
