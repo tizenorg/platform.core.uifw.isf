@@ -1024,7 +1024,6 @@ app_info_cb (package_info_app_component_type_e comp_type, const char *app_id, vo
     HelperInfo *helper_info = (HelperInfo *)user_data;
     pkgmgrinfo_appinfo_h appinfo_handle;
     bool exist = false;
-    int ret;
     if (!helper_info) return false;
 
     if (pkgmgrinfo_appinfo_get_appinfo (app_id, &appinfo_handle) != PMINFO_R_OK)
@@ -1055,7 +1054,7 @@ static bool get_helper_ise_info (const char *type, const char *package, HelperIn
     if (strncmp (type, "wgt", 3) != 0)
         return false;
 
-    package_manager_get_package_info (package, &pkg_info);
+    package_info_create (package, &pkg_info);
     if (!pkg_info)
         return false;
 
