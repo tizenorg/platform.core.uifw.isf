@@ -1,3 +1,12 @@
+ISF 2.4.7720 :
+ 1. Replace deprecated API of package manager
+ 2. Add missing dependency
+ 3. check Web IME package to use category instead of label
+ 4. [demo] code cleanup
+ 5. fix fail to launch Web IME in no OSP environment
+ 6. fix build warning in no minicontrol environment
+
+
 ISF 2.4.7709 :
  1. fix build error in no minicontrol library environment
  2. Set smack for Web IME
