@@ -317,7 +317,9 @@ PKG_CHECK_MODULES(FEEDBACK, [feedback],
 PKG_CHECK_MODULES(PACKAGE_MANAGER, [capi-appfw-package-manager])
 
 # Check core package manager
-PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info])
+PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info],
+                  [ISF_HAS_PKGMGR_INFO=yes],
+                  [ISF_HAS_PKGMGR_INFO=no])
 
 if test "$ISF_HAS_VCONF" = "yes"; then
   AC_DEFINE(HAVE_VCONF,1,[Have VConf functions.])
@@ -343,6 +345,10 @@ AM_CONDITIONAL([MOBILE_ENV], [test x$ISF_HAS_UIGADGET = xyes])
 
 if test "$ISF_HAS_NOTIFICATION" = "yes"; then
   AC_DEFINE(HAVE_NOTIFICATION,1,[Have Notification functions.])
+fi
+
+if test "$ISF_HAS_PKGMGR_INFO" = "yes"; then
+  AC_DEFINE(HAVE_PKGMGR_INFO,1,[Have Package manager functions.])
 fi
 
 # Check GTK2 library

@@ -74,8 +74,10 @@
 #if HAVE_BLUETOOTH
 #include <bluetooth.h>
 #endif
+#if HAVE_PKGMGR_INFO
 #include <package_manager.h>
 #include <pkgmgr-info.h>
+#endif
 
 using namespace scim;
 
@@ -392,7 +394,9 @@ static Ecore_File_Monitor *_osp_helper_ise_em               = NULL;
 static Ecore_File_Monitor *_osp_keyboard_ise_em             = NULL;
 static OSPEmRepository     _osp_bin_em;
 static OSPEmRepository     _osp_info_em;
+#if HAVE_PKGMGR_INFO
 static package_manager_h   pkgmgr                           = NULL;
+#endif
 
 static bool               _launch_ise_on_request            = false;
 static bool               _soft_keyboard_launched           = false;
@@ -1018,6 +1022,7 @@ static unsigned int get_ise_index (const String uuid)
     return index;
 }
 
+#if HAVE_PKGMGR_INFO
 static bool
 app_info_cb (package_info_app_component_type_e comp_type, const char *app_id, void *user_data)
 {
@@ -1143,6 +1148,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
         }
     }
 }
+#endif
 
 /**
  * @brief Get ISE module file path.
@@ -1446,10 +1452,12 @@ static void delete_ise_directory_em (void) {
     _osp_bin_em.clear ();
     _osp_info_em.clear ();
 
+#if HAVE_PKGMGR_INFO
     if (pkgmgr) {
         package_manager_destroy (pkgmgr);
         pkgmgr = NULL;
     }
+#endif
 }
 
 /**
@@ -1505,10 +1513,12 @@ static void add_ise_directory_em (void) {
 
     add_monitor_for_all_osp_modules ();
 
+#if HAVE_PKGMGR_INFO
     if (!pkgmgr) {
         package_manager_create (&pkgmgr);
         package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
     }
+#endif
 }
 
 /**
