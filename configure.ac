@@ -316,6 +316,9 @@ PKG_CHECK_MODULES(FEEDBACK, [feedback],
 # Check package manager
 PKG_CHECK_MODULES(PACKAGE_MANAGER, [capi-appfw-package-manager])
 
+# Check core package manager
+PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info])
+
 if test "$ISF_HAS_VCONF" = "yes"; then
   AC_DEFINE(HAVE_VCONF,1,[Have VConf functions.])
 fi

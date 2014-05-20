@@ -40,6 +40,7 @@ BuildRequires:  pkgconfig(feedback)
 BuildRequires:  efl-assist-devel
 BuildRequires:  pkgconfig(ail)
 BuildRequires:  pkgconfig(libtzplatform-config)
+BuildRequires:  pkgconfig(pkgmgr-info)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
