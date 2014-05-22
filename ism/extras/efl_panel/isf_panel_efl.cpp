@@ -1027,11 +1027,14 @@ static bool
 app_info_cb (package_info_app_component_type_e comp_type, const char *app_id, void *user_data)
 {
     HelperInfo *helper_info = (HelperInfo *)user_data;
-    pkgmgrinfo_appinfo_h appinfo_handle;
+    pkgmgrinfo_appinfo_h appinfo_handle = NULL;
     bool exist = false;
     if (!helper_info) return false;
 
     if (pkgmgrinfo_appinfo_get_appinfo (app_id, &appinfo_handle) != PMINFO_R_OK)
+        return true;
+
+    if (!appinfo_handle)
         return true;
 
     pkgmgrinfo_appinfo_is_category_exist (appinfo_handle, "http://tizen.org/category/ime", &exist);
@@ -1048,7 +1051,7 @@ app_info_cb (package_info_app_component_type_e comp_type, const char *app_id, vo
 
 static bool get_helper_ise_info (const char *type, const char *package, HelperInfo *helper_info)
 {
-    package_info_h pkg_info;
+    package_info_h pkg_info = NULL;
     char *pkg_label = NULL;
     char *pkg_icon_path = NULL;
     bool result = false;
@@ -1059,7 +1062,9 @@ static bool get_helper_ise_info (const char *type, const char *package, HelperIn
     if (strncmp (type, "wgt", 3) != 0)
         return false;
 
-    package_info_create (package, &pkg_info);
+    if (package_info_create (package, &pkg_info) != PACKAGE_MANAGER_ERROR_NONE)
+        return false;
+
     if (!pkg_info)
         return false;
 
