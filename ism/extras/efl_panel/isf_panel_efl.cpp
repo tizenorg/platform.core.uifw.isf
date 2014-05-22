@@ -5531,7 +5531,9 @@ static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
 
         /* Set input detected property for isf setting */
         val = 0;
-        ecore_x_test_fake_key_press ("XF86MenuKB");
+        if (_ise_state == WINDOW_STATE_HIDE) {
+            ecore_x_test_fake_key_press ("XF86MenuKB");
+        }
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
     }
