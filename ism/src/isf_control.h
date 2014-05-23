@@ -56,7 +56,7 @@ EAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
  * @brief Get active ISE's UUID.
  *
  * @param uuid The parameter is used to store active ISE's UUID.
- *             Applcation need free *uuid if it is not used.
+ *             Application needs free *uuid if it is not used.
  *
  * @return the length of UUID if successfully, otherwise return -1;
  */
@@ -66,7 +66,7 @@ EAPI int isf_control_get_active_ise (char **uuid);
  * @brief Get the list of all ISEs' UUID.
  *
  * @param uuid_list The list is used to store all ISEs' UUID.
- *                  Applcation need free **uuid_list if it is not used.
+ *                  Application needs free **uuid_list if it is not used.
  *
  * @return the count of UUID list if successfully, otherwise return -1;
  */
@@ -76,8 +76,8 @@ EAPI int isf_control_get_ise_list (char ***uuid_list);
  * @brief Get ISE's information according to ISE's UUID.
  *
  * @param uuid The ISE's UUID.
- * @param name     The parameter is used to store ISE's name. Applcation need free *name if it is not used.
- * @param language The parameter is used to store ISE's language. Applcation need free *language if it is not used.
+ * @param name     The parameter is used to store ISE's name. Application needs free *name if it is not used.
+ * @param language The parameter is used to store ISE's language. Application needs free *language if it is not used.
  * @param type     The parameter is used to store ISE's type.
  * @param option   The parameter is used to store ISE's option.
  *
@@ -89,8 +89,8 @@ EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **languag
  * @brief Get ISE's information according to ISE's UUID.
  *
  * @param uuid The ISE's UUID.
- * @param name     The parameter is used to store ISE's name. Applcation need free *name if it is not used.
- * @param language The parameter is used to store ISE's language. Applcation need free *language if it is not used.
+ * @param name     The parameter is used to store ISE's name. Application needs free *name if it is not used.
+ * @param language The parameter is used to store ISE's language. Application needs free *language if it is not used.
  * @param type     The parameter is used to store ISE's type.
  * @param option   The parameter is used to store ISE's option.
  * @param module_name The parameter is used to store ISE's module file name.
