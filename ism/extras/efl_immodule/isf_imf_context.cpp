@@ -3375,7 +3375,7 @@ open_specific_factory (EcoreIMFContextISF *ic,
         }
     } else {
         std::cerr << "open_specific_factory () is failed!!!!!!\n";
-        LOGW ("open_specific_factory () is failed. ic : %x uuid : %s", ic->id, uuid.c_str ());
+        LOGW ("open_specific_factory () is failed. uuid : %s", uuid.c_str ());
 
         // turn_off_ic comment out panel_req_update_factory_info ()
         //turn_off_ic (ic);
