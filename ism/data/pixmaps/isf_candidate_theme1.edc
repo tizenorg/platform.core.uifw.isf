@@ -11,3 +11,4 @@
 #define COLOR_PRESS_TEXT        0 0 0 255
 
 #include "isf_candidate.edc"
+#include "isf_minicontrol.edc"

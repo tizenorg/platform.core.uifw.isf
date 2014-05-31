@@ -27,13 +27,13 @@ AUX_DIST                = $(ac_aux_dir)/config.guess \
 EXTRA_DIST		= config.rpath \
 			  mkinstalldirs \
 			  bootstrap \
-	      		  scim.spec \
+			  scim.spec \
 			  intltool-extract.in \
 			  intltool-merge.in \
 			  intltool-update.in
 
 AUTOMAKE_OPTIONS 	= gnu
-SUBDIRS 		= ism/m4 ism/src ism/utils ism/modules ism/configs po/scim po/isfsetting_efl ism/extras ism/data ism/demos
+SUBDIRS 		= ism/src ism/utils ism/modules ism/configs po/scim ism/extras ism/data ism/demos
 
 MAINTAINERCLEANFILES 	= Makefile.in \
 			  aclocal.m4 \
@@ -43,7 +43,7 @@ MAINTAINERCLEANFILES 	= Makefile.in \
 
 DISTCLEANFILES		= isf.pc scim.pc scim-gtkutils.pc intltool-extract intltool-merge intltool-update
 
-CLEANFILES		= *.bak 
+CLEANFILES		= *.bak
 
 ACLOCAL			= aclocal -I $(ac_aux_dir)/ism
 
@@ -56,12 +56,14 @@ endif
 pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
-ugxmldir = /usr/share/packages/
-ugxml_DATA = ug-isfsetting-efl.xml
 
 # $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
+
+if MOBILE_ENV
+else
 systemduserunitdir = /usr/lib/systemd/user
 systemduserunit_DATA = scim.service
+endif
 
 ACLOCAL_AMFLAGS = -I ism/m4
 
@@ -73,6 +75,9 @@ update-ChangeLog:
 uninstall-local:
 	rm -rf @SCIM_MODULE_PATH@
 
+if MOBILE_ENV
+else
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants
 	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants/scim.service
+endif

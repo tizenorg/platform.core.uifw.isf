@@ -386,6 +386,8 @@ protected:
     virtual void filter_send_helper_event (const String &helper_uuid, const Transaction &trans);
     virtual bool filter_get_surrounding_text (WideString &text, int &cursor, int maxlen_before = -1, int maxlen_after = -1);
     virtual bool filter_delete_surrounding_text (int offset, int len);
+    virtual bool filter_get_selection (WideString &text);
+    virtual bool filter_set_selection (int start, int end);
     /** @} */
 };
 

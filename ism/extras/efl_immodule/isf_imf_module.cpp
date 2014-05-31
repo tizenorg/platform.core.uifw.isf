@@ -98,7 +98,7 @@ extern "C"
 
         ctxd = isf_imf_context_new ();
         if (!ctxd) {
-            LOGE ("isf_imf_context_new () failed!!!\n");
+            LOGW ("isf_imf_context_new () failed!!!\n");
             return NULL;
         }
 

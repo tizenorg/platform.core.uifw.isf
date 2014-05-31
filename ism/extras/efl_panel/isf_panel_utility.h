@@ -65,6 +65,7 @@ void isf_save_ise_information (void);
 void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config);
 bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config);
 bool isf_update_ise_module (const String strModulePath, const ConfigPointer &config);
+String isf_get_normalized_language (String src_str);
 
 #endif /* __ISF_PANEL_UTILITY_H */
 

@@ -53,9 +53,10 @@ public:
     void set_active_ise_by_uuid (const char* uuid);
     void get_active_ise (String &uuid);
     void get_ise_list (int* count, char*** iselist);
-    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option);
+    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name);
     void reset_ise_option (void);
     void set_active_ise_to_default (void);
+    void set_initial_ise_by_uuid (const char* uuid);
 };
 
 }

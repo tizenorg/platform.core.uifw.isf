@@ -88,6 +88,12 @@ typedef Signal5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
 typedef Signal3<bool, IMEngineInstanceBase*,int,int>
         IMEngineSignalDeleteSurroundingText;
 
+typedef Signal2<bool, IMEngineInstanceBase*,WideString&>
+        IMEngineSignalGetSelection;
+
+typedef Signal3<bool, IMEngineInstanceBase*,int,int>
+        IMEngineSignalSetSelection;
+
 typedef Signal3<void, IMEngineInstanceBase*,ISF_CANDIDATE_PORTRAIT_LINE_T,ISF_CANDIDATE_MODE_T>
         IMEngineSignalCandidateStyle;
 
@@ -132,6 +138,9 @@ public:
 
     IMEngineSignalGetSurroundingText      m_signal_get_surrounding_text;
     IMEngineSignalDeleteSurroundingText   m_signal_delete_surrounding_text;
+
+    IMEngineSignalGetSelection            m_signal_get_selection;
+    IMEngineSignalSetSelection            m_signal_set_selection;
 
     IMEngineSignalVoid                    m_signal_expand_candidate;
     IMEngineSignalVoid                    m_signal_contract_candidate;
@@ -585,6 +594,18 @@ IMEngineInstanceBase::signal_connect_delete_surrounding_text (IMEngineSlotDelete
 }
 
 Connection
+IMEngineInstanceBase::signal_connect_get_selection (IMEngineSlotGetSelection *slot)
+{
+    return m_impl->m_signal_get_selection.connect (slot);
+}
+
+Connection
+IMEngineInstanceBase::signal_connect_set_selection (IMEngineSlotSetSelection *slot)
+{
+    return m_impl->m_signal_set_selection.connect (slot);
+}
+
+Connection
 IMEngineInstanceBase::signal_connect_expand_candidate (IMEngineSlotVoid *slot)
 {
     return m_impl->m_signal_expand_candidate.connect (slot);
@@ -739,6 +760,21 @@ bool
 IMEngineInstanceBase::delete_surrounding_text (int offset, int len)
 {
     return m_impl->m_signal_delete_surrounding_text (this, offset, len);
+}
+
+bool
+IMEngineInstanceBase::get_selection (WideString &text)
+{
+    if (m_impl->m_signal_get_selection (this, text))
+        return true;
+
+    return false;
+}
+
+bool
+IMEngineInstanceBase::set_selection (int start, int end)
+{
+    return m_impl->m_signal_set_selection (this, start, end);
 }
 
 void

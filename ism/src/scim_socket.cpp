@@ -54,6 +54,7 @@
 #include <signal.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <sys/prctl.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -462,15 +463,19 @@ public:
             int flags = fcntl (m_id, F_GETFL, 0);
             if (fcntl (m_id, F_SETFL, flags | O_NONBLOCK) == -1) {
                 char buf[256] = {0};
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  ppid:%d  %s  %s  fcntl() failed, %d\n",
-                    time (0), getpid (), getppid (), __FILE__, __func__, errno);
+                m_err = errno;
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  ppid:%d  %s  %s  fcntl() failed, %d %s\n",
+                    time (0), getpid (), getppid (), __FILE__, __func__, m_err, strerror (m_err));
                 isf_save_log (buf);
             }
 
             char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  ppid:%d  %s  %s  trying connect() to %s\n",
-                time (0), getpid (), getppid (), __FILE__, __func__, addr.get_address ().c_str ());
-            isf_save_log (buf);
+            char proc_name[17] = {0}; /* the buffer provided shall at least be 16+1 bytes long */
+            if (-1 != prctl(PR_GET_NAME, proc_name, 0, 0, 0)) {
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  ppid:%d  %s  %s  trying connect() to %s, %s\n",
+                    time (0), getpid (), getppid (), __FILE__, __func__, addr.get_address ().c_str (), proc_name);
+                isf_save_log (buf);
+            }
 
             if ((m_err = ::connect (m_id, data, len)) == 0) {
                 if (fcntl (m_id, F_SETFL, flags) == -1) {
@@ -521,8 +526,8 @@ public:
                 }
             } else {
                 m_err = errno;
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  connect() failed with %d\n",
-                        time (0), getpid (), __FILE__, __func__, errno);
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  connect() failed with %d (%s)\n",
+                        time (0), getpid (), __FILE__, __func__, m_err, strerror (m_err));
                 isf_save_log (buf);
             }
             if (fcntl (m_id, F_SETFL, flags) == -1) {
@@ -715,7 +720,13 @@ private:
                 gettimeofday (&cur_tv, 0);
                 elapsed = (cur_tv.tv_sec - begin_tv.tv_sec) * 1000 +
                           (cur_tv.tv_usec - begin_tv.tv_usec) / 1000;
-                *timeout = *timeout - elapsed;
+                /* If somebody else calls settimeofday () after we set begin_tv value,
+                   the elapsed time could be invalid */
+                if (elapsed < 0) {
+                    *timeout = 0;
+                } else {
+                    *timeout = *timeout - elapsed;
+                }
                 if (*timeout > 0) {
                     tv.tv_sec = *timeout / 1000;
                     tv.tv_usec = (*timeout % 1000) * 1000;
@@ -1484,11 +1495,22 @@ scim_socket_open_connection   (uint32       &key,
             if (trans.write_to_socket (socket))
                 return true;
         } else {
+            {
+                char buf[256] = {0};
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  read_from_socket() failed %d\n",
+                    time (0), getpid (), __FILE__, __func__, timeout);
+                isf_save_log (buf);
+            }
             trans.clear ();
             trans.put_command (SCIM_TRANS_CMD_REPLY);
             trans.put_command (SCIM_TRANS_CMD_FAIL);
             trans.write_to_socket (socket);
         }
+    } else {
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  write_to_socket() failed\n",
+            time (0), getpid (), __FILE__, __func__);
+        isf_save_log (buf);
     }
 
     return false;

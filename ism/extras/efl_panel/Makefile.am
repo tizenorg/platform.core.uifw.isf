@@ -26,15 +26,27 @@ endif
 bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
-                         isf_panel_utility.cpp
+                         isf_panel_utility.cpp \
+                         center_popup.cpp
 
-isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ @VCONF_CFLAGS@ @DLOG_CFLAGS@ @TTS_CFLAGS@ @FEEDBACK_CFLAGS@
+if ISF_BUILD_MINICONTROL
+isf_panel_efl_SOURCES  += minicontrol.cpp
+endif
+
+isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ @EFL_ASSIST_CFLAGS@ @VCONF_CFLAGS@ @X11_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ @DLOG_CFLAGS@ \
+                         @MINICONTROL_PROVIDER_CFLAGS@ @NOTIFICATION_CFLAGS@ @TTS_CFLAGS@ @EDBUS_CFLAGS@ @BLUETOOTH_CFLAGS@ @FEEDBACK_CFLAGS@
 
 isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
+                         @EFL_ASSIST_LIBS@ \
                          @VCONF_LIBS@ \
                          @X11_LIBS@ \
+                         @PRIVILEGE_CONTROL_LIBS@ \
                          @DLOG_LIBS@ \
+                         @MINICONTROL_PROVIDER_LIBS@ \
+                         @NOTIFICATION_LIBS@ \
                          @TTS_LIBS@ \
+                         @EDBUS_LIBS@ \
+                         @BLUETOOTH_LIBS@ \
                          @FEEDBACK_LIBS@
 
 isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

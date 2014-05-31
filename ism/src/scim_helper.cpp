@@ -105,6 +105,9 @@ typedef Signal2<void, const HelperAgent *, const std::vector<uint32> &>
 typedef Signal2<void, const HelperAgent *, LookupTable &>
         HelperAgentSignalLookupTable;
 
+typedef Signal3<void, const HelperAgent *, KeyEvent &, uint32 &>
+        HelperAgentSignalKeyEventUint;
+
 class HelperAgent::HelperAgentImpl
 {
 public:
@@ -125,6 +128,7 @@ public:
     HelperAgentSignalIntInt         signal_update_spot_location;
     HelperAgentSignalInt            signal_update_cursor_position;
     HelperAgentSignalInt            signal_update_surrounding_text;
+    HelperAgentSignalVoid           signal_update_selection;
     HelperAgentSignalString         signal_trigger_property;
     HelperAgentSignalTransaction    signal_process_imengine_event;
     HelperAgentSignalVoid           signal_focus_out;
@@ -168,6 +172,7 @@ public:
     HelperAgentSignalUintVoid           signal_turn_on_log;
     HelperAgentSignalInt                signal_update_displayed_candidate_number;
     HelperAgentSignalInt                signal_longpress_candidate;
+    HelperAgentSignalKeyEventUint       signal_process_key_event;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
@@ -205,44 +210,67 @@ HelperAgent::open_connection (const HelperInfo &info,
 
     if (!address.valid ())
         return -1;
-    bool ret;
-    int  i;
-    ret = m_impl->socket.connect (address);
-    if (ret == false) {
+
+    int i = 0;
+    std::cerr << " Connecting to PanelAgent server.";
+    ISF_LOG (" Connecting to PanelAgent server.\n");
+    while (!m_impl->socket.connect (address)) {
+        std::cerr << ".";
         scim_usleep (100000);
-        std::cerr << " Re-connecting to PanelAgent server.";
-        ISF_LOG (" Re-connecting to PanelAgent server.\n");
-        for (i = 0; i < 200; ++i) {
-            if (m_impl->socket.connect (address)) {
-                ret = true;
-                break;
-            }
-            std::cerr << ".";
-            scim_usleep (100000);
+        if (++i == 200) {
+            std::cerr << "m_impl->socket.connect () is failed!!!\n";
+            ISF_LOG ("m_impl->socket.connect () is failed!!!\n");
+            return -1;
         }
-        std::cerr << " Connected :" << i << "\n";
-        ISF_LOG ("  Connected :%d\n", i);
     }
-
-    if (ret == false)
+    std::cerr << " Connected :" << i << "\n";
+    ISF_LOG ("  Connected :%d\n", i);
     {
-        std::cerr << "m_impl->socket.connect () is failed!!!\n";
-        ISF_LOG ("m_impl->socket.connect () is failed!!!\n");
-        return -1;
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Connection to PanelAgent succeeded, %d\n",
+            time (0), getpid (), __FILE__, __func__, i);
+        isf_save_log (buf);
     }
 
-    if (!scim_socket_open_connection (magic,
+    /* Let's retry 10 times when failed */
+    int open_connection_retries = 0;
+    while (!scim_socket_open_connection (magic,
                                       String ("Helper"),
                                       String ("Panel"),
                                       m_impl->socket,
                                       timeout)) {
-        m_impl->socket.close ();
-        std::cerr << "scim_socket_open_connection () is failed!!!\n";
-        ISF_LOG ("scim_socket_open_connection () is failed!!!\n");
-        return -1;
+        if (++open_connection_retries > 10) {
+            m_impl->socket.close ();
+            std::cerr << "scim_socket_open_connection () is failed!!!\n";
+            ISF_LOG ("scim_socket_open_connection () is failed!!!\n");
+            {
+                char buf[256] = {0};
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  scim_socket_open_connection failed, %d\n",
+                    time (0), getpid (), __FILE__, __func__, timeout);
+                isf_save_log (buf);
+            }
+            return -1;
+        }
+
+        /* Retry after re-connecting the socket */
+        if (m_impl->socket.is_connected ())
+            close_connection ();
+
+        /* This time, just retry atmost 2 seconds */
+        i = 0;
+        while (!m_impl->socket.connect (address) && ++i < 10) {
+            scim_usleep (200000);
+        }
+
     }
 
     ISF_LOG ("scim_socket_open_connection () is successful.\n");
+    {
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  scim_socket_open_connection successful\n",
+            time (0), getpid (), __FILE__, __func__);
+        isf_save_log (buf);
+    }
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (magic);
@@ -288,6 +316,12 @@ HelperAgent::open_connection (const HelperInfo &info,
         }
     }
 
+    {
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Trying connect() with Helper_Active\n",
+            time (0), getpid (), __FILE__, __func__);
+        isf_save_log (buf);
+    }
     /* connect to the panel agent as the active helper client */
     if (!m_impl->socket_active.connect (address)) return -1;
     if (!scim_socket_open_connection (magic,
@@ -296,6 +330,12 @@ HelperAgent::open_connection (const HelperInfo &info,
                                       m_impl->socket_active,
                                       timeout)) {
         m_impl->socket_active.close ();
+        {
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper_Active scim_socket_open_connection() failed %d\n",
+                time (0), getpid (), __FILE__, __func__, timeout);
+            isf_save_log (buf);
+        }
         return -1;
     }
 
@@ -312,6 +352,12 @@ HelperAgent::open_connection (const HelperInfo &info,
     m_impl->send.put_data (info.option);
 
     if (!m_impl->send.write_to_socket (m_impl->socket_active, magic)) {
+        {
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper_Active write_to_socket() failed\n",
+                time (0), getpid (), __FILE__, __func__);
+            isf_save_log (buf);
+        }
         m_impl->socket_active.close ();
         return -1;
     }
@@ -443,6 +489,13 @@ HelperAgent::filter_event ()
                 uint32 cursor;
                 if (m_impl->recv.get_data (text) && m_impl->recv.get_data (cursor))
                     m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
+                break;
+            }
+            case ISM_TRANS_CMD_UPDATE_SELECTION:
+            {
+                String text;
+                if (m_impl->recv.get_data (text))
+                    m_impl->signal_update_selection (this, ic, text);
                 break;
             }
             case SCIM_TRANS_CMD_TRIGGER_PROPERTY:
@@ -604,6 +657,18 @@ HelperAgent::filter_event ()
                 m_impl->send.clear ();
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
                 m_impl->send.put_data (disabled);
+                m_impl->send.write_to_socket (m_impl->socket);
+                break;
+            }
+            case SCIM_TRANS_CMD_PROCESS_KEY_EVENT:
+            {
+                KeyEvent key;
+                uint32 ret = 0;
+                if (m_impl->recv.get_data (key))
+                    m_impl->signal_process_key_event(this, key, ret);
+                m_impl->send.clear ();
+                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+                m_impl->send.put_data (ret);
                 m_impl->send.write_to_socket (m_impl->socket);
                 break;
             }
@@ -977,6 +1042,28 @@ HelperAgent::commit_string (int               ic,
     }
 }
 
+void
+HelperAgent::commit_string (int               ic,
+                            const String     &ic_uuid,
+                            const  char      *buf,
+                            int               buflen) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_COMMIT_STRING);
+        if (ic == -1) {
+            m_impl->send.put_data (m_impl->focused_ic);
+        } else {
+            m_impl->send.put_data ((uint32)ic);
+        }
+        m_impl->send.put_data (ic_uuid);
+        m_impl->send.put_dataw (buf, buflen);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
 /**
  * @brief Request to show preedit string.
  *
@@ -1132,6 +1219,16 @@ HelperAgent::update_preedit_string (int                  ic,
     update_preedit_string (ic, ic_uuid, str, attrs, -1);
 }
 
+void
+HelperAgent::update_preedit_string (int                  ic,
+                                    const String        &ic_uuid,
+                                    const char         *buf,
+                                    int                 buflen,
+                                    const AttributeList &attrs) const
+{
+    update_preedit_string (ic, ic_uuid, buf, buflen, attrs, -1);
+}
+
 /**
  * @brief Update a new WideString for preedit.
  *
@@ -1158,6 +1255,28 @@ HelperAgent::update_preedit_string (int                  ic,
         m_impl->send.put_data ((uint32)ic);
         m_impl->send.put_data (ic_uuid);
         m_impl->send.put_data (str);
+        m_impl->send.put_data (attrs);
+        m_impl->send.put_data (caret);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+void
+HelperAgent::update_preedit_string (int                 ic,
+                                    const String       &ic_uuid,
+                                    const char         *buf,
+                                    int                 buflen,
+                                    const AttributeList &attrs,
+                                    int            caret) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING);
+        m_impl->send.put_data ((uint32)ic);
+        m_impl->send.put_data (ic_uuid);
+        m_impl->send.put_dataw (buf, buflen);
         m_impl->send.put_data (attrs);
         m_impl->send.put_data (caret);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
@@ -1298,6 +1417,44 @@ HelperAgent::delete_surrounding_text (int offset, int len) const
         m_impl->send.put_command (SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT);
         m_impl->send.put_data (offset);
         m_impl->send.put_data (len);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @brief Request to get selection text.
+ *
+ * @param uuid The helper ISE UUID.
+ */
+void
+HelperAgent::get_selection (const String &uuid) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_GET_SELECTION);
+        m_impl->send.put_data (uuid);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @brief Request to selected text.
+ *
+ * @param start The start position in text.
+ * @param end The end position in text.
+ */
+void
+HelperAgent::set_selection (int start, int end) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_SET_SELECTION);
+        m_impl->send.put_data (start);
+        m_impl->send.put_data (end);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
 }
@@ -1670,6 +1827,20 @@ HelperAgent::signal_connect_update_surrounding_text (HelperAgentSlotInt *slot)
 }
 
 /**
+ * @brief Connect a slot to Helper update selection signal.
+ *
+ * This signal is used to let the Helper get the selection.
+ *
+ * The prototype of the slot is:
+ * void update_selection (const HelperAgent *agent, int ic, const String &text);
+ */
+Connection
+HelperAgent::signal_connect_update_selection (HelperAgentSlotVoid *slot)
+{
+    return m_impl->signal_update_selection.connect (slot);
+}
+
+/**
  * @brief Connect a slot to Helper trigger property signal.
  *
  * This signal is used to trigger a property registered by this Helper.
@@ -1878,6 +2049,20 @@ Connection
 HelperAgent::signal_connect_set_return_key_disable (HelperAgentSlotUintVoid *slot)
 {
     return m_impl->signal_set_return_key_disable.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper process key event signal.
+ *
+ * This signal is used to send keyboard key event to Helper ISE.
+ *
+ * The prototype of the slot is:
+ * void process_key_event (const HelperAgent *agent, uint32 &ret);
+ */
+Connection
+HelperAgent::signal_connect_process_key_event (HelperAgentSlotKeyEventUint *slot)
+{
+    return m_impl->signal_process_key_event.connect (slot);
 }
 
 /**

@@ -1,8 +1,7 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 2.4.7104, isf@samsung.com)
+AC_INIT(isf, 2.4.7424, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
-m4_pattern_allow([^AS_])
 
 ###########################################################
 ##          Some definitions of Version macros.          ##
@@ -11,7 +10,7 @@ m4_pattern_allow([^AS_])
 # ISF version
 ISF_MAJOR_VERSION=2
 ISF_MINOR_VERSION=4
-ISF_MICRO_VERSION=7104
+ISF_MICRO_VERSION=7424
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -124,7 +123,7 @@ AC_PATH_PROG(PERL, perl)
 AC_SUBST(PERL)
 
 # Check intltool
-IT_PROG_INTLTOOL([0.33], [no-xml])
+#IT_PROG_INTLTOOL([0.33], [no-xml])
 
 # Checks for libraries.
 AC_HEADER_STDC
@@ -216,7 +215,7 @@ if test "$ISF_HAS_GCONF" = "yes"; then
 fi
 
 # Check EFL library
-PKG_CHECK_MODULES(EFL, [elementary ecore-x evas ecore ecore-evas ecore-file edje ecore-input ecore-imf],
+PKG_CHECK_MODULES(EFL, [elementary ecore-x evas ecore ecore-evas ecore-file edje ecore-input ecore-ipc ecore-imf],
                   [ISF_HAS_EFL=yes],
                   [ISF_HAS_EFL=no])
 
@@ -237,10 +236,9 @@ PKG_CHECK_MODULES(EFL_ASSIST, [efl-assist])
 PKG_CHECK_MODULES(X11, [x11])
 
 # Check ui-gadget library
-PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1])
-
-# Check pkgmgr-info library
-PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info])
+PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1],
+                  [ISF_HAS_UIGADGET=yes],
+                  [ISF_HAS_UIGADGET=no])
 
 # Check utilX library
 PKG_CHECK_MODULES(UTILX, [utilX])
@@ -253,6 +251,11 @@ PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 
 # Check privilege control library
 PKG_CHECK_MODULES(PRIVILEGE_CONTROL, [libprivilege-control >= 0])
+
+# Check minicontrol library
+PKG_CHECK_MODULES(MINICONTROL_PROVIDER, [minicontrol-provider],
+                  [ISF_HAS_MINICONTROL=yes],
+                  [ISF_HAS_MINICONTROL=no])
 
 # Check ail library
 PKG_CHECK_MODULES(AIL, [ail >= 0])
@@ -269,10 +272,21 @@ if test "$ISF_HAS_TTS" = "yes"; then
   AC_DEFINE(HAVE_TTS,1,[Have TTS functions.])
 fi
 
+# Check security server
+PKG_CHECK_MODULES(SECURITY_SERVER, [security-server])
+
 # Check vconf library
 PKG_CHECK_MODULES(VCONF, [vconf],
                   [ISF_HAS_VCONF=yes],
                   [ISF_HAS_VCONF=no])
+
+# Check edbus library
+PKG_CHECK_MODULES(EDBUS, [edbus])
+
+# Check bluetooth library
+PKG_CHECK_MODULES(BLUETOOTH, [capi-network-bluetooth],
+                  [ISF_HAS_BLUETOOTH=yes],
+                  [ISF_HAS_BLUETOOTH=no])
 
 # Check feedback library
 PKG_CHECK_MODULES(FEEDBACK, [feedback],
@@ -283,9 +297,23 @@ if test "$ISF_HAS_VCONF" = "yes"; then
   AC_DEFINE(HAVE_VCONF,1,[Have VConf functions.])
 fi
 
+if test "$ISF_HAS_BLUETOOTH" = "yes"; then
+  AC_DEFINE(HAVE_BLUETOOTH,1,[Have Bluetooth functions.])
+fi
+
 if test "$ISF_HAS_FEEDBACK" = "yes"; then
   AC_DEFINE(HAVE_FEEDBACK,1,[Have Feedback functions.])
 fi
+
+if test "$ISF_HAS_MINICONTROL" = "yes"; then
+  AC_DEFINE(HAVE_MINICONTROL,1,[Have Minicontrol functions.])
+fi
+
+if test "$ISF_HAS_UIGADGET" = "yes"; then
+  AC_DEFINE(HAVE_UIGADGET,1,[Have UI gadget functions.])
+fi
+
+AM_CONDITIONAL([MOBILE_ENV], [test x$ISF_HAS_UIGADGET = xyes])
 
 # Check GTK2 library
 PKG_CHECK_MODULES(GTK2, [gtk+-2.0 >= 2.4.0 pango >= 1.1.0 gdk-pixbuf-2.0 >= 2.4.0],
@@ -607,6 +635,9 @@ AM_CONDITIONAL(ISF_BUILD_SETTING_EFL,
 AM_CONDITIONAL(ISF_BUILD_WITH_GCONF,
                 [test "$ISF_HAS_GCONF" = "yes"])
 
+AM_CONDITIONAL(ISF_BUILD_MINICONTROL,
+                [test "$ISF_HAS_MINICONTROL" = "yes"])
+
 AC_SUBST(SCIM_BUILD_TESTS)
 AC_SUBST(SCIM_BUILD_CONFIG_SIMPLE)
 AC_SUBST(SCIM_BUILD_CONFIG_SOCKET)
@@ -652,9 +683,7 @@ AC_SUBST(SCIM_TEMPDIR)
 ###########################################################
 AC_SUBST(ac_aux_dir)
 AC_CONFIG_FILES([Makefile
-                 ism/m4/Makefile
                  po/scim/Makefile.in
-                 po/isfsetting_efl/Makefile.in
                  ism/src/Makefile
                  ism/src/scim_types.h
                  ism/utils/Makefile
@@ -672,7 +701,6 @@ AC_CONFIG_FILES([Makefile
                  ism/extras/gtk2_immodule/Makefile
                  ism/extras/efl_immodule/Makefile
                  ism/extras/efl_panel/Makefile
-                 ism/extras/efl_setting/Makefile
                  ism/demos/Makefile
                  intltool-extract
                  intltool-merge
@@ -693,7 +721,7 @@ Build options:
   Build for x86 host       $enable_x86
   Enable ld version script $enable_ld_version_script
 
-Module options:           
+Module options:
   Simple config module     $enable_config_simple
   Socket config module     $enable_config_socket
 

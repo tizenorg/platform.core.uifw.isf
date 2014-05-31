@@ -632,7 +632,8 @@ SocketConfig::open_connection () const
 
     // Connect to SocketFrontEnd.
     if (!m_socket_client.connect (socket_address)) {
-        for (int i = 0; i < 6; ++i) {
+        /* Retry connecting atmost 10 seconds */
+        for (int i = 0; i < 100; ++i) {
             if (m_socket_client.connect (socket_address))
                 break;
             scim_usleep (100000);

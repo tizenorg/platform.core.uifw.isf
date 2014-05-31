@@ -29,6 +29,9 @@
 #include <Ecore_IMF.h>
 #include <dlog.h>
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
 #define LOG_TAG "IMMODULE"
 
 const double DOUBLE_SPACE_INTERVAL = 1.0;

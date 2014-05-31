@@ -81,23 +81,30 @@ EAPI int isf_control_get_ise_list (char ***uuid_list)
 
 EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option)
 {
+    return isf_control_get_ise_info_and_module_name (uuid, name, language, type, option, NULL);
+}
+
+EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name)
+{
     if (uuid == NULL || name == NULL || language == NULL)
         return -1;
 
     int nType   = 0;
     int nOption = 0;
-    String strName, strLanguage;
+    String strName, strLanguage, strModuleName;
 
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
-    imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption);
+    imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption, strModuleName);
     imcontrol_client.close_connection ();
 
     *name     = strName.length () ? strdup (strName.c_str ()) : strdup ("");
     *language = strLanguage.length () ? strdup (strLanguage.c_str ()) : strdup ("");
     *type     = (ISE_TYPE_T)nType;
     *option   = nOption;
+    if (module_name != NULL)
+        *module_name = strModuleName.length () ? strdup (strModuleName.c_str ()) : strdup ("");
 
     return 0;
 }
@@ -120,6 +127,19 @@ EAPI int isf_control_reset_ise_option (void)
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
     imcontrol_client.reset_ise_option ();
+    imcontrol_client.close_connection ();
+    return 0;
+}
+
+EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
+{
+    if (uuid == NULL)
+        return -1;
+
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.set_initial_ise_by_uuid (uuid);
     imcontrol_client.close_connection ();
     return 0;
 }

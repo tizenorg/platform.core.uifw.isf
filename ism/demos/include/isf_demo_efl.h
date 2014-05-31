@@ -28,7 +28,6 @@
 
 #include <Elementary.h>
 #include <appcore-efl.h>
-#include <ui-gadget.h>
 
 struct appdata {
     int root_w;
@@ -41,13 +40,11 @@ struct appdata {
     Evas_Object *layout_main;     // Layout widget based on EDJ
     Evas_Object *naviframe;
 
-    ui_gadget_h ug;
     int is_frameview;
 
     // Add more variables here
     Evas_Object *li;
     Evas_Object *ev_li;
-    service_h data;
     Eina_Bool vkbd_state;
 };
 

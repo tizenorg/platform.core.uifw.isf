@@ -35,9 +35,9 @@
 #include <stdlib.h>
 #include "scim_private.h"
 #include "scim.h"
-#include "ise_preexec.h"
 #include <privilege-control.h>
 #include <unistd.h>
+#include "ise_preexec.h"
 
 using namespace scim;
 
@@ -143,14 +143,19 @@ int main (int argc, char *argv [])
             continue;
         }
 
+        char buf[256] = {0};
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Invalid command line option: %d %s...\n",
+            time (0), getpid (), __FILE__, __func__, i, argv [i]);
+        isf_save_log (buf);
+
         std::cerr << "Invalid command line option: " << argv [i] << "\n";
         return -1;
     }
 
     SCIM_DEBUG_MAIN(1) << "scim-helper-launcher: " << config << " " << display << " " << helper << " " << uuid << "\n";
     char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE (%s) is launching...\n",
-        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE (%s %s) is launching...\n",
+        time (0), getpid (), __FILE__, __func__, helper.c_str (), uuid.c_str ());
     isf_save_log (buf);
 
     if (!helper.length () || !uuid.length ()) {
@@ -158,7 +163,17 @@ int main (int argc, char *argv [])
         return -1;
     }
 
-    ise_preexec (helper.c_str ());
+    int ret = ise_preexec (helper.c_str (), uuid.c_str ());
+    if (ret < 0) {
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ise_preexec failed (%s, %d)\n",
+            time (0), getpid (), __FILE__, __func__, helper.c_str (), ret);
+        isf_save_log (buf);
+
+        std::cerr << "ise_preexec failed(" << helper << ret << ")\n";
+        return -1;
+    }
+
+    set_app_privilege ("isf", NULL, NULL);
 
     HelperModule helper_module (helper);
 

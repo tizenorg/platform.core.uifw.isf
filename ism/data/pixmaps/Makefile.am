@@ -23,8 +23,5 @@ CLEANFILES           = *.bak *.edj
 isf_candidate_theme1.edj : isf_candidate_theme1.edc
 	edje_cc $^ $@
 
-isfsetting.edj : isfsetting.edc
-	edje_cc $^ $@
-
 edjdir   = @SCIM_DATADIR@
-edj_DATA = isf_candidate_theme1.edj isfsetting.edj
+edj_DATA = isf_candidate_theme1.edj

@@ -529,6 +529,8 @@ const int ISM_TRANS_CMD_SHOW_ASSOCIATE_TABLE              = 170;
 const int ISM_TRANS_CMD_HIDE_ASSOCIATE_TABLE              = 171;
 const int ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE            = 172;
 const int ISM_TRANS_CMD_TRANSACTION_CONTINUE              = 173;
+const int SCIM_TRANS_CMD_GET_SELECTION                    = 174;
+const int SCIM_TRANS_CMD_SET_SELECTION                    = 175;
 
 // Socket IMEngine to Socket FrontEnd
 const int SCIM_TRANS_CMD_NEW_INSTANCE                     = 200;
@@ -566,6 +568,7 @@ const int SCIM_TRANS_CMD_UPDATE_SCREEN                    = 400;
 const int SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION             = 401;
 const int ISM_TRANS_CMD_UPDATE_CURSOR_POSITION            = 402;
 const int ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT           = 403;
+const int ISM_TRANS_CMD_UPDATE_SELECTION                  = 404;
 
 // Privately used by panel.
 const int SCIM_TRANS_CMD_PANEL_EXIT                       = 500;
@@ -625,7 +628,8 @@ const int ISM_TRANS_CMD_SEND_CANDIDATE_WILL_HIDE_ACK      = 1013;
 const int ISM_TRANS_CMD_GET_PANEL_CLIENT_ID               = 1014;
 const int ISM_TRANS_CMD_REGISTER_PANEL_CLIENT             = 1015;
 const int ISM_TRANS_CMD_GET_ISE_STATE                     = 1016;
-
+const int ISM_TRANS_CMD_GET_ACTIVE_HELPER_OPTION          = 1017;
+const int ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID           = 1018;
 
 /* IMControl to ISE */
 const int ISM_TRANS_CMD_SET_ISE_MODE                      = 1108;

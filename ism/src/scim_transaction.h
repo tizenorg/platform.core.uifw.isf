@@ -230,6 +230,11 @@ public:
     void put_data (const char *raw, size_t bufsize);
 
     /**
+     * @brief Store a raw buffer into this transaction.
+     */
+    void put_dataw (const char *raw, size_t bufsize);
+
+    /**
      * @brief Store another Transaction object into this transaction.
      */
     void put_data (const Transaction &trans);

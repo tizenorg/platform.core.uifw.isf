@@ -396,22 +396,22 @@ static __Uint16Pair __scim_key_to_unicode_tab [] = {
   { 0x07f7, 0x03c7 }, /*                   Greek_chi χ GREEK SMALL LETTER CHI */
   { 0x07f8, 0x03c8 }, /*                   Greek_psi ψ GREEK SMALL LETTER PSI */
   { 0x07f9, 0x03c9 }, /*                 Greek_omega ω GREEK SMALL LETTER OMEGA */
-/*  0x08a1                               leftradical ? ??? */
-/*  0x08a2                            topleftradical ? ??? */
-/*  0x08a3                            horizconnector ? ??? */
+  { 0x08a1, 0x23b7 }, /*  0x08a1                               leftradical ? ??? */
+  { 0x08a2, 0x250c }, /*  0x08a2                            topleftradical ? ??? */
+  { 0x08a3, 0x2500 }, /*  0x08a3                            horizconnector ? ??? */
   { 0x08a4, 0x2320 }, /*                 topintegral ⌠ TOP HALF INTEGRAL */
   { 0x08a5, 0x2321 }, /*                 botintegral ⌡ BOTTOM HALF INTEGRAL */
   { 0x08a6, 0x2502 }, /*               vertconnector │ BOX DRAWINGS LIGHT VERTICAL */
-/*  0x08a7                          topleftsqbracket ? ??? */
-/*  0x08a8                          botleftsqbracket ? ??? */
-/*  0x08a9                         toprightsqbracket ? ??? */
-/*  0x08aa                         botrightsqbracket ? ??? */
-/*  0x08ab                             topleftparens ? ??? */
-/*  0x08ac                             botleftparens ? ??? */
-/*  0x08ad                            toprightparens ? ??? */
-/*  0x08ae                            botrightparens ? ??? */
-/*  0x08af                      leftmiddlecurlybrace ? ??? */
-/*  0x08b0                     rightmiddlecurlybrace ? ??? */
+  { 0x08a7, 0x23a1 }, /*  0x08a7                          topleftsqbracket ? ??? */
+  { 0x08a8, 0x23a3 }, /*  0x08a8                          botleftsqbracket ? ??? */
+  { 0x08a9, 0x23a4 }, /*  0x08a9                         toprightsqbracket ? ??? */
+  { 0x08aa, 0x23a6 }, /*  0x08aa                         botrightsqbracket ? ??? */
+  { 0x08ab, 0x239b }, /*  0x08ab                             topleftparens ? ??? */
+  { 0x08ac, 0x239d }, /*  0x08ac                             botleftparens ? ??? */
+  { 0x08ad, 0x239e }, /*  0x08ad                            toprightparens ? ??? */
+  { 0x08ae, 0x23a0 }, /*  0x08ae                            botrightparens ? ??? */
+  { 0x08af, 0x23a8 }, /*  0x08af                      leftmiddlecurlybrace ? ??? */
+  { 0x08b0, 0x23ac }, /*  0x08b0                     rightmiddlecurlybrace ? ??? */
 /*  0x08b1                          topleftsummation ? ??? */
 /*  0x08b2                          botleftsummation ? ??? */
 /*  0x08b3                 topvertsummationconnector ? ??? */
@@ -428,7 +428,7 @@ static __Uint16Pair __scim_key_to_unicode_tab [] = {
   { 0x08c2, 0x221e }, /*                    infinity ∞ INFINITY */
   { 0x08c5, 0x2207 }, /*                       nabla ∇ NABLA */
   { 0x08c8, 0x2245 }, /*                 approximate ≅ APPROXIMATELY EQUAL TO */
-/*  0x08c9                              similarequal ? ??? */
+  { 0x08c9, 0x2243 }, /*  0x08c9                              similarequal ? ??? */
   { 0x08cd, 0x21d4 }, /*                    ifonlyif ⇔ LEFT RIGHT DOUBLE ARROW */
   { 0x08ce, 0x21d2 }, /*                     implies ⇒ RIGHTWARDS DOUBLE ARROW */
   { 0x08cf, 0x2261 }, /*                   identical ≡ IDENTICAL TO */
@@ -459,11 +459,11 @@ static __Uint16Pair __scim_key_to_unicode_tab [] = {
   { 0x09ec, 0x250c }, /*                upleftcorner ┌ BOX DRAWINGS LIGHT DOWN AND RIGHT */
   { 0x09ed, 0x2514 }, /*               lowleftcorner └ BOX DRAWINGS LIGHT UP AND RIGHT */
   { 0x09ee, 0x253c }, /*               crossinglines ┼ BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL */
-/*  0x09ef                            horizlinescan1 ? ??? */
-/*  0x09f0                            horizlinescan3 ? ??? */
+  { 0x09ef, 0x23ba }, /*  0x09ef                            horizlinescan1 ? ??? */
+  { 0x09f0, 0x23bb }, /*  0x09f0                            horizlinescan3 ? ??? */
   { 0x09f1, 0x2500 }, /*              horizlinescan5 ─ BOX DRAWINGS LIGHT HORIZONTAL */
-/*  0x09f2                            horizlinescan7 ? ??? */
-/*  0x09f3                            horizlinescan9 ? ??? */
+  { 0x09f2, 0x23bc }, /*  0x09f2                            horizlinescan7 ? ??? */
+  { 0x09f3, 0x23bd }, /*  0x09f3                            horizlinescan9 ? ??? */
   { 0x09f4, 0x251c }, /*                       leftt ├ BOX DRAWINGS LIGHT VERTICAL AND RIGHT */
   { 0x09f5, 0x2524 }, /*                      rightt ┤ BOX DRAWINGS LIGHT VERTICAL AND LEFT */
   { 0x09f6, 0x2534 }, /*                        bott ┴ BOX DRAWINGS LIGHT UP AND HORIZONTAL */
@@ -479,9 +479,9 @@ static __Uint16Pair __scim_key_to_unicode_tab [] = {
   { 0x0aa8, 0x200a }, /*                   hairspace   HAIR SPACE */
   { 0x0aa9, 0x2014 }, /*                      emdash — EM DASH */
   { 0x0aaa, 0x2013 }, /*                      endash – EN DASH */
-/*  0x0aac                               signifblank ? ??? */
+  { 0x0aac, 0x2423 }, /*  0x0aac                               signifblank ? ??? */
   { 0x0aae, 0x2026 }, /*                    ellipsis … HORIZONTAL ELLIPSIS */
-/*  0x0aaf                           doubbaselinedot ? ??? */
+  { 0x0aaf, 0x2025 }, /*  0x0aaf                           doubbaselinedot ? ??? */
   { 0x0ab0, 0x2153 }, /*                    onethird ⅓ VULGAR FRACTION ONE THIRD */
   { 0x0ab1, 0x2154 }, /*                   twothirds ⅔ VULGAR FRACTION TWO THIRDS */
   { 0x0ab2, 0x2155 }, /*                    onefifth ⅕ VULGAR FRACTION ONE FIFTH */
@@ -765,15 +765,41 @@ static __Uint16Pair __scim_key_to_unicode_tab [] = {
   { 0x0ef0, 0x3171 }, /*    Hangul_SunkyeongeumMieum ㅱ HANGUL LETTER KAPYEOUNMIEUM */
   { 0x0ef1, 0x3178 }, /*    Hangul_SunkyeongeumPieub ㅸ HANGUL LETTER KAPYEOUNPIEUP */
   { 0x0ef2, 0x317f }, /*              Hangul_PanSios ㅿ HANGUL LETTER PANSIOS */
-/*  0x0ef3                  Hangul_KkogjiDalrinIeung ? ??? */
+  { 0x0ef3, 0x3181 }, /*  0x0ef3                  Hangul_KkogjiDalrinIeung ? ??? */
   { 0x0ef4, 0x3184 }, /*   Hangul_SunkyeongeumPhieuf ㆄ HANGUL LETTER KAPYEOUNPHIEUPH */
   { 0x0ef5, 0x3186 }, /*          Hangul_YeorinHieuh ㆆ HANGUL LETTER YEORINHIEUH */
   { 0x0ef6, 0x318d }, /*                Hangul_AraeA ㆍ HANGUL LETTER ARAEA */
   { 0x0ef7, 0x318e }, /*               Hangul_AraeAE ㆎ HANGUL LETTER ARAEAE */
   { 0x0ef8, 0x11eb }, /*            Hangul_J_PanSios ᇫ HANGUL JONGSEONG PANSIOS */
-/*  0x0ef9                Hangul_J_KkogjiDalrinIeung ? ??? */
+  { 0x0ef3, 0x11f0 }, /*  0x0ef9                Hangul_J_KkogjiDalrinIeung ? ??? */
   { 0x0efa, 0x11f9 }, /*        Hangul_J_YeorinHieuh ᇹ HANGUL JONGSEONG YEORINHIEUH */
   { 0x0eff, 0x20a9 }, /*                  Korean_Won ₩ WON SIGN */
+  { 0x12a1, 0x1e02 }, /* Babovedot */
+  { 0x12a2, 0x1e03 }, /* babovedot */
+  { 0x12a6, 0x1e0a }, /* Dabovedot */
+  { 0x12a8, 0x1e80 }, /* Wgrave */
+  { 0x12aa, 0x1e82 }, /* Wacute */
+  { 0x12ab, 0x1e0b }, /* dabovedot */
+  { 0x12ac, 0x1ef2 }, /* Ygrave */
+  { 0x12b0, 0x1e1e }, /* Fabovedot */
+  { 0x12b1, 0x1e1f }, /* fabovedot */
+  { 0x12b4, 0x1e40 }, /* Mabovedot */
+  { 0x12b5, 0x1e41 }, /* mabovedot */
+  { 0x12b7, 0x1e56 }, /* Pabovedot */
+  { 0x12b8, 0x1e81 }, /* wgrave */
+  { 0x12b9, 0x1e57 }, /* pabovedot */
+  { 0x12ba, 0x1e83 }, /* wacute */
+  { 0x12bb, 0x1e60 }, /* Sabovedot */
+  { 0x12bc, 0x1ef3 }, /* ygrave */
+  { 0x12bd, 0x1e84 }, /* Wdiaeresis */
+  { 0x12be, 0x1e85 }, /* wdiaeresis */
+  { 0x12bf, 0x1e61 }, /* sabovedot */
+  { 0x12d0, 0x0174 }, /* Wcircumflex */
+  { 0x12d7, 0x1e6a }, /* Tabovedot */
+  { 0x12de, 0x0176 }, /* Ycircumflex */
+  { 0x12f0, 0x0175 }, /* wcircumflex */
+  { 0x12f7, 0x1e6b }, /* tabovedot */
+  { 0x12fe, 0x0177 }, /* ycircumflex */
   { 0x13bc, 0x0152 }, /*                          OE Œ LATIN CAPITAL LIGATURE OE */
   { 0x13bd, 0x0153 }, /*                          oe œ LATIN SMALL LIGATURE OE */
   { 0x13be, 0x0178 }, /*                  Ydiaeresis Ÿ LATIN CAPITAL LETTER Y WITH DIAERESIS */
@@ -792,6 +818,25 @@ static __Uint16Pair __scim_key_to_unicode_tab [] = {
   { 0x20ac, 0x20ac }, /*                    EuroSign € EURO SIGN */
 
   /* Following items added to SCIM, not in the xterm table */
+  { 0xfe50, 0x0300 }, /* dead_grave */
+  { 0xfe51, 0x0301 }, /* dead_acute */
+  { 0xfe52, 0x0302 }, /* dead_circumflex */
+  { 0xfe53, 0x0303 }, /* dead_tilde */
+  { 0xfe54, 0x0304 }, /* dead_macron */
+  { 0xfe55, 0x0306 }, /* dead_breve */
+  { 0xfe56, 0x0307 }, /* dead_abovedot */
+  { 0xfe57, 0x0308 }, /* dead_diaeresis */
+  { 0xfe58, 0x030a }, /* dead_abovering */
+  { 0xfe59, 0x030b }, /* dead_doubleacute */
+  { 0xfe5a, 0x030c }, /* dead_caron */
+  { 0xfe5b, 0x0327 }, /* dead_cedilla */
+  { 0xfe5c, 0x0328 }, /* dead_ogonek */
+  { 0xfe5d, 0x0345 }, /* dead_iota */
+  { 0xfe5e, 0x3099 }, /* dead_voiced_sound */
+  { 0xfe5f, 0x309a }, /* dead_semivoiced_sound */
+  { 0xfe60, 0x0323 }, /* dead_belowdot */
+  { 0xfe61, 0x0309 }, /* dead_hook */
+  { 0xfe62, 0x031b }, /* dead_horn */
 
   /* Function keys */
   { 0xFF09, 0x0009 },
@@ -1820,6 +1865,34 @@ static __KeyName __scim_keys_by_code [] = {
   { 0x0ef9, "Hangul_J_KkogjiDalrinIeung" },
   { 0x0efa, "Hangul_J_YeorinHieuh" },
   { 0x0eff, "Korean_Won" },
+
+  { 0x12a1, "Babovedot" },
+  { 0x12a2, "babovedot" },
+  { 0x12a6, "Dabovedot" },
+  { 0x12a8, "Wgrave" },
+  { 0x12aa, "Wacute" },
+  { 0x12ab, "dabovedot" },
+  { 0x12ac, "Ygrave" },
+  { 0x12b0, "Fabovedot" },
+  { 0x12b1, "fabovedot" },
+  { 0x12b4, "Mabovedot" },
+  { 0x12b5, "mabovedot" },
+  { 0x12b7, "Pabovedot" },
+  { 0x12b8, "wgrave" },
+  { 0x12b9, "pabovedot" },
+  { 0x12ba, "wacute" },
+  { 0x12bb, "Sabovedot" },
+  { 0x12bc, "ygrave" },
+  { 0x12bd, "Wdiaeresis" },
+  { 0x12be, "wdiaeresis" },
+  { 0x12bf, "sabovedot" },
+  { 0x12d0, "Wcircumflex" },
+  { 0x12d7, "Tabovedot" },
+  { 0x12de, "Ycircumflex" },
+  { 0x12f0, "wcircumflex" },
+  { 0x12f7, "tabovedot" },
+  { 0x12fe, "ycircumflex" },
+
   { 0x13bc, "OE" },
   { 0x13bd, "oe" },
   { 0x13be, "Ydiaeresis" },
@@ -2248,6 +2321,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x00C3, "Atilde" },
   { 0xFE7A, "AudibleBell_Enable" },
   { 0x0042, "B" },
+  { 0x12a1, "Babovedot" },
   { 0xFF08, "BackSpace" },
   { 0xFF58, "Begin" },
   { 0xFE74, "BounceKeys_Enable" },
@@ -2343,6 +2417,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x06DA, "Cyrillic_ze" },
   { 0x06D6, "Cyrillic_zhe" },
   { 0x0044, "D" },
+  { 0x12a6, "Dabovedot" },
   { 0x01CF, "Dcaron" },
   { 0xFFFF, "Delete" },
   { 0x20AB, "DongSign" },
@@ -2403,6 +2478,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0xFFC4, "F7" },
   { 0xFFC5, "F8" },
   { 0xFFC6, "F9" },
+  { 0x12B0, "Fabovedot" },
   { 0x20A3, "FFrancSign" },
   { 0xFF68, "Find" },
   { 0xFED0, "First_Virtual_Screen" },
@@ -2703,6 +2779,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x20A4, "LiraSign" },
   { 0x01A3, "Lstroke" },
   { 0x004D, "M" },
+  { 0x12B4, "Mabovedot" },
   { 0x06B5, "Macedonia_DSE" },
   { 0x06B2, "Macedonia_GJE" },
   { 0x06BC, "Macedonia_KJE" },
@@ -2744,6 +2821,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0xFE78, "Overlay1_Enable" },
   { 0xFE79, "Overlay2_Enable" },
   { 0x0050, "P" },
+  { 0x12B7, "Pabovedot" },
   { 0xFF56, "Page_Down" },
   { 0xFF55, "Page_Up" },
   { 0xFF13, "Pause" },
@@ -2794,6 +2872,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0xFF24, "Romaji" },
   { 0x20A8, "RupeeSign" },
   { 0x0053, "S" },
+  { 0x12BB, "Sabovedot" },
   { 0x01A6, "Sacute" },
   { 0x01A9, "Scaron" },
   { 0x01AA, "Scedilla" },
@@ -2824,6 +2903,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x0054, "T" },
   { 0x00DE, "THORN" },
   { 0xFF09, "Tab" },
+  { 0x12d7, "Tabovedot" },
   { 0x01AB, "Tcaron" },
   { 0x01DE, "Tcedilla" },
   { 0xFED5, "Terminate_Server" },
@@ -2942,11 +3022,17 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x03DD, "Utilde" },
   { 0x0056, "V" },
   { 0x0057, "W" },
+  { 0x12AA, "Wacute" },
+  { 0x12D0, "Wcircumflex" },
+  { 0x12BD, "Wdiaeresis" },
+  { 0x12A8, "Wgrave" },
   { 0x20A9, "WonSign" },
   { 0x0058, "X" },
   { 0x0059, "Y" },
   { 0x00DD, "Yacute" },
+  { 0x12DE, "Ycircumflex" },
   { 0x13BE, "Ydiaeresis" },
+  { 0x12AC, "Ygrave" },
   { 0x005A, "Z" },
   { 0x01AF, "Zabovedot" },
   { 0x01AC, "Zacute" },
@@ -2974,6 +3060,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x0040, "at" },
   { 0x00E3, "atilde" },
   { 0x0062, "b" },
+  { 0x12A2, "babovedot" },
   { 0x005C, "backslash" },
   { 0x0AF4, "ballotcross" },
   { 0x007C, "bar" },
@@ -3021,6 +3108,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x00A4, "currency" },
   { 0x0AFF, "cursor" },
   { 0x0064, "d" },
+  { 0x12AB, "dabovedot" },
   { 0x0AF1, "dagger" },
   { 0x01EF, "dcaron" },
   { 0xFE56, "dead_abovedot" },
@@ -3089,6 +3177,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x0021, "exclam" },
   { 0x00A1, "exclamdown" },
   { 0x0066, "f" },
+  { 0x12B1, "fabovedot" },
   { 0x0AF8, "femalesymbol" },
   { 0x09E3, "ff" },
   { 0x0ABB, "figdash" },
@@ -3280,6 +3369,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x09EA, "lowrightcorner" },
   { 0x01B3, "lstroke" },
   { 0x006D, "m" },
+  { 0x12B5, "mabovedot" },
   { 0x00AF, "macron" },
   { 0x0AF7, "malesymbol" },
   { 0x0AF0, "maltesecross" },
@@ -3330,6 +3420,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x0BC0, "overbar" },
   { 0x047E, "overline" },
   { 0x0070, "p" },
+  { 0x12B9, "pabovedot" },
   { 0x00B6, "paragraph" },
   { 0x0028, "parenleft" },
   { 0x0029, "parenright" },
@@ -3369,6 +3460,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x09F5, "rightt" },
   { 0x0BFC, "righttack" },
   { 0x0073, "s" },
+  { 0x12BF, "sabovedot" },
   { 0x01B6, "sacute" },
   { 0x01B9, "scaron" },
   { 0x01BA, "scedilla" },
@@ -3389,6 +3481,7 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x00DF, "ssharp" },
   { 0x00A3, "sterling" },
   { 0x0074, "t" },
+  { 0x12F7, "tabovedot" },
   { 0x01BB, "tcaron" },
   { 0x01FE, "tcedilla" },
   { 0x0AF9, "telephone" },
@@ -3445,11 +3538,17 @@ static __KeyName __scim_keys_by_name [] = {
   { 0x04DE, "voicedsound" },
   { 0x09E9, "vt" },
   { 0x0077, "w" },
+  { 0x12BA, "wacute" },
+  { 0x12F0, "wcircumflex" },
+  { 0x12BE, "wdiaeresis" },
+  { 0x12B8, "wgrave" },
   { 0x0078, "x" },
   { 0x0079, "y" },
   { 0x00FD, "yacute" },
+  { 0x12FE, "ycircumflex" },
   { 0x00FF, "ydiaeresis" },
   { 0x00A5, "yen" },
+  { 0x12BC, "ygrave" },
   { 0x007A, "z" },
   { 0x01BF, "zabovedot" },
   { 0x01BC, "zacute" },

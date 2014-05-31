@@ -279,7 +279,9 @@ public:
                 bool bConnected = false;
 
                 std::cerr << " Connecting to ISF(scim) server.";
-                for (i = 0; i < 50; ++i) {
+
+                /* Make sure we are not waiting for more than 10 second */
+                for (i = 0; i < 100; ++i) {
                     if (m_socket_client.connect (address)) {
                         bConnected = true;
                         break;
@@ -289,7 +291,8 @@ public:
                 }
                 std::cerr << " Connected :" << i << "\n";
 
-                if (!bConnected) {
+                /* Do not launch SocketFrontEnd process here, let the immodule to create SocketFrontEnd process */
+                if (false && !bConnected) {
                     /* Get modules list */
                     std::vector<String> engine_list;
                     std::vector<String> helper_list;
@@ -314,7 +317,7 @@ public:
                                  (char **)new_argv);
 
                     std::cerr << " Reconnecting to ISF(scim) server.";
-                    for (i = 0; i < 50; ++i) {
+                    for (i = 0; i < 100; ++i) {
                         if (m_socket_client.connect (address))
                             break;
                         scim_usleep (100000);
@@ -360,7 +363,7 @@ public:
             if (trans.write_to_socket (m_socket_client) &&
                 trans.read_from_socket (m_socket_client, m_socket_timeout) &&
                 trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_data (num) && num > 0) {
+                trans.get_data (num) && num >= 0) {
                 for (uint32 j = 0; j < num; j++) {
                     HelperInfo info;
                     if (trans.get_data (info.uuid) &&
@@ -373,10 +376,6 @@ public:
                 }
                 return;
             }
-
-            m_socket_client.close ();
-            if (!open_connection ())
-                break;
         }
     }
 };

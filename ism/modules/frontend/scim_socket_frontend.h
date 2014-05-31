@@ -135,6 +135,9 @@ protected:
     virtual bool get_surrounding_text    (int id, WideString &text, int &cursor, int maxlen_before, int maxlen_after);
     virtual bool delete_surrounding_text (int id, int offset, int len);
 
+    virtual bool get_selection           (int id, WideString &text);
+    virtual bool set_selection           (int id, int start, int end);
+
     virtual void expand_candidate        (int id);
     virtual void contract_candidate      (int id);
     virtual void set_candidate_style     (int                           id,

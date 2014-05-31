@@ -197,6 +197,7 @@ public:
     void update_spot_location   (int icid, int x, int y, int top_y);
     void update_cursor_position (int icid, int cursor_pos);
     void update_surrounding_text (int icid, const WideString &str, int cursor);
+    void update_selection       (int icid, const WideString &str);
     void show_preedit_string    (int icid);
     void show_aux_string        (int icid);
     void show_lookup_table      (int icid);
@@ -243,6 +244,8 @@ public:
     bool get_client_id          (int &client_id);
     void register_client        (int client_id);
     void get_ise_state          (int &ise_state);
+    void process_key_event      (KeyEvent& key, int* ret);
+    void get_active_helper_option (int* option);
 
     /** @} */
 
@@ -443,6 +446,20 @@ public:
      * slot prototype: void delete_surrounding text (int context, int offset, int len);
      */
     Connection signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot);
+
+    /**
+     * @brief Signal: request to get selection
+     *
+     * slot prototype: void get_selection (int context);
+     */
+    Connection signal_connect_get_selection                 (PanelClientSlotVoid                   *slot);
+
+    /**
+     * @brief Signal: set selection
+     *
+     * slot prototype: void set_selection (int context, int start, int end);
+     */
+    Connection signal_connect_set_selection                 (PanelClientSlotIntInt                  *slot);
 
     /**
      * @brief Signal: update candidate item layout

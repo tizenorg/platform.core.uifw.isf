@@ -82,6 +82,8 @@ namespace scim {
 #define SCIM_GLOBAL_CONFIG_DEFAULT_SOCKET_TIMEOUT                   "/DefaultSocketTimeout"
 #define SCIM_GLOBAL_CONFIG_GTKSOCKET_WINDOW_ID                      "/IMWindowSocketID"
 #define SCIM_GLOBAL_CONFIG_GTKSOCKET_WINDOW_STYLE                   "/IMWindowStyle"
+#define SCIM_GLOBAL_CONFIG_PANEL_SOUND_FEEDBACK                     "/Panel/CandidateSoundFeedback"
+#define SCIM_GLOBAL_CONFIG_PANEL_VIBRATION_FEEDBACK                 "/Panel/CandidateVibrationFeedback"
 
 #define SCIM_GLOBAL_CONFIG_INITIAL_ISE_TYPE                         "/InitialIseType"
 #define SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID                         "/InitialIseUuid"

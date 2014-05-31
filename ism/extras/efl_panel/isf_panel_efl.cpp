@@ -50,6 +50,8 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
+#include "center_popup.h"
+#include "minicontrol.h"
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -57,11 +59,17 @@
 #include <privilege-control.h>
 #include "isf_panel_utility.h"
 #include <dlog.h>
+#include <notification.h>
+#include <efl_assist.h>
 #if HAVE_TTS
 #include <tts.h>
 #endif
+#include <E_DBus.h>
 #if HAVE_FEEDBACK
 #include <feedback.h>
+#endif
+#if HAVE_BLUETOOTH
+#include <bluetooth.h>
 #endif
 
 using namespace scim;
@@ -82,15 +90,31 @@ using namespace scim;
 #define ISE_DEFAULT_HEIGHT_LANDSCAPE                    316
 
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
-#define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
-#define ISF_SYSTEM_APPSERVICE_READY_STATE               1
 #define ISF_SYSTEM_WM_WAIT_COUNT                        200
 #define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 #define ISF_CANDIDATE_DESTROY_DELAY                     3
 
 #define ISF_PREEDIT_BORDER                              16
+#define ISE_LAUNCH_TIMEOUT                              2.0
 
+#define ISF_POP_PLAY_ICON_FILE                          "/usr/share/scim/icons/pop_play.png"
+#define ISF_KEYBOARD_ICON_FILE                          "keyboardicon.png"
+#define ISF_ISE_SELECTOR_ICON_FILE                      "noti_icon_keyboard_connected.png"
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
 #define LOG_TAG                                         "ISF_PANEL_EFL"
+
+#define HOST_BUS_NAME        "org.tizen.usb.host"
+#define HOST_OBJECT_PATH     "/Org/Tizen/Usb/Host"
+#define HOST_INTERFACE_NAME  "org.tizen.usb.host"
+#define HOST_KEYBOARD_SIGNAL "usbkeyboard"
+#define HOST_ADDED           "added"
+#define HOST_REMOVED         "removed"
+
+#define E_PROP_DEVICEMGR_INPUTWIN                       "DeviceMgr Input Window"
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
@@ -118,6 +142,11 @@ typedef enum _WINDOW_STATE {
     WINDOW_STATE_ON,
 } WINDOW_STATE;
 
+typedef enum _KEYBOARD_MODE {
+    SOFTWARE_KEYBOARD_MODE = 0,
+    HARDWARE_KEYBOARD_MODE,
+} KEYBOARD_MODE;
+
 typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
 
 
@@ -126,8 +155,9 @@ typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
 /////////////////////////////////////////////////////////////////////////////
 static Evas_Object *efl_create_window                  (const char *strWinName, const char *strEffect);
 static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
-static int        efl_get_angle_for_app_window         (void);
-static int        efl_get_angle_for_ise_window         (void);
+static int        efl_get_app_window_angle             (void);
+static int        efl_get_ise_window_angle             (void);
+static int        efl_get_quickpanel_window_angle      (void);
 
 static int        ui_candidate_get_valid_height        (void);
 static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true, bool will_hide = false);
@@ -137,9 +167,13 @@ static void       ui_candidate_show                    (bool bSetVirtualKbd = tr
 static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
 static void       ui_candidate_window_close_button_cb  (void *data, Evas *e, Evas_Object *button, void *event_info);
+static void       set_highlight_color                  (Evas_Object *item, uint32 nForeGround, uint32 nBackGround, bool bSetBack);
+static void       ui_tts_focus_rect_hide               (void);
+
+static Evas_Object *get_candidate                      (const String& str, Evas_Object *parent, int *total_width, uint32 ForeGround, uint32 BackGround, bool HighLight, bool SetBack, int item_num, int item);
+static bool       tokenize_tag                         (const String& str, struct image *image_data);
 
 static bool       check_wm_ready                       (void);
-static bool       check_system_ready                   (void);
 static void       launch_default_soft_keyboard         (keynode_t *key = NULL, void* data = NULL);
 
 /* PanelAgent related functions */
@@ -168,7 +202,7 @@ static void       slot_update_candidate_table          (const LookupTable &table
 static void       slot_select_candidate                (int index);
 static void       slot_set_active_ise                  (const String &uuid, bool changeDefault);
 static bool       slot_get_ise_list                    (std::vector<String> &list);
-static bool       slot_get_ise_information             (String uuid, String &name, String &language, int &type, int &option);
+static bool       slot_get_ise_information             (String uuid, String &name, String &language, int &type, int &option, String &module_name);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name_list);
 static void       slot_get_language_list               (std::vector<String> &name);
 static void       slot_get_all_language                (std::vector<String> &lang);
@@ -189,13 +223,22 @@ static void       slot_hide_ise                        (void);
 static void       slot_will_hide_ack                   (void);
 static void       slot_candidate_will_hide_ack         (void);
 
+static void       slot_set_hardware_keyboard_mode      (void);
 static void       slot_get_ise_state                   (int &state);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
 static Eina_Bool  efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
-static void       _launch_default_soft_keyboard        (void);
+static Ecore_X_Window efl_get_quickpanel_window        (void);
+static void       check_hardware_keyboard              (KEYBOARD_MODE mode);
+static unsigned int get_ise_index                      (const String uuid);
+static bool       set_active_ise                       (const String &uuid);
+
+static void       minictrl_clicked_cb                  (void *data, Evas_Object *o, const char *emission, const char *source);
+#ifdef HAVE_MINICONTROL
+static void       ise_selector_minictrl_clicked_cb     (void *data, Evas_Object *o, const char *emission, const char *source);
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -210,7 +253,9 @@ static Evas_Object       *_scroller_bg                      = 0;
 static Evas_Object       *_candidate_0_table                = 0;
 static Evas_Object       *_candidate_table                  = 0;
 static Evas_Object       *_candidate_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
-static Evas_Object       *_candidate_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_candidate_text [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_candidate_image [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
+static Evas_Object       *_candidate_pop_image [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_seperate_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_seperate_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_line_0 [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
@@ -218,6 +263,7 @@ static Evas_Object       *_line_items [SCIM_LOOKUP_TABLE_MAX_PAGESIZE];
 static Evas_Object       *_more_btn                         = 0;
 static Evas_Object       *_close_btn                        = 0;
 static bool               _candidate_show_requested         = false;
+static bool               _updated_hide_state_geometry      = false;
 
 static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
@@ -259,6 +305,15 @@ static int                _candidate_scroll_width_max       = 663;
 static int                _candidate_scroll_height_min      = 124;
 static int                _candidate_scroll_height_max      = 190;
 
+const  int                MORE_BUTTON_INDEX                 = -1;
+const  int                CLOSE_BUTTON_INDEX                = -2;
+const  int                INVALID_TTS_FOCUS_INDEX           = -100;
+static int                _candidate_tts_focus_index        = INVALID_TTS_FOCUS_INDEX;
+static uint32             _candidate_display_number         = 0;
+static std::vector<uint32> _candidate_row_items;
+static Evas_Object       *_tts_focus_rect                   = 0;
+static bool               _wait_stop_event                  = false;
+
 static Evas_Object       *_preedit_window                   = 0;
 static Evas_Object       *_preedit_text                     = 0;
 static int                _preedit_width                    = 100;
@@ -276,12 +331,14 @@ static std::vector<Evas_Object *> _aux_seperates;
 static Evas_Object       *_tmp_preedit_text                 = 0;
 static Evas_Object       *_tmp_aux_text                     = 0;
 static Evas_Object       *_tmp_candidate_text               = 0;
+static Evas_Object       *_ise_selector                     = NULL;
+static Evas_Object       *_ise_selector_radio_grp           = NULL;
 
 static int                _spot_location_x                  = -1;
 static int                _spot_location_y                  = -1;
 static int                _spot_location_top_y              = -1;
 static int                _candidate_angle                  = 0;
-static int                _window_angle                     = -1;
+static int                _ise_angle                        = -1;
 
 static int                _ise_width                        = 0;
 static int                _ise_height                       = 0;
@@ -305,7 +362,6 @@ static int                _click_object                     = 0;
 static int                _click_down_pos [2]               = {0, 0};
 static int                _click_up_pos [2]                 = {0, 0};
 static bool               _is_click                         = true;
-static bool               _appsvc_callback_regist           = false;
 static String             _initial_ise_uuid                 = String ("");
 static ConfigPointer      _config;
 static PanelAgent        *_panel_agent                      = 0;
@@ -316,13 +372,14 @@ static clock_t            _clock_start;
 static Ecore_Timer       *_check_size_timer                 = NULL;
 static Ecore_Timer       *_longpress_timer                  = NULL;
 static Ecore_Timer       *_destroy_timer                    = NULL;
-static Ecore_Timer       *_system_ready_timer               = NULL;
 static Ecore_Timer       *_off_prepare_done_timer           = NULL;
 static Ecore_Timer       *_candidate_hide_timer             = NULL;
+static Ecore_Timer       *_ise_launch_timer                 = NULL;
 
 static Ecore_X_Window     _ise_window                       = 0;
 static Ecore_X_Window     _app_window                       = 0;
 static Ecore_X_Window     _control_window                   = 0;
+static Ecore_X_Window     _input_win                        = 0;
 
 static Ecore_File_Monitor *_inh_helper_ise_em               = NULL;
 static Ecore_File_Monitor *_inh_keyboard_ise_em             = NULL;
@@ -331,7 +388,23 @@ static Ecore_File_Monitor *_osp_keyboard_ise_em             = NULL;
 static OSPEmRepository     _osp_bin_em;
 static OSPEmRepository     _osp_info_em;
 
-static bool               hw_kbd_mode                       = false;
+static bool               candidate_expanded                = false;
+static int                _candidate_image_count            = 0;
+static int                _candidate_text_count             = 0;
+static int                _candidate_pop_image_count        = 0;
+static int                candidate_image_height            = 38;
+static int                candidate_play_image_width_height = 19;
+
+static const int          CANDIDATE_TEXT_OFFSET             = 2;
+static const unsigned int SELECT_IME_ITEM_HEIGHT            = 114;
+static const unsigned int MAX_SELECT_IME_ITEM               = 4;
+
+#ifdef HAVE_MINICONTROL
+static MiniControl        input_detect_minictrl;
+static MiniControl        ise_selector_minictrl;
+#endif
+
+static Elm_Genlist_Item_Class itc;
 
 #if HAVE_TTS
 static tts_h              _tts                              = NULL;
@@ -341,7 +414,25 @@ static tts_h              _tts                              = NULL;
 static bool               feedback_initialized              = false;
 #endif
 
+static E_DBus_Connection     *edbus_conn;
+static E_DBus_Signal_Handler *edbus_handler;
+
 static Ecore_Event_Handler *_candidate_show_handler         = NULL;
+
+enum {
+    EMOJI_IMAGE_WIDTH = 0,
+    EMOJI_IMAGE_HEIGHT,
+    EMOJI_IMAGE_KIND,
+    EMOJI_IMAGE_TAG_FLAG,
+    EMOJI_IMAGE_POP_FLAG,
+    EMOJI_IMAGE_END
+};
+
+struct image
+{
+    String path;
+    int emoji_option[EMOJI_IMAGE_END];
+};
 
 /* This structure stores the geometry information reported by ISE */
 struct GeometryCache
@@ -351,6 +442,498 @@ struct GeometryCache
     struct rectinfo geometry;  /* Geometry information */
 };
 static struct GeometryCache _ise_reported_geometry          = {0};
+
+static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
+{
+    DBusError err;
+    char *str;
+
+    if (!msg) {
+        LOGW ("No Message");
+        return;
+    }
+
+    if (dbus_message_is_signal (msg, HOST_INTERFACE_NAME, HOST_KEYBOARD_SIGNAL) == 0) {
+        LOGW ("HOST_KEYBOARD_SIGNAL");
+        return;
+    }
+
+    dbus_error_init (&err);
+
+    if (dbus_message_get_args (msg, &err, DBUS_TYPE_STRING, &str, DBUS_TYPE_INVALID) == 0) {
+        LOGW ("DBUS_TYPE_INVALID");
+        return;
+    }
+
+    if (!strncmp (str, HOST_ADDED, strlen (HOST_ADDED))) {
+        LOGD ("HOST_ADDED");
+        return;
+    }
+
+    if (!strncmp (str, HOST_REMOVED, strlen (HOST_REMOVED))) {
+        LOGD ("HOST_REMOVED");
+        minictrl_clicked_cb (NULL, NULL, NULL, NULL);
+        return;
+    }
+
+    LOGW ("ERROR: msg (%s) is improper", str);
+}
+
+static void unregister_edbus_signal_handler (void)
+{
+    if (edbus_conn) {
+        LOGD ("unregister signal handler for keyboard");
+        if (edbus_handler) {
+            e_dbus_signal_handler_del (edbus_conn, edbus_handler);
+            edbus_handler = NULL;
+        }
+        e_dbus_connection_close (edbus_conn);
+        edbus_conn = NULL;
+    }
+    e_dbus_shutdown ();
+}
+
+static int register_edbus_signal_handler (void)
+{
+    int retry;
+    LOGD ("start register_edbus_signal_handler");
+
+    retry = 0;
+    while (e_dbus_init () == 0) {
+        retry++;
+        if (retry >= 10) {
+            LOGW ("retry fail");
+            return -1;
+        }
+    }
+
+    edbus_conn = e_dbus_bus_get (DBUS_BUS_SYSTEM);
+    if (!edbus_conn) {
+        LOGW ("connection fail");
+        return -1;
+    }
+
+    edbus_handler = e_dbus_signal_handler_add (edbus_conn, NULL, HOST_OBJECT_PATH, HOST_INTERFACE_NAME, HOST_KEYBOARD_SIGNAL, usb_keyboard_signal_cb, NULL);
+    if (!edbus_handler) {
+        LOGW ("cannot register signal");
+        return -1;
+    }
+
+    LOGD ("Success register");
+
+    return 0;
+}
+
+static void minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    unsigned int val = 0;
+#ifdef HAVE_MINICONTROL
+    input_detect_minictrl.destroy ();
+#endif
+
+    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
+    }
+}
+
+static void destroy_ise_selector ()
+{
+    if (_ise_selector_radio_grp) {
+         evas_object_del (_ise_selector_radio_grp);
+         _ise_selector_radio_grp = NULL;
+    }
+
+    if (_ise_selector) {
+        evas_object_del (_ise_selector);
+        _ise_selector = NULL;
+    }
+}
+
+static Eina_Bool delete_ise_launch_timer ()
+{
+    if (_ise_launch_timer) {
+        ecore_timer_del (_ise_launch_timer);
+        _ise_launch_timer = NULL;
+        return EINA_TRUE;
+    }
+    else
+        return EINA_FALSE;
+}
+
+static Eina_Bool ise_launch_timeout (void *data)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    LOGW ("ISE launching timeout\n");
+
+    destroy_ise_selector ();
+    return ECORE_CALLBACK_CANCEL;
+}
+
+static char *gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
+{
+    int index = (int) data;
+    if (index < 0 || index >= (int)_names.size ())
+        return NULL;
+
+    return strdup (_names[index].c_str ());
+}
+
+static Evas_Object *gl_icon_get (void *data, Evas_Object *obj, const char *part)
+{
+    unsigned int index = (unsigned int)(data);
+
+    if (index >= _uuids.size ())
+        return NULL;
+
+    Evas_Object *radio = elm_radio_add (obj);
+    elm_radio_state_value_set (radio, index);
+    if (_ise_selector_radio_grp == NULL)
+        _ise_selector_radio_grp = elm_radio_add (obj);
+    elm_radio_group_add (radio, _ise_selector_radio_grp);
+    evas_object_show (radio);
+
+    if (get_ise_index (_panel_agent->get_current_helper_uuid ()) == index)
+        elm_radio_value_set (_ise_selector_radio_grp, index);
+
+    return radio;
+}
+
+static void gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    int index = (int)(data);
+
+    if (index < 0 || index >= (int)_uuids.size ())
+        return;
+
+    if (_ise_selector_radio_grp)
+        elm_radio_value_set (_ise_selector_radio_grp, index);
+
+    if (TOOLBAR_HELPER_MODE == _panel_agent->get_current_toolbar_mode ()) {
+        if (_uuids[index] == _panel_agent->get_current_helper_uuid ()) {
+            destroy_ise_selector ();
+            return;
+        }
+    }
+
+    LOGD ("Set active ISE : %s\n", _uuids[index].c_str ());
+
+    set_active_ise (_uuids[index]);
+    _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
+}
+
+static void ise_selector_block_clicked_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    destroy_ise_selector ();
+}
+
+static void ise_selector_popup_del_cb (void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+    LOGD ("IME Selector is deleted\n");
+
+    if (_ise_selector_radio_grp) {
+         evas_object_del (_ise_selector_radio_grp);
+         _ise_selector_radio_grp = NULL;
+    }
+
+    _ise_selector = NULL;
+}
+
+static void
+ise_selector_focus_out_cb (void *data, Evas *e, void *event_info)
+{
+    LOGD ("ISE selector window focus out\n");
+    destroy_ise_selector ();
+}
+
+#ifdef HAVE_MINICONTROL
+static void ise_selector_minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    unsigned int index;
+    Evas_Object *genlist;
+    Evas_Object *box;
+    int height;
+    unsigned int item_count;
+
+    destroy_ise_selector ();
+
+    /* Create center popup */
+    _ise_selector = center_popup_add (NULL, "IMESelector", "IMESelector");
+    evas_object_event_callback_add (_ise_selector, EVAS_CALLBACK_DEL, ise_selector_popup_del_cb, NULL);
+    ea_object_event_callback_add (_ise_selector, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+    evas_object_smart_callback_add (_ise_selector, "block,clicked", ise_selector_block_clicked_cb, NULL);
+    elm_object_part_text_set (_ise_selector, "title,text", _("Select input method"));
+
+    /* Create box for adjusting the height of list */
+    box = elm_box_add (_ise_selector);
+    evas_object_size_hint_weight_set (box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+    itc.item_style = "1text.1icon/popup";
+    itc.func.text_get = gl_ise_name_get;
+    itc.func.content_get = gl_icon_get;
+    itc.func.state_get = NULL;
+    itc.func.del = NULL;
+
+    genlist = elm_genlist_add (box);
+    evas_object_size_hint_weight_set (genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+    for (index = 0; index < _uuids.size (); index++) {
+        if (_modes[index] ==  _panel_agent->get_current_toolbar_mode ())
+            elm_genlist_item_append (genlist, &itc, (void *) index, NULL, ELM_GENLIST_ITEM_NONE, gl_ise_selected_cb, (void *)index);
+    }
+
+    elm_box_pack_end (box, genlist);
+    evas_object_show (genlist);
+
+    /* The height of popup being adjusted by application here based on app requirement */
+    item_count = elm_genlist_items_count (genlist);
+
+    if (item_count > MAX_SELECT_IME_ITEM)
+        height = SELECT_IME_ITEM_HEIGHT * MAX_SELECT_IME_ITEM;
+    else
+        height = SELECT_IME_ITEM_HEIGHT*item_count;
+
+    evas_object_size_hint_min_set (box, 618, height);
+    evas_object_show (box);
+
+    elm_object_content_set (_ise_selector, box);
+    evas_object_show (_ise_selector);
+
+    Evas_Object *center_popup_win = center_popup_win_get (_ise_selector);
+    evas_event_callback_add (evas_object_evas_get (center_popup_win), EVAS_CALLBACK_CANVAS_FOCUS_OUT, ise_selector_focus_out_cb, NULL);
+
+    efl_set_transient_for_app_window (elm_win_xwindow_get (center_popup_win));
+}
+#endif
+
+static bool tokenize_tag (const String& str, struct image *image_token)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " str=" << str << ", length=" << str.length () << "\n";
+    if (str.length () <= 0) {
+        LOGW ("str is empty!!!\n");
+        return false;
+    }
+
+    char **tag_str = NULL;
+    int i = 0;
+    tag_str = eina_str_split (str.c_str (), "\u3013", 0);
+
+    for (i = 0; tag_str [i]; i++) {
+        if (i == 0) {
+            if (str.length () == strlen (tag_str[i])) {
+                if (tag_str) {
+                    if (tag_str[0])
+                        free (tag_str[0]);
+
+                    free (tag_str);
+                }
+                return false;
+            }
+
+            image_token->path = String (tag_str[i]);
+        } else {
+            if (i - 1 < EMOJI_IMAGE_END)
+                image_token->emoji_option [i - 1] = atoi (tag_str[i]);
+            else
+                LOGW ("emoji option is more than EMOJI_IMAGE_END!!!\n");
+        }
+    }
+
+    if (tag_str) {
+        if (tag_str[0])
+            free (tag_str[0]);
+
+        free (tag_str);
+    }
+
+    return true;
+}
+
+static Evas_Object* get_candidate (const String& str, Evas_Object *parent, int *total_width, uint32 ForeGround, uint32 BackGround, bool HighLight, bool SetBack, int item_num, int item_index)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " str=" << str << ", length=" << str.length () << "\n";
+
+    struct image image_data;
+    int object_width = 0, text_width = 0, image_width = 0, image_height = 0, max_width = 0, button_width = 0;
+    int i = 0, j = 0;
+    int image_get_width = 0, image_get_height = 0;
+    char image_key [10] = {0, };
+    char **splited_string = NULL;
+    char **sub_splited_string = NULL;
+    double image_rate = 0.0;
+    bool tokenize_result = false;
+    bool candidate_is_long = false;
+
+    Evas_Object *candidate_object_table = NULL;
+    Evas_Object *candidate_object_table_bg_rect = NULL;
+    Evas_Object *candidate_left_padding = NULL;
+
+    candidate_object_table = elm_table_add (parent);
+
+    candidate_left_padding = evas_object_rectangle_add (evas_object_evas_get (parent));
+    evas_object_size_hint_weight_set (candidate_left_padding, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (candidate_left_padding, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    evas_object_size_hint_min_set (candidate_left_padding, _blank_width, 1);
+    evas_object_color_set (candidate_left_padding, 0, 0, 0, 0);
+    elm_table_pack (candidate_object_table, candidate_left_padding, 0, 0, _blank_width, 1);
+    evas_object_show (candidate_left_padding);
+
+    object_width += _blank_width;
+    if (item_num > 1 && item_index == 0)
+        button_width = 92 * _width_rate;
+    else
+        button_width = 0;
+
+    splited_string = eina_str_split (str.c_str (), "\uE000", 0);
+    for (i = 0; splited_string [i]; i++) {
+        if (candidate_is_long)
+            break;
+        sub_splited_string = eina_str_split (splited_string[i], "\uE001", 0);
+        for (j = 0; sub_splited_string [j]; j++) {
+            if (candidate_is_long)
+                break;
+            tokenize_result = tokenize_tag (sub_splited_string[j], &image_data);
+            if (tokenize_result && _candidate_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                _candidate_image [_candidate_image_count] = elm_image_add (parent);
+                snprintf (image_key, sizeof (image_key), "%d",_candidate_image_count);
+                elm_image_file_set (_candidate_image [_candidate_image_count], image_data.path.c_str (), image_key);
+                elm_image_animated_set (_candidate_image [_candidate_image_count], EINA_TRUE);
+                elm_image_animated_play_set (_candidate_image [_candidate_image_count], EINA_TRUE);
+                elm_image_object_size_get (_candidate_image [_candidate_image_count], &image_get_width, &image_get_height);
+                LOGD ("image_path=%s, key=%s\n", image_data.path.c_str (), image_key);
+
+                if (image_get_height > image_get_width)
+                    image_rate = ((double)candidate_image_height / (double)image_get_width);
+                else
+                    image_rate = ((double)candidate_image_height / (double)image_get_height);
+
+                image_width = (int)((double)image_get_width * image_rate);
+                image_height = candidate_image_height;
+
+                if (_candidate_angle == 90 || _candidate_angle == 270)
+                    max_width = _candidate_land_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+                else
+                    max_width = _candidate_port_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+
+                if (image_width > max_width) {
+                    Evas_Object *candidate_end = edje_object_add (evas_object_evas_get (parent));
+                    edje_object_file_set (candidate_end, _candidate_edje_file.c_str (), _candidate_name.c_str ());
+                    evas_object_show (candidate_end);
+                    edje_object_part_text_set (candidate_end, "candidate", "...");
+                    edje_object_scale_set (_candidate_text [_candidate_text_count], _height_rate);
+
+                    text_width = max_width;
+                    evas_object_size_hint_min_set (candidate_end, text_width + (2 * CANDIDATE_TEXT_OFFSET), _item_min_height);
+                    if (HighLight || SetBack) {
+                        set_highlight_color (candidate_end, ForeGround, BackGround, SetBack);
+                    }
+                    elm_table_pack (candidate_object_table, candidate_end, object_width, 0, text_width + (2 * CANDIDATE_TEXT_OFFSET), _candidate_font_size);
+                    object_width += (text_width + (2 * CANDIDATE_TEXT_OFFSET));
+
+                    if (_candidate_image [_candidate_image_count]) {
+                        evas_object_del (_candidate_image [_candidate_image_count]);
+                        _candidate_image [_candidate_image_count] = NULL;
+                    }
+                    candidate_is_long = true;
+                    break;
+                }
+
+                evas_object_resize (_candidate_image [_candidate_image_count], image_width, image_height);
+                evas_object_show (_candidate_image [_candidate_image_count]);
+                evas_object_size_hint_min_set (_candidate_image [_candidate_image_count], image_width, image_height);
+
+                elm_table_pack (candidate_object_table, _candidate_image [_candidate_image_count], object_width, 1, image_width, image_height);
+                object_width += image_width;
+                _candidate_image_count++;
+
+                if (image_data.emoji_option [EMOJI_IMAGE_POP_FLAG] == 1 && image_width > 0 &&  _candidate_pop_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                    _candidate_pop_image [_candidate_pop_image_count] = elm_image_add (parent);
+                    elm_image_file_set (_candidate_pop_image [_candidate_pop_image_count], ISF_POP_PLAY_ICON_FILE, image_key);
+                    evas_object_resize (_candidate_pop_image [_candidate_pop_image_count], candidate_play_image_width_height, candidate_play_image_width_height);
+                    evas_object_show (_candidate_pop_image [_candidate_pop_image_count]);
+                    evas_object_size_hint_min_set (_candidate_pop_image [_candidate_pop_image_count], candidate_play_image_width_height, candidate_play_image_width_height);
+
+                    elm_table_pack (candidate_object_table, _candidate_pop_image [_candidate_pop_image_count],
+                            object_width - candidate_play_image_width_height, image_height - candidate_play_image_width_height - 2,
+                            candidate_play_image_width_height, candidate_play_image_width_height);
+
+                    _candidate_pop_image_count++;
+                }
+
+            } else if (strlen (sub_splited_string [j]) > 0 && _candidate_text_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                _candidate_text [_candidate_text_count] = edje_object_add (evas_object_evas_get (parent));
+                edje_object_file_set (_candidate_text [_candidate_text_count], _candidate_edje_file.c_str (), _candidate_name.c_str ());
+                evas_object_show (_candidate_text [_candidate_text_count]);
+                edje_object_part_text_set (_candidate_text [_candidate_text_count], "candidate", sub_splited_string [j]);
+                edje_object_text_class_set (_candidate_text [_candidate_text_count], "tizen",
+                    _candidate_font_name.c_str (), _candidate_font_size);
+                evas_object_text_text_set (_tmp_candidate_text, sub_splited_string[j]);
+                evas_object_geometry_get (_tmp_candidate_text, NULL, NULL, &text_width, NULL);
+
+                if (_candidate_angle == 90 || _candidate_angle == 270)
+                    max_width = _candidate_land_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+                else
+                    max_width = _candidate_port_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+
+                if (text_width > max_width) {
+                    candidate_is_long = true;
+                    /* In order to avoid overlap issue, calculate show_string */
+                    String show_string = String (sub_splited_string [j]);
+                    int    show_length = text_width;
+                    while (show_length > max_width && show_string.length () > 1) {
+                        show_string = show_string.substr (0, show_string.length () - 1);
+                        evas_object_text_text_set (_tmp_candidate_text, (show_string + String ("...")).c_str ());
+                        evas_object_geometry_get (_tmp_candidate_text, NULL, NULL, &show_length, NULL);
+                    }
+                    edje_object_part_text_set (_candidate_text [_candidate_text_count], "candidate", (show_string + String ("...")).c_str ());
+                    text_width = max_width;
+                }
+
+                evas_object_size_hint_min_set (_candidate_text [_candidate_text_count], text_width + (2 * CANDIDATE_TEXT_OFFSET), _item_min_height);
+                if (HighLight || SetBack) {
+                    set_highlight_color (_candidate_text [_candidate_text_count], ForeGround, BackGround, SetBack);
+                }
+                elm_table_pack (candidate_object_table, _candidate_text[_candidate_text_count], object_width, 0, text_width + (2 * CANDIDATE_TEXT_OFFSET), _candidate_font_size);
+                object_width += (text_width + (2 * CANDIDATE_TEXT_OFFSET));
+                _candidate_text_count++;
+            }
+        }
+    }
+
+    if (splited_string) {
+        if (splited_string[0])
+            free (splited_string[0]);
+
+        free (splited_string);
+    }
+
+    if (sub_splited_string) {
+        if (sub_splited_string[0])
+            free (sub_splited_string[0]);
+
+        free (sub_splited_string);
+    }
+
+    *total_width = object_width + _blank_width;
+
+    candidate_object_table_bg_rect = edje_object_add (evas_object_evas_get (parent));
+    edje_object_file_set (candidate_object_table_bg_rect, _candidate_edje_file.c_str (), "candidate_object_table");
+    evas_object_size_hint_weight_set (candidate_object_table_bg_rect, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (candidate_object_table_bg_rect, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    evas_object_size_hint_min_set (candidate_object_table_bg_rect, *total_width, _item_min_height);
+    elm_table_pack (candidate_object_table, candidate_object_table_bg_rect, 0, 0, *total_width ,_item_min_height);
+    evas_object_show (candidate_object_table_bg_rect);
+
+    evas_object_size_hint_align_set (candidate_object_table, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    evas_object_size_hint_weight_set (candidate_object_table, EVAS_HINT_EXPAND, 0.0);
+
+    return candidate_object_table;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of internal functions.
@@ -409,7 +992,7 @@ static struct rectinfo get_ise_geometry ()
     struct rectinfo info = {0, 0, 0, 0};
 
     int win_w = _screen_width, win_h = _screen_height;
-    int angle = (_window_angle == -1) ? efl_get_angle_for_app_window () : _window_angle;
+    int angle = (_ise_angle == -1) ? efl_get_app_window_angle () : _ise_angle;
 
     if (angle == 90 || angle == 270) {
         win_w = _screen_height;
@@ -419,6 +1002,12 @@ static struct rectinfo get_ise_geometry ()
     /* If we have geometry reported by ISE, use the geometry information */
     if (_ise_reported_geometry.valid && _ise_reported_geometry.angle == angle) {
         info = _ise_reported_geometry.geometry;
+        /* But still, if the current ISE is not in SHOW state, set w/h to 0 */
+        if (_ise_state != WINDOW_STATE_SHOW) {
+            info.pos_y = (win_h > win_w) ? win_h : win_w;
+            info.width = 0;
+            info.height = 0;
+        }
     } else {
         /* READ ISE's SIZE HINT HERE */
         int pos_x, pos_y, width, height;
@@ -451,9 +1040,10 @@ static struct rectinfo get_ise_geometry ()
                 }
             }
 
-            LOGD ("Geometry : %d %d %d, %d %d %d %d\n", angle, _window_angle,
-                _panel_agent->get_current_toolbar_mode (),
-                info.pos_x, info.pos_y, info.width, info.height);
+            LOGD ("angle : %d, w_angle : %d, mode : %d, Geometry : %d %d %d %d\n",
+                    angle, _ise_angle,
+                    _panel_agent->get_current_toolbar_mode (),
+                    info.pos_x, info.pos_y, info.width, info.height);
         } else {
             pos_x = 0;
             pos_y = 0;
@@ -461,6 +1051,7 @@ static struct rectinfo get_ise_geometry ()
             height = 0;
         }
     }
+
     _ise_width  = info.width;
     _ise_height = info.height;
 
@@ -477,13 +1068,13 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (hw_kbd_mode) {
+    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         ise_rect.pos_x = 0;
         if (_candidate_window && _candidate_state == WINDOW_STATE_SHOW) {
             ise_rect.width  = _candidate_width;
             ise_rect.height = _candidate_height;
         }
-        int angle = efl_get_angle_for_app_window ();
+        int angle = efl_get_app_window_angle ();
         if (angle == 90 || angle == 270)
             ise_rect.pos_y = _screen_width - ise_rect.height;
         else
@@ -524,9 +1115,9 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
  *
  * @return The ISE index
  */
-static int get_ise_index (const String uuid)
+static unsigned int get_ise_index (const String uuid)
 {
-    int index = 0;
+    unsigned int index = 0;
     if (uuid.length () > 0) {
         for (unsigned int i = 0; i < _uuids.size (); i++) {
             if (uuid == _uuids[i]) {
@@ -599,7 +1190,9 @@ static int osp_module_list_get (std::vector <String> &ops_module_names)
             while (file) {
                 struct stat filestat;
                 String absfn = path + String (SCIM_PATH_DELIM_STRING) + file->d_name;
-                stat (absfn.c_str (), &filestat);
+                if (stat (absfn.c_str (), &filestat) == -1)
+                    continue;
+
                 if (S_ISREG (filestat.st_mode)) {
                     String link_name = String (file->d_name);
                     ops_module_names.push_back (link_name.substr (0, link_name.find_last_of ('.')));
@@ -628,7 +1221,9 @@ static String osp_module_name_get (const String &path)
         while (file) {
             struct stat filestat;
             String absfn = bin_path + String (SCIM_PATH_DELIM_STRING) + file->d_name;
-            stat (absfn.c_str (), &filestat);
+            if (stat (absfn.c_str (), &filestat) == -1)
+                continue;
+
             if (S_ISREG (filestat.st_mode)) {
                 String ext = absfn.substr (absfn.length () - 4);
                 if (ext == String (".exe")) {
@@ -642,7 +1237,7 @@ static String osp_module_name_get (const String &path)
         }
         closedir (dir);
     } else {
-        LOGD ("open (%s) is failed!!!", bin_path.c_str ());
+        LOGW ("open (%s) is failed!!!", bin_path.c_str ());
     }
     String module_name = String ("");
     if (ise_name.length () > 0)
@@ -670,10 +1265,9 @@ static void osp_engine_dir_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore
                       String (SCIM_PATH_DELIM_STRING) + String ("Helper") + String (SCIM_PATH_DELIM_STRING) + module_name + String (".so");
                 isf_update_ise_module (String (module_path), _config);
                 _panel_agent->update_ise_list (_uuids);
-                _panel_agent->reload_config ();
-#if 0
+
                 String uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-                int    index = get_ise_index (uuid);
+                unsigned int index = get_ise_index (uuid);
                 if (_modes[index] == TOOLBAR_HELPER_MODE) {
                     String active_module = get_module_file_path (_module_names[index], String ("Helper"));
                     if (String (module_path) == active_module) {
@@ -683,7 +1277,6 @@ static void osp_engine_dir_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore
                         _panel_agent->start_helper (uuid);
                     }
                 }
-#endif
             }
         }
     }
@@ -694,13 +1287,23 @@ static void add_monitor_for_osp_module (const String &module_name)
     String rpath         = String ("/opt/apps/") + module_name.substr (0, module_name.find_first_of ('.'));
     String exe_path      = rpath + String ("/bin");
     String manifest_path = rpath + String ("/info");
+    struct stat filestat;
 
-    if (_osp_bin_em.find (module_name) == _osp_bin_em.end () || _osp_bin_em[module_name] == NULL) {
-        _osp_bin_em[module_name] = ecore_file_monitor_add (exe_path.c_str (), osp_engine_dir_monitor_cb, NULL);
-        LOGD ("add %s", module_name.c_str ());
+    if (stat (exe_path.c_str (), &filestat) == 0) {
+        if (_osp_bin_em.find (module_name) == _osp_bin_em.end () || _osp_bin_em[module_name] == NULL) {
+            _osp_bin_em[module_name] = ecore_file_monitor_add (exe_path.c_str (), osp_engine_dir_monitor_cb, NULL);
+            LOGD ("add %s", module_name.c_str ());
+        }
+    } else {
+        LOGW ("can't access : %s, reason : %s\n", exe_path.c_str (), strerror (errno));
     }
-    if (_osp_info_em.find (module_name) == _osp_info_em.end () || _osp_info_em[module_name] == NULL) {
-        _osp_info_em[module_name] = ecore_file_monitor_add (manifest_path.c_str (), osp_engine_dir_monitor_cb, NULL);
+
+    if (stat (manifest_path.c_str (), &filestat) == 0) {
+        if (_osp_info_em.find (module_name) == _osp_info_em.end () || _osp_info_em[module_name] == NULL) {
+            _osp_info_em[module_name] = ecore_file_monitor_add (manifest_path.c_str (), osp_engine_dir_monitor_cb, NULL);
+        }
+    } else {
+        LOGW ("can't access : %s, reason : %s\n", manifest_path.c_str (), strerror (errno));
     }
 }
 
@@ -738,7 +1341,7 @@ static void ise_file_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore_File_
         String file_path = String (path);
         String file_ext  = file_path.substr (file_path.length () - 3);
         if (file_ext != String (".so")) {
-            LOGD ("%s is not valid so file!!!", path);
+            LOGW ("%s is not valid so file!!!", path);
             return;
         }
 
@@ -762,13 +1365,12 @@ static void ise_file_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore_File_
                 ecore_file_monitor_del (iter->second);
                 _osp_info_em.erase (iter);
             }
-        } else if (event == ECORE_FILE_EVENT_CLOSED) {
+        } else if (event == ECORE_FILE_EVENT_CLOSED || ECORE_FILE_EVENT_CREATED_FILE) {
             isf_update_ise_module (String (path), _config);
             _panel_agent->update_ise_list (_uuids);
-            _panel_agent->reload_config ();
-#if 0
+
             String uuid    = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-            int    index   = get_ise_index (uuid);
+            unsigned int index = get_ise_index (uuid);
             String strFile = String (ecore_file_monitor_path_get (em)) +
                              String (SCIM_PATH_DELIM_STRING) + _module_names[index] + String (".so");
 
@@ -784,7 +1386,6 @@ static void ise_file_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore_File_
                 add_monitor_for_osp_module (module_name);
                 LOGD ("add %s", module_name.c_str ());
             }
-#endif
         }
     }
 }
@@ -860,7 +1461,7 @@ static void add_ise_directory_em (void) {
                 LOGD ("ecore_file_monitor_add path=%s", path.c_str ());
             }
         } else {
-            LOGD ("access path=%s is failed!!!", path.c_str ());
+            LOGW ("access path=%s is failed!!!", path.c_str ());
         }
 
         // OSP Helper path
@@ -873,10 +1474,10 @@ static void add_ise_directory_em (void) {
                 LOGD ("ecore_file_monitor_add path=%s", path.c_str ());
             }
         } else {
-            LOGD ("access path=%s is failed!!!", path.c_str ());
+            LOGW ("access path=%s is failed!!!", path.c_str ());
         }
     } else {
-        LOGD ("getenv (\"SCIM_MODULE_PATH\") is failed!!!");
+        LOGW ("getenv (\"SCIM_MODULE_PATH\") is failed!!!");
     }
 
     add_monitor_for_all_osp_modules ();
@@ -937,24 +1538,13 @@ static bool set_helper_ise (const String &uuid, const String &module_name)
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
         char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  stop helper(%s)\n",
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  stop helper (%s)\n",
             time (0), getpid (), __FILE__, __func__, pre_uuid.c_str ());
         isf_save_log (buf);
     }
 
-    /* Set ComposeKey as keyboard ISE */
-    uint32 kbd_option = 0;
-    String kbd_uuid, kbd_name;
-    isf_get_keyboard_ise (_config, kbd_uuid, kbd_name, kbd_option);
-    if (kbd_uuid != String (SCIM_COMPOSE_KEY_FACTORY_UUID)) {
-        kbd_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-        _panel_agent->change_factory (kbd_uuid);
-
-        String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
-        _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, kbd_uuid);
-    }
     char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper(%s)\n",
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
         time (0), getpid (), __FILE__, __func__, uuid.c_str ());
     isf_save_log (buf);
 
@@ -975,7 +1565,7 @@ static bool set_active_ise (const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  set ISE(%s)\n",
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  set ISE (%s)\n",
         time (0), getpid (), __FILE__, __func__, uuid.c_str ());
     isf_save_log (buf);
 
@@ -990,11 +1580,10 @@ static bool set_active_ise (const String &uuid)
                 ise_changed = set_keyboard_ise (_uuids[i], _module_names[i]);
             else if (TOOLBAR_HELPER_MODE == _modes[i])
                 ise_changed = set_helper_ise (_uuids[i], _module_names[i]);
-
+            _panel_agent->set_current_toolbar_mode (_modes[i]);
             if (ise_changed) {
-                _panel_agent->set_current_toolbar_mode (_modes[i]);
+                _panel_agent->set_current_helper_option (_options[i]);
                 _panel_agent->set_current_ise_name (_names[i]);
-
                 _ise_width  = 0;
                 _ise_height = 0;
                 _ise_state  = WINDOW_STATE_HIDE;
@@ -1046,17 +1635,6 @@ static void config_reload_cb (const ConfigPointer &config)
     /* load_config (); */
 }
 
-static Eina_Bool system_ready_timeout_cb (void *data)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    LOGW ("Launching IME because of appservice ready timeout\n");
-
-    _launch_default_soft_keyboard ();
-
-    return ECORE_CALLBACK_CANCEL;
-}
-
 //////////////////////////////////////////////////////////////////////
 // Start of Candidate Functions
 //////////////////////////////////////////////////////////////////////
@@ -1076,7 +1654,7 @@ static int ui_candidate_get_valid_height (void)
         if (_candidate_state == WINDOW_STATE_SHOW)
             angle = _candidate_angle;
         else
-            angle = efl_get_angle_for_app_window ();
+            angle = efl_get_app_window_angle ();
 
         if (_aux_area_visible && _candidate_area_1_visible) {
             if (angle == 90 || angle == 270)
@@ -1119,7 +1697,10 @@ static void ui_candidate_window_resize (int new_width, int new_height)
         height = ui_candidate_get_valid_height ();
         if ((_ise_width == 0 && _ise_height == 0) ||
             (_ise_height > 0 && _candidate_valid_height != height) ||
-            (_ise_height > 0 && (_candidate_height - height) > _ise_height)) {
+            (_ise_height > 0 && (_candidate_height - height) > _ise_height) ||
+            ((_candidate_angle == 90 || _candidate_angle == 270) && (_ise_width < _screen_height)) ||
+            ((_candidate_angle == 0  || _candidate_angle == 180) && (_ise_width > _screen_width ))) {
+
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
@@ -1188,15 +1769,25 @@ static void ui_candidate_window_adjust (void)
         evas_object_show (_aux_line);
         evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
         if (_candidate_angle == 90 || _candidate_angle == 270) {
-            ui_candidate_window_resize (width, _candidate_land_height_max_2);
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _ise_state == WINDOW_STATE_SHOW &&
+                _ise_height > _candidate_land_height_max_2 - _candidate_land_height_min_2)
+                ui_candidate_window_resize (width, _candidate_land_height_min_2 + _ise_height);
+            else
+                ui_candidate_window_resize (width, _candidate_land_height_max_2);
             evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
             evas_object_move (_candidate_area_2, 0, _candidate_land_height_min_2);
             evas_object_move (_scroller_bg, 0, _candidate_land_height_min_2);
+            evas_object_resize (_candidate_bg, width, _candidate_land_height_min_2);
         } else {
-            ui_candidate_window_resize (width, _candidate_port_height_max_2);
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _ise_state == WINDOW_STATE_SHOW &&
+                _ise_height > _candidate_port_height_max_2 - _candidate_port_height_min_2)
+                ui_candidate_window_resize (width, _candidate_port_height_min_2 + _ise_height);
+            else
+                ui_candidate_window_resize (width, _candidate_port_height_max_2);
             evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
             evas_object_move (_candidate_area_2, 0, _candidate_port_height_min_2);
             evas_object_move (_scroller_bg, 0, _candidate_port_height_min_2);
+            evas_object_resize (_candidate_bg, width, _candidate_port_height_min_2);
         }
     } else if (_aux_area_visible && _candidate_area_1_visible) {
         evas_object_show (_aux_line);
@@ -1204,26 +1795,39 @@ static void ui_candidate_window_adjust (void)
         if (_candidate_angle == 90 || _candidate_angle == 270) {
             ui_candidate_window_resize (width, _candidate_land_height_min_2);
             evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            evas_object_resize (_candidate_bg, width, _candidate_land_height_min_2);
         } else {
             ui_candidate_window_resize (width, _candidate_port_height_min_2);
             evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1] + _candidate_port_height_min_2 - _candidate_port_height_min);
+            evas_object_resize (_candidate_bg, width, _candidate_port_height_min_2);
         }
     } else if (_aux_area_visible) {
         evas_object_hide (_aux_line);
         ui_candidate_window_resize (width, _aux_height + 2);
+        evas_object_resize (_candidate_bg, width, _aux_height + 2);
     } else if (_candidate_area_2_visible) {
         evas_object_hide (_aux_line);
         evas_object_move (_candidate_area_1, _candidate_area_1_pos[0], _candidate_area_1_pos[1]);
         if (_candidate_angle == 90 || _candidate_angle == 270) {
-            ui_candidate_window_resize (width, _candidate_land_height_max);
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _ise_state == WINDOW_STATE_SHOW &&
+                _ise_height > _candidate_land_height_max - _candidate_land_height_min)
+                ui_candidate_window_resize (width, _candidate_land_height_min + _ise_height);
+            else
+                ui_candidate_window_resize (width, _candidate_land_height_max);
             evas_object_move (_close_btn, _close_btn_pos[2], _close_btn_pos[3]);
             evas_object_move (_candidate_area_2, 0, _candidate_land_height_min);
             evas_object_move (_scroller_bg, 0, _candidate_land_height_min);
+            evas_object_resize (_candidate_bg, width, _candidate_land_height_min);
         } else {
-            ui_candidate_window_resize (width, _candidate_port_height_max);
+            if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _ise_state == WINDOW_STATE_SHOW &&
+                _ise_height > _candidate_port_height_max - _candidate_port_height_min)
+                ui_candidate_window_resize (width, _candidate_port_height_min + _ise_height);
+            else
+                ui_candidate_window_resize (width, _candidate_port_height_max);
             evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
             evas_object_move (_candidate_area_2, 0, _candidate_port_height_min);
             evas_object_move (_scroller_bg, 0, _candidate_port_height_min);
+            evas_object_resize (_candidate_bg, width, _candidate_port_height_min);
         }
     } else {
         evas_object_hide (_aux_line);
@@ -1231,9 +1835,11 @@ static void ui_candidate_window_adjust (void)
         if (_candidate_angle == 90 || _candidate_angle == 270) {
             ui_candidate_window_resize (width, _candidate_land_height_min);
             evas_object_move (_more_btn, _more_btn_pos[2], _more_btn_pos[3]);
+            evas_object_resize (_candidate_bg, width, _candidate_land_height_min);
         } else {
             ui_candidate_window_resize (width, _candidate_port_height_min);
             evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
+            evas_object_resize (_candidate_bg, width, _candidate_port_height_min);
         }
     }
 }
@@ -1272,6 +1878,8 @@ static void ui_candidate_window_rotate (int angle)
     ui_candidate_window_adjust ();
     if (_candidate_area_1_visible) {
         update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
+        _candidate_tts_focus_index = INVALID_TTS_FOCUS_INDEX;
+        ui_tts_focus_rect_hide ();
     }
     flush_memory ();
 
@@ -1354,7 +1962,7 @@ static Eina_Bool ui_candidate_longpress_timeout (void *data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    int index = (int)GPOINTER_TO_INT(data);
+    int index = (int)GPOINTER_TO_INT (data);
     ui_candidate_delete_longpress_timer ();
     _is_click = false;
     _panel_agent->send_longpress_event (_click_object, index);
@@ -1407,7 +2015,7 @@ static Eina_Bool off_prepare_done_timeout (void *data)
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
     ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
-    LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send(%x, %x)\n",
+    LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
 
     _off_prepare_done_timer = NULL;
@@ -1443,7 +2051,7 @@ static void candidate_window_hide (void)
            candidate window should be displayed but STATE_OFF for the first ISE_HIDE
            calls this function, so when the candidate window is shown by the following
            STATE_ON message, a blank area is displayed in candidate window -
-           so we let the _cnadidate_area_1 as the default area that would be displayed */
+           so we let the _candidate_area_1 as the default area that would be displayed */
         //evas_object_hide (_candidate_area_1);
         //evas_object_hide (_more_btn);
         _candidate_area_1_visible = false;
@@ -1462,7 +2070,9 @@ static void candidate_window_hide (void)
  */
 static Eina_Bool candidate_hide_timer (void *data)
 {
-    LOGD ("calling candidate_window_hide()");
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    LOGD ("calling candidate_window_hide ()");
     candidate_window_hide ();
 
     return ECORE_CALLBACK_CANCEL;
@@ -1491,7 +2101,7 @@ static void delete_candidate_show_handler (void)
 
 static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
 {
-    delete_candidate_show_handler();
+    delete_candidate_show_handler ();
 
     Ecore_X_Event_Window_Show *e = (Ecore_X_Event_Window_Show*)event;
     if (_candidate_state == WINDOW_STATE_WILL_SHOW) {
@@ -1510,9 +2120,9 @@ static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
             /* And the state event */
             _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
 
-            /* If we are in hardward keyboard mode, this candidate window is now considered to be a input panel */
+            /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
             if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-                if (hw_kbd_mode) {
+                if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                     _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
                 }
             }
@@ -1534,20 +2144,26 @@ static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
 static void ui_candidate_show (bool bSetVirtualKbd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
 
     delete_candidate_hide_timer ();
 
     if (!_candidate_window) return;
+    if (_candidate_mode == SOFT_CANDIDATE_WINDOW)
+        return;
 
-   /* FIXME : SHOULD UNIFY THE METHOD FOR CHECKING THE HW KEYBOARD EXISTENCE */
-   /* If the ISE is not visible currently, wait for the ISE to be opened and then show our candidate window */
-   _candidate_show_requested = true;
-   if( (hw_kbd_detect == 0 && _ise_state != WINDOW_STATE_SHOW)) {
-        LOGD ("setting _show_can didate_requested to TRUE");
+    /* FIXME : SHOULD UNIFY THE METHOD FOR CHECKING THE HW KEYBOARD EXISTENCE */
+    /* If the ISE is not visible currently, wait for the ISE to be opened and then show our candidate window */
+    _candidate_show_requested = true;
+    if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) && (_ise_state != WINDOW_STATE_SHOW)) {
+        LOGD ("setting _show_candidate_requested to TRUE");
         return;
     }
 
+    /* If the ISE angle is valid, respect the value to make sure
+       the candidate window always have the same angle with ISE */
+    if (_ise_angle != -1) {
+        _candidate_angle = _ise_angle;
+    }
     ui_candidate_window_rotate (_candidate_angle);
 
     /* If the candidate window was about to hide, turn it back to SHOW state now */
@@ -1560,6 +2176,18 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         _candidate_state = WINDOW_STATE_WILL_SHOW;
     }
 
+    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        /* WMSYNC, #3 Clear the existing application's conformant area and set transient_for */
+        // Unset conformant area
+        Ecore_X_Window current_app_window = efl_get_app_window ();
+        if (_app_window != current_app_window) {
+            struct rectinfo info = {0, 0, 0, 0};
+            info.pos_y = _screen_width > _screen_height ? _screen_width : _screen_height;
+            set_keyboard_geometry_atom_info (_app_window, info);
+            LOGD ("Conformant reset for window %x\n", _app_window);
+            _app_window = current_app_window;
+        }
+    }
     if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
         if (bSetVirtualKbd) {
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
@@ -1579,9 +2207,9 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "more_button");
     }
 
-    /* If we are in hardward keyboard mode, this candidate window is now considered to be a input panel */
+    /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
     if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-        if (hw_kbd_mode) {
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             LOGD ("sending ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW");
             _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
         }
@@ -1603,9 +2231,9 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         /* And the state event */
         _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
 
-        /* If we are in hardward keyboard mode, this candidate window is now considered to be a input panel */
+        /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-            if (hw_kbd_mode) {
+            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                 _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
             }
         }
@@ -1647,8 +2275,6 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
             _candidate_hide_timer = ecore_timer_add (2.0, candidate_hide_timer, NULL);
         }
 
-        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
-
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
             /* FIXME : should check if bSetVirtualKbd flag is really needed in this case */
@@ -1659,11 +2285,14 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
                     set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 }
             }
-            if (hw_kbd_mode) {
+            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                 _panel_agent->update_input_panel_event
                     ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
         }
+
+        /* Update the new keyboard geometry first, and then send the candidate hide event */
+        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
 
         if (!will_hide) {
             /* If we are not in will_hide state, hide the candidate window immediately */
@@ -1687,9 +2316,33 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
 
     _panel_agent->candidate_more_window_show ();
 
-    if (_candidate_angle == 180 || _candidate_angle == 270) {
+    if (candidate_expanded == false) {
+        candidate_expanded = true;
+        int number = SCIM_LOOKUP_TABLE_MAX_PAGESIZE;
+        for (int i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
+            if (_candidate_0 [i] == NULL) {
+                number = i;
+                break;
+            }
+        }
+        if (g_isf_candidate_table.get_current_page_size () != number)
+            update_table (ISF_CANDIDATE_TABLE, g_isf_candidate_table);
+    }
+
+    if (_candidate_angle == 180) {
         Ecore_Evas *ee = ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
         ecore_evas_move_resize (ee, 0, 0, 0, 0);
+        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)", ee, 0, 0, 0, 0);
+    } else if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _candidate_angle == 270) {
+        /*
+         * when screen rotate 270 degrees, candidate have to move then resize for expanding more
+         * candidates, but it will flash or locate in a wrong position, this code just a workaround
+         * for avoiding this situation.
+         */
+        Ecore_Evas *ee = ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
+        ecore_evas_move_resize (ee, 0, 0, _screen_height, ui_candidate_get_valid_height () + _ise_height);
+        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)",
+            ee, 0, 0, _screen_height, ui_candidate_get_valid_height () + _ise_height);
     }
 
     evas_object_show (_candidate_area_2);
@@ -1718,20 +2371,33 @@ static void ui_candidate_window_close_button_cb (void *data, Evas *e, Evas_Objec
     if (_candidate_area_2 == NULL || !_candidate_area_2_visible)
         return;
 
+    _panel_agent->candidate_more_window_hide ();
+
     evas_object_hide (_candidate_area_2);
     _candidate_area_2_visible = false;
     evas_object_hide (_scroller_bg);
     evas_object_hide (_close_btn);
-    _panel_agent->candidate_more_window_hide ();
 
+    candidate_expanded = false;
     evas_object_show (_candidate_area_1);
     _candidate_area_1_visible = true;
     evas_object_show (_more_btn);
 
     elm_scroller_region_show (_candidate_area_2, 0, 0, _candidate_scroll_width, 100);
-    if (_candidate_angle == 180 || _candidate_angle == 270) {
+    if (_candidate_angle == 180) {
         Ecore_Evas *ee= ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
         ecore_evas_move_resize (ee, 0, 0, 0, 0);
+        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)", ee, 0, 0, 0, 0);
+    } else if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _candidate_angle == 270) {
+        /*
+         * when screen rotate 270 degrees, candidate have to move then resize for expanding more
+         * candidates, but it will flash or locate in a wrong position, this code just a workaround
+         * for avoiding this situation.
+         */
+        Ecore_Evas *ee = ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
+        ecore_evas_move_resize (ee, _ise_height, 0, _screen_height, ui_candidate_get_valid_height ());
+        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)",
+            ee, _ise_height, 0, _screen_height, ui_candidate_get_valid_height ());
     }
 
     ui_candidate_window_adjust ();
@@ -1764,20 +2430,27 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
 #if HAVE_FEEDBACK
         if (feedback_initialized) {
             int feedback_result = 0;
+            bool sound_feedback = _config->read (SCIM_GLOBAL_CONFIG_PANEL_SOUND_FEEDBACK, false);
 
-            feedback_result = feedback_play_type (FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_SIP);
+            if (sound_feedback) {
+                feedback_result = feedback_play_type (FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_SIP);
 
-            if (FEEDBACK_ERROR_NONE == feedback_result)
-                LOGD ("Sound play successful");
-            else
-                LOGW ("Cannot play feedback sound : %d", feedback_result);
+                if (FEEDBACK_ERROR_NONE == feedback_result)
+                    LOGD ("Sound play successful");
+                else
+                    LOGW ("Cannot play feedback sound : %d", feedback_result);
+            }
 
-            feedback_result = feedback_play_type (FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_SIP);
+            bool vibrate_feedback = _config->read (SCIM_GLOBAL_CONFIG_PANEL_VIBRATION_FEEDBACK, false);
 
-            if (FEEDBACK_ERROR_NONE == feedback_result)
-                LOGD ("Vibration play successful");
-            else
-                LOGW ("Cannot play feedback vibration : %d", feedback_result);
+            if (vibrate_feedback) {
+                feedback_result = feedback_play_type (FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_SIP);
+
+                if (FEEDBACK_ERROR_NONE == feedback_result)
+                    LOGD ("Vibration play successful");
+                else
+                    LOGW ("Cannot play feedback vibration : %d", feedback_result);
+            }
         }
 #endif
 
@@ -1867,26 +2540,26 @@ static bool ui_open_tts (void)
 #if HAVE_TTS
     int r = tts_create (&_tts);
     if (TTS_ERROR_NONE != r) {
-        LOGW ("tts_create FAILED : result(%d)\n", r);
+        LOGW ("tts_create FAILED : result (%d)\n", r);
         _tts = NULL;
         return false;
     }
 
     r = tts_set_mode (_tts, TTS_MODE_SCREEN_READER);
     if (TTS_ERROR_NONE != r) {
-        LOGW ("tts_set_mode FAILED : result(%d)\n", r);
+        LOGW ("tts_set_mode FAILED : result (%d)\n", r);
     }
 
     tts_state_e current_state;
     r = tts_get_state (_tts, &current_state);
     if (TTS_ERROR_NONE != r) {
-        LOGW ("tts_get_state FAILED : result(%d)\n", r);
+        LOGW ("tts_get_state FAILED : result (%d)\n", r);
     }
 
     if (TTS_STATE_CREATED == current_state)  {
         r = tts_prepare (_tts);
         if (TTS_ERROR_NONE != r) {
-            LOGW ("tts_prepare FAILED : ret(%d)\n", r);
+            LOGW ("tts_prepare FAILED : ret (%d)\n", r);
         }
     }
     return true;
@@ -1906,12 +2579,12 @@ static void ui_close_tts (void)
     if (_tts) {
         int r = tts_unprepare (_tts);
         if (TTS_ERROR_NONE != r) {
-            LOGW ("tts_unprepare FAILED : result(%d)\n", r);
+            LOGW ("tts_unprepare FAILED : result (%d)\n", r);
         }
 
         r = tts_destroy (_tts);
         if (TTS_ERROR_NONE != r) {
-            LOGW ("tts_destroy FAILED : result(%d)\n", r);
+            LOGW ("tts_destroy FAILED : result (%d)\n", r);
         }
     }
 #endif
@@ -1939,25 +2612,99 @@ static void ui_play_tts (const char* str)
 
         r = tts_get_state (_tts, &current_state);
         if (TTS_ERROR_NONE != r) {
-            LOGW ("Fail to get state from TTS : ret(%d)\n", r);
+            LOGW ("Fail to get state from TTS : ret (%d)\n", r);
         }
 
         if (TTS_STATE_PLAYING == current_state)  {
             r = tts_stop (_tts);
             if (TTS_ERROR_NONE != r) {
-                LOGW ("Fail to stop TTS : ret(%d)\n", r);
+                LOGW ("Fail to stop TTS : ret (%d)\n", r);
             }
         }
-        /* FIXME: Should support for all languages */
-        r = tts_add_text (_tts, str, "en_US", TTS_VOICE_TYPE_FEMALE, TTS_SPEED_NORMAL, &utt_id);
+
+        /* Get ISE language */
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+        String language = String ("en_US");
+        if (default_uuid.length () > 0) {
+            language = _langs [get_ise_index (default_uuid)];
+            if (language.length () > 0) {
+                std::vector<String> ise_langs;
+                scim_split_string_list (ise_langs, language);
+                language = ise_langs[0];
+            }
+        }
+        LOGD ("TTS language:%s, str:%s\n", language.c_str (), str);
+
+        r = tts_add_text (_tts, str, language.c_str (), TTS_VOICE_TYPE_AUTO, TTS_SPEED_AUTO, &utt_id);
         if (TTS_ERROR_NONE == r) {
             r = tts_play (_tts);
             if (TTS_ERROR_NONE != r) {
-                LOGW ("Fail to play TTS : ret(%d)\n", r);
+                LOGW ("Fail to play TTS : ret (%d)\n", r);
             }
         }
     }
 #endif
+}
+
+/**
+ * @brief Show rect for candidate focus object when screen reader is enabled.
+ *
+ * @param x Rect X position.
+ * @param y Rect Y position.
+ * @param w Rect width.
+ * @param h Rect height.
+ */
+static void ui_tts_focus_rect_show (int x, int y, int w, int h)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if (_candidate_window == NULL || _candidate_state != WINDOW_STATE_SHOW)
+        return;
+
+    if (_tts_focus_rect == NULL) {
+        _tts_focus_rect = evas_object_rectangle_add (evas_object_evas_get((Evas_Object*)_candidate_window));
+        evas_object_color_set (_tts_focus_rect, 0, 0, 0, 0);
+        elm_access_highlight_set (elm_access_object_register (_tts_focus_rect, (Evas_Object*)_candidate_window));
+    }
+    evas_object_move (_tts_focus_rect, x, y);
+    evas_object_resize (_tts_focus_rect, w, h);
+    evas_object_raise (_tts_focus_rect);
+    evas_object_show (_tts_focus_rect);
+}
+
+/**
+ * @brief Hide rect for candidate focus object when screen reader is enabled.
+ */
+static void ui_tts_focus_rect_hide (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_tts_focus_rect) {
+        //evas_object_hide (_tts_focus_rect);
+        evas_object_move (_tts_focus_rect, -1000, -1000);
+    }
+}
+
+/**
+ * @brief Callback function for candidate scroller stop event.
+ *
+ * @param data Data to pass when it is called.
+ * @param obj The evas object for current event.
+ * @param event_info The information for current event.
+ */
+static void ui_candidate_scroller_stop_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    if (!_wait_stop_event)
+        return;
+
+    if (_candidate_tts_focus_index >= 0 && _candidate_tts_focus_index < g_isf_candidate_table.get_current_page_size ()) {
+        if (_candidate_0 [_candidate_tts_focus_index]) {
+            int x, y, w, h;
+            evas_object_geometry_get (_candidate_0 [_candidate_tts_focus_index], &x, &y, &w, &h);
+            ui_tts_focus_rect_show (x, y, w, h);
+        }
+    }
+    _wait_stop_event = false;
 }
 
 /**
@@ -1981,6 +2728,8 @@ static void ui_mouse_over (int mouse_x, int mouse_y)
                 String mbs = utf8_wcstombs (g_isf_candidate_table.get_candidate_in_current_page (i));
                 SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " play candidate string: " << mbs << "\n";
                 ui_play_tts (mbs.c_str ());
+                _candidate_tts_focus_index = i;
+                ui_tts_focus_rect_show (x, y, width, height);
                 return;
             }
         }
@@ -1989,12 +2738,18 @@ static void ui_mouse_over (int mouse_x, int mouse_y)
     String strTts = String ("");
     if (_candidate_area_2_visible) {
         evas_object_geometry_get (_close_btn, &x, &y, &width, &height);
-        if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height)
-            strTts = String ("close button");
+        if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height) {
+            strTts = String (_("close button"));
+            _candidate_tts_focus_index = CLOSE_BUTTON_INDEX;
+            ui_tts_focus_rect_show (x, y, width, height);
+        }
     } else {
         evas_object_geometry_get (_more_btn, &x, &y, &width, &height);
-        if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height)
-            strTts = String ("more button");
+        if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height) {
+            strTts = String (_("more button"));
+            _candidate_tts_focus_index = MORE_BUTTON_INDEX;
+            ui_tts_focus_rect_show (x, y, width, height);
+        }
     }
     if (strTts.length () > 0)
         ui_play_tts (strTts.c_str ());
@@ -2003,39 +2758,38 @@ static void ui_mouse_over (int mouse_x, int mouse_y)
 /**
  * @brief Mouse click (find focus object and do click event) when screen reader is enabled.
  *
- * @param mouse_x Mouse X position.
- * @param mouse_y Mouse Y position.
+ * @param focus_index focused candidate index.
  */
-static void ui_mouse_click (int mouse_x, int mouse_y)
+static void ui_mouse_click (int focus_index)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    if (_candidate_window == NULL || _candidate_state != WINDOW_STATE_SHOW)
+    if (_candidate_window == NULL || _candidate_state != WINDOW_STATE_SHOW || focus_index == INVALID_TTS_FOCUS_INDEX)
         return;
 
-    int x, y, width, height;
-    for (int i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
-        if (_candidate_0 [i]) {
-            evas_object_geometry_get (_candidate_0 [i], &x, &y, &width, &height);
-            if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height) {
-                Evas_Event_Mouse_Down event_info;
-                event_info.canvas.x = mouse_x;
-                event_info.canvas.y = mouse_y;
-                ui_mouse_button_pressed_cb (GINT_TO_POINTER ((i << 8) + ISF_EFL_CANDIDATE_0), NULL, NULL, &event_info);
-                ui_mouse_button_released_cb (GINT_TO_POINTER (i), NULL, NULL, &event_info);
-                return;
-            }
+    if (focus_index >= 0 && focus_index < g_isf_candidate_table.get_current_page_size ()) {
+        if (_candidate_0 [focus_index]) {
+            int x, y, width, height;
+            evas_object_geometry_get (_candidate_0 [focus_index], &x, &y, &width, &height);
+            Evas_Event_Mouse_Down event_info;
+            event_info.canvas.x = x + width / 2;
+            event_info.canvas.y = y + height / 2;
+            ui_mouse_button_pressed_cb (GINT_TO_POINTER ((focus_index << 8) + ISF_EFL_CANDIDATE_0), NULL, NULL, &event_info);
+            ui_mouse_button_released_cb (GINT_TO_POINTER (focus_index), NULL, NULL, &event_info);
         }
+        _candidate_tts_focus_index = INVALID_TTS_FOCUS_INDEX;
+        ui_tts_focus_rect_hide ();
+        return;
     }
 
     if (_candidate_area_2_visible) {
-        evas_object_geometry_get (_close_btn, &x, &y, &width, &height);
-        if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height) {
+        if (focus_index == CLOSE_BUTTON_INDEX) {
             ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
+            _candidate_tts_focus_index = MORE_BUTTON_INDEX;
         }
     } else {
-        evas_object_geometry_get (_more_btn, &x, &y, &width, &height);
-        if (mouse_x >= x && mouse_x <= x + width && mouse_y >= y && mouse_y <= y + height) {
+        if (focus_index == MORE_BUTTON_INDEX) {
             ui_candidate_window_more_button_cb (NULL, NULL, NULL, NULL);
+            _candidate_tts_focus_index = CLOSE_BUTTON_INDEX;
         }
     }
 }
@@ -2057,7 +2811,6 @@ static void ui_create_preedit_window (void)
 
         _preedit_text = edje_object_add (evas_object_evas_get (_preedit_window));
         edje_object_file_set (_preedit_text, _candidate_edje_file.c_str (), "preedit_text");
-        edje_object_text_class_set (_preedit_text, "preedit_text_class", _candidate_font_name.c_str (), preedit_font_size);
         evas_object_size_hint_fill_set (_preedit_text, EVAS_HINT_FILL, EVAS_HINT_FILL);
         evas_object_size_hint_weight_set (_preedit_text, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         elm_win_resize_object_add (_preedit_window, _preedit_text);
@@ -2078,12 +2831,12 @@ static void ui_create_native_candidate_window (void)
     _candidate_port_width        = _screen_width;
     _candidate_port_height_min   = 84 * _height_rate * _candidate_port_line;
     _candidate_port_height_min_2 = 84 * _height_rate + _candidate_port_height_min;
-    _candidate_port_height_max   = 444 * _height_rate + _candidate_port_height_min;
+    _candidate_port_height_max   = 426 * _height_rate + _candidate_port_height_min;
     _candidate_port_height_max_2 = 84 * _height_rate + _candidate_port_height_max;
     _candidate_land_width        = _screen_height;
     _candidate_land_height_min   = 84 * _width_rate;
     _candidate_land_height_min_2 = 168 * _width_rate;
-    _candidate_land_height_max   = 316 * _width_rate + _candidate_land_height_min;
+    _candidate_land_height_max   = 342 * _width_rate;
     _candidate_land_height_max_2 = 426 * _width_rate;
 
     _candidate_scroll_0_width_min= _screen_width;
@@ -2129,11 +2882,18 @@ static void ui_create_native_candidate_window (void)
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 270, 0, 0, _candidate_land_height_min, _candidate_land_width);
 
-        /* Add background */
+        /* Add dim background */
+        Evas_Object *dim_bg = elm_bg_add (_candidate_window);
+        evas_object_color_set (dim_bg, 0, 0, 0, 153);
+        elm_win_resize_object_add (_candidate_window, dim_bg);
+        evas_object_show (dim_bg);
+
+        /* Add candidate background */
         _candidate_bg = edje_object_add (evas_object_evas_get (_candidate_window));
         edje_object_file_set (_candidate_bg, _candidate_edje_file.c_str (), "candidate_bg");
         evas_object_size_hint_weight_set (_candidate_bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        elm_win_resize_object_add (_candidate_window, _candidate_bg);
+        evas_object_resize (_candidate_bg, _candidate_port_width, _candidate_port_height_min);
+        evas_object_move (_candidate_bg, 0, 0);
         evas_object_show (_candidate_bg);
 
         /* Create _candidate_0 scroller */
@@ -2183,6 +2943,7 @@ static void ui_create_native_candidate_window (void)
         elm_object_content_set (_candidate_scroll, _candidate_table);
         evas_object_show (_candidate_table);
         _candidate_area_2 = _candidate_scroll;
+        evas_object_smart_callback_add (_candidate_scroll, "scroll,anim,stop", ui_candidate_scroller_stop_cb, NULL);
 
         /* Create close button */
         _close_btn = edje_object_add (evas_object_evas_get (_candidate_window));
@@ -2218,6 +2979,8 @@ static void ui_create_native_candidate_window (void)
 
         _tmp_aux_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
         evas_object_text_font_set (_tmp_aux_text, _candidate_font_name.c_str (), _aux_font_size);
+    } else {
+        evas_object_hide (_candidate_window);
     }
 
     flush_memory ();
@@ -2232,8 +2995,8 @@ static void ui_create_candidate_window (void)
 {
     check_time ("\nEnter ui_create_candidate_window");
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    ui_destroy_candidate_window ();
+    if (_candidate_mode == SOFT_CANDIDATE_WINDOW)
+        return;
 
     _candidate_x     = 0;
     _candidate_y     = 0;
@@ -2246,13 +3009,15 @@ static void ui_create_candidate_window (void)
             ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
             &set, 1);
 
-    int angle = efl_get_angle_for_app_window ();
+    int angle = efl_get_app_window_angle ();
     if (_candidate_angle != angle) {
         _candidate_angle = angle;
         ui_candidate_window_rotate (angle);
     } else {
         ui_settle_candidate_window ();
     }
+
+    candidate_expanded = false;
 
     check_time ("Exit ui_create_candidate_window");
 }
@@ -2273,11 +3038,6 @@ static void ui_destroy_candidate_window (void)
             evas_object_del (_candidate_0 [i]);
             _candidate_0 [i] = NULL;
         }
-        if (_candidate_items [i]) {
-            evas_object_del (_candidate_items [i]);
-            _candidate_items [i] = NULL;
-        }
-
         if (_seperate_0 [i]) {
             evas_object_del (_seperate_0 [i]);
             _seperate_0 [i] = NULL;
@@ -2286,7 +3046,6 @@ static void ui_destroy_candidate_window (void)
             evas_object_del (_seperate_items [i]);
             _seperate_items [i] = NULL;
         }
-
         if (_line_0 [i]) {
             evas_object_del (_line_0 [i]);
             _line_0 [i] = NULL;
@@ -2310,6 +3069,7 @@ static void ui_destroy_candidate_window (void)
         _candidate_area_1 = NULL;
         _candidate_area_2 = NULL;
         _scroller_bg      = NULL;
+        _tts_focus_rect   = NULL;
     }
 
     if (_preedit_window) {
@@ -2344,7 +3104,6 @@ static void ui_settle_candidate_window (void)
     int x, y, width, height;
     int pos_x = 0, pos_y = 0, ise_width = 0, ise_height = 0;
     bool get_geometry_result = false;
-    bool reverse = false;
 
     /* Get candidate window position */
     ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
@@ -2355,7 +3114,7 @@ static void ui_settle_candidate_window (void)
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_width, &ise_height);
 
     if ((_ise_state != WINDOW_STATE_SHOW && _ise_state != WINDOW_STATE_WILL_HIDE) ||
-            get_geometry_result == false) {
+            (get_geometry_result == false) || (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
         ise_height = 0;
         ise_width = 0;
     }
@@ -2392,34 +3151,31 @@ static void ui_settle_candidate_window (void)
         int nOffset = _candidate_port_height_min / 3;
         if (_candidate_angle == 270) {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_width - (int)ise_rect.height + nOffset) {
-                reverse = true;
                 spot_x = _screen_width - _spot_location_top_y - (_candidate_height - height2);
             } else {
                 spot_x = _screen_width - _spot_location_y - _candidate_height;
             }
         } else if (_candidate_angle == 90) {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_width - (int)ise_rect.height + nOffset) {
-                reverse = true;
                 spot_x = _spot_location_top_y - height2;
             } else {
                 spot_x = spot_y;
             }
         } else if (_candidate_angle == 180) {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_height - (int)ise_rect.height + nOffset) {
-                reverse = true;
                 spot_y = _screen_height - _spot_location_top_y - (_candidate_height - height2);
             } else {
                 spot_y = _screen_height - _spot_location_y - _candidate_height;
             }
         } else {
             if (ise_rect.height > 0 && spot_y + height2 > _screen_height - (int)ise_rect.height + nOffset) {
-                reverse = true;
                 spot_y = _spot_location_top_y - height2;
             } else {
                 spot_y = spot_y;
             }
         }
     }
+
     if (_candidate_angle == 90) {
         spot_y = (_screen_height - _candidate_width) / 2;
         spot_x = spot_x < _indicator_height ? _indicator_height : spot_x;
@@ -2487,14 +3243,7 @@ static void efl_set_transient_for_app_window (Ecore_X_Window window)
     LOGD ("win : %x, forwin : %x\n", window, xAppWindow);
 }
 
-/**
- * @brief Get angle for app window.
- *
- * @param win_obj The Evas_Object handler of application window.
- *
- * @return The angle of app window.
- */
-static int efl_get_angle_for_app_window ()
+static int efl_get_window_rotate_angle (Ecore_X_Window win)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -2503,20 +3252,33 @@ static int efl_get_angle_for_app_window ()
     int angle = 0;
     unsigned char *prop_data = NULL;
 
-    Ecore_X_Window app_window = efl_get_app_window ();
-    ret = ecore_x_window_prop_property_get (app_window,
+    ret = ecore_x_window_prop_property_get (win,
             ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
     if (ret && prop_data) {
         memcpy (&angle, prop_data, sizeof (int));
-        LOGD ("WINDOW angle for APP %p is %d", app_window, angle);
+        LOGD ("WINDOW angle of %p is %d", win, angle);
     } else {
         std::cerr << "ecore_x_window_prop_property_get () is failed!!!\n";
-        LOGD ("WINDOW angle for APP %p FAILED!", app_window);
+        LOGW ("WINDOW angle of %p FAILED!", win);
     }
     if (prop_data)
         XFree (prop_data);
 
     return angle;
+}
+
+/**
+ * @brief Get angle for app window.
+ *
+ * @param win_obj The Evas_Object handler of application window.
+ *
+ * @return The angle of app window.
+ */
+static int efl_get_app_window_angle ()
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    return efl_get_window_rotate_angle (efl_get_app_window ());
 }
 
 /**
@@ -2526,28 +3288,23 @@ static int efl_get_angle_for_app_window ()
  *
  * @return The angle of ise window.
  */
-static int efl_get_angle_for_ise_window ()
+static int efl_get_ise_window_angle ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    int ret;
-    int count;
-    int angle = 0;
-    unsigned char *prop_data = NULL;
+    return efl_get_window_rotate_angle (_ise_window);
+}
 
-    ret = ecore_x_window_prop_property_get (_ise_window,
-            ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
-    if (ret && prop_data) {
-        memcpy (&angle, prop_data, sizeof (int));
-        LOGD ("WINDOW angle for ISE %p is %d", _ise_window, angle);
-    } else {
-        std::cerr << "ecore_x_window_prop_property_get () is failed!!!\n";
-        LOGD ("WINDOW angle for ISE %p FAILED!", _ise_window);
-    }
-    if (prop_data)
-        XFree (prop_data);
+/**
+ * @brief Get angle of quickpanel window.
+ *
+ * @return The angle of quickpanel window.
+ */
+static int efl_get_quickpanel_window_angle ()
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    return angle;
+    return efl_get_window_rotate_angle (efl_get_quickpanel_window ());
 }
 
 /**
@@ -2644,7 +3401,6 @@ static Ecore_X_Window efl_get_app_window (void)
             xAppWindow = *(Window *)data;
             if (data)
                 XFree (data);
-            _app_window = xAppWindow;
         }
     } else {
         std::cerr << "XGetWindowProperty () is failed!!!\n";
@@ -2652,6 +3408,18 @@ static Ecore_X_Window efl_get_app_window (void)
 
     return xAppWindow;
 }
+
+static Ecore_X_Window efl_get_quickpanel_window (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    Ecore_X_Window rootWin = ecore_x_window_root_first_get ();
+    Ecore_X_Window qpwin;
+    ecore_x_window_prop_xid_get (rootWin, ecore_x_atom_get ("_E_ILLUME_QUICKPANEL_WINDOW_LIST"), ECORE_X_ATOM_WINDOW, &qpwin, 1);
+
+    return qpwin;
+}
+
 /**
  * @brief Get default zone geometry.
  *
@@ -2747,6 +3515,11 @@ static bool initialize_panel_agent (const String &config, const String &display,
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s, initializing panel agent\n",
+        time (0), getpid (), __FILE__, __func__);
+    isf_save_log (buf);
+
     _panel_agent = new PanelAgent ();
 
     if (!_panel_agent || !_panel_agent->initialize (config, display, resident))
@@ -2795,11 +3568,17 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
 
+    _panel_agent->signal_connect_set_hardware_keyboard_mode (slot (slot_set_hardware_keyboard_mode));
+
     _panel_agent->signal_connect_candidate_will_hide_ack    (slot (slot_candidate_will_hide_ack));
     _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
 
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
+
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s, initializing panel agent succeeded\n",
+        time (0), getpid (), __FILE__, __func__);
+    isf_save_log (buf);
 
     return true;
 }
@@ -2886,6 +3665,16 @@ static void slot_set_candidate_style (int portrait_line, int mode)
     }
 }
 
+unsigned int get_ise_size (TOOLBAR_MODE_T mode)
+{
+    unsigned int ise_count = 0;
+    for (unsigned int i = 0; i < _uuids.size (); i++) {
+        if (mode == _modes[i]) ise_count++;
+    }
+
+    return ise_count;
+}
+
 /**
  * @brief Update keyboard ISE information slot function for PanelAgent.
  *
@@ -2897,11 +3686,11 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
 
     String ise_name = info.name;
     String ise_icon = info.icon;
+    unsigned int keyboard_ise_count = 0;
 
     String old_ise = _panel_agent->get_current_ise_name ();
     if (old_ise != ise_name) {
-        int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-        if (hw_kbd_detect && _candidate_window) {
+        if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && _candidate_window) {
             ui_destroy_candidate_window ();
         }
     }
@@ -2913,6 +3702,27 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
 
     if (ise_name.length () > 0)
         _panel_agent->set_current_ise_name (ise_name);
+
+    if (old_ise != ise_name) {
+        if (TOOLBAR_KEYBOARD_MODE == mode) {
+            char noti_msg[256] = {0};
+            keyboard_ise_count = get_ise_size (TOOLBAR_KEYBOARD_MODE);
+            if (keyboard_ise_count == 0) {
+                LOGD ("the number of keyboard ise is %d\n", keyboard_ise_count);
+                return;
+            }
+            else if (keyboard_ise_count >= 2) {
+                snprintf (noti_msg, sizeof (noti_msg), _("%s selected"), ise_name.c_str ());
+           }
+            else if (keyboard_ise_count == 1) {
+                snprintf (noti_msg, sizeof (noti_msg), _("Only %s is available"), ise_name.c_str ());
+            }
+
+            notification_status_message_post (noti_msg);
+            LOGD ("%s\n", noti_msg);
+        }
+    }
+
 }
 
 /**
@@ -2957,26 +3767,21 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << x << " y:" << y << " width:" << width << " height:" << height << "...\n";
 
-    LOGD ("x : %d , y : %d , width : %d , height : %d", x, y, width, height);
+    LOGD ("x : %d , y : %d , width : %d , height : %d, _ise_state : %d", x, y, width, height, _ise_state);
 
-    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-    if (hw_kbd_detect)
+    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
         return;
-
-    int old_height = _ise_height;
 
     _ise_width  = width;
     _ise_height = height;
 
     if (_candidate_window && _candidate_state == WINDOW_STATE_SHOW) {
-        if (old_height != height) {
-            ui_settle_candidate_window ();
-        }
+        ui_settle_candidate_window ();
     }
 
-    if (old_height != height && _ise_state == WINDOW_STATE_SHOW) {
+    if (_ise_state == WINDOW_STATE_SHOW) {
         _ise_reported_geometry.valid = true;
-        _ise_reported_geometry.angle = efl_get_angle_for_ise_window ();
+        _ise_reported_geometry.angle = efl_get_ise_window_angle ();
         _ise_reported_geometry.geometry.pos_x = x;
         _ise_reported_geometry.geometry.pos_y = y;
         _ise_reported_geometry.geometry.width = width;
@@ -2994,7 +3799,7 @@ static void slot_show_preedit_string (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
     if (_preedit_window == NULL) {
         ui_create_preedit_window ();
-        int angle = efl_get_angle_for_app_window ();
+        int angle = efl_get_app_window_angle ();
         elm_win_rotation_with_resize_set (_preedit_window, angle);
 
         /* Move preedit window according to candidate window position */
@@ -3045,6 +3850,7 @@ static void slot_show_aux_string (void)
     LOGD ("calling ui_candidate_show ()");
     ui_candidate_show ();
     ui_settle_candidate_window ();
+    ui_candidate_delete_destroy_timer ();
 }
 
 /**
@@ -3076,6 +3882,7 @@ static void slot_show_candidate_table (void)
     LOGD ("calling ui_candidate_show ()");
     ui_candidate_show ();
     ui_settle_candidate_window ();
+    ui_candidate_delete_destroy_timer ();
 
 #if HAVE_FEEDBACK
     feedback_result = feedback_initialize ();
@@ -3124,7 +3931,7 @@ static void slot_hide_aux_string (void)
 
     if (ui_candidate_can_be_hide ()) {
         _candidate_show_requested = false;
-        LOGD ("setting _show_can didate_requested to FALSE");
+        LOGD ("setting _show_candidate_requested to FALSE");
     }
 }
 
@@ -3347,7 +4154,6 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
         count++;
         aux_edje = edje_object_add (evas);
         edje_object_file_set (aux_edje, _candidate_edje_file.c_str (), "aux");
-        edje_object_text_class_set (aux_edje, "aux_text_class", _candidate_font_name.c_str (), _aux_font_size);
         edje_object_part_text_set (aux_edje, "aux", aux_list [i].c_str ());
         elm_table_pack (_aux_table, aux_edje, 2 * i, 0, 1, 1);
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_AUX));
@@ -3413,12 +4219,11 @@ static void update_table (int table_type, const LookupTable &table)
     WideString wcs;
 
     AttributeList attrs;
-    int i, x, y, width, height, item_0_width = 0;
+    int i, x, y, item_0_width = 0;
 
-    int nLast      = 0;
-    std::vector<uint32> row_items;
+    int nLast = 0;
 
-    int seperate_width  = 4;
+    int seperate_width  = 2;
     int seperate_height = 52 * _height_rate;
     int line_width      = _candidate_scroll_width;
     int line_height     = _v_padding;
@@ -3436,6 +4241,12 @@ static void update_table (int table_type, const LookupTable &table)
     else
         scroll_0_width = 618 * _width_rate;
 
+    _candidate_image_count = 0;
+    _candidate_text_count = 0;
+    _candidate_pop_image_count = 0;
+    _candidate_display_number = 0;
+    _candidate_row_items.clear ();
+
     Evas *evas = evas_object_evas_get (_candidate_window);
     for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
         if (_candidate_0 [i]) {
@@ -3446,19 +4257,21 @@ static void update_table (int table_type, const LookupTable &table)
             evas_object_del (_seperate_0 [i]);
             _seperate_0 [i] = NULL;
         }
-        if (_candidate_items [i]) {
-            evas_object_del (_candidate_items [i]);
-            _candidate_items [i] = NULL;
-        }
         if (_seperate_items [i]) {
             evas_object_del (_seperate_items [i]);
             _seperate_items [i] = NULL;
+        }
+        if (_line_0 [i]) {
+            evas_object_del (_line_0 [i]);
+            _line_0 [i] = NULL;
         }
         if (_line_items [i]) {
             evas_object_del (_line_items [i]);
             _line_items [i] = NULL;
         }
+    }
 
+    for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; ++i) {
         if (i < item_num) {
             bool   bHighLight  = false;
             bool   bSetBack    = false;
@@ -3482,24 +4295,13 @@ static void update_table (int table_type, const LookupTable &table)
             mbs = utf8_wcstombs (wcs);
 
             if (!_candidate_0 [i] && total_width <= scroll_0_width) {
-                _candidate_0 [i] = edje_object_add (evas);
-                edje_object_file_set (_candidate_0 [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
-                edje_object_text_class_set (_candidate_0 [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
+                _candidate_0 [i] = get_candidate (mbs, _candidate_window, &item_0_width, nForeGround, nBackGround, bHighLight, bSetBack, item_num, i);
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_CANDIDATE_0));
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
-                evas_object_show (_candidate_0 [i]);
 
-                edje_object_part_text_set (_candidate_0 [i], "candidate", mbs.c_str ());
                 /* Resize _candidate_0 [i] display width */
-                evas_object_text_text_set (_tmp_candidate_text, mbs.c_str ());
-                evas_object_geometry_get (_tmp_candidate_text, &x, &y, &width, &height);
-                item_0_width = width + 2*_blank_width;
                 item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
-                evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
-                if (bHighLight || bSetBack) {
-                    set_highlight_color (_candidate_0 [i], nForeGround, nBackGround, bSetBack);
-                }
 
                 /* Check whether this item is the last one */
                 if (i == item_num - 1) {
@@ -3512,9 +4314,11 @@ static void update_table (int table_type, const LookupTable &table)
                 /* Add first item */
                 if (i == 0) {
                     item_0_width = item_0_width > scroll_0_width ? scroll_0_width : item_0_width;
+                    evas_object_show (_candidate_0 [i]);
                     evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                     elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, 0, item_0_width, _item_min_height);
                     total_width += item_0_width;
+                    _candidate_display_number++;
                     continue;
                 } else {
                     total_width += (item_0_width + seperate_width);
@@ -3523,56 +4327,49 @@ static void update_table (int table_type, const LookupTable &table)
                         edje_object_file_set (_seperate_0 [i], _candidate_edje_file.c_str (), "seperate_line");
                         evas_object_size_hint_min_set (_seperate_0 [i], seperate_width, seperate_height);
                         elm_table_pack (_candidate_0_table, _seperate_0 [i],
-                                        total_width - item_0_width - seperate_width,
-                                        line_0*(_item_min_height+line_height) + (_item_min_height - seperate_height)/2,
-                                        seperate_width, seperate_height);
+                                total_width - item_0_width - seperate_width,
+                                line_0*(_item_min_height+line_height) + (_item_min_height - seperate_height)/2,
+                                seperate_width, seperate_height);
                         evas_object_show (_seperate_0 [i]);
-
+                        evas_object_show (_candidate_0 [i]);
+                        evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                         elm_table_pack (_candidate_0_table, _candidate_0 [i], total_width - item_0_width, line_0*(_item_min_height+line_height), item_0_width, _item_min_height);
+                        _candidate_display_number++;
                         continue;
                     } else if ((_candidate_angle == 0 || _candidate_angle == 180) &&
-                               (_candidate_port_line > 1 && (line_0 + 1) < _candidate_port_line)) {
+                            (_candidate_port_line > 1 && (line_0 + 1) < _candidate_port_line)) {
                         line_0++;
                         scroll_0_width = _candidate_scroll_0_width_min;
                         item_0_width = item_0_width > scroll_0_width ? scroll_0_width : item_0_width;
+                        evas_object_show (_candidate_0 [i]);
                         evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
                         elm_table_pack (_candidate_0_table, _candidate_0 [i], 0, line_0*(_item_min_height+line_height), item_0_width, _item_min_height);
                         total_width = item_0_width;
+                        _candidate_display_number++;
 
-                        row_items.push_back (i - nLast);
+                        _candidate_row_items.push_back (i - nLast);
                         nLast = i;
                         continue;
                     } else {
-                        row_items.push_back (i - nLast);
+                        _candidate_row_items.push_back (i - nLast);
                         nLast = i;
                     }
                 }
             }
 
-            if (!_candidate_items [i]) {
-                _candidate_items [i] = edje_object_add (evas);
-                edje_object_file_set (_candidate_items [i], _candidate_edje_file.c_str (), _candidate_name.c_str ());
-                edje_object_text_class_set (_candidate_items [i], "candidate_text_class", _candidate_font_name.c_str (), _candidate_font_size);
-                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_CANDIDATE_ITEMS));
-                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
-                evas_object_event_callback_add (_candidate_items [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
-                evas_object_show (_candidate_items [i]);
+            if (!_candidate_0 [i]) {
+                _candidate_0 [i] = get_candidate (mbs, _candidate_window, &item_0_width, nForeGround, nBackGround, bHighLight, bSetBack, item_num, i);
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_CANDIDATE_ITEMS));
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
+                evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
             }
-            if (bHighLight || bSetBack) {
-                set_highlight_color (_candidate_items [i], nForeGround, nBackGround, bSetBack);
-            }
-            edje_object_part_text_set (_candidate_items [i], "candidate", mbs.c_str ());
             /* Resize _candidate_items [i] display width */
-            evas_object_text_text_set (_tmp_candidate_text, mbs.c_str ());
-            evas_object_geometry_get (_tmp_candidate_text, &x, &y, &width, &height);
-            item_0_width = width + 2*_blank_width;
             item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
-            evas_object_size_hint_min_set (_candidate_items [i], item_0_width, _item_min_height);
             if (current_width > 0 && current_width + item_0_width > _candidate_scroll_width) {
                 current_width = 0;
                 line_count++;
 
-                row_items.push_back (i - nLast);
+                _candidate_row_items.push_back (i - nLast);
                 nLast = i;
                 if (cursor_pos >= i)
                     cursor_line++;
@@ -3598,9 +4395,15 @@ static void update_table (int table_type, const LookupTable &table)
             }
             x = current_width;
             y = line_count*(_item_min_height+line_height) + line_height;
-            elm_table_pack (_candidate_table, _candidate_items [i], x, y, item_0_width, _item_min_height);
+            evas_object_size_hint_min_set (_candidate_0 [i], item_0_width, _item_min_height);
+            evas_object_show (_candidate_0 [i]);
+            elm_table_pack (_candidate_table, _candidate_0 [i], x, y, item_0_width, _item_min_height);
             current_width += item_0_width;
             more_item_count++;
+            if (candidate_expanded == false && !bHighLight)
+                break;
+            else
+                candidate_expanded = true;
         }
     }
 
@@ -3624,7 +4427,7 @@ static void update_table (int table_type, const LookupTable &table)
                 edje_object_file_set (_seperate_0 [nIndex], _candidate_edje_file.c_str (), "seperate_line");
                 evas_object_size_hint_min_set (_seperate_0 [nIndex], seperate_width, _item_min_height);
                 elm_table_pack (_candidate_0_table, _seperate_0 [nIndex],
-                                0, i*(_item_min_height+line_height), seperate_width, _item_min_height);
+                        0, i*(_item_min_height+line_height), seperate_width, _item_min_height);
             }
         } else if (_line_0 [i]) {
             evas_object_del (_line_0 [i]);
@@ -3632,9 +4435,9 @@ static void update_table (int table_type, const LookupTable &table)
         }
     }
 
-    row_items.push_back (item_num - nLast);     /* Add the number of last row */
-    _panel_agent->update_candidate_item_layout (row_items);
-    _panel_agent->update_displayed_candidate_number (item_num - more_item_count);
+    _candidate_row_items.push_back (item_num - nLast);     /* Add the number of last row */
+    _panel_agent->update_displayed_candidate_number (_candidate_display_number);
+    _panel_agent->update_candidate_item_layout (_candidate_row_items);
     if (more_item_count == 0) {
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
         evas_object_hide (_more_btn);
@@ -3653,9 +4456,9 @@ static void update_table (int table_type, const LookupTable &table)
     int line_h   = _item_min_height + _v_padding;
     int cursor_y = cursor_line * line_h;
     if (cursor_y < y) {
-        elm_scroller_region_show (_candidate_area_2, 0, cursor_y, w, h);
+        elm_scroller_region_bring_in (_candidate_area_2, 0, cursor_y, w, h);
     } else if (cursor_y >= y + h) {
-        elm_scroller_region_show (_candidate_area_2, 0, cursor_y + line_h - h, w, h);
+        elm_scroller_region_bring_in (_candidate_area_2, 0, cursor_y + line_h - h, w, h);
     }
 
     flush_memory ();
@@ -3670,7 +4473,7 @@ static void slot_update_candidate_table (const LookupTable &table)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (_candidate_mode == SOFT_CANDIDATE_WINDOW){
+    if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
         _panel_agent->update_helper_lookup_table (table);
         return ;
     }
@@ -3681,7 +4484,15 @@ static void slot_update_candidate_table (const LookupTable &table)
     if (!_candidate_window || table.get_current_page_size () < 0)
         return;
 
+    if (evas_object_visible_get (_candidate_area_2)) {
+        candidate_expanded = true;
+    } else {
+        candidate_expanded = false;
+    }
+
     update_table (ISF_CANDIDATE_TABLE, table);
+    _candidate_tts_focus_index = INVALID_TTS_FOCUS_INDEX;
+    ui_tts_focus_rect_hide ();
 }
 
 /**
@@ -3744,8 +4555,7 @@ static void slot_get_candidate_geometry (struct rectinfo &info)
  */
 static void slot_get_input_panel_geometry (struct rectinfo &info)
 {
-    int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-    if (hw_kbd_detect) {
+    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         info.pos_x = 0;
         info.width = 0;
         info.height = 0;
@@ -3753,7 +4563,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
             info.width  = _candidate_width;
             info.height = _candidate_height;
         }
-        int angle = efl_get_angle_for_app_window ();
+        int angle = efl_get_app_window_angle ();
         if (angle == 90 || angle == 270)
             info.pos_y = _screen_width - info.height;
         else
@@ -3789,7 +4599,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
  * @brief Set active ISE slot function for PanelAgent.
  *
  * @param uuid The active ISE's uuid.
- * @param changeDefault The flag for changeing default ISE.
+ * @param changeDefault The flag for changing default ISE.
  */
 static void slot_set_active_ise (const String &uuid, bool changeDefault)
 {
@@ -3820,13 +4630,12 @@ static bool slot_get_ise_list (std::vector<String> &list)
     if (ret && _initial_ise_uuid.length () > 0) {
         String active_uuid   = _initial_ise_uuid;
         String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-        int    hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
         if (std::find (_uuids.begin (), _uuids.end (), default_uuid) == _uuids.end ()) {
-            if (hw_kbd_detect && _modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE) {
+            if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
                 active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
             }
             set_active_ise (active_uuid);
-        } else if (!hw_kbd_detect) {    // Check whether keyboard engine is installed
+        } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
             String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
             String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
             if (std::find (_uuids.begin (), _uuids.end (), keyboard_uuid) == _uuids.end ()) {
@@ -3853,7 +4662,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
  *
  * @return true if this operation is successful, otherwise return false.
  */
-static bool slot_get_ise_information (String uuid, String &name, String &language, int &type, int &option)
+static bool slot_get_ise_information (String uuid, String &name, String &language, int &type, int &option, String &module_name)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -3864,6 +4673,7 @@ static bool slot_get_ise_information (String uuid, String &name, String &languag
                 language = _langs[i];
                 type     = _modes[i];
                 option   = _options[i];
+                module_name = _module_names[i];
                 return true;
             }
         }
@@ -4062,7 +4872,11 @@ static void slot_close_connection (int fd)
  */
 static void slot_exit (void)
 {
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    std::cerr << __FUNCTION__ << "...\n";
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s\n",
+        time (0), getpid (), __FILE__, __func__);
+    isf_save_log (buf);
 
     elm_exit ();
 }
@@ -4078,6 +4892,15 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
         Ecore_X_Window xwindow = atoi (prop.get_key ().c_str ());
         _ise_window = xwindow;
         LOGD ("ISE XID : %x\n", _ise_window);
+
+        /* Just in case for the helper sent this message later than show_ise request */
+        if (_ise_state == WINDOW_STATE_SHOW || _ise_state == WINDOW_STATE_WILL_SHOW) {
+            efl_set_transient_for_app_window (_ise_window);
+        }
+
+        if (delete_ise_launch_timer ()) {
+            destroy_ise_selector ();
+        }
     }
 }
 
@@ -4085,22 +4908,42 @@ static void slot_show_ise (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    /* If the current toolbar mode is not HELPER_MODE, do not proceed */
+    if (_panel_agent->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
+        LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning",
+            _panel_agent->get_current_toolbar_mode ());
+        return;
+    }
+
     /* WMSYNC, #3 Clear the existing application's conformant area and set transient_for */
     // Unset conformant area
     Ecore_X_Window current_app_window = efl_get_app_window ();
     if (_app_window != current_app_window) {
-        _app_window = current_app_window;
-        set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
+        struct rectinfo info = {0, 0, 0, 0};
+        info.pos_y = _screen_width > _screen_height ? _screen_width : _screen_height;
+        set_keyboard_geometry_atom_info (_app_window, info);
+        ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
         LOGD ("Conformant reset for window %x\n", _app_window);
+        _app_window = current_app_window;
+
+        /* If the target window has changed but our ISE is still in visible state,
+           update the keyboard geometry information */
+        if (_ise_state == WINDOW_STATE_SHOW) {
+            set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
+        }
     }
 
     /* If the candidate was already in SHOW state, respect the current angle */
     if (_candidate_state != WINDOW_STATE_SHOW) {
         /* FIXME : Need to check if candidate_angle and window_angle should be left as separated */
-        _candidate_angle = efl_get_angle_for_app_window ();
-        _window_angle = efl_get_angle_for_app_window ();
+        _candidate_angle = efl_get_app_window_angle ();
+    }
+    /* If the ise was already in SHOW state, respect the current angle */
+    if (_ise_state != WINDOW_STATE_SHOW) {
+        _ise_angle = efl_get_app_window_angle ();
     }
 
+    ecore_x_event_mask_set (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
     efl_set_transient_for_app_window (_ise_window);
 
     /* If our ISE was already in SHOW state, skip state transition to WILL_SHOW */
@@ -4117,12 +4960,15 @@ static void slot_hide_ise (void)
     if (_ise_state != WINDOW_STATE_HIDE) {
         /* From this point, slot_get_input_panel_geometry should return hidden state geometry */
         _ise_state = WINDOW_STATE_WILL_HIDE;
+
+        _updated_hide_state_geometry = false;
     }
-    _window_angle = -1;
+    _ise_angle = -1;
+
+    ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
 
     if (_candidate_window) {
-        int hw_kbd_detect = _config->read (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-        if (hw_kbd_detect)
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
             ui_candidate_hide (true, true, true);
     }
 }
@@ -4135,7 +4981,7 @@ static void slot_will_hide_ack (void)
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
     ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
-    LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send(%x, %x)\n",
+    LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
         LOGD ("calling ui_candidate_hide (true, false)");
@@ -4149,7 +4995,7 @@ static void slot_will_hide_ack (void)
     }
 
     if (_off_prepare_done_timer) {
-        ecore_timer_del(_off_prepare_done_timer);
+        ecore_timer_del (_off_prepare_done_timer);
         _off_prepare_done_timer = NULL;
     }
 }
@@ -4164,10 +5010,16 @@ static void slot_candidate_will_hide_ack (void)
     }
 }
 
+static void slot_set_hardware_keyboard_mode (void)
+{
+    LOGD ("slot_set_hardware_keyboard_mode called");
+    check_hardware_keyboard (HARDWARE_KEYBOARD_MODE);
+}
+
 static void slot_get_ise_state (int &state)
 {
     if (_ise_state == WINDOW_STATE_SHOW ||
-        (hw_kbd_mode && _candidate_state == WINDOW_STATE_SHOW)) {
+        ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_candidate_state == WINDOW_STATE_SHOW))) {
         state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
     } else {
         /* Currently we don't have WILL_HIDE / HIDE state distinction in Ecore_IMF */
@@ -4210,12 +5062,17 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
     if (fd_handler == NULL)
         return ECORE_CALLBACK_RENEW;
 
+    char buf[256] = {0};
     int fd = ecore_main_fd_handler_fd_get (fd_handler);
     for (unsigned int i = 0; i < _read_handler_list.size (); i++) {
         if (fd_handler == _read_handler_list [i]) {
             if (!_panel_agent->filter_event (fd)) {
                 std::cerr << "_panel_agent->filter_event () is failed!!!\n";
                 ecore_main_fd_handler_del (fd_handler);
+
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  _panel_agent->filter_event (fd=%d) is failed!!!\n",
+                    time (0), getpid (), __FILE__, __func__, fd);
+                isf_save_log (buf);
             }
             return ECORE_CALLBACK_RENEW;
         }
@@ -4223,6 +5080,10 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
     std::cerr << "panel_agent_handler () has received exception event!!!\n";
     _panel_agent->filter_exception_event (fd);
     ecore_main_fd_handler_del (fd_handler);
+
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Received exception event (fd=%d)!!!\n",
+        time (0), getpid (), __FILE__, __func__, fd);
+    isf_save_log (buf);
     return ECORE_CALLBACK_RENEW;
 }
 
@@ -4236,14 +5097,20 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
  */
 static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_handler)
 {
+    char buf[256] = {0};
     if (_panel_agent->has_helper_manager_pending_event ()) {
         if (!_panel_agent->filter_helper_manager_event ()) {
             std::cerr << "_panel_agent->filter_helper_manager_event () is failed!!!\n";
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  _panel_agent->filter_helper_manager_event () is failed!!!\n",
+                time (0), getpid (), __FILE__, __func__);
+            isf_save_log (buf);
             elm_exit ();
         }
     } else {
         std::cerr << "_panel_agent->has_helper_manager_pending_event () is failed!!!\n";
-        elm_exit ();
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  _panel_agent->has_helper_manager_pending_event () is failed!!!\n",
+            time (0), getpid (), __FILE__, __func__);
+        isf_save_log (buf);
     }
 
     return ECORE_CALLBACK_RENEW;
@@ -4256,8 +5123,13 @@ static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_
  */
 static void signalhandler (int sig)
 {
-    SCIM_DEBUG_MAIN (1) << __FUNCTION__ << " Signal=" << sig << "\n";
+    std::cerr << __FUNCTION__ << " Signal=" << sig << "\n";
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Signal=%d\n",
+        time (0), getpid (), __FILE__, __func__, sig);
+    isf_save_log (buf);
 
+    unregister_edbus_signal_handler ();
     elm_exit ();
 }
 
@@ -4289,6 +5161,7 @@ static bool update_keyboard_ise_locale (const String module_name, int index)
             }
             if (!factory.null ()) {
                 _names[index+j] = utf8_wcstombs (factory->get_name ());
+                _langs[index+j] = isf_get_normalized_language (factory->get_language ());
                 factory.reset ();
             }
         }
@@ -4371,12 +5244,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
         if (std::find (module_list.begin (), module_list.end (), _module_names[i]) != module_list.end ())
             continue;
         module_list.push_back (_module_names[i]);
-        if (_module_names[i] == String (COMPOSE_KEY_MODULE)) {
-            IMEngineFactoryPointer factory;
-            factory = new ComposeKeyFactory ();
-            _names[i] = utf8_wcstombs (factory->get_name ());
-            factory.reset ();
-        } else if (_modes[i] == TOOLBAR_KEYBOARD_MODE) {
+        if (_modes[i] == TOOLBAR_KEYBOARD_MODE) {
             update_keyboard_ise_locale (_module_names[i], i);
         } else if (_modes[i] == TOOLBAR_HELPER_MODE) {
             update_helper_ise_locale (_module_names[i], i);
@@ -4388,101 +5256,137 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     String default_name = _names[get_ise_index (default_uuid)];
     _panel_agent->set_current_ise_name (default_name);
     _config->reload ();
+
+#ifdef HAVE_MINICONTROL
+    if (input_detect_minictrl.get_visibility ())
+        input_detect_minictrl.set_text (_("Input detected from hardware keyboard"), _("Tap to use virtual keyboard"));
+
+    if (ise_selector_minictrl.get_visibility ()) {
+        unsigned int idx = get_ise_index (_panel_agent->get_current_helper_uuid ());
+        String ise_name;
+        if (idx < _names.size ())
+            ise_name = _names[idx];
+        ise_selector_minictrl.set_text (_("Select input method"), ise_name.c_str ());
+    }
+#endif
 }
 #endif
-
-/**
- * @brief Start default ISE.
- *
- * @return void
- */
-static void start_default_ise (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-    if (!set_active_ise (default_uuid)) {
-        std::cerr << __FUNCTION__ << " Failed to launch default ISE(" << default_uuid << ")\n";
-        LOGW ("Failed to launch default ISE (%s)\n", default_uuid.c_str ());
-
-        if (default_uuid != _initial_ise_uuid) {
-            std::cerr << __FUNCTION__ << " Launch initial ISE(" << _initial_ise_uuid << ")\n";
-            if (!set_active_ise (_initial_ise_uuid)) {
-                LOGW ("Failed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
-            } else {
-                LOGD ("Succeed to launch initial ISE (%s)\n", _initial_ise_uuid.c_str ());
-            }
-        }
-    } else {
-        LOGD ("Succeed to launch default ISE (%s)\n", default_uuid.c_str ());
-    }
-}
 
 /**
  * @brief Check hardware keyboard.
  *
  * @return void
  */
-static void check_hardware_keyboard (void)
+static void check_hardware_keyboard (KEYBOARD_MODE mode)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (_off_prepare_done_timer) {
-        ecore_timer_del (_off_prepare_done_timer);
-        _off_prepare_done_timer = NULL;
-    }
-
+    uint32 option = 0;
+    String uuid, name;
     unsigned int val = 0;
 
-    _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-    if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1)) {
-        uint32 option = 0;
-        String uuid, name;
-        String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
-        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+    String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
-        if (val != 0) {
-            _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
+    if (mode == HARDWARE_KEYBOARD_MODE) {
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+            LOGD ("HARDWARE_KEYBOARD_MODE return");
+            return;
+        }
 
-            if (_modes[get_ise_index (default_uuid)] == TOOLBAR_HELPER_MODE) {
-                /* Get the keyboard ISE */
-                isf_get_keyboard_ise (_config, uuid, name, option);
-                if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
-                    uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-                    std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
-                }
-                /* Try to find reasonable keyboard ISE according to helper ISE language */
-                if (uuid == String (SCIM_COMPOSE_KEY_FACTORY_UUID)) {
-                    String helper_language = _langs [get_ise_index (default_uuid)];
-                    if (helper_language.length () > 0) {
-                        std::vector<String> ise_langs;
-                        scim_split_string_list (ise_langs, helper_language);
-                        for (size_t i = 0; i < _groups[ise_langs[0]].size (); ++i) {
-                            int j = _groups[ise_langs[0]][i];
-                            if (_uuids[j] != uuid && _modes[j] == TOOLBAR_KEYBOARD_MODE) {
-                                uuid = _uuids[j];
-                                break;
-                            }
+        LOGD ("HARDWARE KEYBOARD MODE");
+        _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
+
+        if (_modes[get_ise_index (default_uuid)] == TOOLBAR_HELPER_MODE) {
+            /* Get the keyboard ISE */
+            isf_get_keyboard_ise (_config, uuid, name, option);
+            if (option & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD) {
+                uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                std::cerr << __FUNCTION__ << ": Keyboard ISE (" << name << ") can not support hardware keyboard!!!\n";
+            }
+            /* Try to find reasonable keyboard ISE according to helper ISE language */
+            if (uuid == String (SCIM_COMPOSE_KEY_FACTORY_UUID)) {
+                String helper_language = _langs [get_ise_index (default_uuid)];
+                if (helper_language.length () > 0) {
+                    std::vector<String> ise_langs;
+                    scim_split_string_list (ise_langs, helper_language);
+                    for (size_t i = 0; i < _groups[ise_langs[0]].size (); ++i) {
+                        int j = _groups[ise_langs[0]][i];
+                        if (_uuids[j] != uuid && _modes[j] == TOOLBAR_KEYBOARD_MODE) {
+                            uuid = _uuids[j];
+                            break;
                         }
                     }
                 }
-            } else {
-                uuid = default_uuid;
             }
-            _ise_state = WINDOW_STATE_HIDE;
-            hw_kbd_mode = true;
         } else {
-            /* When switching back to S/W keyboard mode, let's hide candidate window first */
-            LOGD ("calling ui_candidate_hide (true, true, true)");
-            ui_candidate_hide (true, true, true);
+            uuid = default_uuid;
+        }
+        _ise_state = WINDOW_STATE_HIDE;
+        _panel_agent->set_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE);
+        _panel_agent->hide_helper (helper_uuid);
+        _panel_agent->reload_config ();
+
+        ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+
+#ifdef HAVE_MINICONTROL
+        input_detect_minictrl.create ("inputpanel", EFL_CANDIDATE_THEME1, efl_get_quickpanel_window_angle ());
+        input_detect_minictrl.set_icon (EFL_CANDIDATE_THEME1, ISF_KEYBOARD_ICON_FILE);
+        input_detect_minictrl.set_text (_("Input detected from hardware keyboard"), _("Tap to use virtual keyboard"));
+        input_detect_minictrl.set_selected_callback (minictrl_clicked_cb, NULL);
+        input_detect_minictrl.show ();
+#endif
+
+        notification_status_message_post (_("Input detected from hardware keyboard"));
+
+        /* Set input detected property for isf setting */
+        val = (unsigned int)HARDWARE_KEYBOARD_MODE;
+        ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+        ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+    } else if (mode == SOFTWARE_KEYBOARD_MODE) {
+        LOGD ("SOFTWARE KEYBOARD MODE");
+        /* When switching back to S/W keyboard mode, let's hide candidate window first */
+        LOGD ("calling ui_candidate_hide (true, true, true)");
+        ui_candidate_hide (true, true, true);
+        _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
-            hw_kbd_mode = false;
-            _panel_agent->reset_keyboard_ise ();
+            set_active_ise (uuid);
         }
 
-        set_active_ise (uuid);
+#ifdef HAVE_MINICONTROL
+        if (input_detect_minictrl.get_visibility ())
+            minictrl_clicked_cb (NULL, NULL, NULL, NULL);
+#endif
+
+        /* Set input detected property for isf setting */
+        val = (unsigned int)SOFTWARE_KEYBOARD_MODE;
+        ecore_x_test_fake_key_press ("XF86MenuKB");
+        ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+        ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+    }
+    _config->reload ();
+}
+
+#if HAVE_BLUETOOTH
+/**
+ * @brief Callback function for the connection state of Bluetooth Keyboard
+ *
+ * @param result The result of changing the connection state
+ * @param connected The state to be changed. true means connected state, Otherwise, false.
+ * @param remote_address The remote address
+ * @param user_data The user data passed from the callback registration function
+ *
+ * @return void
+ */
+static void _bt_cb_hid_state_changed (int result, bool connected, const char *remote_address, void *user_data)
+{
+    if (connected == false) {
+       LOGD ("Bluetooth keyboard disconnected");
+       minictrl_clicked_cb (NULL, NULL, NULL, NULL);
     }
 }
+#endif
 
 /**
  * @brief Callback function for ECORE_X_EVENT_WINDOW_PROPERTY.
@@ -4502,13 +5406,17 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
     if (ev == NULL)
         return ECORE_CALLBACK_PASS_ON;
 
-    Ecore_X_Window rootwin = ecore_x_window_root_first_get ();
-    if (ev->win == rootwin && ev->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
+    if (ev->win == _input_win && ev->atom == ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST)) {
         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-        LOGD("keyboard connected");
-        check_hardware_keyboard ();
-        set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-        _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+        unsigned int val = 0;
+        if (ecore_x_window_prop_card32_get (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1) > 0) {
+            if (val == 0) {
+                _panel_agent->reset_keyboard_ise ();
+                check_hardware_keyboard (SOFTWARE_KEYBOARD_MODE);
+                set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
+                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            }
+        }
     } else if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
         if (ev->win == _control_window) {
             /* WMSYNC, #6 The keyboard window is displayed fully so set the conformant geometry */
@@ -4521,8 +5429,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
 
                 /* Make sure that we have the same rotation angle with the keyboard window */
                 if (_ise_window) {
-                    _candidate_angle = efl_get_angle_for_ise_window ();
-                    _window_angle = efl_get_angle_for_ise_window ();
+                    _candidate_angle = efl_get_ise_window_angle ();
+                    _ise_angle = efl_get_ise_window_angle ();
                 }
 
                 if (_candidate_show_requested) {
@@ -4537,10 +5445,33 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
 
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-                _panel_agent->update_input_panel_event(
+                _panel_agent->update_input_panel_event (
                         ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW);
+
+                if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+                    if (get_ise_size (TOOLBAR_HELPER_MODE) >= 2) {
+                        ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+
+#ifdef HAVE_MINICONTROL
+                        if (ise_selector_minictrl.create ("ise_selector", EFL_CANDIDATE_THEME1, efl_get_quickpanel_window_angle ())) {
+                            String ise_name;
+                            unsigned int idx = get_ise_index (_panel_agent->get_current_helper_uuid ());
+
+                            if (idx < _names.size ())
+                                ise_name = _names[idx];
+
+                            ise_selector_minictrl.set_text (_("Select input method"), ise_name.c_str ());
+                            ise_selector_minictrl.set_icon (EFL_CANDIDATE_THEME1, ISF_ISE_SELECTOR_ICON_FILE);
+                            ise_selector_minictrl.set_selected_callback (ise_selector_minictrl_clicked_cb, NULL);
+                            ise_selector_minictrl.show ();
+                        }
+#endif
+                    }
+                }
+
+                _updated_hide_state_geometry = false;
             } else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
                 /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
                 LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
@@ -4548,7 +5479,18 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 //_panel_agent->update_input_panel_event (
                 //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
                 _ise_state = WINDOW_STATE_HIDE;
-                if (_panel_agent->get_current_toolbar_mode() == TOOLBAR_HELPER_MODE) {
+                _ise_angle = -1;
+                if (!_updated_hide_state_geometry) {
+                    /* When the ISE gets hidden by the window manager forcefully without OFF_PREPARE,
+                       the application might not have updated its autoscroll area */
+                    set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
+                    _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                    _panel_agent->update_input_panel_event (
+                            ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+
+                    _updated_hide_state_geometry = true;
+                }
+                if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
                     LOGD ("calling ui_candidate_hide (true, false)");
                     ui_candidate_hide (true, false);
                 } else {
@@ -4557,9 +5499,26 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
 
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_HIDE);
 
+#ifdef HAVE_MINICONTROL
+                ise_selector_minictrl.destroy ();
+#endif
+
                 _ise_reported_geometry.valid = false;
             }
             ui_settle_candidate_window ();
+        }
+    } else if (ev->atom == ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE) {
+        if (ev->win == efl_get_quickpanel_window ()) {
+            int angle = efl_get_quickpanel_window_angle ();
+            LOGD ("ev->win : %p, change window angle : %d\n", ev->win, angle);
+
+#ifdef HAVE_MINICONTROL
+            if (input_detect_minictrl.get_visibility ())
+                input_detect_minictrl.rotate (angle);
+
+            if (ise_selector_minictrl.get_visibility ())
+                ise_selector_minictrl.rotate (angle);
+#endif
         }
     }
 
@@ -4593,11 +5552,12 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             // WILL_SHOW_REQUEST_DONE Ack to WM
             Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
             ecore_x_e_virtual_keyboard_on_prepare_done_send (root_window, _control_window);
-            LOGD ("_ecore_x_e_virtual_keyboard_on_prepare_done_send(%x, %x)\n",
+            LOGD ("_ecore_x_e_virtual_keyboard_on_prepare_done_send (%x, %x)\n",
                     root_window, _control_window);
 
             _panel_agent->update_input_panel_event (
                     ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
+            ui_create_candidate_window ();
 
             vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_SHOW);
         } else if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST) {
@@ -4615,13 +5575,14 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             _ise_reported_geometry.valid = false;
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _updated_hide_state_geometry = true;
 
             /* If the input panel is getting hidden because of hw keyboard mode while
                the candidate window is still opened, it is considered to be an
                "input panel being resized" event instead of "input panel being hidden",
                since the candidate window will work as an "input panel" afterwards */
             bool send_input_panel_hide_event = true;
-            if (hw_kbd_mode) {
+            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                 LOGD ("_candidate_state : %d", _candidate_state);
                 if (_candidate_state == WINDOW_STATE_SHOW) {
                     send_input_panel_hide_event = false;
@@ -4632,7 +5593,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                         ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
             // For now don't send WILL_HIDE signal here
-            //_panel_agent->update_input_panel_event(
+            //_panel_agent->update_input_panel_event (
             //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_HIDE);
             // Instead send HIDE signal
             vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_HIDE);
@@ -4640,7 +5601,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             /* WMSYNC, #10 Register size hints for candidate window and set conformant geometry */
             // PRE_ROTATE_DONE Ack to WM
             _candidate_angle = ev->data.l[1];
-            _window_angle = ev->data.l[1];
+            _ise_angle = ev->data.l[1];
             LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE : %d\n", _candidate_angle);
 
             if (_candidate_angle == 90 || _candidate_angle == 270) {
@@ -4655,14 +5616,14 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             ui_settle_candidate_window ();
             ui_candidate_window_rotate (_candidate_angle);
             Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
-            LOGD ("ecore_x_e_window_rotation_change_prepare_done_send(%d)\n", _candidate_angle);
+            LOGD ("ecore_x_e_window_rotation_change_prepare_done_send (%d)\n", _candidate_angle);
             ecore_x_e_window_rotation_change_prepare_done_send (root_window,
                     _control_window, _candidate_angle);
         } else if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
             int ise_angle = (int)ev->data.l[1];
-            LOGD("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST for ISE WINDOW : %d %d\n", ise_angle, _candidate_angle);
+            LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST for ISE WINDOW : ISE angle : %d, Candidate angle : %d\n", ise_angle, _candidate_angle);
             _candidate_angle = ise_angle;
-            _window_angle = ise_angle;
+            _ise_angle = ise_angle;
             if (_ise_state == WINDOW_STATE_SHOW) {
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
@@ -4675,7 +5636,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
                 _candidate_angle = (int)ev->data.l[1];
                 ui_candidate_window_rotate (_candidate_angle);
-                LOGD("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST : %d\n", _candidate_angle);
+                LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST : %d\n", _candidate_angle);
             } else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE &&
                 _ise_state != WINDOW_STATE_SHOW) {
                 ecore_x_e_window_rotation_app_set (elm_win_xwindow_get (_candidate_window), EINA_TRUE);
@@ -4688,7 +5649,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                 ui_candidate_window_rotate (_candidate_angle);
                 ui_settle_candidate_window ();
                 ecore_x_e_window_rotation_app_set (elm_win_xwindow_get (_candidate_window), EINA_FALSE);
-                LOGD("ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE : %d\n", _candidate_angle);
+                LOGD ("ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE : %d\n", _candidate_angle);
             }
             SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << _candidate_angle << ")\n";
         }
@@ -4703,8 +5664,8 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             if ((unsigned int)ev->data.l[0] == elm_win_xwindow_get (_candidate_window)) {
                 if ((unsigned int)ev->data.l[1] == ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_ACTIVATE) {
                     // 1 finger double tap
-                    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "    1 finger double tap (" << last_pos_x << ", " << last_pos_y << ")\n";
-                    ui_mouse_click (last_pos_x, last_pos_y);
+                    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "    1 finger double tap focus index = " << _candidate_tts_focus_index << "\n";
+                    ui_mouse_click (_candidate_tts_focus_index);
                 } else if ((unsigned int)ev->data.l[1] == ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ) {
                     // 1 finger tap
                     // 1 finger touch & move
@@ -4712,8 +5673,120 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                     last_pos_y = ev->data.l[3];
                     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "    1 finger touch & move (" << last_pos_x << ", " << last_pos_y << ")\n";
                     ui_mouse_over (last_pos_x, last_pos_y);
+                } else if ((unsigned int)ev->data.l[1] == ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ_NEXT ||
+                           (unsigned int)ev->data.l[1] == ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ_PREV) {
+                    if ((unsigned int)ev->data.l[1] == ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ_NEXT) {
+                        // flick right
+                        SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "    1 finger flick right\n";
+                        if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (_candidate_display_number - 1))
+                            _candidate_tts_focus_index = _candidate_display_number == _candidate_row_items[0] ? MORE_BUTTON_INDEX : 0;
+                        else if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (_candidate_row_items[0] - 1))
+                            _candidate_tts_focus_index = MORE_BUTTON_INDEX;
+                        else if (evas_object_visible_get (_close_btn) && _candidate_tts_focus_index == (_candidate_row_items[0] - 1))
+                            _candidate_tts_focus_index = CLOSE_BUTTON_INDEX;
+                        else if (_candidate_tts_focus_index == MORE_BUTTON_INDEX)
+                            _candidate_tts_focus_index = _candidate_display_number == _candidate_row_items[0] ? 0 : _candidate_row_items[0];
+                        else if (_candidate_tts_focus_index == CLOSE_BUTTON_INDEX)
+                            _candidate_tts_focus_index = _candidate_row_items[0];
+                        else if (_candidate_tts_focus_index >= 0 && _candidate_tts_focus_index < (g_isf_candidate_table.get_current_page_size () - 1))
+                            _candidate_tts_focus_index++;
+                        else if (_candidate_tts_focus_index == (g_isf_candidate_table.get_current_page_size () - 1))
+                            _candidate_tts_focus_index = 0;
+                    } else {
+                        // flick left
+                        SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "    1 finger flick left\n";
+                        if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == 0)
+                            _candidate_tts_focus_index = _candidate_display_number == _candidate_row_items[0] ? MORE_BUTTON_INDEX : _candidate_display_number - 1;
+                        else if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (int)_candidate_row_items[0])
+                            _candidate_tts_focus_index = MORE_BUTTON_INDEX;
+                        else if (evas_object_visible_get (_close_btn) && _candidate_tts_focus_index == (int)_candidate_row_items[0])
+                            _candidate_tts_focus_index = CLOSE_BUTTON_INDEX;
+                        else if (_candidate_tts_focus_index == MORE_BUTTON_INDEX)
+                            _candidate_tts_focus_index = _candidate_row_items[0] - 1;
+                        else if (_candidate_tts_focus_index == CLOSE_BUTTON_INDEX)
+                            _candidate_tts_focus_index = _candidate_row_items[0] - 1;
+                        else if (_candidate_tts_focus_index > 0 && _candidate_tts_focus_index < g_isf_candidate_table.get_current_page_size ())
+                            _candidate_tts_focus_index--;
+                        else if (_candidate_tts_focus_index == 0)
+                            _candidate_tts_focus_index = g_isf_candidate_table.get_current_page_size () - 1;
+                    }
+
+                    int x = 0, y = 0, w = 0, h = 0;
+                    _wait_stop_event = false;
+                    if (candidate_expanded) {
+                        int total = 0;
+                        int cursor_line = 0;
+                        for (unsigned int i = 0; i < _candidate_row_items.size (); i++) {
+                            total += _candidate_row_items [i];
+                            if (total > (int)_candidate_display_number && _candidate_tts_focus_index >= total)
+                                cursor_line++;
+                        }
+
+                        elm_scroller_region_get (_candidate_area_2, &x, &y, &w, &h);
+
+                        int line_h   = _item_min_height + _v_padding;
+                        int cursor_y = cursor_line * line_h;
+                        if (cursor_y < y) {
+                            elm_scroller_region_bring_in (_candidate_area_2, 0, cursor_y, w, h);
+                            _wait_stop_event = true;
+                        } else if (cursor_y >= y + h) {
+                            elm_scroller_region_bring_in (_candidate_area_2, 0, cursor_y + line_h - h, w, h);
+                            _wait_stop_event = true;
+                        }
+                    }
+
+                    x = y = w = h = 0;
+                    String strTts = String ("");
+                    if (_candidate_tts_focus_index >= 0 && _candidate_tts_focus_index < g_isf_candidate_table.get_current_page_size ()) {
+                        strTts = utf8_wcstombs (g_isf_candidate_table.get_candidate_in_current_page (_candidate_tts_focus_index));
+                        if (_candidate_0 [_candidate_tts_focus_index])
+                            evas_object_geometry_get (_candidate_0 [_candidate_tts_focus_index], &x, &y, &w, &h);
+                    } else if (_candidate_tts_focus_index == MORE_BUTTON_INDEX) {
+                        strTts = String (_("more button"));
+                        evas_object_geometry_get (_more_btn, &x, &y, &w, &h);
+                    } else if (_candidate_tts_focus_index == CLOSE_BUTTON_INDEX) {
+                        strTts = String (_("close button"));
+                        evas_object_geometry_get (_close_btn, &x, &y, &w, &h);
+                    } else {
+                        LOGW ("TTS focus index = %d", _candidate_tts_focus_index);
+                        ui_tts_focus_rect_hide ();
+                    }
+
+                    if (strTts.length () > 0)
+                        ui_play_tts (strTts.c_str ());
+                    if (w > 0 && h > 0) {
+                        if (!_wait_stop_event)
+                            ui_tts_focus_rect_show (x, y, w, h);
+                        else
+                            ui_tts_focus_rect_hide ();
+                    }
                 }
             }
+        }
+    }
+
+    return ECORE_CALLBACK_RENEW;
+}
+
+/**
+ * @brief Callback function for focus out event of application window
+ *
+ * @param data Data to pass when it is called.
+ *
+ * @return ECORE_CALLBACK_RENEW
+ */
+
+static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *event)
+{
+    Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out*)event;
+
+    if (e && e->win == _app_window) {
+
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+            LOGD ("Application window focus OUT! Panel hides ISE");
+            _panel_agent->hide_helper (_panel_agent->get_current_helper_uuid ());
+            slot_hide_ise ();
+            ui_candidate_hide (true, false, false);
         }
     }
 
@@ -4740,66 +5813,42 @@ static bool check_wm_ready (void)
 }
 
 /**
- * @brief : Checks whether the system service is ready or not
- * @return true if all system service are ready, else false
- */
-static bool check_system_ready (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    int ret = 0;
-    int val = 0;
-    ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
-
-    LOGD ("ret : %d, val : %d\n", ret, val);
-
-    if (ret == 0 && val >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
-        LOGD ("Appservice was ready\n");
-        return true;
-    } else {
-        /* Register a call back function for checking system ready */
-        if (!_appsvc_callback_regist) {
-            if (vconf_notify_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard, NULL)) {
-                _appsvc_callback_regist = true;
-            }
-
-            if (!_system_ready_timer) {
-                _system_ready_timer = ecore_timer_add (5.0, system_ready_timeout_cb, NULL);
-            }
-        }
-
-        return false;
-    }
-}
-
-static void _launch_default_soft_keyboard (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (_appsvc_callback_regist)
-        vconf_ignore_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, launch_default_soft_keyboard);
-
-    if (_system_ready_timer) {
-        ecore_timer_del (_system_ready_timer);
-        _system_ready_timer = NULL;
-    }
-
-    /* Start default ISE */
-    start_default_ise ();
-    check_hardware_keyboard ();
-}
-
-/**
  * @brief : Launches default soft keyboard for performance enhancement (It's not mandatory)
  */
 static void launch_default_soft_keyboard (keynode_t *key, void* data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    /* Soft keyboard will be started when all system service are ready */
-    if (check_system_ready ()) {
-        _launch_default_soft_keyboard ();
+    /* Start default ISE */
+    check_hardware_keyboard (SOFTWARE_KEYBOARD_MODE);
+}
+
+static String sanitize_string(const char *str, int maxlen = 32)
+{
+    String ret;
+    static char acceptables[] =
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "1234567890_-.@:";
+
+    char *newstr = NULL;
+    if (maxlen > 0) {
+        newstr = new char[maxlen + 1];
     }
+    int len = 0;
+    if (newstr) {
+        memset (newstr, 0x00, sizeof(char) * (maxlen + 1));
+
+        if (str) {
+            while (len < maxlen && str[len] != '\0' && strchr(acceptables, str[len]) != NULL) {
+                newstr[len] = str[len];
+                len++;
+            }
+            ret = newstr;
+        }
+        delete [] newstr;
+    }
+    return ret;
 }
 
 int main (int argc, char *argv [])
@@ -4809,6 +5858,7 @@ int main (int argc, char *argv [])
 
     int           i;
     int           ret             = 0;
+    int           win_ret         = -1;
 
     bool          daemon          = false;
     bool          should_resident = true;
@@ -4818,14 +5868,21 @@ int main (int argc, char *argv [])
     ConfigModule *config_module   = NULL;
     String        config_name     = String ("socket");
     String        display_name    = String ();
+    Ecore_X_Atom  atom            = 0;
 
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
     Ecore_Fd_Handler *helper_manager_handler   = NULL;
     Ecore_Event_Handler *xclient_message_handler  = NULL;
     Ecore_Event_Handler *xwindow_property_handler = NULL;
+    Ecore_Event_Handler *xwindow_focus_out_handler = NULL;
+
+    set_app_privilege ("isf", NULL, NULL);
 
     check_time ("\nStarting ISF Panel EFL...... ");
-    LOGD ("Starting ISF Panel EFL...... \n");
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Starting ISF Panel EFL......\n",
+        time (0), getpid (), __FILE__, __func__);
+    isf_save_log (buf);
 
     DebugOutput::disable_debug (SCIM_DEBUG_AllMask);
     DebugOutput::enable_debug (SCIM_DEBUG_MainMask);
@@ -4898,7 +5955,7 @@ int main (int argc, char *argv [])
                 ret = -1;
                 goto cleanup;
             }
-            display_name = argv [i];
+            display_name = sanitize_string (argv [i]);
             continue;
         }
 
@@ -4953,18 +6010,21 @@ int main (int argc, char *argv [])
             display_name = String (p);
     }
 
-    char buf [256];
     snprintf (buf, sizeof (buf), "config_name=%s display_name=%s", config_name.c_str (), display_name.c_str ());
     check_time (buf);
     try {
         if (!initialize_panel_agent (config_name, display_name, should_resident)) {
             check_time ("Failed to initialize Panel Agent!");
             std::cerr << "Failed to initialize Panel Agent!\n";
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to initialize Panel Agent!\n",
+                time (0), getpid (), __FILE__, __func__);
+            isf_save_log (buf);
+
             ret = -1;
             goto cleanup;
         }
     } catch (scim::Exception & e) {
-        std::cerr << e.what() << "\n";
+        std::cerr << e.what () << "\n";
         ret = -1;
         goto cleanup;
     }
@@ -4983,17 +6043,19 @@ int main (int argc, char *argv [])
     /* Initialize global variables and pointers for candidate items and etc. */
     for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; i++) {
         _candidate_0 [i]     = NULL;
-        _candidate_items [i] = NULL;
         _seperate_0 [i]      = NULL;
         _seperate_items [i]  = NULL;
         _line_0 [i]          = NULL;
         _line_items [i]      = NULL;
+        _candidate_text [i]  = NULL;
+        _candidate_image [i] = NULL;
+        _candidate_pop_image [i] = NULL;
     }
 
     try {
         _panel_agent->send_display_name (display_name);
     } catch (scim::Exception & e) {
-        std::cerr << e.what() << "\n";
+        std::cerr << e.what () << "\n";
         ret = -1;
         goto cleanup;
     }
@@ -5017,6 +6079,20 @@ int main (int argc, char *argv [])
     check_time ("elm_init");
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
+
+    /* get the input window */
+    atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
+    win_ret = ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_input_win, 1);
+    if (_input_win == 0 || win_ret < 1) {
+        LOGW ("Input window is NULL!\n");
+    } else {
+        ecore_x_event_mask_set (_input_win, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+
+        unsigned int val = 0;
+        Ecore_X_Window root_window = ecore_x_window_root_get (_input_win);
+        ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
+        ecore_x_window_prop_card32_set (root_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
+    }
 
     if (!efl_create_control_window ()) {
         LOGW ("Failed to create control window\n");
@@ -5053,6 +6129,9 @@ int main (int argc, char *argv [])
     vconf_notify_key_changed (VCONFKEY_LANGSET, display_language_changed_cb, NULL);
 #endif
 
+    if (0 != register_edbus_signal_handler ())
+        LOGW ("register edbus signal fail");
+
     try {
         /* Update ISE list */
         std::vector<String> list;
@@ -5068,8 +6147,19 @@ int main (int argc, char *argv [])
     }
 
     xclient_message_handler  = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, x_event_client_message_cb, NULL);
-    ecore_x_event_mask_set (ecore_x_window_root_first_get (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
     xwindow_property_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, x_event_window_property_cb, NULL);
+    xwindow_focus_out_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_FOCUS_OUT, x_event_window_focus_out_cb, NULL);
+
+#if HAVE_BLUETOOTH
+    /* Register the callback function of Bluetooth connection */
+     ret = bt_initialize ();
+     if (ret != BT_ERROR_NONE)
+         LOGW ("Fail to init Bluetooth");
+
+     ret = bt_hid_host_initialize (_bt_cb_hid_state_changed, NULL);
+     if (ret != BT_ERROR_NONE)
+         LOGW ("bt_hid_host_initialize failed");
+#endif
 
     /* Set elementary scale */
     if (_screen_width)
@@ -5079,7 +6169,6 @@ int main (int argc, char *argv [])
     signal (SIGTERM, signalhandler);
     signal (SIGINT,  signalhandler);
     signal (SIGHUP,  signalhandler);
-    signal (SIGABRT, signalhandler);
 
     check_time ("EFL Panel launch time");
 
@@ -5088,8 +6177,21 @@ int main (int argc, char *argv [])
     _config->flush ();
     ret = 0;
 
+#if HAVE_BLUETOOTH
+    /* deinitialize the callback function of Bluetooth connection */
+    ret = bt_hid_host_deinitialize ();
+    if (ret != BT_ERROR_NONE)
+        LOGW ("bt_hid_host_deinitialize failed: %d", ret);
+
+    ret = bt_deinitialize ();
+    if (ret != BT_ERROR_NONE)
+        LOGW ("bt_deinitialize failed: %d", ret);
+#endif
+
     ecore_event_handler_del (xclient_message_handler);
     ecore_event_handler_del (xwindow_property_handler);
+    ecore_event_handler_del (xwindow_focus_out_handler);
+
     if (helper_manager_handler)
         ecore_main_fd_handler_del (helper_manager_handler);
     for (unsigned int ii = 0; ii < _read_handler_list.size (); ++ii) {
@@ -5107,7 +6209,11 @@ cleanup:
     ui_candidate_delete_longpress_timer ();
     ui_candidate_delete_destroy_timer ();
     delete_ise_directory_em ();
+    destroy_ise_selector ();
+    delete_ise_launch_timer ();
     ui_close_tts ();
+
+    unregister_edbus_signal_handler ();
 
     if (!_config.null ())
         _config.reset ();
@@ -5124,6 +6230,9 @@ cleanup:
 
     delete []new_argv;
 
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ret=%d\n",
+        time (0), getpid (), __FILE__, __func__, ret);
+    isf_save_log (buf);
     if (ret == 0) {
         std::cerr << "Successfully exited.\n";
         return 0;

@@ -29,6 +29,7 @@
 #include <privilege-control.h>
 #include <vconf.h>
 #include <efl_assist.h>
+#include "scim_private.h"
 #include "isf_demo_efl.h"
 #include "isf_imcontrol_efl.h"
 #include "isf_layout_efl.h"
@@ -40,13 +41,15 @@
 #include "isf_imdata_set_efl.h"
 #include "isf_focus_movement_efl.h"
 #include "isf_language_efl.h"
+#include "isf_ondemand_efl.h"
 
-#define BASE_THEME_WIDTH 720.0f
+#if HAVE_UIGADGET
+#include <ui-gadget.h>
 
 static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info);
+#endif
 
 static struct _menu_item isf_demo_menu_its[] = {
-    { "ISF IM Control", imcontrolapi_bt },
     { "ISF Layout", ise_layout_bt },
     { "ISF Autocapital", ise_autocapital_bt },
     { "ISF Prediction Allow", ise_prediction_bt },
@@ -54,9 +57,15 @@ static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Return Key Type", ise_return_key_type_bt },
     { "ISF Return Key Disable", ise_return_key_disable_bt },
     { "ISF IM Data", ise_imdata_set_bt },
-    { "ISF Event", isf_event_demo_bt },
+#ifdef _WEARABLE
+    { "ISF ondemand", ise_ondemand_bt },
+#endif
     { "ISF Focus Movement", isf_focus_movement_bt },
+    { "ISF Event", isf_event_demo_bt },
+    { "ISF IM Control", imcontrolapi_bt },
+#if HAVE_UIGADGET
     { "ISF Setting", isfsetting_bt },
+#endif
 
     /* do not delete below */
     { NULL, NULL }
@@ -81,12 +90,13 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
         elm_list_item_selected_set (it, EINA_FALSE);
 }
 
+#if HAVE_UIGADGET
 static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
     struct appdata *ad = NULL;
     Evas_Object *base = NULL;
 
-    if ( ug == NULL || priv == NULL)
+    if (ug == NULL || priv == NULL)
         return;
 
     ad = (appdata *)priv;
@@ -138,12 +148,11 @@ static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info)
     cbs.result_cb  = result_cb;
     cbs.destroy_cb = destroy_cb;
     cbs.priv       = ad;
-    ad->ug = ug_create (NULL, "isfsetting-efl",
-                        UG_MODE_FULLVIEW,
-                        ad->data, &cbs);
-    service_destroy (ad->data);
-    ad->data = NULL;
+    ug_create (NULL, "isfsetting-efl",
+               UG_MODE_FULLVIEW,
+               NULL, &cbs);
 }
+#endif
 
 static int create_demo_view (struct appdata *ad)
 {
@@ -178,7 +187,9 @@ static int lang_changed (void *data)
     if (ad->layout_main == NULL)
         return 0;
 
+#if HAVE_UIGADGET
     ug_send_event (UG_EVENT_LANG_CHANGE);
+#endif
     return 0;
 }
 
@@ -281,11 +292,11 @@ static Eina_Bool _keydown_event (void *data, int type, void *event)
 {
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     struct appdata *ad = (struct appdata *)data;
-    if (ad == NULL || ev == NULL) return ECORE_CALLBACK_RENEW;
+    if (ad == NULL || ev == NULL) return ECORE_CALLBACK_PASS_ON;
 
     printf ("[ecore key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 
-    return ECORE_CALLBACK_RENEW;
+    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool _keyup_event (void *data, int type, void *event)
@@ -294,7 +305,7 @@ static Eina_Bool _keyup_event (void *data, int type, void *event)
 
     printf ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 
-    return ECORE_CALLBACK_RENEW;
+    return ECORE_CALLBACK_PASS_ON;
 }
 
 static void input_panel_state_changed_cb (keynode_t *key, void* data)
@@ -329,10 +340,6 @@ static int app_create (void *data)
     ad->evas = evas_object_evas_get (ad->win_main);
     /* get width and height of main window */
     evas_object_geometry_get (ad->win_main, NULL, NULL, &ad->root_w, &ad->root_h);
-
-    if (ad->root_w >= 0) {
-        elm_config_scale_set (ad->root_w / BASE_THEME_WIDTH);
-    }
 
     ad->layout_main = create_layout_main (ad);
 
@@ -401,6 +408,8 @@ static int app_resume (void *data)
 
 int main (int argc, char *argv[])
 {
+    set_app_privilege ("isf", NULL, NULL);
+
     struct appdata ad;
     struct appcore_ops ops;
 

@@ -164,8 +164,8 @@ typedef Slot1<void, struct rectinfo &>
 typedef Slot2<void, const String &, bool>
         PanelAgentSlotStringBool;
 
-typedef Slot5<bool, String, String &, String &, int &, int &>
-        PanelAgentSlotBoolString3int2;
+typedef Slot6<bool, String, String &, String &, int &, int &, String &>
+        PanelAgentSlotBoolString4int2;
 
 typedef struct DefaultIse
 {
@@ -340,6 +340,12 @@ public:
      */
     void set_current_toolbar_mode (TOOLBAR_MODE_T mode);
 
+    /**
+     * @brief Set current helper ISE option.
+     *
+     * @param mode The current helper ISE option.
+     */
+    void set_current_helper_option (uint32 option);
     /**
      * @brief Get current ISE size and position.
      *
@@ -1007,7 +1013,7 @@ public:
      *
      * slot prototype: bool get_ise_information (String, String &, String &, int &, int &);
      */
-    Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString3int2     *slot);
+    Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2     *slot);
 
     /**
      * @brief Signal: Get the list of selected language name.

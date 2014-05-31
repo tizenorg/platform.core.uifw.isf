@@ -505,9 +505,8 @@ CommonBackEnd::initialize (const ConfigPointer       &config,
 {
     SCIM_DEBUG_BACKEND (1) << __FUNCTION__ << "...\n";
 
-    IMEngineFactoryPointer factory;
     std::vector<String>    new_modules = modules;
-
+    IMEngineFactoryPointer factory;
     int all_factories_count = 0;
     int module_factories_count = 0;
 
@@ -535,16 +534,6 @@ CommonBackEnd::initialize (const ConfigPointer       &config,
         return;
     }
 
-    factory = new ComposeKeyFactory ();
-
-    if (all_factories_count == 0 ||
-        std::find (m_impl->m_disabled_factories.begin (),
-                   m_impl->m_disabled_factories.end (),
-                   factory->get_uuid ()) == m_impl->m_disabled_factories.end ()) {
-        factory = m_impl->m_filter_manager->attach_filters_to_factory (factory);
-        add_factory (factory);
-    }
-
     if (is_load_info) {
         /*for (size_t i = 0; i < new_modules.size (); ++i)
             add_module_info (config, new_modules [i]);*/
@@ -556,6 +545,15 @@ CommonBackEnd::initialize (const ConfigPointer       &config,
     for (size_t i = 0; i < new_modules.size (); ++i) {
         module_factories_count = add_module (config, new_modules [i], is_load_resource);
         all_factories_count += module_factories_count;
+    }
+
+    factory = new ComposeKeyFactory ();
+    if (all_factories_count == 0 ||
+        std::find (m_impl->m_disabled_factories.begin (),
+                    m_impl->m_disabled_factories.end (),
+                    factory->get_uuid ()) == m_impl->m_disabled_factories.end ()) {
+        factory = m_impl->m_filter_manager->attach_filters_to_factory (factory);
+        add_factory (factory);
     }
 }
 
@@ -845,7 +843,7 @@ CommonBackEnd::add_imengine_module_info (const String module_name, const ConfigP
     String filename = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (filename.c_str (), "a");
     if (engine_list_file == NULL) {
-        LOGD ("Failed to open %s!!!\n", filename.c_str ());
+        LOGW ("Failed to open %s!!!\n", filename.c_str ());
         return;
     }
 
@@ -873,7 +871,7 @@ CommonBackEnd::add_imengine_module_info (const String module_name, const ConfigP
                 String line = isf_combine_ise_info_string (name, uuid, module_name, language,
                                                            icon, String (mode), String (option), factory->get_locales ());
                 if (fputs (line.c_str (), engine_list_file) < 0) {
-                    LOGD ("Failed to write (%s)!!!\n", line.c_str ());
+                    LOGW ("Failed to write (%s)!!!\n", line.c_str ());
                     break;
                 }
 
@@ -890,7 +888,7 @@ CommonBackEnd::add_imengine_module_info (const String module_name, const ConfigP
     ime_module.unload ();
     int ret = fclose (engine_list_file);
     if (ret != 0)
-        LOGD ("Failed to fclose %s!!!\n", filename.c_str ());
+        LOGW ("Failed to fclose %s!!!\n", filename.c_str ());
 }
 
 

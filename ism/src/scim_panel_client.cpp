@@ -123,6 +123,8 @@ class PanelClient::PanelClientImpl
     PanelClientSignalStringAttrsInt             m_signal_update_preedit_string;
     PanelClientSignalIntInt                     m_signal_get_surrounding_text;
     PanelClientSignalIntInt                     m_signal_delete_surrounding_text;
+    PanelClientSignalVoid                       m_signal_get_selection;
+    PanelClientSignalIntInt                     m_signal_set_selection;
     PanelClientSignalInt                        m_signal_update_displayed_candidate_number;
     PanelClientSignalVoid                       m_signal_candidate_more_window_show;
     PanelClientSignalVoid                       m_signal_candidate_more_window_hide;
@@ -157,18 +159,19 @@ public:
                 launch_panel (config, display);
                 std::cerr << " Re-connecting to PanelAgent server.";
                 ISF_LOG (" Re-connecting to PanelAgent server.\n");
-                for (i = 0; i < 200; ++i) {
+                /* Make sure we are not waiting for more than 10 seconds */
+                for (i = 0; i < 100; ++i) {
                     if (m_socket.connect (addr)) {
                         ret = true;
                         break;
                     }
                     std::cerr << ".";
-                    scim_usleep (200000);
+                    scim_usleep (100000);
                 }
-                std::cerr << " Connected :" << i << "\n";
-                ISF_LOG ("  Connected :%d\n", i);
-                if (m_socket.connect (addr) == false && count >= 2)
-                    break;
+                if (ret) {
+                    std::cerr << " Connected :" << i << "\n";
+                    ISF_LOG ("  Connected :%d\n", i);
+                }
             }
 
             if (ret && scim_socket_open_connection (m_socket_magic_key, String ("FrontEnd"), String ("Panel"), m_socket, m_socket_timeout)) {
@@ -190,9 +193,8 @@ public:
 
             m_socket.close ();
 
-            if (count++ >= 400) break;
-
-            scim_usleep (300000);
+            /* No need to do this forever... */
+            if (count++ >= 0) break;
         }
 
         return m_socket.get_id ();
@@ -431,6 +433,19 @@ public:
                             m_signal_delete_surrounding_text ((int) context, (int)offset, (int)len);
                     }
                     break;
+                 case SCIM_TRANS_CMD_GET_SELECTION:
+                    {
+                        m_signal_get_selection ((int) context);
+                    }
+                    break;
+                case SCIM_TRANS_CMD_SET_SELECTION:
+                    {
+                        uint32 start;
+                        uint32 end;
+                        if (recv.get_data (start) && recv.get_data (end))
+                            m_signal_set_selection ((int) context, (int)start, (int)end);
+                    }
+                    break;
                 case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
                     {
                         uint32 number;
@@ -602,6 +617,13 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT);
             m_send_trans.put_data (utf8_wcstombs (str));
             m_send_trans.put_data ((uint32) cursor);
+        }
+    }
+    void update_selection (int icid, const WideString &str)
+    {
+        if (m_send_refcount > 0 && m_current_icid == icid) {
+            m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_SELECTION);
+            m_send_trans.put_data (utf8_wcstombs (str));
         }
     }
     void show_preedit_string    (int icid)
@@ -1114,6 +1136,50 @@ public:
         }
     }
 
+    void process_key_event(KeyEvent& key, int *ret) {
+        if (m_send_refcount > 0) {
+            int cmd;
+            uint32 ret_temp;
+
+            m_send_trans.put_command (SCIM_TRANS_CMD_PROCESS_KEY_EVENT);
+            m_send_trans.put_data(key);
+            instant_send ();
+            if (!m_send_trans.read_from_socket (m_socket_active, m_socket_timeout))
+                std::cerr << __func__ << " read_from_socket() may be timeout \n";
+
+            if (m_send_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                    m_send_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                    m_send_trans.get_data (ret_temp)) {
+                *ret = ret_temp;
+            } else {
+                std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            }
+            post_prepare ();
+        }
+    }
+
+    void get_active_helper_option(int *option) {
+        if (m_send_refcount > 0) {
+            int cmd;
+            uint32 option_temp;
+
+            m_send_trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_HELPER_OPTION);
+            instant_send ();
+            if (!m_send_trans.read_from_socket (m_socket_active, m_socket_timeout))
+                std::cerr << __func__ << " read_from_socket() may be timeout \n";
+
+            if (m_send_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                    m_send_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                    m_send_trans.get_data (option_temp)) {
+                std::cerr << __func__ <<  "option_temp " << option_temp << "\n";
+                *option = option_temp;
+            } else {
+                std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            }
+            post_prepare ();
+        }
+    }
+
 public:
     void reset_signal_handler                               (void)
     {
@@ -1143,6 +1209,8 @@ public:
         m_signal_update_preedit_string.reset();
         m_signal_get_surrounding_text.reset();
         m_signal_delete_surrounding_text.reset();
+        m_signal_get_selection.reset();
+        m_signal_set_selection.reset();
         m_signal_update_displayed_candidate_number.reset();
         m_signal_candidate_more_window_show.reset();
         m_signal_candidate_more_window_hide.reset();
@@ -1261,6 +1329,16 @@ public:
     Connection signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot)
     {
         return m_signal_delete_surrounding_text.connect (slot);
+    }
+
+    Connection signal_connect_get_selection                 (PanelClientSlotVoid                  *slot)
+    {
+        return m_signal_get_selection.connect (slot);
+    }
+
+    Connection signal_connect_set_selection                 (PanelClientSlotIntInt                  *slot)
+    {
+        return m_signal_set_selection.connect (slot);
     }
 
     Connection signal_connect_update_displayed_candidate_number (PanelClientSlotInt                 *slot)
@@ -1412,6 +1490,11 @@ void
 PanelClient::update_surrounding_text (int icid, const WideString &str, int cursor)
 {
     m_impl->update_surrounding_text (icid, str, cursor);
+}
+void
+PanelClient::update_selection (int icid, const WideString &str)
+{
+    m_impl->update_selection (icid, str);
 }
 void
 PanelClient::show_preedit_string    (int icid)
@@ -1674,6 +1757,18 @@ PanelClient::get_ise_state (int &ise_state)
 }
 
 void
+PanelClient::process_key_event (KeyEvent& key, int* ret)
+{
+    m_impl->process_key_event (key, ret);
+}
+
+void
+PanelClient::get_active_helper_option(int* option)
+{
+    m_impl->get_active_helper_option (option);
+}
+
+void
 PanelClient::reset_signal_handler                         (void)
 {
     m_impl->reset_signal_handler ();
@@ -1815,6 +1910,18 @@ Connection
 PanelClient::signal_connect_delete_surrounding_text       (PanelClientSlotIntInt                  *slot)
 {
     return m_impl->signal_connect_delete_surrounding_text (slot);
+}
+
+Connection
+PanelClient::signal_connect_get_selection                 (PanelClientSlotVoid                  *slot)
+{
+    return m_impl->signal_connect_get_selection (slot);
+}
+
+Connection
+PanelClient::signal_connect_set_selection                 (PanelClientSlotIntInt                  *slot)
+{
+    return m_impl->signal_connect_set_selection (slot);
 }
 
 Connection

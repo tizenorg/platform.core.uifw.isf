@@ -121,6 +121,9 @@ protected:
     virtual bool get_surrounding_text    (int siid, WideString &text, int &cursor, int maxlen_before, int maxlen_after);
     virtual bool delete_surrounding_text (int siid, int offset, int len);
 
+    virtual bool get_selection           (int siid, WideString &text);
+    virtual bool set_selection           (int siid, int start, int end);
+
 public:
     virtual void init (int argc, char **argv);
     virtual void run ();

@@ -144,6 +144,9 @@ public:
      */
     IMEngineFactoryPointer create_factory (unsigned int engine) const;
 
+    /**
+     * @brief Get a name of currently IMEngine modules.
+     */
     String get_module_name () const;
 };
 

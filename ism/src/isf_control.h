@@ -86,6 +86,20 @@ EAPI int isf_control_get_ise_list (char ***uuid_list);
 EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
 
 /**
+ * @brief Get ISE's information according to ISE's UUID.
+ *
+ * @param uuid The ISE's UUID.
+ * @param name     The parameter is used to store ISE's name. Applcation need free *name if it is not used.
+ * @param language The parameter is used to store ISE's language. Applcation need free *language if it is not used.
+ * @param type     The parameter is used to store ISE's type.
+ * @param option   The parameter is used to store ISE's option.
+ * @param module_name The parameter is used to store ISE's module file name.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name);
+
+/**
  * @brief Set active ISE to default ISE.
  *
  * @return 0 if successfully, otherwise return -1;
@@ -98,6 +112,15 @@ EAPI int isf_control_set_active_ise_to_default (void);
  * @return 0 if successfully, otherwise return -1;
  */
 EAPI int isf_control_reset_ise_option (void);
+
+/**
+ * @brief Set initial ISE by UUID.
+ *
+ * @param uuid The initial ISE's UUID.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
 
 #ifdef __cplusplus
 }

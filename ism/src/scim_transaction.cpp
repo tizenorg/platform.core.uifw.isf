@@ -209,7 +209,7 @@ Transaction::read_from_socket (const Socket &socket, int timeout)
 
         m_holder->request_buffer_size (size);
 
-        while (size != 0) {
+        while (size > 0) {
             nbytes = socket.read_with_timeout (m_holder->m_buffer + m_holder->m_write_pos, size, timeout);
             if (nbytes <= 0) {
                 m_holder->m_write_pos = SCIM_TRANS_HEADER_SIZE;
@@ -280,6 +280,8 @@ Transaction::read_from_buffer (const void *buf, size_t bufsize)
 #ifdef ENABLE_CHECKMSG
         if (checksum == m_holder->calc_checksum ())
             return true;
+#else
+        return true;
 #endif
     }
     return false;
@@ -527,6 +529,25 @@ Transaction::put_data (const char *raw, size_t bufsize)
     m_holder->request_buffer_size (bufsize + sizeof (uint32) + 1);
 
     m_holder->m_buffer [m_holder->m_write_pos++] = (unsigned char) SCIM_TRANS_DATA_RAW;
+
+    scim_uint32tobytes (m_holder->m_buffer + m_holder->m_write_pos, (uint32) bufsize);
+
+    m_holder->m_write_pos += sizeof (uint32);
+
+    memcpy (m_holder->m_buffer + m_holder->m_write_pos, raw, bufsize);
+
+    m_holder->m_write_pos += bufsize;
+}
+
+void
+Transaction::put_dataw (const char *raw, size_t bufsize)
+{
+    if (!raw || !bufsize)
+        return;
+
+    m_holder->request_buffer_size (bufsize + sizeof (uint32) + 1);
+
+    m_holder->m_buffer [m_holder->m_write_pos++] = (unsigned char) SCIM_TRANS_DATA_WSTRING;
 
     scim_uint32tobytes (m_holder->m_buffer + m_holder->m_write_pos, (uint32) bufsize);
 

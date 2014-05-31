@@ -29,7 +29,7 @@ namespace scim
 {
     /** Since the keyboard applications in Tizen platform are executed by ISF instead of launchpad,
         we have to go through the same procedure that launchpad does, before loading HelperModule. */
-    int ise_preexec(const char *helper);
+    int ise_preexec (const char *helper, const char *uuid);
 }
 
 #endif /* __ISE_PREEXEC_H */

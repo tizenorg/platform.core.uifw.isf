@@ -108,7 +108,7 @@ protected:
      */
 
     /**
-     * @brief Add one IMEngine module in BackEnd
+     * @brief Add one IMEngine module in BackEnd.
      *
      *
      * @return void.
@@ -116,7 +116,7 @@ protected:
     void add_module (const ConfigPointer &config, const String module, bool is_load_resource) const;
 
     /**
-     * @brief Add one IMEngine module info in BackEnd
+     * @brief Add one IMEngine module info in BackEnd.
      *
      *
      * @return void.
@@ -124,7 +124,7 @@ protected:
     void add_module_info (const ConfigPointer &config, const String module) const;
 
     /**
-     * @brief Get the IMEngine factories list for specific encoding
+     * @brief Get the IMEngine factories list for specific encoding.
      *
      * @param uuids    the vector to store the factories' uuids which
      *                 support the encoding.
@@ -136,10 +136,10 @@ protected:
     uint32 get_factory_list_for_encoding (std::vector<String> &uuids, const String &encoding) const;
 
     /**
-     * @brief Get the IMEngine factories list for specific language
+     * @brief Get the IMEngine factories list for specific language.
      *
      * @param uuids    the vector to store the factories' uuids which
-     *                 support the encoding.
+     *                 support the language.
      * @param language the language to be queried. If empty,
      *                 all IMEngine factories will be returned.
      *
@@ -147,6 +147,13 @@ protected:
      */
     uint32 get_factory_list_for_language (std::vector<String> &uuids, const String &language) const;
 
+    /**
+     * @brief Get the IMEngine factories list.
+     *
+     * @param uuids the vector to store the existing factories' uuids.
+     *
+     * @return the number of IMEngine factories found.
+     */
     uint32 get_factory_list (std::vector<String> &uuids) const;
 
     /**
@@ -346,8 +353,16 @@ protected:
      */
     String get_instance_icon_file (int id) const;
 
+    /**
+     * @brief get the name list of existing IMEngine instances.
+     * @param vec the vector to store the name of existing IMEngine instances,
+     *         aka. the name of its factory.
+     */
     void get_instance_list(std::vector<String> &vec) const;
 
+    /**
+     * @brief output uuid of existing IMEngine instances to scim debug.
+     */
     void dump_instances ();
 
     /**
@@ -686,6 +701,28 @@ protected:
      * @return true if the signal was handled.
      */
     virtual bool delete_surrounding_text  (int id, int offset, int len);
+
+    /**
+     * @brief Retrieves selection text.
+     *
+     * @param id            the id of the IMEngine instance. It must have been focused in.
+     * @param text          location to store the context string selected.
+     *
+     * @return true if selection text was provided.
+     */
+
+    virtual bool get_selection  (int id, WideString &text);
+
+    /**
+     * @brief Ask the client to select around the cursor position.
+     *
+     * @param id     the id of the IMEngine instance. It must have been focused in.
+     * @param start  start position in chars;
+     * @param end    end position in chars.
+     *
+     * @return true if the signal was handled.
+     */
+    virtual bool set_selection  (int id, int start, int end);
 
     /**
      * @brief Request to expand candidate window.

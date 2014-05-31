@@ -56,7 +56,7 @@ public:
 
     int open_connection (void) {
         String config = "";
-        String display = String(getenv ("DISPLAY"));
+        String display = String (getenv ("DISPLAY"));
 
         SocketAddress addr (scim_get_default_panel_socket_address (display));
 
@@ -71,7 +71,10 @@ public:
             ret2 = m_socket_panel2imclient.connect (addr);
             if (!ret) {
                 scim_usleep (100000);
+                /* Do not launch panel process here, let the SocketFrontend to create panel process */
+                /*
                 scim_launch_panel (true, config, display, NULL);
+                */
                 for (int i = 0; i < 200; ++i) {
                     if (m_socket_imclient2panel.connect (addr)) {
                         ret = true;
@@ -143,6 +146,21 @@ public:
         }
     }
 
+    void set_initial_ise_by_uuid (const char* uuid) {
+        int cmd;
+        m_trans.put_command (ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID);
+        m_trans.put_data (uuid, strlen(uuid)+1);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+        } else {
+            std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+        }
+    }
+
     void get_active_ise (String &uuid) {
         int    cmd;
         String strTemp;
@@ -195,11 +213,11 @@ public:
         *iselist = buf;
     }
 
-    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option)
+    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)
     {
         int    cmd;
         uint32 tmp_type, tmp_option;
-        String tmp_name, tmp_language;
+        String tmp_name, tmp_language, tmp_module_name;
 
         m_trans.put_command (ISM_TRANS_CMD_GET_ISE_INFORMATION);
         m_trans.put_data (String (uuid));
@@ -210,11 +228,12 @@ public:
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
                 m_trans.get_data (tmp_name) && m_trans.get_data (tmp_language) &&
-                m_trans.get_data (tmp_type) && m_trans.get_data (tmp_option)) {
+                m_trans.get_data (tmp_type) && m_trans.get_data (tmp_option) && m_trans.get_data (tmp_module_name)) {
             name     = tmp_name;
             language = tmp_language;
             type     = tmp_type;
             option   = tmp_option;
+            module_name = tmp_module_name;
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
         }
@@ -290,6 +309,11 @@ void IMControlClient::set_active_ise_by_uuid (const char* uuid)
     m_impl->set_active_ise_by_uuid (uuid);
 }
 
+void IMControlClient::set_initial_ise_by_uuid (const char* uuid)
+{
+    m_impl->set_initial_ise_by_uuid (uuid);
+}
+
 void IMControlClient::get_active_ise (String &uuid)
 {
     m_impl->get_active_ise (uuid);
@@ -300,9 +324,9 @@ void IMControlClient::get_ise_list (int* count, char*** iselist)
     m_impl->get_ise_list (count, iselist);
 }
 
-void IMControlClient::get_ise_info (const char* uuid, String &name, String &language, int &type, int &option)
+void IMControlClient::get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)
 {
-    m_impl->get_ise_info (uuid, name, language, type, option);
+    m_impl->get_ise_info (uuid, name, language, type, option, module_name);
 }
 
 void IMControlClient::reset_ise_option (void)

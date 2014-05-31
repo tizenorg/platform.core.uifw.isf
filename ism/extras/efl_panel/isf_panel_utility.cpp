@@ -37,7 +37,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dlog.h>
-
+#include <errno.h>
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
@@ -211,8 +211,6 @@ void isf_save_ise_information (void)
 
     std::vector<ISEINFO> info_list;
     for (size_t i = 0; i < _module_names.size (); ++i) {
-        if (_module_names[i] == COMPOSE_KEY_MODULE)
-            continue;
         ISEINFO info;
         info.name     = _names[i];
         info.uuid     = _uuids[i];
@@ -260,19 +258,6 @@ void isf_get_factory_list (LOAD_ISE_TYPE  type,
     modes.clear ();
     options.clear ();
     _groups.clear ();
-
-    if (type != HELPER_ONLY) {
-        /* Add ComposeKeyFactory first. */
-        IMEngineFactoryPointer factory = new ComposeKeyFactory ();
-        uuids.push_back (factory->get_uuid ());
-        names.push_back (utf8_wcstombs (factory->get_name ()));
-        module_names.push_back (COMPOSE_KEY_MODULE);
-        langs.push_back (isf_get_normalized_language (factory->get_language ()));
-        icons.push_back (factory->get_icon_file ());
-        modes.push_back (TOOLBAR_KEYBOARD_MODE);
-        options.push_back (factory->get_option ());
-        factory.reset ();
-    }
 
     String user_file_name = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (user_file_name.c_str (), "r");
@@ -341,7 +326,7 @@ static bool add_keyboard_ise_module (const String module_name, const ConfigPoint
     String filename = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (filename.c_str (), "a");
     if (engine_list_file == NULL) {
-        LOGD ("Failed to open %s!!!\n", filename.c_str ());
+        LOGW ("Failed to open %s!!!\n", filename.c_str ());
         return false;
     }
 
@@ -377,7 +362,7 @@ static bool add_keyboard_ise_module (const String module_name, const ConfigPoint
                     String line = isf_combine_ise_info_string (name, uuid, module_name, language,
                                                                icon, String (mode), String (option), factory->get_locales ());
                     if (fputs (line.c_str (), engine_list_file) < 0) {
-                        LOGD ("Failed to write (%s)!!!\n", line.c_str ());
+                        LOGW ("Failed to write (%s)!!!\n", line.c_str ());
                         break;
                     }
                 }
@@ -386,14 +371,14 @@ static bool add_keyboard_ise_module (const String module_name, const ConfigPoint
         }
         ime_module.unload ();
     } else {
-        LOGD ("Failed to load (%s)!!!", module_name.c_str ());
+        LOGW ("Failed to load (%s)!!!", module_name.c_str ());
         fclose (engine_list_file);
         return false;
     }
 
     int ret = fclose (engine_list_file);
     if (ret != 0)
-        LOGD ("Failed to fclose %s!!!\n", filename.c_str ());
+        LOGW ("Failed to fclose %s!!!\n", filename.c_str ());
 
     return true;
 }
@@ -416,7 +401,7 @@ static bool add_helper_ise_module (const String module_name)
     String filename = String (USER_ENGINE_FILE_NAME);
     FILE *engine_list_file = fopen (filename.c_str (), "a");
     if (engine_list_file == NULL) {
-        LOGD ("Failed to open %s!!!\n", filename.c_str ());
+        LOGW ("Failed to open %s!!!\n", filename.c_str ());
         return false;
     }
 
@@ -440,20 +425,20 @@ static bool add_helper_ise_module (const String module_name)
             String line = isf_combine_ise_info_string (helper_info.name, helper_info.uuid, module_name, isf_get_normalized_language (helper_module.get_helper_lang (j)),
                                                        helper_info.icon, String (mode), String (option), String (""));
             if (fputs (line.c_str (), engine_list_file) < 0) {
-                 LOGD ("Failed to write (%s)!!!\n", line.c_str ());
+                 LOGW ("Failed to write (%s)!!!\n", line.c_str ());
                  break;
             }
         }
         helper_module.unload ();
     } else {
-        LOGD ("Failed to load (%s)!!!", module_name.c_str ());
+        LOGW ("Failed to load (%s)!!!", module_name.c_str ());
         fclose (engine_list_file);
         return false;
     }
 
     int ret = fclose (engine_list_file);
     if (ret != 0)
-        LOGD ("Failed to fclose %s!!!\n", filename.c_str ());
+        LOGW ("Failed to fclose %s!!!\n", filename.c_str ());
 
     return true;
 }
@@ -477,7 +462,6 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
 
     /* Check keyboard ISEs */
     if (type != HELPER_ONLY) {
-        install_modules.push_back (COMPOSE_KEY_MODULE);
         std::vector<String> imengine_list;
         scim_get_imengine_module_list (imengine_list);
         for (size_t i = 0; i < imengine_list.size (); ++i) {
@@ -509,7 +493,7 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
                 uninstall_modules.push_back (_module_names [i]);
                 String filename = String (USER_ENGINE_FILE_NAME);
                 if (isf_remove_ise_info_from_file (filename.c_str (), _module_names [i].c_str ()) == false)
-                    LOGD ("Failed to remove %s from cache file : %s!!!", _module_names [i].c_str (), filename.c_str ());
+                    LOGW ("Failed to remove %s from cache file : %s!!!", _module_names [i].c_str (), filename.c_str ());
             }
         }
     }
@@ -563,7 +547,7 @@ bool isf_update_ise_list (LOAD_ISE_TYPE type, const ConfigPointer &config)
 bool isf_remove_ise_module (const String module_name, const ConfigPointer &config)
 {
     if (std::find (_module_names.begin (), _module_names.end (), module_name) == _module_names.end ()) {
-        LOGD ("Cannot to find %s!!!", module_name.c_str ());
+        LOGW ("Cannot to find %s!!!", module_name.c_str ());
         return true;
     }
 
@@ -584,7 +568,7 @@ bool isf_remove_ise_module (const String module_name, const ConfigPointer &confi
         }
         return true;
     } else {
-        LOGD ("Failed to remove %s from cache file : %s!!!", module_name.c_str (), filename.c_str ());
+        LOGW ("Failed to remove %s from cache file : %s!!!", module_name.c_str (), filename.c_str ());
         return false;
     }
 }
@@ -593,7 +577,11 @@ bool isf_update_ise_module (const String strModulePath, const ConfigPointer &con
 {
     bool ret = false;
     struct stat filestat;
-    stat (strModulePath.c_str (), &filestat);
+    if (stat (strModulePath.c_str (), &filestat) == -1) {
+        LOGW ("can't access : %s, reason : %s\n", strModulePath.c_str (), strerror (errno));
+        return false;
+    }
+
     if (!S_ISDIR (filestat.st_mode)) {
         int begin = strModulePath.find_last_of (SCIM_PATH_DELIM) + 1;
         String mod_name = strModulePath.substr (begin, strModulePath.find_last_of ('.') - begin);
@@ -613,7 +601,7 @@ bool isf_update_ise_module (const String strModulePath, const ConfigPointer &con
                 }
             }
         } else {
-            LOGD ("%s is not valid so file!!!", strModulePath.c_str ());
+            LOGW ("%s is not valid so file!!!", strModulePath.c_str ());
         }
     }
 
@@ -632,6 +620,29 @@ bool isf_update_ise_module (const String strModulePath, const ConfigPointer &con
     }
 
     return ret;
+}
+
+/**
+ * @brief Get normalized language name.
+ *
+ * @param src_str The language name before normalized.
+ *
+ * @return normalized language name.
+ */
+String isf_get_normalized_language (String src_str)
+{
+    if (src_str.length () == 0)
+        return String ("en");
+
+    std::vector<String> str_list, dst_list;
+    scim_split_string_list (str_list, src_str);
+
+    for (size_t i = 0; i < str_list.size (); i++)
+        dst_list.push_back (scim_get_normalized_language (str_list[i]));
+
+    String dst_str =  scim_combine_string_list (dst_list);
+
+    return dst_str;
 }
 
 /*

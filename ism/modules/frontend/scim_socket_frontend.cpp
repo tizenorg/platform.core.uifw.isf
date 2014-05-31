@@ -192,7 +192,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
         String filename = String (USER_ENGINE_FILE_NAME);
         FILE *engine_list_file = fopen (filename.c_str (), "a");
         if (!engine_list_file) {
-            LOGD ("Failed to open %s!!!\n", filename.c_str ());
+            LOGW ("Failed to open %s!!!\n", filename.c_str ());
         }
 
         for (size_t i = 0; i < mod_list.size (); ++i) {
@@ -220,7 +220,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
                             String line = isf_combine_ise_info_string (info.name, info.uuid, mod_list [i], isf_get_normalized_language (module.get_helper_lang (j)),
                                                                        info.icon, String (mode), String (option), String (""));
                             if (fputs (line.c_str (), engine_list_file) < 0)
-                                LOGD ("Failed to write (%s)!!!\n", line.c_str ());
+                                LOGW ("Failed to write (%s)!!!\n", line.c_str ());
                         }
                     }
                 }
@@ -231,7 +231,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
         if (engine_list_file) {
             int ret = fclose (engine_list_file);
             if (ret != 0)
-                LOGD ("Failed to fclose %s!!!\n", filename.c_str ());
+                LOGW ("Failed to fclose %s!!!\n", filename.c_str ());
         }
     }
 }
@@ -613,6 +613,96 @@ SocketFrontEnd::delete_surrounding_text (int id, int offset, int len)
             if (m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REQUEST &&
                 m_temp_trans.get_data (key) && key == m_current_socket_client_key &&
                 m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT &&
+                m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
+                ret = true;
+        }
+        if (cont) {
+            int cmd;
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+            // Move the read ptr to the end.
+            if (!m_send_trans.get_command (cmd))
+                SCIM_DEBUG_FRONTEND (1) << __func__ << " Get command is failed!!!\n";
+        }
+    }
+    return ret;
+}
+
+bool
+SocketFrontEnd::get_selection (int id, WideString &text)
+{
+    bool ret = false;
+    text.clear ();
+
+    if (m_current_instance == id && m_current_socket_client >= 0) {
+        bool cont = false;
+        Socket socket_client (m_current_socket_client);
+        if ( m_send_trans.get_data_type () != SCIM_TRANS_DATA_UNKNOWN) {
+            m_send_trans.put_command (ISM_TRANS_CMD_TRANSACTION_CONTINUE);
+            m_send_trans.write_to_socket (socket_client);
+            cont = true;
+        }
+
+        m_temp_trans.clear ();
+        m_temp_trans.put_command (SCIM_TRANS_CMD_REPLY);
+        m_temp_trans.put_command (SCIM_TRANS_CMD_GET_SELECTION);
+
+        if (m_temp_trans.write_to_socket (socket_client) &&
+            m_temp_trans.read_from_socket (socket_client, m_socket_timeout)) {
+
+            int cmd;
+            uint32 key;
+
+            if (m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REQUEST &&
+                m_temp_trans.get_data (key) && key == m_current_socket_client_key &&
+                m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_GET_SELECTION &&
+                m_temp_trans.get_data (text)) {
+                ret = true;
+            }
+        }
+        if (cont) {
+            int cmd;
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+            // Move the read ptr to the end.
+            if (!m_send_trans.get_command (cmd))
+                SCIM_DEBUG_FRONTEND (1) << __func__ << " Get command is failed!!!\n";
+        }
+    }
+    return ret;
+
+}
+
+bool
+SocketFrontEnd::set_selection (int id, int start, int end)
+{
+    bool ret = false;
+    if (m_current_instance == id && m_current_socket_client >= 0) {
+        bool cont = false;
+
+        Socket socket_client (m_current_socket_client);
+        if (m_send_trans.get_data_type () != SCIM_TRANS_DATA_UNKNOWN) {
+            m_send_trans.put_command (ISM_TRANS_CMD_TRANSACTION_CONTINUE);
+            m_send_trans.write_to_socket (socket_client);
+            cont = true;
+        }
+        m_temp_trans.clear ();
+        m_temp_trans.put_command (SCIM_TRANS_CMD_REPLY);
+        m_temp_trans.put_command (SCIM_TRANS_CMD_SET_SELECTION);
+        m_temp_trans.put_data ((uint32) start);
+        m_temp_trans.put_data ((uint32) end);
+
+        if (m_temp_trans.write_to_socket (socket_client) &&
+            m_temp_trans.read_from_socket (socket_client, m_socket_timeout)) {
+
+            int cmd;
+            uint32 key;
+
+            if (m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REQUEST &&
+                m_temp_trans.get_data (key) && key == m_current_socket_client_key &&
+                m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_SET_SELECTION &&
                 m_temp_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
                 ret = true;
         }

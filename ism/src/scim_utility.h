@@ -515,7 +515,8 @@ typedef enum
 } ISF_CANDIDATE_PORTRAIT_LINE_T;
 
 
-#define PROP_X_EXT_KEYBOARD_EXIST       "X External Keyboard Exist"
+#define PROP_X_EXT_KEYBOARD_INPUT_DETECTED  "HW Keyboard Input Started"
+#define PROP_X_EXT_KEYBOARD_EXIST           "X External Keyboard Exist"
 
 #define VCONFKEY_AUTOCAPITAL_ALLOW_BOOL "file/private/isf/autocapital_allow"
 #define VCONFKEY_AUTOPERIOD_ALLOW_BOOL  "file/private/isf/autoperiod_allow"

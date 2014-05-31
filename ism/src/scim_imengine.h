@@ -155,6 +155,12 @@ typedef Slot5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
 typedef Slot3<bool, IMEngineInstanceBase*,int,int>
         IMEngineSlotDeleteSurroundingText;
 
+typedef Slot2<bool, IMEngineInstanceBase*,WideString&>
+        IMEngineSlotGetSelection;
+
+typedef Slot3<bool, IMEngineInstanceBase*,int,int>
+        IMEngineSlotSetSelection;
+
 typedef Slot3<void, IMEngineInstanceBase*,ISF_CANDIDATE_PORTRAIT_LINE_T,ISF_CANDIDATE_MODE_T>
         IMEngineSlotCandidateStyle;
 
@@ -507,6 +513,9 @@ public:
 
     Connection signal_connect_get_surrounding_text    (IMEngineSlotGetSurroundingText *slot);
     Connection signal_connect_delete_surrounding_text (IMEngineSlotDeleteSurroundingText *slot);
+
+    Connection signal_connect_get_selection           (IMEngineSlotGetSelection *slot);
+    Connection signal_connect_set_selection           (IMEngineSlotSetSelection *slot);
 
     Connection signal_connect_expand_candidate        (IMEngineSlotVoid *slot);
     Connection signal_connect_contract_candidate      (IMEngineSlotVoid *slot);
@@ -926,6 +935,25 @@ protected:
      * @return true if the signal was handled.
      */
     bool delete_surrounding_text (int offset, int len);
+
+    /**
+     * @brief Retrieves selection.
+     *
+     * @param text          location to store the string selected.
+     *
+     * @return true if selection was provided.
+     */
+    bool get_selection (WideString &text);
+
+    /**
+     * @brief Ask the client to select characters from the start to the end position.
+     *
+     * @param start start position in chars;
+     * @param end end position in chars.
+     *
+     * @return true if the signal was handled.
+     */
+    bool set_selection (int start, int end);
 
     /**
      * @brief Request to expand candidate window.

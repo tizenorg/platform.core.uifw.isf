@@ -108,9 +108,9 @@ const uint32 SCIM_HELPER_NEED_SCREEN_INFO        = (1<<3);
 const uint32 SCIM_HELPER_NEED_SPOT_LOCATION_INFO = (1<<4);
 
 /**
- * @brief ISE option indicates whether it should be full style
+ * @brief ISE option indicates whether helper ISE handles the keyboard keyevent
  */
-const uint32 ISM_ISE_FULL_STYLE                  = (1<<16);
+const uint32 ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT = (1<<16);
 
 /**
  * @brief ISE option indicates whether it should be hidden in control panel.
@@ -201,6 +201,8 @@ typedef Slot2<void, const HelperAgent *, const std::vector<uint32> &>
 
 typedef Slot2<void, const HelperAgent *, LookupTable &>
         HelperAgentSlotLookupTable;
+typedef Slot3<void, const HelperAgent *, KeyEvent &, uint32 &>
+        HelperAgentSlotKeyEventUint;
 
 /**
  * @brief The accessory class to write a Helper object.
@@ -365,6 +367,21 @@ public:
                                  const WideString   &wstr) const;
 
     /**
+     * @brief Commit a WideString to client application directly.
+     *
+     * @param ic The handle of the client Input Context to receive the commit string.
+     *        -1 means the currently focused Input Context.
+     * @param ic_uuid The UUID of the IMEngine used by the Input Context.
+     *        Empty means don't match.
+     * @param buf The byte array of UTF-8 string to be committed.
+     * @param buflen The buf size in bytes.
+     */
+    void commit_string          (int                 ic,
+                                 const String       &ic_uuid,
+                                 const char         *buf,
+                                 int                 buflen) const;
+
+    /**
      * @brief Request to show preedit string.
      *
      * @param ic The handle of the client Input Context to receive the request.
@@ -431,6 +448,12 @@ public:
                                  const WideString   &wstr,
                                  const AttributeList &attrs) const;
 
+    void update_preedit_string  (int                 ic,
+                                 const String       &ic_uuid,
+                                 const char         *buf,
+                                 int                 buflen,
+                                 const AttributeList &attrs) const;
+
     /**
      * @brief Update a new WideString and caret for preedit.
      *
@@ -445,6 +468,13 @@ public:
     void update_preedit_string  (int                 ic,
                                  const String       &ic_uuid,
                                  const WideString   &wstr,
+                                 const AttributeList &attrs,
+                                 int                 caret) const;
+
+    void update_preedit_string  (int                 ic,
+                                 const String       &ic_uuid,
+                                 const char         *buf,
+                                 int                 buflen,
                                  const AttributeList &attrs,
                                  int                 caret) const;
 
@@ -500,6 +530,22 @@ public:
      */
     void delete_surrounding_text  (int                          offset,
                                    int                          len) const;
+
+    /**
+     * @brief Request to get selection.
+     *
+     * @param uuid The helper ISE UUID.
+     */
+    void get_selection       (const String                &uuid) const;
+
+    /**
+     * @brief Request to selected text.
+     *
+     * @param start The start position in text.
+     * @param end The end position in text.
+     */
+    void set_selection       (int                          start,
+                              int                          end) const;
 
     /**
      * @brief Set candidate position in screen.
@@ -704,6 +750,16 @@ public:
      * void update_surrounding_text (const HelperAgent *agent, int ic, const String &text, int cursor);
      */
     Connection signal_connect_update_surrounding_text (HelperAgentSlotInt        *slot);
+
+    /**
+     * @brief Connect a slot to Helper update selection signal.
+     *
+     * This signal is used to let the Helper get the selection.
+     *
+     * The prototype of the slot is:
+     * void update_selection (const HelperAgent *agent, int ic, const String &text);
+     */
+    Connection signal_connect_update_selection (HelperAgentSlotVoid        *slot);
 
     /**
      * @brief Connect a slot to Helper trigger property signal.
@@ -1115,6 +1171,14 @@ public:
      * void update_candidate_item_layout (const HelperAgent *, const std::vector<uint32> &row_items);
      */
     Connection signal_connect_update_candidate_item_layout      (HelperAgentSlotUintVector          *slot);
+
+     /**
+     * @brief Connect a slot to Helper process key event signal.
+     *
+     * The prototype of the slot is:
+     * void process_key_event (const HelperAgent *, uint32 &ret);
+     */
+    Connection signal_connect_process_key_event (HelperAgentSlotKeyEventUint *slot);
 };
 
 /**  @} */

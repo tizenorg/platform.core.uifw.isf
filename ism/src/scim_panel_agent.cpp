@@ -65,6 +65,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
+#include "security-server.h"
 
 
 EAPI scim::CommonLookupTable g_isf_candidate_table;
@@ -153,8 +154,8 @@ typedef Signal1<void, const KeyEvent &>
 typedef Signal1<void, struct rectinfo &>
         PanelAgentSignalRect;
 
-typedef Signal5<bool, String, String &, String &, int &, int &>
-        PanelAgentSignalBoolString3int2;
+typedef Signal6<bool, String, String &, String &, int &, int &, String &>
+        PanelAgentSignalBoolString4int2;
 
 enum ClientType {
     UNKNOWN_CLIENT,
@@ -249,6 +250,7 @@ class PanelAgent::PanelAgentImpl
     uint32                              m_current_client_context;
     String                              m_current_context_uuid;
     TOOLBAR_MODE_T                      m_current_toolbar_mode;
+    uint32                              m_current_helper_option;
     String                              m_current_helper_uuid;
     String                              m_last_helper_uuid;
     String                              m_current_ise_name;
@@ -265,6 +267,9 @@ class PanelAgent::PanelAgentImpl
     int                                 m_last_socket_client;
     uint32                              m_last_client_context;
     String                              m_last_context_uuid;
+
+    char                               *m_ise_context_buffer;
+    size_t                              m_ise_context_length;
 
     ClientRepository                    m_client_repository;
     /*
@@ -336,7 +341,7 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalVoid                m_signal_contract_candidate;
     PanelAgentSignalInt                 m_signal_select_candidate;
     PanelAgentSignalBoolStringVector    m_signal_get_ise_list;
-    PanelAgentSignalBoolString3int2     m_signal_get_ise_information;
+    PanelAgentSignalBoolString4int2     m_signal_get_ise_information;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
     PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
     PanelAgentSignalStringVector        m_signal_get_language_list;
@@ -373,11 +378,13 @@ public:
           m_socket_timeout (scim_get_default_socket_timeout ()),
           m_current_socket_client (-1), m_current_client_context (0),
           m_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE),
+          m_current_helper_option (0),
           m_pending_active_imcontrol_id (-1),
           m_active_client_id (-1),
           m_should_shared_ise (false),
           m_ise_exiting (false), m_is_imengine_aux (false), m_is_imengine_candidate (false),
-          m_last_socket_client (-1), m_last_client_context (0)
+          m_last_socket_client (-1), m_last_client_context (0),
+          m_ise_context_buffer (NULL), m_ise_context_length (0)
     {
         m_current_ise_name = String (_("English Keyboard"));
         m_imcontrol_repository.clear ();
@@ -386,6 +393,20 @@ public:
         m_socket_server.signal_connect_accept (slot (this, &PanelAgentImpl::socket_accept_callback));
         m_socket_server.signal_connect_receive (slot (this, &PanelAgentImpl::socket_receive_callback));
         m_socket_server.signal_connect_exception (slot (this, &PanelAgentImpl::socket_exception_callback));
+    }
+
+    ~PanelAgentImpl ()
+    {
+        delete_ise_context_buffer ();
+    }
+
+    void delete_ise_context_buffer (void)
+    {
+        if (m_ise_context_buffer != NULL) {
+            delete[] m_ise_context_buffer;
+            m_ise_context_buffer = NULL;
+            m_ise_context_length = 0;
+        }
     }
 
     bool initialize (const String &config, const String &display, bool resident)
@@ -397,6 +418,12 @@ public:
         m_socket_address = scim_get_default_panel_socket_address (display);
 
         m_socket_server.shutdown ();
+
+        /* If our helper manager could not connect to the HelperManager process,
+           this panel agent's initialization has failed - since we are assuming
+           the helper manager process should be launched beforehand */
+        if (m_helper_manager.get_connection_number() == -1)
+            return false;
 
         return m_socket_server.create (SocketAddress (m_socket_address));
     }
@@ -428,7 +455,7 @@ public:
             client.close ();
         }
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             String helper_uuid = get_current_helper_uuid ();
             hide_helper (helper_uuid);
             stop_helper (helper_uuid, -2, 0);
@@ -492,6 +519,11 @@ public:
         return String ("");
     }
 
+    uint32 get_current_helper_option () const
+    {
+        return m_current_helper_option;
+    }
+
     void set_current_ise_name (String &name)
     {
         m_current_ise_name = name;
@@ -500,6 +532,11 @@ public:
     void set_current_toolbar_mode (TOOLBAR_MODE_T mode)
     {
         m_current_toolbar_mode = mode;
+    }
+
+    void set_current_helper_option (uint32 option)
+    {
+        m_current_helper_option = option;
     }
 
     void update_panel_event (int cmd, uint32 nType, uint32 nValue)
@@ -703,7 +740,7 @@ public:
 
         get_focused_context (client, context);
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -733,7 +770,7 @@ public:
 
         get_focused_context (client, context);
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -773,7 +810,7 @@ public:
                 return true;
             }
         } else {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
                 if (it != m_helper_client_index.end ()) {
@@ -814,7 +851,7 @@ public:
                 return true;
             }
         } else {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
                 if (it != m_helper_client_index.end ()) {
@@ -843,7 +880,7 @@ public:
         int    client;
         uint32 context;
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -1292,14 +1329,13 @@ public:
         return true;
     }
 
-    bool stop_helper (const String &helper_uuid, int client, uint32 context)
+    bool stop_helper (const String &uuid, int client, uint32 context)
     {
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to stop ISE(%s)\n",
-            time (0), getpid (), __FILE__, __func__, helper_uuid.c_str ());
+            time (0), getpid (), __FILE__, __func__, uuid.c_str ());
         isf_save_log (buf);
 
-        String uuid = helper_uuid;
         SCIM_DEBUG_MAIN(1) << "PanelAgent::stop_helper (" << uuid << ")\n";
         if (uuid.length () <= 0)
             return false;
@@ -1685,8 +1721,8 @@ public:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::show_ise_panel ()\n";
         char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to show ISE\n",
-            time (0), getpid (), __FILE__, __func__);
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to show ISE %d\n",
+            time (0), getpid (), __FILE__, __func__, client_id);
         isf_save_log (buf);
 
         char   *data = NULL;
@@ -1713,6 +1749,15 @@ public:
                 uint32 ctx = get_helper_ic (focused_client, focused_context);
                 ret = show_helper (m_current_helper_uuid, data, len, ctx);
             }
+            /* Save ISE context for ISE panel re-showing */
+            if (data && len > 0) {
+                delete_ise_context_buffer ();
+                m_ise_context_buffer = new char [len];
+                if (m_ise_context_buffer) {
+                    m_ise_context_length = len;
+                    memcpy (m_ise_context_buffer, data, m_ise_context_length);
+                }
+            }
         }
 
         trans.clear ();
@@ -1723,26 +1768,27 @@ public:
         if (data != NULL)
             delete[] data;
 
-        m_signal_show_ise ();
+        if (ret) {
+            m_signal_show_ise ();
+        }
     }
 
     void hide_ise_panel (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::hide_ise_panel ()\n";
         char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to hide ISE\n",
-            time (0), getpid (), __FILE__, __func__);
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to hide ISE, %d %d\n",
+            time (0), getpid (), __FILE__, __func__, client_id, m_show_request_client_id);
         isf_save_log (buf);
 
-        TOOLBAR_MODE_T mode;
-
-        mode = m_current_toolbar_mode;
+        bool ret = false;
 
         uint32 client;
         uint32 context;
         if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context)) {
             SCIM_DEBUG_MAIN(4) << __func__ << " (client:" << client << " context:" << context << ")\n";
-            if ((m_panel_client_map[client_id] == m_current_socket_client || client_id == m_show_request_client_id) && TOOLBAR_HELPER_MODE == mode) {
+            if ((m_panel_client_map[client_id] == m_current_socket_client || client_id == m_show_request_client_id)
+                && (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
                 int    focused_client;
                 uint32 focused_context;
                 get_focused_context (focused_client, focused_context);
@@ -1753,10 +1799,16 @@ public:
 
                 uint32 ctx = get_helper_ic (focused_client, focused_context);
                 hide_helper (m_current_helper_uuid, ctx);
+
+                ret = true;
             }
+            /* Release ISE context buffer */
+            delete_ise_context_buffer ();
         }
 
-        m_signal_hide_ise ();
+        if (ret) {
+            m_signal_hide_ise ();
+        }
     }
 
     void set_default_ise (const DEFAULT_ISE_T &ise)
@@ -1768,6 +1820,40 @@ public:
     void set_should_shared_ise (const bool should_shared_ise)
     {
         m_should_shared_ise = should_shared_ise;
+    }
+
+    bool process_key_event (const String &uuid, KeyEvent& key, uint32 &result)
+    {
+        HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+        if (it != m_helper_client_index.end ()) {
+            int    client;
+            uint32 context;
+            Socket client_socket (it->second.id);
+            uint32 ctx;
+            Transaction trans;
+
+            get_focused_context (client, context);
+            ctx = get_helper_ic (client, context);
+
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REPLY);
+            trans.put_data (ctx);
+            trans.put_data (uuid);
+            trans.put_command (SCIM_TRANS_CMD_PROCESS_KEY_EVENT);
+            trans.put_data (key);
+            int cmd;
+            if (trans.write_to_socket (client_socket)
+                && trans.read_from_socket (client_socket)
+                && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
+                && trans.get_data (result)) {
+                SCIM_DEBUG_MAIN (1) << __func__ << " success\n";
+                return true;
+            } else {
+                std::cerr << __func__ << " failed\n";
+            }
+        }
+        return false;
     }
 
     bool get_helper_geometry (String &uuid, struct rectinfo &info)
@@ -1834,7 +1920,7 @@ public:
             int cmd;
             if (trans.write_to_socket (client_socket)
                 && trans.read_from_socket (client_socket)
-                && trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY
+                && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
                 && trans.get_data (imdata, len)) {
                 SCIM_DEBUG_MAIN (1) << "get_helper_imdata success\n";
                 return true;
@@ -1928,7 +2014,7 @@ public:
         bool    ret  = false;
         Transaction trans;
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -1976,10 +2062,9 @@ public:
     void get_current_ise_geometry (rectinfo &rect)
     {
         SCIM_DEBUG_MAIN(4) << __func__ << " \n";
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
         bool           ret  = false;
 
-        if (TOOLBAR_HELPER_MODE == mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_geometry (m_current_helper_uuid, rect);
 
         if (!ret) {
@@ -1996,7 +2081,7 @@ public:
         uint32 mode;
 
         if (m_recv_trans.get_data (mode)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_mode (m_current_helper_uuid, mode);
         }
     }
@@ -2007,7 +2092,7 @@ public:
         uint32 layout;
 
         if (m_recv_trans.get_data (layout)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_layout (m_current_helper_uuid, layout);
         }
     }
@@ -2018,7 +2103,7 @@ public:
         uint32 language;
 
         if (m_recv_trans.get_data (language)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_language (m_current_helper_uuid, language);
         }
     }
@@ -2030,7 +2115,7 @@ public:
         size_t  len;
 
         if (m_recv_trans.get_data (&imdata, len)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_imdata (m_current_helper_uuid, imdata, len);
         }
 
@@ -2045,9 +2130,7 @@ public:
         size_t  len;
         bool    ret    = false;
 
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
-
-        if (TOOLBAR_HELPER_MODE == mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_imdata (m_current_helper_uuid, &imdata, len);
 
         Transaction trans;
@@ -2074,9 +2157,7 @@ public:
         uint32 layout;
         bool   ret = false;
 
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
-
-        if (TOOLBAR_HELPER_MODE == mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_layout (m_current_helper_uuid, layout);
 
         Transaction trans;
@@ -2155,11 +2236,11 @@ public:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
 
-        String strUuid, strName, strLanguage;
+        String strUuid, strName, strLanguage, strModuleName;
         int nType   = 0;
         int nOption = 0;
         if (m_recv_trans.get_data (strUuid)) {
-            m_signal_get_ise_information (strUuid, strName, strLanguage, nType, nOption);
+            m_signal_get_ise_information (strUuid, strName, strLanguage, nType, nOption, strModuleName);
         }
 
         Transaction trans;
@@ -2171,6 +2252,7 @@ public:
         trans.put_data (strLanguage);
         trans.put_data (nType);
         trans.put_data (nOption);
+        trans.put_data (strModuleName);
         trans.write_to_socket (client_socket);
     }
 
@@ -2394,13 +2476,45 @@ public:
             delete[] buf;
     }
 
+    void set_initial_ise_by_uuid (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_initial_ise_by_uuid ()\n";
+        char   *buf = NULL;
+        size_t  len;
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        if (!(m_recv_trans.get_data (&buf, len))) {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            if (NULL != buf)
+                delete[] buf;
+            return;
+        }
+
+        if (buf == NULL) {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            return;
+        }
+
+        String uuid (buf);
+
+        scim_global_config_write (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (uuid));
+
+        if (NULL != buf)
+            delete[] buf;
+    }
+
     void set_ise_return_key_type (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
         uint32 type;
 
         if (m_recv_trans.get_data (type)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_return_key_type (m_current_helper_uuid, type);
         }
     }
@@ -2411,9 +2525,7 @@ public:
         uint32 type = 0;
         bool   ret  = false;
 
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
-
-        if (TOOLBAR_HELPER_MODE == mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_return_key_type (m_current_helper_uuid, type);
 
         Transaction trans;
@@ -2437,7 +2549,7 @@ public:
         uint32 disabled;
 
         if (m_recv_trans.get_data (disabled)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_return_key_disable (m_current_helper_uuid, disabled);
         }
     }
@@ -2448,9 +2560,7 @@ public:
         uint32 disabled = 0;
         bool   ret      = false;
 
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
-
-        if (TOOLBAR_HELPER_MODE == mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_return_key_disable (m_current_helper_uuid, disabled);
 
         Transaction trans;
@@ -2515,9 +2625,8 @@ public:
     void reset_ise_context (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::reset_ise_context ()\n";
-        TOOLBAR_MODE_T mode = m_current_toolbar_mode;
 
-        if (TOOLBAR_HELPER_MODE == mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             reset_helper_context (m_current_helper_uuid);
     }
 
@@ -2526,7 +2635,7 @@ public:
         SCIM_DEBUG_MAIN(4) << "PanelAgent::set_ise_caps_mode ()\n";
         uint32 mode;
         if (m_recv_trans.get_data (mode)) {
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_caps_mode (m_current_helper_uuid, mode);
         }
     }
@@ -2647,6 +2756,48 @@ public:
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "\n";
 
         m_signal_candidate_will_hide_ack ();
+    }
+
+    void process_key_event (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+        uint32 result = 0;
+        bool   ret      = false;
+
+        KeyEvent key;
+        if (m_recv_trans.get_data (key)) {
+            ret = process_key_event (m_current_helper_uuid, key, result);
+        }
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        if (ret) {
+            trans.put_command (SCIM_TRANS_CMD_OK);
+            trans.put_data (result);
+        } else {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+        }
+
+        trans.write_to_socket (client_socket);
+    }
+
+    void get_active_helper_option (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+        uint32 option = get_current_helper_option ();
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.put_data (option);
+        SCIM_DEBUG_MAIN(4) << __func__ << " option " << option << "\n";
+        trans.write_to_socket (client_socket);
     }
 
     Connection signal_connect_reload_config              (PanelAgentSlotVoid                *slot)
@@ -2869,7 +3020,7 @@ public:
         return m_signal_get_ise_list.connect (slot);
     }
 
-    Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString3int2        *slot)
+    Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2        *slot)
     {
         return m_signal_get_ise_information.connect (slot);
     }
@@ -3068,7 +3219,7 @@ private:
                     if (cmd == ISM_TRANS_CMD_REGISTER_PANEL_CLIENT) {
                         uint32 id = 0;
                         if (m_recv_trans.get_data (id)) {
-                            SCIM_DEBUG_MAIN(4) << "    ISM_TRANS_CMD_REGISTER_PANEL_CLIENT (" << client_id << "," << "," << context << "," << id << ")\n";
+                            SCIM_DEBUG_MAIN(4) << "    ISM_TRANS_CMD_REGISTER_PANEL_CLIENT (" << client_id << "," << context << "," << id << ")\n";
                             m_panel_client_map [client_id] = (int)id;
                         }
                         continue;
@@ -3076,7 +3227,7 @@ private:
 
                     if (cmd == SCIM_TRANS_CMD_PANEL_REGISTER_INPUT_CONTEXT) {
                         if (m_recv_trans.get_data (uuid)) {
-                            SCIM_DEBUG_MAIN (2) << "PanelAgent::register_input_context (" << client_id << "," << "," << context << "," << uuid << ")\n";
+                            SCIM_DEBUG_MAIN (2) << "PanelAgent::register_input_context (" << client_id << "," << context << "," << uuid << ")\n";
                             uint32 ctx = get_helper_ic (m_panel_client_map[client_id], context);
                             m_client_context_uuids [ctx] = uuid;
                         }
@@ -3121,7 +3272,7 @@ private:
                         m_signal_focus_in ();
                         focus_in_helper (m_current_helper_uuid, m_panel_client_map[client_id], context);
                         if (m_recv_trans.get_data (uuid)) {
-                            SCIM_DEBUG_MAIN (2) << "PanelAgent::focus_in (" << client_id << "," << "," << context << "," << uuid << ")\n";
+                            SCIM_DEBUG_MAIN (2) << "PanelAgent::focus_in (" << client_id << "," << context << "," << uuid << ")\n";
                             m_active_client_id = client_id;
                             lock ();
                             if (m_current_socket_client >= 0) {
@@ -3205,6 +3356,12 @@ private:
                     } else if (cmd == ISM_TRANS_CMD_SEND_CANDIDATE_WILL_HIDE_ACK) {
                         candidate_will_hide_ack (client_id);
                         continue;
+                    } else if (cmd == SCIM_TRANS_CMD_PROCESS_KEY_EVENT) {
+                        process_key_event (client_id);
+                        continue;
+                    } else if (cmd == ISM_TRANS_CMD_GET_ACTIVE_HELPER_OPTION) {
+                        get_active_helper_option (client_id);
+                        continue;
                     } else if (cmd == ISM_TRANS_CMD_GET_ISE_STATE) {
                         get_ise_state (client_id);
                         continue;
@@ -3268,6 +3425,8 @@ private:
                         socket_update_cursor_position ();
                     else if (cmd == ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT)
                         socket_update_surrounding_text ();
+                    else if (cmd == ISM_TRANS_CMD_UPDATE_SELECTION)
+                        socket_update_selection ();
                     else if (cmd == ISM_TRANS_CMD_EXPAND_CANDIDATE)
                         m_signal_expand_candidate ();
                     else if (cmd == ISM_TRANS_CMD_CONTRACT_CANDIDATE)
@@ -3402,6 +3561,29 @@ private:
                     socket_helper_send_imengine_event (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_REGISTER_PROPERTIES) {
                     socket_helper_register_properties (client_id);
+
+                    /* Check whether application is already focus_in */
+                    if (m_current_socket_client != -1) {
+                        SCIM_DEBUG_MAIN (2) << "Application is already focus_in!\n";
+                        focus_in_helper (m_current_helper_uuid, m_current_socket_client, m_current_client_context);
+                        reset_keyboard_ise ();
+                    }
+                    /* Check whether ISE panel is already shown */
+                    if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode && m_ise_context_length > 0) {
+                        SCIM_DEBUG_MAIN (2) << "Re-show ISE panel!\n";
+                        int    focused_client;
+                        uint32 focused_context;
+                        get_focused_context (focused_client, focused_context);
+                        if (focused_client == -1 && m_active_client_id != -1) {
+                            focused_client  = m_panel_client_map[m_active_client_id];
+                            focused_context = 0;
+                        }
+
+                        uint32 ctx = get_helper_ic (focused_client, focused_context);
+                        bool ret = show_helper (m_current_helper_uuid, m_ise_context_buffer, m_ise_context_length, ctx);
+                        if (ret)
+                            m_signal_show_ise ();
+                    }
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_PROPERTY) {
                     socket_helper_update_property (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_RELOAD_CONFIG) {
@@ -3439,6 +3621,10 @@ private:
                     socket_helper_get_surrounding_text (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT) {
                     socket_helper_delete_surrounding_text (client_id);
+                } else if (cmd == SCIM_TRANS_CMD_GET_SELECTION) {
+                    socket_helper_get_selection (client_id);
+                } else if (cmd == SCIM_TRANS_CMD_SET_SELECTION) {
+                    socket_helper_set_selection (client_id);
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_EXIT) {
                     HelperInfoRepository::iterator hiit = m_helper_active_info_repository.find (client.get_id ());
                     if (hiit != m_helper_active_info_repository.end ()) {
@@ -3460,7 +3646,36 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
+                    char buf[256] = {0};
+                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  checking sockfd privilege...\n",
+                        time (0), getpid (), __FILE__, __func__);
+                    isf_save_log (buf);
+                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
+                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
+                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
+                    } else {
+                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    }
+                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  setting active ise\n",
+                        time (0), getpid (), __FILE__, __func__);
+                    isf_save_log (buf);
                     set_active_ise_by_uuid (client_id);
+                }
+                else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
+                    char buf[256] = {0};
+                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  checking sockfd privilege...\n",
+                        time (0), getpid (), __FILE__, __func__);
+                    isf_save_log (buf);
+                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
+                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
+                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
+                    } else {
+                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    }
+                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  setting initial ise\n",
+                        time (0), getpid (), __FILE__, __func__);
+                    isf_save_log (buf);
+                    set_initial_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
@@ -3553,7 +3768,7 @@ private:
             SCIM_DEBUG_MAIN(4) << "It's a FrontEnd client.\n";
             /* The focused client is closed. */
             if (m_current_socket_client == client.get_id ()) {
-                if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+                if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                     hide_helper (m_current_helper_uuid);
 
                 lock ();
@@ -3799,6 +4014,38 @@ private:
         }
     }
 
+    void socket_update_selection         (void)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
+
+        String text;
+        if (m_recv_trans.get_data (text)) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ()) {
+                int    client;
+                uint32 context;
+                Socket client_socket (it->second.id);
+                uint32 ctx;
+
+                lock ();
+
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (ctx);
+                m_send_trans.put_data (m_current_helper_uuid);
+                m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_SELECTION);
+                m_send_trans.put_data (text);
+                m_send_trans.write_to_socket (client_socket);
+
+                unlock ();
+            }
+        }
+    }
+
     void socket_update_factory_info             (void)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_update_factory_info ()\n";
@@ -3857,12 +4104,7 @@ private:
 
             get_focused_context (focused_client, focused_context);
 
-            if (focused_client == -1) {
-                std::cerr << __func__ << " get_focused_context is failed!!!\n";
-                return;
-            }
-
-            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
                 if (it != m_helper_client_index.end ()) {
@@ -3879,6 +4121,11 @@ private:
                     m_send_trans.put_data (isOn);
                     m_send_trans.write_to_socket (client_socket);
                 }
+            }
+
+            if (focused_client == -1) {
+                std::cerr << __func__ << " get_focused_context is failed!!!\n";
+                return;
             }
 
             ClientInfo client_info = socket_get_client_info (focused_client);
@@ -4585,6 +4832,61 @@ private:
         }
     }
 
+    void socket_helper_get_selection     (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
+
+        String uuid;
+
+        if (m_recv_trans.get_data (uuid)) {
+
+            int     focused_client;
+            uint32  focused_context;
+            String  focused_uuid = get_focused_context (focused_client, focused_context);
+
+            ClientInfo client_info = socket_get_client_info (focused_client);
+            if (client_info.type == FRONTEND_CLIENT) {
+                Socket socket_client (focused_client);
+                lock ();
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (focused_context);
+                m_send_trans.put_command (SCIM_TRANS_CMD_GET_SELECTION);
+                m_send_trans.write_to_socket (socket_client);
+                unlock ();
+            }
+        }
+    }
+
+    void socket_helper_set_selection  (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
+
+        uint32 start;
+        uint32 end;
+
+        if (m_recv_trans.get_data (start) && m_recv_trans.get_data (end)) {
+
+            int     focused_client;
+            uint32  focused_context;
+            String  focused_uuid = get_focused_context (focused_client, focused_context);
+
+            ClientInfo client_info = socket_get_client_info (focused_client);
+            if (client_info.type == FRONTEND_CLIENT) {
+                Socket socket_client (focused_client);
+                lock ();
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (focused_context);
+                m_send_trans.put_command (SCIM_TRANS_CMD_SET_SELECTION);
+                m_send_trans.put_data (start);
+                m_send_trans.put_data (end);
+                m_send_trans.write_to_socket (socket_client);
+                unlock ();
+            }
+        }
+    }
+
     void socket_helper_show_preedit_string            (int client)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_helper_show_preedit_string (" << client << ")\n";
@@ -4913,7 +5215,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_reset_input_context \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode)
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             socket_reset_helper_input_context (m_current_helper_uuid, client, context);
     }
 
@@ -4921,7 +5223,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_select_aux \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -4952,7 +5254,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_select_candidate \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -4983,7 +5285,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_lookup_table_page_up \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5013,7 +5315,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_lookup_table_page_down \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5043,7 +5345,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_update_lookup_table_page_size \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5074,7 +5376,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5105,7 +5407,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_select_associate \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5136,7 +5438,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_associate_table_page_up \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5166,7 +5468,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_associate_table_page_down \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5196,7 +5498,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::helper_update_associate_table_page_size \n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5227,7 +5529,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5258,7 +5560,7 @@ private:
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
 
-        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
@@ -5501,6 +5803,12 @@ void
 PanelAgent::set_current_ise_name (String &name)
 {
     m_impl->set_current_ise_name (name);
+}
+
+void
+PanelAgent::set_current_helper_option (uint32 option)
+{
+    m_impl->set_current_helper_option (option);
 }
 
 void
@@ -6015,7 +6323,7 @@ PanelAgent::signal_connect_get_ise_list               (PanelAgentSlotBoolStringV
 }
 
 Connection
-PanelAgent::signal_connect_get_ise_information        (PanelAgentSlotBoolString3int2     *slot)
+PanelAgent::signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2     *slot)
 {
     return m_impl->signal_connect_get_ise_information (slot);
 }

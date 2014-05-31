@@ -406,6 +406,32 @@ X11FrontEnd::delete_surrounding_text (int siid, int offset, int len)
     return false;
 }
 
+bool
+X11FrontEnd::get_selection (int siid, WideString &text)
+{
+    SCIM_DEBUG_FRONTEND(2) << " Get selection, siid=" << siid << "\n";
+
+    text.clear ();
+
+    if (is_inputing_ic (siid)) {
+        return false;
+    }
+
+    return false;
+}
+
+bool
+X11FrontEnd::set_selection (int siid, int start, int end)
+{
+    SCIM_DEBUG_FRONTEND(2) << " set selection, siid=" << siid << " start = " << start << " end = " << end << "\n";
+
+    if (is_inputing_ic (siid)) {
+        return false;
+    }
+
+    return false;
+}
+
 void
 X11FrontEnd::init (int argc, char **argv)
 {
@@ -599,9 +625,8 @@ X11FrontEnd::init_ims (void)
     // Initialize X Display and Root Windows.
     if (m_xims != (XIMS) 0) {
         throw FrontEndError (String ("X11 -- XIMS already initialized!"));
-       }
+    }
 
-    int retry = 0;
     m_display = XOpenDisplay (NULL);
 
     /* Let's try several more times until X server gets available... */

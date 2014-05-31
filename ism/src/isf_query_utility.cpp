@@ -155,7 +155,7 @@ EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &i
 
     FILE *engine_list_file = fopen (strTempFile.c_str (), "w+");
     if (engine_list_file == NULL) {
-        LOGD ("Failed to open %s!!!\n", strTempFile.c_str ());
+        LOGW ("Failed to open %s!!!\n", strTempFile.c_str ());
         return false;
     }
 
@@ -170,7 +170,7 @@ EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &i
                                                    iter->icon, String (mode), String (option), iter->locales);
         if (fputs (line.c_str (), engine_list_file) < 0) {
             bSuccess = false;
-            LOGD ("Failed to write (%s)!!!\n", line.c_str ());
+            LOGW ("Failed to write (%s)!!!\n", line.c_str ());
             break;
         }
     }
@@ -178,13 +178,13 @@ EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &i
     int ret = fclose (engine_list_file);
     if (ret != 0) {
         bSuccess = false;
-        LOGD ("Failed to fclose %s!!!\n", strTempFile.c_str ());
+        LOGW ("Failed to fclose %s!!!\n", strTempFile.c_str ());
     }
 
     if (bSuccess) {
         if (rename (strTempFile.c_str (), filename) != 0) {
             bSuccess = false;
-            LOGD ("Failed to rename %s!!!\n", filename);
+            LOGW ("Failed to rename %s!!!\n", filename);
         }
     }
 

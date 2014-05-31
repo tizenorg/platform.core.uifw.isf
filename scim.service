@@ -1,15 +1,12 @@
 [Unit]
 Description=Start the input service framework panel
-After=ac.service
-Requires=ac.service
+After=e17.service
 
 [Service]
 ExecStart=/usr/bin/scim
-Environment=HOME=/root
-EnvironmentFile=/etc/sysconfig/tizen-mobile-ui
 Nice=5
 Restart=always
 RestartSec=2
 
 [Install]
-WantedBy=graphical.target
+WantedBy=core-efl.target
