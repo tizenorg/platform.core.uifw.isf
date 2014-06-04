@@ -1,3 +1,4 @@
+%bcond_with wayland
 Name:       isf
 Summary:    Input Service Framework
 Version:    2.4.7424
@@ -15,15 +16,20 @@ BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(appcore-efl)
 BuildRequires:  pkgconfig(libprivilege-control)
 BuildRequires:  pkgconfig(elementary)
-BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(vconf)
+%if %{with wayland}
+BuildRequires:  pkgconfig(ecore-wayland)
+BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
+%else
+BuildRequires:  pkgconfig(utilX)
 %if "%{_repository}" != "wearable"
 BuildRequires:  pkgconfig(ui-gadget-1)
 BuildRequires:  pkgconfig(minicontrol-provider)
 %endif
+BuildRequires:  pkgconfig(x11)
+%endif
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
-BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(tts)
@@ -67,14 +73,37 @@ CFLAGS+=" -D_MOBILE";
 CXXFLAGS+=" -D_MOBILE";
 %endif
 
+%if %{with wayland}
+CFLAGS+=" -DWAYLAND"
+CXXFLAGS+=" -DWAYLAND"
+%endif
+
 export GC_SECTIONS_FLAGS="-fdata-sections -ffunction-sections -Wl,--gc-sections"
+
+CFLAGS+=" -I/usr/include/elementary-1 -I/usr/include/eina-1 -I/usr/include/eina-1/eina -I/usr/include/ecore-1 "
+CFLAGS+=" -I/usr/include/evas-1 -I/usr/include/eet-1 -I/usr/include/edje-1 -I/usr/include/e_dbus-1 "
+CFLAGS+=" -I/usr/include/eio-1 -I/usr/include/ethumb-1 -I/usr/include/efreet-1 -I/usr/include/emotion-1 -I/usr/include/embryo-1 "
+CFLAGS+=" -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include/ "
 CFLAGS+=" -fvisibility=hidden ${GC_SECTIONS_FLAGS} "; export CFLAGS
+
+CXXFLAGS+=" -I/usr/include/elementary-1 -I/usr/include/eina-1 -I/usr/include/eina-1/eina -I/usr/include/ecore-1 "
+CXXFLAGS+=" -I/usr/include/evas-1 -I/usr/include/eet-1 -I/usr/include/edje-1 -I/usr/include/e_dbus-1 "
+CXXFLAGS+=" -I/usr/include/eio-1 -I/usr/include/ethumb-1 -I/usr/include/efreet-1 -I/usr/include/emotion-1 -I/usr/include/embryo-1 "
+CXXFLAGS+=" -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include/ "
 CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS} ";export CXXFLAGS
 
 %autogen
 %configure --disable-static \
 		--disable-tray-icon \
 		--disable-filter-sctc \
+%if %{with wayland}
+        --disable-panel-efl \
+        --disable-setting-efl \
+        --disable-efl-immodule \
+%else
+        --disable-wsm-efl \
+        --disable-wsc-efl \
+%endif
 		--disable-frontend-x11
 make %{?_smp_mflags}
 
@@ -87,11 +116,14 @@ mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
+%if %{with wayland}
+%else
 %if "%{_repository}" != "wearable"
 install -d %{buildroot}%{_libdir}/systemd/system/graphical.target.wants
 install -d %{buildroot}%{_libdir}/systemd/system
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/system/
 ln -sf ../../system/scim.service %{buildroot}%{_libdir}/systemd/system/graphical.target.wants/scim.service
+%endif
 %endif
 
 %find_lang scim
@@ -115,7 +147,7 @@ cat scim.lang > isf.lang
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-%if "%{_repository}" == "wearable"
+%if "%{_repository}" == "wearable" || %{with wayland}
 %dir /etc/scim/conf
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service
@@ -128,12 +160,17 @@ cat scim.lang > isf.lang
 %{_sysconfdir}/scim/config
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
+%if %{with wayland}
+%{_bindir}/isf-wsm-efl
+%{_bindir}/isf-wsc-efl
+%else
 %{_bindir}/isf-demo-efl
+%{_bindir}/isf-panel-efl
+%{_libdir}/*/immodules/*.so
+%endif
 %{_bindir}/scim
 %{_bindir}/isf-log
-%{_bindir}/isf-panel-efl
 %{_bindir}/isf-query-engines
-%{_libdir}/*/immodules/*.so
 %{_libdir}/scim-1.0/1.4.0/IMEngine/socket.so
 %{_libdir}/scim-1.0/1.4.0/Config/simple.so
 %{_libdir}/scim-1.0/1.4.0/Config/socket.so

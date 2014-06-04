@@ -26,13 +26,17 @@
 #define __ISE_CONTEXT_H
 
 #include <Ecore_IMF.h>
+#ifndef WAYLAND
 #include <Ecore_X.h>
+#endif
 
 typedef struct {
     Ecore_IMF_Input_Panel_Lang language;
     Ecore_IMF_Input_Panel_Layout layout;
     Ecore_IMF_Input_Panel_Return_Key_Type return_key_type;
+#ifndef WAYLAND
     Ecore_X_Window client_window;
+#endif
     int imdata_size;
     int cursor_pos;
     Eina_Bool return_key_disabled;
