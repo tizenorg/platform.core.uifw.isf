@@ -291,7 +291,11 @@ static void __set_oom ()
 
 static inline int __set_dac ()
 {
+#ifdef WAYLAND
+    return 0;
+#else
     return perm_app_set_privilege("isf", NULL, NULL);
+#endif
 }
 
 static inline int __set_smack (char* path)

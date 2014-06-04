@@ -155,6 +155,10 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @EFL_LIBS@ \
 			  -lstdc++ \
               -ltzplatform-config-1.0
+if HAVE_X
+libscim@SCIM_EPOCH@_la_CXXFLAGS += @ECOREX_CFLAGS@
+libscim@SCIM_EPOCH@_la_LDFLAGS  += @ECOREX_LIBS@
+endif
 
 libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 
@@ -165,6 +169,11 @@ scim_SOURCES	 	= scim.cpp
 scim_CXXFLAGS		= @EFL_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ @VCONF_CFLAGS@
 scim_LDADD		= libscim@SCIM_EPOCH@.la
 scim_LDFLAGS		= @LTLIBINTL@ @EFL_LIBS@ @PRIVILEGE_CONTROL_LIBS@ @VCONF_LIBS@
+
+if HAVE_X
+scim_CXXFLAGS += @ECOREX_CFLAGS@
+scim_LDFLAGS  += @ECOREX_LIBS@
+endif
 
 isf_log_SOURCES	 	= isf_log.cpp
 isf_log_LDADD		= libscim@SCIM_EPOCH@.la
@@ -192,6 +201,11 @@ scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp ise_preexec.cpp
 scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@ @AIL_CFLAGS@ @EFL_CFLAGS@
 scim_helper_launcher_LDADD	= libscim@SCIM_EPOCH@.la
 scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @AIL_LIBS@ @EFL_LIBS@
+
+if HAVE_X
+scim_helper_launcher_CXXFLAGS += @ECOREX_CFLAGS@
+scim_helper_launcher_LDFLAGS  += @ECOREX_LIBS@
+endif
 
 
 
