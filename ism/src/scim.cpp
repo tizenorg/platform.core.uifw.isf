@@ -126,12 +126,14 @@ static bool check_wm_ready (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+#ifndef WAYLAND 
 #ifdef WAIT_WM
     int try_count = 0;
     while (check_file (ISF_SYSTEM_WM_READY_FILE) == false) {
         if (ISF_SYSTEM_WM_WAIT_COUNT <= (try_count++)) return false;
         usleep (ISF_SYSTEM_WAIT_DELAY);
     }
+#endif
 #endif
 
     return true;

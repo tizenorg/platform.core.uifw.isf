@@ -215,9 +215,17 @@ if test "$ISF_HAS_GCONF" = "yes"; then
 fi
 
 # Check EFL library
-PKG_CHECK_MODULES(EFL, [elementary ecore-x evas ecore ecore-evas ecore-file edje ecore-input ecore-ipc ecore-imf],
+PKG_CHECK_MODULES(EFL, [elementary evas ecore ecore-evas ecore-file edje ecore-input ecore-ipc ecore-imf],
                   [ISF_HAS_EFL=yes],
                   [ISF_HAS_EFL=no])
+
+PKG_CHECK_MODULES(ECOREX, [ecore-x],
+                  [ISF_HAS_ECOREX=yes],
+                  [ISF_HAS_ECOREX=no])
+
+PKG_CHECK_MODULES(WAYLAND, [ecore-wayland wayland-client >= 1.2.0 xkbcommon],
+                  [ISF_HAS_ECOREWL=yes],
+                  [ISF_HAS_ECOREWL=no])
 
 if test "$ISF_HAS_EFL" = "yes"; then
   EFL_LIBDIR=`$PKG_CONFIG --variable=libdir ecore-imf`
@@ -233,7 +241,9 @@ fi
 PKG_CHECK_MODULES(EFL_ASSIST, [efl-assist])
 
 # Check x11 library
-PKG_CHECK_MODULES(X11, [x11])
+PKG_CHECK_MODULES(X11, [x11],
+                  [ISF_HAS_X11=yes],
+                  [ISF_HAS_X11=no])
 
 # Check ui-gadget library
 PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1],
@@ -241,7 +251,9 @@ PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1],
                   [ISF_HAS_UIGADGET=no])
 
 # Check utilX library
-PKG_CHECK_MODULES(UTILX, [utilX])
+PKG_CHECK_MODULES(UTILX, [utilX],
+                  [ISF_HAS_UTILX=yes],
+                  [ISF_HAS_UTILX=no])
 
 # Check appcore-efl library
 PKG_CHECK_MODULES(APPCORE_EFL, [appcore-efl])
@@ -441,6 +453,16 @@ AC_ARG_ENABLE(panel-efl,
               enable_panel_efl=no,
               enable_panel_efl=check)
 
+AC_ARG_ENABLE(wsm-efl,
+              [  --disable-wsm-efl       Do not build EFL Wsm],
+              enable_wsm_efl=no,
+              enable_wsm_efl=check)
+
+AC_ARG_ENABLE(wsc-efl,
+              [  --disable-wsc-efl       Do not build EFL Wsc],
+              enable_wsc_efl=no,
+              enable_wsc_efl=yes)
+
 AC_ARG_ENABLE(setting-efl,
               [  --disable-setting-efl     Do not build EFL Setting],
               enable_setting_efl=no,
@@ -560,12 +582,28 @@ else
   enable_efl_immodule=no
 fi
 
+if test "$enable_wsc_efl" = "yes" -a "$ISF_HAS_EFL" = "yes"; then
+  ISF_BUILD_WSC_EFL=1
+else
+  ISF_BUILD_WSC_EFL=0
+  enable_wsc_efl=no
+fi
+
 ISF_BUILD_PANEL_EFL=0
 if test "$enable_panel_efl" != "no"; then
   enable_panel_efl=no
   if test "$ISF_HAS_EFL" = "yes"; then
     ISF_BUILD_PANEL_EFL=1
     enable_panel_efl=yes
+  fi
+fi
+
+ISF_BUILD_WSM_EFL=0
+if test "$enable_wsm_efl" != "no"; then
+  enable_wsm_efl=no
+  if test "$ISF_HAS_EFL" = "yes"; then
+    ISF_BUILD_WSM_EFL=1
+    enable_wsm_efl=yes
   fi
 fi
 
@@ -626,8 +664,14 @@ AM_CONDITIONAL(SCIM_BUILD_TRAY_ICON,
 AM_CONDITIONAL(ISF_BUILD_EFL_IMMODULE,
                 [test "$enable_efl_immodule" = "yes"])
 
+AM_CONDITIONAL(ISF_BUILD_WSC_EFL,
+                [test "$enable_wsc_efl" = "yes"])
+
 AM_CONDITIONAL(ISF_BUILD_PANEL_EFL,
                 [test "$enable_panel_efl" = "yes"])
+
+AM_CONDITIONAL(ISF_BUILD_WSM_EFL,
+                [test "$enable_wsm_efl" = "yes"])
 
 AM_CONDITIONAL(ISF_BUILD_SETTING_EFL,
                 [test "$enable_setting_efl" = "yes"])
@@ -701,6 +745,8 @@ AC_CONFIG_FILES([Makefile
                  ism/extras/gtk2_immodule/Makefile
                  ism/extras/efl_immodule/Makefile
                  ism/extras/efl_panel/Makefile
+                 ism/extras/efl_wsm/Makefile
+                 ism/extras/efl_wsc/Makefile
                  ism/demos/Makefile
                  intltool-extract
                  intltool-merge
@@ -741,6 +787,8 @@ Module options:
   EFL  IMModule            $enable_efl_immodule
   EFL  IMModule dir        $EFL_IM_MODULEDIR
   EFL  Panel GUI           $enable_panel_efl
+  EFL  Wsm GUI             $enable_wsm_efl
+  EFL  Wsc GUI             $enable_wsc_efl
   EFL  Setting             $enable_setting_efl
 
   Enable TrayIcon          $enable_tray_icon
