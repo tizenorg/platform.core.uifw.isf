@@ -36,8 +36,12 @@
 #include "option.h"
 #include "common.h"
 #include "languages.h"
-
+#include "candidate-factory.h"
+#define CANDIDATE_WINDOW_HEIGHT 84
 using namespace scl;
+#include <vector>
+using namespace std;
+
 CSCLUI *gSCLUI = NULL;
 extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
@@ -51,6 +55,31 @@ KEYBOARD_STATE g_keyboard_state = {
     TRUE,
     FALSE,
 };
+
+Candidate *g_candidate = NULL;
+class CandidateEventListener: public EventListener
+{
+    public:
+        void on_event(const EventDesc &desc)
+        {
+            const MultiEventDesc &multidesc = dynamic_cast<const MultiEventDesc &>(desc);
+            switch (multidesc.type) {
+                case MultiEventDesc::CANDIDATE_ITEM_MOUSE_DOWN:
+                    g_ise_common->select_candidate(multidesc.index);
+                    break;
+                case MultiEventDesc::CANDIDATE_MORE_VIEW_SHOW:
+                    // when more parts shows, click on the candidate will
+                    // not affect the key click event
+                    gSCLUI->disable_input_events(TRUE);
+                    break;
+                case MultiEventDesc::CANDIDATE_MORE_VIEW_HIDE:
+                    gSCLUI->disable_input_events(FALSE);
+                    break;
+                default: break;
+            }
+        }
+};
+static CandidateEventListener g_candidate_event_listener;
 
 static ISELanguageManager _language_manager;
 #define MVK_Shift_L 0xffe1
@@ -459,6 +488,7 @@ ise_show(int ic)
         gSCLUI->disable_input_events(FALSE);
     }
 
+    g_candidate->show();
     g_keyboard_state.visible_state = TRUE;
 }
 
@@ -470,6 +500,9 @@ ise_set_screen_rotation(int degree)
 {
     if (gSCLUI) {
         gSCLUI->set_rotation(DEGREE_TO_SCLROTATION(degree));
+    }
+    if (g_candidate) {
+        g_candidate->rotate(degree);
     }
 }
 
@@ -489,6 +522,9 @@ ise_hide()
         gSCLUI->hide();
     }
     g_keyboard_state.visible_state = FALSE;
+    if (g_candidate) {
+        g_candidate->hide();
+    }
 }
 
 void
@@ -528,7 +564,12 @@ ise_create()
             if (!succeeded) {
                 gSCLUI->init((sclwindow)g_ise_common->get_main_window(), scl_parser_type, MAIN_ENTRY_XML_PATH);
             }
-
+            gSCLUI->set_custom_starting_coordinates(0, CANDIDATE_WINDOW_HEIGHT);
+            // FIXME whether to use global var, need to check
+            if (g_candidate == NULL) {
+                g_candidate = CandidateFactory::make_candidate(CANDIDATE_MULTILINE, g_ise_common->get_main_window());
+            }
+            g_candidate->add_event_listener(&g_candidate_event_listener);
             gSCLUI->set_longkey_duration(elm_config_longpress_timeout_get() * 1000);
 
             /* Default ISE callback */
@@ -567,6 +608,10 @@ ise_destroy()
         LOGD("deleting gSCLUI");
         delete gSCLUI;
         gSCLUI = NULL;
+    }
+    if (g_candidate) {
+        delete g_candidate;
+        g_candidate = NULL;
     }
 }
 
@@ -683,5 +728,12 @@ void ise_get_language_locale(char **locale)
         if(!(info->locale_string.empty())) {
             *locale = strdup(info->locale_string.c_str());
         }
+    }
+}
+
+void ise_update_table(const vector<string> &vec_str)
+{
+    if (g_candidate) {
+        g_candidate->update(vec_str);
     }
 }

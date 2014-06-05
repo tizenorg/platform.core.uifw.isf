@@ -29,7 +29,7 @@
 #include <Evas.h>
 #include <scl.h>
 #include <ise_context.h>
-
+#include "candidate.h"
 
 //SCL_BEGIN_DECLS
 
@@ -68,6 +68,7 @@ struct IISECommonEventCallback {
     virtual void select_candidate (sclint ic, const sclchar *uuid, sclint index) {}
     virtual void candidate_table_page_up (sclint ic, const sclchar *uuid) {}
     virtual void candidate_table_page_down (sclint ic, const sclchar *uuid) {}
+    virtual void update_lookup_table (scim::LookupTable& table) {}
     virtual void update_candidate_table_page_size (sclint ic, const sclchar *uuid, sclint page_size) {}
     virtual void select_associate (sclint ic, const sclchar *uuid, sclint index) {}
     virtual void associate_table_page_up (sclint ic, const sclchar *uuid) {}
@@ -224,6 +225,7 @@ public:
     //void commit_string (int ic, const sclchar *ic_uuid, const WideString &wstr) const;
     void commit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str);
 
+    void select_candidate(int index);
     /**
      * @brief Request to show preedit string.
      *

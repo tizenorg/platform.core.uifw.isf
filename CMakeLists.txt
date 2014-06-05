@@ -12,6 +12,11 @@ SET(ISE_SRCS
     src/sdk/ise_lang_table.cpp
     src/sdk/sdk.cpp
     src/sdk/sdk_option.cpp
+
+    src/candidate/candidate-factory.cpp
+    src/candidate/candidate.cpp
+    src/candidate/efl/candidate-efl.cpp
+    src/candidate/efl/candidate-multiline-efl.cpp
 )
 
 SET(ISE_PACKAGE ${PROJECT_NAME})
@@ -27,7 +32,10 @@ ENDIF()
 MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/include
-    ${CMAKE_SOURCE_DIR}/src )
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/candidate/include
+    ${CMAKE_SOURCE_DIR}/src/candidate/efl
+)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(ISE_PKGS REQUIRED
@@ -56,15 +64,42 @@ ADD_DEFINITIONS("-DPACKAGE_NAME=\"${ISE_PKGNAME}\"")
 #ADD_EXECUTABLE(${PROJECT_NAME} ${ISE_SRCS})
 ADD_LIBRARY(${PROJECT_NAME} SHARED ${ISE_SRCS})
 
+# For edc File
+ADD_CUSTOM_TARGET(
+    candidate-single.edj
+    COMMAND edje_cc
+        -id ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single
+        -sd ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single
+        ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single/candidate.edc
+        ${CMAKE_BINARY_DIR}/candidate-single.edj
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single/candidate.edc
+)
+ADD_DEPENDENCIES(${PROJECT_NAME} candidate-single.edj)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-single.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+# For edc File end
+# For edc File
+ADD_CUSTOM_TARGET(
+    candidate-multiline.edj
+    COMMAND edje_cc
+        -id ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline
+        -sd ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline
+        ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline/candidate.edc
+        ${CMAKE_BINARY_DIR}/candidate-multiline.edj
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline/candidate.edc
+)
+ADD_DEPENDENCIES(${PROJECT_NAME} candidate-multiline.edj)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-multiline.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+# For edc File end
+
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${ISE_PKGS_LDFLAGS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${ISE_LIBDIR})
 
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.xml DESTINATION
-		${MANIFEST_DIR})
+        ${MANIFEST_DIR})
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/sdk/
-		DESTINATION ${ISE_RESDIR}/sdk/image)
+        DESTINATION ${ISE_RESDIR}/sdk/image)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/sdk/ DESTINATION
         ${ISE_RESDIR}/sdk FILES_MATCHING PATTERN "*.xml")
 

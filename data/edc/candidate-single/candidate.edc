@@ -1,0 +1,141 @@
+#define BUTTON_NORMAL_BG        "images/soft_candidate/B09_key_btn_01.png"
+#define BUTTON_PRESS_BG         "images/soft_candidate/B09_key_btn_press.png"
+#define COLOR_PRESS_BUTTON      166 166 166 200
+#define COLOR_NORMAL_TEXT       249 249 249 255
+#define COLOR_PRESS_TEXT        0 0 0 255
+//#define FONT_NAME               "Tizen:style=Regular"
+#define FONT_NAME   "DejaVu"
+#define FONT_SIZE               38
+#define POPUP_LINE_VERTICAL     "images/soft_candidate/B09_predictive_vertical_line.png"
+#define COLOR_NORMAL_BUTTON     0 0 0 0
+
+color_classes {
+    color_class {
+       name: "text_color";
+       color: 249 249 249 255;
+       color2: COLOR_NORMAL_TEXT;
+       color3: COLOR_NORMAL_TEXT;
+    }
+    color_class {
+       name: "rect_color";
+       color: 0 0 0 255;
+    }
+}
+
+collections {
+    group { name: "candidate";
+        parts {
+            part { name: "candidate.bg";
+                type: RECT;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    color: 0 0 0 255;
+                }
+            }
+
+            part { name: "candidate.scroller";
+                type: SWALLOW;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                }
+            }
+        }
+    }
+
+    group { name: "seperate_line";
+        images {
+            image: POPUP_LINE_VERTICAL COMP;
+        }
+
+        parts {
+            part { name: "bg";
+                mouse_events: 0;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    image.normal: POPUP_LINE_VERTICAL;
+                }
+            }
+        }
+    }
+
+    group { name: "candidate_item";
+        images {
+            image: BUTTON_NORMAL_BG COMP;
+            image: BUTTON_PRESS_BG COMP;
+        }
+
+        parts {
+            part { name: "bg";
+                type: RECT;
+                mouse_events: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    color_class: "rect_color";
+                }
+                description { state: "pressed" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    color: COLOR_PRESS_BUTTON;
+                }
+            }
+
+            part { name: "candidate";
+                type: TEXT;
+                mouse_events: 0;
+                description { state: "default" 0.0;
+                    color_class: "text_color";
+                    text {
+                        text: "Test";
+                        font: "arial";
+                        size: 20;
+                        text_class: "candidate";
+                    }
+                    rel1.to: "bg";
+                    rel1.relative: 0.0 0.0;
+                    rel1.offset: 11 0;
+                    rel2.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.offset: -11 0;
+                }
+                description { state: "pressed" 0.0;
+                    inherit: "default" 0.0;
+                    color: COLOR_PRESS_TEXT;
+                }
+            }
+        }
+        programs {
+            program { name: "button_click";
+                signal: "mouse,clicked,1";
+                source: "bg";
+                action: SIGNAL_EMIT "candidate,action,clicked" "";
+            }
+
+            program { name: "button_press";
+                signal: "mouse,down,1";
+                source: "bg";
+                action: STATE_SET "pressed" 0.0;
+                target: "bg";
+                target: "candidate";
+            }
+
+            program { name: "button_release";
+                signal: "mouse,up,1";
+                source: "bg";
+                action: STATE_SET "default" 0.0;
+                target: "bg";
+                target: "candidate";
+                //after, "do_me";
+            }
+
+            program { name: "do_me";
+                //signal, "*";
+                //source, "button_release";
+                action: SIGNAL_EMIT "candidate,action,clicked" "";
+            }
+        }
+    }
+}

@@ -31,9 +31,9 @@
 
 #include "common.h"
 #include "ise.h"
-
+#include "candidate-factory.h"
 #define IMDATA_STRING_MAX_LEN 256
-
+#define CANDIDATE_WINDOW_HEIGHT 84
 using namespace scl;
 
 CISECommon* CISECommon::m_instance = NULL; /* For singleton */
@@ -287,7 +287,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     elm_win_keyboard_win_set(m_main_window, EINA_TRUE);
     elm_win_autodel_set(m_main_window, EINA_TRUE);
     elm_win_title_set(m_main_window, "Tizen Keyboard");
-
+    evas_object_resize(m_main_window, 720, 444+CANDIDATE_WINDOW_HEIGHT);
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
         ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
@@ -340,6 +340,9 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     Ecore_Event_Handler *XClientMsgHandler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, m_main_window);
 
+    m_helper_agent.set_candidate_style(scim::ONE_LINE_CANDIDATE, scim::SOFT_CANDIDATE_WINDOW);
+    m_helper_agent.set_candidate_position(-1, -1);
+
     signal(SIGQUIT, signal_handler);
     signal(SIGTERM, signal_handler);
     signal(SIGINT,  signal_handler);
@@ -356,13 +359,6 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     if (fd_handler) {
         ecore_main_fd_handler_del(fd_handler);
     }
-
-    /* Would the below code needed? */
-    /*
-    if (m_event_callback) {
-        m_event_callback->exit();
-    }
-    */
 
     elm_shutdown();
 
@@ -405,10 +401,10 @@ Evas_Object* CISECommon::get_main_window()
 void CISECommon::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
     /* Temporary code, this should be automatically calculated when changing input mode */
-    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),   0, 0, 0, portrait.width, portrait.height);
-    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),  90, 0, 0, landscape.height, landscape.width);
-    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 180, 0, 0, portrait.width, portrait.height);
-    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 270, 0, 0, landscape.height, landscape.width);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),   0, 0, 0, portrait.width, portrait.height+CANDIDATE_WINDOW_HEIGHT);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),  90, 0, 0, landscape.height+CANDIDATE_WINDOW_HEIGHT, landscape.width);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 180, 0, 0, portrait.width, portrait.height+CANDIDATE_WINDOW_HEIGHT);
+    ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 270, 0, 0, landscape.height+CANDIDATE_WINDOW_HEIGHT, landscape.width);
 }
 
 scim::String CISECommon::get_keyboard_ise_uuid()
@@ -465,6 +461,12 @@ void CISECommon::forward_key_event(sclint ic, const sclchar *ic_uuid, sclu32 key
     event.mask = keymask;
     m_helper_agent.forward_key_event(ic, uuid, event);
 }
+
+void CISECommon::select_candidate(int index)
+{
+    m_helper_agent.select_candidate(index);
+}
+
 
 void CISECommon::commit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str)
 {
@@ -984,6 +986,16 @@ void slot_update_candidate_table_page_size (const scim::HelperAgent *, int ic, c
     }
 }
 
+void slot_update_lookup_table (const scim::HelperAgent *, scim::LookupTable &table) {
+    CISECommon *impl = CISECommon::get_instance();
+    if (impl) {
+        IISECommonEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->update_lookup_table(table);
+        }
+    }
+}
+
 void slot_select_associate (const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
     CISECommon *impl = CISECommon::get_instance();
     if (impl) {
@@ -1103,6 +1115,7 @@ void CISECommon::register_slot_functions()
     m_helper_agent.signal_connect_candidate_table_page_up (scim::slot (slot_candidate_table_page_up));
     m_helper_agent.signal_connect_candidate_table_page_down (scim::slot (slot_candidate_table_page_down));
     m_helper_agent.signal_connect_update_candidate_table_page_size (scim::slot (slot_update_candidate_table_page_size));
+    m_helper_agent.signal_connect_update_lookup_table (scim::slot (slot_update_lookup_table));
     m_helper_agent.signal_connect_select_associate (scim::slot (slot_select_associate));
     m_helper_agent.signal_connect_associate_table_page_up (scim::slot (slot_associate_table_page_up));
     m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));

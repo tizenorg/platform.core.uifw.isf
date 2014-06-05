@@ -8,6 +8,7 @@ Source0:    ise-default-%{version}.tar.gz
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  gettext-tools
+BuildRequires:  edje-bin
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(utilX)
