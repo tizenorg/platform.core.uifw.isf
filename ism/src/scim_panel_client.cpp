@@ -1018,6 +1018,13 @@ public:
         }
     }
 
+    void set_input_mode (int input_mode) {
+        if (m_send_refcount > 0) {
+            m_send_trans.put_command (ISM_TRANS_CMD_SET_INPUT_MODE);
+            m_send_trans.put_data (input_mode);
+        }
+    }
+
     void get_layout (int* layout) {
         if (m_send_refcount > 0) {
             int cmd;
@@ -1702,6 +1709,12 @@ void
 PanelClient::get_layout             (int* layout)
 {
     m_impl->get_layout (layout);
+}
+
+void
+PanelClient::set_input_mode         (int input_mode)
+{
+    m_impl->set_input_mode (input_mode);
 }
 
 void

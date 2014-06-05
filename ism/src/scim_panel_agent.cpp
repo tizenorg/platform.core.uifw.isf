@@ -1681,6 +1681,32 @@ public:
         return false;
     }
 
+    bool set_helper_input_mode (const String &uuid, uint32 &mode)
+    {
+        HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+        if (it != m_helper_client_index.end ()) {
+            int client;
+            uint32 context;
+            Socket client_socket (it->second.id);
+            uint32 ctx;
+
+            get_focused_context (client, context);
+            ctx = get_helper_ic (client, context);
+
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data (ctx);
+            m_send_trans.put_data (uuid);
+            m_send_trans.put_command (ISM_TRANS_CMD_SET_INPUT_MODE);
+            m_send_trans.put_data (mode);
+            m_send_trans.write_to_socket (client_socket);
+            return true;
+        }
+
+        return false;
+    }
+
     bool set_helper_caps_mode (const String &uuid, uint32 &mode)
     {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
@@ -2087,6 +2113,17 @@ public:
         if (m_recv_trans.get_data (layout)) {
             if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
                 set_helper_layout (m_current_helper_uuid, layout);
+        }
+    }
+
+    void set_ise_input_mode (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_ise_input_mode ()\n";
+        uint32 input_mode;
+
+        if (m_recv_trans.get_data (input_mode)) {
+            if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
+                set_helper_input_mode (m_current_helper_uuid, input_mode);
         }
     }
 
@@ -3366,6 +3403,9 @@ private:
                         continue;
                     } else if (cmd == ISM_TRANS_CMD_GET_ISE_STATE) {
                         get_ise_state (client_id);
+                        continue;
+                    } else if (cmd == ISM_TRANS_CMD_SET_INPUT_MODE) {
+                        set_ise_input_mode (client_id);
                         continue;
                     }
 

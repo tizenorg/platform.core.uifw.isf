@@ -173,6 +173,7 @@ public:
     HelperAgentSignalInt                signal_update_displayed_candidate_number;
     HelperAgentSignalInt                signal_longpress_candidate;
     HelperAgentSignalKeyEventUint       signal_process_key_event;
+    HelperAgentSignalUintVoid           signal_set_input_mode;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
@@ -689,6 +690,14 @@ HelperAgent::filter_event ()
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
                 m_impl->send.put_data (layout);
                 m_impl->send.write_to_socket (m_impl->socket);
+                break;
+            }
+            case ISM_TRANS_CMD_SET_INPUT_MODE:
+            {
+                uint32 input_mode;
+
+                if (m_impl->recv.get_data (input_mode))
+                    m_impl->signal_set_input_mode (this, input_mode);
                 break;
             }
             case ISM_TRANS_CMD_SET_CAPS_MODE:
@@ -2105,6 +2114,20 @@ Connection
 HelperAgent::signal_connect_get_layout (HelperAgentSlotUintVoid *slot)
 {
     return m_impl->signal_get_layout.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper set input mode signal.
+ *
+ * This signal is used to set Helper ISE input mode.
+ *
+ * The prototype of the slot is:
+ * void set_input_mode (const HelperAgent *agent, uint32 &input_mode);
+ */
+Connection
+HelperAgent::signal_connect_set_input_mode (HelperAgentSlotUintVoid *slot)
+{
+    return m_impl->signal_set_input_mode.connect (slot);
 }
 
 /**

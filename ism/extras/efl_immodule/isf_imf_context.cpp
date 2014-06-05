@@ -1633,7 +1633,11 @@ isf_imf_context_input_mode_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Mode inp
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF*)ecore_imf_context_data_get (ctx);
     if (context_scim && context_scim->impl) {
-        context_scim->impl->input_mode = input_mode;
+        if (context_scim->impl->input_mode != input_mode) {
+            context_scim->impl->input_mode = input_mode;
+
+            isf_imf_context_input_panel_input_mode_set (ctx, input_mode);
+        }
     }
 }
 

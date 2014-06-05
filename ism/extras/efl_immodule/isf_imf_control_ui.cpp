@@ -964,6 +964,19 @@ void isf_imf_context_input_panel_send_candidate_will_hide_ack (Ecore_IMF_Context
     }
 }
 
+void isf_imf_context_input_panel_input_mode_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Mode input_mode)
+{
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (!IfInitContext)
+        _isf_imf_context_init ();
+
+    if (context_scim == get_focused_ic ()) {
+        SECURE_LOGD ("input mode : %d\n", input_mode);
+        _isf_imf_context_input_panel_input_mode_set (_get_context_id (ctx), input_mode);
+    }
+}
+
 /**
  * process input panel show message
  */

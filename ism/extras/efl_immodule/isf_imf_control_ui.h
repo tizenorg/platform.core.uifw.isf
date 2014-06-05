@@ -43,6 +43,7 @@ extern "C"
 
     void isf_imf_input_panel_init ();
     void isf_imf_input_panel_shutdown ();
+    void isf_imf_context_input_panel_input_mode_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Mode input_mode);
     void isf_imf_context_input_panel_show (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_instant_hide (Ecore_IMF_Context *ctx);

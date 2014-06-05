@@ -1202,6 +1202,16 @@ public:
      * void process_key_event (const HelperAgent *, KeyEvent &key, uint32 &ret);
      */
     Connection signal_connect_process_key_event (HelperAgentSlotKeyEventUint *slot);
+
+    /**
+     * @brief Connect a slot to Helper set input mode signal.
+     *
+     * This signal is used to set Helper ISE input mode.
+     *
+     * The prototype of the slot is:
+     * void set_input_mode (const HelperAgent *agent, uint32 &input_mode);
+     */
+    Connection signal_connect_set_input_mode                        (HelperAgentSlotUintVoid            *slot);
 };
 
 /**  @} */

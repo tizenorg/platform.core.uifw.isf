@@ -646,6 +646,7 @@ const int ISM_TRANS_CMD_SET_RETURN_KEY_TYPE               = 1118;
 const int ISM_TRANS_CMD_GET_RETURN_KEY_TYPE               = 1119;
 const int ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE            = 1120;
 const int ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE            = 1121;
+const int ISM_TRANS_CMD_SET_INPUT_MODE                    = 1122;
 
 /* ISE/Panel to IMControl */
 const int ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT          = 1151;

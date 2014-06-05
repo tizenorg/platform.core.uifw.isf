@@ -223,6 +223,14 @@ int _isf_imf_context_input_panel_send_candidate_will_hide_ack (int context)
     return 0;
 }
 
+int _isf_imf_context_input_panel_input_mode_set (int context, Ecore_IMF_Input_Mode input_mode)
+{
+    _panel_client.prepare (context);
+    _panel_client.set_input_mode ((int)input_mode);
+    _panel_client.send ();
+    return 0;
+}
+
 /*
 vi:ts=4:expandtab:nowrap
 */

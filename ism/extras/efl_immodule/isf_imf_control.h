@@ -64,6 +64,8 @@ extern "C"
 
     int _isf_imf_context_input_panel_send_candidate_will_hide_ack (int context);
 
+    int _isf_imf_context_input_panel_input_mode_set (int context, Ecore_IMF_Input_Mode input_mode);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
