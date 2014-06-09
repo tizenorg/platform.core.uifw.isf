@@ -383,6 +383,13 @@ public:
      */
     //void get_keyboard_ise_list    (const String                &uuid) const;
 
+#ifdef WAYLAND
+     /**
+     * @brief This API returns the pointer to main keyboard object
+     */
+    Evas_Object* get_main_obj();
+#endif
+
 private:
     virtual void register_slot_functions();
 
@@ -398,6 +405,7 @@ private:
     scim::String m_supported_language;
 
     Evas_Object *m_main_window;
+    Evas_Object *m_main_obj;
 };
 
 #endif //__COMMON_H__

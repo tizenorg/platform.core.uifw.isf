@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(ise-default CXX)
+PROJECT(ise-default)
 
 SET(ISE_SRCS
     src/main.cpp
@@ -12,6 +12,7 @@ SET(ISE_SRCS
     src/sdk/ise_lang_table.cpp
     src/sdk/sdk.cpp
     src/sdk/sdk_option.cpp
+    src/input-method-protocol.c
 
     src/candidate/candidate-factory.cpp
     src/candidate/candidate.cpp
@@ -48,6 +49,8 @@ pkg_check_modules(ISE_PKGS REQUIRED
         isf
         vconf
         libxml-2.0
+        ecore-wayland
+        wayland-client
         )
 
 FOREACH(flag ${ISE_PKGS_CFLAGS})
@@ -108,6 +111,10 @@ ADD_SUBDIRECTORY(po)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(ise-default-setup CXX)
+
+IF (with_wayland)
+        ADD_DEFINITIONS("-DWAYLAND")
+ENDIF(with_wayland)
 
 SET(SETUP_SRCS
     src/setup_module.cpp

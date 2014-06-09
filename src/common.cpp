@@ -19,9 +19,18 @@
 #include <stdlib.h>
 
 #include <glib.h>
+
+#ifdef WAYLAND
+#include <Ecore.h>
+#include <Ecore_Wayland.h>
+#include "input-method-client-protocol.h"
+#include <malloc.h>
+#else
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <Ecore_X.h>
+#endif
+#include <Ecore_Evas.h>
 #include <Elementary.h>
 
 #include <dlog.h>
@@ -34,6 +43,24 @@
 #include "candidate-factory.h"
 #define IMDATA_STRING_MAX_LEN 256
 #define CANDIDATE_WINDOW_HEIGHT 84
+
+#ifdef WAYLAND
+struct WeescimKeyboard
+{
+   Ecore_Evas *ee;
+   Ecore_Wl_Window *win;
+   Evas_Object *obj;
+   const char *ee_engine;
+
+   struct wl_surface *surface;
+   struct wl_input_panel *ip;
+   struct wl_input_method *im;
+   struct wl_output *output;
+};
+
+struct WeescimKeyboard wskb = {0};
+#endif
+
 using namespace scl;
 
 CISECommon* CISECommon::m_instance = NULL; /* For singleton */
@@ -51,6 +78,9 @@ Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler);
 
 static int get_app_window_degree(Evas_Object *keypad_win)
 {
+#ifdef WAYLAND
+    return 0;
+#else
     int  ret = 0;
     Atom type_return;
     int  format_return;
@@ -96,8 +126,8 @@ static int get_app_window_degree(Evas_Object *keypad_win)
             XFree(data_window);
     }
 
-
     return retVal;
+#endif
 }
 
 const char * extract_themename_from_theme_file_path(const char *filepath) {
@@ -186,6 +216,7 @@ void accessibility_changed_cb(keynode_t *key, void* data)
 
 static Eina_Bool _client_message_cb (void *data, int type, void *event)
 {
+#ifndef WAYLAND
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
 
     IISECommonEventCallback *callback = NULL;
@@ -229,19 +260,116 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
             }
         }
     }
-
+#endif
     return ECORE_CALLBACK_RENEW;
 }
 
 CISECommon::CISECommon()
 {
     m_main_window = NULL;
+    m_main_obj = NULL;
     m_event_callback = NULL;
 }
 
 CISECommon::~CISECommon()
 {
 }
+
+#ifdef WAYLAND
+static Eina_Bool
+_wskb_ui_setup(struct WeescimKeyboard *wskb)
+{
+   Evas_Coord w, h;
+
+   ecore_evas_alpha_set(wskb->ee, EINA_TRUE);
+   ecore_evas_title_set(wskb->ee, "Weescimkeyboard");
+
+   wskb->obj = evas_object_rectangle_add(ecore_evas_get(wskb->ee));
+
+   /* Check which theme we should use according to the screen width */
+   w = 720;
+   h = 444;
+
+   ecore_evas_move_resize(wskb->ee, 0, 0, w, h);
+   evas_object_move(wskb->obj, 0, 0);
+   evas_object_resize(wskb->obj, w, h);
+   evas_object_size_hint_min_set(wskb->obj, w, h);
+   evas_object_size_hint_max_set(wskb->obj, w, h);
+
+   ecore_evas_show(wskb->ee);
+   return EINA_TRUE;
+}
+
+static void
+_wskb_setup(struct WeescimKeyboard *wskb)
+{
+   struct wl_list *globals;
+   struct wl_registry *registry;
+   Ecore_Wl_Global *global;
+
+   struct wl_input_panel_surface *ips;
+
+   if (!(registry = ecore_wl_registry_get()))
+       return;
+
+   if (!(globals = (wl_list*)ecore_wl_globals_get()))
+       return;
+
+    EINA_INLIST_FOREACH(globals, global)
+    {
+        if (strcmp(global->interface, "wl_input_panel") == 0)
+           wskb->ip = (wl_input_panel *)wl_registry_bind(registry, global->id, &wl_input_panel_interface, 1);
+        else if (strcmp(global->interface, "wl_output") == 0)
+           wskb->output = (wl_output *)wl_registry_bind(registry, global->id, &wl_output_interface, 1);
+    }
+
+    /* Set input panel surface */
+    fprintf(stderr,"Setting up input panel");
+    wskb->win = ecore_evas_wayland_window_get(wskb->ee);
+    ecore_wl_window_type_set(wskb->win, ECORE_WL_WINDOW_TYPE_NONE);
+    wskb->surface = ecore_wl_window_surface_create(wskb->win);
+    ips = wl_input_panel_get_input_panel_surface(wskb->ip, wskb->surface);
+    wl_input_panel_surface_set_toplevel(ips, wskb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
+}
+
+static void
+_wskb_free(struct WeescimKeyboard *wskb)
+{
+   if (wskb->obj)
+      evas_object_del(wskb->obj);
+}
+
+static Eina_Bool
+_wskb_check_evas_engine(struct WeescimKeyboard *wskb)
+{
+   Eina_Bool ret = EINA_FALSE;
+   char *env = getenv("ECORE_EVAS_ENGINE");
+
+   if (!env)
+     {
+        if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_SHM))
+           env = "wayland_shm";
+        else if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_EGL))
+           env = "wayland_egl";
+        else
+          {
+             fprintf(stderr,"ERROR: Ecore_Evas does must be compiled with support for Wayland engines");
+             goto err;
+          }
+     }
+   else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0)
+     {
+        fprintf(stderr,"ERROR: ECORE_EVAS_ENGINE must be set to either 'wayland_shm' or 'wayland_egl'");
+        goto err;
+     }
+
+   wskb->ee_engine = env;
+   ret = EINA_TRUE;
+
+err:
+   return ret;
+}
+#endif
 
 CISECommon*
 CISECommon::get_instance()
@@ -275,6 +403,8 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 {
     char *argv[4];
     int argc = 3;
+    int fd;
+    Ecore_Fd_Handler *fd_handler = NULL;
 
     argv [0] = const_cast<char *> (m_helper_info.name.c_str());
     argv [1] = const_cast<char *> ("--display");
@@ -283,21 +413,62 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     m_config = config;
 
+#ifdef WAYLAND
+    if (!ecore_evas_init())
+    {
+        fprintf(stderr,"ecore_evas_init error!\n");
+        return;
+    }
+
+    if (!_wskb_check_evas_engine(&wskb))
+    {
+        fprintf(stderr,"_wkb_check_evas_engine error!\n");
+        goto end;
+    }
+    fprintf(stderr,"Selected engine: '%s'\n", wskb.ee_engine);
+    wskb.ee = ecore_evas_new(wskb.ee_engine, 0, 0, 1, 1, "frame=0");
+
+    if (!wskb.ee)
+    {
+        fprintf(stderr,"ERROR: Unable to create Ecore_Evas object");
+        goto end;
+    }
+
+    _wskb_setup(&wskb);
+    if (!_wskb_ui_setup(&wskb))
+    {
+        fprintf(stderr,"ERROR: _wkb_ui_setup\n");
+        goto err;
+    }
+
+    m_main_obj = wskb.obj;
     elm_init(argc, argv);
+    m_main_window = elm_win_add(wskb.obj, "Tizen Keyboard", ELM_WIN_INLINED_IMAGE);
+#else
+    elm_init(argc, argv);
+    m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
+#endif
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
-
-    m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
 
     //elm_win_alpha_set(m_main_window, EINA_TRUE);
     elm_win_borderless_set(m_main_window, EINA_TRUE);
     elm_win_keyboard_win_set(m_main_window, EINA_TRUE);
     elm_win_autodel_set(m_main_window, EINA_TRUE);
     elm_win_title_set(m_main_window, "Tizen Keyboard");
+
+#ifdef WAYLAND
+    evas_object_resize(m_main_window, 720, 444);
+    evas_object_move(elm_win_inlined_image_object_get(m_main_window),
+        0, 0);
+    evas_object_resize(elm_win_inlined_image_object_get(m_main_window),
+        720, 444);
+#else
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
         ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
         &set, 1);
+#endif
 
 #ifdef FULL_SCREEN_TEST
     elm_win_fullscreen_set(m_main_window, EINA_TRUE);
@@ -324,15 +495,14 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     register_slot_functions();
 
     m_helper_agent.open_connection(m_helper_info, display);
-    int fd = m_helper_agent.get_connection_number();
+    fd = m_helper_agent.get_connection_number();
 
     if (!m_uuid_keyboard_ise.empty()) {
         m_helper_agent.set_keyboard_ise_by_uuid(m_uuid_keyboard_ise);
     }
 
-    Ecore_Fd_Handler *fd_handler = NULL;
-
     if (fd >= 0) {
+#ifndef WAYLAND
         Ecore_X_Window xwindow = elm_win_xwindow_get(m_main_window);
         char xid[255];
         snprintf(xid, 255, "%d", xwindow);
@@ -340,11 +510,14 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
         scim::PropertyList props;
         props.push_back(prop);
         m_helper_agent.register_properties(props);
+#endif
 
         fd_handler = ecore_main_fd_handler_add(fd, ECORE_FD_READ, input_handler, NULL, NULL, NULL);
     }
 
+#ifndef WAYLAND
     Ecore_Event_Handler *XClientMsgHandler = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, m_main_window);
+#endif
 
     signal(SIGQUIT, signal_handler);
     signal(SIGTERM, signal_handler);
@@ -357,15 +530,37 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     vconf_ignore_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb);
     vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
-    ecore_event_handler_del(XClientMsgHandler);
+#ifndef WAYLAND
+    if (XClientMsgHandler) {
+        ecore_event_handler_del(XClientMsgHandler);
+        XClientMsgHandler = NULL;
+    }
+#endif
 
     if (fd_handler) {
         ecore_main_fd_handler_del(fd_handler);
+        fd_handler = NULL;
     }
 
-    elm_shutdown();
+#ifdef WAYLAND
+err:
+    _wskb_free(&wskb);
+    ecore_evas_free(wskb.ee);
 
+end:
+    elm_shutdown();
+    ecore_evas_shutdown();
+#else
+    elm_shutdown();
+#endif
 }
+
+#ifdef WAYLAND
+Evas_Object* CISECommon::get_main_obj()
+{
+    return m_main_obj;
+}
+#endif
 
 scim::HelperAgent* CISECommon::get_helper_agent()
 {
@@ -403,11 +598,13 @@ Evas_Object* CISECommon::get_main_window()
 
 void CISECommon::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
+#ifndef WAYLAND
     /* Temporary code, this should be automatically calculated when changing input mode */
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),   0, 0, 0, portrait.width, portrait.height);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),  90, 0, 0, landscape.height, landscape.width);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 180, 0, 0, portrait.width, portrait.height);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window), 270, 0, 0, landscape.height, landscape.width);
+#endif
 }
 
 scim::String CISECommon::get_keyboard_ise_uuid()

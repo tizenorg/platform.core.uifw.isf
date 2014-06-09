@@ -17,10 +17,18 @@
 
 #include <string.h>
 #include <scl.h>
+
+#ifdef WAYLAND
+#include <Ecore.h>
+#include <Ecore_Wayland.h>
+#include "common.h"
+#define ECORE_WL_EVENT_FOCUS_OUT 0
+#define OPTION_GENLIST_OBJ_DIR "/usr/share/elementary/themes/tizen-hd.edj"
+#else
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-
 #include <Ecore_X.h>
+#endif
 
 #include <glib.h>
 #include <Elementary.h>
@@ -114,15 +122,46 @@ ILanguageOption* LanguageOptionManager::get_language_option_info(scluint index) 
 static Evas_Object*
 create_main_window(int degree)
 {
-    Evas_Object *window = elm_win_add(NULL, "Option window", ELM_WIN_BASIC);
+#ifdef WAYLAND
+    CISECommon *common = CISECommon::get_instance();
+    Evas_Object *window = elm_win_add(common->get_main_obj(), "Option window", ELM_WIN_INLINED_IMAGE);
+    if (!window) return NULL;
+
     elm_win_title_set(window, "Option window");
+    Evas_Object *bg = elm_bg_add(window);
+    if (!bg) {
+        evas_object_del(window);
+        return NULL;
+    }
+    elm_win_fullscreen_set(window, EINA_TRUE);
+    evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    elm_win_resize_object_add(window, bg);
+    evas_object_show(bg);
+#else
+    Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
 
     elm_win_profile_set(window, "mobile");
+#endif
 
     elm_win_borderless_set(window, EINA_TRUE);
 
     Evas_Coord win_w = 0, win_h = 0;
+
+#ifdef WAYLAND
+    win_w = 720;
+    win_h = 444;
+
+    elm_win_autodel_set(window, EINA_TRUE);
+
+    evas_object_move(window, 0, 0);
+    evas_object_size_hint_min_set(window, win_w, win_h);
+    evas_object_size_hint_max_set(window, win_w, win_h);
+    evas_object_move(elm_win_inlined_image_object_get(window), 0, 0);
+    evas_object_resize(elm_win_inlined_image_object_get(window), win_w, win_h);
+#else
     ecore_x_window_size_get(ecore_x_window_root_first_get(), &win_w, &win_h);
+#endif
+
     if(degree == 90 || degree == 270){
         evas_object_resize(window, win_h, win_w);
     }else{
@@ -344,6 +383,23 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
     Elm_Object_Item *item = (Elm_Object_Item*)event_info;
     ITEMDATA * item_data = (ITEMDATA*)elm_object_item_data_get(item);
     if (item) {
+#ifdef WAYLAND
+    for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
+            if (info) {
+                if (info->enabled) {
+                    elm_genlist_item_selected_set(ad.language_item[loop], EINA_FALSE);
+                    ITEMDATA * item_data_selected = (ITEMDATA*)elm_object_item_data_get(item);
+
+                    // Update check button
+                    Evas_Object *ck_selected = elm_object_item_part_content_get(ad.language_item[loop], "elm.icon");
+                    Eina_Bool state_selected = elm_check_state_get(ck_selected);
+                    elm_check_state_set(ck_selected, !state_selected);
+                    info->enabled = FALSE;
+                }
+            }
+        }
+#endif
         elm_genlist_item_selected_set(item, EINA_FALSE);
 
         // Update check button
@@ -351,6 +407,9 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
         Eina_Bool state = elm_check_state_get(ck);
         elm_check_state_set(ck, !state);
         language_selected(item_data, ck, NULL);
+#ifdef WAYLAND
+        navi_back_cb(data, obj, event_info);
+#endif
     }
 }
 
@@ -543,6 +602,15 @@ _naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
     }
 }
 
+#ifdef WAYLAND
+static void
+_genlist_back_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    language_selection_finished_cb(data, obj, event_info);
+    elm_naviframe_item_promote((Elm_Object_Item *)data);
+}
+#endif
+
 Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe)
 {
     create_genlist_item_classes();
@@ -573,6 +641,9 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 
 static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 {
+#ifdef WAYLAND
+    int num_languages = 0;
+#endif
     Evas_Object *genlist = elm_genlist_add(naviframe);
     elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
     elm_genlist_homogeneous_set (genlist, EINA_TRUE);
@@ -581,6 +652,15 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     {
         LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info) {
+#ifdef WAYLAND
+            if (info->enabled) {
+                num_languages++;
+
+                if(num_languages > 1) {
+                    info->enabled = FALSE;
+                }
+            }
+#endif
             strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
             language_itemdata[loop].mode = loop;
             ad.language_item[loop] = elm_genlist_item_append(genlist, ad.itc_language_subitems, &language_itemdata[loop], NULL,
@@ -590,6 +670,7 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
         }
     }
 
+#ifndef WAYLAND
     evas_object_show(genlist);
 
     Elm_Object_Item *navi_it = elm_naviframe_item_push(ad.naviframe, LANGUAGE, NULL, NULL, genlist,NULL);
@@ -597,6 +678,7 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     evas_object_data_set(genlist, "back_button", back_btn);
     evas_object_smart_callback_add (back_btn, "clicked", language_selection_finished_cb, NULL);
     elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, NULL);
+#endif
 
     return genlist;
 }
@@ -703,6 +785,11 @@ static Eina_Bool focus_out_cb(void *data, int type, void *event)
 static void
 navi_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
+#ifdef WAYLAND
+    language_selection_finished_cb(data, obj, event_info);
+    elm_theme_overlay_del(NULL, OPTION_GENLIST_OBJ_DIR);
+    ise_show(gLastIC);
+#endif
     evas_object_smart_callback_del(obj, "clicked", navi_back_cb);
     close_option_window();
 }
@@ -711,6 +798,7 @@ navi_back_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 set_transient_for_app_window(Evas_Object *window)
 {
+#ifndef WAYLAND
     /* Set a transient window for window stack */
     /* Gets the current XID of the active window into the root window property  */
     Atom type_return;
@@ -738,12 +826,14 @@ set_transient_for_app_window(Evas_Object *window)
             XFree(data);
         }
     }
+#endif
 }
 #endif
 
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
+    ise_pause();
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */
@@ -757,11 +847,17 @@ open_option_window(Evas_Object *parent, sclint degree)
     }
     else
     {
+#ifdef WAYLAND
+        elm_theme_overlay_add(NULL, OPTION_GENLIST_OBJ_DIR);
+        Evas_Coord win_w = 720, win_h = 444;
+#endif
         memset(&ad, 0x0, sizeof(OPTION_ELEMENTS));
 
         /* create option window */
         Evas_Object *window = create_main_window(degree);
+#ifndef WAYLAND
         ad.option_window = window;
+#endif
 
         elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
         elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
@@ -785,16 +881,30 @@ open_option_window(Evas_Object *parent, sclint degree)
         evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
+#ifdef WAYLAND
+        create_genlist_item_classes();
+        Evas_Object *list = create_option_language_view(naviframe);
+#else
         Evas_Object *list = create_option_main_view(conformant, naviframe);
+#endif
 
         /* add a back button to naviframe */
         Evas_Object *back_btn = elm_button_add(naviframe);
         elm_object_style_set(back_btn, "naviframe/back_btn/default");
         evas_object_smart_callback_add (back_btn, "clicked", navi_back_cb, NULL);
+#ifdef WAYLAND
+        Elm_Object_Item *it = elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
+        evas_object_data_set(naviframe, OPTIONS, it);
+        elm_naviframe_item_title_visible_set(it, EINA_FALSE);
+#else
         elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
+#endif
 
         elm_object_content_set(conformant, naviframe);
 
+#ifdef WAYLAND
+        evas_object_resize(naviframe, win_w, win_h);
+#endif
         evas_object_show(naviframe);
 
         set_transient_for_app_window(window);
@@ -803,6 +913,10 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         ad.option_window = window;
 
+#ifdef WAYLAND
+        ad.event_handler = ecore_event_handler_add(ECORE_WL_EVENT_FOCUS_OUT, focus_out_cb, NULL);
+#else
         ad.event_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, NULL);
+#endif
     }
 }

@@ -1,3 +1,5 @@
+%bcond_with wayland
+
 Name:       ise-default
 Summary:    Tizen keyboard
 Version:    1.0.8
@@ -11,12 +13,17 @@ BuildRequires:  gettext-tools
 BuildRequires:  edje-bin
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(elementary)
+%if %{with wayland}
+BuildRequires:  pkgconfig(ecore-wayland)
+BuildRequires:  pkgconfig(wayland-client)
+%else
 BuildRequires:  pkgconfig(utilX)
+BuildRequires:  pkgconfig(x11)
+%endif
 BuildRequires:  pkgconfig(isf)
 BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(dlog)
-BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(libscl-ui)
 BuildRequires:  pkgconfig(ecore-imf)
 BuildRequires:  pkgconfig(libxml-2.0)
@@ -53,7 +60,11 @@ CFLAGS+=" -D_TV";
 CXXFLAGS+=" -D_TV";
 %endif
 
-cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}  -DLIB_INSTALL_DIR:PATH=%{_libdir}
+%if %{with wayland}
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir} -Dwith_wayland=TRUE
+%else
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir}
+%endif
 
 make %{?jobs:-j%jobs}
 

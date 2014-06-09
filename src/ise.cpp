@@ -21,11 +21,15 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#ifndef WAYLAND
 #include <Ecore_X.h>
+#endif
 #include <Ecore_IMF.h>
 #include <Elementary.h>
 
+#ifndef WAYLAND
 #include <X11/XF86keysym.h>
+#endif
 
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -46,6 +50,9 @@ CSCLUI *gSCLUI = NULL;
 extern CISECommon *g_ise_common;
 extern CONFIG_VALUES g_config_values;
 static sclboolean g_need_send_shift_event = FALSE;
+#ifdef WAYLAND
+int gLastIC = 0;
+#endif
 
 KEYBOARD_STATE g_keyboard_state = {
     0,
@@ -488,7 +495,27 @@ ise_show(int ic)
 
     g_candidate->show();
     g_keyboard_state.visible_state = TRUE;
+#ifdef WAYLAND
+    gLastIC = ic;
+#endif
 }
+
+#ifdef WAYLAND
+void
+ise_pause()
+{
+    if (gSCLUI)
+        gSCLUI->disable_input_events(TRUE);
+}
+
+void
+ise_resume()
+{
+    if (gSCLUI)
+        gSCLUI->disable_input_events(FALSE);
+}
+#endif
+
 
 /**
  * Sets screen rotation
@@ -567,7 +594,9 @@ ise_create()
                 g_candidate = CandidateFactory::make_candidate(CANDIDATE_MULTILINE, g_ise_common->get_main_window());
             }
             g_candidate->add_event_listener(&g_candidate_event_listener);
+#ifndef WAYLAND
             gSCLUI->set_longkey_duration(elm_config_longpress_timeout_get() * 1000);
+#endif
 
             /* Default ISE callback */
             gSCLUI->set_ui_event_callback(&callback);
