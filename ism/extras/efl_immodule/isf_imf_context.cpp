@@ -384,6 +384,7 @@ static Ecore_Event_Handler                             *_key_up_handler         
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
 static bool                                             _change_keyboard_mode_by_touch = false;
+static bool                                             _change_keyboard_mode_by_focus_move = false;
 static bool                                             _support_hw_keyboard_mode   = false;
 
 static double                                           space_key_time              = 0.0;
@@ -1432,6 +1433,27 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         SCIM_DEBUG_FRONTEND(1) << "Focus out previous IC first: " << _focused_ic->id << "\n";
         if (_focused_ic->ctx)
             isf_imf_context_focus_out (_focused_ic->ctx);
+    }
+
+    if (_change_keyboard_mode_by_focus_move) {
+        TOOLBAR_MODE_T kbd_mode = TOOLBAR_HELPER_MODE;
+        unsigned int val = 0;
+        //To get the current keyboard mode
+        if (ecore_x_window_prop_card32_get (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1) > 0) {
+            if (val == 1) {
+                kbd_mode = TOOLBAR_KEYBOARD_MODE;
+            } else {
+                kbd_mode = TOOLBAR_HELPER_MODE;
+            }
+        } else {
+            kbd_mode = TOOLBAR_HELPER_MODE;
+        }
+
+        //if h/w keyboard mode, keyboard mode will be changed to s/w mode when the entry get the focus.
+        if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
+            LOGD ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
+            isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
+        }
     }
 
     bool need_cap   = false;
@@ -4518,6 +4540,7 @@ reload_config_callback (const ConfigPointer &config)
     _on_the_spot = config->read (String (SCIM_CONFIG_FRONTEND_ON_THE_SPOT), _on_the_spot);
     _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
     _change_keyboard_mode_by_touch = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_TOUCH), _change_keyboard_mode_by_touch);
+    _change_keyboard_mode_by_focus_move = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_FOCUS_MOVE), _change_keyboard_mode_by_focus_move);
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
     // Get keyboard layout setting

@@ -14,4 +14,5 @@
 /PreloadKeyboardIse = true
 /LaunchIseOnRequest = false
 /ChangeKeyboardModeByTouch = false
+/ChangeKeyboardModeByFocusMove = false
 /SupportHWKeyboardMode = false
