@@ -497,6 +497,11 @@ AC_ARG_ENABLE(tray-icon,
               enable_tray_icon=no,
               enable_tray_icon=yes)
 
+AC_ARG_ENABLE(multiwindow-support,
+              [  --disable-multiwindow-support       Do not build Multiwindow Support],
+              enable_multiwindow_support=no,
+              enable_multiwindow_support=yes)
+
 if test "$have_x" = "yes"; then
   SCIM_BUILD_X11_UTILS=1
   enable_x11_utils=yes
@@ -597,6 +602,13 @@ if test "$enable_tray_icon" = "yes"; then
   fi
 else
   enable_tray_icon=no
+fi
+
+if test "$enable_multiwindow_support" = "yes"; then
+  enable_multiwindow_support=yes
+  AC_DEFINE(ENABLE_MULTIWINDOW_SUPPORT,1,[Enable the Multi Window code.])
+else
+  enable_multiwindow_support=no
 fi
 
 if test "$enable_efl_immodule" = "yes" -a "$ISF_HAS_EFL" = "yes"; then
@@ -819,5 +831,6 @@ Module options:
   EFL  Setting             $enable_setting_efl
 
   Enable TrayIcon          $enable_tray_icon
+  Enable MultiWindow       $enable_multiwindow_support
 ])
 

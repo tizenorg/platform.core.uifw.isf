@@ -5955,6 +5955,8 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
 
     if (e && e->win == _app_window) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+
+#if ENABLE_MULTIWINDOW_SUPPORT
             LOGD ("Application window focus OUT!\n");
             delete_ise_hide_timer ();
 
@@ -5975,6 +5977,12 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
                 slot_hide_ise ();
                 ui_candidate_hide (true, false, false);
             }
+#else
+            LOGD ("Application window focus OUT! Panel hides ISE");
+            _panel_agent->hide_helper (_panel_agent->get_current_helper_uuid ());
+            slot_hide_ise ();
+            ui_candidate_hide (true, false, false);
+#endif
         }
     }
 
