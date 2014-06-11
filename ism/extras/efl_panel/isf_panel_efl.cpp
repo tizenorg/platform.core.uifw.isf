@@ -3461,6 +3461,43 @@ static Ecore_X_Window efl_get_app_window (void)
     return xAppWindow;
 }
 
+/**
+ * @brief Get clipboard window's x window id.
+ *
+ */
+static Ecore_X_Window efl_get_clipboard_window (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    /* Gets the XID of the clipboard window from the root window property */
+    int  ret = 0;
+    Atom type_return;
+    int  format_return;
+    unsigned long    nitems_return;
+    unsigned long    bytes_after_return;
+    unsigned char   *data = NULL;
+    Ecore_X_Window   clipboard_window = 0;
+
+    ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
+                              ecore_x_window_root_get (_control_window),
+                              ecore_x_atom_get ("CBHM_ELM_WIN"),
+                              0, G_MAXLONG, False, XA_WINDOW, &type_return,
+                              &format_return, &nitems_return, &bytes_after_return,
+                              &data);
+
+    if (ret == Success) {
+        if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
+            clipboard_window = *(Window *)data;
+            if (data)
+                XFree (data);
+        }
+    } else {
+        std::cerr << "XGetWindowProperty () is failed!!!\n";
+    }
+
+    return clipboard_window;
+}
+
 static Ecore_X_Window efl_get_quickpanel_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
@@ -5016,6 +5053,11 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
             efl_set_transient_for_app_window (_ise_window);
         }
 
+        Ecore_X_Atom atom = ecore_x_atom_get ("_ISF_ISE_WINDOW");
+        if (atom && _control_window && _ise_window) {
+            ecore_x_window_prop_xid_set (_control_window, atom, ECORE_X_ATOM_WINDOW, &_ise_window, 1);
+        }
+
         ise_selector_destroy ();
     }
 }
@@ -5072,6 +5114,13 @@ static void slot_show_ise (void)
 
     ecore_x_event_mask_set (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
     efl_set_transient_for_app_window (_ise_window);
+
+    /* Make clipboard window to have transient_for information on ISE window,
+       so that the clipboard window will always be above ISE window */
+    Ecore_X_Window clipboard_window = efl_get_clipboard_window ();
+    if (_ise_window && clipboard_window) {
+        ecore_x_icccm_transient_for_set (clipboard_window, _ise_window);
+    }
 
     /* If our ISE was already in SHOW state, skip state transition to WILL_SHOW */
     if (_ise_state != WINDOW_STATE_SHOW) {
