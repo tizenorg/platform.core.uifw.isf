@@ -875,6 +875,9 @@ void isf_imf_context_input_panel_event_callback_clear (Ecore_IMF_Context *ctx)
 {
     ecore_imf_context_input_panel_event_callback_clear (ctx);
 
+    if (input_panel_ctx == ctx)
+        _win_focus_out_handler_del ();
+
     if (show_req_ic == ctx)
         show_req_ic = NULL;
 
