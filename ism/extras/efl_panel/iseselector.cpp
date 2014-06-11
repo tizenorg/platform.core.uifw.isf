@@ -96,7 +96,7 @@ gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
 {
     unsigned int index = (unsigned int)(data);
 
-    if (index < 0 || index >= (int)_uuids.size ())
+    if (index >= (int)_uuids.size ())
         return;
 
     if (_ise_selector_radio_grp)

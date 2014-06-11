@@ -170,8 +170,11 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
     ISE_TYPE_T isetype;
 
     all_ise_count = isf_control_get_ise_list (&iselist);
-    if (all_ise_count < 0)
+    if (all_ise_count < 0) {
+        if (iselist)
+            free (iselist);
         return -1;
+    }
 
     for (int i = 0; i < all_ise_count; i++) {
         if (iselist[i]) {

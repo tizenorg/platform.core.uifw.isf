@@ -392,7 +392,7 @@ public:
             if (trans.write_to_socket (m_socket_client) &&
                 trans.read_from_socket (m_socket_client, m_socket_timeout) &&
                 trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_data (num) && num >= 0) {
+                trans.get_data (num)) {
                 for (uint32 j = 0; j < num; j++) {
                     HelperInfo info;
                     if (trans.get_data (info.uuid) &&

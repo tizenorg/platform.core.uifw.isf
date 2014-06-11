@@ -2018,19 +2018,18 @@ int app_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
         return 0;
     }
 
-    /* Get the label of package */
-    pkgmgrinfo_pkginfo_get_label (pkginfo_handle, &pkg_label);
-
     /* Get the type of package */
-    pkgmgrinfo_pkginfo_get_type (pkginfo_handle, &pkg_type);
+    ret = pkgmgrinfo_pkginfo_get_type (pkginfo_handle, &pkg_type);
+    if (ret == PMINFO_R_OK && pkg_type && !strncmp (pkg_type, "wgt", 3)) {
+        /* Get the label of package */
+        pkgmgrinfo_pkginfo_get_label (pkginfo_handle, &pkg_label);
 
-    /* Get the root path of package */
-    pkgmgrinfo_pkginfo_get_root_path (pkginfo_handle, &pkg_root_path);
+        /* Get the root path of package */
+        pkgmgrinfo_pkginfo_get_root_path (pkginfo_handle, &pkg_root_path);
 
-    /* Get the icon path of package */
-    pkgmgrinfo_pkginfo_get_icon (pkginfo_handle, &pkg_icon_path);
+        /* Get the icon path of package */
+        pkgmgrinfo_pkginfo_get_icon (pkginfo_handle, &pkg_icon_path);
 
-    if (pkg_type && !strncmp (pkg_type, "wgt", 3)) {
         // FIXME : need to get UUID
         helper_info.uuid = scim::String (app_id);
         helper_info.name = scim::String (pkg_label);
