@@ -646,6 +646,27 @@ check_symbol (Eina_Unicode ucode, Eina_Unicode symbols[], int symbol_num)
     return EINA_FALSE;
 }
 
+static Eina_Bool
+check_except_autocapital (Eina_Unicode *ustr, int cursor_pos)
+{
+    const char *except_str[] = {"e.g.", "E.g."};
+    unsigned int i = 0, j = 0, len = 0;
+    for (i = 0; i < (sizeof (except_str) / sizeof (except_str[0])); i++) {
+        len = strlen (except_str[i]);
+        if (cursor_pos < (int)len)
+            continue;
+
+        for (j = len; j > 0; j--) {
+            if (ustr[cursor_pos-j] != except_str[i][len-j])
+                break;
+        }
+
+        if (j == 0) return EINA_TRUE;
+    }
+
+    return EINA_FALSE;
+}
+
 static void
 autoperiod_insert (Ecore_IMF_Context *ctx)
 {
@@ -791,7 +812,11 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
 
             // Check punctuation and following the continuous space(s)
             if (detect_space && check_symbol (ustr[i-1], puncs, punc_num)) {
-                ret = EINA_TRUE;
+                if (check_except_autocapital (ustr, i))
+                    ret = EINA_FALSE;
+                else
+                    ret = EINA_TRUE;
+
                 goto done;
             }
             else {
