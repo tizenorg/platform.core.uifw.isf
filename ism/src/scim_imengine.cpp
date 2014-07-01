@@ -796,6 +796,11 @@ IMEngineInstanceBase::set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrai
     m_impl->m_signal_set_candidate_style (this, portrait_line, mode);
 }
 
+void
+IMEngineInstanceBase::set_autocapital_type (int mode)
+{
+}
+
 // implementation of DummyIMEngine
 DummyIMEngineFactory::DummyIMEngineFactory ()
 {

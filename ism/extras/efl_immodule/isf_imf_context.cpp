@@ -1429,6 +1429,8 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
             context_scim->impl->si->focus_in ();
             context_scim->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ctx));
             context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
+            LOGD ("ctx : %p. set autocapital type : %d\n", ctx, context_scim->impl->autocapital_type);
+            context_scim->impl->si->set_autocapital_type (context_scim->impl->autocapital_type);
             if (context_scim->impl->imdata)
                 context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
         } else {
@@ -1929,6 +1931,13 @@ isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapi
 
     if (context_scim && context_scim->impl && context_scim->impl->autocapital_type != autocapital_type) {
         context_scim->impl->autocapital_type = autocapital_type;
+
+        if (context_scim == _focused_ic) {
+            LOGD ("ctx : %p. set autocapital type : %d\n", ctx, autocapital_type);
+            _panel_client.prepare (context_scim->id);
+            context_scim->impl->si->set_autocapital_type (autocapital_type);
+            _panel_client.send ();
+        }
     }
 }
 
@@ -3058,6 +3067,8 @@ turn_on_ic (EcoreIMFContextISF *ic)
             ic->impl->si->focus_in ();
             ic->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ic->ctx));
             ic->impl->si->set_prediction_allow (ic->impl->prediction_allow);
+            LOGD ("ctx : %p. set autocapital type : %d\n", ic->ctx, ic->impl->autocapital_type);
+            ic->impl->si->set_autocapital_type (ic->impl->autocapital_type);
         }
 
         //Record the IC on/off status

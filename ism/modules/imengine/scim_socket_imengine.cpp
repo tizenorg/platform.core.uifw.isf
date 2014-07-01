@@ -922,6 +922,22 @@ SocketInstance::focus_out ()
 }
 
 void
+SocketInstance::set_autocapital_type (int mode)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__<< " (" << m_peer_id << ")\n";
+
+    trans.put_command (SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE);
+    trans.put_data (m_peer_id);
+    trans.put_data (mode);
+
+    commit_transaction (trans);
+}
+
+void
 SocketInstance::trigger_property (const String &property)
 {
     Transaction trans;

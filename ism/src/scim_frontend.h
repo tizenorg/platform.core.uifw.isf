@@ -522,6 +522,13 @@ protected:
     void set_imdata (int id, const char *data, unsigned int len) const;
 
     /**
+     * @brief Set autocapital type
+     * @param id the IMEngine instance id.
+     * @param mode autocapital type
+     */
+    void set_autocapital_type (int id, int mode) const;
+
+    /**
      * @}
      */
 

@@ -235,6 +235,7 @@ private:
     void socket_candidate_more_window_hide  (int client_id);
     void socket_longpress_candidate         (int client_id);
     void socket_set_imdata                  (int client_id);
+    void socket_set_autocapital_type        (int client_id);
 };
 
 #endif

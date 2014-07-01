@@ -784,6 +784,14 @@ FrontEndBase::set_imdata (int id, const char *data, unsigned int len) const
 }
 
 void
+FrontEndBase::set_autocapital_type (int id, int mode) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->set_autocapital_type (mode);
+}
+
+void
 FrontEndBase::reset_option (int id) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);

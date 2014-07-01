@@ -501,7 +501,7 @@ const int ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_DOWN         = 115;
 const int ISM_TRANS_CMD_SELECT_AUX                        = 116;
 const int ISM_TRANS_CMD_SET_PREDICTION_ALLOW              = 117;
 const int ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT      = 118;
-
+const int SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE             = 119;
 
 // Socket FrontEnd to Socket IMEngine
 // FrontEnds to Panel

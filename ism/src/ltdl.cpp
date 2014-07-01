@@ -3226,6 +3226,7 @@ try_dlopen (
 		  last_libname = lt_estrdup (last_libname + 1);
 		  if (!last_libname)
 		    {
+		      fclose (file);
 		      ++errors;
 		      goto cleanup;
 		    }

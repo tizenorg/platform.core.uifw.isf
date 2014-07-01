@@ -730,6 +730,13 @@ public:
      */
     virtual void set_imdata (const char *data, unsigned int len);
 
+    /**
+     * @brief Set autocapital type.
+     *
+     * @param mode autocapital type.
+     */
+    virtual void set_autocapital_type (int mode);
+
 protected:
     /**
      * @name Signal activation functions

@@ -1004,6 +1004,8 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             socket_longpress_candidate (id);
         else if (cmd == ISM_TRANS_CMD_SET_ISE_IMDATA)
             socket_set_imdata (id);
+        else if (cmd == SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE)
+            socket_set_autocapital_type (id);
         else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
             socket_set_layout (id);
         else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
@@ -1773,6 +1775,28 @@ SocketFrontEnd::socket_set_imdata (int /*client_id*/)
 
     if (NULL != imdata)
         delete [] imdata;
+}
+
+void
+SocketFrontEnd::socket_set_autocapital_type (int /*client_id*/)
+{
+    uint32 siid;
+    uint32 mode;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (mode)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ").\n";
+
+        m_current_instance = (int) siid;
+
+        set_autocapital_type ((int) siid, mode);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
 }
 
 void
