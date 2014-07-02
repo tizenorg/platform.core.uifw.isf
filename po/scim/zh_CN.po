@@ -585,7 +585,7 @@ msgstr "Srpski (latinica)"
 
 #: ism/src/scim_utility.cpp:932
 msgid "Serbian (Cyrillic)"
-msgstr "塞尔维亚语(西里尔)"
+msgstr "Srpski (ćirilica)"
 
 #: ism/src/scim_utility.cpp:933
 msgid "Chinese (Macau)"

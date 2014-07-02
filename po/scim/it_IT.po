@@ -627,7 +627,7 @@ msgstr "Srpski (latinica)"
 
 #: ism/src/scim_utility.cpp:932
 msgid "Serbian (Cyrillic)"
-msgstr ""
+msgstr "Srpski (ćirilica)"
 
 #: ism/src/scim_utility.cpp:933
 #, fuzzy
