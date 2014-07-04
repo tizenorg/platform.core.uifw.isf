@@ -2307,10 +2307,8 @@ feed_key_event (EcoreIMFContextISF *ic, const KeyEvent &key, bool fake)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (key.code <= 0x7F ||
-        (key.code >= SCIM_KEY_BackSpace && key.code <= SCIM_KEY_Delete) ||
-        (key.code >= SCIM_KEY_Home && key.code <= SCIM_KEY_Hyper_R)) {
-        // ascii code and function keys
+    String keyname;
+    if (scim_key_to_string (keyname, key)){
         send_x_key_event (key, fake);
         return EINA_TRUE;
     } else {
