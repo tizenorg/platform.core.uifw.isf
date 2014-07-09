@@ -559,6 +559,8 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     will_hide = EINA_FALSE;
     show_req_ic = ctx;
 
+    isf_imf_context_focus_in (ctx);
+
     /* set return key type */
     iseContext.return_key_type = ecore_imf_context_input_panel_return_key_type_get (ctx);
 
