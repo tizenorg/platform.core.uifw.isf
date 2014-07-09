@@ -275,9 +275,6 @@ PKG_CHECK_MODULES(MINICONTROL_PROVIDER, [minicontrol-provider],
                   [ISF_HAS_MINICONTROL=yes],
                   [ISF_HAS_MINICONTROL=no])
 
-# Check ail library
-PKG_CHECK_MODULES(AIL, [ail >= 0])
-
 # Check notification library
 PKG_CHECK_MODULES(NOTIFICATION, [notification],
                   [ISF_HAS_NOTIFICATION=yes],

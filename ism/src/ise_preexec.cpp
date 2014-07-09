@@ -33,7 +33,7 @@
 #include <sys/prctl.h>
 #include <unistd.h>
 #include <dlog.h>
-#include <ail.h>
+#include <pkgmgr-info.h>
 #include <privilege-control.h>
 
 #define Uses_SCIM_HELPER
@@ -48,6 +48,12 @@
 #define DEFAULT_PACKAGE_TYPE "rpm"
 #define DEFAULT_PACKAGE_NAME "libisf-bin"
 #define DEFAULT_APPLICATION_PATH "/usr/lib/scim-1.0/scim-helper-launcher"
+
+#define NATIVE_APPLICATION_TYPE "c++app"
+#define NATIVE_PACKAGE_TYPE "tpk"
+
+#define WEB_APPLICATION_TYPE "webapp"
+#define WEB_PACKAGE_TYPE "wgt"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -332,8 +338,8 @@ typedef struct {
 static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
 {
     if (helper && uuid && info) {
-        ail_appinfo_h handle;
-        ail_error_e r;
+        pkgmgrinfo_appinfo_h handle;
+        int r;
         char *value;
         const char *app_id;
 
@@ -346,23 +352,18 @@ static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
         }
 
         // get ail handle
-        r = ail_get_appinfo (app_id, &handle);
-        if (r != AIL_ERROR_OK) {
-            LOGW ("ail_get_appinfo failed %s %d \n", app_id, r);
-            /* Let's try with appid once more */
-            r = ail_get_appinfo (app_id, &handle);
-            if (r != AIL_ERROR_OK) {
-                LOGW ("ail_get_appinfo failed %s %d \n", app_id, r);
-                return;
-            }
+        r = pkgmgrinfo_appinfo_get_appinfo (app_id, &handle);
+        if (r != PMINFO_R_OK) {
+            LOGW ("pkgmgrinfo_appinfo_get_appinfo failed %s %d \n", app_id, r);
+            return;
         }
 
         // get package name
         if (!strcmp (helper, "ise-web-helper-agent")) {
             // Web IME
-            r = ail_appinfo_get_str (handle, AIL_PROP_X_SLP_PKGID_STR, &value);
-            if (r != AIL_ERROR_OK) {
-                LOGW ("ail_appinfo_get_str () failed : %s %s %d\n", app_id, AIL_PROP_X_SLP_PKGID_STR, r);
+            r = pkgmgrinfo_appinfo_get_pkgid (handle, &value);
+            if (r != PMINFO_R_OK) {
+                LOGW ("pkgmgrinfo_appinfo_get_pkgid () failed : %s %d\n", app_id, r);
             } else {
                 info->package_name = value;
                 LOGD ("[web] app id : %s, package name : %s\n", app_id, info->package_name.c_str ());
@@ -374,23 +375,27 @@ static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
             LOGD ("[osp] app id : %s, package name : %s\n", app_id, info->package_name.c_str ());
         }
 
-        r = ail_appinfo_get_str (handle, AIL_PROP_X_SLP_PACKAGETYPE_STR, &value);
-        if (r != AIL_ERROR_OK) {
-            LOGW ("ail_appinfo_get_str () failed : %s %s %d\n", helper, AIL_PROP_X_SLP_PACKAGETYPE_STR, r);
+        r = pkgmgrinfo_appinfo_get_apptype (handle, &value);
+        if (r != PMINFO_R_OK) {
+            LOGW ("pkgmgrinfo_appinfo_get_apptype () failed : %s %d\n", helper, r);
         } else {
-            info->package_type = value;
+            if (strncmp(value, NATIVE_APPLICATION_TYPE, strlen(NATIVE_APPLICATION_TYPE)) == 0) {
+                info->package_type = NATIVE_PACKAGE_TYPE;
+            } else if (strncmp(value, WEB_APPLICATION_TYPE, strlen(WEB_APPLICATION_TYPE)) == 0) {
+                info->package_type = WEB_PACKAGE_TYPE;
+            }
             LOGD ("package type : %s\n", info->package_type.c_str());
         }
 
-        r = ail_appinfo_get_str (handle, AIL_PROP_EXEC_STR, &value);
-        if (r != AIL_ERROR_OK) {
-            LOGW ("ail_appinfo_get_str () failed : %s %s %d\n", helper, AIL_PROP_EXEC_STR, r);
+        r = pkgmgrinfo_appinfo_get_exec (handle, &value);
+        if (r != PMINFO_R_OK) {
+            LOGW ("pkgmgrinfo_appinfo_get_exec () failed : %s %d\n", helper, r);
         } else {
             info->app_path = value;
             LOGD ("app path : %s\n", info->app_path.c_str());
         }
 
-        ail_destroy_appinfo (handle);
+        pkgmgrinfo_appinfo_destroy_appinfo(handle);
     }
 }
 
