@@ -2055,9 +2055,9 @@ int app_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
         pkgmgrinfo_pkginfo_get_icon (pkginfo_handle, &pkg_icon_path);
 
         // FIXME : need to get UUID
-        helper_info.uuid = scim::String (app_id);
-        helper_info.name = scim::String (pkg_label);
-        helper_info.icon = scim::String (pkg_icon_path);
+        helper_info.uuid = (app_id ? scim::String (app_id) : scim::String (""));
+        helper_info.name = (pkg_label ? scim::String (pkg_label) : scim::String (""));
+        helper_info.icon = (pkg_icon_path ? scim::String (pkg_icon_path) : scim::String (""));
         helper_info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
             scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART;
 
