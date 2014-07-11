@@ -131,6 +131,7 @@ class PanelClient::PanelClientImpl
     PanelClientSignalInt                        m_signal_longpress_candidate;
     PanelClientSignalIntInt                     m_signal_update_ise_input_context;
     PanelClientSignalIntInt                     m_signal_update_isf_candidate_panel;
+    PanelClientSignalString                     m_signal_send_private_command;
 
 public:
     PanelClientImpl ()
@@ -482,6 +483,13 @@ public:
                         uint32 type, value;
                         if (recv.get_data (type) && recv.get_data (value))
                             m_signal_update_isf_candidate_panel ((int) context, (int)type, (int)value);
+                    }
+                    break;
+                case SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND:
+                    {
+                        String str;
+                        if (recv.get_data (str))
+                            m_signal_send_private_command ((int) context, str);
                     }
                     break;
                 default:
@@ -1226,6 +1234,7 @@ public:
         m_signal_longpress_candidate.reset();
         m_signal_update_ise_input_context.reset();
         m_signal_update_isf_candidate_panel.reset();
+        m_signal_send_private_command.reset();
     }
 
     Connection signal_connect_reload_config                 (PanelClientSlotVoid                    *slot)
@@ -1325,7 +1334,7 @@ public:
         return m_signal_hide_preedit_string.connect (slot);
     }
 
-    Connection signal_connect_update_preedit_string         (PanelClientSlotStringAttrsInt             *slot)
+    Connection signal_connect_update_preedit_string         (PanelClientSlotStringAttrsInt          *slot)
     {
         return m_signal_update_preedit_string.connect (slot);
     }
@@ -1340,7 +1349,7 @@ public:
         return m_signal_delete_surrounding_text.connect (slot);
     }
 
-    Connection signal_connect_get_selection                 (PanelClientSlotVoid                  *slot)
+    Connection signal_connect_get_selection                 (PanelClientSlotVoid                    *slot)
     {
         return m_signal_get_selection.connect (slot);
     }
@@ -1378,6 +1387,11 @@ public:
     Connection signal_connect_update_isf_candidate_panel    (PanelClientSlotIntInt                  *slot)
     {
         return m_signal_update_isf_candidate_panel.connect (slot);
+    }
+
+    Connection signal_connect_send_private_command          (PanelClientSlotString                  *slot)
+    {
+        return m_signal_send_private_command.connect (slot);
     }
 
 private:
@@ -1928,7 +1942,7 @@ PanelClient::signal_connect_delete_surrounding_text       (PanelClientSlotIntInt
 }
 
 Connection
-PanelClient::signal_connect_get_selection                 (PanelClientSlotVoid                  *slot)
+PanelClient::signal_connect_get_selection                 (PanelClientSlotVoid                    *slot)
 {
     return m_impl->signal_connect_get_selection (slot);
 }
@@ -1973,6 +1987,12 @@ Connection
 PanelClient::signal_connect_update_isf_candidate_panel    (PanelClientSlotIntInt                  *slot)
 {
     return m_impl->signal_connect_update_isf_candidate_panel (slot);
+}
+
+Connection
+PanelClient::signal_connect_send_private_command          (PanelClientSlotString                  *slot)
+{
+    return m_impl->signal_connect_send_private_command (slot);
 }
 
 } /* namespace scim */

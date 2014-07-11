@@ -666,6 +666,13 @@ public:
      */
     void reset_keyboard_ise       (void) const;
 
+    /**
+     * @brief Send a private command to an application
+     *
+     * @param command The private command sent from IME.
+     */
+    void send_private_command     (const String                &command) const;
+
 public:
     /**
      * @brief Connect a slot to Helper exit signal.

@@ -1259,6 +1259,14 @@ SocketInstance::do_transaction (Transaction &trans, bool &ret)
                     cont = true;
                     break;
                 }
+                case SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND:
+                {
+                    String command;
+                    if (trans.get_data (command)) {
+                        send_private_command (command);
+                    }
+                    break;
+                }
                 case ISM_TRANS_CMD_EXPAND_CANDIDATE:
                 {
                     SCIM_DEBUG_IMENGINE(3) << "  expand_candidate ()\n";

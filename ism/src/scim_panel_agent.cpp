@@ -3667,6 +3667,8 @@ private:
                     socket_helper_get_selection (client_id);
                 } else if (cmd == SCIM_TRANS_CMD_SET_SELECTION) {
                     socket_helper_set_selection (client_id);
+                } else if (cmd == SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND) {
+                    socket_helper_send_private_command (client_id);
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_EXIT) {
                     HelperInfoRepository::iterator hiit = m_helper_active_info_repository.find (client.get_id ());
                     if (hiit != m_helper_active_info_repository.end ()) {
@@ -5234,6 +5236,32 @@ private:
                 m_send_trans.write_to_socket (client_socket);
             } else {
                 std::cerr << "focused client is not existed!!!" << "\n";
+            }
+        }
+    }
+
+    void socket_helper_send_private_command  (int client)
+    {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
+
+        String command;
+
+        if (m_recv_trans.get_data (command)) {
+            int     focused_client;
+            uint32  focused_context;
+            String  focused_uuid = get_focused_context (focused_client, focused_context);
+
+            ClientInfo client_info = socket_get_client_info (focused_client);
+            if (client_info.type == FRONTEND_CLIENT) {
+                Socket socket_client (focused_client);
+                lock ();
+                m_send_trans.clear ();
+                m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                m_send_trans.put_data (focused_context);
+                m_send_trans.put_command (SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND);
+                m_send_trans.put_data (command);
+                m_send_trans.write_to_socket (socket_client);
+                unlock ();
             }
         }
     }

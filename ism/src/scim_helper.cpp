@@ -1449,7 +1449,7 @@ HelperAgent::get_selection (const String &uuid) const
 }
 
 /**
- * @brief Request to selected text.
+ * @brief Request to select text.
  *
  * @param start The start position in text.
  * @param end The end position in text.
@@ -1464,6 +1464,24 @@ HelperAgent::set_selection (int start, int end) const
         m_impl->send.put_command (SCIM_TRANS_CMD_SET_SELECTION);
         m_impl->send.put_data (start);
         m_impl->send.put_data (end);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+/**
+ * @brief Send a private command to an application.
+ *
+ * @param command The private command sent from IME.
+ */
+void
+HelperAgent::send_private_command (const String &command) const
+{
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND);
+        m_impl->send.put_data (command);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
 }

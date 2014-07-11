@@ -175,6 +175,10 @@ public:
         m_frontend->set_candidate_style (si->get_id (), portrait_line, mode);
     }
 
+    void slot_send_private_command(IMEngineInstanceBase * si, const String & command) {
+        m_frontend->send_private_command (si->get_id (), command);
+    }
+
     void attach_instance (const IMEngineInstancePointer &si)
     {
         si->signal_connect_show_preedit_string (
@@ -244,6 +248,9 @@ public:
 
         si->signal_connect_set_candidate_style (
             slot (this, &FrontEndBase::FrontEndBaseImpl::slot_set_candidate_style));
+
+        si->signal_connect_send_private_command (
+            slot (this, &FrontEndBase::FrontEndBaseImpl::slot_send_private_command));
     }
 };
 
@@ -925,6 +932,10 @@ FrontEndBase::contract_candidate (int id)
 }
 void
 FrontEndBase::set_candidate_style (int id, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
+{
+}
+void
+FrontEndBase::send_private_command  (int id, const String & command)
 {
 }
 void

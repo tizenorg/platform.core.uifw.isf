@@ -147,6 +147,8 @@ public:
 
     IMEngineSignalCandidateStyle          m_signal_set_candidate_style;
 
+    IMEngineSignalString                  m_signal_send_private_command;
+
     int    m_id;
     void * m_frontend_data;
 
@@ -623,6 +625,12 @@ IMEngineInstanceBase::signal_connect_set_candidate_style (IMEngineSlotCandidateS
     return m_impl->m_signal_set_candidate_style.connect (slot);
 }
 
+Connection
+IMEngineInstanceBase::signal_connect_send_private_command (IMEngineSlotString *slot)
+{
+    return m_impl->m_signal_send_private_command.connect (slot);
+}
+
 void
 IMEngineInstanceBase::show_preedit_string ()
 {
@@ -799,6 +807,12 @@ IMEngineInstanceBase::set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrai
 void
 IMEngineInstanceBase::set_autocapital_type (int mode)
 {
+}
+
+void
+IMEngineInstanceBase::send_private_command (const String &command)
+{
+    m_impl->m_signal_send_private_command (this, command);
 }
 
 // implementation of DummyIMEngine

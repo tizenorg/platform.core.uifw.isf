@@ -743,6 +743,15 @@ SocketFrontEnd::set_selection (int id, int start, int end)
 }
 
 void
+SocketFrontEnd::send_private_command (int id, const String &command)
+{
+    if (m_current_instance == id) {
+        m_send_trans.put_command (SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND);
+        m_temp_trans.put_data (command);
+    }
+}
+
+void
 SocketFrontEnd::expand_candidate (int id)
 {
     if (m_current_instance == id)

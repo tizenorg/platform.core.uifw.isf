@@ -149,6 +149,8 @@ protected:
                                           ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
                                           ISF_CANDIDATE_MODE_T          mode);
 
+    virtual void send_private_command    (int id, const String &command);
+
 public:
     virtual void init (int argc, char **argv);
     virtual void run ();

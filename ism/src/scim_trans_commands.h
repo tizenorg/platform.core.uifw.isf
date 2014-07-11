@@ -531,6 +531,7 @@ const int ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE            = 172;
 const int ISM_TRANS_CMD_TRANSACTION_CONTINUE              = 173;
 const int SCIM_TRANS_CMD_GET_SELECTION                    = 174;
 const int SCIM_TRANS_CMD_SET_SELECTION                    = 175;
+const int SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND             = 176;
 
 // Socket IMEngine to Socket FrontEnd
 const int SCIM_TRANS_CMD_NEW_INSTANCE                     = 200;

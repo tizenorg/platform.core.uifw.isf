@@ -124,6 +124,8 @@ protected:
     virtual bool get_selection           (int siid, WideString &text);
     virtual bool set_selection           (int siid, int start, int end);
 
+    virtual void send_private_command    (int siid, const String & command);
+
 public:
     virtual void init (int argc, char **argv);
     virtual void run ();

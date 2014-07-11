@@ -510,6 +510,13 @@ public:
      */
     Connection signal_connect_update_isf_candidate_panel    (PanelClientSlotIntInt                  *slot);
 
+    /**
+     * @brief Signal: send private command
+     *
+     * slot prototype: void send_private_command (int context, const String & command);
+     */
+    Connection signal_connect_send_private_command          (PanelClientSlotString                  *slot);
+
     /** @} */
 };
 

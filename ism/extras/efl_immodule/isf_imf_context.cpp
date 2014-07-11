@@ -148,7 +148,8 @@ static void     panel_slot_get_selection                (int                    
 static void     panel_slot_set_selection                (int                     context,
                                                          int                     start,
                                                          int                     end);
-
+static void     panel_slot_send_private_command         (int                     context,
+                                                         const String           &command);
 static void     panel_req_focus_in                      (EcoreIMFContextISF     *ic);
 static void     panel_req_update_factory_info           (EcoreIMFContextISF     *ic);
 static void     panel_req_update_spot_location          (EcoreIMFContextISF     *ic);
@@ -235,13 +236,14 @@ static bool     slot_get_selection                      (IMEngineInstanceBase   
 static bool     slot_set_selection                      (IMEngineInstanceBase   *si,
                                                          int                     start,
                                                          int                     end);
-
 static void     slot_expand_candidate                   (IMEngineInstanceBase   *si);
 static void     slot_contract_candidate                 (IMEngineInstanceBase   *si);
 
 static void     slot_set_candidate_style                (IMEngineInstanceBase   *si,
                                                          ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
                                                          ISF_CANDIDATE_MODE_T    mode);
+static void     slot_send_private_command               (IMEngineInstanceBase   *si,
+                                                         const String           &command);
 
 static void     reload_config_callback                  (const ConfigPointer    &config);
 
@@ -2657,7 +2659,7 @@ panel_slot_set_selection (int context, int start, int end)
 
     EcoreIMFContextISF *ic = find_ic (context);
 
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si)
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
         slot_set_selection (ic->impl->si, start, end);
 }
 
@@ -2666,7 +2668,7 @@ panel_slot_update_displayed_candidate_number (int context, int number)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " number=" << number << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->update_displayed_candidate_number (number);
         _panel_client.send ();
@@ -2678,7 +2680,7 @@ panel_slot_candidate_more_window_show (int context)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->candidate_more_window_show ();
         _panel_client.send ();
@@ -2690,7 +2692,7 @@ panel_slot_candidate_more_window_hide (int context)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->candidate_more_window_hide ();
         _panel_client.send ();
@@ -2702,7 +2704,7 @@ panel_slot_longpress_candidate (int context, int index)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " index=" << index << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->longpress_candidate (index);
         _panel_client.send ();
@@ -2723,6 +2725,17 @@ panel_slot_update_isf_candidate_panel (int context, int type, int value)
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     process_update_input_context (type, value);
+}
+
+static void
+panel_slot_send_private_command (int context, const String &command)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = find_ic (context);
+
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
+        slot_send_private_command (ic->impl->si, command);
 }
 
 /* Panel Requestion functions. */
@@ -3278,6 +3291,7 @@ initialize (void)
     _panel_client.signal_connect_longpress_candidate           (slot (panel_slot_longpress_candidate));
     _panel_client.signal_connect_update_ise_input_context      (slot (panel_slot_update_ise_input_context));
     _panel_client.signal_connect_update_isf_candidate_panel    (slot (panel_slot_update_isf_candidate_panel));
+    _panel_client.signal_connect_send_private_command          (slot (panel_slot_send_private_command));
 
     if (!panel_initialize ()) {
         std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";
@@ -3775,6 +3789,9 @@ attach_instance (const IMEngineInstancePointer &si)
 
     si->signal_connect_set_candidate_style (
         slot (slot_set_candidate_style));
+
+    si->signal_connect_send_private_command (
+        slot (slot_send_private_command));
 }
 
 // Implementation of slot functions
@@ -4181,7 +4198,7 @@ slot_delete_surrounding_text (IMEngineInstanceBase *si,
 
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (_focused_ic && _focused_ic == ic) {
         Ecore_IMF_Event_Delete_Surrounding ev;
         ev.ctx = _focused_ic->ctx;
         ev.n_chars = len;
@@ -4202,7 +4219,7 @@ slot_get_selection (IMEngineInstanceBase *si,
 #ifdef _WEARABLE
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (_focused_ic && _focused_ic == ic) {
         char *selection = NULL;
         if (ecore_imf_context_selection_get (_focused_ic->ctx, &selection)) {
             SCIM_DEBUG_FRONTEND(2) << "Selection: " << selection <<"\n";
@@ -4230,7 +4247,7 @@ slot_set_selection (IMEngineInstanceBase *si,
 #ifdef _WEARABLE
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (_focused_ic && _focused_ic == ic) {
         Ecore_IMF_Event_Selection ev;
         ev.ctx = _focused_ic->ctx;
         ev.start = start;
@@ -4273,6 +4290,19 @@ slot_set_candidate_style (IMEngineInstanceBase *si, ISF_CANDIDATE_PORTRAIT_LINE_
 
     if (ic && ic->impl && _focused_ic == ic)
         _panel_client.set_candidate_style (ic->id, portrait_line, mode);
+}
+
+static void
+slot_send_private_command (IMEngineInstanceBase *si,
+                           const String &command)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
+
+    if (_focused_ic && _focused_ic == ic) {
+        ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_PRIVATE_COMMAND_SEND, (void *)command.c_str ());
+    }
 }
 
 static void

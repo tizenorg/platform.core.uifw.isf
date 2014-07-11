@@ -755,6 +755,15 @@ protected:
     virtual void set_candidate_style (int                           id,
                                       ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
                                       ISF_CANDIDATE_MODE_T          mode);
+
+    /**
+     * @brief Send a private command to an application.
+     *
+     * @param id     the id of the IMEngine instance. It must have been focused in.
+     * @param command The private command
+     */
+    virtual void send_private_command  (int id, const String &command);
+
     /**
      * @}
      */
