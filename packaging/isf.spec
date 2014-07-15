@@ -44,6 +44,8 @@ BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 
+%define _optexecdir /opt/usr/devel/usr/bin/
+
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
 
@@ -165,7 +167,7 @@ cat scim.lang > isf.lang
 %{_bindir}/isf-wsm-efl
 %{_bindir}/isf-wsc-efl
 %else
-%{_bindir}/isf-demo-efl
+%{_optexecdir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
 %{_libdir}/*/immodules/*.so
 %endif
