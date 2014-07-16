@@ -433,23 +433,36 @@ int main (int argc, char *argv[])
 }
 
 // Utility functions
-Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text)
+Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text, Evas_Object **entry)
 {
-    Evas_Object *ef, *en;
+    Evas_Object *lb, *en;
 
-    ef = elm_layout_add (parent);
-    elm_layout_theme_set (ef, "layout", "dialogue/editfield/title", "default");
-    elm_object_part_text_set (ef, "elm.text", label);
-    evas_object_size_hint_weight_set (ef, EVAS_HINT_EXPAND, 0);
-    evas_object_size_hint_align_set (ef, EVAS_HINT_FILL, 0);
+    Evas_Object *bx;
+    bx = elm_box_add (parent);
+    evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
+    evas_object_show (bx);
+
+    lb = elm_label_add (parent);
+    evas_object_size_hint_weight_set (lb, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (lb, EVAS_HINT_FILL, 0.0);
+    elm_object_text_set (lb, label);
+    evas_object_show (lb);
+    elm_box_pack_end (bx, lb);
 
     en = ea_editfield_add (parent, EA_EDITFIELD_SCROLL_SINGLELINE);
+    evas_object_size_hint_weight_set (en, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (en, EVAS_HINT_FILL, 0.0);
     elm_object_part_text_set (en, "elm.guide", guide_text);
-    elm_object_part_content_set (ef, "elm.icon.entry", en);
+    evas_object_show (en);
+    elm_box_pack_end (bx, en);
 
-    evas_object_show (ef);
+    if (entry)
+        *entry = en;
 
-    return ef;
+    evas_object_show (bx);
+
+    return bx;
 }
 
 static void _back_btn_clicked_cb (void *data, Evas_Object *obj, void *event_info)

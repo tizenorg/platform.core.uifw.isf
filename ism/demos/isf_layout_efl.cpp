@@ -171,9 +171,11 @@ static void entry_preedit_changed_cb (void *data, Evas_Object *obj, void *event_
 
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout, int layout_variation = 0)
 {
-    Evas_Object *ef = create_ef (parent, label, guide_text);
+    Evas_Object *en;
+    Evas_Object *ef = create_ef (parent, label, guide_text, &en);
+    if (!ef || !en) return NULL;
+
     Ecore_IMF_Context *ic = NULL;
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
     elm_entry_input_panel_layout_set (en, layout);
     elm_entry_input_panel_layout_variation_set (en, layout_variation);
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
@@ -241,15 +243,15 @@ static Evas_Object * create_inner_layout (void *data)
     elm_box_pack_end (bx, ef);
 
     /* Number Only with signed Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY WITH SIGNED LAYOUT"), _("click to enter NUMBERONLY WITH SIGNED"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED);
+    ef = _create_ef_layout (parent, _("NUMBERONLY - SIGNED"), _("click to enter NUMBERONLY WITH SIGNED"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED);
     elm_box_pack_end (bx, ef);
 
     /* Number Only with decimal Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY WITH DECIMAL LAYOUT"), _("click to enter NUMBERONLY WITH DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL);
+    ef = _create_ef_layout (parent, _("NUMBERONLY - DECIMAL"), _("click to enter NUMBERONLY WITH DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL);
     elm_box_pack_end (bx, ef);
 
     /* Number Only with signed and decimal Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY WITH SIGNED AND DECIMAL LAYOUT"), _("click to enter NUMBERONLY WITH SIGNED AND DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL);
+    ef = _create_ef_layout (parent, _("NUMBERONLY - SIGNED AND DECIMAL"), _("click to enter NUMBERONLY WITH SIGNED AND DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL);
     elm_box_pack_end (bx, ef);
 
     /* Datetime Layout */

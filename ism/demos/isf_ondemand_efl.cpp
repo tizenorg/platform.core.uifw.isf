@@ -27,8 +27,10 @@
 
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Eina_Bool ondemand)
 {
-    Evas_Object *ef = create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
+    Evas_Object *en;
+    Evas_Object *ef = create_ef (parent, label, guide_text, &en);
+    if (!ef || !en) return NULL;
+
 #ifdef _WEARABLE
     elm_entry_input_panel_show_on_demand_set (en, ondemand);
 #endif

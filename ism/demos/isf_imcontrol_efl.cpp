@@ -209,7 +209,7 @@ static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_in
         printf (" Show ISE selector is failed!!!\n");
 }
 
-char *gli_label_get (void *data, Evas_Object *obj, const char *part)
+static char *gli_label_get (void *data, Evas_Object *obj, const char *part)
 {
     int j = (int)data;
     return strdup (imcontrol_menu_its[j].name);

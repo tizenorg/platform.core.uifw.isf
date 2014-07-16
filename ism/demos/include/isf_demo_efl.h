@@ -54,7 +54,7 @@ struct _menu_item {
 };
 
 // Utility functions
-Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text);
+Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text, Evas_Object **entry = NULL);
 void         add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title);
 
 #endif /* __ISF_DEMO_EFL_H */

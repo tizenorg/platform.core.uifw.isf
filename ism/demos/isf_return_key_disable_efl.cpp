@@ -42,8 +42,10 @@ _cursor_changed_cb (void *data, Evas_Object *obj, void *event_info)
 
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout, Elm_Input_Panel_Return_Key_Type return_key_type)
 {
-    Evas_Object *ef = create_ef (parent, label, guide_text);
-    Evas_Object *en = elm_object_part_content_get (ef, "elm.icon.entry");
+    Evas_Object *en;
+    Evas_Object *ef = create_ef (parent, label, guide_text, &en);
+    if (!ef || !en) return NULL;
+
     elm_entry_input_panel_layout_set (en, layout);
     elm_entry_input_panel_return_key_type_set (en, return_key_type);
 
