@@ -119,10 +119,10 @@ static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
     }
 }
 
-static void result_cb (ui_gadget_h ug, service_h s, void *priv)
+static void result_cb (ui_gadget_h ug, app_control_h s, void *priv)
 {
     char *name = NULL;
-    service_get_extra_data (s, "name", &name);
+    app_control_get_extra_data (s, "name", &name);
 
     if (name) {
         free (name);

@@ -150,21 +150,21 @@ ise_selector_focus_out_cb (void *data, Evas *e, void *event_info)
 static void
 isf_setting_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    service_h service;
-    service_create (&service);
-    service_set_window (service, _ise_selector_app_window);
-    service_set_app_id (service, "isfsetting-efl");
+    app_control_h app_control;
+    app_control_create (&app_control);
+    app_control_set_window (app_control, _ise_selector_app_window);
+    app_control_set_app_id (app_control, "isfsetting-efl");
 
     evas_object_freeze_events_set (obj, EINA_TRUE);
 
-    int ret = service_send_launch_request (service, NULL, NULL);
+    int ret = app_control_send_launch_request (app_control, NULL, NULL);
     if (0 != ret) {
         LOGW ("UG Launch Failed");
         ise_selector_destroy ();
     }
 
-    if (service)
-        service_destroy (service);
+    if (app_control)
+        app_control_destroy (app_control);
 }
 #endif
 
