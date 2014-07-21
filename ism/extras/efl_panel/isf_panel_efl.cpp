@@ -1655,6 +1655,8 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 _config->flush ();
                 _config->reload ();
                 _panel_agent->reload_config ();
+
+                vconf_set_str (VCONFKEY_ISF_ACTIVE_KEYBOARD_UUID, uuid.c_str ());
             }
 
             return true;
