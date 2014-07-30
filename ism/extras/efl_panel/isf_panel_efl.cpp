@@ -5394,7 +5394,7 @@ static bool update_helper_ise_locale (const String module_name, int index)
     HelperInfo   helper_info;
     helper_module.load (module_name);
     if (helper_module.valid ()) {
-        for (size_t j = 0; j < helper_module.number_of_helpers (); ++j) {
+        for (size_t j = 0; j < helper_module.number_of_helpers () && (index+j) < _names.size (); ++j) {
             helper_module.get_helper_info (j, helper_info);
             _names[index+j] = helper_info.name;
         }
