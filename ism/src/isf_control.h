@@ -123,6 +123,16 @@ EAPI int isf_control_reset_ise_option (void);
 EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
 
 /**
+ * @brief Get initial ISE UUID.
+ *
+ * @param uuid The parameter is used to store initial ISE's UUID.
+ *             Application needs free *uuid if it is not used.
+ *
+ * @return the length of UUID if successfully, otherwise return -1;
+ */
+EAPI int isf_control_get_initial_ise (char **uuid);
+
+/**
  * @brief Show ISE selector.
  *
  * @return 0 if successfully, otherwise return -1;

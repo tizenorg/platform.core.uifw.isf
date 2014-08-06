@@ -25,7 +25,7 @@
 #define Uses_SCIM_CONFIG_PATH
 #define Uses_SCIM_TRANSACTION
 #define Uses_ISF_IMCONTROL_CLIENT
-
+#define Uses_SCIM_COMPOSE_KEY
 
 #include <string.h>
 #include "scim.h"
@@ -150,6 +150,18 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
     imcontrol_client.set_initial_ise_by_uuid (uuid);
     imcontrol_client.close_connection ();
     return 0;
+}
+
+EAPI int isf_control_get_initial_ise (char **uuid)
+{
+    if (uuid == NULL)
+        return -1;
+
+    String strUuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
+
+    *uuid = strUuid.length () ? strdup (strUuid.c_str ()) : strdup ("");
+
+    return strUuid.length ();
 }
 
 EAPI int isf_control_show_ise_selector (void)

@@ -39,6 +39,7 @@ static void test_input_panel_state_get (void *data, Evas_Object *obj, void *even
 static void test_get_active_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_get_ise_list (void *data, Evas_Object *obj, void *event_info);
 static void test_get_ise_info (void *data, Evas_Object *obj, void *event_info);
+static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_get_ise_count (void *data, Evas_Object *obj, void *event_info);
 static void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info);
@@ -54,6 +55,7 @@ static struct _menu_item imcontrol_menu_its[] = {
     { "INPUT PANEL STATE GET", test_input_panel_state_get },
     { "GET ACTIVE ISE", test_get_active_ise },
     { "GET ACTIVE ISE INFO", test_get_ise_info },
+    { "GET INITIAL ISE", test_get_initial_ise },
     { "GET ISE LIST", test_get_ise_list },
     { "GET ISE COUNT", test_get_ise_count },
     { "RESET DEFAULT ISE", test_reset_default_ise },
@@ -207,6 +209,16 @@ static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_in
         printf (" Show ISE selector is successful!\n");
     else
         printf (" Show ISE selector is failed!!!\n");
+}
+
+static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info)
+{
+    char *uuid = NULL;
+    int ret = isf_control_get_initial_ise (&uuid);
+    if (ret > 0 && uuid)
+        printf (" Get initial ISE: %s\n", uuid);
+    if (uuid)
+        free (uuid);
 }
 
 static char *gli_label_get (void *data, Evas_Object *obj, const char *part)
