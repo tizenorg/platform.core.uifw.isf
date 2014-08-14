@@ -166,6 +166,7 @@ static Eina_Bool panel_iochannel_handler                (void                   
 /* utility functions */
 static bool     filter_hotkeys                          (EcoreIMFContextISF     *ic,
                                                          const KeyEvent         &key);
+static bool     filter_keys                             (const char *keyname, const char *config_path);
 static void     turn_on_ic                              (EcoreIMFContextISF     *ic);
 static void     turn_off_ic                             (EcoreIMFContextISF     *ic);
 static void     set_ic_capabilities                     (EcoreIMFContextISF     *ic);
@@ -499,18 +500,12 @@ _key_down_cb (void *data, int type, void *event)
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    std::vector <String> hide_ise_keys;
-    scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
-
     if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        for (unsigned int i = 0; i < hide_ise_keys.size (); ++i) {
-            if (!strcmp (ev->keyname, hide_ise_keys [i].c_str ())) {
-                LOGD ("%s key is pressed.\n", ev->keyname);
-                return ECORE_CALLBACK_DONE;
-            }
+        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+            LOGD ("%s key is pressed.\n", ev->keyname);
+            return ECORE_CALLBACK_DONE;
         }
     }
-
     return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -525,17 +520,12 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    std::vector <String> hide_ise_keys;
-    scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
-
     if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        for (unsigned int i = 0; i < hide_ise_keys.size (); ++i) {
-            if (!strcmp (ev->keyname, hide_ise_keys [i].c_str ())) {
-                LOGD ("%s key is released.\n", ev->keyname);
-                isf_imf_context_reset (active_ctx);
-                isf_imf_context_input_panel_instant_hide (active_ctx);
-                return ECORE_CALLBACK_DONE;
-            }
+        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+            LOGD ("%s key is released.\n", ev->keyname);
+            isf_imf_context_reset (active_ctx);
+            isf_imf_context_input_panel_instant_hide (active_ctx);
+            return ECORE_CALLBACK_DONE;
         }
     }
     if (!strcmp (ev->keyname, "XF86MenuKB")) {
@@ -1971,10 +1961,13 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         return ret;
     }
     KeyEvent key;
+    unsigned int timestamp;
 
-    /* Hardware input detect code */
     if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
+        timestamp = ev->timestamp;
+
+        /* Hardware input detect code */
         if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE &&
             scim_string_to_key (key, ev->key) &&
             key.code != 0xFF69 /* Cancel (Power + Volume down) key */) {
@@ -1984,18 +1977,19 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             _panel_client.send ();
             LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
         }
+
+        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+            return EINA_TRUE;
+    }
+    else if (type == ECORE_IMF_EVENT_KEY_UP) {
+        Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
+        timestamp = ev->timestamp;
+
+        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+            return EINA_TRUE;
     }
 
-    unsigned int timestamp;
-
     if (type == ECORE_IMF_EVENT_KEY_DOWN || type == ECORE_IMF_EVENT_KEY_UP) {
-        if (type == ECORE_IMF_EVENT_KEY_DOWN) {
-            Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
-            timestamp = ev->timestamp;
-        } else {
-            Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
-            timestamp = ev->timestamp;
-        }
         if ((timestamp == 0 || timestamp == 1) && !_x_key_event_is_valid) {
             std::cerr << "    S/W key event is not valid!!!\n";
             LOGW ("S/W key event is not valid\n");
@@ -2891,6 +2885,26 @@ filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
         ret = true;
     }
     return ret;
+}
+
+static bool
+filter_keys (const char *keyname, const char *config_path)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (!keyname)
+        return false;
+
+    std::vector <String> keys;
+    scim_split_string_list (keys, _config->read (String (config_path), String ("")), ',');
+
+    for (unsigned int i = 0; i < keys.size (); ++i) {
+        if (!strcmp (keyname, keys [i].c_str ())) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 static bool

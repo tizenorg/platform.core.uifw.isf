@@ -11,6 +11,7 @@
 /Hotkeys/FrontEnd/Trigger = Shift+space,Hangul
 /Hotkeys/FrontEnd/ValidKeyMask = Shift+Control+Alt+CapsLock+Meta+QuirkKanaRo
 /Hotkeys/FrontEnd/HideISE = Escape,XF86Stop,XF86Back
+/Hotkeys/FrontEnd/IgnoreKey = XF86AudioLowerVolume,XF86AudioRaiseVolume,XF86Send,XF86PowerOff,XF86Stop,XF86Back
 /IMEngine/Hangul/AutoReorder = false
 /Panel/Gtk/Color/ActiveBackground = light sky blue
 /Panel/Gtk/Color/ActiveText = black
