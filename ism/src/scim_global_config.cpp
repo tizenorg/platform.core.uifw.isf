@@ -447,6 +447,9 @@ scim_global_config_flush ()
             usr_os << it->first << " = " << it->second << "\n";
         }
         __config_repository.updated.clear ();
+
+        sync();
+
         return true;
     }
 

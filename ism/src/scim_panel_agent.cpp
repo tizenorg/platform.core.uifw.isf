@@ -1748,9 +1748,13 @@ public:
     void show_ise_panel (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::show_ise_panel ()\n";
+
+        String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+
         char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to show ISE %d\n",
-            time (0), getpid (), __FILE__, __func__, client_id);
+        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to show ISE %d [%s] [%s]\n",
+            time (0), getpid (), __FILE__, __func__, client_id, initial_uuid.c_str(), default_uuid.c_str());
         isf_save_log (buf);
 
         char   *data = NULL;
@@ -2533,6 +2537,7 @@ public:
         String uuid (buf);
 
         scim_global_config_write (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (uuid));
+        scim_global_config_flush ();
 
         if (NULL != buf)
             delete[] buf;
