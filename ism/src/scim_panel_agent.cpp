@@ -2539,6 +2539,9 @@ public:
         scim_global_config_write (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (uuid));
         scim_global_config_flush ();
 
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.write_to_socket (client_socket);
+
         if (NULL != buf)
             delete[] buf;
     }
