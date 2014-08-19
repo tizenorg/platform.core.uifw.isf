@@ -1345,12 +1345,22 @@ EAPI void scim_daemon ()
 
 EAPI void isf_save_log (const char *str)
 {
-    /*
-    String strLogFile = scim_get_user_data_dir () + String (SCIM_PATH_DELIM_STRING) + String ("isf.log");
-    std::ofstream isf_log_file (strLogFile.c_str (), std::ios::app);
-    isf_log_file << str;
-    isf_log_file.flush ();
-    */
+    const int MAX_LOG_FILE_SIZE = 10 * 1024; /* 10KB */
+
+    static bool size_exceeded = false;
+    static struct stat st;
+    if (!size_exceeded) {
+        String strLogFile = scim_get_user_data_dir () + String (SCIM_PATH_DELIM_STRING) + String ("isf.log");
+        stat(strLogFile.c_str(), &st);
+
+        if (st.st_size < MAX_LOG_FILE_SIZE) {
+            std::ofstream isf_log_file (strLogFile.c_str (), std::ios::app);
+            isf_log_file << str;
+            isf_log_file.flush ();
+        } else {
+            size_exceeded = true;
+        }
+    }
 
     LOGD ("%s", str);
 }
