@@ -3121,7 +3121,7 @@ try_dlopen (
 	    }
 #endif
 #ifdef LTDL_SYSSEARCHPATH
-	  if (!file && sys_search_path)
+	  if (!file)
 	    {
 	      file = find_file (sys_search_path, base_name, &dir);
 	    }
@@ -4388,7 +4388,7 @@ lt_dlloader_name (
   if (place)
     {
       LT_DLMUTEX_LOCK ();
-      name = place ? place->loader_name : 0;
+      name = place->loader_name;
       LT_DLMUTEX_UNLOCK ();
     }
   else
@@ -4408,7 +4408,7 @@ lt_dlloader_data (
   if (place)
     {
       LT_DLMUTEX_LOCK ();
-      data = place ? &(place->dlloader_data) : 0;
+      data = &(place->dlloader_data);
       LT_DLMUTEX_UNLOCK ();
     }
   else

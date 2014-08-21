@@ -615,6 +615,9 @@ static bool tokenize_tag (const String& str, struct image *image_token)
     int i = 0;
     tag_str = eina_str_split (str.c_str (), "\u3013", 0);
 
+    if (!tag_str)
+        return false;
+
     for (i = 0; tag_str [i]; i++) {
         if (i == 0) {
             if (str.length () == strlen (tag_str[i])) {
@@ -636,12 +639,10 @@ static bool tokenize_tag (const String& str, struct image *image_token)
         }
     }
 
-    if (tag_str) {
-        if (tag_str[0])
-            free (tag_str[0]);
+    if (tag_str[0])
+        free (tag_str[0]);
 
-        free (tag_str);
-    }
+    free (tag_str);
 
     return true;
 }
@@ -682,131 +683,133 @@ static Evas_Object* get_candidate (const String& str, Evas_Object *parent, int *
         button_width = 0;
 
     splited_string = eina_str_split (str.c_str (), "\uE000", 0);
-    for (i = 0; splited_string [i]; i++) {
-        if (candidate_is_long)
-            break;
-        sub_splited_string = eina_str_split (splited_string[i], "\uE001", 0);
-        for (j = 0; sub_splited_string [j]; j++) {
+    if (splited_string) {
+        for (i = 0; splited_string [i]; i++) {
             if (candidate_is_long)
                 break;
-            tokenize_result = tokenize_tag (sub_splited_string[j], &image_data);
-            if (tokenize_result && _candidate_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
-                _candidate_image [_candidate_image_count] = elm_image_add (parent);
-                snprintf (image_key, sizeof (image_key), "%d",_candidate_image_count);
-                elm_image_file_set (_candidate_image [_candidate_image_count], image_data.path.c_str (), image_key);
-                elm_image_animated_set (_candidate_image [_candidate_image_count], EINA_TRUE);
-                elm_image_animated_play_set (_candidate_image [_candidate_image_count], EINA_TRUE);
-                elm_image_object_size_get (_candidate_image [_candidate_image_count], &image_get_width, &image_get_height);
-                LOGD ("image_path=%s, key=%s\n", image_data.path.c_str (), image_key);
+            sub_splited_string = eina_str_split (splited_string [i], "\uE001", 0);
+            if (sub_splited_string) {
+                for (j = 0; sub_splited_string [j]; j++) {
+                    if (candidate_is_long)
+                        break;
+                    tokenize_result = tokenize_tag (sub_splited_string [j], &image_data);
+                    if (tokenize_result && _candidate_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                        _candidate_image [_candidate_image_count] = elm_image_add (parent);
+                        snprintf (image_key, sizeof (image_key), "%d",_candidate_image_count);
+                        elm_image_file_set (_candidate_image [_candidate_image_count], image_data.path.c_str (), image_key);
+                        elm_image_animated_set (_candidate_image [_candidate_image_count], EINA_TRUE);
+                        elm_image_animated_play_set (_candidate_image [_candidate_image_count], EINA_TRUE);
+                        elm_image_object_size_get (_candidate_image [_candidate_image_count], &image_get_width, &image_get_height);
+                        LOGD ("image_path=%s, key=%s\n", image_data.path.c_str (), image_key);
 
-                if (image_get_height > image_get_width)
-                    image_rate = ((double)candidate_image_height / (double)image_get_width);
-                else
-                    image_rate = ((double)candidate_image_height / (double)image_get_height);
+                        if (image_get_height > image_get_width)
+                            image_rate = ((double)candidate_image_height / (double)image_get_width);
+                        else
+                            image_rate = ((double)candidate_image_height / (double)image_get_height);
 
-                image_width = (int)((double)image_get_width * image_rate);
-                image_height = candidate_image_height;
+                        image_width = (int)((double)image_get_width * image_rate);
+                        image_height = candidate_image_height;
 
-                if (_candidate_angle == 90 || _candidate_angle == 270)
-                    max_width = _candidate_land_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
-                else
-                    max_width = _candidate_port_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+                        if (_candidate_angle == 90 || _candidate_angle == 270)
+                            max_width = _candidate_land_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+                        else
+                            max_width = _candidate_port_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
 
-                if (image_width > max_width) {
-                    Evas_Object *candidate_end = edje_object_add (evas_object_evas_get (parent));
-                    edje_object_file_set (candidate_end, _candidate_edje_file.c_str (), _candidate_name.c_str ());
-                    evas_object_show (candidate_end);
-                    edje_object_part_text_set (candidate_end, "candidate", "...");
-                    edje_object_scale_set (_candidate_text [_candidate_text_count], _height_rate);
+                        if (image_width > max_width) {
+                            Evas_Object *candidate_end = edje_object_add (evas_object_evas_get (parent));
+                            edje_object_file_set (candidate_end, _candidate_edje_file.c_str (), _candidate_name.c_str ());
+                            evas_object_show (candidate_end);
+                            edje_object_part_text_set (candidate_end, "candidate", "...");
+                            edje_object_scale_set (_candidate_text [_candidate_text_count], _height_rate);
 
-                    text_width = max_width;
-                    evas_object_size_hint_min_set (candidate_end, text_width + (2 * CANDIDATE_TEXT_OFFSET), _item_min_height);
-                    if (HighLight || SetBack) {
-                        set_highlight_color (candidate_end, ForeGround, BackGround, SetBack);
+                            text_width = max_width;
+                            evas_object_size_hint_min_set (candidate_end, text_width + (2 * CANDIDATE_TEXT_OFFSET), _item_min_height);
+                            if (HighLight || SetBack) {
+                                set_highlight_color (candidate_end, ForeGround, BackGround, SetBack);
+                            }
+                            elm_table_pack (candidate_object_table, candidate_end, object_width, 0, text_width + (2 * CANDIDATE_TEXT_OFFSET), _candidate_font_size);
+                            object_width += (text_width + (2 * CANDIDATE_TEXT_OFFSET));
+
+                            if (_candidate_image [_candidate_image_count]) {
+                                evas_object_del (_candidate_image [_candidate_image_count]);
+                                _candidate_image [_candidate_image_count] = NULL;
+                            }
+                            candidate_is_long = true;
+                            break;
+                        }
+
+                        evas_object_resize (_candidate_image [_candidate_image_count], image_width, image_height);
+                        evas_object_show (_candidate_image [_candidate_image_count]);
+                        evas_object_size_hint_min_set (_candidate_image [_candidate_image_count], image_width, image_height);
+
+                        elm_table_pack (candidate_object_table, _candidate_image [_candidate_image_count], object_width, 1, image_width, image_height);
+                        object_width += image_width;
+                        _candidate_image_count++;
+
+                        if (image_data.emoji_option [EMOJI_IMAGE_POP_FLAG] == 1 && image_width > 0 &&  _candidate_pop_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                            _candidate_pop_image [_candidate_pop_image_count] = elm_image_add (parent);
+                            elm_image_file_set (_candidate_pop_image [_candidate_pop_image_count], ISF_POP_PLAY_ICON_FILE, image_key);
+                            evas_object_resize (_candidate_pop_image [_candidate_pop_image_count], candidate_play_image_width_height, candidate_play_image_width_height);
+                            evas_object_show (_candidate_pop_image [_candidate_pop_image_count]);
+                            evas_object_size_hint_min_set (_candidate_pop_image [_candidate_pop_image_count], candidate_play_image_width_height, candidate_play_image_width_height);
+
+                            elm_table_pack (candidate_object_table, _candidate_pop_image [_candidate_pop_image_count],
+                                    object_width - candidate_play_image_width_height, image_height - candidate_play_image_width_height - 2,
+                                    candidate_play_image_width_height, candidate_play_image_width_height);
+
+                            _candidate_pop_image_count++;
+                        }
+
+                    } else if (strlen (sub_splited_string [j]) > 0 && _candidate_text_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                        _candidate_text [_candidate_text_count] = edje_object_add (evas_object_evas_get (parent));
+                        edje_object_file_set (_candidate_text [_candidate_text_count], _candidate_edje_file.c_str (), _candidate_name.c_str ());
+                        evas_object_show (_candidate_text [_candidate_text_count]);
+                        edje_object_part_text_set (_candidate_text [_candidate_text_count], "candidate", sub_splited_string [j]);
+                        edje_object_text_class_set (_candidate_text [_candidate_text_count], "tizen",
+                                _candidate_font_name.c_str (), _candidate_font_size);
+                        evas_object_text_text_set (_tmp_candidate_text, sub_splited_string [j]);
+                        evas_object_geometry_get (_tmp_candidate_text, NULL, NULL, &text_width, NULL);
+
+                        if (_candidate_angle == 90 || _candidate_angle == 270)
+                            max_width = _candidate_land_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+                        else
+                            max_width = _candidate_port_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
+
+                        if (text_width > max_width) {
+                            candidate_is_long = true;
+                            /* In order to avoid overlap issue, calculate show_string */
+                            String show_string = String (sub_splited_string [j]);
+                            int    show_length = text_width;
+                            while (show_length > max_width && show_string.length () > 1) {
+                                show_string = show_string.substr (0, show_string.length () - 1);
+                                evas_object_text_text_set (_tmp_candidate_text, (show_string + String ("...")).c_str ());
+                                evas_object_geometry_get (_tmp_candidate_text, NULL, NULL, &show_length, NULL);
+                            }
+                            edje_object_part_text_set (_candidate_text [_candidate_text_count], "candidate", (show_string + String ("...")).c_str ());
+                            text_width = max_width;
+                        }
+
+                        evas_object_size_hint_min_set (_candidate_text [_candidate_text_count], text_width + (2 * CANDIDATE_TEXT_OFFSET), _item_min_height);
+                        if (HighLight || SetBack) {
+                            set_highlight_color (_candidate_text [_candidate_text_count], ForeGround, BackGround, SetBack);
+                        }
+                        elm_table_pack (candidate_object_table, _candidate_text [_candidate_text_count], object_width, 0, text_width + (2 * CANDIDATE_TEXT_OFFSET), _candidate_font_size);
+                        object_width += (text_width + (2 * CANDIDATE_TEXT_OFFSET));
+                        _candidate_text_count++;
                     }
-                    elm_table_pack (candidate_object_table, candidate_end, object_width, 0, text_width + (2 * CANDIDATE_TEXT_OFFSET), _candidate_font_size);
-                    object_width += (text_width + (2 * CANDIDATE_TEXT_OFFSET));
-
-                    if (_candidate_image [_candidate_image_count]) {
-                        evas_object_del (_candidate_image [_candidate_image_count]);
-                        _candidate_image [_candidate_image_count] = NULL;
-                    }
-                    candidate_is_long = true;
-                    break;
                 }
-
-                evas_object_resize (_candidate_image [_candidate_image_count], image_width, image_height);
-                evas_object_show (_candidate_image [_candidate_image_count]);
-                evas_object_size_hint_min_set (_candidate_image [_candidate_image_count], image_width, image_height);
-
-                elm_table_pack (candidate_object_table, _candidate_image [_candidate_image_count], object_width, 1, image_width, image_height);
-                object_width += image_width;
-                _candidate_image_count++;
-
-                if (image_data.emoji_option [EMOJI_IMAGE_POP_FLAG] == 1 && image_width > 0 &&  _candidate_pop_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
-                    _candidate_pop_image [_candidate_pop_image_count] = elm_image_add (parent);
-                    elm_image_file_set (_candidate_pop_image [_candidate_pop_image_count], ISF_POP_PLAY_ICON_FILE, image_key);
-                    evas_object_resize (_candidate_pop_image [_candidate_pop_image_count], candidate_play_image_width_height, candidate_play_image_width_height);
-                    evas_object_show (_candidate_pop_image [_candidate_pop_image_count]);
-                    evas_object_size_hint_min_set (_candidate_pop_image [_candidate_pop_image_count], candidate_play_image_width_height, candidate_play_image_width_height);
-
-                    elm_table_pack (candidate_object_table, _candidate_pop_image [_candidate_pop_image_count],
-                            object_width - candidate_play_image_width_height, image_height - candidate_play_image_width_height - 2,
-                            candidate_play_image_width_height, candidate_play_image_width_height);
-
-                    _candidate_pop_image_count++;
-                }
-
-            } else if (strlen (sub_splited_string [j]) > 0 && _candidate_text_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
-                _candidate_text [_candidate_text_count] = edje_object_add (evas_object_evas_get (parent));
-                edje_object_file_set (_candidate_text [_candidate_text_count], _candidate_edje_file.c_str (), _candidate_name.c_str ());
-                evas_object_show (_candidate_text [_candidate_text_count]);
-                edje_object_part_text_set (_candidate_text [_candidate_text_count], "candidate", sub_splited_string [j]);
-                edje_object_text_class_set (_candidate_text [_candidate_text_count], "tizen",
-                    _candidate_font_name.c_str (), _candidate_font_size);
-                evas_object_text_text_set (_tmp_candidate_text, sub_splited_string[j]);
-                evas_object_geometry_get (_tmp_candidate_text, NULL, NULL, &text_width, NULL);
-
-                if (_candidate_angle == 90 || _candidate_angle == 270)
-                    max_width = _candidate_land_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
-                else
-                    max_width = _candidate_port_width - (_blank_width + object_width + button_width + (2 * CANDIDATE_TEXT_OFFSET));
-
-                if (text_width > max_width) {
-                    candidate_is_long = true;
-                    /* In order to avoid overlap issue, calculate show_string */
-                    String show_string = String (sub_splited_string [j]);
-                    int    show_length = text_width;
-                    while (show_length > max_width && show_string.length () > 1) {
-                        show_string = show_string.substr (0, show_string.length () - 1);
-                        evas_object_text_text_set (_tmp_candidate_text, (show_string + String ("...")).c_str ());
-                        evas_object_geometry_get (_tmp_candidate_text, NULL, NULL, &show_length, NULL);
-                    }
-                    edje_object_part_text_set (_candidate_text [_candidate_text_count], "candidate", (show_string + String ("...")).c_str ());
-                    text_width = max_width;
-                }
-
-                evas_object_size_hint_min_set (_candidate_text [_candidate_text_count], text_width + (2 * CANDIDATE_TEXT_OFFSET), _item_min_height);
-                if (HighLight || SetBack) {
-                    set_highlight_color (_candidate_text [_candidate_text_count], ForeGround, BackGround, SetBack);
-                }
-                elm_table_pack (candidate_object_table, _candidate_text[_candidate_text_count], object_width, 0, text_width + (2 * CANDIDATE_TEXT_OFFSET), _candidate_font_size);
-                object_width += (text_width + (2 * CANDIDATE_TEXT_OFFSET));
-                _candidate_text_count++;
             }
         }
-    }
 
-    if (splited_string) {
-        if (splited_string[0])
-            free (splited_string[0]);
+        if (splited_string [0])
+            free (splited_string [0]);
 
         free (splited_string);
     }
 
     if (sub_splited_string) {
-        if (sub_splited_string[0])
-            free (sub_splited_string[0]);
+        if (sub_splited_string [0])
+            free (sub_splited_string [0]);
 
         free (sub_splited_string);
     }
@@ -1078,13 +1081,17 @@ static bool get_helper_ise_info (const char *type, const char *package, HelperIn
         helper_info->icon = (pkg_icon_path ? scim::String (pkg_icon_path) : scim::String (""));
         helper_info->option = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | SCIM_HELPER_AUTO_RESTART;
 
-        if (pkg_label)
-            free (pkg_label);
-
-        if (pkg_icon_path)
-            free (pkg_icon_path);
-
         result = true;
+    }
+
+    if (pkg_label) {
+        free (pkg_label);
+        pkg_label = NULL;
+    }
+
+    if (pkg_icon_path) {
+        free (pkg_icon_path);
+        pkg_icon_path = NULL;
     }
 
     package_info_destroy (pkg_info);
