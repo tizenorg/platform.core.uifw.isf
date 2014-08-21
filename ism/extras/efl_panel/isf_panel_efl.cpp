@@ -1071,14 +1071,15 @@ static bool get_helper_ise_info (const char *type, const char *package, HelperIn
     if (!pkg_info)
         return false;
 
-    package_info_get_label (pkg_info, &pkg_label);
-    package_info_get_icon (pkg_info, &pkg_icon_path);
-
     package_info_foreach_app_from_package (pkg_info, PACKAGE_INFO_UIAPP, app_info_cb, helper_info);
 
     if (helper_info->uuid.length ()  > 0) {
-        helper_info->name = (pkg_label ? scim::String (pkg_label) : scim::String (""));
-        helper_info->icon = (pkg_icon_path ? scim::String (pkg_icon_path) : scim::String (""));
+        if (package_info_get_label (pkg_info, &pkg_label) == 0)
+            helper_info->name = (pkg_label ? scim::String (pkg_label) : scim::String (""));
+
+        if (package_info_get_icon (pkg_info, &pkg_icon_path) == 0)
+            helper_info->icon = (pkg_icon_path ? scim::String (pkg_icon_path) : scim::String (""));
+
         helper_info->option = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | SCIM_HELPER_AUTO_RESTART;
 
         result = true;

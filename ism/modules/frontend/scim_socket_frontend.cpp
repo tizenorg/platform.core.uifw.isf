@@ -2026,7 +2026,7 @@ int app_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
 {
     int ret;
     char *app_id = NULL;
-    char *pkg_id = NULL, *pkg_label = NULL, *pkg_type = NULL, *pkg_root_path = NULL, *pkg_icon_path = NULL;
+    char *pkg_id = NULL, *pkg_label = NULL, *pkg_type = NULL, *pkg_icon_path = NULL;
     pkgmgrinfo_appinfo_h appinfo_handle;
     pkgmgrinfo_pkginfo_h pkginfo_handle;
     HelperInfo helper_info;
@@ -2042,7 +2042,11 @@ int app_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
         return 0;
 
     /* Get package id */
-    pkgmgrinfo_appinfo_get_pkgname (appinfo_handle, &pkg_id);
+    ret = pkgmgrinfo_appinfo_get_pkgname (appinfo_handle, &pkg_id);
+    if (ret != PMINFO_R_OK) {
+        pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
+        return 0;
+    }
 
     /* Get package info handle */
     ret = pkgmgrinfo_pkginfo_get_pkginfo (pkg_id, &pkginfo_handle);
@@ -2055,18 +2059,16 @@ int app_list_cb (pkgmgrinfo_appinfo_h handle, void *user_data)
     ret = pkgmgrinfo_pkginfo_get_type (pkginfo_handle, &pkg_type);
     if (ret == PMINFO_R_OK && pkg_type && !strncmp (pkg_type, "wgt", 3)) {
         /* Get the label of package */
-        pkgmgrinfo_pkginfo_get_label (pkginfo_handle, &pkg_label);
-
-        /* Get the root path of package */
-        pkgmgrinfo_pkginfo_get_root_path (pkginfo_handle, &pkg_root_path);
+        if (pkgmgrinfo_pkginfo_get_label (pkginfo_handle, &pkg_label) == PMINFO_R_OK)
+            helper_info.name = (pkg_label ? scim::String (pkg_label) : scim::String (""));
 
         /* Get the icon path of package */
-        pkgmgrinfo_pkginfo_get_icon (pkginfo_handle, &pkg_icon_path);
+        if (pkgmgrinfo_pkginfo_get_icon (pkginfo_handle, &pkg_icon_path) == PMINFO_R_OK)
+            helper_info.icon = (pkg_icon_path ? scim::String (pkg_icon_path) : scim::String (""));
 
         // FIXME : need to get UUID
         helper_info.uuid = (app_id ? scim::String (app_id) : scim::String (""));
-        helper_info.name = (pkg_label ? scim::String (pkg_label) : scim::String (""));
-        helper_info.icon = (pkg_icon_path ? scim::String (pkg_icon_path) : scim::String (""));
+
         helper_info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
             scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART;
 
