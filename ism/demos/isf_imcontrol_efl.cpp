@@ -155,6 +155,7 @@ static void test_get_ise_list (void *data, Evas_Object *obj, void *event_info)
 {
     char **iselist = NULL;
     int count = isf_control_get_ise_list (&iselist);
+    printf ("Count : %d\n", count);
 
     for (int i = 0; i < count; i++) {
         if (iselist[i]) {

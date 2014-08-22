@@ -5999,6 +5999,24 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     return ECORE_CALLBACK_RENEW;
 }
 
+Eina_Bool check_focus_out_by_popup_win ()
+{
+    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
+    Eina_Bool ret = EINA_FALSE;
+    Ecore_X_Window_Type win_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
+
+    if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
+        return EINA_FALSE;
+
+    LOGD ("win type : %d\n", win_type);
+
+    if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU) {
+        ret = EINA_TRUE;
+    }
+
+    return ret;
+}
+
 /**
  * @brief Callback function for focus out event of application window
  *
@@ -6006,7 +6024,6 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
  *
  * @return ECORE_CALLBACK_RENEW
  */
-
 static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *event)
 {
     Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out*)event;
@@ -6014,6 +6031,8 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
 
     if (e && e->win == _app_window) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+            if (check_focus_out_by_popup_win ())
+                return ECORE_CALLBACK_RENEW;
 
 #if ENABLE_MULTIWINDOW_SUPPORT
             LOGD ("Application window focus OUT!\n");

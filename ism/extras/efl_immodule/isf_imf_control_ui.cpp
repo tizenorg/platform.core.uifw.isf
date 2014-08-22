@@ -46,7 +46,7 @@ static Ecore_IMF_Context *hide_req_ic       = NULL;
 static Ecore_Event_Handler *_prop_change_handler = NULL;
 static Ecore_X_Atom       prop_x_keyboard_input_detected = 0;
 static Ecore_X_Window     _control_win;
-static TOOLBAR_MODE_T    kbd_mode = TOOLBAR_HELPER_MODE;
+static TOOLBAR_MODE_T     kbd_mode = TOOLBAR_HELPER_MODE;
 static Ecore_Timer       *hide_timer = NULL;
 static Ecore_Timer       *will_show_timer = NULL;
 Ecore_IMF_Input_Panel_State input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
@@ -391,11 +391,16 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
     if (!ctx || !e) return ECORE_CALLBACK_PASS_ON;
     Ecore_X_Window client_win = _client_window_id_get (ctx);
+    Ecore_X_Window focus_out_win = e->win;
+    Ecore_X_Window focus_in_win = ecore_x_window_focus_get ();
 
-    LOGD ("ctx : %p, client_window : %d\n", ctx, client_win);
+    LOGD ("ctx : %p, client_window : %x, focus-out win : %x, focus-in win : %x\n", ctx, client_win, focus_out_win, focus_in_win);
+
+    if (check_focus_out_by_popup_win (ctx))
+        return ECORE_CALLBACK_PASS_ON;
 
     if (client_win > 0) {
-        if (e->win == client_win)
+        if (focus_out_win == client_win)
             isf_imf_context_input_panel_instant_hide (ctx);
     }
     else {
@@ -409,6 +414,29 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
 void input_panel_event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
 {
     _event_callback_call (type, value);
+}
+
+Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
+{
+    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
+    Eina_Bool ret = EINA_FALSE;
+    Ecore_X_Window_Type win_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
+    Ecore_X_Window client_win = _client_window_id_get (ctx);
+
+    if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
+        return EINA_FALSE;
+
+    LOGD ("win type : %d\n", win_type);
+
+    if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU) {
+        LOGD ("client window : %x, focus window : %x\n", client_win, focus_win);
+
+        if (client_win != focus_win) {
+            ret = EINA_TRUE;
+        }
+    }
+
+    return ret;
 }
 
 TOOLBAR_MODE_T get_keyboard_mode ()

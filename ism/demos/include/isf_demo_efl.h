@@ -39,6 +39,7 @@ struct appdata {
     Evas_Object *win_main;
     Evas_Object *layout_main;     // Layout widget based on EDJ
     Evas_Object *naviframe;
+    Evas_Object *menu_popup;
 
     int is_frameview;
 

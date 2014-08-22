@@ -520,14 +520,20 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
-            LOGD ("%s key is released.\n", ev->keyname);
-            isf_imf_context_reset (active_ctx);
-            isf_imf_context_input_panel_instant_hide (active_ctx);
-            return ECORE_CALLBACK_DONE;
+    Ecore_X_Window client_win = (Ecore_X_Window)ecore_imf_context_client_window_get (active_ctx);
+    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
+
+    if (client_win == focus_win) {
+        if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+            if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+                LOGD ("%s key is released.\n", ev->keyname);
+                isf_imf_context_reset (active_ctx);
+                isf_imf_context_input_panel_instant_hide (active_ctx);
+                return ECORE_CALLBACK_DONE;
+            }
         }
     }
+
     if (!strcmp (ev->keyname, "XF86MenuKB")) {
         if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             ecore_imf_context_input_panel_hide (active_ctx);
@@ -1467,6 +1473,7 @@ EAPI void
 isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+    Eina_Bool is_popup_win = EINA_FALSE;
 
     if (!context_scim) return;
 
@@ -1478,8 +1485,12 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         LOGD ("ctx : %p\n", ctx);
 
-        if (ecore_imf_context_input_panel_enabled_get (ctx))
-            ecore_imf_context_input_panel_hide (ctx);
+        is_popup_win = check_focus_out_by_popup_win (ctx);
+
+        if (!is_popup_win) {
+            if (ecore_imf_context_input_panel_enabled_get (ctx))
+                ecore_imf_context_input_panel_hide (ctx);
+        }
 
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
