@@ -2945,7 +2945,7 @@ check_socket_frontend (void)
                                       String ("ConnectionTester"),
                                       String ("SocketFrontEnd"),
                                       client,
-                                      1000)) {
+                                      500)) {
         LOGW ("check_socket_frontend's scim_socket_open_connection () failed.\n");
         return false;
     }
@@ -2992,8 +2992,8 @@ panel_initialize (void)
     /* Before initializing panel client, make sure the socket frontend is running */
     if (!check_socket_frontend ()) {
         bool connected = false;
-        /* Make sure we are not retrying for more than 10 seconds */
-        for (int i = 0; i < 100; ++i) {
+        /* Make sure we are not retrying for more than 5 seconds, in total */
+        for (int i = 0; i < 3; ++i) {
             if (check_socket_frontend ()) {
                 connected = true;
                 break;
@@ -3214,8 +3214,8 @@ initialize (void)
         // And set manual to false.
         bool check_result = check_socket_frontend ();
 
-        /* Make sure we are not retrying for more than 10 seconds */
-        for (int i = 0; i < 100 && !check_result; ++i) {
+        /* Make sure we are not retrying for more than 5 seconds, in total */
+        for (int i = 0; i < 3 && !check_result; ++i) {
             check_result = check_socket_frontend ();
             scim_usleep (100000);
         }
@@ -3239,14 +3239,14 @@ initialize (void)
         // If there is one Socket FrontEnd running and it's not manual mode,
         // then just use this Socket Frontend.
         if (!manual) {
-            for (int i = 0; i < 200; ++i) {
+            for (int i = 0; i < 3; ++i) {
                 if (check_result) {
                     config_module_name = "socket";
                     load_engine_list.clear ();
                     load_engine_list.push_back ("socket");
                     break;
                 }
-                scim_usleep (50000);
+                scim_usleep (100000);
                 check_result = check_socket_frontend ();
             }
         }
