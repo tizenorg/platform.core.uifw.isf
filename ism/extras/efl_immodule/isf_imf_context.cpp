@@ -57,6 +57,13 @@
 #endif
 
 #define ENABLE_BACKKEY 1
+#define SHIFT_MODE_OFF  0xffe1
+#define SHIFT_MODE_ON   0xffe2
+#define SHIFT_MODE_LOCK 0xffe6
+#define SHIFT_MODE_ENABLE 0x9fe7
+#define SHIFT_MODE_DISABLE 0x9fe8
+
+#define E_PROP_DEVICEMGR_INPUTWIN                       "DeviceMgr Input Window"
 
 using namespace scim;
 
@@ -88,6 +95,11 @@ struct _EcoreIMFContextISFImpl {
 
     EcoreIMFContextISFImpl  *next;
 };
+
+typedef enum {
+    INPUT_LANG_JAPANESE,
+    INPUT_LANG_OTHER
+} Input_Language;
 
 /* Input Context handling functions. */
 static EcoreIMFContextISFImpl *new_ic_impl              (EcoreIMFContextISF     *parent);
@@ -166,7 +178,8 @@ static Eina_Bool panel_iochannel_handler                (void                   
 /* utility functions */
 static bool     filter_hotkeys                          (EcoreIMFContextISF     *ic,
                                                          const KeyEvent         &key);
-static bool     filter_keys                             (const char *keyname, const char *config_path);
+static bool     filter_keys                             (const char             *keyname,
+                                                         const char             *config_path);
 static void     turn_on_ic                              (EcoreIMFContextISF     *ic);
 static void     turn_off_ic                             (EcoreIMFContextISF     *ic);
 static void     set_ic_capabilities                     (EcoreIMFContextISF     *ic);
@@ -178,12 +191,18 @@ static void     open_next_factory                       (EcoreIMFContextISF     
 static void     open_previous_factory                   (EcoreIMFContextISF     *ic);
 static void     open_specific_factory                   (EcoreIMFContextISF     *ic,
                                                          const String           &uuid);
-static void     initialize_modifier_bits                (Display *display);
-static unsigned int scim_x11_keymask_scim_to_x11        (Display *display, uint16 scimkeymask);
-static XKeyEvent createKeyEvent                         (bool press, int keycode, int modifiers, bool fake);
-static void     send_x_key_event                        (const KeyEvent &key, bool fake);
-static int      _keyname_to_keycode                     (const char *keyname);
-static void     _hide_preedit_string                    (int context, bool update_preedit);
+static void     initialize_modifier_bits                (Display                *display);
+static unsigned int scim_x11_keymask_scim_to_x11        (Display                *display,
+                                                         uint16                  scimkeymask);
+static XKeyEvent createKeyEvent                         (bool                    press,
+                                                         int                     keycode,
+                                                         int                     modifiers,
+                                                         bool                    fake);
+static void     send_x_key_event                        (const KeyEvent         &key,
+                                                         bool                    fake);
+static int      _keyname_to_keycode                     (const char             *keyname);
+static void     _hide_preedit_string                    (int                     context,
+                                                         bool                    update_preedit);
 
 static void     attach_instance                         (const IMEngineInstancePointer &si);
 
@@ -306,31 +325,18 @@ static bool                                             _x_key_event_is_valid   
 
 static Ecore_Timer                                     *_click_timer                = NULL;
 
-typedef enum {
-    INPUT_LANG_JAPANESE,
-    INPUT_LANG_OTHER
-} Input_Language;
-
 static Input_Language                                   input_lang                  = INPUT_LANG_OTHER;
 
-static Display *__current_display      = 0;
-static int      __current_alt_mask     = Mod1Mask;
-static int      __current_meta_mask    = 0;
-static int      __current_super_mask   = 0;
-static int      __current_hyper_mask   = 0;
-static int      __current_numlock_mask = Mod2Mask;
+static Display                                         *__current_display      = 0;
+static int                                              __current_alt_mask     = Mod1Mask;
+static int                                              __current_meta_mask    = 0;
+static int                                              __current_super_mask   = 0;
+static int                                              __current_hyper_mask   = 0;
+static int                                              __current_numlock_mask = Mod2Mask;
 
-#define SHIFT_MODE_OFF  0xffe1
-#define SHIFT_MODE_ON   0xffe2
-#define SHIFT_MODE_LOCK 0xffe6
-#define SHIFT_MODE_ENABLE 0x9fe7
-#define SHIFT_MODE_DISABLE 0x9fe8
-
-#define E_PROP_DEVICEMGR_INPUTWIN                       "DeviceMgr Input Window"
-
-extern Ecore_IMF_Input_Panel_State  input_panel_state;
-extern Ecore_IMF_Input_Panel_State  notified_state;
-extern Ecore_IMF_Context           *input_panel_ctx;
+extern Ecore_IMF_Input_Panel_State                      input_panel_state;
+extern Ecore_IMF_Input_Panel_State                      notified_state;
+extern Ecore_IMF_Context                               *input_panel_ctx;
 
 // A hack to shutdown the immodule cleanly even if im_module_exit () is not called when exiting.
 class FinalizeHandler
