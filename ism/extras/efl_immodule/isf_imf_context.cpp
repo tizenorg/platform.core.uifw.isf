@@ -97,9 +97,47 @@ struct _EcoreIMFContextISFImpl {
 };
 
 typedef enum {
+    INPUT_LANG_URDU,
+    INPUT_LANG_HINDI,
+    INPUT_LANG_BENGALI,
+    INPUT_LANG_ASSAMESE,
+    INPUT_LANG_PUNJABI,
+    INPUT_LANG_NEPALI,
+    INPUT_LANG_ORIYA,
+    INPUT_LANG_ARMENIAN,
+    INPUT_LANG_CN,
+    INPUT_LANG_CN_HK,
+    INPUT_LANG_CN_TW,
     INPUT_LANG_JAPANESE,
+    INPUT_LANG_KHMER,
+    INPUT_LANG_MYANMAR,
+    INPUT_LANG_BURMESE,
     INPUT_LANG_OTHER
 } Input_Language;
+
+struct __Punctuations {
+    const char *code;
+    Input_Language lang;
+    wchar_t punc_code;
+};
+
+static __Punctuations __punctuations [] = {
+    { "ur_PK",  INPUT_LANG_URDU,    0x06D4 },
+    { "hi_IN",  INPUT_LANG_HINDI,   0x0964 },
+    { "bn_IN",  INPUT_LANG_BENGALI, 0x0964 },
+    { "as_IN",  INPUT_LANG_ASSAMESE,0x0964 },
+    { "pa_IN",  INPUT_LANG_PUNJABI, 0x0964 },
+    { "ne_NP",  INPUT_LANG_NEPALI,  0x0964 },
+    { "or_IN",  INPUT_LANG_ORIYA,   0x0964 },
+    { "hy_AM",  INPUT_LANG_ARMENIAN,0x0589 },
+    { "zh_CN",  INPUT_LANG_CN,      0x3002 },
+    { "zh_HK",  INPUT_LANG_CN_HK,   0x3002 },
+    { "zh_TW",  INPUT_LANG_CN_TW,   0x3002 },
+    { "ja_JP",  INPUT_LANG_JAPANESE,0x3002 },
+    { "km_KH",  INPUT_LANG_KHMER,   0x17D4 },
+    { "my_MM",  INPUT_LANG_MYANMAR, 0x104A },
+    { "z1_MM",  INPUT_LANG_BURMESE, 0x104A },
+};
 
 /* Input Context handling functions. */
 static EcoreIMFContextISFImpl *new_ic_impl              (EcoreIMFContextISF     *parent);
@@ -718,11 +756,15 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
         ecore_imf_context_delete_surrounding_event_add (ctx, -1, 1);
         ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, &ev);
 
-        if (input_lang == INPUT_LANG_JAPANESE) {
-            fullstop_mark = strdup ("。");
+        if (input_lang == INPUT_LANG_OTHER) {
+            fullstop_mark = strdup (".");
         }
         else {
-            fullstop_mark = strdup (".");
+            wchar_t wbuf[2] = {0};
+            wbuf[0] = __punctuations[input_lang].punc_code;
+
+            WideString wstr = WideString (wbuf);
+            fullstop_mark = strdup (utf8_wcstombs (wstr).c_str ());
         }
 
         ecore_imf_context_commit_event_add (ctx, fullstop_mark);
@@ -964,10 +1006,14 @@ get_input_language ()
     char *input_lang_str = vconf_get_str (VCONFKEY_ISF_INPUT_LANGUAGE);
     if (!input_lang_str) return;
 
-    if (strcmp (input_lang_str, "ja_JP") == 0)
-        input_lang = INPUT_LANG_JAPANESE;
-    else
-        input_lang = INPUT_LANG_OTHER;
+    input_lang = INPUT_LANG_OTHER;
+
+    for (unsigned int i = 0; i < (sizeof (__punctuations) / sizeof (__punctuations[0])); i++) {
+        if (strcmp (input_lang_str, __punctuations[i].code) == 0) {
+            input_lang = __punctuations[i].lang;
+            break;
+        }
+    }
 
     free (input_lang_str);
 }
@@ -1978,7 +2024,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         return ret;
     }
     KeyEvent key;
-    unsigned int timestamp;
+    unsigned int timestamp = 0;
 
     if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
