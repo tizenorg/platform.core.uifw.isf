@@ -5703,6 +5703,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 }
 
                 _updated_hide_state_geometry = false;
+
+                ecore_x_e_virtual_keyboard_state_set (_ise_window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
             } else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
                 /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
                 LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
@@ -5735,6 +5737,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
 #endif
 
                 _ise_reported_geometry.valid = false;
+
+                ecore_x_e_virtual_keyboard_state_set (_ise_window, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
             }
             ui_settle_candidate_window ();
         }
