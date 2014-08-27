@@ -178,6 +178,12 @@ ConfigBase::get (bool create_on_demand, const String &default_module)
     return _scim_default_config;
 }
 
+void
+ConfigBase::unload ()
+{
+    _scim_default_config_module.unload ();
+}
+
 /*
  * Implementation of DummyConfig
  */

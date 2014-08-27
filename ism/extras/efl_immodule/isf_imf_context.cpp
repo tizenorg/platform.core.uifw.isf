@@ -3403,7 +3403,8 @@ finalize (void)
     SCIM_DEBUG_FRONTEND(2) << " Releasing Config...\n";
     _config.reset ();
     _config_connection.disconnect ();
-
+    ConfigBase::set (0);
+    ConfigBase::unload ();
     _focused_ic = NULL;
     _ic_list = NULL;
 

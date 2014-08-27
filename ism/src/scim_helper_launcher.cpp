@@ -201,6 +201,7 @@ int main (int argc, char *argv [])
     if (!config_pointer.null ())
         config_pointer.reset ();
     ConfigBase::set (0);
+    ConfigBase::unload ();
     snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE (%s) is destroyed!!!\n",
         time (0), getpid (), __FILE__, __func__, uuid.c_str ());
     isf_save_log (buf);
