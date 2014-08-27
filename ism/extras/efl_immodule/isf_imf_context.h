@@ -80,6 +80,7 @@ EAPI void isf_imf_context_prediction_allow_set (Ecore_IMF_Context* ctx, Eina_Boo
 EAPI void isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
 EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context* ctx, const void *data, int len);
 EAPI void isf_imf_context_imdata_get (Ecore_IMF_Context* ctx, void *data, int *len);
+EAPI void isf_imf_context_input_hint_set (Ecore_IMF_Context* ctx, Ecore_IMF_Input_Hints hint);
 
 EAPI EcoreIMFContextISF* isf_imf_context_new      (void);
 EAPI void                isf_imf_context_shutdown (void);

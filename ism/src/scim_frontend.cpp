@@ -735,6 +735,14 @@ FrontEndBase::set_layout (int id, unsigned int layout) const
 }
 
 void
+FrontEndBase::set_input_hint (int id, unsigned int input_hint) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->set_input_hint (input_hint);
+}
+
+void
 FrontEndBase::update_candidate_item_layout (int id, const std::vector<unsigned int> &row_items) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);

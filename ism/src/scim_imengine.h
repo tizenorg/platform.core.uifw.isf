@@ -739,6 +739,13 @@ public:
      */
     virtual void set_autocapital_type (int mode);
 
+    /**
+     * @brief Set input hint
+     *
+     * @param input_hint - the input hint.
+     */
+    virtual void set_input_hint (unsigned int input_hint);
+
 protected:
     /**
      * @name Signal activation functions

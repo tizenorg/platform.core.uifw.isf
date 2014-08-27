@@ -1017,6 +1017,8 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
             socket_set_autocapital_type (id);
         else if (cmd == ISM_TRANS_CMD_SET_LAYOUT)
             socket_set_layout (id);
+        else if (cmd == ISM_TRANS_CMD_SET_INPUT_HINT)
+            socket_set_input_hint (id);
         else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
             socket_reset_option (id);
         else if (cmd == SCIM_TRANS_CMD_RESET)
@@ -1631,6 +1633,29 @@ SocketFrontEnd::socket_set_layout (int /*client_id*/)
         m_current_instance = -1;
     }
 }
+
+void
+SocketFrontEnd::socket_set_input_hint (int /*client_id*/)
+{
+    uint32 siid;
+    uint32 input_hint;
+
+    SCIM_DEBUG_FRONTEND (2) << __func__ << "\n";
+
+    if (m_receive_trans.get_data (siid) &&
+        m_receive_trans.get_data (input_hint)) {
+
+        SCIM_DEBUG_FRONTEND (3) << "  SI (" << siid << ").\n";
+
+        m_current_instance = (int) siid;
+
+        set_input_hint ((int) siid, input_hint);
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
+        m_current_instance = -1;
+    }
+}
+
 
 void
 SocketFrontEnd::socket_update_candidate_item_layout (int /*client_id*/)

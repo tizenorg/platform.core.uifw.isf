@@ -238,6 +238,7 @@ private:
     void socket_longpress_candidate         (int client_id);
     void socket_set_imdata                  (int client_id);
     void socket_set_autocapital_type        (int client_id);
+    void socket_set_input_hint              (int client_id);
 };
 
 #endif

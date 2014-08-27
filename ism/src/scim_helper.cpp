@@ -174,6 +174,7 @@ public:
     HelperAgentSignalInt                signal_longpress_candidate;
     HelperAgentSignalKeyEventUint       signal_process_key_event;
     HelperAgentSignalUintVoid           signal_set_input_mode;
+    HelperAgentSignalUintVoid           signal_set_input_hint;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
@@ -867,6 +868,14 @@ HelperAgent::filter_event ()
                 uint32 index;
                 if (m_impl->recv.get_data (index))
                     m_impl->signal_longpress_candidate (this, ic, ic_uuid, index);
+                break;
+            }
+            case ISM_TRANS_CMD_SET_INPUT_HINT:
+            {
+                uint32 input_hint;
+
+                if (m_impl->recv.get_data (input_hint))
+                    m_impl->signal_set_input_hint (this, input_hint);
                 break;
             }
             default:
@@ -2146,6 +2155,20 @@ Connection
 HelperAgent::signal_connect_set_input_mode (HelperAgentSlotUintVoid *slot)
 {
     return m_impl->signal_set_input_mode.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper set input hint signal.
+ *
+ * This signal is used to set Helper ISE input hint.
+ *
+ * The prototype of the slot is:
+ * void set_input_hint (const HelperAgent *agent, uint32 &input_hint);
+ */
+Connection
+HelperAgent::signal_connect_set_input_hint (HelperAgentSlotUintVoid *slot)
+{
+    return m_impl->signal_set_input_hint.connect (slot);
 }
 
 /**

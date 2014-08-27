@@ -45,7 +45,8 @@ typedef struct {
     Eina_Bool caps_mode;
     int layout_variation;
     Ecore_IMF_Autocapital_Type autocapital_type;
-    int reserved[247];
+    Ecore_IMF_Input_Hints input_hint;
+    int reserved[246];
 } Ise_Context;
 
 #endif  /* __ISE_CONTEXT_H */

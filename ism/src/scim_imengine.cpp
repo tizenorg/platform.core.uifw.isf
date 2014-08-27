@@ -406,6 +406,11 @@ IMEngineInstanceBase::set_layout (unsigned int layout)
 }
 
 void
+IMEngineInstanceBase::set_input_hint (unsigned int input_hint)
+{
+}
+
+void
 IMEngineInstanceBase::update_candidate_item_layout (const std::vector<unsigned int> &row_items)
 {
 }

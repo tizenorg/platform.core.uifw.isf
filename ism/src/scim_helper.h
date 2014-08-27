@@ -1219,6 +1219,16 @@ public:
      * void set_input_mode (const HelperAgent *agent, uint32 &input_mode);
      */
     Connection signal_connect_set_input_mode                        (HelperAgentSlotUintVoid            *slot);
+
+    /**
+     * @brief Connect a slot to Helper set input hint signal.
+     *
+     * This signal is used to set Helper ISE input hint.
+     *
+     * The prototype of the slot is:
+     * void set_input_hint (const HelperAgent *agent, uint32 &input_hint);
+     */
+    Connection signal_connect_set_input_hint                        (HelperAgentSlotUintVoid            *slot);
 };
 
 /**  @} */

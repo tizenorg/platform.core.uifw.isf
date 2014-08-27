@@ -529,6 +529,13 @@ protected:
     void set_autocapital_type (int id, int mode) const;
 
     /**
+     * @brief Set input hint.
+     * @param id the IMEngine instance id.
+     * @param input_hint - the input hint.
+     */
+    void set_input_hint (int id, unsigned int input_hint) const;
+
+    /**
      * @}
      */
 

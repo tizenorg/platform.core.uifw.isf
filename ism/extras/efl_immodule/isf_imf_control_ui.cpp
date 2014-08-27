@@ -394,7 +394,7 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
     Ecore_X_Window focus_out_win = e->win;
     Ecore_X_Window focus_in_win = ecore_x_window_focus_get ();
 
-    LOGD ("ctx : %p, client_window : %x, focus-out win : %x, focus-in win : %x\n", ctx, client_win, focus_out_win, focus_in_win);
+    LOGD ("ctx : %p, client_window : %#x, focus-out win : %#x, focus-in win : %#x\n", ctx, client_win, focus_out_win, focus_in_win);
 
     if (check_focus_out_by_popup_win (ctx))
         return ECORE_CALLBACK_PASS_ON;
@@ -429,7 +429,7 @@ Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
     LOGD ("win type : %d\n", win_type);
 
     if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU) {
-        LOGD ("client window : %x, focus window : %x\n", client_win, focus_win);
+        LOGD ("client window : %#x, focus window : %#x\n", client_win, focus_win);
 
         if (client_win != focus_win) {
             ret = EINA_TRUE;
@@ -609,10 +609,13 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     iseContext.autocapital_type = ecore_imf_context_autocapital_type_get (ctx);
 
+    iseContext.input_hint = ecore_imf_context_input_hint_get (ctx);
+
     SECURE_LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     SECURE_LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     SECURE_LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
     SECURE_LOGD ("client_window : %#x, password mode : %d, prediction_allow : %d\n", iseContext.client_window, iseContext.password_mode, iseContext.prediction_allow);
+    SECURE_LOGD ("input hint : %#x\n", iseContext.input_hint);
 
     if (iseContext.client_window != ecore_x_window_focus_get ()) {
         LOGW ("Client window is different from focus window. client win : %#x, focus win : %#x\n", iseContext.client_window, ecore_x_window_focus_get ());

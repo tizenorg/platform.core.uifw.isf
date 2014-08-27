@@ -76,6 +76,7 @@ struct _EcoreIMFContextISFImpl {
     WideString               preedit_string;
     AttributeList            preedit_attrlist;
     Ecore_IMF_Autocapital_Type autocapital_type;
+    Ecore_IMF_Input_Hints    input_hint;
     void                    *imdata;
     int                      imdata_size;
     int                      preedit_caret;
@@ -206,6 +207,7 @@ static void     panel_req_update_spot_location          (EcoreIMFContextISF     
 static void     panel_req_update_cursor_position        (EcoreIMFContextISF     *ic, int cursor_pos);
 static void     panel_req_show_help                     (EcoreIMFContextISF     *ic);
 static void     panel_req_show_factory_menu             (EcoreIMFContextISF     *ic);
+static void     panel_req_set_input_hint                (EcoreIMFContextISF     *ic, int hint);
 
 /* Panel iochannel handler*/
 static bool     panel_initialize                        (void);
@@ -425,6 +427,7 @@ new_ic_impl (EcoreIMFContextISF *parent)
     }
 
     impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
+    impl->input_hint = ECORE_IMF_INPUT_HINT_NONE;
     impl->next_shift_status = 0;
     impl->shift_mode_enabled = 0;
     impl->next = _used_ic_impl_list;
@@ -1481,6 +1484,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
             context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
             LOGD ("ctx : %p. set autocapital type : %d\n", ctx, context_scim->impl->autocapital_type);
             context_scim->impl->si->set_autocapital_type (context_scim->impl->autocapital_type);
+            context_scim->impl->si->set_input_hint (context_scim->impl->input_hint);
             if (context_scim->impl->imdata)
                 context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
         } else {
@@ -2191,6 +2195,28 @@ EAPI void isf_imf_context_imdata_get (Ecore_IMF_Context *ctx, void* data, int* l
     isf_imf_context_input_panel_imdata_get (ctx, data, length);
 }
 
+EAPI void
+isf_imf_context_input_hint_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Hints hint)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (context_scim && context_scim->impl) {
+        if (context_scim->impl->input_hint != hint) {
+            LOGD ("ctx : %p, input hint : %#x\n", ctx, hint);
+            context_scim->impl->input_hint = hint;
+
+            if (context_scim->impl->si && context_scim == _focused_ic) {
+                _panel_client.prepare (context_scim->id);
+                context_scim->impl->si->set_input_hint (hint);
+                panel_req_set_input_hint (context_scim, hint);
+                _panel_client.send ();
+            }
+        }
+    }
+}
+
 /* Panel Slot functions */
 static void
 panel_slot_reload_config (int context)
@@ -2889,6 +2915,15 @@ panel_req_update_cursor_position (EcoreIMFContextISF *ic, int cursor_pos)
         _panel_client.update_cursor_position (ic->id, cursor_pos);
 }
 
+static void
+panel_req_set_input_hint (EcoreIMFContextISF *ic, int hint)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (ic)
+        _panel_client.set_input_hint (ic->id, hint);
+}
+
 static bool
 filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
 {
@@ -3159,6 +3194,7 @@ turn_on_ic (EcoreIMFContextISF *ic)
             ic->impl->si->set_prediction_allow (ic->impl->prediction_allow);
             LOGD ("ctx : %p. set autocapital type : %d\n", ic->ctx, ic->impl->autocapital_type);
             ic->impl->si->set_autocapital_type (ic->impl->autocapital_type);
+            ic->impl->si->set_input_hint (ic->impl->input_hint);
         }
 
         //Record the IC on/off status

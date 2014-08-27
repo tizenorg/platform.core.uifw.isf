@@ -1033,6 +1033,13 @@ public:
         }
     }
 
+    void set_input_hint (int icid, int input_hint) {
+        if (m_send_refcount > 0 && m_current_icid == icid) {
+            m_send_trans.put_command (ISM_TRANS_CMD_SET_INPUT_HINT);
+            m_send_trans.put_data (input_hint);
+        }
+    }
+
     void get_layout (int* layout) {
         if (m_send_refcount > 0) {
             int cmd;
@@ -1729,6 +1736,12 @@ void
 PanelClient::set_input_mode         (int input_mode)
 {
     m_impl->set_input_mode (input_mode);
+}
+
+void
+PanelClient::set_input_hint         (int icid, int input_hint)
+{
+    m_impl->set_input_hint (icid, input_hint);
 }
 
 void

@@ -246,6 +246,7 @@ public:
     void process_key_event      (KeyEvent& key, int* ret);
     void get_active_helper_option (int* option);
     void set_input_mode         (int input_mode);
+    void set_input_hint         (int icid, int input_hint);
 
     /** @} */
 

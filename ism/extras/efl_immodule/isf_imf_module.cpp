@@ -75,7 +75,8 @@ extern "C"
         NULL, /* input_panel_event_callback_add */
         NULL, /* input_panel_event_callback_del */
         isf_imf_context_input_panel_language_locale_get,
-        isf_imf_context_candidate_window_geometry_get
+        isf_imf_context_candidate_window_geometry_get,
+        isf_imf_context_input_hint_set
     };
 
     static Ecore_IMF_Context *imf_module_create (void);

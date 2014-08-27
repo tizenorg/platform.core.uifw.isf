@@ -42,6 +42,7 @@
 #include "isf_focus_movement_efl.h"
 #include "isf_language_efl.h"
 #include "isf_ondemand_efl.h"
+#include "isf_input_hint_efl.h"
 
 #if HAVE_UIGADGET
 #include <ui-gadget.h>
@@ -56,6 +57,7 @@ static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Language", ise_language_bt },
     { "ISF Return Key Type", ise_return_key_type_bt },
     { "ISF Return Key Disable", ise_return_key_disable_bt },
+    { "ISF Input hint", ise_input_hint_bt },
     { "ISF IM Data", ise_imdata_set_bt },
 #ifdef _WEARABLE
     { "ISF ondemand", ise_ondemand_bt },

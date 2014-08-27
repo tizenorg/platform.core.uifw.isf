@@ -117,6 +117,7 @@ public:
     virtual void longpress_candidate (unsigned int index);
     virtual void set_imdata (const char *data, unsigned int len);
     virtual void set_autocapital_type (int mode);
+    virtual void set_input_hint (unsigned int input_hint);
 
 private:
     bool commit_transaction (Transaction &trans);
