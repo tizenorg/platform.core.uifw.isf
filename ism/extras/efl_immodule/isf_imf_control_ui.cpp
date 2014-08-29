@@ -428,7 +428,8 @@ Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
 
     LOGD ("win type : %d\n", win_type);
 
-    if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU) {
+    if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU ||
+        win_type == ECORE_X_WINDOW_TYPE_NOTIFICATION) {
         LOGD ("client window : %#x, focus window : %#x\n", client_win, focus_win);
 
         if (client_win != focus_win) {

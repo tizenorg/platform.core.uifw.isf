@@ -6014,7 +6014,8 @@ Eina_Bool check_focus_out_by_popup_win ()
 
     LOGD ("win type : %d\n", win_type);
 
-    if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU) {
+    if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU ||
+        win_type == ECORE_X_WINDOW_TYPE_NOTIFICATION) {
         ret = EINA_TRUE;
     }
 
