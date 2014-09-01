@@ -142,6 +142,31 @@ public:
         if (m_data) delete m_data;
     }
 
+    const SocketAddressImpl & operator = (const SocketAddressImpl &other) {
+        m_family = other.m_family;
+        m_address = other.m_address;
+        if (m_data)
+            delete (m_data);
+
+        if (other.m_data) {
+            size_t len = 0;
+            switch (m_family) {
+                case SCIM_SOCKET_LOCAL:
+                    m_data = (struct sockaddr*) new struct sockaddr_un;
+                    len = sizeof (sockaddr_un);
+                    break;
+                case SCIM_SOCKET_INET:
+                    m_data = (struct sockaddr*) new struct sockaddr_in;
+                    len = sizeof (sockaddr_in);
+                    break;
+                case SCIM_SOCKET_UNKNOWN:
+                    break;
+            }
+            if (len && m_data) memcpy (m_data, other.m_data, len);
+        }
+        return *this;
+    }
+
     void swap (SocketAddressImpl &other) {
         std::swap (m_data, other.m_data);
         std::swap (m_family, other.m_family);

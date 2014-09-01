@@ -94,7 +94,9 @@ public:
         m_ref = other.m_ref;
         m_buffer_size = other.m_buffer_size;
         m_write_pos = other.m_write_pos;
-        free (m_buffer);
+        if (m_buffer)
+            free (m_buffer);
+
         m_buffer = (unsigned char*) malloc (other.m_buffer_size);
         if (!m_buffer)
             throw Exception ("TransactionHolder::TransactionHolder() Out of memory");
