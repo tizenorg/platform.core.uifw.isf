@@ -74,8 +74,35 @@ public:
             throw Exception ("TransactionHolder::TransactionHolder() Out of memory");
     }
 
+    TransactionHolder (TransactionHolder &other)
+        : m_ref (other.m_ref),
+          m_buffer_size (other.m_buffer_size),
+          m_write_pos (other.m_write_pos),
+          m_buffer ((unsigned char*) malloc (other.m_buffer_size)) {
+        if (!m_buffer)
+            throw Exception ("TransactionHolder::TransactionHolder() Out of memory");
+
+        if (m_buffer_size && m_buffer)
+            memcpy (m_buffer, other.m_buffer, m_buffer_size);
+    }
+
     ~TransactionHolder () {
         free (m_buffer);
+    }
+
+    const TransactionHolder & operator = (const TransactionHolder &other) {
+        m_ref = other.m_ref;
+        m_buffer_size = other.m_buffer_size;
+        m_write_pos = other.m_write_pos;
+        free (m_buffer);
+        m_buffer = (unsigned char*) malloc (other.m_buffer_size);
+        if (!m_buffer)
+            throw Exception ("TransactionHolder::TransactionHolder() Out of memory");
+
+        if (m_buffer_size && m_buffer)
+            memcpy (m_buffer, other.m_buffer, m_buffer_size);
+
+        return *this;
     }
 
     bool valid () const {
