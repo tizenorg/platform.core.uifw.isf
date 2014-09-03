@@ -3797,15 +3797,18 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
         keysyms = XGetKeyboardMapping (display, keycode_min,
                 keycode_max - keycode_min + 1,
                 &keycode_num);
-        mod = (mod + 1) & 0x7;
-        i = (keycode_max - keycode_min - mod - 1) * keycode_num;
 
-        keysyms[i] = keysym;
-        XChangeKeyboardMapping (display, keycode_min, keycode_num,
-                keysyms, (keycode_max - keycode_min));
-        XFree (keysyms);
-        XSync (display, False);
-        keycode = keycode_max - mod - 1;
+        if (keysyms) {
+            mod = (mod + 1) & 0x7;
+            i = (keycode_max - keycode_min - mod - 1) * keycode_num;
+
+            keysyms[i] = keysym;
+            XChangeKeyboardMapping (display, keycode_min, keycode_num,
+                    keysyms, (keycode_max - keycode_min));
+            XFree (keysyms);
+            XSync (display, False);
+            keycode = keycode_max - mod - 1;
+        }
     }
 
     unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, key.mask);
