@@ -6143,6 +6143,7 @@ int main (int argc, char *argv [])
 
     int           new_argc        = 0;
     char        **new_argv        = new char * [40];
+    int           display_name_c  = 0;
     ConfigModule *config_module   = NULL;
     String        config_name     = String ("socket");
     String        display_name    = String ();
@@ -6254,7 +6255,8 @@ int main (int argc, char *argv [])
     /* Make up DISPLAY env. */
     if (display_name.length ()) {
         new_argv [new_argc ++] = const_cast <char*> ("--display");
-        new_argv [new_argc ++] = const_cast <char*> (display_name.c_str ());
+        display_name_c = new_argc;
+        new_argv [new_argc ++] = strdup (display_name.c_str ());
 
         setenv ("DISPLAY", display_name.c_str (), 1);
     }
@@ -6490,7 +6492,9 @@ cleanup:
         }
         delete _panel_agent;
     }
-
+    if ((display_name_c > 0) && new_argv [display_name_c]) {
+        free (new_argv [display_name_c]);
+    }
     delete []new_argv;
 
     snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ret=%d\n",

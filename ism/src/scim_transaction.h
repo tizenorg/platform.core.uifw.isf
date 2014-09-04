@@ -379,7 +379,7 @@ public:
     /**
      * @brief Copy operator.
      */
-    const TransactionReader & operator = (const TransactionReader &);
+    TransactionReader & operator = (const TransactionReader &);
 
     /**
      * @brief Attach this TransactionReader object to a Transaction.

@@ -125,7 +125,7 @@ public:
     /**
      * @brief Copy operator.
      */
-    const SocketAddress& operator = (const SocketAddress &addr);
+    SocketAddress& operator = (const SocketAddress &addr);
 
     /**
      * @brief Check if this address is valid.

@@ -66,7 +66,7 @@ IConvert::~IConvert ()
     delete m_impl;
 }
 
-const IConvert &
+IConvert &
 IConvert::operator= (const IConvert & iconvert)
 {
     if (this != &iconvert)

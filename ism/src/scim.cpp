@@ -623,13 +623,20 @@ int main (int argc, char *argv [])
         isf_save_log (buf);
 
         /* When finished launching scim-launcher, let's create panel process also, for the default display :0 */
-        if (!check_panel ("")) {
-            cerr << "Launching Panel...\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Launching panel process......%s\n",
-                time (0), getpid (), getppid (), __FILE__, __func__, def_config.c_str ());
-            isf_save_log (buf);
+        try {
+            if (!check_panel ("")) {
+               cerr << "Launching Panel...\n";
+               snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Launching panel process......%s\n",
+                  time (0), getpid (), getppid (), __FILE__, __func__, def_config.c_str ());
+                isf_save_log (buf);
 
-            scim_launch_panel (true, "socket", "", NULL);
+               scim_launch_panel (true, "socket", "", NULL);
+            }
+        } catch (scim::Exception & e) {
+            cerr << e.what () << "\n";
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  %s\n",
+            time (0), getpid (), getppid (), __FILE__, __func__, e.what ());
+            isf_save_log (buf);
         }
 
         run_broker (argc, argv);

@@ -291,7 +291,7 @@ SocketAddress::~SocketAddress ()
     delete m_impl;
 }
 
-const SocketAddress&
+SocketAddress&
 SocketAddress::operator = (const SocketAddress &addr)
 {
     if (this != &addr) {

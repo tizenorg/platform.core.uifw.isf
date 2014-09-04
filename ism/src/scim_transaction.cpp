@@ -782,7 +782,7 @@ TransactionReader::TransactionReader (const TransactionReader &reader)
 {
 }
 
-const TransactionReader &
+TransactionReader &
 TransactionReader::operator = (const TransactionReader &reader)
 {
     m_impl->attach (reader.m_impl->m_holder);
