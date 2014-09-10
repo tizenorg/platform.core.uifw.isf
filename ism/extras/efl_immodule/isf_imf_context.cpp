@@ -3440,7 +3440,6 @@ finalize (void)
     _config.reset ();
     _config_connection.disconnect ();
     ConfigBase::set (0);
-    ConfigBase::unload ();
     _focused_ic = NULL;
     _ic_list = NULL;
 

@@ -72,12 +72,6 @@ ConfigModule::load (const String &name)
 }
 
 bool
-ConfigModule::unload ()
-{
-    return m_module.unload ();
-}
-
-bool
 ConfigModule::valid () const
 {
     return (m_module.valid () && m_config_init && m_config_create_config);

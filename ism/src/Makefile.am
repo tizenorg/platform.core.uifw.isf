@@ -104,13 +104,15 @@ endif
 
 lib_LTLIBRARIES 	= libscim@SCIM_EPOCH@.la
 
-libscim@SCIM_EPOCH@_la_SOURCES = scim_backend.cpp \
-		      	  scim_chartraits.cpp \
+libscim@SCIM_EPOCH@_la_SOURCES = \
+			  scim_debug.cpp \
+			  scim_module.cpp \
+			  scim_backend.cpp \
+			  scim_chartraits.cpp \
 			  scim_compose_key.cpp \
 			  scim_config_base.cpp \
 			  scim_config_module.cpp \
 			  scim_connection.cpp \
-			  scim_debug.cpp \
 			  scim_event.cpp \
 			  scim_filter.cpp \
 			  scim_filter_module.cpp \
@@ -126,7 +128,6 @@ libscim@SCIM_EPOCH@_la_SOURCES = scim_backend.cpp \
 			  scim_imengine.cpp \
 			  scim_imengine_module.cpp \
 			  scim_lookup_table.cpp \
-			  scim_module.cpp \
 			  scim_object.cpp \
 			  scim_panel_agent.cpp \
 			  scim_panel_client.cpp \

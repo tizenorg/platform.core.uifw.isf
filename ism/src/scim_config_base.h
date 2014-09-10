@@ -365,13 +365,6 @@ public:
      */
     static ConfigPointer get (bool create_on_demand = true,
                               const String &default_module = String (""));
-    /**
-     * @brief Unload the default global Config module.
-     *
-     * If global Config object is used by calling function ConfigBase::get
-     * ConfigBase::unload is needed before exit.
-     */
-    static void unload ();
 };
 
 /**
