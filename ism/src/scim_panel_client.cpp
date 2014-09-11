@@ -160,8 +160,8 @@ public:
                 launch_panel (config, display);
                 std::cerr << " Re-connecting to PanelAgent server.";
                 ISF_LOG (" Re-connecting to PanelAgent server.\n");
-                /* Make sure we are not waiting for more than 10 seconds */
-                for (i = 0; i < 100; ++i) {
+                /* Make sure we are not retrying for more than 5 seconds, in total */
+                for (i = 0; i < 3; ++i) {
                     if (m_socket.connect (addr)) {
                         ret = true;
                         break;
