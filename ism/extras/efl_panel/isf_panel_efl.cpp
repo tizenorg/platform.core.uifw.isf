@@ -3727,6 +3727,40 @@ static Eina_Bool ise_hide_timeout (void *data)
     return ECORE_CALLBACK_CANCEL;
 }
 
+static bool update_ise_list (std::vector<String> &list)
+{
+    /* update ise list */
+    bool ret = isf_update_ise_list (ALL_ISE, _config);
+
+    list.clear ();
+    list = _uuids;
+
+    _panel_agent->update_ise_list (list);
+
+    if (ret && _initial_ise_uuid.length () > 0) {
+        String active_uuid   = _initial_ise_uuid;
+        String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+        if (std::find (_uuids.begin (), _uuids.end (), default_uuid) == _uuids.end ()) {
+            if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
+                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+            }
+            set_active_ise (active_uuid, _soft_keyboard_launched);
+        } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
+            String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
+            String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
+            if (std::find (_uuids.begin (), _uuids.end (), keyboard_uuid) == _uuids.end ()) {
+                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                _panel_agent->change_factory (active_uuid);
+                _config->write (IMENGINE_KEY, active_uuid);
+                _config->flush ();
+            }
+        }
+    }
+
+    add_ise_directory_em ();
+    return ret;
+}
+
 /**
  * @brief Reload config slot function for PanelAgent.
  */
@@ -4782,36 +4816,14 @@ static bool slot_get_ise_list (std::vector<String> &list)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    /* update ise list */
-    bool ret = isf_update_ise_list (ALL_ISE, _config);
-
-    list.clear ();
-    list = _uuids;
-
-    _panel_agent->update_ise_list (list);
-
-    if (ret && _initial_ise_uuid.length () > 0) {
-        String active_uuid   = _initial_ise_uuid;
-        String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-        if (std::find (_uuids.begin (), _uuids.end (), default_uuid) == _uuids.end ()) {
-            if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
-                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-            }
-            set_active_ise (active_uuid, _soft_keyboard_launched);
-        } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
-            String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
-            String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
-            if (std::find (_uuids.begin (), _uuids.end (), keyboard_uuid) == _uuids.end ()) {
-                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-                _panel_agent->change_factory (active_uuid);
-                _config->write (IMENGINE_KEY, active_uuid);
-                _config->flush ();
-            }
-        }
+    if (_uuids.size () > 0) {
+        list = _uuids;
+    }
+    else {
+        return update_ise_list (list);
     }
 
-    add_ise_directory_em ();
-    return ret;
+    return true;
 }
 
 /**
@@ -6400,7 +6412,7 @@ int main (int argc, char *argv [])
     try {
         /* Update ISE list */
         std::vector<String> list;
-        slot_get_ise_list (list);
+        update_ise_list (list);
 
         /* Load initial ISE information */
         _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
