@@ -77,6 +77,7 @@ struct _EcoreIMFContextISFImpl {
     AttributeList            preedit_attrlist;
     Ecore_IMF_Autocapital_Type autocapital_type;
     Ecore_IMF_Input_Hints    input_hint;
+    Ecore_IMF_BiDi_Direction bidi_direction;
     void                    *imdata;
     int                      imdata_size;
     int                      preedit_caret;
@@ -208,6 +209,7 @@ static void     panel_req_update_cursor_position        (EcoreIMFContextISF     
 static void     panel_req_show_help                     (EcoreIMFContextISF     *ic);
 static void     panel_req_show_factory_menu             (EcoreIMFContextISF     *ic);
 static void     panel_req_set_input_hint                (EcoreIMFContextISF     *ic, int hint);
+static void     panel_req_update_bidi_direction         (EcoreIMFContextISF     *ic, int bidi_direction);
 
 /* Panel iochannel handler*/
 static bool     panel_initialize                        (void);
@@ -428,6 +430,7 @@ new_ic_impl (EcoreIMFContextISF *parent)
 
     impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
     impl->input_hint = ECORE_IMF_INPUT_HINT_NONE;
+    impl->bidi_direction = ECORE_IMF_BIDI_DIRECTION_NEUTRAL;
     impl->next_shift_status = 0;
     impl->shift_mode_enabled = 0;
     impl->next = _used_ic_impl_list;
@@ -1485,6 +1488,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
             LOGD ("ctx : %p. set autocapital type : %d\n", ctx, context_scim->impl->autocapital_type);
             context_scim->impl->si->set_autocapital_type (context_scim->impl->autocapital_type);
             context_scim->impl->si->set_input_hint (context_scim->impl->input_hint);
+            context_scim->impl->si->update_bidi_direction (context_scim->impl->bidi_direction);
             if (context_scim->impl->imdata)
                 context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
         } else {
@@ -2217,6 +2221,28 @@ isf_imf_context_input_hint_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Hints hi
     }
 }
 
+EAPI void
+isf_imf_context_bidi_direction_set (Ecore_IMF_Context *ctx, Ecore_IMF_BiDi_Direction direction)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
+
+    if (context_scim && context_scim->impl) {
+        if (context_scim->impl->bidi_direction != direction) {
+            LOGD ("ctx : %p, bidi direction : %#x\n", ctx, direction);
+            context_scim->impl->bidi_direction = direction;
+
+            if (context_scim->impl->si && context_scim == _focused_ic) {
+                _panel_client.prepare (context_scim->id);
+                context_scim->impl->si->update_bidi_direction (direction);
+                panel_req_update_bidi_direction (context_scim, direction);
+                _panel_client.send ();
+            }
+        }
+    }
+}
+
 /* Panel Slot functions */
 static void
 panel_slot_reload_config (int context)
@@ -2924,6 +2950,15 @@ panel_req_set_input_hint (EcoreIMFContextISF *ic, int hint)
         _panel_client.set_input_hint (ic->id, hint);
 }
 
+static void
+panel_req_update_bidi_direction (EcoreIMFContextISF *ic, int direction)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (ic)
+        _panel_client.update_bidi_direction (ic->id, direction);
+}
+
 static bool
 filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
 {
@@ -3195,6 +3230,7 @@ turn_on_ic (EcoreIMFContextISF *ic)
             LOGD ("ctx : %p. set autocapital type : %d\n", ic->ctx, ic->impl->autocapital_type);
             ic->impl->si->set_autocapital_type (ic->impl->autocapital_type);
             ic->impl->si->set_input_hint (ic->impl->input_hint);
+            ic->impl->si->update_bidi_direction (ic->impl->bidi_direction);
         }
 
         //Record the IC on/off status

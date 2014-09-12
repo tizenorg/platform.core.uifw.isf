@@ -768,6 +768,22 @@ SocketInstance::set_input_hint (unsigned int input_hint)
 }
 
 void
+SocketInstance::update_bidi_direction (unsigned int bidi_direction)
+{
+    Transaction trans;
+
+    global->init_transaction (trans);
+
+    SCIM_DEBUG_IMENGINE(1) << __func__<< " (" << m_peer_id << ")\n";
+
+    trans.put_command (ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION);
+    trans.put_data (m_peer_id);
+    trans.put_data (bidi_direction);
+
+    commit_transaction (trans);
+}
+
+void
 SocketInstance::update_candidate_item_layout (const std::vector<unsigned int> &row_items)
 {
     Transaction trans;

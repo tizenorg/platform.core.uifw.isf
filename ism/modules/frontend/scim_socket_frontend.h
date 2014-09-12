@@ -239,6 +239,7 @@ private:
     void socket_set_imdata                  (int client_id);
     void socket_set_autocapital_type        (int client_id);
     void socket_set_input_hint              (int client_id);
+    void socket_update_bidi_direction       (int client_id);
 };
 
 #endif

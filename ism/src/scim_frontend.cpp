@@ -743,6 +743,14 @@ FrontEndBase::set_input_hint (int id, unsigned int input_hint) const
 }
 
 void
+FrontEndBase::update_bidi_direction (int id, unsigned int bidi_direction) const
+{
+    IMEngineInstancePointer si = m_impl->find_instance (id);
+
+    if (!si.null ()) si->update_bidi_direction (bidi_direction);
+}
+
+void
 FrontEndBase::update_candidate_item_layout (int id, const std::vector<unsigned int> &row_items) const
 {
     IMEngineInstancePointer si = m_impl->find_instance (id);

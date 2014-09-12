@@ -1040,6 +1040,13 @@ public:
         }
     }
 
+    void update_bidi_direction (int icid, int bidi_direction) {
+        if (m_send_refcount > 0 && m_current_icid == icid) {
+            m_send_trans.put_command (ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION);
+            m_send_trans.put_data (bidi_direction);
+        }
+    }
+
     void get_layout (int* layout) {
         if (m_send_refcount > 0) {
             int cmd;
@@ -1742,6 +1749,12 @@ void
 PanelClient::set_input_hint         (int icid, int input_hint)
 {
     m_impl->set_input_hint (icid, input_hint);
+}
+
+void
+PanelClient::update_bidi_direction     (int icid, int bidi_direction)
+{
+    m_impl->update_bidi_direction (icid, bidi_direction);
 }
 
 void

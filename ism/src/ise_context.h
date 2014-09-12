@@ -46,7 +46,8 @@ typedef struct {
     int layout_variation;
     Ecore_IMF_Autocapital_Type autocapital_type;
     Ecore_IMF_Input_Hints input_hint;
-    int reserved[246];
+    Ecore_IMF_BiDi_Direction bidi_direction;
+    int reserved[245];
 } Ise_Context;
 
 #endif  /* __ISE_CONTEXT_H */

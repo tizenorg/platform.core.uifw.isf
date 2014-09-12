@@ -175,6 +175,7 @@ public:
     HelperAgentSignalKeyEventUint       signal_process_key_event;
     HelperAgentSignalUintVoid           signal_set_input_mode;
     HelperAgentSignalUintVoid           signal_set_input_hint;
+    HelperAgentSignalUintVoid           signal_update_bidi_direction;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
@@ -876,6 +877,14 @@ HelperAgent::filter_event ()
 
                 if (m_impl->recv.get_data (input_hint))
                     m_impl->signal_set_input_hint (this, input_hint);
+                break;
+            }
+            case ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION:
+            {
+                uint32 bidi_direction;
+
+                if (m_impl->recv.get_data (bidi_direction))
+                    m_impl->signal_update_bidi_direction (this, bidi_direction);
                 break;
             }
             default:
@@ -2169,6 +2178,20 @@ Connection
 HelperAgent::signal_connect_set_input_hint (HelperAgentSlotUintVoid *slot)
 {
     return m_impl->signal_set_input_hint.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper set BiDi direction signal.
+ *
+ * This signal is used to set Helper ISE BiDi direction.
+ *
+ * The prototype of the slot is:
+ * void update_bidi_direction (const HelperAgent *agent, uint32 &bidi_direction);
+ */
+Connection
+HelperAgent::signal_connect_update_bidi_direction (HelperAgentSlotUintVoid *slot)
+{
+    return m_impl->signal_update_bidi_direction.connect (slot);
 }
 
 /**

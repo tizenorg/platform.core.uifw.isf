@@ -118,6 +118,7 @@ public:
     virtual void set_imdata (const char *data, unsigned int len);
     virtual void set_autocapital_type (int mode);
     virtual void set_input_hint (unsigned int input_hint);
+    virtual void update_bidi_direction (unsigned int bidi_direction);
 
 private:
     bool commit_transaction (Transaction &trans);

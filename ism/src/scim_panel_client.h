@@ -247,6 +247,7 @@ public:
     void get_active_helper_option (int* option);
     void set_input_mode         (int input_mode);
     void set_input_hint         (int icid, int input_hint);
+    void update_bidi_direction  (int icid, int bidi_direction);
 
     /** @} */
 

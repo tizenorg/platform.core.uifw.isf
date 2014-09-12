@@ -746,6 +746,13 @@ public:
      */
     virtual void set_input_hint (unsigned int input_hint);
 
+    /**
+     * @brief When bidi direction is changed, this method will be invoked by FrontEnd.
+     *
+     * @param bidi_direction - the bidi direction.
+     */
+    virtual void update_bidi_direction (unsigned int bidi_direction);
+
 protected:
     /**
      * @name Signal activation functions

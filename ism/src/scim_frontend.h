@@ -536,6 +536,13 @@ protected:
     void set_input_hint (int id, unsigned int input_hint) const;
 
     /**
+     * @brief Update BiDi direction. (Neutral / LTR / RTL)
+     * @param id the IMEngine instance id.
+     * @param bidi_direction - the BiDi direction.
+     */
+    void update_bidi_direction (int id, unsigned int bidi_direction) const;
+
+    /**
      * @}
      */
 

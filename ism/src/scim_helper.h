@@ -1229,6 +1229,16 @@ public:
      * void set_input_hint (const HelperAgent *agent, uint32 &input_hint);
      */
     Connection signal_connect_set_input_hint                        (HelperAgentSlotUintVoid            *slot);
+
+    /**
+     * @brief Connect a slot to Helper update bidi direction signal.
+     *
+     * This signal is used to update Helper ISE bidi direction.
+     *
+     * The prototype of the slot is:
+     * void update_bidi_direction (const HelperAgent *agent, uint32 &bidi_direction);
+     */
+    Connection signal_connect_update_bidi_direction                 (HelperAgentSlotUintVoid            *slot);
 };
 
 /**  @} */

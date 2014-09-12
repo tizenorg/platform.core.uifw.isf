@@ -612,11 +612,14 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     iseContext.input_hint = ecore_imf_context_input_hint_get (ctx);
 
+    iseContext.bidi_direction = ecore_imf_context_bidi_direction_get (ctx);
+
     SECURE_LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     SECURE_LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     SECURE_LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
     SECURE_LOGD ("client_window : %#x, password mode : %d, prediction_allow : %d\n", iseContext.client_window, iseContext.password_mode, iseContext.prediction_allow);
     SECURE_LOGD ("input hint : %#x\n", iseContext.input_hint);
+    SECURE_LOGD ("bidi direction : %d\n", iseContext.bidi_direction);
 
     if (iseContext.client_window != ecore_x_window_focus_get ()) {
         LOGW ("Client window is different from focus window. client win : %#x, focus win : %#x\n", iseContext.client_window, ecore_x_window_focus_get ());
