@@ -240,13 +240,14 @@ static Ecore_X_Window efl_get_quickpanel_window        (void);
 static void       check_hardware_keyboard              (TOOLBAR_MODE_T mode);
 static unsigned int get_ise_index                      (const String uuid);
 static bool       set_active_ise                       (const String &uuid, bool launch_ise);
-
+static bool       update_ise_list                      (std::vector<String> &list);
+static void       update_ise_locale                    ();
 static void       minictrl_clicked_cb                  (void *data, Evas_Object *o, const char *emission, const char *source);
 #ifdef HAVE_MINICONTROL
 static void       ise_selector_minictrl_clicked_cb     (void *data, Evas_Object *o, const char *emission, const char *source);
 #endif
-static Eina_Bool  ise_launch_timeout (void *data);
-static Eina_Bool  delete_ise_launch_timer ();
+static Eina_Bool  ise_launch_timeout                   (void *data);
+static Eina_Bool  delete_ise_launch_timer              ();
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -369,6 +370,7 @@ static int                _click_down_pos [2]               = {0, 0};
 static int                _click_up_pos [2]                 = {0, 0};
 static bool               _is_click                         = true;
 static String             _initial_ise_uuid                 = String ("");
+static String             _locale_string                    = String ("");
 static ConfigPointer      _config;
 static PanelAgent        *_panel_agent                      = 0;
 static std::vector<Ecore_Fd_Handler *> _read_handler_list;
@@ -1386,7 +1388,7 @@ static void ise_file_monitor_cb (void *data, Ecore_File_Monitor *em, Ecore_File_
         if (event == ECORE_FILE_EVENT_DELETED_FILE) {
             /* Update ISE list */
             std::vector<String> list;
-            slot_get_ise_list (list);
+            update_ise_list (list);
 
             /* delete osp monitor */
             OSPEmRepository::iterator iter = _osp_bin_em.find (module_name);
@@ -3758,6 +3760,13 @@ static bool update_ise_list (std::vector<String> &list)
     }
 
     add_ise_directory_em ();
+
+    char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
+    if (lang_str) {
+        _locale_string = String (lang_str);
+        free (lang_str);
+    }
+
     return ret;
 }
 
@@ -4816,14 +4825,17 @@ static bool slot_get_ise_list (std::vector<String> &list)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    bool result = false;
+
     if (_uuids.size () > 0) {
         list = _uuids;
+        result = true;
     }
     else {
-        return update_ise_list (list);
+        result = update_ise_list (list);
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -4842,6 +4854,10 @@ static bool slot_get_ise_information (String uuid, String &name, String &languag
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (uuid.length () > 0) {
+        // update all ISE names according to the display languages
+        // sometimes get_ise_information is called before vconf display language changed callback is called.
+        update_ise_locale ();
+
         for (unsigned int i = 0; i < _uuids.size (); i++) {
             if (uuid == _uuids[i]) {
                 name     = _names[i];
@@ -5428,6 +5444,37 @@ static bool update_helper_ise_locale (const String module_name, int index)
     return true;
 }
 
+static void update_ise_locale ()
+{
+    std::vector<String> module_list;
+
+    char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
+
+    if (lang_str && _locale_string == String (lang_str)) {
+        free (lang_str);
+        return;
+    }
+
+    LOGD ("update all ISE names according to display language\n");
+
+    for (unsigned int i = 0; i < _module_names.size (); i++) {
+        if (std::find (module_list.begin (), module_list.end (), _module_names[i]) != module_list.end ())
+            continue;
+        module_list.push_back (_module_names[i]);
+        if (_modes[i] == TOOLBAR_KEYBOARD_MODE) {
+            update_keyboard_ise_locale (_module_names[i], i);
+        } else if (_modes[i] == TOOLBAR_HELPER_MODE) {
+            update_helper_ise_locale (_module_names[i], i);
+        }
+    }
+    isf_save_ise_information ();
+
+    if (lang_str) {
+        _locale_string = String (lang_str);
+        free (lang_str);
+    }
+}
+
 /**
  * @brief Set language and locale.
  *
@@ -5464,18 +5511,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     set_language_and_locale ();
 
     /* Update all ISE names according to display language */
-    std::vector<String> module_list;
-    for (unsigned int i = 0; i < _module_names.size (); i++) {
-        if (std::find (module_list.begin (), module_list.end (), _module_names[i]) != module_list.end ())
-            continue;
-        module_list.push_back (_module_names[i]);
-        if (_modes[i] == TOOLBAR_KEYBOARD_MODE) {
-            update_keyboard_ise_locale (_module_names[i], i);
-        } else if (_modes[i] == TOOLBAR_HELPER_MODE) {
-            update_helper_ise_locale (_module_names[i], i);
-        }
-    }
-    isf_save_ise_information ();
+    update_ise_locale ();
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
     String default_name = _names[get_ise_index (default_uuid)];
