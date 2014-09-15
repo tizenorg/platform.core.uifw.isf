@@ -529,6 +529,8 @@ _naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
         close_option_window();
     } else {
         elm_naviframe_item_pop(obj);
+        language_selection_finished_cb(NULL, NULL, NULL);
+        read_options();
     }
 }
 
