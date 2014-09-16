@@ -4810,7 +4810,6 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
 static void slot_set_active_ise (const String &uuid, bool changeDefault)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << uuid << ")\n";
-
     set_active_ise (uuid, _soft_keyboard_launched);
 }
 
@@ -6145,6 +6144,20 @@ static bool check_wm_ready (void)
 static void launch_default_soft_keyboard (keynode_t *key, void* data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    char *csc_initial_uuid = vconf_get_str ("db/isf/csc_initial_uuid");
+    if (csc_initial_uuid) {
+        if (strlen(csc_initial_uuid) > 0) {
+            _config->write (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (csc_initial_uuid));
+            scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (csc_initial_uuid));
+
+            _config->flush ();
+            scim_global_config_flush ();
+        }
+        free(csc_initial_uuid);
+
+        vconf_set_str ("db/isf/csc_initial_uuid", "");
+    }
 
     /* Start default ISE */
     check_hardware_keyboard (TOOLBAR_HELPER_MODE);

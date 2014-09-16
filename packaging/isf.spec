@@ -139,6 +139,7 @@ cat scim.lang > isf.lang
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -s system::vconf_inhouse -g 6514 || :
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -s system::vconf_inhouse -g 6514 || :
 /usr/bin/vconftool set -t string db/isf/input_language "en_US" -s system::vconf_misc -g 5000 || :
+/usr/bin/vconftool set -t string db/isf/csc_initial_uuid "" -s system::vconf_inhouse -g 6514 || :
 /usr/bin/vconftool set -t string db/isf/input_keyboard_uuid "12aa3425-f88d-45f4-a509-cee8dfe904e3" -s system::vconf_inhouse -g 6514 || :
 /usr/bin/vconftool set -t int memory/isf/input_panel_state 0 -s system::vconf_inhouse -i -g 5000 || :
 

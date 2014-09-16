@@ -27,6 +27,7 @@
 
 
 #include <string.h>
+#include <vconf.h>
 #include "scim.h"
 
 
@@ -159,6 +160,8 @@ public:
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
         }
+
+        vconf_set_str ("db/isf/csc_initial_uuid", uuid);
     }
 
     void get_active_ise (String &uuid) {

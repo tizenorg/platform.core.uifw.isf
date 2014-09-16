@@ -2573,6 +2573,8 @@ public:
             m_signal_set_active_ise_by_uuid (uuid, 1);
         }
 
+        sync();
+
         if (find_active_ise_by_uuid (uuid)) {
             trans.put_command (SCIM_TRANS_CMD_OK);
             trans.write_to_socket (client_socket);
