@@ -564,7 +564,6 @@ ise_create()
             if (!succeeded) {
                 gSCLUI->init((sclwindow)g_ise_common->get_main_window(), scl_parser_type, MAIN_ENTRY_XML_PATH);
             }
-            gSCLUI->set_custom_starting_coordinates(0, CANDIDATE_WINDOW_HEIGHT);
             // FIXME whether to use global var, need to check
             if (g_candidate == NULL) {
                 g_candidate = CandidateFactory::make_candidate(CANDIDATE_MULTILINE, g_ise_common->get_main_window());
