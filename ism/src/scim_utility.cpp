@@ -1316,8 +1316,17 @@ scim_usleep (unsigned int usec)
 EAPI void scim_daemon ()
 {
 #if HAVE_DAEMON
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  calling daemon()\n",
+        time (0), getpid (), getppid (), __FILE__, __func__);
+    isf_save_log (buf);
+
     if (daemon (0, 0) == -1)
         std::cerr << "Error to make SCIM into a daemon!\n";
+
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  daemon() called\n",
+        time (0), getpid (), getppid (), __FILE__, __func__);
+    isf_save_log (buf);
 
     return;
 #else
@@ -1331,6 +1340,11 @@ EAPI void scim_daemon ()
         _exit (0);
     }
 
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  fork result : %d\n",
+        time (0), getpid (), getppid (), __FILE__, __func__, id);
+    isf_save_log (buf);
+
     id = fork ();
     if (id == -1) {
         std::cerr << "Error to make SCIM into a daemon!\n";
@@ -1338,6 +1352,11 @@ EAPI void scim_daemon ()
     } else if (id > 0) {
         _exit (0);
     }
+
+    char buf[256] = {0};
+    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  fork result : %d\n",
+        time (0), getpid (), getppid (), __FILE__, __func__, id);
+    isf_save_log (buf);
 
     return;
 #endif

@@ -300,8 +300,8 @@ void SocketFrontEnd::run_helper (const Socket &client)
 
                 SCIM_DEBUG_MAIN(2) << " Call scim-helper-launcher.\n";
                 char buf[256] = {0};
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Exec scim_helper_launcher(%s)\n",
-                    time (0), getpid (), __FILE__, __func__, __helpers [i].second.c_str ());
+                snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Exec scim_helper_launcher(%s)\n",
+                    time (0), getpid (), getppid(), __FILE__, __func__, __helpers [i].second.c_str ());
                 isf_save_log (buf);
 
                 execv (SCIM_HELPER_LAUNCHER_PROGRAM, (char **)argv);
