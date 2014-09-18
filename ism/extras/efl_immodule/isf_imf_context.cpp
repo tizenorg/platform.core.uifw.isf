@@ -725,7 +725,9 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
     Ecore_IMF_Event_Delete_Surrounding ev;
     Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
     Eina_Unicode symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */,
-                              ':', ';', '.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */, 0x3002 /* 。 */};
+                              ':', ';', '.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */,
+                              0x3002 /* 。 */, 0x06D4 /* Urdu */,  0x0964 /* Hindi */,
+                              0x0589 /* Armenian */, 0x17D4 /* Khmer */, 0x104A /* Myanmar */};
     const int symbol_num = sizeof (symbols) / sizeof (symbols[0]);
     char *fullstop_mark = NULL;
 
@@ -793,7 +795,9 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
 {
     char *plain_str = NULL;
     char *markup_str = NULL;
-    Eina_Unicode puncs[] = {'\n','.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */, 0x3002 /* 。 */};
+    Eina_Unicode puncs[] = {'\n','.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */,
+                            0x3002 /* 。 */, 0x06D4 /* Urdu */, 0x0964 /* Hindi */,
+                            0x0589 /* Armenian */, 0x17D4 /* Khmer */, 0x104A /* Myanmar */};
     Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
     Eina_Unicode *ustr = NULL;
     Eina_Bool ret = EINA_FALSE;
