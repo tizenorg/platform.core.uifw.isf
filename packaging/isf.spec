@@ -114,6 +114,9 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 
 %make_install
+mkdir -p %{buildroot}/opt/etc/dump.d/module.d
+cp -af ism/dump/isf_log_dump.sh %{buildroot}/opt/etc/dump.d/module.d
+
 mkdir -p %{buildroot}/etc/scim/conf
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
@@ -184,6 +187,7 @@ cat scim.lang > isf.lang
 %{_libdir}/scim-1.0/scim-helper-launcher
 %{_libdir}/libscim-*.so*
 %license COPYING
+/opt/etc/dump.d/module.d/*
 
 %files devel
 %defattr(-,root,root,-)
