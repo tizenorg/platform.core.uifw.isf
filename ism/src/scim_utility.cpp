@@ -376,6 +376,20 @@ utf8_wcstombs (const ucs4_t *wstr, int len)
     return str;
 }
 
+static String trim_blank (const String &str)
+{
+    String::size_type begin, len;
+
+    begin = str.find_first_not_of (" \t\n\v");
+
+    if (begin == String::npos)
+        return String ();
+
+    len = str.find_last_not_of (" \t\n\v") - begin + 1;
+
+    return str.substr (begin, len);
+}
+
 EAPI String
 scim_validate_locale (const String& locale)
 {
@@ -470,6 +484,7 @@ scim_split_string_list (std::vector<String>& vec, const String& str, char delim)
                 break;
         }
         temp.assign (bg, ed);
+        temp = trim_blank (temp);
         vec.push_back (temp);
         ++count;
 
