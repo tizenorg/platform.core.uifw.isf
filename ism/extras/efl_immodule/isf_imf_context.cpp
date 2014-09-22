@@ -2050,6 +2050,10 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             _panel_client.prepare (ic->id);
             _panel_client.get_active_helper_option (&_active_helper_option);
             _panel_client.send ();
+            char buf[256] = {0};
+            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n",
+                time (0), getpid (), __FILE__, __func__, key.code, ev->keyname);
+            isf_save_log (buf);
             LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
         }
 
