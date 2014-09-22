@@ -877,6 +877,7 @@ static __Language __languages [] = {
     { "ru_RU",    NULL, N_("Russian"), "русский", ".koi8r" },
     { "sd",    "sd_IN", N_("Sindhi"), "ﺲﻧڌﻱ", NULL },
     { "sd_IN",    NULL, N_("Sindhi"), "सिन्धी", "@devanagari" },
+    { "si_IN",    NULL, N_("Sinhala"), "සිංහල", NULL },
     { "si_LK",    NULL, N_("Sinhala"), "සිංහල", NULL },
     { "sk_SK",    NULL, N_("Slovak"), "Slovenský", NULL },
     { "sl_SI",    NULL, N_("Slovenian"), "Slovenščina", NULL },
