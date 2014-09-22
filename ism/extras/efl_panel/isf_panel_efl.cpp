@@ -53,6 +53,7 @@
 #include "center_popup.h"
 #include "minicontrol.h"
 #include "iseselector.h"
+#include "isf_panel_efl.h"
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -108,11 +109,6 @@ using namespace scim;
 #define ISF_POP_PLAY_ICON_FILE                          "/usr/share/scim/icons/pop_play.png"
 #define ISF_KEYBOARD_ICON_FILE                          "keyboardicon.png"
 #define ISF_ISE_SELECTOR_ICON_FILE                      "noti_icon_keyboard_connected.png"
-
-#ifdef LOG_TAG
-# undef LOG_TAG
-#endif
-#define LOG_TAG                                         "ISF_PANEL_EFL"
 
 #define HOST_BUS_NAME        "org.tizen.usb.host"
 #define HOST_OBJECT_PATH     "/Org/Tizen/Usb/Host"
@@ -413,6 +409,9 @@ static int                candidate_play_image_width_height = 19;
 
 static const int          CANDIDATE_TEXT_OFFSET             = 2;
 
+static double             _app_scale                        = 1.0;
+static double             _system_scale                     = 1.0;
+
 #ifdef HAVE_MINICONTROL
 static MiniControl        input_detect_minictrl;
 static MiniControl        ise_selector_minictrl;
@@ -575,12 +574,19 @@ static void ise_selected_cb (unsigned int index)
     _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
 }
 
+static void ise_selector_deleted_cb ()
+{
+    elm_config_scale_set (_app_scale);
+}
+
 #ifdef HAVE_MINICONTROL
 static void ise_selector_minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb);
+    elm_config_scale_set (_system_scale);
+
+    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb, ise_selector_deleted_cb);
 }
 #endif
 
@@ -5103,7 +5109,9 @@ static void slot_show_ise_selector (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb);
+    elm_config_scale_set (_system_scale);
+
+    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb, ise_selector_deleted_cb);
 }
 
 static void slot_show_ise (void)
@@ -6487,9 +6495,13 @@ int main (int argc, char *argv [])
          LOGW ("bt_hid_host_initialize failed");
 #endif
 
+    _system_scale = elm_config_scale_get ();
+
     /* Set elementary scale */
-    if (_screen_width)
-        elm_config_scale_set (_screen_width / 720.0f);
+    if (_screen_width) {
+        _app_scale = _screen_width / 720.0;
+        elm_config_scale_set (_app_scale);
+    }
 
     signal (SIGQUIT, signalhandler);
     signal (SIGTERM, signalhandler);

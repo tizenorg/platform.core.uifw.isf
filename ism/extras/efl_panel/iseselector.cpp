@@ -32,6 +32,7 @@
 #include "scim.h"
 #include "iseselector.h"
 #include "center_popup.h"
+#include "isf_panel_efl.h"
 #if HAVE_UIGADGET
 #include <ui-gadget.h>
 #endif
@@ -46,8 +47,7 @@ extern std::vector<String>          _icons;
 extern std::vector<uint32>          _options;
 extern std::vector<TOOLBAR_MODE_T>  _modes;
 
-static const unsigned int ISE_SELECTOR_WIDTH = 618;
-static const unsigned int ISE_SELECTOR_ITEM_HEIGHT = 114;
+static const unsigned int ISE_SELECTOR_ITEM_HEIGHT = 98;
 static const unsigned int ISE_SELECTOR_MAX_ITEM = 4;
 
 static unsigned int _ise_selector_ise_idx = 0;
@@ -58,7 +58,14 @@ static Ecore_X_Window _ise_selector_app_window = 0;
 
 static Elm_Genlist_Item_Class itc;
 
-static Ise_Selected_Cb _ise_selector_selected_cb;
+static Ise_Selector_Selected_Cb _ise_selector_selected_cb;
+static Ise_Selector_Deleted_Cb _ise_selector_deleted_cb;
+
+static void _ise_selector_radio_grp_del_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+    LOGD ("selector radio deleted\n");
+    _ise_selector_radio_grp = NULL;
+}
 
 static char *
 gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
@@ -67,7 +74,12 @@ gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
     if (index < 0 || index >= (int)_names.size ())
         return NULL;
 
-    return strdup (_names[index].c_str ());
+    if (!strcmp (part, "elm.text.main.left") ||
+        !strcmp (part, "elm.text")) {
+        return strdup (_names[index].c_str ());
+    }
+
+    return NULL;
 }
 
 static Evas_Object *
@@ -78,23 +90,31 @@ gl_icon_get (void *data, Evas_Object *obj, const char *part)
     if (index >= _uuids.size ())
         return NULL;
 
-    Evas_Object *radio = elm_radio_add (obj);
-    elm_radio_state_value_set (radio, index);
-    if (_ise_selector_radio_grp == NULL)
-        _ise_selector_radio_grp = elm_radio_add (obj);
-    elm_radio_group_add (radio, _ise_selector_radio_grp);
-    evas_object_show (radio);
+    if (!strcmp (part, "elm.icon.right")) {
+        Evas_Object *radio = elm_radio_add (obj);
+        elm_radio_state_value_set (radio, index);
+        if (_ise_selector_radio_grp == NULL) {
+            _ise_selector_radio_grp = elm_radio_add (obj);
+            evas_object_event_callback_add(_ise_selector_radio_grp, EVAS_CALLBACK_DEL, _ise_selector_radio_grp_del_cb, NULL);
+        }
+        elm_radio_group_add (radio, _ise_selector_radio_grp);
+        evas_object_show (radio);
 
-    if (_ise_selector_ise_idx == index)
-        elm_radio_value_set (_ise_selector_radio_grp, index);
+        if (_ise_selector_ise_idx == index)
+            elm_radio_value_set (_ise_selector_radio_grp, index);
 
-    return radio;
+        return radio;
+    }
+
+    return NULL;
 }
 
 static void
 gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
 {
     unsigned int index = (unsigned int)(data);
+
+    LOGD ("selected item : %d\n", index);
 
     if (index >= (int)_uuids.size ())
         return;
@@ -137,6 +157,9 @@ ise_selector_popup_del_cb (void *data, Evas *evas, Evas_Object *obj, void *event
     LOGD ("IME Selector is deleted\n");
 
     ise_selector_init ();
+
+    if (_ise_selector_deleted_cb)
+        _ise_selector_deleted_cb ();
 }
 
 static void
@@ -168,7 +191,7 @@ isf_setting_cb (void *data, Evas_Object *obj, void *event_info)
 }
 #endif
 
-void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb func)
+void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selector_Selected_Cb sel_cb, Ise_Selector_Deleted_Cb del_cb)
 {
     unsigned int index;
     Evas_Object *genlist;
@@ -180,7 +203,8 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb 
 
     _ise_selector_ise_idx = ise_idx;
     _ise_selector_app_window = win;
-    _ise_selector_selected_cb = func;
+    _ise_selector_selected_cb = sel_cb;
+    _ise_selector_deleted_cb = del_cb;
 
     /* Create center popup */
     _ise_selector_popup = center_popup_add (NULL, "IMESelector", "IMESelector");
@@ -195,7 +219,8 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb 
 #if HAVE_UIGADGET
     /* Create "Set up input methods" button */
     Evas_Object *btn = elm_button_add (_ise_selector_popup);
-    elm_object_style_set (btn, "popup");
+    if (!elm_object_style_set (btn, "popup"))
+        LOGW ("elm_object_style_set failed. obj : button, style : popup\n");
     elm_object_text_set (btn, _("Set up input methods"));
     elm_object_part_content_set (_ise_selector_popup, "button1", btn);
 
@@ -206,15 +231,18 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb 
     box = elm_box_add (_ise_selector_popup);
     evas_object_size_hint_weight_set (box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
-    itc.item_style = "1text.1icon/popup";
+    /* Create genlist for displaying IME list */
+    genlist = elm_genlist_add (box);
+    elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
+    elm_genlist_homogeneous_set (genlist, EINA_TRUE);
+    evas_object_size_hint_weight_set (genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+    itc.item_style = "1line";
     itc.func.text_get = gl_ise_name_get;
     itc.func.content_get = gl_icon_get;
     itc.func.state_get = NULL;
     itc.func.del = NULL;
-
-    genlist = elm_genlist_add (box);
-    evas_object_size_hint_weight_set (genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set (genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
     for (index = 0; index < _uuids.size (); index++) {
         if (_modes[index] ==  TOOLBAR_HELPER_MODE)
@@ -232,7 +260,7 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selected_Cb 
     else
         height = ISE_SELECTOR_ITEM_HEIGHT * item_count;
 
-    evas_object_size_hint_min_set (box, ISE_SELECTOR_WIDTH, height);
+    evas_object_size_hint_min_set (box, -1, height);
     evas_object_show (box);
 
     elm_object_content_set (_ise_selector_popup, box);

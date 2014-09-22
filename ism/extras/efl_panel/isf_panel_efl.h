@@ -22,15 +22,14 @@
  *
  */
 
-#ifndef __ISE_SELECTOR_H__
-#define __ISE_SELECTOR_H__
+#ifndef __ISE_PANEL_EFL_H__
+#define __ISE_PANEL_EFL_H__
 
-#include <Elementary.h>
+#include <dlog.h>
 
-typedef void (*Ise_Selector_Selected_Cb)(unsigned int index);
-typedef void (*Ise_Selector_Deleted_Cb)();
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG                                         "ISF_PANEL_EFL"
 
-EAPI void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selector_Selected_Cb sel_cb, Ise_Selector_Deleted_Cb del_cb);
-EAPI void ise_selector_destroy ();
-
-#endif /* __ISE_SELECTOR_H__ */
+#endif /* __ISE_PANEL_EFL_H__ */

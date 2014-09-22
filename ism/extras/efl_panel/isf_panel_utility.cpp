@@ -32,6 +32,7 @@
 #include <string.h>
 #include "scim.h"
 #include "scim_stl_map.h"
+#include "isf_panel_efl.h"
 #include "isf_panel_utility.h"
 #include "isf_query_utility.h"
 #include <sys/stat.h>
@@ -42,11 +43,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
-#ifdef LOG_TAG
-# undef LOG_TAG
-#endif
-#define LOG_TAG                                         "ISF_PANEL_EFL"
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of global variables.
