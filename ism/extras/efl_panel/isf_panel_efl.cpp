@@ -244,6 +244,7 @@ static void       ise_selector_minictrl_clicked_cb     (void *data, Evas_Object 
 #endif
 static Eina_Bool  ise_launch_timeout                   (void *data);
 static Eina_Bool  delete_ise_launch_timer              ();
+static void       set_language_and_locale              (void);
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -5463,6 +5464,7 @@ static void update_ise_locale ()
     }
 
     LOGD ("update all ISE names according to display language\n");
+    set_language_and_locale ();
 
     for (unsigned int i = 0; i < _module_names.size (); i++) {
         if (std::find (module_list.begin (), module_list.end (), _module_names[i]) != module_list.end ())
