@@ -6503,6 +6503,9 @@ int main (int argc, char *argv [])
     if (_screen_width) {
         _app_scale = _screen_width / 720.0;
         elm_config_scale_set (_app_scale);
+        char buf[16] = {0};
+        snprintf(buf, sizeof(buf), "%4.3f", _app_scale);
+        setenv ("ELM_SCALE", buf, 1);
     }
 
     signal (SIGQUIT, signalhandler);
