@@ -3100,12 +3100,11 @@ launch_socket_frontend ()
     for (it = helper_list.begin (); it != helper_list.end (); it++)
         load_engine_list.push_back (*it);
 
-    const char *new_argv [] = { "--no-stay", 0 };
     return scim_launch (true,
         "simple",
         (load_engine_list.size () > 0 ? scim_combine_string_list (load_engine_list, ',') : "none"),
         "socket",
-        (char **)new_argv);
+        NULL);
 }
 
 static bool
