@@ -5559,8 +5559,9 @@ static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
 
     String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+    bool _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
-    if (mode == TOOLBAR_KEYBOARD_MODE) {
+    if (mode == TOOLBAR_KEYBOARD_MODE && _support_hw_keyboard_mode) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             LOGD ("HARDWARE_KEYBOARD_MODE return");
             return;

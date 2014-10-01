@@ -356,6 +356,7 @@ static Ecore_Event_Handler                             *_key_up_handler         
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
 static bool                                             _change_keyboard_mode_by_touch = false;
+static bool                                             _support_hw_keyboard_mode   = false;
 
 static double                                           space_key_time              = 0.0;
 
@@ -584,7 +585,7 @@ _key_up_cb (void *data, int type, void *event)
         }
     }
 
-    if (!strcmp (ev->keyname, "XF86MenuKB")) {
+    if (_support_hw_keyboard_mode && !strcmp (ev->keyname, "XF86MenuKB")) {
         if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             ecore_imf_context_input_panel_hide (active_ctx);
         } else {
@@ -2043,7 +2044,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         timestamp = ev->timestamp;
 
         /* Hardware input detect code */
-        if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE &&
+        if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE && _support_hw_keyboard_mode &&
             scim_string_to_key (key, ev->key) &&
             key.code != 0xFF69 /* Cancel (Power + Volume down) key */) {
             isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_KEYBOARD_MODE);
@@ -4485,6 +4486,7 @@ reload_config_callback (const ConfigPointer &config)
     _on_the_spot = config->read (String (SCIM_CONFIG_FRONTEND_ON_THE_SPOT), _on_the_spot);
     _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
     _change_keyboard_mode_by_touch = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_TOUCH), _change_keyboard_mode_by_touch);
+    _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
     // Get keyboard layout setting
     // Flush the global config first, in order to load the new configs from disk.

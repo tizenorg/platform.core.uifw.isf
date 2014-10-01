@@ -23,6 +23,7 @@
  */
 
 #define Uses_SCIM_TRANSACTION
+#define Uses_SCIM_HOTKEY
 
 
 /* IM control UI part */
@@ -61,6 +62,7 @@ static Eina_Bool          candidate_conformant_reset_done = EINA_FALSE;
 static Eina_Bool          received_will_hide_event = EINA_FALSE;
 static Eina_Bool          received_candidate_will_hide_event = EINA_FALSE;
 static Eina_Bool          will_hide = EINA_FALSE;
+static bool               _support_hw_keyboard_mode = false;
 
 static void _send_input_panel_hide_request ();
 
@@ -471,18 +473,21 @@ void isf_imf_input_panel_init (void)
     ecore_x_event_mask_set (_control_win, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 
     _prop_change_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change, NULL);
+    _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
-    if (!prop_x_keyboard_input_detected)
-        prop_x_keyboard_input_detected = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED);
+    if (_support_hw_keyboard_mode){
+        if (!prop_x_keyboard_input_detected)
+            prop_x_keyboard_input_detected = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED);
 
-    if (ecore_x_window_prop_card32_get (_control_win, prop_x_keyboard_input_detected, &val, 1) > 0){
-        if (val == 1){
-            kbd_mode = TOOLBAR_KEYBOARD_MODE;
+        if (ecore_x_window_prop_card32_get (_control_win, prop_x_keyboard_input_detected, &val, 1) > 0){
+            if (val == 1){
+                kbd_mode = TOOLBAR_KEYBOARD_MODE;
+            } else {
+                kbd_mode = TOOLBAR_HELPER_MODE;
+            }
         } else {
             kbd_mode = TOOLBAR_HELPER_MODE;
         }
-    } else {
-        kbd_mode = TOOLBAR_HELPER_MODE;
     }
     LOGD ("keyboard mode(0:H/W Keyboard, 1:S/W Keyboard): %d\n", kbd_mode);
 }
@@ -976,10 +981,13 @@ void isf_imf_context_set_keyboard_mode (Ecore_IMF_Context *ctx, TOOLBAR_MODE_T m
     if (IfInitContext == false) {
         _isf_imf_context_init ();
     }
+    _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
-    kbd_mode = mode;
-    SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
-    _isf_imf_context_set_keyboard_mode (_get_context_id (ctx), mode);
+    if (_support_hw_keyboard_mode) {
+        kbd_mode = mode;
+        SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
+        _isf_imf_context_set_keyboard_mode (_get_context_id (ctx), mode);
+    }
 }
 
 void isf_imf_context_input_panel_send_candidate_will_hide_ack (Ecore_IMF_Context *ctx)
