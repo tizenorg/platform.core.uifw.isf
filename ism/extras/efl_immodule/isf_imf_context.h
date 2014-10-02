@@ -48,6 +48,9 @@ struct _EcoreIMFContextISF {
 
     int id; /* Input Context id*/
     struct _EcoreIMFContextISF *next;
+
+    /* Constructor */
+    _EcoreIMFContextISF () : ctx(NULL), impl(NULL), id(0), next(NULL) {}
 };
 
 EAPI int register_key_handler ();

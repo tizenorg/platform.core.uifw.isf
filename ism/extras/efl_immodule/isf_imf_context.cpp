@@ -96,6 +96,33 @@ struct _EcoreIMFContextISFImpl {
     int                      shift_mode_enabled;
 
     EcoreIMFContextISFImpl  *next;
+
+    /* Constructor */
+    _EcoreIMFContextISFImpl() : parent(NULL),
+                                client_window(0),
+                                client_canvas(NULL),
+                                input_mode(ECORE_IMF_INPUT_MODE_FULL),
+                                autocapital_type(ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE),
+                                input_hint(ECORE_IMF_INPUT_HINT_NONE),
+                                bidi_direction(ECORE_IMF_BIDI_DIRECTION_NEUTRAL),
+                                imdata(NULL),
+                                imdata_size(0),
+                                preedit_caret(0),
+                                cursor_x(0),
+                                cursor_y(0),
+                                cursor_top_y(0),
+                                cursor_pos(-1),
+                                use_preedit(true),
+                                is_on(true),
+                                shared_si(false),
+                                preedit_started(false),
+                                preedit_updating(false),
+                                need_commit_preedit(false),
+                                prediction_allow(false),
+                                next_shift_status(0),
+                                shift_mode_enabled(0)
+    {
+    }
 };
 
 typedef enum {
@@ -429,17 +456,10 @@ new_ic_impl (EcoreIMFContextISF *parent)
             return NULL;
     }
 
-    impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
-    impl->input_hint = ECORE_IMF_INPUT_HINT_NONE;
-    impl->bidi_direction = ECORE_IMF_BIDI_DIRECTION_NEUTRAL;
-    impl->next_shift_status = 0;
-    impl->shift_mode_enabled = 0;
     impl->next = _used_ic_impl_list;
     _used_ic_impl_list = impl;
 
     impl->parent = parent;
-    impl->imdata = NULL;
-    impl->imdata_size = 0;
 
     return impl;
 }
