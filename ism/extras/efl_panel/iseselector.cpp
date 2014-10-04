@@ -214,14 +214,14 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selector_Sel
     evas_object_event_callback_add (_ise_selector_popup, EVAS_CALLBACK_DEL, ise_selector_popup_del_cb, NULL);
     ea_object_event_callback_add (_ise_selector_popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
     evas_object_smart_callback_add (_ise_selector_popup, "block,clicked", ise_selector_block_clicked_cb, NULL);
-    elm_object_part_text_set (_ise_selector_popup, "title,text", _("Select input method"));
+    elm_object_domain_translatable_part_text_set (_ise_selector_popup, "title,text", GETTEXT_PACKAGE, "Select input method");
 
 #if HAVE_UIGADGET
     /* Create "Set up input methods" button */
     Evas_Object *btn = elm_button_add (_ise_selector_popup);
     if (!elm_object_style_set (btn, "popup"))
         LOGW ("elm_object_style_set failed. obj : button, style : popup\n");
-    elm_object_text_set (btn, _("Set up input methods"));
+    elm_object_domain_translatable_part_text_set (btn, NULL, GETTEXT_PACKAGE, "Set up input methods");
     elm_object_part_content_set (_ise_selector_popup, "button1", btn);
 
     evas_object_smart_callback_add (btn, "clicked", isf_setting_cb, _ise_selector_popup);

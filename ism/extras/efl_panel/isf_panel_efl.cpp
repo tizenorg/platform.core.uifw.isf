@@ -5496,6 +5496,8 @@ static void set_language_and_locale (void)
     char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
 
     if (lang_str) {
+        elm_language_set (lang_str);
+
         setenv ("LANG", lang_str, 1);
         setlocale (LC_MESSAGES, lang_str);
         free (lang_str);
