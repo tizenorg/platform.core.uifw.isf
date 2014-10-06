@@ -1454,6 +1454,8 @@ TransactionReader::skip_data ()
                 m_impl->m_read_pos += (len + sizeof (uint32) + 1);
                 return true;
             }
+            default :
+                break;
         }
     }
     return false;

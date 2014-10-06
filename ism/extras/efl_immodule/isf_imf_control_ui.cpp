@@ -237,6 +237,8 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                 case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
                     SECURE_LOGD ("[input panel will be shown] ctx : %p\n", using_ic);
                     break;
+                default:
+                    break;
             }
             notified_state = (Ecore_IMF_Input_Panel_State)value;
             break;

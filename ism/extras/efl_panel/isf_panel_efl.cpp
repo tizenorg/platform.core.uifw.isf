@@ -455,7 +455,7 @@ struct GeometryCache
     int angle;                 /* For which angle this information is useful */
     struct rectinfo geometry;  /* Geometry information */
 };
-static struct GeometryCache _ise_reported_geometry          = {0};
+static struct GeometryCache _ise_reported_geometry          = {0, 0, {0, 0, 0, 0}};
 
 static void get_input_window (void)
 {
@@ -3469,7 +3469,8 @@ static Ecore_X_Window efl_get_app_window (void)
 
     if (ret == Success) {
         if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
-            xAppWindow = *(Window *)data;
+            void *pvoid = data;
+            xAppWindow = *(Window *)pvoid;
             if (data)
                 XFree (data);
         }
@@ -3725,6 +3726,7 @@ static void hide_ise ()
             ui_candidate_hide (true, true, true);
     }
 }
+#if ENABLE_MULTIWINDOW_SUPPORT
 
 static Eina_Bool ise_hide_timeout (void *data)
 {
@@ -3776,7 +3778,7 @@ static bool update_ise_list (std::vector<String> &list)
 
     return ret;
 }
-
+#endif
 /**
  * @brief Reload config slot function for PanelAgent.
  */
@@ -5974,11 +5976,11 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                     if ((unsigned int)ev->data.l[1] == ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ_NEXT) {
                         // flick right
                         SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "    1 finger flick right\n";
-                        if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (_candidate_display_number - 1))
+                        if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (int)(_candidate_display_number - 1))
                             _candidate_tts_focus_index = _candidate_display_number == _candidate_row_items[0] ? MORE_BUTTON_INDEX : 0;
-                        else if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (_candidate_row_items[0] - 1))
+                        else if (evas_object_visible_get (_more_btn) && _candidate_tts_focus_index == (int)(_candidate_row_items[0] - 1))
                             _candidate_tts_focus_index = MORE_BUTTON_INDEX;
-                        else if (evas_object_visible_get (_close_btn) && _candidate_tts_focus_index == (_candidate_row_items[0] - 1))
+                        else if (evas_object_visible_get (_close_btn) && _candidate_tts_focus_index == (int)(_candidate_row_items[0] - 1))
                             _candidate_tts_focus_index = CLOSE_BUTTON_INDEX;
                         else if (_candidate_tts_focus_index == MORE_BUTTON_INDEX)
                             _candidate_tts_focus_index = _candidate_display_number == _candidate_row_items[0] ? 0 : _candidate_row_items[0];
@@ -6093,7 +6095,6 @@ Eina_Bool check_focus_out_by_popup_win ()
 static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *event)
 {
     Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out*)event;
-    unsigned int layout = 0;
 
     if (e && e->win == _app_window) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
@@ -6101,6 +6102,7 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
                 return ECORE_CALLBACK_RENEW;
 
 #if ENABLE_MULTIWINDOW_SUPPORT
+            unsigned int layout = 0;
             LOGD ("Application window focus OUT!\n");
             delete_ise_hide_timer ();
 

@@ -147,7 +147,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
 {
     SCIM_DEBUG_MAIN (1) << "load_helper_modules ()\n";
 
-    size_t i;
+    size_t i = 0;
 
     __load_engine_list.clear ();
     for (i = 0; i < load_engine_list.size (); ++i)
@@ -176,7 +176,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
         if (!ret) {
             std::cerr << __func__ << " Failed to read(" << USER_ENGINE_FILE_NAME << ")\n";
         }
-        for (size_t i = 0; i < info_list.size (); ++i) {
+        for (i = 0; i < info_list.size (); ++i) {
             if (info_list [i].mode != TOOLBAR_HELPER_MODE)
                 continue;
             if (std::find (mod_list.begin (), mod_list.end (), info_list [i].module) != mod_list.end ()) {
@@ -197,7 +197,7 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
             LOGW ("Failed to open %s!!!\n", filename.c_str ());
         }
 
-        for (size_t i = 0; i < mod_list.size (); ++i) {
+        for (i = 0; i < mod_list.size (); ++i) {
             if (std::find (tmp_list.begin (), tmp_list.end (), mod_list [i]) != tmp_list.end ())
                 continue;
 
@@ -231,8 +231,8 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
             module.unload ();
         }
         if (engine_list_file) {
-            int ret = fclose (engine_list_file);
-            if (ret != 0)
+            int iret = fclose (engine_list_file);
+            if (iret != 0)
                 LOGW ("Failed to fclose %s!!!\n", filename.c_str ());
         }
     }
@@ -299,12 +299,12 @@ void SocketFrontEnd::run_helper (const Socket &client)
                                    0};
 
                 SCIM_DEBUG_MAIN(2) << " Call scim-helper-launcher.\n";
-                char buf[256] = {0};
+                buf[0] = '\0';
                 snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Exec scim_helper_launcher(%s)\n",
                     time (0), getpid (), getppid(), __FILE__, __func__, __helpers [i].second.c_str ());
                 isf_save_log (buf);
 
-                execv (SCIM_HELPER_LAUNCHER_PROGRAM, (char **)argv);
+                execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
                 exit (-1);
             }
 
@@ -2143,6 +2143,7 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
     std::vector<String> install_modules;
     std::vector<String> imengine_list;
     std::vector<String> helper_list;
+    size_t i = 0, j = 0;
 
     if (m_receive_trans.get_data (strName) && strName.length () > 0) {
         //std::cout << "ISE name list:" << strName << "\n";
@@ -2151,7 +2152,7 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
         scim_get_imengine_module_list (imengine_list);
         scim_get_helper_module_list (helper_list);
 
-        for (size_t i = 0; i < imengine_list.size (); ++i) {
+        for (i = 0; i < imengine_list.size (); ++i) {
             install_modules.push_back (imengine_list [i]);
             if (std::find (__load_engine_list.begin (), __load_engine_list.end (), imengine_list [i]) == __load_engine_list.end ()) {
                 SCIM_DEBUG_FRONTEND (3) << "add_module " << imengine_list [i]  << " in " << __FUNCTION__ << "\n";
@@ -2163,12 +2164,12 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
 
         HelperModule module;
         HelperInfo   info;
-        for (size_t i = 0; i < helper_list.size (); ++i) {
+        for (i = 0; i < helper_list.size (); ++i) {
             install_modules.push_back (helper_list [i]);
             if (std::find (__load_engine_list.begin (), __load_engine_list.end (), helper_list [i]) == __load_engine_list.end ()) {
                 if (module.load (helper_list [i]) && module.valid ()) {
                     size_t num = module.number_of_helpers ();
-                    for (size_t j = 0; j < num; ++j) {
+                    for (j = 0; j < num; ++j) {
                         if (module.get_helper_info (j, info))
                             __helpers.push_back (std::make_pair (info, helper_list [i]));
                     }
@@ -2179,13 +2180,13 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
         }
 
         /* Try to find uninstall ISEs */
-        for (size_t i = 0; i < __load_engine_list.size (); ++i) {
+        for (i = 0; i < __load_engine_list.size (); ++i) {
             if (std::find (install_modules.begin (), install_modules.end (), __load_engine_list [i]) == install_modules.end ()) {
                 HelperRepository tmp_helpers = __helpers;
                 __helpers.clear ();
-                for (size_t i = 0; i < tmp_helpers.size (); ++i) {
-                    if (std::find (install_modules.begin (), install_modules.end (), tmp_helpers [i].second) != install_modules.end ())
-                        __helpers.push_back (tmp_helpers [i]);
+                for (j = 0; j < tmp_helpers.size (); ++j) {
+                    if (std::find (install_modules.begin (), install_modules.end (), tmp_helpers [j].second) != install_modules.end ())
+                        __helpers.push_back (tmp_helpers [j]);
                 }
                 __load_engine_list = install_modules;
                 break;

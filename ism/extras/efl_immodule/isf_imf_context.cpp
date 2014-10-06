@@ -1270,7 +1270,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
     if (!_ic_list) return;
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF*)ecore_imf_context_data_get (ctx);
-    Ecore_IMF_Input_Panel_State input_panel_state = ecore_imf_context_input_panel_state_get (ctx);
+    Ecore_IMF_Input_Panel_State l_input_panel_state = ecore_imf_context_input_panel_state_get (ctx);
 
     if (context_scim) {
         if (context_scim->id != _ic_list->id) {
@@ -1297,8 +1297,8 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
 
         if (input_panel_ctx == ctx && _scim_initialized) {
             LOGD ("ctx : %p\n", ctx);
-            if (input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
-                input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+            if (l_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
+                l_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 ecore_imf_context_input_panel_hide (ctx);
                 isf_imf_context_input_panel_send_will_hide_ack (ctx);
             }
@@ -1582,7 +1582,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
             if (wstr.length ()) {
                 ecore_imf_context_commit_event_add (context_scim->ctx, utf8_wcstombs (wstr).c_str ());
-                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
+                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, const_cast<char*>(utf8_wcstombs (wstr).c_str ()));
             }
             _panel_client.prepare (context_scim->id);
             _panel_client.reset_input_context (context_scim->id);
@@ -1634,7 +1634,7 @@ isf_imf_context_reset (Ecore_IMF_Context *ctx)
 
             if (wstr.length ()) {
                 ecore_imf_context_commit_event_add (context_scim->ctx, utf8_wcstombs (wstr).c_str ());
-                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
+                ecore_imf_context_event_callback_call (context_scim->ctx, ECORE_IMF_CALLBACK_COMMIT, const_cast<char*>(utf8_wcstombs (wstr).c_str ()));
             }
         }
     }
@@ -2162,7 +2162,8 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
             ret = EINA_FALSE;
         } else if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE && (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
-            _panel_client.process_key_event (key, (int*)&ret);
+            void *pvoid = &ret;
+            _panel_client.process_key_event (key, (int*)pvoid);
         } else {
             ret = _focused_ic->impl->si->process_key_event (key);
         }
@@ -2524,7 +2525,7 @@ panel_slot_commit_string (int context, const WideString &wstr)
         if (ic->impl->need_commit_preedit)
             _hide_preedit_string (ic->id, false);
         ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (wstr).c_str ());
-        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
+        ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, const_cast<char*>(utf8_wcstombs (wstr).c_str ()));
     } else {
         LOGW ("No ic\n");
     }
@@ -2604,7 +2605,7 @@ panel_slot_reset_keyboard_ise (int context)
 
             if (wstr.length ()) {
                 ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (wstr).c_str ());
-                ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (wstr).c_str ());
+                ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, const_cast<char*>(utf8_wcstombs (wstr).c_str ()));
                 if (!check_valid_ic (ic))
                     return;
             }
@@ -4209,7 +4210,7 @@ slot_commit_string (IMEngineInstanceBase *si,
 
         if (!auto_capitalized) {
             ecore_imf_context_commit_event_add (ic->ctx, utf8_wcstombs (str).c_str ());
-            ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (str).c_str ());
+            ecore_imf_context_event_callback_call (ic->ctx, ECORE_IMF_CALLBACK_COMMIT, const_cast<char*>(utf8_wcstombs (str).c_str ()));
         }
     }
 }
@@ -4523,7 +4524,7 @@ fallback_commit_string_cb (IMEngineInstanceBase  *si,
 
     if (_focused_ic && _focused_ic->impl) {
         ecore_imf_context_commit_event_add (_focused_ic->ctx, utf8_wcstombs (str).c_str ());
-        ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)utf8_wcstombs (str).c_str ());
+        ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_COMMIT, const_cast<char*>(utf8_wcstombs (str).c_str ()));
     }
 }
 

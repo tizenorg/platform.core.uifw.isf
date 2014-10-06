@@ -90,7 +90,8 @@ __gethostname (const char *host)
 
     /* Found the host */
     if (!res && hp) {
-        addr = * ((struct in_addr *)hp->h_addr_list [0]);
+        void *pvoid = hp->h_addr_list [0];
+        addr = * ((struct in_addr *) pvoid);
     }
 
     free (tmphstbuf);
@@ -99,8 +100,10 @@ __gethostname (const char *host)
 
     hostinfo = gethostbyname (host);
 
-    if (hostinfo)
-        addr = * ((struct in_addr *) hostinfo->h_addr_list [0]);
+    if (hostinfo){
+        pvoid = hostinfo->h_addr_list [0];
+        addr = * ((struct in_addr *) pvoid);
+    }
 #endif
     return addr;
 }
@@ -132,6 +135,8 @@ public:
                     break;
                 case SCIM_SOCKET_UNKNOWN:
                     break;
+                default :
+                    break;
             }
 
             if (len && m_data) memcpy (m_data, other.m_data, len);
@@ -160,6 +165,8 @@ public:
                     len = sizeof (sockaddr_in);
                     break;
                 case SCIM_SOCKET_UNKNOWN:
+                    break;
+                default :
                     break;
             }
             if (len && m_data) memcpy (m_data, other.m_data, len);
@@ -481,7 +488,7 @@ public:
         if (m_binded) return false;
 
         if (addr.valid () && m_id >= 0 && m_family == addr.get_family ()) {
-            struct sockaddr * data = (sockaddr *) addr.get_data ();
+            struct sockaddr * data = static_cast<sockaddr*> (const_cast<void*> (addr.get_data ()));
             int len = addr.get_data_length ();
 
             // Backup the current flag to restore after non-blocking connect() try

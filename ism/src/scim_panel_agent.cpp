@@ -567,7 +567,7 @@ public:
         }
 
         if (m_panel_client_map[m_show_request_client_id] != focused_client) {
-            ClientInfo client_info = socket_get_client_info (m_panel_client_map[m_show_request_client_id]);
+            client_info = socket_get_client_info (m_panel_client_map[m_show_request_client_id]);
             if (client_info.type == FRONTEND_CLIENT) {
                 Socket client_socket (m_panel_client_map[m_show_request_client_id]);
                 m_send_trans.clear ();
@@ -3762,8 +3762,8 @@ private:
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_EXIT) {
                     HelperInfoRepository::iterator hiit = m_helper_active_info_repository.find (client.get_id ());
                     if (hiit != m_helper_active_info_repository.end ()) {
-                        String uuid = hiit->second.uuid;
-                        HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
+                        String l_uuid = hiit->second.uuid;
+                        HelperClientIndex::iterator it = m_helper_client_index.find (l_uuid);
                         if (it != m_helper_client_index.end ()) {
                             Socket client_socket (it->second.id);
                             socket_close_connection (server, client_socket);
@@ -4604,10 +4604,8 @@ private:
         if (m_recv_trans.get_data (uuid)) {
             HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
             if (it != m_helper_client_index.end ()) {
-                int    client;
-                uint32 context;
                 get_focused_context (client, context);
-                uint32 ctx = get_helper_ic (client, context);
+                ctx = get_helper_ic (client, context);
                 Socket socket_client (it->second.id);
                 m_send_trans.clear ();
                 m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);

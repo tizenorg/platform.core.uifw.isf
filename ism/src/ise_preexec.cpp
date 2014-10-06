@@ -43,6 +43,7 @@
 #define LABEL_LEN       23
 #define AUL_PR_NAME     16
 
+#define APP_UID         5000
 #define PREEXEC_FILE "/usr/share/aul/preexec_list.txt"
 
 #define DEFAULT_PACKAGE_TYPE "rpm"
@@ -106,7 +107,8 @@ void send_message_to_broker (const char *message)
     exit_handler = ecore_event_handler_add (ECORE_EVENT_SIGNAL_EXIT, sig_exit_cb, NULL);
     data_handler = ecore_event_handler_add (ECORE_IPC_EVENT_SERVER_DATA, handler_server_data, NULL);
 
-    server = ecore_ipc_server_connect (ECORE_IPC_LOCAL_SYSTEM, "scim-helper-broker", 0, NULL);
+    const char *sever_name = "scim-helper-broker";
+    server = ecore_ipc_server_connect (ECORE_IPC_LOCAL_SYSTEM, const_cast<char*>(sever_name), 0, NULL);
 
     LOGD("connect_broker () : %p\n", server);
 
@@ -184,7 +186,7 @@ static inline void __preexec_init ()
 
     LOGD("preexec start\n");
 
-    while (fgets (line, MAX_LOCAL_BUFSZ, preexec_file) > 0) {
+    while (fgets (line, MAX_LOCAL_BUFSZ, preexec_file) != NULL) {
         /* Parse each line */
         if (line[0] == '#' || line[0] == '\0')
             continue;
@@ -265,8 +267,8 @@ static inline void __preexec_run (const char *pkg_type, const char *pkg_name,
         if (type_t) {
             if (!strcmp (pkg_type, type_t->pkg_type)) {
                 if (type_t->dl_do_pre_exe != NULL) {
-                    type_t->dl_do_pre_exe ((char *)pkg_name,
-                        (char *)app_path);
+                    type_t->dl_do_pre_exe (const_cast<char*>(pkg_name),
+                            const_cast<char*>(app_path));
                     LOGD("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
                 } else {
                     LOGE("no symbol for this type: %s",
@@ -297,7 +299,17 @@ static inline int __set_dac ()
 #ifdef WAYLAND
     return 0;
 #else
-    return perm_app_set_privilege("isf", NULL, NULL);
+    //Copied from control_privilege() in the libprivilege-control package
+
+    if(getuid() == APP_UID) // current user is 'app'
+        return PC_OPERATION_SUCCESS;
+
+    if(perm_app_set_privilege("com.samsung.", NULL, NULL) == PC_OPERATION_SUCCESS) {
+        return PC_OPERATION_SUCCESS;
+    } else {
+        LOGW("perm_app_set_privilege failed (not permitted).");
+        return PC_ERR_NOT_PERMITTED;
+    }
 #endif
 }
 
@@ -447,7 +459,7 @@ int ise_preexec (const char *helper, const char *uuid)
     __set_oom ();
 
     /* SET SMACK LABEL */
-    __set_smack ((char*)(info.app_path.c_str ()));
+    __set_smack (const_cast<char*>(info.app_path.c_str ()));
 
     /* SET DAC*/
     if (__set_dac() != PC_OPERATION_SUCCESS) {

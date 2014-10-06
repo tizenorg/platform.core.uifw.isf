@@ -2010,7 +2010,7 @@ presym_open (lt_user_data loader_data, const char *filename)
 	{
 	  if (!syms->address && strcmp(syms->name, filename) == 0)
 	    {
-	      module = (lt_module) syms;
+	      module = syms->address;
 	      goto done;
 	    }
 	  ++syms;
@@ -2621,7 +2621,7 @@ foreach_dirinpath (
       {
 	size_t lendir = LT_STRLEN (dir_name);
 
-	if (lendir +1 +lenbase >= filenamesize)
+	if ((int)(lendir +1 +lenbase) >= filenamesize)
 	{
 	  LT_DLFREE (filename);
 	  filenamesize	= lendir +1 +lenbase +1; /* "/d" + '/' + "f" + '\0' */
@@ -2630,7 +2630,7 @@ foreach_dirinpath (
 	    goto cleanup;
 	}
 
-	assert (filenamesize > lendir);
+	assert (filenamesize > (int)lendir);
 	strcpy (filename, dir_name);
 
 	if (base_name && *base_name)
@@ -3076,7 +3076,7 @@ try_dlopen (
 
       /* canonicalize the module name */
       {
-        size_t i;
+        int i;
         for (i = 0; i < ext - base_name; ++i)
 	  {
 	    if (isalnum ((int)(base_name[i])))
@@ -3400,7 +3400,7 @@ lt_dlopenext (
   assert (filename);
 
   len = LT_STRLEN (filename);
-  ext = strrchr ((char *)filename, '.');
+  ext = strrchr (const_cast<char*>(filename), '.');
 
   /* If FILENAME already bears a suitable extension, there is no need
      to try appending additional extensions.  */
@@ -3414,7 +3414,7 @@ lt_dlopenext (
     }
 
   /* First try appending ARCHIVE_EXT.  */
-  tmp = LT_EMALLOC (char, len + LT_STRLEN (archive_ext) + 1);
+  tmp = LT_EMALLOC (char, len + strlen (archive_ext) + 1);
   if (!tmp)
     return 0;
 
@@ -3435,10 +3435,10 @@ lt_dlopenext (
 
 #ifdef LTDL_SHLIB_EXT
   /* Try appending SHLIB_EXT.   */
-  if (LT_STRLEN (shlib_ext) > LT_STRLEN (archive_ext))
+  if (strlen (shlib_ext) > strlen (archive_ext))
     {
       LT_DLFREE (tmp);
-      tmp = LT_EMALLOC (char, len + LT_STRLEN (shlib_ext) + 1);
+      tmp = LT_EMALLOC (char, len + strlen (shlib_ext) + 1);
       if (!tmp)
 	return 0;
 
@@ -3930,7 +3930,7 @@ lt_dlpath_insertdir (
   if (before)
     {
       assert (*ppath <= before);
-      assert (before - *ppath <= strlen (*ppath));
+      assert (before - *ppath <= (int)strlen (*ppath));
 
       before = before - *ppath + argz;
     }
@@ -3992,7 +3992,7 @@ lt_dlinsertsearchdir (
     {
       LT_DLMUTEX_LOCK ();
       if (lt_dlpath_insertdir (&user_search_path,
-			       (char *) before, search_dir) != 0)
+			       const_cast<char*>(before), search_dir) != 0)
 	{
 	  ++errors;
 	}

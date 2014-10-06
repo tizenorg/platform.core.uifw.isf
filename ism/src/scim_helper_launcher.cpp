@@ -117,8 +117,8 @@ int main (int argc, char *argv [])
                 std::vector<String> debug_mask_list;
                 scim_split_string_list (debug_mask_list, argv [i], ',');
                 DebugOutput::disable_debug (SCIM_DEBUG_AllMask);
-                for (size_t j=0; j<debug_mask_list.size (); j++)
-                    DebugOutput::enable_debug_by_name (debug_mask_list [j]);
+                for (size_t k=0; k<debug_mask_list.size (); k++)
+                    DebugOutput::enable_debug_by_name (debug_mask_list [k]);
             }
             continue;
         }

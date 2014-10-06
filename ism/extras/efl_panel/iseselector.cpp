@@ -116,7 +116,7 @@ gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
 
     LOGD ("selected item : %d\n", index);
 
-    if (index >= (int)_uuids.size ())
+    if (index >= _uuids.size ())
         return;
 
     if (_ise_selector_radio_grp)

@@ -182,22 +182,22 @@ Module::load (const String &name, const String &type)
     if (!new_handle)
         return false;
 
-    String symbol;
+    String l_symbol;
 
     // Try to load the symbol scim_module_init
-    symbol = "scim_module_init";
-    new_init = (ModuleInitFunc) lt_dlsym (new_handle, symbol.c_str ());
+    l_symbol = "scim_module_init";
+    new_init = (ModuleInitFunc) lt_dlsym (new_handle, l_symbol.c_str ());
 
     // If symbol load failed, try to add LTX prefix and load again.
     // This will occurred when name.la is missing.
     if (!new_init) {
-        symbol = _concatenate_ltdl_prefix (name, symbol);
-        new_init = (ModuleInitFunc) lt_dlsym (new_handle, symbol.c_str ());
+        l_symbol = _concatenate_ltdl_prefix (name, l_symbol);
+        new_init = (ModuleInitFunc) lt_dlsym (new_handle, l_symbol.c_str ());
 
         // Failed again? Try to prepend a under score to the symbol name.
         if (!new_init) {
-            symbol.insert (symbol.begin (),'_');
-            new_init = (ModuleInitFunc) lt_dlsym (new_handle, symbol.c_str ());
+            l_symbol.insert (l_symbol.begin (),'_');
+            new_init = (ModuleInitFunc) lt_dlsym (new_handle, l_symbol.c_str ());
         }
     }
 
@@ -208,19 +208,19 @@ Module::load (const String &name, const String &type)
     }
 
     // Try to load the symbol scim_module_exit
-    symbol = "scim_module_exit";
-    new_exit = (ModuleExitFunc) lt_dlsym (new_handle, symbol.c_str ());
+    l_symbol = "scim_module_exit";
+    new_exit = (ModuleExitFunc) lt_dlsym (new_handle, l_symbol.c_str ());
 
     // If symbol load failed, try to add LTX prefix and load again.
     // This will occurred when name.la is missing.
     if (!new_exit) {
-        symbol = _concatenate_ltdl_prefix (name, symbol);
-        new_exit = (ModuleExitFunc) lt_dlsym (new_handle, symbol.c_str ());
+        l_symbol = _concatenate_ltdl_prefix (name, l_symbol);
+        new_exit = (ModuleExitFunc) lt_dlsym (new_handle, l_symbol.c_str ());
 
         // Failed again? Try to prepend a under score to the symbol name.
         if (!new_exit) {
-            symbol.insert (symbol.begin (),'_');
-            new_exit = (ModuleExitFunc) lt_dlsym (new_handle, symbol.c_str ());
+            l_symbol.insert (l_symbol.begin (),'_');
+            new_exit = (ModuleExitFunc) lt_dlsym (new_handle, l_symbol.c_str ());
         }
     }
 
@@ -321,14 +321,14 @@ Module::symbol (const String & sym) const
     void * func = 0;
 
     if (m_impl->handle) {
-        String symbol = sym;
-        func = lt_dlsym (m_impl->handle, symbol.c_str ());
+        String l_symbol = sym;
+        func = lt_dlsym (m_impl->handle, l_symbol.c_str ());
         if (!func) {
-            symbol = _concatenate_ltdl_prefix (m_impl->name, symbol);
-            func = lt_dlsym (m_impl->handle, symbol.c_str ());
+            l_symbol = _concatenate_ltdl_prefix (m_impl->name, l_symbol);
+            func = lt_dlsym (m_impl->handle, l_symbol.c_str ());
             if (!func) {
-                symbol.insert (symbol.begin (), '_');
-                func = lt_dlsym (m_impl->handle, symbol.c_str ());
+                l_symbol.insert (l_symbol.begin (), '_');
+                func = lt_dlsym (m_impl->handle, l_symbol.c_str ());
             }
         }
     }

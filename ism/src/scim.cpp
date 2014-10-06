@@ -244,7 +244,7 @@ static void launch_helper (const char *name, const char *uuid)
             time (0), getpid (), __FILE__, __func__, _ise_name, _ise_uuid);
         isf_save_log (buf);
 
-        execv (SCIM_HELPER_LAUNCHER_PROGRAM, (char **)argv);
+        execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
         exit (-1);
     }
 }
@@ -267,7 +267,7 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
 
     const char *message = "Done";
     if (ecore_ipc_client_send (e->client, 0, 0, 0, 0, 0, message, strlen (message)) == 0) {
-        char buf[256] = {0};
+        buf[0] = '\0';
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ecore_ipc_client_send FAILED!!\n",
             time (0), getpid (), __FILE__, __func__);
         isf_save_log (buf);
@@ -575,19 +575,19 @@ int main (int argc, char *argv [])
            And set manual to false. */
         if (!check_socket_frontend ()) {
             cerr << "Launching a daemon with Socket FrontEnd...\n";
-            char *argv [] = { const_cast<char *> ("--stay"), 0 };
+            char *l_argv [] = { const_cast<char *> ("--stay"), 0 };
             scim_launch (true,
                          def_config,
                          (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
                          "socket",
-                         argv);
+                         l_argv);
             manual = false;
         }
 
         /* If there is one Socket FrontEnd running and it's not manual mode,
            then just use this Socket Frontend. */
         if (!manual) {
-            for (int i = 0; i < 100; ++i) {
+            for (int j = 0; j < 100; ++j) {
                 if (check_socket_frontend ()) {
                     def_config = "socket";
                     load_engine_list.clear ();

@@ -343,7 +343,7 @@ public:
                                  "simple",
                                  (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
                                  "socket",
-                                 (char **)new_argv);
+                                 const_cast<char**>(new_argv));
 
                     std::cerr << " Reconnecting to ISF(scim) server.";
                     for (i = 0; i < 100; ++i) {

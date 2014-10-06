@@ -142,7 +142,7 @@ static void destroy_cb (ui_gadget_h ug, void *priv)
 static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
-    struct ug_cbs cbs = {0, };
+    struct ug_cbs cbs = {0, 0, 0, 0, 0, {0, 0, 0}};
 
     UG_INIT_EFL (ad->win_main, UG_OPT_INDICATOR_ENABLE);
 
@@ -361,6 +361,9 @@ static void input_panel_state_changed_cb (keynode_t *key, void* data)
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_SHOW:
             printf ("state : will_show\n");
+            break;
+        default :
+            printf ("sip_status error!\n");
             break;
     }
 }
