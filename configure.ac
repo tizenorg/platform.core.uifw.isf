@@ -240,6 +240,9 @@ fi
 # Check EFL assist library
 PKG_CHECK_MODULES(EFL_ASSIST, [efl-assist])
 
+# Check tzplatform-config library
+PKG_CHECK_MODULES(TZPLATFORM_CONFIG, [libtzplatform-config])
+
 # Check x11 library
 PKG_CHECK_MODULES(X11, [x11],
                   [ISF_HAS_X11=yes],
