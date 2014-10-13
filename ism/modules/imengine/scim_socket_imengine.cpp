@@ -132,7 +132,7 @@ extern "C" {
     EAPI void scim_module_exit (void)
     {
         if (global) {
-            //delete global;
+            delete global;
             global = 0;
         }
     }
