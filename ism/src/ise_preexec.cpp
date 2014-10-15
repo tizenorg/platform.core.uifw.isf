@@ -110,7 +110,7 @@ void send_message_to_broker (const char *message)
     const char *sever_name = "scim-helper-broker";
     server = ecore_ipc_server_connect (ECORE_IPC_LOCAL_SYSTEM, const_cast<char*>(sever_name), 0, NULL);
 
-    LOGD("connect_broker () : %p\n", server);
+    LOGD ("connect_broker () : %p\n", server);
 
     if (server && message) {
         ecore_ipc_server_send (server, 0, 0, 0, 0, 0, message, strlen (message));
@@ -180,11 +180,11 @@ static inline void __preexec_init ()
 
     preexec_file = fopen (PREEXEC_FILE, "rt");
     if (preexec_file == NULL) {
-        LOGW("no preexec\n");
+        LOGW ("no preexec\n");
         return;
     }
 
-    LOGD("preexec start\n");
+    LOGD ("preexec start\n");
 
     while (fgets (line, MAX_LOCAL_BUFSZ, preexec_file) != NULL) {
         /* Parse each line */
@@ -203,7 +203,7 @@ static inline void __preexec_init ()
 
         type_t = (preexec_list_t *) calloc (1, sizeof (preexec_list_t));
         if (type_t == NULL) {
-            LOGE("no available memory\n");
+            LOGE ("no available memory\n");
             __preexec_list_free ();
             fclose (preexec_file);
             return;
@@ -214,11 +214,11 @@ static inline void __preexec_init ()
             free (type_t);
             continue;
         }
-        LOGD("preexec %s %s# - handle : %x\n", type, sopath, type_t->handle);
+        LOGD ("preexec %s %s# - handle : %x\n", type, sopath, type_t->handle);
 
         func = (int (*)(char*, char*))dlsym (type_t->handle, symbol);
         if (func == NULL) {
-            LOGE("failed to get symbol type:%s path:%s\n",
+            LOGE ("failed to get symbol type:%s path:%s\n",
                type, sopath);
             dlclose (type_t->handle);
             free (type_t);
@@ -227,7 +227,7 @@ static inline void __preexec_init ()
 
         type_t->pkg_type = strdup (type);
         if (type_t->pkg_type == NULL) {
-            LOGE("no available memory\n");
+            LOGE ("no available memory\n");
             dlclose (type_t->handle);
             free (type_t);
             __preexec_list_free ();
@@ -236,7 +236,7 @@ static inline void __preexec_init ()
         }
         type_t->so_path = strdup (sopath);
         if (type_t->so_path == NULL) {
-            LOGE("no available memory\n");
+            LOGE ("no available memory\n");
             dlclose (type_t->handle);
             free (type_t->pkg_type);
             free (type_t);
@@ -269,9 +269,9 @@ static inline void __preexec_run (const char *pkg_type, const char *pkg_name,
                 if (type_t->dl_do_pre_exe != NULL) {
                     type_t->dl_do_pre_exe (const_cast<char*>(pkg_name),
                             const_cast<char*>(app_path));
-                    LOGD("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
+                    LOGD ("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
                 } else {
-                    LOGE("no symbol for this type: %s",
+                    LOGE ("no symbol for this type: %s",
                         pkg_type);
                 }
             }
@@ -299,15 +299,15 @@ static inline int __set_dac ()
 #ifdef WAYLAND
     return 0;
 #else
-    //Copied from control_privilege() in the libprivilege-control package
+    //Copied from control_privilege () in the libprivilege-control package
 
-    if(getuid() == APP_UID) // current user is 'app'
+    if (getuid () == APP_UID) // current user is 'app'
         return PC_OPERATION_SUCCESS;
 
-    if(perm_app_set_privilege("com.samsung.", NULL, NULL) == PC_OPERATION_SUCCESS) {
+    if (perm_app_set_privilege ("com.samsung.", NULL, NULL) == PC_OPERATION_SUCCESS) {
         return PC_OPERATION_SUCCESS;
     } else {
-        LOGW("perm_app_set_privilege failed (not permitted).");
+        LOGW ("perm_app_set_privilege failed (not permitted).");
         return PC_ERR_NOT_PERMITTED;
     }
 #endif
@@ -391,12 +391,12 @@ static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
         if (r != PMINFO_R_OK) {
             LOGW ("pkgmgrinfo_appinfo_get_apptype () failed : %s %d\n", helper, r);
         } else {
-            if (strncmp(value, NATIVE_APPLICATION_TYPE, strlen(NATIVE_APPLICATION_TYPE)) == 0) {
+            if (strncmp (value, NATIVE_APPLICATION_TYPE, strlen (NATIVE_APPLICATION_TYPE)) == 0) {
                 info->package_type = NATIVE_PACKAGE_TYPE;
-            } else if (strncmp(value, WEB_APPLICATION_TYPE, strlen(WEB_APPLICATION_TYPE)) == 0) {
+            } else if (strncmp (value, WEB_APPLICATION_TYPE, strlen (WEB_APPLICATION_TYPE)) == 0) {
                 info->package_type = WEB_PACKAGE_TYPE;
             }
-            LOGD ("package type : %s\n", info->package_type.c_str());
+            LOGD ("package type : %s\n", info->package_type.c_str ());
         }
 
         r = pkgmgrinfo_appinfo_get_exec (handle, &value);
@@ -404,10 +404,10 @@ static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
             LOGW ("pkgmgrinfo_appinfo_get_exec () failed : %s %d\n", helper, r);
         } else {
             info->app_path = value;
-            LOGD ("app path : %s\n", info->app_path.c_str());
+            LOGD ("app path : %s\n", info->app_path.c_str ());
         }
 
-        pkgmgrinfo_appinfo_destroy_appinfo(handle);
+        pkgmgrinfo_appinfo_destroy_appinfo (handle);
     }
 }
 
@@ -463,7 +463,7 @@ int ise_preexec (const char *helper, const char *uuid)
 
     /* SET DAC*/
     if (__set_dac() != PC_OPERATION_SUCCESS) {
-        LOGW("fail to set DAC - check your package's credential\n");
+        LOGW ("fail to set DAC - check your package's credential\n");
         return -2;
     }
     /* SET DUMPABLE - for coredump*/
@@ -471,12 +471,12 @@ int ise_preexec (const char *helper, const char *uuid)
 
     /* SET PROCESS NAME*/
     if (info.app_path.empty ()) {
-        LOGW("app_path should not be NULL - check menu db");
+        LOGW ("app_path should not be NULL - check menu db");
         return -3;
     }
     file_name = strrchr (info.app_path.c_str (), '/') + 1;
     if (file_name == NULL) {
-        LOGW("can't locate file name to execute");
+        LOGW ("can't locate file name to execute");
         return -4;
     }
     memset (process_name, '\0', AUL_PR_NAME);
