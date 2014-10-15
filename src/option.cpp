@@ -52,6 +52,24 @@ static ITEMDATA language_itemdata[OPTION_MAX_LANGUAGES];
 
 struct OPTION_ELEMENTS
 {
+    OPTION_ELEMENTS() {
+        option_window = NULL;
+        naviframe = NULL;
+        lang_popup = NULL;
+
+        event_handler = NULL;
+
+        itc_main_separator = NULL;
+        itc_main_text_only = NULL;
+
+        itc_language_subitems = NULL;
+        itc_language_radio = NULL;
+
+        languages_item = NULL;
+
+        memset(language_item, 0x00, sizeof(language_item));
+        memset(rdg_language, 0x00, sizeof(rdg_language));
+    }
     Evas_Object *option_window;
     Evas_Object *naviframe;
     Evas_Object *lang_popup;
@@ -70,7 +88,7 @@ struct OPTION_ELEMENTS
     Evas_Object *rdg_language[OPTION_MAX_LANGUAGES];
 };
 
-static OPTION_ELEMENTS ad = {NULL, };
+static OPTION_ELEMENTS ad;
 extern CONFIG_VALUES g_config_values;
 
 //static Evas_Object* create_main_window();
@@ -161,6 +179,8 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
         case SETTING_ITEM_ID_LANGUAGE: {
             create_option_language_view(ad.naviframe);
         }
+        break;
+        default:
         break;
     }
 

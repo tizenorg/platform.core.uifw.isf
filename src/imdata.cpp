@@ -45,7 +45,7 @@ static void process_imdata_string_language(const char *language_string)
 {
     bool found = FALSE;
     if(language_string) {
-        for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {
+        for (scluint loop = 0;loop < _language_manager.get_languages_num() && !found;loop++) {
             LANGUAGE_INFO *language = _language_manager.get_language_info(loop);
             if (language) {
                 if (language->locale_string.compare(language_string) == 0 && language->enabled) {

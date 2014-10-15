@@ -130,13 +130,12 @@ EflCandidate::create_seperate_line() {
     return seperate_line;
 }
 
-EflCandidate::EflCandidate(Evas_Object *win)
+EflCandidate::EflCandidate(Evas_Object *window)
 {
-    this->win = win;
-    layout = elm_layout_add(win);
+    this->win = window;
+    layout = elm_layout_add(window);
 
-    int ret = elm_layout_file_set(layout,
-        CANDIDATE_EDJ_FILE_PATH, "candidate");
+    int ret = elm_layout_file_set(layout, CANDIDATE_EDJ_FILE_PATH, "candidate");
     if (!ret) {
         throw "loading candidate layout file failed";
     }
@@ -144,13 +143,13 @@ EflCandidate::EflCandidate(Evas_Object *win)
     evas_object_resize(layout, candidate_config.width, candidate_config.height);
     evas_object_show(layout);
 
-    scroller = elm_scroller_add(win);
+    scroller = elm_scroller_add(window);
     elm_scroller_bounce_set(scroller, EINA_TRUE, EINA_FALSE);
     elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_AUTO, ELM_SCROLLER_POLICY_OFF);
     evas_object_resize(scroller, candidate_config.width, candidate_config.height);
     evas_object_show(scroller);
 
-    table = elm_table_add(win);
+    table = elm_table_add(window);
     elm_object_content_set(scroller, table);
     evas_object_show(table);
 

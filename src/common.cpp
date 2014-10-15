@@ -272,7 +272,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     int argc = 3;
 
     argv [0] = const_cast<char *> (m_helper_info.name.c_str());
-    argv [1] = (char *)"--display";
+    argv [1] = const_cast<char *> ("--display");
     argv [2] = const_cast<char *> (display);
     argv [3] = 0;
 

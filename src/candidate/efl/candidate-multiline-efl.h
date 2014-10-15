@@ -51,7 +51,7 @@ class EflMultiLineCandidate: public Candidate
         Evas_Object *get_candidate_item();
         std::vector<std::string> cur_candidates;
 
-        Evas_Object *win;
+        Evas_Object *m_window;
         // used for normal candidate
         struct View {
             Evas_Object *layout;
@@ -65,6 +65,6 @@ class EflMultiLineCandidate: public Candidate
             Evas_Object *more_table;
         }more_view;
 
-        int degree;
+        int m_degree;
 };
 #endif

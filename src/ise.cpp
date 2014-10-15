@@ -434,8 +434,6 @@ ise_show(int ic)
         }
 
         if (reset_inputmode) {
-            int loop;
-
             ise_reset_context();
 
             /* Turn the shift state off if we need to reset our input mode, only when auto-capitalization is not set  */
@@ -703,15 +701,18 @@ void ise_set_return_key_type(unsigned int type)
     case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN:
         snprintf(buf, BUF_LEN, ISE_RETURN_KEY_LABEL_SIGNIN);
         break;
+    default:
+        break;
     }
 
     if (type == ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT) {
         gSCLUI->unset_private_key("Enter");
     } else {
         static sclchar *imagelabel[SCL_BUTTON_STATE_MAX] = {
-           " ", " ", " "
+           const_cast<sclchar*>(" "), const_cast<sclchar*>(" "), const_cast<sclchar*>(" ")
         };
-        gSCLUI->set_private_key("Enter", buf, imagelabel, NULL, 0, "Enter", TRUE);
+
+        gSCLUI->set_private_key("Enter", buf, imagelabel, NULL, 0, const_cast<sclchar*>("Enter"), TRUE);
     }
 }
 

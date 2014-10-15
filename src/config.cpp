@@ -28,10 +28,12 @@ using namespace scl;
 
 extern ConfigPointer _scim_config;
 
-CONFIG_VALUES g_config_values = {
-    KEYPAD_MODE_QTY, // keypad_mode
-    FALSE, // prediction_on
+CONFIG_VALUES::CONFIG_VALUES() {
+    keypad_mode = KEYPAD_MODE_QTY; // keypad_mode
+    prediction_on = FALSE; // prediction_on
 };
+
+CONFIG_VALUES g_config_values;
 
 void read_ise_config_values() {
     if (_scim_config) {

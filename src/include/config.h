@@ -33,12 +33,14 @@ enum KEYPAD_MODE {
     KEYPAD_MODE_QTY,
 };
 
-typedef struct {
+struct CONFIG_VALUES {
+    CONFIG_VALUES();
+
     KEYPAD_MODE keypad_mode;
     sclboolean prediction_on;
     std::string selected_language;
     std::vector<std::string> enabled_languages;
-} CONFIG_VALUES;
+};
 
 /**
  * Reads all option values from SCIM config file

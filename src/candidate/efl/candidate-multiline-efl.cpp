@@ -100,7 +100,7 @@ EflMultiLineCandidate::get_candidate_item()
     int ret;
     Evas_Object *edje;
 
-    edje = edje_object_add(evas_object_evas_get(win));
+    edje = edje_object_add(evas_object_evas_get(m_window));
     ret = edje_object_file_set(edje,
         CANDIDATE_EDJ_FILE_PATH, "candidate_item");
     if (!ret) {
@@ -130,6 +130,7 @@ ui_candidate_window_close_button_down_cb(void *data, Evas *e,
     candidate->close_btn_clicked();
 }
 
+/*
 static void
 ui_candidate_window_more_button_up_cb(void *data, Evas *e,
     Evas_Object *button, void *event_info)
@@ -138,6 +139,7 @@ ui_candidate_window_more_button_up_cb(void *data, Evas *e,
         (EflMultiLineCandidate *)data;
     candidate->more_btn_released();
 }
+*/
 
 static void
 ui_candidate_window_more_button_down_cb(void *data, Evas *e,
@@ -202,7 +204,7 @@ EflMultiLineCandidate::more_btn_clicked()
         Evas_Object *item = get_candidate_item();
         edje_object_part_text_set (item, "candidate", cur_candidates.at(i).c_str());
         elm_table_pack(view.table, item, 2*i, 0, 1, 1);
-        Evas_Object *seperate = _get_seperate_line(win);
+        Evas_Object *seperate = _get_seperate_line(m_window);
         elm_table_pack(view.table, seperate, 2*i+1, 0, 1, 1);
     }
     // create candidate more/close button
@@ -219,7 +221,7 @@ EflMultiLineCandidate::more_btn_clicked()
         Evas_Object *item = get_candidate_item();
         edje_object_part_text_set (item, "candidate", cur_candidates[n].c_str());
         elm_table_pack(more_view.more_table, item, 2*j, i, 1, 1);
-        Evas_Object *seperate = _get_seperate_line(win);
+        Evas_Object *seperate = _get_seperate_line(m_window);
         elm_table_pack(more_view.more_table, seperate, 2*j+1, i, 1, 1);
         j++;
         if (j >= CANDIDATE_MORE_ONE_LINE) {
@@ -249,7 +251,7 @@ EflMultiLineCandidate::get_candidate_more_button ()
 {
     Evas_Object *edje;
 
-    edje = edje_object_add (evas_object_evas_get (win));
+    edje = edje_object_add (evas_object_evas_get (m_window));
     edje_object_file_set (edje,
         CANDIDATE_EDJ_FILE_PATH, "more_button");
     evas_object_size_hint_min_set(edje, 100, 84);
@@ -264,7 +266,7 @@ EflMultiLineCandidate::get_candidate_close_button ()
 {
     Evas_Object *edje;
 
-    edje = edje_object_add (evas_object_evas_get (win));
+    edje = edje_object_add (evas_object_evas_get (m_window));
     edje_object_file_set (edje,
         CANDIDATE_EDJ_FILE_PATH, "close_button");
     evas_object_size_hint_min_set(edje, 100, 84);
@@ -293,7 +295,7 @@ _get_seperate_line(Evas_Object *win) {
 void
 EflMultiLineCandidate::make_more_view()
 {
-    more_view.layout = edje_object_add(evas_object_evas_get(win));
+    more_view.layout = edje_object_add(evas_object_evas_get(m_window));
     int ret = edje_object_file_set(more_view.layout,
         CANDIDATE_EDJ_FILE_PATH, "candidate_more_view");
     if (!ret) {
@@ -306,7 +308,7 @@ EflMultiLineCandidate::make_more_view()
     evas_object_show(more_view.layout);
 
     // create candidate more part
-    more_view.more_scroller = elm_scroller_add(win);
+    more_view.more_scroller = elm_scroller_add(m_window);
     elm_scroller_bounce_set (
         more_view.more_scroller, EINA_TRUE, EINA_FALSE);
     elm_scroller_policy_set (
@@ -316,7 +318,7 @@ EflMultiLineCandidate::make_more_view()
     edje_object_part_swallow(more_view.layout,
         "candidate_more", more_view.more_scroller);
 
-    more_view.more_table = elm_table_add(win);
+    more_view.more_table = elm_table_add(m_window);
     elm_table_padding_set(more_view.more_table, 0, 1);
     evas_object_show(more_view.more_table);
     elm_object_content_set(more_view.more_scroller, more_view.more_table);
@@ -325,7 +327,7 @@ EflMultiLineCandidate::make_more_view()
 void
 EflMultiLineCandidate::make_view()
 {
-    view.layout = edje_object_add(evas_object_evas_get(win));
+    view.layout = edje_object_add(evas_object_evas_get(m_window));
     int ret = edje_object_file_set(view.layout,
         CANDIDATE_EDJ_FILE_PATH, "candidate");
     if (!ret) {
@@ -336,15 +338,15 @@ EflMultiLineCandidate::make_view()
     evas_object_resize(view.layout, 720, 84);
     evas_object_show(view.layout);
 
-    view.table = elm_table_add(win);
+    view.table = elm_table_add(m_window);
     evas_object_show(view.table);
     edje_object_part_swallow(view.layout,
         "candidate_bar", view.table);
 }
 
-EflMultiLineCandidate::EflMultiLineCandidate(Evas_Object *win)
+EflMultiLineCandidate::EflMultiLineCandidate(Evas_Object *window)
 {
-    this->win = win;
+    m_window = window;
     make_view();
     make_more_view();
 }
@@ -390,7 +392,7 @@ EflMultiLineCandidate::update(const vector<string> &vec_str)
             it->c_str());
 
         elm_table_pack(view.table, item, 2*i, 0, 1, 1);
-        Evas_Object *seperate = _get_seperate_line(win);
+        Evas_Object *seperate = _get_seperate_line(m_window);
         elm_table_pack(view.table, seperate, 2*i+1, 0, 1, 1);
     }
 
@@ -403,7 +405,7 @@ EflMultiLineCandidate::update(const vector<string> &vec_str)
 
 void
 EflMultiLineCandidate::rotate(int degree) {
-    this->degree = degree;
+    m_degree = degree;
     switch (degree) {
         case 0:
         case 180:
@@ -414,6 +416,8 @@ EflMultiLineCandidate::rotate(int degree) {
         case 270:
             evas_object_resize(view.layout, 1280, 84);
             evas_object_resize(more_view.layout, 1280, 444);
+            break;
+        default:
             break;
     }
     show_view();
