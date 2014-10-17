@@ -182,7 +182,7 @@ static int create_demo_view (struct appdata *ad)
     return 0;
 }
 
-static int lang_changed (void *data)
+static int lang_changed (void *event_info, void *data)
 {
     struct appdata *ad = (appdata *)data;
 
@@ -392,7 +392,7 @@ static int app_create (void *data)
     //init the content in layout_main.
     create_demo_view (ad);
 
-    lang_changed (ad);
+    lang_changed (NULL, ad);
 
     evas_object_show (ad->win_main);
 
