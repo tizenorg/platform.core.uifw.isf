@@ -57,7 +57,9 @@ public:
 
     int open_connection (void) {
         String config = "";
-        String display = String (getenv ("DISPLAY"));
+        const char *p = getenv ("DISPLAY");
+        String display;
+        if (p) display = String (p);
 
         SocketAddress addr (scim_get_default_panel_socket_address (display));
 
@@ -135,7 +137,7 @@ public:
     void set_active_ise_by_uuid (const char* uuid) {
         int cmd;
         m_trans.put_command (ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID);
-        m_trans.put_data (uuid, strlen(uuid)+1);
+        m_trans.put_data (uuid, strlen (uuid)+1);
         m_trans.write_to_socket (m_socket_imclient2panel);
         if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
@@ -150,7 +152,7 @@ public:
     void set_initial_ise_by_uuid (const char* uuid) {
         int cmd;
         m_trans.put_command (ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID);
-        m_trans.put_data (uuid, strlen(uuid)+1);
+        m_trans.put_data (uuid, strlen (uuid)+1);
         m_trans.write_to_socket (m_socket_imclient2panel);
         if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
             std::cerr << __func__ << " read_from_socket() may be timeout \n";

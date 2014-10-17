@@ -97,7 +97,12 @@ scim_get_module_list (std::vector <String>& mod_list, const String& type)
     for (std::vector<String>::iterator i = paths.begin (); i!= paths.end (); ++i) {
         DIR *dir = opendir (i->c_str ());
         if (dir) {
-            struct dirent *file = readdir (dir);
+            struct dirent direntp, *result = NULL;
+            struct dirent *file = NULL;
+
+            if (readdir_r (dir, &direntp, &result) == 0 && result){
+                file = result;
+            }
             while (file) {
                 struct stat filestat;
                 String absfn = *i + String (SCIM_PATH_DELIM_STRING) + file->d_name;
@@ -106,7 +111,7 @@ scim_get_module_list (std::vector <String>& mod_list, const String& type)
                     String mod_name = String (file->d_name);
                     mod_list.push_back (mod_name.substr (0, mod_name.find_last_of ('.')));
                 }
-                file = readdir (dir);
+                readdir_r (dir, &direntp, &file);
             }
             closedir (dir);
         }

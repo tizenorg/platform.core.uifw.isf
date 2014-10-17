@@ -426,8 +426,20 @@ int ise_preexec (const char *helper, const char *uuid)
     get_pkginfo (helper, uuid, &info);
 
     /* In case of OSP or Web IME, request scim process to re-launch this ISE if we are not ROOT! */
-    struct passwd *lpwd;
-    lpwd = getpwuid (getuid ());
+    struct passwd *lpwd = NULL;
+    long bufsize;
+    char *buf;
+    struct passwd pwbuf, *pw = NULL;
+
+    if ((bufsize = sysconf (_SC_GETPW_R_SIZE_MAX)) <= 0)
+        bufsize = 4096;
+
+    if (!(buf = (char*) malloc (bufsize)))
+        return -1;
+
+    if (getpwuid_r (getuid (), &pwbuf, buf, bufsize, &pw) == 0 && pw)
+        lpwd = pw;
+
     if (lpwd && lpwd->pw_name) {
         if (info.package_type.compare (DEFAULT_PACKAGE_TYPE) != 0) {
             if (strcmp (lpwd->pw_name, "root") != 0) {

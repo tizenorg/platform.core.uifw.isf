@@ -464,7 +464,7 @@ static void get_input_window (void)
 
     if (_input_win == 0) {
         atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
-        win_ret = ecore_x_window_prop_window_get(ecore_x_window_root_first_get (), atom, &_input_win, 1);
+        win_ret = ecore_x_window_prop_window_get (ecore_x_window_root_first_get (), atom, &_input_win, 1);
         if (_input_win == 0 || win_ret < 1) {
             LOGW ("Input window is NULL!\n");
         } else {
@@ -563,7 +563,7 @@ static void minictrl_clicked_cb (void *data, Evas_Object *o, const char *emissio
     input_detect_minictrl.destroy ();
 #endif
 
-    get_input_window();
+    get_input_window ();
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
     }
@@ -1228,7 +1228,12 @@ static int osp_module_list_get (std::vector <String> &ops_module_names)
 
         DIR *dir = opendir (path.c_str ());
         if (dir) {
-            struct dirent *file = readdir (dir);
+            struct dirent direntp, *result = NULL;
+            struct dirent *file = NULL;
+
+            if (readdir_r (dir, &direntp, &result) == 0 && result){
+                file = result;
+            }
             while (file) {
                 struct stat filestat;
                 String absfn = path + String (SCIM_PATH_DELIM_STRING) + file->d_name;
@@ -1239,8 +1244,7 @@ static int osp_module_list_get (std::vector <String> &ops_module_names)
                     String link_name = String (file->d_name);
                     ops_module_names.push_back (link_name.substr (0, link_name.find_last_of ('.')));
                 }
-
-                file = readdir (dir);
+                readdir_r (dir, &direntp, &file);
             }
             closedir (dir);
         }
@@ -1259,7 +1263,12 @@ static String osp_module_name_get (const String &path)
     String bin_path = path + String ("/bin");
     DIR *dir = opendir (bin_path.c_str ());
     if (dir) {
-        struct dirent *file = readdir (dir);
+        struct dirent direntp, *result = NULL;
+        struct dirent *file = NULL;
+
+        if (readdir_r (dir, &direntp, &result) == 0 && result){
+            file = result;
+        }
         while (file) {
             struct stat filestat;
             String absfn = bin_path + String (SCIM_PATH_DELIM_STRING) + file->d_name;
@@ -1274,8 +1283,7 @@ static String osp_module_name_get (const String &path)
                     break;
                 }
             }
-
-            file = readdir (dir);
+            readdir_r (dir, &direntp, &file);
         }
         closedir (dir);
     } else {
@@ -1339,7 +1347,8 @@ static void add_monitor_for_osp_module (const String &module_name)
             LOGD ("add %s", module_name.c_str ());
         }
     } else {
-        LOGW ("can't access : %s, reason : %s\n", exe_path.c_str (), strerror (errno));
+        char buf_err[256];
+        LOGW ("can't access : %s, reason : %s\n", exe_path.c_str (), strerror_r (errno, buf_err, sizeof (buf_err)));
     }
 
     if (stat (manifest_path.c_str (), &filestat) == 0) {
@@ -1347,7 +1356,8 @@ static void add_monitor_for_osp_module (const String &module_name)
             _osp_info_em[module_name] = ecore_file_monitor_add (manifest_path.c_str (), osp_engine_dir_monitor_cb, NULL);
         }
     } else {
-        LOGW ("can't access : %s, reason : %s\n", manifest_path.c_str (), strerror (errno));
+        char buf_err[256];
+        LOGW ("can't access : %s, reason : %s\n", manifest_path.c_str (), strerror_r (errno, buf_err, sizeof (buf_err)));
     }
 }
 
@@ -2730,7 +2740,7 @@ static void ui_tts_focus_rect_show (int x, int y, int w, int h)
         return;
 
     if (_tts_focus_rect == NULL) {
-        _tts_focus_rect = evas_object_rectangle_add (evas_object_evas_get((Evas_Object*)_candidate_window));
+        _tts_focus_rect = evas_object_rectangle_add (evas_object_evas_get ((Evas_Object*)_candidate_window));
         evas_object_color_set (_tts_focus_rect, 0, 0, 0, 0);
         elm_access_highlight_set (elm_access_object_register (_tts_focus_rect, (Evas_Object*)_candidate_window));
     }
@@ -4283,15 +4293,15 @@ static void set_highlight_color (Evas_Object *item, uint32 nForeGround, uint32 n
 
     int r, g, b, a, r2, g2, b2, a2, r3, g3, b3, a3;
     if (edje_object_color_class_get (item, "text_color", &r, &g, &b, &a, &r2, &g2, &b2, &a2, &r3, &g3, &b3, &a3)) {
-        r = SCIM_RGB_COLOR_RED(nForeGround);
-        g = SCIM_RGB_COLOR_GREEN(nForeGround);
-        b = SCIM_RGB_COLOR_BLUE(nForeGround);
+        r = SCIM_RGB_COLOR_RED (nForeGround);
+        g = SCIM_RGB_COLOR_GREEN (nForeGround);
+        b = SCIM_RGB_COLOR_BLUE (nForeGround);
         edje_object_color_class_set (item, "text_color", r, g, b, a, r2, g2, b2, a2, r3, g3, b3, a3);
     }
     if (bSetBack && edje_object_color_class_get (item, "rect_color", &r, &g, &b, &a, &r2, &g2, &b2, &a2, &r3, &g3, &b3, &a3)) {
-        r = SCIM_RGB_COLOR_RED(nBackGround);
-        g = SCIM_RGB_COLOR_GREEN(nBackGround);
-        b = SCIM_RGB_COLOR_BLUE(nBackGround);
+        r = SCIM_RGB_COLOR_RED (nBackGround);
+        g = SCIM_RGB_COLOR_GREEN (nBackGround);
+        b = SCIM_RGB_COLOR_BLUE (nBackGround);
         edje_object_color_class_set (item, "rect_color", r, g, b, 255, r2, g2, b2, a2, r3, g3, b3, a3);
     }
 }
@@ -4326,8 +4336,8 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
     int    aux_index = -1, aux_start = 0, aux_end = 0;
     String strAux      = str;
     bool   bSetBack    = false;
-    uint32 nForeGround = SCIM_RGB_COLOR(62, 207, 255);
-    uint32 nBackGround = SCIM_RGB_COLOR(0, 0, 0);
+    uint32 nForeGround = SCIM_RGB_COLOR (62, 207, 255);
+    uint32 nBackGround = SCIM_RGB_COLOR (0, 0, 0);
     for (AttributeList::const_iterator ait = attrs.begin (); ait != attrs.end (); ++ait) {
         if (aux_index == -1 && ait->get_type () == SCIM_ATTR_DECORATE) {
             aux_index = ait->get_value ();
@@ -4490,13 +4500,13 @@ static void update_table (int table_type, const LookupTable &table)
         if (i < item_num) {
             bool   bHighLight  = false;
             bool   bSetBack    = false;
-            uint32 nForeGround = SCIM_RGB_COLOR(249, 249, 249);
-            uint32 nBackGround = SCIM_RGB_COLOR(0, 0, 0);
+            uint32 nForeGround = SCIM_RGB_COLOR (249, 249, 249);
+            uint32 nBackGround = SCIM_RGB_COLOR (0, 0, 0);
             attrs = table.get_attributes_in_current_page (i);
             for (AttributeList::const_iterator ait = attrs.begin (); ait != attrs.end (); ++ait) {
                 if (ait->get_type () == SCIM_ATTR_DECORATE && ait->get_value () == SCIM_ATTR_DECORATE_HIGHLIGHT) {
                     bHighLight  = true;
-                    nForeGround = SCIM_RGB_COLOR(62, 207, 255);
+                    nForeGround = SCIM_RGB_COLOR (62, 207, 255);
                 } else if (ait->get_type () == SCIM_ATTR_FOREGROUND) {
                     bHighLight  = true;
                     nForeGround = ait->get_value ();
@@ -6163,14 +6173,14 @@ static void launch_default_soft_keyboard (keynode_t *key, void* data)
 
     char *csc_initial_uuid = vconf_get_str ("db/isf/csc_initial_uuid");
     if (csc_initial_uuid) {
-        if (strlen(csc_initial_uuid) > 0) {
+        if (strlen (csc_initial_uuid) > 0) {
             _config->write (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (csc_initial_uuid));
             scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (csc_initial_uuid));
 
             _config->flush ();
             scim_global_config_flush ();
         }
-        free(csc_initial_uuid);
+        free (csc_initial_uuid);
 
         vconf_set_str ("db/isf/csc_initial_uuid", "");
     }
@@ -6193,7 +6203,7 @@ static String sanitize_string (const char *str, int maxlen = 32)
     }
     int len = 0;
     if (newstr) {
-        memset (newstr, 0x00, sizeof(char) * (maxlen + 1));
+        memset (newstr, 0x00, sizeof (char) * (maxlen + 1));
 
         if (str) {
             while (len < maxlen && str[len] != '\0' && strchr (acceptables, str[len]) != NULL) {
@@ -6510,7 +6520,7 @@ int main (int argc, char *argv [])
         _app_scale = _screen_width / 720.0;
         elm_config_scale_set (_app_scale);
         char buf[16] = {0};
-        snprintf(buf, sizeof(buf), "%4.3f", _app_scale);
+        snprintf (buf, sizeof (buf), "%4.3f", _app_scale);
         setenv ("ELM_SCALE", buf, 1);
     }
 

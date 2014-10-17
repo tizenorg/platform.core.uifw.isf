@@ -98,12 +98,12 @@ static char   **_argv = NULL;
 extern "C" {
     EAPI void scim_module_init (void)
     {
-        SCIM_DEBUG_FRONTEND(1) << "Initializing Socket FrontEnd module...\n";
+        SCIM_DEBUG_FRONTEND (1) << "Initializing Socket FrontEnd module...\n";
     }
 
     EAPI void scim_module_exit (void)
     {
-        SCIM_DEBUG_FRONTEND(1) << "Exiting Socket FrontEnd module...\n";
+        SCIM_DEBUG_FRONTEND (1) << "Exiting Socket FrontEnd module...\n";
         _scim_frontend.reset ();
     }
 
@@ -113,7 +113,7 @@ extern "C" {
                                     char **argv)
     {
         if (_scim_frontend.null ()) {
-            SCIM_DEBUG_FRONTEND(1) << "Initializing Socket FrontEnd module (more)...\n";
+            SCIM_DEBUG_FRONTEND (1) << "Initializing Socket FrontEnd module (more)...\n";
             _scim_frontend = new SocketFrontEnd (backend, config);
             _argc = argc;
             _argv = argv;
@@ -125,7 +125,7 @@ extern "C" {
         struct tms tiks_buf;
         clock_t start = times (&tiks_buf);
         if (!_scim_frontend.null ()) {
-            SCIM_DEBUG_FRONTEND(1) << "Starting Socket FrontEnd module...\n";
+            SCIM_DEBUG_FRONTEND (1) << "Starting Socket FrontEnd module...\n";
             _scim_frontend->init (_argc, _argv);
             gettime (start, "Init socket frontend");
             _scim_frontend->run ();
@@ -280,7 +280,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
     for (size_t i = 0; i < __helpers.size (); ++i) {
         if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
 
-            __active_helpers.push_back(__helpers [i].first.name);
+            __active_helpers.push_back (__helpers [i].first.name);
 
             int pid;
 
@@ -298,10 +298,10 @@ void SocketFrontEnd::run_helper (const Socket &client)
                                    const_cast<char*> (__helpers [i].first.uuid.c_str ()),
                                    0};
 
-                SCIM_DEBUG_MAIN(2) << " Call scim-helper-launcher.\n";
+                SCIM_DEBUG_MAIN (2) << " Call scim-helper-launcher.\n";
                 buf[0] = '\0';
                 snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Exec scim_helper_launcher(%s)\n",
-                    time (0), getpid (), getppid(), __FILE__, __func__, __helpers [i].second.c_str ());
+                    time (0), getpid (), getppid (), __FILE__, __func__, __helpers [i].second.c_str ());
                 isf_save_log (buf);
 
                 execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
@@ -320,7 +320,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
     }
 
     m_send_trans.put_command (SCIM_TRANS_CMD_OK);
-    SCIM_DEBUG_MAIN(2) << " exit run_helper ().\n";
+    SCIM_DEBUG_MAIN (2) << " exit run_helper ().\n";
 }
 
 /**
@@ -808,7 +808,7 @@ SocketFrontEnd::init (int argc, char **argv)
     m_socket_server.signal_connect_receive (
         slot (this, &SocketFrontEnd::socket_receive_callback));
 
-    m_socket_server.signal_connect_exception(
+    m_socket_server.signal_connect_exception (
         slot (this, &SocketFrontEnd::socket_exception_callback));
 
     if (argv && argc > 1) {
@@ -888,7 +888,9 @@ SocketFrontEnd::run ()
 uint32
 SocketFrontEnd::generate_key () const
 {
-    return (uint32)rand ();
+    unsigned int seed = (unsigned int)time (NULL);
+
+    return (uint32)rand_r (&seed);
 }
 
 bool
@@ -896,9 +898,9 @@ SocketFrontEnd::check_client_connection (const Socket &client) const
 {
     SCIM_DEBUG_FRONTEND (1) << "check_client_connection (" << client.get_id () << ").\n";
 
-    unsigned char buf [sizeof(uint32)];
+    unsigned char buf [sizeof (uint32)];
 
-    int nbytes = client.read_with_timeout (buf, sizeof(uint32), m_socket_timeout);
+    int nbytes = client.read_with_timeout (buf, sizeof (uint32), m_socket_timeout);
 
     if (nbytes == sizeof (uint32))
         return true;

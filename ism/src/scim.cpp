@@ -586,17 +586,19 @@ int main (int argc, char *argv [])
 
         /* If there is one Socket FrontEnd running and it's not manual mode,
            then just use this Socket Frontend. */
-        if (!manual) {
-            for (int j = 0; j < 100; ++j) {
-                if (check_socket_frontend ()) {
-                    def_config = "socket";
-                    load_engine_list.clear ();
-                    load_engine_list.push_back ("socket");
-                    break;
+        try {
+            if (!manual) {
+                for (int j = 0; j < 100; ++j) {
+                    if (check_socket_frontend ()) {
+                        def_config = "socket";
+                        load_engine_list.clear ();
+                        load_engine_list.push_back ("socket");
+                        break;
+                    }
+                    scim_usleep (100000);
                 }
-                scim_usleep (100000);
             }
-        }
+        } catch (scim::Exception &e) {}
     }
 
     cerr << "Launching a process with " << def_frontend << " FrontEnd...\n";
