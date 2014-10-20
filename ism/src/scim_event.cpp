@@ -253,10 +253,6 @@ KeyEvent::map_to_layout (KeyboardLayout new_layout) const
             new_code = __remap_keycode (new_code, __caps_shift_map [layout]);
             new_code = __remap_keycode (new_code, __caps_shift_invert_map [new_layout]);
             break;
-        default :
-            new_code = __remap_keycode (new_code, __normal_map [layout]);
-            new_code = __remap_keycode (new_code, __normal_invert_map [new_layout]);
-            break;
     }
 
     evt.code = (uint32) new_code;

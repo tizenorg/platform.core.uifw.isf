@@ -180,9 +180,6 @@ utf8_wctomb (unsigned char *dest, ucs4_t wc, int dest_size)
         case 3: dest [2] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0x800;
         case 2: dest [1] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0xc0;
         case 1: dest [0] = wc;
-            break;
-        default :
-            break;
     }
     return count;
 }
