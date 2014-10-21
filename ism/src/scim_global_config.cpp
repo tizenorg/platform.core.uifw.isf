@@ -43,8 +43,6 @@
 #include "scim.h"
 #include "scim_stl_map.h"
 
-#define SCIM_CSCDIR "/opt/system/csc-default/usr/keyboard"
-
 namespace scim {
 
 #if SCIM_USE_STL_EXT_HASH_MAP
@@ -144,6 +142,13 @@ __initialize_config ()
                            String (SCIM_PATH_DELIM_STRING) +
                            String ("global");
 
+    // Load second system configure file for localization
+    String sys_conf_file2 = String (SCIM_SYSCONFDIR) +
+                            String (SCIM_PATH_DELIM_STRING) +
+                            String ("scim") +
+                            String (SCIM_PATH_DELIM_STRING) +
+                            String ("conf/global");
+
     String usr_conf_file = scim_get_home_dir () +
                            String (SCIM_PATH_DELIM_STRING) +
                            String (".scim") +
@@ -151,6 +156,7 @@ __initialize_config ()
                            String ("global");
 
     std::ifstream sys_is (sys_conf_file.c_str ());
+    std::ifstream sys_is2 (sys_conf_file2.c_str ());
     std::ifstream usr_is (usr_conf_file.c_str ());
 
     if (sys_is) {
@@ -160,18 +166,14 @@ __initialize_config ()
         std::cerr << __func__ << " Cannot open(" << sys_conf_file << ")\n";
     }
 
-    if (usr_is) {
-        __parse_config (usr_is, __config_repository.usr);
+    if (sys_is2) {
+        __parse_config (sys_is2, __config_repository.sys);
         __config_repository.initialized = true;
     }
 
-    // Load second system configure file for localization
-    String sys_conf_file2 = String (SCIM_CSCDIR) +
-                            String (SCIM_PATH_DELIM_STRING) +
-                            String ("global");
-    std::ifstream sys_is2 (sys_conf_file2.c_str ());
-    if (sys_is2) {
-        __parse_config (sys_is2, __config_repository.sys);
+    if (usr_is) {
+        __parse_config (usr_is, __config_repository.usr);
+        __config_repository.initialized = true;
     }
 }
 
