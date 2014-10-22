@@ -4380,6 +4380,7 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
         aux_edje = edje_object_add (evas);
         edje_object_file_set (aux_edje, _candidate_edje_file.c_str (), "aux");
         edje_object_part_text_set (aux_edje, "aux", aux_list [i].c_str ());
+        edje_object_text_class_set (aux_edje, "tizen", _candidate_font_name.c_str (), _aux_font_size);
         elm_table_pack (_aux_table, aux_edje, 2 * i, 0, 1, 1);
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_DOWN, ui_mouse_button_pressed_cb, GINT_TO_POINTER ((i << 8) + ISF_EFL_AUX));
         evas_object_event_callback_add (aux_edje, EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
