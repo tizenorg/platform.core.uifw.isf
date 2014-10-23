@@ -3827,12 +3827,12 @@ lt_dlsym (
       /* this is a libtool module */
       if (handle->loader->sym_prefix)
 	{
-	  strncpy(sym, handle->loader->sym_prefix, lensym );
+	  strncpy(sym, handle->loader->sym_prefix, lensym - 1);
 	  strncat(sym, handle->info.name, lensym - strlen(sym) - 1);
 	}
       else
 	{
-	  strncpy(sym, handle->info.name, lensym);
+	  strncpy(sym, handle->info.name, lensym - 1);
 	}
 
       strncat(sym, "_LTX_", lensym - strlen(sym) - 1);
@@ -3854,12 +3854,12 @@ lt_dlsym (
   /* otherwise try "symbol" */
   if (handle->loader->sym_prefix)
     {
-      strncpy(sym, handle->loader->sym_prefix, lensym);
+      strncpy(sym, handle->loader->sym_prefix, lensym - 1);
       strncat(sym, symbol, lensym - strlen(sym) - 1);
     }
   else
     {
-      strncpy(sym, symbol, lensym);
+      strncpy(sym, symbol, lensym - 1);
     }
 
   address = handle->loader->find_sym (data, handle->module, sym);

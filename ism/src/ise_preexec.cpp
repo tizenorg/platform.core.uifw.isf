@@ -449,13 +449,19 @@ int ise_preexec (const char *helper, const char *uuid)
                 parameter += " ";
                 parameter += uuid;
                 send_message_to_broker (parameter.c_str ());
-
+                if (buf) {
+                    free (buf);
+                }
                 return -1;
             }
         }
 
         LOGD ("%s %s %s %s %s %s\n", lpwd->pw_name, helper, uuid,
              info.package_name.c_str (), info.package_type.c_str (), info.app_path.c_str ());
+    }
+
+    if (buf) {
+        free (buf);
     }
 
     /* Set new session ID & new process group ID*/
