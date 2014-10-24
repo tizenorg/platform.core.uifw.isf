@@ -111,7 +111,10 @@ scim_get_module_list (std::vector <String>& mod_list, const String& type)
                     String mod_name = String (file->d_name);
                     mod_list.push_back (mod_name.substr (0, mod_name.find_last_of ('.')));
                 }
-                readdir_r (dir, &direntp, &file);
+
+                if (readdir_r (dir, &direntp, &file) != 0){
+                    break;
+                }
             }
             closedir (dir);
         }

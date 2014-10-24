@@ -1244,7 +1244,10 @@ static int osp_module_list_get (std::vector <String> &ops_module_names)
                     String link_name = String (file->d_name);
                     ops_module_names.push_back (link_name.substr (0, link_name.find_last_of ('.')));
                 }
-                readdir_r (dir, &direntp, &file);
+
+                if (readdir_r (dir, &direntp, &file) != 0){
+                    break;
+                }
             }
             closedir (dir);
         }
@@ -1283,7 +1286,10 @@ static String osp_module_name_get (const String &path)
                     break;
                 }
             }
-            readdir_r (dir, &direntp, &file);
+
+            if (readdir_r (dir, &direntp, &file) != 0){
+                break;
+            }
         }
         closedir (dir);
     } else {
