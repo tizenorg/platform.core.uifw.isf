@@ -1,8 +1,8 @@
 %bcond_with wayland
 Name:       isf
 Summary:    Input Service Framework
-Version:    2.4.8224
-Release:    2
+Version:    2.4.8227
+Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1
 Source0:    %{name}-%{version}.tar.gz
