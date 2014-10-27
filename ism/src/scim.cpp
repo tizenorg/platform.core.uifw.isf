@@ -43,6 +43,8 @@
 #include <signal.h>
 #include <string.h>
 #include <privilege-control.h>
+#include <sys/resource.h>
+#include <sched.h>
 
 #define WAIT_WM
 #define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
@@ -348,6 +350,12 @@ int main (int argc, char *argv [])
     std::vector<String>  all_engine_list;
 
     std::vector<String>::iterator it;
+
+    struct sched_param param;
+    param.sched_priority = 0;
+
+    sched_setscheduler(0, SCHED_OTHER, &param);
+    setpriority (PRIO_PROCESS, getpid (), -11);
 
     String def_frontend ("socket");
     String def_config ("simple");
