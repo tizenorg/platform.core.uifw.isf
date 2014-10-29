@@ -189,7 +189,7 @@ public:
         uint32 count_temp = 0;
         char **buf = NULL;
         size_t len;
-        char * buf_temp = NULL;
+        char *buf_temp = NULL;
 
         m_trans.put_command (ISM_TRANS_CMD_GET_ISE_LIST);
         m_trans.write_to_socket (m_socket_imclient2panel);
@@ -199,23 +199,31 @@ public:
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
                 m_trans.get_data (count_temp) ) {
-            *count = count_temp;
+            if (count)
+                *count = count_temp;
         } else {
-            *count = 0;
+            if (count)
+                *count = 0;
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
         }
 
-        if (count_temp > 0) {
-            buf = (char**)malloc (count_temp * sizeof (char*));
-            if (buf) {
-                memset (buf, 0, count_temp * sizeof (char*));
-                for (uint32 i = 0; i < count_temp; i++) {
-                    if (m_trans.get_data (&buf_temp, len))
-                        buf[i] = buf_temp;
+        if (iselist) {
+            if (count_temp > 0) {
+                buf = (char**)calloc (1, count_temp * sizeof (char*));
+                if (buf) {
+                    for (uint32 i = 0; i < count_temp; i++) {
+                        if (m_trans.get_data (&buf_temp, len)) {
+                            if (buf_temp) {
+                                buf[i] = strdup (buf_temp);
+                                delete [] buf_temp;
+                            }
+                        }
+                    }
                 }
             }
+
+            *iselist = buf;
         }
-        *iselist = buf;
     }
 
     void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)

@@ -100,16 +100,16 @@ EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name
     imcontrol_client.close_connection ();
 
     if (name != NULL)
-        *name     = strName.length () ? strdup (strName.c_str ()) : strdup ("");
+        *name = strName.length () ? strdup (strName.c_str ()) : strdup ("");
 
     if (language != NULL)
         *language = strLanguage.length () ? strdup (strLanguage.c_str ()) : strdup ("");
 
     if (type != NULL)
-        *type     = (ISE_TYPE_T)nType;
+        *type = (ISE_TYPE_T)nType;
 
     if (option != NULL)
-        *option   = nOption;
+        *option = nOption;
 
     if (module_name != NULL)
         *module_name = strModuleName.length () ? strdup (strModuleName.c_str ()) : strdup ("");

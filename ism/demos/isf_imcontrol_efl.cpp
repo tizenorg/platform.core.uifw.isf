@@ -104,9 +104,8 @@ static void test_input_panel_imdata_set (void *data, Evas_Object *obj, void *eve
 static void test_input_panel_imdata_get (void *data, Evas_Object *obj, void *event_info)
 {
     int len = 256;
-    char* buf = (char*) malloc (len);
+    char* buf = (char*) calloc (1, len*sizeof (char));
     if (buf != NULL) {
-        memset (buf, '\0', len);
         if (imf_context != NULL) {
             ecore_imf_context_input_panel_imdata_get (imf_context, buf, &len);
             printf ("get imdata  %s, and len is %d ...\n", (char *)buf, len);
@@ -161,6 +160,9 @@ static void test_get_ise_list (void *data, Evas_Object *obj, void *event_info)
         if (iselist[i]) {
             printf (" [%d : %s]\n", i, iselist[i]);
             free (iselist[i]);
+        }
+        else {
+            printf (" [%d] No data\n", i);
         }
     }
     if (iselist)
