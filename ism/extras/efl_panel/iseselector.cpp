@@ -92,6 +92,7 @@ gl_icon_get (void *data, Evas_Object *obj, const char *part)
 
     if (!strcmp (part, "elm.icon.right")) {
         Evas_Object *radio = elm_radio_add (obj);
+        elm_object_style_set (radio, "list");
         elm_radio_state_value_set (radio, index);
         if (_ise_selector_radio_grp == NULL) {
             _ise_selector_radio_grp = elm_radio_add (obj);
