@@ -168,6 +168,7 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                 LOGD ("conformant_reset_done = 0, candidate_conformant_reset_done = 0, registering _candidate_render_post_cb\n");
                 conformant_reset_done = EINA_FALSE;
                 candidate_conformant_reset_done = EINA_FALSE;
+                _clear_will_show_timer ();
                 if (active_context_canvas && _conformant_get ()) {
                     evas_event_callback_add (active_context_canvas, EVAS_CALLBACK_RENDER_POST, _candidate_render_post_cb, NULL);
                 }
