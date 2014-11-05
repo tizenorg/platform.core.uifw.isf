@@ -574,7 +574,8 @@ bool isf_update_ise_module (const String strModulePath, const ConfigPointer &con
     bool ret = false;
     struct stat filestat;
     if (stat (strModulePath.c_str (), &filestat) == -1) {
-        LOGW ("can't access : %s, reason : %s\n", strModulePath.c_str (), strerror (errno));
+        char buf_err[256];
+        LOGW ("can't access : %s, reason : %s\n", strModulePath.c_str (), strerror_r (errno, buf_err, sizeof (buf_err)));
         return false;
     }
 
