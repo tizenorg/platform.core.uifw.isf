@@ -6554,12 +6554,26 @@ int main (int argc, char *argv [])
         LOGW ("bt_deinitialize failed: %d", ret);
 #endif
 
-    ecore_event_handler_del (xclient_message_handler);
-    ecore_event_handler_del (xwindow_property_handler);
-    ecore_event_handler_del (xwindow_focus_out_handler);
+    if (xclient_message_handler) {
+        ecore_event_handler_del (xclient_message_handler);
+        xclient_message_handler = NULL;
+    }
 
-    if (helper_manager_handler)
+    if (xwindow_property_handler) {
+        ecore_event_handler_del (xwindow_property_handler);
+        xwindow_property_handler = NULL;
+    }
+
+    if (xwindow_focus_out_handler) {
+        ecore_event_handler_del (xwindow_focus_out_handler);
+        xwindow_focus_out_handler = NULL;
+    }
+
+    if (helper_manager_handler) {
         ecore_main_fd_handler_del (helper_manager_handler);
+        helper_manager_handler = NULL;
+    }
+
     for (unsigned int ii = 0; ii < _read_handler_list.size (); ++ii) {
         ecore_main_fd_handler_del (_read_handler_list[ii]);
     }
