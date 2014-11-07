@@ -69,6 +69,10 @@ IConvert::~IConvert ()
 IConvert &
 IConvert::operator= (const IConvert & iconvert)
 {
+    if (m_impl)
+        delete (m_impl);
+    m_impl = new IConvertImpl ();
+
     if (this != &iconvert)
         set_encoding (iconvert.m_impl->m_encoding);
 

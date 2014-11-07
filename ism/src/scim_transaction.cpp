@@ -785,6 +785,10 @@ TransactionReader::TransactionReader (const TransactionReader &reader)
 TransactionReader &
 TransactionReader::operator = (const TransactionReader &reader)
 {
+    if (m_impl)
+        delete (m_impl);
+    m_impl = new TransactionReaderImpl ();
+
     m_impl->attach (reader.m_impl->m_holder);
     m_impl->m_read_pos = reader.m_impl->m_read_pos;
     return *this;
