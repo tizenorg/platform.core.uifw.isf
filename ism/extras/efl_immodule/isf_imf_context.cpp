@@ -1589,16 +1589,18 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
             _panel_client.send ();
         }
 
-        _panel_client.prepare (context_scim->id);
+        if (context_scim->impl->si) {
+            _panel_client.prepare (context_scim->id);
 
-        context_scim->impl->si->focus_out ();
-        context_scim->impl->si->reset ();
-        context_scim->impl->cursor_pos = -1;
+            context_scim->impl->si->focus_out ();
+            context_scim->impl->si->reset ();
+            context_scim->impl->cursor_pos = -1;
 
-//          if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
+            //          if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
 
-        _panel_client.focus_out (context_scim->id);
-        _panel_client.send ();
+            _panel_client.focus_out (context_scim->id);
+            _panel_client.send ();
+        }
         _focused_ic = 0;
     }
     _x_key_event_is_valid = false;
@@ -1624,10 +1626,12 @@ isf_imf_context_reset (Ecore_IMF_Context *ctx)
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         WideString wstr = context_scim->impl->preedit_string;
 
-        _panel_client.prepare (context_scim->id);
-        context_scim->impl->si->reset ();
-        _panel_client.reset_input_context (context_scim->id);
-        _panel_client.send ();
+        if (context_scim->impl->si) {
+            _panel_client.prepare (context_scim->id);
+            context_scim->impl->si->reset ();
+            _panel_client.reset_input_context (context_scim->id);
+            _panel_client.send ();
+        }
 
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
@@ -1665,10 +1669,13 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
 
             if (context_scim->impl->preedit_updating)
                 return;
-            _panel_client.prepare (context_scim->id);
-            context_scim->impl->si->update_cursor_position (cursor_pos);
-            panel_req_update_cursor_position (context_scim, cursor_pos);
-            _panel_client.send ();
+
+            if (context_scim->impl->si) {
+                _panel_client.prepare (context_scim->id);
+                context_scim->impl->si->update_cursor_position (cursor_pos);
+                panel_req_update_cursor_position (context_scim, cursor_pos);
+                _panel_client.send ();
+            }
         }
     }
 }
@@ -2020,7 +2027,7 @@ isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapi
     if (context_scim && context_scim->impl && context_scim->impl->autocapital_type != autocapital_type) {
         context_scim->impl->autocapital_type = autocapital_type;
 
-        if (context_scim == _focused_ic) {
+        if (context_scim->impl->si && context_scim == _focused_ic) {
             LOGD ("ctx : %p. set autocapital type : %d\n", ctx, autocapital_type);
             _panel_client.prepare (context_scim->id);
             context_scim->impl->si->set_autocapital_type (autocapital_type);
@@ -2293,7 +2300,7 @@ panel_slot_update_candidate_item_layout (int context, const std::vector<uint32> 
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " row size=" << row_items.size () << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->update_candidate_item_layout (row_items);
         _panel_client.send ();
@@ -2305,7 +2312,7 @@ panel_slot_update_lookup_table_page_size (int context, int page_size)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " page_size=" << page_size << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->update_lookup_table_page_size (page_size);
         _panel_client.send ();
@@ -2317,7 +2324,7 @@ panel_slot_lookup_table_page_up (int context)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->lookup_table_page_up ();
         _panel_client.send ();
@@ -2329,7 +2336,7 @@ panel_slot_lookup_table_page_down (int context)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->lookup_table_page_down ();
         _panel_client.send ();
@@ -2341,7 +2348,7 @@ panel_slot_trigger_property (int context, const String &property)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " property=" << property << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si) {
         _panel_client.prepare (ic->id);
         ic->impl->si->trigger_property (property);
         _panel_client.send ();
@@ -2354,7 +2361,7 @@ panel_slot_process_helper_event (int context, const String &target_uuid, const S
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " target=" << target_uuid
                            << " helper=" << helper_uuid << " ic=" << ic << " ic->impl=" << (ic != NULL ? ic->impl : 0) << " ic-uuid="
-                           << ((ic && ic->impl) ? ic->impl->si->get_factory_uuid () : "" ) << " _focused_ic=" << _focused_ic << "\n";
+                           << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "" ) << " _focused_ic=" << _focused_ic << "\n";
     if (ic && ic->impl && _focused_ic == ic && ic->impl->is_on && ic->impl->si &&
         ic->impl->si->get_factory_uuid () == target_uuid) {
         _panel_client.prepare (ic->id);
@@ -2369,7 +2376,7 @@ panel_slot_move_preedit_caret (int context, int caret_pos)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " caret=" << caret_pos << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->move_preedit_caret (caret_pos);
         _panel_client.send ();
@@ -2406,7 +2413,7 @@ panel_slot_select_aux (int context, int aux_index)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " aux=" << aux_index << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->select_aux (aux_index);
         _panel_client.send ();
@@ -2418,7 +2425,7 @@ panel_slot_select_candidate (int context, int cand_index)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " candidate=" << cand_index << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->select_candidate (cand_index);
         _panel_client.send ();
@@ -2585,7 +2592,7 @@ panel_slot_change_factory (int context, const String &uuid)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " factory=" << uuid << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si) {
         _panel_client.prepare (ic->id);
         ic->impl->si->reset ();
         open_specific_factory (ic, uuid);
@@ -2754,7 +2761,7 @@ panel_slot_get_surrounding_text (int context, int maxlen_before, int maxlen_afte
 
     EcoreIMFContextISF *ic = find_ic (context);
 
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         int cursor = 0;
         WideString text = WideString ();
         slot_get_surrounding_text (ic->impl->si, text, cursor, maxlen_before, maxlen_after);
@@ -2771,7 +2778,7 @@ panel_slot_delete_surrounding_text (int context, int offset, int len)
 
     EcoreIMFContextISF *ic = find_ic (context);
 
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si)
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
         slot_delete_surrounding_text (ic->impl->si, offset, len);
 }
 
@@ -2889,7 +2896,7 @@ panel_req_show_help (EcoreIMFContextISF *ic)
             String (SCIM_VERSION) +
             String (_("\n(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n\n"));
 
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si) {
         IMEngineFactoryPointer sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
         if (sf) {
             help += utf8_wcstombs (sf->get_name ());
@@ -2931,7 +2938,7 @@ panel_req_update_factory_info (EcoreIMFContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (ic && ic->impl && ic == _focused_ic) {
+    if (ic && ic->impl && ic->impl->si && ic == _focused_ic) {
         PanelFactoryInfo info;
         if (ic->impl->is_on) {
             IMEngineFactoryPointer sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
@@ -3242,7 +3249,7 @@ turn_on_ic (EcoreIMFContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (ic && ic->impl && !ic->impl->is_on) {
+    if (ic && ic->impl && ic->impl->si && !ic->impl->is_on) {
         ic->impl->is_on = true;
 
         if (ic == _focused_ic) {
@@ -3292,7 +3299,8 @@ turn_off_ic (EcoreIMFContextISF *ic)
         ic->impl->is_on = false;
 
         if (ic == _focused_ic) {
-            ic->impl->si->focus_out ();
+            if (ic->impl->si)
+                ic->impl->si->focus_out ();
 
 //            panel_req_update_factory_info (ic);
             _panel_client.turn_off (ic->id);
@@ -3332,7 +3340,8 @@ set_ic_capabilities (EcoreIMFContextISF *ic)
         if (!_on_the_spot || !ic->impl->use_preedit)
             cap -= SCIM_CLIENT_CAP_ONTHESPOT_PREEDIT;
 
-        ic->impl->si->update_client_capabilities (cap);
+        if (ic->impl->si)
+            ic->impl->si->update_client_capabilities (cap);
     }
 }
 
@@ -3582,7 +3591,7 @@ open_specific_factory (EcoreIMFContextISF *ic,
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
 
     // The same input method is selected, just turn on the IC.
-    if (ic->impl->si->get_factory_uuid () == uuid) {
+    if (ic->impl->si && (ic->impl->si->get_factory_uuid () == uuid)) {
         turn_on_ic (ic);
         return;
     }
@@ -4285,7 +4294,7 @@ slot_start_helper (IMEngineInstanceBase *si,
 
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " helper= " << helper_uuid << " context="
                            << (ic != NULL ? ic->id : -1) << " ic=" << ic
-                           << " ic-uuid=" << ((ic != NULL && ic->impl != NULL) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
+                           << " ic-uuid=" << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
 
     if (ic && ic->impl)
         _panel_client.start_helper (ic->id, helper_uuid);
@@ -4312,7 +4321,7 @@ slot_send_helper_event (IMEngineInstanceBase *si,
 
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " helper= " << helper_uuid << " context="
                            << (ic != NULL ? ic->id : -1) << " ic=" << ic
-                           << " ic-uuid=" << ((ic != NULL && ic->impl != NULL) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
+                           << " ic-uuid=" << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
 
     if (ic && ic->impl)
         _panel_client.send_helper_event (ic->id, helper_uuid, trans);
