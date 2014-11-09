@@ -319,7 +319,7 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
                     Evas_Object *ck = elm_check_add(obj);
                     elm_object_style_set(ck, "default/genlist");
                     //elm_check_state_pointer_set(ck, &(g_language_state[item_data->mode]));
-                    evas_object_repeat_events_set(ck, EINA_TRUE);
+                    //evas_object_repeat_events_set(ck, EINA_FALSE);
                     evas_object_propagate_events_set(ck, EINA_FALSE);
                     if (info->enabled) {
                         elm_check_state_set(ck, TRUE);
