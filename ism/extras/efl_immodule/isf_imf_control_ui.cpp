@@ -427,6 +427,7 @@ Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
     Eina_Bool ret = EINA_FALSE;
     Ecore_X_Window_Type win_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
     Ecore_X_Window client_win = _client_window_id_get (ctx);
+    char *class_name = NULL;
 
     if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
         return EINA_FALSE;
@@ -438,7 +439,16 @@ Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
         LOGD ("client window : %#x, focus window : %#x\n", client_win, focus_win);
 
         if (client_win != focus_win) {
-            ret = EINA_TRUE;
+            ecore_x_icccm_name_class_get (focus_win, NULL, &class_name);
+
+            if (class_name) {
+                if (strncmp (class_name, "LOCK_SCREEN", 11) != 0) {
+                    ret = EINA_TRUE;
+                }
+
+                free (class_name);
+                class_name = NULL;
+            }
         }
     }
 
