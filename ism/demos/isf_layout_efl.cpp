@@ -169,6 +169,11 @@ static void entry_preedit_changed_cb (void *data, Evas_Object *obj, void *event_
     printf ("[%s]\n", __func__);
 }
 
+static void entry_cursor_changed_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    printf ("[%s] cursor pos : %d\n", __func__, elm_entry_cursor_pos_get (obj));
+}
+
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout, int layout_variation = 0)
 {
     Evas_Object *en;
@@ -182,6 +187,7 @@ static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, c
     evas_object_event_callback_add (en, EVAS_CALLBACK_KEY_UP, _key_up_cb, NULL);
     evas_object_smart_callback_add (en, "changed", entry_changed_cb, NULL);
     evas_object_smart_callback_add (en, "preedit,changed", entry_preedit_changed_cb, NULL);
+    evas_object_smart_callback_add (en, "cursor,changed", entry_cursor_changed_cb, NULL);
 
     ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (en);
 
