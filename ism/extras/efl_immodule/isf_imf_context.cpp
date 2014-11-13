@@ -3810,7 +3810,7 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
 
     ::KeyCode keycode = 0;
     ::KeySym keysym = 0;
-    int shift = 0;
+    bool shift = false;
     char key_string[256] = {0};
     char keysym_str[256] = {0};
     Window focus_win;
@@ -3853,11 +3853,11 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     keycode = _keyname_to_keycode (keysym_str);
     if (XkbKeycodeToKeysym (display, keycode, 0, 0) != keysym) {
         if (XkbKeycodeToKeysym (display, keycode, 0, 1) == keysym)
-            shift = 1;
+            shift = true;
         else
             keycode = 0;
     } else {
-        shift = 0;
+        shift = false;
     }
 
     if (keycode == 0) {
@@ -3881,6 +3881,13 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
             XFree (keysyms);
             XSync (display, False);
             keycode = keycode_max - mod - 1;
+        }
+
+        if (XkbKeycodeToKeysym (display, keycode, 0, 0) != keysym) {
+            if (XkbKeycodeToKeysym (display, keycode, 0, 1) == keysym)
+                shift = true;
+        } else {
+            shift = false;
         }
     }
 
