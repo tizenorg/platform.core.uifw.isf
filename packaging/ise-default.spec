@@ -2,8 +2,8 @@ Name:       ise-default
 Summary:    Tizen keyboard
 Version:    1.0.8
 Release:    1
-Group:      TO BE / FILLED IN
-License:    TO BE / FILLED IN
+Group:      System Environment/Libraries
+License:    Apache License, Version 2.0
 Source0:    ise-default-%{version}.tar.gz
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -41,7 +41,7 @@ make %{?jobs:-j%jobs}
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/license
-cp LICENSE.Flora %{buildroot}/usr/share/license/%{name}
+cp LICENSE %{buildroot}/usr/share/license/%{name}
 
 %make_install
 
