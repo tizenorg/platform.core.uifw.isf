@@ -475,6 +475,8 @@ scim_split_string_list (std::vector<String>& vec, const String& str, char delim)
 
     vec.clear ();
 
+    if (str.empty ()) return 0;
+
     bg = str.begin ();
     ed = str.begin ();
 
