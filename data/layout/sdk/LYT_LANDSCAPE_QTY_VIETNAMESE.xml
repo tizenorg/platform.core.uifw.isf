@@ -31,79 +31,54 @@
       </magnifier_label>
       <auto_popup_keys>
         <label shift="off" autopopup="0">3</label>
-        <label shift="off" autopopup="1">è</label>
-        <label shift="off" autopopup="2">é</label>
-        <label shift="off" autopopup="3">ê</label>
-        <label shift="off" autopopup="4">ë</label>
-        <label shift="off" autopopup="5">ē</label>
-        <label shift="off" autopopup="6">ė</label>
-        <label shift="off" autopopup="7">ę</label>
-        <label shift="off" autopopup="8">ě</label>
-        <label shift="off" autopopup="9">ə</label>
+        <label shift="off" autopopup="1">é</label>
+        <label shift="off" autopopup="2">è</label>
+        <label shift="off" autopopup="3">ẻ</label>
+        <label shift="off" autopopup="4">ẽ</label>
+        <label shift="off" autopopup="5">ẹ</label>
+        <label shift="off" autopopup="6">ê</label>
+        <label shift="off" autopopup="7">ế</label>
+        <label shift="off" autopopup="8">ề</label>
+        <label shift="off" autopopup="9">ể</label>
+        <label shift="off" autopopup="10">ễ</label>
+        <label shift="off" autopopup="11">ệ</label>
         <label shift="on" autopopup="0">3</label>
-        <label shift="on" autopopup="1">È</label>
-        <label shift="on" autopopup="2">É</label>
-        <label shift="on" autopopup="3">Ê</label>
-        <label shift="on" autopopup="4">Ë</label>
-        <label shift="on" autopopup="5">Ē</label>
-        <label shift="on" autopopup="6">Ė</label>
-        <label shift="on" autopopup="7">Ę</label>
-        <label shift="on" autopopup="8">Ě</label>
-        <label shift="on" autopopup="9">Ə</label>
+        <label shift="on" autopopup="1">É</label>
+        <label shift="on" autopopup="2">È</label>
+        <label shift="on" autopopup="3">Ẻ</label>
+        <label shift="on" autopopup="4">Ẽ</label>
+        <label shift="on" autopopup="5">Ẹ</label>
+        <label shift="on" autopopup="6">Ê</label>
+        <label shift="on" autopopup="7">Ế</label>
+        <label shift="on" autopopup="8">Ề</label>
+        <label shift="on" autopopup="9">Ể</label>
+        <label shift="on" autopopup="10">Ễ</label>
+        <label shift="on" autopopup="11">Ệ</label>
         <label shift="loc" autopopup="0">3</label>
-        <label shift="loc" autopopup="1">È</label>
-        <label shift="loc" autopopup="2">É</label>
-        <label shift="loc" autopopup="3">Ê</label>
-        <label shift="loc" autopopup="4">Ë</label>
-        <label shift="loc" autopopup="5">Ē</label>
-        <label shift="loc" autopopup="6">Ė</label>
-        <label shift="loc" autopopup="7">Ę</label>
-        <label shift="loc" autopopup="8">Ě</label>
-        <label shift="loc" autopopup="9">Ə</label>
+        <label shift="loc" autopopup="1">É</label>
+        <label shift="loc" autopopup="2">È</label>
+        <label shift="loc" autopopup="3">Ẻ</label>
+        <label shift="loc" autopopup="4">Ẽ</label>
+        <label shift="loc" autopopup="5">Ẹ</label>
+        <label shift="loc" autopopup="6">Ê</label>
+        <label shift="loc" autopopup="7">Ế</label>
+        <label shift="loc" autopopup="8">Ề</label>
+        <label shift="loc" autopopup="9">Ể</label>
+        <label shift="loc" autopopup="10">Ễ</label>
+        <label shift="loc" autopopup="11">Ệ</label>
       </auto_popup_keys>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="4" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">r</rec>
         <rec multi="1">4</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">4</label>
-        <label shift="off" autopopup="1">ŕ</label>
-        <label shift="off" autopopup="2">ř</label>
-        <label shift="on" autopopup="0">4</label>
-        <label shift="on" autopopup="1">Ŕ</label>
-        <label shift="on" autopopup="2">Ř</label>
-        <label shift="loc" autopopup="0">4</label>
-        <label shift="loc" autopopup="1">Ŕ</label>
-        <label shift="loc" autopopup="2">Ř</label>
-      </auto_popup_keys>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="5" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">t</rec>
         <rec multi="1">5</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">5</label>
-        <label shift="off" autopopup="1">þ</label>
-        <label shift="off" autopopup="2">ť</label>
-        <label shift="off" autopopup="3">ț</label>
-        <label shift="on" autopopup="0">5</label>
-        <label shift="on" autopopup="1">Þ</label>
-        <label shift="on" autopopup="2">Ť</label>
-        <label shift="on" autopopup="3">Ț</label>
-        <label shift="loc" autopopup="0">5</label>
-        <label shift="loc" autopopup="1">Þ</label>
-        <label shift="loc" autopopup="2">Ť</label>
-        <label shift="loc" autopopup="3">Ț</label>
-      </auto_popup_keys>
     </key>
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
       <label>
@@ -115,11 +90,23 @@
       </magnifier_label>
       <auto_popup_keys>
         <label shift="off" autopopup="0">ý</label>
-        <label shift="off" autopopup="1">6</label>
+        <label shift="off" autopopup="1">ỳ</label>
+        <label shift="off" autopopup="2">ỷ</label>
+        <label shift="off" autopopup="3">ỹ</label>
+        <label shift="off" autopopup="4">6</label>
+        <label shift="off" autopopup="5">ỵ</label>
         <label shift="on" autopopup="0">Ý</label>
-        <label shift="on" autopopup="1">6</label>
+        <label shift="on" autopopup="1">Ỳ</label>
+        <label shift="on" autopopup="2">Ỷ</label>
+        <label shift="on" autopopup="3">Ỹ</label>
+        <label shift="on" autopopup="4">6</label>
+        <label shift="on" autopopup="5">Ỵ</label>
         <label shift="loc" autopopup="0">Ý</label>
-        <label shift="loc" autopopup="1">6</label>
+        <label shift="loc" autopopup="1">Ỳ</label>
+        <label shift="loc" autopopup="2">Ỷ</label>
+        <label shift="loc" autopopup="3">Ỹ</label>
+        <label shift="loc" autopopup="4">6</label>
+        <label shift="loc" autopopup="5">Ỵ</label>
       </auto_popup_keys>
     </key>
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
@@ -131,33 +118,42 @@
         <rec multi="1">...</rec>
       </magnifier_label>
       <auto_popup_keys>
-        <label shift="off" autopopup="0">ü</label>
-        <label shift="off" autopopup="1">û</label>
-        <label shift="off" autopopup="2">ú</label>
-        <label shift="off" autopopup="3">ù</label>
-        <label shift="off" autopopup="4">7</label>
-        <label shift="off" autopopup="5">ų</label>
-        <label shift="off" autopopup="6">ű</label>
-        <label shift="off" autopopup="7">ů</label>
-        <label shift="off" autopopup="8">ū</label>
-        <label shift="on" autopopup="0">Ü</label>
-        <label shift="on" autopopup="1">Û</label>
-        <label shift="on" autopopup="2">Ú</label>
-        <label shift="on" autopopup="3">Ù</label>
-        <label shift="on" autopopup="4">7</label>
-        <label shift="on" autopopup="5">Ų</label>
-        <label shift="on" autopopup="6">Ű</label>
-        <label shift="on" autopopup="7">Ů</label>
-        <label shift="on" autopopup="8">Ū</label>
-        <label shift="loc" autopopup="0">Ü</label>
-        <label shift="loc" autopopup="1">Û</label>
-        <label shift="loc" autopopup="2">Ú</label>
-        <label shift="loc" autopopup="3">Ù</label>
-        <label shift="loc" autopopup="4">7</label>
-        <label shift="loc" autopopup="5">Ų</label>
-        <label shift="loc" autopopup="6">Ű</label>
-        <label shift="loc" autopopup="7">Ů</label>
-        <label shift="loc" autopopup="8">Ū</label>
+        <label shift="off" autopopup="0">ú</label>
+        <label shift="off" autopopup="1">ù</label>
+        <label shift="off" autopopup="2">ủ</label>
+        <label shift="off" autopopup="3">ũ</label>
+        <label shift="off" autopopup="4">ụ</label>
+        <label shift="off" autopopup="5">7</label>
+        <label shift="off" autopopup="6">ư</label>
+        <label shift="off" autopopup="7">ứ</label>
+        <label shift="off" autopopup="8">ừ</label>
+        <label shift="off" autopopup="9">ử</label>
+        <label shift="off" autopopup="10">ữ</label>
+        <label shift="off" autopopup="11">ự</label>
+        <label shift="on" autopopup="0">Ú</label>
+        <label shift="on" autopopup="1">Ù</label>
+        <label shift="on" autopopup="2">Ủ</label>
+        <label shift="on" autopopup="3">Ũ</label>
+        <label shift="on" autopopup="4">Ụ</label>
+        <label shift="on" autopopup="5">7</label>
+        <label shift="on" autopopup="6">Ư</label>
+        <label shift="on" autopopup="7">Ứ</label>
+        <label shift="on" autopopup="8">Ừ</label>
+        <label shift="on" autopopup="9">Ử</label>
+        <label shift="on" autopopup="10">Ữ</label>
+        <label shift="on" autopopup="11">Ự</label>
+        <label shift="loc" autopopup="0">Ú</label>
+        <label shift="loc" autopopup="1">Ù</label>
+        <label shift="loc" autopopup="2">Ủ</label>
+        <label shift="loc" autopopup="3">Ũ</label>
+        <label shift="loc" autopopup="4">Ụ</label>
+        <label shift="loc" autopopup="5">7</label>
+        <label shift="loc" autopopup="6">Ư</label>
+        <label shift="loc" autopopup="7">Ứ</label>
+        <label shift="loc" autopopup="8">Ừ</label>
+        <label shift="loc" autopopup="9">Ử</label>
+        <label shift="loc" autopopup="10">Ữ</label>
+        <label shift="loc" autopopup="11">Ự</label>
       </auto_popup_keys>
     </key>
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
@@ -169,30 +165,24 @@
         <rec multi="1">...</rec>
       </magnifier_label>
       <auto_popup_keys>
-        <label shift="off" autopopup="0">î</label>
-        <label shift="off" autopopup="1">í</label>
-        <label shift="off" autopopup="2">ì</label>
-        <label shift="off" autopopup="3">8</label>
-        <label shift="off" autopopup="4">ı</label>
-        <label shift="off" autopopup="5">į</label>
-        <label shift="off" autopopup="6">ī</label>
-        <label shift="off" autopopup="7">ï</label>
-        <label shift="on" autopopup="0">Î</label>
-        <label shift="on" autopopup="1">Í</label>
-        <label shift="on" autopopup="2">Ì</label>
-        <label shift="on" autopopup="3">8</label>
-        <label shift="on" autopopup="4">İ</label>
-        <label shift="on" autopopup="5">Į</label>
-        <label shift="on" autopopup="6">Ī</label>
-        <label shift="on" autopopup="7">Ï</label>
-        <label shift="loc" autopopup="0">Î</label>
-        <label shift="loc" autopopup="1">Í</label>
-        <label shift="loc" autopopup="2">Ì</label>
-        <label shift="loc" autopopup="3">8</label>
-        <label shift="loc" autopopup="4">İ</label>
-        <label shift="loc" autopopup="5">Į</label>
-        <label shift="loc" autopopup="6">Ī</label>
-        <label shift="loc" autopopup="7">Ï</label>
+        <label shift="off" autopopup="0">í</label>
+        <label shift="off" autopopup="1">ì</label>
+        <label shift="off" autopopup="2">ỉ</label>
+        <label shift="off" autopopup="3">ĩ</label>
+        <label shift="off" autopopup="4">ị</label>
+        <label shift="off" autopopup="5">8</label>
+        <label shift="on" autopopup="0">Í</label>
+        <label shift="on" autopopup="1">Ì</label>
+        <label shift="on" autopopup="2">Ỉ</label>
+        <label shift="on" autopopup="3">Ĩ</label>
+        <label shift="on" autopopup="4">Ị</label>
+        <label shift="on" autopopup="5">8</label>
+        <label shift="loc" autopopup="0">Í</label>
+        <label shift="loc" autopopup="1">Ì</label>
+        <label shift="loc" autopopup="2">Ỉ</label>
+        <label shift="loc" autopopup="3">Ĩ</label>
+        <label shift="loc" autopopup="4">Ị</label>
+        <label shift="loc" autopopup="5">8</label>
       </auto_popup_keys>
     </key>
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
@@ -204,33 +194,60 @@
         <rec multi="1">...</rec>
       </magnifier_label>
       <auto_popup_keys>
-        <label shift="off" autopopup="0">õ</label>
-        <label shift="off" autopopup="1">ô</label>
-        <label shift="off" autopopup="2">ó</label>
-        <label shift="off" autopopup="3">ò</label>
-        <label shift="off" autopopup="4">9</label>
-        <label shift="off" autopopup="5">œ</label>
-        <label shift="off" autopopup="6">ő</label>
-        <label shift="off" autopopup="7">ø</label>
-        <label shift="off" autopopup="8">ö</label>
-        <label shift="on" autopopup="0">Õ</label>
-        <label shift="on" autopopup="1">Ô</label>
-        <label shift="on" autopopup="2">Ó</label>
-        <label shift="on" autopopup="3">Ò</label>
-        <label shift="on" autopopup="4">9</label>
-        <label shift="on" autopopup="5">Œ</label>
-        <label shift="on" autopopup="6">Ő</label>
-        <label shift="on" autopopup="7">Ø</label>
-        <label shift="on" autopopup="8">Ö</label>
-        <label shift="loc" autopopup="0">Õ</label>
-        <label shift="loc" autopopup="1">Ô</label>
-        <label shift="loc" autopopup="2">Ó</label>
-        <label shift="loc" autopopup="3">Ò</label>
-        <label shift="loc" autopopup="4">9</label>
-        <label shift="loc" autopopup="5">Œ</label>
-        <label shift="loc" autopopup="6">Ő</label>
-        <label shift="loc" autopopup="7">Ø</label>
-        <label shift="loc" autopopup="8">Ö</label>
+        <label shift="off" autopopup="0">ó</label>
+        <label shift="off" autopopup="1">ò</label>
+        <label shift="off" autopopup="2">ỏ</label>
+        <label shift="off" autopopup="3">õ</label>
+        <label shift="off" autopopup="4">ọ</label>
+        <label shift="off" autopopup="5">9</label>
+        <label shift="off" autopopup="6">ô</label>
+        <label shift="off" autopopup="7">ố</label>
+        <label shift="off" autopopup="8">ồ</label>
+        <label shift="off" autopopup="9">ổ</label>
+        <label shift="off" autopopup="10">ỗ</label>
+        <label shift="off" autopopup="11">ộ</label>
+        <label shift="off" autopopup="12">ơ</label>
+        <label shift="off" autopopup="13">ớ</label>
+        <label shift="off" autopopup="14">ờ</label>
+        <label shift="off" autopopup="15">ở</label>
+        <label shift="off" autopopup="16">ỡ</label>
+        <label shift="off" autopopup="17">ợ</label>
+        <label shift="on" autopopup="0">Ó</label>
+        <label shift="on" autopopup="1">Ò</label>
+        <label shift="on" autopopup="2">Ỏ</label>
+        <label shift="on" autopopup="3">Õ</label>
+        <label shift="on" autopopup="4">Ọ</label>
+        <label shift="on" autopopup="5">9</label>
+        <label shift="on" autopopup="6">Ô</label>
+        <label shift="on" autopopup="7">Ố</label>
+        <label shift="on" autopopup="8">Ồ</label>
+        <label shift="on" autopopup="9">Ổ</label>
+        <label shift="on" autopopup="10">Ỗ</label>
+        <label shift="on" autopopup="11">Ộ</label>
+        <label shift="on" autopopup="12">Ơ</label>
+        <label shift="on" autopopup="13">Ớ</label>
+        <label shift="on" autopopup="14">Ờ</label>
+        <label shift="on" autopopup="15">Ở</label>
+        <label shift="on" autopopup="16">Ỡ</label>
+        <label shift="on" autopopup="17">Ợ</label>
+        <label shift="loc" autopopup="0">Ó</label>
+        <label shift="loc" autopopup="1">Ò</label>
+        <label shift="loc" autopopup="2">Ỏ</label>
+        <label shift="loc" autopopup="3">Õ</label>
+        <label shift="loc" autopopup="4">Ọ</label>
+        <label shift="loc" autopopup="5">9</label>
+        <label shift="loc" autopopup="6">Ô</label>
+        <label shift="loc" autopopup="7">Ố</label>
+        <label shift="loc" autopopup="8">Ồ</label>
+        <label shift="loc" autopopup="9">Ổ</label>
+        <label shift="loc" autopopup="10">Ỗ</label>
+        <label shift="loc" autopopup="11">Ộ</label>
+        <label shift="loc" autopopup="12">Ơ</label>
+        <label shift="loc" autopopup="13">Ớ</label>
+        <label shift="loc" autopopup="14">Ờ</label>
+        <label shift="loc" autopopup="15">Ở</label>
+        <label shift="loc" autopopup="16">Ỡ</label>
+        <label shift="loc" autopopup="17">Ợ</label>
       </auto_popup_keys>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="0" multitouch_type="settle_previous">
@@ -240,7 +257,7 @@
       </label>
     </key>
   </row>
-  <row x="14">
+  <row x="77">
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="14">
       <label>
         <rec auto_upper="true">a</rec>
@@ -251,85 +268,72 @@
       </magnifier_label>
       <auto_popup_keys>
         <label shift="off" autopopup="0">-</label>
-        <label shift="off" autopopup="1">à</label>
-        <label shift="off" autopopup="2">á</label>
-        <label shift="off" autopopup="3">â</label>
+        <label shift="off" autopopup="1">á</label>
+        <label shift="off" autopopup="2">à</label>
+        <label shift="off" autopopup="3">ả</label>
         <label shift="off" autopopup="4">ã</label>
-        <label shift="off" autopopup="5">ä</label>
-        <label shift="off" autopopup="6">å</label>
-        <label shift="off" autopopup="7">æ</label>
-        <label shift="off" autopopup="8">ā</label>
-        <label shift="off" autopopup="9">ă</label>
-        <label shift="off" autopopup="10">ą</label>
+        <label shift="off" autopopup="5">ạ</label>
+        <label shift="off" autopopup="6">ă</label>
+        <label shift="off" autopopup="7">ắ</label>
+        <label shift="off" autopopup="8">ằ</label>
+        <label shift="off" autopopup="9">ẳ</label>
+        <label shift="off" autopopup="10">ẵ</label>
+        <label shift="off" autopopup="11">ặ</label>
+        <label shift="off" autopopup="12">â</label>
+        <label shift="off" autopopup="13">ấ</label>
+        <label shift="off" autopopup="14">ầ</label>
+        <label shift="off" autopopup="15">ẩ</label>
+        <label shift="off" autopopup="16">ẫ</label>
+        <label shift="off" autopopup="17">ậ</label>
         <label shift="on" autopopup="0">-</label>
-        <label shift="on" autopopup="1">À</label>
-        <label shift="on" autopopup="2">Á</label>
-        <label shift="on" autopopup="3">Â</label>
+        <label shift="on" autopopup="1">Á</label>
+        <label shift="on" autopopup="2">À</label>
+        <label shift="on" autopopup="3">Ả</label>
         <label shift="on" autopopup="4">Ã</label>
-        <label shift="on" autopopup="5">Ä</label>
-        <label shift="on" autopopup="6">Å</label>
-        <label shift="on" autopopup="7">Æ</label>
-        <label shift="on" autopopup="8">Ā</label>
-        <label shift="on" autopopup="9">Ă</label>
-        <label shift="on" autopopup="10">Ą</label>
+        <label shift="on" autopopup="5">Ạ</label>
+        <label shift="on" autopopup="6">Ă</label>
+        <label shift="on" autopopup="7">Ắ</label>
+        <label shift="on" autopopup="8">Ằ</label>
+        <label shift="on" autopopup="9">Ẳ</label>
+        <label shift="on" autopopup="10">Ẵ</label>
+        <label shift="on" autopopup="11">Ặ</label>
+        <label shift="on" autopopup="12">Â</label>
+        <label shift="on" autopopup="13">Ấ</label>
+        <label shift="on" autopopup="14">Ầ</label>
+        <label shift="on" autopopup="15">Ẩ</label>
+        <label shift="on" autopopup="16">Ẫ</label>
+        <label shift="on" autopopup="17">Ậ</label>
         <label shift="loc" autopopup="0">-</label>
-        <label shift="loc" autopopup="1">À</label>
-        <label shift="loc" autopopup="2">Á</label>
-        <label shift="loc" autopopup="3">Â</label>
+        <label shift="loc" autopopup="1">Á</label>
+        <label shift="loc" autopopup="2">À</label>
+        <label shift="loc" autopopup="3">Ả</label>
         <label shift="loc" autopopup="4">Ã</label>
-        <label shift="loc" autopopup="5">Ä</label>
-        <label shift="loc" autopopup="6">Å</label>
-        <label shift="loc" autopopup="7">Æ</label>
-        <label shift="loc" autopopup="8">Ā</label>
-        <label shift="loc" autopopup="9">Ă</label>
-        <label shift="loc" autopopup="10">Ą</label>
+        <label shift="loc" autopopup="5">Ạ</label>
+        <label shift="loc" autopopup="6">Ă</label>
+        <label shift="loc" autopopup="7">Ắ</label>
+        <label shift="loc" autopopup="8">Ằ</label>
+        <label shift="loc" autopopup="9">Ẳ</label>
+        <label shift="loc" autopopup="10">Ẵ</label>
+        <label shift="loc" autopopup="11">Ặ</label>
+        <label shift="loc" autopopup="12">Â</label>
+        <label shift="loc" autopopup="13">Ấ</label>
+        <label shift="loc" autopopup="14">Ầ</label>
+        <label shift="loc" autopopup="15">Ẩ</label>
+        <label shift="loc" autopopup="16">Ẫ</label>
+        <label shift="loc" autopopup="17">Ậ</label>
       </auto_popup_keys>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="@" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">s</rec>
         <rec multi="1">@</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">@</label>
-        <label shift="off" autopopup="1">ß</label>
-        <label shift="off" autopopup="2">ś</label>
-        <label shift="off" autopopup="3">š</label>
-        <label shift="off" autopopup="4">ş</label>
-        <label shift="on" autopopup="0">@</label>
-        <label shift="on" autopopup="1">ß</label>
-        <label shift="on" autopopup="2">Ś</label>
-        <label shift="on" autopopup="3">Š</label>
-        <label shift="on" autopopup="4">Ş</label>
-        <label shift="loc" autopopup="0">@</label>
-        <label shift="loc" autopopup="1">ß</label>
-        <label shift="loc" autopopup="2">Ś</label>
-        <label shift="loc" autopopup="3">Š</label>
-        <label shift="loc" autopopup="4">Ş</label>
-      </auto_popup_keys>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="*" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">d</rec>
         <rec multi="1">*</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">*</label>
-        <label shift="off" autopopup="1">ď</label>
-        <label shift="off" autopopup="2">đ</label>
-        <label shift="on" autopopup="0">*</label>
-        <label shift="on" autopopup="1">Ď</label>
-        <label shift="on" autopopup="2">Đ</label>
-        <label shift="loc" autopopup="0">*</label>
-        <label shift="loc" autopopup="1">Ď</label>
-        <label shift="loc" autopopup="2">Đ</label>
-      </auto_popup_keys>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="^" multitouch_type="settle_previous">
       <label>
@@ -337,25 +341,11 @@
         <rec multi="1">^</rec>
       </label>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value=":" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">g</rec>
         <rec multi="1">:</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">:</label>
-        <label shift="off" autopopup="1">ģ</label>
-        <label shift="off" autopopup="2">ğ</label>
-        <label shift="on" autopopup="0">:</label>
-        <label shift="on" autopopup="1">Ģ</label>
-        <label shift="on" autopopup="2">Ğ</label>
-        <label shift="loc" autopopup="0">:</label>
-        <label shift="loc" autopopup="1">Ģ</label>
-        <label shift="loc" autopopup="2">Ğ</label>
-      </auto_popup_keys>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value=";" multitouch_type="settle_previous">
       <label>
@@ -369,52 +359,16 @@
         <rec multi="1">(</rec>
       </label>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value=")" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">k</rec>
         <rec multi="1">)</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">ķ</label>
-        <label shift="off" autopopup="1">)</label>
-        <label shift="on" autopopup="0">Ķ</label>
-        <label shift="on" autopopup="1">)</label>
-        <label shift="loc" autopopup="0">Ķ</label>
-        <label shift="loc" autopopup="1">)</label>
-      </auto_popup_keys>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="~" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">l</rec>
         <rec multi="1">~</rec>
-      </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">ł</label>
-        <label shift="off" autopopup="1">ľ</label>
-        <label shift="off" autopopup="2">ļ</label>
-        <label shift="off" autopopup="3">ĺ</label>
-        <label shift="off" autopopup="4">~</label>
-        <label shift="on" autopopup="0">Ł</label>
-        <label shift="on" autopopup="1">Ľ</label>
-        <label shift="on" autopopup="2">Ļ</label>
-        <label shift="on" autopopup="3">Ĺ</label>
-        <label shift="on" autopopup="4">~</label>
-        <label shift="loc" autopopup="0">Ł</label>
-        <label shift="loc" autopopup="1">Ľ</label>
-        <label shift="loc" autopopup="2">Ļ</label>
-        <label shift="loc" autopopup="3">Ĺ</label>
-        <label shift="loc" autopopup="4">~</label>
-      </auto_popup_keys>
-    </key>
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="82">
-      <label>
-        <rec>´</rec>
       </label>
     </key>
   </row>
@@ -438,28 +392,11 @@
         <rec>Shift</rec>
       </key_value>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="/" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">z</rec>
         <rec multi="1">/</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">/</label>
-        <label shift="off" autopopup="1">ź</label>
-        <label shift="off" autopopup="2">ż</label>
-        <label shift="off" autopopup="3">ž</label>
-        <label shift="on" autopopup="0">/</label>
-        <label shift="on" autopopup="1">Ź</label>
-        <label shift="on" autopopup="2">Ż</label>
-        <label shift="on" autopopup="3">Ž</label>
-        <label shift="loc" autopopup="0">/</label>
-        <label shift="loc" autopopup="1">Ź</label>
-        <label shift="loc" autopopup="2">Ż</label>
-        <label shift="loc" autopopup="3">Ž</label>
-      </auto_popup_keys>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="'" multitouch_type="settle_previous">
       <label>
@@ -467,28 +404,11 @@
         <rec multi="1">'</rec>
       </label>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="&quot;" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">c</rec>
         <rec multi="1">"</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">"</label>
-        <label shift="off" autopopup="1">ć</label>
-        <label shift="off" autopopup="2">č</label>
-        <label shift="off" autopopup="3">ç</label>
-        <label shift="on" autopopup="0">"</label>
-        <label shift="on" autopopup="1">Ç</label>
-        <label shift="on" autopopup="2">Ć</label>
-        <label shift="on" autopopup="3">Č</label>
-        <label shift="loc" autopopup="0">"</label>
-        <label shift="loc" autopopup="1">Ç</label>
-        <label shift="loc" autopopup="2">Ć</label>
-        <label shift="loc" autopopup="3">Č</label>
-      </auto_popup_keys>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="." multitouch_type="settle_previous">
       <label>
@@ -502,31 +422,11 @@
         <rec multi="1">,</rec>
       </label>
     </key>
-    <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="?" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">n</rec>
         <rec multi="1">?</rec>
       </label>
-      <magnifier_label>
-        <rec multi="1">...</rec>
-      </magnifier_label>
-      <auto_popup_keys>
-        <label shift="off" autopopup="0">ň</label>
-        <label shift="off" autopopup="1">ņ</label>
-        <label shift="off" autopopup="2">ń</label>
-        <label shift="off" autopopup="3">ñ</label>
-        <label shift="off" autopopup="4">?</label>
-        <label shift="on" autopopup="0">Ň</label>
-        <label shift="on" autopopup="1">Ņ</label>
-        <label shift="on" autopopup="2">Ń</label>
-        <label shift="on" autopopup="3">Ñ</label>
-        <label shift="on" autopopup="4">?</label>
-        <label shift="loc" autopopup="0">Ň</label>
-        <label shift="loc" autopopup="1">Ņ</label>
-        <label shift="loc" autopopup="2">Ń</label>
-        <label shift="loc" autopopup="3">Ñ</label>
-        <label shift="loc" autopopup="4">?</label>
-      </auto_popup_keys>
     </key>
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="!" multitouch_type="settle_previous" key_spacing="45">
       <label>
