@@ -114,7 +114,8 @@ ILanguageOption* LanguageOptionManager::get_language_option_info(scluint index) 
 static Evas_Object*
 create_main_window(int degree)
 {
-    Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
+    Evas_Object *window = elm_win_add(NULL, "Option window", ELM_WIN_BASIC);
+    elm_win_title_set(window, "Option window");
 
     const char *szProfile[] = {"mobile", ""};
     elm_win_profiles_set(window, szProfile, 1);
@@ -762,7 +763,8 @@ open_option_window(Evas_Object *parent, sclint degree)
         Evas_Object *window = create_main_window(degree);
         ad.option_window = window;
 
-        elm_win_indicator_mode_set (window, ELM_WIN_INDICATOR_SHOW);
+        elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
+        elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
 
         Evas_Object *layout = elm_layout_add(window);
         elm_layout_theme_set (layout, "layout", "application", "default");
@@ -779,6 +781,12 @@ open_option_window(Evas_Object *parent, sclint degree)
         evas_object_show(conformant);
 
         elm_object_content_set(conformant, layout);
+
+        /* create header bg */
+        Evas_Object *bg = elm_bg_add(conformant);
+        elm_object_style_set(bg, "indicator/headerbg");
+        elm_object_part_content_set(conformant, "elm.swallow.indicator_bg", bg);
+        evas_object_show(bg);
 
         Evas_Object *naviframe = elm_naviframe_add(layout);
         elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
