@@ -581,15 +581,18 @@ int main (int argc, char *argv [])
 
         /* If no Socket FrontEnd is running, then launch one.
            And set manual to false. */
-        if (!check_socket_frontend ()) {
-            cerr << "Launching a daemon with Socket FrontEnd...\n";
-            char *l_argv [] = { const_cast<char *> ("--stay"), 0 };
-            scim_launch (true,
-                         def_config,
-                         (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
-                         "socket",
-                         l_argv);
-            manual = false;
+        try {
+            if (!check_socket_frontend ()) {
+                cerr << "Launching a daemon with Socket FrontEnd...\n";
+                char *l_argv [] = { const_cast<char *> ("--stay"), 0 };
+                scim_launch (true,
+                            def_config,
+                            (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
+                            "socket",
+                            l_argv);
+                manual = false;
+            }
+        } catch (scim::Exception &e) {
         }
 
         /* If there is one Socket FrontEnd running and it's not manual mode,
