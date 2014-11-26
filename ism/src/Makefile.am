@@ -181,10 +181,11 @@ endif
 isf_log_SOURCES	 	= isf_log.cpp
 isf_log_LDADD		= libscim@SCIM_EPOCH@.la
 if SCIM_BUILD_GTK_UTILS
-isf_log_CXXFLAGS	= @GTK2_CFLAGS@
-isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -L@GTK_LIBDIR@ -lgtk-x11-2.0 -lgdk-x11-2.0 -lglib-2.0 -lgobject-2.0
+isf_log_CXXFLAGS	= @GTK2_CFLAGS@ -fPIE
+isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -L@GTK_LIBDIR@ -lgtk-x11-2.0 -lgdk-x11-2.0 -lglib-2.0 -lgobject-2.0 -pie
 else
-isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -lglib-2.0 -lgobject-2.0
+isf_log_CXXFLAGS	= -fPIE
+isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -lglib-2.0 -lgobject-2.0 -pie
 endif
 
 isf_query_engines_SOURCES  = isf_query_engines.cpp
