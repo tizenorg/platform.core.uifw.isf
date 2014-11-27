@@ -740,7 +740,6 @@ static void
 autoperiod_insert (Ecore_IMF_Context *ctx)
 {
     char *plain_str = NULL;
-    char *markup_str = NULL;
     int cursor_pos = 0;
     Eina_Unicode *ustr = NULL;
     Ecore_IMF_Event_Delete_Surrounding ev;
@@ -764,11 +763,7 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
     if ((ecore_time_get () - space_key_time) > DOUBLE_SPACE_INTERVAL)
         goto done;
 
-    ecore_imf_context_surrounding_get (ctx, &markup_str, &cursor_pos);
-    if (!markup_str) goto done;
-
-    // Convert into plain string
-    plain_str = evas_textblock_text_markup_to_utf8 (NULL, markup_str);
+    ecore_imf_context_surrounding_get (ctx, &plain_str, &cursor_pos);
     if (!plain_str) goto done;
 
     // Convert string from UTF-8 to unicode
@@ -805,7 +800,6 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
     }
 
 done:
-    if (markup_str) free (markup_str);
     if (plain_str) free (plain_str);
     if (ustr) free (ustr);
     space_key_time = ecore_time_get ();
