@@ -2,8 +2,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(ise-default)
 
 SET(BASIC_ISE_SRCS
-    src/main.cpp
-    src/common.cpp
     src/ise.cpp
     src/languages.cpp
     src/config.cpp
@@ -49,6 +47,7 @@ SET(PKGS_CHECK_MODULES
         efl-extension
         dlog
         libscl-ui
+        libscl-core
         ecore-imf
         isf
         vconf
@@ -56,6 +55,7 @@ SET(PKGS_CHECK_MODULES
         )
 
 IF (with_wayland)
+    ADD_DEFINITIONS("-DWAYLAND")
     pkg_check_modules(ISE_PKGS REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client)
 ELSE (with_wayland)
     pkg_check_modules(ISE_PKGS REQUIRED ${PKGS_CHECK_MODULES})
@@ -115,53 +115,3 @@ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/sdk/ DESTINATION
         ${ISE_RESDIR}/sdk FILES_MATCHING PATTERN "*.xml")
 
 ADD_SUBDIRECTORY(po)
-
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(ise-default-setup CXX)
-
-IF (with_wayland)
-        ADD_DEFINITIONS("-DWAYLAND")
-ENDIF(with_wayland)
-
-SET(SETUP_SRCS
-    src/setup_module.cpp
-    src/option.cpp
-    src/languages.cpp
-    src/config.cpp
-    src/sdk/ise_lang_table.cpp
-    src/sdk/sdk_option.cpp
-)
-SET(PREFIX ${CMAKE_INSTALL_PREFIX})
-SET(SETUP_LIBDIR "${LIBDIR}/scim-1.0/1.4.0/SetupUI")
-
-IF("${CMAKE_BUILD_TYPE}" STREQUAL "")
-    SET(CMAKE_BUILD_TYPE "Release")
-ENDIF()
-MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
-
-INCLUDE(FindPkgConfig)
-pkg_check_modules(SETUP_PKGS REQUIRED
-        elementary
-        efl-extension
-        dlog
-        libscl-ui
-        ecore-imf
-        libxml-2.0
-        isf
-        )
-
-FOREACH(flag ${SETUP_PKGS_CFLAGS})
-    SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
-ENDFOREACH(flag)
-
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CFLAGS} -fPIC -Wall -DSETUP_MODULE")
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CFLAGS} -finstrument-functions")
-SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
-SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -g")
-
-ADD_LIBRARY(${PROJECT_NAME} SHARED ${SETUP_SRCS})
-
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SETUP_PKGS_LDFLAGS})
-
-set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
-INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${SETUP_LIBDIR})

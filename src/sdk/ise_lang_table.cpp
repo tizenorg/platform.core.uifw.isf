@@ -18,15 +18,16 @@
 #include <dlog.h>
 #undef LOG_TAG
 #define LOG_TAG "ISE_DEFAULT"
-#include <scl.h> // scl structures need
+#include <sclcommon.h> // scl structures need
 #include <libxml/parser.h>
 #include <vector>
+#include <string>
 #include <assert.h>
 #include <memory.h>
 #include <string.h>
 
 #include "ise_lang_table.h"
-using namespace std;
+
 using namespace scl;
 
 #define LANG_TABLE_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/ise_lang_table.xml"
@@ -78,17 +79,17 @@ get_prop_int(
     return val;
 }
 
-static string
+static std::string
 get_prop_str(
         const xmlNodePtr cur_node,
         const char* prop) {
-    string str;
+    std::string str;
     if (cur_node && prop) {
         xmlChar* key = xmlGetProp(
                 cur_node,
                 (const xmlChar*)prop);
         if (key) {
-            str = string((const char*)key);
+            str = std::string((const char*)key);
             xmlFree(key);
         }
     }
@@ -180,20 +181,20 @@ Ise_Lang::parsing_keyboard_uuid_table(const xmlNodePtr p_node) {
         cur_node = cur_node->next;
     }
 }
-static inline string
-find_uuid(const vector<Keyboard_UUID>& vec_rec, const string& name) {
-    vector<Keyboard_UUID>::const_iterator it;
+static inline std::string
+find_uuid(const std::vector<Keyboard_UUID>& vec_rec, const std::string& name) {
+    std::vector<Keyboard_UUID>::const_iterator it;
     for (it = vec_rec.begin(); it != vec_rec.end(); ++it) {
         if (it->name == name) {
             return it->uuid;
         }
     }
 
-    return string();
+    return std::string();
 }
 
 static inline char*
-get_str(string str) {
+get_str(std::string str) {
     int len = str.length();
     if (len == 0) return NULL;
 
@@ -238,7 +239,7 @@ Ise_Lang::parsing_lang_table(const xmlNodePtr p_node) {
                 m_table[m_size].main_keyboard_name = (sclchar *)strdup("abc");
             }
 
-            string uuid = find_uuid(vec_keyboard_uuid, get_prop_str(cur_node, "keyboard_ise_uuid"));
+            std::string uuid = find_uuid(vec_keyboard_uuid, get_prop_str(cur_node, "keyboard_ise_uuid"));
             m_table[m_size].keyboard_ise_uuid = get_str(uuid);
             xmlChar* country_code_URL = xmlGetProp(cur_node, (const xmlChar*)"country_code_URL");
             m_table[m_size].country_code_URL = (sclchar*)country_code_URL;

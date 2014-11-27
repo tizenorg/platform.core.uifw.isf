@@ -2,7 +2,7 @@
 
 Name:       ise-default
 Summary:    Tizen keyboard
-Version:    1.0.8
+Version:    1.1.0
 Release:    1
 Group:      Graphics & UI Framework/Input
 License:    Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(libscl-ui)
+BuildRequires:  pkgconfig(libscl-core)
 BuildRequires:  pkgconfig(ecore-imf)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(efl-extension)
@@ -81,7 +82,6 @@ cp LICENSE %{buildroot}/usr/share/license/%{name}
 %files 
 %defattr(-,root,root,-)
 %{_libdir}/scim-1.0/1.4.0/Helper/ise-default.so
-%{_libdir}/scim-1.0/1.4.0/SetupUI/ise-default-setup.so
 %{_datadir}/isf/ise/ise-default/*
 %{_datadir}/packages/*
 %{_datadir}/locale/*

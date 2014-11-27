@@ -15,11 +15,11 @@
  *
  */
 
-#include <scl.h>
+#include <sclui.h>
 #include "ise.h"
 #include "sdk.h"
 #include "option.h"
-#include "common.h"
+#include "sclcore.h"
 
 #include "ise_lang_table.h"
 
@@ -86,14 +86,15 @@ public :
 
 static CSDKISE ise_instance;
 
-extern CSCLUI *gSCLUI;
-extern CISECommon *g_ise_common;
+extern CSCLUI *g_ui;
+extern CSCLCore g_core;
+
 extern CONFIG_VALUES g_config_values;
 extern KEYBOARD_STATE g_keyboard_state;
 
 static void set_caps_mode(sclint mode) {
-    if (gSCLUI->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
-        gSCLUI->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
+    if (g_ui->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
+        g_ui->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
     }
 }
 SCLEventReturnType
@@ -161,20 +162,20 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                     if (info->accepts_caps_mode) {
                         // FIXME this if condition means the AC is off
                         if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
-                            gSCLUI->set_autocapital_shift_state(TRUE);
-                            gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
+                            g_ui->set_autocapital_shift_state(TRUE);
+                            g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
                         }
 
                         // normal layout means the AC is on
                         else {
-                            gSCLUI->set_autocapital_shift_state(FALSE);
-                            ise_send_event(MVK_Shift_Enable, scim::SCIM_KEY_NullMask);
+                            g_ui->set_autocapital_shift_state(FALSE);
+                            ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
                             set_caps_mode(g_keyboard_state.caps_mode);
                         }
                     } else {
-                        gSCLUI->set_autocapital_shift_state(TRUE);
-                        ise_send_event(MVK_Shift_Disable, scim::SCIM_KEY_NullMask);
-                        gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
+                        g_ui->set_autocapital_shift_state(TRUE);
+                        ise_send_event(MVK_Shift_Disable, KEY_MASK_NULL);
+                        g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
                     }
                 }
             } else {
@@ -230,43 +231,43 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
         sclint loop;
         for (loop = 0;loop < get_lang_table_size();loop++) {
             if (strcmp(language, get_lang_table()[loop].language) == 0) {
-                if (g_ise_common && gSCLUI) {
+                if (g_ui) {
                     if (get_lang_table()[loop].keyboard_ise_uuid) {
-                        g_ise_common->set_keyboard_ise_by_uuid(get_lang_table()[loop].keyboard_ise_uuid);
-                        g_ise_common->send_imengine_event(-1, get_lang_table()[loop].keyboard_ise_uuid,
+                        g_core.set_keyboard_ise_by_uuid(get_lang_table()[loop].keyboard_ise_uuid);
+                        g_core.send_imengine_event(-1, get_lang_table()[loop].keyboard_ise_uuid,
                             get_lang_table()[loop].language_command, get_lang_table()[loop].language_code);
                     }
 
                     /* This is to update the screen only for once, not everytime we request a UI update  */
-                    gSCLUI->set_update_pending(TRUE);
-                    gSCLUI->set_input_mode(input_mode);
+                    g_ui->set_update_pending(TRUE);
+                    g_ui->set_input_mode(input_mode);
 
-                    SclSize size_portrait = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_PORTRAIT);
-                    SclSize size_landscape = gSCLUI->get_input_mode_size(gSCLUI->get_input_mode(), DISPLAYMODE_LANDSCAPE);
-                    g_ise_common->set_keyboard_size_hints(size_portrait, size_landscape);
+                    SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
+                    SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+                    g_core.set_keyboard_size_hints(size_portrait, size_landscape);
 
                     /* Check if we need to turn on the shift key */
                     LANGUAGE_INFO *info = _language_manager.get_language_info(language);
                     if (info) {
                         if (info->accepts_caps_mode) {
                             if (g_keyboard_state.caps_mode) {
-                                gSCLUI->set_shift_state(SCL_SHIFT_STATE_ON);
-                                ise_send_event(MVK_Shift_On, scim::SCIM_KEY_NullMask);
+                                g_ui->set_shift_state(SCL_SHIFT_STATE_ON);
+                                ise_send_event(MVK_Shift_On, KEY_MASK_NULL);
                                 g_keyboard_state.caps_mode = TRUE;
                             } else {
-                                gSCLUI->set_shift_state(SCL_SHIFT_STATE_OFF);
-                                ise_send_event(MVK_Shift_Off, scim::SCIM_KEY_NullMask);
+                                g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
+                                ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
                                 g_keyboard_state.caps_mode = FALSE;
                             }
                             if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_NORMAL) {
                                 // not allow the SCL auto capital shift state
-                                gSCLUI->set_autocapital_shift_state(FALSE);
+                                g_ui->set_autocapital_shift_state(FALSE);
                             }
                         } else {
-                            gSCLUI->set_autocapital_shift_state(TRUE);
+                            g_ui->set_autocapital_shift_state(TRUE);
                         }
                     } else {
-                        gSCLUI->set_autocapital_shift_state(TRUE);
+                        g_ui->set_autocapital_shift_state(TRUE);
                     }
                     /* And set the url postfixes */
                     for (size_t inner_loop = 0; inner_loop < (sizeof(url_postfixes) / sizeof (const char *)); inner_loop++) {
@@ -277,18 +278,18 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                             postfix.replace(offset, strlen(replace_target), get_lang_table()[loop].country_code_URL);
                         }
 
-                        gSCLUI->set_string_substitution(url_postfixes[inner_loop], postfix.c_str());
+                        g_ui->set_string_substitution(url_postfixes[inner_loop], postfix.c_str());
                     }
 
                     /* Replace LANGUAGE_STRING with localized language name */
-                    gSCLUI->set_string_substitution(LANGUAGE_STRING, get_lang_table()[loop].language_name);
+                    g_ui->set_string_substitution(LANGUAGE_STRING, get_lang_table()[loop].language_name);
                     /* Change main_keyboard_name with localized language name */
                     if (get_lang_table()[loop].main_keyboard_name) {
-                        gSCLUI->set_string_substitution(PLACEHOLDER_MAIN_KEYBOARD_NAME, get_lang_table()[loop].main_keyboard_name);
+                        g_ui->set_string_substitution(PLACEHOLDER_MAIN_KEYBOARD_NAME, get_lang_table()[loop].main_keyboard_name);
                     }
 
                     /* Now we update the whole screen */
-                    gSCLUI->set_update_pending(FALSE);
+                    g_ui->set_update_pending(FALSE);
                 }
 
                 ret = TRUE;
@@ -297,7 +298,7 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
     }
 
     if (ret) {
-        g_ise_common->update_input_context(ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT, 0);
+        g_core.update_input_context(ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT, 0);
     }
 
     return ret;
@@ -337,19 +338,17 @@ sclboolean CSDKISE::flush_imengine(const sclchar *language)
 {
     bool bRet = false;
 
-    if (g_ise_common) {
-        int lang_id = get_lang_id(language);
-        if (lang_id != -1) {
-            if (get_lang_table()[lang_id].flush_code != 0) {
-                g_ise_common->send_imengine_event(-1, get_lang_table()[lang_id].keyboard_ise_uuid,
-                        get_lang_table()[lang_id].flush_command, get_lang_table()[lang_id].flush_code);
-                bRet = true;
-            } else {
-                g_ise_common->reset_keyboard_ise();
-                bRet = true;
-            }
-
+    int lang_id = get_lang_id(language);
+    if (lang_id != -1) {
+        if (get_lang_table()[lang_id].flush_code != 0) {
+            g_core.send_imengine_event(-1, get_lang_table()[lang_id].keyboard_ise_uuid,
+                    get_lang_table()[lang_id].flush_command, get_lang_table()[lang_id].flush_code);
+            bRet = true;
+        } else {
+            g_core.reset_keyboard_ise();
+            bRet = true;
         }
+
     }
 
     return bRet;

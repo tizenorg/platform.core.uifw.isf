@@ -15,18 +15,19 @@
  *
  */
 
-#define Uses_SCIM_CONFIG_BASE
+#include <string>
+#include <vector>
+#include <sstream>
+#include <iterator>
 
-#include <scim.h>
-#include <scl.h>
+#include <sclcore.h>
 
 #include "config.h"
 #include "languages.h"
 
-using namespace scim;
 using namespace scl;
 
-extern ConfigPointer _scim_config;
+extern CSCLCore g_core;
 
 CONFIG_VALUES::CONFIG_VALUES() {
     keypad_mode = KEYPAD_MODE_QTY; // keypad_mode
@@ -36,37 +37,46 @@ CONFIG_VALUES::CONFIG_VALUES() {
 CONFIG_VALUES g_config_values;
 
 void read_ise_config_values() {
-    if (_scim_config) {
-        _scim_config->reload();
-        g_config_values.keypad_mode =
-            (KEYPAD_MODE)(_scim_config->read(String(ISE_CONFIG_KEYPAD_MODE), g_config_values.keypad_mode));
-        g_config_values.prediction_on =
-            _scim_config->read (String (ISE_CONFIG_PREDICTION_ON), g_config_values.prediction_on);
-        g_config_values.enabled_languages =
-            _scim_config->read(String(ISE_CONFIG_ENABLED_LANGUAGES), g_config_values.enabled_languages);
-        g_config_values.selected_language =
-            _scim_config->read(String(ISE_CONFIG_SELECTED_LANGUAGE), g_config_values.selected_language);
+    g_core.config_reload();
+    sclint integer_value;
+    std::string string_value;
+
+    if (g_core.config_read_int(ISE_CONFIG_KEYPAD_MODE, integer_value)) {
+        g_config_values.keypad_mode = static_cast<KEYPAD_MODE>(integer_value);
+    }
+    if (g_core.config_read_int(ISE_CONFIG_PREDICTION_ON, integer_value)) {
+        g_config_values.prediction_on = integer_value;
+    }
+    if (g_core.config_read_string(ISE_CONFIG_ENABLED_LANGUAGES, string_value)) {
+        std::stringstream ss(string_value);
+        std::istream_iterator<std::string> begin(ss);
+        std::istream_iterator<std::string> end;
+        std::vector<std::string> vstrings(begin, end);
+        g_config_values.enabled_languages = vstrings;
+    }
+    if (g_core.config_read_string(ISE_CONFIG_SELECTED_LANGUAGE, string_value)) {
+        g_config_values.selected_language = string_value;
     }
 }
 
 void write_ise_config_values() {
-    if (_scim_config) {
-        _scim_config->write(String(ISE_CONFIG_KEYPAD_MODE), g_config_values.keypad_mode);
-        _scim_config->write(String(ISE_CONFIG_PREDICTION_ON), g_config_values.prediction_on);
-        _scim_config->write(String(ISE_CONFIG_ENABLED_LANGUAGES), g_config_values.enabled_languages);
-        _scim_config->write(String(ISE_CONFIG_SELECTED_LANGUAGE), g_config_values.selected_language);
-
-        _scim_config->flush ();
+    std::string string_value;
+    g_core.config_write_int(ISE_CONFIG_KEYPAD_MODE, g_config_values.keypad_mode);
+    g_core.config_write_int(ISE_CONFIG_PREDICTION_ON, g_config_values.prediction_on);
+    for(std::vector<std::string>::iterator it = g_config_values.enabled_languages.begin();
+        it != g_config_values.enabled_languages.end();std::advance(it, 1)) {
+            string_value += *it;
+            string_value += " ";
     }
+    g_core.config_write_string(ISE_CONFIG_ENABLED_LANGUAGES, string_value);
+    g_core.config_write_string(ISE_CONFIG_SELECTED_LANGUAGE, g_config_values.selected_language);
+    g_core.config_reload();
 }
 
 void erase_ise_config_values() {
-    if (_scim_config) {
-        _scim_config->erase(String(ISE_CONFIG_KEYPAD_MODE));
-        _scim_config->erase(String(ISE_CONFIG_PREDICTION_ON));
-        _scim_config->erase(String(ISE_CONFIG_ENABLED_LANGUAGES));
-        _scim_config->erase(String(ISE_CONFIG_SELECTED_LANGUAGE));
-
-        _scim_config->flush ();
-    }
+    g_core.config_erase(ISE_CONFIG_KEYPAD_MODE);
+    g_core.config_erase(ISE_CONFIG_PREDICTION_ON);
+    g_core.config_erase(ISE_CONFIG_ENABLED_LANGUAGES);
+    g_core.config_erase(ISE_CONFIG_SELECTED_LANGUAGE);
+    g_core.config_reload();
 }

@@ -18,19 +18,17 @@
 #ifndef _ISE_H_
 #define _ISE_H_
 
-#include <scl.h>
-#include <Ecore.h>
-#include <Evas.h>
-#include <Ecore_Evas.h>
-#include <Ecore_IMF.h>
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif  /*  */
-#include <vector>
+#include <sclcore.h>
 #include <string>
+
+#include <Elementary.h>
+
 #include "languages.h"
 
-#define ISE_VERSION "1.0.8-1"
+#define ISEUUID "12aa3425-f88d-45f4-a509-cee8dfe904e3"
+#define ISENAME "Tizen keyboard"
+
+#define ISE_VERSION "1.1.0-1"
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
@@ -103,6 +101,44 @@ typedef struct {
     sclboolean need_reset;
     sclboolean visible_state;
 } KEYBOARD_STATE;
+
+using namespace scl;
+
+class CCoreEventCallback : public ISCLCoreEventCallback
+{
+    void on_get_app_info(SclCoreAppInfo *info);
+
+    void on_init();
+    void on_exit();
+
+    void on_attach_input_context(sclint ic, const sclchar *ic_uuid);
+    void on_detach_input_context(sclint ic, const sclchar *ic_uuid);
+
+    void on_focus_out(sclint ic, const sclchar *ic_uuid);
+    void on_focus_in(sclint ic, const sclchar *ic_uuid);
+
+    void on_ise_show(sclint ic, const sclint degree, Ise_Context context);
+    void on_ise_hide(sclint ic, const sclchar *ic_uuid);
+
+    void on_reset_input_context(sclint ic, const sclchar *uuid);
+
+    void on_set_display_language(const sclchar *language);
+    void on_set_accessibility_state(const sclboolean state);
+    void on_set_rotation_degree(sclint degree);
+
+    void on_set_caps_mode(sclu32 mode);
+    void on_update_cursor_position(sclint ic, const sclchar *ic_uuid, sclint cursor_pos);
+
+    void on_set_return_key_type(sclu32 type);
+    void on_set_return_key_disable(sclu32 disabled);
+
+    void on_set_imdata(sclchar *buf, sclu32 len);
+    void on_get_language_locale(sclint ic, sclchar **locale);
+    void on_update_lookup_table(SclCandidateTable &table);
+
+    void on_create_option_window(sclwindow window, SCLOptionWindowType type);
+    void on_destroy_option_window(sclwindow window);
+};
 
 void ise_send_string(const sclchar *key_value);
 void ise_update_preedit_string(const sclchar *str);

@@ -15,8 +15,6 @@
  *
  */
 
-#include <scl.h>
-
 #include "ise.h"
 #include "config.h"
 
@@ -40,13 +38,13 @@
 #define ITEM_DATA_STRING_LEN 64
 struct ITEMDATA
 {
-    sclchar main_text[ITEM_DATA_STRING_LEN];
-    sclchar sub_text[ITEM_DATA_STRING_LEN];
-    sclint mode;
+    char main_text[ITEM_DATA_STRING_LEN];
+    char sub_text[ITEM_DATA_STRING_LEN];
+    int mode;
     ITEMDATA()
     {
-        memset(main_text, 0, sizeof(sclchar)*ITEM_DATA_STRING_LEN);
-        memset(sub_text, 0, sizeof(sclchar)*ITEM_DATA_STRING_LEN);
+        memset(main_text, 0, sizeof(char)*ITEM_DATA_STRING_LEN);
+        memset(sub_text, 0, sizeof(char)*ITEM_DATA_STRING_LEN);
         mode = 0;
     }
 };
@@ -61,7 +59,7 @@ class LanguageOptionManager {
 public:
     static void add_language_option(ILanguageOption *language_option);
     static scluint get_language_options_num();
-    static ILanguageOption* get_language_option_info(scluint index);
+    static ILanguageOption* get_language_option_info(unsigned int index);
 private:
     static std::vector<ILanguageOption*> language_option_vector;
 };
@@ -74,7 +72,7 @@ private:
  * 
  **/
 void
-open_option_window(Evas_Object *parent, sclint degree);
+option_window_created(Evas_Object *window, SCLOptionWindowType type);
 
 /**
  * Closes option window
@@ -82,7 +80,7 @@ open_option_window(Evas_Object *parent, sclint degree);
  * 
  **/
 void
-close_option_window();
+option_window_destroyed(Evas_Object *window);
 
 void
 read_options();

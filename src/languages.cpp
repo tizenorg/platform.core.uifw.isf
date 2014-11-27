@@ -15,7 +15,7 @@
  *
  */
 
-#include <scl.h>
+#include <sclcommon.h>
 #include <stdio.h>
 #include <algorithm>
 #include <assert.h>

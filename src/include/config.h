@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-#include <scl.h>
+#include <sclcommon.h>
 
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
@@ -27,6 +27,8 @@
 #define ISE_CONFIG_PREDICTION_ON        "/ise-default/prediction_on"
 #define ISE_CONFIG_ENABLED_LANGUAGES    "/ise-default/enabled_languages"
 #define ISE_CONFIG_SELECTED_LANGUAGE    "/ise-default/selected_language"
+
+using namespace scl;
 
 enum KEYPAD_MODE {
     KEYPAD_MODE_3X4,

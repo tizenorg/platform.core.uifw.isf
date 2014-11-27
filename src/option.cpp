@@ -16,7 +16,7 @@
  */
 
 #include <string.h>
-#include <scl.h>
+#include <sclcommon.h>
 #include <Ecore.h>
 
 #ifdef WAYLAND
@@ -62,8 +62,6 @@ struct OPTION_ELEMENTS
         naviframe = NULL;
         lang_popup = NULL;
 
-        event_handler = NULL;
-
         itc_main_text_only = NULL;
 
         itc_language_subitems = NULL;
@@ -78,8 +76,6 @@ struct OPTION_ELEMENTS
     Evas_Object *naviframe;
     Evas_Object *lang_popup;
 
-    Ecore_Event_Handler *event_handler;
-
     Elm_Genlist_Item_Class *itc_main_text_only;
 
     Elm_Genlist_Item_Class *itc_language_subitems;
@@ -93,6 +89,7 @@ struct OPTION_ELEMENTS
 
 static OPTION_ELEMENTS ad;
 extern CONFIG_VALUES g_config_values;
+extern CSCLCore g_core;
 
 //static Evas_Object* create_main_window();
 static Evas_Object* create_option_language_view(Evas_Object *naviframe);
@@ -114,28 +111,6 @@ scluint LanguageOptionManager::get_language_options_num() {
 }
 ILanguageOption* LanguageOptionManager::get_language_option_info(scluint index) {
     return ((index < language_option_vector.size()) ? language_option_vector.at(index) : NULL);
-}
-
-static Evas_Object*
-create_main_window(int degree)
-{
-    Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
-    if (!window)
-        return NULL;
-
-    int w, h;
-
-    elm_win_screen_size_get (window, NULL, NULL, &w, &h);
-    evas_object_resize (window, w, h);
-
-    elm_win_borderless_set(window, EINA_TRUE);
-
-    int rots[] = { 0, 90, 180, 270 };
-    elm_win_wm_rotation_available_rotations_set(window, rots, (sizeof(rots) / sizeof(int)));
-
-    evas_object_show(window);
-
-    return window;
 }
 
 static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
@@ -540,6 +515,14 @@ Eina_Bool _pop_cb(void *data, Elm_Object_Item *it)
     return EINA_TRUE;
 }
 
+void
+close_option_window()
+{
+    destroy_genlist_item_classes();
+    g_core.destroy_option_window(ad.option_window);
+    ad.option_window = NULL;
+}
+
 static void
 _naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -610,22 +593,6 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, NULL);
 
     return genlist;
-}
-
-void
-close_option_window()
-{
-    destroy_genlist_item_classes();
-
-    if (ad.option_window) {
-        evas_object_del(ad.option_window);
-        ad.option_window = NULL;
-    }
-
-    if (ad.event_handler) {
-        ecore_event_handler_del(ad.event_handler);
-        ad.event_handler = NULL;
-    }
 }
 
 void read_options()
@@ -704,13 +671,6 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-static Eina_Bool focus_out_cb(void *data, int type, void *event)
-{
-    language_selection_finished_cb(NULL, NULL, NULL);
-    close_option_window();
-    return ECORE_CALLBACK_CANCEL;
-}
-
 static void
 navi_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -718,45 +678,11 @@ navi_back_cb(void *data, Evas_Object *obj, void *event_info)
     close_option_window();
 }
 
-#ifndef APPLY_WINDOW_MANAGER_CHANGE
-static void
-set_transient_for_app_window(Evas_Object *window)
-{
-#ifndef WAYLAND
-    /* Set a transient window for window stack */
-    /* Gets the current XID of the active window into the root window property  */
-    Atom type_return;
-    unsigned long nitems_return;
-    unsigned long bytes_after_return;
-    int format_return;
-    unsigned char *data = NULL;
-    Ecore_X_Window xAppWindow;
-    Ecore_X_Window xWindow = elm_win_xwindow_get(window);
-    gint ret = 0;
-
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get(), ecore_x_window_root_get(xWindow),
-        ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
-        0, G_MAXLONG, False, XA_WINDOW, &type_return,
-        &format_return, &nitems_return, &bytes_after_return,
-        &data);
-
-    if (ret == Success) {
-        if (data) {
-            if (type_return == XA_WINDOW) {
-                xAppWindow = *(Window *)data;
-                LOGD("TRANSIENT_FOR SET : %x , %x", xAppWindow, xWindow);
-                ecore_x_icccm_transient_for_set(xWindow, xAppWindow);
-            }
-            XFree(data);
-        }
-    }
-#endif
-}
-#endif
-
 void
-open_option_window(Evas_Object *parent, sclint degree)
+option_window_created(Evas_Object *window, SCLOptionWindowType type)
 {
+    if (window == NULL) return;
+
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */
@@ -764,20 +690,10 @@ open_option_window(Evas_Object *parent, sclint degree)
 
     set_option_values();
 
-    if (ad.option_window)
-    {
+    if (ad.option_window) {
         elm_win_raise(ad.option_window);
-    }
-    else
-    {
+    } else {
         memset(&ad, 0x0, sizeof(OPTION_ELEMENTS));
-
-        /* create option window */
-        Evas_Object *window = create_main_window(degree);
-        if (!window) {
-            LOGE("Failed to create option window\n");
-            return;
-        }
 
         elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
         elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
@@ -812,16 +728,18 @@ open_option_window(Evas_Object *parent, sclint degree)
         elm_object_content_set(conformant, naviframe);
         evas_object_show(naviframe);
 
-        set_transient_for_app_window(window);
-
         if (window) elm_win_raise (window);
 
         ad.option_window = window;
 
-#ifdef WAYLAND
-        ad.event_handler = ecore_event_handler_add(ECORE_WL_EVENT_FOCUS_OUT, focus_out_cb, NULL);
-#else
-        ad.event_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, NULL);
-#endif
+        evas_object_show(window);
+    }
+}
+
+void
+option_window_destroyed(Evas_Object *window)
+{
+    if (ad.option_window == window) {
+        ad.option_window = NULL;
     }
 }
