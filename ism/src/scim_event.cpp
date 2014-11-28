@@ -49,7 +49,7 @@ struct __KeyCodeMap
 
 struct __KeyName
 {
-    uint16      value;
+    uint32      value;
     const char *name;
 };
 
@@ -76,11 +76,11 @@ public:
         return lhs.value < rhs.value;
     }
 
-    bool operator ()(const __KeyName &lhs, const uint16 &rhs) const {
+    bool operator ()(const __KeyName &lhs, const uint32 &rhs) const {
         return lhs.value < rhs;
     }
 
-    bool operator ()(const uint16 &lhs, const __KeyName &rhs) const {
+    bool operator ()(const uint32 &lhs, const __KeyName &rhs) const {
         return lhs < rhs.value;
     }
 };
@@ -185,10 +185,10 @@ KeyEvent::get_key_string () const
 
     if (code == 0xFFFFFF) {
         codestr = String ("VoidSymbol");
-    } else if (code <= 0xFFFF){
+    } else if (code <= 0xFFFFFFFF){
         __KeyName *it = std::lower_bound (__scim_keys_by_code,
                                           __scim_keys_by_code + SCIM_NUM_KEY_NAMES,
-                                          (uint16) code,
+                                          code,
                                           __KeyNameLessByCode ());
 
         if (it != __scim_keys_by_code + SCIM_NUM_KEY_NAMES && it->value == code)
@@ -197,7 +197,7 @@ KeyEvent::get_key_string () const
 
     if (!codestr.length () && code) {
         char buf [20];
-        snprintf (buf, 20, ((code <= 0xFFFF) ? "0x%04x" : "0x%06x"), code);
+        snprintf (buf, 20, ((code <= 0xFFFF) ? "0x%04x" : "0x%08x"), code);
         codestr = String (buf);
     }
 

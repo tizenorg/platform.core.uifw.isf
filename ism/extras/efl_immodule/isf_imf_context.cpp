@@ -586,8 +586,10 @@ _key_up_cb (void *data, int type, void *event)
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     unsigned int val = 0;
+    Eina_Bool ret = EINA_FALSE;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
+    EcoreIMFContextISF *ic = (EcoreIMFContextISF*) ecore_imf_context_data_get (active_ctx);
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
@@ -598,8 +600,19 @@ _key_up_cb (void *data, int type, void *event)
         if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
             if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
                 LOGD ("%s key is released.\n", ev->keyname);
-                isf_imf_context_reset (active_ctx);
-                isf_imf_context_input_panel_instant_hide (active_ctx);
+                if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+                    KeyEvent key;
+                    scim_string_to_key (key, ev->key);
+                    LOGD ("process hide_ise_key_event to handle it in the helper: %s", ev->keyname);
+                    void *pvoid = &ret;
+                    _panel_client.prepare (ic->id);
+                    _panel_client.process_key_event (key, (int*) pvoid);
+                    _panel_client.send ();
+                }
+                if (!ret) {
+                    isf_imf_context_reset (active_ctx);
+                    isf_imf_context_input_panel_instant_hide (active_ctx);
+                }
                 return ECORE_CALLBACK_DONE;
             }
         }
