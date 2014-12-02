@@ -30,11 +30,6 @@
 
 #define MSG_NONE_SELECTED			gettext("IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS")
 
-#define PORTRAIT_DEGREE_0			0
-#define PORTRAIT_DEGREE_180			180
-#define LANDSCAPE_DEGREE_270		270
-#define LANDSCAPE_DEGREE_90			90
-
 #define ITEM_DATA_STRING_LEN 64
 struct ITEMDATA
 {
@@ -83,7 +78,7 @@ void
 option_window_destroyed(Evas_Object *window);
 
 void
-read_options();
+read_options(Evas_Object *naviframe);
 
 void
 write_options();
