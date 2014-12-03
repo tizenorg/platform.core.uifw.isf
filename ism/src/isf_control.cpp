@@ -205,6 +205,17 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
     return ise_count;
 }
 
+EAPI int isf_control_show_ise_option_window (void)
+{
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.show_ise_option_window ();
+    imcontrol_client.send ();
+    imcontrol_client.close_connection ();
+    return 0;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */

@@ -1774,6 +1774,33 @@ public:
         return false;
     }
 
+    bool show_helper_option_window (const String &uuid)
+    {
+        HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+        if (it != m_helper_client_index.end ()) {
+            int client;
+            uint32 context;
+            Socket client_socket (it->second.id);
+            uint32 ctx;
+
+            get_focused_context (client, context);
+            ctx = get_helper_ic (client, context);
+
+            m_send_trans.clear ();
+            m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_data (ctx);
+            m_send_trans.put_data (uuid);
+            m_send_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW);
+            m_send_trans.write_to_socket (client_socket);
+
+            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message\n");
+
+            return true;
+        }
+        return false;
+    }
+
     void show_isf_panel (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::show_isf_panel ()\n";
@@ -2899,6 +2926,20 @@ public:
         trans.write_to_socket (client_socket);
     }
 
+    void show_ise_option_window (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::show_ise_panel ()\n";
+
+        String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+
+        ISF_SAVE_LOG ("prepare to show ISE option window %d [%s] [%s]\n", client_id, initial_uuid.c_str(), default_uuid.c_str());
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
+            show_helper_option_window (m_current_helper_uuid);
+        }
+    }
+
     Connection signal_connect_reload_config              (PanelAgentSlotVoid                *slot)
     {
         return m_signal_reload_config.connect (slot);
@@ -3480,6 +3521,9 @@ private:
                     } else if (cmd == ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION) {
                         update_ise_bidi_direction (client_id);
                         continue;
+                    } else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW) {
+                        show_ise_option_window (client_id);
+                        continue;
                     }
 
                     current = last = false;
@@ -3794,6 +3838,8 @@ private:
                     reset_default_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL)
                     show_isf_panel (client_id);
+                else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW)
+                    show_ise_option_window (client_id);
             }
 
             socket_transaction_end ();

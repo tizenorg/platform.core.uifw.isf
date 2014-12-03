@@ -275,6 +275,10 @@ public:
     void show_ise_selector (void) {
         m_trans.put_command (ISM_TRANS_CMD_SHOW_ISF_CONTROL);
     }
+
+    void show_ise_option_window (void) {
+        m_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW);
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -360,6 +364,12 @@ void IMControlClient::show_ise_selector (void)
 {
     m_impl->show_ise_selector ();
 }
+
+void IMControlClient::show_ise_option_window (void)
+{
+    m_impl->show_ise_option_window ();
+}
+
 };
 
 /*
