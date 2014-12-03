@@ -148,6 +148,13 @@ EAPI int isf_control_show_ise_selector ();
  */
 EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
 
+/**
+ * @brief Show ISE's option window.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_show_ise_option_window ();
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

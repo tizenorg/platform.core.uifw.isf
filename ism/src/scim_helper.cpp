@@ -176,6 +176,7 @@ public:
     HelperAgentSignalUintVoid           signal_set_input_mode;
     HelperAgentSignalUintVoid           signal_set_input_hint;
     HelperAgentSignalUintVoid           signal_update_bidi_direction;
+    HelperAgentSignalVoid               signal_show_option_window;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
@@ -843,6 +844,11 @@ HelperAgent::filter_event ()
 
                 if (m_impl->recv.get_data (bidi_direction))
                     m_impl->signal_update_bidi_direction (this, bidi_direction);
+                break;
+            }
+            case ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW:
+            {
+                m_impl->signal_show_option_window (this, ic, ic_uuid);
                 break;
             }
             default:
@@ -2472,6 +2478,20 @@ Connection
 HelperAgent::signal_connect_longpress_candidate (HelperAgentSlotInt *slot)
 {
     return m_impl->signal_longpress_candidate.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper show option window.
+ *
+ * This signal is used to do request the ISE to show option window.
+ *
+ * The prototype of the slot is:
+ * void show_option_window (const HelperAgent *agent, int ic, const String &uuid);
+ */
+Connection
+HelperAgent::signal_connect_show_option_window (HelperAgentSlotVoid *slot)
+{
+    return m_impl->signal_show_option_window.connect (slot);
 }
 
 } /* namespace scim */
