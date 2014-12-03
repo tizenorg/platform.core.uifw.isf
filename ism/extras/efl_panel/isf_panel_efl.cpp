@@ -233,7 +233,7 @@ static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Han
 static Eina_Bool  efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
 static Ecore_X_Window efl_get_quickpanel_window        (void);
-static void       check_hardware_keyboard              (TOOLBAR_MODE_T mode);
+static void       change_keyboard_mode                 (TOOLBAR_MODE_T mode);
 static unsigned int get_ise_index                      (const String uuid);
 static bool       set_active_ise                       (const String &uuid, bool launch_ise);
 static bool       update_ise_list                      (std::vector<String> &list);
@@ -456,6 +456,18 @@ struct GeometryCache
     struct rectinfo geometry;  /* Geometry information */
 };
 static struct GeometryCache _ise_reported_geometry          = {0, 0, {0, 0, 0, 0}};
+
+static void show_soft_keyboard (void)
+{
+    /* If the current toolbar mode is not HELPER_MODE, do not proceed */
+    if (_panel_agent->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
+        LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning", _panel_agent->get_current_toolbar_mode ());
+        return;
+    }
+    if (_ise_state == WINDOW_STATE_HIDE) {
+        ecore_x_test_fake_key_press ("XF86MenuKB");
+    }
+}
 
 static void get_input_window (void)
 {
@@ -5244,7 +5256,8 @@ static void slot_set_keyboard_mode (int mode)
 {
     LOGD ("slot_set_keyboard_mode called (TOOLBAR_MODE : %d)\n",mode);
 
-    check_hardware_keyboard ((TOOLBAR_MODE_T)mode);
+    change_keyboard_mode ((TOOLBAR_MODE_T)mode);
+    show_soft_keyboard ();
 }
 
 static void slot_get_ise_state (int &state)
@@ -5564,13 +5577,13 @@ static void display_language_changed_cb (keynode_t *key, void* data)
 #endif
 
 /**
- * @brief Check hardware keyboard.
+ * @brief Change keyboard mode.
  *
  * @param mode The keyboard mode.
  *
  * @return void
  */
-static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
+static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -5591,6 +5604,7 @@ static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
 
         LOGD ("HARDWARE KEYBOARD MODE");
         _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
+        _config->flush ();
 
         if (_modes[get_ise_index (default_uuid)] == TOOLBAR_HELPER_MODE) {
             /* Get the keyboard ISE */
@@ -5655,6 +5669,7 @@ static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
         LOGD ("calling ui_candidate_hide (true, true, true)");
         ui_candidate_hide (true, true, true);
         _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
+        _config->flush ();
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
             if (_launch_ise_on_request)
@@ -5670,9 +5685,6 @@ static void check_hardware_keyboard (TOOLBAR_MODE_T mode)
 
         /* Set input detected property for isf setting */
         val = 0;
-        if (_ise_state == WINDOW_STATE_HIDE) {
-            ecore_x_test_fake_key_press ("XF86MenuKB");
-        }
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
     }
@@ -5723,9 +5735,10 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
         if (ecore_x_window_prop_card32_get (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1) > 0) {
             if (val == 0) {
                 _panel_agent->reset_keyboard_ise ();
-                check_hardware_keyboard (TOOLBAR_HELPER_MODE);
+                change_keyboard_mode (TOOLBAR_HELPER_MODE);
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                show_soft_keyboard ();
             }
         }
     } else if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
@@ -6193,7 +6206,7 @@ static void launch_default_soft_keyboard (keynode_t *key, void* data)
     }
 
     /* Start default ISE */
-    check_hardware_keyboard (TOOLBAR_HELPER_MODE);
+    change_keyboard_mode (TOOLBAR_HELPER_MODE);
 }
 
 static String sanitize_string (const char *str, int maxlen = 32)
