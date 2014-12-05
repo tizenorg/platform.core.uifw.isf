@@ -751,6 +751,15 @@ check_except_autocapital (Eina_Unicode *ustr, int cursor_pos)
     return EINA_FALSE;
 }
 
+static Eina_Bool
+check_space_symbol (Eina_Unicode uchar)
+{
+    Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
+    const int symbol_num = sizeof (space_symbols) / sizeof (space_symbols[0]);
+
+    return check_symbol (uchar, space_symbols, symbol_num);
+}
+
 static void
 autoperiod_insert (Ecore_IMF_Context *ctx)
 {
@@ -781,8 +790,8 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
 
     if (cursor_pos < 2) goto done;
 
-    if (iswblank (ustr[cursor_pos-1]) &&
-        !(iswpunct (ustr[cursor_pos-2]) || iswblank (ustr[cursor_pos-2]))) {
+    if (check_space_symbol (ustr[cursor_pos-1]) &&
+        !(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
         ev.ctx = ctx;
         ev.n_chars = 1;
         ev.offset = -1;
@@ -865,7 +874,7 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
     if (cursor_pos >= 1) {
         if (context_scim->impl->autocapital_type == ECORE_IMF_AUTOCAPITAL_TYPE_WORD) {
             // Check space or no-break space
-            if (iswblank (ustr[cursor_pos-1])) {
+            if (check_space_symbol (ustr[cursor_pos-1])) {
                 ret = EINA_TRUE;
                 goto done;
             }
@@ -879,7 +888,7 @@ analyze_surrounding_text (Ecore_IMF_Context *ctx)
 
         for (i = cursor_pos; i > 0; i--) {
             // Check space or no-break space
-            if (iswblank (ustr[i-1])) {
+            if (check_space_symbol (ustr[i-1])) {
                 detect_space = EINA_TRUE;
                 continue;
             }
