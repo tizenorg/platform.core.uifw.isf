@@ -173,7 +173,7 @@ int main (int argc, char *argv [])
         return -1;
     }
 
-    set_app_privilege ("isf", NULL, NULL);
+    perm_app_set_privilege ("isf", NULL, NULL);
 
     HelperModule helper_module (helper);
 

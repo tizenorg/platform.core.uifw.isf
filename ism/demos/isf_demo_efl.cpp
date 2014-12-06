@@ -408,7 +408,7 @@ static int app_resume (void *data)
 
 int main (int argc, char *argv[])
 {
-    set_app_privilege ("isf", NULL, NULL);
+    perm_app_set_privilege ("isf", NULL, NULL);
 
     struct appdata ad;
     struct appcore_ops ops;
