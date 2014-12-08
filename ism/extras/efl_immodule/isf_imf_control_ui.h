@@ -28,6 +28,7 @@
 #define Uses_SCIM_PANEL_CLIENT
 
 #include <Ecore_IMF.h>
+#include <Ecore_X.h>
 #include "scim.h"
 
 #ifdef __cplusplus
@@ -41,6 +42,7 @@ extern "C"
     Ecore_IMF_Context *get_using_ic (Ecore_IMF_Input_Panel_Event type, int value);
     void save_current_xid (Ecore_IMF_Context *ctx);
     void clear_hide_request ();
+    Ecore_X_Window client_window_id_get (Ecore_IMF_Context *ctx);
 
     void isf_imf_input_panel_init ();
     void isf_imf_input_panel_shutdown ();

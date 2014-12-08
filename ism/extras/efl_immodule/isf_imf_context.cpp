@@ -595,7 +595,7 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    Ecore_X_Window client_win = (Ecore_X_Window)ecore_imf_context_client_window_get (active_ctx);
+    Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
     if (client_win == focus_win) {

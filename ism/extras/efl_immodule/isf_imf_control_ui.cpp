@@ -122,7 +122,7 @@ static Eina_Bool _conformant_get ()
     return ecore_x_e_illume_conformant_get (active_context_window);
 }
 
-static Ecore_X_Window _client_window_id_get (Ecore_IMF_Context *ctx)
+Ecore_X_Window client_window_id_get (Ecore_IMF_Context *ctx)
 {
     Ecore_X_Window xid = 0;
     Evas *evas = NULL;
@@ -194,7 +194,7 @@ void save_current_xid (Ecore_IMF_Context *ctx)
 {
     Ecore_X_Window xid = 0, rootwin_xid = 0;
 
-    xid = _client_window_id_get (ctx);
+    xid = client_window_id_get (ctx);
 
     if (xid == 0)
         rootwin_xid = ecore_x_window_root_first_get ();
@@ -307,7 +307,7 @@ static int _get_context_id (Ecore_IMF_Context *ctx)
 static void _save_hide_context_info (Ecore_IMF_Context *ctx)
 {
     hide_context_id = _get_context_id (ctx);
-    active_context_window = _client_window_id_get (ctx);
+    active_context_window = client_window_id_get (ctx);
     active_context_canvas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
 }
 
@@ -395,7 +395,7 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
     Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out *)ev;
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
     if (!ctx || !e) return ECORE_CALLBACK_PASS_ON;
-    Ecore_X_Window client_win = _client_window_id_get (ctx);
+    Ecore_X_Window client_win = client_window_id_get (ctx);
     Ecore_X_Window focus_out_win = e->win;
     Ecore_X_Window focus_in_win = ecore_x_window_focus_get ();
 
@@ -426,7 +426,7 @@ Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
     Eina_Bool ret = EINA_FALSE;
     Ecore_X_Window_Type win_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
-    Ecore_X_Window client_win = _client_window_id_get (ctx);
+    Ecore_X_Window client_win = client_window_id_get (ctx);
     char *class_name = NULL;
 
     if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
@@ -616,7 +616,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
 
     /* set X Client window ID */
-    iseContext.client_window = _client_window_id_get (ctx);
+    iseContext.client_window = client_window_id_get (ctx);
 
     /* set the size of imdata */
     context_scim_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
