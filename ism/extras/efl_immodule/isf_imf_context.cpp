@@ -589,11 +589,12 @@ _key_up_cb (void *data, int type, void *event)
 
     unsigned int val = 0;
     Eina_Bool ret = EINA_FALSE;
+    Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+    if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_PASS_ON;
 
     EcoreIMFContextISF *ic = (EcoreIMFContextISF*) ecore_imf_context_data_get (active_ctx);
-    Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
-    if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
+    if (!ic) return ECORE_CALLBACK_PASS_ON;
 
     Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
