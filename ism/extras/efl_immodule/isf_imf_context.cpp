@@ -1585,7 +1585,6 @@ EAPI void
 isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
-    Eina_Bool is_popup_win = EINA_FALSE;
 
     if (!context_scim) return;
 
@@ -1597,10 +1596,8 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         LOGD ("ctx : %p\n", ctx);
 
-        is_popup_win = check_focus_out_by_popup_win (ctx);
-
-        if (!is_popup_win) {
-            if (ecore_imf_context_input_panel_enabled_get (ctx))
+        if (ecore_imf_context_input_panel_enabled_get (ctx)) {
+            if (!check_focus_out_by_popup_win (ctx))
                 ecore_imf_context_input_panel_hide (ctx);
         }
 
