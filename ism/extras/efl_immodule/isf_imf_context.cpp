@@ -385,6 +385,7 @@ static bool                                             _on_the_spot            
 static bool                                             _shared_input_method        = false;
 static bool                                             _change_keyboard_mode_by_touch = false;
 static bool                                             _change_keyboard_mode_by_focus_move = false;
+static bool                                             _hide_ise_based_on_focus    = false;
 static bool                                             _support_hw_keyboard_mode   = false;
 
 static double                                           space_key_time              = 0.0;
@@ -569,13 +570,34 @@ _key_down_cb (void *data, int type, void *event)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
+    Eina_Bool ret = EINA_FALSE;
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
 
-    if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
+    EcoreIMFContextISF *ic = (EcoreIMFContextISF*) ecore_imf_context_data_get (active_ctx);
+    if (!ic) return ECORE_CALLBACK_PASS_ON;
+
+    Ecore_X_Window client_win = client_window_id_get (active_ctx);
+    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
+
+    if (client_win == focus_win && (_hide_ise_based_on_focus) ? (_focused_ic != 0):(true)) {
+        if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
+            if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+                return ECORE_CALLBACK_PASS_ON;
+        }
+
         if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
             LOGD ("%s key is pressed.\n", ev->keyname);
+            if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+                KeyEvent key;
+                scim_string_to_key (key, ev->key);
+                LOGD ("process hide_ise_key_event to handle it in the helper: %s", ev->keyname);
+                void *pvoid = &ret;
+                _panel_client.prepare (ic->id);
+                _panel_client.process_key_event (key, (int*) pvoid);
+                _panel_client.send ();
+            }
             return ECORE_CALLBACK_DONE;
         }
     }
@@ -599,25 +621,30 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
-    if (client_win == focus_win) {
-        if (ecore_imf_context_input_panel_state_get (active_ctx) != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-            if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
-                LOGD ("%s key is released.\n", ev->keyname);
-                if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
-                    KeyEvent key;
-                    scim_string_to_key (key, ev->key);
-                    LOGD ("process hide_ise_key_event to handle it in the helper: %s", ev->keyname);
-                    void *pvoid = &ret;
-                    _panel_client.prepare (ic->id);
-                    _panel_client.process_key_event (key, (int*) pvoid);
-                    _panel_client.send ();
-                }
-                if (!ret) {
-                    isf_imf_context_reset (active_ctx);
-                    isf_imf_context_input_panel_instant_hide (active_ctx);
-                }
-                return ECORE_CALLBACK_DONE;
+    if (client_win == focus_win && (_hide_ise_based_on_focus) ? (_focused_ic != 0):(true)) {
+        if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
+            if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+                return ECORE_CALLBACK_PASS_ON;
+        }
+
+        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+            LOGD ("%s key is released.\n", ev->keyname);
+            if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+                KeyEvent key;
+                scim_string_to_key (key, ev->key);
+                key.mask = SCIM_KEY_ReleaseMask;
+                key.mask &= _valid_key_mask;
+                LOGD ("process hide_ise_key_event to handle it in the helper: %s", ev->keyname);
+                void *pvoid = &ret;
+                _panel_client.prepare (ic->id);
+                _panel_client.process_key_event (key, (int*) pvoid);
+                _panel_client.send ();
             }
+            if (!ret) {
+                isf_imf_context_reset (active_ctx);
+                isf_imf_context_input_panel_instant_hide (active_ctx);
+            }
+            return ECORE_CALLBACK_DONE;
         }
     }
 
@@ -4548,6 +4575,7 @@ reload_config_callback (const ConfigPointer &config)
     _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
     _change_keyboard_mode_by_touch = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_TOUCH), _change_keyboard_mode_by_touch);
     _change_keyboard_mode_by_focus_move = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_FOCUS_MOVE), _change_keyboard_mode_by_focus_move);
+    _hide_ise_based_on_focus = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_HIDE_ISE_BASED_ON_FOCUS), _hide_ise_based_on_focus);
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
     // Get keyboard layout setting
