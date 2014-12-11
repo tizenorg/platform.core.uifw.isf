@@ -61,8 +61,8 @@ pkgconfig_DATA          = isf.pc scim.pc \
 
 if MOBILE_ENV
 else
-systemduserunitdir = /usr/lib/systemd/user
-systemduserunit_DATA = scim.service
+systemdsystemunitdir = /usr/lib/systemd/system
+systemdsystemunit_DATA = scim.service
 endif
 
 ACLOCAL_AMFLAGS = -I ism/m4
@@ -78,6 +78,6 @@ uninstall-local:
 if MOBILE_ENV
 else
 install-data-hook:
-	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants
-	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants/scim.service
+	$(mkinstalldirs) $(DESTDIR)$(systemdsystemunitdir)/multi-user.target.wants
+	ln -sf ../scim.service $(DESTDIR)$(systemdsystemunitdir)/multi-user.target.wants/scim.service
 endif

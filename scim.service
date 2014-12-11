@@ -4,9 +4,10 @@ After=e17.service
 
 [Service]
 ExecStart=/usr/bin/scim
+OOMScoreAdjust=-1000
 Nice=5
 Restart=always
 RestartSec=2
 
 [Install]
-WantedBy=core-efl.target
+WantedBy=multi-user.target

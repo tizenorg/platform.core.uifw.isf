@@ -157,8 +157,8 @@ cat scim.lang > isf.lang
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %if "%{_repository}" == "wearable" || %{with wayland}
 %dir /etc/scim/conf
-%{_libdir}/systemd/user/core-efl.target.wants/scim.service
-%{_libdir}/systemd/user/scim.service
+%{_libdir}/systemd/system/multi-user.target.wants/scim.service
+%{_libdir}/systemd/system/scim.service
 %else
 %{_libdir}/systemd/system/graphical.target.wants/scim.service
 %{_libdir}/systemd/system/scim.service
