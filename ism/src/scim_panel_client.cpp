@@ -403,15 +403,12 @@ public:
                     break;
                 case ISM_TRANS_CMD_TURN_ON_LOG:
                     {
-                        printf ("<%s:%d>receive ISM_TRANS_CMD_TURN_ON_LOG\n", __FUNCTION__, __LINE__);
                         uint32 isOn;
                         if (recv.get_data (isOn)) {
                             if (isOn) {
-                                printf ("<%s:%d>turn on log\n", __FUNCTION__, __LINE__);
                                 DebugOutput::enable_debug (SCIM_DEBUG_AllMask);
                                 DebugOutput::set_verbose_level (7);
                             } else {
-                                printf ("<%s:%d>turn off log\n", __FUNCTION__, __LINE__);
                                 DebugOutput::disable_debug (SCIM_DEBUG_AllMask);
                                 DebugOutput::set_verbose_level (0);
                             }

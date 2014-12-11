@@ -55,12 +55,12 @@ static void _input_panel_state_cb (void *data, Ecore_IMF_Context *ctx, int value
 
     if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
         ecore_imf_context_input_panel_geometry_get (ctx, &x, &y, &w, &h);
-        printf ("[%s] Input panel is shown. ctx : %p\n", __func__, ctx);
-        printf ("x : %d, y : %d, w : %d, h : %d\n", x, y, w, h);
+        LOGD ("Input panel is shown. ctx : %p\n", ctx);
+        LOGD ("x : %d, y : %d, w : %d, h : %d\n", x, y, w, h);
     } else if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        printf ("[%s] Input panel is hidden. ctx : %p\n", __func__, ctx);
+        LOGD ("Input panel is hidden. ctx : %p\n", ctx);
     } else if (value == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) {
-        printf ("[%s] Input panel will be shown. ctx : %p\n", __func__, ctx);
+        LOGD ("Input panel will be shown. ctx : %p\n", ctx);
     }
 }
 
@@ -69,25 +69,25 @@ static void _input_panel_resize_cb (void *data, Ecore_IMF_Context *ctx, int valu
     int x, y, w, h;
 
     ecore_imf_context_input_panel_geometry_get (ctx, &x, &y, &w, &h);
-    printf ("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, x, y, w, h);
+    LOGD ("x : %d, y : %d, w : %d, h : %d\n", x, y, w, h);
 }
 
 static void _shift_mode_cb (void *data, Ecore_IMF_Context *ctx, int value)
 {
     if (value == ECORE_IMF_INPUT_PANEL_SHIFT_MODE_OFF) {
-        printf ("[%s] Shift Mode : OFF\n", __func__);
+        LOGD ("Shift Mode : OFF\n");
     } else if (value == ECORE_IMF_INPUT_PANEL_SHIFT_MODE_ON) {
-        printf ("[%s] Shift Mode : ON\n", __func__);
+        LOGD ("Shift Mode : ON\n");
     }
 }
 
 static void _language_changed_cb (void *data, Ecore_IMF_Context *ctx, int value)
 {
-    char *locale;
+    char *locale = NULL;
 
     ecore_imf_context_input_panel_language_locale_get (ctx, &locale);
 
-    printf ("[%s] language : %s\n", __func__, locale);
+    LOGD ("language : %s\n", locale);
 
     if (locale)
         free (locale);
@@ -99,10 +99,10 @@ static void _candidate_panel_state_cb (void *data, Ecore_IMF_Context *ctx, int v
 
     if (value == ECORE_IMF_CANDIDATE_PANEL_SHOW) {
         ecore_imf_context_candidate_panel_geometry_get (ctx, &x, &y, &w, &h);
-        printf ("[%s] Candidate window is shown\n", __func__);
-        printf ("[%s] x : %d, y : %d, w : %d, h : %d\n", __func__, x, y, w, h);
+        LOGD ("Candidate window is shown\n");
+        LOGD ("x : %d, y : %d, w : %d, h : %d\n", x, y, w, h);
     } else if (value == ECORE_IMF_CANDIDATE_PANEL_HIDE) {
-        printf ("[%s] Candidate window is hidden\n", __func__);
+        LOGD ("Candidate window is hidden\n");
     }
 }
 
@@ -111,21 +111,21 @@ static void _candidate_panel_geometry_changed_cb (void *data, Ecore_IMF_Context 
     int x, y, w, h;
 
     ecore_imf_context_candidate_panel_geometry_get (ctx, &x, &y, &w, &h);
-    printf ("[%s] ctx : %p, x : %d, y : %d, w : %d, h : %d\n", __func__, ctx, x, y, w, h);
+    LOGD ("ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, x, y, w, h);
 }
 
 static void
 _key_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
     Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event_info;
-    printf ("[evas key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+    LOGD ("[evas key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 }
 
 static void
 _key_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
     Evas_Event_Key_Up *ev = (Evas_Event_Key_Up *)event_info;
-    printf ("[evas key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+    LOGD ("[evas key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 }
 
 static void
@@ -139,7 +139,7 @@ _print_keyboard_geometry (Ecore_X_Window xwin)
     if (!ecore_x_e_illume_keyboard_geometry_get (zone, &sx, &sy, &sw, &sh))
         sx = sy = sw = sh = 0;
 
-    printf ("Keyboard geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+    LOGD ("Keyboard geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
 }
 
 static Eina_Bool
@@ -149,10 +149,10 @@ _prop_change_cb (void *data, int type, void *event)
     ev = (Ecore_X_Event_Window_Property *)event;
 
     if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
-        printf ("[ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE] ");
+        LOGD ("[ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE] ");
         _print_keyboard_geometry (ev->win);
     } else if (ev->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY) {
-        printf ("[ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY] ");
+        LOGD ("[ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY] ");
         _print_keyboard_geometry (ev->win);
     }
 
@@ -161,17 +161,17 @@ _prop_change_cb (void *data, int type, void *event)
 
 static void entry_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    printf ("[%s]\n", __func__);
+    LOGD ("The text within the entry was changed.\n");
 }
 
 static void entry_preedit_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    printf ("[%s]\n", __func__);
+    LOGD ("The preedit string has changed.\n");
 }
 
 static void entry_cursor_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    printf ("[%s] cursor pos : %d\n", __func__, elm_entry_cursor_pos_get (obj));
+    LOGD ("cursor pos : %d\n", elm_entry_cursor_pos_get (obj));
 }
 
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Elm_Input_Panel_Layout layout, int layout_variation = 0)
