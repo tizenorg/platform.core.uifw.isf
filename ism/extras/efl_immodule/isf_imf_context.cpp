@@ -582,12 +582,11 @@ _key_down_cb (void *data, int type, void *event)
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
     if (client_win == focus_win && (_hide_ise_based_on_focus) ? (_focused_ic != 0):(true)) {
-        if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
-            if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
-                return ECORE_CALLBACK_PASS_ON;
-        }
-
         if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+            if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
+                if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+                    return ECORE_CALLBACK_PASS_ON;
+            }
             LOGD ("%s key is pressed.\n", ev->keyname);
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 KeyEvent key;
@@ -622,12 +621,11 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
     if (client_win == focus_win && (_hide_ise_based_on_focus) ? (_focused_ic != 0):(true)) {
-        if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
-            if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
-                return ECORE_CALLBACK_PASS_ON;
-        }
-
         if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+            if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
+                if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+                    return ECORE_CALLBACK_PASS_ON;
+            }
             LOGD ("%s key is released.\n", ev->keyname);
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 KeyEvent key;
