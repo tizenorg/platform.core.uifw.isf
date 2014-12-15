@@ -125,6 +125,9 @@ int main (int argc, char *argv[])
 
     char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
 
+    if (lang_str == NULL)
+        return 0;
+
     if (strlen (lang_str)) {
         setenv ("LANG", lang_str, 1);
         setlocale (LC_MESSAGES, lang_str);
