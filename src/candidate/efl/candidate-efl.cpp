@@ -211,7 +211,7 @@ EflCandidate::update(const vector<string> &vec_str) {
                 255, 255, 255, 255);
         }
         i++;
-        if (i > MAX_CANDIDATE) {
+        if (i >= MAX_CANDIDATE) {
             break;
         }
     }
