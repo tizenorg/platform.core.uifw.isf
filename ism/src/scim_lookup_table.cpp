@@ -305,7 +305,7 @@ CommonLookupTable::CommonLookupTable (int page_size)
     char buf [2] = { 0, 0 };
     for (int i = 0; i < 9; ++i) {
         buf [0] = '1' + i;
-        labels.push_back (utf8_mbstowcs (buf));
+        labels.push_back (utf8_mbstowcs (String (buf)));
     }
 
     labels.push_back (utf8_mbstowcs ("0"));
