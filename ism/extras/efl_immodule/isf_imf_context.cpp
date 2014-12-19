@@ -689,7 +689,7 @@ _x_prop_change (void *data, int type, void *event)
     Ecore_X_Event_Window_Property *e = (Ecore_X_Event_Window_Property *)event;
     Ecore_X_Window xwin = (Ecore_X_Window)data;
 
-    if (e->win != xwin) return ECORE_CALLBACK_PASS_ON;
+    if (!e || e->win != xwin) return ECORE_CALLBACK_PASS_ON;
 
     if (e->atom == ECORE_X_ATOM_E_PROFILE) {
         _check_desktop_mode (e->win);

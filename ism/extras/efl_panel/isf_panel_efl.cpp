@@ -488,7 +488,7 @@ static void get_input_window (void)
 static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
 {
     DBusError err;
-    char *str;
+    char *str = NULL;
 
     if (!msg) {
         LOGW ("No Message");
@@ -506,6 +506,8 @@ static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
         LOGW ("DBUS_TYPE_INVALID");
         return;
     }
+
+    if (!str) return;
 
     if (!strncmp (str, HOST_ADDED, strlen (HOST_ADDED))) {
         LOGD ("HOST_ADDED");
@@ -1080,7 +1082,7 @@ static bool get_helper_ise_info (const char *type, const char *package, HelperIn
     char *pkg_icon_path = NULL;
     bool result = false;
 
-    if (!type)
+    if (!type || !package || !helper_info)
         return false;
 
     if (strncmp (type, "wgt", 3) != 0)
@@ -2518,6 +2520,8 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
     _is_click     = true;
 
     Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
+    if (!ev) return;
+
     _click_down_pos [0] = ev->canvas.x;
     _click_down_pos [1] = ev->canvas.y;
 
@@ -2615,6 +2619,8 @@ static void ui_mouse_moved_cb (void *data, Evas *e, Evas_Object *button, void *e
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
+    if (!ev) return;
+
     _click_up_pos [0] = ev->canvas.x;
     _click_up_pos [1] = ev->canvas.y;
 
@@ -2696,48 +2702,48 @@ static void ui_play_tts (const char* str)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " str=" << str << "\n";
 
+    if (!str) return;
+
 #if HAVE_TTS
     if (_tts == NULL) {
         if (!ui_open_tts ())
             return;
     }
 
-    if (str) {
-        int r;
-        int utt_id = 0;
-        tts_state_e current_state;
+    int r;
+    int utt_id = 0;
+    tts_state_e current_state;
 
-        r = tts_get_state (_tts, &current_state);
+    r = tts_get_state (_tts, &current_state);
+    if (TTS_ERROR_NONE != r) {
+        LOGW ("Fail to get state from TTS : ret (%d)\n", r);
+    }
+
+    if (TTS_STATE_PLAYING == current_state)  {
+        r = tts_stop (_tts);
         if (TTS_ERROR_NONE != r) {
-            LOGW ("Fail to get state from TTS : ret (%d)\n", r);
+            LOGW ("Fail to stop TTS : ret (%d)\n", r);
         }
+    }
 
-        if (TTS_STATE_PLAYING == current_state)  {
-            r = tts_stop (_tts);
-            if (TTS_ERROR_NONE != r) {
-                LOGW ("Fail to stop TTS : ret (%d)\n", r);
-            }
+    /* Get ISE language */
+    String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+    String language = String ("en_US");
+    if (default_uuid.length () > 0) {
+        language = _langs [get_ise_index (default_uuid)];
+        if (language.length () > 0) {
+            std::vector<String> ise_langs;
+            scim_split_string_list (ise_langs, language);
+            language = ise_langs[0];
         }
+    }
+    LOGD ("TTS language:%s, str:%s\n", language.c_str (), str);
 
-        /* Get ISE language */
-        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-        String language = String ("en_US");
-        if (default_uuid.length () > 0) {
-            language = _langs [get_ise_index (default_uuid)];
-            if (language.length () > 0) {
-                std::vector<String> ise_langs;
-                scim_split_string_list (ise_langs, language);
-                language = ise_langs[0];
-            }
-        }
-        LOGD ("TTS language:%s, str:%s\n", language.c_str (), str);
-
-        r = tts_add_text (_tts, str, language.c_str (), TTS_VOICE_TYPE_AUTO, TTS_SPEED_AUTO, &utt_id);
-        if (TTS_ERROR_NONE == r) {
-            r = tts_play (_tts);
-            if (TTS_ERROR_NONE != r) {
-                LOGW ("Fail to play TTS : ret (%d)\n", r);
-            }
+    r = tts_add_text (_tts, str, language.c_str (), TTS_VOICE_TYPE_AUTO, TTS_SPEED_AUTO, &utt_id);
+    if (TTS_ERROR_NONE == r) {
+        r = tts_play (_tts);
+        if (TTS_ERROR_NONE != r) {
+            LOGW ("Fail to play TTS : ret (%d)\n", r);
         }
     }
 #endif
@@ -3705,7 +3711,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
 
-    _panel_agent->signal_connect_set_keyboard_mode (slot (slot_set_keyboard_mode));
+    _panel_agent->signal_connect_set_keyboard_mode          (slot (slot_set_keyboard_mode));
 
     _panel_agent->signal_connect_candidate_will_hide_ack    (slot (slot_candidate_will_hide_ack));
     _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
