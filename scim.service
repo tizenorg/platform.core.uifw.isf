@@ -1,7 +1,7 @@
 [Unit]
 Description=Start the input service framework panel
 DefaultDependencies=no
-After=local-fs.target
+After=local-fs.target xorg.service e17.service wm_ready.service
 
 [Service]
 ExecStart=/usr/bin/scim -d
