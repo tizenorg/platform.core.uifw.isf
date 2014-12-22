@@ -95,10 +95,7 @@ int main (int argc, char *argv [])
 
     new_argv [new_argc ++] = argv [0];
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s\n",
-        time (0), getpid (), getppid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("Start scim-launcher\n");
 
     perm_app_set_privilege ("isf", NULL, NULL);
 
@@ -278,15 +275,11 @@ int main (int argc, char *argv [])
         /* reset backend pointer, in order to destroy backend automatically. */
         backend.reset ();
 
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s, now running frontend...\n",
-            time (0), getpid (), getppid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("now running frontend...\n");
 
         frontend_module->run ();
     } catch (const std::exception & err) {
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s, caught an exception! : %s\n",
-            time (0), getpid (), getppid (), __FILE__, __func__, err.what());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("caught an exception! : %s\n", err.what());
 
         std::cerr << err.what () << "\n";
         return 1;

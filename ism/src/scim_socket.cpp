@@ -496,20 +496,14 @@ public:
             // Backup the current flag to restore after non-blocking connect() try
             int flags = fcntl (m_id, F_GETFL, 0);
             if (fcntl (m_id, F_SETFL, flags | O_NONBLOCK) == -1) {
-                char buf[256] = {0};
                 char buf_err[256];
                 m_err = errno;
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  ppid:%d  %s  %s  fcntl() failed, %d %s\n",
-                    time (0), getpid (), getppid (), __FILE__, __func__, m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("ppid : %d fcntl() failed, %d %s\n", getppid (), m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
             }
 
-            char buf[256] = {0};
             char proc_name[17] = {0}; /* the buffer provided shall at least be 16+1 bytes long */
             if (-1 != prctl (PR_GET_NAME, proc_name, 0, 0, 0)) {
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  ppid:%d  %s  %s  trying connect() to %s, %s\n",
-                    time (0), getpid (), getppid (), __FILE__, __func__, addr.get_address ().c_str (), proc_name);
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("ppid:%d  trying connect() to %s, %s\n", getppid (), addr.get_address ().c_str (), proc_name);
             }
 
             if ((m_err = ::connect (m_id, data, len)) == 0) {
@@ -518,9 +512,7 @@ public:
                 }
                 m_address = addr;
 
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  connect() succeeded\n",
-                    time (0), getpid (), __FILE__, __func__);
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("connect() succeeded\n");
 
                 return true;
             }
@@ -537,21 +529,15 @@ public:
                 tval.tv_sec = nsec;
                 tval.tv_usec = 0;
 
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  EINPROGRESS, select() with timeout %d\n",
-                    time (0), getpid (), __FILE__, __func__, nsec);
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("EINPROGRESS, select() with timeout %d\n", nsec);
 
                 if (select (m_id + 1, &rset, &wset, NULL, nsec ? &tval : NULL) == 0) {
                     m_err = ETIMEDOUT;
 
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  timeout in select()\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
+                    ISF_SAVE_LOG ("timeout in select()\n");
                 } else {
                     // We've got something, connection succeeded
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  finally connected\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
+                    ISF_SAVE_LOG ("finally connected\n");
 
                     if (fcntl (m_id, F_SETFL, flags) == -1) {
                         m_err = errno;
@@ -562,9 +548,7 @@ public:
             } else {
                 char buf_err[256];
                 m_err = errno;
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  connect() failed with %d (%s)\n",
-                        time (0), getpid (), __FILE__, __func__, m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("connect() failed with %d (%s)\n", m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
             }
             if (fcntl (m_id, F_SETFL, flags) == -1) {
                 m_err = errno;
@@ -1540,10 +1524,7 @@ scim_socket_open_connection   (uint32       &key,
                 return true;
         } else {
             {
-                char buf[256] = {0};
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  read_from_socket() failed %d\n",
-                    time (0), getpid (), __FILE__, __func__, timeout);
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("read_from_socket() failed %d\n", timeout);
             }
             trans.clear ();
             trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -1551,10 +1532,7 @@ scim_socket_open_connection   (uint32       &key,
             trans.write_to_socket (socket);
         }
     } else {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  write_to_socket() failed\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("write_to_socket() failed\n");
     }
 
     return false;

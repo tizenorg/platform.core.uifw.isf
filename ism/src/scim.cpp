@@ -175,10 +175,7 @@ static void vconf_appservice_ready_changed (keynode_t *node, void *user_data)
             _appsvc_callback_regist = false;
         }
 
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  vconf_appservice_ready_changed val : %d)\n",
-            time (0), getpid (), __FILE__, __func__, node->value.i);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("vconf_appservice_ready_changed val : %d)\n", node->value.i);
 
         launch_helper (_ise_name, _ise_uuid);
     }
@@ -192,10 +189,7 @@ static bool check_appservice_ready ()
     int val = 0;
     ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  vconf returned : %d, val : %d)\n",
-        time (0), getpid (), __FILE__, __func__, ret, val);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("vconf returned : %d, val : %d)\n", ret, val);
 
     if (ret == 0) {
         if (val >= ISF_SYSTEM_APPSERVICE_READY_STATE)
@@ -241,10 +235,7 @@ static void launch_helper (const char *name, const char *uuid)
             _ise_uuid,
             0};
 
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Exec scim_helper_launcher(%s %s)\n",
-            time (0), getpid (), __FILE__, __func__, _ise_name, _ise_uuid);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", _ise_name, _ise_uuid);
 
         execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
         exit (-1);
@@ -262,17 +253,11 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
     Ecore_Ipc_Event_Client_Data *e = (Ecore_Ipc_Event_Client_Data *)ev;
     if (!e) return ECORE_CALLBACK_RENEW;
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  client %p sent [%i] [%i] [%i]\n",
-        time (0), getpid (), getppid (), __FILE__, __func__, e->client, e->major, e->minor, e->size);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("client %p sent [%i] [%i] [%i]\n", e->client, e->major, e->minor, e->size);
 
     const char *message = "Done";
     if (ecore_ipc_client_send (e->client, 0, 0, 0, 0, 0, message, strlen (message)) == 0) {
-        buf[0] = '\0';
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ecore_ipc_client_send FAILED!!\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("ecore_ipc_client_send FAILED!!\n");
     }
 
     char buffer[_POSIX_PATH_MAX + 1] = {0};
@@ -298,18 +283,12 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
 static void run_broker (int argc, char *argv [])
 {
     if (!ecore_init ()) {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to init ecore!!\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("Failed to init ecore!!\n");
         return;
     }
 
     if (!ecore_ipc_init ()) {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to init ecore_ipc!!\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("Failed to init ecore_ipc!!\n");
         ecore_shutdown ();
         return;
     }
@@ -320,10 +299,7 @@ static void run_broker (int argc, char *argv [])
     server = ecore_ipc_server_add (ECORE_IPC_LOCAL_SYSTEM, "scim-helper-broker", 0, NULL);
 
     if (server == NULL) {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ecore_ipc_server_add returned NULL!!\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("ecore_ipc_server_add returned NULL!!\n");
     }
 
     ecore_main_loop_begin ();
@@ -368,16 +344,11 @@ int main (int argc, char *argv [])
     int   new_argc = 0;
     char *new_argv [80];
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Waiting for wm_ready\n",
-        time (0), getpid (), getppid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid : %d Waiting for wm_ready\n", getppid ());
 
     if (!check_wm_ready ()) {
         std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Window Manager ready timeout\n",
-            time (0), getpid (), getppid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("ppid:%d Window Manager ready timeout\n", getppid ());
     }
 
     /* Display version info */
@@ -535,9 +506,7 @@ int main (int argc, char *argv [])
 
     new_argv [new_argc] = 0;
 
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Starting SCIM......\n",
-        time (0), getpid (), getppid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid:%d Starting SCIM......\n", getppid ());
 
     /* Get the imengine module list which should be loaded. */
     if (exclude_engine_list.size ()) {
@@ -575,9 +544,7 @@ int main (int argc, char *argv [])
 
     /* Try to start a SocketFrontEnd daemon first. */
     if (socket) {
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Now socket frontend......\n",
-            time (0), getpid (), getppid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("ppid:%d Now socket frontend......\n", getppid ());
 
         /* If no Socket FrontEnd is running, then launch one.
            And set manual to false. */
@@ -614,9 +581,7 @@ int main (int argc, char *argv [])
 
     cerr << "Launching a process with " << def_frontend << " FrontEnd...\n";
 
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Now default frontend......\n",
-        time (0), getpid (), getppid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid:%d Now default frontend......\n", getppid ());
 
     /* Launch the scim process. */
     if (scim_launch (daemon,
@@ -631,25 +596,19 @@ int main (int argc, char *argv [])
 
         gettime (clock_start, "ISM launch time");
 
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Now checking panel process......\n",
-            time (0), getpid (), getppid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("ppid:%d Now checking panel process......\n", getppid ());
 
         /* When finished launching scim-launcher, let's create panel process also, for the default display :0 */
         try {
             if (!check_panel ("")) {
                cerr << "Launching Panel...\n";
-               snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  Launching panel process......%s\n",
-                  time (0), getpid (), getppid (), __FILE__, __func__, def_config.c_str ());
-                isf_save_log (buf);
+               ISF_SAVE_LOG ("ppid:%d Launching panel process......%s\n", getppid (), def_config.c_str ());
 
                scim_launch_panel (true, "socket", "", NULL);
             }
         } catch (scim::Exception & e) {
             cerr << e.what () << "\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  %s\n",
-            time (0), getpid (), getppid (), __FILE__, __func__, e.what ());
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("Fail to launch panel. error: %s\n", e.what ());
         }
 
         run_broker (argc, argv);

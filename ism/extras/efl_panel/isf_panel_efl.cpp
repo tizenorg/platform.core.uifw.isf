@@ -1629,17 +1629,11 @@ static bool set_helper_ise (const String &uuid, const String &module_name, bool 
     if (TOOLBAR_HELPER_MODE == mode && pre_uuid.length () > 0 && _soft_keyboard_launched) {
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  stop helper (%s)\n",
-            time (0), getpid (), __FILE__, __func__, pre_uuid.c_str ());
-        isf_save_log (buf);
+        ISF_SAVE_LOG("stop helper : %s\n", pre_uuid.c_str ());
     }
 
     if (launch_ise) {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
-            time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
         if (_panel_agent->start_helper (uuid))
             _soft_keyboard_launched = true;
@@ -1660,10 +1654,7 @@ static bool set_helper_ise (const String &uuid, const String &module_name, bool 
 static bool set_active_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  set ISE (%s)\n",
-        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("set ISE (%s)\n", uuid.c_str ());
 
     if (uuid.length () <= 0)
         return false;
@@ -3658,10 +3649,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s, initializing panel agent\n",
-        time (0), getpid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("initializing panel agent\n");
 
     _panel_agent = new PanelAgent ();
 
@@ -3722,9 +3710,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
 
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s, initializing panel agent succeeded\n",
-        time (0), getpid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("initializing panel agent succeeded\n");
 
     return true;
 }
@@ -3836,10 +3822,7 @@ static void slot_focus_in (void)
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
             if (uuid.length () > 0 && (_options[get_ise_index (uuid)] & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
-                char buf[256] = {0};
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
-                    time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
                 if (_panel_agent->start_helper (uuid))
                     _soft_keyboard_launched = true;
@@ -5109,10 +5092,7 @@ static void slot_close_connection (int fd)
 static void slot_exit (void)
 {
     std::cerr << __FUNCTION__ << "...\n";
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s\n",
-        time (0), getpid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("exit\n");
 
     elm_exit ();
 }
@@ -5301,10 +5281,7 @@ static void slot_start_default_ise (void)
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
 
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper (%s)\n",
-                time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
             if (_panel_agent->start_helper (uuid))
                 _soft_keyboard_launched = true;
@@ -5323,10 +5300,7 @@ static void slot_stop_default_ise (void)
             _panel_agent->hide_helper (uuid);
             _panel_agent->stop_helper (uuid);
             _soft_keyboard_launched = false;
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  stop helper (%s)\n",
-                time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("stop helper (%s)\n", uuid.c_str ());
         }
     }
 }
@@ -5349,7 +5323,6 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
     if (fd_handler == NULL)
         return ECORE_CALLBACK_RENEW;
 
-    char buf[256] = {0};
     int fd = ecore_main_fd_handler_fd_get (fd_handler);
     for (unsigned int i = 0; i < _read_handler_list.size (); i++) {
         if (fd_handler == _read_handler_list [i]) {
@@ -5357,9 +5330,7 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
                 std::cerr << "_panel_agent->filter_event () is failed!!!\n";
                 ecore_main_fd_handler_del (fd_handler);
 
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  _panel_agent->filter_event (fd=%d) is failed!!!\n",
-                    time (0), getpid (), __FILE__, __func__, fd);
-                isf_save_log (buf);
+                ISF_SAVE_LOG ("_panel_agent->filter_event (fd=%d) is failed!!!\n", fd);
             }
             return ECORE_CALLBACK_RENEW;
         }
@@ -5368,9 +5339,7 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
     _panel_agent->filter_exception_event (fd);
     ecore_main_fd_handler_del (fd_handler);
 
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Received exception event (fd=%d)!!!\n",
-        time (0), getpid (), __FILE__, __func__, fd);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("Received exception event (fd=%d)!!!\n", fd);
     return ECORE_CALLBACK_RENEW;
 }
 
@@ -5384,20 +5353,15 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
  */
 static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_handler)
 {
-    char buf[256] = {0};
     if (_panel_agent->has_helper_manager_pending_event ()) {
         if (!_panel_agent->filter_helper_manager_event ()) {
             std::cerr << "_panel_agent->filter_helper_manager_event () is failed!!!\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  _panel_agent->filter_helper_manager_event () is failed!!!\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("_panel_agent->filter_helper_manager_event () is failed!!!\n")
             elm_exit ();
         }
     } else {
         std::cerr << "_panel_agent->has_helper_manager_pending_event () is failed!!!\n";
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  _panel_agent->has_helper_manager_pending_event () is failed!!!\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("_panel_agent->has_helper_manager_pending_event () is failed!!!\n");
     }
 
     return ECORE_CALLBACK_RENEW;
@@ -5411,10 +5375,7 @@ static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_
 static void signalhandler (int sig)
 {
     std::cerr << __FUNCTION__ << " Signal=" << sig << "\n";
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Signal=%d\n",
-        time (0), getpid (), __FILE__, __func__, sig);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("Signal=%d\n", sig);
 
     unregister_edbus_signal_handler ();
     elm_exit ();
@@ -6260,6 +6221,7 @@ int main (int argc, char *argv [])
     ConfigModule *config_module   = NULL;
     String        config_name     = String ("socket");
     String        display_name    = String ();
+    char          buf[256]        = {0};
 
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
     Ecore_Fd_Handler *helper_manager_handler   = NULL;
@@ -6270,10 +6232,7 @@ int main (int argc, char *argv [])
     perm_app_set_privilege ("isf", NULL, NULL);
 
     check_time ("\nStarting ISF Panel EFL...... ");
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Starting ISF Panel EFL......\n",
-        time (0), getpid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("Starting ISF Panel EFL......\n");
 
     DebugOutput::disable_debug (SCIM_DEBUG_AllMask);
     DebugOutput::enable_debug (SCIM_DEBUG_MainMask);
@@ -6404,13 +6363,12 @@ int main (int argc, char *argv [])
 
     snprintf (buf, sizeof (buf), "config_name=%s display_name=%s", config_name.c_str (), display_name.c_str ());
     check_time (buf);
+
     try {
         if (!initialize_panel_agent (config_name, display_name, should_resident)) {
             check_time ("Failed to initialize Panel Agent!");
             std::cerr << "Failed to initialize Panel Agent!\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Failed to initialize Panel Agent!\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("Failed to initialize Panel Agent!\n");
 
             ret = -1;
             goto cleanup;
@@ -6634,9 +6592,7 @@ cleanup:
     }
     delete []new_argv;
 
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ret=%d\n",
-        time (0), getpid (), __FILE__, __func__, ret);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ret=%d\n", ret);
     if (ret == 0) {
         std::cerr << "Successfully exited.\n";
         return 0;

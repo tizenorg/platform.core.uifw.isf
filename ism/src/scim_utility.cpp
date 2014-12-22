@@ -1191,10 +1191,7 @@ EAPI int  scim_launch (bool          daemon,
 
     child_pid = fork ();
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  fork result : %d, user %s\n",
-        time (0), getpid (), getppid (), __FILE__, __func__, child_pid, scim_get_user_name ().c_str ());
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid: %d, fork result : %d, user %s\n", getppid (), child_pid, scim_get_user_name ().c_str ());
 
     // Error fork.
     if (child_pid < 0) return -1;
@@ -1274,10 +1271,7 @@ EAPI int scim_launch_panel (bool          daemon,
 
     child_pid = fork ();
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  fork result : %d\n",
-        time (0), getpid (), getppid (), __FILE__, __func__, child_pid);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid : %d fork result : %d\n", getppid (), child_pid);
 
     // Error fork.
     if (child_pid < 0) return -1;
@@ -1334,17 +1328,12 @@ scim_usleep (unsigned int usec)
 EAPI void scim_daemon ()
 {
 #if HAVE_DAEMON
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  calling daemon()\n",
-        time (0), getpid (), getppid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid:%d  calling daemon()\n", getppid ());
 
     if (daemon (0, 0) == -1)
         std::cerr << "Error to make SCIM into a daemon!\n";
 
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  daemon() called\n",
-        time (0), getpid (), getppid (), __FILE__, __func__);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid:%d  daemon() called\n", getppid ());
 
     return;
 #else
@@ -1358,10 +1347,7 @@ EAPI void scim_daemon ()
         _exit (0);
     }
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  fork result : %d\n",
-        time (0), getpid (), getppid (), __FILE__, __func__, id);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid:%d fork result : %d\n", getppid (), id);
 
     id = fork ();
     if (id == -1) {
@@ -1371,17 +1357,21 @@ EAPI void scim_daemon ()
         _exit (0);
     }
 
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d ppid:%d  %s  %s  fork result : %d\n",
-        time (0), getpid (), getppid (), __FILE__, __func__, id);
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("ppid:%d fork result : %d\n", getppid (), id);
 
     return;
 #endif
 }
 
-EAPI void isf_save_log (const char *str)
+EAPI void isf_save_log (const char *fmt, ...)
 {
+    char buf[1024] = {0};
+    va_list ap;
+
+    va_start (ap, fmt);
+    vsnprintf (buf, sizeof (buf), fmt, ap);
+    va_end (ap);
+
     const int MAX_LOG_FILE_SIZE = 10 * 1024; /* 10KB */
 
     static bool size_exceeded = false;
@@ -1392,7 +1382,7 @@ EAPI void isf_save_log (const char *str)
         if (ret == 0 || (ret == -1 && errno == ENOENT)) {
             if (st.st_size < MAX_LOG_FILE_SIZE) {
                 std::ofstream isf_log_file (strLogFile.c_str (), std::ios::app);
-                isf_log_file << str;
+                isf_log_file << buf;
                 isf_log_file.flush ();
             } else {
                 size_exceeded = true;
@@ -1400,7 +1390,7 @@ EAPI void isf_save_log (const char *str)
         }
     }
 
-    LOGD ("%s", str);
+    LOGD ("%s", buf);
 }
 
 static struct timeval _t0 = {0, 0};

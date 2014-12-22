@@ -143,20 +143,14 @@ int main (int argc, char *argv [])
             continue;
         }
 
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Invalid command line option: %d %s...\n",
-            time (0), getpid (), __FILE__, __func__, i, argv [i]);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("Invalid command line option: %d %s...\n", i, argv [i]);
 
         std::cerr << "Invalid command line option: " << argv [i] << "\n";
         return -1;
     }
 
     SCIM_DEBUG_MAIN(1) << "scim-helper-launcher: " << config << " " << display << " " << helper << " " << uuid << "\n";
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE (%s %s) is launching...\n",
-        time (0), getpid (), __FILE__, __func__, helper.c_str (), uuid.c_str ());
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("Helper ISE (%s %s) is launching...\n", helper.c_str (), uuid.c_str ());
 
     if (!helper.length () || !uuid.length ()) {
         std::cerr << "Module name or Helper UUID is missing.\n";
@@ -165,9 +159,7 @@ int main (int argc, char *argv [])
 
     int ret = ise_preexec (helper.c_str (), uuid.c_str ());
     if (ret < 0) {
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  ise_preexec failed (%s, %d)\n",
-            time (0), getpid (), __FILE__, __func__, helper.c_str (), ret);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("ise_preexec failed (%s, %d)\n", helper.c_str (), ret);
 
         std::cerr << "ise_preexec failed(" << helper << ret << ")\n";
         return -1;
@@ -178,9 +170,7 @@ int main (int argc, char *argv [])
     HelperModule helper_module (helper);
 
     if (!helper_module.valid () || helper_module.number_of_helpers () == 0) {
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Unable to load helper module(%s)\n",
-            time (0), getpid (), __FILE__, __func__, helper.c_str ());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("Unable to load helper module(%s)\n", helper.c_str ());
 
         std::cerr << "Unable to load helper module(" << helper << ")\n";
         return -1;
@@ -201,9 +191,7 @@ int main (int argc, char *argv [])
     if (!config_pointer.null ())
         config_pointer.reset ();
     ConfigBase::set (0);
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE (%s) is destroyed!!!\n",
-        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("Helper ISE (%s) is destroyed!!!\n", uuid.c_str ());
 }
 
 /*

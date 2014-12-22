@@ -453,8 +453,12 @@ EAPI void scim_daemon ();
  *
  * @param str The string to be saved.
  */
-EAPI void isf_save_log (const char *str);
+EAPI void isf_save_log (const char *fmt, ...);
 
+#define ISF_SAVE_LOG(fmt, arg...) \
+    do{ \
+        isf_save_log ("time:%ld  pid:%d  %s  %s  " fmt, time (0), getpid (), __FILE__, __func__, ##arg); \
+    }while(0);
 
 #ifdef ISF_PROF
 

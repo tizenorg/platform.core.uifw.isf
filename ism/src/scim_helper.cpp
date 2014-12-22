@@ -228,12 +228,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     }
     std::cerr << " Connected :" << i << "\n";
     ISF_LOG ("  Connected :%d\n", i);
-    {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Connection to PanelAgent succeeded, %d\n",
-            time (0), getpid (), __FILE__, __func__, i);
-        isf_save_log (buf);
-    }
+    ISF_SAVE_LOG ("Connection to PanelAgent succeeded, %d\n", i);
 
     /* Let's retry 10 times when failed */
     int open_connection_retries = 0;
@@ -246,12 +241,8 @@ HelperAgent::open_connection (const HelperInfo &info,
             m_impl->socket.close ();
             std::cerr << "scim_socket_open_connection () is failed!!!\n";
             ISF_LOG ("scim_socket_open_connection () is failed!!!\n");
-            {
-                char buf[256] = {0};
-                snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  scim_socket_open_connection failed, %d\n",
-                    time (0), getpid (), __FILE__, __func__, timeout);
-                isf_save_log (buf);
-            }
+            ISF_SAVE_LOG ("scim_socket_open_connection failed, %d\n", timeout);
+
             return -1;
         }
 
@@ -268,12 +259,8 @@ HelperAgent::open_connection (const HelperInfo &info,
     }
 
     ISF_LOG ("scim_socket_open_connection () is successful.\n");
-    {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  scim_socket_open_connection successful\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
-    }
+    ISF_SAVE_LOG ("scim_socket_open_connection successful\n");
+
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (magic);
@@ -319,12 +306,8 @@ HelperAgent::open_connection (const HelperInfo &info,
         }
     }
 
-    {
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Trying connect() with Helper_Active\n",
-            time (0), getpid (), __FILE__, __func__);
-        isf_save_log (buf);
-    }
+    ISF_SAVE_LOG ("Trying connect() with Helper_Active\n");
+
     /* connect to the panel agent as the active helper client */
     if (!m_impl->socket_active.connect (address)) return -1;
     if (!scim_socket_open_connection (magic,
@@ -333,12 +316,7 @@ HelperAgent::open_connection (const HelperInfo &info,
                                       m_impl->socket_active,
                                       timeout)) {
         m_impl->socket_active.close ();
-        {
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper_Active scim_socket_open_connection() failed %d\n",
-                time (0), getpid (), __FILE__, __func__, timeout);
-            isf_save_log (buf);
-        }
+        ISF_SAVE_LOG ("Helper_Active scim_socket_open_connection() failed %d\n", timeout);
         return -1;
     }
 
@@ -355,12 +333,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     m_impl->send.put_data (info.option);
 
     if (!m_impl->send.write_to_socket (m_impl->socket_active, magic)) {
-        {
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper_Active write_to_socket() failed\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
-        }
+        ISF_SAVE_LOG ("Helper_Active write_to_socket() failed\n");
         m_impl->socket_active.close ();
         return -1;
     }
@@ -454,12 +427,7 @@ HelperAgent::filter_event ()
     while (m_impl->recv.get_command (cmd)) {
         switch (cmd) {
             case SCIM_TRANS_CMD_EXIT:
-                {
-                    char buf[256] = {0};
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE received SCIM_TRANS_CMD_EXIT message\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
-                }
+                ISF_SAVE_LOG ("Helper ISE received SCIM_TRANS_CMD_EXIT message\n");
                 m_impl->signal_exit (this, ic, ic_uuid);
                 break;
             case SCIM_TRANS_CMD_RELOAD_CONFIG:
@@ -535,12 +503,7 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_SHOW_ISE_PANEL:
             {
-                {
-                    char buf[256] = {0};
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
-                }
+                ISF_SAVE_LOG ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
 
                 char   *data = NULL;
                 size_t  len;
@@ -552,12 +515,7 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_HIDE_ISE_PANEL:
             {
-                {
-                    char buf[256] = {0};
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
-                }
+                ISF_SAVE_LOG ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
 
                 m_impl->signal_ise_hide (this, ic, ic_uuid);
                 break;

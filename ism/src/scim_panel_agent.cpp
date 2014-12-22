@@ -1310,10 +1310,7 @@ public:
     bool start_helper (const String  &uuid, int client, uint32 context)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::start_helper (" << uuid << ")\n";
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  start ISE(%s)\n",
-            time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("start ISE(%s)\n", uuid.c_str ());
 
         if (uuid.length () <= 0)
             return false;
@@ -1336,7 +1333,7 @@ public:
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to stop ISE(%s)\n",
             time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("prepare to stop ISE(%s)\n", uuid.c_str ());
 
         SCIM_DEBUG_MAIN(1) << "PanelAgent::stop_helper (" << uuid << ")\n";
         if (uuid.length () <= 0)
@@ -1359,9 +1356,7 @@ public:
             m_send_trans.put_command (SCIM_TRANS_CMD_EXIT);
             m_send_trans.write_to_socket (client_socket);
             SCIM_DEBUG_MAIN(1) << "Stop helper\n";
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  send SCIM_TRANS_CMD_EXIT message\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("send SCIM_TRANS_CMD_EXIT message\n");
         }
 
         unlock ();
@@ -1418,10 +1413,7 @@ public:
             m_send_trans.put_data (data, len);
             m_send_trans.write_to_socket (client_socket);
 
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Send ISM_TRANS_CMD_SHOW_ISE_PANEL message\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
 
             return true;
         }
@@ -1449,10 +1441,7 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_HIDE_ISE_PANEL);
             m_send_trans.write_to_socket (client_socket);
 
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Send ISM_TRANS_CMD_HIDE_ISE_PANEL message\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
         }
     }
 
@@ -1804,10 +1793,7 @@ public:
         String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to show ISE %d [%s] [%s]\n",
-            time (0), getpid (), __FILE__, __func__, client_id, initial_uuid.c_str(), default_uuid.c_str());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("prepare to show ISE %d [%s] [%s]\n", client_id, initial_uuid.c_str(), default_uuid.c_str());
 
         char   *data = NULL;
         size_t  len;
@@ -1862,10 +1848,7 @@ public:
     void hide_ise_panel (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::hide_ise_panel ()\n";
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to hide ISE, %d %d\n",
-            time (0), getpid (), __FILE__, __func__, client_id, m_show_request_client_id);
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("prepare to hide ISE, %d %d\n", client_id, m_show_request_client_id);
 
         uint32 client;
         uint32 context;
@@ -3780,35 +3763,25 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    char buf[256] = {0};
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  checking sockfd privilege...\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
+                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
                     int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
                     if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
                         SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
                     } else {
                         SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
                     }
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  setting active ise\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
+                    ISF_SAVE_LOG ("setting active ise\n");
                     set_active_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    char buf[256] = {0};
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  checking sockfd privilege...\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
+                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
                     int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
                     if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
                         SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
                     } else {
                         SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
                     }
-                    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  setting initial ise\n",
-                        time (0), getpid (), __FILE__, __func__);
-                    isf_save_log (buf);
+                    ISF_SAVE_LOG ("setting initial ise\n");
                     set_initial_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
