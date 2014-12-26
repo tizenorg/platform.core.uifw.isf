@@ -271,11 +271,6 @@ PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 # Check privilege control library
 PKG_CHECK_MODULES(PRIVILEGE_CONTROL, [libprivilege-control >= 0])
 
-# Check minicontrol library
-PKG_CHECK_MODULES(MINICONTROL_PROVIDER, [minicontrol-provider],
-                  [ISF_HAS_MINICONTROL=yes],
-                  [ISF_HAS_MINICONTROL=no])
-
 # Check notification library
 PKG_CHECK_MODULES(NOTIFICATION, [notification],
                   [ISF_HAS_NOTIFICATION=yes],
@@ -336,16 +331,12 @@ if test "$ISF_HAS_FEEDBACK" = "yes"; then
   AC_DEFINE(HAVE_FEEDBACK,1,[Have Feedback functions.])
 fi
 
-if test "$ISF_HAS_MINICONTROL" = "yes"; then
-  AC_DEFINE(HAVE_MINICONTROL,1,[Have Minicontrol functions.])
+if test "$ISF_HAS_NOTIFICATION" = "yes"; then
+  AC_DEFINE(HAVE_NOTIFICATION,1,[Have Notification functions.])
 fi
 
 if test "$ISF_HAS_UIGADGET" = "yes"; then
   AC_DEFINE(HAVE_UIGADGET,1,[Have UI gadget functions.])
-fi
-
-if test "$ISF_HAS_NOTIFICATION" = "yes"; then
-  AC_DEFINE(HAVE_NOTIFICATION,1,[Have Notification functions.])
 fi
 
 if test "$ISF_HAS_PKGMGR_INFO" = "yes"; then
@@ -713,9 +704,6 @@ AM_CONDITIONAL(ISF_BUILD_WSM_EFL,
 
 AM_CONDITIONAL(ISF_BUILD_WITH_GCONF,
                 [test "$ISF_HAS_GCONF" = "yes"])
-
-AM_CONDITIONAL(ISF_BUILD_MINICONTROL,
-                [test "$ISF_HAS_MINICONTROL" = "yes"])
 
 AM_CONDITIONAL(ISF_BUILD_DB_UTIL,
                 [test "$ISF_HAS_DB_UTIL" = "yes"])

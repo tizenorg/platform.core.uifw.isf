@@ -20,9 +20,6 @@ BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
 %endif
-%if "%{profile}" == "mobile"
-BuildRequires:  pkgconfig(minicontrol-provider)
-%endif
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(notification)

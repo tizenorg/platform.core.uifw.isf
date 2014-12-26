@@ -50,9 +50,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "center_popup.h"
-#include "minicontrol.h"
-#include "iseselector.h"
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -61,6 +58,7 @@
 #include <dlog.h>
 #if HAVE_NOTIFICATION
 #include <notification.h>
+#include <notification_internal.h>
 #endif
 #if HAVE_TTS
 #include <tts.h>
@@ -137,6 +135,15 @@ typedef enum _WINDOW_STATE {
     WINDOW_STATE_SHOW,
     WINDOW_STATE_ON,
 } WINDOW_STATE;
+
+typedef struct NotiData
+{
+    char* title;
+    const char* content;
+    char* icon;
+    const char* launch_app;
+    int noti_id;
+} NotificationData;
 
 typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
 
@@ -237,9 +244,9 @@ static unsigned int get_ise_index                      (const String uuid);
 static bool       set_active_ise                       (const String &uuid, bool launch_ise);
 static bool       update_ise_list                      (std::vector<String> &list);
 static void       update_ise_locale                    ();
-static void       minictrl_clicked_cb                  (void *data, Evas_Object *o, const char *emission, const char *source);
-#ifdef HAVE_MINICONTROL
-static void       ise_selector_minictrl_clicked_cb     (void *data, Evas_Object *o, const char *emission, const char *source);
+#ifdef HAVE_NOTIFICATION
+static void       delete_notification                  (NotificationData *noti_data);
+static void       create_notification                  (NotificationData *noti_data);
 #endif
 static Eina_Bool  ise_launch_timeout                   (void *data);
 static Eina_Bool  delete_ise_launch_timer              ();
@@ -421,9 +428,9 @@ static const int          CANDIDATE_TEXT_OFFSET             = 2;
 static double             _app_scale                        = 1.0;
 static double             _system_scale                     = 1.0;
 
-#ifdef HAVE_MINICONTROL
-static MiniControl        input_detect_minictrl;
-static MiniControl        ise_selector_minictrl;
+#ifdef HAVE_NOTIFICATION
+static NotificationData hwkbd_module_noti                   = {"Input detected from hardware keyboard", "Tap to use virtual keyboard", ISF_KEYBOARD_ICON_FILE, "", 0};
+static NotificationData ise_selector_module_noti            = {"Select input method", NULL, ISF_ISE_SELECTOR_ICON_FILE, "", 0};
 #endif
 
 #if HAVE_TTS
@@ -525,7 +532,9 @@ static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
 
     if (!strncmp (str, HOST_REMOVED, strlen (HOST_REMOVED))) {
         LOGD ("HOST_REMOVED");
-        minictrl_clicked_cb (NULL, NULL, NULL, NULL);
+        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+            change_keyboard_mode (TOOLBAR_HELPER_MODE);
+        }
         return;
     }
 
@@ -577,40 +586,47 @@ static int register_edbus_signal_handler (void)
     return 0;
 }
 
-static void minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
+#ifdef HAVE_NOTIFICATION
+static void delete_notification (NotificationData *noti_data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    unsigned int val = 0;
-#ifdef HAVE_MINICONTROL
-    input_detect_minictrl.destroy ();
-#endif
-
-    get_input_window ();
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-        ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
+    if (noti_data->noti_id != 0) {
+        notification_delete_by_priv_id ("isf-panel-efl", NOTIFICATION_TYPE_ONGOING, noti_data->noti_id);
+        LOGD ("deleted notification : %s\n", noti_data->launch_app);
+        noti_data->noti_id = 0;
     }
 }
 
-static void ise_selected_cb (unsigned int index)
-{
-    set_active_ise (_ime_info[index].appid, _soft_keyboard_launched);
-    _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
-}
-
-static void ise_selector_deleted_cb ()
-{
-    elm_config_scale_set (_app_scale);
-}
-
-#ifdef HAVE_MINICONTROL
-static void ise_selector_minictrl_clicked_cb (void *data, Evas_Object *o, const char *emission, const char *source)
+static void create_notification (NotificationData *noti_data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    elm_config_scale_set (_system_scale);
+    notification_h notification = NULL;
 
-    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb, ise_selector_deleted_cb);
+    if (noti_data->noti_id != 0) {
+        notification_delete_by_priv_id ("isf-panel-efl", NOTIFICATION_TYPE_ONGOING, noti_data->noti_id);
+        noti_data->noti_id = 0;
+    }
+
+    notification = notification_create (NOTIFICATION_TYPE_ONGOING);
+
+    notification_set_pkgname (notification, "isf-panel-efl");
+    notification_set_layout (notification, NOTIFICATION_LY_NOTI_EVENT_SINGLE);
+    notification_set_image (notification, NOTIFICATION_IMAGE_TYPE_ICON, noti_data->icon);
+    notification_set_text (notification, NOTIFICATION_TEXT_TYPE_TITLE, _(noti_data->title), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+    notification_set_text (notification, NOTIFICATION_TEXT_TYPE_CONTENT, _(noti_data->content), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+    notification_set_display_applist (notification, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY);
+
+    app_control_h service = NULL;
+    app_control_create (&service);
+    app_control_set_operation (service, APP_CONTROL_OPERATION_DEFAULT);
+    app_control_set_app_id (service, noti_data->launch_app);
+
+    notification_set_launch_option (notification, NOTIFICATION_LAUNCH_OPTION_APP_CONTROL, (void *)service);
+    notification_insert (notification, &noti_data->noti_id);
+    app_control_destroy (service);
+    notification_free (notification);
 }
 #endif
 
@@ -630,8 +646,9 @@ static Eina_Bool ise_launch_timeout (void *data)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     LOGW ("ISE launching timeout\n");
-
-    ise_selector_destroy ();
+#ifdef HAVE_NOTIFICATION
+    delete_notification (&ise_selector_module_noti);
+#endif
     return ECORE_CALLBACK_CANCEL;
 }
 
@@ -5183,8 +5200,9 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
         if (atom && _control_window && _ise_window) {
             ecore_x_window_prop_xid_set (_control_window, atom, ECORE_X_ATOM_WINDOW, &_ise_window, 1);
         }
-
-        ise_selector_destroy ();
+#ifdef HAVE_NOTIFICATION
+        delete_notification (&ise_selector_module_noti);
+#endif
     }
 }
 
@@ -5194,7 +5212,26 @@ static void slot_show_ise_selector (void)
 
     elm_config_scale_set (_system_scale);
 
-    ise_selector_create (get_ise_index (_panel_agent->get_current_helper_uuid ()), efl_get_app_window (), ise_selected_cb, ise_selector_deleted_cb);
+    /* Read configuations for notification app (ise-selector) */
+    String ise_selector = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_SELECTOR_PROGRAM), String (""));
+    ise_selector_module_noti.launch_app = ise_selector.c_str ();
+
+    app_control_h app_control;
+
+    app_control_create (&app_control);
+    app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
+    app_control_set_app_id (app_control, ise_selector_module_noti.launch_app);
+
+    if (app_control_send_launch_request (app_control, NULL, NULL) == APP_CONTROL_ERROR_NONE)
+    {
+        LOGD ("Succeeded to launch %s", ise_selector_module_noti.launch_app);
+    }
+    else
+    {
+        LOGD ("Failed to launch %s", ise_selector_module_noti.launch_app);
+    }
+
+    app_control_destroy (app_control);
 }
 
 static void slot_show_ise (void)
@@ -5539,19 +5576,6 @@ static void display_language_changed_cb (keynode_t *key, void* data)
         _panel_agent->set_current_ise_name (default_name);
         _config->reload ();
     }
-
-#ifdef HAVE_MINICONTROL
-    if (input_detect_minictrl.get_visibility ())
-        input_detect_minictrl.set_text (_("Input detected from hardware keyboard"), _("Tap to use virtual keyboard"));
-
-    if (ise_selector_minictrl.get_visibility ()) {
-        unsigned int idx = get_ise_index (_panel_agent->get_current_helper_uuid ());
-        String ise_name;
-        if (idx < _ime_info.size ())
-            ise_name = _ime_info[idx].label;
-        ise_selector_minictrl.set_text (_("Select input method"), ise_name.c_str ());
-    }
-#endif
 }
 #endif
 
@@ -5629,16 +5653,14 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 
         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 
-#ifdef HAVE_MINICONTROL
-        input_detect_minictrl.create ("inputpanel", EFL_CANDIDATE_THEME1, efl_get_quickpanel_window_angle ());
-        input_detect_minictrl.set_icon (EFL_CANDIDATE_THEME1, ISF_KEYBOARD_ICON_FILE);
-        input_detect_minictrl.set_text (_("Input detected from hardware keyboard"), _("Tap to use virtual keyboard"));
-        input_detect_minictrl.set_selected_callback (minictrl_clicked_cb, NULL);
-        input_detect_minictrl.show ();
-#endif
-
 #ifdef HAVE_NOTIFICATION
         notification_status_message_post (_("Input detected from hardware keyboard"));
+
+        /* Read configuations for notification app (isf-kbd-mode-changer) */
+        String kbd_mode_changer = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_KBD_MODE_CHANGER_PROGRAM), String (""));
+        hwkbd_module_noti.launch_app = kbd_mode_changer.c_str ();
+        LOGD ("Create kbd_mode_changer notification with : %s", kbd_mode_changer.c_str ());
+        create_notification (&hwkbd_module_noti);
 #endif
 
         /* Set input detected property for isf setting */
@@ -5660,9 +5682,8 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
                 set_active_ise (uuid, true);
         }
 
-#ifdef HAVE_MINICONTROL
-        if (input_detect_minictrl.get_visibility ())
-            minictrl_clicked_cb (NULL, NULL, NULL, NULL);
+#ifdef HAVE_NOTIFICATION
+        delete_notification (&hwkbd_module_noti);
 #endif
 
         /* Set input detected property for isf setting */
@@ -5688,7 +5709,9 @@ static void _bt_cb_hid_state_changed (int result, bool connected, const char *re
 {
     if (connected == false) {
        LOGD ("Bluetooth keyboard disconnected");
-       minictrl_clicked_cb (NULL, NULL, NULL, NULL);
+       if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+           change_keyboard_mode (TOOLBAR_HELPER_MODE);
+        }
     }
 }
 #endif
@@ -5759,20 +5782,19 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
                     if (get_ise_size (TOOLBAR_HELPER_MODE) >= 2) {
                         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+#ifdef HAVE_NOTIFICATION
+                        String ise_name;
+                        unsigned int idx = get_ise_index (_panel_agent->get_current_helper_uuid ());
+                        if (idx < _ime_info.size ())
+                            ise_name = _ime_info[idx].label;
 
-#ifdef HAVE_MINICONTROL
-                        if (ise_selector_minictrl.create ("ise_selector", EFL_CANDIDATE_THEME1, efl_get_quickpanel_window_angle ())) {
-                            String ise_name;
-                            unsigned int idx = get_ise_index (_panel_agent->get_current_helper_uuid ());
+                        ise_selector_module_noti.content = ise_name.c_str ();
 
-                            if (idx < _ime_info.size ())
-                                ise_name = _ime_info[idx].label;
-
-                            ise_selector_minictrl.set_text (_("Select input method"), ise_name.c_str ());
-                            ise_selector_minictrl.set_icon (EFL_CANDIDATE_THEME1, ISF_ISE_SELECTOR_ICON_FILE);
-                            ise_selector_minictrl.set_selected_callback (ise_selector_minictrl_clicked_cb, NULL);
-                            ise_selector_minictrl.show ();
-                        }
+                        /* Read configuations for notification app (ise-selector) */
+                        String ise_selector = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_SELECTOR_PROGRAM), String (""));
+                        ise_selector_module_noti.launch_app = ise_selector.c_str ();
+                        LOGD ("Create ise_selector notification with : %s", ise_selector.c_str ());
+                        create_notification (&ise_selector_module_noti);
 #endif
                     }
                 }
@@ -5807,8 +5829,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
 
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_HIDE);
 
-#ifdef HAVE_MINICONTROL
-                ise_selector_minictrl.destroy ();
+#ifdef HAVE_NOTIFICATION
+                delete_notification (&ise_selector_module_noti);
 #endif
 
                 _ise_reported_geometry.valid = false;
@@ -5821,14 +5843,6 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
         if (ev->win == efl_get_quickpanel_window ()) {
             int angle = efl_get_quickpanel_window_angle ();
             LOGD ("ev->win : %p, change window angle : %d\n", ev->win, angle);
-
-#ifdef HAVE_MINICONTROL
-            if (input_detect_minictrl.get_visibility ())
-                input_detect_minictrl.rotate (angle);
-
-            if (ise_selector_minictrl.get_visibility ())
-                ise_selector_minictrl.rotate (angle);
-#endif
         }
     }
 
@@ -6558,7 +6572,6 @@ cleanup:
     ui_candidate_delete_longpress_timer ();
     ui_candidate_delete_destroy_timer ();
     delete_ise_directory_em ();
-    ise_selector_destroy ();
     delete_ise_launch_timer ();
     ui_close_tts ();
 
