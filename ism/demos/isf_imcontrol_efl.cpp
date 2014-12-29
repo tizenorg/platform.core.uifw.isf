@@ -210,7 +210,7 @@ static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_in
     if (ret == 0)
         LOGD ("Show ISE selector is successful!\n");
     else
-        LOGD ("Show ISE selector is failed!!!\n");
+        LOGW ("Show ISE selector is failed!!!\n");
 }
 
 static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info)
