@@ -5524,9 +5524,13 @@ static void display_language_changed_cb (keynode_t *key, void* data)
     update_ise_locale ();
 
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-    String default_name = _names[get_ise_index (default_uuid)];
-    _panel_agent->set_current_ise_name (default_name);
-    _config->reload ();
+    unsigned int ise_idx = get_ise_index (default_uuid);
+
+    if (ise_idx < _names.size ()) {
+        String default_name = _names[ise_idx];
+        _panel_agent->set_current_ise_name (default_name);
+        _config->reload ();
+    }
 
 #ifdef HAVE_MINICONTROL
     if (input_detect_minictrl.get_visibility ())
