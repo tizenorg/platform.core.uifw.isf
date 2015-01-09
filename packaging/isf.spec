@@ -110,10 +110,10 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/opt/etc/dump.d/module.d
 cp -af ism/dump/isf_log_dump.sh %{buildroot}/opt/etc/dump.d/module.d
 mkdir -p %{buildroot}/opt/usr/dbspace
-if [ ! -s %{buildroot}/opt/usr/dbspace/.ime_parser.db ]; then
+if [ ! -s %{buildroot}/opt/usr/dbspace/.ime_info.db ]; then
 echo "The database file for ime will be created."
-sqlite3 %{buildroot}/opt/usr/dbspace/.ime_parser.db <<EOF
-CREATE TABLE ime_info ( appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT, kbdtype TEXT);
+sqlite3 %{buildroot}/opt/usr/dbspace/.ime_info.db <<EOF
+CREATE TABLE ime_info ( appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT);
 EOF
 fi
 
@@ -172,7 +172,7 @@ cat scim.lang > isf.lang
 %{_libdir}/libscim-*.so*
 %license COPYING
 /opt/etc/dump.d/module.d/*
-/opt/usr/dbspace/.ime_parser.db*
+%attr(660,root,app) /opt/usr/dbspace/.ime_info.db*
 
 %files devel
 %defattr(-,root,root,-)

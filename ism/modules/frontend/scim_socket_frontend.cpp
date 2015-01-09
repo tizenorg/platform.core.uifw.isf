@@ -170,7 +170,6 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
 
     if (mod_list.size ()) {
         HelperInfo           info;
-        std::vector<String>  tmp_list;
         std::vector<ImeInfoDB> ime_info;
 
         isf_db_select_all_ime_info(ime_info);
@@ -179,13 +178,12 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
             if (ime_info[i].mode == TOOLBAR_KEYBOARD_MODE)
                 continue;
             if (std::find (mod_list.begin (), mod_list.end (), ime_info[i].module_name) != mod_list.end ()) {
-                info.uuid   = ime_info[i].uuid;
+                info.uuid   = ime_info[i].appid;
                 info.name   = ime_info[i].label;
                 info.icon   = ime_info[i].iconpath;
                 info.option = ime_info[i].options;
                 SCIM_DEBUG_MAIN (3) << "  " << info.uuid << ": " << info.name << "\n";
                 __helpers.push_back (std::make_pair (info, ime_info[i].module_name));
-                tmp_list.push_back (ime_info[i].module_name);
             }
         }
     }
