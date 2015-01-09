@@ -42,6 +42,9 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "isf_query_utility.h"
+#include "scim_helper.h"
+#include <pkgmgr-info.h>
+#include <db-util.h>
 
 
 using namespace scim;
@@ -55,321 +58,656 @@ using namespace scim;
 #endif
 #define LOG_TAG                                         "ISF_QUERY"
 
+/*!
+ * \note
+ * DB Table schema
+ *
+ * ime_info
+ * +-------+------+-------+-----------+-----------+-------+-------------+-----------+-----------+
+ * | appid | uuid | label | languages | iconpath  | pkgid | pkgrootpath |  pkgtype  |  kbdtype  |
+ * +-------+------+-------+-----------+-----------+-------+-------------+-----------+-----------+
+ * |   -   |  -   |   -   |     -     |   -       |   -   |     -       |     -     |      -    |
+ * +-------+------+-------+-----------+-----------+-------+-------------+-----------+-----------+
+ *
+ * CREATE TABLE ime_info ( appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT, kbdtype TEXT)
+ *
+ */
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// DATABASE
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#define DB_PATH "/opt/usr/dbspace/.ime_parser.db"
+static struct {
+    const char* pPath;
+    sqlite3* pHandle;
+} databaseInfo = {
+    DB_PATH, NULL
+};
+
+static inline int _begin_transaction(void)
+{
+	sqlite3_stmt* pStmt = NULL;
+
+	int ret = sqlite3_prepare_v2(databaseInfo.pHandle, "BEGIN TRANSACTION", -1, &pStmt, NULL);
+	if (ret != SQLITE_OK)
+	{
+		LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		return EXIT_FAILURE;
+	}
+
+	if (sqlite3_step(pStmt) != SQLITE_DONE)
+	{
+		LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		sqlite3_finalize(pStmt);
+		return EXIT_FAILURE;
+	}
+
+	sqlite3_finalize(pStmt);
+	return EXIT_SUCCESS;
+}
+
+static inline int _rollback_transaction(void)
+{
+	sqlite3_stmt* pStmt = NULL;
+
+	int ret = sqlite3_prepare_v2(databaseInfo.pHandle, "ROLLBACK TRANSACTION", -1, &pStmt, NULL);
+	if (ret != SQLITE_OK)
+	{
+		LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		return EXIT_FAILURE;
+	}
+
+	if (sqlite3_step(pStmt) != SQLITE_DONE)
+	{
+		LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		sqlite3_finalize(pStmt);
+		return EXIT_FAILURE;
+	}
+
+	sqlite3_finalize(pStmt);
+	return EXIT_SUCCESS;
+}
+
+static inline int _commit_transaction(void)
+{
+	sqlite3_stmt* pStmt = NULL;
+
+	int ret = sqlite3_prepare_v2(databaseInfo.pHandle, "COMMIT TRANSACTION", -1, &pStmt, NULL);
+	if (ret != SQLITE_OK)
+	{
+		LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		return EXIT_FAILURE;
+	}
+
+	if (sqlite3_step(pStmt) != SQLITE_DONE)
+	{
+		LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		sqlite3_finalize(pStmt);
+		return EXIT_FAILURE;
+	}
+
+	sqlite3_finalize(pStmt);
+	return EXIT_SUCCESS;
+}
+
+static inline int _db_create_ime_info(void)
+{
+	char* pException = NULL;
+	static const char* pQuery = "CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT, kbdtype TEXT)";
+
+	if (sqlite3_exec(databaseInfo.pHandle, pQuery, NULL, NULL, &pException) != SQLITE_OK) {
+		LOGE("%s", pException);
+		return -EIO;
+	}
+
+	if (sqlite3_changes(databaseInfo.pHandle) == 0) {
+		LOGD("The database is not changed.");
+	}
+
+	return 0;
+}
+
+static inline void _db_create_table(void)
+{
+	_begin_transaction();
+
+	int ret = _db_create_ime_info();
+	if (ret < 0) {
+		_rollback_transaction();
+		return;
+	}
+
+	_commit_transaction();
+}
+
+static inline int _db_init(void)
+{
+	struct stat stat;
+
+	int ret = db_util_open(databaseInfo.pPath, &databaseInfo.pHandle, DB_UTIL_REGISTER_HOOK_METHOD);
+	if (ret != SQLITE_OK) {
+		LOGE("sqlite3 return code: %d", ret);
+		return -EIO;
+	}
+
+	if (lstat(databaseInfo.pPath, &stat) < 0) {
+		LOGE("%s", strerror(errno));
+		db_util_close(databaseInfo.pHandle);
+		databaseInfo.pHandle = NULL;
+		return -EIO;
+	}
+
+	if (!S_ISREG(stat.st_mode)) {
+		LOGE("S_ISREG failed.");
+		db_util_close(databaseInfo.pHandle);
+		databaseInfo.pHandle = NULL;
+		return -EINVAL;
+	}
+
+	if (!stat.st_size) {
+		LOGE("The RPM file has not been installed properly.");
+		_db_create_table();
+	}
+
+	return 0;
+}
+
+static inline int _db_connect(void)
+{
+	if (!databaseInfo.pHandle) {
+		int ret = _db_init();
+		if (ret < 0)
+		{
+			LOGE("%d", ret);
+			return -EIO;
+		}
+	}
+
+	return 0;
+}
+
+static inline int _db_disconnect(void)
+{
+	if (!databaseInfo.pHandle)
+		return 0;
+
+	db_util_close(databaseInfo.pHandle);
+
+	databaseInfo.pHandle = NULL;
+
+	return 0;
+}
 
 /**
- * @brief Get normalized language name.
+ * @brief Insert data to ime_info table.
  *
- * @param src_str The language name before normalized.
+ * @param ime_info The list to store ImeInfoDB
  *
- * @return normalized language name.
+ * @return the number of inserted data.
  */
-EAPI String isf_get_normalized_language (String src_str)
+static inline int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
 {
-    if (src_str.length () == 0)
-        return String ("en");
+	int ret = 0, i = 0;
+	sqlite3_stmt* pStmt = NULL;
+	std::vector<ImeInfoDB>::iterator iter;
+	static const char* pQuery = "INSERT INTO ime_info (appid, uuid, label, languages, iconpath, pkgid, pkgrootpath, pkgtype, kbdtype) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    std::vector<String> str_list, dst_list;
-    scim_split_string_list (str_list, src_str);
+	ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+	if (ret != SQLITE_OK) {
+		LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		return 0;
+	}
 
-    for (size_t i = 0; i < str_list.size (); i++)
-        dst_list.push_back (scim_get_normalized_language (str_list[i]));
+	for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
+		ret = sqlite3_bind_text(pStmt, 1, iter->appid.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
 
-    String dst_str =  scim_combine_string_list (dst_list);
+		ret = sqlite3_bind_text(pStmt, 2, iter->uuid.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
 
-    return dst_str;
+		ret = sqlite3_bind_text(pStmt, 3, iter->label.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		ret = sqlite3_bind_text(pStmt, 4, iter->languages.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		ret = sqlite3_bind_text(pStmt, 5, iter->iconpath.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		ret = sqlite3_bind_text(pStmt, 6, iter->pkgid.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		ret = sqlite3_bind_text(pStmt, 7, iter->pkgrootpath.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		ret = sqlite3_bind_text(pStmt, 8, iter->pkgtype.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		ret = sqlite3_bind_text(pStmt, 9, iter->kbdtype.c_str(), -1, SQLITE_TRANSIENT);
+		if (ret != SQLITE_OK) {
+			LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			goto out;
+		}
+
+		if (sqlite3_step(pStmt) != SQLITE_DONE) {
+			LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+			ret = SQLITE_ERROR;
+			goto out;
+		}
+		else {
+			LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+				iter->appid.c_str(), iter->uuid.c_str(), iter->label.c_str(), iter->languages.c_str(),
+				iter->iconpath.c_str(), iter->pkgid.c_str(), iter->pkgrootpath.c_str(), iter->pkgtype.c_str(),
+				iter->kbdtype.c_str());
+		}
+		sqlite3_reset(pStmt);
+		sqlite3_clear_bindings(pStmt);
+		i++;
+	}
+
+out:
+	if (ret != SQLITE_OK) {
+		sqlite3_reset(pStmt);
+		sqlite3_clear_bindings(pStmt);
+	}
+	sqlite3_finalize(pStmt);
+
+	return i;
 }
 
-EAPI void isf_get_ise_info_from_string (const char *str, ISEINFO &info)
+/**
+ * @brief Update label data by appid in ime_info table.
+ *
+ * @param appid appid in ime_info table.
+ * @param label label to be updated in ime_info table.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static inline int _db_update_label_ime_info(const char *appid, const char *label)
 {
-    if (str == NULL || strlen (str) == 0)
-        return;
+	int ret = 0;
+	sqlite3_stmt* pStmt = NULL;
+	static const char* pQuery = "UPDATE ime_info SET label = ? WHERE appid = ?";
 
-    char *buf = strdup (str);
-    if (buf == NULL)
-        return;
+	if (appid == NULL || label == NULL) {
+		LOGE("input is NULL.");
+		return 0;
+	}
 
-    int len = strlen (buf);
-    for (int i = 0; i < len; i++) {
-        if (buf[i] == ':' || buf[i] == '\n')
-            buf[i] = '\0';
-    }
+	ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+	if (ret != SQLITE_OK) {
+		LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		return 0;
+	}
 
-    int j = 0;
-    info.name = buf + j;
-    j += strlen (buf + j) + 1;
-    info.uuid = buf + j;
-    j += strlen (buf + j) + 1;
-    info.module = buf + j;
-    j += strlen (buf + j) + 1;
-    info.language = buf + j;
-    j += strlen (buf + j) + 1;
-    info.icon = buf + j;
-    j += strlen (buf + j) + 1;
-    info.mode = (TOOLBAR_MODE_T)atoi (buf + j);
-    j += strlen (buf + j) + 1;
-    info.option = (uint32)atoi (buf + j);
-    j += strlen (buf + j) + 1;
-    info.locales = buf + j;
+	ret = sqlite3_bind_text(pStmt, 1, label, -1, SQLITE_TRANSIENT);
+	if (ret != SQLITE_OK) {
+		LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		ret = 0;
+		goto out;
+	}
 
-    free (buf);
+	ret = sqlite3_bind_text(pStmt, 2, appid, -1, SQLITE_TRANSIENT);
+	if (ret != SQLITE_OK) {
+		LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		ret = 0;
+		goto out;
+	}
+
+	ret = sqlite3_step(pStmt);
+	if (ret != SQLITE_DONE) {
+		LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		ret = 0;
+	}
+	else {
+		LOGD("UPDATE ime_info SET label = %s WHERE appid = %s", label, appid);
+		ret = 1;
+	}
+
+out:
+	sqlite3_reset(pStmt);
+	sqlite3_clear_bindings(pStmt);
+	sqlite3_finalize(pStmt);
+	return ret;
 }
 
-EAPI String isf_combine_ise_info_string (String name, String uuid, String module, String language,
-                                    String icon, String mode, String option, String locales)
+static int filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 {
-        String line = name + String (":") + uuid + String (":") + module + String (":") + language + String (":") +
-                      icon + String (":") + mode + String (":") + option + String (":") + locales + String ("\n");
-        return line;
+	int ret = 0;
+	char *appid = NULL, *icon = NULL, *pkgid = NULL, *pkgtype = NULL, *label = NULL, *path = NULL;
+	pkgmgrinfo_pkginfo_h  pkginfo_handle = NULL;
+	ImeInfoDB ime_db;
+	std::vector<ImeInfoDB> ime_info;
+
+	/* appid */
+	ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
+	if (ret == PMINFO_R_OK)
+		ime_db.appid = String(appid);
+
+	/* iconpath */
+	ret = pkgmgrinfo_appinfo_get_icon( handle, &icon);
+	if (ret == PMINFO_R_OK)
+		ime_db.iconpath = String(icon);
+
+	/* pkgid */
+	ret = pkgmgrinfo_appinfo_get_pkgid(handle, &pkgid);
+	if (ret == PMINFO_R_OK)
+		ime_db.pkgid = String(pkgid);
+
+	/* get pkgmgrinfo_pkginfo_h */
+	ret = pkgmgrinfo_pkginfo_get_pkginfo(pkgid, &pkginfo_handle);
+	if (ret == PMINFO_R_OK && pkginfo_handle) {
+		/* pkgtype */
+		ret = pkgmgrinfo_pkginfo_get_type(pkginfo_handle, &pkgtype);
+		if (ret == PMINFO_R_OK)
+			ime_db.pkgtype = String(pkgtype);
+
+		/* label */
+		ret = pkgmgrinfo_pkginfo_get_label(pkginfo_handle, &label);
+		if (ret == PMINFO_R_OK)
+			ime_db.label = String(label);
+
+		/* pkgrootpath */
+		ret = pkgmgrinfo_pkginfo_get_root_path(pkginfo_handle, &path);
+		if (ret == PMINFO_R_OK)
+			ime_db.pkgrootpath = String(path);
+
+		pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
+	}
+
+	ime_db.languages = String("en");
+
+	ime_info.push_back(ime_db);
+	_db_insert_ime_info(ime_info);
+
+	return 0;
 }
 
-EAPI bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list)
+/**
+ * @brief Select all ime_info table.
+ *
+ * @param ime_info The list to store ImeInfoDB
+ *
+ * @return the number of selected row.
+ */
+static inline int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 {
-    info_list.clear ();
-    FILE *engine_list_file = fopen (filename, "r");
-    if (engine_list_file == NULL) {
-        std::cerr << "failed to open " << filename << "\n";
-        return false;
-    }
+	int ret = 0, i = 0;
+	bool firsttry = true;
+	ImeInfoDB info;
+	sqlite3_stmt* pStmt = NULL;
+	std::vector <String> module_list;
+	String module_name;
+	size_t found = 0;
+	static const char* pQuery = "SELECT * FROM ime_info";
 
-    char buf[MAXLINE];
-    while (fgets (buf, MAXLINE, engine_list_file) != NULL && strlen (buf) > 0) {
-        ISEINFO info;
-        isf_get_ise_info_from_string (buf, info);
 
-        info_list.push_back (info);
-    }
+	do {
+		if (i == 0) {
+			ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+			if (ret != SQLITE_OK) {
+				LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+				return 0;
+			}
+		}
 
-    fclose (engine_list_file);
-    return true;
+		ret = sqlite3_step(pStmt);
+		if (ret == SQLITE_ROW) {
+			info.appid = String((char *)sqlite3_column_text(pStmt, 0));
+			info.uuid = String((char *)sqlite3_column_text(pStmt, 1));
+			info.label = String((char *)sqlite3_column_text(pStmt, 2));
+			info.languages = String((char *)sqlite3_column_text(pStmt, 3));
+			info.iconpath = String((char *)sqlite3_column_text(pStmt, 4));
+			info.pkgid = String((char *)sqlite3_column_text(pStmt, 5));
+			info.pkgrootpath = String((char *)sqlite3_column_text(pStmt, 6));
+			info.pkgtype = String((char *)sqlite3_column_text(pStmt, 7));
+			info.kbdtype = String((char *)sqlite3_column_text(pStmt, 8));
+
+			LOGD("appid=\"%s\", uuid=\"%s\", label=\"%s\", languages=\"%s\", iconpath=\"%s\", pkgid=\"%s\", pkgrootpath=\"%s\", pkgtype=\"%s\", kbdtype=\"%s\"",
+				info.appid.c_str(),
+				info.uuid.c_str(),
+				info.label.c_str(),
+				info.languages.c_str(),
+				info.iconpath.c_str(),
+				info.pkgid.c_str(),
+				info.pkgrootpath.c_str(),
+				info.pkgtype.c_str(),
+				info.kbdtype.c_str());
+
+			if (info.kbdtype.compare("SOFTWARE_KEYBOARD_ISE") == 0) {
+				info.mode = TOOLBAR_HELPER_MODE;
+				info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
+
+				if (info.pkgtype.compare("wgt") == 0) {
+					info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | SCIM_HELPER_AUTO_RESTART;
+					info.module_name = String("ise-web-helper-agent");
+				}
+				else 	{
+					info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
+
+					found = info.appid.find_last_of('.');
+					if (found != String::npos)
+						info.module_name = info.appid.substr(found+1);
+					else
+						info.module_name = info.appid;
+
+					if (scim_get_helper_module_list(module_list)) {
+						if (std::find (module_list.begin(), module_list.end(), info.module_name) == module_list.end())
+							LOGE("Module name \"%s\" can't be found in scim_get_helper_module_list().", info.module_name.c_str());
+					}
+				}
+			}
+			else /*if (info.kbdtype.compare("HARDWARE_KEYBOARD_ISE") == 0)*/ {
+				info.mode = TOOLBAR_KEYBOARD_MODE;
+				info.options = 0;
+
+				found = info.appid.find_last_of('.');
+				if (found != String::npos)
+					info.module_name = info.appid.substr(found+1);
+				else
+					info.module_name = info.appid;
+
+				if (scim_get_imengine_module_list(module_list)) {
+					if (std::find (module_list.begin(), module_list.end(), info.module_name) == module_list.end())
+						LOGE("Module name \"%s\" can't be found in scim_get_imengine_module_list().", info.module_name.c_str());
+				}
+			}
+
+			ime_info.push_back(info);
+			i++;
+		}
+		else if (i == 0 && firsttry) {
+			LOGD("sqlite3_step returned %d, empty DB", ret);
+			firsttry = false;
+
+			sqlite3_reset(pStmt);
+			sqlite3_clear_bindings(pStmt);
+			sqlite3_finalize(pStmt);
+
+			pkgmgrinfo_appinfo_filter_h handle;
+			ret = pkgmgrinfo_appinfo_filter_create(&handle);
+			if (ret == PMINFO_R_OK) {
+				ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime");
+				if (ret == PMINFO_R_OK) {
+					ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, filtered_app_list_cb, NULL);
+				}
+				pkgmgrinfo_appinfo_filter_destroy(handle);
+			}
+			ret = SQLITE_ROW;
+		}
+	} while (ret == SQLITE_ROW);
+
+	if (ret != SQLITE_DONE) {
+		LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+	}
+
+	sqlite3_reset(pStmt);
+	sqlite3_clear_bindings(pStmt);
+	sqlite3_finalize(pStmt);
+	return i;
 }
 
-EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list)
+/**
+ * @brief Select all ime_info table.
+ *
+ * @param appid appid to select ime_info row.
+ * @param pImeInfo The pointer of ImeInfoDB.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static inline int _db_select_ime_info(const char *appid, ImeInfoDB *pImeInfo)
 {
-    LOGD ("Enter");
-    if (info_list.size () <= 0)
-        return false;
+	int ret = 0, i = 0;
+	sqlite3_stmt* pStmt = NULL;
+	static const char* pQuery = "SELECT * FROM ime_info WHERE appid = ?";
 
-    /* In order to avoid file writing failed, firstly save ISE information to temporary file */
-    bool   bSuccess = true;
-    String strTempFile = String (filename) + String (".tmp");
+	if (appid == NULL || pImeInfo == NULL) {
+		LOGE("invalid parameter.");
+		return 0;
+	}
 
-    FILE *engine_list_file = fopen (strTempFile.c_str (), "w+");
-    if (engine_list_file == NULL) {
-        LOGW ("Failed to open %s!!!\n", strTempFile.c_str ());
-        return false;
-    }
+	pImeInfo->appid.clear();
+	pImeInfo->uuid.clear();
+	pImeInfo->label.clear();
+	pImeInfo->languages.clear();
+	pImeInfo->iconpath.clear();
+	pImeInfo->pkgid.clear();
+	pImeInfo->pkgrootpath.clear();
+	pImeInfo->pkgtype.clear();
+	pImeInfo->kbdtype.clear();
 
-    std::vector<ISEINFO>::iterator iter;
-    for (iter = info_list.begin (); iter != info_list.end (); iter++) {
-        char mode[12];
-        char option[12];
-        snprintf (mode, sizeof (mode), "%d", (int)iter->mode);
-        snprintf (option, sizeof (option), "%d", iter->option);
+	ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+	if (ret != SQLITE_OK) {
+		LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+		return 0;
+	}
 
-        String line = isf_combine_ise_info_string (iter->name, iter->uuid, iter->module, iter->language,
-                                                   iter->icon, String (mode), String (option), iter->locales);
-        if (fputs (line.c_str (), engine_list_file) < 0) {
-            bSuccess = false;
-            LOGW ("Failed to write (%s)!!!\n", line.c_str ());
-            break;
-        }
-    }
+	ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
+	if (ret != SQLITE_OK) {
+		LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+		goto out;
+	}
 
-    int ret = fclose (engine_list_file);
-    if (ret != 0) {
-        bSuccess = false;
-        LOGW ("Failed to fclose %s!!!\n", strTempFile.c_str ());
-    }
+	ret = sqlite3_step(pStmt);
+	if (ret != SQLITE_ROW) {
+		LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+		goto out;
+	}
+	i = 1;
 
-    if (bSuccess) {
-        if (rename (strTempFile.c_str (), filename) != 0) {
-            bSuccess = false;
-            LOGW ("Failed to rename %s!!!\n", filename);
-        }
-    }
+	pImeInfo->appid = String((char*)sqlite3_column_text(pStmt, 0));
+	pImeInfo->uuid = String((char*)sqlite3_column_text(pStmt, 1));
+	pImeInfo->label = String((char*)sqlite3_column_text(pStmt, 2));
+	pImeInfo->languages = String((char*)sqlite3_column_text(pStmt, 3));
+	pImeInfo->iconpath = String((char*)sqlite3_column_text(pStmt, 4));
+	pImeInfo->pkgid = String((char*)sqlite3_column_text(pStmt, 5));
+	pImeInfo->pkgrootpath = String((char*)sqlite3_column_text(pStmt, 6));
+	pImeInfo->pkgtype = String((char*)sqlite3_column_text(pStmt, 7));
+	pImeInfo->kbdtype = String((char*)sqlite3_column_text(pStmt, 8));
 
-    LOGD ("Exit");
-    return bSuccess;
+	LOGD("appid=\"%s\", uuid=\"%s\", label=\"%s\", languages=\"%s\", iconpath=\"%s\", pkgid=\"%s\", pkgrootpath=\"%s\", pkgtype=\"%s\", kbdtype=\"%s\"",
+		pImeInfo->appid.c_str(),
+		pImeInfo->uuid.c_str(),
+		pImeInfo->label.c_str(),
+		pImeInfo->languages.c_str(),
+		pImeInfo->iconpath.c_str(),
+		pImeInfo->pkgid.c_str(),
+		pImeInfo->pkgrootpath.c_str(),
+		pImeInfo->pkgtype.c_str(),
+		pImeInfo->kbdtype.c_str());
+
+out:
+	sqlite3_reset(pStmt);
+	sqlite3_clear_bindings(pStmt);
+	sqlite3_finalize(pStmt);
+	return i;
 }
 
-static void add_keyboard_info_to_list (std::vector<ISEINFO> &info_list, const char *module_name, const ConfigPointer &config)
+/**
+ * @brief Select all ime_info table.
+ *
+ * @param ime_info The list to store ImeInfoDB
+ *
+ * @return the number of selected row.
+ */
+EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 {
-    if (module_name == NULL)
-        return;
+	int ret = 0;
 
-    IMEngineFactoryPointer factory;
-    IMEngineModule         ime_module;
-    ime_module.load (module_name, config);
-    if (ime_module.valid ()) {
-        for (size_t j = 0; j < ime_module.number_of_factories (); ++j) {
-            try {
-                factory = ime_module.create_factory (j);
-            } catch (...) {
-                factory.reset ();
-            }
+	ime_info.clear();
 
-            if (!factory.null ()) {
-                ISEINFO info;
+	if (_db_connect() == 0) {
+		ret = _db_select_all_ime_info(ime_info);
+		_db_disconnect();
+	}
 
-                info.name = utf8_wcstombs (factory->get_name ());
-                info.uuid = factory->get_uuid ();
-                info.module = module_name;
-                info.language = isf_get_normalized_language (factory->get_language ());
-                info.icon = factory->get_icon_file ();
-                info.mode = TOOLBAR_KEYBOARD_MODE;
-                info.option = factory->get_option ();
-                info.locales = factory->get_locales ();
-
-                info_list.push_back (info);
-                factory.reset ();
-            }
-        }
-        ime_module.unload ();
-    }
+	return ret;
 }
 
-static void add_helper_info_to_list (std::vector<ISEINFO> &info_list, const char *module_name)
+/**
+ * @brief Insert data to ime_info table.
+ *
+ * @param ime_info The list to store ImeInfoDB
+ *
+ * @return the number of inserted data.
+ */
+EAPI int isf_db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
 {
-    if (module_name == NULL)
-        return;
+	int ret = 0;
 
-    HelperModule helper_module;
-    HelperInfo   helper_info;
-    helper_module.load (module_name);
-    if (helper_module.valid ()) {
-        for (size_t j = 0; j < helper_module.number_of_helpers (); ++j) {
-            ISEINFO info;
-            helper_module.get_helper_info (j, helper_info);
-            info.name = helper_info.name;
-            info.uuid = helper_info.uuid;
-            info.module = module_name;
-            info.language = isf_get_normalized_language (helper_module.get_helper_lang (j));
-            info.icon = helper_info.icon;
-            info.mode = TOOLBAR_HELPER_MODE;
-            info.option = helper_info.option;
-            info.locales = String ("");
+	if (ime_info.size() < 1) {
+		LOGE("Nothing to insert.");
+		return ret;
+	}
 
-            info_list.push_back (info);
-        }
-        helper_module.unload ();
-    }
+	if (_db_connect() == 0) {
+		ret = _db_insert_ime_info(ime_info);
+		_db_disconnect();
+	}
+
+	return ret;
 }
 
-static void remove_ise_info_from_list (std::vector<ISEINFO> &info_list, const char *module_name)
+/**
+ * @brief Update label data by appid in ime_info table.
+ *
+ * @param appid appid in ime_info table.
+ * @param label label to be updated in ime_info table.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+EAPI int isf_db_update_label_ime_info(const char *appid, const char *label)
 {
-    if (module_name == NULL)
-        return;
-
-    std::vector<ISEINFO>::iterator iter;
-    while (info_list.size () > 0) {
-        for (iter = info_list.begin (); iter != info_list.end (); iter++) {
-            if (iter->module == module_name)
-                break;
-        }
-
-        if (iter !=  info_list.end ())
-            info_list.erase (iter);
-        else
-            break;
-    }
-}
-
-static void remove_ise_info_from_list_by_uuid (std::vector<ISEINFO> &info_list, const char *uuid)
-{
-    if (uuid == NULL)
-        return;
-
-    std::vector<ISEINFO>::iterator iter;
-    while (info_list.size () > 0) {
-        for (iter = info_list.begin (); iter != info_list.end (); iter++) {
-            if (iter->uuid == uuid)
-                break;
-        }
-
-        if (iter !=  info_list.end ())
-            info_list.erase (iter);
-        else
-            break;
-    }
-}
-
-EAPI bool isf_add_keyboard_info_to_file (const char *filename, const char *module_name, const ConfigPointer &config)
-{
-    std::vector<ISEINFO> info_list;
-    std::vector<ISEINFO>::iterator iter;
-    isf_read_ise_info_list (filename, info_list);
-
-    /* Firstly, remove the info of the specified modules from info_list */
-    remove_ise_info_from_list (info_list, module_name);
-
-    add_keyboard_info_to_list (info_list, module_name, config);
-
-    return isf_write_ise_info_list (filename, info_list);
-}
-
-EAPI bool isf_add_helper_info_to_file (const char *filename, const char *module_name)
-{
-    std::vector<ISEINFO> info_list;
-    std::vector<ISEINFO>::iterator iter;
-    isf_read_ise_info_list (filename, info_list);
-
-    /* Firstly, remove the info of the specified modules from info_list */
-    remove_ise_info_from_list (info_list, module_name);
-
-    add_helper_info_to_list (info_list, module_name);
-
-    return isf_write_ise_info_list (filename, info_list);
-}
-
-EAPI bool isf_remove_ise_info_from_file (const char *filename, const char *module_name)
-{
-    std::vector<ISEINFO> info_list;
-    std::vector<ISEINFO>::iterator iter;
-
-    if (isf_read_ise_info_list (filename, info_list)) {
-
-        remove_ise_info_from_list (info_list, module_name);
-
-        return isf_write_ise_info_list (filename, info_list);
-    }
-    return false;
-}
-
-EAPI bool isf_remove_ise_info_from_file_by_uuid (const char *filename, const char *uuid)
-{
-    std::vector<ISEINFO> info_list;
-    std::vector<ISEINFO>::iterator iter;
-
-    if (isf_read_ise_info_list (filename, info_list)) {
-
-        remove_ise_info_from_list_by_uuid (info_list, uuid);
-
-        return isf_write_ise_info_list (filename, info_list);
-    }
-    return false;
-}
-
-EAPI void isf_update_ise_info_to_file (const char *filename, const ConfigPointer &config)
-{
-    if (filename == NULL)
-        return;
-
-    std::vector<ISEINFO> info_list;
-
-    std::vector<String> imengine_list;
-    scim_get_imengine_module_list (imengine_list);
-    for (size_t i = 0; i < imengine_list.size (); ++i) {
-        if (imengine_list[i] != String ("socket"))
-            add_keyboard_info_to_list (info_list, imengine_list[i].c_str (), config);
-    }
-
-    std::vector<String> helper_list;
-    scim_get_helper_module_list (helper_list);
-    for (size_t i = 0; i < helper_list.size (); ++i) {
-        add_helper_info_to_list (info_list, helper_list[i].c_str ());
-    }
-
-    isf_write_ise_info_list (filename, info_list);
+	int ret = 0;
+	if (_db_connect() == 0) {
+		ret = _db_update_label_ime_info(appid, label);
+		_db_disconnect();
+	}
+	return ret;
 }
 
 /*

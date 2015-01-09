@@ -35,6 +35,7 @@ BuildRequires:  pkgconfig(feedback)
 BuildRequires:  efl-extension-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
+BuildRequires:  pkgconfig(db-util)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
@@ -108,6 +109,13 @@ rm -rf %{buildroot}
 %make_install
 mkdir -p %{buildroot}/opt/etc/dump.d/module.d
 cp -af ism/dump/isf_log_dump.sh %{buildroot}/opt/etc/dump.d/module.d
+mkdir -p %{buildroot}/opt/usr/dbspace
+if [ ! -s %{buildroot}/opt/usr/dbspace/.ime_parser.db ]; then
+echo "The database file for ime will be created."
+sqlite3 %{buildroot}/opt/usr/dbspace/.ime_parser.db <<EOF
+CREATE TABLE ime_info ( appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT, kbdtype TEXT);
+EOF
+fi
 
 mkdir -p %{buildroot}/etc/scim/conf
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
@@ -155,7 +163,6 @@ cat scim.lang > isf.lang
 %endif
 %{_bindir}/scim
 %{_bindir}/isf-log
-%{_bindir}/isf-query-engines
 %{_libdir}/scim-1.0/1.4.0/IMEngine/socket.so
 %{_libdir}/scim-1.0/1.4.0/Config/simple.so
 %{_libdir}/scim-1.0/1.4.0/Config/socket.so
@@ -165,6 +172,7 @@ cat scim.lang > isf.lang
 %{_libdir}/libscim-*.so*
 %license COPYING
 /opt/etc/dump.d/module.d/*
+/opt/usr/dbspace/.ime_parser.db*
 
 %files devel
 %defattr(-,root,root,-)
