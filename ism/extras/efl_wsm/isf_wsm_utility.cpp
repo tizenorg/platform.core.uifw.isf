@@ -33,7 +33,7 @@
 #include "scim.h"
 #include "scim_stl_map.h"
 #include "isf_wsm_utility.h"
-#include "isf_query_utility.h"
+#include "isf_wsm_query_utility.h"
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dlog.h>

@@ -170,70 +170,23 @@ void SocketFrontEnd::load_helper_modules (const std::vector<String> &load_engine
 
     if (mod_list.size ()) {
         HelperInfo           info;
-        std::vector<ISEINFO> info_list;
         std::vector<String>  tmp_list;
-        bool ret = isf_read_ise_info_list (USER_ENGINE_FILE_NAME, info_list);
-        if (!ret) {
-            std::cerr << __func__ << " Failed to read(" << USER_ENGINE_FILE_NAME << ")\n";
-        }
-        for (i = 0; i < info_list.size (); ++i) {
-            if (info_list [i].mode != TOOLBAR_HELPER_MODE)
+        std::vector<ImeInfoDB> ime_info;
+
+        isf_db_select_all_ime_info(ime_info);
+
+        for (i = 0; i < ime_info.size (); ++i) {
+            if (ime_info[i].mode == TOOLBAR_KEYBOARD_MODE)
                 continue;
-            if (std::find (mod_list.begin (), mod_list.end (), info_list [i].module) != mod_list.end ()) {
-                info.uuid   = info_list [i].uuid;
-                info.name   = info_list [i].name;
-                info.icon   = info_list [i].icon;
-                info.option = info_list [i].option;
+            if (std::find (mod_list.begin (), mod_list.end (), ime_info[i].module_name) != mod_list.end ()) {
+                info.uuid   = ime_info[i].uuid;
+                info.name   = ime_info[i].label;
+                info.icon   = ime_info[i].iconpath;
+                info.option = ime_info[i].options;
                 SCIM_DEBUG_MAIN (3) << "  " << info.uuid << ": " << info.name << "\n";
-                __helpers.push_back (std::make_pair (info, info_list [i].module));
-                tmp_list.push_back (info_list [i].module);
+                __helpers.push_back (std::make_pair (info, ime_info[i].module_name));
+                tmp_list.push_back (ime_info[i].module_name);
             }
-        }
-
-        HelperModule module;
-        String filename = String (USER_ENGINE_FILE_NAME);
-        FILE *engine_list_file = fopen (filename.c_str (), "a");
-        if (!engine_list_file) {
-            LOGW ("Failed to open %s!!!\n", filename.c_str ());
-        }
-
-        for (i = 0; i < mod_list.size (); ++i) {
-            if (std::find (tmp_list.begin (), tmp_list.end (), mod_list [i]) != tmp_list.end ())
-                continue;
-
-            SCIM_DEBUG_MAIN (2) << " Load module: " << mod_list [i] << "\n";
-
-            if (module.load (mod_list [i]) && module.valid ()) {
-                size_t num = module.number_of_helpers ();
-
-                SCIM_DEBUG_MAIN (2) << " Find " << num << " Helpers:\n";
-
-                for (size_t j = 0; j < num; ++j) {
-                    if (module.get_helper_info (j, info)) {
-                        SCIM_DEBUG_MAIN (3) << "  " << info.uuid << ": " << info.name << "\n";
-                        __helpers.push_back (std::make_pair (info, mod_list [i]));
-
-                        if (engine_list_file) {
-                            char mode[12];
-                            char option[12];
-                            snprintf (mode, sizeof (mode), "%d", (int)TOOLBAR_HELPER_MODE);
-                            snprintf (option, sizeof (option), "%d", info.option);
-
-                            String line = isf_combine_ise_info_string (info.name, info.uuid, mod_list [i], isf_get_normalized_language (module.get_helper_lang (j)),
-                                                                       info.icon, String (mode), String (option), String (""));
-                            if (fputs (line.c_str (), engine_list_file) < 0)
-                                LOGW ("Failed to write (%s)!!!\n", line.c_str ());
-                        }
-                    }
-                }
-            }
-
-            module.unload ();
-        }
-        if (engine_list_file) {
-            int iret = fclose (engine_list_file);
-            if (iret != 0)
-                LOGW ("Failed to fclose %s!!!\n", filename.c_str ());
         }
     }
 }
@@ -1135,7 +1088,7 @@ SocketFrontEnd::socket_receive_callback (SocketServer *server, const Socket &cli
 bool
 SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &client)
 {
-    SCIM_DEBUG_FRONTEND (2) << " Open socket connection for client " << client.get_id () 
+    SCIM_DEBUG_FRONTEND (2) << " Open socket connection for client " << client.get_id ()
         << "  number of clients=" << m_socket_client_repository.size () << ".\n";
 
     uint32 key;

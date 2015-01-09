@@ -142,7 +142,10 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  isf_imcontrol_client.cpp \
 			  isf_query_utility.cpp
 
-libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@ @DLOG_CFLAGS@ @VCONF_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@
+libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@  @TZPLATFORM_CONFIG_CFLAGS@\
+			  @DLOG_CFLAGS@ \
+			  @VCONF_CFLAGS@ \
+			  @PKGMGR_INFO_CFLAGS@
 
 libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
 			  -export-dynamic \
@@ -154,8 +157,14 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LTLIBINTL@ \
 			  @EFL_LIBS@ \
 			  @VCONF_LIBS@ \
+			  @PKGMGR_INFO_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
 			  -lstdc++
+
+if ISF_BUILD_DB_UTIL
+libscim@SCIM_EPOCH@_la_CXXFLAGS  += @DB_UTIL_CFLAGS@
+libscim@SCIM_EPOCH@_la_LDFLAGS   += @DB_UTIL_LIBS@
+endif
 
 if HAVE_X
 libscim@SCIM_EPOCH@_la_CXXFLAGS += @ECOREX_CFLAGS@
@@ -165,7 +174,7 @@ endif
 libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 
 
-bin_PROGRAMS		= scim isf-log isf-query-engines
+bin_PROGRAMS		= scim isf-log
 
 scim_SOURCES	 	= scim.cpp
 scim_CXXFLAGS		= @EFL_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ @VCONF_CFLAGS@ -fPIE
@@ -186,11 +195,6 @@ else
 isf_log_CXXFLAGS	= -fPIE
 isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -lglib-2.0 -lgobject-2.0 -pie
 endif
-
-isf_query_engines_SOURCES  = isf_query_engines.cpp
-isf_query_engines_CXXFLAGS = @VCONF_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ -fPIE
-isf_query_engines_LDADD    = libscim@SCIM_EPOCH@.la
-isf_query_engines_LDFLAGS  = @LTLIBINTL@ @VCONF_LIBS@ @PRIVILEGE_CONTROL_LIBS@ -pie
 
 libexecdir		= $(libdir)/scim@SCIM_EPOCH@
 libexec_PROGRAMS        = scim-launcher scim-helper-launcher

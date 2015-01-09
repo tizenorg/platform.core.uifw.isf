@@ -33,19 +33,14 @@
 #include "iseselector.h"
 #include "center_popup.h"
 #include "isf_panel_efl.h"
+#include "isf_query_utility.h"
 #if HAVE_UIGADGET
 #include <ui-gadget.h>
 #endif
 
 using namespace scim;
 
-extern std::vector<String>          _uuids;
-extern std::vector<String>          _names;
-extern std::vector<String>          _module_names;
-extern std::vector<String>          _langs;
-extern std::vector<String>          _icons;
-extern std::vector<uint32>          _options;
-extern std::vector<TOOLBAR_MODE_T>  _modes;
+extern std::vector<ImeInfoDB> _ime_info;
 
 static const unsigned int ISE_SELECTOR_ITEM_HEIGHT = 98;
 static const unsigned int ISE_SELECTOR_MAX_ITEM = 4;
@@ -71,12 +66,12 @@ static char *
 gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
 {
     int index = (int)(reinterpret_cast<long>(data));
-    if (index < 0 || index >= (int)_names.size ())
+    if (index < 0 || index >= (int)_ime_info.size())
         return NULL;
 
     if (!strcmp (part, "elm.text.main.left") ||
         !strcmp (part, "elm.text")) {
-        return strdup (_names[index].c_str ());
+        return strdup (_ime_info[index].label.c_str ());
     }
 
     return NULL;
@@ -87,7 +82,7 @@ gl_icon_get (void *data, Evas_Object *obj, const char *part)
 {
     unsigned int index = (int)(reinterpret_cast<long>(data));
 
-    if (index >= _uuids.size ())
+    if (index >= _ime_info.size())
         return NULL;
 
     if (!strcmp (part, "elm.icon.right")) {
@@ -117,7 +112,7 @@ gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
 
     LOGD ("selected item : %d\n", index);
 
-    if (index >= _uuids.size ())
+    if (index >= _ime_info.size())
         return;
 
     if (_ise_selector_radio_grp)
@@ -128,7 +123,7 @@ gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
         return;
     }
 
-    LOGD ("Set active ISE : %s\n", _uuids[index].c_str ());
+    LOGD ("Set active ISE : %s\n", _ime_info[index].uuid.c_str ());
 
     if (_ise_selector_selected_cb)
         _ise_selector_selected_cb (index);
@@ -245,8 +240,8 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selector_Sel
     itc.func.state_get = NULL;
     itc.func.del = NULL;
 
-    for (index = 0; index < _uuids.size (); index++) {
-        if (_modes[index] ==  TOOLBAR_HELPER_MODE)
+    for (index = 0; index < _ime_info.size (); index++) {
+        if (_ime_info[index].mode ==  TOOLBAR_HELPER_MODE)
             elm_genlist_item_append (genlist, &itc, (void *) index, NULL, ELM_GENLIST_ITEM_NONE, gl_ise_selected_cb, (void *)index);
     }
 
