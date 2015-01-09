@@ -26,7 +26,8 @@ endif
 bin_PROGRAMS           = $(CONFIG_WSM_EFL)
 
 isf_wsm_efl_SOURCES  = isf_wsm_efl.cpp \
-                         isf_wsm_utility.cpp
+                         isf_wsm_utility.cpp \
+                         isf_wsm_query_utility.cpp
 
 isf_wsm_efl_CXXFLAGS = @EFL_CFLAGS@ @VCONF_CFLAGS@ @DLOG_CFLAGS@ @TTS_CFLAGS@ @FEEDBACK_CFLAGS@
 

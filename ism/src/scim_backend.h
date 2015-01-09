@@ -249,16 +249,8 @@ public:
     virtual void release_module (const std::vector<String> &use_uuids,
                                  const String del_uuid);
 
-    void add_module_info_from_cache_file (const ConfigPointer &config,
+    void add_module_info_from_db (const ConfigPointer &config,
                                           std::vector<String> &modules);
-
-    void update_module_info (const ConfigPointer &config,
-                             std::vector<String> &current_modules,
-                             std::vector<String> &modules);
-
-    void add_imengine_module_info (const String module_name,
-                                   const ConfigPointer &config);
-
 };
 
 } /* namespace scim */
