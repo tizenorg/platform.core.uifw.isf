@@ -49,22 +49,18 @@ typedef struct {
 
 typedef struct {
     String appid;
-    String uuid;
     String label;
     String languages;
     String iconpath;
     String pkgid;
-    String pkgrootpath;
     String pkgtype;
-    String kbdtype;
-
     String module_name;
+    String module_path;
     TOOLBAR_MODE_T mode;
     uint32 options;
 } ImeInfoDB;
 
 EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
-EAPI int isf_db_insert_ime_info(std::vector<ImeInfoDB> &ime_info);
 EAPI int isf_db_update_label_ime_info(const char *appid, const char *label);
 
 #endif /* __ISF_QUERY_UTILITY_H */
