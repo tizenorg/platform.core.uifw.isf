@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __ISF_QUERY_UTILITY_H
-#define __ISF_QUERY_UTILITY_H
+#ifndef __ISF_WSM_QUERY_UTILITY_H
+#define __ISF_WSM_QUERY_UTILITY_H
 
 /* For multi-user support */
 #include <tzplatform_config.h>
@@ -34,7 +34,16 @@ using namespace scim;
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
-#define USER_ENGINE_LIST_PATH           "/home/app/.scim"
+#define MAXLINE                         4096
+#define USER_ENGINE_LIST_PATH           "/home/owner/.scim"
+
+#ifndef SCIM_SYSCONFDIR
+  #define SCIM_SYSCONFDIR               "/usr/etc"
+#endif
+
+#define USER_ENGINE_FILE_NAME           (USER_ENGINE_LIST_PATH "/engines_list")
+#define SYS_ENGINE_FILE_NAME            (SCIM_SYSCONFDIR "/scim/engines_list")
+
 
 typedef struct {
     String name;
@@ -47,27 +56,19 @@ typedef struct {
     String locales;
 } ISEINFO;
 
-typedef struct {
-    String appid;
-    String uuid;
-    String label;
-    String languages;
-    String iconpath;
-    String pkgid;
-    String pkgrootpath;
-    String pkgtype;
-    String kbdtype;
+EAPI String isf_get_normalized_language (String src_str);
+EAPI String isf_combine_ise_info_string (String name, String uuid, String module, String language,
+                                         String icon, String mode, String option, String locales);
+EAPI void isf_get_ise_info_from_string (const char *str, ISEINFO &info);
+EAPI bool isf_read_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
+EAPI bool isf_write_ise_info_list (const char *filename, std::vector<ISEINFO> &info_list);
+EAPI bool isf_add_keyboard_info_to_file (const char *filename, const char *module_name, const ConfigPointer &config);
+EAPI bool isf_add_helper_info_to_file (const char *filename, const char *module_name);
+EAPI bool isf_remove_ise_info_from_file (const char *filename, const char *module_name);
+EAPI bool isf_remove_ise_info_from_file_by_uuid (const char *filename, const char *uuid);
+EAPI void isf_update_ise_info_to_file (const char *filename, const ConfigPointer &config);
 
-    String module_name;
-    TOOLBAR_MODE_T mode;
-    uint32 options;
-} ImeInfoDB;
-
-EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
-EAPI int isf_db_insert_ime_info(std::vector<ImeInfoDB> &ime_info);
-EAPI int isf_db_update_label_ime_info(const char *appid, const char *label);
-
-#endif /* __ISF_QUERY_UTILITY_H */
+#endif /* __ISF_WSM_QUERY_UTILITY_H */
 
 /*
 vi:ts=4:ai:nowrap:expandtab
