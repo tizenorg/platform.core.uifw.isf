@@ -415,6 +415,13 @@ static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
 #endif
 }
 
+/**
+ * @brief
+ *
+ * @param helper	implies module_name(so name)
+ * @param uuid	implies appid
+ *
+ */
 int ise_preexec (const char *helper, const char *uuid)
 {
     const char *file_name;
@@ -427,7 +434,8 @@ int ise_preexec (const char *helper, const char *uuid)
 
     LOGD ("starting\n");
 
-    get_pkginfo (helper, uuid, &info);
+// TODO: instead of this, let's use DB info (like isf_db_select_ime_info())... Need more work for Web IME.
+    //get_pkginfo (helper, uuid, &info);
 
     /* In case of OSP or Web IME, request scim process to re-launch this ISE if we are not ROOT! */
     struct passwd *lpwd = NULL;
