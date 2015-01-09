@@ -123,7 +123,7 @@ gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
         return;
     }
 
-    LOGD ("Set active ISE : %s\n", _ime_info[index].uuid.c_str ());
+    LOGD ("Set active ISE : %s\n", _ime_info[index].appid.c_str ());
 
     if (_ise_selector_selected_cb)
         _ise_selector_selected_cb (index);

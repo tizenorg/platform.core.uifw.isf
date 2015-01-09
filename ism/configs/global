@@ -9,7 +9,7 @@
 /DefaultHelperManagerSocketAddress = local:/tmp/scim-socket-frontend
 /DefaultSocketTimeout = 5000
 /InitialIseType = 1
-/InitialIseUuid = 12aa3425-f88d-45f4-a509-cee8dfe904e3
+/InitialIseUuid = com.samsung.ise-multilingual-lite
 /InitialIseName = Tizen Keyboard
 /PreloadKeyboardIse = true
 /LaunchIseOnRequest = false

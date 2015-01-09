@@ -207,7 +207,7 @@ SocketIMEngineGlobal::init ()
     for (it = ime_info.begin(); it != ime_info.end(); it++) {
         if (it->mode == TOOLBAR_KEYBOARD_MODE) {
             info.name = it->label;
-            info.uuid = it->uuid;
+            info.uuid = it->appid;
             info.module = it->module_name;
             info.language = it->languages;
             info.icon = it->iconpath;
@@ -215,8 +215,8 @@ SocketIMEngineGlobal::init ()
             info.option = it->options;
             info.locales = "";
 
-            m_peer_factories.push_back (it->uuid);
-            ise_info_repository[it->uuid] = info;
+            m_peer_factories.push_back (it->appid);
+            ise_info_repository[it->appid] = info;
         }
     }
 }

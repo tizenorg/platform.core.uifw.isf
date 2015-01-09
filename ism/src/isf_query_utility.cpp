@@ -63,20 +63,20 @@ using namespace scim;
  * DB Table schema
  *
  * ime_info
- * +-------+------+-------+-----------+-----------+-------+-------------+-----------+-----------+
- * | appid | uuid | label | languages | iconpath  | pkgid | pkgrootpath |  pkgtype  |  kbdtype  |
- * +-------+------+-------+-----------+-----------+-------+-------------+-----------+-----------+
- * |   -   |  -   |   -   |     -     |   -       |   -   |     -       |     -     |      -    |
- * +-------+------+-------+-----------+-----------+-------+-------------+-----------+-----------+
+ * +-------+------+-------+-----------+-----------+-------+-------------+-----------+
+ * | appid | uuid | label | languages | iconpath  | pkgid | pkgrootpath |  pkgtype  |
+ * +-------+------+-------+-----------+-----------+-------+-------------+-----------+
+ * |   -   |  -   |   -   |     -     |   -       |   -   |     -       |     -     |
+ * +-------+------+-------+-----------+-----------+-------+-------------+-----------+
  *
- * CREATE TABLE ime_info ( appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT, kbdtype TEXT)
+ * CREATE TABLE ime_info ( appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT)
  *
  */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // DATABASE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-#define DB_PATH "/opt/usr/dbspace/.ime_parser.db"
+#define DB_PATH "/opt/usr/dbspace/.ime_info.db"
 static struct {
     const char* pPath;
     sqlite3* pHandle;
@@ -153,10 +153,11 @@ static inline int _commit_transaction(void)
 static inline int _db_create_ime_info(void)
 {
 	char* pException = NULL;
-	static const char* pQuery = "CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT, kbdtype TEXT)";
+	static const char* pQuery = "CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, uuid TEXT, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgrootpath TEXT, pkgtype TEXT)";
 
 	if (sqlite3_exec(databaseInfo.pHandle, pQuery, NULL, NULL, &pException) != SQLITE_OK) {
 		LOGE("%s", pException);
+		sqlite3_free(pException);
 		return -EIO;
 	}
 
@@ -186,7 +187,7 @@ static inline int _db_init(void)
 
 	int ret = db_util_open(databaseInfo.pPath, &databaseInfo.pHandle, DB_UTIL_REGISTER_HOOK_METHOD);
 	if (ret != SQLITE_OK) {
-		LOGE("sqlite3 return code: %d", ret);
+		LOGE("db_util_open returned code: %d", ret);
 		return -EIO;
 	}
 
@@ -250,7 +251,7 @@ static inline int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
 	int ret = 0, i = 0;
 	sqlite3_stmt* pStmt = NULL;
 	std::vector<ImeInfoDB>::iterator iter;
-	static const char* pQuery = "INSERT INTO ime_info (appid, uuid, label, languages, iconpath, pkgid, pkgrootpath, pkgtype, kbdtype) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	static const char* pQuery = "INSERT INTO ime_info (appid, uuid, label, languages, iconpath, pkgid, pkgrootpath, pkgtype) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
 	if (ret != SQLITE_OK) {
@@ -313,16 +314,21 @@ static inline int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
 			goto out;
 		}
 
-		if (sqlite3_step(pStmt) != SQLITE_DONE) {
-			LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		ret = sqlite3_step(pStmt);
+		if (ret != SQLITE_DONE) {
+			char buf[256] = {0};
+			snprintf (buf, sizeof (buf), "pid:%d  	%s	%s	sqlite3_step returned %d, %s\n",
+				getpid (), __FILE__, __func__, ret, sqlite3_errmsg(databaseInfo.pHandle));
+			isf_save_log(buf);
+			LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
 			ret = SQLITE_ERROR;
 			goto out;
 		}
 		else {
-			LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+			LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
 				iter->appid.c_str(), iter->uuid.c_str(), iter->label.c_str(), iter->languages.c_str(),
-				iter->iconpath.c_str(), iter->pkgid.c_str(), iter->pkgrootpath.c_str(), iter->pkgtype.c_str(),
-				iter->kbdtype.c_str());
+				iter->iconpath.c_str(), iter->pkgid.c_str(), iter->pkgrootpath.c_str(), iter->pkgtype.c_str());
+			ret = SQLITE_OK;
 		}
 		sqlite3_reset(pStmt);
 		sqlite3_clear_bindings(pStmt);
@@ -380,7 +386,11 @@ static inline int _db_update_label_ime_info(const char *appid, const char *label
 
 	ret = sqlite3_step(pStmt);
 	if (ret != SQLITE_DONE) {
-		LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+		char buf[256] = {0};
+		snprintf (buf, sizeof (buf), "pid:%d  	%s	%s	sqlite3_step returned %d, %s\n",
+			getpid (), __FILE__, __func__, ret, sqlite3_errmsg(databaseInfo.pHandle));
+		isf_save_log(buf);
+		LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
 		ret = 0;
 	}
 	else {
@@ -395,7 +405,15 @@ out:
 	return ret;
 }
 
-static int filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
+/**
+ * @brief Read data from ime category manifest and insert initial db
+ *
+ * @param handle	pkgmgrinfo_appinfo_h pointer
+ * @param user_data	The data to pass to this callback.
+ *
+ * @return 0 if success, negative value(<0) if fail. Callback is not called if return value is negative.
+ */
+static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 {
 	int ret = 0;
 	char *appid = NULL, *icon = NULL, *pkgid = NULL, *pkgtype = NULL, *label = NULL, *path = NULL;
@@ -440,6 +458,8 @@ static int filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_d
 	}
 
 	ime_db.languages = String("en");
+// TODO: Need to remove these after replace uuid with appid...
+	ime_db.uuid = ime_db.appid;
 
 	ime_info.push_back(ime_db);
 	_db_insert_ime_info(ime_info);
@@ -465,7 +485,6 @@ static inline int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 	size_t found = 0;
 	static const char* pQuery = "SELECT * FROM ime_info";
 
-
 	do {
 		if (i == 0) {
 			ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
@@ -485,43 +504,8 @@ static inline int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 			info.pkgid = String((char *)sqlite3_column_text(pStmt, 5));
 			info.pkgrootpath = String((char *)sqlite3_column_text(pStmt, 6));
 			info.pkgtype = String((char *)sqlite3_column_text(pStmt, 7));
-			info.kbdtype = String((char *)sqlite3_column_text(pStmt, 8));
 
-			LOGD("appid=\"%s\", uuid=\"%s\", label=\"%s\", languages=\"%s\", iconpath=\"%s\", pkgid=\"%s\", pkgrootpath=\"%s\", pkgtype=\"%s\", kbdtype=\"%s\"",
-				info.appid.c_str(),
-				info.uuid.c_str(),
-				info.label.c_str(),
-				info.languages.c_str(),
-				info.iconpath.c_str(),
-				info.pkgid.c_str(),
-				info.pkgrootpath.c_str(),
-				info.pkgtype.c_str(),
-				info.kbdtype.c_str());
-
-			if (info.kbdtype.compare("SOFTWARE_KEYBOARD_ISE") == 0) {
-				info.mode = TOOLBAR_HELPER_MODE;
-				info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
-
-				if (info.pkgtype.compare("wgt") == 0) {
-					info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | SCIM_HELPER_AUTO_RESTART;
-					info.module_name = String("ise-web-helper-agent");
-				}
-				else 	{
-					info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
-
-					found = info.appid.find_last_of('.');
-					if (found != String::npos)
-						info.module_name = info.appid.substr(found+1);
-					else
-						info.module_name = info.appid;
-
-					if (scim_get_helper_module_list(module_list)) {
-						if (std::find (module_list.begin(), module_list.end(), info.module_name) == module_list.end())
-							LOGE("Module name \"%s\" can't be found in scim_get_helper_module_list().", info.module_name.c_str());
-					}
-				}
-			}
-			else /*if (info.kbdtype.compare("HARDWARE_KEYBOARD_ISE") == 0)*/ {
+			if (info.pkgtype.compare("rpm") == 0 && info.appid.find("ise-engine") != String::npos) {
 				info.mode = TOOLBAR_KEYBOARD_MODE;
 				info.options = 0;
 
@@ -536,6 +520,41 @@ static inline int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 						LOGE("Module name \"%s\" can't be found in scim_get_imengine_module_list().", info.module_name.c_str());
 				}
 			}
+			else {
+				info.mode = TOOLBAR_HELPER_MODE;
+
+				if (info.pkgtype.compare("wgt") == 0) {
+					info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | SCIM_HELPER_NEED_SPOT_LOCATION_INFO;
+					info.module_name = String("ise-web-helper-agent");
+				}
+				else {
+					info.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
+
+					found = info.appid.find_last_of('.');
+					if (found != String::npos)
+						info.module_name = info.appid.substr(found+1);
+					else
+						info.module_name = info.appid;
+
+					if (scim_get_helper_module_list(module_list)) {
+						if (std::find (module_list.begin(), module_list.end(), info.module_name) == module_list.end())
+							LOGE("Module name \"%s\" can't be found in scim_get_helper_module_list().", info.module_name.c_str());
+					}
+				}
+			}
+
+			LOGD("appid=\"%s\", uuid=\"%s\", label=\"%s\", languages=\"%s\", iconpath=\"%s\", pkgid=\"%s\", pkgrootpath=\"%s\", pkgtype=\"%s\", module_name=\"%s\", mode=%d, options=%u",
+				info.appid.c_str(),
+				info.uuid.c_str(),
+				info.label.c_str(),
+				info.languages.c_str(),
+				info.iconpath.c_str(),
+				info.pkgid.c_str(),
+				info.pkgrootpath.c_str(),
+				info.pkgtype.c_str(),
+				info.module_name.c_str(),
+				info.mode,
+				info.options);
 
 			ime_info.push_back(info);
 			i++;
@@ -553,7 +572,7 @@ static inline int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 			if (ret == PMINFO_R_OK) {
 				ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime");
 				if (ret == PMINFO_R_OK) {
-					ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, filtered_app_list_cb, NULL);
+					ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_app_list_cb, NULL);
 				}
 				pkgmgrinfo_appinfo_filter_destroy(handle);
 			}
@@ -598,7 +617,6 @@ static inline int _db_select_ime_info(const char *appid, ImeInfoDB *pImeInfo)
 	pImeInfo->pkgid.clear();
 	pImeInfo->pkgrootpath.clear();
 	pImeInfo->pkgtype.clear();
-	pImeInfo->kbdtype.clear();
 
 	ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
 	if (ret != SQLITE_OK) {
@@ -627,9 +645,8 @@ static inline int _db_select_ime_info(const char *appid, ImeInfoDB *pImeInfo)
 	pImeInfo->pkgid = String((char*)sqlite3_column_text(pStmt, 5));
 	pImeInfo->pkgrootpath = String((char*)sqlite3_column_text(pStmt, 6));
 	pImeInfo->pkgtype = String((char*)sqlite3_column_text(pStmt, 7));
-	pImeInfo->kbdtype = String((char*)sqlite3_column_text(pStmt, 8));
 
-	LOGD("appid=\"%s\", uuid=\"%s\", label=\"%s\", languages=\"%s\", iconpath=\"%s\", pkgid=\"%s\", pkgrootpath=\"%s\", pkgtype=\"%s\", kbdtype=\"%s\"",
+	LOGD("appid=\"%s\", uuid=\"%s\", label=\"%s\", languages=\"%s\", iconpath=\"%s\", pkgid=\"%s\", pkgrootpath=\"%s\", pkgtype=\"%s\"",
 		pImeInfo->appid.c_str(),
 		pImeInfo->uuid.c_str(),
 		pImeInfo->label.c_str(),
@@ -637,8 +654,7 @@ static inline int _db_select_ime_info(const char *appid, ImeInfoDB *pImeInfo)
 		pImeInfo->iconpath.c_str(),
 		pImeInfo->pkgid.c_str(),
 		pImeInfo->pkgrootpath.c_str(),
-		pImeInfo->pkgtype.c_str(),
-		pImeInfo->kbdtype.c_str());
+		pImeInfo->pkgtype.c_str());
 
 out:
 	sqlite3_reset(pStmt);
