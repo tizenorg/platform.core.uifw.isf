@@ -578,7 +578,7 @@ static void minictrl_clicked_cb (void *data, Evas_Object *o, const char *emissio
 
 static void ise_selected_cb (unsigned int index)
 {
-    set_active_ise (_ime_info[index].uuid, _soft_keyboard_launched);
+    set_active_ise (_ime_info[index].appid, _soft_keyboard_launched);
     _ise_launch_timer = ecore_timer_add (ISE_LAUNCH_TIMEOUT, ise_launch_timeout, NULL);
 }
 
@@ -1013,7 +1013,7 @@ static unsigned int get_ise_index (const String uuid)
     unsigned int index = 0;
     if (uuid.length () > 0) {
         for (unsigned int i = 0; i < _ime_info.size (); i++) {
-            if (uuid == _ime_info[i].uuid) {
+            if (uuid == _ime_info[i].appid) {
                 index = i;
                 break;
             }
@@ -1141,11 +1141,10 @@ static void delete_ise_directory_em (void) {
  * @brief Set keyboard ISE.
  *
  * @param uuid The keyboard ISE's uuid.
- * @param module_name The keyboard ISE's module name.
  *
  * @return false if keyboard ISE change is failed, otherwise return true.
  */
-static bool set_keyboard_ise (const String &uuid, const String &module_name)
+static bool set_keyboard_ise (const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -1176,12 +1175,11 @@ static bool set_keyboard_ise (const String &uuid, const String &module_name)
  * @brief Set helper ISE.
  *
  * @param uuid The helper ISE's uuid.
- * @param module_name The helper ISE's module name.
  * @param launch_ise The flag for launching helper ISE.
  *
  * @return false if helper ISE change is failed, otherwise return true.
  */
-static bool set_helper_ise (const String &uuid, const String &module_name, bool launch_ise)
+static bool set_helper_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
@@ -1226,11 +1224,11 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
     bool ise_changed = false;
 
     for (unsigned int i = 0; i < _ime_info.size (); i++) {
-        if (!uuid.compare (_ime_info[i].uuid)) {
+        if (!uuid.compare (_ime_info[i].appid)) {
             if (TOOLBAR_KEYBOARD_MODE == _ime_info[i].mode)
-                ise_changed = set_keyboard_ise (_ime_info[i].uuid, _ime_info[i].module_name);
+                ise_changed = set_keyboard_ise (_ime_info[i].appid);
             else if (TOOLBAR_HELPER_MODE == _ime_info[i].mode)
-                ise_changed = set_helper_ise (_ime_info[i].uuid, _ime_info[i].module_name, launch_ise);
+                ise_changed = set_helper_ise (_ime_info[i].appid, launch_ise);
             _panel_agent->set_current_toolbar_mode (_ime_info[i].mode);
             if (ise_changed) {
                 _panel_agent->set_current_helper_option (_ime_info[i].options);
@@ -1243,7 +1241,7 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 if (_candidate_window)
                     ui_create_candidate_window ();
 
-                scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _ime_info[i].uuid);
+                scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _ime_info[i].appid);
                 scim_global_config_flush ();
 
                 _config->flush ();
@@ -3347,30 +3345,33 @@ static bool update_ise_list (std::vector<String> &list)
     }
 
     for (iter = _ime_info.begin (); iter != _ime_info.end (); iter++) {
-        uuids.push_back(iter->uuid);
+        uuids.push_back(iter->appid);
         modes.push_back(iter->mode);
     }
-    list.clear ();
-    list = uuids;
 
-    _panel_agent->update_ise_list (list);
+    if (uuids.size() > 0) {
+        list.clear ();
+        list = uuids;
 
-    if (_initial_ise_uuid.length () > 0) {
-        String active_uuid   = _initial_ise_uuid;
-        String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-        if (std::find (uuids.begin (), uuids.end (), default_uuid) == uuids.end ()) {
-            if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
-                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-            }
-            set_active_ise (active_uuid, _soft_keyboard_launched);
-        } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
-            String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
-            String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
-            if (std::find (uuids.begin (), uuids.end (), keyboard_uuid) == uuids.end ()) {
-                active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-                _panel_agent->change_factory (active_uuid);
-                _config->write (IMENGINE_KEY, active_uuid);
-                _config->flush ();
+        _panel_agent->update_ise_list (list);
+
+        if (_initial_ise_uuid.length () > 0) {
+            String active_uuid   = _initial_ise_uuid;
+            String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+            if (std::find (uuids.begin (), uuids.end (), default_uuid) == uuids.end ()) {
+                if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
+                    active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                }
+                set_active_ise (active_uuid, _soft_keyboard_launched);
+            } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
+                String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
+                String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
+                if (std::find (uuids.begin (), uuids.end (), keyboard_uuid) == uuids.end ()) {
+                    active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
+                    _panel_agent->change_factory (active_uuid);
+                    _config->write (IMENGINE_KEY, active_uuid);
+                    _config->flush ();
+                }
             }
         }
     }
@@ -4438,7 +4439,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
 
     std::vector<String> uuids;
     for (std::vector<ImeInfoDB>::iterator iter = _ime_info.begin(); iter != _ime_info.end(); iter++) {
-        uuids.push_back(iter->uuid);
+        uuids.push_back(iter->appid);
     }
     if (_ime_info.size () > 0) {
         list =  uuids;
@@ -4472,7 +4473,7 @@ static bool slot_get_ise_information (String uuid, String &name, String &languag
         update_ise_locale ();
 
         for (unsigned int i = 0; i < _ime_info.size (); i++) {
-            if (uuid == _ime_info[i].uuid) {
+            if (uuid == _ime_info[i].appid) {
                 name = _ime_info[i].label;
                 language = _ime_info[i].languages;
                 type  = _ime_info[i].mode;
@@ -4576,8 +4577,8 @@ static bool slot_get_ise_info (const String &uuid, ISE_INFO &info)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     for (unsigned int i = 0; i < _ime_info.size (); i++) {
-        if (!uuid.compare (_ime_info[i].uuid)) {
-            info.uuid   = _ime_info[i].uuid;
+        if (!uuid.compare (_ime_info[i].appid)) {
+            info.uuid   = _ime_info[i].appid;
             info.name   = _ime_info[i].label;
             info.icon   = _ime_info[i].iconpath;
             info.lang   = _ime_info[i].languages;
@@ -4602,7 +4603,7 @@ static void slot_set_keyboard_ise (const String &uuid)
     std::vector<String> uuids;
     std::vector<ImeInfoDB>::iterator iter;
     for (iter = _ime_info.begin(); iter != _ime_info.end(); iter++) {
-        uuids.push_back(iter->uuid);
+        uuids.push_back(iter->appid);
     }
 
     if (uuid.length () <= 0 || std::find (uuids.begin (), uuids.end (), uuid) == uuids.end ())
@@ -5123,8 +5124,8 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
                     scim_split_string_list (ise_langs, helper_language);
                     for (size_t i = 0; i < _groups[ise_langs[0]].size (); ++i) {
                         int j = _groups[ise_langs[0]][i];
-                        if (_ime_info[j].uuid != uuid && _ime_info[j].mode == TOOLBAR_KEYBOARD_MODE) {
-                            uuid = _ime_info[j].uuid;
+                        if (_ime_info[j].appid != uuid && _ime_info[j].mode == TOOLBAR_KEYBOARD_MODE) {
+                            uuid = _ime_info[j].appid;
                             break;
                         }
                     }

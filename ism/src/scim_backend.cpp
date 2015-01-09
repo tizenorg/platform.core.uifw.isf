@@ -759,9 +759,9 @@ CommonBackEnd::add_module_info_from_db (const ConfigPointer &config, std::vector
     for (iter = ime_info.begin(); iter != ime_info.end(); iter++) {
         it = std::find (modules.begin(), modules.end(), iter->module_name);
         if (iter->mode == TOOLBAR_KEYBOARD_MODE && it != modules.end()) {
-            if (m_impl->m_factory_module_repository.find (iter->uuid) == m_impl->m_factory_module_repository.end ()) {
-                add_specific_factory (iter->uuid, IMEngineFactoryPointer (0));
-                m_impl->m_factory_module_repository[iter->uuid] = iter->module_name;
+            if (m_impl->m_factory_module_repository.find (iter->appid) == m_impl->m_factory_module_repository.end ()) {
+                add_specific_factory (iter->appid, IMEngineFactoryPointer (0));
+                m_impl->m_factory_module_repository[iter->appid] = iter->module_name;
             }
         }
     }

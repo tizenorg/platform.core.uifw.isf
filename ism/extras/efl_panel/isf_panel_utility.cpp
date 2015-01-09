@@ -89,8 +89,8 @@ void isf_get_keyboard_ise (const ConfigPointer &config, String &ise_uuid, String
     if (ise_uuid.length () > 0)
         uuid = ise_uuid;
     for (unsigned int i = 0; i < _ime_info.size (); i++) {
-        if (uuid == _ime_info[i].uuid) {
-            ise_uuid = _ime_info[i].uuid;
+        if (uuid == _ime_info[i].appid) {
+            ise_uuid = _ime_info[i].appid;
             ise_name = _ime_info[i].label;
             ise_option = _ime_info[i].options;
             return;
@@ -124,8 +124,8 @@ void isf_get_keyboard_ises_in_languages (const std::vector<String> &lang_list,
                     continue;
                 if (bCheckOption && (_ime_info[it->second[i]].options & SCIM_IME_NOT_SUPPORT_HARDWARE_KEYBOARD))
                     continue;
-                if (std::find (uuid_list.begin (), uuid_list.end (), _ime_info[it->second[i]].uuid) == uuid_list.end ()) {
-                    uuid_list.push_back (_ime_info[it->second[i]].uuid);
+                if (std::find (uuid_list.begin (), uuid_list.end (), _ime_info[it->second[i]].appid) == uuid_list.end ()) {
+                    uuid_list.push_back (_ime_info[it->second[i]].appid);
                     name_list.push_back (_ime_info[it->second[i]].label);
                 }
             }
@@ -152,8 +152,8 @@ void isf_get_helper_ises_in_languages (const std::vector<String> &lang_list, std
                 if (_ime_info[it->second[i]].mode != TOOLBAR_HELPER_MODE)
                     continue;
                 // Avoid to add the same ISE
-                if (std::find (uuid_list.begin (), uuid_list.end (), _ime_info[it->second[i]].uuid) == uuid_list.end ()) {
-                    uuid_list.push_back (_ime_info[it->second[i]].uuid);
+                if (std::find (uuid_list.begin (), uuid_list.end (), _ime_info[it->second[i]].appid) == uuid_list.end ()) {
+                    uuid_list.push_back (_ime_info[it->second[i]].appid);
                     name_list.push_back (_ime_info[it->second[i]].label);
                 }
             }
