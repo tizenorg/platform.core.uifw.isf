@@ -1567,8 +1567,15 @@ static void add_ise_directory_em (void) {
 
 #if HAVE_PKGMGR_INFO
     if (!pkgmgr) {
-        package_manager_create (&pkgmgr);
-        package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
+        int ret = package_manager_create (&pkgmgr);
+        if (ret == 0) {
+            ret = package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
+            if (ret != 0)
+                LOGW ("Failed to call package_manager_set_event_cb(). ret : %d\n", ret);
+        }
+        else {
+            LOGW ("Failed to call package_manager_create(). ret : %d\n", ret);
+        }
     }
 #endif
 }
