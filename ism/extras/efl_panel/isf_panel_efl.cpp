@@ -3753,8 +3753,8 @@ static void hide_ise ()
             ui_candidate_hide (true, true, true);
     }
 }
-#if ENABLE_MULTIWINDOW_SUPPORT
 
+#if ENABLE_MULTIWINDOW_SUPPORT
 static Eina_Bool ise_hide_timeout (void *data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
@@ -3764,6 +3764,7 @@ static Eina_Bool ise_hide_timeout (void *data)
 
     return ECORE_CALLBACK_CANCEL;
 }
+#endif
 
 static bool update_ise_list (std::vector<String> &list)
 {
@@ -3805,7 +3806,7 @@ static bool update_ise_list (std::vector<String> &list)
 
     return ret;
 }
-#endif
+
 /**
  * @brief Reload config slot function for PanelAgent.
  */
