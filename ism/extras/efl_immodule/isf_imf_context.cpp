@@ -39,6 +39,7 @@
 
 #include <Evas.h>
 #include <Ecore_Evas.h>
+#include <Ecore_Input.h>
 #include <Ecore_X.h>
 #include <X11/XKBlib.h>
 #include <X11/keysym.h>
