@@ -38,7 +38,7 @@ using namespace scim;
 
 typedef struct {
     String name;
-    String uuid;
+    String uuid;    // Replaced by appid.
     String module;
     String language;
     String icon;
@@ -48,12 +48,13 @@ typedef struct {
 } ISEINFO;
 
 typedef struct {
-    String appid;
+    String appid;   // Replace the previous uuid.
     String label;
     String languages;
     String iconpath;
     String pkgid;
     String pkgtype;
+    String exec;
     String module_name;
     String module_path;
     TOOLBAR_MODE_T mode;
@@ -61,7 +62,13 @@ typedef struct {
 } ImeInfoDB;
 
 EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
-EAPI int isf_db_update_label_ime_info(const char *appid, const char *label);
+EAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo);
+EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname);
+EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath);
+EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids);
+EAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
+EAPI int isf_db_insert_ime_info_by_pkgid(const char *pkgid);
+EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
 
 #endif /* __ISF_QUERY_UTILITY_H */
 

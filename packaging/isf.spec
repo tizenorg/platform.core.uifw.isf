@@ -113,7 +113,7 @@ mkdir -p %{buildroot}/opt/usr/dbspace
 if [ ! -s %{buildroot}/opt/usr/dbspace/.ime_info.db ]; then
 echo "The database file for ime will be created."
 sqlite3 %{buildroot}/opt/usr/dbspace/.ime_info.db <<EOF
-CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER);
+CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER);
 EOF
 fi
 
@@ -133,7 +133,7 @@ cat scim.lang > isf.lang
 /usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -s User || :
 /usr/bin/vconftool set -t string db/isf/input_language "en_US" -s User || :
 /usr/bin/vconftool set -t string db/isf/csc_initial_uuid "" -s User || :
-/usr/bin/vconftool set -t string db/isf/input_keyboard_uuid "12aa3425-f88d-45f4-a509-cee8dfe904e3" -s User || :
+/usr/bin/vconftool set -t string db/isf/input_keyboard_uuid "isf-default" -s User || :
 /usr/bin/vconftool set -t int memory/isf/input_panel_state 0 -s User -i || :
 
 %postun -p /sbin/ldconfig
