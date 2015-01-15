@@ -170,7 +170,7 @@ void isf_get_helper_ises_in_languages (const std::vector<String> &lang_list, std
 void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config)
 {
     /* Load IME info */
-    //if (_ime_info.size() == 0)
+    if (_ime_info.size() == 0)
         isf_db_select_all_ime_info(_ime_info);
 
     /* Update _groups */
