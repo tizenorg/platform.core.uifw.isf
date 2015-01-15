@@ -214,5 +214,3 @@ scim_helper_launcher_CXXFLAGS += @ECOREX_CFLAGS@
 scim_helper_launcher_LDFLAGS  += @ECOREX_LIBS@
 endif
 
-
-

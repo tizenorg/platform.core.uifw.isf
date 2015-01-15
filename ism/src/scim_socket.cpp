@@ -1523,9 +1523,8 @@ scim_socket_open_connection   (uint32       &key,
             if (trans.write_to_socket (socket))
                 return true;
         } else {
-            {
-                ISF_SAVE_LOG ("read_from_socket() failed %d\n", timeout);
-            }
+            ISF_SAVE_LOG ("read_from_socket() failed %d\n", timeout);
+
             trans.clear ();
             trans.put_command (SCIM_TRANS_CMD_REPLY);
             trans.put_command (SCIM_TRANS_CMD_FAIL);

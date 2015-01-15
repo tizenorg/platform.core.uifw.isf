@@ -388,6 +388,10 @@ static OSPEmRepository     _osp_bin_em;
 static OSPEmRepository     _osp_info_em;
 #if HAVE_PKGMGR_INFO
 static package_manager_h   pkgmgr                           = NULL;
+static bool	ime_info_to_be_removed = false;
+static Ecore_Timer *g_start_default_helper_timer = NULL;
+static String g_stopped_helper_appid = "";	// now appid is uuid.
+static String g_removed_pkgid = "";
 #endif
 
 static bool               _launch_ise_on_request            = false;
@@ -423,8 +427,6 @@ static E_DBus_Connection     *edbus_conn;
 static E_DBus_Signal_Handler *edbus_handler;
 
 static Ecore_Event_Handler *_candidate_show_handler         = NULL;
-
-static HelperInfo         remove_helper_info;
 
 enum {
     EMOJI_IMAGE_WIDTH = 0,
@@ -1024,70 +1026,221 @@ static unsigned int get_ise_index (const String uuid)
 }
 
 #if HAVE_PKGMGR_INFO
+static Eina_Bool _start_default_helper_timer(void *data)
+{
+    std::vector<String> total_appids;
+    std::vector<ImeInfoDB>::iterator it;
+
+    /* Let panel know that ise is deleted... */
+    for (it = _ime_info.begin(); it != _ime_info.end(); it++) {
+        total_appids.push_back(it->appid);
+    }
+    if (total_appids.size() > 0)
+        _panel_agent->update_ise_list (total_appids);
+
+    LOGD("Try to start the initial helper");
+    set_active_ise(_initial_ise_uuid, true);
+
+    g_stopped_helper_appid = "";
+    g_removed_pkgid = "";
+
+    g_start_default_helper_timer = NULL;
+    return ECORE_CALLBACK_CANCEL;
+}
+
+static void _update_ime_info(void)
+{
+    std::vector<String> ise_langs;
+
+    _ime_info.clear();
+    isf_db_select_all_ime_info(_ime_info);
+
+    /* Update _groups */
+    _groups.clear();
+    for (size_t i = 0; i < _ime_info.size (); ++i) {
+        scim_split_string_list(ise_langs, _ime_info[i].languages);
+        for (size_t j = 0; j < ise_langs.size (); j++) {
+            if (std::find (_groups[ise_langs[j]].begin (), _groups[ise_langs[j]].end (), i) == _groups[ise_langs[j]].end ())
+                _groups[ise_langs[j]].push_back (i);
+        }
+        ise_langs.clear ();
+    }
+}
+
+/**
+ * @brief Called when the package is installed, uninstalled or updated, and the progress of the request to the package manager changes.
+ * @since_tizen 2.3
+ * @param[in] type The type of the package to be installed, uninstalled or updated
+ * @param[in] package The name of the package to be installed, uninstalled or updated
+ * @param[in] event_type The type of the request to the package manager
+ * @param[in] event_state The current state of the request to the package manager
+ * @param[in] progress The progress for the request that is being processed by the package manager \n
+ *            The range of progress is from 0 to 100
+ * @param[in] error The error code when the package manager failed to process the request
+ * @param[in] user_data The user data passed from package_manager_set_event_cb()
+ * @see package_manager_set_event_cb()
+ * @see package_manager_unset_event_cb()
+ */
 static void _package_manager_event_cb (const char *type, const char *package, package_manager_event_type_e event_type, package_manager_event_state_e event_state, int progress, package_manager_error_e error, void *user_data)
 {
-    if (!package || !type) return;
+    String current_ime_appid;	// now appid is uuid.
+    std::vector<String> appids;
+    std::vector<String> total_appids;
+    std::vector<ImeInfoDB>::iterator it;
 
-LOGD ("type=%s package=%s event_type=%d event_state=%d", type, package, event_type, event_state);
+    if (!package || !type)
+        return;
 
-#if 0 // TODO: Need to check more...
-    if (event_type == PACKAGE_MANAGER_EVENT_TYPE_INSTALL ||
-        event_type == PACKAGE_MANAGER_EVENT_TYPE_UPDATE) {
-        HelperInfo helper_info;
+    if (event_type == PACKAGE_MANAGER_EVENT_TYPE_INSTALL || event_type == PACKAGE_MANAGER_EVENT_TYPE_UPDATE) {
+        if (event_state == PACKAGE_MANAGER_EVENT_STATE_STARTED) {
+            LOGD ("type=%s package=%s event_type=%d event_state=STARTED progress=%d error=%d", type, package, event_type, progress, error);
+            if (g_stopped_helper_appid.size() > 0 && g_removed_pkgid.compare(package) == 0) {	// If the uninstalled ISE is reinstalled...
+                if (g_start_default_helper_timer) {
+                    LOGD("Cancel timer.");
+                    ecore_timer_del(g_start_default_helper_timer);
+                    g_start_default_helper_timer = NULL;
+                }
+            }
+        }
+        else if (event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
+            LOGD ("type=%s package=%s event_type=%d event_state=COMPLETED progress=%d error=%d", type, package, event_type, progress, error);
+            int add = 0, del = 0;
+            if (event_state == PACKAGE_MANAGER_EVENT_TYPE_UPDATE)
+                del = isf_db_delete_ime_info_by_pkgid(package);
+            add = isf_db_insert_ime_info_by_pkgid(package);
+            if (del || add) {
+                _update_ime_info();
 
-        if (event_state != PACKAGE_MANAGER_EVENT_STATE_COMPLETED)
-            return;
+                isf_db_select_appids_by_pkgid(package, appids);
 
-        if (get_helper_ise_info (type, package, &helper_info)) {
-            /* update engine list */
-            if (isf_remove_helper_ise (helper_info.uuid.c_str (), _config))
-                LOGD ("remove helper info. uuid : %s\n", helper_info.uuid.c_str ());
+                /* Let panel know that ise is added... */
+                for (it = _ime_info.begin(); it != _ime_info.end(); it++) {
+                    total_appids.push_back(it->appid);
+                }
+                if (total_appids.size() > 0)
+                    _panel_agent->update_ise_list (total_appids);
 
-            if (isf_add_helper_ise (helper_info, String ("ise-web-helper-agent"))) {
-                LOGD ("add helper info. uuid : %s\n", helper_info.uuid.c_str ());
-                _panel_agent->update_ise_list (_uuids);
+                if (g_stopped_helper_appid.size() > 0 && g_removed_pkgid.compare(package) == 0) {	// in case of INSTALL after UNINSTALL...
+                    if (std::find(appids.begin(), appids.end(), g_stopped_helper_appid) != appids.end()) {
+                        _panel_agent->start_helper (g_stopped_helper_appid);
+                        _soft_keyboard_launched = true;
+                        g_stopped_helper_appid = "";
+                        g_removed_pkgid = "";
+                    }
+                }
+                else if (_soft_keyboard_launched) {	// in case of UPDATE...
+                    current_ime_appid = scim_global_config_read(String(SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
+                    if (std::find(appids.begin(), appids.end(), current_ime_appid) != appids.end()) {	// If the current ISE package is updated, restart it.
+                        for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
+                            if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) {	// Make sure it's Helper ISE...
+                                //set_helper_ise();
+                                _panel_agent->hide_helper (current_ime_appid);
+                                _panel_agent->stop_helper (current_ime_appid);
+                                _panel_agent->start_helper (current_ime_appid);
+                            }
+                        }
+                    }
+                }
+
+                g_stopped_helper_appid = "";
             }
         }
     } else if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL) {
         switch (event_state) {
             case PACKAGE_MANAGER_EVENT_STATE_STARTED:
-                /* get package information and check whether the type of package is Web IME */
-                /* In COMPLETED status, it is impossible to get the package information,
-                   therefore it is necessary to get package information in the START status in advance */
-                if (get_helper_ise_info (type, package, &remove_helper_info)) {
-                    LOGD ("'%s' package has been uninstalled", remove_helper_info.name.c_str ());
-                }
-                break;
-            case PACKAGE_MANAGER_EVENT_STATE_COMPLETED:
-                if (remove_helper_info.uuid.length () == 0)
-                    return;
+                LOGD ("type=%s package=%s event_type=UNINSTALL event_state=STARTED progress=%d error=%d", type, package, progress, error);
+                {
+                    // Need to check if there is "http://tizen.org/category/ime" category; it can be done by comparing pkgid with ime_info db.
+                    int imeCnt = 0;
+                    if (_ime_info.size() == 0)
+                        _update_ime_info();
 
-                /* update engine list */
-                if (isf_remove_helper_ise (remove_helper_info.uuid.c_str (), _config)) {
-                    LOGD ("Completed to remove IME uuid : %s\n", remove_helper_info.uuid.c_str ());
+                    for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
+                        if (it->pkgid.compare(package) ==  0)
+                            imeCnt++;
+                    }
 
-                    _panel_agent->update_ise_list (_uuids);
+                    if (imeCnt == 0) {
+                        LOGD("No IME info DB for pkgid=\"%s\"", package);
+                    }
+                    else {	// There might be more than one appid for one pkgid. Stop Helper ISE, but not delete it from ime_info db.
+                        LOGD("%d ime_info DB for pkgid(\"%s\") are about to be deleted", imeCnt, package);
+                        ime_info_to_be_removed = true;
 
-                    String uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
-                    if (uuid == remove_helper_info.uuid) {
-                        /* switching to initial ISE */
-                        if (_soft_keyboard_launched) {
-                            _panel_agent->hide_helper (uuid);
-                            _panel_agent->stop_helper (uuid);
-                            _panel_agent->start_helper (_initial_ise_uuid);
+                        g_stopped_helper_appid = "";
+                        if (_soft_keyboard_launched && isf_db_select_appids_by_pkgid(package, appids)) {
+                            current_ime_appid = scim_global_config_read(String(SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
+                            if (std::find(appids.begin(), appids.end(), current_ime_appid) != appids.end()) {	// if the uninstalled ISE is the current ISE...
+                                for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
+                                    if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) {	// Make sure it's Helper ISE...
+                                        _panel_agent->hide_helper (current_ime_appid);
+                                        _panel_agent->stop_helper (current_ime_appid);
+                                        _soft_keyboard_launched = false;
+                                        g_stopped_helper_appid = current_ime_appid;
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                remove_helper_info.uuid = String ("");
                 break;
+
+            case PACKAGE_MANAGER_EVENT_STATE_COMPLETED:
+                LOGD ("type=%s package=%s event_type=UNINSTALL event_state=COMPLETED progress=%d error=%d", type, package, progress, error);
+                if (ime_info_to_be_removed) {
+                    if (isf_db_delete_ime_info_by_pkgid(package)) {	// Delete package from ime_info db.
+                        _update_ime_info();
+                    }
+                    ime_info_to_be_removed = false;
+
+                    g_removed_pkgid = package;
+
+                    if (g_stopped_helper_appid.size() > 0) {	// if the uninstalled ISE is the current ISE, start the initial helper ISE by timer.
+                        if (g_start_default_helper_timer)
+                            ecore_timer_del(g_start_default_helper_timer);
+                        g_start_default_helper_timer = ecore_timer_add(3.0, _start_default_helper_timer, NULL);
+                    }
+                    else {
+                        /* Let panel know that ise is deleted... */
+                        for (it = _ime_info.begin(); it != _ime_info.end(); it++) {
+                            total_appids.push_back(it->appid);
+                        }
+                        if (total_appids.size() > 0)
+                            _panel_agent->update_ise_list (total_appids);
+                    }
+                }
+                break;
+
             case PACKAGE_MANAGER_EVENT_STATE_FAILED:
-                remove_helper_info.uuid = String ("");
+                LOGD ("type=%s package=%s event_type=UNINSTALL event_state=FAILED progress=%d error=%d", type, package, progress, error);
+                if (ime_info_to_be_removed) {
+                    ime_info_to_be_removed = false;
+
+                    // Update _ime_info for sure...
+                    _update_ime_info();
+
+                    if (g_stopped_helper_appid.size() > 0) {
+                        if (isf_db_select_appids_by_pkgid(package, appids)) {
+                            if (std::find(appids.begin(), appids.end(), g_stopped_helper_appid) != appids.end()) {	// If the stopped Helper ISE is available, restart it.
+                                for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
+                                    if (it->appid.compare(g_stopped_helper_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) {	// Make sure it's Helper ISE...
+                                        _panel_agent->start_helper (g_stopped_helper_appid);
+                                        _soft_keyboard_launched = true;
+                                        g_stopped_helper_appid = "";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
+
             default:
                 break;
         }
     }
-#endif
 }
 #endif
 
@@ -1216,7 +1369,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
 static bool set_active_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    ISF_SAVE_LOG ("set ISE (%s)\n", uuid.c_str ());
+    ISF_SAVE_LOG ("set ISE (%s) %d\n", uuid.c_str(), launch_ise);
 
     if (uuid.length () <= 0)
         return false;
@@ -3344,7 +3497,7 @@ static bool update_ise_list (std::vector<String> &list)
         ise_langs.clear ();
     }
 
-    for (iter = _ime_info.begin (); iter != _ime_info.end (); iter++) {
+    for (iter = _ime_info.begin(); iter != _ime_info.end(); iter++) {
         uuids.push_back(iter->appid);
         modes.push_back(iter->mode);
     }
@@ -3384,8 +3537,19 @@ static bool update_ise_list (std::vector<String> &list)
 
 #if HAVE_PKGMGR_INFO
     if (!pkgmgr) {
-        package_manager_create (&pkgmgr);
-        package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
+        int ret = package_manager_create (&pkgmgr);
+        if (ret == PACKAGE_MANAGER_ERROR_NONE) {
+            package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
+            if (ret == PACKAGE_MANAGER_ERROR_NONE) {
+                LOGD("package_manager_set_event_cb succeeded.");
+            }
+            else {
+                LOGW("package_manager_set_event_cb failed(%d)", ret);
+            }
+        }
+        else {
+            LOGW("package_manager_create failed(%d)", ret);
+        }
     }
 #endif
 
@@ -3414,7 +3578,7 @@ static void slot_focus_in (void)
     if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
-            if (uuid.length () > 0 && (_ime_info[get_ise_index(uuid)].options  & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
+            if (uuid.length () > 0 && (_ime_info[get_ise_index(uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
                 ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
                 if (_panel_agent->start_helper (uuid))
@@ -5002,7 +5166,7 @@ static void update_ise_locale ()
                 if (ret == PMINFO_R_OK && label) {
                     _ime_info[i].label = String(label);
                     /* Update label column in ime_info db table */
-                    isf_db_update_label_ime_info(_ime_info[i].appid.c_str(), label);
+                    isf_db_update_label_by_appid(_ime_info[i].appid.c_str(), label);
                 }
             }
             pkgmgrinfo_appinfo_destroy_appinfo(handle);

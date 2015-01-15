@@ -37,6 +37,8 @@
 #include <pkgmgr-info.h>
 #endif
 #include <privilege-control.h>
+#include <scim_panel_common.h>
+#include "isf_query_utility.h"
 
 #define Uses_SCIM_HELPER
 #include "scim.h"
@@ -349,70 +351,37 @@ typedef struct {
     std::string app_path;
 } PKGINFO;
 
-static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
+static void get_pkginfo (const char *appid, PKGINFO *info)
 {
-#if HAVE_PKGMGR_INFO
-    if (helper && uuid && info) {
-        pkgmgrinfo_appinfo_h handle;
-        int r;
-        char *value = NULL;
-        const char *app_id = NULL;
+	if (appid && info) {
+		int ret = 0;
+		ImeInfoDB imeInfo;
 
-        if (!strcmp (helper, "ise-web-helper-agent")) {
-            // Web IME
-            app_id = uuid;
-        }
-        else {
-            app_id = helper;
-        }
+		ret = isf_db_select_ime_info_by_appid(appid, &imeInfo);
+		if (ret < 1) {
+			LOGW("ime_info row is not available for %s", appid);
+			return;
+		}
 
-        // get ail handle
-        r = pkgmgrinfo_appinfo_get_appinfo (app_id, &handle);
-        if (r != PMINFO_R_OK) {
-            LOGW ("pkgmgrinfo_appinfo_get_appinfo failed %s %d \n", app_id, r);
-            return;
-        }
-
-        // get package name
-        if (!strcmp (helper, "ise-web-helper-agent")) {
-            // Web IME
-            r = pkgmgrinfo_appinfo_get_pkgid (handle, &value);
-            if (r != PMINFO_R_OK) {
-                LOGW ("pkgmgrinfo_appinfo_get_pkgid () failed : %s %d\n", app_id, r);
-            } else {
-                info->package_name = value;
-                LOGD ("[web] app id : %s, package name : %s\n", app_id, info->package_name.c_str ());
-            }
-        }
-        else {
-            // OSP IME
-            info->package_name = helper;
-            LOGD ("[osp] app id : %s, package name : %s\n", app_id, info->package_name.c_str ());
-        }
-
-        r = pkgmgrinfo_appinfo_get_apptype (handle, &value);
-        if (r != PMINFO_R_OK) {
-            LOGW ("pkgmgrinfo_appinfo_get_apptype () failed : %s %d\n", helper, r);
-        } else {
-            if (strncmp (value, NATIVE_APPLICATION_TYPE, strlen (NATIVE_APPLICATION_TYPE)) == 0) {
-                info->package_type = NATIVE_PACKAGE_TYPE;
-            } else if (strncmp (value, WEB_APPLICATION_TYPE, strlen (WEB_APPLICATION_TYPE)) == 0) {
-                info->package_type = WEB_PACKAGE_TYPE;
-            }
-            LOGD ("package type : %s\n", info->package_type.c_str ());
-        }
-
-        r = pkgmgrinfo_appinfo_get_exec (handle, &value);
-        if (r != PMINFO_R_OK) {
-            LOGW ("pkgmgrinfo_appinfo_get_exec () failed : %s %d\n", helper, r);
-        } else {
-            info->app_path = value;
-            LOGD ("app path : %s\n", info->app_path.c_str ());
-        }
-
-        pkgmgrinfo_appinfo_destroy_appinfo (handle);
-    }
-#endif
+		if (imeInfo.pkgtype.compare("rpm") == 0) {
+			info->package_type = DEFAULT_PACKAGE_TYPE;
+			info->app_path = std::string(imeInfo.exec.c_str());	//DEFAULT_APPLICATION_PATH;
+			info->package_name = DEFAULT_PACKAGE_NAME;
+		}
+		else if (imeInfo.pkgtype.compare("wgt") == 0) {
+			info->package_type = WEB_PACKAGE_TYPE;
+			info->app_path = std::string(imeInfo.exec.c_str());
+			info->package_name = std::string(imeInfo.pkgid.c_str());
+		}
+		else if (imeInfo.pkgtype.compare("tpk") == 0) {
+			info->package_type = NATIVE_PACKAGE_TYPE;
+			info->app_path = std::string(imeInfo.exec.c_str());
+			info->package_name = std::string(imeInfo.pkgid.c_str());
+		}
+		else {
+			LOGW("Unknown pkg type: %s", imeInfo.pkgtype.c_str());
+		}
+	}
 }
 
 /**
@@ -434,8 +403,7 @@ int ise_preexec (const char *helper, const char *uuid)
 
     LOGD ("starting\n");
 
-// TODO: instead of this, let's use DB info (like isf_db_select_ime_info())... Need more work for Web IME.
-    //get_pkginfo (helper, uuid, &info);
+    get_pkginfo (uuid, &info);
 
     /* In case of OSP or Web IME, request scim process to re-launch this ISE if we are not ROOT! */
     struct passwd *lpwd = NULL;
