@@ -102,27 +102,34 @@ static bool check_panel (const String &display)
 
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
+#ifdef _MOBILE
 #include <vconf.h>
+#endif
 
 #ifndef SCIM_HELPER_LAUNCHER_PROGRAM
 #define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
 #endif
 
+#ifdef _MOBILE
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
 #define ISF_SYSTEM_APPSERVICE_READY_STATE               2
+#endif
 
 static Ecore_Ipc_Server *server = NULL;
 
 static Ecore_Event_Handler *exit_handler = NULL;
 static Ecore_Event_Handler *data_handler = NULL;
 
+#ifdef _MOBILE
 static bool _appsvc_callback_regist = false;
+#endif
 
 static char _ise_name[_POSIX_PATH_MAX + 1] = {0};
 static char _ise_uuid[_POSIX_PATH_MAX + 1] = {0};
 
 static void launch_helper (const char *name, const char *uuid);
 
+#ifdef _MOBILE
 static void vconf_appservice_ready_changed (keynode_t *node, void *user_data)
 {
     int node_value = vconf_keynode_get_int(node);
@@ -166,13 +173,16 @@ static bool check_appservice_ready ()
         return true;
     }
 }
+#endif
 
 static void launch_helper (const char *name, const char *uuid)
 {
     int pid;
 
+#ifdef _MOBILE
     /* If appservice is not ready yet, let's return here */
     if (!check_appservice_ready ()) return;
+#endif
 
     pid = fork ();
 
