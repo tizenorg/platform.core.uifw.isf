@@ -74,6 +74,9 @@ initialize_modifier_bits (Display *display)
     __current_hyper_mask   = 0;
     __current_numlock_mask = 0;
 
+    if (!mods)
+        return;
+
     /* We skip the first three sets for Shift, Lock, and Control.  The
        remaining sets are for Mod1, Mod2, Mod3, Mod4, and Mod5.  */
     for (i = 3; i < 8; i++) {
