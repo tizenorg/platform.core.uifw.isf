@@ -479,6 +479,7 @@ language_selection_finished_cb(void *data, Evas_Object *obj, void *event_info)
     }
     std::string languages = compose_selected_languages_string();
     strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
+    elm_genlist_item_update (ad.languages_item);
 
     if (obj) {
         evas_object_smart_callback_del(obj, "clicked", language_selection_finished_cb);
