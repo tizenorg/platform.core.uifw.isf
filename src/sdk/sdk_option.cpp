@@ -24,7 +24,10 @@
 #include "option.h"
 #include "ise_lang_table.h"
 
+#ifdef SETUP_MODULE
 static ISELanguageManager _language_manager;
+#endif // SETUP_MODULE
+
 /*
  * This class customizes option windows based on languages
  * So you should perform desired tasks in this class.

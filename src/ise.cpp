@@ -265,7 +265,7 @@ void CCoreEventCallback::on_update_lookup_table(SclCandidateTable &table)
     //    table.number_of_candidates(), table.get_current_page_size());
     for (int i = table.current_page_start; i < table.current_page_start + table.page_size; ++i)
     {
-        if (i < table.candidate_labels.size()) {
+        if (i < (int)table.candidate_labels.size()) {
             vec_str.push_back(table.candidate_labels[i]);
         }
     }
