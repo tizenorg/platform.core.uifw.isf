@@ -582,7 +582,7 @@ _key_down_cb (void *data, int type, void *event)
     Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
-    if (client_win == focus_win && (_hide_ise_based_on_focus) ? (_focused_ic != 0):(true)) {
+    if ((client_win == focus_win) && ((_hide_ise_based_on_focus) ? (_focused_ic != 0):(true))) {
         if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
             if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
@@ -621,7 +621,7 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
-    if (client_win == focus_win && (_hide_ise_based_on_focus) ? (_focused_ic != 0):(true)) {
+    if ((client_win == focus_win) && ((_hide_ise_based_on_focus) ? (_focused_ic != 0):(true))) {
         if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
             if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
