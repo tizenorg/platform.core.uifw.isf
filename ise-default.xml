@@ -1,28 +1,13 @@
-<?xml version="1.0"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="PRIVTISE01" type="rpm" version="1.0.4" install-location="internal-only">
-<label>Tizen keyboard</label>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="ise-default" type="rpm" version="1.0.0" install-location="internal-only" support-mode="screen-reader">
 <author/>
 <description/>
 <label>Tizen keyboard</label>
 <icon/>
-<ui-application appid="PRIVTISE01.ise-default" exec="/usr/lib/scim-1.0/scim-helper-launcher" nodisplay="true" taskmanage="false" multiple="false" type="capp" hw-acceleration="use-system-setting" mainapp="true">
-        <category name="http://tizen.org/category/ime"/>
-        <label>Tizen keyboard</label>
-        <label xml:lang="en-us">Tizen keyboard</label>
-        <icon/>
+<ui-application appid="ise-default" exec="/usr/lib/scim-1.0/scim-helper-launcher" nodisplay="true" taskmanage="false" multiple="false" type="capp" hw-acceleration="use-system-setting" mainapp="true">
+    <category name="http://tizen.org/category/ime"/>
+    <label>Tizen keyboard</label>
+    <label xml:lang="en-gb">Tizen keyboard</label>
+    <icon/>
 </ui-application>
-<ime appid="PRIVTISE01.ise-default">
-        <uuid>12aa3425-f88d-45f4-a509-cee8dfe904e3</uuid>
-        <label>Tizen keyboard</label>
-        <label xml:lang="en-us">Tizen keyboard</label>
-        <languages>
-                <language>en-us</language>
-        </languages>
-        <type>SOFTWARE_KEYBOARD_ISE</type>
-        <options>
-                <option>STAND_ALONE</option>
-                <option>NEED_SCREEN_INFO</option>
-                <option>AUTO_RESTART</option>
-        </options>
-</ime>
 </manifest>

@@ -25,7 +25,7 @@
 
 #include "languages.h"
 
-#define ISEUUID "12aa3425-f88d-45f4-a509-cee8dfe904e3"
+#define ISEUUID "ise-default"
 #define ISENAME "Tizen keyboard"
 
 #define ISE_VERSION "1.1.0-1"
