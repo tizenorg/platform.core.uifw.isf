@@ -70,10 +70,7 @@ static void test_input_panel_geometry_get (void *data, Evas_Object *obj, void *e
     int x, y, w, h;
     if (imf_context != NULL) {
         ecore_imf_context_input_panel_geometry_get (imf_context, &x, &y, &w, &h);
-        printf ("x=%d \n", x);
-        printf ("y=%d \n", y);
-        printf ("width=%d \n", w);
-        printf ("height=%d \n", h);
+        LOGD ("x : %d, y : %d, w : %d, h : %d\n", x, y, w, h);
     }
 }
 
@@ -108,7 +105,7 @@ static void test_input_panel_imdata_get (void *data, Evas_Object *obj, void *eve
     if (buf != NULL) {
         if (imf_context != NULL) {
             ecore_imf_context_input_panel_imdata_get (imf_context, buf, &len);
-            printf ("get imdata  %s, and len is %d ...\n", (char *)buf, len);
+            LOGD ("get imdata  %s, and len is %d ...\n", (char *)buf, len);
         }
         free (buf);
     }
@@ -126,7 +123,7 @@ static void test_input_panel_layout_get (void *data, Evas_Object *obj, void *eve
     Ecore_IMF_Input_Panel_Layout layout;
     if (imf_context != NULL) {
         layout = ecore_imf_context_input_panel_layout_get (imf_context);
-        printf ("get layout : %d ...\n", (int)layout);
+        LOGD ("get layout : %d ...\n", (int)layout);
     }
 }
 
@@ -136,7 +133,7 @@ static void test_input_panel_state_get (void *data, Evas_Object *obj, void *even
 
     if (imf_context != NULL) {
         state = ecore_imf_context_input_panel_state_get (imf_context);
-        printf ("ise state : %d \n", (int)state);
+        LOGD ("ise state : %d \n", (int)state);
     }
 }
 
@@ -145,7 +142,7 @@ static void test_get_active_ise (void *data, Evas_Object *obj, void *event_info)
     char *uuid = NULL;
     int ret = isf_control_get_active_ise (&uuid);
     if (ret > 0 && uuid)
-        printf (" Get active ISE: %s\n", uuid);
+        LOGD ("Get active ISE: %s\n", uuid);
     if (uuid)
         free (uuid);
 }
@@ -154,15 +151,15 @@ static void test_get_ise_list (void *data, Evas_Object *obj, void *event_info)
 {
     char **iselist = NULL;
     int count = isf_control_get_ise_list (&iselist);
-    printf ("Count : %d\n", count);
+    LOGD ("Count : %d\n", count);
 
     for (int i = 0; i < count; i++) {
         if (iselist[i]) {
-            printf (" [%d : %s]\n", i, iselist[i]);
+            LOGD ("[%d : %s]\n", i, iselist[i]);
             free (iselist[i]);
         }
         else {
-            printf (" [%d] No data\n", i);
+            LOGD ("[%d] No data\n", i);
         }
     }
     if (iselist)
@@ -180,7 +177,7 @@ static void test_get_ise_info (void *data, Evas_Object *obj, void *event_info)
         int   option    = 0;
         ret = isf_control_get_ise_info (uuid, &name, &language, &type, &option);
         if (ret == 0 && name && language) {
-            printf (" Active ISE: uuid[%s], name[%s], language[%s], type[%d], option[%d]\n", uuid, name, language, type, option);
+            LOGD ("Active ISE: uuid[%s], name[%s], language[%s], type[%d], option[%d]\n", uuid, name, language, type, option);
         }
         if (name)
             free (name);
@@ -193,25 +190,25 @@ static void test_get_ise_info (void *data, Evas_Object *obj, void *event_info)
 
 static void test_get_ise_count (void *data, Evas_Object *obj, void *event_info)
 {
-    printf ("S/W keyboard : %d, H/W keyboard : %d\n", isf_control_get_ise_count (SOFTWARE_KEYBOARD_ISE), isf_control_get_ise_count (HARDWARE_KEYBOARD_ISE));
+    LOGD ("S/W keyboard : %d, H/W keyboard : %d\n", isf_control_get_ise_count (SOFTWARE_KEYBOARD_ISE), isf_control_get_ise_count (HARDWARE_KEYBOARD_ISE));
 }
 
 static void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info)
 {
     int ret = isf_control_set_active_ise_to_default ();
     if (ret == 0)
-        printf (" Reset default ISE is successful!\n");
+        LOGD ("Reset default ISE is successful!\n");
     else
-        printf (" Reset default ISE is failed!!!\n");
+        LOGW ("Reset default ISE is failed!!!\n");
 }
 
 static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info)
 {
     int ret = isf_control_show_ise_selector ();
     if (ret == 0)
-        printf (" Show ISE selector is successful!\n");
+        LOGD ("Show ISE selector is successful!\n");
     else
-        printf (" Show ISE selector is failed!!!\n");
+        LOGD ("Show ISE selector is failed!!!\n");
 }
 
 static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info)
@@ -219,7 +216,7 @@ static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info
     char *uuid = NULL;
     int ret = isf_control_get_initial_ise (&uuid);
     if (ret > 0 && uuid)
-        printf (" Get initial ISE: %s\n", uuid);
+        LOGD ("Get initial ISE: %s\n", uuid);
     if (uuid)
         free (uuid);
 }
@@ -278,7 +275,7 @@ void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
     if (ctx_id != NULL) {
         imf_context = ecore_imf_context_add (ctx_id);
     } else {
-        printf ("Cannot create imf context\n");
+        LOGW ("Cannot create imf context\n");
         return;
     }
 

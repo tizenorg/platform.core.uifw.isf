@@ -28,6 +28,12 @@
 
 #include <Elementary.h>
 #include <appcore-efl.h>
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG "ISF_DEMO_EFL"
 
 struct appdata {
     int root_w;

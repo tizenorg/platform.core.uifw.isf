@@ -50,6 +50,7 @@ isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @VCONF_CFLAGS@ \
                         @PRIVILEGE_CONTROL_CFLAGS@ \
                         @EFL_ASSIST_CFLAGS@ \
+                        @DLOG_CFLAGS@ \
                         -fPIE
 
 isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
@@ -59,6 +60,7 @@ isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @UIGADGET_LIBS@ \
                         @PRIVILEGE_CONTROL_LIBS@ \
                         @EFL_ASSIST_LIBS@ \
+                        @DLOG_LIBS@ \
                         -pie
 
 isf_demo_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

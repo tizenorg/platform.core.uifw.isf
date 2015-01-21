@@ -114,7 +114,7 @@ static void layout_cb (ui_gadget_h ug, enum ug_mode mode, void *priv)
         evas_object_show (base);
         break;
     case UG_MODE_FRAMEVIEW:
-        printf ("please set ug mode to UG_MODE_FULLVIEW!\n");
+        LOGD ("please set ug mode to UG_MODE_FULLVIEW!\n");
         break;
     default:
         break;
@@ -226,7 +226,7 @@ _vkbd_state_on (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
 
-    printf ("[%s] input panel is shown\n", __func__);
+    LOGD ("input panel is shown\n");
     ad->vkbd_state = EINA_TRUE;
 }
 
@@ -235,7 +235,7 @@ _vkbd_state_off (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
 
-    printf ("[%s] input panel is hidden\n", __func__);
+    LOGD ("input panel is hidden\n");
     ad->vkbd_state = EINA_FALSE;
 }
 
@@ -296,7 +296,7 @@ static Eina_Bool _keydown_event (void *data, int type, void *event)
     struct appdata *ad = (struct appdata *)data;
     if (ad == NULL || ev == NULL) return ECORE_CALLBACK_PASS_ON;
 
-    printf ("[ecore key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+    LOGD ("[ecore key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -336,7 +336,7 @@ static Eina_Bool _keyup_event (void *data, int type, void *event)
 {
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
 
-    printf ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+    LOGD ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 
     if (strcmp (ev->keyname, "XF86Send") == 0) {
         toggle_menu (data);
@@ -351,19 +351,19 @@ static void input_panel_state_changed_cb (keynode_t *key, void* data)
 
     switch (sip_status) {
         case VCONFKEY_ISF_INPUT_PANEL_STATE_HIDE:
-            printf ("state : hide\n");
+            LOGD ("state : hide\n");
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_HIDE:
-            printf ("state : will_hide\n");
+            LOGD ("state : will_hide\n");
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW:
-            printf ("state : show\n");
+            LOGD ("state : show\n");
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_SHOW:
-            printf ("state : will_show\n");
+            LOGD ("state : will_show\n");
             break;
         default :
-            printf ("sip_status error!\n");
+            LOGD ("sip_status error!\n");
             break;
     }
 }
@@ -466,7 +466,7 @@ int main (int argc, char *argv[])
     try {
         ret = appcore_efl_main ("isf-demo-efl", &argc, &argv, &ops);
     } catch (...) {
-        printf ("Exception is thrown from appcore_efl_main ()!!!\n");
+        LOGW ("Exception is thrown from appcore_efl_main ()!!!\n");
     }
 
     return ret;

@@ -36,9 +36,9 @@ static Ecore_Event_Handler *_commit_handler  = NULL;
 static void _input_panel_event_callback (void *data, Ecore_IMF_Context *ctx, int value)
 {
     if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-        printf ("[%s] ECORE_IMF_INPUT_PANEL_STATE_SHOW\n", __func__);
+        LOGD ("ECORE_IMF_INPUT_PANEL_STATE_SHOW\n");
     } else if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        printf ("[%s] ECORE_IMF_INPUT_PANEL_STATE_HIDE\n", __func__);
+        LOGD ("ECORE_IMF_INPUT_PANEL_STATE_HIDE\n");
     }
 }
 
