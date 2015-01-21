@@ -15,4 +15,5 @@
 /LaunchIseOnRequest = false
 /ChangeKeyboardModeByTouch = false
 /ChangeKeyboardModeByFocusMove = false
+/HideIseBasedOnFocus = false
 /SupportHWKeyboardMode = false
