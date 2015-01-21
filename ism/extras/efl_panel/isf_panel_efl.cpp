@@ -6514,6 +6514,9 @@ int main (int argc, char *argv [])
 
         /* Launches default soft keyboard when all conditions are satisfied */
         launch_default_soft_keyboard ();
+
+        /* Update the name of each ISE according to display language */
+        update_ise_locale ();
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }
