@@ -59,7 +59,6 @@ struct OPTION_ELEMENTS
 
         event_handler = NULL;
 
-        itc_main_separator = NULL;
         itc_main_text_only = NULL;
 
         itc_language_subitems = NULL;
@@ -76,7 +75,6 @@ struct OPTION_ELEMENTS
 
     Ecore_Event_Handler *event_handler;
 
-    Elm_Genlist_Item_Class *itc_main_separator;
     Elm_Genlist_Item_Class *itc_main_text_only;
 
     Elm_Genlist_Item_Class *itc_language_subitems;
@@ -143,16 +141,19 @@ static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
 {
     ITEMDATA *item_data = (ITEMDATA*)data;
     if (item_data) {
-        if (!strcmp(part, "elm.text")) {
+        if (!strcmp(part, "elm.text.main.left.top") ||
+            !strcmp(part, "elm.text.main.left") ||
+            !strcmp(part, "elm.text.main") ||
+            !strcmp(part, "elm.text") ||
+            !strcmp(part, "elm.text.1")) {
             return strdup(item_data->main_text);
         }
-        if (!strcmp(part, "elm.text.1")) {
-            return strdup(item_data->main_text);
-        }
-        if (!strcmp(part, "elm.text.2")) {
+        if (!strcmp(part, "elm.text.sub.left.bottom") ||
+            !strcmp(part, "elm.text.2")) {
             return strdup(item_data->sub_text);
         }
     }
+
     return NULL;
 }
 
@@ -162,7 +163,7 @@ static Evas_Object *_main_gl_content_get(void *data, Evas_Object *obj, const cha
     ITEMDATA *item_data = (ITEMDATA*)data;
 
     if (item_data) {
-        if (!strcmp(part, "elm.icon")) {
+        if (!strcmp(part, "elm.icon.right")) {
         }
     }
 
@@ -233,7 +234,7 @@ static Evas_Object *_input_mode_gl_content_get(void *data, Evas_Object *obj, con
     Evas_Object *item = NULL;
 
     if (data) {
-        if (strcmp(part, "elm.icon") == 0) {
+        if (strcmp(part, "elm.icon.right") == 0) {
             for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
                 LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
                 if (info) {
@@ -293,16 +294,19 @@ static char *_language_gl_text_get(void *data, Evas_Object *obj, const char *par
 {
     ITEMDATA *item_data = (ITEMDATA*)data;
     if (item_data) {
-        if (!strcmp(part, "elm.text")) {
+        if (!strcmp(part, "elm.text.main.left.top") ||
+            !strcmp(part, "elm.text.main.left") ||
+            !strcmp(part, "elm.text.main") ||
+            !strcmp(part, "elm.text") ||
+            !strcmp(part, "elm.text.1")) {
             return strdup(item_data->main_text);
         }
-        if (!strcmp(part, "elm.text.1")) {
-            return strdup(item_data->main_text);
-        }
-        if (!strcmp(part, "elm.text.2")) {
+        if (!strcmp(part, "elm.text.sub.left.bottom") ||
+            !strcmp(part, "elm.text.2")) {
             return strdup(item_data->sub_text);
         }
     }
+
     return NULL;
 }
 
@@ -312,14 +316,12 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
     ITEMDATA *item_data = (ITEMDATA*)data;
 
     if (item_data) {
-        if (strcmp(part, "elm.icon") == 0) {
+        if (strcmp(part, "elm.icon.right") == 0) {
             if (item_data->mode >= 0 && item_data->mode < OPTION_MAX_LANGUAGES) {
                 LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
                 if (info) {
                     Evas_Object *ck = elm_check_add(obj);
                     elm_object_style_set(ck, "default/genlist");
-                    //elm_check_state_pointer_set(ck, &(g_language_state[item_data->mode]));
-                    //evas_object_repeat_events_set(ck, EINA_FALSE);
                     evas_object_propagate_events_set(ck, EINA_FALSE);
                     if (info->enabled) {
                         elm_check_state_set(ck, TRUE);
@@ -345,7 +347,7 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
         elm_genlist_item_selected_set(item, EINA_FALSE);
 
         // Update check button
-        Evas_Object *ck = elm_object_item_part_content_get(item, "elm.icon");
+        Evas_Object *ck = elm_object_item_part_content_get(item, "elm.icon.right");
         Eina_Bool state = elm_check_state_get(ck);
         elm_check_state_set(ck, !state);
         language_selected(item_data, ck, NULL);
@@ -392,10 +394,6 @@ static void _language_gl_exp(void *data, Evas_Object *obj, void *event_info)
 #endif
 static void
 destroy_genlist_item_classes() {
-    if (ad.itc_main_separator) {
-        elm_genlist_item_class_free(ad.itc_main_separator);
-        ad.itc_main_separator = NULL;
-    }
     if (ad.itc_main_text_only) {
         elm_genlist_item_class_free(ad.itc_main_text_only);
         ad.itc_main_text_only = NULL;
@@ -412,18 +410,9 @@ destroy_genlist_item_classes() {
 
 static void
 create_genlist_item_classes() {
-    ad.itc_main_separator = elm_genlist_item_class_new();
-    if (ad.itc_main_separator) {
-        ad.itc_main_separator->item_style = "dialogue/separator";
-        ad.itc_main_separator->func.text_get = NULL;
-        ad.itc_main_separator->func.content_get = NULL;
-        ad.itc_main_separator->func.state_get = NULL;
-        ad.itc_main_separator->func.del = NULL;
-    }
-
     ad.itc_main_text_only = elm_genlist_item_class_new();
     if (ad.itc_main_text_only) {
-        ad.itc_main_text_only->item_style = "dialogue/2text.3";
+        ad.itc_main_text_only->item_style = "2line.top";
         ad.itc_main_text_only->func.text_get = _main_gl_text_get;
         ad.itc_main_text_only->func.content_get = _main_gl_content_get;
         ad.itc_main_text_only->func.state_get = _main_gl_state_get;
@@ -432,7 +421,7 @@ create_genlist_item_classes() {
 
     ad.itc_language_subitems = elm_genlist_item_class_new();
     if (ad.itc_language_subitems) {
-        ad.itc_language_subitems->item_style = "dialogue/1text.1icon.3";
+        ad.itc_language_subitems->item_style = "1line";
         ad.itc_language_subitems->func.text_get = _language_gl_text_get;
         ad.itc_language_subitems->func.content_get = _language_gl_content_get;
     }
@@ -559,14 +548,11 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     ad.naviframe = naviframe;
 
     Evas_Object *genlist = elm_genlist_add(naviframe);
+    elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
+    elm_genlist_homogeneous_set (genlist, EINA_TRUE);
     evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_object_style_set(genlist, "dialogue");
     elm_genlist_tree_effect_enabled_set(genlist, EINA_FALSE);
-
-    Elm_Object_Item *separator = elm_genlist_item_append(genlist, ad.itc_main_separator, NULL, NULL,
-        ELM_GENLIST_ITEM_NONE, NULL, NULL);
-    elm_genlist_item_select_mode_set(separator, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
     if (_language_manager.get_languages_num() > 1) {
         std::string languages = compose_selected_languages_string();
@@ -587,11 +573,8 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 {
     Evas_Object *genlist = elm_genlist_add(naviframe);
-    elm_object_style_set(genlist, "dialogue");
-
-    Elm_Object_Item *separator = elm_genlist_item_append(genlist, ad.itc_main_separator, NULL, NULL,
-        ELM_GENLIST_ITEM_NONE, NULL, NULL);
-    elm_genlist_item_select_mode_set(separator, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+    elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
+    elm_genlist_homogeneous_set (genlist, EINA_TRUE);
 
     for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
     {

@@ -34,6 +34,10 @@ Description: Tizen keyboard
 
 
 %build
+export CFLAGS+=" -DTIZEN_DEBUG_ENABLE"
+export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE"
+export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
+
 cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}
 
 make %{?jobs:-j%jobs}
