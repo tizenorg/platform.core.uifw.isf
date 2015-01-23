@@ -43,7 +43,6 @@ static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info
 static void test_get_ise_count (void *data, Evas_Object *obj, void *event_info);
 static void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info);
-static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info);
 
 static struct _menu_item imcontrol_menu_its[] = {
     { "PANEL GEOMETRY GET", test_input_panel_geometry_get },
@@ -61,7 +60,6 @@ static struct _menu_item imcontrol_menu_its[] = {
     { "GET ISE COUNT", test_get_ise_count },
     { "RESET DEFAULT ISE", test_reset_default_ise },
     { "SHOW ISE SELECTOR", test_show_ise_selector },
-    { "SHOW ISE OPTION", test_show_ise_option },
 
     /* do not delete below */
     { NULL, NULL}
@@ -211,15 +209,6 @@ static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_in
         LOGD ("Show ISE selector is successful!\n");
     else
         LOGW ("Show ISE selector is failed!!!\n");
-}
-
-static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info)
-{
-    int ret = isf_control_show_ise_option_window ();
-    if (ret == 0)
-        LOGD ("Show ISE option window is successful!\n");
-    else
-        LOGW ("Show ISE option window is failed!!!\n");
 }
 
 static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info)
