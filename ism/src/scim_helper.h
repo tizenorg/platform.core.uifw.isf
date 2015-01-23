@@ -1239,16 +1239,6 @@ public:
      * void update_bidi_direction (const HelperAgent *agent, uint32 &bidi_direction);
      */
     Connection signal_connect_update_bidi_direction                 (HelperAgentSlotUintVoid            *slot);
-
-    /**
-     * @brief Connect a slot to Helper show option window.
-     *
-     * This signal is used to do request the ISE to show option window.
-     *
-     * The prototype of the slot is:
-     * void show_option_window (const HelperAgent *agent, int ic, const String &uuid);
-     */
-    Connection signal_connect_show_option_window                    (HelperAgentSlotVoid                *slot);
 };
 
 /**  @} */
