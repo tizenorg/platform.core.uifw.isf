@@ -59,9 +59,7 @@ static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Return Key Disable", ise_return_key_disable_bt },
     { "ISF Input hint", ise_input_hint_bt },
     { "ISF IM Data", ise_imdata_set_bt },
-#ifdef _WEARABLE
     { "ISF ondemand", ise_ondemand_bt },
-#endif
     { "ISF Focus Movement", isf_focus_movement_bt },
     { "ISF Event", isf_event_demo_bt },
     { "ISF IM Control", imcontrolapi_bt },

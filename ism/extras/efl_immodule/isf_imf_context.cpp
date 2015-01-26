@@ -1578,19 +1578,13 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         context_scim->impl->shift_mode_enabled = 0;
     }
 
-#ifdef _WEARABLE
     LOGD ("ctx : %p. on demand : %d\n", ctx, ecore_imf_context_input_panel_show_on_demand_get (ctx));
-#endif
 
     if (ecore_imf_context_input_panel_enabled_get (ctx)) {
-#ifdef _WEARABLE
         if (!ecore_imf_context_input_panel_show_on_demand_get (ctx))
             ecore_imf_context_input_panel_show (ctx);
         else
             LOGD ("ctx : %p input panel on demand mode : TRUE\n", ctx);
-#else
-        ecore_imf_context_input_panel_show (ctx);
-#endif
     }
     else
         LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
@@ -4460,7 +4454,6 @@ slot_get_selection (IMEngineInstanceBase *si,
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-#ifdef _WEARABLE
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
     if (_focused_ic && _focused_ic == ic) {
@@ -4477,7 +4470,6 @@ slot_get_selection (IMEngineInstanceBase *si,
             return true;
         }
     }
-#endif
     return false;
 }
 
@@ -4488,7 +4480,6 @@ slot_set_selection (IMEngineInstanceBase *si,
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-#ifdef _WEARABLE
     EcoreIMFContextISF *ic = static_cast<EcoreIMFContextISF *> (si->get_frontend_data ());
 
     if (_focused_ic && _focused_ic == ic) {
@@ -4499,7 +4490,6 @@ slot_set_selection (IMEngineInstanceBase *si,
         ecore_imf_context_event_callback_call (_focused_ic->ctx, ECORE_IMF_CALLBACK_SELECTION_SET, &ev);
         return true;
     }
-#endif
     return false;
 }
 
