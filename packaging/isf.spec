@@ -6,7 +6,7 @@ Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1
 Source0:    %{name}-%{version}.tar.gz
-%if "%{_repository}" != "wearable"
+%if "%{profile}" != "wearable"
 Source1:    scim.service
 %endif
 Source1001: isf.manifest
@@ -22,11 +22,10 @@ BuildRequires:  pkgconfig(ecore-wayland)
 BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
 %else
 BuildRequires:  pkgconfig(utilX)
-%if "%{_repository}" != "wearable"
-BuildRequires:  pkgconfig(ui-gadget-1)
-BuildRequires:  pkgconfig(minicontrol-provider)
-%endif
 BuildRequires:  pkgconfig(x11)
+%endif
+%if "%{profile}" == "mobile"
+BuildRequires:  pkgconfig(minicontrol-provider)
 %endif
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
@@ -62,18 +61,23 @@ This package contains ISF header files for ISE development.
 cp %{SOURCE1001} .
 
 %build
-%if 0%{?sec_build_binary_debug_enable}
 export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
 export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
-%endif
 
-%if "%{_repository}" == "wearable"
+%if "%{profile}" == "wearable"
 CFLAGS+=" -D_WEARABLE";
 CXXFLAGS+=" -D_WEARABLE";
-%else
+%endif
+
+%if "%{profile}" == "mobile"
 CFLAGS+=" -D_MOBILE";
 CXXFLAGS+=" -D_MOBILE";
+%endif
+
+%if "%{profile}" == "tv"
+CFLAGS+=" -D_TV";
+CXXFLAGS+=" -D_TV";
 %endif
 
 %if %{with wayland}
@@ -124,7 +128,7 @@ mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 %if %{with wayland}
 %else
-%if "%{_repository}" != "wearable"
+%if "%{profile}" != "wearable"
 install -d %{buildroot}%{_libdir}/systemd/system/graphical.target.wants
 install -d %{buildroot}%{_libdir}/systemd/system
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/system/
@@ -155,7 +159,7 @@ cat scim.lang > isf.lang
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-%if "%{_repository}" == "wearable" || %{with wayland}
+%if "%{profile}" == "wearable" || %{with wayland}
 %dir /etc/scim/conf
 %{_libdir}/systemd/user/core-efl.target.wants/scim.service
 %{_libdir}/systemd/user/scim.service
