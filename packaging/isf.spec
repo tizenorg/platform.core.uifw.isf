@@ -174,7 +174,7 @@ cat scim.lang > isf.lang
 %else
 %{_optexecdir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
-%{_libdir}/*/immodules/*.so
+%{_libdir}/ecore_imf/modules/*/*/*.so
 %endif
 %{_bindir}/scim
 %{_bindir}/isf-log

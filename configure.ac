@@ -235,7 +235,7 @@ if test "$ISF_HAS_EFL" = "yes"; then
   if test -z "$EFL_LIBDIR)"; then
     EFL_LIBDIR="$libdir"
   fi
-  EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore/immodules
+  EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/isf/v-1.12
   AC_SUBST(EFL_LIBDIR)
   AC_SUBST(EFL_IM_MODULEDIR)
 fi
