@@ -1692,8 +1692,6 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 _config->flush ();
                 _config->reload ();
                 _panel_agent->reload_config ();
-
-                vconf_set_str (VCONFKEY_ISF_ACTIVE_KEYBOARD_UUID, uuid.c_str ());
             }
 
             return true;
@@ -3445,8 +3443,7 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     elm_win_prop_focus_skip_set (win, EINA_TRUE);
     efl_set_showing_effect_for_app_window (win, strEffect);
 
-    const char *szProfile[] = {"mobile", ""};
-    elm_win_profiles_set (win, szProfile, 1);
+    elm_win_profile_set (win, "mobile");
 
     return win;
 }
@@ -4098,8 +4095,6 @@ static void slot_show_aux_string (void)
  */
 static void slot_show_candidate_table (void)
 {
-    int feedback_result = 0;
-
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
         _panel_agent->helper_candidate_show ();
         return;
@@ -4125,7 +4120,7 @@ static void slot_show_candidate_table (void)
     ui_candidate_delete_destroy_timer ();
 
 #if HAVE_FEEDBACK
-    feedback_result = feedback_initialize ();
+    int feedback_result = feedback_initialize ();
 
     if (FEEDBACK_ERROR_NONE == feedback_result) {
         LOGD ("Feedback initialize successful");
@@ -4182,8 +4177,6 @@ static void slot_hide_candidate_table (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    int feedback_result = 0;
-
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
         _panel_agent->helper_candidate_hide ();
         return;
@@ -4222,7 +4215,7 @@ static void slot_hide_candidate_table (void)
     }
 
 #if HAVE_FEEDBACK
-    feedback_result = feedback_deinitialize ();
+    int feedback_result = feedback_deinitialize ();
 
     if (FEEDBACK_ERROR_NONE == feedback_result)
         LOGD ("Feedback deinitialize successful");
