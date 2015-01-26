@@ -301,46 +301,11 @@ static Eina_Bool _keydown_event (void *data, int type, void *event)
     return ECORE_CALLBACK_PASS_ON;
 }
 
-static void
-more_ctxpopup_del_cb (void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-    struct appdata *ad = (struct appdata *)data;
-    if (ad == NULL) return;
-
-    ad->menu_popup = NULL;
-}
-
-static void toggle_menu (void *data)
-{
-    struct appdata *ad = (struct appdata *)data;
-    if (ad == NULL) return;
-
-    if (ad->menu_popup) {
-        evas_object_del (ad->menu_popup);
-        ad->menu_popup = NULL;
-    }
-    else {
-        Evas_Object *more_ctxpopup = ea_menu_popup_add (ad->win_main);
-        elm_ctxpopup_item_append (more_ctxpopup, "Menu 1", NULL, NULL, NULL);
-        elm_ctxpopup_item_append (more_ctxpopup, "Menu 2", NULL, NULL, NULL);
-        ea_menu_popup_move (more_ctxpopup);
-        evas_object_show (more_ctxpopup);
-
-        evas_object_event_callback_add (more_ctxpopup, EVAS_CALLBACK_DEL, more_ctxpopup_del_cb, ad);
-
-        ad->menu_popup = more_ctxpopup;
-    }
-}
-
 static Eina_Bool _keyup_event (void *data, int type, void *event)
 {
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
 
     LOGD ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
-
-    if (strcmp (ev->keyname, "XF86Send") == 0) {
-        toggle_menu (data);
-    }
 
     return ECORE_CALLBACK_PASS_ON;
 }
