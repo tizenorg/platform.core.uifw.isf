@@ -35,7 +35,6 @@ BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(security-server)
 BuildRequires:  pkgconfig(edbus)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
-BuildRequires:  pkgconfig(feedback)
 BuildRequires:  efl-assist-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
@@ -111,7 +110,8 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
         --disable-wsm-efl \
         --disable-wsc-efl \
 %endif
-		--disable-frontend-x11
+		--disable-frontend-x11 \
+		--disable-multiwindow-support
 make %{?_smp_mflags}
 
 %install
