@@ -117,8 +117,7 @@ create_main_window(int degree)
     Evas_Object *window = elm_win_add(NULL, "Option window", ELM_WIN_BASIC);
     elm_win_title_set(window, "Option window");
 
-    const char *szProfile[] = {"mobile", ""};
-    elm_win_profiles_set(window, szProfile, 1);
+    elm_win_profile_set(window, "mobile");
 
     elm_win_borderless_set(window, EINA_TRUE);
 
