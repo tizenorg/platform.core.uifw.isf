@@ -560,11 +560,7 @@ _panel_show (void *data)
 static Eina_Bool
 _click_check (void *data)
 {
-    if (_click_timer) {
-        ecore_timer_del (_click_timer);
-        _click_timer = NULL;
-    }
-
+    _click_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
 }
 
