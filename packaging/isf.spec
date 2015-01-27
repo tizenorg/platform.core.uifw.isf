@@ -6,9 +6,7 @@ Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1
 Source0:    %{name}-%{version}.tar.gz
-%if "%{profile}" != "wearable"
 Source1:    scim.service
-%endif
 Source1001: isf.manifest
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
