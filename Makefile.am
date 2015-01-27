@@ -58,12 +58,8 @@ pkgconfig_DATA          = isf.pc scim.pc \
 
 
 # $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
-
-if MOBILE_ENV
-else
-systemduserunitdir = /usr/lib/systemd/user
+systemduserunitdir = /usr/lib/systemd/system
 systemduserunit_DATA = scim.service
-endif
 
 ACLOCAL_AMFLAGS = -I ism/m4
 
@@ -75,9 +71,6 @@ update-ChangeLog:
 uninstall-local:
 	rm -rf @SCIM_MODULE_PATH@
 
-if MOBILE_ENV
-else
 install-data-hook:
-	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants
-	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/core-efl.target.wants/scim.service
-endif
+	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/graphical.target.wants
+	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/graphical.target.wants/scim.service

@@ -128,12 +128,10 @@ mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 
 %if %{with wayland}
 %else
-%if "%{profile}" != "wearable"
 install -d %{buildroot}%{_libdir}/systemd/system/graphical.target.wants
 install -d %{buildroot}%{_libdir}/systemd/system
 install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/system/
 ln -sf ../../system/scim.service %{buildroot}%{_libdir}/systemd/system/graphical.target.wants/scim.service
-%endif
 %endif
 
 %find_lang scim
@@ -159,14 +157,9 @@ cat scim.lang > isf.lang
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-%if "%{profile}" == "wearable" || %{with wayland}
 %dir /etc/scim/conf
-%{_libdir}/systemd/user/core-efl.target.wants/scim.service
-%{_libdir}/systemd/user/scim.service
-%else
 %{_libdir}/systemd/system/graphical.target.wants/scim.service
 %{_libdir}/systemd/system/scim.service
-%endif
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config

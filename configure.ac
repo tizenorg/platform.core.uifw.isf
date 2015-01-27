@@ -338,8 +338,6 @@ if test "$ISF_HAS_UIGADGET" = "yes"; then
   AC_DEFINE(HAVE_UIGADGET,1,[Have UI gadget functions.])
 fi
 
-AM_CONDITIONAL([MOBILE_ENV], [test x$ISF_HAS_UIGADGET = xyes])
-
 if test "$ISF_HAS_NOTIFICATION" = "yes"; then
   AC_DEFINE(HAVE_NOTIFICATION,1,[Have Notification functions.])
 fi

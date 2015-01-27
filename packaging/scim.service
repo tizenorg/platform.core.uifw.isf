@@ -1,12 +1,11 @@
 [Unit]
 Description=Start the input service framework panel
-After=ac.service
-Requires=ac.service
+After=enlightenment.service
+Requires=enlightenment.service
 
 [Service]
 ExecStart=/usr/bin/scim -d
-Environment=HOME=/root
-EnvironmentFile=/etc/sysconfig/tizen-mobile-ui
+Environment="DISPLAY=:0.0" "HOME=%h"
 Nice=5
 OOMScoreAdjust=-100
 Restart=always
