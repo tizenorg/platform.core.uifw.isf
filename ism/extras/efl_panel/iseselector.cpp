@@ -70,7 +70,7 @@ static void _ise_selector_radio_grp_del_cb (void *data, Evas *e, Evas_Object *ob
 static char *
 gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
 {
-    int index = (int) data;
+    int index = static_cast<int>(reinterpret_cast<long>(data));
     if (index < 0 || index >= (int)_names.size ())
         return NULL;
 
@@ -85,7 +85,7 @@ gl_ise_name_get (void *data, Evas_Object *obj, const char *part)
 static Evas_Object *
 gl_icon_get (void *data, Evas_Object *obj, const char *part)
 {
-    unsigned int index = (unsigned int)(data);
+    unsigned int index = static_cast<int>(reinterpret_cast<long>(data));
 
     if (index >= _uuids.size ())
         return NULL;
@@ -113,7 +113,7 @@ gl_icon_get (void *data, Evas_Object *obj, const char *part)
 static void
 gl_ise_selected_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    unsigned int index = (unsigned int)(data);
+    unsigned int index = static_cast<int>(reinterpret_cast<long>(data));
 
     LOGD ("selected item : %d\n", index);
 
