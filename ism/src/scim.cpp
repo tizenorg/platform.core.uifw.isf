@@ -169,13 +169,14 @@ static void launch_helper (const char *name, const char *uuid);
 
 static void vconf_appservice_ready_changed (keynode_t *node, void *user_data)
 {
-    if (node && node->value.i >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
+    int node_value = vconf_keynode_get_int(node);
+    if (node && node_value >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
         if (_appsvc_callback_regist) {
             vconf_ignore_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, vconf_appservice_ready_changed);
             _appsvc_callback_regist = false;
         }
 
-        ISF_SAVE_LOG ("vconf_appservice_ready_changed val : %d)\n", node->value.i);
+        ISF_SAVE_LOG ("vconf_appservice_ready_changed val : %d)\n", node_value);
 
         launch_helper (_ise_name, _ise_uuid);
     }
