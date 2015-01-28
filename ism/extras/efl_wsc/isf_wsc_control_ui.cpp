@@ -157,7 +157,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
         return;
 
     memcpy (packet, (void *)&iseContext, sizeof (iseContext));
-    memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
+    memcpy ((void *)((char *)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
     int context_id = _get_context_id (ctx);
 
