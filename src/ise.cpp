@@ -144,6 +144,12 @@ void CCoreEventCallback::on_init()
     ise_create();
 }
 
+void CCoreEventCallback::on_run(int argc, char **argv)
+{
+    LOGD("CCoreEventCallback::on_run()\n");
+    g_core.run();
+}
+
 void CCoreEventCallback::on_exit()
 {
     ::ise_hide();

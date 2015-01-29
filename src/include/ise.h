@@ -109,6 +109,7 @@ class CCoreEventCallback : public ISCLCoreEventCallback
     void on_get_app_info(SclCoreAppInfo *info);
 
     void on_init();
+    void on_run(int argc, char **argv);
     void on_exit();
 
     void on_attach_input_context(sclint ic, const sclchar *ic_uuid);
