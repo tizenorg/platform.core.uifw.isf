@@ -57,7 +57,8 @@ pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
 
-systemduserunitdir = $(libdir)/systemd/system
+# $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
+systemduserunitdir = /usr/lib/systemd/system
 systemduserunit_DATA = scim.service
 
 ACLOCAL_AMFLAGS = -I ism/m4
