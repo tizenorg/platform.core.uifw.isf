@@ -25,9 +25,6 @@
 
 #include "languages.h"
 
-#define ISEUUID "ise-default"
-#define ISENAME "Tizen keyboard"
-
 #define ISE_VERSION "1.1.0-1"
 #define LOCALEDIR "/usr/share/locale"
 
@@ -106,8 +103,6 @@ using namespace scl;
 
 class CCoreEventCallback : public ISCLCoreEventCallback
 {
-    void on_get_app_info(SclCoreAppInfo *info);
-
     void on_init();
     void on_run(int argc, char **argv);
     void on_exit();

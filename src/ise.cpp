@@ -128,16 +128,6 @@ check_ic_temporary(int ic)
     return FALSE;
 }
 
-void CCoreEventCallback::on_get_app_info(SclCoreAppInfo *info)
-{
-    LOGD("CCoreEventCallback::on_get_app_info()\n");
-    if (info) {
-        info->name = ISENAME;
-        info->uuid = ISEUUID;
-        info->language = "en_US";
-    }
-}
-
 void CCoreEventCallback::on_init()
 {
     LOGD("CCoreEventCallback::init()\n");
