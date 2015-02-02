@@ -42,7 +42,7 @@ void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info);
 
 static void _set_focus_button_bt (void *data, Evas_Object *obj, void *event_info)
 {
-    int i = (int) data;
+    int i = (int)(reinterpret_cast<long>(data));
 
     focus_label_idx = i;
 

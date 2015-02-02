@@ -688,7 +688,7 @@ static Eina_Bool
 _x_prop_change (void *data, int type, void *event)
 {
     Ecore_X_Event_Window_Property *e = (Ecore_X_Event_Window_Property *)event;
-    Ecore_X_Window xwin = (Ecore_X_Window)data;
+    Ecore_X_Window xwin = (Ecore_X_Window)(reinterpret_cast<long>(data));
 
     if (!e || e->win != xwin) return ECORE_CALLBACK_PASS_ON;
 

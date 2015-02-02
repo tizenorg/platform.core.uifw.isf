@@ -135,7 +135,7 @@ Ecore_X_Window client_window_id_get (Ecore_IMF_Context *ctx)
         if (ee)
             xid = (Ecore_X_Window)ecore_evas_window_get (ee);
     } else {
-        xid = (Ecore_X_Window)ecore_imf_context_client_window_get (ctx);
+        xid = (Ecore_X_Window)(reinterpret_cast<long>(ecore_imf_context_client_window_get (ctx)));
     }
 
     return xid;
@@ -651,7 +651,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         return;
 
     memcpy (packet, (void *)&iseContext, sizeof (iseContext));
-    memcpy ((void *)((unsigned int)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
+    memcpy ((void *)((unsigned int)(reinterpret_cast<long>(packet)) + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
     int context_id = _get_context_id (ctx);
 

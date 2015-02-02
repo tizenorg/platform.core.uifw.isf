@@ -223,13 +223,13 @@ static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info
 
 static char *gli_label_get (void *data, Evas_Object *obj, const char *part)
 {
-    int j = (int)data;
+    int j = (int)(reinterpret_cast<long>(data));
     return strdup (imcontrol_menu_its[j].name);
 }
 
 static void test_api (void *data, Evas_Object *obj, void *event_info)
 {
-    int j = (int)data;
+    int j = (int)(reinterpret_cast<long>(data));
     Elm_Object_Item *it = (Elm_Object_Item *)event_info;
     if (it)
         elm_genlist_item_selected_set (it, EINA_FALSE);
