@@ -6,7 +6,6 @@ Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1
 Source0:    %{name}-%{version}.tar.gz
-Source1:    scim.service
 Source1001: isf.manifest
 BuildRequires:  edje-bin
 BuildRequires:  embryo-bin
@@ -123,14 +122,6 @@ mkdir -p %{buildroot}/etc/scim/conf
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-
-%if %{with wayland}
-%else
-install -d %{buildroot}%{_libdir}/systemd/system/graphical.target.wants
-install -d %{buildroot}%{_libdir}/systemd/system
-install -m0644 %{SOURCE1} %{buildroot}%{_libdir}/systemd/system/
-ln -sf ../../system/scim.service %{buildroot}%{_libdir}/systemd/system/graphical.target.wants/scim.service
-%endif
 
 %find_lang scim
 
