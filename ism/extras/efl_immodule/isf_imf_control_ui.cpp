@@ -519,7 +519,11 @@ void isf_imf_input_panel_shutdown (void)
 
     candidate_conformant_reset_done = TRUE;
     SECURE_LOGD ("candidate_conformant_reset_done = 1");
-    isf_imf_context_input_panel_send_candidate_will_hide_ack (get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW));
+
+    Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+    if (active_ctx) {
+        isf_imf_context_input_panel_send_candidate_will_hide_ack (active_ctx);
+    }
 
     if (_prop_change_handler) {
         ecore_event_handler_del (_prop_change_handler);
