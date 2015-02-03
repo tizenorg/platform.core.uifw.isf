@@ -174,7 +174,7 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
 {
     Elm_Object_Item *item = (Elm_Object_Item*)event_info;
 
-    int id = (int)(data);
+    int id = (int)reinterpret_cast<long>(data);
 
     switch (id) {
         case SETTING_ITEM_ID_LANGUAGE: {

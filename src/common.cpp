@@ -788,7 +788,9 @@ void slot_get_imdata (const scim::HelperAgent *, char **buf, size_t &len) {
     if (impl) {
         IISECommonEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
-            callback->get_imdata(buf, &len);
+            sclu32 _len = 0;
+            callback->get_imdata(buf, &_len);
+            len = _len;
         }
     }
 }

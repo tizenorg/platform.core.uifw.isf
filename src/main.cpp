@@ -186,7 +186,8 @@ void CCoreEventCallback::set_return_key_disable (sclu32 disabled)
 
 void CCoreEventCallback::set_imdata(sclchar *buf, sclu32 len)
 {
-    set_ise_imdata(buf, len);
+    size_t _len = len;
+    set_ise_imdata(buf, _len);
 }
 
 void CCoreEventCallback::get_language_locale(sclint ic, sclchar **locale)
