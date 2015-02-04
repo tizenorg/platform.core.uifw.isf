@@ -2,8 +2,8 @@ Name:       ise-default
 Summary:    Tizen keyboard
 Version:    1.0.8
 Release:    1
-Group:      System Environment/Libraries
-License:    Apache License, Version 2.0
+Group:      Graphics & UI Framework/Input
+License:    Apache-2.0
 Source0:    ise-default-%{version}.tar.gz
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
