@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "ரேடியோ பொத்தான்"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "திற"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "தேர்வுசெய்யப்பட்டது"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "மூடவும்"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "உதவி"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "ஒன்றுமில்லை"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "ஆஃப்"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "ஆன்"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "அமைவுகள்"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "நீக்கு"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "கியர் Azerty வி.ப."
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "கிய. க்வர்ட்டி வி.ப."
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "கியர் Qwertz வி.ப."
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "முகங்கள்"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "பாப்-அப் மூடப்பட்டது."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "பாப் அப் காண்பிக்கப்படுகிறது"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "எண்கள்"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "இடங்கள்"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "தொடர்ச்சியான உள்ளீட்டைப் பயன்படுத்தல்"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "உரை கணிப்பைப் பயன்படுத்தல்"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "உள்ளீட்டு முறையை மாற்றுதல்"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "உள்ளீட்டு முறையை மாற்றுதல்"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "மொழியை மாற்றுதல்"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "விசைப்பலகையை மூடுதல்"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "சுட்டியை நகர்த்துதல்"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "விசைப்பலகையைத் திறத்தல்"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "உரையைத் தேர்ந்தெடுத்தல்"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "சாம்சங் வி.பலகை பயன்படுத்துதல்"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "நீங்கள் தட்டச்சு செய்யும்போது, அதற்கான மிக பொருத்தமான சொல்லை ஸ்பேஸ் பாரைத் டேப் செய்து நிறைவு செய்யவும் அல்லது மாற்றவும்."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "பட்டியலை மூடவென இருமுறை டேப் செய்க."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "இந்தப் புலத்தைத் திருத்த இருமுறை டேப் செய்யவும்."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "பட்டியலைத் திறக்கவென இருமுறை டேப் செய்க."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "விரிவாக்கத்தக்க பட்டியல்"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "ஆன்/ஆஃப் பொத்தான்"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "சாம்சங் விசைப்பலகை"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "கூடுதல் அமைவுகள்"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "விசைப்பலகை அமைவுகளில் குறைந்தபட்சம் ஒரு மொழியையாவது நீங்கள் தேர்வுசெய்ய வேண்டும்."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "உள்ளீடு மொழிகளை தேர்வு."
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "அதிகபட்ச எண்ணிக்கையிலான ஆதரிக்கப்பட்ட மொழிகள் (%d) அடைந்தன."
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "விசைப்பலகை"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "தேர்ந்தெடுக்கப்படாதவை"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "தேர்வுசெய்யப்பட்டது"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "தேர்வுப் பெட்டி"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "நாம் எப்போது சந்திக்கலாம்?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "நீங்கள் எங்கே இருக்கிறீர்கள்?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "மீ.காட்ட வேண்டாம்."
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "சாதனத்தில் காண்பி"
+
+msgid "IDS_ST_SK_OK"
+msgstr "சரி"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "ரத்து"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "டெம்ப்ளேட்டை தேர்ந்தெடு"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "எப்படி போகிறது?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "என்ன நடக்கிறது?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "விரைவில் உங்களுடன் பேசுகிறேன்."
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "உங்களை பிறகு அழைக்கிறேன்."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "மொழியை மாற்றுக"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "முடிந்தது"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "தானியங்கு மாற்றீடை இயக்க குறைந்தது ஒரு மொழியேனும் தேர்ந்தெடுக்கவும்."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "முன்மொழியப்பட்ட உரை திருத்தத்தை ஏற்றுக்கொள்ள இடைவெளி விசையை டேப் செய்க அல்லது நடப்பு உரையை தொடர்வதற்கு அம்புக்குறி விசையை டேப் செய்க."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "க்வெர்ட்ஸ் விசைப்பலகை"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "அடுத்து"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "கானா விசைப்பலகை"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "கானா ஃப்ளிக் விசைப்பலகை"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "ஜெர்மன் விசைப்பலகை"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "உள்ளிடவும்"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Chunjiin வி.பலகை"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "பல்கேரியன் ஒலிப்பு விசைப்பலகை"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "பல்கேரியன் விசைப்பலகை"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "அசெர்டி விசைப்பலகை"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "கவனம்"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 வி.பலகை"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "அதிர்வு"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "ஸ்பேஸ் பார் ஸ்வீப்"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "ஒலி"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "ரீசெட் அமைவுகள்"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "விசைப்பலகை ஸ்வைப்"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "எழுத்து முன்காணல்"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "தானியக்க மாற்றீடு"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "தானியக்க நிறுத்தற்குறி"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "ஸ்மார்ட் டைப்பிங்"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "விசை-டேப் பதில்கருத்து"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "உள்ளீடு மொழிகள்"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "உள்நுழைவு"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "அனுப்பு"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "தேடல்"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "உள்நுழைக"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "இணைக"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "செல்க"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "யென்"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "வொன்"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "வெள்ளை நட்சத்திரம்"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "வெள்ளை இதயம்"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI க்வர்ட்டி விசைப்பலகை"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "மெய்நிகர் விசைப்பலகை இயலச்செய்யப்பட்டது."
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "கர்சர் கட்டுப்பாட்டைப் பயன்படுத்துவது தொடர்ச்சியான உள்ளீட்டை செயல்நீக்கும்."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "தொடர்ச்சியான உள்ளீட்டைப் பயன்படுத்துவது கர்சர் கட்டுப்பாட்டைச் செயல்நீக்கும்."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "அடிக்கோடு"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "டர்கீஷ் க்வர்ட்டி விசைப்பலகை"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "டர்கீஷ் F விசைப்பலகை"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "மொழி மாற்றவென ஸ்பேஸ் பார் ஊடாய் கிடைமட்டமாக ஸ்வைப் செய்க."
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "முறைகள்"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "அலைக்குறியீடு"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "சாம்சங் விசைப்பலகை உங்கள் எழுது நடையை கற்றுக்கொண்டு நீங்கள் உள்ளிடுவதை நினைவில்கொள்வதன் மூலம் நீங்கள் டைப் செய்ய விரும்புவதை ஊகிக்க முயற்சிக்கிறது. கடவுச்சொற்கள் விலக்கப்படும், ஆனால் கடனட்டை எண்கள் போன்ற தனிப்பட்ட விபரங்கள் சேமிக்கப்படும்."
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "டெலெக்ஸ் க்வர்ட்டி விசைப்பலகை"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "மெய்நிகர் விசைப்பலகையை உபயோகிக்கத் தட்டுக."
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "குறியீடு பட்டியலைப் பார்க்க இந்த விசையை டேப் செய்து வைத்திருக்கவும். ஒரு குறுக்குவழியாக பயன்படுத்த ஒன்றை தேர்ந்தெடுக்கவும்."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "குறியீட்டு விசைப்பலகை %2$d என்பதில் %1$d."
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "குறிகள்"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "இடைவெளி"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "சாய்வுக்கோடு"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "ஒற்றை மேற்கோள்"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "க்வர்ட்டி விசைப்பலகையில் ஓர் விசை டேப் செய்யப்படும் போது ஓர் பெரிய எழுத்துக் குமிழை காண்பிக்கவும்."
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "ஷிஃப்ட் பூட்டப்பட்டுள்ளது."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "ஷிஃப்ட் ஆன் ஆக உள்ளது."
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "ஷிஃப்ட் ஆஃப் நிலையில் உள்ளது."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "அமைவுகள்"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "செப்டம்பர்"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "அரைப்புள்ளி"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "வலது கோண மேற்கோள்கள்"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "மேற்கோள்கள்"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "கேள்விக் குறியீடு"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ கற்றுக்கொள்ளப்பட்ட சொற்களில் இருந்து அகற்றப்படும்."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "ஆருட உரை விருப்பங்கள்"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "முன்கனிப்பு உரை"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "பவுண்ட்"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "கூட்டல்"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "குழாய்"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "வீதம்"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "திறப்பு அடைப்புக்குறி"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "திறப்பு அடைப்புக்குறி"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "திறப்பு அடையாளக்குறி"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "அக்டோபர்"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "மொழிகள் எதுவும் தேர்வுசெய்யப்படவில்லை."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "நவம்பர்"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "விசைப்பலகை மீது விரலை ஸ்லைட் செய்வதன் மூலம் கர்சரை நகர்த்தவும்."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "மே"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "மார்ச்"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "எழுத்துகள்"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "இதைவிடக் குறைவு"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "இடது கோண மேற்கோள்கள்"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "விசைப்பலகை வகை"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "விசைப்பலகை அமைவுகள்"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "ஜூன்"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "ஜூலை"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "ஜனவரி"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "தலைகீழான கேள்விக் குறியீடு"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "தலைகீழான ஆச்சரியக் குறியீடு"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "உள்ளீடானது மென்பொருள் விசைப்பலகையிலிருந்து கண்டறியப்பட்டது."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "தனிப்பயனாக்கப்பட்டத் தரவு செயல்படுத்தப்படும் பட்சத்தில் ஃபேஸ்புக், ஜிமெயில், ட்வீட்டர், தகவல்கள், தொடர்புகளில் ஆகியவற்றிலிருந்து சாம்சங் விசைப்பலகை உங்கள் எழுத்து நடையை கற்றுக்கொண்டு உங்களுக்குப் பொருத்தமான கணிப்புகள் மற்றும் திருத்தங்களை வழங்கும்."
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "ஹாஷ்"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "இதைவிடப் பெரியது"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "க்ரேவ் அக்சண்ட்"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "குறியீடுகள் மற்றும் மாற்று எழுத்துகளை காண ஒரு விசையில் மேலாக ஃபளிக் செய்யவும்."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "விசைப்பலகையை மறைக்க அதை ஃப்ளிக் செய்க."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "ஃப்ளிக் உள்ளீடு"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "பிப்ரவரி"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ஆச்சரியக் குறியீடு"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "யூரோ"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "சமம்"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "விசைப்பலகையைச் சுற்றி உங்கள் விரலை ஸ்லைட் செய்வதன் மூலம் உரையை உள்ளிடவும். இந்த அம்சம் க்வர்ட்டி விசைப்பலகைக்காக ஆப்டிமைஸ் செய்யப்பட்டது."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "விசைப்பலகையின் மீது உங்கள் விரலை ஸ்லைடு செய்வதன் மூலம் உரையை நுழைக்கவும்."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "உள்ளிடுக"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "தனிப்பயனாக்கிய தரவை செயல்படுத்துக"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "எமோடிகான்கள்"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "புள்ளி"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "டாலர்"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "இதால் பிரிக்கப்பட்டது"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "இடைவெளி நீக்குக"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "டிசம்பர்"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "கோடு"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "தனிப்பயனாக்கல் விசை"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "கர்சர் கட்டுப்பாடு"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "நாணயக் குறியீடு"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "தொடர்ச்சியான உள்ளீடு"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "காற்புள்ளி"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "முக்காற்புள்ளி"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "மூடும் அடைப்புக்குறி"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "மூடும் அடைப்புக்குறி"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "மூடும் அடையாளக்குறி"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "கிளிப்போர்டு"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "வில்லுரு"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "எழுத்து முன்காணல்"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "பெரிய எழுத்து"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "பேக்ஸ்பேஸ்"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "பேக்ஸ்லாஷ்"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "தானியக்க இடைவெளி"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "தானியக்க தலைப்பெழுத்தாக்குதல்"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "சொற்களுக்கு இடையே தானாக இடைவெளியிடவும்."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "ஸ்பேஸ் பாரை இருமுறை டேப் செய்வதன் மூலம் ஒரு முற்றுப்புள்ளி தானாக நுழைக்கப்படும்."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "வாக்கியத்தின் முதல் எழுத்தை தானாகவே பெரியெழுத்தாக மாற்றுக."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "ஆகஸ்ட்"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "இதில்"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "நட்சத்திரக்குறியீடு"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "ஏப்ரல்"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "மற்றும்"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "பட்டியலை விரிவுபடுத்துவதற்கான பொத்தான்"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "குரல் உள்ளீடு"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "விசைப்பலகையானது தொடர்ச்சியான உள்ளீடு மற்றும் யூக உரை ஆகிய செயல்பாடுகளை வழங்குகிறது."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "குரல் உள்ளீட்டைப் பயன்படுத்த குரல் சின்னத்தை டேப் செய்யவும்."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "கைப்பிடி தோன்றுமாறு செய்ய விசைப்பலகை திறந்திருக்கையில் உரை உள்ளீட்டுப் தளத்தை டேப் செய்யவும். கர்சரை நகர்த்த கைப்பிடியை நகர்த்தவும்."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "சாம்சங் விசைப்பலகை அமைவுகளை திறப்பதற்கு அமைவுகள் சின்னத்தை டேப் செய்க."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "எழுத்துகளுக்கும் குறியீடுகளுக்கும் இடையில் மாறுவதற்கு நடை பொத்தானை டேப் செய்க."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "உள்ளீட்டு முறையை மாற்ற அறிவிப்பு பலகை உள்ள விசைப்பலகை சின்னத்தை டேப் செய்யவும்."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "எமோடிகான்களை சேர்க்க எமோடிகான் சின்னத்தை டேப் செய்யவும்.."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "க்ளிப்போர்டை திறக்க க்ளிப்போர்ட் சின்னத்தை டேப் செய்க."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "விசைப்பலகையைத் திறக்கவென ஏதேனும் ஒரு உரை புலத்தை டேப் செய்யவும்."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "எமோடிகான்கள், குரல், கிளிப்போர்டு, விசைப்பலகை அமைவுகள் அல்லது நிறுத்தற் குறியீடுகளைத் தேர்ந்தெடுப்பதற்கு தனிப்பயனாக்கும் விசையை டேப் செய்து பிடிக்கவும்."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "குரல், கிளிப்போர்டு மற்றும் விசைப்பலகை அமைவுகள் மற்றும் நிறுத்தற்குறிகளை தேர்வு செய்யவென தனிப்பயனாக்கத்தக்க விசையை டேப் செய்து பிடிக்கவும்."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "தேர்ந்தெடுப்பதற்கான சில உரைகளை டேப் செய்து பிடிக்கவும். சுட்டிக் கைப்பிடியானது துவக்க கைப்பிடியையும் முடிவுக் கைப்பிடியையும் கொண்டுள்ளது. உரையை தேர்ந்தெடுப்பதற்கு இரு கைப்பிடிகளையும் நகர்த்தவும். நகலெடுத்தல், வெட்டுதல், ஒட்டுதல், மற்றும் பிற தெரிவுகளை தேர்ந்தெடுப்பதற்கு கைப்பிடியை விடுவிக்கவும்."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "விசைப்பலகையை மூட பின்விசையை அழுத்தவும்."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "அமைவுகளைத் திறந்து பின்னர் மொழி மற்றும் விசைப்பலகை > விசைப்பலகை > விசைப்பலகை அமைவுகள் > யூக உரை என்பதைத் தேர்ந்தெடுக்கவும்."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "விசைப்பலகை அமைவுகளில் இரண்டு அல்லது அதற்கும் அதிகமான மொழிகள் தேர்வு செய்யப்பட்டால் அவற்றுக்கு இடையே மாற க்ளோப் விசையை ஸ்வைப் செய்யவும்."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "தனிப்பயனாக்கிய தரவு செயல்படுத்தப்பட்டால் ஜிமெயில், ட்வீட்டர், தகவல்கள் மற்றும் தொடர்புகள் ஆகியவற்றிலிருந்து சாம்சங் விசைப்பலகை உங்கள் எழுத்து நடையை கற்றுக்கொண்டு உங்களுக்குப் பொருத்தமான கணிப்புகள் மற்றும் திருத்தங்களை வழங்கலாம்."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "விதிகளும் நிபந்தனைகளும்"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "எல்லாம்"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "மொழி"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "தேர்வுசெய்யப்படாதது"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "ஏற்பு"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "க்வர்ட்டி விசைப்பலகை"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "தனிப்பயனாக்கப்பட்ட தரவு"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "என்னை பின்னர் அழை."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "வலைப் பக்கம் உங்கள் மொபைல் சாதனத்தின் திரையில் திறக்கப்படும்."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "இந்த அம்சத்தைப் பயன்படுத்த, சரி என்பதை டேப் செய்யவும். உங்கள் சாதனத்திலுள்ள தனிப்பயனாக்கிய தரவுகள் %s-ஆலும் பயன்படுத்தப்படும். உங்கள் தனிப்பட்ட தரவு சேமிக்கப்படுவதை நீங்கள் விரும்பாவிட்டால், விசைப்பலகை அமைவுகளுக்குச் சென்று, தனிப்பயனாக்கிய தரவைச் செயல்படுத்தவும் என்பதைத் தேர்வு நீக்கவும்."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "பதிவிறக்கப்பட்ட மொழிகள் தவிர, விசைப்பலகை அமைவுகள் அனைத்தும் ரீசெட் செய்யப்படும்."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "சூழலுடன் பொருந்துகின்ற எழுத்து தானாகவே உள்ளிடப்படும்."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "குரல் உள்ளீட்டைப் பயன்படுத்த, ஸ்பேஸ் விசையை டேப் செய்து பிடித்திருக்கவும்."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "தெரிவுகளின் பட்டியலைக் காண, தெரிவுகள் விசையை டேப் செய்து பிடித்திருக்கவும்."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "மொழிகளை மாற்ற, ஸ்பேஸ் பாரை இடதுபுறம் அல்லது வலதுபுறம் ஸ்வைப் செய்யவும்."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "டெம்ப்ளேட்கள் இல்லை"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "ஸ்மார்ட் உள்ளீடு செயல்பாடுகள்"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "தானாக பேரெழுத்தாக்கவும்"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "ஒவ்வொரு வாக்கியத்தின் முதல் எழுத்தையும் தானாக பேரெழுத்தாக மாற்றவும்."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "தானியக்க-நிறுத்தக்குறி"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "ரீசெட்"
+

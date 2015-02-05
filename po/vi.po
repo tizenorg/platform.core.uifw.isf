@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Phím Radio"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "Mở"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Đã chọn"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Đóng"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "Trợ giúp"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Không dùng"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Tắt"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Bật"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Cài đặt"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Xóa"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Bàn phím Gear Azerty"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Bàn phím Gear Qwerty"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Bàn phím Gear Qwertz"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Khuôn mặt"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Đã đóng pop-up."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Hiển thị pop-up"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Số"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Vị trí"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Sử dụng nhập liên tục"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Sử dụng tiên đoán văn bản"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Đổi phương pháp nhập"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Đổi chế độ nhập"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Đổi ngôn ngữ"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Đóng bàn phím"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Di chuyển con trỏ"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Mở bàn phím"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Chọn văn bản"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Sử dụng bàn phím Samsung"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Hoàn tất hoặc thay thế từ bạn đang nhập bằng từ phù hợp nhất khi chạm phím khoảng cách."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Chạm hai lần để đóng danh sách."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Chạm hai lần để chỉnh sửa mục này."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Chạm hai lần để mở danh sách."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Danh sách có thể mở rộng"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Phím bật/tắt"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Bàn phím Samsung"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Nhiều cài đặt hơn"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Bạn phải chọn ít nhất một ngôn ngữ trong cài đặt bàn phím."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Chọn ngôn ngữ nhập"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Đã đạt đến số ngôn ngữ được hỗ trợ tối đa (%d)."
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Bàn phím"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Chưa được chọn"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Đã được đánh dấu"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Hộp đánh dấu"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Khi nào chúng ta gặp nhau?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Bạn đang ở đâu?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Không lặp lại"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Hiển thị trên thiết bị"
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Hủy"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Chọn mẫu"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Bạn thế nào rồi?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Có chuyện gì vậy?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Tôi sẽ nói chuyện với bạn sau."
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Tôi sẽ gọi lại sau."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Đổi ngôn ngữ"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Xong"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Để bật tự động thay thế, hãy bật ít nhất một ngôn ngữ."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Chạm vào phím khoảng cách để chấp nhận phần sửa văn bản tiên đoán hoặc chạm vào phím mũi tên để giữ văn bản hiện tại."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Bàn phím Qwertz"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Tiếp"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Bàn phím Kana"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Bàn phím vuốt Kana"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Bàn phím Đức"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Nhập"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Bàn phím Chunjiin"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Bàn phím ngữ âm Bulgaria"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Bàn phím Bulgaria"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Bàn phím Azerty"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Chú ý"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Bàn phím 3 x 4"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Rung"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Vuốt phím khoảng cách"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Âm thanh"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Đặt lại các cài đặt"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Vuốt bàn phím"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Xem trước ký tự"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Tự động thay thế"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Tự động chấm câu"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Nhập thông minh"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Phản hồi chạm phím"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Ngôn ngữ nhập"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Đăng nhập"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Gửi"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Tìm"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Đăng nhập"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Tham dự"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Bắt đầu"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Đồng Yên"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Đồng Won"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Sao trắng"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Tim trắng"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "Bàn phím Qwerty VNI"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Đã bật bàn phím ảo."
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Dùng điều khiển con trỏ sẽ tắt nhập vào liên tục."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Dùng nhập vào liên tục sẽ tắt điều khiển con trỏ."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Gạch dưới"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Bàn phím Qwerty Thỗ Nhĩ Kỳ"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Bàn phím F Thổ Nhĩ Kỳ"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Để thay đổi ngôn ngữ, hãy vuốt ngang phím khoảng cách."
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Nhân"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Dấu ngã"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Bàn phím Samsung học kiểu viết tay của bạn và cố gắng dự đoán từ bạn có thể muốn nhập bằng cách nhớ từ bạn nhập. Mật mã sẽ bị xóa nhưng các thông tin cá nhân, như số thẻ tín dụng, sẽ được lưu trữ"
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Bàn phím Qwerty Telex"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Chạm để dùng bàn phím ảo."
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Chạm và giữ phím này để xem danh sách biểu tượng. Hãy chọn một biểu tượng để sử dụng làm phím tắt."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Bàn phím ký hiệu %1$d / %2$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Biểu tượng"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Khoảng cách"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Dấu chéo"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Dấu nháy đơn"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Hiển thị ký tự lớn khi chạm vào một phím trên bàn phím Qwerty."
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Đã khóa Shift."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Bật Shift."
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Tắt Shift."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Cài đặt"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "Tháng 9"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Chấm phẩy"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Dấu nháy kép phải"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Dấu nháy kép"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Dấu hỏi"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ sẽ bị xóa khỏi các từ đã học."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Tùy chọn văn bản dự đoán"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Tiên đoán văn bản"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Đồng Bảng"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Cộng"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Gạch đứng"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Phần trăm"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Ngoặc đơn mở"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Ngoặc vuông mở"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Ngoặc móc mở"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Tháng 10"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Không ngôn ngữ nào được chọn."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "Tháng 11"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Di chuyển con trỏ bằng cách trượt ngón tay trên bàn phím."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Tháng 5"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Tháng 3"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Chữ cái"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Dấu bé"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Dấu nháy kép trái"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Loại bàn phím"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Cài đặt bàn phím"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Tháng 6"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "Tháng 7"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Tháng 1"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Chấm hỏi ngược"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Chấm than ngược"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Phát hiện đầu vào từ bàn phím thật."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Nếu bật dữ liệu được cá nhân hóa, bàn phím Samsung có thể học kiểu viết tay của bạn từ Facebook, Gmail, Twitter, Tin nhắn và Danh bạ rồi cung cấp dự đoán và sửa nét phù hợp với bạn"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Dấu thăng"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Dấu lớn"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Dấu huyền"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Vuốt nhanh lên phím để xem biểu tượng và ký tự thay thế."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Lật bàn phím xuống để ẩn."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Nhập bằng cách chạm"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Tháng 2"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Chấm than"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Đồng Euro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Bằng"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Nhập văn bản bằng cách trượt ngón tay trên bàn phím. Tính năng này được tối ưu hóa cho bàn phím Qwerty."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Nhập văn bản bằng cách trượt ngón tay trên bàn phím."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Nhập"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Bật dữ liệu được cá nhân hóa"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Biểu tượng cảm xúc"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Điểm"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Đô la"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Chia cho"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Xóa khoảng cách"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Tháng 12"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Gạch ngang"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Phím tùy chỉnh"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Điều khiển con trỏ"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Dấu tiền tệ"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Nhập liên tục"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Phẩy"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Hai chấm"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Ngoặc đơn đóng"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Ngoặc vuông đóng"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Ngoặc móc đóng"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Bộ nhớ tạm"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Dấu mũ"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Xem trước ký tự"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "In hoa"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Dấu lùi"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Dấu chéo ngược"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Tự thêm dấu cách"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Tự động viết hoa"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Tự động chèn khoảng cách giữa các từ."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Tự động chèn dấu chấm câu bằng cách chạm vào thanh khoảng cách hai lần."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Tự động viết hoa chữ cái đầu câu."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "Tháng 8"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "A móc"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Hoa thị"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "Tháng 4"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Và"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Phím mở rộng danh sách"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Nhập giọng nói"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Bàn phím cung cấp các chức năng như nhập liên tục và tiên đoán văn bản."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Chạm biểu tượng thoại để sử dụng nhập thoại."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Chạm vào ô nhập văn bản khi bàn phím đang mở để làm phím điều khiển xuất hiện. Di chuyển phím điều khiển để di chuyển con trỏ."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Chạm vào biểu tượng Cài đặt để mở cài đặt bàn phím Samsung."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Chạm vào phím chế độ nhập để chuyển đổi giữa ký tự và ký hiệu."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Chạm biểu tượng bàn phím trên bảng thông báo để đổi cách nhập."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Chạm vào biểu tượng cảm xúc để chèn cảm xúc."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Chạm biểu tượng bộ nhớ tạm để mở bộ nhớ tạm."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Chạm vào vùng văn bản bất kỳ để mở bàn phím."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Chạm và giữ phím tùy chỉnh để chọn biểu tượng cảm xúc, lời thoại, bộ nhớ tạm, cài đặt bàn phím hoặc dấu câu."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Chạm và giữ phím có thể tùy chỉnh để chọn cài đặt giọng nói, bộ nhớ tạm, bàn phím và dấu câu."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Chạm và giữ để chọn một số văn bản. Điều khiển con trỏ gồm các phím điều khiển bắt đầu và kết thúc. Di chuyển cả hai phím điều khiển để chọn văn bản. Thả phím điều khiển để chọn sao chép, cắt, dán và các tùy chọn khác."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Nhấn phím trở về để đóng bàn phím."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Mở Cài đặt, rồi chọn Ngôn ngữ và bàn phím > Bàn phím > Cài đặt bàn phím > Dự đoán văn bản."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Nếu hai hay nhiều ngôn ngữ được chọn trong phần cài đặt bàn phím, hãy chạm phím địa cầu để chuyển đổi giữa các ngôn ngữ đó."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Nếu bật dữ liệu được cá nhân hóa, bàn phím Samsung có thể học kiểu viết tay của bạn từ Gmail, Twitter, Tin nhắn và Danh bạ, rồi đưa ra những dự đoán và chỉnh sửa dành cho bạn."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Điều khoản và điều kiện"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Tất cả"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Ngôn ngữ"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Chưa đánh dấu"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Đồng ý"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Bàn phím Qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Dữ liệu được cá nhân hóa"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Gọi tôi sau."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Trang web sẽ được mở trên màn hình thiết bị di động của bạn."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Chạm OK để sử dụng tính năng này. Dữ liệu đã được cá nhân hóa từ thiết bị di động của bạn cũng sẽ được sử dụng bởi %s. Nếu bạn không muốn lưu trữ dữ liệu cá nhân, hãy đến cài đặt bàn phím và bỏ chọn Bật dữ liệu cá nhân hóa."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Cài đặt bàn phím sẽ được đặt lại, ngoại trừ ngôn ngữ đã tải về."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Chữ cái phù hợp với ngữ cảnh sẽ tự động được nhập."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Chạm và giữ phím khoảng cách để sử dụng nhập bằng giọng nói."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Chạm và giữ phím tùy chọn để xem danh sách tùy chọn."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Bàn phím Samsung có thể học văn bản được nhập để nâng cao tính năng tự động thay thế và mang lại các kết quả tiên đoán tốt hơn. Việc này không bao gồm các thông tin bảo mật như mật mã và số thẻ tín dụng."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Vuốt phím khoảng cách sang trái hoặc phải để thay đổi ngôn ngữ."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Không có mẫu"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Chức năng nhập thông minh"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Tự động viết hoa"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Tự động viết hoa chữ cái đầu tiên của mỗi câu."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Tự động chấm câu"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Đặt lại"
+

@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "ប៊ូតុង​វិទ្យុ"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "បើក"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "បាន​ជ្រើស"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "បិទ"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "ជំនួយ"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "គ្មាន"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "បិទ"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "បើក"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "ការកំណត់"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "លុប"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Gear Azerty"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Gear Qwerty"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Gear Qwertz"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "មុខ"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "បាន​បិទ​ផ្ទាំងផុស។"
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "ផ្ទាំង​ផុស​បង្ហាញ​ឡើង"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "លេខ"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "កន្លែង"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "ការប្រើ​ការបញ្ចូល​បន្តបន្ទាប់"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "ការប្រើ​អត្ថបទ​ទាយ"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "ការប្ដូរ​វិធី​បញ្ចូល"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "ការប្ដូរ​ទម្រង់​បញ្ចូល"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "ការប្ដូរ​ភាសា"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "ការបិទ​ក្ដារចុច"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "ការផ្លាស់ទី​ទស្សន៍ទ្រនិច"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "ការបើក​ក្ដារចុច"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "ការជ្រើស​អត្ថបទ"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "ការប្រើ​ក្តារចុច Samsung"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "បំពេញ ឬ ជំនួស​ពាក្យ​ដែល​អ្នក​កំពុង​វាយ​ជាមួយ​នឹង​ពាក្យ​ទំនង​បំផុត នៅពេល​អ្នក​ប៉ះ​របារ​ដំណកឃ្លា។"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "ប៉ះ​ពីរ​ដង​ដើម្បី​បិទ​បញ្ជី។"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "ប៉ះ​ពីរដង​ដើម្បី​កែ​វាល​នេះ។"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "ប៉ះ​ពីរ​ដង​ដើម្បី​បើក​បញ្ជី។"
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "បញ្ជី​ដែល​អាច​ពង្រីក​បាន"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "ប៊ូតុង​បើក/​បិទ"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "ក្ដារ​ចុច Samsung"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "ការកំណត់​ច្រើន​ទៀត"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "អ្នក​ត្រូវតែ​ជ្រើស​ភាសា​មួយ​យ៉ាង​តិច​ក្នុង​ការកំណត់​ក្ដារចុច។"
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "ជ្រើស​ភាសា​បញ្ចូល"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "បាន​ដល់​ចំនួន​អតិបរមា​នៃ​ភាសា​ដែល​បាន​គាំទ្រ (%d)។"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "ក្ដារចុច"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "មិន​បាន​ជ្រើស"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "បាន​ធីក"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "ប្រអប់​ធីក"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "តើយើង​អាច​ជួប​គ្នា​ពេល​ណា?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "តើ​អ្នក​នៅ​កន្លែង​ណា?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "កុំ​ធ្វើឡើងវិញ"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "បង្ហាញ​លើ​ឧបករណ៍"
+
+msgid "IDS_ST_SK_OK"
+msgstr "ព្រម"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "ចោល"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "ជ្រើស​ពុម្ពគំរូ"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "តើ​វា​យ៉ាង​ម៉េច​ហើយ?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "មាន​រឿង​អី?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "ខ្ញុំ​នឹង​ជជែក​ជាមួយ​អ្នក​ក្នុង​ពេល​ឆាប់ៗ។"
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "ខ្ញុំ​នឹង​ហៅ​ទៅ​អ្នក​ពេល​ក្រោយ។"
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "ប្តូរ​ភាសា"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "រួចរាល់"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "ដើម្បី​បើកប្រើ​ស្វ័យ​ជំនួស សូម​បើកប្រើ​ភាសា​មួយ​យ៉ាង​តិច។"
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "ប៉ះ​គ្រាប់ចុច​ដំណកឃ្លា ដើម្បី​ព្រមទទួល​ការកែ​អត្ថបទ​ទាយ ឬ ប៉ះ​គ្រាប់ចុច​ព្រួញ ដើម្បី​រក្សា​អត្ថបទ​បច្ចុប្បន្ន។"
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Qwertz"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "បន្ទាប់"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "ក្ដារចុច Kana"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "ក្ដារចុច​អូស Kana"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "ក្ដារចុច​អាល្លឺម៉ង់"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "វាយបញ្ចូល"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Chunjiin"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "ក្ដារចុច​សូរសព្ទ​ប៊ុលហ្គារី"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "ក្ដារចុច​ប៊ុលហ្គារី"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Azerty"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "ប្រុងប្រយ័ត្ន"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "ក្ដារចុច 3 x 4"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "រំញ័រ"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "អូស​កាត់​របារ​ដំណកឃ្លា"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "សំឡេង"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "កំណត់​ឡើង​វិញ​នូវ​ការកំណត់"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "ក្តារចុច​អូស"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "ការបង្ហាញ​តួអក្សរ"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "ស្វ័យ​ជំនួស"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "ស្វ័យ​ដាក់​វណ្ណយុត្ត"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "ការវាយ​វៃឆ្លាត"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "រំញ័រ​ប៉ះ​គ្រាប់ចុច"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "ភាសា​បញ្ចូល"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "ចុះ​ឈ្មោះ​ចូល"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "ផ្ញើ"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "ស្វែងរក"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "ចុះ​ឈ្មោះ​ចូល"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "ចូលរួម"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "ទៅ"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "យេន"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "វុន"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "ផ្កាយ​ពណ៌ស"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "បេះដូង​ពណ៌ស"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "ក្តារចុច Qwerty VNI"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "បាន​បើកប្រើ​ក្ដារចុច​និម្មិត។"
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "ការប្រើ​ការគ្រប់គ្រង​ទស្សន៍​ទ្រនិច​នឹង​បិទ​ការបញ្ចូល​បន្ត​គ្នា។"
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "ការប្រើ​ការបញ្ចូល​បន្ត​គ្នា​នឹង​ត្រូវ​បិទ​ការគ្រប់គ្រង​ទស្សន៍​ទ្រនិច។"
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "គំនូស​ក្រោម"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "ក្ដារចុច Qwerty ទួរគី"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "ក្ដារចុច F ទួរគី"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "ដើម្បី​ប្ដូរ​ភាសា សូម​អូស​ផ្ដេក​កាត់​របារ​ដំណកឃ្លា។"
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "គុណ"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "សញ្ញា​រលក"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "ក្ដារចុច Samsung រៀន​ពី​របៀប​ដែល​អ្នក​សរសេរ និង សាកល្បង​ទាយ​អ្វី​ដែល​អ្នក​អាច​វាយ ដោយ​ការចងចាំ​នូវ​អ្វី​ដែល​អ្នក​វាយបញ្ចូល។ ពាក្យសម្ងាត់​នឹង​មិន​ត្រូវ​បាន​រួមបញ្ចូល​ឡើយ ប៉ុន្តែ​ព័ត៌មាន​ផ្ទាល់ខ្លួន​ដូចជា​លេខ​បណ្ណ​ឥណទាន នឹង​ត្រូវ​បាន​រក្សាទុក"
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "ក្តារចុច Qwerty ទូរលេខ"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "ប៉ះ​ដើម្បី​ប្រើ​ក្ដារចុច​និម្មិត។"
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "ប៉ះ​គ្រាប់ចុច​នេះ​ឲ្យ​ជាប់​ដើម្បី​ឃើញ​បញ្ជី​និមិត្តសញ្ញា។ ជ្រើស​មួយ​ដើម្បី​ប្រើ​វា​ជា​ផ្លូវកាត់។"
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "ក្ដារចុច​និមិត្ត​សញ្ញា %1$d នៃ %2$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "សញ្ញា"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "ដំណកឃ្លា"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "គំនូស​ទ្រេត"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "អព្ភន្តរ​សញ្ញា"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "បង្ហាញ​ផ្ទាំង​តួអក្សរ​ធំ​មួយ នៅពេល​មាន​ការ​ប៉ះ​លើ​ប៊ូតុង​មួយ​នៃ​ក្ដារចុច Qwerty។"
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "បាន​ចាក់​សោ​គ្រាប់ចុច​ប្ដូរ។"
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "បាន​បើក​គ្រាប់ចុច​ប្ដូរ។"
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "បាន​បិទ​គ្រាប់ចុច​ប្ដូរ។"
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "ការកំណត់"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "កញ្ញា"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "ក្បៀស​ចុច​ពី​លើ"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "អញ្ញប្រកាស​ស្ដាំ"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "អញ្ញប្រកាស"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "សញ្ញា​សួរ"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "នឹង​លុប ‘%s’ ពី​ពាក្យ​ដែល​បាន​រៀន។"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "ជម្រើស​អត្ថបទ​ទាយ"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "អត្ថបទ​ទាយ"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "ផោន"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "បូក"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "គំនូសត្រង់"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "ភាគរយ"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "វង់ក្រចក​បើក"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "វង់តង្កៀប​បើក"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "ឃ្នាបរ៉ាត់​បើក"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "តុលា"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "មិន​បាន​ជ្រើស​ភាសា​ណា​មួយ។"
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "វិច្ឆិកា"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "ផ្លាស់ទី​ទស្សន៍​ទ្រនិច ដោយ​ការ​អូស​ម្រាម​ដៃ​កាត់​តាម​ក្ដារចុច។"
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "ឧ.ភ"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "មីនា"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "អក្សរ"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "តិច​ជាង"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "អញ្ញប្រកាស​ឆ្វេង"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "ប្រភេទ​ក្តារចុច"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "ការកំណត់​ក្ដារចុច"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "មិថុនា"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "កក្កដា"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "មករា"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "សញ្ញាសួរ​បញ្ច្រាស់"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ឧទានសញ្ញា​បញ្ច្រាស់"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "ចាប់បាន​ការបញ្ចូល​ពី​ក្ដារចុច​ហាដវែរ។"
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "បើ​បាន​បើកប្រើ​ទិន្នន័យ​តាម​បុគ្គល ក្តារចុច Samsung អាច​រៀន​ពី​របៀប​ដែល​អ្នក​សរសេរ, ពី Facebook, Gmail, Twitter, សារ និង ទំនាក់ទំនង ព្រមទាំង​ផ្តល់​នូវ​ការទាយ និង ការកែ​ដែល​បាន​ថែមថយ​ចំពោះ​អ្នក"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "ទ្រុងជ្រូក"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "ធំ​ជាង"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "សញ្ញា​សង្កត់​សំឡេង"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "អូស​ឡើងលើ​នៅលើ​គ្រាប់ចុច​មួយ ដើម្បី​បង្ហាញ​និមិត្តសញ្ញា និង តួអក្សរ​ជំនួស។"
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "អូស​លើក្ដារចុច​ចុះ​ក្រោម​ដើម្បី​លាក់​វា។"
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "ការវាយបញ្ចូលថ្នមៗលើអេក្រង់"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "កុម្ភៈ"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ឧទានសញ្ញា"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "អឺរ៉ូ"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "ស្មើ"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "វាយបញ្ចូល​អត្ថបទ​ដោយ​ការរំអិល​ម្រាមដៃ​របស់​អ្នក​កាត់​ក្ដារចុច។ មុខងារ​នេះ​ត្រូវ​បាន​ធ្វើ​ឲ្យ​ប្រសើរ​ឡើង​សម្រាប់​ក្ដារចុច Qwerty។"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "វាយបញ្ចូល​អត្ថបទ ដោយ​ការអូស​ម្រាម​ដៃ​កាត់​តាម​ក្ដារចុច។"
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "វាយបញ្ចូល"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "បើកប្រើ​ទិន្នន័យ​តាម​បុគ្គល"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "សញ្ញារម្មណ៍"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "អាទិសង្កេត"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "ដុល្លារ"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "ចែក​ដោយ"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "លុប​ដំណកឃ្លា"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "ធ្នូ"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "សហសញ្ញា"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "គ្រាប់ចុច​ដែល​អាច​កែប្រែ​បាន"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "ការគ្រប់គ្រង​ទស្សន៍​ទ្រនិច"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "សញ្ញា​រូបិយបណ្ណ"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "ការបញ្ចូល​បន្ត​គ្នា"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "ក្បៀស"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "ចំណុច​ពីរ"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "វង់ក្រចក​បិទ"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "វង់តង្កៀប​បិទ"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "ឃ្នាបរ៉ាត់​បិទ"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "ក្ដារ​តម្បៀតខ្ទាស់"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "សញ្ញាមួក"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "ការបង្ហាញ​តួអក្សរ"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "អក្សរ​ធំ"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "លុប​ថយ"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "គំនូស​ទ្រេត​ក្រោយ"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "ស្វ័យ​ដកឃ្លា"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "ស្វ័យ​អក្សរ​ពុម្ព"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "បញ្ចូល​ដំណកឃ្លា​រវាង​ពាក្យ​ដោយ​ស្វ័យប្រវត្តិ។"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "បញ្ចូល​ចំណុច​ខណ្ឌ​ដោយ​ស្វ័យប្រវត្តិ​ដោយ​ការប៉ះ​របារ​ដំណកឃ្លា​ពីរ​ដង។"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "ដាក់​អក្សរ​ពុម្ព​ធំ​ដោយ​ស្វ័យប្រវត្តិ​ចំពោះ​អក្សរ​ដំបូង​នៃ​ឃ្លា។"
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "សីហា"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "នៅ"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "ផ្កាយ"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "មេសា"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "និង"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "ប៊ូតុង​សម្រាប់​ការពង្រីក​បញ្ជី"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "ធាតុ​បញ្ចូល​សំឡេង"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "ក្ដារចុច​ផ្ដល់​នូវ​មុខងារ​ដូចជា​ការបញ្ចូល​ជា​បន្តបន្ទាប់ និង អត្ថបទ​ទាយ។"
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "ប៉ះ​អាយខុន​សំឡេង ដើម្បី​ធ្វើ​ការបញ្ចូល​សំឡេង។"
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "ប៉ះ​វាល​បញ្ចូល​អត្ថបទ ខណៈពេល​បាន​បើក​ក្ដារចុច ដើម្បី​ធ្វើ​ឲ្យ​ដងទ្រនិច​លេចឡើង។ ផ្លាស់ទី​ដងទ្រនិច ដើម្បី​ផ្លាស់ទី​ទស្សន៍ទ្រនិច។"
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "ប៉ះ​អាយខុន​ការកំណត់ ដើម្បី​បើក​ការកំណត់​ក្ដារចុច Samsung។"
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "ប៉ះ​ប៊ូតុង​ទម្រង់ ដើម្បី​ឆ្លាស់​តួ​អក្សរ និង និមិត្ត​សញ្ញា។"
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "ប៉ះ​អាយខុន​ក្ដារចុច​លើ​ផ្ទាំង​ជូនដំណឹង ដើម្បី​ប្ដូរ​វិធី​បញ្ចូល។"
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "ប៉ះ​អាយខុន​សញ្ញារម្មណ៍​ដើម្បី​បញ្ចូល​សញ្ញារម្មណ៍។"
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "ប៉ះ​អាយខុន​ក្ដារតម្បៀតខ្ទាស់​ដើម្បី​បើក​ក្ដារ​តម្បៀតខ្ទាស់។"
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "ប៉ះ​វាល​អត្ថបទ​ណា​មួយ ដើម្បី​បើក​ក្ដារចុច។"
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "ប៉ះ​គ្រាប់ចុច​ដែល​អាច​ប្ដូរ​តាមបំណង​ឲ្យ​ជាប់ ដើម្បី​ជ្រើស​រវាង​ការកំណត់​សញ្ញារម្មណ៍, សំឡេង, ក្តារ​តម្បៀតខ្ទាស់, ក្ដារចុច ឬក៏​សញ្ញា​វណ្ណយុត្ត។"
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "ប៉ះ​គ្រាប់ចុច​ដែល​អាច​ប្ដូរ​តាម​បំណង​ឲ្យ​ជាប់ ដើម្បី​ជ្រើស​ការកំណត់​សំឡេង, ក្តារ​តម្បៀតខ្ទាស់ និង ក្ដារចុច ព្រមទាំង​សញ្ញា​វណ្ណយុត្ត។"
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "ប៉ះ​អត្ថបទ​ខ្លះ​ឲ្យ​ជាប់​ដើម្បី​ជ្រើស​វា។ ដង​ទស្សន៍ទ្រនិច​រួមមាន​ដងទ្រនិច​ចាប់ផ្ដើម និង ដងទ្រនិច​បញ្ចប់។ ផ្លាស់ទី​ដងទ្រនិច​ទាំងពីរ​ដើម្បី​ជ្រើស​អត្ថបទ។ លែង​ដងទ្រនិច​ដើម្បី​ជ្រើស ចម្លង, កាត់, បិទ​ភ្ជាប់ និង ជម្រើស​ផ្សេងទៀត។"
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "ចុច​គ្រាប់ចុច​ថយ ដើម្បី​បិទ​ក្ដារចុច។"
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "បើក​ការកំណត់ រួច​ជ្រើស ភាសា និង ក្ដារចុច > ក្ដារចុច > ការកំណត់​ក្ដារចុច > អត្ថបទ​ទាយ។"
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "បើ​បាន​ជ្រើស​ភាសា​ពីរ ឬ ច្រើន​ក្នុង​ការកំណត់​ក្ដារចុច សូម​ប៉ះ​គ្រាប់ចុច​សាកល ដើម្បី​ប្ដូរ​រវាង​ពួកវា។"
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "បើ​បាន​បើកប្រើ​ទិន្នន័យ​តាម​បុគ្គល ក្តារចុច Samsung អាច​រៀន​ពី​របៀប​ដែល​អ្នក​សរសេរ, ពី Gmail, Twitter, សារ និង ទំនាក់ទំនង ហើយ​ផ្តល់​នូវ​ការទាយ និង ការកែ​ដែល​បាន​ថែមថយ​សម្រាប់​អ្នក។"
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "ពេល​វេលា និង លក្ខខណ្ឌ"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "ទាំងអស់"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "ភាសា"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "មិន​បាន​ធីក"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "យល់​ព្រម"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "ក្ដារចុច Qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "ទិន្នន័យ​ដែល​តម្រូវ​តាម​បុគ្គល"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "ហៅ​ខ្ញុំ​ពេល​ក្រោយ។"
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "ទំព័រវិប​នឹង​បើកឡើង​លើ​អេក្រង់​របស់​ឧបករណ៍​ចល័ត​អ្នក។"
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "ប៉ះ ព្រម ដើម្បី​ប្រើ​មុខងារ​នេះ។ ទិន្នន័យ​តាម​បុគ្គល​ពី​ឧបករណ៍​ចល័ត​របស់​អ្នក​ក៏​នឹង​ត្រូវ​បាន​ប្រើ​ដោយ %s ផងដែរ។ បើ​អ្នក​មិន​ចង់​ឲ្យ​រក្សាទុក​ទិន្នន័យ​ផ្ទាល់ខ្លួន​របស់​អ្នក​ទេ សូម​ចូលទៅ​ការកំណត់​ក្ដារចុច ហើយ​ដោះ​សម្គាល់ បើកប្រើ​ទិន្នន័យ​តាម​បុគ្គល។"
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "នឹង​កំណត់​ឡើងវិញ​នូវ​ការកំណត់​ក្ដារចុច លើកលែង​តែ​ភាសា​ដែល​បាន​ទាញយក។"
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "អក្សរ​ដែល​សមស្រប​តាម​បរិការណ៍​នឹង​ត្រូវ​បាន​វាយបញ្ចូល​ដោយ​ស្វ័យប្រវត្តិ។"
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "ប៉ះ​ឲ្យ​ជាប់​លើ​គ្រាប់ចុច​ដំណកឃ្លា ដើម្បី​ប្រើ​ការបញ្ចូល​សំឡេង។"
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "ប៉ះ​ឲ្យ​ជាប់​លើ​គ្រាប់ចុច​ជម្រើស ដើម្បី​បង្ហាញ​បញ្ជី​នៃ​ជម្រើស។"
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "អូស​របារ​ដំណកឃ្លា​មក​ឆ្វេង ឬ ទៅ​ស្ដាំ ដើម្បី​ប្ដូរ​ភាសា។"
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "គ្មាន​ពុម្ពគំរូ"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "មុខងារ​បញ្ចូល​វៃឆ្លាត"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "ស្វ័យ​ដាក់​អក្សរធំ"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "ដាក់​អក្សរ​ពុម្ព​ធំ​ដោយ​ស្វ័យប្រវត្តិ​ចំពោះ​អក្សរ​ដំបូង​នៃ​ឃ្លា​នីមួយៗ។"
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "ស្វ័យ​ដាក់​វណ្ណយុត្ត"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "កំណត់​ឡើងវិញ"
+

@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Butang radio"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "Buka"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Dipilih"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Tutup"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "Bantuan"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Tiada"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Matikan"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Hidupkan"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Aturan"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Keluarkan"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Ppn kkunci Azerty Gear"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Ppn kkunci Qwerty Gear"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Ppn kkunci Qwertz Gear"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Muka"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Pop timbul ditutup."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Pop timbul dipaparkan"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Nombor"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Tempat"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Menggunakan input berterusan"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Menggunakan teks ramalan"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Menukar kaedah input"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Menukar mod input"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Menukar bahasa"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Menutup papan kekunci"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Menggerakkan kursor"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Menutup papan kekunci"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Memilih teks"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Mnggnkn ppn kknci Samsung"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Lengkapkan atau gantikan perkataan yang anda taip dengan perkataan yang paling munasabah apabila anda mengetik bar ruang."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Dwiketik untuk menutup senarai."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Dwiketik untuk menyunting medan ini."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Dwiketik untuk membuka senarai."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Senarai boleh kembang"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Butang hidup/mati"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Papan kekunci Samsung"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Lebih aturan"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Anda hendaklah pilih sekurang-kurangnya satu bahasa dalam aturan papan kekunci."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Pilih bahasa input"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Bilangan maksimum bahasa sokongan (%d) telah dicapai."
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Papan kekunci"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Tidak dipilih"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Ditanda"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Kotak tanda"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Bila kita boleh berjumpa?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Di manakah anda?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Jgn ulang"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Tunjk di prnti"
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Batal"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Pilih templat"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Bagaimana sekarang?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Apa khabar?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Berbual lagi kemudian."
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Saya akan hubungi anda."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Ubah bahasa"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Siap"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Untuk mengaktifkan penggantian auto, aktifkan sekurang-kurangnya satu bahasa."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Ketik kekunci ruang untuk menerima pembetulan teks diramalkan atau ketik kekunci anak panah untuk menyimpan teks semasa."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Papan kekunci Qwertz"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Bikut"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Papan kekunci Kana"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Papan kekunci selak Kana"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Papan kekunci Jerman"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Masukkan"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Papan kekunci Chunjiin"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Papan kekunci fonetik Bulgaria"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Papan kekunci Bulgaria"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Papan kekunci Azerty"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Perhatian"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Papan kekunci 3 x 4"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Getaran"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Leret bar ruang"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Bunyi"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Tetapkan semula tetapan"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Papan kekunci sapu"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Pratonton aksara"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Penggantian automatik"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Tanda baca auto"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Menaip pintar"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Maklum balas ketik kekunci"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Bahasa input"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Log msk"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Hantar"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Cari"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Log msk"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Sertai"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Pergi"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Yen"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Won"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Bintang putih"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Hati putih"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "Papan kekunci Qwerty VNI"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Papan kekunci maya diaktifkan."
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Menggunakan kawalan kursor akan menyahaktifkan input berterusan."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Menggunakan input berterusan akan menyahaktifkan kawalan kursor."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Garis bawah"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Papan kekunci Qwerty Turkish"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Papan kekunci Turkish F"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Untuk menukar bahasa, leret secara mendatar merentasi bar ruang."
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Darab"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tilde"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Papan kekunci Samsung belajar gaya penulisan anda dan cuba meramalkan apa yang anda ingin taipkan dengan mengingati apa yang anda masukkan. Kata laluan akan dikecualikan, tetapi maklumat peribadi, seperti nombor kad kredit, akan disimpan"
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Papan kekunci Qwerty Telex"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Ketik untuk menggunakan papan kekunci maya."
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Ketik dan tahan kekunci ini untuk melihat senarai simbol. Pilih satu untuk menggunakannya sebagai pintasan."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Simbol papan kekunci %1$d daripada %2$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Simbol"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Ruang"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Garis miring"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Petikan tunggal"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Paparkan gelembung aksara yang besar apabila sesuatu kekunci pada papan kekunci Qwerty diketik."
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Shift dikunci."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Shift dihidupkan."
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Shift dimatikan."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Aturan"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "September"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Koma bernoktah"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Tanda petikan sudut kanan"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Tanda petikan"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Tanda tanya"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ akan dialih keluar daripada perkataan yang diketahui."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Pilihan teks ramalan"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Teks ramalan"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Paun"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Tambah"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Paip"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Peratus"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Tanda kurung pembuka"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Pembuka kurungan"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Tanda kurung buka"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Oktober"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Tiada bahasa dipilih."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "November"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Alihkan kursor dengan meleretkan jari merentasi papan kekunci."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Mei"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Mac"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Huruf"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Kurang daripada"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Tanda petikan sudut kiri"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Jenis papan kekunci"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Aturan papan kekunci"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Jun"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "Julai"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Januari"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Tanda tanya songsang"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Tanda seru songsang"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Input dikesan dari papan kekunci perkakasan."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Jika data peribadi diaktifkan, papan kekunci Samsung boleh mengetahui gaya penulisan anda, daripada Facebook, Gmail, Twitter, Mesej dan Kenalan serta menawarkan ramalan dan pembetulan yang disesuaikan dengan anda"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Hash"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Lebih besar daripada"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Aksen grava"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Selak ke atas pada kekunci untuk melihat simbol dan aksara alternatif."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Kuis papan kekunci untuk menyembunyikannya."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Selak input"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Februari"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Tanda seru"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Euro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Bersamaan dengan"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Masukkan teks dengan meleretkan jari anda merentasi papan kekunci. Ciri ini dioptimumkan untuk papan kekunci Qwerty."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Masukkan teks dengan meleretkan jari anda merentasi papan kekunci."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Masuk"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Aktifkan data diperibadikan"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Emotikon"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Titik"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dolar"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Dibahagi dengan"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Padam ruang"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Disember"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Sengkang"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Kekunci boleh suai"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Kawalan kursor"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Tanda mata wang"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Input berterusan"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Koma"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Titik bertindih"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Tanda kurung penutup"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Penutup kurungan"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Tanda kurung tutup"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Papan klip"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Sirkumfleks"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Pratonton aksara"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Huruf besar"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Undur ruang"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Garis miring balik"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Auto ruang"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Auto huruf besar"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Automatik memasukkan ruangan di antara perkataan."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Automatik masukkan noktah dengan menekan palang penjarak dua kali."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Menjadikan huruf pertama ayat sebagai huruf besar secara automatik."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "Ogos"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "At"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Berbintang"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "April"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Dan"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Butang mengembangkan senarai"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Suara input"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Papan kekunci menawarkan fungsi seperti input berterusan dan teks ramalan."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Ketik ikon suara untuk menggunakan input suara."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Ketik medan entri teks semasa papan kekunci terbuka untuk membuat pemegang muncul. Gerakkan pemegang untuk menggerakkan kursor."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Ketik ikon aturan untuk membuka aturan papan kekunci Samsung."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Ketik butang mod untuk menogol aksara dan simbol."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Ketik ikon papan kekunci pada panel pemberitahuan untuk mengubah kaedah input."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Ketik ikon emotikon untuk memasukkan emotikon."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Ketik ikon papan klip untuk membuka papan klip."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Ketik mana-mana medan teks untuk membuka papan kekunci."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Ketik dan tahan kekunci boleh suai untuk memilih emotikon, suara, papan klip, aturan papan kekunci atau tanda baca."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Ketik dan tahan kekunci boleh suai untuk memilih suara, papan klip dan aturan papan kekunci dan tanda baca."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Ketik dan tahan beberapa teks untuk memilihnya. Pemegang kursor terdiri daripada pemegang permulaan dan pemegang akhiran. Gerakkan kedua-dua pemegang untuk memilih teks. Lepaskan pemegang untuk memilih salin, potong, tampal dan pilihan yang lain."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Tekan kekunci kembali untuk menutup papan kekunci."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Buka Aturan, kemudian pilih Bahasa dan papan kekunci > Papan kekunci > Aturan papan kekunci > Teks ramalan."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Jika dua atau lebih bahasa dipilih dalam aturan papan kekunci, ketik kekunci dunia untuk bertukar antaranya."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Jika data peribadi diaktifkan, papan kekunci Samsung boleh mengetahui gaya penulisan anda, dari Gmail, Twitter, Mesej dan Kenalan serta menawarkan ramalan dan pembetulan yang disesuaikan dengan anda."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Syarat-Syarat"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Semua"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Bahasa"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Tidak ditanda"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Bersetuju"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Papan kekunci Qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Data diperibadikan"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Hubungi saya kemudian."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Halaman web akan dibuka pada skrin peranti mudah alih anda."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Ketik OK untuk menggunakan ciri ini. Data yang diperibadikan dari peranti mudah alih anda juga akan digunakan oleh %s. Jika anda tidak mahu data peribadi anda disimpan, pergi ke aturan papan kekunci dan nyahtandakan Aktifkan Data diperibadikan."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Aturan papan kekunci, kecuali bahasa dimuat turun, akan ditetapkan semula."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Huruf yang sesuai dengan konteks akan dimasukkan secara automatik."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Ketik dan tahan kekunci ruang untuk menggunakan input suara."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Ketik dan tahan kekunci pilihan untuk melihat senarai pilihan."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Leret bar ruang ke kiri atau kanan untuk menukar bahasa."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Tiada templat"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Fungsi input pintar"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Auto huruf besar"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Tukarkan huruf besar pada huruf pertama setiap ayat secara automatik."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Auto bubuh tanda baca"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Tetapkan semula"
+

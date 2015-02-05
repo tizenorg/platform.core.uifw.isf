@@ -1,627 +1,702 @@
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Ta bort blanksteg"
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Radioknapp"
 
-msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
-msgstr "Det gick inte att identifiera rösten"
+msgid "IDS_BT_SK_OPEN"
+msgstr "Öppna"
 
-msgid "IDS_IME_BODY_HANDWRITING"
-msgstr "Handskrift"
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Markerade"
 
-msgid "IDS_IME_BODY_PEN_COLOUR"
-msgstr "Pennfärg"
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Stäng"
 
-msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
-msgstr "Pen gesture guide"
+msgid "IDS_ST_BODY_HELP"
+msgstr "Hjälp"
 
-msgid "IDS_IME_BODY_PEN_THICKNESS"
-msgstr "Penntjocklek"
+msgid "IDS_ST_BODY_NONE"
+msgstr "Ingen"
 
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Mellanrum"
+msgid "IDS_ST_BODY_OFF"
+msgstr "Av"
 
-msgid "IDS_IME_OPT_RED"
-msgstr "Röd"
+msgid "IDS_ST_BODY_ON"
+msgstr "På"
 
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "Klar"
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Inställningar"
 
-msgid "IDS_IME_BODY_MY_WORD_LIST"
-msgstr "Min ordlista"
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Ta bort"
 
-msgid "IDS_IME_BODY_ABOUT"
-msgstr "Om"
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Gear Azerty-tang.b."
 
-msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
-msgstr "Fullständig igenkänning"
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Gear Qwerty-tang.b"
 
-msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
-msgstr "Ta bort (1 tecken)"
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Gear Qwertz-tang.b"
 
-msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
-msgstr "Ta bort (Ord eller mening)"
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Ansikten"
 
-msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
-msgstr "Retur (Klappigenkänning)"
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Popup-meddelande har stängts."
 
-msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
-msgstr "Inställningar för handskrift"
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Popup-fönster visas"
 
-msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
-msgstr "Tangentbordsval"
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Nummer"
 
-msgid "IDS_IME_BODY_RECOGNITION_TIME"
-msgstr "Identifieringstid"
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Platser"
 
-msgid "IDS_IME_BODY_RECOGNITION_TYPE"
-msgstr "Identifieringstyp"
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Använda kontinuerlig inmatning"
 
-msgid "IDS_IME_BODY_SPEAK_NOW"
-msgstr "Prata nu"
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Använda intelligent ordbok"
 
-msgid "IDS_IME_BODY_STROKE_RECOGNITION"
-msgstr "Klappigenkänning"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Ändra inmatningsmetod"
 
-msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
-msgstr "Skicka (Fullständig igenkänning)"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Ändra inmatningsläge"
 
-msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
-msgstr "Försöker identifiera..."
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Ändra språk"
 
-msgid "IDS_IME_BODY_TUTORIAL"
-msgstr "Självstudie"
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Stänga tangentbordet"
 
-msgid "IDS_IME_OPT_BLUE"
-msgstr "Blå"
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Flytta markören"
 
-msgid "IDS_IME_OPT_BROWN"
-msgstr "Brun"
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Öppna tangentbordet"
 
-msgid "IDS_IME_OPT_GREEN"
-msgstr "Grön"
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Markera text"
 
-msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
-msgstr "Alla ord raderas"
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Använda Samsung-tangentb."
 
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Ange text genom att dra fingret över tangentbordet"
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Slutför eller ersätt ordet du skriver med det mest sannolika ordet när du trycker på mellanslagstangenten."
 
-msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
-msgstr "Mina ord är fullt. Om du vill lägga till ord måste du ta bort några objekt"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Dubbeltryck för att stänga listan."
 
-msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
-msgstr "%d ord raderas"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Dubbeltryck för att redigera det här fältet."
 
-msgid "IDS_IME_BODY_SELECT_WORDS"
-msgstr "Välj ord"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Dubbeltryck för att öppna listan."
 
-msgid "IDS_IME_HEADER_ADD_WORDS"
-msgstr "Lägg till ord"
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Expanderbar lista"
 
-msgid "IDS_IME_MBODY_3X4_KEYBOARD"
-msgstr "3×4 tangentbord"
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "På-/av-knapp"
 
-msgid "IDS_IME_OPT_1000_MS_ABB"
-msgstr "1 000 ms"
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Samsung-tangentbord"
 
-msgid "IDS_IME_OPT_100_MS_ABB"
-msgstr "100 ms"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Fler inställningar"
 
-msgid "IDS_IME_OPT_1_PIXEL_ABB"
-msgstr "1 pixel"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Du måste välja minst ett språk för tangentbordsinställningar."
 
-msgid "IDS_IME_OPT_2000_MS_ABB"
-msgstr "2 000 ms"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Välj inmatningsspråk"
 
-msgid "IDS_IME_OPT_300_MS_ABB"
-msgstr "300 ms"
-
-msgid "IDS_IME_OPT_500_MS_ABB"
-msgstr "500 ms"
-
-msgid "IDS_IME_OPT_PD_PIXELS_ABB"
-msgstr "%d pixlar"
-
-msgid "IDS_IME_BODY_LANG_BULGARIAN"
-msgstr "Български"
-
-msgid "IDS_IME_BODY_LANG_JAPANESE"
-msgstr "日本語"
-
-msgid "IDS_IME_BODY_ARABIC"
-msgstr "عربي"
-
-msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
-msgstr "简体中文"
-
-msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
-msgstr "简体中文 (新加坡)"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
-msgstr "繁體中文"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
-msgstr "香港繁體"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
-msgstr "台灣繁體"
-
-msgid "IDS_IME_BODY_FARSI"
-msgstr "فارسی"
-
-msgid "IDS_IME_BODY_HEBREW"
-msgstr "עברית"
-
-msgid "IDS_IME_BODY_INDONESIAN"
-msgstr "Bahasa Indonesia"
-
-msgid "IDS_IME_BODY_THAI"
-msgstr "ภาษาไทย"
-
-msgid "IDS_IME_BODY_URDU"
-msgstr "اردو"
-
-msgid "IDS_IME_BODY_UZBEK"
-msgstr "o'zbek tili"
-
-msgid "IDS_IME_BODY_VIETNAMESE"
-msgstr "Tiếng Việt"
-
-msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
-msgstr "Ord kommer att tas bort"
-
-msgid "IDS_IME_BODY_ARMENIAN"
-msgstr "Հայերեն"
-
-msgid "IDS_IME_MBODY_AUTO_APPEND"
-msgstr "Lägg till automatiskt"
-
-msgid "IDS_IME_OPT_LANG_ALBANIAN"
-msgstr "shqip"
-
-msgid "IDS_IME_OPT_LANG_CROATIAN"
-msgstr "Hrvatski"
-
-msgid "IDS_IME_BODY_ENTER_WORD"
-msgstr "Ange ord"
-
-msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
-msgstr "Ordprediktion"
-
-msgid "IDS_IME_BODY_NO_WORDS"
-msgstr "Inga ord"
-
-msgid "IDS_IME_BODY_RECAPTURE"
-msgstr "Ta om"
-
-msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
-msgstr "Regional korrigering"
-
-msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
-msgstr "Lista för autoersättning"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
-msgstr "Infoga automatiskt punkt genom att trycka två gånger på mellanslag"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
-msgstr "English (UK)"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
-msgstr "English (US)"
-
-msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
-msgstr "Rekommendera hela ord baserat på angivna tecken"
-
-msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
-msgstr "Rekommendera en uppsättning alternativa ord"
-
-msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
-msgstr "Ordkompletteringspunkt"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Inled automatiskt första bokstaven i en mening med versal"
-
-msgid "IDS_IME_BODY_WRITING_LANGUAGES"
-msgstr "Skrivspråk"
-
-msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
-msgstr "Clear learning dictionary"
-
-msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
-msgstr "Ordbok från Kontakter"
-
-msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
-msgstr "Inmatning på engelska"
-
-msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
-msgstr "Engelsk användarordbok"
-
-msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
-msgstr "Flick input"
-
-msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
-msgstr "Input word learning"
-
-msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
-msgstr "Japanese user dictionary"
-
-msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
-msgstr "Toggle input"
-
-msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
-msgstr "Typing error correction"
-
-msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
-msgstr "Wildcard prediction"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Kontinuerlig inmatning"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Högsta antal språk som stöds (%d) har uppnåtts."
 
 msgid "IDS_IME_HEADER_KEYBOARD"
 msgstr "Tangentbord"
 
-msgid "IDS_IME_BODY_WORD_COMPLETION"
-msgstr "Ordförslag"
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Ej vald"
 
-msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
-msgstr "Bahasa Malaysia"
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Markerad"
 
-msgid "IDS_IME_BODY_ASSAMESE"
-msgstr "অসমীয়া"
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Kryssruta"
 
-msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
-msgstr "Automatisk punkt"
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "När kan vi träffas?"
 
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Stor bokstav automatiskt"
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Var är du?"
 
-msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
-msgstr "Auto-ersättning"
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Uppr. inte."
 
-msgid "IDS_IME_BODY_BASQUE"
-msgstr "Baskiska"
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Visa på enhet"
 
-msgid "IDS_IME_BODY_BULGARIAN"
-msgstr "Bulgariska"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_CATALAN"
-msgstr "Katalanska"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Avbryt"
 
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Förhandsgranska tecken"
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Välj mall"
 
-msgid "IDS_IME_BODY_CZECH"
-msgstr "Tjeckiska"
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Hur går det?"
 
-msgid "IDS_IME_BODY_DANISH"
-msgstr "Danska"
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Vad händer?"
 
-msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
-msgstr "Engelska (USA)"
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Vi hörs snart."
 
-msgid "IDS_IME_BODY_ESTONIAN"
-msgstr "Estniska"
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Jag ringer dig senare."
 
-msgid "IDS_IME_BODY_FAST"
-msgstr "Snabb"
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Ändra språk"
 
-msgid "IDS_IME_BODY_INFO_SCAN"
-msgstr "Sök efter info"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Klar"
 
-msgid "IDS_IME_BODY_JAPANESE"
-msgstr "Japanska"
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Aktivera minst ett språk om du vill aktivera Ersätt automatiskt."
 
-msgid "IDS_IME_BODY_KEYBOARD_TYPE"
-msgstr "Tangentbordstyp"
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Tryck på mellanslagstangenten för att acceptera ordförslaget eller tryck på pilknappen för att behålla aktuell text."
 
-msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
-msgstr "Liggande inmatningsalternativ"
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Qwertz-tangentbord"
 
-msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
-msgstr "Azərbaycan"
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Nästa"
 
-msgid "IDS_IME_BODY_LANG_BASQUE"
-msgstr "Euskara"
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Kana-tangentbord"
 
-msgid "IDS_IME_BODY_LANG_BENGALI"
-msgstr "বাংলা"
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Kana-snärttangentbord"
 
-msgid "IDS_IME_BODY_LANG_CATALAN"
-msgstr "Català"
-
-msgid "IDS_IME_BODY_LANG_GALICIAN"
-msgstr "Galego"
-
-msgid "IDS_IME_BODY_LANG_GEORGIAN"
-msgstr "ქართული"
-
-msgid "IDS_IME_BODY_LANG_GUJARATI"
-msgstr "ગુજરાતી"
-
-msgid "IDS_IME_BODY_LANG_HINDI"
-msgstr "हिन्दी"
-
-msgid "IDS_IME_BODY_LANG_KANNADA"
-msgstr "ಕನ್ನಡ"
-
-msgid "IDS_IME_BODY_LANG_MALAYALAM"
-msgstr "മലയാളം"
-
-msgid "IDS_IME_BODY_LANG_MARATHI"
-msgstr "मराठी"
-
-msgid "IDS_IME_BODY_LANG_NEPALI"
-msgstr "नेपाली"
-
-msgid "IDS_IME_BODY_LANG_PUNJABI"
-msgstr "ਪੰਜਾਬੀ"
-
-msgid "IDS_IME_BODY_LANG_ROMANIAN"
-msgstr "Română"
-
-msgid "IDS_IME_BODY_LANG_SINHALA"
-msgstr "සිංහල"
-
-msgid "IDS_IME_BODY_LANG_TAMIL"
-msgstr "தமிழ்"
-
-msgid "IDS_IME_BODY_LANG_TELUGU"
-msgstr "తెలుగు"
-
-msgid "IDS_IME_BODY_LATVIAN"
-msgstr "Lettiska"
-
-msgid "IDS_IME_BODY_MACEDONIAN"
-msgstr "Makedonska"
-
-msgid "IDS_IME_BODY_MALAY"
-msgstr "Malay"
-
-msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
-msgstr "Maximal ordlängd (%d) överskriden"
-
-msgid "IDS_IME_BODY_MOAKEY"
-msgstr "MoAKey"
-
-msgid "IDS_IME_BODY_MOAKEY_TIP"
-msgstr "MoAKey-tips"
-
-msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
-msgstr "Multitap-ordkomplettering"
-
-msgid "IDS_IME_BODY_NO_OPTIONS"
-msgstr "Inga alternativ"
-
-msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
-msgstr "Stående inmatningsalternativ"
-
-msgid "IDS_IME_BODY_PREDICTION"
-msgstr "Inmatning"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
-msgstr "Förutsedd text"
-
-msgid "IDS_IME_BODY_PROCESSING_ING"
-msgstr "Bearbetar..."
-
-msgid "IDS_IME_BODY_REGIONAL_INPUT"
-msgstr "Regionala indata"
-
-msgid "IDS_IME_BODY_SELECTION"
-msgstr "Markering"
-
-msgid "IDS_IME_BODY_SHORTCUT"
-msgstr "Genväg"
-
-msgid "IDS_IME_BODY_SPELL_CORRECTION"
-msgstr "Stavningskorrigering"
-
-msgid "IDS_IME_BODY_SUBSTITUTION"
-msgstr "Ersättning"
-
-msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
-msgstr "Tryck för att lyssna igen"
-
-msgid "IDS_IME_BODY_THEME"
-msgstr "Tema"
-
-msgid "IDS_IME_BODY_TONE"
-msgstr "Signal"
-
-msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
-msgstr "Orden känns inte igen. Försök igen och prata långsamt och tydligt"
-
-msgid "IDS_IME_HEADER_NEW_WORDS"
-msgstr "Nya ord"
-
-msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
-msgstr "3 x 4-tangentbord"
-
-msgid "IDS_IME_OPT_AFTER_1_LETTER"
-msgstr "Efter 1 bokstav"
-
-msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
-msgstr "Efter %d bokstäver"
-
-msgid "IDS_IME_OPT_BLACK"
-msgstr "Svart"
-
-msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
-msgstr "Chunjiyin"
-
-msgid "IDS_IME_OPT_COLOUR"
-msgstr "Färg"
-
-msgid "IDS_IME_OPT_DO_NOT_SHOW"
-msgstr "Visa inte"
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Tyskt tangentbord"
 
 msgid "IDS_IME_OPT_ENTER_ABB"
 msgstr "Retur"
 
-msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
-msgstr "Fullstort qwerty-tangentbord"
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Chunjiin-tangentbord"
 
-msgid "IDS_IME_OPT_GO_ABB"
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Bulgariskt fonetiskt tangentbord"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Bulgariskt tangentbord"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Azerty-tangentbord"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Obs!"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4-tangentbord"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Vibration"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Svep över mellanslag"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Ljud"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Återställ inställningar"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Tangentbordssvep"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Förhandsgranska tecken"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Ersätt automatiskt"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Automatisk interpunktion"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Smart skrift"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Knapptrycksåterkoppling"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Inmatningsspråk"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Inlogg."
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Sänd"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Sök"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Inlogg."
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Anslut"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Gå"
 
-msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
-msgstr "Gå med"
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Yen"
 
-msgid "IDS_IME_OPT_LANG_CZECH"
-msgstr "Čeština"
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Won"
 
-msgid "IDS_IME_OPT_LANG_DANISH"
-msgstr "Dansk"
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Vit stjärna"
 
-msgid "IDS_IME_OPT_LANG_FINNISH"
-msgstr "Suomi"
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Vitt hjärta"
 
-msgid "IDS_IME_OPT_LANG_HUNGARIAN"
-msgstr "Magyar"
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI qwerty-tangentbord"
 
-msgid "IDS_IME_OPT_LANG_IRISH"
-msgstr "Gaeilge"
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Virtuellt tangentbord har aktiverats."
 
-msgid "IDS_IME_OPT_LANG_KAZAKH"
-msgstr "Қазақ"
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Om du använder markörkontroll inaktiveras kontinuerlig inmatning."
 
-msgid "IDS_IME_OPT_LANG_KOREAN"
-msgstr "한국어"
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Om du använder kontinuerlig inmatning inaktiveras markörkontroll."
 
-msgid "IDS_IME_OPT_LANG_POLISH"
-msgstr "Polski"
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Understreck"
 
-msgid "IDS_IME_OPT_LANG_SLOVAK"
-msgstr "Slovenčina"
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Turkiskt qwerty-tangentbord"
 
-msgid "IDS_IME_OPT_LANG_UKRAINIAN"
-msgstr "Українська"
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Turkiskt F-tangentbord"
 
-msgid "IDS_IME_OPT_LANG_WELSH"
-msgstr "Cymraeg"
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Om du vill byta språk sveper du horisontellt över mellanslag."
 
-msgid "IDS_IME_OPT_LOG_IN_ABB"
-msgstr "Inlogg"
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Multiplikationstecken"
 
-msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
-msgstr "Mini-qwerty-tangentbord"
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tilde"
 
-msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
-msgstr "MoAKey-tangentbord"
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Samsung-tangentbordet lär sig din stil och försöker att förutse vad du vill skriva genom att komma ihåg vad du skriver. Lösenord utesluts, men personliga uppgifter som kreditkortsnummer sparas"
 
-msgid "IDS_IME_OPT_MOAKEY_POP_UP"
-msgstr "Popup-fönster för MoAKey"
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Telex qwerty-tangentbord"
 
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
-msgstr "Qwerty-tangentbord"
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Tryck om du vill använda det virtuella tangentbordet."
 
-msgid "IDS_IME_OPT_SHADES_OF_GREY"
-msgstr "Gråa nyanser"
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Tryck på den här tangenten och håll den nedtryckt för att se symbollistan. Välj en för att använda den som en genväg."
 
-msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
-msgstr "Visa i 0,1 sekund"
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Symboltangentbord %1$d av %2$d"
 
-msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
-msgstr "Visa i 0,2 sekunder"
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Symboler"
 
-msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
-msgstr "Visa i 0,3 sekunder"
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Mellanrum"
 
-msgid "IDS_IME_OPT_SLOW"
-msgstr "Långsam"
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Snedstreck"
 
-msgid "IDS_IME_OPT_SPEED"
-msgstr "Hastighet"
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Enkla citationstecken"
 
-msgid "IDS_IME_OPT_STROKE_CHN"
-msgstr "Stroke"
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Visa en stor teckenbubbla när en knapp trycks ned på ett QWERTY-tangentbord."
 
-msgid "IDS_IME_OPT_THICK"
-msgstr "Tjock"
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Skift är låst."
 
-msgid "IDS_IME_OPT_WHITE"
-msgstr "Vit"
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Skift är på."
 
-msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
-msgstr "Skriv med ritpanelen"
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Skift är av."
 
-msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
-msgstr "Skriv med helskärm"
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Inställningar"
 
-msgid "IDS_IME_POP_LANG_ESTONIAN"
-msgstr "Eesti"
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "september"
 
-msgid "IDS_IME_POP_LANG_ICELANDIC"
-msgstr "íslenska"
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Semikolon"
 
-msgid "IDS_IME_POP_LANG_LATVIAN"
-msgstr "Latviešu"
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Höger vinkelcitationstecken"
 
-msgid "IDS_IME_POP_LANG_LITHUANIAN"
-msgstr "Lietuvių"
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Citat"
 
-msgid "IDS_IME_POP_LANG_MACEDONIAN"
-msgstr "Македонски"
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Frågetecken"
 
-msgid "IDS_IME_POP_LANG_NORWEGIAN"
-msgstr "Norsk"
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ kommer att tas bort från inlärda ord."
 
-msgid "IDS_IME_POP_LANG_SERBIAN"
-msgstr "Srpski"
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Alternativ för intelligent ordbok"
 
-msgid "IDS_IME_POP_LANG_SLOVENIAN"
-msgstr "Slovenščina"
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Förutsedd text"
 
-msgid "IDS_IME_POP_LANG_SWEDISH"
-msgstr "Svenska"
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Pund"
 
-msgid "IDS_IME_OPT_LANG_DUTCH"
-msgstr "Nederlands"
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Plus"
 
-msgid "IDS_IME_OPT_LANG_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Vertikalstreck"
 
-msgid "IDS_IME_OPT_LANG_FRENCH"
-msgstr "Français"
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Procent"
 
-msgid "IDS_IME_OPT_LANG_GERMAN"
-msgstr "Deutsch"
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Vänsterparentes"
 
-msgid "IDS_IME_OPT_LANG_GREEK"
-msgstr "Ελληνικά"
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Vänster hakparentes"
 
-msgid "IDS_IME_OPT_LANG_RUSSIAN"
-msgstr "Русский"
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Vänster klammerparentes"
 
-msgid "IDS_IME_OPT_LANG_SPANISH"
-msgstr "Español"
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "oktober"
 
-msgid "IDS_IME_OPT_LANG_TURKISH"
-msgstr "Türkçe"
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Inga språk valda."
 
-msgid "IDS_IME_POP_LANG_ITALIAN"
-msgstr "Italiano"
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "november"
 
-msgid "IDS_IME_POP_LANG_PORTUGUESE"
-msgstr "Português"
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Flytta markören genom att dra fingret över tangentbordet."
 
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Du måste välja minst ett språk för tangentbordsinställningar"
+msgid "IDS_IME_BODY_MAY"
+msgstr "maj"
 
-msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
-msgstr "Maskinvarutangentbord"
+msgid "IDS_IME_BODY_MARCH"
+msgstr "mars"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Bokstäver"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Mindre än"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Vänster vinkelcitationstecken"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Tangentbordstyp"
 
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Tangentbordsinställningar"
 
-msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
-msgstr "Programvarutangentbord"
+msgid "IDS_IME_BODY_JUNE"
+msgstr "juni"
 
-msgid "IDS_IME_BODY_DUTCH"
-msgstr "Holländsk"
+msgid "IDS_IME_BODY_JULY"
+msgstr "juli"
 
-msgid "IDS_IME_BODY_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "januari"
 
-msgid "IDS_IME_OPT_QWERTY"
-msgstr "Qwerty"
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Omvänt frågetecken"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Omvänt utropstecken"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Inmatning från fysiskt tangentbord har identifierats."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Om anpassade data är aktiverat kan Samsung-tangentbordet lära sig din skrivstil från Facebook, Gmail, Twitter, Meddelanden och Kontakter och ge förslag och korrigeringar som är anpassade för dig."
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Fyrkant"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Större än"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Grav accent"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Snärta uppåt på en tangent för att visa symboler och alternativa tecken."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Snärta tangentbordet nedåt för att dölja det."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Snärtinmatning"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "februari"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Utropstecken"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Euro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Lika med"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Ange text genom att dra fingret över tangentbordet. Funktionen är optimerad för Qwerty-tangentbord."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Ange text genom att dra fingret över tangentbordet."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Retur"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Aktivera anpassade data"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Uttrycksikoner"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Punkt"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dollar"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Divisionstecken"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Ta bort blanksteg"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "december"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Tankstreck"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Anpassningsbar knapp"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Markörkontroll"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Valutatecken"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Kontinuerlig inmatning"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Komma"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Kolon"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Högerparentes"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Höger hakparentes"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Höger klammerparentes"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Urklipp"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Insättningstecken"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Förhandsgranska tecken"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Versal"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Backsteg"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Omvänt snedsträck"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Automatiska mellanrum"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Stor bokstav automatiskt"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Infoga automatiskt mellanslag mellan ord."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Infoga automatiskt punkt genom att trycka två gånger på mellanslag."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Inled automatiskt första bokstaven i en mening med versal."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "augusti"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "Snabel-a"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Asterisk"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "april"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Et-tecken"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Knapp för att utöka listan"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Röstindata"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Tangentbordet erbjuder olika funktioner, t.ex. kontinuerlig inmatning och intelligent ordbok."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Tryck på röstikonen för att använda röstinmatning."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Tryck på textinmatningsfältet när tangentbordet är öppet för att ta bort handtaget. Flytta handtaget för att flytta markören."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Tryck på ikonen för inställningar för att öppna inställningarna för Samsung-tangentbordet."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Tryck på lägesknappen för att växla mellan tecken och symboler."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Tryck på tangentbordsikonen på meddelandepanelen för att ändra inmatningsmetod."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Tryck på uttrycksikonen om du vill lägga till en uttryckssymbol."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Tryck på ikonen för urklipp för att öppna Urklipp."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Tryck på ett textfält för att öppna tangentbordet."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Håll ned den anpassningsbara knappen för att välja uttrycksikoner, röst, urklipp, tangentbord eller skiljetecken."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Tryck på den anpassningsbara knappen och håll den nedtryckt för att välja inställningar för röst, urklipp, tangentbord och skiljetecken."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Tryck på en text och håll den nedtryckt för att markera den. Ett markörhandtag består av ett starthandtag och ett sluthandtag. Välj text genom att flytta handtagen. Släpp handtaget för att välja att kopiera, klippa, klistra in och andra alternativ."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Tryck på tillbakaknappen för att stänga tangentbordet."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Öppna Inställningar och välj sedan Språk och tangentbord > Tangentbord > Tangentbordsinställningar > Intelligent ordbok."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Om två eller flera språk har valts i tangentbordsinställningarna trycker du på jordglobsknappen för att växla mellan dem."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Om anpassade data är aktiverade kan Samsung-tangentbordet lära sig din skrivstil från Gmail, Twitter, Meddelanden och Kontakter och ge förslag och korrigeringar som är anpassade för dig."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Villkor"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Alla"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Språk"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Inte markerad"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Godkänn"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty-tangentbord"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Anpassade data"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Ring mig senare."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Webbsidan öppnas på den mobila enhetens skärm."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Tryck på OK om du vill använda den här funktionen. Personliga data från din mobila enhet kommer också att användas av %s. Om du inte vill att dina personliga data ska lagras går du till tangentbordsinställningarna och avmarkerar Aktivera anpassade data."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Tangentbordsinställningar, utom hämtningsspråk, kommer att återställas."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Det brev som passar sammanhanget anges automatiskt."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Tryck på och håll ned mellanslagstangenten om du vill använda röstinmatning."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Tryck på och håll ned alternativknappen så visas en lista med alternativ."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Svep mellanslag åt vänster eller till höger om du vill byta språk."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Inga mallar"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Smarta inmatningsfunktioner"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Stor bokstav automatiskt"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Skriv automatiskt första bokstaven i varje mening med versal."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Interpunktera automatiskt"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Nollställ"
 

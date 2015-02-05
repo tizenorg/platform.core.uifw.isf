@@ -1,627 +1,702 @@
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Izbriši presledek"
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Gumb za radio"
 
-msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
-msgstr "Prepoznavanje glasu ni uspelo"
+msgid "IDS_BT_SK_OPEN"
+msgstr "Odpri"
 
-msgid "IDS_IME_BODY_HANDWRITING"
-msgstr "Rokopis"
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Izbrano"
 
-msgid "IDS_IME_BODY_PEN_COLOUR"
-msgstr "Barva pisala"
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Zapri"
 
-msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
-msgstr "Pen gesture guide"
+msgid "IDS_ST_BODY_HELP"
+msgstr "Pomoč"
 
-msgid "IDS_IME_BODY_PEN_THICKNESS"
-msgstr "Debelina pisala"
+msgid "IDS_ST_BODY_NONE"
+msgstr "Brez"
 
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Prostor"
+msgid "IDS_ST_BODY_OFF"
+msgstr "Izključeno"
 
-msgid "IDS_IME_OPT_RED"
-msgstr "Rdeče"
+msgid "IDS_ST_BODY_ON"
+msgstr "Vključeno"
 
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "Konč."
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Nastavitve"
 
-msgid "IDS_IME_BODY_MY_WORD_LIST"
-msgstr "Moj seznam besed"
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Odstrani"
 
-msgid "IDS_IME_BODY_ABOUT"
-msgstr "O"
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Tipk. Azerty za Gear"
 
-msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
-msgstr "Popolno prepoznavanje"
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Tipk. Qwerty za Gear"
 
-msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
-msgstr "Izbriši (1 znak)"
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Tipk. Qwertz za Gear"
 
-msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
-msgstr "Izbriši (Beseda ali stavek)"
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Obrazi"
 
-msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
-msgstr "Vnos (Hitro prepoznavanje)"
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Pojavno okno je zaprto."
 
-msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
-msgstr "Nastavitve za rokopis"
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Pojavno okno je prikazano"
 
-msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
-msgstr "Izbira tipkovnice"
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Številke"
 
-msgid "IDS_IME_BODY_RECOGNITION_TIME"
-msgstr "Čas prepoznavanja"
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Zanimivi kraji"
 
-msgid "IDS_IME_BODY_RECOGNITION_TYPE"
-msgstr "Vrsta prepoznavanja"
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Uporaba neprekinjenega vnosa"
 
-msgid "IDS_IME_BODY_SPEAK_NOW"
-msgstr "Začnite govoriti"
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Uporaba predvidevanja besedila"
 
-msgid "IDS_IME_BODY_STROKE_RECOGNITION"
-msgstr "Hitro prepoznavanje"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Spreminjanje načina vnašanja"
 
-msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
-msgstr "Pošlji (Popolno prepoznavanje)"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Spreminjanje načina vnosa"
 
-msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
-msgstr "Poskus prepoznavanja ..."
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Spreminjanje jezika"
 
-msgid "IDS_IME_BODY_TUTORIAL"
-msgstr "Vodnik"
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Zapiranje tipkovnice"
 
-msgid "IDS_IME_OPT_BLUE"
-msgstr "Modro"
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Premikanje kazalca"
 
-msgid "IDS_IME_OPT_BROWN"
-msgstr "Brown"
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Odpiranje tipkovnice"
 
-msgid "IDS_IME_OPT_GREEN"
-msgstr "Zelena"
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Izbiranje besedila"
 
-msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
-msgstr "Vse besede bodo izbrisane"
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Uporaba tipkovn. Samsung"
 
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Vnesite besedilo tako, da s prstom podrsate po tipkovnici"
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Besedo, ko jo pravkar vnašate, lahko dokončate ali zamenjate z najbolj verjetno besedo, če pritisnete preslednico."
 
-msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
-msgstr "Seznam mojih besed je poln. Če želite dodati besedo, izbrišite nekaj elementov"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Dvakrat pritisnite, da zaprete seznam."
 
-msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
-msgstr "%d besed bo izbrisanih"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Dvakrat pritisnite, da uredite to polje."
 
-msgid "IDS_IME_BODY_SELECT_WORDS"
-msgstr "Izberite besede"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Dvakrat pritisnite, da odprete seznam."
 
-msgid "IDS_IME_HEADER_ADD_WORDS"
-msgstr "Dodaj besede"
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Razširljiv seznam"
 
-msgid "IDS_IME_MBODY_3X4_KEYBOARD"
-msgstr "Tipkovnica 3x4"
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Gumb za vklop/izklop"
 
-msgid "IDS_IME_OPT_1000_MS_ABB"
-msgstr "1000 ms"
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Tipkovnica Samsung"
 
-msgid "IDS_IME_OPT_100_MS_ABB"
-msgstr "100 ms"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Več nastavit."
 
-msgid "IDS_IME_OPT_1_PIXEL_ABB"
-msgstr "1 sl. pika"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "V nastavitvah tipkovnice morate izbrati vsaj en jezik."
 
-msgid "IDS_IME_OPT_2000_MS_ABB"
-msgstr "2000 ms"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Izberite jezike vnosa"
 
-msgid "IDS_IME_OPT_300_MS_ABB"
-msgstr "300 ms"
-
-msgid "IDS_IME_OPT_500_MS_ABB"
-msgstr "500 ms"
-
-msgid "IDS_IME_OPT_PD_PIXELS_ABB"
-msgstr "%d sl. pik"
-
-msgid "IDS_IME_BODY_LANG_BULGARIAN"
-msgstr "Български"
-
-msgid "IDS_IME_BODY_LANG_JAPANESE"
-msgstr "日本語"
-
-msgid "IDS_IME_BODY_ARABIC"
-msgstr "عربي"
-
-msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
-msgstr "简体中文"
-
-msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
-msgstr "简体中文 (新加坡)"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
-msgstr "繁體中文"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
-msgstr "香港繁體"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
-msgstr "台灣繁體"
-
-msgid "IDS_IME_BODY_FARSI"
-msgstr "فارسی"
-
-msgid "IDS_IME_BODY_HEBREW"
-msgstr "עברית"
-
-msgid "IDS_IME_BODY_INDONESIAN"
-msgstr "Bahasa Indonesia"
-
-msgid "IDS_IME_BODY_THAI"
-msgstr "ภาษาไทย"
-
-msgid "IDS_IME_BODY_URDU"
-msgstr "اردو"
-
-msgid "IDS_IME_BODY_UZBEK"
-msgstr "o'zbek tili"
-
-msgid "IDS_IME_BODY_VIETNAMESE"
-msgstr "Tiếng Việt"
-
-msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
-msgstr "Beseda bo izbrisana"
-
-msgid "IDS_IME_BODY_ARMENIAN"
-msgstr "Հայերեն"
-
-msgid "IDS_IME_MBODY_AUTO_APPEND"
-msgstr "Samodejno pripenjanje"
-
-msgid "IDS_IME_OPT_LANG_ALBANIAN"
-msgstr "shqip"
-
-msgid "IDS_IME_OPT_LANG_CROATIAN"
-msgstr "Hrvatski"
-
-msgid "IDS_IME_BODY_ENTER_WORD"
-msgstr "Vnesite besedo"
-
-msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
-msgstr "Napovedovanje nove besede"
-
-msgid "IDS_IME_BODY_NO_WORDS"
-msgstr "Brez besed"
-
-msgid "IDS_IME_BODY_RECAPTURE"
-msgstr "Ponovno zajemi"
-
-msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
-msgstr "Regionalno popravljanje"
-
-msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
-msgstr "Seznam samodej. zamenjav"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
-msgstr "Samodejno vnese piko, če dvakrat pritisnete preslednico"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
-msgstr "English (UK)"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
-msgstr "English (US)"
-
-msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
-msgstr "Predlagaj celotne besede na podlagi do zdaj vnesenih znakov"
-
-msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
-msgstr "Predlagaj nabor nadomestnih besed"
-
-msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
-msgstr "Točka zaključevanja besed"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Samodejno popravi veliko začetnico na začetku stavka"
-
-msgid "IDS_IME_BODY_WRITING_LANGUAGES"
-msgstr "Jeziki pisanja"
-
-msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
-msgstr "Clear learning dictionary"
-
-msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
-msgstr "Slovar iz stikov"
-
-msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
-msgstr "Angleško napovedovanje"
-
-msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
-msgstr "Slovar za angleške uporabnike"
-
-msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
-msgstr "Flick input"
-
-msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
-msgstr "Input word learning"
-
-msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
-msgstr "Japanese user dictionary"
-
-msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
-msgstr "Toggle input"
-
-msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
-msgstr "Typing error correction"
-
-msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
-msgstr "Wildcard prediction"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Neprekinjen vnos"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Največje dovoljeno število podprtih jezikov (%d) je doseženo."
 
 msgid "IDS_IME_HEADER_KEYBOARD"
 msgstr "Tipkovnica"
 
-msgid "IDS_IME_BODY_WORD_COMPLETION"
-msgstr "Zaključevanje besed"
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Ni izbrano"
 
-msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
-msgstr "Bahasa Malaysia"
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Potrjeno"
 
-msgid "IDS_IME_BODY_ASSAMESE"
-msgstr "অসমীয়া"
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Polje za potrditev"
 
-msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
-msgstr "Samodejno dodajanje pike"
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Kje se lahko dobiva?"
 
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Samodejno pisanje z veliko začetnico"
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Kje ste?"
 
-msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
-msgstr "Samodejna zamenjava"
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Ne ponovi"
 
-msgid "IDS_IME_BODY_BASQUE"
-msgstr "Baskovščina"
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Pok. v napravi"
 
-msgid "IDS_IME_BODY_BULGARIAN"
-msgstr "Bolgarščina"
+msgid "IDS_ST_SK_OK"
+msgstr "V redu"
 
-msgid "IDS_IME_BODY_CATALAN"
-msgstr "Katalonščina"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Prekliči"
 
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Predogled znakov"
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Izberite predlogo"
 
-msgid "IDS_IME_BODY_CZECH"
-msgstr "Češčina"
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Kako si kaj?"
 
-msgid "IDS_IME_BODY_DANISH"
-msgstr "Danščina"
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Kaj se dogaja?"
 
-msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
-msgstr "Angleščina (Združene države)"
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Kmalu se slišiva."
 
-msgid "IDS_IME_BODY_ESTONIAN"
-msgstr "Estonščina"
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Pokličem pozneje."
 
-msgid "IDS_IME_BODY_FAST"
-msgstr "Hitro"
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Spremeni jezik"
 
-msgid "IDS_IME_BODY_INFO_SCAN"
-msgstr "Pregled podatkov"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Konč."
 
-msgid "IDS_IME_BODY_JAPANESE"
-msgstr "Japonščina"
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Če želite omogočiti samodejno zamenjavo, omogočite vsaj en jezik."
 
-msgid "IDS_IME_BODY_KEYBOARD_TYPE"
-msgstr "Vrsta tipkovnice"
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Pritisnite preslednico, da sprejmete popravek, ali pritisnite puščico, da ohranite trenutno besedilo."
 
-msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
-msgstr "Možnosti ležečega vnosa"
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Tipkovnica Qwertz"
 
-msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
-msgstr "Azərbaycan"
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Napr."
 
-msgid "IDS_IME_BODY_LANG_BASQUE"
-msgstr "Euskara"
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Tipkovnica Kana"
 
-msgid "IDS_IME_BODY_LANG_BENGALI"
-msgstr "বাংলা"
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Tipkovnica Kana flick"
 
-msgid "IDS_IME_BODY_LANG_CATALAN"
-msgstr "Català"
-
-msgid "IDS_IME_BODY_LANG_GALICIAN"
-msgstr "Galego"
-
-msgid "IDS_IME_BODY_LANG_GEORGIAN"
-msgstr "ქართული"
-
-msgid "IDS_IME_BODY_LANG_GUJARATI"
-msgstr "ગુજરાતી"
-
-msgid "IDS_IME_BODY_LANG_HINDI"
-msgstr "हिन्दी"
-
-msgid "IDS_IME_BODY_LANG_KANNADA"
-msgstr "ಕನ್ನಡ"
-
-msgid "IDS_IME_BODY_LANG_MALAYALAM"
-msgstr "മലയാളം"
-
-msgid "IDS_IME_BODY_LANG_MARATHI"
-msgstr "मराठी"
-
-msgid "IDS_IME_BODY_LANG_NEPALI"
-msgstr "नेपाली"
-
-msgid "IDS_IME_BODY_LANG_PUNJABI"
-msgstr "ਪੰਜਾਬੀ"
-
-msgid "IDS_IME_BODY_LANG_ROMANIAN"
-msgstr "Română"
-
-msgid "IDS_IME_BODY_LANG_SINHALA"
-msgstr "සිංහල"
-
-msgid "IDS_IME_BODY_LANG_TAMIL"
-msgstr "தமிழ்"
-
-msgid "IDS_IME_BODY_LANG_TELUGU"
-msgstr "తెలుగు"
-
-msgid "IDS_IME_BODY_LATVIAN"
-msgstr "Latvijščina"
-
-msgid "IDS_IME_BODY_MACEDONIAN"
-msgstr "Makedonščina"
-
-msgid "IDS_IME_BODY_MALAY"
-msgstr "Malajščina"
-
-msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
-msgstr "Največja dovoljena dolžina besede (%d) je presežena"
-
-msgid "IDS_IME_BODY_MOAKEY"
-msgstr "MoAKey"
-
-msgid "IDS_IME_BODY_MOAKEY_TIP"
-msgstr "Nasvet za MoAKey"
-
-msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
-msgstr "Zaključevanje besed z večkratnim pritiskanjem"
-
-msgid "IDS_IME_BODY_NO_OPTIONS"
-msgstr "Ni možnosti"
-
-msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
-msgstr "Možnosti pokončnega vnosa"
-
-msgid "IDS_IME_BODY_PREDICTION"
-msgstr "Napovedovanje"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
-msgstr "Predvidevanje besedila"
-
-msgid "IDS_IME_BODY_PROCESSING_ING"
-msgstr "Obdelujem..."
-
-msgid "IDS_IME_BODY_REGIONAL_INPUT"
-msgstr "Lokalni vnos"
-
-msgid "IDS_IME_BODY_SELECTION"
-msgstr "Izbira"
-
-msgid "IDS_IME_BODY_SHORTCUT"
-msgstr "Bližnjica"
-
-msgid "IDS_IME_BODY_SPELL_CORRECTION"
-msgstr "Popravljanje črkovanja"
-
-msgid "IDS_IME_BODY_SUBSTITUTION"
-msgstr "Zamenjava"
-
-msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
-msgstr "Pritisnite, da začnete znova poslušati"
-
-msgid "IDS_IME_BODY_THEME"
-msgstr "Tema"
-
-msgid "IDS_IME_BODY_TONE"
-msgstr "Ton"
-
-msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
-msgstr "Besed ni mogoče prepoznati. Poskusite znova, govorite počasi in razločno"
-
-msgid "IDS_IME_HEADER_NEW_WORDS"
-msgstr "Nove besede"
-
-msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
-msgstr "Tipkovnica 3 x 4"
-
-msgid "IDS_IME_OPT_AFTER_1_LETTER"
-msgstr "Po 1 črki"
-
-msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
-msgstr "Po %d črkah"
-
-msgid "IDS_IME_OPT_BLACK"
-msgstr "Črna"
-
-msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
-msgstr "Chunjiyin"
-
-msgid "IDS_IME_OPT_COLOUR"
-msgstr "Barva"
-
-msgid "IDS_IME_OPT_DO_NOT_SHOW"
-msgstr "Ne prikaži"
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Nemška tipkovnica"
 
 msgid "IDS_IME_OPT_ENTER_ABB"
 msgstr "Vnos"
 
-msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
-msgstr "Celotna tipkovnica qwerty"
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Tipkovnica Chunjiin"
 
-msgid "IDS_IME_OPT_GO_ABB"
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Bolgarska fonetična tipkovnica"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Bolgarska tipkovnica"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Tipkovnica Azerty"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Pozor"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Tipkovnica 3 x 4"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Vibriranje"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Drsanje po preslednici"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Zvok"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Ponastavi nastavitve"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Drsanje tipkovnice"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Predogled znakov"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Samodejna zamenjava"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Samodejno dodaj ločila"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Pametno tipkanje"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Povr. infor. ob pritisku tipke"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Jeziki vnosa"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Prijava"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Pošlji"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Išči"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Prijava"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Združi"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Pojdi"
 
-msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
-msgstr "Pridruži se"
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Jen"
 
-msgid "IDS_IME_OPT_LANG_CZECH"
-msgstr "Čeština"
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Von"
 
-msgid "IDS_IME_OPT_LANG_DANISH"
-msgstr "Dansk"
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Bela zvezda"
 
-msgid "IDS_IME_OPT_LANG_FINNISH"
-msgstr "Suomi"
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Belo srce"
 
-msgid "IDS_IME_OPT_LANG_HUNGARIAN"
-msgstr "Magyar"
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "Tipkovnica Qwerty VNI"
 
-msgid "IDS_IME_OPT_LANG_IRISH"
-msgstr "Gaeilge"
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Navidezna tipkovnica je omogočena."
 
-msgid "IDS_IME_OPT_LANG_KAZAKH"
-msgstr "Қазақ"
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Upravljanje kazalca bo onemogočilo neprekinjen vnos."
 
-msgid "IDS_IME_OPT_LANG_KOREAN"
-msgstr "한국어"
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Uporaba neprekinjenega vnosa bo onemogočila upravljanje kazalca."
 
-msgid "IDS_IME_OPT_LANG_POLISH"
-msgstr "Polski"
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Podčrtaj"
 
-msgid "IDS_IME_OPT_LANG_SLOVAK"
-msgstr "Slovenčina"
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Turška tipkovnica Qwerty"
 
-msgid "IDS_IME_OPT_LANG_UKRAINIAN"
-msgstr "Українська"
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Turška tipkovnica F"
 
-msgid "IDS_IME_OPT_LANG_WELSH"
-msgstr "Cymraeg"
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Če želite spremeniti jezik, v vodoravni smeri podrsajte po preslednici."
 
-msgid "IDS_IME_OPT_LOG_IN_ABB"
-msgstr "Prij."
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Krat"
 
-msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
-msgstr "Mini tipkovnica qwerty"
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tilda"
 
-msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
-msgstr "Tipkovnica MoAKey"
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Tipkovnica Samsung si zapomni vaš slog pisanja in poskuša predvidevati, kaj želite napisati, saj si zapomni, kaj ste že vnesli. Ta funkcija ne velja za gesla, shranjeni pa bodo osebni podatki, kot so številke kreditnih kartic"
 
-msgid "IDS_IME_OPT_MOAKEY_POP_UP"
-msgstr "Pojavno okno MoAKey"
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Tipkovnica Qwerty Telex"
 
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
-msgstr "Tipkovnica qwerty"
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Pritisnite za uporabo navidezne tipkovnice."
 
-msgid "IDS_IME_OPT_SHADES_OF_GREY"
-msgstr "Odtenki sive"
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Pritisnite in držite to tipko za ogled seznama simbolov. Izberite enega, da ga uporabite kot bližnjico."
 
-msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
-msgstr "Pokaži za 0,1 s"
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Tipkovnica s simboli %1$d od %2$d"
 
-msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
-msgstr "Pokaži za 0,2 s"
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Simboli"
 
-msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
-msgstr "Pokaži za 0,3 s"
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Prostor"
 
-msgid "IDS_IME_OPT_SLOW"
-msgstr "Počasi"
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Poševnica"
 
-msgid "IDS_IME_OPT_SPEED"
-msgstr "Hitrost"
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Enojni narekovaj"
 
-msgid "IDS_IME_OPT_STROKE_CHN"
-msgstr "Stroke"
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Pokaži oblaček za velike znake ob pritisku tipke na tipkovnici QWERTY."
 
-msgid "IDS_IME_OPT_THICK"
-msgstr "Tanek"
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Tipka Shift je zaklenjena."
 
-msgid "IDS_IME_OPT_WHITE"
-msgstr "Bela"
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Tipka Shift je vklopljena."
 
-msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
-msgstr "Pisanje z uporabo risalne plošče"
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Tipka Shift je izklopljena."
 
-msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
-msgstr "Pisanje z uporabo celotnega zaslona"
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Nastavitve"
 
-msgid "IDS_IME_POP_LANG_ESTONIAN"
-msgstr "Eesti"
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "September"
 
-msgid "IDS_IME_POP_LANG_ICELANDIC"
-msgstr "íslenska"
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Podpičje"
 
-msgid "IDS_IME_POP_LANG_LATVIAN"
-msgstr "Latviešu"
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Desni dvojni narekovaj"
 
-msgid "IDS_IME_POP_LANG_LITHUANIAN"
-msgstr "Lietuvių"
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Narekovaji"
 
-msgid "IDS_IME_POP_LANG_MACEDONIAN"
-msgstr "Македонски"
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Vprašaj"
 
-msgid "IDS_IME_POP_LANG_NORWEGIAN"
-msgstr "Norsk"
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "Beseda ‘%s’ bo odstranjena iz naučenih besed."
 
-msgid "IDS_IME_POP_LANG_SERBIAN"
-msgstr "Srpski"
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Možnosti predvidevanja besedila"
 
-msgid "IDS_IME_POP_LANG_SLOVENIAN"
-msgstr "Slovenščina"
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Predvidevanje besedila"
 
-msgid "IDS_IME_POP_LANG_SWEDISH"
-msgstr "Svenska"
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Funt"
 
-msgid "IDS_IME_OPT_LANG_DUTCH"
-msgstr "Nederlands"
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Plus"
 
-msgid "IDS_IME_OPT_LANG_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Navpičnica"
 
-msgid "IDS_IME_OPT_LANG_FRENCH"
-msgstr "Français"
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Odstotek"
 
-msgid "IDS_IME_OPT_LANG_GERMAN"
-msgstr "Deutsch"
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Oklepaj"
 
-msgid "IDS_IME_OPT_LANG_GREEK"
-msgstr "Ελληνικά"
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Začetni oglati oklepaj"
 
-msgid "IDS_IME_OPT_LANG_RUSSIAN"
-msgstr "Русский"
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Začetni zaviti oklepaj"
 
-msgid "IDS_IME_OPT_LANG_SPANISH"
-msgstr "Español"
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Oktober"
 
-msgid "IDS_IME_OPT_LANG_TURKISH"
-msgstr "Türkçe"
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Jeziki niso izbrani."
 
-msgid "IDS_IME_POP_LANG_ITALIAN"
-msgstr "Italiano"
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "November"
 
-msgid "IDS_IME_POP_LANG_PORTUGUESE"
-msgstr "Português"
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Kazalec premaknete tako, da s prstom podrsate po tipkovnici."
 
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "V nastavitvah tipkovnice morate izbrati vsaj en jezik"
+msgid "IDS_IME_BODY_MAY"
+msgstr "Maj"
 
-msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
-msgstr "Strojna tipkovnica"
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Marec"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Črke"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Manjše kot"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Levi dvojni narekovaj"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Vrsta tipkovnice"
 
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Nastavitve tipkovnice"
 
-msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
-msgstr "Programska tipkovnica"
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Junij"
 
-msgid "IDS_IME_BODY_DUTCH"
-msgstr "nizozemščina"
+msgid "IDS_IME_BODY_JULY"
+msgstr "Julij"
 
-msgid "IDS_IME_BODY_ENGLISH"
-msgstr "angleščina"
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Januar"
 
-msgid "IDS_IME_OPT_QWERTY"
-msgstr "Qwerty"
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Obrnjen vprašaj"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Obrnjen klicaj"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Zaznan je vnos s strojno tipkovnico."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Če so omogočeni prilagojeni podatki, lahko tipkovnica Samsung kopira vaš slog pisanja iz storitev Facebook, Gmail, Twitter, Sporočila in Stiki ter vam ponudi napovedi in popravke, prilagojene vam"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Lojtra"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Večje kot"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Krativec"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Povlecite navzgor po tipki za prikaz simbolov in nadomestnih znakov."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Povlecite tipkovnico navzdol, da jo skrijete."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Vnos z dotikom"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Februar"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Klicaj"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Evro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Je enako"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Vnesite besedilo, tako da s prstom podrsate po tipkovnici. Ta funkcija je optimirana za tipkovnico Qwerty."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Vnesite besedilo tako, da s prstom podrsate po tipkovnici."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Vnos"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Omogočite prilagojene podatke"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Ikone čustev"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Pika"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dolar"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Deljeno z"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Izbriši presledek"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "December"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Pomišljaj"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Prilagodljiva tipka"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Upravljanje kazalca"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Znak za valuto"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Neprekinjen vnos"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Vejica"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Dvopičje"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Zaklepaj"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Zaključni oglati oklepaj"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Zaključni zaviti oklepaj"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Odložišče"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Strešica"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Predogled znakov"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Velika začetnica"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Vračalka"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Poševnica nazaj"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Samodejni razmik vrstic"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Samodejno pisanje z veliko začetnico"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Samodejno vstavi presledke med besedami."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Samodejno vnese piko, če dvakrat pritisnete preslednico."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Samodejno popravi veliko začetnico na začetku stavka."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "Avgust"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "Afna"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Zvezdica"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "April"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "In"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Gumb za razširitev seznama"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Glasovni vhod"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Tipkovnica omogoča funkcije, kot sta neprekinjen vnos in predvidevanje besedila."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Pritisnite ikono za glas, če želite uporabiti glasovni vnos."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Medtem, ko je tipkovnica odprta, pritisnite polje za vnos besedila, da se pojavi ročica. Premaknite ročico, da premaknete kazalec"
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Pritisnite ikono za nastavitve, da odprete nastavitve za tipkovnico Samsung."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Pritisnite gumb za način za preklop med znaki in simboli."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Pritisnite ikono tipkovnice v obvestilni plošči, da spremenite način vnosa."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Pritisnite ikono emotikona, da vstavite emotikone."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Pritisnite ikono odložišča, da ga odprete."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Pritisnite katero koli besedilno polje, da se odpre tipkovnica."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Pritisnite in pridržite prilagodljivo tipko, da izberete emotikone, glasovno funkcijo, odložišče, nastavitve tipkovnice ali oznake za ločila."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Pritisnite in držite prilagodljivo tipko, da izberete glasovno funkcijo, odložišče, nastavitve tipkovnice ali oznake za ločila."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Pritisnite in držite del besedila, da ga izberete. Kazalec je sestavljen iz začetne in končne ročice. Premaknite obe, da izberete besedilo. Sprostite ročico, da izberete kopiranje, rezanje, lepljenje in druge možnosti"
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Pritisnite tipko za vrnitev, da zaprete tipkovnico."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Odprite Nastavitve in izberite Jezik in tipkovnica > Tipkovnica > Nastavitve tipkovnice > Predvidevanje besedila."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Če v nastavitvah tipkovnice izberete dva ali več jezikov, pritisnite tipko z globusom, da preklopite med njimi."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Če so prilagojeni podatki omogočeni, lahko tipkovnica Samsung kopira vaš slog pisanja iz storitev Gmail, Twitter, Sporočila in Stiki ter vam ponudi napovedi in popravke, prilagojene vam."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Določila in pogoji"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Vse"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Jezik"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Ni potrjeno"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Sprejmem"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Tipkovnica qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Prilagojeni podatki"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Pokliči me kasneje."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Spletna stran se bo odprla na zaslonu mobilne naprave."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Pritisnite V redu, če želite uporabiti to funkcijo. Tudi naprava %s bo uporabila prilagojene podatke iz mobilne naprave. Če ne želite, da se vaši osebni podatki shranjujejo, pojdite v nastavitve tipkovnice in počistite potrditveno polje Omogoči prilagojene podatke."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Nastavitve tipkovnice (razen prenesenih jezikov) bodo ponastavljene."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Črka, ki ustreza kontekstu, bo samodejno vnesena."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Za uporabo glasovnega vnosa pritisnite in pridržite preslednico."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Pritisnite in držite tipko za možnosti, da prikažete seznam možnosti."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Za spremembo jezika podrsajte po preslednici v levo ali desno."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Ni predlog"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Funkcije pametnega vnašanja"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Samodejna vel. začetnica"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Samodejno popravljanje velike začetnice na začetku vsakega stavka."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Samodejna ločila"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Ponastavitev"
 

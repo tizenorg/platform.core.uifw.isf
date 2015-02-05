@@ -2,12 +2,14 @@
 
 SET(LOCALEDIR "${PREFIX}/share/locale")
 SET(POFILES
-		ar.po az.po bg.po ca.po cs.po da.po de_DE.po el_GR.po en.po en_PH.po
-		en_US.po es_ES.po es_MX.po es_US.po et.po eu.po fi.po fr_CA.po fr_FR.po ga.po gl.po
-		hi.po hr.po hu.po hy.po is.po it_IT.po ja_JP.po ka.po kk.po ko_KR.po
-		lt.po lv.po mk.po nb.po nl_NL.po pl.po pt_BR.po pt_PT.po ro.po ru_RU.po
-		sk.po sl.po sr.po sv.po tr_TR.po uk.po uz.po zh_CN.po zh_HK.po zh_SG.po
-		zh_TW.po)
+		ar.po as.po az.po bg.po bn.po ca.po cs.po da.po de.po el_GR.po en.po en_PH.po
+		en_US.po es_ES.po es_US.po et.po eu.po fa.po fi.po fr.po ga.po gl.po gu.po he.po
+		hi.po hr.po hu.po hy.po id.po is.po it_IT.po ja_JP.po ka.po kk.po km.po kn.po
+		ko_KR.po ky_KG.po lo.po lt.po lv.po mk.po ml.po mn_MN.po mr.po ms.po my.po nb.po
+		ne.po nl.po or.po pa.po pl.po pt_BR.po pt_PT.po ro.po ru_RU.po si.po sk.po sl.po
+		sq.po sr.po sv.po ta.po te.po tg_TJ.po th.po tk_TM.po tl.po tr_TR.po uk.po ur.po
+		uz.po vi.po zh_CN.po zh_HK.po zh_TW.po
+		)
 
 SET(MSGFMT "/usr/bin/msgfmt")
 

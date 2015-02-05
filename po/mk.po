@@ -1,627 +1,702 @@
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Избриши празно место"
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Радио копче"
 
-msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
-msgstr "Неуспешно препознавање глас"
+msgid "IDS_BT_SK_OPEN"
+msgstr "Отвори"
 
-msgid "IDS_IME_BODY_HANDWRITING"
-msgstr "Ракопис"
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Избрано"
 
-msgid "IDS_IME_BODY_PEN_COLOUR"
-msgstr "Боја на пенкалото"
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Затвори"
 
-msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
-msgstr "Pen gesture guide"
+msgid "IDS_ST_BODY_HELP"
+msgstr "Помош"
 
-msgid "IDS_IME_BODY_PEN_THICKNESS"
-msgstr "Дебелина на пенкалото"
+msgid "IDS_ST_BODY_NONE"
+msgstr "Ништо"
 
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Празно место"
+msgid "IDS_ST_BODY_OFF"
+msgstr "Исклучено"
 
-msgid "IDS_IME_OPT_RED"
-msgstr "Црвено"
+msgid "IDS_ST_BODY_ON"
+msgstr "Вклучено"
 
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "ГОТОВ"
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Опции"
 
-msgid "IDS_IME_BODY_MY_WORD_LIST"
-msgstr "Моја листа на зборови"
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Отстрани"
 
-msgid "IDS_IME_BODY_ABOUT"
-msgstr "За апликацијата"
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Таст. Gear Azerty"
 
-msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
-msgstr "Целосно препознавање"
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Таст. Gear Qwerty"
 
-msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
-msgstr "Избриши (1 знак)"
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Таст. Gear Qwertz"
 
-msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
-msgstr "Избриши (Збор или реченица)"
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Лицa"
 
-msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
-msgstr "Внеси (Препознавање потег)"
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Пораката е затворена."
 
-msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
-msgstr "Опции за ракопис"
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Прикажан е појавен прозорец"
 
-msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
-msgstr "Одбирање тастатура"
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Броеви"
 
-msgid "IDS_IME_BODY_RECOGNITION_TIME"
-msgstr "Време на препознавање"
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Места"
 
-msgid "IDS_IME_BODY_RECOGNITION_TYPE"
-msgstr "Тип препознавање"
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Користење постојан внес"
 
-msgid "IDS_IME_BODY_SPEAK_NOW"
-msgstr "Зборувајте"
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Користење на предвидливиот текст"
 
-msgid "IDS_IME_BODY_STROKE_RECOGNITION"
-msgstr "Препознавање потег"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Менување начин на внесување"
 
-msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
-msgstr "Поднеси (Целосно препознавање)"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Менување режим на внесување"
 
-msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
-msgstr "Обид да се препознае..."
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Менување јазик"
 
-msgid "IDS_IME_BODY_TUTORIAL"
-msgstr "Упатство"
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Затворање на тастатурата"
 
-msgid "IDS_IME_OPT_BLUE"
-msgstr "Сино"
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Движење на покажувачот"
 
-msgid "IDS_IME_OPT_BROWN"
-msgstr "Кафена"
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Отворање на тастатурата"
 
-msgid "IDS_IME_OPT_GREEN"
-msgstr "Зелена"
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Избирање текст"
 
-msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
-msgstr "Сите зборови ќе се избришат"
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Корист.на тастат. Samsung"
 
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Внесувајте текст со лизгање на прстот по тастатурата"
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Довршете го или заменете го зборот што го пишувате со најверојатниот збор кога ќе го допрете копчето за празно место."
 
-msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
-msgstr "Листата Мои зборови е полна. За да додадете збор, избришете некој запис"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Допрете двапати за да затворите листа."
 
-msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
-msgstr "%d зборови ќе се избришат"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Допрете двапати за да го измените полето."
 
-msgid "IDS_IME_BODY_SELECT_WORDS"
-msgstr "Изберете зборови"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Допрете двапати за да отворите листа."
 
-msgid "IDS_IME_HEADER_ADD_WORDS"
-msgstr "Додај зборови"
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Листа што се раширува"
 
-msgid "IDS_IME_MBODY_3X4_KEYBOARD"
-msgstr "Тастатура 3x4"
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Копче вклучено/исклучено"
 
-msgid "IDS_IME_OPT_1000_MS_ABB"
-msgstr "1000 ms"
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Тастатура Samsung"
 
-msgid "IDS_IME_OPT_100_MS_ABB"
-msgstr "100 ms"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Повеќе парам."
 
-msgid "IDS_IME_OPT_1_PIXEL_ABB"
-msgstr "1 точка"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Мора да изберете барем еден јазик во опциите за тастатурата."
 
-msgid "IDS_IME_OPT_2000_MS_ABB"
-msgstr "2000 ms"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Изб. јазици за внесување"
 
-msgid "IDS_IME_OPT_300_MS_ABB"
-msgstr "300 ms"
-
-msgid "IDS_IME_OPT_500_MS_ABB"
-msgstr "500 ms"
-
-msgid "IDS_IME_OPT_PD_PIXELS_ABB"
-msgstr "%d точки"
-
-msgid "IDS_IME_BODY_LANG_BULGARIAN"
-msgstr "Български"
-
-msgid "IDS_IME_BODY_LANG_JAPANESE"
-msgstr "日本語"
-
-msgid "IDS_IME_BODY_ARABIC"
-msgstr "عربي"
-
-msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
-msgstr "简体中文"
-
-msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
-msgstr "简体中文 (新加坡)"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
-msgstr "繁體中文"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
-msgstr "香港繁體"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
-msgstr "台灣繁體"
-
-msgid "IDS_IME_BODY_FARSI"
-msgstr "فارسی"
-
-msgid "IDS_IME_BODY_HEBREW"
-msgstr "עברית"
-
-msgid "IDS_IME_BODY_INDONESIAN"
-msgstr "Bahasa Indonesia"
-
-msgid "IDS_IME_BODY_THAI"
-msgstr "ภาษาไทย"
-
-msgid "IDS_IME_BODY_URDU"
-msgstr "اردو"
-
-msgid "IDS_IME_BODY_UZBEK"
-msgstr "o'zbek tili"
-
-msgid "IDS_IME_BODY_VIETNAMESE"
-msgstr "Tiếng Việt"
-
-msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
-msgstr "Зборот ќе се избрише"
-
-msgid "IDS_IME_BODY_ARMENIAN"
-msgstr "Հայերեն"
-
-msgid "IDS_IME_MBODY_AUTO_APPEND"
-msgstr "Автоматско додавање"
-
-msgid "IDS_IME_OPT_LANG_ALBANIAN"
-msgstr "shqip"
-
-msgid "IDS_IME_OPT_LANG_CROATIAN"
-msgstr "Hrvatski"
-
-msgid "IDS_IME_BODY_ENTER_WORD"
-msgstr "Внесете збор"
-
-msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
-msgstr "Ново предвидување збор"
-
-msgid "IDS_IME_BODY_NO_WORDS"
-msgstr "Без зборови"
-
-msgid "IDS_IME_BODY_RECAPTURE"
-msgstr "Повторно доловување"
-
-msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
-msgstr "Регионално корегирање"
-
-msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
-msgstr "Листа за автом. замена"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
-msgstr "Автоматско внесување точка со притискање на разделникот двапати"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
-msgstr "English (UK)"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
-msgstr "English (US)"
-
-msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
-msgstr "Препорачување цели зборови врз основа на внесените знаци"
-
-msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
-msgstr "Препорачани алтернативни зборови"
-
-msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
-msgstr "Точка на завршување збор"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Автоматска голема прва буква на речениците"
-
-msgid "IDS_IME_BODY_WRITING_LANGUAGES"
-msgstr "Јазици за пишување"
-
-msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
-msgstr "Clear learning dictionary"
-
-msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
-msgstr "Речник од Контакти"
-
-msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
-msgstr "Англиско предвидување"
-
-msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
-msgstr "Англиски кориснички речник"
-
-msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
-msgstr "Flick input"
-
-msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
-msgstr "Input word learning"
-
-msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
-msgstr "Japanese user dictionary"
-
-msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
-msgstr "Toggle input"
-
-msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
-msgstr "Typing error correction"
-
-msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
-msgstr "Wildcard prediction"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Постојано внесување"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Достигнат е максималниот број поддржани јазици (%d)."
 
 msgid "IDS_IME_HEADER_KEYBOARD"
 msgstr "Тастатура"
 
-msgid "IDS_IME_BODY_WORD_COMPLETION"
-msgstr "Довршување зборови"
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Не е одбрано"
 
-msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
-msgstr "Bahasa Malaysia"
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Штиклирано"
 
-msgid "IDS_IME_BODY_ASSAMESE"
-msgstr "অসমীয়া"
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Квадрат за штиклирање"
 
-msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
-msgstr "Автоматска точка"
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Кога може да се видиме?"
 
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Автоматска прва голема буква"
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Каде си?"
 
-msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
-msgstr "Автоматска замена"
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Не повтор."
 
-msgid "IDS_IME_BODY_BASQUE"
-msgstr "Баскиски"
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Пок. на уредот"
 
-msgid "IDS_IME_BODY_BULGARIAN"
-msgstr "Бугарски"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_CATALAN"
-msgstr "Каталански"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Откажи"
 
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Преглед на знаците"
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Избери урнек"
 
-msgid "IDS_IME_BODY_CZECH"
-msgstr "Чешки"
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Што правиш?"
 
-msgid "IDS_IME_BODY_DANISH"
-msgstr "Дански"
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Што има ново?"
 
-msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
-msgstr "Американски англиски"
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Ќе разговараме наскоро."
 
-msgid "IDS_IME_BODY_ESTONIAN"
-msgstr "Естонски"
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Ќе ти се јавам подоцна."
 
-msgid "IDS_IME_BODY_FAST"
-msgstr "Брзо"
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Смени јазик"
 
-msgid "IDS_IME_BODY_INFO_SCAN"
-msgstr "Скенирање информации"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "ГОТОВ"
 
-msgid "IDS_IME_BODY_JAPANESE"
-msgstr "Јапонски"
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "За да вклучите автоматска замена, вклучете барем еден јазик."
 
-msgid "IDS_IME_BODY_KEYBOARD_TYPE"
-msgstr "Вид тастатура"
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Допрете го копчето за празно место за да ја прифатите исправката од предвидувањето текст или допрете го копчето со стрелка за да се задржи моменталниот текст."
 
-msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
-msgstr "Опции за внесување на широко"
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Тастатура Qwertz"
 
-msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
-msgstr "Azərbaycan"
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "След."
 
-msgid "IDS_IME_BODY_LANG_BASQUE"
-msgstr "Euskara"
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Тастатура Кана"
 
-msgid "IDS_IME_BODY_LANG_BENGALI"
-msgstr "বাংলা"
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Тастатура на помин. Кана"
 
-msgid "IDS_IME_BODY_LANG_CATALAN"
-msgstr "Català"
-
-msgid "IDS_IME_BODY_LANG_GALICIAN"
-msgstr "Galego"
-
-msgid "IDS_IME_BODY_LANG_GEORGIAN"
-msgstr "ქართული"
-
-msgid "IDS_IME_BODY_LANG_GUJARATI"
-msgstr "ગુજરાતી"
-
-msgid "IDS_IME_BODY_LANG_HINDI"
-msgstr "हिन्दी"
-
-msgid "IDS_IME_BODY_LANG_KANNADA"
-msgstr "ಕನ್ನಡ"
-
-msgid "IDS_IME_BODY_LANG_MALAYALAM"
-msgstr "മലയാളം"
-
-msgid "IDS_IME_BODY_LANG_MARATHI"
-msgstr "मराठी"
-
-msgid "IDS_IME_BODY_LANG_NEPALI"
-msgstr "नेपाली"
-
-msgid "IDS_IME_BODY_LANG_PUNJABI"
-msgstr "ਪੰਜਾਬੀ"
-
-msgid "IDS_IME_BODY_LANG_ROMANIAN"
-msgstr "Română"
-
-msgid "IDS_IME_BODY_LANG_SINHALA"
-msgstr "සිංහල"
-
-msgid "IDS_IME_BODY_LANG_TAMIL"
-msgstr "தமிழ்"
-
-msgid "IDS_IME_BODY_LANG_TELUGU"
-msgstr "తెలుగు"
-
-msgid "IDS_IME_BODY_LATVIAN"
-msgstr "Летонски"
-
-msgid "IDS_IME_BODY_MACEDONIAN"
-msgstr "Македонски"
-
-msgid "IDS_IME_BODY_MALAY"
-msgstr "Малајски"
-
-msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
-msgstr "Надмината е максималната должина за збор (%d)"
-
-msgid "IDS_IME_BODY_MOAKEY"
-msgstr "MoAKey"
-
-msgid "IDS_IME_BODY_MOAKEY_TIP"
-msgstr "Совет MoAKey"
-
-msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
-msgstr "Завршување зборови со повеќе допири"
-
-msgid "IDS_IME_BODY_NO_OPTIONS"
-msgstr "Нема опции"
-
-msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
-msgstr "Опции за внесување на портрет"
-
-msgid "IDS_IME_BODY_PREDICTION"
-msgstr "Предвидување"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
-msgstr "Предвидување текст"
-
-msgid "IDS_IME_BODY_PROCESSING_ING"
-msgstr "Обработување..."
-
-msgid "IDS_IME_BODY_REGIONAL_INPUT"
-msgstr "Регионално внесување"
-
-msgid "IDS_IME_BODY_SELECTION"
-msgstr "Избор"
-
-msgid "IDS_IME_BODY_SHORTCUT"
-msgstr "Кратенка"
-
-msgid "IDS_IME_BODY_SPELL_CORRECTION"
-msgstr "Поправка на правописот"
-
-msgid "IDS_IME_BODY_SUBSTITUTION"
-msgstr "Замена"
-
-msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
-msgstr "Допрете за повторно слушање"
-
-msgid "IDS_IME_BODY_THEME"
-msgstr "Тема"
-
-msgid "IDS_IME_BODY_TONE"
-msgstr "Тон"
-
-msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
-msgstr "Зборовите не се препознаени. Обидете се повторно, зборувајќи бавно и јасно"
-
-msgid "IDS_IME_HEADER_NEW_WORDS"
-msgstr "Нови зборови"
-
-msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
-msgstr "Тастатура 3 х 4"
-
-msgid "IDS_IME_OPT_AFTER_1_LETTER"
-msgstr "По 1 буква"
-
-msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
-msgstr "По %d букви"
-
-msgid "IDS_IME_OPT_BLACK"
-msgstr "Црна"
-
-msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
-msgstr "Чунџијин"
-
-msgid "IDS_IME_OPT_COLOUR"
-msgstr "Боја"
-
-msgid "IDS_IME_OPT_DO_NOT_SHOW"
-msgstr "Не прикажувај"
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Германска тастатура"
 
 msgid "IDS_IME_OPT_ENTER_ABB"
 msgstr "Внеси"
 
-msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
-msgstr "Целосна qwerty тастатура"
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Тастатура Chunjiin"
 
-msgid "IDS_IME_OPT_GO_ABB"
-msgstr "Оди"
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Бугарска фонетска тастатура"
 
-msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
-msgstr "Придружи се"
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Бугарска тастатура"
 
-msgid "IDS_IME_OPT_LANG_CZECH"
-msgstr "Čeština"
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Тастатура Azerty"
 
-msgid "IDS_IME_OPT_LANG_DANISH"
-msgstr "Dansk"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Внимание"
 
-msgid "IDS_IME_OPT_LANG_FINNISH"
-msgstr "Suomi"
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Тастатура 3 х 4"
 
-msgid "IDS_IME_OPT_LANG_HUNGARIAN"
-msgstr "Magyar"
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Вибрации"
 
-msgid "IDS_IME_OPT_LANG_IRISH"
-msgstr "Gaeilge"
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Минув. преку разделникот"
 
-msgid "IDS_IME_OPT_LANG_KAZAKH"
-msgstr "Қазақ"
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Звук"
 
-msgid "IDS_IME_OPT_LANG_KOREAN"
-msgstr "한국어"
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Ресетирај параметри"
 
-msgid "IDS_IME_OPT_LANG_POLISH"
-msgstr "Polski"
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Поминување по тастатура"
 
-msgid "IDS_IME_OPT_LANG_SLOVAK"
-msgstr "Slovenčina"
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Преглед на ликот"
 
-msgid "IDS_IME_OPT_LANG_UKRAINIAN"
-msgstr "Українська"
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Автоматска замена"
 
-msgid "IDS_IME_OPT_LANG_WELSH"
-msgstr "Cymraeg"
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Автоматска интерпункција"
 
-msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Паметно пишување"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Повр. инфо. за допир на копче"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Работни јазици"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
 msgstr "Најава"
 
-msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
-msgstr "Мини qwerty тастатура"
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Прати"
 
-msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
-msgstr "Тастатура MoAKey"
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Пребар."
 
-msgid "IDS_IME_OPT_MOAKEY_POP_UP"
-msgstr "Појавно MoAKey"
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Најава"
 
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
-msgstr "Qwerty тастатура"
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Придр."
 
-msgid "IDS_IME_OPT_SHADES_OF_GREY"
-msgstr "Нијанси на сиво"
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Оди"
 
-msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
-msgstr "Прикажи за 0,1 секунда"
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Јен"
 
-msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
-msgstr "Прикажи за 0,2 секунди"
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Вон"
 
-msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
-msgstr "Прикажи за 0,3 секунди"
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Бела ѕвезда"
 
-msgid "IDS_IME_OPT_SLOW"
-msgstr "Бавно"
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Бело срце"
 
-msgid "IDS_IME_OPT_SPEED"
-msgstr "Брзина"
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI тастатура Qwerty"
 
-msgid "IDS_IME_OPT_STROKE_CHN"
-msgstr "Stroke"
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Виртуелната тастатура е вклучена."
 
-msgid "IDS_IME_OPT_THICK"
-msgstr "Дебела"
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Користењето на контролата на покажувачот ќе го исклучи постојаниот внес."
 
-msgid "IDS_IME_OPT_WHITE"
-msgstr "Бела"
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Користењето постојан внес ќе го исклучи контролирањето на покажувачот."
 
-msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
-msgstr "Пишување со плоча за цртање"
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Долна црта"
 
-msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
-msgstr "Пишување на цел екран"
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Турска Qwerty тастатура"
 
-msgid "IDS_IME_POP_LANG_ESTONIAN"
-msgstr "Eesti"
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Турска F-тастатура"
 
-msgid "IDS_IME_POP_LANG_ICELANDIC"
-msgstr "íslenska"
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "За да го смените јазикот, поминете хоризонтално преку разделникот."
 
-msgid "IDS_IME_POP_LANG_LATVIAN"
-msgstr "Latviešu"
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Помножено со"
 
-msgid "IDS_IME_POP_LANG_LITHUANIAN"
-msgstr "Lietuvių"
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Тилда"
 
-msgid "IDS_IME_POP_LANG_MACEDONIAN"
-msgstr "Македонски"
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Тастатурата Samsung го учи Вашиот стил на пишување и се обидува да предвиди што сакате да напишете помнејќи што внесувате. Лозинките се изоставени, но личните информации, како броевите на кредитните картички, ќе се зачуваат"
 
-msgid "IDS_IME_POP_LANG_NORWEGIAN"
-msgstr "Norsk"
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Телекс тастатура Qwerty"
 
-msgid "IDS_IME_POP_LANG_SERBIAN"
-msgstr "Srpski"
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Допрете за да користите виртуелна тастатура."
 
-msgid "IDS_IME_POP_LANG_SLOVENIAN"
-msgstr "Slovenščina"
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Допрете го и држете го копчево за да ја видите листата симболи. Изберете некој за да го користите како кратенка."
 
-msgid "IDS_IME_POP_LANG_SWEDISH"
-msgstr "Svenska"
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Тастатура со симболи %1$d од %2$d"
 
-msgid "IDS_IME_OPT_LANG_DUTCH"
-msgstr "Nederlands"
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Симболи"
 
-msgid "IDS_IME_OPT_LANG_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Празно место"
 
-msgid "IDS_IME_OPT_LANG_FRENCH"
-msgstr "Français"
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Коса црта десно"
 
-msgid "IDS_IME_OPT_LANG_GERMAN"
-msgstr "Deutsch"
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Единечни наводници"
 
-msgid "IDS_IME_OPT_LANG_GREEK"
-msgstr "Ελληνικά"
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Покажи големо облаче со знакот кога ќе се допре копче на тастатурата QWERTY."
 
-msgid "IDS_IME_OPT_LANG_RUSSIAN"
-msgstr "Русский"
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Копчето Шифт е блокирано."
 
-msgid "IDS_IME_OPT_LANG_SPANISH"
-msgstr "Español"
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Копчето Шифт е вклучено."
 
-msgid "IDS_IME_OPT_LANG_TURKISH"
-msgstr "Türkçe"
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Копчето Шифт е исклучено."
 
-msgid "IDS_IME_POP_LANG_ITALIAN"
-msgstr "Italiano"
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Опции"
 
-msgid "IDS_IME_POP_LANG_PORTUGUESE"
-msgstr "Português"
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "Септември"
 
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Мора да изберете барем еден јазик во опциите за тастатурата"
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Точка и запирка"
 
-msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
-msgstr "Физичка тастатура"
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Затвори аголни наводници"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Наводници"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Прашалник"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ ќе се отстрани од научените зборови."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Опции за предвидлив текст"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Предвидување текст"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Фунта"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Плус"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Исправена црта"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Насто"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Отвори заграда"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Отвори средна заграда"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Отвори голема заграда"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Октомври"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Не се избрани јазици."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "Ноември"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Движете го покажувачот со лизгање на прстот по тастатурата."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Мај"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Март"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Букви"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Помалку од"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Воведни аголни наводници"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Вид тастатура"
 
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Нагодувања за тастатурата"
 
-msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
-msgstr "Софтверска тастатура"
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Јуни"
 
-msgid "IDS_IME_BODY_DUTCH"
-msgstr "Dutch"
+msgid "IDS_IME_BODY_JULY"
+msgstr "Јули"
 
-msgid "IDS_IME_BODY_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Јануари"
 
-msgid "IDS_IME_OPT_QWERTY"
-msgstr "Qwerty"
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Превртен прашалник"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Превртен извичник"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Откриено е внесување од хардверска тастатура."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Ако се вклучени персонализираните податоци, тастатурата Samsung може да го научи Вашиот стил на пишување од Facebook, Gmail, Twitter, Пораки и Контакти и да понуди исправки скроени според Вас"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Тараба"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Поголемо од"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Апостроф акцент"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Поминете нагоре на копче за да видите симболи и алтернативни знаци."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Повлечете ја тастатурата надолу за да ја сокриете."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Внесување со поминување"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Февруари"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Извичник"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Евро"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Еднакво на"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Внесете текст со лизгање на прстот преку тастатурата. Функцијата е оптимизирана за тастатура Qwerty."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Внесувајте текст со лизгање на прстот по тастатурата."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Внеси"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Вклучи персонализирани податоци"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Емотикони"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Точка"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Долар"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Делено со"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Избриши празно место"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Декември"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Мала црта"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Прилагодливо копче"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Контрола на покажувачот"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Знак за валута"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Постојано внесување"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Запирка"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Две точки"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Затвори заграда"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Затвори средна заграда"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Затвори голема заграда"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Посредна меморија"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Надредена аголна заграда"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Преглед на знаците"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Голема"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Бришење назад"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Коса црта"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Автоматски празни места"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Автоматска прва голема буква"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Автоматски празни места меѓу зборовите."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Автоматско внесување точка со притискање на разделникот двапати."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Автоматска голема прва буква на речениците."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "Август"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "При"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Ѕвездичка"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "Април"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Амперсанд"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Копче за раширување листа"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Говорен влез"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Тастатурата овозможува функции како постојан внес и предвидлив текст."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Допрете ја иконата за глас за да користите внесување со говор."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Допрете го полето за внесување текст додека е отворена тастатурата за да се појави ознаката. Поместете ја ознаката за да се помести покажувачот"
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Допрете ја иконата за опции за да ги отворите опциите за тастатура Samsung."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Допрете го копчето за режим за да менувате знаци и симболи."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Допрете ја иконата за тастатура на таблата за известувања за да го смените начинот за внесување."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Допрете ја иконата за емотикони за нивно вметнување."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Допрете ја иконата на табличка за да ја отворите посредната меморија."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Допрете кое било текстуално поле за да ја отворите тастатурата."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Допрете го и држете го прилагодливото копче за да изберете емотикони, глас, посредна меморија, опции за тастатура или знаци за интерпункција."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Допрете го и држете го прилагодливото копче за да изберете глас, посредна меморија и опции за тастатура и знаци за интерпункција."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Допрете и држете некој текст за да го изберете. Ознаката на покажувачот се состои од почетна и крајна ознака. Поместете ги двете ознаки за да изберете текст. Отпуштете ја ознаката за да изберете копирање, отсекување, пресликување и други опции"
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Притиснете го копчето за назад за да ја затворите тастатурата."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Отворете Опции, па изберете Јазик и тастатура > Тастатура > Поставки за тастатурата > Предвидлив текст."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Ако се избрани два или повеќе јазици во поставките на тастатурата, допрете го копчето глобус за да менувате меѓу нив."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Ако се вклучени персонализираните податоци, тастатурата Samsung може да го научи Вашиот стил на пишување од Gmail, Twitter, Пораки и Контакти и да понуди исправки скроени според Вас."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Надлежности и услови"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Сите"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Јазик"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Нештиклирано"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Добро"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Тастатура qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Персон. податоци"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Јави ми се попосле."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Интернет-страницата ќе се отвори на екранот на мобилниот уред."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Допрете OK за да ја користите оваа функција. Персонализираните податоци од мобилниот уред ќе се користат и од %s. Ако не сакате да се сочувуваат лични податоци, одете во поставките за тастатурата и отштиклирајте ги Вклучи персонализирани податоци."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Поставките за тастатурата, освен преземените јазици, ќе се ресетираат."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Буквата што одговара на контекстот ќе се внесе автоматски."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Допрете го и држете го копчето за празно место за да користите говорно внесување."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Допрете го и држете го копчето за опции за да видите листа опции."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Поминете по разделникот налево или надесно за да менувате јазици."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Нема урнеци"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Функции за паметно внесување"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Автоматски големи букви"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Голема прва буква на секоја реченица автоматски."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Автоматска интерпункција"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Ресетирај"
 

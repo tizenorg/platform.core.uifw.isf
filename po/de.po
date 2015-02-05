@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Optionsfeld"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "Öffnen"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Ausgewählt"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Schließen"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "Hilfe"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Ohne"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Aus"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Ein"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Einstellungen"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Entfernen"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Gear-AZERTY-Tastatur"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Gear-QWERTY-Tastatur"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Gear-QWERTZ-Tastatur"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Gesichter"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Pop-up geschlossen."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Pop-up wird angezeigt"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Nummern"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Orte"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Verwenden der Serieneingabe"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Verwenden der Texterkennung"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Ändern der Eingabemethode"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Ändern des Eingabemodus"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Ändern der Sprache"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Schließen der Tastatur"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Bewegen des Cursors"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Öffnen der Tastatur"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Textauswahl"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Samsung Tastatur verwenden"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Beim Tippen auf die Leertaste das gerade eingegebene Wort mit dem wahrscheinlichsten Wort ergänzen bzw. ersetzen"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Zweimal tippen, um die Liste zu schließen."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Zweimal tippen, um dieses Feld zu bearbeiten."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Zweimal tippen, um die Liste zu öffnen."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Erweiterbare Liste"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Ein-/Aus-Taste"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Samsung-Tastatur"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Weitere Einstellungen"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Sie müssen in den Tastatureinstellungen mindestens eine Sprache auswählen."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Eingabesprachen auswählen"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Maximale Anzahl an unterstützten Sprachen (%d) erreicht"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Tastatur"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Nicht ausgewählt"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Aktiviert"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Kontrollkästchen"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Wann können wir uns treffen?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Wo bist du?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Nicht wiederholen"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Auf Gerät anzg."
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Abbrechen"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Vorlage auswählen"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Wie läuft’s?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Was ist los?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Bis bald!"
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Ich rufe Dich später an."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Sprache ändern"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "OK"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Sie können „Automatisch ersetzen“ aktivieren, wenn mindestens eine Sprache aktiviert ist."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Tippen Sie auf die Leertaste, um die Texterkennungskorrekturen zu akzeptieren, oder tippen Sie auf die Pfeiltaste, um den aktuellen Text beizubehalten."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "QWERTZ-Tastatur"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Weiter"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Kana-Tastatur"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Kana-Streichtastatur"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Deutsche Tastatur"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Eingabe"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Chunjiin-Tastatur"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Bulgarische phonetische Tastatur"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Bulgarische Tastatur"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "AZERTY-Tastatur"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Achtung"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 - Tastatur"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Vibration"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Über Leertaste streichen"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Ton"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Einstellungen zurücksetzen"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Tastatur wischen"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Zeichenvorschau"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Automatisch ersetzen"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Autom. Satzzeichen setzen"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Intelligentes Tippen"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Tastenfeedback"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Eingabesprachen"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Anmeld."
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Senden"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Suche"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Anmeld."
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Verkn."
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Öffnen"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Yen"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Won"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Weißer Stern"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Weißes Herz"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI-QWERTY-Tastatur"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Virtuelle Tastatur aktiviert"
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Bei Verwendung der Cursorsteuerung wird die durchgehende Eingabe deaktiviert."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Bei Verwendung der durchgehenden Eingabe wird die Cursorsteuerung deaktiviert."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Unterstrich"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Tastatur Türkisch-QWERTY"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Tastatur Türkisch-F"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Zum Ändern der Sprache horizontal über die Leertaste streichen."
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Mal"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tilde"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Die Samsung Tastatur lernt Ihren Schreibstil und kann Ihnen auf der Grundlage der von Ihnen eingegebenen Begriffe Vorschläge zur Eingabe unterbreiten. Dabei werden mit Ausnahme von Passwörtern auch persönliche Daten wie z. B. Kreditkartennummern gespeichert."
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Telex-QWERTY-Tastatur"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Tippen, um virtuelle Tastatur zu verwenden"
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Auf die Taste tippen und sie halten, um die Symbolliste anzuzeigen. Ein Symbol auswählen, um es als Shortcut zu verwenden."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Symboltastatur %1$d von %2$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Symbole"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Zwischenraum"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Schrägstrich"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Einfaches Anführungszeichen"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Buchstaben vergrößert anzeigen, wenn eine Taste auf einer QWERTZ-Tastatur gedrückt wird"
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Shift gesperrt."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Shift ist ein."
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Shift ist aus."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Einstellungen"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "September"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Semikolon"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Rechtes Chevron"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Anführungszeichen"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Fragezeichen"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ wird aus den gelernten Wörtern entfernt"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Texterkennungsoptionen"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Texterkennung"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Pfund"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Plus"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Senkrechter Strich"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Prozent"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Öffnende runde Klammer"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Öffnende eckige Klammer"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Öffnende geschweifte Klammer"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Oktober"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Keine Sprachen ausgewählt"
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "November"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Bewegen Sie den Cursor, indem Sie mit einem Finger über die Tastatur gleiten."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Mai"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "März"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Buchstaben"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Kleiner als"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Linkes Chevron"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Tastaturtyp"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Tastatur-Einstellungen"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Juni"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "Juli"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Januar"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Umgekehrtes Fragezeichen"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Umgekehrtes Ausrufezeichen"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Eingabe von der Hardwaretastatur erkannt"
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Wenn personalisierte Daten aktiviert sind, kann die Samsung-Tastatur Ihren Schreibstil von Facebook, Gmail, Twitter, Ihren Nachrichten und Kontakten lernen und Ihnen so Vorhersagen und Korrekturen anbieten, die Ihrem Stil entsprechen."
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Raute"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Größer als"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Graviszeichen"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Auf einer Taste nach oben streichen, um Symbole und alternative Zeichen anzuzeigen."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Streichen Sie auf der Tastatur nach unten, um sie auszublenden."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Streicheingabe"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Februar"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Ausrufezeichen"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Euro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Gleichheitszeichen"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Geben Sie einen Text ein, indem Sie mit dem Finger über die Tastatur fahren. Diese Funktion ist für die QWERTZ-Tastatur optimiert."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Geben Sie einen Text ein, indem Sie mit dem Finger über die Tastatur fahren."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Eingabe"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Personalisierte Daten aktivieren"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Emoticons"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Punkt"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dollar"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Divisionszeichen"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Leerzeichen löschen"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Dezember"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Gedankenstrich"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Anpassbare Taste"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Cursorsteuerung"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Währungssymbol"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Durchgehende Eingabe"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Komma"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Doppelpunkt"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Schließende runde Klammer"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Schließende eckige Klammer"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Schließende geschweifte Klammer"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Zwischenablage"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Zirkumflex-Akzent"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Zeichenvorschau"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Großes"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Zurück"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Umgekehrter Schrägstrich"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Automatische Leerzeichen"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Automatische Großschreibung"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Automatisch Leerzeichen zwischen den Wörtern einfügen"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Punkt automatisch durch zweimaliges Tippen auf die Leertaste einfügen."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Ersten Buchstaben im Satz automatisch groß schreiben"
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "August"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "At"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Stern"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "April"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Und"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Taste für die Erweiterung der Liste"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Spracheingabe"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Die Tastatur verfügt über verschiedene Funktionen, wie Serieneingabe und Texterkennung."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Tippen Sie auf das Sprachsymbol, um die Spracheingabe zu verwenden."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Wenn die Tastatur geöffnet ist, tippen Sie auf das Texteingabefeld, um den Marker anzuzeigen. Bewegen Sie den Marker, um den Cursor zu bewegen."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Tippen Sie auf das Symbol „Einstellungen“, um die Samsung-Tastatureinstellungen zu öffnen."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Tippen Sie auf die Modus-Schaltfläche, um zwischen Zeichen und Symbolen zu wechseln."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Tippen Sie im Benachrichtigungsfeld auf das Tastatursymbol, um die Eingabemethode zu ändern."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Tippen Sie auf das Emoticon-Symbol, um Emoticons einzufügen."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Tippen Sie zum Öffnen der Zwischenablage auf das Symbol für die Zwischenablage."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Tippen Sie auf ein beliebiges Textfeld, um die Tastatur zu öffnen."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Berühren und halten Sie die anpassbare Taste gedrückt, um zwischen Einstellungen für Emoticons, Sprache, Handschrift, Zwischenablage und Satzzeichen auszuwählen."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Tippen und halten Sie die anpassbare Taste gedrückt, um zwischen den Einstellungen für Sprache, Zwischenablage und Tastatur sowie Satzzeichen auszuwählen."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Zur Auswahl von Text tippen und halten. Ein Cursor-Marker besteht aus einem Start-Marker und einem End-Marker. Bewegen Sie zur Auswahl von Text beide Marker. Lassen Sie den Marker los, um „Kopieren“, „Ausschneiden“, „Einfügen“ und andere Optionen auszuwählen."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Drücken Sie die Zurück-Taste, um die Tastatur zu schließen."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Öffnen Sie „Einstellungen“, und wählen Sie dann „Sprache und Tastatur > Tastatur > Tastatureinstellungen > Textvorhersage“ aus."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Wenn in den Tastatureinstellungen eine oder mehrere Sprachen ausgewählt wurden, tippen Sie zum Umschalten auf die Globus-Taste."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Wenn personalisierte Daten aktiviert sind, kann die Samsung-Tastatur Ihren Schreibstil von Gmail, Twitter, Nachrichten und Kontakten lernen und Vorhersagen und Korrekturen nach Maß anbieten."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Geschäftsbedingungen"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Alle"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Sprache"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Nicht aktiviert"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Zustimmen"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "QWERTZ-Tastatur"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Personalisierte Daten"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Ruf mich später an"
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Die Webseite wird auf dem Bildschirm Ihres Mobilgeräts geöffnet."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Tippen Sie auf „OK“, um diese Funktion zu nutzen. Von %s werden ebenfalls persönliche Daten von Ihrem Mobilgerät verwendet. Wenn Sie nicht möchten, dass Ihre persönlichen Daten gespeichert werden, gehen Sie zu den Tastatureinstellungen und deaktivieren Sie „Personalisierte Daten aktivieren“."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Die Tastatureinstellungen mit Ausnahme der heruntergeladenen Sprachen werden zurückgesetzt."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Der zu diesem Kontext passende Buchstabe wird automatisch eingefügt."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Auf die Leertaste tippen und sie halten, um die Spracheingabe zu verwenden."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Tippen Sie auf die Optionstaste und halten Sie sie, um eine Liste mit Optionen anzuzeigen."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Die Samsung-Tastatur kann eingegebenen Text erlernen, um das automatische Ersetzen und die Ergebnisse der Vorhersage zu verbessern. Davon ausgenommen sind Sicherheitsinformationen wie Passwörter oder Kreditkartennummern."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Auf der Leertaste nach links oder rechts streichen, um zwischen den Sprachen zu wechseln."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Keine Vorlagen"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Intelligente Eingabefunktionen"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Autom. Großschreibung"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Den ersten Buchstaben jedes Satzes automatisch groß schreiben."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Automatisch unterbrechen"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Zurücksetzen"
+

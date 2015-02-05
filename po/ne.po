@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "रेडियो बटन"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "खोल्नुहो."
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "चयन गरिएको"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "बन्द"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "मद्दत"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "शून्‍य"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "अफ"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "अन"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "सेटिङहरु"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "हटाउने"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "गियर अजेर्टी कीबोर्ड"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "गियर क्वेर्टी कीबोर्ड"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "गियर क्वेर्ट्ज कीबोर्ड"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "अनुहारहरु"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "पप-अप बन्द गरिएको छ।"
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "पप-अप प्रदर्शन भयो"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "नम्बरहरू"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "स्थानहरु"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "निरन्तर इन्पुट प्रयोग गर्नु"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "पूर्वानुमान टेक्‍स्‍ट प्रयोग गर्नु"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "इन्पुट पद्धति परिवर्तन गर्नु"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "इन्पुट मोड परिवर्तन गर्नु"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "भाषा परिवर्तन गर्नु"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "कीबोर्ड बन्द गर्नु"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "कर्सर सार्नु"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "कीबोर्ड खोल्नु"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "टेक्‍स्‍ट चयन गर्नु"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "सैमसंग किबोर्ड प्रयोग गर्ने"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "तपाईले स्पेस बार ट्याप गर्दा अत्याधिक सम्भाव्य शब्द द्वारा तपाईले टाइप गरि रहनुभएको शब्द पूरा गर्नुहोस् वा बदल्नुहोस्।"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "सूची बन्द गर्न दुईपटक त्यप गर्नुहोस्।"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "यो फील्ड सम्पादन गर्न दुईपटक ट्याप गर्नुहोस्।"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "सूची खोल्न दुईपटक त्यप गर्नुहोस्।"
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "विस्तार गर्न योग्य सूची"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "अन/अफ बटन"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "सैमसंग कीबोर्ड"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "थप सेटिङहरु"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "तपाईले कीबोर्ड सेटिङमा कम्तिमा एउटा भाषा चयन गर्नु पर्छ।"
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "आगत भाषाहरू चयन गर्नुहोस्"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "समर्थित भाषाहरूको अधिकतम संख्या (%d) पुग्यो।"
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "कीबोर्ड"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "चयन गरिएको छैन"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "टिक गरिएको"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "टिक बाकस"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "हामी कहिले भेट्न सक्छौ?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "तपाई कहाँ हुनुहुन्छ?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "नदोहर्‍याउनुहोस्।"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "यन्त्रमा देखाउनुहोस्"
+
+msgid "IDS_ST_SK_OK"
+msgstr "ठीक छ"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "रद्द"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "टेम्प्लेट चयन गर्नुहोस्"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "कस्तो भइरहेको छ?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "के भयो?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "तपाईसंग म चाँडै कुरा गर्नेछु।"
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "म तपाईलाई पछि कल गर्नेछु।"
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "भाषा बदल्नुहोस्"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "भयो"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "स्वत: प्रतिस्थापन सक्षम गर्न, कम्तिमा एउटा भाषा सक्षम गर्नुहोस्।"
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "अनुमानित पाठ सुधार स्वीकार्न स्पेस कुञ्जीलाई ट्याप गर्नुहोस् वा हालको पाठ राख्न बाण कुञ्जी ट्याप गर्नुहोस्।"
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "क्वेर्ट्ज कीबोर्ड"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "अर्को"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "काना कीबोर्ड"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "काना फ्लिक कीबोर्ड"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "जर्मन कीबोर्ड"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "प्रविष्ट"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "चुंजिन कीबोर्ड"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "बुल्गेरी फोनेटिक कीबोर्ड"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "बुल्गेरी कीबोर्ड"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "अजेर्टी कीबोर्ड"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "ध्‍यान दिनुहोस्"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 कीबोर्ड"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "कम्पन"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "स्पेस बार स्वाइप"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "ध्वनि"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "सेटिङहरू रिसेट गर्नुहोस्"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "कीबोर्ड तान्ने"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "क्यारेक्टर पूर्वावलोकन"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "स्वः प्रतिस्थापन"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "सवत: विराम चिन्ह हाल्नुहोस्"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "स्मार्ट टाइपिङ"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "कुञ्जी-ट्याप प्रतिक्रिया"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "इन्पुट भाषाहरू"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "साइन इन गर्नुहोस्"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "पठाउनुहोस्"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "खोज्‍नुहोस्"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "लग इन गर्नुहोस्"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "सहभागी हुनुहोस्"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "जानुहोस्"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "येन"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "वोन"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "सेतो तारा"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "सेतो मुटु"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI क्वेर्टी कीबोर्ड"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "वास्तविक कीबोर्ड सक्षम भयो।"
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "कर्सर नियन्त्रण प्रयोग गर्नाले निरन्तर आगतलाई असक्षम गर्नेछ।"
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "निरन्तर आगत प्रयोग गर्नाले कर्सर नियन्त्रणलाई असक्षम गर्नेछ।"
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "अण्‍डरस्कोर"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "तुर्किस क्वेर्टी कीबोर्ड"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "तुर्किस F कीबोर्ड"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "भाषा परिवर्तन गर्न, स्पेस बारमा तेर्सो गरि स्वाइप गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "गुणा"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "टिल्ड"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "सैमसंग कीबोर्डले तपाईको लेखन शैली सिक्छ र तपाईले प्रविष्‍ट गरेकोलार्इ सम्झेर तपाईले टाइप गर्न चाहने शब्दको पूर्वानुमान लगाउने प्रयास गर्छ। पासवर्ड छोडिनेछ, तर क्रेडिट कार्ड नम्बरहरू जस्तो व्यक्तिगत जानकारी भण्डार गरिनेछ।"
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "टेलेक्स क्वेर्टी कीबोर्ड"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "वास्तविक कीबोर्ड प्रयोग गर्नको लागि ट्याप गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "संकेत सुची हेर्न यस कुञ्जीलाई ट्याप गरेर होल्ड गर्नुहोस्। यसलाई सर्टकटको रुपमा प्रयोग गर्न एक चयन गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "%2$d को संकेत कीबोर्ड %1$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "चिन्हहरू"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Space"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "स्ल्याश"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "एकल उद्धरण"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "क्वेर्टी कीबोर्ड ट्याप गरिएको बेला ठूलो वर्णको बबल देखाउनुहोस्।"
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "सिफ्ट लक गरिएको छ।"
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "सिफ्ट अन छ।"
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "सिफ्ट अफ छ।"
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "सेटिङहरू"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "सितम्बर"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "अर्धविराम"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "दायाँ कोणीय उद्धरणहरू"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "उद्धरणहरू"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "प्रश्‍नवाचक चिह्न"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ लाई सिकेको शब्दहरूबाट हटाइनेछ।"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "भविष्यसूचक पाठ संदेश"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "पूर्वानुमान पाठ"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "पाउण्‍ड"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "जोड"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "पाइप"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "प्रतिशत"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "खुल्ला लघुकोष्‍ठक"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "खुल्ला कोष्‍ठक"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "खुल्ला धनुकोष्‍ठक"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "अक्टूबर"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "भाषाहरू चयन गरिएन।"
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "नवम्बर"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "कीबोर्ड माथि औंलालाई स्लाइड गरि कर्सर सार्नुहोस्।"
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "मई"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "मार्च"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "चिठीहरू"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "भन्दा सानो"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "बायाँ कोणीय उद्धरणहरू"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "कीबोर्ड प्रकार"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "कीबोर्ड सेटिङहरु"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "जुन"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "जुलाई"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "जनवरी"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "उल्टो प्रश्‍नवाचक चिह्न"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "उल्टो विस्मयबोधक चिह्न"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "हार्डवेयर कीबोर्डबाट इन्पुट पत्ता लाग्यो।"
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "यदि व्यक्तिगत गरिएको डाटाहरू सक्षम छ भने, सैमसंग कीबोर्डले फेसबुक, जिमेल, ट्विटर, संदेश र सम्पर्कहरूबाट तपाईको लेख्ने शैली सिक्न सक्छ र तपाईको लागि अनुकूलित गरिएका पूर्वानुमान र सुधारहरू प्रस्तुत गर्न सक्छ।"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "ह्याश"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "भन्दा ठूलो"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "ग्रेव एक्सेंट"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "संकेत र वैकल्पिक वर्णहरू हेर्न कुञ्जीमा माथिल्लोतर्फ फ्लिक गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "यसलाई लुकाउनको लागि कीबोर्डलाई तलतिर फ्लिक गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "इन्पुट फ्लिक गर्नुहोस्"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "फरवरी"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "विस्मयबोधक चिह्न"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "यूरो"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "बराबर"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "कीबोर्ड वारपार आफ्नो औंलालाई स्लाईड गरेर पाठ प्रविष्ट गर्नुहोस्। सुविधा क्वेर्टी कीबोर्डको लागि बढाइएको छ।"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "कीबोर्डमा औंलालाई स्लाइड गरेर पाठ प्रविष्ट गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "प्रविष्ट गर्नुहोस्"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "वैयक्तिकृत डाटा सक्षम गर्नुहोस्"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "इमोटिकनहरू"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "डट"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "डलर"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "भाग"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "ठाउँ मेटाउनुहोस्"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "दिसम्बर"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "ड्याश"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "अनुकूलनयोग्य कुञ्जी"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "कर्सर नियन्त्रण"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "मुद्रा चिह्न"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "निरन्तर इन्पुट"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "अल्पविराम"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "अपूर्ण विराम"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "बन्द लघुकोष्‍ठक"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "बन्द कोष्‍ठक"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "बन्द धनुकोष्‍ठक"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "क्लिपबोर्ड"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "सर्कम्फ्लेक्स"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "क्यारेक्टर पूर्वावलोकन"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "क्यापिटल"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "ब्याकस्पेस"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "ब्याकस्ल्याश"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "स्वतः खाली ठाउँ"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "आटो क्यापिटलाइजेसन"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "स्वचालित रूपले शब्दहरू बीच ठाउँ सम्मिलित गर्नुहोस्।"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "स्पेसबारमा दुईपटक ढकढकाएर स्वचालित रूपले पूर्ण विराम घुसाउनुहोस्।"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "वाक्यको पहिलो अक्षर स्वतः क्यापिटलाइज गर्छ।"
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "अगस्त"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "मा"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "तारा चिह्न"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "अप्रेल"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "र"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "सूची विस्तृत गर्नको लागि बटन"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "भ्वाइस इन्पुट"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "कीबोर्डले निरन्तर इन्पुट र अनुमानित पाठ जस्ता फंक्शनहरू प्रदान गर्दछ।"
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "भ्वाइस इन्पुट प्रयोग गर्न भ्वाइस प्रतिमा ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "ह्याण्डल देखिने बनाउनलाई कीबोर्ड खुला गरिँदा पाठ प्रविष्टि फील्डलाई ट्याप गर्नुहोस्। कर्सरलाई सार्न ह्याण्डललाई सार्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "सैमसंग कीबोर्ड सेटिङहरु खोल्न सेटिङहरु प्रतिक ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "क्यारेक्टर र संकेतलाई खोल्न वा बन्द गर्न मोड बटन ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "इन्पुट विधिमा परिवर्तनको लागि अधिसूचना प्‍यानलमा कीबोर्ड प्रतिमालाई ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "भावप्रतिमा घुसाउनको लागि भावहरू ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "क्‍लिपबोर्ड खोल्‍न क्‍लिपबोर्ड ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "कीबोर्ड खोल्न कुनै पनि पाठ क्षेत्रमा ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "भावप्रतिमा, भ्वाइस, क्लिपबोर्ड, कीबोर्ड सेटिङहरू, वा विराम चिन्हहरू चयन गर्नको लागि अनुकूलनीय कुञ्जीलाई ट्याप गरि होल्ड गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "भ्वाइस, क्लिपबोर्ड र कीबोर्ड सेटिङहरू र विराम चिह्नहरू चयन गर्न अनुकूलनयोग्य कुञ्जीलाई ट्याप गरेर होल्ड गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "पाठ चयन गर्न त्यसलाई ट्याप गरेर होल्ड गर्नुहोस्। कर्सर ह्याण्डलमा सुरुवाती ह्याण्डल र अन्तिम ह्याण्डल शामिल छ। पाठ चयन गर्न दुबै ह्याण्डललाई सार्नुहोस्। प्रतिलिपि बनाउन, काट्न, टाँस्न र अन्य विकल्पहरू चयन गर्नको लागि ह्याण्डललाई छोड्नुहोस्।"
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "कीबोर्ड बन्द गर्न पछाडिको कुञ्जी थिच्नुहोस्।"
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "सेटिङहरू खोल्नुहोस्, त्यसपछि भाषा र किबोर्ड चयन गर्नुहोस् > किबोर्ड > किबोर्ड सेटिङहरू > भविष्यवाणी पाठ।"
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "यदि कीबोर्ड सेटिङहरूमा दुई वा धेरै भाषाहरू चयन गरिन्छ भने, तिनीहरू बीच स्विच गर्न ग्लोब कुञ्जी ट्याप गर्नुहोस्।"
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "यदि व्यक्तिगत गरिएको डाटा सक्षम छ भने, सैमसंग कीबोर्डले जिमेल, ट्विटर, संदेशहरू र सम्पर्कहरूबाट तपाईको लेख्ने शैली सिक्न सक्छ र तपाईको लागि अनुकूलित पूर्वानुमान र सुधारहरू प्रस्ताव गर्न सक्छ।"
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "शर्त तथा नियमहरू"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "सबै"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "भाषा"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "टिक गरिएको छैन"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "स्वीकार्नु"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "क्वेर्टी कीबोर्ड"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "व्यक्तिगतकरण गरिएको डाटा"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "मलाई पछि कल गनुहोला।"
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "तपाईको मोबाइल यन्त्रको स्क्रीनमा वेबपृष्‍ठ खोलिनेछ।"
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "यो सुविधा प्रयोग गर्न ठीक छमा ट्याप गर्नुहोस्। %s ले तपाईको मोबाइल यन्त्रबाट वैयक्तिकृत डाटालाई पनि प्रयोग गर्नेछ। यदि तपाईले आफ्नो व्यक्तिगत डाटा भण्डार गर्न चाहनुहुन्न भने, कीबोर्ड सेटिङहरूमा जानुहोस् र वैयक्तिकृत डाटा सक्षम गर्नुहोस् बाट चयन हटाउनुहोस्।"
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "डाउनलोड गरिएका भाषाहरू बाहेक, कीबोर्ड सेटिङहरूलाई रिसेट गरिनेछ।"
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "प्रसंगसंग मिल्ने अक्षरलाई स्वचालित रूपमा प्रविष्‍ट गरिने छ।"
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "भ्‍वाइस इन्पुट प्रयोग गर्न स्पेस कुञ्जी ट्याप गरेर होल्ड गर्नुहोस्।"
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "विकल्पहरूको सूची हेर्न विकल्पहरू कुञ्जी ट्याप गरेर होल्ड गर्नुहोस्।"
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "भाषाहरू परिवर्तन गर्न स्पेस बारलाई बायाँ वा दायाँ स्वाइप गर्नुहोस्।"
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "टेम्पलेटहरू छैनन्"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "स्मार्ट इन्पुट फंक्शनहरू"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "स्वत: क्यापिटलाइज गर्नुहोस्"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "प्रत्येक वाक्यको पहिलो अक्षरलाई स्वचालित रूपमा क्यापिटलाइज गर्नुहोस्।"
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "स्वतः-चिन्ह लगाउनु"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "रिसेट"
+

@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Ради баскычы"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "Ачуу"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Тандалды"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Жабуу"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "Жардам"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Жок"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Өчүк"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Күйүк"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Орнотуулар"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Өчүрүү"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Gear Azerty арпткт"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Gear Qwerty клав."
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Gear Qwertz арпткт"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Өңдөр"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Калкыма жабылды."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Калкыма көрсөтүлдү"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Сандар"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Жерлер"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Using Continuous input"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Using predictive text"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Киргизүү ыкмасын өзгөртүү"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Жазуу режимин өзгөртүү"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Тилди өзгөртүү"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Ариптактаны жабуу"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Курсорду жылдыруу"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Клавиатураны ачуу"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Текстти тандоо"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Samsung ариптакта колдону"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Ара тилкесин таптаганыңызда, сиз терип жаткан сөздү аяктатып, же эң жакын сөз менен алмаштырат."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Double tap to close the list."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Double tap to edit this field."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Double tap to open the list."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Жайылуучу тизмек"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Бар/жок баскычы"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Samsung клавиатурасы"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Дагы орнотуулар"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "You must select at least one language in keyboard settings."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Select input languages"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Колдоого алынган тилдердин саны (%d) нары четине жетти."
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Ариптакта"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Тандалган эмес"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Белгиленген"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Белгилөө кутусу"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Качан жолуга алабыз?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Сен кайдасың?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Кайталабоо"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Түзмөктө көрсөт"
+
+msgid "IDS_ST_SK_OK"
+msgstr "ОК"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Артка"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Калыпты тандоо"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Иштер кандай?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Кандайсың?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Кийинчерээк сүйлөшөм."
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Сизге кийинчерээк чалам."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Тилди өзгөртүү"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Бүттү"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Авто алмаштырууну иштетүү үчүн, жок дегенде бир тилди иштетүү керек."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Жарыш текст тууралоосун кабыл алууга ара баскычын таптаңыз, же учурдагы текстти калтырууга жебе баскычын таптаңыз."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Qwertz ариптактасы"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Next"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Kana ариптактасы"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Kana серпитүү ариптактасы"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Немис ариптактасы"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Киргизүү"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Chunjiin ариптактасы"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Булгардык фонетикалык баскычтакта"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Булгардык баскычтакта"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Azerty keyboard"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Көңүл буруңуз"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 keyboard"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Дирилдөө"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Ара тилкесин ала салдыруу"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Добуш"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Орнотууларды кайра коюу"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Клавиатурадан жылдыруу"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Белгини алдын ала көрүү"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Авто алмаштыруу"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Авто пунктуация"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Эстүү жазуу"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Баскыч-таптоо кайтарым жообу"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Жазуу тилдери"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Кирүү"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Жөнөтүү"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Search"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Log in"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Кошулуу"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Go"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Йена"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Вона"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Ак жылдызча"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Ак жүрөкчө"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI Qwerty ариптактасы"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Virtual keyboard enabled."
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Курсор башкаруусун колдонуу, тынымсыз киргизүүнү иштен чыгарат."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Тынымсыз киргизүүнү колдонуу, курсор башкаруусун иштен чыгарат."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Астынан сызуу"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Түрк Qwerty ариптактасы"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Түрк F ариптактасы"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Тилди өзгөртүүгө, ара тилкеси боюнча горизонталдуу ала салыңыз"
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Көбөйтүү белгиси"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Тильда"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Samsung ариптактасы жазуу стилиңизди изилдеп, эмнени киргизгендигиңизди эстеп калуу менен эмне жаза турганыңызды жарышып киргизүүгө аракет кылат. Сырсөздөр четке чыгарылат, бирок насыя картасынын номерлери сыяктуу жекелик маалымат сакталат."
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Telex Qwerty ариптактасы"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Tap to use virtual keyboard."
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Сиволдор тизмесин көрүүгө, бул баскычты таптап кармап туруңуз. Бирөөсүн тез чакырма катары колдонууга, тандап алыңыз."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Символ ариптактасы %2$d ичинен %1$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Символдор"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Орун"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Слэш"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Жалгыз тырмакча"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "QWERTY клавиатурасында баскычты басканда чоң белгисин көрсөтүү."
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Shift кулпуланган."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Shift күйүк"
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Shift өчүк."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Орнотуулар"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "Сентябрь"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Үтүрлүү чекит"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Оң бурчтуу тырмакча"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Тырмакча"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Суроо белгиси"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "“%s” үйрөнгөн сөздөр тизмесинен өчүрүлөт"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Predictive text options"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "T9 Режими"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Фунт"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Плюс"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Түз сызык"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Пайыз"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Сол кашаа"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Сол бурчтуу кашаа"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Сол ийилген кашаа"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Октябрь"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Эч бир тил тандалган жок."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "Ноябрь"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Манжаны ариптакта боюнча жылдыруу аркылуу курсорду жылдырыңыз."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Май"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Март"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Тамгалар"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Мындан кем"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Сол бурчтуу тырмакча"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Ариптакта түрү"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Клавиатура орнотуулары"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Июнь"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "Июль"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Январь"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Көмкөрүлгөн суроо белгиси"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Көмкөрүлгөн илеп белгиси"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Input detected from hardware keyboard."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Эгерде жекелештирилген айтымдар иштетилсе, анда Samsung ариптактасы Facebook, Gmail, Twitter, Кабарлардан жана Катыштардан жазуу стилиңизди үйрөнө алат, жана өзгөчөлөштүрүлгөн жарыш сөздөрдү жана тууралоолорду сунуштайт."
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Торчо"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Мындан чоң"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Грав"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Символдорду жана башка белгилерди көрүү үчүн жогору багытта жылдырыңыз."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Flick the keyboard down to hide it."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Чертип киргизүү"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Февраль"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Илеп белгиси"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Евро"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Барабар"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Манжаңызды ариптактанын туурасынан соймолотуу менен текст киргизиңиз. Бул өзгөчөлүк Qwerty ариптактасы үчүн ылайыкташкан."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Манжаны ариптакта боюнча жылдыруу аркылуу текстти киргизиңиз"
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Киргизүү"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Жекелештирилген айтымдарды иштетүү"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Смайлдар"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Чекит"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Доллар"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Боюнча бөлүнгөн"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Араны өчүрүү"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Декабрь"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Сызыкча"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Башкачалатуучу баскыч"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Курсор башкаруу"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Валюта белгиси"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Улануучу киргизүү"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Үтүр"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Кош чекит"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Оң кашаа"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Оң бурчтуу кашаа"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Оң ийилген кашаа"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Буфер"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Циркумфлекс"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Белгини алдын ала көрүү"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Чоң тамга"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Артка кайтуу"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Арткы слэш"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Авто орун"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Авто баш тамгадан баштоо"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Сөздөрдүн ортосуна автоматтык түрдө орун киргизүү"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Орун баскычын эки ирет басуу менен чекитти автоматтык түрдө киргизиңиз"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Сүйлөмдүн биринчи тамгасын автоматтуу баш тамгага айлантуу."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "Август"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "маймылча"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Жылдызча"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "Апрель"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Жана"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Button for expanding the list"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Үн менен киргизүү"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Ариптакта үзгүлтүксүз жазуу жана жарыш сөз тексти сыяктуу иш-милдеттерди сунуштайт."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Үн менен жазууну колдонуу үчүн үн сүрөтчөсүн таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Tap the text entry field while the keyboard is open to make the handle appear. Move the handle to move the cursor."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Samsung ариптактасынын орнотууларын ачуу үчүн орнотуулар сүрөтчөсүн таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Тамга жана символдорду тоголотуу үчүн режим баскычын таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Жазуу ыкмасын өзгөртүү үчүн билдирүү панелиндеги ариптакта сүрөтчөсүн таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Жымыңдарды кыстаруу үчүн жымың сүрөтчөсүн таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Буферди ачууга буфер сүрөтчөсүн таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Ариптакта ачуу үчүн көрүнгөн текст талаасын таптаңыз."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Tap and hold the customisable key to select emoticons, voice, clipboard, keyboard settings, or punctuation marks."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Tap and hold the customisable key to select the voice, clipboard, and keyboard settings, and punctuation marks."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Тандоо үчүн текстти таптап, кармап туруңуз. Курсор туткасы баштоо туткасынан жана аяктоо туткасынан турат. Текстти тандоо үчүн эки тутканы тең жылдырыңыз. Көчүрүү, кесүү, чаптоо жана башка жолдорду тандоо үчүн тутканы бошотуңуз."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Ариптактаны жабуу үчүн артка баскычын басыңыз."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Open Settings, then select Language and keyboard > Keyboard > Keyboard settings > Predictive text."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Эгер клавиатура орнотууларында эки же андан ашык тил тандалса, аларды орду менен которуу үчүн глобус баскычын басыңыз."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "If personalised data is enabled, Samsung keyboard can learn your writing style, from Gmail, Twitter, Messages, and Contacts, and offer predictions and corrections tailored to you."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Шарттар жана жагдайлар"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Баары"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Тил"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Белгиленген эмес"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Макул"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwertу ариптактасы"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Жекелештирилген маалыматтар"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Мага бир аздан кийин чалыңыз."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Веб-барак мобилдик түзмөгүңүздүн экранында ачылат."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Бул өзгөчөлүктү колдонууга ОК басыңыз. Мобилдик түзмөгүңүздөн жекелештирген маалыматтар %s тарабынан да колдонулат. Эгерде сиз жекелик маалыматтарыңыздын сакталышын каалабасаңыз, анда ариптакта орнотууларына өтүп, Жекелештирилген маалыматтарды Иштетүүдөн белгини алыңыз."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Клавиатура орнотуулары, жүктөлгөн тилдерден башкасы, кайра коюлат."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Контекстке ылайыктуу тамга автоматтуу түрдө киргизилет."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Үн буйругун пайдалануу үчүн, ара баскычын таптап, кармап туруңуз."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Тандоолор баскычын тандоолор тизмегин көрүүгө, таптап, кармаңыз."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Тилдерди өзгөртүүгө ара тилкесин солго же оңго ала салыңыз."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Калыптар жок"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Акылдуу киргизүү функциялары"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Авто чоң тамга коюу"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Ар сүйлөмдүн биринчи тамгасын автоматтык түрдө чоңойтуу."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Авто-пунктуация"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Кайра коюу"
+

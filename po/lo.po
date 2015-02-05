@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "ປຸ່ມວິທະຍຸ"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "ເປີດ"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "​ປຸ່ມເລືອກ"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "ປິດ"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "ຊ່ວຍ​ເຫຼືອ"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "ບໍ່ມີ"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "ປິດ"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "ເປີດ"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "ຕັ້ງຄ່າ"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "ເອົາ​ອອກ​"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "ຄີບອດ Gear Azerty"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "ຄີບອດ Gear Qwerty"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "ຄີບອດ Gear Qwertz"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "ໃບໜ້າ"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "ຕົວປັອບອັບປິດແລ້ວ."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "ຕົວປັອບອັບສະແດງຂຶ້ນ"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "ໝາຍເລກ"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "ສະຖານທີ່"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "ໃຊ້ການປ້ອນຂໍ້ມູນຕໍ່ເນື່ອງ"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "ໃຊ້ຂໍ້ຄວາມທີ່ຄາດການໄດ້"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "ການປ່ຽນວິທີປ້ອນຂໍ້ມູນ"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "ການປ່ຽນໂໝດປ້ອນຂໍ້ມູນ"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "ການປ່ຽນພາສາ"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "ການປິດນຳໃຊ້ຄີບອດ"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "ການຍ້າຍເຄີເຊີ"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "ການເປີດນຳໃຊ້ຄີບອດ"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "ເລືອກຂໍ້ຄວາມ"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "ການໃຊ້ຄີບອດຊໍາຊຸງ"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "ໃສ່ ຫຼືປ່ຽນແທນຄໍາເວົ້າທີ່ທ່ານກໍາລັງພິມດ້ວຍຄໍາທີ່ເປັນໄປໄດ້ທີ່ສຸດ ເມື່ອທ່ານແຕະຍະຫວ່າງ."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "ເຄາະສອງບາດຊ້ອນເພື່ອປິດລາຍການ."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "ແຕະສອງເທື່ອຊ້ອນເພື່ອແກ້ໄຂບ່ອນໃສ່ຂໍ້ມູນ."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "ເຄາະສອງບາດຊ້ອນເພື່ອເປີດລາຍການ."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "ລາຍການສາມາດຂະຫຍາຍໄດ້"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "ປຸ່ມ ເປີດ/ປິດ"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "ຄີບອດ ຊໍາຊຸງ"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "ການຕັ້ງຄ່າເພີ່ມເຕີມ"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "ທ່ານຕ້ອງເລືອກເອົາຢ່າງໜ້ອຍໜຶ່ງພາສາຢູ່ໃນການຕັ້ງຄ່າຄີບອດ."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "ເລືອກພາສາໃສ່ເຂົ້າໄປ"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "ຮອດຈໍານວນສູງສຸດຂອງພາສາທີ່ເຂົ້າກັນໄດ້ (%d) ແລ້ວ."
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "ຄີບອດ"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "ບໍ່ໄດ້ເລືອກ"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "ໝາຍຕິກແລ້ວ"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "ກ່ອງໃຫ້ໝາຍຕິກ"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "ພວກເຮົາສາມາດປະຊຸມກັນໄດ້ເມື່ອໃດ?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "ເຈົ້າຢູ່ໃສ?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "ຢ່າເຮັດຊໍ້າຄືນ"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "ສະແດງຢູ່ໃນເຄື່ອງ"
+
+msgid "IDS_ST_SK_OK"
+msgstr "ຕົກລົງ"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "ຍົກເລີກ"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "ເລືອກເທັມເພລດ"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "ມັນເປັນໄປແນວໃດ?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "ເກີດຫຍັງຂຶ້ນ?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "ຂ້ອຍຈະລົມກັບເຈົ້າໃນໄວໆນີ້ລະ."
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "ຂ້ອຍຈະໂທຫາເຈົ້າພາຍຫຼັງ."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "ປ່ຽນພາສາ"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "ສໍາເລັດແລ້ວ"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "ເພື່ອເປີດໃຊ້ງານການປ່ຽນແທນອັດຕະໂນມັດ, ເປີດໃຊ້ງານຢ່າງໜ້ອຍໜຶ່ງພາສາ."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "ແຕະກຸນແຈຊ່ອງຫວ່າງ ເພື່ອຮັບເອົາການແກ້ໄຂຂໍ້ຄວາມທີ່ເດົາໄວ້ ຫຼືແຕະປຸ່ມລູກສອນ ເພື່ອຮັກສາຂໍ້ຄວາມປະຈຸບັນໄວ້."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "ຄີບອດ Qwertz"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "ຕໍ່ໄປ"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "ຄີບອດການາ"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "ຄີບອດສະບັດການາ"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "ຄີບອດພາສາເຢຍລະມັນ"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "ກົດເອັນເທີ"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "ແປ້ນພິມ Chunjiin"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "ຄີບອດອອກສຽງພາສາບຸນກາຣີ"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "ຄີບອດພາສາບຸນກາຣີ"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "ຄີບອດ Azerty"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "ຂໍ້ຄວນຄຳນຶງ"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "ຄີບອດ 3 x 4"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "ການສັ່ນ"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "ເລື່ອນປຸ່ມຍະຫວ່າງ"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "ສຽງ"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "ຕັ້ງການຕັ້ງຄ່າໃໝ່"
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "ເລື່ອນຄີບອດ"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "ຕົວຢ່າງຕົວອັກສອນ"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "ການປ່ຽນແທນອັດຕະໂນມັດ"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "ໃສ່ເຄື່ອງໝາຍວັກຕອນໂອໂຕ່"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "ການພິມອັດສະລິຍະ"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "ການຕອບສະໜອງການສຳຜັດປຸ່ມ"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "ໃສ່ພາສາຕ່າງໆເຂົ້າໄປ"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "ລົງຊື່ເຂົ້າໃຊ້"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "ສົ່ງ"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "ຄົ້ນຫາ"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "ລົງຊື່ເຂົ້າໃຊ້"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "ເຂົ້າຮ່ວມ"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "ໄປ"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "ເງິນເຢນ"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "ເງິນວອນ"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "ຮູບດາວສີຂາວ"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "ຮູບຫົວໃຈສີຂາວ"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "ປະເພດແປ້ນພິມ Qwerty VNI"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "ຄີບອດສະເໝືອນເປີດໃຊ້ງານ."
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "ການໃຊ້ການຄວບຄຸມເຄີເຊີຈະປິດໃຊ້ປ້ອນຂໍ້ມູນຕໍ່ເນື່ອງ."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "ການໃຊ້ປ້ອນຂໍ້ມູນຕໍ່ເນື່ອງແມ່ນຈະປິດໃຊ້ການຄວບຄຸມເຄີເຊີ."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "ຂີດກ້ອງ"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "ຄີບອດ Qwerty ຕຸຣາກີ"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "ຄີບອດ F ຕຸຣາກີ"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "ເພື່ອປ່ຽນພາສາ, ເລື່ອນໄປທາງຂວາງຂ້າມປຸ່ມຍະຫວ່າງ."
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍ x"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍໂຕໜອນ"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "ຄີບອດ ຊໍາຊຸງຮຽນຮູ້ສະໄຕລ໌ການຂຽນຂອງທ່ານ ແລະພະຍາຍາມຄາດການສິ່ງທີ່ທ່ານຕ້ອງການຂຽນ ໂດຍການຈື່ສິ່ງທີ່ທ່ານປ້ອນເຂົ້າໄປ. ຈະບໍ່ມີການຮັກສາລະຫັດໄວ້, ແຕ່ຂໍ້ມູນສ່ວນຕົວເຊັ່ນ ໝາຍເລກບັດເຄຣດິດແມ່ນຈະຖືກເກັບໄວ້"
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "ປະເພດແປ້ນພິມ Qwerty ໂທລະເລກ"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "ແຕະເພື່ອໃຊ້ຄີບອດສະເໝືອນ."
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "ແຕະປຸ່ມນີ້ຄ້າງໄວ້ ເພື່ອເບິ່ງລາຍການສັນຍາລັກ. ເລືອກອັນໜຶ່ງ ເພື່ອໃຊ້ມັນເປັນທາງລັດ."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "ຄີບອດຕົວສັນຍາລັກ %1$d ຂອງ %2$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "ສັນຍາ​ລັກ"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "ຊ່ອງຫວ່າງ"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍ /"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "ວົງຢືມດ່ຽວ"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "ສະແດງກອບຕົວອັກສອນຂະໜາດໃຫຍ່ເມື່ອສຳຜັດປຸ່ມເທິງຄີບອດ Qwerty."
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "ປຸ່ມຊິບລັອກ."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "ປຸ່ມຊິບເປີດ."
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "ປຸ່ມຊິບປິດ."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "ຕັ້ງຄ່າ"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "ກັນຍາ"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "ຈໍ້າຈຸດ"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "ວົງຢືມມຸມຂວາ"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "ວົງຢືມ"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍຖາມ"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "‘%s’ ຈະຖືກເອົາອອກໄປຈາກຄໍາເວົ້າທີ່ໄດ້ຮຽນຮູ້."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "ຕົວເລືອກເດົາຂໍ້ຄວາມ"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "ເດົາຂໍ້ຄວາມ"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "ປອນ"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "ບວກ"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "ຂີດຊື່"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "ເປີເຊັນ"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "ເປີດວົງເລັບ"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "ເປີດວົງຂໍ"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "ເປີດວົງປີກກາ"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "ຕຸລາ"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "ບໍ່ໄດ້ເລືອກພາສາໃດ."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "ພະຈິກ"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "ຍ້າຍເຄີເຊີ່ໄປດ້ວຍ ການເລື່ອນນີ້ວມືຜ່ານຄີບອດ."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "ພຶດສະພາ"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "ມີນາ"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "ຕົວໜັງສື"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "ນ້ອຍກວ່າ"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "ວົງຢືມມຸມຊ້າຍ"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "ປະເພດຄີບອດ"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "ການຕັ້ງຄ່າຄີບອດ"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "ມິຖຸນາ"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "ກໍລະກົດ"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "ມັງກອນ"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ໝາຍຖາມລວງປີ້ນ"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ອຸທານລວງປີ້ນ"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "ການປ້ອນຂໍ້ມູນທີ່ໄດ້ກວດພົບຈາກຄີບອດຂອງຮາດແວ."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "ຖ້າຂໍ້ມູນສ່ວນຕົວຖືກເປີດໃຊ້ງານ, ຄີບອດ ຊໍາຊຸງສາມາດຮຽນຮູ້ສະໄຕລ໌ການຂຽນຈາກເຟັສບຸກ, ຈີເມລ໌, ທະວິດເຕີ, ຂໍ້ຄວາມ ແລະຜູ້ຕິດຕໍ່, ແລະໃຫ້ການຄາດເດົາ ແລະການແກ້ໄຂໃຫ້ຖືກຕ້ອງທີ່ໄດ້ຈັດໃຫ້ກັບທ່ານ"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍ #"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "ໃຫຍ່ກວ່າ"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "ສໍານຽງເຄັ່ງຂຶມ"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "ພິກຂຶ້ນເທິງຢູ່ໃນປຸ່ມ ເພື່ອເບິ່ງສັນຍາລັກ ແລະຕົວອັກສອນທາງເລືອກ."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "ສະບັດຄີບອດລົງລຸ່ມ ເພື່ອເຊື່ອງມັນ."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "ພິກຂໍ້ມູນທີ່ໃສ່ເຂົ້າໄປ"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "ກຸມພາ"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍອຸທານ"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "ເງິນເອີໂຣ"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "ເທົ່າກັບ"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "ໃສ່ຂໍ້ຄວາມເຂົ້າໄປໂດຍການເລື່ອນນີ້ວມືຂອງທ່ານຂ້າມແປ້ນພິມໄປ. ຄໍາສັ່ງນີ້ໄດ້ຈັດໃຫ້ເໝາະສົມສໍາລັບແປ້ນພິມ Qwerty."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "ໃສ່ຂໍ້ຄວາມເຂົ້າໄປ ໂດຍການເລື່ອນນີ້ວມືຜ່ານຄີບອດ."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "ປ້ອນ"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "ເປີດໃຊ້ງານຂໍ້ມູນສ່ວນຕົວ"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "ອີ​​ໂມ​ຕີ​ຄອນ"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍຈໍ້າ"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "ເງິນໂດລາ"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "ຫານໂດຍ"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "ລຶບຊ່ອງຫວ່າງ"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "ທັນວາ"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍແດຊ໌"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "ປຸ່ມທີ່ສາມາດປັບປ່ຽນໄດ້"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "ການຄວບຄຸມເຄີເຊີ"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "ສັນຍາລັກເງິນຕາ"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "ປ້ອນຂໍ້ມູນຕໍ່ເນື່ອງ"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "ໝາຍຈຸດ"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "ສອງຈໍ້າ"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "ປິດວົງເລັບ"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "ປິດວົງຂໍ"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "ປິດວົງປີກກາ"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "ກະດານເກັບຄວາມຈໍາ"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍ ^"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "ຕົວຢ່າງຕົວອັກສອນ"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "ຕົວໃຫຍ່"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "ຍ້າຍຄືນຫຼັງ"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "ເຄື່ອງໝາຍທັບຂວາ"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "ຍະຫວ່າງອັດຕະໂນມັດ"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "ເຮັດເປັນຕົວອັກສອນໃຫຍ່ອັດຕະໂນມັດ"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "ໃສ່ຍະຫວ່າງລະຫວ່າງຄຳເວົ້າໂດຍອັດຕະໂນມັດ."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "ໃສ່ໝາຍຈໍ້າອັດຕະໂນມັດໂດຍການແຕະປຸ່ມຍະຫວ່າງສອງເທື່ອ."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "ປັບເປັນຕົວພິມໃຫຍ່ຕົວທຳອິດຂອງປະໂຫຍກອັດຕະໂນມັດ."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "ສິງຫາ"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "ຢູ່ທີ່"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "ດອກຈັນ"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "ເມສາ"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "ແລະ"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "ປຸ່ມສໍາລັບການຂະຫຍາຍບັນຊີ"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "ການໃສ່ສຽງເຂົ້າໄປ"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "ຄີບອດມີຟັງຄ໌ຊັນຕ່າງໆໃຫ້ເຊັ່ນ: ການປ້ອນຂໍ້ມູນຕໍ່ເນື່ອງ ແລະເດົາຂໍ້ຄວາມໄດ້."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "ແຕະໄອຄອນສຽງເພື່ອໃຊ້ການໃສ່ຂໍ້ມູນສຽງເຂົ້າໄປ."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "ແຕະບ່ອນໃສ່ຂໍ້ຄວາມເຂົ້າໄປ ໃນຂະນະທີ່ຄີບອດເປີດ ເພື່ອເຮັດໃຫ້ມືຈັບປະກົດຂຶ້ນ. ເລື່ອນດ້າມຈັບ ເພື່ອເລື່ອນເຄີເຊີ."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "ແຕະໄອຄອນການຕັ້ງຄ່າ ເພື່ອເປີດການຕັ້ງຄ່າຄີບອດຊໍາຊຸງ."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "ແຕະປຸ່ມໂໝດເພື່ອສະຫຼັບຕົວອັກສອນແລະສັນຍາລັກ."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "ແຕະໄອຄອນແປ້ນພິມເທິງແຜງການແຈ້ງເຕືອນເພື່ອປ່ຽນວິທີການໃສ່ຂໍ້ມູນ."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "ແຕະໄອຄອນອີໂມຕິຄອນ ເພື່ອປ້ອນອີໂມຕິຄອນ."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "ແຕະໄອຄອນຄລິບບອດ ເພື່ອເປີດຄລິບບອດ."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "ແຕະບ່ອນຂໍ້ຄວາມໃດໜຶ່ງເພື່ອເປີດຄີບອດ."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "ແຕະປຸ່ມສາມາດກໍານົດເອງໄດ້ຄ້າງໄວ້ ເພື່ອເລືອກອີໂມຕິຄອນ, ສຽງ, ຄລິບບອດ, ການຕັ້ງຄ່າຄີບອດ, ຫຼືເຄື່ອງໝາຍວັກຕອນ."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "ແຕະປຸ່ມທີ່ສາມາດກໍານົດເອງໄດ້ ເພື່ອເລືອກການຕັ້ງຄ່າສຽງ, ຄລິບບອດ, ແລະຄີບອດ, ແລະເຄື່ອງໝາຍວັກຕອນ."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "ແຕະບາງຂໍ້ຄວາມຄ້າງໄວ້ ເພື່ອເລືອກມັນ. ດ້າມຈັບເຄີເຊີປະກອບດ້ວຍດ້າມຈັບເລີ່ມຕົ້ນ ແລະດ້າມຈັບສຸດທ້າຍ. ຍ້າຍດ້າມຈັບທັງສອງອັນເພື່ອເລືອກຂໍ້ຄວາມ. ປ່ອຍດ້າມຈັບເພື່ອເລືອກກັອບປີ້, ຕັດ, ແປະໃສ່, ແລະຕົວເລືອກອື່ນໆ."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "ກົດປຸ່ມກັບຄືນ ເພື່ອປິດແປ້ນພິມ."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "ເປີດການຕັ້ງຄ່າ, ຈາກນັ້ນ ເລືອກພາສາ ແລະຄີບອດ > ຄີບອດ > ຕັ້ງຄ່າຄີບອດ > ຂໍ້ຄວາມທີ່ເດົາໄດ້."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "ຖ້າໄດ້ເລືອກເອົາສອງພາສາ ຫຼືຫຼາຍກວ່ານັ້ນຢູ່ໃນການຕັ້ງຄ່າຄີບອດ, ແຕະປຸ່ມຮູບໂລກ ເພື່ອປ່ຽນພາສາ."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "ຖ້າຂໍ້ມູນສ່ວນຕົວເປີດໃຊ້ງານ, ຄີບອດຊໍາຊຸງສາມາດຮຽນຮູ້ຮູບແບບການຂຽນຂອງທ່ານໄດ້, ຈາກຈີເມລ໌, ທວີດເຕີ, ຂໍ້ຄວາມ, ແລະຜູ້ຕິດຕໍ່, ແລະ ການເດົາຂໍ້ຄວາມ ແລະການແກ້ໄຂໃຫ້ຖືກຕ້ອງທີ່ໄດ້ຈັດໃຫ້ກັບທ່ານ."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "ຂໍ້ກໍານົດ ແລະເງື່ອນໄຂ"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "ທັງໝົດ"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "ພາສາ"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "ບໍ່ໄດ້ໝາຍຕິກ"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "ເຫັນດີ"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "ຄີບອດ Qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "ຂໍ້ມູນທີ່ໄດ້ເຮັດເປັນສ່ວນຕົວແລ້ວ"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Call me later."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "ເວັບເພສຈະເປີດຢູ່ໃນໜ້າຈໍຂອງໂທລະສັບມືຖືຂອງທ່ານ."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "ແຕະຕົກລົງເພື່ອໃຊ້ຟີເຈີນີ້. ຂໍ້ມູນສ່ວນຕົວຈາກອຸປະກອນມືຖືຂອງທ່ານຈະຖືທາງ %s ໃຊ້ນໍາອີກ. ຖ້າທ່ານບໍ່ຕ້ອງການໃຫ້ເກັບຂໍ້ມູນສ່ວນຕົວຂອງທ່ານໄວ້, ໄປທີ່ການຕັ້ງຄ່າຄີບອດ ແລະບໍ່ໝາຍໃສ່ເປີດໃຊ້ງານຂໍ້ມູນສ່ວນຕົວນັ້ນ."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "ການຕັ້ງຄ່າຄີບອດ, ຍົກເວັ້ນພາສາທີ່ດາວໂຫຼດໄວ້ຈະຖືກຕັ້ງຄ່າຄືນໃໝ່."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "ຕົວໜັງສືທີ່ເຂົ້າກັບສະພາບເນື້ອໃນຈະຖືກປ້ອນເຂົ້າໄປອັດຕະໂນມັດ."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "ແຕະປຸ່ມຍະຫວ່າງຄ້າງໄວ້ ເພື່ອໃຊ້ການປ້ອນຂໍ້ມູນສຽງ."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "ແຕະປຸ່ມຕົວເລືອກຄ້າງໄວ້ ເພື່ອເບິ່ງລາຍການຕົວເລືອກ."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "ຮູດຄານຍະຫວ່າງໄປຊ້າຍ ຫຼືຂວາ ເພື່ອປ່ຽນພາສາ."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "ບໍ່ມີເທັມເພລດ"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "ຟັງຄ໌ຊັນປ້ອນຂໍ້ມູນອັດສະລິຍະ"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "ເຮັດເປັນຕົວອັກສອນໃຫຍ່ອັດຕະໂນມັດ"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "ເຮັດຕົວອັກສອນຕົວທໍາອິດຂຶ້ນຕົ້ນແຕ່ລະປະໂຫຍກເປັນຕົວໃຫຍ່ໂດຍອັດຕະໂນມັດ."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "ໃສ່ເຄື່ອງໝາຍອັດຕະໂນມັດ"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "ຕັ້ງຄ່າໃໝ່"
+

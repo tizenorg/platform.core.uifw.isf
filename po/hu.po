@@ -1,627 +1,702 @@
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Szóköz törlése"
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Választógomb"
 
-msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
-msgstr "Nem sikerült felismerni a hangot"
+msgid "IDS_BT_SK_OPEN"
+msgstr "Megnyit"
 
-msgid "IDS_IME_BODY_HANDWRITING"
-msgstr "Kézírás"
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Kiválasztva"
 
-msgid "IDS_IME_BODY_PEN_COLOUR"
-msgstr "Toll színe"
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Bezár"
 
-msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
-msgstr "Pen gesture guide"
+msgid "IDS_ST_BODY_HELP"
+msgstr "Súgó"
 
-msgid "IDS_IME_BODY_PEN_THICKNESS"
-msgstr "Toll vastagsága"
+msgid "IDS_ST_BODY_NONE"
+msgstr "Nincs"
 
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Szóköz"
+msgid "IDS_ST_BODY_OFF"
+msgstr "Ki"
 
-msgid "IDS_IME_OPT_RED"
-msgstr "Piros"
+msgid "IDS_ST_BODY_ON"
+msgstr "Be"
 
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "Kész"
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Beállítások"
 
-msgid "IDS_IME_BODY_MY_WORD_LIST"
-msgstr "Saját szavak listája"
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Eltávolít"
 
-msgid "IDS_IME_BODY_ABOUT"
-msgstr "Névjegy"
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Gear AZERTY-bil.zete"
 
-msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
-msgstr "Teljes felismerés"
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Gear QWERTY-bil.zete"
 
-msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
-msgstr "Törlés (1 karakter)"
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Gear QWERTZ-bil.zete"
 
-msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
-msgstr "Törlés (Szó vagy mondat)"
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Arcok"
 
-msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
-msgstr "Bevitel (Tollvonás-felismerés)"
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Az előugró ablak bezáródott."
 
-msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
-msgstr "Kézírás beállításai"
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Előugró ablak jelent meg"
 
-msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
-msgstr "Billentyűzet kiválasztása"
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Számok"
 
-msgid "IDS_IME_BODY_RECOGNITION_TIME"
-msgstr "Felismerés késleltetése"
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Helyek"
 
-msgid "IDS_IME_BODY_RECOGNITION_TYPE"
-msgstr "Felismerés típusa"
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Folyamatos bevitel használata"
 
-msgid "IDS_IME_BODY_SPEAK_NOW"
-msgstr "Most beszéljen"
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Prediktív szöveg használata"
 
-msgid "IDS_IME_BODY_STROKE_RECOGNITION"
-msgstr "Tollvonás-felismerés"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Beviteli módszer megváltoztatása"
 
-msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
-msgstr "Küldés (Teljes felismerés)"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Beviteli mód megváltoztatása"
 
-msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
-msgstr "Felismerés..."
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Nyelvváltás"
 
-msgid "IDS_IME_BODY_TUTORIAL"
-msgstr "Tankönyv"
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "A billentyűzet bezárása"
 
-msgid "IDS_IME_OPT_BLUE"
-msgstr "Kék"
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "A kurzor mozgatása"
 
-msgid "IDS_IME_OPT_BROWN"
-msgstr "Barna"
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "A billentyűzet megnyitása"
 
-msgid "IDS_IME_OPT_GREEN"
-msgstr "Zöld"
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Szöveg kijelölése"
 
-msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
-msgstr "Minden szót törölni fog"
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Samsung bill. használata"
 
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Szöveg bevitele a billentyűzeten húzott ujjal"
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "A beírt szó kiegészítése vagy lecserélése a legvalószínűbb szóra a szóköz gomb érintésékor."
 
-msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
-msgstr "A Saját szavak listája megtelt. Szó hozzáadásához töröljön tételeket"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Érintse meg kétszer a lista bezárásához."
 
-msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
-msgstr "Törölni fog %d szót"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Kétszeri érintéssel szerkesztheti a mezőt."
 
-msgid "IDS_IME_BODY_SELECT_WORDS"
-msgstr "Szavak kiválasztása"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Érintse meg kétszer a lista megnyitásához."
 
-msgid "IDS_IME_HEADER_ADD_WORDS"
-msgstr "Szavak hozzáadása"
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Kibontható lista"
 
-msgid "IDS_IME_MBODY_3X4_KEYBOARD"
-msgstr "3x4 gombos billentyűzet"
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Be-ki gomb"
 
-msgid "IDS_IME_OPT_1000_MS_ABB"
-msgstr "1000 ms"
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Samsung billentyűzet"
 
-msgid "IDS_IME_OPT_100_MS_ABB"
-msgstr "100 ms"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Egyéb beállítás"
 
-msgid "IDS_IME_OPT_1_PIXEL_ABB"
-msgstr "1 képpont"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Legalább egy nyelvet ki kell választani a billentyűzet beállításaiban."
 
-msgid "IDS_IME_OPT_2000_MS_ABB"
-msgstr "2000 ms"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Beviteli nyelvek kivál."
 
-msgid "IDS_IME_OPT_300_MS_ABB"
-msgstr "300 ms"
-
-msgid "IDS_IME_OPT_500_MS_ABB"
-msgstr "500 ms"
-
-msgid "IDS_IME_OPT_PD_PIXELS_ABB"
-msgstr "%d képpont"
-
-msgid "IDS_IME_BODY_LANG_BULGARIAN"
-msgstr "Български"
-
-msgid "IDS_IME_BODY_LANG_JAPANESE"
-msgstr "日本語"
-
-msgid "IDS_IME_BODY_ARABIC"
-msgstr "عربي"
-
-msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
-msgstr "简体中文"
-
-msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
-msgstr "简体中文 (新加坡)"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
-msgstr "繁體中文"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
-msgstr "香港繁體"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
-msgstr "台灣繁體"
-
-msgid "IDS_IME_BODY_FARSI"
-msgstr "فارسی"
-
-msgid "IDS_IME_BODY_HEBREW"
-msgstr "עברית"
-
-msgid "IDS_IME_BODY_INDONESIAN"
-msgstr "Bahasa Indonesia"
-
-msgid "IDS_IME_BODY_THAI"
-msgstr "ภาษาไทย"
-
-msgid "IDS_IME_BODY_URDU"
-msgstr "اردو"
-
-msgid "IDS_IME_BODY_UZBEK"
-msgstr "o'zbek tili"
-
-msgid "IDS_IME_BODY_VIETNAMESE"
-msgstr "Tiếng Việt"
-
-msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
-msgstr "Törölni fogja a szót"
-
-msgid "IDS_IME_BODY_ARMENIAN"
-msgstr "Հայերեն"
-
-msgid "IDS_IME_MBODY_AUTO_APPEND"
-msgstr "Automatikus hozzáfűzés"
-
-msgid "IDS_IME_OPT_LANG_ALBANIAN"
-msgstr "shqip"
-
-msgid "IDS_IME_OPT_LANG_CROATIAN"
-msgstr "Hrvatski"
-
-msgid "IDS_IME_BODY_ENTER_WORD"
-msgstr "Írja be a szót"
-
-msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
-msgstr "Következő szó megjóslása"
-
-msgid "IDS_IME_BODY_NO_WORDS"
-msgstr "Nincsenek szavak."
-
-msgid "IDS_IME_BODY_RECAPTURE"
-msgstr "Felvétel újra"
-
-msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
-msgstr "Nyelvspecifikus javítás"
-
-msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
-msgstr "Aut. helyettesítési lista"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
-msgstr "A szóköz gomb kétszeri megérintésével automatikusan beszúrhat egy pontot"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
-msgstr "English (UK)"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
-msgstr "English (US)"
-
-msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
-msgstr "Befejezett szavak felajánlása a már bevitt karakterek alapján"
-
-msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
-msgstr "Alternatív szavak felajánlása"
-
-msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
-msgstr "Szóbefejezés pontja"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Automatikus nagybetűs mondatkezdés"
-
-msgid "IDS_IME_BODY_WRITING_LANGUAGES"
-msgstr "Írás nyelvei"
-
-msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
-msgstr "Clear learning dictionary"
-
-msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
-msgstr "Szótár a Névjegyzékből"
-
-msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
-msgstr "Angol szójavaslás"
-
-msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
-msgstr "Angol felhasználói szótár"
-
-msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
-msgstr "Flick input"
-
-msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
-msgstr "Input word learning"
-
-msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
-msgstr "Japanese user dictionary"
-
-msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
-msgstr "Toggle input"
-
-msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
-msgstr "Typing error correction"
-
-msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
-msgstr "Wildcard prediction"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Folyamatos bevitel"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Elérte a támogatott nyelvek maximális számát (%d)."
 
 msgid "IDS_IME_HEADER_KEYBOARD"
 msgstr "Billentyűzet"
 
-msgid "IDS_IME_BODY_WORD_COMPLETION"
-msgstr "Szóbefejezés"
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Nincs kijelölve"
 
-msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
-msgstr "Bahasa Malaysia"
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Bejelölve"
 
-msgid "IDS_IME_BODY_ASSAMESE"
-msgstr "অসমীয়া"
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Jelölőnégyzet"
 
-msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
-msgstr "Automatikus pont"
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Mikor találkozhatunk?"
 
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Automatikus nagybetűs mondatkezdés"
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Hol vagy?"
 
-msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
-msgstr "Automatikus helyettesítés"
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Ne ismételje"
 
-msgid "IDS_IME_BODY_BASQUE"
-msgstr "Baszk"
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Megj. eszközön"
 
-msgid "IDS_IME_BODY_BULGARIAN"
-msgstr "Bolgár"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_CATALAN"
-msgstr "Katalán"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Mégse"
 
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Karakterek előnézete"
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Sablon kiválasztása"
 
-msgid "IDS_IME_BODY_CZECH"
-msgstr "Cseh"
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Hogy vagy?"
 
-msgid "IDS_IME_BODY_DANISH"
-msgstr "Dán"
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Mi a helyzet?"
 
-msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
-msgstr "Angol (USA-beli)"
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Később beszélünk."
 
-msgid "IDS_IME_BODY_ESTONIAN"
-msgstr "Észt"
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Később visszahívom."
 
-msgid "IDS_IME_BODY_FAST"
-msgstr "Gyors"
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Nyelvváltás"
 
-msgid "IDS_IME_BODY_INFO_SCAN"
-msgstr "Infó leolvasása"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Kész"
 
-msgid "IDS_IME_BODY_JAPANESE"
-msgstr "Japán"
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Az automatikus helyettesítés engedélyezéséhez engedélyezzen legalább egy nyelvet."
 
-msgid "IDS_IME_BODY_KEYBOARD_TYPE"
-msgstr "Billentyűzet típusa"
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Érintse meg a szóközbillentyűt a javasolt szövegjavítás elfogadásához, vagy érintse meg a nyílbillentyűt a jelenlegi szó megtartásához."
 
-msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
-msgstr "Fekvő beviteli opciók"
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "QWERTZ-billentyűzet"
 
-msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
-msgstr "Azərbaycan"
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Köv."
 
-msgid "IDS_IME_BODY_LANG_BASQUE"
-msgstr "Euskara"
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Kana billentyűzet"
 
-msgid "IDS_IME_BODY_LANG_BENGALI"
-msgstr "বাংলা"
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Kana pöccintős bill.zet"
 
-msgid "IDS_IME_BODY_LANG_CATALAN"
-msgstr "Català"
-
-msgid "IDS_IME_BODY_LANG_GALICIAN"
-msgstr "Galego"
-
-msgid "IDS_IME_BODY_LANG_GEORGIAN"
-msgstr "ქართული"
-
-msgid "IDS_IME_BODY_LANG_GUJARATI"
-msgstr "ગુજરાતી"
-
-msgid "IDS_IME_BODY_LANG_HINDI"
-msgstr "हिन्दी"
-
-msgid "IDS_IME_BODY_LANG_KANNADA"
-msgstr "ಕನ್ನಡ"
-
-msgid "IDS_IME_BODY_LANG_MALAYALAM"
-msgstr "മലയാളം"
-
-msgid "IDS_IME_BODY_LANG_MARATHI"
-msgstr "मराठी"
-
-msgid "IDS_IME_BODY_LANG_NEPALI"
-msgstr "नेपाली"
-
-msgid "IDS_IME_BODY_LANG_PUNJABI"
-msgstr "ਪੰਜਾਬੀ"
-
-msgid "IDS_IME_BODY_LANG_ROMANIAN"
-msgstr "Română"
-
-msgid "IDS_IME_BODY_LANG_SINHALA"
-msgstr "සිංහල"
-
-msgid "IDS_IME_BODY_LANG_TAMIL"
-msgstr "தமிழ்"
-
-msgid "IDS_IME_BODY_LANG_TELUGU"
-msgstr "తెలుగు"
-
-msgid "IDS_IME_BODY_LATVIAN"
-msgstr "Lett"
-
-msgid "IDS_IME_BODY_MACEDONIAN"
-msgstr "Macedón"
-
-msgid "IDS_IME_BODY_MALAY"
-msgstr "Maláj"
-
-msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
-msgstr "Túllépte a maximális szóhosszúságot (%d)"
-
-msgid "IDS_IME_BODY_MOAKEY"
-msgstr "MoAKey"
-
-msgid "IDS_IME_BODY_MOAKEY_TIP"
-msgstr "MoAKey-tipp"
-
-msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
-msgstr "Szó befejezése hagyományos betűbevitellel"
-
-msgid "IDS_IME_BODY_NO_OPTIONS"
-msgstr "Nincsenek opciók"
-
-msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
-msgstr "Álló beviteli opciók"
-
-msgid "IDS_IME_BODY_PREDICTION"
-msgstr "Szójavaslás"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
-msgstr "Prediktív szöveg"
-
-msgid "IDS_IME_BODY_PROCESSING_ING"
-msgstr "Feldolgozás folyamatban"
-
-msgid "IDS_IME_BODY_REGIONAL_INPUT"
-msgstr "Nyelvspecifikus bevitel"
-
-msgid "IDS_IME_BODY_SELECTION"
-msgstr "Kijelölés"
-
-msgid "IDS_IME_BODY_SHORTCUT"
-msgstr "Rövidítés"
-
-msgid "IDS_IME_BODY_SPELL_CORRECTION"
-msgstr "Helyesírás-javítás"
-
-msgid "IDS_IME_BODY_SUBSTITUTION"
-msgstr "Helyettesítés"
-
-msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
-msgstr "Érintse meg az újbóli meghallgatáshoz"
-
-msgid "IDS_IME_BODY_THEME"
-msgstr "Téma"
-
-msgid "IDS_IME_BODY_TONE"
-msgstr "Hang"
-
-msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
-msgstr "Nem sikerült felismerni a szavakat. Próbálja meg újra, lassan és érthetően beszélve"
-
-msgid "IDS_IME_HEADER_NEW_WORDS"
-msgstr "Új szavak"
-
-msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
-msgstr "3x4 gombos billentyűzet"
-
-msgid "IDS_IME_OPT_AFTER_1_LETTER"
-msgstr "1. betű után"
-
-msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
-msgstr "%d. betű után"
-
-msgid "IDS_IME_OPT_BLACK"
-msgstr "Fekete"
-
-msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
-msgstr "Chunjiyin"
-
-msgid "IDS_IME_OPT_COLOUR"
-msgstr "Szín"
-
-msgid "IDS_IME_OPT_DO_NOT_SHOW"
-msgstr "Ne jelenítse meg"
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Német billentyűzet"
 
 msgid "IDS_IME_OPT_ENTER_ABB"
 msgstr "Beírás"
 
-msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
-msgstr "Teljes qwertz-billentyűzet"
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Chunjiin billentyűzet"
 
-msgid "IDS_IME_OPT_GO_ABB"
-msgstr "Indít"
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Bolgár fonetikus billentyűzet"
 
-msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
-msgstr "Belépés"
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Bolgár billentyűzet"
 
-msgid "IDS_IME_OPT_LANG_CZECH"
-msgstr "Čeština"
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "AZERTY-billentyűzet"
 
-msgid "IDS_IME_OPT_LANG_DANISH"
-msgstr "Dansk"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Figyelem"
 
-msgid "IDS_IME_OPT_LANG_FINNISH"
-msgstr "Suomi"
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3x4 gombos billentyűzet"
 
-msgid "IDS_IME_OPT_LANG_HUNGARIAN"
-msgstr "Magyar"
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Rezgés"
 
-msgid "IDS_IME_OPT_LANG_IRISH"
-msgstr "Gaeilge"
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Szóköz gomb végigsimítása"
 
-msgid "IDS_IME_OPT_LANG_KAZAKH"
-msgstr "Қазақ"
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Hang"
 
-msgid "IDS_IME_OPT_LANG_KOREAN"
-msgstr "한국어"
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Beállítás visszaállítása"
 
-msgid "IDS_IME_OPT_LANG_POLISH"
-msgstr "Polski"
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Billentyűzethúzás"
 
-msgid "IDS_IME_OPT_LANG_SLOVAK"
-msgstr "Slovenčina"
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Karakterek előnézete"
 
-msgid "IDS_IME_OPT_LANG_UKRAINIAN"
-msgstr "Українська"
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Automatikus helyettesítés"
 
-msgid "IDS_IME_OPT_LANG_WELSH"
-msgstr "Cymraeg"
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Automatikus központozás"
 
-msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Intelligens írás"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Visszajelzés gombérintésre"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Beviteli nyelvek"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
 msgstr "Bejel."
 
-msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
-msgstr "Mini qwertz-billentyűzet"
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Küldés"
 
-msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
-msgstr "MoAKey-billentyűzet"
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Keresés"
 
-msgid "IDS_IME_OPT_MOAKEY_POP_UP"
-msgstr "MoAKey előugró ablaka"
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Bejel."
 
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
-msgstr "QWERTY-billentyűzet"
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Csatl."
 
-msgid "IDS_IME_OPT_SHADES_OF_GREY"
-msgstr "A szürke árnyalatai"
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Mehet"
 
-msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
-msgstr "Megjelenítés 0,1 mp-ig"
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Jen"
 
-msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
-msgstr "Megjelenítés 0,2 mp-ig"
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Von"
 
-msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
-msgstr "Megjelenítés 0,3 mp-ig"
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Fehér csillag"
 
-msgid "IDS_IME_OPT_SLOW"
-msgstr "Lassú"
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Fehér szív"
 
-msgid "IDS_IME_OPT_SPEED"
-msgstr "Sebesség"
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI QWERTZ-billentyűzet"
 
-msgid "IDS_IME_OPT_STROKE_CHN"
-msgstr "Stroke"
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Virtuális billentyűzet engedélyezve"
 
-msgid "IDS_IME_OPT_THICK"
-msgstr "Vastag"
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Kurzorvezérlés használata esetén le lesz tiltva a folyamatos bevitel."
 
-msgid "IDS_IME_OPT_WHITE"
-msgstr "Fehér"
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Folyamatos bevitel használata esetén le lesz tiltva a kurzorvezérlés."
 
-msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
-msgstr "Írás rajztáblával"
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Aláhúzásjel"
 
-msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
-msgstr "Teljes képernyős írás"
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Török QWERTZ-billentyűzet"
 
-msgid "IDS_IME_POP_LANG_ESTONIAN"
-msgstr "Eesti"
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Török F-billentyűzet"
 
-msgid "IDS_IME_POP_LANG_ICELANDIC"
-msgstr "íslenska"
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Nyelvváltáshoz simítsa végig vízszintesen a szóköz gombot."
 
-msgid "IDS_IME_POP_LANG_LATVIAN"
-msgstr "Latviešu"
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Szorzás"
 
-msgid "IDS_IME_POP_LANG_LITHUANIAN"
-msgstr "Lietuvių"
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tilde"
 
-msgid "IDS_IME_POP_LANG_MACEDONIAN"
-msgstr "Македонски"
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "A Samsung billentyűzet megtanulja a felhasználó írási stílusát, és a korábban bevitt szövegből kiindulva megpróbálja megjósolni a beírni kívánt szót. A funkció a jelszavakat nem menti, a személyes adatokat, például a hitelkártyaszámot azonban igen"
 
-msgid "IDS_IME_POP_LANG_NORWEGIAN"
-msgstr "Norsk"
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Telex QWERTZ-billentyűzet"
 
-msgid "IDS_IME_POP_LANG_SERBIAN"
-msgstr "Srpski"
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Érintse meg a virtuális billentyűzet használatához."
 
-msgid "IDS_IME_POP_LANG_SLOVENIAN"
-msgstr "Slovenščina"
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Tartsa ujját a billentyűn a szimbólumlista megjelenítéséhez. Válasszon ki egyet, amelyet rövidítésként kíván használni."
 
-msgid "IDS_IME_POP_LANG_SWEDISH"
-msgstr "Svenska"
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Szimbólumbillentyűzet %1$d/%2$d"
 
-msgid "IDS_IME_OPT_LANG_DUTCH"
-msgstr "Nederlands"
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Szimbólumok"
 
-msgid "IDS_IME_OPT_LANG_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Szóköz"
 
-msgid "IDS_IME_OPT_LANG_FRENCH"
-msgstr "Français"
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Törtvonal"
 
-msgid "IDS_IME_OPT_LANG_GERMAN"
-msgstr "Deutsch"
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Aposztróf"
 
-msgid "IDS_IME_OPT_LANG_GREEK"
-msgstr "Ελληνικά"
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Nagy karakterbuborék megjelenítése a QWERTZ-billentyűzet billentyűinek érintésekor"
 
-msgid "IDS_IME_OPT_LANG_RUSSIAN"
-msgstr "Русский"
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Zárolva van a Shift billentyű."
 
-msgid "IDS_IME_OPT_LANG_SPANISH"
-msgstr "Español"
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Be van kapcsolva a Shift billentyű."
 
-msgid "IDS_IME_OPT_LANG_TURKISH"
-msgstr "Türkçe"
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Ki van kapcsolva a Shift billentyű."
 
-msgid "IDS_IME_POP_LANG_ITALIAN"
-msgstr "Italiano"
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Beállítások"
 
-msgid "IDS_IME_POP_LANG_PORTUGUESE"
-msgstr "Português"
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "szeptember"
 
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Legalább egy nyelvet ki kell választani a billentyűzet beállításaiban"
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Pontosvessző"
 
-msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
-msgstr "Hardveres billentyűzet"
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Nyitó belső idézőjel"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Idézőjel"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Kérdőjel"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "Eltávolítja a „%s” szót a tanult szavak közül."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Prediktív szöveg opciói"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Prediktív szöveg"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Font"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Plusz"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Függőleges vonal"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Százalék"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Kerek zárójel kinyitva"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Szögletes zárójel kinyitva"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Kapcsos zárójel kinyitva"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "október"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Nincs kiválasztva nyelv."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "november"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Kurzormozgatás a billentyűzeten húzott ujjal."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "máj."
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "március"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Betűk"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Kisebb, mint"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Záró belső idézőjel"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Billentyűzet típusa"
 
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Billentyűzet beállításai"
 
-msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
-msgstr "Szoftveres billentyűzet"
+msgid "IDS_IME_BODY_JUNE"
+msgstr "június"
 
-msgid "IDS_IME_BODY_DUTCH"
-msgstr "Dutch"
+msgid "IDS_IME_BODY_JULY"
+msgstr "július"
 
-msgid "IDS_IME_BODY_ENGLISH"
-msgstr "Angol"
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "január"
 
-msgid "IDS_IME_OPT_QWERTY"
-msgstr "Qwertz"
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Fordított kérdőjel"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Fordított felkiáltójel"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Bevitel észlelve a hardveres billentyűzetről."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "A személyre szabott adatok engedélyezése esetén a Samsung billentyűzet megtanulja a felhasználó írási stílusát a Facebook, Gmail, Twitter, Üzenetek és Névjegyzék alkalmazásokból, és személyre szabott javaslatokat, javításokat kínál"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Kettős kereszt"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Nagyobb, mint"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Fordított ékezet"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Ha felfelé pöccint egy billentyűn, megjelennek a megfelelő szimbólumok és alternatív karakterek."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Az elrejtéshez pöccintse lefelé a billentyűzetet."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Pöccintéses bevitel"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "február"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Felkiáltójel"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Euró"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Egyenlő"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Szöveg beviteléhez húzza ujját a billentyűzeten. A funkció QWERTZ-billentyűzetre van optimalizálva."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Szöveg bevitele a billentyűzeten húzott ujjal."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Bevitel"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Személyre szabott adatok engedélyezése"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Hangulatjelek"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Pont"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dollár"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Osztva"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Szóköz törlése"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "december"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Kötőjel"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Testreszabható billentyű"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Kurzorvezérlés"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Pénznemjel"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Folyamatos bevitel"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Vessző"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Kettőspont"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Kerek zárójel bezárva"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Szögletes zárójel bezárva"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Kapcsos zárójel bezárva"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Vágólap"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Kalap"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Karakterek előnézete"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Nagy"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Visszatörlés"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Fordított törtvonal"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Szóköz automatikus beszúrása"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Automatikus nagybetűs mondatkezdés"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Szóköz automatikus beszúrása a szavak közé"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "A szóköz gomb kétszeri megérintésével automatikusan beszúrhat egy pontot."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Automatikus nagybetűs mondatkezdés"
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "augusztus"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "Kukac"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Csillag"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "április"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Et"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Listakibontó gomb"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Hangbemenet"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "A billentyűzet olyan funkciókat kínál, mint a folyamatos bevitel vagy a prediktív szöveg."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "A hangikont érintve használhatja a hangbemenetet."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "A fogó megjelenítéséhez megnyitott billentyűzet mellett érintse meg a beviteli mezőt. A kurzort a fogó mozgatásával irányíthatja"
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "A beállítások ikonját megérintve megnyithatja a Samsung billentyűzet beállításait."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "A betűk és szimbólumok közötti váltáshoz érintse meg az Üzemmód gombot."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Az értesítési panel billentyűzetikonját érintve megváltoztathatja a beviteli módszert."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Emotikon beszúrásához érintse meg az Emotikon ikont."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "A vágólapikont érintve megnyithatja a vágólapot."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "A billentyűzet megnyitásához érintsen meg egy szövegmezőt."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Ujját a testreszabható billentyűn tartva választhat az emotikonok, a hang, a vágólap, a billentyűzet beállításai és az írásjelek közül."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Ujját a testreszabható billentyűn tartva választhat a hang, a vágólap, a billentyűzet beállításai és az írásjelek közül."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Tartsa ujját a kijelölni kívánt szövegen. A kurzorfogót kezdő- és befejezőfogó alkotja. Szöveg kijelöléséhez mindkettőt húzza a megfelelő helyre. Másolás, Kivágás, Beillesztés és egyéb opciók kiválasztásához engedje el a fogót"
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "A billentyűzet lezárásához nyomja meg a Vissza gombot."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Nyissa meg a Beállításokat, majd válassza a Nyelv és billentyűzet > Billentyűzet > Billentyűzet beállításai > Prediktív szöveg menüpontokat."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Ha a billentyűzet beállításaiban több nyelv van kiválasztva, az ezek közti váltáshoz érintse meg a földgömb gombot."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "A személyre szabott adatok engedélyezése esetén a Samsung billentyűzet megtanulja a felhasználó írási stílusát a Gmail, Twitter, Üzenetek és Névjegyzék alkalmazásokból, és személyre szabott javaslatokat és javításokat kínál."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Feltételek"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Mind"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Nyelv"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Nincs bejelölve"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Elfogad"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "QWERTZ-billentyűzet"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Személyre szabott adatok"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Hívjon később."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "A weboldal a mobileszköz képernyőjén nyílik meg."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Érintse meg az OK gombot a funkció használatához. A(z) %s is a mobileszköz személyre szabott adatait fogja használni. Ha nem szeretné ily módon tárolni személyes adatait, akkor a billentyűzet beállításaiban törölje a jelet a Személyre szabott adatok bekapcsolása jelölőnégyzetből."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Visszaállítja a billentyűzet beállításait, kivéve a letöltött nyelveket."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Az eszköz automatikusan beírja a kontextusnak megfelelő betűt."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "A hangbevitel használatához tartsa ujját a szóköz gombon."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Ujját az Opciók gombon tartva megjelenítheti a lehetőségek listáját."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Nyelvváltáshoz simítson jobbra vagy balra a szóköz gombon."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Nincs sablon"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Intelligens beviteli funkciók"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Automatikus nagybetű"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Minden mondatot automatikusan nagybetűvel kezd."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Automatikus központozás"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Visszaállítás"
 

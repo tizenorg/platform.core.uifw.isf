@@ -1,627 +1,702 @@
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Ştergere spaţiu"
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Buton radio"
 
-msgid "IDS_IME_BODY_FAILED_TO_RECOGNISE_VOICE"
-msgstr "Imposibil de recunoscut vocea"
+msgid "IDS_BT_SK_OPEN"
+msgstr "Deschidere"
 
-msgid "IDS_IME_BODY_HANDWRITING"
-msgstr "Scriere de mână"
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Selectat"
 
-msgid "IDS_IME_BODY_PEN_COLOUR"
-msgstr "Culoarea creionului"
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Închidere"
 
-msgid "IDS_IME_BODY_PEN_GESTURE_GUIDE"
-msgstr "Pen gesture guide"
+msgid "IDS_ST_BODY_HELP"
+msgstr "Ajutor"
 
-msgid "IDS_IME_BODY_PEN_THICKNESS"
-msgstr "Grosime creion"
+msgid "IDS_ST_BODY_NONE"
+msgstr "Niciuna"
 
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Spaţiu"
+msgid "IDS_ST_BODY_OFF"
+msgstr "Oprit"
 
-msgid "IDS_IME_OPT_RED"
-msgstr "Roşu"
+msgid "IDS_ST_BODY_ON"
+msgstr "Pornit"
 
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "Gata"
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Setări"
 
-msgid "IDS_IME_BODY_MY_WORD_LIST"
-msgstr "Lista mea de cuvinte"
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Eliminare"
 
-msgid "IDS_IME_BODY_ABOUT"
-msgstr "Despre"
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Tastat. Azerty Gear"
 
-msgid "IDS_IME_BODY_COMPLETE_RECOGNITION"
-msgstr "Recunoaştere completă"
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Tastat. Qwerty Gear"
 
-msgid "IDS_IME_BODY_DELETE_H1_CHARACTER"
-msgstr "Ştergere (1 caracter)"
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Tastat. Qwertz Gear"
 
-msgid "IDS_IME_BODY_DELETE_HWORD_OR_SENTENCE"
-msgstr "Ştergere (Cuvânt sau propoziţie)"
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Feţe"
 
-msgid "IDS_IME_BODY_ENTER_HSTROKE_RECOGNITION"
-msgstr "Introducere (Recunoaştere scris de mână)"
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Pop-up închis."
 
-msgid "IDS_IME_BODY_HANDWRITING_SETTINGS"
-msgstr "Setări pentru scrierea de mână"
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Fereastră de tip pop-up afişată"
 
-msgid "IDS_IME_BODY_KEYBOARD_SELECTION"
-msgstr "Selectare tastatură"
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Numere"
 
-msgid "IDS_IME_BODY_RECOGNITION_TIME"
-msgstr "Durată de recunoaştere"
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Locuri"
 
-msgid "IDS_IME_BODY_RECOGNITION_TYPE"
-msgstr "Tip recunoaştere"
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Utilizarea introducerii continue"
 
-msgid "IDS_IME_BODY_SPEAK_NOW"
-msgstr "Vorbiţi acum"
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Utilizarea textului predictiv"
 
-msgid "IDS_IME_BODY_STROKE_RECOGNITION"
-msgstr "Recunoaştere scris de mână"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Schimbarea metodei de introducere"
 
-msgid "IDS_IME_BODY_SUBMIT_HCOMPLETE_RECOGNITION"
-msgstr "Trimitere (Recunoaştere completă)"
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Schimbarea modului de introducere"
 
-msgid "IDS_IME_BODY_TRYING_TO_RECOGNISE_ING"
-msgstr "Se încearcă recunoaşterea..."
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Schimbarea limbii"
 
-msgid "IDS_IME_BODY_TUTORIAL"
-msgstr "Tutorial"
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Închiderea tastaturii"
 
-msgid "IDS_IME_OPT_BLUE"
-msgstr "Albastru"
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Mutarea cursorului"
 
-msgid "IDS_IME_OPT_BROWN"
-msgstr "Maro"
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Deschiderea tastaturii"
 
-msgid "IDS_IME_OPT_GREEN"
-msgstr "Verde"
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Selectarea textului"
 
-msgid "IDS_IME_BODY_ALL_WORDS_WILL_BE_DELETED"
-msgstr "Toate cuvintele vor fi şterse"
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Util. tastaturii Samsung"
 
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Introduceţi text glisând cu degetul pe tastatură"
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Completaţi sau înlocuiţi cuvântul pe care îl scrieţi cu cel mai probabil cuvânt când atingeţi bara de spaţiu."
 
-msgid "IDS_IME_BODY_MY_WORDS_IS_FULL_TO_ADD_A_WORD_DELETE_SOME_ITEMS"
-msgstr "Caseta Cuvintele mele este plină. Pentru a adăuga un cuvânt, ştergeţi câteva elemente"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "Atingeţi de două ori pentru a închide lista."
 
-msgid "IDS_IME_BODY_PD_WORDS_WILL_BE_DELETED"
-msgstr "%d cuvinte vor fi şterse"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Atingeţi de două ori pentru a edita acest câmp."
 
-msgid "IDS_IME_BODY_SELECT_WORDS"
-msgstr "Selectare cuvinte"
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "Atingeţi de două ori pentru a deschide lista."
 
-msgid "IDS_IME_HEADER_ADD_WORDS"
-msgstr "Adăugare cuvinte"
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Listă extensibilă"
 
-msgid "IDS_IME_MBODY_3X4_KEYBOARD"
-msgstr "Tastatură 3x4"
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "Buton pornit/oprit"
 
-msgid "IDS_IME_OPT_1000_MS_ABB"
-msgstr "1.000 ms"
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Tastatură Samsung"
 
-msgid "IDS_IME_OPT_100_MS_ABB"
-msgstr "100 ms"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Setări"
 
-msgid "IDS_IME_OPT_1_PIXEL_ABB"
-msgstr "1 pixel"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Trebuie să selectaţi cel puţin o opţiune în setările tastaturii."
 
-msgid "IDS_IME_OPT_2000_MS_ABB"
-msgstr "2.000 ms"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Select. limbi introducere"
 
-msgid "IDS_IME_OPT_300_MS_ABB"
-msgstr "300 ms"
-
-msgid "IDS_IME_OPT_500_MS_ABB"
-msgstr "500 ms"
-
-msgid "IDS_IME_OPT_PD_PIXELS_ABB"
-msgstr "%d pixeli"
-
-msgid "IDS_IME_BODY_LANG_BULGARIAN"
-msgstr "Български"
-
-msgid "IDS_IME_BODY_LANG_JAPANESE"
-msgstr "日本語"
-
-msgid "IDS_IME_BODY_ARABIC"
-msgstr "عربي"
-
-msgid "IDS_IME_BODY_CHINESE_SIMPLIFIED"
-msgstr "简体中文"
-
-msgid "IDS_IME_BODY_CHINESE_SINGAPORE"
-msgstr "简体中文 (新加坡)"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL"
-msgstr "繁體中文"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_HONGKONG"
-msgstr "香港繁體"
-
-msgid "IDS_IME_BODY_CHINESE_TRADITIONAL_TAIWAN"
-msgstr "台灣繁體"
-
-msgid "IDS_IME_BODY_FARSI"
-msgstr "فارسی"
-
-msgid "IDS_IME_BODY_HEBREW"
-msgstr "עברית"
-
-msgid "IDS_IME_BODY_INDONESIAN"
-msgstr "Bahasa Indonesia"
-
-msgid "IDS_IME_BODY_THAI"
-msgstr "ภาษาไทย"
-
-msgid "IDS_IME_BODY_URDU"
-msgstr "اردو"
-
-msgid "IDS_IME_BODY_UZBEK"
-msgstr "o'zbek tili"
-
-msgid "IDS_IME_BODY_VIETNAMESE"
-msgstr "Tiếng Việt"
-
-msgid "IDS_IME_BODY_WORD_WILL_BE_DELETED"
-msgstr "Cuvântul va fi şters"
-
-msgid "IDS_IME_BODY_ARMENIAN"
-msgstr "Հայերեն"
-
-msgid "IDS_IME_MBODY_AUTO_APPEND"
-msgstr "Adăugare automată"
-
-msgid "IDS_IME_OPT_LANG_ALBANIAN"
-msgstr "shqip"
-
-msgid "IDS_IME_OPT_LANG_CROATIAN"
-msgstr "Hrvatski"
-
-msgid "IDS_IME_BODY_ENTER_WORD"
-msgstr "Introducere cuvânt"
-
-msgid "IDS_IME_BODY_NEXT_WORD_PREDICTION"
-msgstr "Predicţie cuvânt următor"
-
-msgid "IDS_IME_BODY_NO_WORDS"
-msgstr "Fără cuvinte"
-
-msgid "IDS_IME_BODY_RECAPTURE"
-msgstr "Recapturare"
-
-msgid "IDS_IME_BODY_REGIONAL_CORRECTION"
-msgstr "Corectare regională"
-
-msgid "IDS_IME_MBODY_AUTO_SUBSTITUTION_LIST"
-msgstr "Listă substituire autom."
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
-msgstr "Introduceţi automat semnul punct atingând de două ori bara de spaţiu"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_KINGDOM"
-msgstr "English (UK)"
-
-msgid "IDS_IME_BODY_LANG_ENGLISH_HUNITED_STATES"
-msgstr "English (US)"
-
-msgid "IDS_IME_BODY_RECOMMEND_COMPLETE_WORDS_BASED_ON_CHARACTERS_ENTERED_SO_FAR"
-msgstr "Recomandă cuvinte complete pe baza caracterelor introduse anterior"
-
-msgid "IDS_IME_BODY_RECOMMEND_SET_OF_ALTERNATIVE_WORDS"
-msgstr "Recomandă un set de cuvinte alternative"
-
-msgid "IDS_IME_BODY_WORD_COMPLETION_POINT"
-msgstr "Punct de completare a cuvântului"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Introducere automată majusculă pentru prima literă din propoziţie"
-
-msgid "IDS_IME_BODY_WRITING_LANGUAGES"
-msgstr "Limbi de introducere"
-
-msgid "IDS_IME_BODY_CLEAR_LEARNING_DICTIONARY_JPN"
-msgstr "Clear learning dictionary"
-
-msgid "IDS_IME_BODY_DICTIONARY_FROM_CONTACTS"
-msgstr "Dicţionar din Contacte"
-
-msgid "IDS_IME_BODY_ENGLISH_PREDICTION"
-msgstr "Predicţie în limba engleză"
-
-msgid "IDS_IME_BODY_ENGLISH_USER_DICTIONARY"
-msgstr "Dicţionar de utilizator în limba engleză"
-
-msgid "IDS_IME_BODY_FLICK_INPUT_JPN"
-msgstr "Flick input"
-
-msgid "IDS_IME_BODY_INPUT_WORD_LEARNING_JPN"
-msgstr "Input word learning"
-
-msgid "IDS_IME_BODY_JAPANESE_USER_DICTIONARY_JPN"
-msgstr "Japanese user dictionary"
-
-msgid "IDS_IME_BODY_TOGGLE_INPUT_JPN"
-msgstr "Toggle input"
-
-msgid "IDS_IME_BODY_TYPING_ERROR_CORRECTION_JPN"
-msgstr "Typing error correction"
-
-msgid "IDS_IME_BODY_WILDCARD_PREDICTION_JPN"
-msgstr "Wildcard prediction"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Intrare continuă"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "S-a atins numărul maxim de limbi acceptate (%d)."
 
 msgid "IDS_IME_HEADER_KEYBOARD"
 msgstr "Tastatură"
 
-msgid "IDS_IME_BODY_WORD_COMPLETION"
-msgstr "Completare cuvinte"
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Neselectat"
 
-msgid "IDS_IME_BODY_LANG_BAHASA_MALAYSIA"
-msgstr "Bahasa Malaysia"
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Bifată"
 
-msgid "IDS_IME_BODY_ASSAMESE"
-msgstr "অসমীয়া"
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Casetă de bifare"
 
-msgid "IDS_IME_BODY_AUTOMATIC_FULL_STOP"
-msgstr "Introducere automată punct"
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Când ne putem întâlni?"
 
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Majusculă automată"
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Unde eşti?"
 
-msgid "IDS_IME_BODY_AUTO_SUBSTITUTION"
-msgstr "Înlocuire automată"
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Fără repet."
 
-msgid "IDS_IME_BODY_BASQUE"
-msgstr "Bască"
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Afiş. pe disp."
 
-msgid "IDS_IME_BODY_BULGARIAN"
-msgstr "Bulgară"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_CATALAN"
-msgstr "Catalană"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Anulare"
 
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Previzualizare caracter"
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Selectaţi şablonul"
 
-msgid "IDS_IME_BODY_CZECH"
-msgstr "Cehă"
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Cum merge treaba?"
 
-msgid "IDS_IME_BODY_DANISH"
-msgstr "Daneză"
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Ce s-a întâmplat?"
 
-msgid "IDS_IME_BODY_ENGLISH_HUNITED_STATES"
-msgstr "Engleză (Statele Unite ale Americii)"
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Mai vorbim."
 
-msgid "IDS_IME_BODY_ESTONIAN"
-msgstr "Estonă"
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Te sun mai târziu."
 
-msgid "IDS_IME_BODY_FAST"
-msgstr "Rapid"
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Modificare limbă"
 
-msgid "IDS_IME_BODY_INFO_SCAN"
-msgstr "Scanare informaţii"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Gata"
 
-msgid "IDS_IME_BODY_JAPANESE"
-msgstr "Japoneză"
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Pentru a activa înlocuirea automată, activaţi cel puţin o limbă."
 
-msgid "IDS_IME_BODY_KEYBOARD_TYPE"
-msgstr "Tip de tastatură"
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "Atingeţi bara de spaţiu pentru a accepta corecţia de text predictiv sau atingeţi tasta săgeată pentru a păstra textul actual."
 
-msgid "IDS_IME_BODY_LANDSCAPE_INPUT_OPTIONS"
-msgstr "Opţiuni de introducere în modul Peisaj"
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "Tastatură Qwertz"
 
-msgid "IDS_IME_BODY_LANG_AZERBAIJANI"
-msgstr "Azərbaycan"
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Urm."
 
-msgid "IDS_IME_BODY_LANG_BASQUE"
-msgstr "Euskara"
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Tastatură Kana"
 
-msgid "IDS_IME_BODY_LANG_BENGALI"
-msgstr "বাংলা"
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Tastatură Kana cu glisare"
 
-msgid "IDS_IME_BODY_LANG_CATALAN"
-msgstr "Català"
-
-msgid "IDS_IME_BODY_LANG_GALICIAN"
-msgstr "Galego"
-
-msgid "IDS_IME_BODY_LANG_GEORGIAN"
-msgstr "ქართული"
-
-msgid "IDS_IME_BODY_LANG_GUJARATI"
-msgstr "ગુજરાતી"
-
-msgid "IDS_IME_BODY_LANG_HINDI"
-msgstr "हिन्दी"
-
-msgid "IDS_IME_BODY_LANG_KANNADA"
-msgstr "ಕನ್ನಡ"
-
-msgid "IDS_IME_BODY_LANG_MALAYALAM"
-msgstr "മലയാളം"
-
-msgid "IDS_IME_BODY_LANG_MARATHI"
-msgstr "मराठी"
-
-msgid "IDS_IME_BODY_LANG_NEPALI"
-msgstr "नेपाली"
-
-msgid "IDS_IME_BODY_LANG_PUNJABI"
-msgstr "ਪੰਜਾਬੀ"
-
-msgid "IDS_IME_BODY_LANG_ROMANIAN"
-msgstr "Română"
-
-msgid "IDS_IME_BODY_LANG_SINHALA"
-msgstr "සිංහල"
-
-msgid "IDS_IME_BODY_LANG_TAMIL"
-msgstr "தமிழ்"
-
-msgid "IDS_IME_BODY_LANG_TELUGU"
-msgstr "తెలుగు"
-
-msgid "IDS_IME_BODY_LATVIAN"
-msgstr "Letonă"
-
-msgid "IDS_IME_BODY_MACEDONIAN"
-msgstr "Macedoneană"
-
-msgid "IDS_IME_BODY_MALAY"
-msgstr "Malaieză"
-
-msgid "IDS_IME_BODY_MAXIMUM_WORD_LENGTH_HPD_EXCEEDED"
-msgstr "S-a depăşit dimensiunea maximă pentru cuvânt (%d)"
-
-msgid "IDS_IME_BODY_MOAKEY"
-msgstr "MoAKey"
-
-msgid "IDS_IME_BODY_MOAKEY_TIP"
-msgstr "Sfat MoAKey"
-
-msgid "IDS_IME_BODY_MULTITAP_WORD_COMPLETION"
-msgstr "Completare cuvânt prin atingere multiplă"
-
-msgid "IDS_IME_BODY_NO_OPTIONS"
-msgstr "Nu sunt opţiuni"
-
-msgid "IDS_IME_BODY_PORTRAIT_INPUT_OPTIONS"
-msgstr "Opţiuni de introducere în modul Portret"
-
-msgid "IDS_IME_BODY_PREDICTION"
-msgstr "Anticipare"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
-msgstr "Text predictiv"
-
-msgid "IDS_IME_BODY_PROCESSING_ING"
-msgstr "Se procesează..."
-
-msgid "IDS_IME_BODY_REGIONAL_INPUT"
-msgstr "Introducere regională"
-
-msgid "IDS_IME_BODY_SELECTION"
-msgstr "Selecţie"
-
-msgid "IDS_IME_BODY_SHORTCUT"
-msgstr "Comandă rapidă"
-
-msgid "IDS_IME_BODY_SPELL_CORRECTION"
-msgstr "Corectare ortografie"
-
-msgid "IDS_IME_BODY_SUBSTITUTION"
-msgstr "Înlocuire"
-
-msgid "IDS_IME_BODY_TAP_TO_START_LISTENING_AGAIN"
-msgstr "Atingeţi pentru a începe să ascultaţi din nou"
-
-msgid "IDS_IME_BODY_THEME"
-msgstr "Temă"
-
-msgid "IDS_IME_BODY_TONE"
-msgstr "Ton"
-
-msgid "IDS_IME_BODY_WORDS_NOT_RECOGNISED_TRY_AGAIN_SPEAKING_SLOWLY_AND_CLEARLY"
-msgstr "Cuvinte nerecunoscute. Încercaţi din nou, vorbind încet şi clar"
-
-msgid "IDS_IME_HEADER_NEW_WORDS"
-msgstr "Cuvinte noi"
-
-msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
-msgstr "Tastatură 3 x 4"
-
-msgid "IDS_IME_OPT_AFTER_1_LETTER"
-msgstr "După 1 literă"
-
-msgid "IDS_IME_OPT_AFTER_PD_LETTERS"
-msgstr "După %d litere"
-
-msgid "IDS_IME_OPT_BLACK"
-msgstr "Negru"
-
-msgid "IDS_IME_OPT_CHUNJIYIN_KOR"
-msgstr "Chunjiyin"
-
-msgid "IDS_IME_OPT_COLOUR"
-msgstr "Culoare"
-
-msgid "IDS_IME_OPT_DO_NOT_SHOW"
-msgstr "Nu se afişează"
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "Tastatură germană"
 
 msgid "IDS_IME_OPT_ENTER_ABB"
 msgstr "Introd."
 
-msgid "IDS_IME_OPT_FULL_QWERTY_KEYBOARD"
-msgstr "Tastatură completă qwerty"
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Tastatură Chunjiin"
 
-msgid "IDS_IME_OPT_GO_ABB"
-msgstr "Pornire"
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Tastatură bulgară fonetică"
 
-msgid "IDS_IME_OPT_JOIN_M_SIGN_IN"
-msgstr "Participare"
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Tastatură bulgară"
 
-msgid "IDS_IME_OPT_LANG_CZECH"
-msgstr "Čeština"
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "Tastatură Azerty"
 
-msgid "IDS_IME_OPT_LANG_DANISH"
-msgstr "Dansk"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Atenţie"
 
-msgid "IDS_IME_OPT_LANG_FINNISH"
-msgstr "Suomi"
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "Tastatură 3 x 4"
 
-msgid "IDS_IME_OPT_LANG_HUNGARIAN"
-msgstr "Magyar"
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Vibraţie"
 
-msgid "IDS_IME_OPT_LANG_IRISH"
-msgstr "Gaeilge"
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Glisare bară de spaţiu"
 
-msgid "IDS_IME_OPT_LANG_KAZAKH"
-msgstr "Қазақ"
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Sunet"
 
-msgid "IDS_IME_OPT_LANG_KOREAN"
-msgstr "한국어"
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "Resetare setări"
 
-msgid "IDS_IME_OPT_LANG_POLISH"
-msgstr "Polski"
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Glisare tastatură"
 
-msgid "IDS_IME_OPT_LANG_SLOVAK"
-msgstr "Slovenčina"
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Previzualizare caracter"
 
-msgid "IDS_IME_OPT_LANG_UKRAINIAN"
-msgstr "Українська"
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Înlocuire automată"
 
-msgid "IDS_IME_OPT_LANG_WELSH"
-msgstr "Cymraeg"
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Introd. autom. punctuaţie"
 
-msgid "IDS_IME_OPT_LOG_IN_ABB"
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Introducere inteligentă"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Feedback atingere taste"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Limbă tastatură"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Conect."
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Trim."
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Căut."
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
 msgstr "Conec."
 
-msgid "IDS_IME_OPT_MINI_QWERTY_KEYBOARD"
-msgstr "Tastatură mini qwerty"
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Asoc."
 
-msgid "IDS_IME_OPT_MOAKEY_KEYBOARD"
-msgstr "Tastatură MoAKey"
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Acces."
 
-msgid "IDS_IME_OPT_MOAKEY_POP_UP"
-msgstr "Fereastră de tip pop-up MoAKey"
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Yen"
 
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD"
-msgstr "Tastatură Qwerty"
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Won"
 
-msgid "IDS_IME_OPT_SHADES_OF_GREY"
-msgstr "Umbre de gri"
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Stea albă"
 
-msgid "IDS_IME_OPT_SHOW_FOR_01_SECS"
-msgstr "Afişare pentru 0,1 sec."
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Inimioară albă"
 
-msgid "IDS_IME_OPT_SHOW_FOR_02_SECS"
-msgstr "Afişare pentru 0,2 sec."
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "Tastatură Qwerty VNI"
 
-msgid "IDS_IME_OPT_SHOW_FOR_03_SECS"
-msgstr "Afişare pentru 0,3 sec."
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Tastatură virtuală activată"
 
-msgid "IDS_IME_OPT_SLOW"
-msgstr "Încet"
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Utilizarea controlului cursorului va dezactiva introducerea continuă."
 
-msgid "IDS_IME_OPT_SPEED"
-msgstr "Viteză"
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Utilizarea introducerii continue va dezactiva controlul cursorului."
 
-msgid "IDS_IME_OPT_STROKE_CHN"
-msgstr "Stroke"
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Caracter de subliniere"
 
-msgid "IDS_IME_OPT_THICK"
-msgstr "Groasă"
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Tastatură Qwerty în turcă"
 
-msgid "IDS_IME_OPT_WHITE"
-msgstr "Alb"
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Tastatură F în turcă"
 
-msgid "IDS_IME_OPT_WRITE_USING_DRAWING_PANEL"
-msgstr "Scriere pe şevalet"
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Pentru a schimba limba, glisaţi bara de spaţiu orizontal."
 
-msgid "IDS_IME_OPT_WRITE_USING_FULL_SCREEN"
-msgstr "Scriere pe ecran complet"
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Ori"
 
-msgid "IDS_IME_POP_LANG_ESTONIAN"
-msgstr "Eesti"
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tildă"
 
-msgid "IDS_IME_POP_LANG_ICELANDIC"
-msgstr "íslenska"
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Tastatura Samsung învaţă stilul dvs. de scriere şi încearcă să ofere predicţii pentru cuvintele pe care doriţi să le scrieţi, reţinând ceea ce introduceţi. Parolele vor fi excluse, dar informaţiile personale, cum ar fi numerele cardurilor de credit, vor fi stocate"
 
-msgid "IDS_IME_POP_LANG_LATVIAN"
-msgstr "Latviešu"
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Tastatură Qwerty telex"
 
-msgid "IDS_IME_POP_LANG_LITHUANIAN"
-msgstr "Lietuvių"
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "Atingeţi pentru a utiliza tastatura virtuală."
 
-msgid "IDS_IME_POP_LANG_MACEDONIAN"
-msgstr "Македонски"
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "Menţineţi apăsată această tastă pentru a vedea lista de simboluri. Selectaţi unul pentru utilizarea drept comandă rapidă."
 
-msgid "IDS_IME_POP_LANG_NORWEGIAN"
-msgstr "Norsk"
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Tastatură cu simboluri %1$d din %2$d"
 
-msgid "IDS_IME_POP_LANG_SERBIAN"
-msgstr "Srpski"
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Simboluri"
 
-msgid "IDS_IME_POP_LANG_SLOVENIAN"
-msgstr "Slovenščina"
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Spaţiu"
 
-msgid "IDS_IME_POP_LANG_SWEDISH"
-msgstr "Svenska"
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Bară oblică spre dreapta"
 
-msgid "IDS_IME_OPT_LANG_DUTCH"
-msgstr "Nederlands"
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Ghilimele simple"
 
-msgid "IDS_IME_OPT_LANG_ENGLISH"
-msgstr "English"
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Se afişează un balon cu un caracter mare atunci când se apasă o tastă de pe o tastatură QWERTY."
 
-msgid "IDS_IME_OPT_LANG_FRENCH"
-msgstr "Français"
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Tasta Shift este blocată."
 
-msgid "IDS_IME_OPT_LANG_GERMAN"
-msgstr "Deutsch"
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Tasta Shift este activată."
 
-msgid "IDS_IME_OPT_LANG_GREEK"
-msgstr "Ελληνικά"
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Tasta Shift este dezactivată."
 
-msgid "IDS_IME_OPT_LANG_RUSSIAN"
-msgstr "Русский"
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Setări"
 
-msgid "IDS_IME_OPT_LANG_SPANISH"
-msgstr "Español"
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "Septembrie"
 
-msgid "IDS_IME_OPT_LANG_TURKISH"
-msgstr "Türkçe"
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Punct şi virgulă"
 
-msgid "IDS_IME_POP_LANG_ITALIAN"
-msgstr "Italiano"
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Paranteză unghiulară dreapta"
 
-msgid "IDS_IME_POP_LANG_PORTUGUESE"
-msgstr "Português"
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Ghilimele"
 
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Trebuie să selectaţi cel puţin o opţiune în setările tastaturii"
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Semn de întrebare"
 
-msgid "IDS_IME_BODY_HARDWARE_KEYBOARD"
-msgstr "Tastatură hardware"
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "„%s” va fi eliminat din cuvintele învăţate."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Opţiuni text predictiv"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Text predictiv"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Liră"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Plus"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Bară verticală"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Procent"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Paranteză de deschidere"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Paranteză dreaptă de deschidere"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Acoladă de deschidere"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Octombrie"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Nicio limbă selectată"
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "Noiembrie"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Mutaţi cursorul glisând cu degetul pe tastatură."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Mai"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Martie"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Litere"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Mai mic decât"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Paranteză unghiulară stânga"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Tip de tastatură"
 
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Setări tastatură"
 
-msgid "IDS_IME_BODY_SOFTWARE_KEYBOARD"
-msgstr "Tastatură software"
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Iunie"
 
-msgid "IDS_IME_BODY_DUTCH"
-msgstr "Olandeză"
+msgid "IDS_IME_BODY_JULY"
+msgstr "Iulie"
 
-msgid "IDS_IME_BODY_ENGLISH"
-msgstr "Engleză"
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Ianuarie"
 
-msgid "IDS_IME_OPT_QWERTY"
-msgstr "Qwerty"
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Semnul întrebării inversat"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Semnul exclamării inversat"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Intrare detectată de la tastatura hardware"
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Dacă sunt activate datele personalizate, tastatura Samsung poate învăţa stilul dvs. de a scrie de pe Facebook, Gmail, Twitter, Mesaje şi Contacte şi vă poate oferi predicţii şi corecturi adaptate"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Diez"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Mai mare decât"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Accent grav"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Glisaţi în sus pe o tastă pentru a vizualiza simbolurile şi caracterele alternative."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "Glisaţi tastatura în jos pentru a o ascunde."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Introducere prin glisare"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Februarie"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Semnul exclamării"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Euro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Este egal cu"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Introduceţi text glisând cu degetul pe tastatură. Această caracteristică este optimizată pentru tastatura Qwerty."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Introduceţi text glisând cu degetul pe tastatură."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Enter"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Activaţi datele personalizate"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Emoticonuri"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Punct"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dolar"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "Împărţit la"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "Ştergere spaţiu"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Decembrie"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Liniuţă"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Cheie particularizabilă"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Control cursor"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Simbol valutar"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Intrare continuă"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Virgulă"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Două puncte"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Paranteză de închidere"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Paranteză dreaptă de închidere"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Acoladă de închidere"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Clipboard"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Circumflex"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Previzualizare caracter"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Mare"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Backspace"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Bară oblică inversă"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Spaţiere automată"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Majusculă automată"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Introducere automată de spaţii între cuvinte"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Introduceţi automat semnul punct atingând de două ori bara de spaţiu."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Introducere automată majusculă pentru prima literă din propoziţie"
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "August"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "A rond"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Asterisc"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "Aprilie"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "Şi"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Buton pentru extinderea listei"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Introducere voce"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Tastatura oferă funcţii precum introducerea continuă şi textul predictiv."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "Atingeţi pictograma pentru voce pentru a utiliza introducerea vocală."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "Atingeţi câmpul de introducere a textului în timp ce tastatura este deschisă, pentru a afişa reperul. Mutaţi reperul pentru a muta cursorul"
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "Atingeţi pictograma de setări pentru a deschide setările tastaturii Samsung."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "Atingeţi butonul de mod pentru a comuta între caractere şi simboluri."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "Atingeţi pictograma pentru tastatură în panoul de notificări pentru a schimba metoda de introducere."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "Atingeţi pictograma emoticon pentru a insera emoticoane."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "Atingeţi pictograma clipboard pentru a deschide clipboardul."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "Atingeţi orice câmp de text pentru a deschide tastatura."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "Atingeţi lung butonul personalizabil pentru a selecta emoticoanele, vocea, clipboardul, setările pentru tastatură sau semnele de punctuaţie."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "Apăsaţi lung tasta particularizabilă pentru a selecta setările pentru voce, clipboard şi tastatură şi semnele de punctuaţie."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Atingeţi lung un text pentru a-l selecta. Reperul cursorului constă din reperul de început şi cel de sfârşit. Mutaţi ambele repere pentru a selecta textul. Eliberaţi reperul pentru a selecta copierea, decuparea, lipirea şi pentru alte opţiuni"
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Apăsaţi butonul înapoi pentru a închide tastatura."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Deschideţi meniul Setări, apoi selectaţi Limbă şi tastatură > Tastatură > Setări tastatură > Text predictiv."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Dacă în setările tastaturii sunt selectate două sau mai multe limbi, atingeţi tasta glob pentru a trece de la o limbă la alta."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Dacă sunt activate datele personalizate, tastatura Samsung poate învăţa stilul dvs. de a scrie de pe Gmail, Twitter, Mesaje şi Contacte şi vă poate oferi predicţii şi corecturi adaptate."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Termeni şi condiţii"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Toate"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Limbă"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Nebifată"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "De acord"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Tastatură Qwerty"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Date personalizate"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Apelaţi-mă mai târziu."
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Pagina web va fi deschisă pe ecranul dispozitivului mobil."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "Atingeţi OK pentru a utiliza această caracteristică. Datele personalizate de pe dispozitivul mobil vor fi utilizate şi de către %s. Dacă nu doriţi stocarea datelor personale, accesaţi setările pentru tastatură şi debifaţi Activare Date personalizate."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Setările tastaturii, cu excepţia limbilor descărcate, vor fi resetate."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Se va introduce automat litera cea mai potrivită în context."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "Menţineţi apăsată bara de spaţiu pentru a utiliza comenzile vocale."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "Menţineţi apăsată tasta opţiuni pentru a vizualiza o listă de opţiuni."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "Glisaţi peste bara de spaţiu la stânga sau la dreapta pentru a schimba limbile."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Niciun şablon"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Funcţii introducere inteligentă"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Majusculă automată"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Transformaţi automat în majusculă prima literă a fiecărei propoziţii."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Introducere automată punctuaţie"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Resetare"
 

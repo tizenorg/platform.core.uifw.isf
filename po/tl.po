@@ -1,0 +1,702 @@
+msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
+msgstr "Radio button"
+
+msgid "IDS_BT_SK_OPEN"
+msgstr "Buksan"
+
+msgid "IDS_CAM_BODY_SELECTED_T_TTS"
+msgstr "Napili"
+
+msgid "IDS_EMAIL_SK_CLOSE"
+msgstr "Isara"
+
+msgid "IDS_ST_BODY_HELP"
+msgstr "Tulong"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Wala"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "I-off"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "I-on"
+
+msgid "IDS_ST_BODY_SETTINGS"
+msgstr "Mga Setting"
+
+msgid "IDS_ST_SK_REMOVE"
+msgstr "Alisin"
+
+msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
+msgstr "Gear Azerty keyboard"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
+msgstr "Gear Qwerty keyboard"
+
+msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
+msgstr "Gear Qwertz keyboard"
+
+msgid "IDS_CAM_OPT_FACES"
+msgstr "Mga Mukha"
+
+msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
+msgstr "Isinara ang pop-up."
+
+msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
+msgstr "Ipinapakita ang pop-up"
+
+msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
+msgstr "Mga Numero"
+
+msgid "IDS_ST_BODY_PLACES"
+msgstr "Lugar"
+
+msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
+msgstr "Paggamit sa tuluy-tuloy na input"
+
+msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
+msgstr "Paggamit ng paghula ng text"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
+msgstr "Binabago ang paraan ng input"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
+msgstr "Binabago ang input mode"
+
+msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
+msgstr "Pinapalitan ang wika"
+
+msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
+msgstr "Isinasara ang keyboard"
+
+msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
+msgstr "Paglilipat sa cursor"
+
+msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
+msgstr "Pagbukas sa keyboard"
+
+msgid "IDS_IME_HEADER_SELECTING_TEXT"
+msgstr "Pagpili ng text"
+
+msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
+msgstr "Using Samsung keyboard"
+
+msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
+msgstr "Kumpletuhin o palitan ang salitang tina-type mo gamit ang pinakamalamang na salita kapag nag-tap ka sa space bar."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
+msgstr "I-double tap upang isara ang listahan."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "I-tap nang dalawang beses upang i-edit ang field na ito."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
+msgstr "I-double tap upang buksan ang listahan."
+
+msgid "IDS_ST_BODY_EXPANDABLE_LIST"
+msgstr "Napapalawak na listahan"
+
+msgid "IDS_ST_BODY_ON_OFF_BUTTON"
+msgstr "On/off button"
+
+msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
+msgstr "Samsung keyboard"
+
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Higit pang mga setting"
+
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Dapat na pumili ka ng kahit isang wika sa mga setting ng keyboard."
+
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Pumili ng wika sa input"
+
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Naabot ang maximum na bilang ng sinusuportahan na bilang ng mga wika (%d)."
+
+msgid "IDS_IME_HEADER_KEYBOARD"
+msgstr "Keyboard"
+
+msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
+msgstr "Hindi pinili"
+
+msgid "IDS_MSG_BODY_TICKED_T_TTS"
+msgstr "Naka-tick"
+
+msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
+msgstr "Tick box"
+
+msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
+msgstr "Kailan tayo pwedeng magkita?"
+
+msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
+msgstr "Nasaan ka?"
+
+msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
+msgstr "Wag ulitin"
+
+msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
+msgstr "Show on device"
+
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
+
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Ikansela"
+
+msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
+msgstr "Pumili ng template"
+
+msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
+msgstr "Kamusta na?"
+
+msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
+msgstr "Anong balita?"
+
+msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
+msgstr "Usap tayo sa susunod."
+
+msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
+msgstr "Tawagan kita mamaya."
+
+msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
+msgstr "Palitan ang wika"
+
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Tapos"
+
+msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
+msgstr "Upang paganahin ang auto replacement, magpagana ng kahit isang wika."
+
+msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
+msgstr "I-tap ang space key upang tanggapin ang hinulaang pagwawasto sa text o i-tap ang arrow key upang panatilihin ang kasalukuyang text."
+
+msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
+msgstr "QWERTZ keyboard"
+
+msgid "IDS_IME_OPT_NEXT_ABB"
+msgstr "Next"
+
+msgid "IDS_IME_OPT_KANA_KEYBOARD"
+msgstr "Kana keyboard"
+
+msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
+msgstr "Kana flick keyboard"
+
+msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
+msgstr "German na keyboard"
+
+msgid "IDS_IME_OPT_ENTER_ABB"
+msgstr "Enter"
+
+msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
+msgstr "Chunjiin keyboard"
+
+msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
+msgstr "Bulgarian phonetic keyboard"
+
+msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
+msgstr "Bulgarian keyboard"
+
+msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
+msgstr "AZERTY keyboard"
+
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Atensyon"
+
+msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
+msgstr "3 x 4 keyboard"
+
+msgid "IDS_IME_MBODY_VIBRATION"
+msgstr "Pag-vibrate"
+
+msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
+msgstr "Pag-swipe sa space bar"
+
+msgid "IDS_IME_MBODY_SOUND"
+msgstr "Tunog"
+
+msgid "IDS_IME_MBODY_RESET_SETTINGS"
+msgstr "I-reset ang mga setting."
+
+msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
+msgstr "Pag-swipe sa keyboard"
+
+msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
+msgstr "Preview ng character"
+
+msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
+msgstr "Awtomatikong pagpapalit"
+
+msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
+msgstr "Auto punctuate"
+
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Smart typing"
+
+msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
+msgstr "Feedback sa pag-tap ng key"
+
+msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
+msgstr "Mga wika ng input"
+
+msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
+msgstr "Sign in"
+
+msgid "IDS_IME_BUTTON_SEND_M_KEYBOARD"
+msgstr "Ipadala"
+
+msgid "IDS_IME_BUTTON_SEARCH_M_KEYBOARD"
+msgstr "Hanapin"
+
+msgid "IDS_IME_BUTTON_LOG_IN_M_KEYBOARD"
+msgstr "Log in"
+
+msgid "IDS_IME_BUTTON_JOIN_M_KEYBOARD"
+msgstr "Sumali"
+
+msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
+msgstr "Pumunta"
+
+msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
+msgstr "Yen"
+
+msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
+msgstr "Won"
+
+msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
+msgstr "Puting bituin"
+
+msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
+msgstr "Puting puso"
+
+msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
+msgstr "VNI QWERTY keyboard"
+
+msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
+msgstr "Pinagana ang virtual keyboard."
+
+msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
+msgstr "Hindi papaganahin ang paggamit ng kontrol sa cursor ang tuloy-tuloy na input."
+
+msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
+msgstr "Hindi papaganahin ng paggamit sa tuloy-tuloy na input ang kontrol sa cursor."
+
+msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
+msgstr "Underscore"
+
+msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
+msgstr "Turkish QWERTY keyboard"
+
+msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
+msgstr "Turkish F keyboard"
+
+msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
+msgstr "Upang palitan ang wika, mag-swipe nang pahalang sa space bar."
+
+msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
+msgstr "Times"
+
+msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
+msgstr "Tilde"
+
+msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
+msgstr "Pinag-aaralan ng Samsung keyboard ang iyong istilo ng pagsusulat at sinusubukan nitong hulaan kung ano ang gusto mong i-type sa pamamagitan ng pagsasaulo ng mga ipinapasok mo. Hindi isasama ang mga password, ngunit iiimbak ang personal na impormasyon, gaya ng mga credit card number"
+
+msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
+msgstr "Telex QWERTY keyboard"
+
+msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
+msgstr "I-tap upang gamitin ang virtual keyboard."
+
+msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
+msgstr "I-tap nang matagal ang key na ito upang makita ang listaha ng simbolo. Pumili ng isa upang gamitin ito bilang isang shortcut."
+
+msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
+msgstr "Symbol keyboard %1$d ng %2$d"
+
+msgid "IDS_IME_BODY_SYMBOLS"
+msgstr "Mga Simbolo"
+
+msgid "IDS_IME_BODY_SPACE"
+msgstr "Puwang"
+
+msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
+msgstr "Slash"
+
+msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
+msgstr "Isang panipi"
+
+msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
+msgstr "Magpakita ng bubble ng malaking character kapag na-tap ang isang key sa isang QWERTY na keyboard."
+
+msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
+msgstr "Naka-lock ang Shift."
+
+msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
+msgstr "Naka-on ang Shift."
+
+msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
+msgstr "Naka-off ang Shift."
+
+msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
+msgstr "Mga Setting"
+
+msgid "IDS_IME_BODY_SEPTEMBER"
+msgstr "Setyembre"
+
+msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
+msgstr "Tuldok-kuwit"
+
+msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Right angle quotes"
+
+msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Mga Panipi"
+
+msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Takdang pananong"
+
+msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
+msgstr "Matatanggal ang ‘%s’ mula sa mga natutunang salita."
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
+msgstr "Mga pagpipilian sa predictive text"
+
+msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
+msgstr "Predictive text"
+
+msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
+msgstr "Pound"
+
+msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
+msgstr "Plus"
+
+msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
+msgstr "Pipe"
+
+msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
+msgstr "Porsyento"
+
+msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Opening parenthesis"
+
+msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Opening bracket"
+
+msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Opening brace"
+
+msgid "IDS_IME_BODY_OCTOBER"
+msgstr "Oktubre"
+
+msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
+msgstr "Walang piniling mga wika."
+
+msgid "IDS_IME_BODY_NOVEMBER"
+msgstr "Nobyembre"
+
+msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Galawin ang cursor sa pamamagitan ng pagsa-slide ng daliri sa keyboard."
+
+msgid "IDS_IME_BODY_MAY"
+msgstr "Mayo"
+
+msgid "IDS_IME_BODY_MARCH"
+msgstr "Marso"
+
+msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
+msgstr "Mga Titik"
+
+msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Mas mababa sa"
+
+msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
+msgstr "Left angle quotes"
+
+msgid "IDS_IME_BODY_KEYBOARD_TYPE"
+msgstr "Uri ng keyboard"
+
+msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
+msgstr "Mga setting ng keyboard"
+
+msgid "IDS_IME_BODY_JUNE"
+msgstr "Hunyo"
+
+msgid "IDS_IME_BODY_JULY"
+msgstr "Hulyo"
+
+msgid "IDS_IME_BODY_JANUARY"
+msgstr "Enero"
+
+msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Baliktad na takdang pananong"
+
+msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Baliktad na takdang padamdam"
+
+msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
+msgstr "Nakakita ng input mula sa hardware na keyboard."
+
+msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
+msgstr "Kung pinagana ang na-personalize na data, maaaring matutunan ng Samsung keyboard ang iyong istilo ng pagsusulat mula sa Facebook, Gmail, Twitter, Mga Mensahe at Mga Contact, at makakapag-alok ito ng mga hula at pagwawastong iniangkop sa iyo"
+
+msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
+msgstr "Hash"
+
+msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
+msgstr "Mas malaki sa"
+
+msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
+msgstr "Grave accent"
+
+msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
+msgstr "Mag-flick pataas sa isang key upang makakita ng mga simbolo at alternatibong character."
+
+msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
+msgstr "I-flick ang keyboard pababa upang itago ito."
+
+msgid "IDS_IME_BODY_FLICK_INPUT"
+msgstr "Flick input"
+
+msgid "IDS_IME_BODY_FEBRUARY"
+msgstr "Pebrero"
+
+msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
+msgstr "Takdang padamdam"
+
+msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
+msgstr "Euro"
+
+msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
+msgstr "Equals"
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
+msgstr "Magpasok ng text sa pamamagitan ng pag-slide ng iyong daliri sa keyboard. Naka-optimize ang feature na ito para sa QWERTY keyboard."
+
+msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
+msgstr "Maglagay ng text sa pamamagitan ng pag-slide ng iyong daliri sa keyboard."
+
+msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
+msgstr "Enter"
+
+msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
+msgstr "Paganahin ang na-personalize na data"
+
+msgid "IDS_IME_BODY_EMOTICONS"
+msgstr "Mga Emoticon"
+
+msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
+msgstr "Tuldok"
+
+msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
+msgstr "Dollar"
+
+msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
+msgstr "I-divide sa"
+
+msgid "IDS_IME_BODY_DELETE_SPACE"
+msgstr "I-delete ang puwang"
+
+msgid "IDS_IME_BODY_DECEMBER"
+msgstr "Disyembre"
+
+msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
+msgstr "Gitling"
+
+msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
+msgstr "Nako-customize na key"
+
+msgid "IDS_IME_BODY_CURSOR_CONTROL"
+msgstr "Kontrol sa cursor"
+
+msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
+msgstr "Simbolo ng pera"
+
+msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
+msgstr "Tuluy-tuloy na pag-input"
+
+msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
+msgstr "Kuwit"
+
+msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
+msgstr "Tutuldok"
+
+msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
+msgstr "Panghuling panaklong"
+
+msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
+msgstr "Panghuling bracket"
+
+msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
+msgstr "Panghuling brace"
+
+msgid "IDS_IME_BODY_CLIPBOARD"
+msgstr "Clipboard"
+
+msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
+msgstr "Circumflex"
+
+msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
+msgstr "Character preview"
+
+msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
+msgstr "Malaking"
+
+msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
+msgstr "Backspace"
+
+msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
+msgstr "Backslash"
+
+msgid "IDS_IME_BODY_AUTO_SPACING"
+msgstr "Auto spacing"
+
+msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
+msgstr "Awtomatikong capitalization"
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
+msgstr "Awtomatikong magpasok ng mga espasyo sa pagitan ng mga salita."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
+msgstr "Awtomatikong magpasok ng full stop sa pamamagitan ng pag-tap sa space bar nang dalawang beses."
+
+msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
+msgstr "Awtomatikong gawing malaking titik ang unang titik ng pangungusap."
+
+msgid "IDS_IME_BODY_AUGUST"
+msgstr "Agosto"
+
+msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
+msgstr "At"
+
+msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
+msgstr "Asterisk"
+
+msgid "IDS_IME_BODY_APRIL"
+msgstr "Abril"
+
+msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
+msgstr "At"
+
+msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
+msgstr "Button para sa pagpapalawak ng listahan"
+
+msgid "IDS_HELP_BODY_VOICE_INPUT"
+msgstr "Input ng boses"
+
+msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
+msgstr "Nagbibigay ang keyboard ng mga function gaya ng tuluy-tuloy na input at predictive text."
+
+msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
+msgstr "I-tap ang icon na voice upang gamitin ang input na voice."
+
+msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
+msgstr "I-tap ang field ng pagpapasok ng text habang nakabukas ang keyboard upang palabasin ang handle. Igalaw ang handle upang maigalaw ang cursor."
+
+msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
+msgstr "I-tap ang icon ng mga setting upang buksan ang mga setting ng Samsung keyboard."
+
+msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
+msgstr "I-tap ang mode button upang mag-toggle sa mga character at simbolo."
+
+msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
+msgstr "I-tap ang icon na keyboard sa notification panel upang baguhin ang paraan ng pag-input."
+
+msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
+msgstr "I-tap ang icon ng emoticon upang magpasok ng mga emoticon."
+
+msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
+msgstr "I-tap ang icon ng clipboard upang buksan ang clipboard."
+
+msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
+msgstr "I-tap ang anumang field ng text upang buksan ang keyboard."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
+msgstr "I-tap nang matagal ang customizable key upang piliin ang mga emoticon, boses, clipboard, mga setting ng keyboard, o mga bantas."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
+msgstr "I-tap nang matagal ang nako-customize na key upang piliin ang mga setting ng boses, clipboard, at keyboard, at mga bantas."
+
+msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
+msgstr "Mag-tap nang matagal sa isang bahagi ng text upang piliin ito. Ang isang cursor handle ay may handle sa umpisa at handle sa dulo. Igalaw ang dalawang handle upang pumili ng text. Bitawan ang handle upang piliin ang mga opsyong kopyahin, i-cut, i-paste, at iba pa."
+
+msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
+msgstr "Pindutin ang back key upang isara ang keyboard."
+
+msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
+msgstr "Buksan ang Mga Setting, pagkatapos ay piliin ang Wika at keyboard > Keyboard > Mga setting ng keyboard > Predictive text."
+
+msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
+msgstr "Kung dalawa o higit pang mga wika ang pinili sa mga setting ng keyboard, i-tap ang globe key upang magpalipat-lipat sa mga ito."
+
+msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
+msgstr "Kung pinagana ang personalized na data, malalaman ng keyboard ng Samsung ang iyong estilo ng pagsusulat, mula sa Gmail, Twitter, Mga Mensahe, at Mga Contact, at mag-aalok ng mga hula at pagwawasto na iniakma sa iyo."
+
+msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
+msgstr "Mga tuntunin at kundisyon"
+
+msgid "IDS_MUSIC_BUTTON_ALL"
+msgstr "Lahat"
+
+msgid "IDS_ST_BODY_LANGUAGE"
+msgstr "Wika"
+
+msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
+msgstr "Hindi naka-tick"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Sang-ayon"
+
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "QWERTY keyboard"
+
+msgid "IDS_IME_MBODY_PERSONALISED_DATA"
+msgstr "Na-personalize na data"
+
+msgid "IDS_CST_BODY_CALL_ME_LATER"
+msgstr "Tawagan ako sa ibang pagkakataon"
+
+msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
+msgstr "Bubuksan ang webpage na ito sa screen ng iyong mobile device."
+
+msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
+msgstr "I-tap ang OK upang magamit ang feature na ito. Ang naka-personalize na data mula sa iyong mobile device ay magagamit din ng %s. Kung hindi mo gustong maimbak ang iyong personal na data, pumunta sa mga setting ng keyboard at alisan ng check ang na-personalize na data."
+
+msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
+msgstr "Ire-reset ang mga setting ng keyboard, maliban sa na-download na mga wika."
+
+msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
+msgstr "Awtomatikong ilalagay ang titik na umaakma sa konteksto."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
+msgstr "I-tap at i-hold ang space key para gumagamit ng voice input."
+
+msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
+msgstr "I-tap at i-hold ang ang mga option key para tingnan ang listahan ng mga opsiyon."
+
+msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
+msgstr "Maaaring matutunan ng Samsung keyboard ang inilagay na text para pahusayin ang auto replacement at magbigay ng mga mas mahusay na resulta sa paghula. Hindi kasama dito ang impormasyon ng seguridad, gaya ng mga password at mga numero ng credit card."
+
+msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
+msgstr "I-swipe ang space bar pakaliwa o pakanan upang magpalit ng wika."
+
+msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
+msgstr "Walang mga template"
+
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Mga function ng Smart input"
+
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Awto capitalize"
+
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Awtomatikong palakihin ang unang titik ng bawat pangungusap."
+
+msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
+msgstr "Auto-punctuate"
+
+msgid "IDS_IME_MBODY_RESET"
+msgstr "I-reset"
+
