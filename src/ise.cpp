@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <vconf.h>
 
 #ifndef WAYLAND
 #include <Ecore_X.h>
@@ -755,8 +756,12 @@ ise_create()
 
             read_ise_config_values();
             _language_manager.set_enabled_languages(g_config_values.enabled_languages);
-
             _language_manager.select_language(g_config_values.selected_language.c_str());
+            vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, g_config_values.auto_capitalise);
+            vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, g_config_values.auto_punctuate);
+            g_ui->enable_sound (g_config_values.sound_on);
+            g_ui->enable_vibration (g_config_values.vibration_on);
+            g_ui->enable_magnifier (g_config_values.preview_on);
         }
 
         SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);

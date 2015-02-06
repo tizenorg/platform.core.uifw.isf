@@ -32,6 +32,11 @@ extern CSCLCore g_core;
 CONFIG_VALUES::CONFIG_VALUES() {
     keypad_mode = KEYPAD_MODE_QTY; // keypad_mode
     prediction_on = FALSE; // prediction_on
+    auto_capitalise = TRUE;
+    auto_punctuate = TRUE;
+    sound_on = TRUE;
+    vibration_on = TRUE;
+    preview_on = TRUE;
 };
 
 CONFIG_VALUES g_config_values;
@@ -57,6 +62,21 @@ void read_ise_config_values() {
     if (g_core.config_read_string(ISE_CONFIG_SELECTED_LANGUAGE, string_value)) {
         g_config_values.selected_language = string_value;
     }
+    if (g_core.config_read_int(ISE_CONFIG_AUTO_CAPITALISE, integer_value)) {
+        g_config_values.auto_capitalise = integer_value;
+    }
+    if (g_core.config_read_int(ISE_CONFIG_AUTO_PUNCTUATE, integer_value)) {
+        g_config_values.auto_punctuate = integer_value;
+    }
+    if (g_core.config_read_int(ISE_CONFIG_SOUND_ON, integer_value)) {
+        g_config_values.sound_on = integer_value;
+    }
+    if (g_core.config_read_int(ISE_CONFIG_VIBRATION_ON, integer_value)) {
+        g_config_values.vibration_on = integer_value;
+    }
+    if (g_core.config_read_int(ISE_CONFIG_PREVIEW_ON, integer_value)) {
+        g_config_values.preview_on = integer_value;
+    }
 }
 
 void write_ise_config_values() {
@@ -70,6 +90,11 @@ void write_ise_config_values() {
     }
     g_core.config_write_string(ISE_CONFIG_ENABLED_LANGUAGES, string_value);
     g_core.config_write_string(ISE_CONFIG_SELECTED_LANGUAGE, g_config_values.selected_language);
+    g_core.config_write_int(ISE_CONFIG_AUTO_CAPITALISE, g_config_values.auto_capitalise);
+    g_core.config_write_int(ISE_CONFIG_AUTO_PUNCTUATE, g_config_values.auto_punctuate);
+    g_core.config_write_int(ISE_CONFIG_SOUND_ON, g_config_values.sound_on);
+    g_core.config_write_int(ISE_CONFIG_VIBRATION_ON, g_config_values.vibration_on);
+    g_core.config_write_int(ISE_CONFIG_PREVIEW_ON, g_config_values.preview_on);
     g_core.config_reload();
 }
 
@@ -78,5 +103,10 @@ void erase_ise_config_values() {
     g_core.config_erase(ISE_CONFIG_PREDICTION_ON);
     g_core.config_erase(ISE_CONFIG_ENABLED_LANGUAGES);
     g_core.config_erase(ISE_CONFIG_SELECTED_LANGUAGE);
+    g_core.config_erase(ISE_CONFIG_AUTO_CAPITALISE);
+    g_core.config_erase(ISE_CONFIG_AUTO_PUNCTUATE);
+    g_core.config_erase(ISE_CONFIG_SOUND_ON);
+    g_core.config_erase(ISE_CONFIG_VIBRATION_ON);
+    g_core.config_erase(ISE_CONFIG_PREVIEW_ON);
     g_core.config_reload();
 }

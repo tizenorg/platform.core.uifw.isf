@@ -27,6 +27,11 @@
 #define ISE_CONFIG_PREDICTION_ON        "/ise-default/prediction_on"
 #define ISE_CONFIG_ENABLED_LANGUAGES    "/ise-default/enabled_languages"
 #define ISE_CONFIG_SELECTED_LANGUAGE    "/ise-default/selected_language"
+#define ISE_CONFIG_AUTO_CAPITALISE      "/ise-default/auto_capitalise"
+#define ISE_CONFIG_AUTO_PUNCTUATE       "/ise-default/auto_punctuate"
+#define ISE_CONFIG_SOUND_ON             "/ise-default/sound_on"
+#define ISE_CONFIG_VIBRATION_ON         "/ise-default/vibration_on"
+#define ISE_CONFIG_PREVIEW_ON           "/ise-default/preview_on"
 
 using namespace scl;
 
@@ -42,27 +47,32 @@ struct CONFIG_VALUES {
     sclboolean prediction_on;
     std::string selected_language;
     std::vector<std::string> enabled_languages;
+    sclboolean auto_capitalise;
+    sclboolean auto_punctuate;
+    sclboolean sound_on;
+    sclboolean vibration_on;
+    sclboolean preview_on;
 };
 
 /**
  * Reads all option values from SCIM config file
-    @return		Nothing.
- * 
+    @return     Nothing.
+ *
  **/
 void
 read_ise_config_values();
 
 /**
  * Writes all option values to SCIM config file
-    @return		Nothing.
- * 
+    @return     Nothing.
+ *
  **/
 void
 write_ise_config_values();
 
 /**
  * Resets all option values by erasing them
-    @return		Nothing.
+    @return     Nothing.
  *
  **/
 void

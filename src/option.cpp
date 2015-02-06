@@ -42,15 +42,6 @@
 
 using namespace scl;
 
-#define CONFIG_AUTO_CAPITALISE_VAL      ISE_NAME"/auto_capitalise_val"
-#define CONFIG_AUTO_PUNCTUATE_VAL       ISE_NAME"/auto_punctuate_val"
-#define CONFIG_KEY_SOUNDS_VAL           ISE_NAME"/key_sounds_val"
-#define CONFIG_KEY_VIBRATION_VAL        ISE_NAME"/key_vibration_val"
-#define CONFIG_KEY_CHARACTER_PRE_VAL    ISE_NAME"/key_character_pre_val"
-
-#define VCONFKEY_AUTOCAPITAL_ALLOW_BOOL "file/private/isf/autocapital_allow"
-#define VCONFKEY_AUTOPERIOD_ALLOW_BOOL  "file/private/isf/autoperiod_allow"
-
 
 static ISELanguageManager _language_manager;
 
@@ -380,7 +371,8 @@ static void check_autocapitalise_change_callback(void *data, Evas_Object *obj, v
     } else {
         state = (int)(data);
     }
-    g_core.config_write_int(CONFIG_AUTO_CAPITALISE_VAL, state);
+    g_config_values.auto_capitalise = state;
+    write_ise_config_values ();
     if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, state) == -1)
         LOGE("Failed to set vconf autocapital");
 }
@@ -393,7 +385,8 @@ static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, vo
     } else {
         state = (int)(data);
     }
-    g_core.config_write_int(CONFIG_AUTO_PUNCTUATE_VAL, state);
+    g_config_values.auto_punctuate = state;
+    write_ise_config_values ();
     if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, state) == -1)
         LOGE("Failed to set vconf autoperiod");
 }
@@ -406,7 +399,8 @@ static void check_sound_change_callback(void *data, Evas_Object *obj, void *even
     } else {
         state = (int)(data);
     }
-    g_core.config_write_int(CONFIG_KEY_SOUNDS_VAL, state);
+    g_config_values.sound_on = state;
+    write_ise_config_values ();
     g_ui->enable_sound (state);
 }
 
@@ -418,7 +412,8 @@ static void check_vibration_change_callback(void *data, Evas_Object *obj, void *
     } else {
         state = (int)(data);
     }
-    g_core.config_write_int(CONFIG_KEY_VIBRATION_VAL, state);
+    g_config_values.vibration_on = state;
+    write_ise_config_values ();
     g_ui->enable_vibration (state);
 }
 
@@ -430,7 +425,8 @@ static void check_character_pre_change_callback(void *data, Evas_Object *obj, vo
     } else {
         state = (int)(data);
     }
-    g_core.config_write_int(CONFIG_KEY_CHARACTER_PRE_VAL, state);
+    g_config_values.preview_on = state;
+    write_ise_config_values ();
     g_ui->enable_magnifier (state);
 }
 
@@ -440,73 +436,37 @@ static Evas_Object *_main_radio_gl_content_get(void *data, Evas_Object *obj, con
     if(NULL != data) {
         ITEMDATA *item_data = (ITEMDATA *)data;
         if (!strcmp(part, "elm.icon.right")) {
-            switch (item_data->mode)
-            {
+            sclboolean state = false;
+            Eina_Bool ret = EINA_FALSE;
+            switch (item_data->mode) {
                 case SETTING_ITEM_ID_AUTO_CAPITALISE:
-                    {
-                        item = elm_check_add(obj);
-                        elm_object_style_set(item, "default/genlist");
-                        sclint check_enable = 0;
-                        g_core.config_reload();
-                        g_core.config_read_int(CONFIG_AUTO_CAPITALISE_VAL, check_enable);
-                        elm_check_state_set(item, check_enable);
-                        evas_object_propagate_events_set(item, EINA_FALSE);
-                        evas_object_smart_callback_add(item, "changed", check_autocapitalise_change_callback, (void*)(item_data->mode));
-                        evas_object_show(item);
-                        break;
-                    }
+                    state = g_config_values.auto_capitalise;
+                    ret = EINA_TRUE;
+                    break;
                 case SETTING_ITEM_ID_AUTO_PUNCTUATE:
-                    {
-                        item = elm_check_add(obj);
-                        elm_object_style_set(item, "default/genlist");
-                        sclint check_enable = 0;
-                        g_core.config_reload();
-                        g_core.config_read_int(CONFIG_AUTO_PUNCTUATE_VAL, check_enable);
-                        elm_check_state_set(item, check_enable);
-                        evas_object_propagate_events_set(item, EINA_FALSE);
-                        evas_object_smart_callback_add(item, "changed", check_autopunctuate_change_callback, (void*)(item_data->mode));
-                        evas_object_show(item);
-                        break;
-                   }
+                    state = g_config_values.auto_punctuate;
+                    ret = EINA_TRUE;
+                    break;
                 case SETTING_ITEM_ID_SOUND:
-                   {
-                        item = elm_check_add(obj);
-                        elm_object_style_set(item, "default/genlist");
-                        sclint check_enable = 0;
-                        g_core.config_reload();
-                        g_core.config_read_int(CONFIG_KEY_SOUNDS_VAL, check_enable);
-                        elm_check_state_set(item, check_enable);
-                        evas_object_propagate_events_set(item, EINA_FALSE);
-                        evas_object_smart_callback_add(item, "changed", check_sound_change_callback, (void*)(item_data->mode));
-                        evas_object_show(item);
-                        break;
-                   }
+                    state = g_config_values.sound_on;
+                    ret = EINA_TRUE;
+                    break;
                 case SETTING_ITEM_ID_VIBRATION:
-                   {
-                        item = elm_check_add(obj);
-                        elm_object_style_set(item, "default/genlist");
-                        sclint check_enable = 0;
-                        g_core.config_reload();
-                        g_core.config_read_int(CONFIG_KEY_VIBRATION_VAL, check_enable);
-                        elm_check_state_set(item, check_enable);
-                        evas_object_propagate_events_set(item, EINA_FALSE);
-                        evas_object_smart_callback_add(item, "changed", check_vibration_change_callback, (void*)(item_data->mode));
-                        evas_object_show(item);
-                        break;
-                   }
+                    state = g_config_values.vibration_on;
+                    ret = EINA_TRUE;
+                    break;
                 case SETTING_ITEM_ID_CHARACTER_PRE:
-                   {
-                        item = elm_check_add(obj);
-                        elm_object_style_set(item, "default/genlist");
-                        sclint check_enable = 0;
-                        g_core.config_reload();
-                        g_core.config_read_int(CONFIG_KEY_CHARACTER_PRE_VAL, check_enable);
-                        elm_check_state_set(item, check_enable);
-                        evas_object_propagate_events_set(item, EINA_FALSE);
-                        evas_object_smart_callback_add(item, "changed", check_character_pre_change_callback, (void*)(item_data->mode));
-                        evas_object_show(item);
-                        break;
-                   }
+                    state = g_config_values.preview_on;
+                    ret = EINA_TRUE;
+                    break;
+            }
+            if (ret) {
+                item = elm_check_add(obj);
+                elm_object_style_set(item, "on&off");
+                elm_check_state_set(item, state);
+                evas_object_propagate_events_set(item, EINA_FALSE);
+                evas_object_smart_callback_add(item, "changed", check_autocapitalise_change_callback, (void*)(item_data->mode));
+                evas_object_show(item);
             }
         }
     }
@@ -524,13 +484,25 @@ destroy_genlist_item_classes(SCLOptionWindowType type) {
         elm_genlist_item_class_free(option_elements[type].itc_language_subitems);
         option_elements[type].itc_language_subitems = NULL;
     }
+    if (option_elements[type].itc_main_text_radio) {
+        elm_genlist_item_class_free(option_elements[type].itc_main_text_radio);
+        option_elements[type].itc_main_text_radio = NULL;
+    }
+    if (option_elements[type].itc_main_sub_text_radio) {
+        elm_genlist_item_class_free(option_elements[type].itc_main_sub_text_radio);
+        option_elements[type].itc_main_sub_text_radio = NULL;
+    }
+    if (option_elements[type].itc_group_title) {
+        elm_genlist_item_class_free(option_elements[type].itc_group_title);
+        option_elements[type].itc_group_title = NULL;
+    }
 }
 
 static void
 create_genlist_item_classes(SCLOptionWindowType type) {
     option_elements[type].itc_main_text_only = elm_genlist_item_class_new();
     if (option_elements[type].itc_main_text_only) {
-        option_elements[type].itc_main_text_only->item_style = "double_label";
+        option_elements[type].itc_main_text_only->item_style = "1line";
         option_elements[type].itc_main_text_only->func.text_get = _main_gl_text_get;
         option_elements[type].itc_main_text_only->func.content_get = _main_gl_content_get;
         option_elements[type].itc_main_text_only->func.state_get = _main_gl_state_get;
@@ -544,7 +516,6 @@ create_genlist_item_classes(SCLOptionWindowType type) {
         option_elements[type].itc_language_subitems->func.content_get = _language_gl_content_get;
     }
 
-
     option_elements[type].itc_main_text_radio = elm_genlist_item_class_new();
     if (option_elements[type].itc_main_text_radio) {
         option_elements[type].itc_main_text_radio->item_style = "1line";
@@ -553,6 +524,7 @@ create_genlist_item_classes(SCLOptionWindowType type) {
         option_elements[type].itc_main_text_radio->func.state_get = _main_gl_state_get;
         option_elements[type].itc_main_text_radio->func.del = _main_gl_del;
     }
+
     option_elements[type].itc_main_sub_text_radio = elm_genlist_item_class_new();
     if (option_elements[type].itc_main_sub_text_radio) {
         option_elements[type].itc_main_sub_text_radio->item_style = "2line.top";
@@ -718,10 +690,10 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
                             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel,(void *)(main_itemdata[SETTING_ITEM_ID_CUR_LANGUAGE].mode));
 
     if (_language_manager.get_languages_num() > 1) {
-        std::string languages = compose_selected_languages_string();
+        //std::string languages = compose_selected_languages_string();
 
-        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].main_text, "Select input language", ITEM_DATA_STRING_LEN - 1);
-        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
+        strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].main_text, SELECT_LANGUAGES, ITEM_DATA_STRING_LEN - 1);
+        //strncpy(main_itemdata[SETTING_ITEM_ID_LANGUAGE].sub_text, languages.c_str(), ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_LANGUAGE].mode = SETTING_ITEM_ID_LANGUAGE;
         option_elements[type].languages_item =
             elm_genlist_item_append(genlist, option_elements[type].itc_main_text_only,
@@ -729,38 +701,38 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
             _main_gl_sel, (void*)(main_itemdata[SETTING_ITEM_ID_LANGUAGE].mode));
     }
 
-    strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, "Smart input functions", ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_FUNCTIONS, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode = SETTING_ITEM_ID_SMART_INPUT_TITLE;
     elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
                             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
 
-    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].main_text, "Auto capitalise", ITEM_DATA_STRING_LEN - 1);
-    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].sub_text, "Capitalise the first letter of each setence automatically",                            ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].main_text, AUTO_CAPITALISE, ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].sub_text, CAPITALISE_DESC, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode = SETTING_ITEM_ID_AUTO_CAPITALISE;
     elm_genlist_item_append(genlist, option_elements[type].itc_main_sub_text_radio,&main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE],
                         NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode));
 
 
-    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].main_text, "Auto punctuate", ITEM_DATA_STRING_LEN - 1);
-    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].sub_text,"Automatically insert a full stop by tapping the space bar twice", ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].main_text, AUTO_PUNCTUATE, ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].sub_text, PUNCTUATE_DESC, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].mode = SETTING_ITEM_ID_AUTO_PUNCTUATE;
     elm_genlist_item_append(genlist, option_elements[type].itc_main_sub_text_radio, &main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE],
                           NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].mode));
 
-    strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, "Key-tap feedback", ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].main_text, KEY_FEEDBACK, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].mode = SETTING_ITEM_ID_KEY_TAP_TITLE;
     elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE],
                             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
-    strncpy(main_itemdata[SETTING_ITEM_ID_SOUND].main_text, "Sound", ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_SOUND].main_text, SOUND, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_SOUND].mode = SETTING_ITEM_ID_SOUND;
     elm_genlist_item_append(genlist, option_elements[type].itc_main_text_radio, &main_itemdata[SETTING_ITEM_ID_SOUND],
                             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_SOUND].mode));
-    strncpy(main_itemdata[SETTING_ITEM_ID_VIBRATION].main_text, "Vibration", ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_VIBRATION].main_text, VIBRATION, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_VIBRATION].mode = SETTING_ITEM_ID_VIBRATION;
     elm_genlist_item_append(genlist, option_elements[type].itc_main_text_radio, &main_itemdata[SETTING_ITEM_ID_VIBRATION],
                             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_VIBRATION].mode));
-    strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].main_text, "Character preview", ITEM_DATA_STRING_LEN - 1);
-    strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].sub_text, "Show a big character bubble when a key on a qwerty keyboard is tapped", ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].main_text, CHARACTER_PREVIEW, ITEM_DATA_STRING_LEN - 1);
+    strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].sub_text, PREVIEW_DESC, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode = SETTING_ITEM_ID_AUTO_CAPITALISE;
     main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode = SETTING_ITEM_ID_CHARACTER_PRE;
     elm_genlist_item_append(genlist, option_elements[type].itc_main_sub_text_radio, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
