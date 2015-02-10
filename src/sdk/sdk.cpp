@@ -67,7 +67,7 @@ public :
             language.accepts_caps_mode = get_lang_table()[loop].accepts_caps_mode;
 
             /* These variable should be read from stored setting values */
-            language.enabled = TRUE;
+            language.enabled = FALSE;
             language.selected_input_mode = input_mode_QTY.name;
 
             _language_manager.add_language(language);
