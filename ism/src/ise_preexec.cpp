@@ -286,7 +286,7 @@ static void __set_oom ()
 
     /* we should reset oomadj value as default because child
     inherits from parent oom_adj*/
-    snprintf (buf, MAX_LOCAL_BUFSZ, "/proc/%d/oom_adj", getpid ());
+    snprintf (buf, MAX_LOCAL_BUFSZ, "/proc/%d/oom_score_adj", getpid ());
     fp = fopen (buf, "w");
     if (fp == NULL)
         return;
