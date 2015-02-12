@@ -78,5 +78,11 @@ write_ise_config_values();
 void
 erase_ise_config_values();
 
+/**
+ * Reset all option values to default values
+    @return     Nothing.
+ *
+ **/
+void reset_ise_config_values ();
 
 #endif

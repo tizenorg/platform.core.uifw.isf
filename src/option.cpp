@@ -163,6 +163,51 @@ SCLOptionWindowType find_option_window_type(Evas_Object *obj)
     return OPTION_WINDOW_TYPE_MAX;
 }
 
+static void reset_settings_popup_response_ok_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    reset_ise_config_values ();
+    _language_manager.set_enabled_languages (g_config_values.enabled_languages);
+
+    Evas_Object *genlist = static_cast<Evas_Object*>(evas_object_data_get (obj, "parent_genlist"));
+    SCLOptionWindowType type = find_option_window_type (genlist);
+    read_options (option_elements[type].naviframe);
+
+    Evas_Object *popup = (Evas_Object *)data;
+    if (popup)
+        evas_object_del (popup);
+}
+
+static void reset_settings_popup_response_cancel_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *popup = (Evas_Object *)data;
+    if (popup)
+        evas_object_del (popup);
+}
+
+static void reset_settings_popup (void *data, Evas_Object *obj, void *event_info)
+{
+    Evas_Object *popup = elm_popup_add (elm_object_top_widget_get (obj));
+    elm_popup_align_set (popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+    ea_object_event_callback_add (popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+    evas_object_size_hint_weight_set (popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    elm_object_domain_translatable_text_set (popup, PACKAGE, RESET_SETTINGS_POPUP_TEXT);
+    elm_object_domain_translatable_part_text_set (popup, "title,text", PACKAGE, RESET_SETTINGS_POPUP_TITLE_TEXT);
+
+    Evas_Object *btn_cancel = elm_button_add (popup);
+    elm_object_style_set (btn_cancel, "popup");
+    elm_object_domain_translatable_text_set (btn_cancel, PACKAGE, POPUP_CANCEL_BTN);
+    elm_object_part_content_set (popup, "button1", btn_cancel);
+    evas_object_smart_callback_add (btn_cancel, "clicked", reset_settings_popup_response_cancel_cb, popup);
+
+    Evas_Object *btn_ok = elm_button_add (popup);
+    evas_object_data_set (btn_ok, "parent_genlist", obj);
+    elm_object_style_set (btn_ok, "popup");
+    elm_object_domain_translatable_text_set (btn_ok, PACKAGE, POPUP_OK_BTN);
+    elm_object_part_content_set (popup, "button2", btn_ok);
+    evas_object_smart_callback_add (btn_ok, "clicked", reset_settings_popup_response_ok_cb, popup);
+    evas_object_show (popup);
+}
+
 static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
 {
     ITEMDATA *item_data = (ITEMDATA*)data;
@@ -264,6 +309,7 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
             }
             case SETTING_ITEM_ID_RESET: {
                 LOGD("reset keyboard settings");
+                reset_settings_popup (data, obj, event_info);
             }
             break;
             default:
@@ -750,6 +796,17 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     elm_genlist_item_append(genlist, option_elements[type].itc_main_sub_text_radio, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
                             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode));
 
+    /* More settings */
+    strncpy(main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE].main_text, MORE_SETTINGS, ITEM_DATA_STRING_LEN - 1);
+    main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE].mode = SETTING_ITEM_ID_MORE_SETTINGS_TITLE;
+    elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE],
+                            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+
+    strncpy(main_itemdata[SETTING_ITEM_ID_RESET].main_text, RESET, ITEM_DATA_STRING_LEN - 1);
+    main_itemdata[SETTING_ITEM_ID_RESET].mode = SETTING_ITEM_ID_RESET;
+    elm_genlist_item_append(genlist, option_elements[type].itc_main_text_only, &main_itemdata[SETTING_ITEM_ID_RESET],
+                        NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_RESET].mode));
+
     evas_object_smart_callback_add(genlist, "expanded", _main_gl_exp, genlist);
     evas_object_smart_callback_add(genlist, "contracted", _main_gl_con, genlist);
 
@@ -840,6 +897,7 @@ static void language_view_popup_show (Evas_Object *obj, SCLOptionWindowType type
     Evas_Object *top_level = elm_object_top_widget_get (obj);
     option_elements[type].lang_popup = elm_popup_add (top_level);
     elm_object_text_set (option_elements[type].lang_popup, content_text);
+    elm_popup_align_set (option_elements[type].lang_popup, ELM_NOTIFY_ALIGN_FILL, 0.5);
     elm_popup_timeout_set (option_elements[type].lang_popup, 3.0);
     evas_object_smart_callback_add (option_elements[type].lang_popup, "timeout", _popup_timeout_cb, obj);
     elm_object_focus_allow_set (option_elements[type].lang_popup, EINA_TRUE);

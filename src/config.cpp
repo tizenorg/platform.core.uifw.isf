@@ -110,3 +110,18 @@ void erase_ise_config_values() {
     g_core.config_erase(ISE_CONFIG_PREVIEW_ON);
     g_core.config_reload();
 }
+
+void reset_ise_config_values () {
+    g_config_values.keypad_mode = KEYPAD_MODE_QTY;
+    g_config_values.prediction_on = FALSE;
+    g_config_values.selected_language = "English";
+    g_config_values.enabled_languages.clear ();
+    g_config_values.enabled_languages.push_back ("English");
+    g_config_values.auto_capitalise = TRUE;
+    g_config_values.auto_punctuate = TRUE;
+    g_config_values.sound_on = TRUE;
+    g_config_values.vibration_on = TRUE;
+    g_config_values.preview_on = TRUE;
+
+    write_ise_config_values ();
+}
