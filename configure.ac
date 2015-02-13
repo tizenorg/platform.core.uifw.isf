@@ -241,7 +241,7 @@ if test "$ISF_HAS_EFL" = "yes"; then
 fi
 
 # Check EFL assist library
-PKG_CHECK_MODULES(EFL_ASSIST, [efl-assist])
+PKG_CHECK_MODULES(EFL_EXTENSION, [efl-extension])
 
 # Check tzplatform-config library
 PKG_CHECK_MODULES(TZPLATFORM_CONFIG, [libtzplatform-config])

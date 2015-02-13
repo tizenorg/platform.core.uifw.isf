@@ -26,7 +26,7 @@
 
 #include <Elementary.h>
 #include <Ecore_X.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <dlog.h>
 #include "scim_private.h"
 #include "scim.h"
@@ -213,7 +213,7 @@ void ise_selector_create (unsigned ise_idx, Ecore_X_Window win, Ise_Selector_Sel
         return;
 
     evas_object_event_callback_add (_ise_selector_popup, EVAS_CALLBACK_DEL, ise_selector_popup_del_cb, NULL);
-    ea_object_event_callback_add (_ise_selector_popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+    eext_object_event_callback_add (_ise_selector_popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
     evas_object_smart_callback_add (_ise_selector_popup, "block,clicked", ise_selector_block_clicked_cb, NULL);
     elm_object_domain_translatable_part_text_set (_ise_selector_popup, "title,text", GETTEXT_PACKAGE, "Select input method");
 
