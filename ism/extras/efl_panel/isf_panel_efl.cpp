@@ -64,7 +64,6 @@
 #if HAVE_NOTIFICATION
 #include <notification.h>
 #endif
-#include <efl_assist.h>
 #if HAVE_TTS
 #include <tts.h>
 #endif

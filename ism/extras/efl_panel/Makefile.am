@@ -35,7 +35,7 @@ isf_panel_efl_SOURCES  += minicontrol.cpp
 endif
 
 isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
-                         @EFL_ASSIST_CFLAGS@ \
+                         @EFL_EXTENSION_CFLAGS@ \
                          @VCONF_CFLAGS@ \
                          @X11_CFLAGS@ \
                          @PRIVILEGE_CONTROL_CFLAGS@ \
@@ -53,7 +53,7 @@ isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
 
 isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @ECOREX_LIBS@ \
-                         @EFL_ASSIST_LIBS@ \
+                         @EFL_EXTENSION_LIBS@ \
                          @VCONF_LIBS@ \
                          @X11_LIBS@ \
                          @PRIVILEGE_CONTROL_LIBS@ \

@@ -28,7 +28,7 @@
 #include <Ecore_X.h>
 #include <privilege-control.h>
 #include <vconf.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include "scim_private.h"
 #include "isf_demo_efl.h"
 #include "isf_imcontrol_efl.h"
@@ -267,7 +267,7 @@ static Evas_Object* _create_naviframe_layout (Evas_Object *parent)
 {
     Evas_Object *naviframe = elm_naviframe_add (parent);
     elm_naviframe_prev_btn_auto_pushed_set (naviframe, EINA_FALSE);
-    ea_object_event_callback_add (naviframe, EA_CALLBACK_BACK, _naviframe_back_cb, NULL);
+    eext_object_event_callback_add (naviframe, EEXT_CALLBACK_BACK, _naviframe_back_cb, NULL);
     elm_object_part_content_set (parent, "elm.swallow.content", naviframe);
 
     evas_object_show (naviframe);
@@ -398,8 +398,6 @@ static int app_resume (void *data)
 
 int main (int argc, char *argv[])
 {
-    perm_app_set_privilege ("isf", NULL, NULL);
-
     struct appdata ad;
     struct appcore_ops ops;
 
@@ -440,7 +438,8 @@ Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guid
     evas_object_show (lb);
     elm_box_pack_end (bx, lb);
 
-    en = ea_editfield_add (parent, EA_EDITFIELD_SCROLL_SINGLELINE);
+    en = elm_entry_add (parent);
+    elm_entry_single_line_set (en, EINA_TRUE);
     evas_object_size_hint_weight_set (en, EVAS_HINT_EXPAND, 0.0);
     evas_object_size_hint_align_set (en, EVAS_HINT_FILL, 0.0);
     elm_object_part_text_set (en, "elm.guide", guide_text);

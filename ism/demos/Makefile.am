@@ -49,7 +49,7 @@ isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @UIGADGET_CFLAGS@ \
                         @VCONF_CFLAGS@ \
                         @PRIVILEGE_CONTROL_CFLAGS@ \
-                        @EFL_ASSIST_CFLAGS@ \
+                        @EFL_EXTENSION_CFLAGS@ \
                         @DLOG_CFLAGS@ \
                         -fPIE
 
@@ -59,7 +59,7 @@ isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @APPCORE_EFL_LIBS@ \
                         @UIGADGET_LIBS@ \
                         @PRIVILEGE_CONTROL_LIBS@ \
-                        @EFL_ASSIST_LIBS@ \
+                        @EFL_EXTENSION_LIBS@ \
                         @DLOG_LIBS@ \
                         -pie
 
