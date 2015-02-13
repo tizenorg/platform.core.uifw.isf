@@ -182,11 +182,6 @@ static int create_demo_view (struct appdata *ad)
 
 static int lang_changed (void *event_info, void *data)
 {
-    struct appdata *ad = (appdata *)data;
-
-    if (ad->layout_main == NULL)
-        return 0;
-
 #if HAVE_UIGADGET
     ug_send_event (UG_EVENT_LANG_CHANGE);
 #endif
@@ -237,15 +232,9 @@ _vkbd_state_off (void *data, Evas_Object *obj, void *event_info)
     ad->vkbd_state = EINA_FALSE;
 }
 
-static Evas_Object* create_layout_main (struct appdata *ad)
+static Evas_Object* create_conformant (struct appdata *ad)
 {
     Evas_Object *win_main = ad->win_main;
-
-    Evas_Object *layout = elm_layout_add (win_main);
-    elm_layout_theme_set (layout, "layout", "application", "default");
-    evas_object_size_hint_weight_set (layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set (layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    evas_object_show (layout);
 
     /* Put the layout inside conformant for drawing indicator in app side */
     Evas_Object *conformant = elm_conformant_add (win_main);
@@ -259,9 +248,7 @@ static Evas_Object* create_layout_main (struct appdata *ad)
 
     elm_win_conformant_set (win_main, EINA_TRUE);
 
-    elm_object_content_set (conformant, layout);
-
-    return layout;
+    return conformant;
 }
 
 static void
@@ -344,15 +331,15 @@ static int app_create (void *data)
     /* get width and height of main window */
     evas_object_geometry_get (ad->win_main, NULL, NULL, &ad->root_w, &ad->root_h);
 
-    ad->layout_main = create_layout_main (ad);
+    ad->conformant = create_conformant (ad);
 
     // Indicator
     elm_win_indicator_mode_set (ad->win_main, ELM_WIN_INDICATOR_SHOW);
 
     // Navigation Bar
-    ad->naviframe = _create_naviframe_layout (ad->layout_main);
+    ad->naviframe = _create_naviframe_layout (ad->conformant);
 
-    //init the content in layout_main.
+    //init the content in conformant.
     create_demo_view (ad);
 
     lang_changed (NULL, ad);
@@ -386,9 +373,9 @@ static int app_exit (void *data)
         ad->ev_li = NULL;
     }
 
-    if (ad->layout_main != NULL) {
-        evas_object_del (ad->layout_main);
-        ad->layout_main = NULL;
+    if (ad->conformant != NULL) {
+        evas_object_del (ad->conformant);
+        ad->conformant = NULL;
     }
 
     if (ad->win_main != NULL) {
