@@ -32,7 +32,7 @@ BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(security-server)
 BuildRequires:  pkgconfig(edbus)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
-BuildRequires:  efl-assist-devel
+BuildRequires:  efl-extension-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
 BuildRequires:  capi-appfw-package-manager-devel
