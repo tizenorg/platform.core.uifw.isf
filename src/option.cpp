@@ -24,7 +24,7 @@
 
 #include <glib.h>
 #include <Elementary.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <vconf.h>
 
 #include "option.h"
@@ -686,7 +686,7 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
                     evas_object_smart_callback_add(ad.lang_popup, "timeout", _popup_timeout_cb, ad.naviframe);
                     elm_object_focus_allow_set(ad.lang_popup, EINA_TRUE);
                     evas_object_show(ad.lang_popup);
-                    ea_object_event_callback_add(ad.lang_popup, EA_CALLBACK_BACK, _popup_timeout_cb, NULL);
+                    eext_object_event_callback_add(ad.lang_popup, EEXT_CALLBACK_BACK, _popup_timeout_cb, NULL);
                 }
             }
         }
@@ -790,7 +790,7 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         Evas_Object *naviframe = elm_naviframe_add(layout);
         elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
-        ea_object_event_callback_add(naviframe, EA_CALLBACK_BACK, _naviframe_back_cb, NULL);
+        eext_object_event_callback_add(naviframe, EEXT_CALLBACK_BACK, _naviframe_back_cb, NULL);
         evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 

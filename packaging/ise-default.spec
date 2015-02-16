@@ -20,7 +20,7 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(libscl-ui)
 BuildRequires:  pkgconfig(ecore-imf)
 BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  pkgconfig(efl-assist)
+BuildRequires:  pkgconfig(efl-extension)
 
 
 

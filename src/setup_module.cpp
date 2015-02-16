@@ -22,7 +22,6 @@
 #define Uses_SCIM_CONFIG_PATH
 
 #include <Elementary.h>
-#include <efl_assist.h>
 #include <Ecore_IMF.h>
 #include <Ecore_X.h>
 #include "option.h"
