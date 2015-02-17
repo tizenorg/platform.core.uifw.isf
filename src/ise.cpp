@@ -65,9 +65,15 @@ KEYBOARD_STATE g_keyboard_state = {
     0,
     0,
     ISE_LAYOUT_STYLE_NORMAL,
+    0,
     FALSE,
     TRUE,
     FALSE,
+};
+
+#define ISE_LAYOUT_NUMBERONLY_VARIATION_MAX 4
+const sclchar *g_ise_numberonly_variation_name[ISE_LAYOUT_NUMBERONLY_VARIATION_MAX] = {
+    "DEFAULT", "SIG", "DEC", "SIGDEC"
 };
 
 Candidate *g_candidate = NULL;
@@ -177,7 +183,7 @@ void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context
         ise_explictly_set_language(PRIMARY_LATIN_LANGUAGE_INDEX);
     }*/
 
-    ise_set_layout(context.layout);
+    ise_set_layout(context.layout, context.layout_variation);
 
     ise_set_return_key_type(context.return_key_type);
     ise_set_return_key_disable(context.return_key_disabled);
@@ -437,7 +443,11 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                             strcmp(input_mode, "PHONE_3X4") == 0 ||
                             strcmp(input_mode, "IPv6_3X4_123") == 0 ||
                             strcmp(input_mode, "IPv6_3X4_ABC") == 0 ||
-                            strcmp(input_mode, "NUMONLY_3X4") == 0) {
+                            strcmp(input_mode, "NUMONLY_3X4") == 0 ||
+                            strcmp(input_mode, "NUMONLY_3X4_SIG") == 0 ||
+                            strcmp(input_mode, "NUMONLY_3X4_DEC") == 0 ||
+                            strcmp(input_mode, "NUMONLY_3X4_SIGDEC") == 0 ||
+                            strcmp(input_mode, "DATETIME_3X4") == 0) {
                         need_forward = TRUE;
                     }
                 }
@@ -480,14 +490,17 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
 }
 
 void
-ise_set_layout(sclu32 layout)
+ise_set_layout(sclu32 layout, sclu32 layout_variation)
 {
     /* Check if the layoutIdx is in the valid range */
     if (layout < ISE_LAYOUT_STYLE_MAX) {
-        if (g_keyboard_state.layout != layout) {
+        if (g_keyboard_state.layout != layout ||
+            g_keyboard_state.layout_variation != layout_variation) {
             g_keyboard_state.need_reset = TRUE;
         }
         g_keyboard_state.layout = layout;
+        g_keyboard_state.layout_variation = layout_variation;
+        LOGD ("layout:%d, variation:%d", g_keyboard_state.layout, g_keyboard_state.layout_variation);
     }
 }
 
@@ -606,9 +619,16 @@ ise_show(int ic)
                 g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
             }
             if (g_keyboard_state.layout < ISE_LAYOUT_STYLE_MAX) {
+                sclu32 layout_index = g_keyboard_state.layout;
+                if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_NUMBERONLY &&
+                    g_keyboard_state.layout_variation > 0 &&
+                    g_keyboard_state.layout_variation < ISE_LAYOUT_NUMBERONLY_VARIATION_MAX) {
+                    layout_index = ISE_LAYOUT_STYLE_NUMBERONLY_SIG + g_keyboard_state.layout_variation - 1;
+                }
+
                 /* If this layout requires specific input mode, set it */
-                if (strlen(g_ise_default_values[g_keyboard_state.layout].input_mode) > 0) {
-                    g_ui->set_input_mode(g_ise_default_values[g_keyboard_state.layout].input_mode);
+                if (strlen(g_ise_default_values[layout_index].input_mode) > 0) {
+                    g_ui->set_input_mode(g_ise_default_values[layout_index].input_mode);
 
                     SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
                     SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
@@ -622,7 +642,7 @@ ise_show(int ic)
                         }
                     }
                 }
-                g_ui->set_cur_sublayout(g_ise_default_values[g_keyboard_state.layout].sublayout_name);
+                g_ui->set_cur_sublayout(g_ise_default_values[layout_index].sublayout_name);
             }
         }
 

@@ -184,6 +184,137 @@
       </font_color_record>
     </label_properties>
   </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_1">
+    <label_properties font_name="Tizen:style=medium" font_size="78" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_2">
+    <label_properties font_name="Tizen:style=medium" font_size="46" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_3">
+    <label_properties font_name="Tizen:style=medium" font_size="44" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_4">
+    <label_properties font_name="Tizen:style=medium" font_size="30" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_5">
+    <label_properties font_name="Tizen:style=medium" font_size="36" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_5_2">
+    <label_properties font_name="Tizen:style=medium" font_size="36" label_alignment="center_top" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=medium" font_size="36" label_alignment="center_bottom" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_5_2_DISABLED">
+    <label_properties font_name="Tizen:style=medium" font_size="36" label_alignment="center_top" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x0000004c</color>
+        <color button="pressed">0x0000004c</color>
+        <color button="disabled">0x0000004c</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=medium" font_size="36" label_alignment="center_bottom" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x0000004c</color>
+        <color button="pressed">0x0000004c</color>
+        <color button="disabled">0x0000004c</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_6">
+    <label_properties font_name="Tizen:style=medium" font_size="54" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_7">
+    <label_properties font_name="Tizen:style=medium" font_size="34" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_8">
+    <label_properties font_name="Tizen:style=medium" font_size="40" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_9">
+    <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_9_DISABLED">
+    <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x0000004c</color>
+        <color button="pressed">0x0000004c</color>
+        <color button="disabled">0x0000004c</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_10">
+    <label_properties font_name="Tizen:style=medium" font_size="42" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
   <label_properties_table label_type="AUTOPOPUP">
     <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>

@@ -112,15 +112,18 @@
         <rec>9</rec>
       </key_value>
     </key>
-    <key button_type="uiitem" label_type="3X4_BTN_9_DISABLED">
+    <key label_type="3X4_BTN_9">
       <label>
-        <rec>.,-/</rec>
+        <rec>.-</rec>
       </label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
+      <key_value>
+        <rec>.</rec>
+      </key_value>
     </key>
   </row>
   <row x="12">

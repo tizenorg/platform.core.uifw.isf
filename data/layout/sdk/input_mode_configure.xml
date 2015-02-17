@@ -528,10 +528,34 @@
       <landscape>LYT_LANDSCAPE_3X4_NUMONLY.xml</landscape>
     </layouts>
   </mode>
+  <mode name="NUMONLY_3X4_DEC">
+    <layouts>
+      <portrait>LYT_PORTRAIT_3X4_NUMONLY_DEC.xml</portrait>
+      <landscape>LYT_LANDSCAPE_3X4_NUMONLY_DEC.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="NUMONLY_3X4_SIG">
+    <layouts>
+      <portrait>LYT_PORTRAIT_3X4_NUMONLY_SIG.xml</portrait>
+      <landscape>LYT_LANDSCAPE_3X4_NUMONLY_SIG.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="NUMONLY_3X4_SIGDEC">
+    <layouts>
+      <portrait>LYT_PORTRAIT_3X4_NUMONLY_SIG_DEC.xml</portrait>
+      <landscape>LYT_LANDSCAPE_3X4_NUMONLY_SIG_DEC.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="MONTH_3X4">
     <layouts>
       <portrait>LYT_PORTRAIT_3X4_MONTH.xml</portrait>
       <landscape>LYT_LANDSCAPE_3X4_MONTH.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="DATETIME_3X4">
+    <layouts>
+      <portrait>LYT_PORTRAIT_3X4_DATETIME.xml</portrait>
+      <landscape>LYT_LANDSCAPE_3X4_DATETIME.xml</landscape>
     </layouts>
   </mode>
   <mode name="EMOTICON_POPUP" dim_window="true">
