@@ -1114,7 +1114,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
         else if (event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
             LOGD ("type=%s package=%s event_type=%d event_state=COMPLETED progress=%d error=%d", type, package, event_type, progress, error);
             int add = 0, del = 0;
-            if (event_state == PACKAGE_MANAGER_EVENT_TYPE_UPDATE)
+            if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UPDATE)
                 del = isf_db_delete_ime_info_by_pkgid(package);
             add = isf_db_insert_ime_info_by_pkgid(package);
             if (del || add) {
