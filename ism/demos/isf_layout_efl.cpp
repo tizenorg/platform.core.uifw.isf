@@ -270,7 +270,7 @@ static Evas_Object * create_inner_layout (void *data)
     elm_box_pack_end (bx, ef);
 
     /* Password numberonly Layout */
-    ef = _create_ef_layout (parent, _("PASSWORD NUMBERONLY LAYOUT"), _("click to enter PASSWORD"), ELM_INPUT_PANEL_LAYOUT_PASSWORD, ELM_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY);
+    ef = _create_ef_layout (parent, _("PASSWORD NUMBERONLY LAYOUT"), _("click to enter PASSWORD NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_PASSWORD, ELM_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY);
     elm_box_pack_end (bx, ef);
 
     /* Emoticon Layout */
