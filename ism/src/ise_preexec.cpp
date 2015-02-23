@@ -33,7 +33,9 @@
 #include <sys/prctl.h>
 #include <unistd.h>
 #include <dlog.h>
+#if HAVE_PKGMGR_INFO
 #include <pkgmgr-info.h>
+#endif
 #include <privilege-control.h>
 
 #define Uses_SCIM_HELPER
@@ -349,11 +351,12 @@ typedef struct {
 
 static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
 {
+#if HAVE_PKGMGR_INFO
     if (helper && uuid && info) {
         pkgmgrinfo_appinfo_h handle;
         int r;
-        char *value;
-        const char *app_id;
+        char *value = NULL;
+        const char *app_id = NULL;
 
         if (!strcmp (helper, "ise-web-helper-agent")) {
             // Web IME
@@ -409,6 +412,7 @@ static void get_pkginfo (const char *helper, const char *uuid, PKGINFO *info)
 
         pkgmgrinfo_appinfo_destroy_appinfo (handle);
     }
+#endif
 }
 
 int ise_preexec (const char *helper, const char *uuid)
