@@ -766,13 +766,6 @@ open_option_window(Evas_Object *parent, sclint degree)
         elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
         elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
 
-        Evas_Object *layout = elm_layout_add(window);
-        elm_layout_theme_set (layout, "layout", "application", "default");
-        evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
-        evas_object_show(layout);
-
-        /* put the layout inside conformant for drawing indicator in app side */
         Evas_Object *conformant = elm_conformant_add(window);
         evas_object_size_hint_weight_set(conformant, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(conformant, EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -780,21 +773,19 @@ open_option_window(Evas_Object *parent, sclint degree)
         elm_win_conformant_set(window, EINA_TRUE);
         evas_object_show(conformant);
 
-        elm_object_content_set(conformant, layout);
-
         /* create header bg */
         Evas_Object *bg = elm_bg_add(conformant);
         elm_object_style_set(bg, "indicator/headerbg");
         elm_object_part_content_set(conformant, "elm.swallow.indicator_bg", bg);
         evas_object_show(bg);
 
-        Evas_Object *naviframe = elm_naviframe_add(layout);
+        Evas_Object *naviframe = elm_naviframe_add(conformant);
         elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
         eext_object_event_callback_add(naviframe, EEXT_CALLBACK_BACK, _naviframe_back_cb, NULL);
         evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-        Evas_Object *list = create_option_main_view(layout, naviframe);
+        Evas_Object *list = create_option_main_view(conformant, naviframe);
 
         /* add a back button to naviframe */
         Evas_Object *back_btn = elm_button_add(naviframe);
@@ -802,7 +793,7 @@ open_option_window(Evas_Object *parent, sclint degree)
         evas_object_smart_callback_add (back_btn, "clicked", navi_back_cb, NULL);
         elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
 
-        elm_object_part_content_set(layout, "elm.swallow.content", naviframe);
+        elm_object_content_set(conformant, naviframe);
 
         evas_object_show(naviframe);
 
