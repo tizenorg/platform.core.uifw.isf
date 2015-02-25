@@ -76,6 +76,12 @@ const sclchar *g_ise_numberonly_variation_name[ISE_LAYOUT_NUMBERONLY_VARIATION_M
     "DEFAULT", "SIG", "DEC", "SIGDEC"
 };
 
+#define SIG_DEC_SIZE        2
+static scluint              _click_count = 0;
+static const char          *_sig_dec[SIG_DEC_SIZE] = {".", "-"};
+static scluint              _sig_dec_event[SIG_DEC_SIZE] = {'.', '-'};
+static Ecore_Timer         *_commit_timer = NULL;
+
 Candidate *g_candidate = NULL;
 class CandidateEventListener: public EventListener
 {
@@ -353,6 +359,38 @@ static void set_caps_mode(sclint mode) {
         }
     }
 }
+
+/**
+ * @brief Delete commit timer.
+ *
+ * @return void
+ */
+static void delete_commit_timer (void)
+{
+    if (_commit_timer != NULL) {
+        ecore_timer_del (_commit_timer);
+        _commit_timer = NULL;
+    }
+}
+
+/**
+ * @brief Callback function for commit timer.
+ *
+ * @param data Data to pass when it is called.
+ *
+ * @return ECORE_CALLBACK_CANCEL
+ */
+static Eina_Bool commit_timeout (void *data)
+{
+    if (_commit_timer != NULL) {
+        g_core.hide_preedit_string (-1, "");
+        ise_forward_key_event (_sig_dec_event[(_click_count-1)%SIG_DEC_SIZE]);
+        _click_count = 0;
+    }
+    _commit_timer = NULL;
+    return ECORE_CALLBACK_CANCEL;
+}
+
 static sclboolean
 on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_type)
 {
@@ -451,7 +489,15 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                         need_forward = TRUE;
                     }
                 }
-                if (event_desc.key_event) {
+                if (input_mode && strcmp (input_mode, "NUMONLY_3X4_SIGDEC") == 0 &&
+                    strcmp (event_desc.key_value, ".") == 0) {
+                    g_core.update_preedit_string (-1, "", _sig_dec[_click_count%SIG_DEC_SIZE]);
+                    g_core.show_preedit_string (-1, "");
+                    delete_commit_timer ();
+                    _commit_timer = ecore_timer_add (1.0, commit_timeout, NULL);
+                    _click_count++;
+                } else if (event_desc.key_event) {
+                    commit_timeout (NULL);
                     if (need_forward) {
                         ise_forward_key_event(event_desc.key_event);
                     } else {
@@ -461,6 +507,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                 break;
             }
         case KEY_TYPE_CONTROL: {
+                commit_timeout (NULL);
                 if (event_desc.key_event) {
                     ise_send_event(event_desc.key_event, KEY_MASK_NULL);
                     if (event_desc.key_event == MVK_Shift_L) {
@@ -703,6 +750,8 @@ ise_set_accessibility_state(bool state)
 void
 ise_hide()
 {
+    _click_count = 0;
+    delete_commit_timer ();
     if (g_ui) {
         g_ui->disable_input_events(TRUE);
         g_ui->hide();
