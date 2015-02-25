@@ -46,11 +46,6 @@
 #include <sys/resource.h>
 #include <sched.h>
 
-#define WAIT_WM
-#define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
-#define ISF_SYSTEM_WM_WAIT_COUNT                        200
-#define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
-
 using namespace scim;
 using std::cout;
 using std::cerr;
@@ -118,27 +113,6 @@ static bool check_file (const char* strFile)
         return false;
     else
         return true;
-}
-
-/**
- * @brief : Checks whether the window manager is launched or not
- * @return true if window manager launched, else false
- */
-static bool check_wm_ready (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-#ifndef WAYLAND 
-#ifdef WAIT_WM
-    int try_count = 0;
-    while (check_file (ISF_SYSTEM_WM_READY_FILE) == false) {
-        if (ISF_SYSTEM_WM_WAIT_COUNT <= (try_count++)) return false;
-        usleep (ISF_SYSTEM_WAIT_DELAY);
-    }
-#endif
-#endif
-
-    return true;
 }
 
 /* The broker for launching OSP based IMEs */
@@ -338,13 +312,6 @@ int main (int argc, char *argv [])
 
     int   new_argc = 0;
     char *new_argv [80];
-
-    ISF_SAVE_LOG ("ppid : %d Waiting for wm_ready\n", getppid ());
-
-    if (!check_wm_ready ()) {
-        std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
-        ISF_SAVE_LOG ("ppid:%d Window Manager ready timeout\n", getppid ());
-    }
 
     /* Display version info */
     cout << "Input Service Manager " << ISF_VERSION << "\n\n";

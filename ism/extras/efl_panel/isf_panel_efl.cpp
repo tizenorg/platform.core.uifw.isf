@@ -96,9 +96,6 @@ using namespace scim;
 #define ISE_DEFAULT_HEIGHT_PORTRAIT                     444
 #define ISE_DEFAULT_HEIGHT_LANDSCAPE                    316
 
-#define ISF_SYSTEM_WM_READY_FILE                        "/tmp/.wm_ready"
-#define ISF_SYSTEM_WM_WAIT_COUNT                        200
-#define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 #define ISF_CANDIDATE_DESTROY_DELAY                     3
 #define ISF_ISE_HIDE_DELAY                              0.15
 
@@ -6137,25 +6134,6 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
 }
 
 /**
- * @brief : Checks whether the window manager is launched or not
- * @return true if window manager launched, else false
- */
-static bool check_wm_ready (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-#ifdef WAIT_WM
-    int try_count = 0;
-    while (check_file (ISF_SYSTEM_WM_READY_FILE) == false) {
-        if (ISF_SYSTEM_WM_WAIT_COUNT <= (try_count++)) return false;
-        usleep (ISF_SYSTEM_WAIT_DELAY);
-    }
-#endif
-
-    return true;
-}
-
-/**
  * @brief : Launches default soft keyboard for performance enhancement (It's not mandatory)
  */
 static void launch_default_soft_keyboard (keynode_t *key, void* data)
@@ -6421,13 +6399,6 @@ int main (int argc, char *argv [])
 
     /* Connect the configuration reload signal. */
     _config->signal_connect_reload (slot (config_reload_cb));
-
-    if (!check_wm_ready ()) {
-        std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
-        LOGW ("Window Manager ready timeout\n");
-    } else {
-        LOGD ("Window Manager is in ready state\n");
-    }
 
     elm_init (argc, argv);
     check_time ("elm_init");

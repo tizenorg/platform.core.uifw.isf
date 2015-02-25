@@ -80,8 +80,6 @@ using namespace scim;
 
 #define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
 #define ISF_SYSTEM_APPSERVICE_READY_STATE               1
-#define ISF_SYSTEM_WM_WAIT_COUNT                        200
-#define ISF_SYSTEM_WAIT_DELAY                           100 * 1000
 #define ISF_CANDIDATE_DESTROY_DELAY                     3
 
 #define ISF_PREEDIT_BORDER                              16
@@ -134,7 +132,6 @@ static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
 static void       ui_candidate_window_close_button_cb  (void *data, Evas *e, Evas_Object *button, void *event_info);
 
-static bool       check_wm_ready                       (void);
 static bool       check_system_ready                   (void);
 static void       launch_default_soft_keyboard         (keynode_t *key = NULL, void* data = NULL);
 
@@ -4134,17 +4131,6 @@ static void check_hardware_keyboard (void)
 }
 
 /**
- * @brief : Checks whether the window manager is launched or not
- * @return true if window manager launched, else false
- */
-static bool check_wm_ready (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    return true;
-}
-
-/**
  * @brief : Checks whether the system service is ready or not
  * @return true if all system service are ready, else false
  */
@@ -4408,13 +4394,6 @@ int main (int argc, char *argv [])
 
     /* Connect the configuration reload signal. */
     _config->signal_connect_reload (slot (config_reload_cb));
-
-    if (!check_wm_ready ()) {
-        std::cerr << "[ISF-PANEL-EFL] WM ready timeout\n";
-        LOGW ("Window Manager ready timeout\n");
-    } else {
-        LOGD ("Window Manager is in ready state\n");
-    }
 
     elm_init (argc, argv);
     check_time ("elm_init");
