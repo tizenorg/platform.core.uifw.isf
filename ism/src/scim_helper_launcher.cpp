@@ -156,7 +156,8 @@ int main (int argc, char *argv [])
         std::cerr << "Module name or Helper UUID is missing.\n";
         return -1;
     }
-
+    /* FIXME Disable launching helper-launcher with root privilege */
+    /*
     int ret = ise_preexec (helper.c_str (), uuid.c_str ());
     if (ret < 0) {
         ISF_SAVE_LOG ("ise_preexec failed (%s, %d)\n", helper.c_str (), ret);
@@ -166,6 +167,7 @@ int main (int argc, char *argv [])
     }
 
     perm_app_set_privilege ("isf", NULL, NULL);
+    */
 
     HelperModule helper_module (helper);
 
