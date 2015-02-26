@@ -193,6 +193,22 @@
       </font_color_record>
     </label_properties>
   </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_1_2">
+    <label_properties font_name="Tizen:style=medium" font_size="78" label_alignment="left_middle" padding_X="36" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=medium" font_size="30" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x0000004c</color>
+        <color button="pressed">0x0000004c</color>
+        <color button="disabled">0x0000004c</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
   <label_properties_table label_type="3X4_BTN_2">
     <label_properties font_name="Tizen:style=medium" font_size="46" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>

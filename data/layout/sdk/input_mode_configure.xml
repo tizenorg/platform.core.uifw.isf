@@ -558,6 +558,12 @@
       <landscape>LYT_LANDSCAPE_3X4_DATETIME.xml</landscape>
     </layouts>
   </mode>
+  <mode name="PASSWD_3X4">
+    <layouts>
+      <portrait>LYT_PORTRAIT_3X4_PASSWD.xml</portrait>
+      <landscape>LYT_LANDSCAPE_3X4_PASSWD.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="EMOTICON_POPUP" dim_window="true">
     <layouts>
       <portrait>LYT_EMOTICON_POPUP.xml</portrait>

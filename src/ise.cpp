@@ -671,6 +671,8 @@ ise_show(int ic)
                     g_keyboard_state.layout_variation > 0 &&
                     g_keyboard_state.layout_variation < ISE_LAYOUT_NUMBERONLY_VARIATION_MAX) {
                     layout_index = ISE_LAYOUT_STYLE_NUMBERONLY_SIG + g_keyboard_state.layout_variation - 1;
+                } else if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_PASSWORD && g_keyboard_state.layout_variation > 0) {
+                    layout_index = ISE_LAYOUT_STYLE_PASSWD_3X4;
                 }
 
                 /* If this layout requires specific input mode, set it */
