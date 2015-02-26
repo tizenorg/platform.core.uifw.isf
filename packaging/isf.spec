@@ -147,8 +147,8 @@ cat scim.lang > isf.lang
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %dir /etc/scim/conf
-%{_prefix}/lib/systemd/system/graphical.target.wants/scim.service
-%{_prefix}/lib/systemd/system/scim.service
+%{_prefix}/lib/systemd/user/default.target.wants/scim.service
+%{_prefix}/lib/systemd/user/scim.service
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config

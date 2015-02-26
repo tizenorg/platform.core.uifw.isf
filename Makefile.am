@@ -58,7 +58,7 @@ pkgconfig_DATA          = isf.pc scim.pc \
 
 
 # $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
-systemduserunitdir = /usr/lib/systemd/system
+systemduserunitdir = /usr/lib/systemd/user
 systemduserunit_DATA = scim.service
 
 ACLOCAL_AMFLAGS = -I ism/m4
@@ -72,5 +72,5 @@ uninstall-local:
 	rm -rf @SCIM_MODULE_PATH@
 
 install-data-hook:
-	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/graphical.target.wants
-	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/graphical.target.wants/scim.service
+	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/default.target.wants
+	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/default.target.wants/scim.service
