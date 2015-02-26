@@ -11,24 +11,18 @@
   <row x="12" y="12">
     <key>
       <label>
-        <rec>1</rec>
+        <rec>(</rec>
       </label>
     </key>
     <key>
       <label>
-        <rec>2  abc</rec>
+        <rec>/</rec>
       </label>
-      <key_value>
-        <rec>2</rec>
-      </key_value>
     </key>
     <key>
       <label>
-        <rec>3  def</rec>
+        <rec>)</rec>
       </label>
-      <key_value>
-        <rec>3</rec>
-      </key_value>
     </key>
     <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true">
       <image_label>
@@ -48,27 +42,21 @@
   <row x="12">
     <key>
       <label>
-        <rec>4  ghi</rec>
+        <rec>N</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>Pause(,)</rec>
       </label>
       <key_value>
-        <rec>4</rec>
+        <rec>,</rec>
       </key_value>
     </key>
     <key>
       <label>
-        <rec>5 jkl</rec>
+        <rec>.</rec>
       </label>
-      <key_value>
-        <rec>5</rec>
-      </key_value>
-    </key>
-    <key>
-      <label>
-        <rec>6  mno</rec>
-      </label>
-      <key_value>
-        <rec>6</rec>
-      </key_value>
     </key>
     <key key_type="control" custom_id="Next">
       <background_image>
@@ -87,31 +75,25 @@
   <row x="12">
     <key>
       <label>
-        <rec>7  pqrs</rec>
+        <rec>*</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>Wait(;)</rec>
       </label>
       <key_value>
-        <rec>7</rec>
+        <rec>;</rec>
       </key_value>
     </key>
     <key>
       <label>
-        <rec>8  tuv</rec>
+        <rec>#</rec>
       </label>
-      <key_value>
-        <rec>8</rec>
-      </key_value>
-    </key>
-    <key>
-      <label>
-        <rec>9  wxyz</rec>
-      </label>
-      <key_value>
-        <rec>9</rec>
-      </key_value>
     </key>
     <key button_type="selfish" key_type="modechange">
       <label>
-        <rec>Sym</rec>
+        <rec>123</rec>
       </label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -119,7 +101,7 @@
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
       <key_value>
-        <rec>PHONE_3X4_SYM</rec>
+        <rec>PHONE_3X4</rec>
       </key_value>
     </key>
   </row>
@@ -131,28 +113,27 @@
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
       <label>
-        <rec>*</rec>
+        <rec>-</rec>
       </label>
     </key>
     <key long_key_value="+">
       <label>
-        <rec>0  +</rec>
+        <rec>+</rec>
       </label>
-      <key_value>
-        <rec>0</rec>
-      </key_value>
     </key>
-    <key>
+    <key button_type="direction" key_type="control" hit_left="17" hit_right="17" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE">
+      <image_label>
+        <rec button="normal">B09_icon_space.png</rec>
+        <rec button="pressed">B09_icon_space_press.png</rec>
+        <rec button="disabled">B09_icon_space_dim.png</rec>
+      </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
-      <label>
-        <rec>#</rec>
-      </label>
       <key_value>
-        <rec>#</rec>
+        <rec>Space</rec>
       </key_value>
     </key>
     <key button_type="uiitem">
