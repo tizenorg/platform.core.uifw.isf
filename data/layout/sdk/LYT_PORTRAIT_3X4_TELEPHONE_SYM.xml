@@ -58,17 +58,19 @@
         <rec>.</rec>
       </label>
     </key>
-    <key key_type="control" custom_id="Next">
+    <key key_type="control" custom_id="Enter">
+      <image_label>
+        <rec button="normal">B09_icon_enter.png</rec>
+        <rec button="pressed">B09_icon_enter_press.png</rec>
+        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+      </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
-      <label>
-        <rec>Next</rec>
-      </label>
       <key_value>
-        <rec>Next</rec>
+        <rec>Enter</rec>
       </key_value>
     </key>
   </row>
@@ -136,10 +138,12 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key button_type="uiitem">
-      <label>
-        <rec>CM</rec>
-      </label>
+    <key button_type="selfish">
+      <image_label>
+        <rec button="normal">setting icon/B09_icon_setting.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+      </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
