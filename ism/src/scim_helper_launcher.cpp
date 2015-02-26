@@ -157,16 +157,6 @@ int main (int argc, char *argv [])
         return -1;
     }
 
-    int ret = ise_preexec (helper.c_str (), uuid.c_str ());
-    if (ret < 0) {
-        ISF_SAVE_LOG ("ise_preexec failed (%s, %d)\n", helper.c_str (), ret);
-
-        std::cerr << "ise_preexec failed(" << helper << ret << ")\n";
-        return -1;
-    }
-
-    perm_app_set_privilege ("isf", NULL, NULL);
-
     HelperModule helper_module (helper);
 
     if (!helper_module.valid () || helper_module.number_of_helpers () == 0) {
