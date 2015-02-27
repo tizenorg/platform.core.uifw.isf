@@ -144,7 +144,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_PHONE">
-    <label_properties font_name="Tizen:style=medium" font_size="44" label_alignment="center_bottom" padding_X="0" padding_Y="12" inner_width="0" inner_height="56">
+    <label_properties font_name="Tizen:style=medium" font_size="44" label_alignment="center_middle" padding_X="0" padding_Y="0" inner_width="0" inner_height="56">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>

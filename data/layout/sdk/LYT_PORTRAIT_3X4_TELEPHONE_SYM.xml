@@ -138,7 +138,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key button_type="selfish">
+    <key button_type="selfish" key_type="user">
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
@@ -149,6 +149,9 @@
         <rec button="pressed">button/B09_key_btn_press.png</rec>
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
     </key>
   </row>
 </layout>
