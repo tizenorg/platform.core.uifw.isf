@@ -123,7 +123,7 @@
         <rec>+</rec>
       </label>
     </key>
-    <key button_type="direction" key_type="control" hit_left="17" hit_right="17" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE">
+    <key button_type="direction" key_type="control" hit_left="17" hit_right="17" label_type="QTY_SPACE">
       <image_label>
         <rec button="normal">B09_icon_space.png</rec>
         <rec button="pressed">B09_icon_space_press.png</rec>
