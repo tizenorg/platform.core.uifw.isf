@@ -150,6 +150,7 @@ typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
 /////////////////////////////////////////////////////////////////////////////
 static Evas_Object *efl_create_window                  (const char *strWinName, const char *strEffect);
 static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
+static void       efl_set_transient_for_keyboard_window     (Ecore_X_Window window);
 static int        efl_get_app_window_angle             (void);
 static int        efl_get_ise_window_angle             (void);
 static int        efl_get_quickpanel_window_angle      (void);
@@ -2289,7 +2290,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     _check_size_timer = ecore_timer_add (0.02, ui_candidate_check_size_timeout, NULL);
 
     SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
-    efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
+    efl_set_transient_for_keyboard_window (elm_win_xwindow_get (_candidate_window));
     if (_ise_state == WINDOW_STATE_SHOW) {
         edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
         edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
@@ -3340,6 +3341,22 @@ static void efl_set_transient_for_app_window (Ecore_X_Window window)
     LOGD ("win : %x, forwin : %x\n", window, xAppWindow);
 }
 
+/**
+ * @brief Set transient for soft keyboard window.
+ *
+ * @param window The Ecore_X_Window handler of soft keyboard window.
+ */
+static void efl_set_transient_for_keyboard_window (Ecore_X_Window window)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    /* Set a transient window for window stack */
+    Ecore_X_Window   xAppWindow = _ise_window == 0 ? efl_get_app_window () : _ise_window;
+    ecore_x_icccm_transient_for_set (window, xAppWindow);
+
+    LOGD ("win : %x, forwin : %x\n", window, xAppWindow);
+}
+
 static int efl_get_window_rotate_angle (Ecore_X_Window win)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
@@ -4102,7 +4119,7 @@ static void slot_show_candidate_table (void)
 
     if (_candidate_state == WINDOW_STATE_SHOW &&
         (_candidate_area_1_visible || _candidate_area_2_visible)) {
-        efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
+        efl_set_transient_for_keyboard_window (elm_win_xwindow_get (_candidate_window));
         return;
     }
 
