@@ -6421,8 +6421,8 @@ int main (int argc, char *argv [])
     _candidate_height = (int)(_candidate_port_height_min * _height_rate);
     _indicator_height = (int)(_indicator_height * _height_rate);
 
-    _aux_font_size       = (int)(_aux_font_size * _width_rate);
-    _candidate_font_size = (int)(_candidate_font_size * _width_rate);
+    _aux_font_size       = (int)(_aux_font_size * (_width_rate < _height_rate ? _width_rate : _height_rate));
+    _candidate_font_size = (int)(_candidate_font_size * (_width_rate < _height_rate ? _width_rate : _height_rate));
 
     /* Load ISF configuration */
     load_config ();
