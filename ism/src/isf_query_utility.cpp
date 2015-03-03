@@ -812,12 +812,6 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         return 0;
     }
 
-    // This would be necessary unless "http://tizen.org/category/ime" category in ise-web-helper-agent.xml is deleted.
-    if (ime_db.appid.compare("ise-web-helper-agent") == 0) {
-        LOGD("Ignore ise-web-helper-agent...");
-        return 0;
-    }
-
     /* iconpath */
     ret = pkgmgrinfo_appinfo_get_icon( handle, &icon);
     if (ret == PMINFO_R_OK)
@@ -891,14 +885,18 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
             ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION) + String(SCIM_PATH_DELIM_STRING) + String("Helper");
             ime_db.module_name = String("ise-web-helper-agent");
         }
-        else /*if (ime_db.pkgtype.compare("tpk") == 0)*/    //1 Download Native IME
+        else if (ime_db.pkgtype.compare("coretpk") == 0)    //1 Download Native IME
         {
             ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
             if (path)
                 ime_db.module_path = String(path);
             else
                 ime_db.module_path = String("/opt/usr/apps/") + ime_db.pkgid + String("/lib");
-            ime_db.module_name = ime_db.pkgid;
+            ime_db.module_name = ime_db.appid;
+        }
+        else {
+            LOGE("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str());
+            return 0;
         }
     }
 
