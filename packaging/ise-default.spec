@@ -38,6 +38,21 @@ export CFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 
+%if "%{profile}" == "wearable"
+CFLAGS+=" -D_WEARABLE";
+CXXFLAGS+=" -D_WEARABLE";
+%endif
+
+%if "%{profile}" == "mobile"
+CFLAGS+=" -D_MOBILE";
+CXXFLAGS+=" -D_MOBILE";
+%endif
+
+%if "%{profile}" == "tv"
+CFLAGS+=" -D_TV";
+CXXFLAGS+=" -D_TV";
+%endif
+
 cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}  -DLIB_INSTALL_DIR:PATH=%{_libdir}
 
 make %{?jobs:-j%jobs}
