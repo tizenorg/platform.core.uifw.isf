@@ -256,8 +256,13 @@ void CISECommon::init(const sclchar *name, const sclchar *uuid, const sclchar *l
 {
     m_helper_info.uuid = scim::String(uuid);
     m_helper_info.name = scim::String(name);
+#ifdef _TV
+    m_helper_info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
+        scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART | scim::ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT;
+#else
     m_helper_info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
         scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART;
+#endif
 
     m_supported_language = scim::String(language);
 }
@@ -1046,6 +1051,20 @@ void slot_turn_on_log (const scim::HelperAgent *agent, scim::uint32 &on) {
     }
 }
 
+void slot_process_key_event (const scim::HelperAgent *agent, scim::KeyEvent& key, scim::uint32 &ret) {
+
+    ret = false;
+    CISECommon *impl = CISECommon::get_instance();
+    if (impl) {
+        IISECommonEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            if (callback->process_key_event(key.get_key_string().c_str())) {
+                ret = true;
+            }
+        }
+    }
+}
+
 /* Internal signal handler function */
 void signal_handler(int sig) {
     elm_exit();
@@ -1121,4 +1140,5 @@ void CISECommon::register_slot_functions()
     m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
     m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
     m_helper_agent.signal_connect_turn_on_log (scim::slot (slot_turn_on_log));
+    m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
 }

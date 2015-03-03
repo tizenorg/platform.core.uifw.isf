@@ -80,6 +80,7 @@ struct IISECommonEventCallback {
     virtual void set_theme_name(const sclchar *name) {}
     virtual void set_rotation_degree(sclint degree) {}
     virtual void set_accessibility_state(sclboolean state) {}
+    virtual sclboolean process_key_event(const char *key) {return FALSE;}
 };
 
 /**

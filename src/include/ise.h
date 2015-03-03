@@ -128,5 +128,6 @@ void ise_set_return_key_type(unsigned int type);
 void ise_set_return_key_disable(unsigned int disabled);
 void ise_get_language_locale(char **locale);
 void ise_update_table(const std::vector<std::string> &vec_str);
+sclboolean ise_process_key_event(const char *key);
 
 #endif

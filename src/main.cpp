@@ -72,6 +72,8 @@ class CCoreEventCallback : public IISECommonEventCallback
     void set_imdata (sclchar *buf, sclu32 len);
     void get_language_locale (sclint ic, sclchar **locale);
     void update_lookup_table(LookupTable& table);
+
+    sclboolean process_key_event(const char *key);
 };
 
 void CCoreEventCallback::init()
@@ -207,6 +209,12 @@ void CCoreEventCallback::update_lookup_table(LookupTable &table)
         vec_str.push_back(str);
     }
     ise_update_table(vec_str);
+}
+
+sclboolean
+CCoreEventCallback::process_key_event(const char *key)
+{
+    return ise_process_key_event(key);
 }
 
 static CCoreEventCallback g_core_event_callback;

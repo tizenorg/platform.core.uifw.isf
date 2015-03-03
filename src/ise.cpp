@@ -737,3 +737,11 @@ void ise_update_table(const vector<string> &vec_str)
         g_candidate->update(vec_str);
     }
 }
+
+sclboolean ise_process_key_event(const char *key)
+{
+    if (gSCLUI && g_ise_common) {
+        return gSCLUI->process_key_event(key);
+    }
+    return FALSE;
+}
