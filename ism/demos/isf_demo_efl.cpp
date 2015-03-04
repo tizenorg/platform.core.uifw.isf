@@ -25,7 +25,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Elementary.h>
+#ifndef WAYLAND
 #include <Ecore_X.h>
+#endif
 #include <privilege-control.h>
 #include <vconf.h>
 #include <efl_extension.h>
@@ -180,6 +182,7 @@ static int create_demo_view (struct appdata *ad)
     return 0;
 }
 
+#ifndef WAYLAND
 static int lang_changed (void *event_info, void *data)
 {
 #if HAVE_UIGADGET
@@ -187,6 +190,7 @@ static int lang_changed (void *event_info, void *data)
 #endif
     return 0;
 }
+#endif
 
 static void win_del (void *data, Evas_Object *obj, void *event)
 {
@@ -196,15 +200,13 @@ static void win_del (void *data, Evas_Object *obj, void *event)
 static Evas_Object* create_win (const char *name)
 {
     Evas_Object *eo = NULL;
-    int w, h;
     const int rots[4] = { 0, 90, 180, 270 };
 
     eo = elm_win_util_standard_add (name, name);
     if (eo != NULL) {
         evas_object_smart_callback_add (eo, "delete,request",
                                         win_del, NULL);
-        ecore_x_window_size_get (ecore_x_window_root_first_get (), &w, &h);
-        evas_object_resize (eo, w, h);
+        elm_win_fullscreen_set (eo, EINA_TRUE);
     }
 
     if (elm_win_wm_rotation_supported_get (eo)) {
@@ -342,15 +344,19 @@ static int app_create (void *data)
     //init the content in conformant.
     create_demo_view (ad);
 
+#ifndef WAYLAND
     lang_changed (NULL, ad);
+#endif
 
     evas_object_show (ad->win_main);
 
     vconf_notify_key_changed (VCONFKEY_ISF_INPUT_PANEL_STATE, input_panel_state_changed_cb, NULL);
 
+#ifndef WAYLAND
     /* add system event callback */
     appcore_set_event_callback (APPCORE_EVENT_LANG_CHANGE,
                                 lang_changed, ad);
+#endif
 
     ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _keydown_event, ad);
     ecore_event_handler_add (ECORE_EVENT_KEY_UP, _keyup_event, ad);

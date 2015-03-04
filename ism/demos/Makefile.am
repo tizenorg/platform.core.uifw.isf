@@ -21,9 +21,7 @@ INCLUDES = -I$(top_builddir) \
 
 noinst_HEADERS =
 
-if ISF_BUILD_SETTING_EFL
 ISF_DEMO_EFL = isf-demo-efl
-endif
 
 optexecdir            = /opt/usr/devel/usr/bin/
 optexec_PROGRAMS      = $(ISF_DEMO_EFL)

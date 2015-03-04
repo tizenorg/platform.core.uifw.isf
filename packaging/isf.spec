@@ -154,11 +154,11 @@ cat scim.lang > isf.lang
 %{_sysconfdir}/scim/config
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
+%{_optexecdir}/isf-demo-efl
 %if %{with wayland}
 %{_bindir}/isf-wsm-efl
 %{_bindir}/isf-wsc-efl
 %else
-%{_optexecdir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
 %{_libdir}/ecore_imf/modules/*/*/*.so
 %endif

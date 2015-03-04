@@ -24,13 +24,17 @@
 
 #include "isf_demo_efl.h"
 #include "isf_layout_efl.h"
+#ifndef WAYLAND
 #include <Ecore_X.h>
 #include <utilX.h>
+#endif
 
+#ifndef WAYLAND
 static void _back_key_cb (void *data, Evas_Object *obj, void *event_info)
 {
     ecore_x_test_fake_key_press (KEY_END);
 }
+#endif
 
 static void _rotate_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -123,6 +127,7 @@ _key_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
     LOGD ("[evas key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 }
 
+#ifndef WAYLAND
 static void
 _print_keyboard_geometry (Ecore_X_Window xwin)
 {
@@ -153,6 +158,7 @@ _prop_change_cb (void *data, int type, void *event)
 
     return ECORE_CALLBACK_PASS_ON;
 }
+#endif
 
 static void entry_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
@@ -275,6 +281,7 @@ static Evas_Object * create_inner_layout (void *data)
     ef = _create_ef_layout (parent, _("TERMINAL LAYOUT"), _("click to enter TERMINAL"), ELM_INPUT_PANEL_LAYOUT_TERMINAL);
     elm_box_pack_end (bx, ef);
 
+#ifndef WAYLAND
     /* create back key event generation button */
     Evas_Object *back_key_btn = elm_button_add (parent);
     elm_object_text_set (back_key_btn, "Generate BACK key");
@@ -284,6 +291,7 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (back_key_btn);
     elm_box_pack_end (bx, back_key_btn);
     elm_object_focus_allow_set (back_key_btn, EINA_FALSE);
+#endif
 
     /* Click to rotate button */
     Evas_Object *rotate_btn = elm_button_add (parent);
@@ -294,7 +302,9 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_show (rotate_btn);
     elm_box_pack_end (bx, rotate_btn);
 
+#ifndef WAYLAND
     ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change_cb, NULL);
+#endif
 
     return bx;
 }
