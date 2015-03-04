@@ -596,7 +596,12 @@ _key_down_cb (void *data, int type, void *event)
                 _panel_client.process_key_event (key, (int*) pvoid);
                 _panel_client.send ();
             }
-            return ECORE_CALLBACK_DONE;
+            if (ret) {
+                return ECORE_CALLBACK_DONE;
+            }
+            else if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+                return ECORE_CALLBACK_DONE;
+            }
         }
     }
     return ECORE_CALLBACK_PASS_ON;
@@ -637,11 +642,14 @@ _key_up_cb (void *data, int type, void *event)
                 _panel_client.process_key_event (key, (int*) pvoid);
                 _panel_client.send ();
             }
-            if (!ret) {
+            if (ret) {
+                return ECORE_CALLBACK_DONE;
+            }
+            else if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_reset (active_ctx);
                 isf_imf_context_input_panel_instant_hide (active_ctx);
+                return ECORE_CALLBACK_DONE;
             }
-            return ECORE_CALLBACK_DONE;
         }
     }
 
