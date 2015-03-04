@@ -35,13 +35,13 @@ using namespace scim;
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
 #define MAXLINE                         4096
-#define USER_ENGINE_LIST_PATH           tzplatform_mkpath(TZ_USER_HOME, ".scim")
+#define USER_ENGINE_LIST_PATH           "/home/owner/.scim"
 
 #ifndef SCIM_SYSCONFDIR
   #define SCIM_SYSCONFDIR               "/usr/etc"
 #endif
 
-#define USER_ENGINE_FILE_NAME           tzplatform_mkpath3(TZ_USER_HOME, ".scim", "engines_list")
+#define USER_ENGINE_FILE_NAME           (USER_ENGINE_LIST_PATH "/engines_list")
 #define SYS_ENGINE_FILE_NAME            (SCIM_SYSCONFDIR "/scim/engines_list")
 
 
