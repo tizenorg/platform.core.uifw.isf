@@ -881,13 +881,13 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         }
         else if (ime_db.pkgtype.compare("wgt") == 0)    //1 Download Web IME
         {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | SCIM_HELPER_NEED_SPOT_LOCATION_INFO;
+            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT;
             ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION) + String(SCIM_PATH_DELIM_STRING) + String("Helper");
             ime_db.module_name = String("ise-web-helper-agent");
         }
         else if (ime_db.pkgtype.compare("coretpk") == 0)    //1 Download Native IME
         {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
+            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT;
             if (path)
                 ime_db.module_path = String(path);
             else
