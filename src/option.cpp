@@ -833,7 +833,9 @@ set_transient_for_app_window(Evas_Object *window)
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
+#ifdef WAYLAND
     ise_pause();
+#endif
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */

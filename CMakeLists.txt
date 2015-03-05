@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(ise-default)
 
-SET(ISE_SRCS
+SET(BASIC_ISE_SRCS
     src/main.cpp
     src/common.cpp
     src/ise.cpp
@@ -12,13 +12,17 @@ SET(ISE_SRCS
     src/sdk/ise_lang_table.cpp
     src/sdk/sdk.cpp
     src/sdk/sdk_option.cpp
-    src/input-method-protocol.c
-
     src/candidate/candidate-factory.cpp
     src/candidate/candidate.cpp
     src/candidate/efl/candidate-efl.cpp
     src/candidate/efl/candidate-multiline-efl.cpp
 )
+
+IF (with_wayland)
+    SET(ISE_SRCS ${BASIC_ISE_SRCS} src/input-method-protocol.c)
+ELSE (with_wayland)
+    SET(ISE_SRCS ${BASIC_ISE_SRCS})
+ENDIF (with_wayland)
 
 SET(ISE_PACKAGE ${PROJECT_NAME})
 SET(ISE_PKGNAME ${PACKAGE})
@@ -40,7 +44,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/include
 )
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(ISE_PKGS REQUIRED
+SET(PKGS_CHECK_MODULES
         elementary
         efl-extension
         dlog
@@ -49,9 +53,13 @@ pkg_check_modules(ISE_PKGS REQUIRED
         isf
         vconf
         libxml-2.0
-        ecore-wayland
-        wayland-client
         )
+
+IF (with_wayland)
+    pkg_check_modules(ISE_PKGS REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client)
+ELSE (with_wayland)
+    pkg_check_modules(ISE_PKGS REQUIRED ${PKGS_CHECK_MODULES})
+ENDIF (with_wayland)
 
 FOREACH(flag ${ISE_PKGS_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -65,7 +73,6 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -g")
 ADD_DEFINITIONS("-DPACKAGE=\"${ISE_PACKAGE}\"")
 ADD_DEFINITIONS("-DPACKAGE_NAME=\"${ISE_PKGNAME}\"")
 
-#ADD_EXECUTABLE(${PROJECT_NAME} ${ISE_SRCS})
 ADD_LIBRARY(${PROJECT_NAME} SHARED ${ISE_SRCS})
 
 # For edc File

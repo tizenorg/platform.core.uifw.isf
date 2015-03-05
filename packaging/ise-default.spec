@@ -41,6 +41,9 @@ Description: Tizen keyboard
 
 
 %build
+rm -rf CMakeFiles
+rm -rf CMakeCache.txt
+
 export CFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
@@ -74,10 +77,6 @@ mkdir -p %{buildroot}/usr/share/license
 cp LICENSE %{buildroot}/usr/share/license/%{name}
 
 %make_install
-
-%post
-
-%postun
 
 %files 
 %defattr(-,root,root,-)
