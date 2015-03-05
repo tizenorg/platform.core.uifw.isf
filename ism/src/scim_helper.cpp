@@ -2066,7 +2066,7 @@ HelperAgent::signal_connect_set_return_key_disable (HelperAgentSlotUintVoid *slo
  * This signal is used to send keyboard key event to Helper ISE.
  *
  * The prototype of the slot is:
- * void process_key_event (const HelperAgent *agent, uint32 &ret);
+ * void process_key_event (const HelperAgent *agent, KeyEvent &key, uint32 &ret);
  */
 Connection
 HelperAgent::signal_connect_process_key_event (HelperAgentSlotKeyEventUint *slot)
