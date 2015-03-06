@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="720" height="460" key_width="165" key_height="100" key_spacing="12" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_PHONE" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="720" height="460" key_width="165" key_height="100" key_spacing="12" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_BTN_1" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -14,7 +14,7 @@
         <rec>(</rec>
       </label>
     </key>
-    <key>
+    <key label_type="3X4_BTN_5">
       <label>
         <rec>/</rec>
       </label>
@@ -40,12 +40,12 @@
     </key>
   </row>
   <row x="12">
-    <key>
+    <key label_type="3X4_BTN_5">
       <label>
         <rec>N</rec>
       </label>
     </key>
-    <key>
+    <key label_type="3X4_BTN_3">
       <label>
         <rec>Pause(,)</rec>
       </label>
@@ -53,12 +53,12 @@
         <rec>,</rec>
       </key_value>
     </key>
-    <key>
+    <key label_type="3X4_BTN_4">
       <label>
         <rec>.</rec>
       </label>
     </key>
-    <key key_type="control" custom_id="Enter">
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2">
       <image_label>
         <rec button="normal">B09_icon_enter.png</rec>
         <rec button="pressed">B09_icon_enter_press.png</rec>
@@ -75,12 +75,12 @@
     </key>
   </row>
   <row x="12">
-    <key>
+    <key label_type="3X4_BTN_4">
       <label>
         <rec>*</rec>
       </label>
     </key>
-    <key>
+    <key label_type="3X4_BTN_3">
       <label>
         <rec>Wait(;)</rec>
       </label>
@@ -88,12 +88,12 @@
         <rec>;</rec>
       </key_value>
     </key>
-    <key>
+    <key label_type="3X4_BTN_4">
       <label>
         <rec>#</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="modechange">
+    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2">
       <label>
         <rec>123</rec>
       </label>
@@ -108,7 +108,7 @@
     </key>
   </row>
   <row x="12">
-    <key>
+    <key label_type="3X4_BTN_4">
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
@@ -118,7 +118,7 @@
         <rec>-</rec>
       </label>
     </key>
-    <key long_key_value="+">
+    <key label_type="3X4_BTN_4">
       <label>
         <rec>+</rec>
       </label>

@@ -109,7 +109,7 @@
         <rec>0</rec>
       </key_value>
     </key>
-    <key key_type="control" custom_id="Enter">
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2">
       <image_label>
         <rec button="normal">B09_icon_enter.png</rec>
         <rec button="pressed">B09_icon_enter_press.png</rec>
