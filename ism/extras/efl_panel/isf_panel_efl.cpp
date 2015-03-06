@@ -168,7 +168,6 @@ static void       ui_tts_focus_rect_hide               (void);
 static Evas_Object *get_candidate                      (const String& str, Evas_Object *parent, int *total_width, uint32 ForeGround, uint32 BackGround, bool HighLight, bool SetBack, int item_num, int item);
 static bool       tokenize_tag                         (const String& str, struct image *image_data);
 
-static bool       check_wm_ready                       (void);
 static void       launch_default_soft_keyboard         (keynode_t *key = NULL, void* data = NULL);
 
 /* PanelAgent related functions */
