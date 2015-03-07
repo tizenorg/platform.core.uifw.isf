@@ -863,12 +863,12 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
     ime_db.languages = String("en");
 
     if (ime_db.pkgtype.compare("rpm") == 0 &&   //1 Inhouse IMEngine ISE(IME)
-        //(ime_db.pkgid.find("ise-engine") != String::npos || ime_db.appid.find("ise-engine") != String::npos)) // FIXME: this checking code is a temporary one, but...
         ime_db.exec.find("scim-launcher") != String::npos)  // Some IMEngine's pkgid doesn't have "ise-engine" prefix.
     {
         ime_db.mode = TOOLBAR_KEYBOARD_MODE;
         ime_db.options = 0;
-        ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION) + String(SCIM_PATH_DELIM_STRING) + String("IMEngine");
+        ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
+            + String(SCIM_PATH_DELIM_STRING) + String("IMEngine");
         ime_db.module_name = ime_db.pkgid;
     }
     else {
@@ -876,18 +876,22 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         if (ime_db.pkgtype.compare("rpm") == 0) //1 Inhouse Helper ISE(IME)
         {
             ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
-            ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION) + String(SCIM_PATH_DELIM_STRING) + String("Helper");
+            ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
+                + String(SCIM_PATH_DELIM_STRING) + String("Helper");
             ime_db.module_name = ime_db.pkgid;
         }
         else if (ime_db.pkgtype.compare("wgt") == 0)    //1 Download Web IME
         {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT;
-            ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION) + String(SCIM_PATH_DELIM_STRING) + String("Helper");
+            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
+                | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
+            ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
+                + String(SCIM_PATH_DELIM_STRING) + String("Helper");
             ime_db.module_name = String("ise-web-helper-agent");
         }
         else if (ime_db.pkgtype.compare("coretpk") == 0)    //1 Download Native IME
         {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT;
+            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
+                | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
             if (path)
                 ime_db.module_path = String(path);
             else

@@ -2232,9 +2232,12 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
                 ret = _focused_ic->impl->si->process_key_event (key);
             }
 #else
-        } else if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE && (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
+        } else if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             void *pvoid = &ret;
             _panel_client.process_key_event (key, (int*)pvoid);
+            if (!ret && !(_active_helper_option & ISM_HELPER_WITHOUT_IMENGINE)) {
+                ret = _focused_ic->impl->si->process_key_event (key);
+            }
 #endif
         } else {
             ret = _focused_ic->impl->si->process_key_event (key);
