@@ -117,6 +117,10 @@ const uint32 ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT = (1<<16);
  */
 const uint32 ISM_ISE_HIDE_IN_CONTROL_PANEL       = (1<<17);
 
+/**
+ * @brief ISE option for 3rd party; IMEngine is not available.
+ */
+const uint32 ISM_HELPER_WITHOUT_IMENGINE         = (1<<18);
 
 /**
  * @brief Structure to hold the information of a Helper object.
