@@ -232,10 +232,11 @@ PKG_CHECK_MODULES(WAYLAND, [ecore-wayland wayland-client >= 1.2.0 xkbcommon],
 
 if test "$ISF_HAS_EFL" = "yes"; then
   EFL_LIBDIR=`$PKG_CONFIG --variable=libdir ecore-imf`
+  ECORE_IMF_MODULE_ARCH=`$PKG_CONFIG --variable=module_arch ecore`
   if test -z "$EFL_LIBDIR)"; then
     EFL_LIBDIR="$libdir"
   fi
-  EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/isf/v-1.12
+  EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/isf/$ECORE_IMF_MODULE_ARCH
   AC_SUBST(EFL_LIBDIR)
   AC_SUBST(EFL_IM_MODULEDIR)
 fi
