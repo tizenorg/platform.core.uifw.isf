@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="290" height="252" style="popup" key_width="140" key_height="56" label_type="AUTOPOPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="210" height="290" style="popup" key_width="102" key_height="72" key_spacing="2" row_spacing="2" label_type="URL_POPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_popup_bg.png</button_normal>
   </image_path>
@@ -8,43 +8,7 @@
     <rec button="pressed">B09_bubble_popup_press.png</rec>
     <rec button="disabled">B09_bg_Popup.png</rec>
   </background_image>
-  <row x="5" y="5">
-    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
-      <label>
-        <rec>.co.us</rec>
-      </label>
-      <key_value>
-        <rec>.co.us</rec>
-      </key_value>
-    </key>
-    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
-      <label>
-        <rec>.or.us</rec>
-      </label>
-      <key_value>
-        <rec>.or.us</rec>
-      </key_value>
-    </key>
-  </row>
-  <row>
-    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
-      <label>
-        <rec>.ac.us</rec>
-      </label>
-      <key_value>
-        <rec>.ac.us</rec>
-      </key_value>
-    </key>
-    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
-      <label>
-        <rec>.go.us</rec>
-      </label>
-      <key_value>
-        <rec>.go.us</rec>
-      </key_value>
-    </key>
-  </row>
-  <row>
+  <row x="2" y="2">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
         <rec>.net</rec>
@@ -55,14 +19,32 @@
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
-        <rec>.org</rec>
+        <rec>.co.uk</rec>
       </label>
       <key_value>
-        <rec>.org</rec>
+        <rec>.co.uk</rec>
       </key_value>
     </key>
   </row>
-  <row>
+  <row x="2">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.org</rec>
+      </label>
+      <key_value>
+        <rec>.org</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.or.uk</rec>
+      </label>
+      <key_value>
+        <rec>.or.uk</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="2">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
         <rec>.edu</rec>
@@ -73,10 +55,28 @@
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
+        <rec>.ac.uk</rec>
+      </label>
+      <key_value>
+        <rec>.ac.uk</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="2">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
         <rec>.gov</rec>
       </label>
       <key_value>
         <rec>.gov</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>.go.uk</rec>
+      </label>
+      <key_value>
+        <rec>.go.uk</rec>
       </key_value>
     </key>
   </row>
