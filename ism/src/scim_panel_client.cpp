@@ -786,9 +786,6 @@ public:
     bool instant_send           (void)
     {
         if (m_socket_active.is_connected () && m_send_refcount > 0) {
-
-            m_send_refcount --;
-
             if (m_send_trans.get_data_type () != SCIM_TRANS_DATA_UNKNOWN)
                 return m_send_trans.write_to_socket (m_socket_active, 0x4d494353);
         }
