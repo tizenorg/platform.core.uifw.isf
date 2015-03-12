@@ -405,7 +405,7 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
         return ECORE_CALLBACK_PASS_ON;
 
     if (client_win > 0) {
-        if (focus_out_win == client_win)
+        if ((focus_out_win == client_win) && (focus_out_win != focus_in_win))
             isf_imf_context_input_panel_instant_hide (ctx);
     }
     else {
