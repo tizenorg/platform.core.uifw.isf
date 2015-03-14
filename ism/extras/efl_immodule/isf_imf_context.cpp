@@ -2117,6 +2117,9 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
 
     if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
+        if (ev->dev_name) {
+            scim_set_device_name (key, ev->dev_name);
+        }
         timestamp = ev->timestamp;
 
         /* Hardware input detect code */
@@ -2161,12 +2164,18 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
+        if (ev->dev_name) {
+            scim_set_device_name (key, ev->dev_name);
+        }
         key.mask |= _ecore_imf_modifier_to_scim_mask (ev->modifiers);
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);
     } else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
+        if (ev->dev_name) {
+            scim_set_device_name (key, ev->dev_name);
+        }
         key.mask = SCIM_KEY_ReleaseMask;
         key.mask |= _ecore_imf_modifier_to_scim_mask (ev->modifiers);
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);

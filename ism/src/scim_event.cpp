@@ -392,6 +392,11 @@ scim_set_default_keyboard_layout (KeyboardLayout layout)
     scim_global_config_write (SCIM_GLOBAL_CONFIG_DEFAULT_KEYBOARD_LAYOUT, layout_name);
 }
 
+EAPI void
+scim_set_device_name (KeyEvent &key, String str)
+{
+    key.dev_name = str;
+}
 } // namespace scim
 
 /*
