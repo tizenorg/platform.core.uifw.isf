@@ -2,8 +2,8 @@
 <default_configure>
   <display>portrait</display>
   <inputMode>QTY_ENGLISH</inputMode>
-  <base_screen_width>720</base_screen_width>
-  <base_screen_height>1280</base_screen_height>
+  <base_screen_width>540</base_screen_width>
+  <base_screen_height>960</base_screen_height>
   <auto_detect_landscape>true</auto_detect_landscape>
   <use_magnifier>true</use_magnifier>
   <use_autopopup>true</use_autopopup>

@@ -1,23 +1,32 @@
 <?xml version="1.0"?>
 <label_properties_frame>
   <label_properties_table label_type="QTY_DEFAULT">
-    <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="center_bottom" padding_X="0" padding_Y="4" inner_width="62" inner_height="56">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="32" label_alignment="center_bottom" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=medium" font_size="23" label_alignment="right_top" padding_X="2" padding_Y="1" inner_width="28" inner_height="30">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="17" label_alignment="right_top" padding_X="6" padding_Y="0">
       <font_color_record>
-        <color button="normal">0x626465ff</color>
+        <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
-        <color button="disabled">0x62646533</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="QTY_line1">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="32" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_?123">
-    <label_properties font_name="Tizen:style=medium" font_size="30" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="24" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -26,7 +35,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_SPACE">
-    <label_properties font_name="Tizen:style=medium" font_size="20" label_alignment="center_top" padding_X="0" padding_Y="13" inner_width="0" inner_height="28">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="18" label_alignment="center_top" padding_X="0" padding_Y="8">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -53,7 +62,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_WWWCOM">
-    <label_properties font_name="Tizen:style=medium" font_size="26" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="24" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -201,7 +210,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_1_2">
-    <label_properties font_name="SamsungSansNum-3Lv:style=Light" font_size="54" label_alignment="left_middle" padding_X="36" padding_Y="0">
+    <label_properties font_name="SamsungSansNum-3Lv:style=Light" font_size="54" label_alignment="left_middle" padding_X="15" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -269,14 +278,14 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_5_2_DISABLED">
-    <label_properties font_name="Samsung Sans:style=Regular" font_size="36" label_alignment="center_top" padding_X="0" padding_Y="0">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="28" label_alignment="center_top" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717174c</color>
         <color button="pressed">0x1717174c</color>
         <color button="disabled">0x1717174c</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Samsung Sans:style=Regular" font_size="36" label_alignment="center_bottom" padding_X="0" padding_Y="0">
+    <label_properties font_name="Samsung Sans:style=Regular" font_size="28" label_alignment="center_bottom" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717174c</color>
         <color button="pressed">0x1717174c</color>
@@ -462,7 +471,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="IMAGE_CUE">
-    <label_properties label_alignment="right_top" padding_X="9" padding_Y="7">
+    <label_properties label_alignment="right_top" padding_X="5" padding_Y="5">
     </label_properties>
   </label_properties_table>
 </label_properties_frame>
