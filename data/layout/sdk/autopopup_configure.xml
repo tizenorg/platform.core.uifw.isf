@@ -22,10 +22,10 @@
   </button_image_path>
   <sw_button_style>0</sw_button_style>
   <button_size>
-    <width>76</width>
-    <height>133</height>
+    <width>62</width>
+    <height>72</height>
   </button_size>
-  <button_spacing>0</button_spacing>
+  <button_spacing>2</button_spacing>
   <label_type>AUTOPOPUP</label_type >
   <window_decorator size="0">
     <image direction="top_left"></image>

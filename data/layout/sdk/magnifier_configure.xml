@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <magnifier_configure>
   <magnifier_style>label_only</magnifier_style>
-  <width>120</width>
-  <height>142</height>
+  <width>88</width>
+  <height>108</height>
   <label_area>
     <left>0</left>
     <top>1</top>
-    <right>120</right>
-    <bottom>117</bottom>
+    <right>88</right>
+    <bottom>107</bottom>
   </label_area>
   <background_image_path>
     <image state="normal">B09_btn_bubble.png</image>

@@ -240,7 +240,7 @@
       </label>
     </key>
   </row>
-  <row x="27">
+  <row x="30">
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="40">
       <label>
         <rec auto_upper="true">a</rec>
@@ -645,7 +645,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key key_type="string" label_type="QTY_line1">
+    <key key_type="string" label_type="QTY_LINE1">
       <label>
         <rec>/</rec>
       </label>
@@ -663,7 +663,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" label_type="QTY_line1">
+    <key key_type="string" label_type="QTY_LINE1">
       <label>
         <rec>.</rec>
       </label>
@@ -726,7 +726,7 @@
         <rec>OPTION</rec>
       </key_value>
     </key>
-    <key key_type="string" label_type="QTY_line1">
+    <key key_type="string" label_type="QTY_LINE1">
       <label>
         <rec>@</rec>
       </label>
@@ -744,7 +744,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" label_type="QTY_line1">
+    <key key_type="string" label_type="QTY_LINE1">
       <label>
         <rec>.</rec>
       </label>
