@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="540" height="333" key_width="170" key_height="74" key_spacing="8" row_spacing="6" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_MONTH" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="540" height="333" key_width="170" key_height="74" key_spacing="8" row_spacing="6" hit_left="4" hit_right="4" hit_top="3" hit_bottom="3" label_type="3X4_MONTH" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -9,7 +9,7 @@
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
   <row x="7" y="9">
-    <key key_type="string">
+    <key key_type="string" hit_left="7" hit_top="9">
       <label>
         <rec>1            </rec>
         <rec multi="1">      JAN</rec>
@@ -18,7 +18,7 @@
         <rec>1</rec>
       </key_value>
     </key>
-    <key key_type="string">
+    <key key_type="string" hit_top="9">
       <label>
         <rec>2            </rec>
         <rec multi="1">      FEB</rec>
@@ -27,7 +27,7 @@
         <rec>2</rec>
       </key_value>
     </key>
-    <key key_type="string">
+    <key key_type="string" hit_right="7" hit_top="9">
       <label>
         <rec>3            </rec>
         <rec multi="1">      MAR</rec>
@@ -38,7 +38,7 @@
     </key>
   </row>
   <row x="7">
-    <key key_type="string">
+    <key key_type="string" hit_left="7">
       <label>
         <rec>4            </rec>
         <rec multi="1">      APR</rec>
@@ -56,7 +56,7 @@
         <rec>5</rec>
       </key_value>
     </key>
-    <key key_type="string">
+    <key key_type="string" hit_right="7">
       <label>
         <rec>6            </rec>
         <rec multi="1">      JUN</rec>
@@ -67,7 +67,7 @@
     </key>
   </row>
   <row x="7">
-    <key key_type="string">
+    <key key_type="string" hit_left="7">
       <label>
         <rec>7            </rec>
         <rec multi="1">      JUL</rec>
@@ -85,7 +85,7 @@
         <rec>8</rec>
       </key_value>
     </key>
-    <key key_type="string">
+    <key key_type="string" hit_right="7">
       <label>
         <rec>9            </rec>
         <rec multi="1">      SEP</rec>
@@ -96,7 +96,7 @@
     </key>
   </row>
   <row x="7">
-    <key key_type="string">
+    <key key_type="string" hit_left="7" hit_bottom="10">
       <label>
         <rec>10            </rec>
         <rec multi="1">      OCT</rec>
@@ -105,7 +105,7 @@
         <rec>10</rec>
       </key_value>
     </key>
-    <key key_type="string">
+    <key key_type="string" hit_bottom="10">
       <label>
         <rec>11            </rec>
         <rec multi="1">      NOV</rec>
@@ -114,7 +114,7 @@
         <rec>11</rec>
       </key_value>
     </key>
-    <key key_type="string">
+    <key key_type="string" hit_right="7" hit_bottom="10">
       <label>
         <rec>12            </rec>
         <rec multi="1">      DEC</rec>
