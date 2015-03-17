@@ -59,6 +59,8 @@ typedef struct {
     String module_path;
     TOOLBAR_MODE_T mode;
     uint32 options;
+    uint32 enabled;
+    uint32 preinstalled;
 } ImeInfoDB;
 
 EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
@@ -67,6 +69,7 @@ EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Stri
 EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath);
 EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids);
 EAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
+EAPI int isf_db_update_enabled_by_appid(const char *appid, bool enabled);
 EAPI int isf_db_insert_ime_info_by_pkgid(const char *pkgid);
 EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
 
