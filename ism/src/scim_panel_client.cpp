@@ -1196,7 +1196,6 @@ public:
             if (m_send_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                     m_send_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
                     m_send_trans.get_data (option_temp)) {
-                std::cerr << __func__ <<  "option_temp " << option_temp << "\n";
                 *option = option_temp;
             } else {
                 std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
