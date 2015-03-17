@@ -63,11 +63,11 @@ using namespace scim;
  * DB Table schema
  *
  * ime_info
- * +-------+-------+-----------+----------+-------+----------+------+-------+-------+------+---------+
- * | appid | label | languages | iconpath | pkgid |  pkgtype | exec | mname | mpath | mode | options |
- * +-------+-------+-----------+----------+-------+----------+------+-------+-------+------+---------+
+ * +-------+-------+-----------+----------+-------+----------+------+-------+-------+------+---------+---------+--------------+
+ * | appid | label | languages | iconpath | pkgid |  pkgtype | exec | mname | mpath | mode | options | enabled | preinstalled |
+ * +-------+-------+-----------+----------+-------+----------+------+-------+-------+------+---------+---------+--------------+
  *
- * CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT mname TEXT, mpath TEXT, mode INTEGER, options INTEGER)
+ * CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT mname TEXT, mpath TEXT, mode INTEGER, options INTEGER, enabled INTEGER, preinstalled INTEGER)
  *
  */
 
@@ -153,7 +153,7 @@ static inline int _commit_transaction(void)
 static inline int _db_create_ime_info(void)
 {
     char* pException = NULL;
-    static const char* pQuery = "CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER)";
+    static const char* pQuery = "CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER, enabled INTEGER, preinstalled INTEGER)";
 
     if (sqlite3_exec(databaseInfo.pHandle, pQuery, NULL, NULL, &pException) != SQLITE_OK) {
         LOGE("sqlite3_exec: %s", pException);
@@ -276,8 +276,10 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
             info.module_path = String((char *)sqlite3_column_text(pStmt, 8));
             info.mode = (TOOLBAR_MODE_T)sqlite3_column_int(pStmt, 9);
             info.options = (uint32)sqlite3_column_int(pStmt, 10);
+            info.enabled = (uint32)sqlite3_column_int(pStmt, 11);
+            info.preinstalled = (uint32)sqlite3_column_int(pStmt, 12);
 
-            SECURE_LOGD("appid=\"%s\", label=\"%s\", langs=\"%s\", icon=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u",
+            SECURE_LOGD("appid=\"%s\", label=\"%s\", langs=\"%s\", icon=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, enabled=%u, preinstalled=%u",
                 info.appid.c_str(),
                 info.label.c_str(),
                 info.languages.c_str(),
@@ -288,7 +290,9 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
                 info.module_name.c_str(),
                 info.module_path.c_str(),
                 info.mode,
-                info.options);
+                info.options,
+                info.enabled,
+                info.preinstalled);
 
             ime_info.push_back(info);
             i++;
@@ -349,6 +353,8 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     pImeInfo->module_path.clear();
     pImeInfo->mode = TOOLBAR_KEYBOARD_MODE;
     pImeInfo->options = 0;
+    pImeInfo->enabled = 0;
+    pImeInfo->preinstalled = 0;
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -380,8 +386,10 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     pImeInfo->module_path = String((char *)sqlite3_column_text(pStmt, 8));
     pImeInfo->mode = (TOOLBAR_MODE_T)sqlite3_column_int(pStmt, 9);
     pImeInfo->options = (uint32)sqlite3_column_int(pStmt, 10);
+    pImeInfo->enabled = (uint32)sqlite3_column_int(pStmt, 11);
+    pImeInfo->preinstalled = (uint32)sqlite3_column_int(pStmt, 12);
 
-    SECURE_LOGD("appid=\"%s\", label=\"%s\", langs=\"%s\", icon=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u",
+    SECURE_LOGD("appid=\"%s\", label=\"%s\", langs=\"%s\", icon=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, enabled=%u, preinstalled=%u",
         pImeInfo->appid.c_str(),
         pImeInfo->label.c_str(),
         pImeInfo->languages.c_str(),
@@ -392,7 +400,9 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
         pImeInfo->module_name.c_str(),
         pImeInfo->module_path.c_str(),
         pImeInfo->mode,
-        pImeInfo->options);
+        pImeInfo->options,
+        pImeInfo->enabled,
+        pImeInfo->preinstalled);
 
 out:
     sqlite3_reset(pStmt);
@@ -621,6 +631,63 @@ out:
 }
 
 /**
+ * @brief Update enabled data by appid in ime_info table.
+ *
+ * @param appid appid in ime_info table.
+ * @param enabled Helper ISE enabled or not.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static int _db_update_enabled_by_appid(const char *appid, bool enabled)
+{
+    int ret = 0;
+    sqlite3_stmt* pStmt = NULL;
+    static const char* pQuery = "UPDATE ime_info SET enabled = ? WHERE appid = ?";
+
+    if (appid == NULL) {
+        LOGE("input is NULL.");
+        return 0;
+    }
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        return 0;
+    }
+
+    ret = sqlite3_bind_int(pStmt, 1, (int)enabled);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 2, appid, -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        ret = 0;
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_DONE) {
+        ISF_SAVE_LOG("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        ret = 0;
+    }
+    else {
+        SECURE_LOGD("UPDATE ime_info SET enabled = %d WHERE appid = %s", enabled, appid);
+        ret = 1;
+    }
+
+out:
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
+    sqlite3_finalize(pStmt);
+    return ret;
+}
+
+
+/**
  * @brief Insert data to ime_info table.
  *
  * @param ime_info The list to store ImeInfoDB
@@ -632,7 +699,7 @@ static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
     std::vector<ImeInfoDB>::iterator iter;
-    static const char* pQuery = "INSERT INTO ime_info (appid, label, languages, iconpath, pkgid, pkgtype, exec, mname, mpath, mode, options) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    static const char* pQuery = "INSERT INTO ime_info (appid, label, languages, iconpath, pkgid, pkgtype, exec, mname, mpath, mode, options, enabled, preinstalled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -707,6 +774,18 @@ static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
             goto out;
         }
 
+        ret = sqlite3_bind_int(pStmt, 12, (int)iter->enabled);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_bind_int(pStmt, 13, (int)iter->preinstalled);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
         ret = sqlite3_step(pStmt);
         if (ret != SQLITE_DONE) {
             ISF_SAVE_LOG("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
@@ -715,9 +794,10 @@ static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
             goto out;
         }
         else {
-            SECURE_LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u",
-                iter->appid.c_str(), iter->label.c_str(), iter->languages.c_str(), iter->iconpath.c_str(), iter->pkgid.c_str(),
-                iter->pkgtype.c_str(), iter->module_name.c_str(), iter->exec.c_str(), iter->module_path.c_str(), iter->mode, iter->options);
+            SECURE_LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u",
+                iter->appid.c_str(), iter->label.c_str(), iter->languages.c_str(), iter->iconpath.c_str(),
+                iter->pkgid.c_str(), iter->pkgtype.c_str(), iter->module_name.c_str(), iter->exec.c_str(),
+                iter->module_path.c_str(), iter->mode, iter->options, iter->enabled, iter->preinstalled);
             ret = SQLITE_OK;
             i++;
         }
@@ -870,6 +950,8 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
             + String(SCIM_PATH_DELIM_STRING) + String("IMEngine");
         ime_db.module_name = ime_db.pkgid;
+        ime_db.enabled = 1;
+        ime_db.preinstalled = 1;
     }
     else {
         ime_db.mode = TOOLBAR_HELPER_MODE;
@@ -879,6 +961,8 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
             ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
                 + String(SCIM_PATH_DELIM_STRING) + String("Helper");
             ime_db.module_name = ime_db.pkgid;
+            ime_db.enabled = 1;
+            ime_db.preinstalled = 1;
         }
         else if (ime_db.pkgtype.compare("wgt") == 0)    //1 Download Web IME
         {
@@ -887,6 +971,14 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
             ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
                 + String(SCIM_PATH_DELIM_STRING) + String("Helper");
             ime_db.module_name = String("ise-web-helper-agent");
+            if (ime_db.exec.compare(0, 5, "/usr/") == 0) {
+                ime_db.enabled = 1;
+                ime_db.preinstalled = 1;
+            }
+            else {
+               ime_db.enabled = 0;
+               ime_db.preinstalled = 0;
+            }
         }
         else if (ime_db.pkgtype.compare("coretpk") == 0)    //1 Download Native IME
         {
@@ -897,6 +989,14 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
             else
                 ime_db.module_path = String("/opt/usr/apps/") + ime_db.pkgid + String("/lib");
             ime_db.module_name = ime_db.appid;
+            if (ime_db.exec.compare(0, 5, "/usr/") == 0) {
+                ime_db.enabled = 1;
+                ime_db.preinstalled = 1;
+            }
+            else {
+                ime_db.enabled = 0;
+                ime_db.preinstalled = 0;
+            }
         }
         else {
             LOGE("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str());
@@ -1040,6 +1140,24 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
     int ret = 0;
     if (_db_connect() == 0) {
         ret = _db_update_label_by_appid(appid, label);
+        _db_disconnect();
+    }
+    return ret;
+}
+
+/**
+ * @brief Update enabled data by appid in ime_info table.
+ *
+ * @param appid appid in ime_info table.
+ * @param enabled Helper ISE enabled or not.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+EAPI int isf_db_update_enabled_by_appid(const char *appid, bool enabled)
+{
+    int ret = 0;
+    if (_db_connect() == 0) {
+        ret = _db_update_enabled_by_appid(appid, enabled);
         _db_disconnect();
     }
     return ret;
