@@ -1972,11 +1972,6 @@ static void ui_candidate_window_rotate (int angle)
         ui_tts_focus_rect_hide ();
     }
     flush_memory ();
-
-    LOGD ("elm_win_rotation_with_resize_set (window : %p, angle : %d)\n", _candidate_window, angle);
-    elm_win_rotation_with_resize_set (_candidate_window, angle);
-    if (_preedit_window)
-        elm_win_rotation_with_resize_set (_preedit_window, angle);
 }
 
 /**
@@ -2900,7 +2895,8 @@ static void ui_create_preedit_window (void)
     if (_preedit_window == NULL) {
         _preedit_window = efl_create_window ("preedit", "Preedit Window");
         evas_object_resize (_preedit_window, _preedit_width, _preedit_height);
-
+        int rots [4] = {0, 90, 180, 270};
+        elm_win_wm_rotation_available_rotations_set (_preedit_window, rots, 4);
         int preedit_font_size = (int)(32 * _width_rate);
 
         _preedit_text = edje_object_add (evas_object_evas_get (_preedit_window));
@@ -2960,6 +2956,8 @@ static void ui_create_native_candidate_window (void)
     /* Create candidate window */
     if (_candidate_window == NULL) {
         _candidate_window = efl_create_window ("candidate", "Prediction Window");
+        int rots [4] = {0, 90, 180, 270};
+        elm_win_wm_rotation_available_rotations_set (_candidate_window, rots, 4);
         if (_candidate_angle == 90 || _candidate_angle == 270) {
             _candidate_width  = _candidate_land_width;
             _candidate_height = _candidate_land_height_min;
@@ -4032,7 +4030,6 @@ static void slot_show_preedit_string (void)
     if (_preedit_window == NULL) {
         ui_create_preedit_window ();
         int angle = efl_get_app_window_angle ();
-        elm_win_rotation_with_resize_set (_preedit_window, angle);
 
         /* Move preedit window according to candidate window position */
         if (_candidate_window) {
