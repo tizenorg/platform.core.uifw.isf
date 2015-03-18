@@ -202,7 +202,7 @@ void accessibility_changed_cb(keynode_t *key, void* data)
 {
     int vconf_value = 0;
     if (vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &vconf_value) == 0) {
-        LOGD("accessbility state : %d\n", vconf_value);
+        LOGD("accessibility state : %d\n", vconf_value);
 
         CISECommon *impl = CISECommon::get_instance();
         if (impl) {
@@ -413,16 +413,12 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     m_config = config;
 
-#ifdef WAYLAND
-    if (!ecore_evas_init())
-    {
-        fprintf(stderr,"ecore_evas_init error!\n");
-        return;
-    }
+    elm_init(argc, argv);
 
+#ifdef WAYLAND
     if (!_wskb_check_evas_engine(&wskb))
     {
-        fprintf(stderr,"_wkb_check_evas_engine error!\n");
+        fprintf(stderr,"_wskb_check_evas_engine error!\n");
         goto end;
     }
     fprintf(stderr,"Selected engine: '%s'\n", wskb.ee_engine);
@@ -437,15 +433,14 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     _wskb_setup(&wskb);
     if (!_wskb_ui_setup(&wskb))
     {
-        fprintf(stderr,"ERROR: _wkb_ui_setup\n");
+        fprintf(stderr,"ERROR: _wskb_ui_setup\n");
         goto err;
     }
 
     m_main_obj = wskb.obj;
-    elm_init(argc, argv);
+
     m_main_window = elm_win_add(wskb.obj, "Tizen Keyboard", ELM_WIN_INLINED_IMAGE);
 #else
-    elm_init(argc, argv);
     m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
 #endif
 
@@ -473,11 +468,6 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 #ifdef FULL_SCREEN_TEST
     elm_win_fullscreen_set(m_main_window, EINA_TRUE);
 #endif
-
-    /*Evas_Object *box = elm_box_add(m_main_window);
-    evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-    elm_win_resize_object_add(m_main_window, box);*/
 
     if (m_event_callback) {
         m_event_callback->init();
@@ -548,11 +538,8 @@ err:
     ecore_evas_free(wskb.ee);
 
 end:
-    elm_shutdown();
-    ecore_evas_shutdown();
-#else
-    elm_shutdown();
 #endif
+    elm_shutdown();
 }
 
 #ifdef WAYLAND
