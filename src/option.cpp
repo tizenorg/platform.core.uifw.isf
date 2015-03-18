@@ -389,7 +389,6 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
             if (info) {
                 if (info->enabled) {
                     elm_genlist_item_selected_set(ad.language_item[loop], EINA_FALSE);
-                    ITEMDATA * item_data_selected = (ITEMDATA*)elm_object_item_data_get(item);
 
                     // Update check button
                     Evas_Object *ck_selected = elm_object_item_part_content_get(ad.language_item[loop], "elm.icon");
