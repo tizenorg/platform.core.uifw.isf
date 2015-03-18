@@ -384,7 +384,7 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
     ITEMDATA * item_data = (ITEMDATA*)elm_object_item_data_get(item);
     if (item) {
 #ifdef WAYLAND
-    for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {
+        for (scluint loop = 0;loop < _language_manager.get_languages_num();loop++) {
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info) {
                 if (info->enabled) {

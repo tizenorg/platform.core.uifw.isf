@@ -95,21 +95,21 @@ static int get_app_window_degree(Evas_Object *keypad_win)
     LOGD("Trying to get app window degree for %p\n", keypad_win);
     Ecore_X_Window win = elm_win_xwindow_get(static_cast<Evas_Object*>(keypad_win));
     ret = XGetWindowProperty((Display *)ecore_x_display_get (),
-        ecore_x_window_root_get(win),
-        ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
-        0, G_MAXLONG, False, XA_WINDOW, &type_return,
-        &format_return, &nitems_return, &bytes_after_return,
-        &data_window);
+            ecore_x_window_root_get(win),
+            ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
+            0, G_MAXLONG, False, XA_WINDOW, &type_return,
+            &format_return, &nitems_return, &bytes_after_return,
+            &data_window);
 
     if (ret == Success) {
         if ((type_return == XA_WINDOW) && (format_return == 32) && (data_window)) {
             app_window = *(Window *)data_window;
 
             ret = XGetWindowProperty((Display *)ecore_x_display_get(), app_window,
-                ecore_x_atom_get("_E_ILLUME_ROTATE_WINDOW_ANGLE"),
-                0, G_MAXLONG, False, XA_CARDINAL, &type_return,
-                &format_return, &nitems_return, &bytes_after_return,
-                &data_angle);
+                    ecore_x_atom_get("_E_ILLUME_ROTATE_WINDOW_ANGLE"),
+                    0, G_MAXLONG, False, XA_CARDINAL, &type_return,
+                    &format_return, &nitems_return, &bytes_after_return,
+                    &data_angle);
 
             LOGD("app_window : %p, ret %d, %d, %p\n", app_window, ret, type_return, data_angle);
             if (ret == Success) {
@@ -255,8 +255,8 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
             Ecore_X_Window root = ecore_x_window_root_first_get ();
             if (ecore_x_window_prop_xid_get(root, atom, ECORE_X_ATOM_WINDOW, &control_window, 1) == 1) {
                 ecore_x_client_message32_send(control_window, ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST,
-                    ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
-                    ev->data.l[0], ev->data.l[1], ev->data.l[2], ev->data.l[3], ev->data.l[4]);
+                        ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
+                        ev->data.l[0], ev->data.l[1], ev->data.l[2], ev->data.l[3], ev->data.l[4]);
             }
         }
     }
@@ -279,48 +279,47 @@ CISECommon::~CISECommon()
 static Eina_Bool
 _wskb_ui_setup(struct WeescimKeyboard *wskb)
 {
-   Evas_Coord w, h;
+    Evas_Coord w, h;
 
-   ecore_evas_alpha_set(wskb->ee, EINA_TRUE);
-   ecore_evas_title_set(wskb->ee, "Weescimkeyboard");
+    ecore_evas_alpha_set(wskb->ee, EINA_TRUE);
+    ecore_evas_title_set(wskb->ee, "Weescimkeyboard");
 
-   wskb->obj = evas_object_rectangle_add(ecore_evas_get(wskb->ee));
+    wskb->obj = evas_object_rectangle_add(ecore_evas_get(wskb->ee));
 
-   /* Check which theme we should use according to the screen width */
-   w = 720;
-   h = 444;
+    /* Check which theme we should use according to the screen width */
+    w = 720;
+    h = 444;
 
-   ecore_evas_move_resize(wskb->ee, 0, 0, w, h);
-   evas_object_move(wskb->obj, 0, 0);
-   evas_object_resize(wskb->obj, w, h);
-   evas_object_size_hint_min_set(wskb->obj, w, h);
-   evas_object_size_hint_max_set(wskb->obj, w, h);
+    ecore_evas_move_resize(wskb->ee, 0, 0, w, h);
+    evas_object_move(wskb->obj, 0, 0);
+    evas_object_resize(wskb->obj, w, h);
+    evas_object_size_hint_min_set(wskb->obj, w, h);
+    evas_object_size_hint_max_set(wskb->obj, w, h);
 
-   ecore_evas_show(wskb->ee);
-   return EINA_TRUE;
+    ecore_evas_show(wskb->ee);
+    return EINA_TRUE;
 }
 
 static void
 _wskb_setup(struct WeescimKeyboard *wskb)
 {
-   struct wl_list *globals;
-   struct wl_registry *registry;
-   Ecore_Wl_Global *global;
+    struct wl_list *globals;
+    struct wl_registry *registry;
+    Ecore_Wl_Global *global;
+    struct wl_input_panel_surface *ips;
 
-   struct wl_input_panel_surface *ips;
+    if (!(registry = ecore_wl_registry_get()))
+        return;
 
-   if (!(registry = ecore_wl_registry_get()))
-       return;
-
-   if (!(globals = (wl_list*)ecore_wl_globals_get()))
-       return;
+    if (!(globals = (wl_list*)ecore_wl_globals_get()))
+        return;
 
     EINA_INLIST_FOREACH(globals, global)
     {
         if (strcmp(global->interface, "wl_input_panel") == 0)
-           wskb->ip = (wl_input_panel *)wl_registry_bind(registry, global->id, &wl_input_panel_interface, 1);
+            wskb->ip = (wl_input_panel *)wl_registry_bind(registry, global->id, &wl_input_panel_interface, 1);
         else if (strcmp(global->interface, "wl_output") == 0)
-           wskb->output = (wl_output *)wl_registry_bind(registry, global->id, &wl_output_interface, 1);
+            wskb->output = (wl_output *)wl_registry_bind(registry, global->id, &wl_output_interface, 1);
     }
 
     /* Set input panel surface */
@@ -335,39 +334,36 @@ _wskb_setup(struct WeescimKeyboard *wskb)
 static void
 _wskb_free(struct WeescimKeyboard *wskb)
 {
-   if (wskb->obj)
-      evas_object_del(wskb->obj);
+    if (wskb->obj)
+        evas_object_del(wskb->obj);
 }
 
 static Eina_Bool
 _wskb_check_evas_engine(struct WeescimKeyboard *wskb)
 {
-   Eina_Bool ret = EINA_FALSE;
-   char *env = getenv("ECORE_EVAS_ENGINE");
+    Eina_Bool ret = EINA_FALSE;
+    char *env = getenv("ECORE_EVAS_ENGINE");
 
-   if (!env)
-     {
+    if (!env) {
         if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_SHM))
-           env = "wayland_shm";
+            env = "wayland_shm";
         else if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_EGL))
-           env = "wayland_egl";
-        else
-          {
-             fprintf(stderr,"ERROR: Ecore_Evas does must be compiled with support for Wayland engines");
-             goto err;
-          }
-     }
-   else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0)
-     {
+            env = "wayland_egl";
+        else {
+            fprintf(stderr,"ERROR: Ecore_Evas does must be compiled with support for Wayland engines");
+            goto err;
+        }
+    }
+    else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0) {
         fprintf(stderr,"ERROR: ECORE_EVAS_ENGINE must be set to either 'wayland_shm' or 'wayland_egl'");
         goto err;
-     }
+    }
 
-   wskb->ee_engine = env;
-   ret = EINA_TRUE;
+    wskb->ee_engine = env;
+    ret = EINA_TRUE;
 
 err:
-   return ret;
+    return ret;
 }
 #endif
 
@@ -416,23 +412,20 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     elm_init(argc, argv);
 
 #ifdef WAYLAND
-    if (!_wskb_check_evas_engine(&wskb))
-    {
+    if (!_wskb_check_evas_engine(&wskb)) {
         fprintf(stderr,"_wskb_check_evas_engine error!\n");
         goto end;
     }
     fprintf(stderr,"Selected engine: '%s'\n", wskb.ee_engine);
     wskb.ee = ecore_evas_new(wskb.ee_engine, 0, 0, 1, 1, "frame=0");
 
-    if (!wskb.ee)
-    {
+    if (!wskb.ee) {
         fprintf(stderr,"ERROR: Unable to create Ecore_Evas object");
         goto end;
     }
 
     _wskb_setup(&wskb);
-    if (!_wskb_ui_setup(&wskb))
-    {
+    if (!_wskb_ui_setup(&wskb)) {
         fprintf(stderr,"ERROR: _wskb_ui_setup\n");
         goto err;
     }
@@ -446,7 +439,6 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
-    //elm_win_alpha_set(m_main_window, EINA_TRUE);
     elm_win_borderless_set(m_main_window, EINA_TRUE);
     elm_win_keyboard_win_set(m_main_window, EINA_TRUE);
     elm_win_autodel_set(m_main_window, EINA_TRUE);
@@ -455,14 +447,14 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 #ifdef WAYLAND
     evas_object_resize(m_main_window, 720, 444);
     evas_object_move(elm_win_inlined_image_object_get(m_main_window),
-        0, 0);
+            0, 0);
     evas_object_resize(elm_win_inlined_image_object_get(m_main_window),
-        720, 444);
+            720, 444);
 #else
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
-        ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
-        &set, 1);
+            ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
+            &set, 1);
 #endif
 
 #ifdef FULL_SCREEN_TEST
@@ -653,7 +645,6 @@ void CISECommon::select_candidate(int index)
 {
     m_helper_agent.select_candidate(index);
 }
-
 
 void CISECommon::commit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str)
 {
