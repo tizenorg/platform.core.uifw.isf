@@ -84,6 +84,9 @@ using namespace scim;
 
 #define ISF_PREEDIT_BORDER                              16
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
 #define LOG_TAG                                         "ISF_WSM_EFL"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -314,7 +317,6 @@ static Ecore_Timer       *_candidate_hide_timer             = NULL;
 
 static Ecore_X_Window     _ise_window                       = 0;
 static Ecore_X_Window     _app_window                       = 0;
-static Ecore_X_Window     _control_window                   = 0;
 
 static Ecore_File_Monitor *_inh_helper_ise_em               = NULL;
 static Ecore_File_Monitor *_inh_keyboard_ise_em             = NULL;
@@ -356,24 +358,6 @@ static void check_time (const char *strInfo)
 {
     gettime (_clock_start, strInfo);
     ISF_LOG ("%s ppid=%d pid=%d\n", strInfo, getppid (), getpid ());
-}
-
-/**
- * @brief Check the specific file.
- *
- * @param strFile The file path.
- *
- * @return true if the file is existed, otherwise false.
- */
-static bool check_file (const char* strFile)
-{
-    struct stat st;
-
-    /* Workaround so that "/" returns a true, otherwise we can't monitor "/" in ecore_file_monitor */
-    if (stat (strFile, &st) < 0 && strcmp (strFile, "/"))
-        return false;
-    else
-        return true;
 }
 
 /**
@@ -1118,11 +1102,10 @@ static void ui_candidate_window_adjust (void)
     if (!_candidate_window)
         return;
 
-    int x, y, width, height;
+    int width, height;
 
     /* Get candidate window size */
     // FIXME:
-    x = y = 0;
     width = _candidate_width;
     height = _candidate_height;
 
@@ -2343,10 +2326,7 @@ static int efl_get_angle_for_app_window ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    int ret;
-    int count;
     int angle = 0;
-    unsigned char *prop_data = NULL;
 
     //FIXME:
 
@@ -2364,10 +2344,7 @@ static int efl_get_angle_for_ise_window ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    int ret;
-    int count;
     int angle = 0;
-    unsigned char *prop_data = NULL;
 
     //FIXME:
 
@@ -2765,8 +2742,6 @@ static void slot_show_aux_string (void)
  */
 static void slot_show_candidate_table (void)
 {
-    int feedback_result = 0;
-
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
         _panel_agent->helper_candidate_show ();
         return;
@@ -2791,7 +2766,7 @@ static void slot_show_candidate_table (void)
     ui_settle_candidate_window ();
 
 #if HAVE_FEEDBACK
-    feedback_result = feedback_initialize ();
+    int feedback_result = feedback_initialize ();
 
     if (FEEDBACK_ERROR_NONE == feedback_result) {
         LOGD ("Feedback initialize successful");
@@ -2848,8 +2823,6 @@ static void slot_hide_candidate_table (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    int feedback_result = 0;
-
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
         _panel_agent->helper_candidate_hide ();
         return;
@@ -2888,7 +2861,7 @@ static void slot_hide_candidate_table (void)
     }
 
 #if HAVE_FEEDBACK
-    feedback_result = feedback_deinitialize ();
+    int feedback_result = feedback_deinitialize ();
 
     if (FEEDBACK_ERROR_NONE == feedback_result)
         LOGD ("Feedback deinitialize successful");
@@ -4109,12 +4082,9 @@ static void check_hardware_keyboard (void)
         _off_prepare_done_timer = NULL;
     }
 
-    unsigned int val = 0;
-
     _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
     
     //FIXME:
-    uint32 option = 0;
     String uuid, name;
     String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));

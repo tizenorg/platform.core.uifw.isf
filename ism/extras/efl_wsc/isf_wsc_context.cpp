@@ -246,10 +246,6 @@ static int                                              _panel_client_id        
 static Ecore_Fd_Handler                                *_panel_iochannel_read_handler = 0;
 static Ecore_Fd_Handler                                *_panel_iochannel_err_handler  = 0;
 
-static Ecore_Wl_Window                                 *_client_window              = 0;
-static Ecore_Event_Handler                             *_key_down_handler           = 0;
-static Ecore_Event_Handler                             *_key_up_handler             = 0;
-
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
 static double                                           space_key_time              = 0.0;
@@ -2536,12 +2532,10 @@ slot_hide_preedit_string (IMEngineInstanceBase *si)
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 
     if (ic && ic->impl && _focused_ic == ic) {
-        bool emit = false;
         if (ic->impl->preedit_string.length ()) {
             ic->impl->preedit_string = WideString ();
             ic->impl->preedit_caret = 0;
             ic->impl->preedit_attrlist.clear ();
-            emit = true;
         }
         if (ic->impl->use_preedit) {
             if (check_valid_ic (ic) && ic->impl->preedit_started) {
@@ -2762,8 +2756,6 @@ static void
 slot_beep (IMEngineInstanceBase *si)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-
-    WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 }
 
 static void

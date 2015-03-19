@@ -97,24 +97,6 @@ static bool check_panel (const String &display)
     return true;
 }
 
-/**
- * @brief Check the specific file.
- *
- * @param strFile The file path.
- *
- * @return true if the file is existed, otherwise false.
- */
-static bool check_file (const char* strFile)
-{
-    struct stat st;
-
-    /* Workaround so that "/" returns a true, otherwise we can't monitor "/" in ecore_file_monitor */
-    if (stat (strFile, &st) < 0 && strcmp (strFile, "/"))
-        return false;
-    else
-        return true;
-}
-
 /* The broker for launching OSP based IMEs */
 // {
 

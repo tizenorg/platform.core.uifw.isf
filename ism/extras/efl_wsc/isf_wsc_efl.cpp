@@ -77,6 +77,9 @@ static KeycodeRepository _keysym2keycode;
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
 #define LOG_TAG                                         "ISF_WSC_EFL"
 
 /* This structure stores the wayland input method information */
@@ -127,21 +130,6 @@ struct weescim
     WSCContextISF *wsc_ctx;
 };
 static struct weescim _wsc                                  = {0};
-
-static char *
-append(char *s1, const char *s2)
-{
-    int len1, len2;
-    char *s;
-
-    len1 = strlen(s1);
-    len2 = strlen(s2);
-    s = (char*)realloc(s1, len1 + len2 + 1);
-    memcpy(s + len1, s2, len2);
-    s[len1 + len2] = '\0';
-
-    return s;
-}
 
 static char *
 insert_text(const char *text, uint32_t offset, const char *insert)
@@ -365,7 +353,6 @@ static void
 _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uint32_t hint, uint32_t purpose)
 {
     struct weescim *wsc = (weescim*)data;
-    Ecore_IMF_Input_Panel_Layout layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
 
     ISF_LOG ("im_context = %p hint = %d purpose = %d", im_ctx, hint, purpose);
 
