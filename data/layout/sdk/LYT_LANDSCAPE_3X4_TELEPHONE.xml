@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout direction="landscape" width="1280" height="316" key_width="310" key_height="68" key_spacing="8" row_spacing="8" hit_left="4" hit_right="4" hit_top="4" hit_bottom="4" label_type="3X4_PHONE" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout direction="landscape" width="960" height="238" key_width="227" key_height="54" key_spacing="10" row_spacing="3" hit_left="4" hit_right="4" hit_top="1" hit_bottom="1" label_type="3X4_BTN_1_2" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -8,21 +8,32 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="8" y="12">
+  <row x="11" y="6">
     <key>
       <label>
         <rec>1</rec>
       </label>
+      <key_value>
+        <rec>1</rec>
+      </key_value>
     </key>
     <key>
       <label>
         <rec>2</rec>
+        <rec multi="1">      ABC</rec>
       </label>
+      <key_value>
+        <rec>2</rec>
+      </key_value>
     </key>
     <key>
       <label>
         <rec>3</rec>
+        <rec multi="1">      DEF</rec>
       </label>
+      <key_value>
+        <rec>3</rec>
+      </key_value>
     </key>
     <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true">
       <image_label>
@@ -39,23 +50,35 @@
       </key_value>
     </key>
   </row>
-  <row x="8">
+  <row x="11">
     <key>
       <label>
         <rec>4</rec>
+        <rec multi="1">      GHI</rec>
       </label>
+      <key_value>
+        <rec>4</rec>
+      </key_value>
     </key>
     <key>
       <label>
         <rec>5</rec>
+        <rec multi="1">      JKL</rec>
       </label>
+      <key_value>
+        <rec>5</rec>
+      </key_value>
     </key>
     <key>
       <label>
         <rec>6</rec>
+        <rec multi="1">      MNO</rec>
       </label>
+      <key_value>
+        <rec>6</rec>
+      </key_value>
     </key>
-    <key key_type="control" custom_id="Enter">
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2">
       <image_label>
         <rec button="normal">B09_icon_enter.png</rec>
         <rec button="pressed">B09_icon_enter_press.png</rec>
@@ -71,47 +94,77 @@
       </key_value>
     </key>
   </row>
-  <row x="8">
+  <row x="11">
     <key>
       <label>
         <rec>7</rec>
+        <rec multi="1">      PQRS</rec>
       </label>
+      <key_value>
+        <rec>7</rec>
+      </key_value>
     </key>
     <key>
       <label>
         <rec>8</rec>
+        <rec multi="1">      TUV</rec>
       </label>
+      <key_value>
+        <rec>8</rec>
+      </key_value>
     </key>
     <key>
       <label>
         <rec>9</rec>
+        <rec multi="1">      WXYZ</rec>
       </label>
+      <key_value>
+        <rec>9</rec>
+      </key_value>
     </key>
-    <key button_type="uiitem">
+    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2">
       <label>
-        <rec>123</rec>
+        <rec>Sym</rec>
       </label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
+      <key_value>
+        <rec>PHONE_3X4_SYM</rec>
+      </key_value>
     </key>
   </row>
-  <row x="8">
-    <key long_key_value="p">
+  <row x="11">
+    <key>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
       <label>
         <rec>*</rec>
-        <rec multi="1">p</rec>
       </label>
+      <key_value>
+        <rec>*</rec>
+      </key_value>
     </key>
     <key long_key_value="+">
       <label>
         <rec>0</rec>
-        <rec multi="1">+</rec>
+        <rec multi="1">      +</rec>
       </label>
+      <key_value>
+        <rec>0</rec>
+      </key_value>
     </key>
     <key>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
       <label>
         <rec>#</rec>
       </label>
@@ -119,7 +172,7 @@
         <rec>#</rec>
       </key_value>
     </key>
-    <key button_type="uiitem">
+    <key button_type="selfish" key_type="user">
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
@@ -130,6 +183,9 @@
         <rec button="pressed">button/B09_key_btn_press.png</rec>
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
     </key>
   </row>
 </layout>
