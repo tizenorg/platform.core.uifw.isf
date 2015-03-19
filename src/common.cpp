@@ -214,9 +214,9 @@ void accessibility_changed_cb(keynode_t *key, void* data)
     }
 }
 
+#ifndef WAYLAND
 static Eina_Bool _client_message_cb (void *data, int type, void *event)
 {
-#ifndef WAYLAND
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
 
     IISECommonEventCallback *callback = NULL;
@@ -260,9 +260,10 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
             }
         }
     }
-#endif
+
     return ECORE_CALLBACK_RENEW;
 }
+#endif
 
 CISECommon::CISECommon()
 {

@@ -601,15 +601,6 @@ _naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
     }
 }
 
-#ifdef WAYLAND
-static void
-_genlist_back_cb(void *data, Evas_Object *obj, void *event_info)
-{
-    language_selection_finished_cb(data, obj, event_info);
-    elm_naviframe_item_promote((Elm_Object_Item *)data);
-}
-#endif
-
 Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe)
 {
     create_genlist_item_classes();
@@ -896,7 +887,7 @@ open_option_window(Evas_Object *parent, sclint degree)
 #ifdef WAYLAND
         Elm_Object_Item *it = elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
         evas_object_data_set(naviframe, OPTIONS, it);
-        elm_naviframe_item_title_visible_set(it, EINA_FALSE);
+        elm_naviframe_item_title_enabled_set(it, EINA_FALSE, EINA_FALSE);
 #else
         elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
 #endif
