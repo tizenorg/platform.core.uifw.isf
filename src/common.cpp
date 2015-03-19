@@ -303,7 +303,7 @@ _wskb_ui_setup(struct WeescimKeyboard *wskb)
 static void
 _wskb_setup(struct WeescimKeyboard *wskb)
 {
-    struct wl_list *globals;
+    Eina_Inlist *globals;
     struct wl_registry *registry;
     Ecore_Wl_Global *global;
     struct wl_input_panel_surface *ips;
@@ -311,7 +311,7 @@ _wskb_setup(struct WeescimKeyboard *wskb)
     if (!(registry = ecore_wl_registry_get()))
         return;
 
-    if (!(globals = (wl_list*)ecore_wl_globals_get()))
+    if (!(globals = ecore_wl_globals_get()))
         return;
 
     EINA_INLIST_FOREACH(globals, global)
