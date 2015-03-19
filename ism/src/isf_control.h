@@ -40,6 +40,20 @@ typedef enum
     SOFTWARE_KEYBOARD_ISE       /* Software keyboard ISE */
 } ISE_TYPE_T;
 
+/**
+ * @brief The structure type to contain IME's information.
+ *
+ * @since_tizen 2.4
+ *
+ * @see isf_control_get_all_ime_info
+ */
+typedef struct {
+    char label[256];
+    bool is_enabled;
+    bool is_preinstalled;
+    bool has_option;
+} ime_info_s;
+
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of global functions.
 /////////////////////////////////////////////////////////////////////////////
@@ -154,6 +168,52 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
  * @return 0 if successfully, otherwise return -1;
  */
 EAPI int isf_control_show_ise_option_window ();
+
+/**
+ * @brief Gets the information of all Software (on-screen) IME.
+ *
+ * @since_tizen 2.4
+ *
+ * @param[out] info The parameter is used to store all IME information. Application needs to free @a *info variable
+ *
+ * @return The count of IME if successfully, otherwise return -1;
+ *
+ * @code
+     int i;
+     ime_info_s *ime_info = NULL;
+     cnt = isf_control_get_all_ime_info(&ime_info);
+     if (ime_info) {
+         for (i = 0; i < cnt; i++) {
+             LOGD("%s %d %d %d", ime_info[i].label, ime_info[i].is_enabled, ime_info[i].is_preinstalled, ime_info[i].has_option);
+         }
+         free(ime_info);
+     }
+ * @endcode
+ */
+EAPI int isf_control_get_all_ime_info (ime_info_s **info);
+
+/**
+ * @brief Sets active IME by Application ID.
+ *
+ * @since_tizen 2.4
+ *
+ * @param[in] appid Application ID of IME to set as active one
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_set_active_ime (const char *appid);
+
+/**
+ * @brief Sets On/Off of installed IME by Application ID.
+ *
+ * @since_tizen 2.4
+ *
+ * @param[in] appid Application ID of IME to enable or disable
+ * @param[in] is_enabled @c true to enable the IME, otherwise @c false
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_enable_ime (const char *appid, bool is_enabled);
 
 #ifdef __cplusplus
 }

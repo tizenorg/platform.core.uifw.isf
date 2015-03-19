@@ -77,6 +77,13 @@ typedef struct _ISE_INFO
     TOOLBAR_MODE_T type;
 } ISE_INFO;
 
+typedef struct _HELPER_ISE_INFO {
+    std::vector<String> label;
+    std::vector<uint32> is_enabled;
+    std::vector<uint32> is_preinstalled;
+    std::vector<uint32> has_option;
+} HELPER_ISE_INFO;
+
 typedef Slot0<void>
         PanelAgentSlotVoid;
 
@@ -139,6 +146,9 @@ typedef Slot3<void, const String &, const AttributeList &, int>
 
 typedef Slot1<void, std::vector<String> &>
         PanelAgentSlotStringVector;
+
+typedef Slot1<bool, HELPER_ISE_INFO &>
+        PanelAgentSlotBoolHelperInfo;
 
 typedef Slot1<bool, std::vector<String> &>
         PanelAgentSlotBoolStringVector;
@@ -1008,6 +1018,20 @@ public:
      * slot prototype: bool get_ise_list (std::vector<String> &);
      */
     Connection signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector    *slot);
+
+    /**
+     * @brief Signal: Get the info of all helper ise.
+     *
+     * slot prototype: bool get_all_helper_ise_info (HELPER_ISE_INFO &);
+     */
+    Connection signal_connect_get_all_helper_ise_info    (PanelAgentSlotBoolHelperInfo     *slot);
+
+    /**
+     * @brief Signal: Sets On/Off of installed helper ise by Application ID
+     *
+     * slot prototype: void enable_helper_ise (const String &, bool );
+     */
+    Connection signal_connect_enable_helper_ise          (PanelAgentSlotStringBool     *slot);
 
     /**
      * @brief Signal: Get the ISE information according to UUID.
