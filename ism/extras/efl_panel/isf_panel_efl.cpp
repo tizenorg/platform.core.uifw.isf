@@ -4513,9 +4513,6 @@ static void update_table (int table_type, const LookupTable &table)
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_0));
 
-                /* Resize _candidate_0 [i] display width */
-                item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
-
                 /* Check whether this item is the last one */
                 if (i == item_num - 1) {
                     if (_candidate_angle == 90 || _candidate_angle == 270)
@@ -4576,8 +4573,6 @@ static void update_table (int table_type, const LookupTable &table)
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_UP, ui_mouse_button_released_cb, GINT_TO_POINTER (i));
                 evas_object_event_callback_add (_candidate_0 [i], EVAS_CALLBACK_MOUSE_MOVE, ui_mouse_moved_cb, GINT_TO_POINTER (ISF_EFL_CANDIDATE_ITEMS));
             }
-            /* Resize _candidate_items [i] display width */
-            item_0_width = item_0_width > _item_min_width ? item_0_width : _item_min_width;
             if (current_width > 0 && current_width + item_0_width > _candidate_scroll_width) {
                 current_width = 0;
                 line_count++;
