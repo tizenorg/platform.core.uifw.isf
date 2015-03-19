@@ -678,7 +678,7 @@ _wsc_im_key_handler(struct weescim *wsc,
 static void
 _wsc_setup(struct weescim *wsc)
 {
-    struct wl_list *globals;
+    Eina_Inlist *globals;
     struct wl_registry *registry;
     Ecore_Wl_Global *global;
 	
@@ -698,7 +698,7 @@ _wsc_setup(struct weescim *wsc)
     if (!(registry = ecore_wl_registry_get()))
         return;
 
-    if (!(globals = (wl_list*)ecore_wl_globals_get()))
+    if (!(globals = ecore_wl_globals_get()))
         return;
 
     EINA_INLIST_FOREACH(globals, global) {
