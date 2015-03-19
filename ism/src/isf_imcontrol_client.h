@@ -28,9 +28,6 @@
 namespace scim
 {
 
-typedef Slot1<void, int> IMControlClientSlotVoid;
-
-
 class EAPI IMControlClient
 {
     class IMControlClientImpl;
@@ -59,6 +56,9 @@ public:
     void set_initial_ise_by_uuid (const char* uuid);
     void show_ise_selector ();
     void show_ise_option_window ();
+
+    void get_all_helper_ise_info (HELPER_ISE_INFO &info);
+    void enable_helper_ise (const char *appid, bool is_enabled);
 };
 
 }

@@ -138,6 +138,9 @@ typedef Signal2<void, const String &, const AttributeList &>
 typedef Signal1<void, std::vector <String> &>
         PanelAgentSignalStringVector;
 
+typedef Signal1<bool, HELPER_ISE_INFO &>
+        PanelAgentSignalBoolHelperInfo;
+
 typedef Signal1<bool, std::vector <String> &>
         PanelAgentSignalBoolStringVector;
 
@@ -341,6 +344,8 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalVoid                m_signal_contract_candidate;
     PanelAgentSignalInt                 m_signal_select_candidate;
     PanelAgentSignalBoolStringVector    m_signal_get_ise_list;
+    PanelAgentSignalBoolHelperInfo      m_signal_get_all_helper_ise_info;
+    PanelAgentSignalStringBool          m_signal_enable_helper_ise;
     PanelAgentSignalBoolString4int2     m_signal_get_ise_information;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
     PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
@@ -2345,6 +2350,62 @@ public:
         trans.write_to_socket (client_socket);
     }
 
+    void get_all_helper_ise_info (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::get_all_helper_ise_info ()\n";
+        HELPER_ISE_INFO info;
+        m_signal_get_all_helper_ise_info (info);
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+
+        if (info.label.size() > 0) {
+            trans.put_data (info.label);
+            trans.put_data (info.is_enabled);
+            trans.put_data (info.is_preinstalled);
+            trans.put_data (info.has_option);
+        }
+
+        trans.write_to_socket (client_socket);
+    }
+
+    void enable_helper_ise (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::enable_helper_ise ()\n";
+        String appid;
+        uint32 is_enabled;
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+        if (!(m_recv_trans.get_data (appid))) {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            return;
+        }
+        if (appid.length () == 0) {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            return;
+        }
+        if (!(m_recv_trans.get_data (is_enabled))) {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            return;
+        }
+
+        m_signal_enable_helper_ise (appid, static_cast<bool>(is_enabled));
+
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.write_to_socket (client_socket);
+    }
+
     void get_ise_information (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
@@ -2858,7 +2919,7 @@ public:
 
         String initial_ise = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         if (initial_ise.length () > 0)
-            m_signal_set_active_ise_by_uuid (initial_ise.c_str (), 1);
+            m_signal_set_active_ise_by_uuid (initial_ise, 1);
         else
             std::cerr << "Read SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID is failed!!!\n";
     }
@@ -3161,6 +3222,16 @@ public:
     Connection signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector       *slot)
     {
         return m_signal_get_ise_list.connect (slot);
+    }
+
+    Connection signal_connect_get_all_helper_ise_info    (PanelAgentSlotBoolHelperInfo       *slot)
+    {
+        return m_signal_get_all_helper_ise_info.connect (slot);
+    }
+
+    Connection signal_connect_enable_helper_ise          (PanelAgentSlotStringBool          *slot)
+    {
+        return m_signal_enable_helper_ise.connect (slot);
     }
 
     Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2        *slot)
@@ -3814,6 +3885,19 @@ private:
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO)
+                    get_all_helper_ise_info (client_id);
+                else if (cmd == ISM_TRANS_CMD_ENABLE_HELPER_ISE) {
+                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
+                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
+                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
+                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
+                    } else {
+                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    }
+                    ISF_SAVE_LOG ("enable helper ise\n");
+                    enable_helper_ise (client_id);
+                }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION)
                     get_ise_information (client_id);
                 else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
@@ -6489,6 +6573,18 @@ Connection
 PanelAgent::signal_connect_get_ise_list               (PanelAgentSlotBoolStringVector    *slot)
 {
     return m_impl->signal_connect_get_ise_list (slot);
+}
+
+Connection
+PanelAgent::signal_connect_get_all_helper_ise_info    (PanelAgentSlotBoolHelperInfo    *slot)
+{
+    return m_impl->signal_connect_get_all_helper_ise_info (slot);
+}
+
+Connection
+PanelAgent::signal_connect_enable_helper_ise          (PanelAgentSlotStringBool    *slot)
+{
+    return m_impl->signal_connect_enable_helper_ise (slot);
 }
 
 Connection
