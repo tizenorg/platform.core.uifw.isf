@@ -292,7 +292,10 @@ static int                _candidate_land_height_max_2      = 214;
 static int                _candidate_area_1_pos [2]         = {0, 2};
 static int                _more_btn_pos [4]                 = {369, 11, 689, 11};
 static int                _close_btn_pos [4]                = {362, 211, 682, 75};
+static int                _more_btn_width                   = 80;
+static int                _more_btn_height                  = 64;
 
+static int                _h_padding                        = 4;
 static int                _v_padding                        = 2;
 static int                _item_min_width                   = 99;
 static int                _item_min_height                  = 82;
@@ -2899,6 +2902,8 @@ static void ui_create_preedit_window (void)
 static void ui_create_native_candidate_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    _more_btn_width = 80 * (_width_rate > 1 ? 1 : _width_rate);
+    _more_btn_height = 64 * _height_rate;
 
     _candidate_port_width        = _screen_width;
     _candidate_port_height_min   = 84 * _height_rate * _candidate_port_line;
@@ -2920,13 +2925,13 @@ static void ui_create_native_candidate_window (void)
 
     _candidate_area_1_pos [0]    = 0 * _width_rate;
     _candidate_area_1_pos [1]    = 2 * _height_rate;
-    _more_btn_pos [0]            = 628 * _width_rate;
+    _more_btn_pos [0]            = _candidate_port_width - _more_btn_width - _h_padding;
     _more_btn_pos [1]            = 12 * _height_rate;
-    _more_btn_pos [2]            = 1188 * _height_rate;
+    _more_btn_pos [2]            = _candidate_land_width - _more_btn_width - _h_padding;
     _more_btn_pos [3]            = 12 * _width_rate;
-    _close_btn_pos [0]           = 628 * _width_rate;
+    _close_btn_pos [0]           = _candidate_port_width - _more_btn_width - _h_padding;
     _close_btn_pos [1]           = 12 * _height_rate;
-    _close_btn_pos [2]           = 1188 * _height_rate;
+    _close_btn_pos [2]           = _candidate_land_width - _more_btn_width - _h_padding;
     _close_btn_pos [3]           = 12 * _width_rate;
 
     _aux_height                  = 84 * _height_rate - 2;
@@ -2991,7 +2996,7 @@ static void ui_create_native_candidate_window (void)
         else
             edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
         evas_object_move (_more_btn, _more_btn_pos[0], _more_btn_pos[1]);
-        evas_object_resize (_more_btn, 80 * _width_rate, 64 * _height_rate);
+        evas_object_resize (_more_btn, _more_btn_width, _more_btn_height);
         evas_object_event_callback_add (_more_btn, EVAS_CALLBACK_MOUSE_UP, ui_candidate_window_more_button_cb, NULL);
 
         /* Add scroller background */
@@ -3026,7 +3031,7 @@ static void ui_create_native_candidate_window (void)
         else
             edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
         evas_object_move (_close_btn, _close_btn_pos[0], _close_btn_pos[1]);
-        evas_object_resize (_close_btn, 80 * _width_rate, 64 * _height_rate);
+        evas_object_resize (_close_btn, _more_btn_width, _more_btn_height);
         evas_object_event_callback_add (_close_btn, EVAS_CALLBACK_MOUSE_UP, ui_candidate_window_close_button_cb, NULL);
 
         _tmp_candidate_text = evas_object_text_add (evas_object_evas_get (_candidate_window));
@@ -4445,9 +4450,9 @@ static void update_table (int table_type, const LookupTable &table)
     int cursor_line     = 0;
 
     if (_candidate_angle == 90 || _candidate_angle == 270)
-        scroll_0_width = 1176 * _height_rate;
+        scroll_0_width = _screen_height - _more_btn_width - _h_padding;
     else
-        scroll_0_width = 618 * _width_rate;
+        scroll_0_width = _screen_width - _more_btn_width - _h_padding;
 
     _candidate_image_count = 0;
     _candidate_text_count = 0;
