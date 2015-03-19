@@ -1420,7 +1420,6 @@ static void delete_candidate_show_handler (void)
     }
 }
 
-
 /**
  * @brief Show candidate window.
  *
@@ -1493,7 +1492,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " bForce:" << bForce << " bSetVirtualKbd:" << bSetVirtualKbd << " will_hide:" << will_hide << "...\n";
-    
+
     if (!_candidate_window)
         return;
 
@@ -2838,7 +2837,7 @@ static void slot_hide_aux_string (void)
 
     if (ui_candidate_can_be_hide ()) {
         _candidate_show_requested = false;
-        LOGD ("setting _show_can didate_requested to FALSE");
+        LOGD ("setting _show_candidate_requested to FALSE");
     }
 }
 

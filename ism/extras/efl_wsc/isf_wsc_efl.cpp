@@ -82,14 +82,14 @@ static KeycodeRepository _keysym2keycode;
 /* This structure stores the wayland input method information */
 struct weescim;
 
-#define MOD_SHIFT_MASK		0x01
-#define MOD_ALT_MASK		0x02
-#define MOD_CONTROL_MASK	0x04
+#define MOD_SHIFT_MASK      0x01
+#define MOD_ALT_MASK        0x02
+#define MOD_CONTROL_MASK    0x04
 
 typedef void (*keyboard_input_key_handler_t)(struct weescim *wsc,
-					     uint32_t serial,
-					     uint32_t time, uint32_t key, uint32_t unicode,
-					     enum wl_keyboard_key_state state);
+                                             uint32_t serial,
+                                             uint32_t time, uint32_t key, uint32_t unicode,
+                                             enum wl_keyboard_key_state state);
 
 struct weescim
 {
@@ -131,80 +131,82 @@ static struct weescim _wsc                                  = {0};
 static char *
 append(char *s1, const char *s2)
 {
-	int len1, len2;
-	char *s;
+    int len1, len2;
+    char *s;
 
-	len1 = strlen(s1);
-	len2 = strlen(s2);
-	s = (char*)realloc(s1, len1 + len2 + 1);
-	memcpy(s + len1, s2, len2);
-	s[len1 + len2] = '\0';
+    len1 = strlen(s1);
+    len2 = strlen(s2);
+    s = (char*)realloc(s1, len1 + len2 + 1);
+    memcpy(s + len1, s2, len2);
+    s[len1 + len2] = '\0';
 
-	return s;
+    return s;
 }
 
 static char *
 insert_text(const char *text, uint32_t offset, const char *insert)
 {
-	int tlen = strlen(text), ilen = strlen(insert);
-	char *new_text = (char*)malloc(tlen + ilen + 1);
+    int tlen = strlen(text), ilen = strlen(insert);
+    char *new_text = (char*)malloc(tlen + ilen + 1);
 
-	memcpy(new_text, text, offset);
-	memcpy(new_text + offset, insert, ilen);
-	memcpy(new_text + offset + ilen, text + offset, tlen - offset);
-	new_text[tlen + ilen] = '\0';
+    memcpy(new_text, text, offset);
+    memcpy(new_text + offset, insert, ilen);
+    memcpy(new_text + offset + ilen, text + offset, tlen - offset);
+    new_text[tlen + ilen] = '\0';
 
-	return new_text;
+    return new_text;
 }
 
 static void
 wsc_commit_preedit(weescim *ctx)
 {
-	char *surrounding_text;
+    char *surrounding_text;
 
-	if (!ctx->preedit_str ||
-	    strlen(ctx->preedit_str) == 0)
-		return;
+    if (!ctx->preedit_str ||
+        strlen(ctx->preedit_str) == 0)
+        return;
 
-	wl_input_method_context_cursor_position(ctx->im_ctx,
-						0, 0);
-	wl_input_method_context_commit_string(ctx->im_ctx,
-					      ctx->serial,
-					      ctx->preedit_str);
+    wl_input_method_context_cursor_position(ctx->im_ctx,
+                                            0, 0);
 
-	if (ctx->surrounding_text) {
-		surrounding_text = insert_text(ctx->surrounding_text,
-					       ctx->surrounding_cursor,
-					       ctx->preedit_str);
-		free(ctx->surrounding_text);
-		ctx->surrounding_text = surrounding_text;
-		ctx->surrounding_cursor += strlen(ctx->preedit_str);
-	} else {
-		ctx->surrounding_text = strdup(ctx->preedit_str);
-		ctx->surrounding_cursor = strlen(ctx->preedit_str);
-	}
+    wl_input_method_context_commit_string(ctx->im_ctx,
+                                          ctx->serial,
+                                          ctx->preedit_str);
 
-	free(ctx->preedit_str);
-	ctx->preedit_str = strdup("");
+    if (ctx->surrounding_text) {
+        surrounding_text = insert_text(ctx->surrounding_text,
+                                       ctx->surrounding_cursor,
+                                       ctx->preedit_str);
+        free(ctx->surrounding_text);
+        ctx->surrounding_text = surrounding_text;
+        ctx->surrounding_cursor += strlen(ctx->preedit_str);
+    } else {
+        ctx->surrounding_text = strdup(ctx->preedit_str);
+        ctx->surrounding_cursor = strlen(ctx->preedit_str);
+    }
+
+    free(ctx->preedit_str);
+    ctx->preedit_str = strdup("");
 }
 
 static void
 wsc_send_preedit(weescim *ctx, int32_t cursor)
 {
-	uint32_t index = strlen(ctx->preedit_str);
+    uint32_t index = strlen(ctx->preedit_str);
 
-	if (ctx->preedit_style)
-		wl_input_method_context_preedit_styling(ctx->im_ctx,
-							0,
-							strlen(ctx->preedit_str),
-							ctx->preedit_style);
-	if (cursor > 0)
-		index = cursor;
-	wl_input_method_context_preedit_cursor(ctx->im_ctx, index);
-	wl_input_method_context_preedit_string(ctx->im_ctx,
-					       ctx->serial,
-					       ctx->preedit_str,
-					       ctx->preedit_str);
+    if (ctx->preedit_style)
+        wl_input_method_context_preedit_styling(ctx->im_ctx,
+                                                0,
+                                                strlen(ctx->preedit_str),
+                                                ctx->preedit_style);
+    if (cursor > 0)
+        index = cursor;
+
+    wl_input_method_context_preedit_cursor(ctx->im_ctx, index);
+    wl_input_method_context_preedit_string(ctx->im_ctx,
+                                           ctx->serial,
+                                           ctx->preedit_str,
+                                           ctx->preedit_str);
 }
 
 bool wsc_context_surrounding_get(weescim *ctx, char **text, int *cursor_pos)
@@ -214,38 +216,39 @@ bool wsc_context_surrounding_get(weescim *ctx, char **text, int *cursor_pos)
 
     *text = strdup (ctx->surrounding_text);
     *cursor_pos = ctx->surrounding_cursor;
+
     return true;
 }
 
 Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx)
 {
     Ecore_IMF_Input_Panel_Layout layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
-    
+
     switch (ctx->content_purpose) {
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER:
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_DATE:
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_TIME:
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_DATETIME:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DATE:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_TIME:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DATETIME:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBER;
             break;
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_PHONE:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_PHONE:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PHONENUMBER;
             break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_URL:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_URL;
             break;
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_EMAIL:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_EMAIL:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_EMAIL;
             break;
-	    case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD;
             break;
         default:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
             break;
     }
-    
+
     return layout;
 }
 
@@ -253,7 +256,7 @@ bool wsc_context_input_panel_caps_lock_mode_get(weescim *ctx)
 {
     if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
         return true;
-    
+
     return false;
 }
 
@@ -271,7 +274,7 @@ void wsc_context_commit_string(weescim *ctx, const char *str)
         free(ctx->preedit_str);
         ctx->preedit_str = NULL;
     }
-    
+
     ctx->preedit_str = strdup (str);
     wsc_commit_preedit(ctx);
 }
@@ -286,7 +289,7 @@ void wsc_context_commit_preedit_string(weescim *ctx)
         free(ctx->preedit_str);
         ctx->preedit_str = NULL;
     }
-    
+
     ctx->preedit_str = preedit_str;
     wsc_commit_preedit(ctx);
 }
@@ -301,7 +304,7 @@ void wsc_context_send_preedit_string(weescim *ctx)
         free(ctx->preedit_str);
         ctx->preedit_str = NULL;
     }
-    
+
     ctx->preedit_str = preedit_str;
     wsc_send_preedit(ctx, cursor_pos);
 }
@@ -310,7 +313,7 @@ void wsc_context_send_key(weescim *ctx, uint32_t keysym, uint32_t modifiers, uin
 {
     uint32_t keycode;
     KeycodeRepository::iterator it = _keysym2keycode.find(keysym);
-    
+
     if(it == _keysym2keycode.end())
         return;
 
@@ -320,19 +323,19 @@ void wsc_context_send_key(weescim *ctx, uint32_t keysym, uint32_t modifiers, uin
     if (press) {
         if (ctx->modifiers) {
             wl_input_method_context_modifiers(ctx->im_ctx, ctx->serial,
-                ctx->modifiers, 0, 0, 0);
+                                              ctx->modifiers, 0, 0, 0);
         }
 
         wl_input_method_context_key(ctx->im_ctx, ctx->serial, time,
-            keycode, WL_KEYBOARD_KEY_STATE_PRESSED);
+                                    keycode, WL_KEYBOARD_KEY_STATE_PRESSED);
     }
     else {
         wl_input_method_context_key(ctx->im_ctx, ctx->serial, time,
-            keycode, WL_KEYBOARD_KEY_STATE_RELEASED);
-        
+                                    keycode, WL_KEYBOARD_KEY_STATE_RELEASED);
+
         if (ctx->modifiers) {
             wl_input_method_context_modifiers(ctx->im_ctx, ctx->serial,
-                0, 0, 0, 0);
+                                              0, 0, 0, 0);
         }
     }
 }
@@ -354,7 +357,7 @@ static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
 {
     struct weescim *wsc = (weescim*)data;
-    
+
     isf_wsc_context_reset(wsc->wsc_ctx);
 }
 
@@ -373,8 +376,8 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
     wsc->content_purpose = purpose;
 
     isf_wsc_context_input_panel_layout_set (wsc->wsc_ctx,
-        wsc_context_input_panel_layout_get (wsc));
-    
+                                            wsc_context_input_panel_layout_get (wsc));
+
     caps_mode_check(wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
 
     //FIXME: process hint like layout.
@@ -404,9 +407,9 @@ _wsc_im_ctx_commit_state(void *data, struct wl_input_method_context *im_ctx, uin
         ISF_LOG ("Surrounding text updated: %s", wsc->surrounding_text);
 
     if(wsc->language)
-	    wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
+        wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
 
-	wl_input_method_context_text_direction (im_ctx, wsc->serial, wsc->text_direction);
+    wl_input_method_context_text_direction (im_ctx, wsc->serial, wsc->text_direction);
 }
 
 static void
@@ -523,7 +526,7 @@ _wsc_im_keyboard_keymap(void *data,
         1 << xkb_map_mod_get_index(wsc->keymap, "Mod1");
     wsc->shift_mask =
         1 << xkb_map_mod_get_index(wsc->keymap, "Shift");
-    
+
     fprintf(stderr, "create _keysym2keycode\n");
     _init_keysym2keycode(wsc);
 }
@@ -643,7 +646,7 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     if (wsc->im_ctx) {
         wl_input_method_context_destroy(wsc->im_ctx);
         wsc->im_ctx = NULL;
-    } 
+    }
 }
 
 static const struct wl_input_method_listener wsc_im_listener = {
@@ -653,7 +656,7 @@ static const struct wl_input_method_listener wsc_im_listener = {
 
 static void
 _wsc_seat_handle_capabilities(void *data, struct wl_seat *seat,
-        uint32_t caps)
+                              uint32_t caps)
 {
     struct weescim *wsc = (weescim*)data;
 
@@ -665,13 +668,13 @@ _wsc_seat_handle_capabilities(void *data, struct wl_seat *seat,
 }
 
 static const struct wl_seat_listener wsc_seat_listener = {
-	_wsc_seat_handle_capabilities,
+    _wsc_seat_handle_capabilities,
 };
 
 static void
 _wsc_im_key_handler(struct weescim *wsc,
-		      uint32_t serial, uint32_t time, uint32_t key, uint32_t sym,
-		      enum wl_keyboard_key_state state)
+                    uint32_t serial, uint32_t time, uint32_t key, uint32_t sym,
+                    enum wl_keyboard_key_state state)
 {
 }
 
@@ -681,7 +684,7 @@ _wsc_setup(struct weescim *wsc)
     Eina_Inlist *globals;
     struct wl_registry *registry;
     Ecore_Wl_Global *global;
-	
+
     wsc->xkb_context = xkb_context_new((xkb_context_flags)0);
     if (wsc->xkb_context == NULL) {
         fprintf(stderr, "Failed to create XKB context\n");
@@ -711,9 +714,9 @@ _wsc_setup(struct weescim *wsc)
     /* Input method listener */
     ISF_LOG ("Adding wl_input_method listener");
     wl_input_method_add_listener (wsc->im, &wsc_im_listener, wsc);
-	
+
     wl_seat_add_listener(wsc->seat, &wsc_seat_listener, wsc);
-    
+
     isf_wsc_context_add (wsc->wsc_ctx);
 }
 
@@ -734,7 +737,7 @@ _wsc_free(struct weescim *wsc)
 
     if (wsc->im_ctx)
         wl_input_method_context_destroy (wsc->im_ctx);
-    
+
     isf_wsc_context_del(wsc->wsc_ctx);
     isf_wsc_context_shutdown ();
 
@@ -747,9 +750,9 @@ int main (int argc EINA_UNUSED, char **argv EINA_UNUSED)
     sleep(1);
 
     _wsc_setup(&_wsc);
-   
+
     ecore_main_loop_begin();
-    
+
     _wsc_free(&_wsc);
 
     return 0;

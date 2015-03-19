@@ -1039,7 +1039,7 @@ isf_wsc_context_focus_out (WSCContextISF *ctx)
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
 
-            wsc_context_commit_preedit_string(context_scim->ctx); 
+            wsc_context_commit_preedit_string(context_scim->ctx);
             _panel_client.prepare (context_scim->id);
             _panel_client.reset_input_context (context_scim->id);
             _panel_client.send ();
@@ -1717,7 +1717,7 @@ panel_slot_commit_string (int context, const WideString &wstr)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " str=" << utf8_wcstombs (wstr) << " ic=" << ic << "\n";
-    
+
     if (ic && ic->impl) {
         if (_focused_ic != ic)
             return;
@@ -2323,7 +2323,7 @@ static uint32_t _keyname_to_keysym(uint32_t keyname, uint32_t *modifiers)
 {
     if (!modifiers)
         return keyname;
-    
+
     if ((keyname >= '0' && keyname <= '9') ||
         (keyname >= 'a' && keyname <= 'z')) {
         return keyname;
@@ -2402,7 +2402,7 @@ static uint32_t _keyname_to_keysym(uint32_t keyname, uint32_t *modifiers)
 static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-    
+
     uint32_t time = 0;
     uint32_t sym = 0;
 
@@ -2653,7 +2653,7 @@ slot_commit_string (IMEngineInstanceBase *si,
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
-    
+
     if (ic && ic->ctx) {
         if (utf8_wcstombs (str) == String (" ") || utf8_wcstombs (str) == String ("　"))
             autoperiod_insert (ic);
@@ -2941,7 +2941,7 @@ fallback_commit_string_cb (IMEngineInstanceBase  *si,
                            const WideString      &str)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-    
+
     if (_focused_ic && _focused_ic->impl) {
         wsc_context_commit_string (_focused_ic->ctx, utf8_wcstombs (str).c_str ());
     }
