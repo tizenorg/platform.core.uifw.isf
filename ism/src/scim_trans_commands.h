@@ -631,6 +631,8 @@ const int ISM_TRANS_CMD_REGISTER_PANEL_CLIENT             = 1015;
 const int ISM_TRANS_CMD_GET_ISE_STATE                     = 1016;
 const int ISM_TRANS_CMD_GET_ACTIVE_HELPER_OPTION          = 1017;
 const int ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID           = 1018;
+const int ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO           = 1019;
+const int ISM_TRANS_CMD_ENABLE_HELPER_ISE                 = 1020;
 
 /* IMControl to ISE */
 const int ISM_TRANS_CMD_SET_ISE_MODE                      = 1108;

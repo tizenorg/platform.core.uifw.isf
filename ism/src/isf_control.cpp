@@ -26,6 +26,7 @@
 #define Uses_SCIM_TRANSACTION
 #define Uses_ISF_IMCONTROL_CLIENT
 #define Uses_SCIM_COMPOSE_KEY
+#define Uses_SCIM_PANEL_AGENT
 
 #include <string.h>
 #include "scim.h"
@@ -213,6 +214,60 @@ EAPI int isf_control_show_ise_option_window (void)
     imcontrol_client.show_ise_option_window ();
     imcontrol_client.send ();
     imcontrol_client.close_connection ();
+    return 0;
+}
+
+EAPI int isf_control_get_all_ime_info (ime_info_s **info)
+{
+    int count = -1, i = 0;
+    HELPER_ISE_INFO helper_info;
+    ime_info_s *ime_info = NULL;
+
+    if (info == NULL)
+        return count;
+
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.get_all_helper_ise_info (helper_info);
+    imcontrol_client.close_connection ();
+
+    count = static_cast<int>(helper_info.label.size());
+    if (count > 0) {
+        ime_info = (ime_info_s *)calloc (count, sizeof (ime_info_s));
+        if (ime_info) {
+            for (i = 0; i < count; i++) {
+                snprintf(ime_info[i].label, sizeof (ime_info[i].label), "%s", helper_info.label[i].c_str());
+                ime_info[i].is_enabled = static_cast<bool>(helper_info.is_enabled[i]);
+                ime_info[i].is_preinstalled = static_cast<bool>(helper_info.is_preinstalled[i]);
+                ime_info[i].has_option = static_cast<bool>(helper_info.has_option[i]);
+            }
+            *info = ime_info;
+        }
+        else {
+            count = -1;
+        }
+    }
+
+    return count;
+}
+
+EAPI int isf_control_set_active_ime (const char *appid)
+{
+    return isf_control_set_active_ise_by_uuid(appid);
+}
+
+EAPI int isf_control_enable_ime (const char *appid, bool is_enabled)
+{
+    if (!appid)
+        return -1;
+
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.enable_helper_ise (appid, is_enabled);
+    imcontrol_client.close_connection ();
+
     return 0;
 }
 

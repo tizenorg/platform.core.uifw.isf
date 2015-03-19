@@ -25,6 +25,7 @@
 #define Uses_SCIM_TRANSACTION
 #define Uses_ISF_IMCONTROL_CLIENT
 #define Uses_SCIM_PANEL_CLIENT
+#define Uses_SCIM_PANEL_AGENT
 
 #include <stdio.h>
 #include <Ecore.h>
