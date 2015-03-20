@@ -48,7 +48,7 @@
 struct WeescimKeyboard
 {
     Ecore_Evas *ee;
-    Ecore_Wl_Window *win;
+    Ecore_Wl_Window *wl_win;
     Evas_Object *obj;
     const char *ee_engine;
 
@@ -287,8 +287,8 @@ _wskb_ui_setup(struct WeescimKeyboard *wskb)
     wskb->obj = evas_object_rectangle_add(ecore_evas_get(wskb->ee));
 
     /* Check which theme we should use according to the screen width */
-    w = 720;
-    h = 444;
+    w = IME_WIDTH;
+    h = IME_HEIGHT;
 
     ecore_evas_move_resize(wskb->ee, 0, 0, w, h);
     evas_object_move(wskb->obj, 0, 0);
@@ -324,9 +324,9 @@ _wskb_setup(struct WeescimKeyboard *wskb)
 
     /* Set input panel surface */
     fprintf(stderr,"Setting up input panel");
-    wskb->win = ecore_evas_wayland_window_get(wskb->ee);
-    ecore_wl_window_type_set(wskb->win, ECORE_WL_WINDOW_TYPE_NONE);
-    wskb->surface = ecore_wl_window_surface_create(wskb->win);
+    wskb->wl_win = ecore_evas_wayland_window_get(wskb->ee);
+    ecore_wl_window_type_set(wskb->wl_win, ECORE_WL_WINDOW_TYPE_NONE);
+    wskb->surface = ecore_wl_window_surface_create(wskb->wl_win);
     ips = wl_input_panel_get_input_panel_surface(wskb->ip, wskb->surface);
     wl_input_panel_surface_set_toplevel(ips, wskb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
 }
@@ -445,11 +445,11 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     elm_win_title_set(m_main_window, "Tizen Keyboard");
 
 #ifdef WAYLAND
-    evas_object_resize(m_main_window, 720, 444);
+    evas_object_resize(m_main_window, IME_WIDTH, IME_HEIGHT);
     evas_object_move(elm_win_inlined_image_object_get(m_main_window),
             0, 0);
     evas_object_resize(elm_win_inlined_image_object_get(m_main_window),
-            720, 444);
+                       IME_WIDTH, IME_HEIGHT);
 #else
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),

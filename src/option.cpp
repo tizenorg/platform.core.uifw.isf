@@ -148,8 +148,8 @@ create_main_window(int degree)
     Evas_Coord win_w = 0, win_h = 0;
 
 #ifdef WAYLAND
-    win_w = 720;
-    win_h = 444;
+    win_w = IME_WIDTH;
+    win_h = IME_HEIGHT;
 
     elm_win_autodel_set(window, EINA_TRUE);
 
@@ -841,7 +841,7 @@ open_option_window(Evas_Object *parent, sclint degree)
     {
 #ifdef WAYLAND
         elm_theme_overlay_add(NULL, OPTION_GENLIST_OBJ_DIR);
-        Evas_Coord win_w = 720, win_h = 444;
+        Evas_Coord win_w = IME_WIDTH, win_h = IME_HEIGHT;
 #endif
         memset(&ad, 0x0, sizeof(OPTION_ELEMENTS));
 
