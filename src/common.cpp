@@ -47,15 +47,14 @@
 #ifdef WAYLAND
 struct WeescimKeyboard
 {
-   Ecore_Evas *ee;
-   Ecore_Wl_Window *win;
-   Evas_Object *obj;
-   const char *ee_engine;
+    Ecore_Evas *ee;
+    Ecore_Wl_Window *win;
+    Evas_Object *obj;
+    const char *ee_engine;
 
-   struct wl_surface *surface;
-   struct wl_input_panel *ip;
-   struct wl_input_method *im;
-   struct wl_output *output;
+    struct wl_surface *surface;
+    struct wl_input_panel *ip;
+    struct wl_output *output;
 };
 
 struct WeescimKeyboard wskb = {0};
