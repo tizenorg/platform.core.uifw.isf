@@ -1,80 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="386" height="150" style="popup" key_width="62" key_height="72" key_spacing="2" row_spacing="2" hit_left="1" hit_right="1" hit_top="1" hit_bottom="1" label_type="PUNC_POPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="386" height="150" style="popup" key_width="64" key_height="74" key_spacing="0" row_spacing="0" hit_left="0" hit_right="0" hit_top="0" hit_bottom="0" label_type="PUNC_POPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_popup_bg.png</button_normal>
   </image_path>
   <background_image>
-    <rec button="normal">B09_bg_Popup.png</rec>
     <rec button="pressed">B09_bubble_popup_press.png</rec>
-    <rec button="disabled">B09_key_btn_press.png</rec>
   </background_image>
-  <row x="2" y="2">
+  <row x="1" y="1">
     <key key_type="string">
       <label>
         <rec>&amp;</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_left.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>^</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>%</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>$</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>#</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_center.png</rec>
+      </background_image>
     </key>
-    <key button_type="uiitem" label_type="PUNC_POPUP_2">
+    <key label_type="PUNC_POPUP_2">
       <label>
         <rec>Sym</rec>
       </label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
     </key>
   </row>
-  <row x="2">
+  <row x="1">
     <key key_type="string">
       <label>
         <rec>-</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_left.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>@</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>'</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>!</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>?</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_center.png</rec>
+      </background_image>
     </key>
     <key key_type="string">
       <label>
         <rec>,</rec>
       </label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_right.png</rec>
+      </background_image>
     </key>
   </row>
 </layout>

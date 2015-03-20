@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="210" height="290" style="popup" key_width="102" key_height="72" key_spacing="2" row_spacing="2" hit_left="1" hit_right="1" hit_top="1" hit_bottom="1" label_type="URL_POPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="210" height="298" style="popup" key_width="104" key_height="74" key_spacing="0" row_spacing="0" hit_left="0" hit_right="0" hit_top="0" hit_bottom="0" label_type="URL_POPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_popup_bg.png</button_normal>
   </image_path>
   <background_image>
-    <rec button="normal">B09_bg_Popup.png</rec>
     <rec button="pressed">B09_bubble_popup_press.png</rec>
-    <rec button="disabled">B09_bg_Popup.png</rec>
   </background_image>
-  <row x="2" y="2">
+  <row x="1" y="1">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
         <rec>.net</rec>
@@ -16,6 +14,9 @@
       <key_value>
         <rec>.net</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_left.png</rec>
+      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
@@ -24,9 +25,12 @@
       <key_value>
         <rec>.co.uk</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_top_right.png</rec>
+      </background_image>
     </key>
   </row>
-  <row x="2">
+  <row x="1">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
         <rec>.org</rec>
@@ -34,6 +38,9 @@
       <key_value>
         <rec>.org</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_middle_left.png</rec>
+      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
@@ -42,9 +49,12 @@
       <key_value>
         <rec>.or.uk</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_middle_right.png</rec>
+      </background_image>
     </key>
   </row>
-  <row x="2">
+  <row x="1">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
         <rec>.edu</rec>
@@ -52,6 +62,9 @@
       <key_value>
         <rec>.edu</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_middle_left.png</rec>
+      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
@@ -60,9 +73,12 @@
       <key_value>
         <rec>.ac.uk</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_middle_right.png</rec>
+      </background_image>
     </key>
   </row>
-  <row x="2">
+  <row x="1">
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
         <rec>.gov</rec>
@@ -70,6 +86,9 @@
       <key_value>
         <rec>.gov</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_left.png</rec>
+      </background_image>
     </key>
     <key key_type="string" use_magnifier="true" longkey_magnifier="true">
       <label>
@@ -78,6 +97,9 @@
       <key_value>
         <rec>.go.uk</rec>
       </key_value>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_bottom_right.png</rec>
+      </background_image>
     </key>
   </row>
 </layout>
