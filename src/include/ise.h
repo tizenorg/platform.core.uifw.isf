@@ -131,8 +131,6 @@ void ise_update_table(const std::vector<std::string> &vec_str);
 sclboolean ise_process_key_event(const char *key);
 
 #ifdef WAYLAND
-void ise_pause();
-void ise_resume();
 extern int gLastIC;
 #endif
 

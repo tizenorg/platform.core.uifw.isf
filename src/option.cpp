@@ -121,51 +121,14 @@ ILanguageOption* LanguageOptionManager::get_language_option_info(scluint index) 
 static Evas_Object*
 create_main_window(int degree)
 {
-#ifdef WAYLAND
-    CISECommon *common = CISECommon::get_instance();
-    Evas_Object *window = elm_win_add(common->get_main_obj(), "Option window", ELM_WIN_INLINED_IMAGE);
-    if (!window) return NULL;
-
-    elm_win_title_set(window, "Option window");
-    Evas_Object *bg = elm_bg_add(window);
-    if (!bg) {
-        evas_object_del(window);
-        return NULL;
-    }
-    elm_win_fullscreen_set(window, EINA_TRUE);
-    evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_win_resize_object_add(window, bg);
-    evas_object_show(bg);
-#else
     Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
+    elm_win_fullscreen_set(window, EINA_TRUE);
 
+#ifndef WAYLAND
     elm_win_profile_set(window, "mobile");
 #endif
 
     elm_win_borderless_set(window, EINA_TRUE);
-
-    Evas_Coord win_w = 0, win_h = 0;
-
-#ifdef WAYLAND
-    win_w = IME_WIDTH;
-    win_h = IME_HEIGHT;
-
-    elm_win_autodel_set(window, EINA_TRUE);
-
-    evas_object_move(window, 0, 0);
-    evas_object_size_hint_min_set(window, win_w, win_h);
-    evas_object_size_hint_max_set(window, win_w, win_h);
-    evas_object_move(elm_win_inlined_image_object_get(window), 0, 0);
-    evas_object_resize(elm_win_inlined_image_object_get(window), win_w, win_h);
-#else
-    ecore_x_window_size_get(ecore_x_window_root_first_get(), &win_w, &win_h);
-#endif
-
-    if(degree == 90 || degree == 270){
-        evas_object_resize(window, win_h, win_w);
-    }else{
-        evas_object_resize(window, win_w, win_h);
-    }
 
     int rots[] = { 0, 90, 180, 270 };
     elm_win_wm_rotation_available_rotations_set(window, rots, (sizeof(rots) / sizeof(int)));
@@ -402,9 +365,11 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
 
         // Update check button
         Evas_Object *ck = elm_object_item_part_content_get(item, "elm.icon.right");
-        Eina_Bool state = elm_check_state_get(ck);
-        elm_check_state_set(ck, !state);
-        language_selected(item_data, ck, NULL);
+        if (ck) {
+            Eina_Bool state = elm_check_state_get(ck);
+            elm_check_state_set(ck, !state);
+            language_selected(item_data, ck, NULL);
+        }
 #ifdef WAYLAND
         navi_back_cb(data, obj, event_info);
 #endif
@@ -467,7 +432,9 @@ destroy_genlist_item_classes() {
 
 static void
 create_genlist_item_classes() {
-    ad.itc_main_text_only = elm_genlist_item_class_new();
+    if (!ad.itc_main_text_only)
+        ad.itc_main_text_only = elm_genlist_item_class_new();
+
     if (ad.itc_main_text_only) {
         ad.itc_main_text_only->item_style = "2line.top";
         ad.itc_main_text_only->func.text_get = _main_gl_text_get;
@@ -476,14 +443,18 @@ create_genlist_item_classes() {
         ad.itc_main_text_only->func.del = _main_gl_del;
     }
 
-    ad.itc_language_subitems = elm_genlist_item_class_new();
+    if (!ad.itc_language_subitems)
+        ad.itc_language_subitems = elm_genlist_item_class_new();
+
     if (ad.itc_language_subitems) {
         ad.itc_language_subitems->item_style = "1line";
         ad.itc_language_subitems->func.text_get = _language_gl_text_get;
         ad.itc_language_subitems->func.content_get = _language_gl_content_get;
     }
 
-    ad.itc_language_radio = elm_genlist_item_class_new();
+    if (!ad.itc_language_radio)
+        ad.itc_language_radio = elm_genlist_item_class_new();
+
     if (ad.itc_language_radio) {
         ad.itc_language_radio->item_style = "dialogue/1text.1icon/expandable2";
         ad.itc_language_radio->func.text_get = _input_mode_gl_text_get;
@@ -822,9 +793,6 @@ set_transient_for_app_window(Evas_Object *window)
 void
 open_option_window(Evas_Object *parent, sclint degree)
 {
-#ifdef WAYLAND
-    ise_pause();
-#endif
     read_ise_config_values();
 
     /* To make sure there is no temporary language in the enabled language list */
@@ -840,15 +808,11 @@ open_option_window(Evas_Object *parent, sclint degree)
     {
 #ifdef WAYLAND
         elm_theme_overlay_add(NULL, OPTION_GENLIST_OBJ_DIR);
-        Evas_Coord win_w = IME_WIDTH, win_h = IME_HEIGHT;
 #endif
         memset(&ad, 0x0, sizeof(OPTION_ELEMENTS));
 
         /* create option window */
         Evas_Object *window = create_main_window(degree);
-#ifndef WAYLAND
-        ad.option_window = window;
-#endif
 
         elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
         elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
@@ -886,16 +850,11 @@ open_option_window(Evas_Object *parent, sclint degree)
 #ifdef WAYLAND
         Elm_Object_Item *it = elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
         evas_object_data_set(naviframe, OPTIONS, it);
-        elm_naviframe_item_title_enabled_set(it, EINA_FALSE, EINA_FALSE);
 #else
         elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
 #endif
 
         elm_object_content_set(conformant, naviframe);
-
-#ifdef WAYLAND
-        evas_object_resize(naviframe, win_w, win_h);
-#endif
         evas_object_show(naviframe);
 
         set_transient_for_app_window(window);

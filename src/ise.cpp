@@ -500,23 +500,6 @@ ise_show(int ic)
 #endif
 }
 
-#ifdef WAYLAND
-void
-ise_pause()
-{
-    if (gSCLUI)
-        gSCLUI->disable_input_events(TRUE);
-}
-
-void
-ise_resume()
-{
-    if (gSCLUI)
-        gSCLUI->disable_input_events(FALSE);
-}
-#endif
-
-
 /**
  * Sets screen rotation
  */

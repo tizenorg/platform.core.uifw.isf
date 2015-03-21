@@ -49,7 +49,6 @@ struct WeescimKeyboard
 {
     Ecore_Evas *ee;
     Ecore_Wl_Window *wl_win;
-    Evas_Object *obj;
     const char *ee_engine;
 
     struct wl_surface *surface;
@@ -267,7 +266,6 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
 CISECommon::CISECommon()
 {
     m_main_window = NULL;
-    m_main_obj = NULL;
     m_event_callback = NULL;
 }
 
@@ -276,30 +274,6 @@ CISECommon::~CISECommon()
 }
 
 #ifdef WAYLAND
-static Eina_Bool
-_wskb_ui_setup(struct WeescimKeyboard *wskb)
-{
-    Evas_Coord w, h;
-
-    ecore_evas_alpha_set(wskb->ee, EINA_TRUE);
-    ecore_evas_title_set(wskb->ee, "Weescimkeyboard");
-
-    wskb->obj = evas_object_rectangle_add(ecore_evas_get(wskb->ee));
-
-    /* Check which theme we should use according to the screen width */
-    w = IME_WIDTH;
-    h = IME_HEIGHT;
-
-    ecore_evas_move_resize(wskb->ee, 0, 0, w, h);
-    evas_object_move(wskb->obj, 0, 0);
-    evas_object_resize(wskb->obj, w, h);
-    evas_object_size_hint_min_set(wskb->obj, w, h);
-    evas_object_size_hint_max_set(wskb->obj, w, h);
-
-    ecore_evas_show(wskb->ee);
-    return EINA_TRUE;
-}
-
 static void
 _wskb_setup(struct WeescimKeyboard *wskb)
 {
@@ -329,13 +303,6 @@ _wskb_setup(struct WeescimKeyboard *wskb)
     wskb->surface = ecore_wl_window_surface_create(wskb->wl_win);
     ips = wl_input_panel_get_input_panel_surface(wskb->ip, wskb->surface);
     wl_input_panel_surface_set_toplevel(ips, wskb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
-}
-
-static void
-_wskb_free(struct WeescimKeyboard *wskb)
-{
-    if (wskb->obj)
-        evas_object_del(wskb->obj);
 }
 
 static Eina_Bool
@@ -417,7 +384,12 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
         goto end;
     }
     fprintf(stderr,"Selected engine: '%s'\n", wskb.ee_engine);
-    wskb.ee = ecore_evas_new(wskb.ee_engine, 0, 0, 1, 1, "frame=0");
+#endif
+
+    m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
+
+#ifdef WAYLAND
+    wskb.ee = ecore_evas_ecore_evas_get (evas_object_evas_get (m_main_window));
 
     if (!wskb.ee) {
         fprintf(stderr,"ERROR: Unable to create Ecore_Evas object");
@@ -425,16 +397,6 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     }
 
     _wskb_setup(&wskb);
-    if (!_wskb_ui_setup(&wskb)) {
-        fprintf(stderr,"ERROR: _wskb_ui_setup\n");
-        goto err;
-    }
-
-    m_main_obj = wskb.obj;
-
-    m_main_window = elm_win_add(wskb.obj, "Tizen Keyboard", ELM_WIN_INLINED_IMAGE);
-#else
-    m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
 #endif
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
@@ -446,10 +408,6 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
 #ifdef WAYLAND
     evas_object_resize(m_main_window, IME_WIDTH, IME_HEIGHT);
-    evas_object_move(elm_win_inlined_image_object_get(m_main_window),
-            0, 0);
-    evas_object_resize(elm_win_inlined_image_object_get(m_main_window),
-                       IME_WIDTH, IME_HEIGHT);
 #else
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
@@ -525,21 +483,10 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     }
 
 #ifdef WAYLAND
-err:
-    _wskb_free(&wskb);
-    ecore_evas_free(wskb.ee);
-
 end:
 #endif
     elm_shutdown();
 }
-
-#ifdef WAYLAND
-Evas_Object* CISECommon::get_main_obj()
-{
-    return m_main_obj;
-}
-#endif
 
 scim::HelperAgent* CISECommon::get_helper_agent()
 {
