@@ -22,7 +22,6 @@
 #include <Ecore.h>
 #include <Ecore_Wayland.h>
 #include "common.h"
-#define ECORE_WL_EVENT_FOCUS_OUT 0
 #define OPTION_GENLIST_OBJ_DIR "/usr/share/elementary/themes/tizen-hd.edj"
 #else
 #include <X11/Xlib.h>
