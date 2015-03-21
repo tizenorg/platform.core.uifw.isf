@@ -83,16 +83,8 @@ CXXFLAGS+=" -DWAYLAND"
 
 export GC_SECTIONS_FLAGS="-fdata-sections -ffunction-sections -Wl,--gc-sections"
 
-CFLAGS+=" -I/usr/include/elementary-1 -I/usr/include/eina-1 -I/usr/include/eina-1/eina -I/usr/include/ecore-1 "
-CFLAGS+=" -I/usr/include/evas-1 -I/usr/include/eet-1 -I/usr/include/edje-1 -I/usr/include/e_dbus-1 "
-CFLAGS+=" -I/usr/include/eio-1 -I/usr/include/ethumb-1 -I/usr/include/efreet-1 -I/usr/include/emotion-1 -I/usr/include/embryo-1 "
-CFLAGS+=" -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include/ "
 CFLAGS+=" -fvisibility=hidden ${GC_SECTIONS_FLAGS} "; export CFLAGS
 
-CXXFLAGS+=" -I/usr/include/elementary-1 -I/usr/include/eina-1 -I/usr/include/eina-1/eina -I/usr/include/ecore-1 "
-CXXFLAGS+=" -I/usr/include/evas-1 -I/usr/include/eet-1 -I/usr/include/edje-1 -I/usr/include/e_dbus-1 "
-CXXFLAGS+=" -I/usr/include/eio-1 -I/usr/include/ethumb-1 -I/usr/include/efreet-1 -I/usr/include/emotion-1 -I/usr/include/embryo-1 "
-CXXFLAGS+=" -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include/ "
 CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS} ";export CXXFLAGS
 
 %autogen
