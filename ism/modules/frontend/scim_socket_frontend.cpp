@@ -403,6 +403,20 @@ SocketFrontEnd::update_preedit_string (int id,
 }
 
 void
+SocketFrontEnd::update_preedit_utf8_string (int id,
+                                            const char * buf, int buflen,
+                                            const AttributeList & attrs,
+                                            int caret)
+{
+    if (m_current_instance == id) {
+        m_send_trans.put_command (SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING);
+        m_send_trans.put_dataw (buf, buflen);
+        m_send_trans.put_data (attrs);
+        m_send_trans.put_data ((uint32) caret);
+    }
+}
+
+void
 SocketFrontEnd::update_aux_string (int id,
                                    const WideString & str,
                                    const AttributeList & attrs)
@@ -415,11 +429,32 @@ SocketFrontEnd::update_aux_string (int id,
 }
 
 void
+SocketFrontEnd::update_aux_utf8_string (int id,
+                                        const char * buf, int buflen,
+                                        const AttributeList & attrs)
+{
+    if (m_current_instance == id) {
+        m_send_trans.put_command (SCIM_TRANS_CMD_UPDATE_AUX_STRING);
+        m_send_trans.put_dataw (buf, buflen);
+        m_send_trans.put_data (attrs);
+    }
+}
+
+void
 SocketFrontEnd::commit_string (int id, const WideString & str)
 {
     if (m_current_instance == id) {
         m_send_trans.put_command (SCIM_TRANS_CMD_COMMIT_STRING);
         m_send_trans.put_data (str);
+    }
+}
+
+void
+SocketFrontEnd::commit_utf8_string (int id, const char * buf, int buflen)
+{
+    if (m_current_instance == id) {
+        m_send_trans.put_command (SCIM_TRANS_CMD_COMMIT_STRING);
+        m_send_trans.put_dataw (buf, buflen);
     }
 }
 
