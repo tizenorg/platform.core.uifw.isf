@@ -128,6 +128,9 @@ typedef Slot2<void, IMEngineInstanceBase*,const String&>
 typedef Slot2<void, IMEngineInstanceBase*,const WideString&>
         IMEngineSlotWideString;
 
+typedef Slot3<void, IMEngineInstanceBase*,const char*, int>
+        IMEngineSlotUTF8String;
+
 typedef Slot2<void, IMEngineInstanceBase*,const KeyEvent&>
         IMEngineSlotKeyEvent;
 
@@ -146,8 +149,14 @@ typedef Slot3<void, IMEngineInstanceBase*,const String&,const Transaction&>
 typedef Slot4<void, IMEngineInstanceBase*,const WideString&,const AttributeList&,int>
         IMEngineSlotWideStringAttributeListInt;
 
+typedef Slot5<void, IMEngineInstanceBase*,const char*, int,const AttributeList&,int>
+        IMEngineSlotUTF8StringAttributeListInt;
+
 typedef Slot3<void, IMEngineInstanceBase*,const WideString&,const AttributeList&>
         IMEngineSlotWideStringAttributeList;
+
+typedef Slot4<void, IMEngineInstanceBase*,const char*, int,const AttributeList&>
+        IMEngineSlotUTF8StringAttributeList;
 
 typedef Slot5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
         IMEngineSlotGetSurroundingText;
@@ -500,9 +509,12 @@ public:
     Connection signal_connect_hide_lookup_table       (IMEngineSlotVoid *slot);
     Connection signal_connect_update_preedit_caret    (IMEngineSlotInt *slot);
     Connection signal_connect_update_preedit_string   (IMEngineSlotWideStringAttributeListInt *slot);
+    Connection signal_connect_update_preedit_utf8_string   (IMEngineSlotUTF8StringAttributeListInt *slot);
     Connection signal_connect_update_aux_string       (IMEngineSlotWideStringAttributeList *slot);
+    Connection signal_connect_update_aux_utf8_string  (IMEngineSlotUTF8StringAttributeList *slot);
     Connection signal_connect_update_lookup_table     (IMEngineSlotLookupTable *slot);
     Connection signal_connect_commit_string           (IMEngineSlotWideString *slot);
+    Connection signal_connect_commit_utf8_string      (IMEngineSlotUTF8String *slot);
     Connection signal_connect_forward_key_event       (IMEngineSlotKeyEvent *slot);
     Connection signal_connect_register_properties     (IMEngineSlotPropertyList *slot);
     Connection signal_connect_update_property         (IMEngineSlotProperty *slot);
@@ -825,11 +837,35 @@ protected:
     /**
      * @brief Update the content of the preedit string,
      *
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buffer size in bytes.
+     * @param attrs - the string attributes
+     */
+    void update_preedit_string (const char          *buf,
+                                int                  buflen,
+                                const AttributeList &attrs = AttributeList ());
+
+    /**
+     * @brief Update the content of the preedit string,
+     *
      * @param str - the string content
      * @param attrs - the string attributes
      * @param caret - the caret position
      */
     void update_preedit_string (const WideString    &str,
+                                const AttributeList &attrs,
+                                int                  caret);
+
+    /**
+     * @brief Update the content of the preedit string,
+     *
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buffer size in bytes.
+     * @param attrs - the string attributes
+     * @param caret - the caret position
+     */
+    void update_preedit_string (const char          *buf,
+                                int                  buflen,
                                 const AttributeList &attrs,
                                 int                  caret);
 
@@ -841,6 +877,18 @@ protected:
      */
     void update_aux_string (const WideString    &str,
                             const AttributeList &attrs = AttributeList ());
+
+    /**
+     * @brief Update the content of the aux string,
+     *
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buffer size in bytes.
+     * @param attrs - the string attribute
+     */
+    void update_aux_string (const char          *buf,
+                            int                  buflen,
+                            const AttributeList &attrs = AttributeList ());
+
 
     /**
      * @brief Update the content of the lookup table,
@@ -864,6 +912,15 @@ protected:
      * @param str - the string to be committed.
      */
     void commit_string (const WideString &str);
+
+    /**
+     * @brief Commit a UTF-8 String to client application.
+     *
+     * @param buf The byte array of UTF-8 string to be committed.
+     * @param buflen The buffer size in bytes.
+     */
+    void commit_string (const char       *buf,
+                        int               buflen);
 
     /**
      * @brief Forward a key event to the client application.

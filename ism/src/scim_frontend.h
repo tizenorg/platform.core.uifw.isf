@@ -605,7 +605,16 @@ protected:
      * @param str the new content of preedit string.
      * @param attrs the string attributes.
      */
-    virtual void update_preedit_string (int id, const WideString & str, const AttributeList & attrs, int caret);
+    virtual void update_preedit_string      (int id, const WideString & str, const AttributeList & attrs, int caret);
+
+    /**
+     * @brief update the content of preedit string for an IMEngine instance.
+     * @param id the id of the IMEngine instance. It must have been focused in.
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buffer size in bytes.
+     * @param attrs the string attributes.
+     */
+    virtual void update_preedit_utf8_string (int id, const char * buf, int buflen, const AttributeList & attrs, int caret);
 
     /**
      * @brief update the content of aux string for an IMEngine instance.
@@ -614,6 +623,15 @@ protected:
      * @param attrs the string attributes.
      */
     virtual void update_aux_string     (int id, const WideString & str, const AttributeList & attrs);
+
+    /**
+     * @brief update the content of aux string for an IMEngine instance.
+     * @param id the id of the IMEngine instance. It must have been focused in.
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buffer size in bytes.
+     * @param attrs the string attributes.
+     */
+    virtual void update_aux_utf8_string(int id, const char * buf, int buflen, const AttributeList & attrs);
 
     /**
      * @brief update the content of lookup table for an IMEngine instance.
@@ -628,6 +646,14 @@ protected:
      * @param str the string to be committed.
      */
     virtual void commit_string         (int id, const WideString & str);
+
+    /**
+     * @brief commit a string to client for an IMEngine instance.
+     * @param id the id of the IMEngine instance to commit the string.
+     * @param buf The byte array of UTF-8 string to be updated.
+     * @param buflen The buffer size in bytes.
+     */
+    virtual void commit_utf8_string    (int id, const char * buf, int buflen);
 
     /**
      * @brief forward a keyevent to the client of an IMEngine instance.
