@@ -458,6 +458,7 @@ SCLEventReturnType CUIEventCallback::on_event_drag_state_changed(SclUIEventDesc 
 SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_desc)
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
+    LOGD ("key value: %s", event_desc.key_value);
 
     if (g_ui) {
         switch (event_desc.key_type) {

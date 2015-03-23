@@ -47,14 +47,17 @@
         <rec button="normal">popup_line/popup_line_top_center.png</rec>
       </background_image>
     </key>
-    <key label_type="PUNC_POPUP_2">
+    <key key_type="modechange" label_type="PUNC_POPUP_2">
       <label>
         <rec>Sym</rec>
       </label>
       <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="normal">popup_line/popup_line_sym_btn.png</rec>
+        <rec button="pressed">popup_line/popup_line_sym_btn_press.png</rec>
       </background_image>
+      <key_value>
+        <rec>SYM_QTY_1</rec>
+      </key_value>
     </key>
   </row>
   <row x="1">
