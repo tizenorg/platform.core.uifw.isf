@@ -123,8 +123,11 @@ protected:
 
     virtual void update_preedit_caret    (int id, int caret);
     virtual void update_preedit_string   (int id, const WideString & str, const AttributeList & attrs, int caret);
+    virtual void update_preedit_utf8_string   (int id, const char * buf, int buflen, const AttributeList & attrs, int caret);
     virtual void update_aux_string       (int id, const WideString & str, const AttributeList & attrs);
+    virtual void update_aux_utf8_string  (int id, const char * buf, int buflen, const AttributeList & attrs);
     virtual void commit_string           (int id, const WideString & str);
+    virtual void commit_utf8_string      (int id, const char * buf, int buflen);
     virtual void forward_key_event       (int id, const KeyEvent & key);
     virtual void update_lookup_table     (int id, const LookupTable & table);
 
