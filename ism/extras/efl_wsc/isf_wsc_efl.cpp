@@ -173,7 +173,9 @@ wsc_commit_preedit(weescim *ctx)
         ctx->surrounding_cursor = strlen(ctx->preedit_str);
     }
 
-    free(ctx->preedit_str);
+    if (ctx->preedit_str)
+        free (ctx->preedit_str);
+
     ctx->preedit_str = strdup("");
 }
 
@@ -202,8 +204,11 @@ bool wsc_context_surrounding_get(weescim *ctx, char **text, int *cursor_pos)
     if (!ctx)
         return false;
 
-    *text = strdup (ctx->surrounding_text);
-    *cursor_pos = ctx->surrounding_cursor;
+    if (text)
+        *text = strdup (ctx->surrounding_text);
+
+    if (cursor_pos)
+        *cursor_pos = ctx->surrounding_cursor;
 
     return true;
 }
@@ -336,7 +341,9 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
 {
     struct weescim *wsc = (weescim*)data;
 
-    free (wsc->surrounding_text);
+    if (wsc->surrounding_text)
+        free (wsc->surrounding_text);
+
     wsc->surrounding_text = strdup (text);
     wsc->surrounding_cursor = cursor;
 }
@@ -605,11 +612,15 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wsc->content_hint = WL_TEXT_INPUT_CONTENT_HINT_NONE;
     wsc->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
 
-    free (wsc->language);
-    wsc->language = NULL;
+    if (wsc->language) {
+        free (wsc->language);
+        wsc->language = NULL;
+    }
 
-    free (wsc->surrounding_text);
-    wsc->surrounding_text = NULL;
+    if (wsc->surrounding_text) {
+        free (wsc->surrounding_text);
+        wsc->surrounding_text = NULL;
+    }
 
     wsc->im_ctx = im_ctx;
     wl_input_method_context_add_listener (im_ctx, &wsc_im_context_listener, wsc);
@@ -728,8 +739,15 @@ _wsc_free(struct weescim *wsc)
     isf_wsc_context_del(wsc->wsc_ctx);
     isf_wsc_context_shutdown ();
 
-    free (wsc->preedit_str);
-    free (wsc->surrounding_text);
+    if (wsc->preedit_str) {
+        free (wsc->preedit_str);
+        wsc->preedit_str = NULL;
+    }
+
+    if (wsc->surrounding_text) {
+        free (wsc->surrounding_text);
+        wsc->surrounding_text = NULL;
+    }
 }
 
 int main (int argc EINA_UNUSED, char **argv EINA_UNUSED)
