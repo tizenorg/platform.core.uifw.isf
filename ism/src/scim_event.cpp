@@ -393,8 +393,10 @@ scim_set_default_keyboard_layout (KeyboardLayout layout)
 }
 
 EAPI void
-scim_set_device_name (KeyEvent &key, String str)
+scim_set_device_info (KeyEvent &key, String str, uint16 dev_class, uint16 dev_subclass)
 {
+    key.dev_class = dev_class;
+    key.dev_subclass = dev_subclass;
     key.dev_name = str;
 }
 } // namespace scim
