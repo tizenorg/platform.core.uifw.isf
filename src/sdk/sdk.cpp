@@ -206,6 +206,7 @@ SCLEventReturnType CSDKISE::on_event_drag_state_changed(SclUIEventDesc event_des
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
 
     if (event_desc.event_type == EVENT_TYPE_LONGPRESS) {
+
         const char *www_string = "www.";
         if (event_desc.key_value) {
             if (strncmp(event_desc.key_value, www_string, strlen(www_string)) == 0) {

@@ -414,7 +414,7 @@
     </key>
   </row>
   <row x="16">
-    <key button_type="selfish" key_type="control" width="128" hit_left="16">
+    <key long_key_value="LongShift" long_key_event="65505" button_type="selfish" key_type="control" width="128" hit_left="16">
       <image_label>
         <rec shift="off" button="normal">B09_icon_shift_50x50.png</rec>
         <rec shift="on" button="normal">B09_icon_shift_on_50x50.png</rec>

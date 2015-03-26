@@ -141,6 +141,20 @@ check_ic_temporary(int ic)
     return FALSE;
 }
 
+static void _reset_shift_state (void)
+{
+    if (g_ui) {
+        /* Reset all shift state variables */
+        SCLShiftState old_shift_state = g_ui->get_shift_state ();
+        SCLShiftState new_shift_state = SCL_SHIFT_STATE_OFF;
+        if (old_shift_state != new_shift_state) {
+            g_need_send_shift_event = true;
+            g_ui->set_shift_state (new_shift_state);
+        }
+        LOGD ("Shift state changed from (%d) to (%d)", (int)old_shift_state, (int)new_shift_state);
+    }
+}
+
 void CCoreEventCallback::on_init()
 {
     LOGD("CCoreEventCallback::init()\n");
@@ -424,6 +438,7 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
 SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_type, SclNotiDesc *etc_info)
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
+    LOGD ("noti type: %d, g_need_send_shift_event: %d", noti_type, g_need_send_shift_event);
 
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
         if (g_need_send_shift_event) {
@@ -431,6 +446,7 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
             SclNotiShiftStateChangeDesc *desc = static_cast<SclNotiShiftStateChangeDesc*>(etc_info);
             if (info && desc) {
                 if (info->accepts_caps_mode) {
+                    LOGD ("shift state: %d", desc->shift_state);
                     if (desc->shift_state == SCL_SHIFT_STATE_OFF) {
                         ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
                     }
@@ -458,7 +474,6 @@ SCLEventReturnType CUIEventCallback::on_event_drag_state_changed(SclUIEventDesc 
 SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_desc)
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
-    LOGD ("key value: %s", event_desc.key_value);
 
     if (g_ui) {
         switch (event_desc.key_type) {
@@ -510,9 +525,17 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
         case KEY_TYPE_CONTROL: {
                 commit_timeout (NULL);
                 if (event_desc.key_event) {
-                    ise_send_event(event_desc.key_event, KEY_MASK_NULL);
-                    if (event_desc.key_event == MVK_Shift_L) {
+                    const char *long_shift = "LongShift";
+                    if (strncmp (event_desc.key_value, long_shift, strlen (long_shift)) == 0) {
+                        LOGD ("shift key is longpress");
+                        g_ui->set_shift_state (SCL_SHIFT_STATE_ON);
                         g_need_send_shift_event = TRUE;
+                        //ise_send_event (MVK_Shift_Lock, KEY_MASK_NULL);
+                    } else {
+                        ise_send_event(event_desc.key_event, KEY_MASK_NULL);
+                        if (event_desc.key_event == MVK_Shift_L) {
+                            g_need_send_shift_event = TRUE;
+                        }
                     }
                 }
                 break;
@@ -763,6 +786,7 @@ ise_hide()
     if (g_candidate) {
         g_candidate->hide();
     }
+    _reset_shift_state ();
 }
 
 void
