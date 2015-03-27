@@ -283,15 +283,17 @@ public:
 
     void get_all_helper_ise_info (HELPER_ISE_INFO &info) {
         int cmd;
+        std::vector<String> appid;
         std::vector<String> label;
         std::vector<uint32> is_enabled;
         std::vector<uint32> is_preinstalled;
         std::vector<uint32> has_option;
 
-        info.label.clear();
-        info.is_enabled.clear();
-        info.is_preinstalled.clear();
-        info.has_option.clear();
+        info.appid.clear ();
+        info.label.clear ();
+        info.is_enabled.clear ();
+        info.is_preinstalled.clear ();
+        info.has_option.clear ();
 
         m_trans.put_command (ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO);
         m_trans.write_to_socket (m_socket_imclient2panel);
@@ -300,16 +302,18 @@ public:
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
-                m_trans.get_data (label) ) {
+                m_trans.get_data (appid) ) {
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
         }
 
-        if (label.size() > 0) {
+        if (appid.size () > 0) {
+            m_trans.get_data (label);
             m_trans.get_data (is_enabled);
             m_trans.get_data (is_preinstalled);
             m_trans.get_data (has_option);
-            if (label.size() == is_enabled.size() && label.size() == is_preinstalled.size() && label.size() == has_option.size()) {
+            if (appid.size () == label.size () && appid.size () == is_enabled.size () && appid.size () == is_preinstalled.size () && appid.size () == has_option.size ()) {
+                info.appid = appid;
                 info.label = label;
                 info.is_enabled = is_enabled;
                 info.is_preinstalled = is_preinstalled;
@@ -318,13 +322,13 @@ public:
         }
     }
 
-    void enable_helper_ise (const char *appid, bool is_enabled) {
+    void set_enable_helper_ise_info (const char *appid, bool is_enabled) {
         int cmd;
 
         if (!appid)
             return;
 
-        m_trans.put_command (ISM_TRANS_CMD_ENABLE_HELPER_ISE);
+        m_trans.put_command (ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO);
         m_trans.put_data (String (appid));
         m_trans.put_data (static_cast<uint32>(is_enabled));
         m_trans.write_to_socket (m_socket_imclient2panel);
@@ -433,9 +437,9 @@ void IMControlClient::get_all_helper_ise_info (HELPER_ISE_INFO &info)
     m_impl->get_all_helper_ise_info (info);
 }
 
-void IMControlClient::enable_helper_ise (const char *appid, bool is_enabled)
+void IMControlClient::set_enable_helper_ise_info (const char *appid, bool is_enabled)
 {
-    m_impl->enable_helper_ise (appid, is_enabled);
+    m_impl->set_enable_helper_ise_info (appid, is_enabled);
 }
 
 };

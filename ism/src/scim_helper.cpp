@@ -177,6 +177,7 @@ public:
     HelperAgentSignalUintVoid           signal_set_input_hint;
     HelperAgentSignalUintVoid           signal_update_bidi_direction;
     HelperAgentSignalVoid               signal_show_option_window;
+    HelperAgentSignalUintVoid           signal_check_option_window;
 
 public:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
@@ -849,6 +850,16 @@ HelperAgent::filter_event ()
             case ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW:
             {
                 m_impl->signal_show_option_window (this, ic, ic_uuid);
+                break;
+            }
+            case ISM_TRANS_CMD_CHECK_OPTION_WINDOW:
+            {
+                uint32 avail = 0;
+                m_impl->signal_check_option_window (this, avail);
+                m_impl->send.clear ();
+                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+                m_impl->send.put_data (avail);
+                m_impl->send.write_to_socket (m_impl->socket);
                 break;
             }
             default:
@@ -2492,6 +2503,20 @@ Connection
 HelperAgent::signal_connect_show_option_window (HelperAgentSlotVoid *slot)
 {
     return m_impl->signal_show_option_window.connect (slot);
+}
+
+/**
+ * @brief Connect a slot to Helper check if the option is available.
+ *
+ * This signal is used to check if the option (setting) is available from Helper ISE.
+ *
+ * The prototype of the slot is:
+ * void check_option_window (const HelperAgent *agent, uint32 &avail);
+ */
+Connection
+HelperAgent::signal_connect_check_option_window (HelperAgentSlotUintVoid *slot)
+{
+    return m_impl->signal_check_option_window.connect (slot);
 }
 
 } /* namespace scim */
