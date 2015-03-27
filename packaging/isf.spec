@@ -113,7 +113,7 @@ mkdir -p %{buildroot}/opt/usr/dbspace
 if [ ! -s %{buildroot}/opt/usr/dbspace/.ime_info.db ]; then
 echo "The database file for ime will be created."
 sqlite3 %{buildroot}/opt/usr/dbspace/.ime_info.db <<EOF
-CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER, enabled INTEGER, preinstalled INTEGER);
+CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER, is_enabled INTEGER, is_preinstalled INTEGER, has_option INTEGER);
 EOF
 fi
 

@@ -48,10 +48,11 @@ typedef enum
  * @see isf_control_get_all_ime_info
  */
 typedef struct {
+    char appid[128];
     char label[256];
     bool is_enabled;
     bool is_preinstalled;
-    bool has_option;
+    int has_option; // 0: no keyboard option, 1: keyboard option is available, -1: unknown
 } ime_info_s;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -172,19 +173,22 @@ EAPI int isf_control_show_ise_option_window ();
 /**
  * @brief Gets the information of all Software (on-screen) IME.
  *
+ * @remarks This API should not be used by IME process.
+ *
  * @since_tizen 2.4
  *
  * @param[out] info The parameter is used to store all IME information. Application needs to free @a *info variable
  *
- * @return The count of IME if successfully, otherwise return -1;
+ * @return The count of IME on success, otherwise -1
+ *
+ * @post The current active IME's has_option variable will have 0 or 1 value. Other IME's has_option variable might be -1 (unknown).
  *
  * @code
-     int i;
      ime_info_s *ime_info = NULL;
-     cnt = isf_control_get_all_ime_info(&ime_info);
+     int i, cnt = isf_control_get_all_ime_info(&ime_info);
      if (ime_info) {
          for (i = 0; i < cnt; i++) {
-             LOGD("%s %d %d %d", ime_info[i].label, ime_info[i].is_enabled, ime_info[i].is_preinstalled, ime_info[i].has_option);
+             LOGD("%s %s %d %d %d", ime_info[i].appid, ime_info[i].label, ime_info[i].is_enabled, ime_info[i].is_preinstalled, ime_info[i].has_option);
          }
          free(ime_info);
      }
@@ -193,13 +197,24 @@ EAPI int isf_control_show_ise_option_window ();
 EAPI int isf_control_get_all_ime_info (ime_info_s **info);
 
 /**
+ * @brief Gets active IME's Application ID.
+ *
+ * @since_tizen 2.4
+ *
+ * @param[out] appid This is used to store active IME's Application ID. The allocated @a appid needs to be released using free()
+ *
+ * @return The length of @a appid on success, otherwise -1
+ */
+EAPI int isf_control_get_active_ime (char **appid);
+
+/**
  * @brief Sets active IME by Application ID.
  *
  * @since_tizen 2.4
  *
  * @param[in] appid Application ID of IME to set as active one
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 on success, otherwise -1
  */
 EAPI int isf_control_set_active_ime (const char *appid);
 
@@ -213,7 +228,7 @@ EAPI int isf_control_set_active_ime (const char *appid);
  *
  * @return 0 if successfully, otherwise return -1;
  */
-EAPI int isf_control_enable_ime (const char *appid, bool is_enabled);
+EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
 
 #ifdef __cplusplus
 }

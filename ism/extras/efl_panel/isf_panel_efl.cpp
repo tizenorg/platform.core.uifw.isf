@@ -193,7 +193,8 @@ static void       slot_select_candidate                (int index);
 static void       slot_set_active_ise                  (const String &uuid, bool changeDefault);
 static bool       slot_get_ise_list                    (std::vector<String> &list);
 static bool       slot_get_all_helper_ise_info         (HELPER_ISE_INFO &info);
-static void       slot_enable_helper_ise               (const String &appid, bool is_enabled);
+static void       slot_set_has_option_helper_ise_info  (const String &appid, bool has_option);
+static void       slot_set_enable_helper_ise_info      (const String &appid, bool is_enabled);
 static bool       slot_get_ise_information             (String uuid, String &name, String &language, int &type, int &option, String &module_name);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name_list);
 static void       slot_get_language_list               (std::vector<String> &name);
@@ -3431,7 +3432,8 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise));
     _panel_agent->signal_connect_get_ise_list               (slot (slot_get_ise_list));
     _panel_agent->signal_connect_get_all_helper_ise_info    (slot (slot_get_all_helper_ise_info));
-    _panel_agent->signal_connect_enable_helper_ise          (slot (slot_enable_helper_ise));
+    _panel_agent->signal_connect_set_has_option_helper_ise_info(slot (slot_set_has_option_helper_ise_info));
+    _panel_agent->signal_connect_set_enable_helper_ise_info (slot (slot_set_enable_helper_ise_info));
     _panel_agent->signal_connect_get_ise_information        (slot (slot_get_ise_information));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
@@ -4672,7 +4674,7 @@ static bool slot_get_ise_list (std::vector<String> &list)
 }
 
 /**
- * @brief Get all Helper ISE information slot function for PanelAgent.
+ * @brief Get all Helper ISE information from ime_info DB.
  *
  * @param info This is used to store all Helper ISE information.
  *
@@ -4681,22 +4683,30 @@ static bool slot_get_ise_list (std::vector<String> &list)
 static bool slot_get_all_helper_ise_info (HELPER_ISE_INFO &info)
 {
     bool result = false;
+    String active_ime_appid;
 
-    info.label.clear();
-    info.is_enabled.clear();
-    info.is_preinstalled.clear();
-    info.has_option.clear();
+    info.appid.clear ();
+    info.label.clear ();
+    info.is_enabled.clear ();
+    info.is_preinstalled.clear ();
+    info.has_option.clear ();
 
     if (_ime_info.size() == 0)
-        isf_db_select_all_ime_info(_ime_info);
+        isf_db_select_all_ime_info (_ime_info);
+
+    //active_ime_appid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+    if (_panel_agent) {
+        active_ime_appid = _panel_agent->get_current_helper_uuid ();
+    }
 
     if (_ime_info.size () > 0) {
-        for (std::vector<ImeInfoDB>::iterator iter = _ime_info.begin(); iter != _ime_info.end(); iter++) {
+        for (std::vector<ImeInfoDB>::iterator iter = _ime_info.begin (); iter != _ime_info.end (); iter++) {
             if (iter->mode == TOOLBAR_HELPER_MODE) {
-                info.label.push_back(iter->label);
-                info.is_enabled.push_back(iter->enabled);
-                info.is_preinstalled.push_back(iter->preinstalled);
-                info.has_option.push_back(1);     // TODO:
+                info.appid.push_back (iter->appid);
+                info.label.push_back (iter->label);
+                info.is_enabled.push_back (iter->is_enabled);
+                info.is_preinstalled.push_back (iter->is_preinstalled);
+                info.has_option.push_back (static_cast<uint32>(iter->has_option));
                 result = true;
             }
         }
@@ -4706,12 +4716,12 @@ static bool slot_get_all_helper_ise_info (HELPER_ISE_INFO &info)
 }
 
 /**
- * @brief Sets On/Off of installed IME by Application ID in settings
+ * @brief Update "has_option" column of ime_info DB by Application ID
  *
  * @param[in] appid Application ID of IME to enable or disable
- * @param[in] is_enabled @c true to enable the IME, otherwise @c false
+ * @param[in] has_option @c true to have IME option(setting), otherwise @c false
  */
-static void slot_enable_helper_ise (const String &appid, bool is_enabled)
+static void slot_set_has_option_helper_ise_info (const String &appid, bool has_option)
 {
     if (appid.length() == 0) {
         LOGW("Invalid appid");
@@ -4721,10 +4731,35 @@ static void slot_enable_helper_ise (const String &appid, bool is_enabled)
     if (_ime_info.size() == 0)
         isf_db_select_all_ime_info(_ime_info);
 
-    if (isf_db_update_enabled_by_appid(appid.c_str(), is_enabled)) {
+    if (isf_db_update_has_option_by_appid(appid.c_str(), has_option)) {    // Update ime_info DB
         for (unsigned int i = 0; i < _ime_info.size (); i++) {
             if (appid == _ime_info[i].appid) {
-                _ime_info[i].enabled = static_cast<uint32>(is_enabled);
+                _ime_info[i].has_option = static_cast<uint32>(has_option);  // Update global variable
+            }
+        }
+    }
+}
+
+/**
+ * @brief Update "is_enable" column of ime_info DB by Application ID
+ *
+ * @param[in] appid Application ID of IME to enable or disable
+ * @param[in] is_enabled @c true to enable the IME, otherwise @c false
+ */
+static void slot_set_enable_helper_ise_info (const String &appid, bool is_enabled)
+{
+    if (appid.length() == 0) {
+        LOGW("Invalid appid");
+        return;
+    }
+
+    if (_ime_info.size() == 0)
+        isf_db_select_all_ime_info(_ime_info);
+
+    if (isf_db_update_is_enabled_by_appid(appid.c_str(), is_enabled)) {    // Update ime_info DB
+        for (unsigned int i = 0; i < _ime_info.size (); i++) {
+            if (appid == _ime_info[i].appid) {
+                _ime_info[i].is_enabled = static_cast<uint32>(is_enabled);  // Update global variable
             }
         }
     }

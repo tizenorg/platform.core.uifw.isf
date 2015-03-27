@@ -345,7 +345,8 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalInt                 m_signal_select_candidate;
     PanelAgentSignalBoolStringVector    m_signal_get_ise_list;
     PanelAgentSignalBoolHelperInfo      m_signal_get_all_helper_ise_info;
-    PanelAgentSignalStringBool          m_signal_enable_helper_ise;
+    PanelAgentSignalStringBool          m_signal_set_has_option_helper_ise_info;
+    PanelAgentSignalStringBool          m_signal_set_enable_helper_ise_info;
     PanelAgentSignalBoolString4int2     m_signal_get_ise_information;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
     PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
@@ -2356,26 +2357,67 @@ public:
         HELPER_ISE_INFO info;
         m_signal_get_all_helper_ise_info (info);
 
-        Transaction trans;
-        Socket client_socket (client_id);
+        //1 Check if the current IME's option (setting) is available or not.
+        for (uint32 i = 0; i < info.appid.size (); i++) {
+            if (m_current_helper_uuid.compare (info.appid [i]) == 0) {  // Find the current IME
+                // If the current IME's "has_option" is unknown (-1), get it through ISM_TRANS_CMD_CHECK_OPTION_WINDOW command.
+                // And it's saved to ime_info DB. Then next time this will be skipped.
+                if (info.has_option [i] >= 2) {
+                    HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+                    if (it != m_helper_client_index.end ()) {
+                        int cmd;
+                        Socket client_socket (it->second.id);
+                        int    client;
+                        uint32 context;
+                        get_focused_context (client, context);
+                        uint32 ctx = get_helper_ic (client, context);
+                        Transaction trans;
+                        uint32 avail = static_cast<uint32>(-1);
 
-        trans.clear ();
-        trans.put_command (SCIM_TRANS_CMD_REPLY);
-        trans.put_command (SCIM_TRANS_CMD_OK);
-
-        if (info.label.size() > 0) {
-            trans.put_data (info.label);
-            trans.put_data (info.is_enabled);
-            trans.put_data (info.is_preinstalled);
-            trans.put_data (info.has_option);
+                        trans.clear ();
+                        trans.put_command (SCIM_TRANS_CMD_REPLY);
+                        trans.put_data (ctx);
+                        trans.put_data (m_current_helper_uuid);
+                        trans.put_command (ISM_TRANS_CMD_CHECK_OPTION_WINDOW);
+                        trans.write_to_socket (client_socket);
+                        if (!trans.read_from_socket (client_socket, m_socket_timeout) ||
+                            !trans.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY ||
+                            !trans.get_data (avail)) {
+                            ISF_SAVE_LOG("ISM_TRANS_CMD_CHECK_OPTION_WINDOW failed\n");
+                        }
+                        if (avail < 2) {
+                            info.has_option [i] = avail;
+                            // Update "has_option" column of ime_info DB and global variable.
+                            m_signal_set_has_option_helper_ise_info(info.appid [i], static_cast<bool>(avail));
+                        }
+                    }
+                }
+            }
         }
 
-        trans.write_to_socket (client_socket);
+        do {
+            Transaction trans;
+            Socket client_socket (client_id);
+
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REPLY);
+            trans.put_command (SCIM_TRANS_CMD_OK);
+
+            if (info.appid.size() > 0) {
+                trans.put_data (info.appid);
+                trans.put_data (info.label);
+                trans.put_data (info.is_enabled);
+                trans.put_data (info.is_preinstalled);
+                trans.put_data (info.has_option);
+            }
+
+            trans.write_to_socket (client_socket);
+        } while(0);
     }
 
-    void enable_helper_ise (int client_id)
+    void set_enable_helper_ise_info (int client_id)
     {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::enable_helper_ise ()\n";
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::set_enable_helper_ise_info ()\n";
         String appid;
         uint32 is_enabled;
         Transaction trans;
@@ -2400,7 +2442,7 @@ public:
             return;
         }
 
-        m_signal_enable_helper_ise (appid, static_cast<bool>(is_enabled));
+        m_signal_set_enable_helper_ise_info (appid, static_cast<bool>(is_enabled));
 
         trans.put_command (SCIM_TRANS_CMD_OK);
         trans.write_to_socket (client_socket);
@@ -3229,9 +3271,14 @@ public:
         return m_signal_get_all_helper_ise_info.connect (slot);
     }
 
-    Connection signal_connect_enable_helper_ise          (PanelAgentSlotStringBool          *slot)
+    Connection signal_connect_set_has_option_helper_ise_info (PanelAgentSlotStringBool          *slot)
     {
-        return m_signal_enable_helper_ise.connect (slot);
+        return m_signal_set_has_option_helper_ise_info.connect (slot);
+    }
+
+    Connection signal_connect_set_enable_helper_ise_info      (PanelAgentSlotStringBool          *slot)
+    {
+        return m_signal_set_enable_helper_ise_info.connect (slot);
     }
 
     Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2        *slot)
@@ -3887,7 +3934,7 @@ private:
                     get_ise_list (client_id);
                 else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO)
                     get_all_helper_ise_info (client_id);
-                else if (cmd == ISM_TRANS_CMD_ENABLE_HELPER_ISE) {
+                else if (cmd == ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO) {
                     ISF_SAVE_LOG ("checking sockfd privilege...\n");
                     int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
                     if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
@@ -3896,7 +3943,7 @@ private:
                         SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
                     }
                     ISF_SAVE_LOG ("enable helper ise\n");
-                    enable_helper_ise (client_id);
+                    set_enable_helper_ise_info (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION)
                     get_ise_information (client_id);
@@ -6582,9 +6629,15 @@ PanelAgent::signal_connect_get_all_helper_ise_info    (PanelAgentSlotBoolHelperI
 }
 
 Connection
-PanelAgent::signal_connect_enable_helper_ise          (PanelAgentSlotStringBool    *slot)
+PanelAgent::signal_connect_set_has_option_helper_ise_info (PanelAgentSlotStringBool    *slot)
 {
-    return m_impl->signal_connect_enable_helper_ise (slot);
+    return m_impl->signal_connect_set_has_option_helper_ise_info (slot);
+}
+
+Connection
+PanelAgent::signal_connect_set_enable_helper_ise_info      (PanelAgentSlotStringBool    *slot)
+{
+    return m_impl->signal_connect_set_enable_helper_ise_info (slot);
 }
 
 Connection
