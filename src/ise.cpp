@@ -313,6 +313,12 @@ void CCoreEventCallback::on_destroy_option_window(sclwindow window)
     option_window_destroyed(NATIVE_WINDOW_CAST(window));
 }
 
+void CCoreEventCallback::on_check_option_window_availability(sclboolean *ret)
+{
+    if (ret)
+        *ret = true;   // Tizen keyboard (ise-default) has the option window, but 3rd party IME may not. This interface is for it.
+}
+
 /**
  * Send the given string to input framework
  */

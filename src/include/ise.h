@@ -149,6 +149,7 @@ class CCoreEventCallback : public ISCLCoreEventCallback
 
     void on_create_option_window(sclwindow window, SCLOptionWindowType type);
     void on_destroy_option_window(sclwindow window);
+    void on_check_option_window_availability(sclboolean *ret);
 };
 
 void ise_send_string(const sclchar *key_value);
