@@ -60,6 +60,12 @@ int gLastIC = 0;
 #endif
 
 extern void set_ise_imdata(const char * buf, size_t &len);
+static void update_recent_used_punctuation(const char *key_value);
+static sclboolean g_popup_opened = FALSE;
+static vector<string> g_recent_used_punctuation;
+const int MAX_DEFAULT_PUNCTUATION = 6;
+static string g_default_punctuation[MAX_DEFAULT_PUNCTUATION] = {"-", "@", "'", "!", "?", ","};
+static string g_current_punctuation[MAX_DEFAULT_PUNCTUATION-1] = {"&", "^", "%", "$", "#"};
 
 KEYBOARD_STATE g_keyboard_state = {
     0,
@@ -462,6 +468,17 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
             g_need_send_shift_event = FALSE;
         }
     }
+    else if(noti_type == SCL_UINOTITYPE_POPUP_OPENING)
+    {
+        g_popup_opened = TRUE;
+        vector<string>::reverse_iterator iter = g_recent_used_punctuation.rbegin();
+        int punc_pos = 0;
+        for(; iter!=g_recent_used_punctuation.rend(); ++iter)
+        {
+            g_ui->set_string_substitution(g_current_punctuation[punc_pos].c_str(), iter->c_str());
+            punc_pos++;
+        }
+    }
 
     return ret;
 }
@@ -477,7 +494,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
 
     if (g_ui) {
         switch (event_desc.key_type) {
-        case KEY_TYPE_STRING:
+        case KEY_TYPE_STRING:{
             if (event_desc.key_modifier != KEY_MODIFIER_MULTITAP_START &&
                 event_desc.key_modifier != KEY_MODIFIER_MULTITAP_REPEAT) {
                     if (event_desc.key_event) {
@@ -486,7 +503,16 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                         ise_send_string(event_desc.key_value);
                     }
             }
+            const sclchar *input_mode = g_ui->get_input_mode();
+            if((strcmp(input_mode, "SYM_QTY_1")) || (strcmp(input_mode, "SYM_QTY_2"))){
+                update_recent_used_punctuation(event_desc.key_value);
+            }
+            if(g_popup_opened){
+               update_recent_used_punctuation(event_desc.key_value);
+               g_popup_opened = FALSE;
+            }
             break;
+        }
         case KEY_TYPE_CHAR: {
                 sclboolean need_forward = FALSE;
                 // FIXME : Should decide when to forward key events
@@ -519,6 +545,9 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                     } else {
                         ise_send_event(event_desc.key_event, KEY_MASK_NULL);
                     }
+                }
+                if((strcmp(input_mode, "SYM_QTY_1") == 0) || (strcmp(input_mode, "SYM_QTY_2"))){
+                    update_recent_used_punctuation(event_desc.key_value);
                 }
                 break;
             }
@@ -864,6 +893,14 @@ ise_create()
         SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
         g_core.set_keyboard_size_hints(size_portrait, size_landscape);
     }
+
+    if(g_recent_used_punctuation.empty())
+    {
+        for(int i=0; i<MAX_DEFAULT_PUNCTUATION-1; ++i)
+        {
+            g_recent_used_punctuation.push_back(g_current_punctuation[MAX_DEFAULT_PUNCTUATION-2-i]);
+        }
+    }
 }
 
 void
@@ -1014,4 +1051,46 @@ sclboolean ise_process_key_event(const char *key)
         return g_ui->process_key_event(key);
     }
     return FALSE;
+}
+
+static void update_recent_used_punctuation(const char * key_value)
+{
+    if(NULL == key_value)
+    {
+        return;
+    }
+    for(int i=0; i<10; ++i)
+    {
+        char buf[5] = {0};
+        sprintf(buf, "%d", i);
+        if(strcmp(key_value, buf) == 0)
+        {
+            return;
+        }
+    }
+    string strKey = string(key_value);
+    for(int i=0; i<MAX_DEFAULT_PUNCTUATION; ++i)
+    {
+        if(0 == strKey.compare(g_default_punctuation[i].c_str()))
+        {
+            return;
+        }
+    }
+    vector<string>::iterator iter = g_recent_used_punctuation.begin();
+    for(; iter!=g_recent_used_punctuation.end(); ++iter)
+    {
+        if(0 == strKey.compare(iter->c_str()))
+        {
+            break;
+        }
+    }
+    if(iter != g_recent_used_punctuation.end())
+    {
+        g_recent_used_punctuation.erase(iter);
+    }
+    g_recent_used_punctuation.push_back(strKey);
+    if(g_recent_used_punctuation.size() > MAX_DEFAULT_PUNCTUATION-1)
+    {
+        g_recent_used_punctuation.erase(g_recent_used_punctuation.begin());
+    }
 }
