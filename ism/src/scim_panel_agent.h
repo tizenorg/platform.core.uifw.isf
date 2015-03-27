@@ -78,6 +78,7 @@ typedef struct _ISE_INFO
 } ISE_INFO;
 
 typedef struct _HELPER_ISE_INFO {
+    std::vector<String> appid;
     std::vector<String> label;
     std::vector<uint32> is_enabled;
     std::vector<uint32> is_preinstalled;
@@ -1027,11 +1028,18 @@ public:
     Connection signal_connect_get_all_helper_ise_info    (PanelAgentSlotBoolHelperInfo     *slot);
 
     /**
-     * @brief Signal: Sets On/Off of installed helper ise by Application ID
+     * @brief Signal: Update "has_option" column of ime_info DB by Application ID
      *
-     * slot prototype: void enable_helper_ise (const String &, bool );
+     * slot prototype: void set_enable_helper_ise_info (const String &, bool );
      */
-    Connection signal_connect_enable_helper_ise          (PanelAgentSlotStringBool     *slot);
+    Connection signal_connect_set_has_option_helper_ise_info     (PanelAgentSlotStringBool     *slot);
+
+    /**
+     * @brief Signal: Update "is_enable" column of ime_info DB by Application ID
+     *
+     * slot prototype: void set_enable_helper_ise_info (const String &, bool );
+     */
+    Connection signal_connect_set_enable_helper_ise_info     (PanelAgentSlotStringBool     *slot);
 
     /**
      * @brief Signal: Get the ISE information according to UUID.

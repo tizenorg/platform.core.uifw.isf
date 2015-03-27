@@ -1253,6 +1253,16 @@ public:
      * void show_option_window (const HelperAgent *agent, int ic, const String &uuid);
      */
     Connection signal_connect_show_option_window                    (HelperAgentSlotVoid                *slot);
+
+    /**
+     * @brief Connect a slot to Helper check if the option is available.
+     *
+     * This signal is used to request ISE to reply if the option (setting) is available.
+     *
+     * The prototype of the slot is:
+     * void check_option_window (const HelperAgent *agent, uint32 &avail);
+     */
+    Connection signal_connect_check_option_window                   (HelperAgentSlotUintVoid            *slot);
 };
 
 /**  @} */

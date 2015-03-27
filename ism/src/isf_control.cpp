@@ -237,10 +237,11 @@ EAPI int isf_control_get_all_ime_info (ime_info_s **info)
         ime_info = (ime_info_s *)calloc (count, sizeof (ime_info_s));
         if (ime_info) {
             for (i = 0; i < count; i++) {
+                snprintf(ime_info[i].appid, sizeof (ime_info[i].appid), "%s", helper_info.appid[i].c_str());
                 snprintf(ime_info[i].label, sizeof (ime_info[i].label), "%s", helper_info.label[i].c_str());
                 ime_info[i].is_enabled = static_cast<bool>(helper_info.is_enabled[i]);
                 ime_info[i].is_preinstalled = static_cast<bool>(helper_info.is_preinstalled[i]);
-                ime_info[i].has_option = static_cast<bool>(helper_info.has_option[i]);
+                ime_info[i].has_option = static_cast<int>(helper_info.has_option[i]);
             }
             *info = ime_info;
         }
@@ -252,12 +253,32 @@ EAPI int isf_control_get_all_ime_info (ime_info_s **info)
     return count;
 }
 
+EAPI int isf_control_get_active_ime (char **appid)
+{
+    if (appid == NULL)
+        return -1;
+
+    String strUuid;
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.get_active_ise (strUuid);
+    imcontrol_client.close_connection ();
+
+    *appid = strUuid.length () ? strdup (strUuid.c_str ()) : NULL;
+
+    if (*appid == NULL)
+        return -1;
+    else
+        return strUuid.length ();
+}
+
 EAPI int isf_control_set_active_ime (const char *appid)
 {
     return isf_control_set_active_ise_by_uuid(appid);
 }
 
-EAPI int isf_control_enable_ime (const char *appid, bool is_enabled)
+EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled)
 {
     if (!appid)
         return -1;
@@ -265,7 +286,7 @@ EAPI int isf_control_enable_ime (const char *appid, bool is_enabled)
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
-    imcontrol_client.enable_helper_ise (appid, is_enabled);
+    imcontrol_client.set_enable_helper_ise_info (appid, is_enabled);
     imcontrol_client.close_connection ();
 
     return 0;

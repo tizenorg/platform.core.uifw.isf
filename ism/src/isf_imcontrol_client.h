@@ -58,7 +58,7 @@ public:
     void show_ise_option_window ();
 
     void get_all_helper_ise_info (HELPER_ISE_INFO &info);
-    void enable_helper_ise (const char *appid, bool is_enabled);
+    void set_enable_helper_ise_info (const char *appid, bool is_enabled);
 };
 
 }
