@@ -2075,32 +2075,20 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
             }
         }
 
+        HelperModule module;
         HelperInfo   info;
-        std::vector<ImeInfoDB> ime_info;
-        std::vector<ImeInfoDB>::iterator iter;
-        bool valid = false;
-
-        isf_db_select_all_ime_info (ime_info);
         for (i = 0; i < helper_list.size (); ++i) {
             install_modules.push_back (helper_list [i]);
             if (std::find (__load_engine_list.begin (), __load_engine_list.end (), helper_list [i]) == __load_engine_list.end ()) {
-                if (ime_info.size () > 0) {
-                    valid = false;
-                    for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
-                        if (iter->module_name.compare (helper_list [i]) == 0) {
-                            info.uuid = iter->appid;
-                            info.name = iter->label;
-                            info.icon = iter->iconpath;
-                            info.description = "";
-                            info.option = iter->options;
-                            valid = true;
+                if (module.load (helper_list [i]) && module.valid ()) {
+                    size_t num = module.number_of_helpers ();
+                    for (j = 0; j < num; ++j) {
+                        if (module.get_helper_info (j, info))
                             __helpers.push_back (std::make_pair (info, helper_list [i]));
-                        }
                     }
-                    if (valid) {
-                        __load_engine_list.push_back (helper_list [i]);
-                    }
+                    __load_engine_list.push_back (helper_list [i]);
                 }
+                module.unload ();
             }
         }
 
