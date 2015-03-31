@@ -128,8 +128,6 @@ HelperModule::get_helper_info (unsigned int idx, HelperInfo &info) const
     if (m_module.valid () && m_run_helper && appid.length () > 0) {
         std::vector<ImeInfoDB> ime_info;
         std::vector<ImeInfoDB>::iterator iter;
-        bool valid = false;
-        size_t i = 0;
 
         isf_db_select_all_ime_info (ime_info);
         for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
