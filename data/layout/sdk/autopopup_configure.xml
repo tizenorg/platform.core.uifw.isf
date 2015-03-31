@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <autopopup_configure>
-  <background_image_path>B09_bubble_bg.png</background_image_path>
+  <background_image_path>B09_bubble_bg_02.png</background_image_path>
   <background_color>
     <r>0</r>
     <g>128</g>
@@ -16,9 +16,9 @@
   </background_line_color>
   <background_padding>0</background_padding>
   <button_image_path>
-    <image button_state="normal">B09_btn_bubble.png</image>
-    <image button_state="pressed">B09_btn_bubble_press.png</image>
-    <image button_state="disabled">B09_btn_bubble.png</image>
+    <image button_state="normal"></image>
+    <image button_state="pressed">B09_bubble_popup_press.png</image>
+    <image button_state="disabled"></image>
   </button_image_path>
   <sw_button_style>0</sw_button_style>
   <button_size>
