@@ -5,7 +5,7 @@ Requires=enlightenment.service
 
 [Service]
 ExecStart=/usr/bin/scim -d
-Environment="DISPLAY=:0.0" "HOME=%h"
+Environment="DISPLAY=:0.0" "HOME=%h" "XDG_RUNTIME_DIR=/run/display"
 Nice=5
 Restart=always
 RestartSec=2
