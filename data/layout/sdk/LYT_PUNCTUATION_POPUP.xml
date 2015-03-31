@@ -9,7 +9,7 @@
   <row x="1" y="1">
     <key key_type="string">
       <label>
-        <rec>&amp;</rec>
+        <rec>RCENT1</rec>
       </label>
       <background_image>
         <rec button="normal">popup_line/popup_line_top_left.png</rec>
@@ -17,7 +17,7 @@
     </key>
     <key key_type="string">
       <label>
-        <rec>^</rec>
+        <rec>RCENT2</rec>
       </label>
       <background_image>
         <rec button="normal">popup_line/popup_line_top_center.png</rec>
@@ -25,7 +25,7 @@
     </key>
     <key key_type="string">
       <label>
-        <rec>%</rec>
+        <rec>RCENT3</rec>
       </label>
       <background_image>
         <rec button="normal">popup_line/popup_line_top_center.png</rec>
@@ -33,7 +33,7 @@
     </key>
     <key key_type="string">
       <label>
-        <rec>$</rec>
+        <rec>RCENT4</rec>
       </label>
       <background_image>
         <rec button="normal">popup_line/popup_line_top_center.png</rec>
@@ -41,7 +41,7 @@
     </key>
     <key key_type="string">
       <label>
-        <rec>#</rec>
+        <rec>RCENT5</rec>
       </label>
       <background_image>
         <rec button="normal">popup_line/popup_line_top_center.png</rec>

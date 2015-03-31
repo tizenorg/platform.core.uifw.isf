@@ -60,12 +60,14 @@ int gLastIC = 0;
 #endif
 
 extern void set_ise_imdata(const char * buf, size_t &len);
+static void init_recent_used_punctuation();
 static void update_recent_used_punctuation(const char *key_value);
+static sclboolean g_punctuation_popup_opened = FALSE;
 static sclboolean g_popup_opened = FALSE;
 static vector<string> g_recent_used_punctuation;
 const int MAX_DEFAULT_PUNCTUATION = 6;
 static string g_default_punctuation[MAX_DEFAULT_PUNCTUATION] = {"-", "@", "'", "!", "?", ","};
-static string g_current_punctuation[MAX_DEFAULT_PUNCTUATION-1] = {"&", "^", "%", "$", "#"};
+static string g_current_punctuation[MAX_DEFAULT_PUNCTUATION-1] = {"RCENT1", "RCENT2", "RCENT3", "RCENT4", "RCENT5"};
 
 KEYBOARD_STATE g_keyboard_state = {
     0,
@@ -476,13 +478,20 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
     }
     else if(noti_type == SCL_UINOTITYPE_POPUP_OPENING)
     {
-        g_popup_opened = TRUE;
         vector<string>::reverse_iterator iter = g_recent_used_punctuation.rbegin();
         int punc_pos = 0;
         for(; iter!=g_recent_used_punctuation.rend(); ++iter)
         {
             g_ui->set_string_substitution(g_current_punctuation[punc_pos].c_str(), iter->c_str());
             punc_pos++;
+        }
+    }
+    else if(noti_type == SCL_UINOTITYPE_POPUP_OPENED)
+    {
+        g_popup_opened = TRUE;
+        SclNotiPopupOpenedDesc *openedDesc = (SclNotiPopupOpenedDesc *)etc_info;
+        if(0 == strcmp(openedDesc->input_mode, "PUNCTUATION_POPUP")){
+            g_punctuation_popup_opened = TRUE;
         }
     }
 
@@ -509,13 +518,15 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                         ise_send_string(event_desc.key_value);
                     }
             }
-            const sclchar *input_mode = g_ui->get_input_mode();
-            if((strcmp(input_mode, "SYM_QTY_1")) || (strcmp(input_mode, "SYM_QTY_2"))){
+            if(!g_popup_opened){
+                const sclchar *input_mode = g_ui->get_input_mode();
+                if((0 == strcmp(input_mode, "SYM_QTY_1")) || (0 == strcmp(input_mode, "SYM_QTY_2"))){
+                    update_recent_used_punctuation(event_desc.key_value);
+                }
+            }else if(g_punctuation_popup_opened){
                 update_recent_used_punctuation(event_desc.key_value);
-            }
-            if(g_popup_opened){
-               update_recent_used_punctuation(event_desc.key_value);
-               g_popup_opened = FALSE;
+                g_punctuation_popup_opened = FALSE;
+                g_popup_opened = FALSE;
             }
             break;
         }
@@ -552,7 +563,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                         ise_send_event(event_desc.key_event, KEY_MASK_NULL);
                     }
                 }
-                if((strcmp(input_mode, "SYM_QTY_1") == 0) || (strcmp(input_mode, "SYM_QTY_2"))){
+                if((strcmp(input_mode, "SYM_QTY_1") == 0) || (0 == strcmp(input_mode, "SYM_QTY_2"))){
                     update_recent_used_punctuation(event_desc.key_value);
                 }
                 break;
@@ -899,14 +910,7 @@ ise_create()
         SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
         g_core.set_keyboard_size_hints(size_portrait, size_landscape);
     }
-
-    if(g_recent_used_punctuation.empty())
-    {
-        for(int i=0; i<MAX_DEFAULT_PUNCTUATION-1; ++i)
-        {
-            g_recent_used_punctuation.push_back(g_current_punctuation[MAX_DEFAULT_PUNCTUATION-2-i]);
-        }
-    }
+    init_recent_used_punctuation();
 }
 
 void
@@ -1057,6 +1061,19 @@ sclboolean ise_process_key_event(const char *key)
         return g_ui->process_key_event(key);
     }
     return FALSE;
+}
+
+static void init_recent_used_punctuation()
+{
+    if(g_recent_used_punctuation.empty())
+    {
+        g_recent_used_punctuation.push_back("#");
+        g_recent_used_punctuation.push_back("$");
+        g_recent_used_punctuation.push_back("%");
+        g_recent_used_punctuation.push_back("^");
+        g_recent_used_punctuation.push_back("&");
+    }
+
 }
 
 static void update_recent_used_punctuation(const char * key_value)
