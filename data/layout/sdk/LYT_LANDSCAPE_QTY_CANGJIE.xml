@@ -272,15 +272,10 @@
     </key>
   </row>
   <row x="16" sub_layout="DEFAULT" key_width="128">
-    <key button_type="selfish" key_type="modechange" popup_type="longpress_popup_once" label_type="QTY_?123" image_label_type="IMAGE_CUE" popup_offset_y="-224" width="128" hit_left="16">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="128" hit_left="16">
       <label>
         <rec>?123</rec>
       </label>
-      <image_label>
-        <rec button="normal">B09_icon_cue.png</rec>
-        <rec button="pressed">B09_icon_cue.png</rec>
-        <rec button="disabled">B09_icon_cue.png</rec>
-      </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
         <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
@@ -289,9 +284,6 @@
       <key_value>
         <rec>SYM_QTY_1</rec>
       </key_value>
-      <popup_input_mode_record>
-        <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
-      </popup_input_mode_record>
     </key>
     <key key_type="user" width="81">
       <image_label>
@@ -361,15 +353,10 @@
     </key>
   </row>
   <row x="16" sub_layout="URL" key_width="128">
-    <key button_type="selfish" key_type="modechange" popup_type="longpress_popup_once" label_type="QTY_?123" image_label_type="IMAGE_CUE" popup_offset_y="-224" hit_left="16">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
       <label>
         <rec>?123</rec>
       </label>
-      <image_label>
-        <rec button="normal">B09_icon_cue.png</rec>
-        <rec button="pressed">B09_icon_cue.png</rec>
-        <rec button="disabled">B09_icon_cue.png</rec>
-      </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
         <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
@@ -378,9 +365,6 @@
       <key_value>
         <rec>SYM_QTY_1</rec>
       </key_value>
-      <popup_input_mode_record>
-        <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
-      </popup_input_mode_record>
     </key>
     <key key_type="user" width="81">
       <image_label>
@@ -465,15 +449,10 @@
     </key>
   </row>
   <row x="16" sub_layout="EMAIL" key_width="128">
-    <key button_type="selfish" key_type="modechange" popup_type="longpress_popup_once" label_type="QTY_?123" image_label_type="IMAGE_CUE" popup_offset_y="-224" hit_left="16">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
       <label>
         <rec>?123</rec>
       </label>
-      <image_label>
-        <rec button="normal">B09_icon_cue.png</rec>
-        <rec button="pressed">B09_icon_cue.png</rec>
-        <rec button="disabled">B09_icon_cue.png</rec>
-      </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
         <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
@@ -482,9 +461,6 @@
       <key_value>
         <rec>SYM_QTY_1</rec>
       </key_value>
-      <popup_input_mode_record>
-        <popup_input_mode>EMOTICON_POPUP</popup_input_mode>
-      </popup_input_mode_record>
     </key>
     <key key_type="user" width="81">
       <image_label>
