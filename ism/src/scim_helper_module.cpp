@@ -46,11 +46,14 @@
 
 #include "scim_private.h"
 #include "scim.h"
+#include <scim_panel_common.h>
+#include "isf_query_utility.h"
 
 namespace scim {
 
 HelperModule::HelperModule (const String &name)
-    : m_number_of_helpers (0),
+    : appid (""),
+      m_number_of_helpers (0),
       m_get_helper_info (0),
       m_get_helper_lang (0),
       m_run_helper (0),
@@ -67,42 +70,32 @@ HelperModule::load (const String &name)
         if (!m_module.load (name, "Helper"))
             return false;
 
-        m_number_of_helpers =
-            (HelperModuleNumberOfHelpersFunc) m_module.symbol ("scim_helper_module_number_of_helpers");
+        appid = name;
 
-        m_get_helper_info =
-            (HelperModuleGetHelperInfoFunc) m_module.symbol ("scim_helper_module_get_helper_info");
-
-        m_get_helper_lang =
-            (HelperModuleGetHelperLangFunc) m_module.symbol ("scim_helper_module_get_helper_language");
 
         m_run_helper =
             (HelperModuleRunHelperFunc) m_module.symbol ("scim_helper_module_run_helper");
 
-        m_set_arg_info =
-            (HelperModuleSetArgInfoFunc) m_module.symbol ("scim_helper_module_set_arg_info");
-
-        m_set_path_info =
-            (HelperModuleSetPathInfoFunc) m_module.symbol ("scim_helper_module_set_path_info");
-
-        if (!m_number_of_helpers || !m_get_helper_info || !m_run_helper) {
+        if (!m_run_helper) {
             m_module.unload ();
+            appid = "";
             m_number_of_helpers = 0;
             m_get_helper_info = 0;
             m_get_helper_lang = 0;
             m_run_helper = 0;
+            m_set_arg_info = 0;
+            m_set_path_info = 0;
             return false;
-        }
-
-        if (m_set_path_info) {
-            m_set_path_info (m_module.get_path ().c_str ());
         }
     } catch (...) {
         m_module.unload ();
+        appid = "";
         m_number_of_helpers = 0;
         m_get_helper_info = 0;
         m_get_helper_lang = 0;
         m_run_helper = 0;
+        m_set_arg_info = 0;
+        m_set_path_info = 0;
         return false;
     }
 
@@ -119,36 +112,43 @@ bool
 HelperModule::valid () const
 {
     return (m_module.valid () &&
-            m_number_of_helpers &&
-            m_get_helper_info &&
-            m_run_helper &&
-            m_number_of_helpers () > 0);
+            appid.length () > 0 &&
+            m_run_helper);
 }
 
 unsigned int
 HelperModule::number_of_helpers () const
 {
-    if (m_module.valid () && m_number_of_helpers && m_get_helper_info && m_run_helper)
-        return m_number_of_helpers ();
-
-    return (unsigned int) 0;
+    return static_cast<unsigned int>(1);
 }
 
 bool
 HelperModule::get_helper_info (unsigned int idx, HelperInfo &info) const
 {
-    if (m_module.valid () && m_number_of_helpers && m_get_helper_info && m_run_helper)
-        return m_get_helper_info (idx, info);
+    if (m_module.valid () && m_run_helper && appid.length () > 0) {
+        std::vector<ImeInfoDB> ime_info;
+        std::vector<ImeInfoDB>::iterator iter;
+        bool valid = false;
+        size_t i = 0;
 
+        isf_db_select_all_ime_info (ime_info);
+        for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
+            if (iter->appid.compare(appid) == 0) {
+                info.uuid = iter->appid;
+                info.name = iter->label;
+                info.icon = iter->iconpath;
+                info.description = "";
+                info.option = iter->options;
+                return true;
+            }
+        }
+    }
     return false;
 }
 
 String
 HelperModule::get_helper_lang (unsigned int idx) const
 {
-    if (m_module.valid () && m_get_helper_lang)
-        return m_get_helper_lang (idx);
-
     return String("other");
 }
 
@@ -161,8 +161,7 @@ HelperModule::run_helper (const String &uuid, const ConfigPointer &config, const
 void
 HelperModule::set_arg_info (int argc, char *argv []) const
 {
-    if (m_module.valid () && m_set_arg_info)
-        m_set_arg_info (argc, argv);
+    return;
 }
 
 EAPI int scim_get_helper_module_list (std::vector <String> &mod_list)
