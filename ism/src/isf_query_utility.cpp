@@ -453,7 +453,7 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
             i++;
         }
         else if (i == 0 && firsttry) {
-            LOGD("sqlite3_step returned %d, empty DB", ret);
+            LOGD("sqlite3_step returned %d, mode=%d, empty DB", ret, mode);
             firsttry = false;
 
             sqlite3_reset(pStmt);
@@ -520,7 +520,7 @@ static int _db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
     } while (ret == SQLITE_ROW);
 
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGW("sqlite3_step returned %d, mode=%d, %s", ret, mode, sqlite3_errmsg(databaseInfo.pHandle));
     }
 
 out:
@@ -579,6 +579,46 @@ out:
 }
 
 /**
+ * @brief Gets the count of the same module name in ime_info table.
+ *
+ * @param module_name Module name
+ *
+ * @return the number of selected row.
+ */
+static int _db_select_count_by_module_name(const char *module_name)
+{
+    int ret = 0, i = 0;
+    sqlite3_stmt* pStmt = NULL;
+    static const char* pQuery = "SELECT COUNT(*) FROM ime_info WHERE mname = ?";
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        return 0;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 1, module_name, -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_ROW) {
+        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+    }
+    else {
+        i = sqlite3_column_int(pStmt, 0);
+    }
+
+out:
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
+    sqlite3_finalize(pStmt);
+    return i;
+}
+
+/**
  * @brief Update label data by appid in ime_info table.
  *
  * @param appid appid in ime_info table.
@@ -619,7 +659,7 @@ static int _db_update_label_by_appid(const char *appid, const char *label)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
@@ -675,7 +715,7 @@ static int _db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
@@ -731,7 +771,7 @@ static int _db_update_has_option_by_appid(const char *appid, bool has_option)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
@@ -854,8 +894,8 @@ static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
 
         ret = sqlite3_step(pStmt);
         if (ret != SQLITE_DONE) {
-            ISF_SAVE_LOG("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
-            LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+            ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+            LOGE("sqlite3_step returned %d, appid=%s, %s", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
             ret = SQLITE_ERROR;
             goto out;
         }
@@ -1099,6 +1139,8 @@ EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
         ret = _db_select_all_ime_info(ime_info);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
 
     return ret;
 }
@@ -1124,6 +1166,9 @@ EAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
         ret = _db_select_ime_info_by_appid(appid, pImeInfo);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
+
     return ret;
 }
 
@@ -1145,6 +1190,8 @@ EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Stri
         ret = _db_select_module_name_by_mode(mode, mname);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
 
     return ret;
 }
@@ -1167,6 +1214,8 @@ EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Stri
         ret = _db_select_module_path_by_mode(mode, mpath);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
 
     return ret;
 }
@@ -1192,6 +1241,34 @@ EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &a
         ret = _db_select_appids_by_pkgid(pkgid, appids);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
+
+    return ret;
+}
+
+/**
+ * @brief Gets the count of the same module name in ime_info table.
+ *
+ * @param module_name Module name
+ *
+ * @return the number of selected row.
+ */
+EAPI int isf_db_select_count_by_module_name(const char *module_name)
+{
+    int ret = 0;
+
+    if (!module_name) {
+        LOGW("module_name is null.");
+        return 0;
+    }
+
+    if (_db_connect() == 0) {
+        ret = _db_select_count_by_module_name(module_name);
+        _db_disconnect();
+    }
+    else
+        LOGW("failed");
 
     return ret;
 }
@@ -1207,10 +1284,14 @@ EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &a
 EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
 {
     int ret = 0;
+
     if (_db_connect() == 0) {
         ret = _db_update_label_by_appid(appid, label);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
+
     return ret;
 }
 
@@ -1225,10 +1306,14 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
 EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 {
     int ret = 0;
+
     if (_db_connect() == 0) {
         ret = _db_update_is_enabled_by_appid(appid, is_enabled);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
+
     return ret;
 }
 
@@ -1243,10 +1328,14 @@ EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
 {
     int ret = 0;
+
     if (_db_connect() == 0) {
         ret = _db_update_has_option_by_appid(appid, has_option);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
+
     return ret;
 }
 
@@ -1285,6 +1374,8 @@ EAPI int isf_db_insert_ime_info_by_pkgid(const char *pkgid)
 
         _db_disconnect();
     }
+    else
+        LOGW("failed");
 
     pkgmgrinfo_pkginfo_destroy_pkginfo(handle);
 
@@ -1311,6 +1402,8 @@ EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
         ret = _db_delete_ime_info_by_pkgid(pkgid);
         _db_disconnect();
     }
+    else
+        LOGW("failed");
 
     return ret;
 }

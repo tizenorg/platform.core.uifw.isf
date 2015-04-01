@@ -150,7 +150,7 @@ typedef void (*HelperModuleSetPathInfoFunc)       (const char *path);
 class EAPI HelperModule
 {
     Module                          m_module;
-    String                          appid;
+    String                          module_name;
 
     HelperModuleNumberOfHelpersFunc m_number_of_helpers;
     HelperModuleGetHelperInfoFunc   m_get_helper_info;

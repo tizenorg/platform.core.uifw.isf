@@ -100,12 +100,12 @@ scim_get_module_list (std::vector <String>& mod_list, const String& type)
     if (type.compare("Helper") == 0) {
         isf_db_select_module_name_by_mode(TOOLBAR_HELPER_MODE, mname);
         for (i = 0; i < mname.size(); i++)
-                mod_list.push_back(mname[i]);
+            mod_list.push_back(mname[i]);
     }
     else if (type.compare("IMEngine") == 0) {
         isf_db_select_module_name_by_mode(TOOLBAR_KEYBOARD_MODE, mname);
         for (i = 0; i < mname.size(); i++)
-                mod_list.push_back(mname[i]);
+            mod_list.push_back(mname[i]);
 
         struct stat sb;
         stat("/usr/lib/scim-1.0/1.4.0/IMEngine/socket.so", &sb);

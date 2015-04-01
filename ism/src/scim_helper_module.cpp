@@ -52,7 +52,7 @@
 namespace scim {
 
 HelperModule::HelperModule (const String &name)
-    : appid (""),
+    : module_name (""),
       m_number_of_helpers (0),
       m_get_helper_info (0),
       m_get_helper_lang (0),
@@ -70,15 +70,14 @@ HelperModule::load (const String &name)
         if (!m_module.load (name, "Helper"))
             return false;
 
-        appid = name;
-
+        module_name = name; // Module name is PkgID for Inhouse IME, "ise-web-helper-agent" for Web IME or AppID for Native IME.
 
         m_run_helper =
             (HelperModuleRunHelperFunc) m_module.symbol ("scim_helper_module_run_helper");
 
         if (!m_run_helper) {
             m_module.unload ();
-            appid = "";
+            module_name = "";
             m_number_of_helpers = 0;
             m_get_helper_info = 0;
             m_get_helper_lang = 0;
@@ -89,7 +88,7 @@ HelperModule::load (const String &name)
         }
     } catch (...) {
         m_module.unload ();
-        appid = "";
+        module_name = "";
         m_number_of_helpers = 0;
         m_get_helper_info = 0;
         m_get_helper_lang = 0;
@@ -112,26 +111,30 @@ bool
 HelperModule::valid () const
 {
     return (m_module.valid () &&
-            appid.length () > 0 &&
+            module_name.length () > 0 &&
             m_run_helper);
 }
 
 unsigned int
 HelperModule::number_of_helpers () const
 {
-    return static_cast<unsigned int>(1);
+    const char *web_ime_module_name = "ise-web-helper-agent";   // Only Web IME can have multiple helpers.
+    if (module_name.compare (web_ime_module_name) == 0) {
+        return static_cast<unsigned int>(isf_db_select_count_by_module_name (web_ime_module_name));
+    }
+
+    return 1u;
 }
 
 bool
 HelperModule::get_helper_info (unsigned int idx, HelperInfo &info) const
 {
-    if (m_module.valid () && m_run_helper && appid.length () > 0) {
-        std::vector<ImeInfoDB> ime_info;
-        std::vector<ImeInfoDB>::iterator iter;
+    if (m_module.valid () && m_run_helper && module_name.length () > 0) {
 
-        isf_db_select_all_ime_info (ime_info);
-        for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
-            if (iter->appid.compare(appid) == 0) {
+        std::vector<ImeInfoDB> ime_info_db;
+        isf_db_select_all_ime_info (ime_info_db);
+        for (std::vector<ImeInfoDB>::iterator iter = ime_info_db.begin (); iter != ime_info_db.end (); iter++) {
+            if (iter->module_name.compare (module_name) == 0) {
                 info.uuid = iter->appid;
                 info.name = iter->label;
                 info.icon = iter->iconpath;
