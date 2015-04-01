@@ -49,6 +49,8 @@
 
 #include "scim_private.h"
 #include "scim.h"
+#include <scim_panel_common.h>
+#include "isf_query_utility.h"
 
 EAPI scim::CommonLookupTable g_helper_candidate_table;
 
@@ -263,15 +265,25 @@ HelperAgent::open_connection (const HelperInfo &info,
     ISF_LOG ("scim_socket_open_connection () is successful.\n");
     ISF_SAVE_LOG ("scim_socket_open_connection successful\n");
 
+    bool match = false;
+    std::vector<ImeInfoDB> ime_info_db;
+    isf_db_select_all_ime_info (ime_info_db);
+    for (i = 0; i < (int)ime_info_db.size (); i++) {
+        if (ime_info_db[i].appid.compare (info.uuid) == 0) {
+            match = true;
+            break;
+        }
+    }
+
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (magic);
     m_impl->send.put_command (SCIM_TRANS_CMD_PANEL_REGISTER_HELPER);
     m_impl->send.put_data (info.uuid);
-    m_impl->send.put_data (info.name);
-    m_impl->send.put_data (info.icon);
+    m_impl->send.put_data (match? ime_info_db[i].label : info.name);
+    m_impl->send.put_data (match? ime_info_db[i].iconpath : info.icon);
     m_impl->send.put_data (info.description);
-    m_impl->send.put_data (info.option);
+    m_impl->send.put_data (match? ime_info_db[i].options : info.option);
 
     if (!m_impl->send.write_to_socket (m_impl->socket, magic)) {
         m_impl->socket.close ();
@@ -329,10 +341,10 @@ HelperAgent::open_connection (const HelperInfo &info,
     m_impl->send.put_data (magic);
     m_impl->send.put_command (SCIM_TRANS_CMD_PANEL_REGISTER_ACTIVE_HELPER);
     m_impl->send.put_data (info.uuid);
-    m_impl->send.put_data (info.name);
-    m_impl->send.put_data (info.icon);
+    m_impl->send.put_data (match? ime_info_db[i].label : info.name);
+    m_impl->send.put_data (match? ime_info_db[i].iconpath : info.icon);
     m_impl->send.put_data (info.description);
-    m_impl->send.put_data (info.option);
+    m_impl->send.put_data (match? ime_info_db[i].options : info.option);
 
     if (!m_impl->send.write_to_socket (m_impl->socket_active, magic)) {
         ISF_SAVE_LOG ("Helper_Active write_to_socket() failed\n");

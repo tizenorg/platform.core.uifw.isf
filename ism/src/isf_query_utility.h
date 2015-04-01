@@ -69,6 +69,7 @@ EAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
 EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname);
 EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath);
 EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids);
+EAPI int isf_db_select_count_by_module_name(const char *module_name);
 EAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
 EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled);
 EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option);
