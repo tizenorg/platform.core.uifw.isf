@@ -29,12 +29,13 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(tts)
-BuildRequires:  pkgconfig(security-server)
 BuildRequires:  pkgconfig(edbus)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
 BuildRequires:  efl-extension-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
+BuildRequires:  pkgconfig(cynara-client)
+BuildRequires:  pkgconfig(cynara-creds-socket)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
