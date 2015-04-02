@@ -65,8 +65,8 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "security-server.h"
-
+#include <cynara-client.h>
+#include <cynara-creds-socket.h>
 
 EAPI scim::CommonLookupTable g_isf_candidate_table;
 
@@ -185,6 +185,8 @@ struct IMControlStub {
 };
 
 static  int _id_count = -4;
+static bool cynara_init = false;
+static cynara *p_cynara = NULL;
 
 #define DEFAULT_CONTEXT_VALUE 0xfff
 
@@ -399,6 +401,7 @@ public:
     ~PanelAgentImpl ()
     {
         delete_ise_context_buffer ();
+        cynara_finish (p_cynara);
     }
 
     void delete_ise_context_buffer (void)
@@ -425,6 +428,16 @@ public:
            the helper manager process should be launched beforehand */
         if (m_helper_manager.get_connection_number() == -1)
             return false;
+
+        // Cynara init code
+        int ret;
+        ret = cynara_initialize (&p_cynara, NULL);
+        if (ret == CYNARA_API_SUCCESS) {
+            cynara_init = true;
+        } else {
+            ISF_SAVE_LOG ("cynara_initialize fail\n");
+            cynara_init = false;
+        }
 
         return m_socket_server.create (SocketAddress (m_socket_address));
     }
@@ -3759,29 +3772,60 @@ private:
         } else if (client_info.type == IMCONTROL_ACT_CLIENT) {
             socket_transaction_start ();
 
+            // Get client peer credential
+            char *clientSmack = NULL;
+            int ret;
+
+            if (cynara_init == true) {
+                ret =  cynara_creds_socket_get_client (client_id, CLIENT_METHOD_SMACK, &clientSmack);
+                if (ret != CYNARA_API_SUCCESS) {
+                    ISF_SAVE_LOG ("cynara creds socket get client fail\n");
+                    cynara_init = false;
+                }
+            }
+
+            char *uid = NULL;
+            if (cynara_init == true) {
+                ret =  cynara_creds_socket_get_user (client_id, USER_METHOD_UID, &uid);
+                if (ret != CYNARA_API_SUCCESS) {
+                    ISF_SAVE_LOG ("cynara creds socket get user fail\n");
+                    cynara_init = false;
+                }
+            }
+
+            /* Concept of session is service-specific. Might be empty string if service does not have such concept */
+            char *client_session= "";
+            bool cynara_access = false;
+
+            if (cynara_init == true) {
+                ISF_SAVE_LOG ("checking sockfd privilege by cynara...\n");
+                ret = cynara_check (p_cynara, clientSmack, client_session, uid, "http://tizen.org/privilege/imemanager");
+                if (ret == CYNARA_API_ACCESS_ALLOWED) {
+                    ISF_SAVE_LOG ("Access allowed!\n");
+                    cynara_access = true;
+                } else {
+                    ISF_SAVE_LOG ("Cynara access fail\n");
+                    cynara_access = false;
+                }
+            }
+
             while (m_recv_trans.get_command (cmd)) {
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    if ((cynara_init == true) && (cynara_access == true)) {
                         ISF_SAVE_LOG ("setting active ise\n");
                         set_active_ise_by_uuid (client_id);
+                    } else {
+                        ISF_SAVE_LOG ("Fail to setting active ise becuase of cynara check\n");
                     }
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    if ((cynara_init == true) && (cynara_access == true)) {
                         ISF_SAVE_LOG ("setting initial ise\n");
                         set_initial_ise_by_uuid (client_id);
+                    } else {
+                        ISF_SAVE_LOG ("Fail to setting active ise becuase of cynara check\n");
                     }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
@@ -3795,7 +3839,16 @@ private:
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL)
                     show_isf_panel (client_id);
             }
-
+            // Cleanup of cynara structure
+            if (client_session) {
+                free (client_session);
+            }
+            if (clientSmack) {
+                free (clientSmack);
+            }
+            if (uid) {
+                free (uid);
+            }
             socket_transaction_end ();
         }
     }
