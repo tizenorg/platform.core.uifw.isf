@@ -3769,9 +3769,9 @@ private:
                         SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
                     } else {
                         SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                        ISF_SAVE_LOG ("setting active ise\n");
+                        set_active_ise_by_uuid (client_id);
                     }
-                    ISF_SAVE_LOG ("setting active ise\n");
-                    set_active_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
                     ISF_SAVE_LOG ("checking sockfd privilege...\n");
@@ -3780,9 +3780,9 @@ private:
                         SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
                     } else {
                         SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                        ISF_SAVE_LOG ("setting initial ise\n");
+                        set_initial_ise_by_uuid (client_id);
                     }
-                    ISF_SAVE_LOG ("setting initial ise\n");
-                    set_initial_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
