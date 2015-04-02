@@ -57,9 +57,12 @@ pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
 
+if ISF_INSTALL_SYSTEMD_SCRIPT
+SYSTEMD_SCRIPT = scim.service
+endif
 # $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
 systemduserunitdir = /usr/lib/systemd/user
-systemduserunit_DATA = scim.service
+systemduserunit_DATA = $(SYSTEMD_SCRIPT)
 
 ACLOCAL_AMFLAGS = -I ism/m4
 
@@ -72,5 +75,7 @@ uninstall-local:
 	rm -rf @SCIM_MODULE_PATH@
 
 install-data-hook:
+if ISF_INSTALL_SYSTEMD_SCRIPT
 	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/default.target.wants
 	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/default.target.wants/scim.service
+endif

@@ -498,6 +498,11 @@ AC_ARG_ENABLE(multiwindow-support,
               enable_multiwindow_support=no,
               enable_multiwindow_support=yes)
 
+AC_ARG_ENABLE(lazy-launch,
+              [  --enable-lazy-launch      Launch ISF when focusing in entry],
+              enable_lazy_launch=yes,
+              enable_lazy_launch=no)
+
 if test "$have_x" = "yes"; then
   SCIM_BUILD_X11_UTILS=1
   enable_x11_utils=yes
@@ -648,6 +653,13 @@ fi
 AM_CONDITIONAL(HAVE_X,
                 [test "$have_x" = "yes"])
 
+if test "$enable_lazy_launch" = "yes"; then
+  AC_DEFINE(ENABLE_LAZY_LAUNCH,1,[Launch ISF when focusing in entry])
+  ISF_INSTALL_SYSTEMD_SCRIPT=0
+else
+  ISF_INSTALL_SYSTEMD_SCRIPT=1
+fi
+
 AM_CONDITIONAL(SCIM_LD_VERSION_SCRIPT,
                 [test "$enable_ld_version_script" = "yes"])
 
@@ -708,6 +720,9 @@ AM_CONDITIONAL(ISF_BUILD_MINICONTROL,
 AM_CONDITIONAL(ISF_BUILD_DB_UTIL,
                 [test "$ISF_HAS_DB_UTIL" = "yes"])
 
+AM_CONDITIONAL(ISF_INSTALL_SYSTEMD_SCRIPT,
+                [test "$enable_lazy_launch" = "no"])
+
 AC_SUBST(SCIM_BUILD_TESTS)
 AC_SUBST(SCIM_BUILD_CONFIG_SIMPLE)
 AC_SUBST(SCIM_BUILD_CONFIG_SOCKET)
@@ -725,6 +740,7 @@ AC_SUBST(ISF_BUILD_EFL_IMMODULE)
 AC_SUBST(ISF_BUILD_PANEL_EFL)
 AC_SUBST(ISF_BUILD_WITH_GCONF)
 AC_SUBST(ISF_BUILD_DB_UTIL)
+AC_SUBST(ISF_INSTALL_SYSTEMD_SCRIPT)
 
 ISF_BUILDING_DLL="-DISF_BUILDING_DLL"
 AC_SUBST(ISF_BUILDING_DLL)
@@ -818,5 +834,6 @@ Module options:
 
   Enable TrayIcon          $enable_tray_icon
   Enable MultiWindow       $enable_multiwindow_support
+  Enable LazyLaunch        $enable_lazy_launch
 ])
 

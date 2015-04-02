@@ -373,7 +373,6 @@ static IMEngineInstancePointer                          _fallback_instance;
 PanelClient                                             _panel_client;
 static int                                              _panel_client_id            = 0;
 
-static bool                                             _panel_initialized          = false;
 static int                                              _active_helper_option       = 0;
 
 static Ecore_Fd_Handler                                *_panel_iochannel_read_handler = 0;
@@ -1135,39 +1134,15 @@ imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout
     }
 }
 
-/* Public functions */
-/**
- * isf_imf_context_new
- *
- * This function will be called by Ecore IMF.
- * Create a instance of type EcoreIMFContextISF.
- *
- * Return value: A pointer to the newly created EcoreIMFContextISF instance
- */
-EAPI EcoreIMFContextISF *
-isf_imf_context_new (void)
+static void
+_scim_initialize (void)
 {
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-
-    int val;
-
-    EcoreIMFContextISF *context_scim = new EcoreIMFContextISF;
-    if (context_scim == NULL) {
-        std::cerr << "memory allocation failed in " << __FUNCTION__ << "\n";
-        return NULL;
-    }
-
-    if (_context_count == 0) {
-        _context_count = getpid () % 50000;
-    }
-    context_scim->id = _context_count++;
-
     if (!_scim_initialized) {
+        _scim_initialized = true;
         ecore_x_init (NULL);
         initialize ();
-        _scim_initialized = true;
         isf_imf_input_panel_init ();
-
+        int val;
         /* get autoperiod allow vconf value */
         if (vconf_get_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, &val) == 0) {
             if (val == EINA_TRUE)
@@ -1189,22 +1164,11 @@ isf_imf_context_new (void)
 
         vconf_notify_key_changed (VCONFKEY_ISF_INPUT_LANGUAGE, input_language_changed_cb, NULL);
     }
-
-    return context_scim;
 }
 
-/**
- * isf_imf_context_shutdown
- *
- * It will be called when the scim im module is unloaded by ecore. It will do some
- * cleanup job.
- */
-EAPI void
-isf_imf_context_shutdown (void)
+static void
+_scim_finalize (void)
 {
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-    ConfigBase::set (0);
-    _default_instance.reset();
     if (_scim_initialized) {
         _scim_initialized = false;
 
@@ -1220,6 +1184,52 @@ isf_imf_context_shutdown (void)
     }
 }
 
+/* Public functions */
+/**
+ * isf_imf_context_new
+ *
+ * This function will be called by Ecore IMF.
+ * Create a instance of type EcoreIMFContextISF.
+ *
+ * Return value: A pointer to the newly created EcoreIMFContextISF instance
+ */
+EAPI EcoreIMFContextISF *
+isf_imf_context_new (void)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    EcoreIMFContextISF *context_scim = new EcoreIMFContextISF;
+    if (context_scim == NULL) {
+        std::cerr << "memory allocation failed in " << __FUNCTION__ << "\n";
+        return NULL;
+    }
+
+    if (_context_count == 0) {
+        _context_count = getpid () % 50000;
+    }
+    context_scim->id = _context_count++;
+#if !(ENABLE_LAZY_LAUNCH)
+     _scim_initialize ();
+#endif
+    return context_scim;
+}
+
+/**
+ * isf_imf_context_shutdown
+ *
+ * It will be called when the scim im module is unloaded by ecore. It will do some
+ * cleanup job.
+ */
+EAPI void
+isf_imf_context_shutdown (void)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+    ConfigBase::set (0);
+    _default_instance.reset();
+    _scim_finalize ();
+
+}
+
 EAPI void
 isf_imf_context_add (Ecore_IMF_Context *ctx)
 {
@@ -1231,35 +1241,6 @@ isf_imf_context_add (Ecore_IMF_Context *ctx)
 
     context_scim->impl = NULL;
 
-    if (_backend.null ())
-        return;
-
-    IMEngineInstancePointer si;
-
-    // Use the default instance if "shared input method" mode is enabled.
-    if (_shared_input_method && !_default_instance.null ()) {
-        si = _default_instance;
-        SCIM_DEBUG_FRONTEND(2) << "use default instance: " << si->get_id () << " " << si->get_factory_uuid () << "\n";
-    }
-
-    // Not in "shared input method" mode, or no default instance, create an instance.
-    if (si.null ()) {
-        IMEngineFactoryPointer factory = _backend->get_default_factory (_language, "UTF-8");
-        if (factory.null ()) return;
-        si = factory->create_instance ("UTF-8", _instance_count++);
-        if (si.null ()) return;
-        LOGD ("create_instance: %s",si->get_factory_uuid ().c_str ());
-        attach_instance (si);
-        SCIM_DEBUG_FRONTEND(2) << "create new instance: " << si->get_id () << " " << si->get_factory_uuid () << "\n";
-    }
-
-    // If "shared input method" mode is enabled, and there is no default instance,
-    // then store this instance as default one.
-    if (_shared_input_method && _default_instance.null ()) {
-        SCIM_DEBUG_FRONTEND(2) << "update default instance.\n";
-        _default_instance = si;
-    }
-
     context_scim->ctx                       = ctx;
     context_scim->impl                      = new_ic_impl (context_scim);
     if (context_scim->impl == NULL) {
@@ -1267,7 +1248,6 @@ isf_imf_context_add (Ecore_IMF_Context *ctx)
         return;
     }
 
-    context_scim->impl->si                  = si;
     context_scim->impl->client_window       = 0;
     context_scim->impl->client_canvas       = NULL;
     context_scim->impl->preedit_caret       = 0;
@@ -1291,11 +1271,6 @@ isf_imf_context_add (Ecore_IMF_Context *ctx)
 
     if (_shared_input_method)
         context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
-
-    _panel_client.prepare (context_scim->id);
-    _panel_client.register_input_context (context_scim->id, si->get_factory_uuid ());
-    set_ic_capabilities (context_scim);
-    _panel_client.send ();
 
     SCIM_DEBUG_FRONTEND(2) << "input context created: id = " << context_scim->id << "\n";
 }
@@ -1461,10 +1436,9 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 
     if (!context_scim)
         return;
-
-    if (!_panel_initialized)
-        panel_initialize ();
-
+#if ENABLE_LAZY_LAUNCH
+    _scim_initialize ();
+#endif
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__<< "(" << context_scim->id << ")...\n";
 
     if (_focused_ic) {
@@ -2271,8 +2245,7 @@ EAPI void isf_imf_context_imdata_set (Ecore_IMF_Context *ctx, const void* data, 
 
     if (context_scim == NULL || data == NULL || length <= 0)
         return;
-
-    if (context_scim && context_scim->impl) {
+    if (context_scim->impl) {
         if (context_scim->impl->imdata)
             free (context_scim->impl->imdata);
 
@@ -3269,8 +3242,6 @@ panel_initialize (void)
             }
         }
 
-        _panel_initialized = true;
-
         return true;
     }
     std::cerr << "panel_initialize () failed!!!\n";
@@ -3282,7 +3253,6 @@ panel_finalize (void)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    _panel_initialized = false;
     _panel_client.close_connection ();
 
     if (_panel_iochannel_read_handler) {
@@ -3584,8 +3554,6 @@ finalize (void)
     ConfigBase::set (0);
     _focused_ic = NULL;
     _ic_list = NULL;
-
-    _scim_initialized = false;
 
     _panel_client.reset_signal_handler ();
     panel_finalize ();

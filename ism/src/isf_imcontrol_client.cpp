@@ -25,6 +25,8 @@
 #define Uses_SCIM_TRANSACTION
 #define Uses_ISF_IMCONTROL_CLIENT
 #define Uses_SCIM_PANEL_AGENT
+#define Uses_SCIM_IMENGINE_MODULE
+#define Uses_SCIM_HELPER_MODULE
 
 
 #include <string.h>
@@ -36,6 +38,88 @@ namespace scim
 {
 
 typedef Signal1<void, int> IMControlClientSignalVoid;
+
+static bool check_panel (const String &display)
+{
+    SocketAddress address;
+    SocketClient client;
+
+    uint32 magic;
+
+    address.set_address (scim_get_default_panel_socket_address (display));
+
+    if (!client.connect (address))
+        return false;
+
+    if (!scim_socket_open_connection (magic,
+        String ("ConnectionTester"),
+        String ("Panel"),
+        client,
+        1000)) {
+        return false;
+    }
+
+    return true;
+}
+
+static bool
+check_socket_frontend (void)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    SocketAddress address;
+    SocketClient client;
+
+    uint32 magic;
+
+    address.set_address (scim_get_default_socket_frontend_address ());
+
+    if (!client.connect (address)) {
+        std::cerr << "check_socket_frontend's connect () failed.\n";
+        return false;
+    }
+
+    if (!scim_socket_open_connection (magic,
+                                      String ("ConnectionTester"),
+                                      String ("SocketFrontEnd"),
+                                      client,
+                                      500)) {
+        std::cerr << "check_socket_frontend's scim_socket_open_connection () failed.\n";
+        return false;
+    }
+
+    return true;
+}
+
+static int
+launch_socket_frontend ()
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    std::vector<String>     engine_list;
+    std::vector<String>     helper_list;
+    std::vector<String>     load_engine_list;
+
+    std::vector<String>::iterator it;
+
+    std::cerr << "Launching a ISF daemon with Socket FrontEnd...\n";
+    //get modules list
+    scim_get_imengine_module_list (engine_list);
+    scim_get_helper_module_list (helper_list);
+
+    for (it = engine_list.begin (); it != engine_list.end (); it++) {
+        if (*it != "socket")
+            load_engine_list.push_back (*it);
+    }
+    for (it = helper_list.begin (); it != helper_list.end (); it++)
+        load_engine_list.push_back (*it);
+
+    return scim_launch (true,
+        "simple",
+        (load_engine_list.size () > 0 ? scim_combine_string_list (load_engine_list, ',') : "none"),
+        "socket",
+        NULL);
+}
 
 class IMControlClient::IMControlClientImpl
 {
@@ -57,7 +141,6 @@ public:
     }
 
     int open_connection (void) {
-        String config = "";
         const char *p = getenv ("DISPLAY");
         String display;
         if (p) display = String (p);
@@ -75,10 +158,12 @@ public:
             ret2 = m_socket_panel2imclient.connect (addr);
             if (!ret) {
                 scim_usleep (100000);
-                /* Do not launch panel process here, let the SocketFrontend to create panel process */
-                /*
-                scim_launch_panel (true, config, display, NULL);
-                */
+#if ENABLE_LAZY_LAUNCH
+                if (!check_socket_frontend ())
+                    launch_socket_frontend ();
+                if (!check_panel (display))
+                    scim_launch_panel (true, "socket", display, NULL);
+#endif
                 for (int i = 0; i < 200; ++i) {
                     if (m_socket_imclient2panel.connect (addr)) {
                         ret = true;
