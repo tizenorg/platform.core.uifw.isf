@@ -65,8 +65,8 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "security-server.h"
-
+#include <cynara-client.h>
+#include <cynara-creds-socket.h>
 
 EAPI scim::CommonLookupTable g_isf_candidate_table;
 
@@ -3759,29 +3759,55 @@ private:
         } else if (client_info.type == IMCONTROL_ACT_CLIENT) {
             socket_transaction_start ();
 
+            // Cynara init code
+            int ret;
+            cynara *p_cynara;
+            ret = cynara_initialize (&p_cynara, NULL);
+            if (ret != CYNARA_API_SUCCESS) {
+                ISF_SAVE_LOG ("cynara_initialize fail\n");
+            }
+
+            // Get client peer credential
+            char *clientSmack;
+            ret =  cynara_creds_socket_get_client (client_id, CLIENT_METHOD_SMACK, &clientSmack);
+
+            if (ret != CYNARA_API_SUCCESS) {
+                ISF_SAVE_LOG ("cynara creds socket get client fail\n");
+            }
+
+            char *uid;
+            ret =  cynara_creds_socket_get_user (client_id, USER_METHOD_UID, &uid);
+            if (ret != CYNARA_API_SUCCESS) {
+                ISF_SAVE_LOG ("cynara creds socket get user fail\n");
+            }
+
+            /* Concept of session is service-specific. Might be empty string if service does not have such concept
+            */
+            char *client_session="";
+
             while (m_recv_trans.get_command (cmd)) {
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    ISF_SAVE_LOG ("checking sockfd privilege by cynara...\n");
+                    int ret = cynara_check (p_cynara, clientSmack, client_session, uid, "http://tizen.org/privilege/imemanager");
+                    if (ret == CYNARA_API_ACCESS_ALLOWED) {
+                        ISF_SAVE_LOG ("Access allowed by checking cynara");
                         ISF_SAVE_LOG ("setting active ise\n");
                         set_active_ise_by_uuid (client_id);
+                    } else {
+                        ISF_SAVE_LOG ("Access denied!! by checking cynara");
                     }
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
+                    ISF_SAVE_LOG ("checking sockfd privilege by cynara...\n");
+                    int ret = cynara_check (p_cynara, clientSmack, client_session, uid, "http://tizen.org/privilege/imemanager");
+                    if (ret == CYNARA_API_ACCESS_ALLOWED) {
+                        ISF_SAVE_LOG ("Access allowed by checking cynara");
                         ISF_SAVE_LOG ("setting initial ise\n");
                         set_initial_ise_by_uuid (client_id);
+                    } else {
+                        ISF_SAVE_LOG ("Access denied!! by checking cynara");
                     }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
@@ -3795,6 +3821,11 @@ private:
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL)
                     show_isf_panel (client_id);
             }
+            // Cleanup of cynara structure
+            free (clientSmack);
+            free (client_session);
+            free (uid);
+            cynara_finish (p_cynara);
 
             socket_transaction_end ();
         }
