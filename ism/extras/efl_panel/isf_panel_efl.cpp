@@ -4206,7 +4206,7 @@ static void slot_hide_candidate_table (void)
 
     if (ui_candidate_can_be_hide ()) {
         _candidate_show_requested = false;
-        LOGD ("setting _show_can didate_requested to FALSE");
+        LOGD ("setting _show_candidate_requested to FALSE");
     }
 }
 
@@ -4267,7 +4267,7 @@ static void slot_update_preedit_caret (int caret)
 }
 
 /**
- * @brief Set hightlight text color and background color for edje object.
+ * @brief Set highlight text color and background color for edje object.
  *
  * @param item The edje object pointer.
  * @param nForeGround The text color.
@@ -5113,7 +5113,7 @@ static void slot_show_ise (void)
 
     /* If the current toolbar mode is not HELPER_MODE, do not proceed */
     if (_panel_agent->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
-        LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning",
+        LOGD ("Current toolbar mode should be TOOLBAR_HELPER_MODE but is %d, returning",
             _panel_agent->get_current_toolbar_mode ());
         return;
     }
