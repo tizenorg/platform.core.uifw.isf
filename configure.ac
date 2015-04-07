@@ -309,6 +309,9 @@ PKG_CHECK_MODULES(PACKAGE_MANAGER, [capi-appfw-package-manager])
 # Check App Control
 PKG_CHECK_MODULES(APP_CONTROL, [capi-appfw-app-control])
 
+# Check appfw library
+PKG_CHECK_MODULES(APPFW, [capi-appfw-application])
+
 # Check core package manager
 PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info],
                   [ISF_HAS_PKGMGR_INFO=yes],
@@ -711,6 +714,9 @@ AM_CONDITIONAL(ISF_BUILD_DB_UTIL,
 AM_CONDITIONAL(ISF_INSTALL_SYSTEMD_SCRIPT,
                 [test "$enable_lazy_launch" = "no"])
 
+AM_CONDITIONAL(ISF_BUILD_KBD_MODE_CHANGER,
+                [test "$ISF_HAS_ECOREX" = "yes"])
+
 AC_SUBST(SCIM_BUILD_TESTS)
 AC_SUBST(SCIM_BUILD_CONFIG_SIMPLE)
 AC_SUBST(SCIM_BUILD_CONFIG_SOCKET)
@@ -729,6 +735,7 @@ AC_SUBST(ISF_BUILD_PANEL_EFL)
 AC_SUBST(ISF_BUILD_WITH_GCONF)
 AC_SUBST(ISF_BUILD_DB_UTIL)
 AC_SUBST(ISF_INSTALL_SYSTEMD_SCRIPT)
+AC_SUBST(ISF_BUILD_KBD_MODE_CHANGER)
 
 ISF_BUILDING_DLL="-DISF_BUILDING_DLL"
 AC_SUBST(ISF_BUILDING_DLL)
@@ -775,6 +782,7 @@ AC_CONFIG_FILES([Makefile
                  ism/extras/gtk2_immodule/Makefile
                  ism/extras/efl_immodule/Makefile
                  ism/extras/efl_panel/Makefile
+                 ism/extras/kbd_mode_changer/Makefile
                  ism/extras/efl_wsm/Makefile
                  ism/extras/efl_wsc/Makefile
                  ism/demos/Makefile

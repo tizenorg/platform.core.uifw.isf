@@ -33,11 +33,13 @@ BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
 BuildRequires:  pkgconfig(db-util)
 BuildRequires:  pkgconfig(capi-appfw-app-control)
+BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 
 %define _optexecdir /opt/usr/devel/usr/bin/
+%define APP_PREFIX %{_prefix}/apps/org.tizen.isf-kbd-mode-changer/bin/
 
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
@@ -49,6 +51,16 @@ Requires:   %{name} = %{version}-%{release}
 
 %description devel
 This package contains ISF header files for ISE development.
+
+%if %{without wayland}
+%package -n org.tizen.isf-kbd-mode-changer
+Summary: isf-kbd-mode-changer
+Group: Application
+Requires: %{name} = %{version}-%{release}
+
+%description -n org.tizen.isf-kbd-mode-changer
+isf-kbd-mode-changer
+%endif
 
 %prep
 %setup -q
@@ -177,3 +189,13 @@ cat scim.lang > isf.lang
 %{_libdir}/libscim-*.so
 %{_libdir}/pkgconfig/isf.pc
 %{_libdir}/pkgconfig/scim.pc
+
+%if %{without wayland}
+%post -n org.tizen.isf-kbd-mode-changer
+mkdir -p /usr/apps/org.tizen.isf-kbd-mode-changer
+
+%files -n org.tizen.isf-kbd-mode-changer
+%manifest org.tizen.isf-kbd-mode-changer.manifest
+/usr/share/packages/org.tizen.isf-kbd-mode-changer.xml
+%{APP_PREFIX}/*
+%endif
