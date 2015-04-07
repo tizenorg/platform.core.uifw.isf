@@ -1808,15 +1808,7 @@ public:
         if (m_recv_trans.get_data (client) && m_recv_trans.get_data (context) && m_recv_trans.get_data (&data, len)) {
             SCIM_DEBUG_MAIN(4) << __func__ << " (client:" << client << " context:" << context << ")\n";
             if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
-                int    focused_client;
-                uint32 focused_context;
-                get_focused_context (focused_client, focused_context);
-                if (focused_client == -1 && m_active_client_id != -1) {
-                    focused_client  = m_panel_client_map[m_active_client_id];
-                    focused_context = 0;
-                }
-
-                uint32 ctx = get_helper_ic (focused_client, focused_context);
+                uint32 ctx = get_helper_ic (client, context);
                 ret = show_helper (m_current_helper_uuid, data, len, ctx);
             }
             /* Save ISE context for ISE panel re-showing */
