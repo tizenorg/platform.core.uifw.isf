@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tizen Remote Input</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <script src="ajaxCaller.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="remote_input.css" type="text/css"/>
+    <script src="util.js" type="text/javascript"> </script>
+    <script src="jquery-2.0.2.min.js"></script>
+<script type="text/javascript" src="web-helper-client.js"></script>
+
+</head>
+
+<body id="by">
+<script>
+
+
+//for key_input
+            // Key definition
+        var KEY_BACKSPACE = 8;
+        var KEY_ENTER = 13;
+        var KEY_SPACE = 32;
+        var KEY_ESCAPE = 27;
+        var MODE_CHANGE_BOUNDARY_VALUE = 15;
+
+        var KEY_MENU = 10001;
+        var KEY_HOME = 10002;
+        var KEY_BACK = 10003;
+
+        var MOUSE_CLICK = 555;
+
+        // Callback incremental index
+        var id_num = 0;
+
+        var TV_KEY_POWER = 124;
+        var TV_KEY_SWITCHMODE = 235;
+        var TV_KEY_MENU = 179;
+        var TV_KEY_UP = 111;
+        var TV_KEY_INFO = 69;
+        var TV_KEY_LEFT = 113;
+        var TV_KEY_SELECT = 36;
+        var TV_KEY_RIGHT = 114;
+        var TV_KEY_BACK = 166;
+        var TV_KEY_DOWN = 116;
+        var TV_KEY_EXIT = 182;
+        var TV_KEY_VOL_UP = 123;
+        var TV_KEY_MUTE = 121;
+        var TV_KEY_CHAN_UP = 112;
+        var TV_KEY_VOL_DOWN = 122;
+        var TV_KEY_CHAN_LIST = 68;
+        var TV_KEY_CHAN_DOWN = 117;
+
+        var multi_touched = 0;
+        var touch_started_x = 0;
+        var touch_started_y = 0;
+        var touch_contentarea_Pressed=0;
+        var touch_contentarea_Moved=0;
+        var touch_contentarea_pre_x=0;
+        var touch_contentarea_pre_y=0;
+        var air_disabled = 0;
+
+
+// for key_input
+
+        // Mouse prior coordinate, click flag
+        var pre_x = 0;
+        var pre_y = 0;
+        var touch_Pressed=0;
+        var touch_Moved=0;
+        var scroll_pre_x = 0;
+        var scroll_pre_y = 0;
+
+        // Callback incremental index
+        var id_num = 0;
+        var count = 0;
+
+        // Flush timer
+        var flush_timeout;
+        var cal_flush_timeout;
+        var CAL_FLUSH_TIMEOUT = 3000;
+        var FLUSH_TIMEOUT = 3000;
+        var FLUSH_ENTER_TIMEOUT = 50;
+        var click_start_time = 0;
+        //var flick_time = 0;
+        // Backup pre string
+        var pre_str = "";
+        var pre_pre_str = "";
+        var TMP_CHAR = " ";
+        var TMP_TIMESTAMP = 0;
+        var EMPTY_CHECKER_TIMEOUT = 10;
+        var latest_typed_timestamp = 0;
+        var cur_air_mode = 0;
+        var cur_reset_mode = 0;
+        var cur_touch_mode = 0;
+        var forceEnable_air = 0;
+        var touchmove_delta;
+        var air_delta;
+        var gry_basic_a = -0.043;
+        var gry_basic_b = 0.005;
+        var gry_basic_g = -0.002;
+        var gry_sum_a = 0;
+        var gry_sum_b = 0;
+        var gry_sum_g = 0;
+        var gry_sum_count = 0;
+        var progress = ["",".","..","...","...."];
+        var progress_count=0;
+        var cur_mode = 0;
+
+
+
+        var WebHelperClientHandler = {
+            onInit : function () {
+                WebHelperClient.log("ON INIT");
+            }
+        };
+
+        WebHelperClient.initialize(WebHelperClientHandler);
+
+        function cbAjax(text, headers, callingContext){
+            id_num++;
+            return true;
+        }
+        function sendKeyEvent(keyCode){
+            event.preventDefault();
+                WebHelperClient.sendKeyEvent(keyCode);
+        }
+        function sendMouse_KeyEvent(mouseCode) {
+            event.preventDefault();
+            if (event.touches.length < 2) {
+                WebHelperClient.sendMouse_KeyEvent(mouseCode);
+            }
+        }
+        function sendMouse_MoveEvent(coordinate) {
+            event.preventDefault();
+            if (event.touches.length < 2) {
+                WebHelperClient.log(coordinate);
+                //alert(coordinate);
+                //console.log(coordinate);
+                WebHelperClient.sendMouse_MoveEvent(coordinate);
+            }
+        }
+
+        function sendWheel_MoveEvent(coordinate) {
+            event.preventDefault();
+            if (event.touches.length < 2) {
+                WebHelperClient.sendWheel_MoveEvent(coordinate);
+            }
+        }
+        function sendAir_Input(coordinate) {
+            event.preventDefault();
+            //if (event.touches.length < 2) {
+                WebHelperClient.sendAir_Input(coordinate);
+            //}
+        }
+
+
+        function removeTmpChar(str){
+            if (TMP_CHAR.length < 1) return;
+            if (str.length >= TMP_CHAR.length) {
+                str = str.substring (TMP_CHAR.length);
+            }
+            return str;
+        }
+        function sendPreeditStr(str){
+            str = removeTmpChar(str);
+            event.preventDefault();
+            WebHelperClient.updatePreeditString(str);
+        }
+
+        function sendCommitStr(str){
+            str = removeTmpChar(str);
+            event.preventDefault();
+            WebHelperClient.commitString(str);
+        }
+        function inputModeChanged(from, to) {
+                event.preventDefault();
+                var from_div = document.getElementById(from);
+                from_div.style.display = "none";
+                var to_div = document.getElementById(to);
+                to_div.style.display = "block";
+            }
+        function sendFlushCurStr(){
+            var entry = document.getElementById( "entry" );
+            var str = entry.value;
+            if(str.length > 0){
+                entry.value = TMP_CHAR;
+                pre_str = "";
+                pre_pre_str = "";
+                sendCommitStr (str)
+                window.clearInterval(flush_timeout);
+            }
+        }
+        function show_keypad(){
+            var entry = document.getElementById( "entry" );
+            entry.focus();
+            Android.showKeyboard();
+        }
+        function hide_keypad(){
+            var entry = document.getElementById( "entry" );
+            entry.blur();
+            Android.hideKeyboard();
+            setTimeout(function(){
+                window.scrollTo(0,1);
+                var entry = document.getElementById( "entry" );
+                entry.focus();
+               entry.value = TMP_CHAR;
+            }, 300);
+        }
+        function imageModeChanged(image, object) {
+            //event.preventDefault();
+            var bt = document.getElementById(object);
+            bt.style.background = "url(imgs/" + image + ")";
+            bt.style.backgroundRepeat = "no-repeat";
+            bt.style.backgroundSize = "auto 100%";
+            bt.style.backgroundPosition = "center top";
+            bt = document.getElementById((object+"2"));
+            bt.style.background = "url(imgs/" + image + ")";
+            bt.style.backgroundRepeat = "no-repeat";
+            bt.style.backgroundSize = "auto 100%";
+            bt.style.backgroundPosition = "center top";
+        }
+
+        function home_icon_add(title){
+            var home_page_uri = "http://moakey.com/tizen_tv/list.php";
+            var home_icon_uri = "http://" + document.domain +":8182/shortcut_icon.png";
+
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
+            var UserAgent = navigator.userAgent.toLowerCase();
+
+            if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
+                alert('Add the ' + title +'shortCut icon');
+                var home_icon_add_frame=document.getElementById("home_icon_add_frame");
+                    home_icon_add_frame.src=naver_UrlScheme;
+            }else{
+                alert("Not surpport in iOS, Tizen ");
+            }
+        }
+        function make_calibration(gry_a, gry_b, gry_g) {
+            gry_sum_a +=gry_a;
+            gry_sum_b +=gry_b;
+            gry_sum_g +=gry_g;
+            gry_sum_count++;
+            gry_basic_a = (gry_sum_a/gry_sum_count).toFixed(3);
+            gry_basic_b = (gry_sum_b/gry_sum_count).toFixed(3);
+            gry_basic_g = (gry_sum_g/gry_sum_count).toFixed(3);
+            if (gry_sum_count%4==0){
+                air_click_area.innerHTML="Calibrating" + progress[progress_count];
+                progress_count++;
+                if(progress_count >= 5){
+                    progress_count = 0;
+                }
+            }
+           // air_click_area.innerHTML="a:"+gry_basic_a + " ,b: " + gry_basic_b + ", g:" + gry_basic_g;
+        }
+
+        function get_gyro_calibration(event) {
+            event.preventDefault();
+            var r = event.rotationRate;
+            if(r!=null) {
+                make_calibration(r.alpha, r.beta, r.gamma);
+            }
+        }
+
+        function gyro_event_listener(event) {
+
+            event.preventDefault();
+            var x = event.accelerationIncludingGravity.x;
+            var y = event.accelerationIncludingGravity.y;
+            var z = event.accelerationIncludingGravity.z;
+            var r = event.rotationRate;
+            var data;
+            /*
+            gry_basic_a = x;
+            gry_basic_b = y;
+            gry_basic_g = z;
+            */
+
+                var gyro_a = r.alpha - gry_basic_a;
+                var gyro_b = r.beta - gry_basic_b;
+                var gyro_g = r.gamma - gry_basic_g;
+                //var acc_x = x*10; //for libMoveaEngine 
+                //var acc_y = y*10;
+                //var acc_z = z*10;
+                //var acc_x = x; 
+                //var acc_y = y;
+                //var acc_z = z;
+
+                var UserAgent = navigator.userAgent.toLowerCase();
+                if(UserAgent.indexOf("android") != -1 ) {
+                    gyro_a *=100;
+                    gyro_b *=100;
+                    gyro_g *=100;
+                }
+                /*
+                var xz_force = Math.sqrt(x * x + z * z);
+                var x_sin = x / xz_force;
+                var z_sin = z / xz_force;
+                var x_0 = z_sin * gyro_g;
+                var y_0 = z_sin * gyro_a;
+                var x_1 = -x_sin * gyro_a;
+                var y_1 = x_sin * gyro_g
+
+                var x_offset = (- x_sin * gyro_a - z_sin * gyro_g);
+                var y_offset = (x_sin * gyro_g - z_sin * gyro_a);
+                air_delta = parseInt(Math.sqrt(x_offset*x_offset + y_offset*y_offset));
+                */
+                /*
+                if (air_delta >= 10){
+                    air_disabled = 0;
+                }
+                */
+            if((x!=null || y!=null || z!=null || r!=null) && (air_disabled == 0)) {
+
+                //data = parseInt(x_offset).toString() + "," + parseInt(y_offset).toString();
+               // data = parseInt(x_0).toString() + "," + parseInt(y_0).toString() + "," + parseInt(x_1).toString() + "," + parseInt(y_1).toString();
+
+/*
+               if(UserAgent.indexOf("iphone") != -1){
+                    //data = parseInt(x_offset*(-1)).toString() + "," + parseInt(y_offset*(-1)).toString();
+                }
+                */
+                data = x.toFixed(3).toString() + "," + y.toFixed(3).toString() + "," + z.toFixed(3).toString() + "," + gyro_a.toFixed(3).toString() + "," + gyro_b.toFixed(3).toString() + "," + gyro_g.toFixed(3).toString() + ",";
+                //data = acc_x.toFixed(4).toString() + "," + acc_y.toFixed(4).toString() + "," + acc_z.toFixed(4).toString() + "," + gyro_a.toFixed(4).toString() + "," + gyro_b.toFixed(4).toString() + "," + gyro_g.toFixed(4).toString() + ",";
+                //data = acc_x.toFixed(4) + "," + acc_y.toFixed(4) + "," + acc_z.toFixed(4) + "," + gyro_a.toFixed(4) + "," + gyro_b.toFixed(4) + "," + gyro_g.toFixed(4) + ",";
+                sendAir_Input(data);
+                //air_click_area.innerHTML=data;
+            }
+        }
+        function Enable_calibration(checker){
+            if (checker == true){
+                imageModeChanged("reset_bt.png","reset_bt");
+                cur_reset_mode = 1;
+                window.addEventListener('devicemotion', get_gyro_calibration);
+            }
+            else{
+                imageModeChanged("reset_bt_pressed.png","reset_bt");
+                window.removeEventListener('devicemotion', get_gyro_calibration);
+                cur_reset_mode = 0;
+                air_click_area.innerHTML=""
+            }
+        }
+
+        function DisableMode(mode)
+        {
+            cur_mode = 0;
+
+            if (mode == "a")
+            {
+                imageModeChanged("a_bt_pressed.png","type_a");
+                if(window.DeviceMotionEvent) {
+                    window.removeEventListener('devicemotion', gyro_event_listener);
+                    //forceEnable_air=0;
+                    air_click_area.innerHTML="";
+
+                }
+            }
+            else if(mode =="b")
+            {
+                imageModeChanged("b_bt_pressed.png","type_b");
+                if(window.DeviceMotionEvent) {
+                    window.removeEventListener('devicemotion', gyro_event_listener);
+                    //forceEnable_air=0;
+                    air_click_area.innerHTML="";
+                }
+            }
+            else if (mode =="c")
+            {
+                imageModeChanged("c_bt_pressed.png","type_c");
+            }
+        }
+        function EnableMode(mode)
+        {
+            cur_mode = mode;
+
+            if (mode == "a")
+            {
+                imageModeChanged("a_bt.png","type_a");
+                imageModeChanged("b_bt_pressed.png","type_b");
+                imageModeChanged("c_bt_pressed.png","type_c");
+                //cur_air_mode = 1;
+                // Check for support for DeviceMotion events
+                  if(window.DeviceMotionEvent) {
+                      window.addEventListener('devicemotion', gyro_event_listener);
+                      forceEnable_air = 1;
+                      air_click_area.innerHTML="click";
+                  }
+            }
+            else if(mode =="b")
+            {
+                imageModeChanged("b_bt.png","type_b");
+                imageModeChanged("a_bt_pressed.png","type_a");
+                imageModeChanged("c_bt_pressed.png","type_c");
+                if(window.DeviceMotionEvent) {
+                    window.addEventListener('devicemotion', gyro_event_listener);
+                    forceEnable_air = 1;
+                    air_click_area.innerHTML="click";
+
+                }
+            }
+            else if (mode =="c")
+            {
+                imageModeChanged("c_bt.png","type_c");
+                imageModeChanged("a_bt_pressed.png","type_a");
+                imageModeChanged("b_bt_pressed.png","type_b");
+                if(window.DeviceMotionEvent) {
+                    window.removeEventListener('devicemotion', gyro_event_listener);
+                    forceEnable_air = 0;
+                }
+            }
+        }
+
+        function EnableAirinput(checker){
+            if (checker == true){
+                imageModeChanged("air_bt.png","air_input_mode");
+                cur_air_mode = 1;
+              // Check for support for DeviceMotion events
+                if(window.DeviceMotionEvent) {
+                    window.addEventListener('devicemotion', gyro_event_listener);
+                    forceEnable_air = 1;
+                }
+            }
+            else{
+                imageModeChanged("air_bt_pressed.png","air_input_mode");
+                cur_air_mode = 0;
+                if(window.DeviceMotionEvent) {
+                    window.removeEventListener('devicemotion', gyro_event_listener);
+                    forceEnable_air=0;
+                }
+            }
+        }
+
+        function sendevent(form){
+            //alert(form);
+            if (form == "sys_btn_modechange") {
+                inputModeChanged("tvmode", "keymode");
+            }
+            else if (form == "sys_btn_home"){
+                sendKeyEvent(KEY_HOME);
+            }
+            else if (form == "sys_btn_back"){
+                sendKeyEvent(KEY_BACK);
+            }
+            else if (form == "sys_btn_modechange2"){
+                inputModeChanged("keymode", "tvmode");
+            }
+            else if (form == "sys_btn_home2"){
+                sendKeyEvent(KEY_HOME);
+            }
+            else if (form == "sys_btn_back2"){
+                sendKeyEvent(KEY_BACK);
+            }
+            else if (form == "bt_power"){
+                sendKeyEvent(TV_KEY_POWER);
+            }
+            else if (form == "bt_switchmode"){
+                sendKeyEvent(TV_KEY_SWITCHMODE);
+            }
+            else if (form == "bt_menu"){
+                sendKeyEvent(KEY_MENU);
+            }
+            else if (form == "bt_info"){
+                sendKeyEvent(TV_KEY_INFO);
+            }
+            else if (form == "bt_select"){
+                sendKeyEvent(TV_KEY_SELECT);
+            }
+            else if (form == "bt_back"){
+                sendKeyEvent(TV_KEY_BACK);
+            }
+            else if (form == "bt_exit"){
+                sendKeyEvent(TV_KEY_EXIT);
+            }
+            else if (form == "bt_volume_up"){
+                sendKeyEvent(TV_KEY_VOL_UP);
+            }
+            else if (form == "bt_mute"){
+                sendKeyEvent(TV_KEY_MUTE);
+            }
+            else if (form == "bt_channel_up"){
+                sendKeyEvent(TV_KEY_CHAN_UP);
+            }
+            else if (form == "bt_volume_down"){
+                sendKeyEvent(TV_KEY_VOL_DOWN);
+            }
+            else if (form == "bt_channel_list"){
+                sendKeyEvent(TV_KEY_CHAN_LIST);
+            }
+            else if (form == "bt_channel_down"){
+                sendKeyEvent(TV_KEY_CHAN_DOWN);
+            }
+            else if (form == "type_a" || form == "type_b" || form == "type_c"||form == "type_a2" || form == "type_b2" || form == "type_c2"){
+                if (cur_mode != form.charAt(5))
+                    {
+                    EnableMode(form.charAt(5));
+                    }
+                else
+                    {
+                    DisableMode(form.charAt(5));
+                    }
+            }
+            else if (form == "air_input_mode" || form == "air_input_mode2"){
+                if (cur_air_mode == 0 ) {
+                    EnableAirinput(true);
+                    air_click_area.innerHTML="click";
+                }
+                else{
+                    EnableAirinput(false);
+                    air_click_area.innerHTML="";
+                }
+            }
+            else if (form == "reset_bt" || form == "reset_bt2"){
+                    Enable_calibration(true);
+                    cal_flush_timeout = window.setTimeout(function(){
+                        alert("Finished Gyro Calibration.");
+                        Enable_calibration(false);}, CAL_FLUSH_TIMEOUT);
+            }
+            else if (form == "air_click_area"){
+                if (cur_mode == "a" ||cur_mode == "b"){
+                sendMouse_KeyEvent(MOUSE_CLICK);
+                }
+            }
+
+        }
+        function clearLog(){
+            //log_box.value = "";log_box.value +"\n"+ str;
+        }
+        function reArrangeCursorPos(){
+            if(latest_typed_timestamp == TMP_TIMESTAMP){
+                entry.setSelectionRange(TMP_CHAR.length,TMP_CHAR.length);
+            }
+            window.clearInterval(empty_checker_timeout);
+        }
+
+        $(document).ready(function()    {
+            var entry = document.getElementById( "entry" );
+            entry.focus();
+            entry.value = TMP_CHAR;
+           //set the document size
+          var obj = document.getElementById('by');
+          obj.style.height =  $(document).height() + "px";
+
+
+          setTimeout(function(){
+            window.scrollTo(0, 1);
+
+            var entry = document.getElementById( "entry" );
+            entry.focus();
+            entry.value = TMP_CHAR;
+
+            }, 300);
+
+
+        /*
+            mousepad2.addEventListener("touchstart", function(event) {
+                //hideTheKeyBoard();
+                flick_start_time = new Date;
+                pre_x = event.touches[0].pageX;
+                pre_y = event.touches[0].pageY;
+//                scroll_pre_x = event.touches[0].pageX;
+//                scroll_pre_y = event.touches[0].pageY;
+                touch_Pressed=1;
+                touch_Moved=0;
+
+                if(document.activeElement == document.getElementById( "entry" )) {
+                    sendFlushCurStr();
+                    document.activeElement.blur();
+                }
+            });
+
+            mousepad2.addEventListener("touchmove", function(event) {
+
+                var coordinate;
+                touch_Moved=1;
+                event.preventDefault();
+                if((pre_x==0) && (pre_y==0)) {
+                    pre_x = event.touches[0].pageX;
+                    pre_y = event.touches[0].pageY;
+                    return;
+                }
+                if((event.touches[0].pageX-pre_x == 0) && (event.touches[0].pageY-pre_y == 0)) {
+                    return;
+                }
+
+                coordinate = (event.touches[0].pageX-pre_x).toString() + "," + (event.touches[0].pageY-pre_y).toString();
+                sendMouse_MoveEvent(coordinate);
+                pre_x = event.touches[0].pageX;
+                pre_y = event.touches[0].pageY;
+            });
+
+            mousepad2.addEventListener("touchend", function(event) {
+
+                var coordinate, coordinate2;
+                var direction = 0, count = 0;
+//                var flick_end_time = new Date;
+//                var flick_time = flick_end_time - flick_start_time;
+
+                if(touch_Moved==0&&touch_Pressed==1){
+                    if(document.activeElement == document.getElementById( "entry" )){
+                        sendFlushCurStr();
+                    }
+                    else{
+                        sendMouse_KeyEvent(MOUSE_CLICK);
+                    }
+                }
+                 if(document.activeElement == document.getElementById( "entry" )){
+                        sendFlushCurStr();
+                        touch_Moved=0;
+                        touch_Pressed=0;
+                    }
+                  else {
+                        //sendMouse_KeyEvent(MOUSE_RELEASED);
+                        touch_Moved=0;
+                        touch_Pressed=0;
+                  }
+
+            });
+*/
+/*
+            air_click_area.addEventListener("touchstart", function(event) {
+                event.preventDefault();
+                click_start_time = new Date;
+                touch_Pressed=1;
+            });
+
+            air_click_area.addEventListener("touchend", function(event) {
+                event.preventDefault();
+                var coordinate, coordinate2;
+                var direction = 0, count = 0;
+                var click_end_time = new Date;
+                var click_time = click_end_time - click_start_time;
+
+                if(touch_Pressed==1 && click_time < 350){
+                        sendMouse_KeyEvent(MOUSE_CLICK);
+                        touch_Pressed=0;
+                }
+
+            });
+            */
+            mousepad.addEventListener("touchstart", function(event) {
+
+                event.preventDefault();
+                //hideTheKeyBoard();
+                click_start_time = new Date;
+                pre_x = event.touches[0].pageX;
+                pre_y = event.touches[0].pageY;
+                touch_Pressed=1;
+                touch_Moved=0;
+
+                if(document.activeElement == document.getElementById( "entry" )) {
+                    sendFlushCurStr();
+                    touch_Pressed=0;
+                    return;
+                }
+
+                if(window.DeviceMotionEvent && cur_mode == "c") {
+                    window.addEventListener('devicemotion', gyro_event_listener);
+                    cur_air_mode = 1;
+                }
+                air_disabled = 1;
+
+            //mousepad.innerHTML = "";
+            });
+
+            mousepad.addEventListener("touchmove", function(event) {
+
+                event.preventDefault();
+                var coordinate;
+                touch_Moved=1;
+                event.preventDefault();
+                if((pre_x==0) && (pre_y==0)) {
+                    pre_x = event.touches[0].pageX;
+                    pre_y = event.touches[0].pageY;
+                    return;
+                }
+                if((event.touches[0].pageX-pre_x == 0) && (event.touches[0].pageY-pre_y == 0)) {
+                    return;
+                }
+
+                if(document.activeElement == document.getElementById( "entry" )) {
+                    touch_Moved=0;
+                    touch_Pressed=0;
+                    return;
+                }
+                touchmove_delta = parseInt(Math.sqrt(((event.touches[0].pageX-pre_x) * (event.touches[0].pageX-pre_x)) + ((event.touches[0].pageY-pre_y)*(event.touches[0].pageY-pre_y))));
+
+                coordinate = (event.touches[0].pageX-pre_x).toString() + "," + (event.touches[0].pageY-pre_y).toString();
+
+                /*
+                if(touchmove_delta >= 5 && cur_touch_mode ==0){
+                    cur_air_mode = 0;
+                    mousepad.innerHTML ="air->touch";
+                    cur_touch_mode = 1;
+                    //  mousepad.innerHTML = click_time;
+                    /*
+                    if(window.DeviceMotionEvent && forceEnable_air == 0 ) {
+                        window.removeEventListener('devicemotion', gyro_event_listener);
+                        cur_air_mode = 0;
+                    }
+
+                }
+                */
+
+                if (air_delta >= 5 || touchmove_delta >= 5){
+                    air_disabled = 0;
+                }
+
+
+                if(window.DeviceMotionEvent && cur_mode == "b" ) {
+                    window.removeEventListener('devicemotion', gyro_event_listener);
+                    cur_air_mode = 0;
+                }
+               // if (cur_touch_mode == 1 && cur_air_mode == 0){
+                sendMouse_MoveEvent(coordinate);
+                //mousepad.innerHTML ="touch";
+                //}
+                pre_x = event.touches[0].pageX;
+                pre_y = event.touches[0].pageY;
+                //mousepad.innerHTML = "";
+            });
+
+            mousepad.addEventListener("touchend", function(event) {
+
+                event.preventDefault();
+                var coordinate, coordinate2;
+                var direction = 0, count = 0;
+                var click_end_time = new Date;
+                var click_time = click_end_time - click_start_time;
+
+                if(document.activeElement == document.getElementById( "entry" )){
+                    sendFlushCurStr();
+                    hide_keypad();
+                    touch_Moved=0;
+                    touch_Pressed=0;
+                }
+                else if(touch_Pressed==1 && click_time < 350){
+                        sendMouse_KeyEvent(MOUSE_CLICK);
+                        touch_Moved=0;
+                        touch_Pressed=0;
+                }
+                //mousepad.innerHTML ="";
+
+              //  mousepad.innerHTML = click_time;
+                if(window.DeviceMotionEvent && cur_mode == "c" ) {
+                    window.removeEventListener('devicemotion', gyro_event_listener);
+                    cur_air_mode = 0;
+                }
+                if(window.DeviceMotionEvent && cur_mode == "b" ) {
+                    window.addEventListener('devicemotion', gyro_event_listener);
+                    cur_air_mode = 1;
+                }
+                cur_touch_mode = 0;
+                air_disabled = 0;
+
+
+            });
+
+            mousescroll.addEventListener("touchstart", function(event) {
+
+                scroll_pre_x = event.touches[0].pageX;
+                scroll_pre_y = event.touches[0].pageY;
+                if(document.activeElement == document.getElementById( "entry" )) {
+                    sendFlushCurStr();
+                    document.getElementById( "entry" ).blur();
+                   return;
+                }
+            });
+
+            mousescroll.addEventListener("touchmove", function(event) {
+
+                var coordinate;
+                event.preventDefault();
+
+                if(document.activeElement == document.getElementById( "entry" )) {
+                    sendFlushCurStr();
+                    document.getElementById( "entry" ).blur();
+                    return;
+                }
+                if(scroll_pre_y == 0){
+                    scroll_pre_x = event.touches[0].pageX;
+                    scroll_pre_y = event.touches[0].pageY;
+                    return;
+                }
+                if(((event.touches[0].pageX-scroll_pre_x == 0) && (event.touches[0].pageY-scroll_pre_y == 0))||(event.touches[0].pageY-scroll_pre_y == 0)){
+                    return;
+                }
+                var coordinate = (event.touches[0].pageX-scroll_pre_x).toString()+","+(event.touches[0].pageY-scroll_pre_y).toString();
+                    if (Math.abs((event.touches[0].pageY-scroll_pre_y)) >= 3){
+                          sendWheel_MoveEvent(coordinate);
+                       }
+                scroll_pre_x = event.touches[0].pageX;
+                scroll_pre_y = event.touches[0].pageY;
+            });
+
+            mousescroll.addEventListener("touchend", function(event) {
+                scroll_pre_y=0;
+            });
+
+            // Firefox, Google Chrome, Opera, Safari, Internet Explorer from version 9
+            $("#entry").on("input", function(event) {
+
+                window.clearInterval(flush_timeout);
+                var cur_timestamp = (new Date).getTime();
+                latest_typed_timestamp = cur_timestamp;
+
+                //To prevent multiline field in textarea when the enter key is typed and send commit string and enter key event
+                if(this.value.substring(this.value.length - 1) == "\n"){
+                    this.value = this.value.substring(0, this.value.length - 1);
+                    sendFlushCurStr();
+                    entry.value = TMP_CHAR;
+                    TMP_TIMESTAMP = cur_timestamp;
+                    empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+                    sendKeyEvent(KEY_ENTER);
+                    return false;
+                }
+                //To prevent removing the TMP_CHAR(first) character for the all time
+                if(TMP_CHAR.substring(0, TMP_CHAR.length - 1) == this.value){
+                    entry.value = TMP_CHAR;
+                    TMP_TIMESTAMP = cur_timestamp;
+                    empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+                    return false;
+                }
+                //To prevent duplicating preedit string error for Note2, S3 web browser
+                if(pre_str == this.value){
+                    return;
+                }
+                /*To prevent wrong preedit string error for Tizen phone, when next character is made in CJK
+                  correct event must happen like [pre_str:가 for 간 -> preedit:간 ->  pre_str: 간 for 가나 -> preedit:가나 ]
+                  wrong event happen from tizen  [pre_str:가 for 간 -> preedit:간 -> preedit:가나 -> pre_str: 가 for 가나 -> preedit: 가 -> pre_str: 간 for  가 ] */
+                if(pre_pre_str == this.value){
+                    return;
+                }
+                pre_pre_str = pre_str;
+                pre_str = this.value;
+
+                //send commit string when the space key is typed
+                if(this.value.substring(this.value.length - 1) == " ") {
+                    sendFlushCurStr();
+                }
+                else{
+                    flush_timeout = window.setInterval("sendFlushCurStr()", FLUSH_TIMEOUT);
+                    sendPreeditStr(this.value);
+                }
+            });
+
+            // Internet Explorer
+            $("#entry").on("propertychange", function(event) {
+
+                window.clearInterval(flush_timeout);
+                var cur_timestamp = (new Date).getTime();
+                latest_typed_timestamp = cur_timestamp;
+
+                //To prevent multiline field in textarea when the enter key is typed and send commit string and enter key event
+                if(this.value.substring(this.value.length - 1) == "\n"){
+                    this.value = this.value.substring(0, this.value.length - 1);
+                    sendFlushCurStr();
+                    entry.value = TMP_CHAR;
+                    TMP_TIMESTAMP = cur_timestamp;
+                    empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+                    sendKeyEvent(KEY_ENTER);
+                    return false;
+                }
+                //To prevent removing the TMP_CHAR(first) chartor for the all time
+                if(TMP_CHAR.substring(0, TMP_CHAR.length - 1) == this.value){
+                    entry.value = TMP_CHAR;
+                    TMP_TIMESTAMP = cur_timestamp;
+                    empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+                    return false;
+                }
+                //To prevent duplicating preedit string error for Note2, S3 web browser
+                if(pre_str == this.value){
+                    return;
+                }
+                /*To prevent wrong preedit string error for Tizen phone, when next character is made in CJK
+                  correct event must happen like [pre_str:가 for 간 -> preedit:간 ->  pre_str: 간 for 가나 -> preedit:가나 ]
+                  wrong event happen from tizen  [pre_str:가 for 간 -> preedit:간 -> preedit:가나 -> pre_str: 가 for 가나 -> preedit: 가 -> pre_str: 간 for  가 ] */
+                if(pre_pre_str == this.value){
+                    return;
+                }
+                pre_pre_str = pre_str;
+                pre_str = this.value;
+
+                //send commit string when the space key is typed
+                if(this.value.substring(this.value.length - 1) == " ") {
+                    sendFlushCurStr();
+                }
+                else{
+                    flush_timeout = window.setInterval("sendFlushCurStr()", FLUSH_TIMEOUT);
+                    sendPreeditStr(this.value);
+                }
+            });
+
+            $("#entry").on("keydown", function(event) {
+
+                //To prevent Ctrl + C event (keycode 17:Ctrl, 67:C)
+                if(event.keyCode == 17 || event.keyCode == 67) return;
+
+                //To enable back space key continually, even there is no charactor for Note2, S3 web browser
+                if(this.value == TMP_CHAR && event.keyCode == KEY_BACKSPACE) {
+                    sendKeyEvent(event.keyCode);
+
+                //To remove the last preedit charator, when tap the backspace key
+                }else if(this.value.length > TMP_CHAR.length && TMP_CHAR == this.value.substring(0, this.value.length - 1) && event.keyCode == KEY_BACKSPACE){
+                    sendKeyEvent(event.keyCode);
+                }
+            });
+        });
+
+</script>
+<!-- page 1 -->
+    <!-- TV MODE -->
+    <div id="tvmode" data-role="page" data-fullscreen="true" class ="visible">
+        <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_width33 cell_height10 logo"></td>
+                <td class="t_cell cell_width77" colspan="2">
+                    <table  class="tb1">
+                        <tr>
+                            <td id ="reset_bt" class="t_cell reset_bt" ontouchstart="javascript:sendevent(this.id)"></td>
+                            <td id ="type_a" class="t_cell type_a" ontouchstart="javascript:sendevent(this.id)"></td>
+                            <td id ="type_b" class="t_cell type_b" ontouchstart="javascript:sendevent(this.id)"></td>
+                            <td id ="type_c" class="t_cell type_c" ontouchstart="javascript:sendevent(this.id)"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td  class="t_cell t_cell_inner" colspan="3">
+                        <!-- Content -->
+<!--                         <table class="tv_table"  id="mousepad2" > -->
+                        <table class="tv_table" >
+
+                                <!-- Content_space-top
+                                <tr>
+                                    <td class="t_cell cell_height5"></td>
+                                </tr> -->
+                                <tr>
+                                    <td>
+                                    <!-- Content_area -->
+                                        <table class="tv_inner_table">
+                                            <tr>
+                                                <td class="t_cell cell_height18" colspan="2">&nbsp;</td>
+                                                <td id="bt_power" class="t_cell power cell_height18" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_volume_up" class="t_cell volume_up cell_width33" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_channel_up" class="t_cell channel_up cell_width33" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_switchmode" class="t_cell source cell_height13 cell_width33" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell cell_height13"></td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="t_cell volume t_cell_text"></td>
+                                                <td  class="t_cell channel t_cell_text"></td>
+                                                <td id="bt_menu" class="t_cell menu cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_volume_down" class="t_cell volume_down" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_channel_down" class="t_cell channel_down" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_info" class="t_cell info cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_select" class="t_cell return cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_mute" class="t_cell mute" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_channel_list" class="t_cell chlist" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_exit" class="t_cell exit cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Content_space-bottom -->
+                                <tr>
+                                    <td id = "air_click_area" class="t_cell cell_height20 cell_gray_font" ontouchstart="sendevent(this.id)"></td>
+                                </tr>
+                        </table>
+                </td>
+            </tr>
+        <!-- Footer -->
+            <tr>
+                <td id="sys_btn_home" class="t_cell_footer apps cell_width33" ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id="sys_btn_modechange" class="t_cell_footer modeswitcher_to_mouse cell_width33" ontouchstart="javascript:inputModeChanged('tvmode','keymode')" ></td>
+                <td id="sys_btn_back" class="t_cell_footer back cell_width33" ontouchstart="sendevent(this.id)"></td>
+            </tr>
+        </table>
+    </div>
+
+<!-- end page 1 -->
+
+<!-- page 2 -->
+    <!-- MOUSE MODE -->
+    <div id="keymode"  data-role="page" data-fullscreen="true" class ="invisible">
+       <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_width33 cell_height10 logo" ontouchstart="home_icon_add('Tizen_Input')"></td>
+                <td class="t_cell cell_width77"  colspan="2">
+                    <table  class="tb1">
+                        <tr>
+                            <td id ="reset_bt2" class="t_cell reset_bt" ontouchstart="javascript:sendevent(this.id)"></td>
+                            <td id ="type_a2" class="t_cell type_a" ontouchstart="javascript:sendevent(this.id)"></td>
+                            <td id ="type_b2" class="t_cell type_b" ontouchstart="javascript:sendevent(this.id)"></td>
+                            <td id ="type_c2" class="t_cell type_c" ontouchstart="javascript:sendevent(this.id)"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td  class="t_cell" colspan="3">
+                        <!-- Content -->
+                        <table class="tb1">
+                                <!-- Content_space-top -->
+                                <tr>
+                                    <td class="t_cell cell_height13 t_cell_vertical_align_bottom" >
+                                        <textarea name="entry" wrap="off" rows="1" id="entry"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="tb1_thin_border mouse_panel ">
+                                            <tr>
+                                                <!-- Content_area -->
+                                                <td id="mousepad" class="t_cell t_cell_mousepad t_cell_thin_border"> </td>
+                                                <td id="mousescroll" class="t_cell cell_width15 t_cell_thin_border"> </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Content_space-bottom -->
+                        </table>
+                </td>
+            </tr>
+        <!-- Footer -->
+            <tr>
+                <td id="sys_btn_home2" class="t_cell_footer apps cell_width33" ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id="sys_btn_modechange2" class="t_cell_footer modeswitcher_to_tv cell_width33" ontouchstart="javascript:inputModeChanged('keymode','tvmode')" ></td>
+                <td id="sys_btn_back2" class="cell_width16 t_cell_footer back cell_width33" ontouchstart="sendevent(this.id)"></td>
+            </tr>
+
+        </table>
+    </div>
+
+<!-- end page 2 -->
+<iframe id="home_icon_add_frame" style="display:none;width:0px;height:0px;"></iframe>
+
+</body>
+</html>
+
+
