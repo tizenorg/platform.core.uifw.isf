@@ -85,6 +85,8 @@
 #include "isf_pkg.h"
 #include "privilege_checker.h"
 
+#include "remote_input.h"
+
 using namespace scim;
 
 
@@ -242,6 +244,8 @@ static void       slot_set_keyboard_mode               (int mode);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
+static void       slot_enable_remote_input             (void);
+static void       slot_disable_remote_input            (void);
 
 static void       slot_run_helper                      (const String &uuid, const String &config, const String &display);
 
@@ -457,6 +461,9 @@ static bool               feedback_initialized              = false;
 
 static E_DBus_Connection     *edbus_conn;
 static E_DBus_Signal_Handler *edbus_handler;
+
+static Remote_Input*        remote_input_impl               = NULL;
+static bool               launch_remote_input               = false;
 
 #if HAVE_ECOREX
 static Ecore_Event_Handler *_candidate_show_handler         = NULL;
@@ -3985,6 +3992,8 @@ static bool initialize_panel_agent (const ConfigPointer& config, const String &d
     _info_manager->signal_connect_start_default_ise          (slot (slot_start_default_ise));
     _info_manager->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
     _info_manager->signal_connect_show_panel                 (slot (slot_show_helper_ise_selector));
+    _info_manager->signal_connect_enable_remote_input        (slot (slot_enable_remote_input));
+    _info_manager->signal_connect_disable_remote_input       (slot (slot_disable_remote_input));
 
     _info_manager->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
     _info_manager->signal_connect_check_privilege_by_sockfd  (slot (slot_check_privilege_by_sockfd));
@@ -5848,6 +5857,18 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
 #endif
 }
 
+static void slot_enable_remote_input (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    LOGD("Enable remote input");
+}
+
+static void slot_disable_remote_input (void)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+    LOGD("Disable remote input");
+}
+
 static void slot_show_ise (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
@@ -7333,6 +7354,15 @@ int main (int argc, char *argv [])
     if (ret != BT_ERROR_NONE)
         LOGW ("bt_deinitialize failed: %d\n", ret);
 #endif
+    launch_remote_input = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_LAUNCH_REMOTE_INPUT), launch_remote_input);
+     /* Create remote input */
+    if (launch_remote_input) {
+         LOGD("remote input start");
+         remote_input_impl = new Remote_Input();
+         if (remote_input_impl) {
+             remote_input_impl->init(_info_manager);
+         }
+    }
 
 #if HAVE_ECOREX
     if (xclient_message_handler) {
