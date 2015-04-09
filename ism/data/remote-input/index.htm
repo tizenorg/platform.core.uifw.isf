@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tizen Remote Input</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable = no">
+<link rel="stylesheet" href="jquery.mobile-1.3.1.min.css" type="text/css"/>
+<script src="ajaxCaller.js" type="text/javascript"> </script>
+<script src="util.js" type="text/javascript"> </script>
+<script src="jquery-2.0.2.min.js"></script>
+<script src="jquery.mobile-1.3.1.min.js"></script>
+</head>
+
+<body>
+	<script>
+
+		// Key definition
+		var KEY_BACKSPACE = 8;
+		var KEY_ENTER = 13;
+		var KEY_SPACE = 32;
+		var KEY_ESCAPE = 27;
+
+		var KEY_LEFT = 37;
+		var KEY_RIGHT = 39;
+		var KEY_UP = 38;
+		var KEY_DOWN = 40;
+
+		var KEY_MENU = 10001;
+		var KEY_HOME = 10002;
+		var KEY_BACK = 10003;
+
+		// Callback incremental index
+		var id_num = 0;
+		var count = 0;
+
+		// Flush timer
+		var flush_timeout;
+		var FLUSH_TIMEOUT = 5000;
+		var FLUSH_ENTER_TIMEOUT = 50;
+
+		// Backup pre string
+		var pre_str = "";
+		var TMP_CHAR = " ";
+		var TMP_TIMESTAMP = 0;
+		var EMPTY_CHECKER_TIMEOUT = 10;
+		var latest_typed_timestamp = 0;
+
+		function cbAjax(text, headers, callingContext){
+			id_num++;
+			return true;
+		}
+
+		function sendKeyEvent(keyCode){
+			printLog("Send_Key_Event :("+ keyCode +")");
+			var bodyVars = {id:id_num, key:'event', value:keyCode}
+			ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+		}
+
+		function removeTmpChar(str){
+			if(TMP_CHAR.length < 1) return;
+			if(str.length >= TMP_CHAR.length){
+				str = str.substring(TMP_CHAR.length);
+			}
+			return str;
+		}
+
+		function sendPreeditStr(str){
+			if (!$("#send_preedit_checker").prop("checked")){
+				return;
+			}
+			str = removeTmpChar(str);
+			printLog("Send_Preedit string :("+ str+")");
+			var bodyVars = {id:id_num, key:'preedit', value:str}
+			ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+		}
+
+		function sendCommitStr(str){
+			str = removeTmpChar(str);
+			printLog("Send_Commit string :("+ str + ")");
+			var bodyVars = {id:id_num, key:'commit', value:str}
+			ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+		}
+
+		function sendFlushCurStr(){
+			var entry = document.getElementById( "entry" );
+			var str = entry.value;
+			if(str.length > 0){
+				entry.value = TMP_CHAR;
+				pre_str = "";
+				sendCommitStr(str)
+				window.clearInterval(flush_timeout);
+				entry.focus();
+			}
+		}
+
+		function printLog(str){
+			if (!$("#use_debug_checker").prop("checked")){
+				return;
+			}
+			log_box.value = log_box.value +"\n"+ str;
+			var psconsole = $('#log_box');
+			psconsole.scrollTop(
+				psconsole[0].scrollHeight - psconsole.height()
+			);
+		}
+
+		function clearLog(){
+			log_box.value = "";log_box.value +"\n"+ str;
+		}
+
+		function reArrangeCursorPos(){
+			if(latest_typed_timestamp == TMP_TIMESTAMP){
+				//printLog("reArrange Cursor Position");
+				entry.setSelectionRange(TMP_CHAR.length,TMP_CHAR.length);
+			}
+			window.clearInterval(empty_checker_timeout);
+		}
+
+		$(document).ready(function() {
+			var entry = document.getElementById( "entry" );
+			entry.focus();
+			entry.value = TMP_CHAR;
+
+			// 4 arrow keys
+			$("#arrow_left").click(function(event) {
+				//printLog("left btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_LEFT);
+				entry.focus();
+			});
+
+			$("#arrow_right").click(function(event) {
+				//printLog("right btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_RIGHT);
+				entry.focus();
+			});
+
+			$("#arrow_down").click(function(event) {
+				//printLog("down btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_DOWN);
+				entry.focus();
+			});
+
+			$("#arrow_up").click(function(event) {
+				//printLog("up btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_UP);
+				entry.focus();
+			});
+			// 3 system hw buttons
+			$("#sys_btn_menu").click(function(event) {
+				//printLog("menu btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_MENU);
+				entry.focus();
+			});
+
+			$("#sys_btn_home").click(function(event) {
+				//printLog("home btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_HOME);
+				entry.focus();
+			});
+
+			$("#sys_btn_back").click(function(event) {
+				//printLog("back btn is clicked");
+				sendFlushCurStr();
+				sendKeyEvent(KEY_BACK);
+				entry.focus();
+			});
+
+			// Always focus into entry
+			$("#entry").focusout(function(event) {
+				entry.focus();
+			});
+
+			// Firefox, Google Chrome, Opera, Safari, Internet Explorer from version 9
+			$("#entry").on("input", function(event) {
+				window.clearInterval(flush_timeout);
+				var cur_timestamp = (new Date).getTime();
+				latest_typed_timestamp = cur_timestamp;
+
+				//To prevent multiline field in textarea when the enter key is typed and send keyevent
+				if(this.value.substring(this.value.length - 1) == "\n"){
+					//printLog("enter key is pressed");
+					this.value = this.value.substring(0, this.value.length - 1);
+					sendFlushCurStr();
+					entry.value = TMP_CHAR;
+					TMP_TIMESTAMP = cur_timestamp;
+					empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+					sendKeyEvent(KEY_ENTER);
+					return false;
+				}
+				//To prevent removing the first chartor(TMP_CHAR)
+				if(TMP_CHAR.substring(0, TMP_CHAR.length - 1) == this.value){
+					//printLog("Current text field empty");
+					entry.value = TMP_CHAR;
+					TMP_TIMESTAMP = cur_timestamp;
+					empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+					return false;
+				}
+				//To prevent duplicating preedit string error for Note2, S3 web browser
+				if(pre_str == this.value){
+					//printLog("same string is occurd");
+					return;
+				}
+				pre_str = this.value;
+				//printLog("oninput | value : (" + this.value+ ")");
+
+				if(this.value.substring(this.value.length - 1) == " "){
+					var commitStr = this.value;
+					sendFlushCurStr();
+				}else{
+					if ($("#auto_flush_checker").prop("checked")){
+						flush_timeout = window.setInterval("sendFlushCurStr()", FLUSH_TIMEOUT);
+					}
+					sendPreeditStr(this.value);
+				}
+			});
+
+			// Internet Explorer
+			$("#entry").on("propertychange", function(event) {
+
+				window.clearInterval(flush_timeout);
+				var cur_timestamp = (new Date).getTime();
+				latest_typed_timestamp = cur_timestamp;
+
+				//To prevent multiline field in textarea when the enter key is typed and send keyevent
+				if(this.value.substring(this.value.length - 1) == "\n"){
+					//printLog("enter key is pressed");
+					this.value = this.value.substring(0, this.value.length - 1);
+					sendFlushCurStr();
+					entry.value = TMP_CHAR;
+					TMP_TIMESTAMP = cur_timestamp;
+					empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+					sendKeyEvent(KEY_ENTER);
+					return false;
+				}
+				//To prevent removing the first chartor(TMP_CHAR)
+				if(TMP_CHAR.substring(0, TMP_CHAR.length - 1) == this.value){
+					//printLog("Current text field empty");
+					entry.value = TMP_CHAR;
+					TMP_TIMESTAMP = cur_timestamp;
+					empty_checker_timeout = window.setInterval("reArrangeCursorPos()", EMPTY_CHECKER_TIMEOUT);
+					return false;
+				}
+				//To prevent duplicating preedit string error for Note2, S3 web browser
+				if(pre_str == this.value){
+					//printLog("same string is occurd");
+					return;
+				}
+				pre_str = this.value;
+				//printLog("oninput | value : (" + this.value+ ")");
+
+				if(this.value.substring(this.value.length - 1) == " "){
+					var commitStr = this.value;
+					sendFlushCurStr();
+				}else{
+					if ($("#auto_flush_checker").prop("checked")){
+						flush_timeout = window.setInterval("sendFlushCurStr()", FLUSH_TIMEOUT);
+					}
+					sendPreeditStr(this.value);
+				}
+
+			});
+
+			$("#entry").on("keydown", function(event) {
+				if(event.keyCode == 17 || event.keyCode == 67) return;
+				//printLog("onkeydown | event.keyCode : (" + event.keyCode + ")");
+
+				//To enable back space key continually, even there is no charactor for Note2, S3 web browser
+				if(this.value == TMP_CHAR && event.keyCode == KEY_BACKSPACE){
+					sendKeyEvent(event.keyCode);
+
+				//To remove the last preedit charator, when tap the backspace key
+				}else if(this.value.length > TMP_CHAR.length &&
+				TMP_CHAR == this.value.substring(0, this.value.length - 1) &&
+				event.keyCode == KEY_BACKSPACE){
+					sendKeyEvent(event.keyCode);
+				}
+			});
+
+		});
+	</script>
+
+	<div data-role="page" data-theme="a" data-fullscreen="true">
+
+		<div data-role="header">
+			<h1><table align=left border=0 width=100%><tr><td align=right><img width=35 src="wifikeyboard.png"></td><td align=left >Tizen Remote Input</td><td align=left><a href="#" id="mode_change"><img width=35 onclick="window.location='mouse.htm'" src="mouse.png"></a></td></tr></table></h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+				<label for="text-3"><font size ="2">Press "space" key after typing a desired word</font></label>
+			<textarea name="entry" wrap="off"  style="overflow:hidden;" rows="1" id="entry"></textarea>
+
+			<!--	<input type="text" data-theme="b" name="entry" id="entry" autofocus="true">-->
+
+				<label><input type="checkbox" id="auto_flush_checker" name="auto_flush_checker" checked> <font size ="2">Auto commit
+					after <script>document.write(FLUSH_TIMEOUT/1000)</script> seconds</font></label>
+			<fieldset class="ui-grid-c">
+				<div class="ui-block-a">
+					<button id="arrow_left" type="button" data-icon="arrow-l"
+						data-iconpos="left" data-theme="c"><font size="1" style="nomal" weight="300">&nbsp;</font></button>
+				</div>
+				<div class="ui-block-b">
+					<button id="arrow_right" type="button" data-icon="arrow-r"
+						data-iconpos="left" data-theme="c"><font size="1" style="nomal" weight="300">&nbsp;</font></button>
+				</div>
+				<div class="ui-block-c">
+					<button id="arrow_up" type="button" data-icon="arrow-u"
+						data-iconpos="left" data-theme="b"><font size="1" style="nomal" weight="300">&nbsp;</font></button>
+				</div>
+				<div class="ui-block-d">
+					<button id="arrow_down" type="button" data-icon="arrow-d"
+						data-iconpos="left" data-theme="b"><font size="1" style="nomal" weight="300">&nbsp;</font></button>
+				</div>
+			</fieldset>
+		<textarea name="logbox" id="log_box" style="overflow:auto; height:120px;width:100%;letter-spacing:0; padding:8; border-style:dotted; font-size:12px" ></textarea>
+				<label><input type="checkbox" id="send_preedit_checker" name="send_preedit_checker" checked> <font size ="2">Sends composing string</font></input></label>
+				<label><input type="checkbox" id="use_debug_checker" name="use_debug_checker"> <font size ="2">Debug mode</font></input></label>
+
+		</div>
+		<!-- /content -->
+		<div data-role="footer" >
+			<div data-role="navbar" class="nav-glyphish-example" data-grid="b">
+				<ul>
+					<li><a href="#" id="sys_btn_menu" data-icon="bars">Menu</a></li>
+					<li><img onclick="javascript:clearLog();" width=100% src="tizenbrand.png"></li>
+					<li><a href="#" id="sys_btn_back" data-icon="back">Back</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- /page -->
+
+</body>
+</html>
+
+

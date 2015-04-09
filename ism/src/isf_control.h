@@ -82,6 +82,20 @@ EXAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
 EXAPI int isf_control_get_active_ise (char **uuid);
 
 /**
+ * @brief Enable remote input.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EXAPI int isf_control_enable_remote_input (void);
+
+/**
+ * @brief Disable remote input.
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EXAPI int isf_control_disable_remote_input (void);
+
+/**
  * @brief Get the list of all ISEs' UUID.
  *
  * @param uuid_list The list is used to store all ISEs' UUID.

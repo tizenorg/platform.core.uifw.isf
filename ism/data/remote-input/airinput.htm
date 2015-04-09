@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tizen Remote Input</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+     <script src="ajaxCaller.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="remote_input.css" type="text/css"/>
+     <script src="util.js" type="text/javascript"> </script>
+    <script src="jquery-2.0.2.min.js"></script>
+
+
+
+</head>
+
+<body id="by">
+<script>
+
+
+        // Callback incremental index
+        var id_num = 0;
+        var ori;
+        var CAL_FLUSH_TIMEOUT = 3000;
+        
+        var MOUSE_CLICK = 555;
+        var KEY_MENU = 10001;
+        var KEY_HOME = 10002;
+        var KEY_BACK = 10003;
+        var scroll_pre_x = 0;
+        var scroll_pre_y = 0;
+        var cur_air_mode = 0;
+        var cur_reset_mode = 0;
+        var gry_basic_a = 0;
+        var gry_basic_b = 0;
+        var gry_basic_g = 0;
+        var gry_sum_a = 0;
+        var gry_sum_b = 0;
+        var gry_sum_g = 0;
+        var gry_sum_count = 0;
+        var progress = ["",".","..","...","...."];
+        var progress_count=0;
+        
+        function cbAjax(text, headers, callingContext){
+            id_num++;
+            return true;
+        }
+        function sendKeyEvent(keyCode){
+            var bodyVars = {id:id_num, key:'event', value:keyCode}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+        function sendMouse_KeyEvent(mouseCode) {
+            var bodyVars = {id:id_num, key:'mouse_key', value:mouseCode}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function sendMouse_MoveEvent(coordinate) {
+            var bodyVars = {id:id_num, key:'mouse_move', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function sendWheel_MoveEvent(coordinate) {
+            var bodyVars = {id:id_num, key:'wheel_move', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function sendAir_Input(coordinate) {
+            var bodyVars = {id:id_num, key:'air_raw', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+        function sendAir_Set(coordinate) {
+            var bodyVars = {id:id_num, key:'air_set', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+           alert("Set the new config value");
+            
+        }
+        
+        function airModeChanged(to) {
+                event.preventDefault();
+                var air_input_bt = document.getElementById('air_input_mode');
+                air_input_bt.style.background = "url(imgs/" + to + ")";
+                air_input_bt.style.backgroundRepeat = "no-repeat";
+                air_input_bt.style.backgroundSize = "auto 100%";
+                air_input_bt.style.backgroundPosition = "center";
+            }
+        function make_calibration(gry_a, gry_b, gry_g) {
+            gry_sum_a +=gry_a;
+            gry_sum_b +=gry_b;
+            gry_sum_g +=gry_g;
+            gry_sum_count++;
+            gry_basic_a = (gry_sum_a/gry_sum_count).toFixed(3);
+            gry_basic_b = (gry_sum_b/gry_sum_count).toFixed(3);
+            gry_basic_g = (gry_sum_g/gry_sum_count).toFixed(3);
+            
+            if (gry_sum_count%4==0){
+                //tb_gyro.innerHTML="Calibrating" + progress[progress_count];
+                progress_count++;
+                if(progress_count >= 5){
+                    progress_count = 0;
+                }
+            }
+           // air_click_area.innerHTML="a:"+gry_basic_a + " ,b: " + gry_basic_b + ", g:" + gry_basic_g;
+        }
+        
+        function get_gyro_calibration(event) {
+            event.preventDefault();
+            var r = event.rotationRate;
+            if(r!=null) {
+                make_calibration(r.alpha, r.beta, r.gamma);
+            }
+        }
+        function gyro_event_listener(event) {
+        
+                    var x = event.accelerationIncludingGravity.x;
+                    var y = event.accelerationIncludingGravity.y;
+                    var z = event.accelerationIncludingGravity.z;
+                    var r = event.rotationRate;
+                    var data;
+                    
+                    var acc_basic_x = 16.00;
+                    var acc_basic_y = -3.0;
+                    var acc_basic_z = 65.00;
+                    
+                    if(x!=null || y!=null || z!=null || r!=null) {
+//                        tb_gyro.innerHTML ="Acceleration</br> x:0.01,y:-0.05,z:10</br>"+"x: " + x + " ,</br>y: " + y + " ,</br>z: " + z +"</br></br>Rotation Rate</br>a:-4, b:0.8, g:-0.2 </br>"+ "a: " + r.alpha*100 + " ,</br>b: " + r.beta*100 + " ,</br>g: " + r.gamma*100;
+                        
+                        var gyro_a = r.alpha - gry_basic_a;
+                        var gyro_b = r.beta - gry_basic_b;
+                        var gyro_g = r.gamma - gry_basic_g;
+/*
+                        var acc_x = x;
+                        var acc_y = y;
+                        var acc_z = z;
+  */                     
+                        var acc_x = x*10;
+                        var acc_y = y*10;
+                        var acc_z = z*10;
+                        /*
+                        var acc_x = x + acc_basic_x;
+                        var acc_y = y + acc_basic_y;
+                        var acc_z = z + acc_basic_z;
+*/
+                        var UserAgent = navigator.userAgent.toLowerCase();
+                        if(UserAgent.indexOf("android") != -1 ) {
+                            gyro_a *=100;
+                            gyro_b *=100;
+                            gyro_g *=100;
+                        }
+                        data = acc_x.toFixed(4) + "," + acc_y.toFixed(4) + "," + acc_z.toFixed(4) + "," + gyro_a.toFixed(4) + "," + gyro_b.toFixed(4) + "," + gyro_g.toFixed(4) + ",";
+                        
+                        sendAir_Input(data);
+                        
+                        //var x_offset = (- x_sin * gyro_a - z_sin * gyro_g);
+                        //var y_offset = (x_sin * gyro_g - z_sin * gyro_a);
+                        //data = parseInt(x_offset).toString() + "," + parseInt(y_offset).toString();
+                        //tb_gyro.innerHTML = data;
+                       // sendAir_Input(data);
+                    }
+        }
+        function imageModeChanged(image, object) {
+            //event.preventDefault();
+            var bt = document.getElementById(object);
+            bt.style.background = "url(imgs/" + image + ")";
+            bt.style.backgroundRepeat = "no-repeat";
+            bt.style.backgroundSize = "auto 100%";
+            bt.style.backgroundPosition = "center top";
+        }
+        function Enable_calibration(checker){
+            if (checker == true){
+                imageModeChanged("reset_bt.png","reset_bt");
+                cur_reset_mode = 1;
+                window.addEventListener('devicemotion', get_gyro_calibration);
+            }
+            else{
+                imageModeChanged("reset_bt_pressed.png","reset_bt");
+                window.removeEventListener('devicemotion', get_gyro_calibration);
+                cur_reset_mode = 0;
+                //tb_gyro.innerHTML=""
+            }
+        }
+        function sendevent(form){
+            if (form == "sys_btn_home2"){
+                sendKeyEvent(KEY_HOME);
+            }
+            else if (form == "sys_btn_back2"){
+                sendKeyEvent(KEY_BACK);
+            }
+            else if (form == "bt_air_click"){
+                sendMouse_KeyEvent(MOUSE_CLICK);
+            }
+            else if (form == "reset_bt" || form == "reset_bt2"){
+                    Enable_calibration(true);
+                    cal_flush_timeout = window.setTimeout(function(){
+                        alert("Finished Gyro Calibration.");
+                        Enable_calibration(false);}, CAL_FLUSH_TIMEOUT);
+            }
+            else if (form == "air_input_mode"){
+                if (cur_air_mode == 0 ) {
+                    airModeChanged("air_bt.png");
+                    cur_air_mode = 1;
+                    if(window.DeviceMotionEvent) {
+                        window.addEventListener('devicemotion', gyro_event_listener);
+                    }
+                }
+                else{
+                    airModeChanged("air_bt_pressed.png");
+                    cur_air_mode = 0;
+                    if(window.DeviceMotionEvent) {
+                        window.removeEventListener('devicemotion', gyro_event_listener);
+                    }
+                }
+            }
+
+        }
+        function home_icon_add(title){
+            var home_page_uri = document.domain;
+        
+            var home_icon_uri = "/shortcut_icon.png";
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";    
+            var UserAgent = navigator.userAgent.toLowerCase();
+        
+            if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
+                alert('Add the ' + title +'shortCut icon');
+                var home_icon_add_frame=document.getElementById("home_icon_add_frame");
+                    home_icon_add_frame.src=naver_UrlScheme;
+            }else{
+                alert("Not surpport in iOS, Tizen ");
+            }
+        }
+        
+        function send_setting(){
+            
+            var data = document.getElementById("ACC_FW_GAIN").value + "," + document.getElementById("GYRO_FW_GAIN").value + "," 
+                        + document.getElementById("FACTOR_WEIGHT").value + "," + document.getElementById("MIN_MOVING_DELTA").value + "," 
+                        + document.getElementById("max_tremor_speed").value + "," + document.getElementById("sensor_speed").value + "," + document.getElementById("set_max_tremor").value + "," 
+                        + document.getElementById("set_cursor_acceleration").value + "," + document.getElementById("set_cursor_gain").value + "," 
+                        + document.getElementById("set_gyro_max_noise").value + "," + document.getElementById("set_filtering_level").value + ",";
+            sendAir_Set(data);
+        }
+        
+        function reset_sliderbar (){
+        
+            document.getElementById("ACC_FW_GAIN").value = 0.000244140625;
+            document.getElementById("GYRO_FW_GAIN").value = 0.00106422515;
+            document.getElementById("FACTOR_WEIGHT").value = 0.1;
+            document.getElementById("MIN_MOVING_DELTA").value = 1;
+            document.getElementById("max_tremor_speed").value = 3;
+            document.getElementById("sensor_speed").value = 1;
+            document.getElementById("set_max_tremor").value = -1.0;
+            document.getElementById("set_cursor_acceleration").value = 2.85;
+            document.getElementById("set_cursor_gain").value = 0.70;
+            document.getElementById("set_gyro_max_noise").value = 0.05;
+            document.getElementById("set_filtering_level").value = 0;
+
+            showValue("ACC_FW_GAIN", 0.000244140625);
+            showValue("GYRO_FW_GAIN", 0.00106422515);
+            showValue("FACTOR_WEIGHT", 0.1);
+            showValue("MIN_MOVING_DELTA", 1);
+            showValue("max_tremor_speed", 3);
+            showValue("sensor_speed", 1);
+            showValue("set_max_tremor", -1.0);
+            showValue("set_cursor_acceleration", 2.85);
+            showValue("set_cursor_gain", 0.70);
+            showValue("set_gyro_max_noise", 0.05);
+            showValue("set_filtering_level", 0);
+
+            
+        }
+        
+        function showValue(obj, newValue)
+        {
+            document.getElementById((obj+"1")).innerHTML=newValue;
+        }
+        
+
+        $(document).ready(function() {
+
+            var obj = document.getElementById('by');
+            obj.style.height =  $(document).height() + "px";
+            
+            reset_sliderbar();
+            /*
+            showValue("ACC_FW_GAIN", 0.000244140625);
+            showValue("GYRO_FW_GAIN", 0.00106422515);
+            showValue("FACTOR_WEIGHT", 0.1);
+            showValue("MIN_MOVING_DELTA", 1);
+            showValue("max_tremor_speed", 2);
+            showValue("set_max_tremor", 1.0);
+            showValue("set_cursor_acceleration", 1.0);
+            showValue("set_cursor_gain", 1.65);
+            showValue("set_gyro_max_noise", 0.05);
+            */
+        });
+
+</script>
+    <!-- MOUSE MODE -->
+    <div id="keymode"  data-role="page" data-fullscreen="true" class ="visible">
+       <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_width33 cell_height7 logo" onclick="home_icon_add('Tizen_Input')"></td>
+                <td id="reset_bt" class="t_cell cell_width33 reset_bt " ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id ="air_input_mode" class="t_cell cell_width33 air_input_mode" onclick="javascript:sendevent(this.id)"></td>
+            </tr>
+            <tr>
+                <td  class="t_cell" colspan="3">
+                        <!-- Content -->
+                        <table class="tb1">
+                                <!-- Content_space-top -->
+                                <tr>
+                                    <td class="t_cell cell_height5 t_cell_vertical_align_bottom" >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table id="air_panel" class="tb1_thin_border air_panel ">
+                                            <tr>
+                                                <td class="t_cell_thin_border cell_height5" colspan="3">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell_thin_border cell_width5">
+                                                </td>
+                                                <td id="bt_air_click" class="t_cell_thin_border air_bt" ontouchstart="javascript:sendevent(this.id)">
+                                                </td>
+                                                <td class="t_cell_thin_border cell_width5">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell_thin_border ">
+                                                </td>
+                                                <td id ="tb_gyro" class="t_cell_thin_border" style="text-align:left; font-size:10px;">
+                                                ACC_FW_GAIN (0.000244140625)</br>
+                                                <input id="ACC_FW_GAIN" type="range" min="-0.05" style="width:200px"  step="0.001" max="0.05" onchange="showValue(this.id,this.value)" /> <span id="ACC_FW_GAIN1"></span></br>
+                                                GYRO_FW_GAIN (0.00106422515)</br>
+                                                <input id="GYRO_FW_GAIN" type="range" min="-0.05" style="width:200px" step="0.001" max="0.05" onchange="showValue(this.id,this.value)" /> <span id="GYRO_FW_GAIN1"></span></br>
+                                                FACTOR_WEIGHT (0.1f)</br>
+                                                <input id="FACTOR_WEIGHT" type="range" min="0" style="width:200px" max="0.5" step="0.001" onchange="showValue(this.id,this.value)" /> <span id="FACTOR_WEIGHT1"></span></br>
+                                                MIN_MOVING_DELTA (1)</br>
+                                                <input id="MIN_MOVING_DELTA" type="range" min="0" max="10.0" style="width:200px" step="0.01" onchange="showValue(this.id,this.value)" /> <span id="MIN_MOVING_DELTA1"></span></br>
+                                                max_tremor_speed (2)</br>
+                                                <input id="max_tremor_speed" type="range" min="0" max="10.0" style="width:200px" step="0.01" onchange="showValue(this.id,this.value)" /> <span id="max_tremor_speed1"></span></br>
+                                                sensor_speed (1 Slo-Nor-Fas)</br>
+                                                <input id="sensor_speed" type="range" min="0" max="2" style="width:200px" step="1" onchange="showValue(this.id,this.value)" /> <span id="sensor_speed1"></span></br>
+                                                set_max_tremor(-1.0)</br>
+                                                <input id="set_max_tremor" type="range" min="-1" max="2" style="width:200px" step="0.01" onchange="showValue(this.id,this.value)" /> <span id="set_max_tremor1"></span></br>
+                                                set_cursor_acceleration(2.85)</br>
+                                                <input id="set_cursor_acceleration" type="range" min="1" max="4" style="width:200px" step="0.01" onchange="showValue(this.id,this.value)" /> <span id="set_cursor_acceleration1"></span></br>
+                                                set_cursor_gain(0.70)</br>
+                                                <input id="set_cursor_gain" type="range" min="0.01" max="5" style="width:200px" step="0.0001" onchange="showValue(this.id,this.value)" /> <span id="set_cursor_gain1"></span></br>
+                                                set_gyro_max_noise(0.05)</br>
+                                                <input id="set_gyro_max_noise" type="range" min="0.0001" max="10" style="width:200px" step="0.0001" onchange="showValue(this.id,this.value)" /> <span id="set_gyro_max_noise1"></span></br>
+                                                set_filtering_level (0 Nor-Low-No)</br>
+                                                <input id="set_filtering_level" type="range" min="0" max="2" style="width:200px" step="1" onchange="showValue(this.id,this.value)" /> <span id="set_filtering_level1"></span></br>
+
+                                                </br><input id="send_setting" type="button" value="send setting" onclick="send_setting()"/>                  
+                                                <input id="reset_setting" type="button" value="reset setting" onclick="reset_sliderbar()"/>
+                                                </td>
+                                                <td class="t_cell_thin_border">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Content_space-bottom -->
+                        </table>
+                </td>
+            </tr>
+        <!-- Footer -->
+            <tr>
+                <td id="sys_btn_home2" class="t_cell_footer apps" ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id="sys_btn_modechange2" class="t_cell_footer modeswitcher_to_tv" ></td>
+                <td id="sys_btn_back2" class="t_cell_footer back" ontouchstart="sendevent(this.id)"></td>
+            </tr>
+
+        </table>
+    </div>
+<iframe id="home_icon_add_frame" style="display:none;width:0px;height:0px;"></iframe>
+<!-- end page 2 -->
+</body>
+</html>
+
+

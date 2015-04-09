@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tizen Remote Input</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable = 0"/>
+    <link rel="stylesheet" href="custom3.css" type="text/css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.3.1.min.css" type="text/css"/>
+    <script src="tv_mode.js" type="text/javascript"> </script>
+    <script src="jquery-2.0.2.min.js"></script>
+    <script src="jquery.mobile-1.3.1.min.js"></script>
+</head>
+
+<body>
+    <script>
+
+    </script>
+
+
+
+<!--Start page 1 -->
+    <div id="tvmode" data-role="page" data-theme="a" data-fullscreen="true">
+
+        <div data-role="header" style="line-height:0em">
+<!--              <h1><table align=left border=0 width=100%><tr><td align=right><img width=35 src="wifikeyboard.png"></td><td align=left >Tizen Remote Input</td><td align="right" ><a href="#keymode" data-transition="flip"><img width=35 src="keyboard.png"></a></td></tr></table></h1> -->
+<!--            <h1><table align=left border=0 width=100%><tr><td align=right><img width=35 src="wifikeyboard.png"></td><td align=left >Tizen Remote Input</td><td align="center" ></td></tr></table></h1> -->
+             <h1><table border="0" width="100%"><tr><td align="right" width="25%"><img width=35 src="wifikeyboard.png"></td><td align=center >Tizen Remote Input</td><td align="right" width="25%" ><right><a  href="#keymode" data-transition="flip" data-role="button" data-theme="a" style= "height:30px; width:50px" ><font size="1" style="normal" >모드</p>전환</font></a></right></td></tr></table></h1>
+
+        </div> <!-- /header -->
+
+        <div id ="content_div" data-role="content" >
+
+            <div align="center" style="line-height:0em">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr >
+                        <td style= "width:70px; text-align: center" ><center><a id="bt_power" href="#" data-role="button" data-icon="gear" data-iconpos="bottom" data-theme="i" style= "height:60px; width:60px" ><font size="1" style="normal" >전원</font> </a></center></td>
+                        <td style= "width:150px; text-align: center"><font size="4" style="font-weight: bold" ></font></td>
+                        <td style= "width:70px"><center><a id="bt_switchmode" href="#" data-role="button" data-theme="a" style= "height:60px; width:60px" ><font size="1" style="normal" >외부</p>입력</font></a></center></td>
+                    </tr>
+                </table>
+
+                <table style="text-align: center;" border="0" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <td><a id="bt_menu" href="#" data-role="button" data-icon="grid" data-iconpos="bottom" data-theme="f" style= "height:60px; width:60px" ><font size="1" style="normal" >간편</p>메뉴</font> </a></td>
+                        <td><a id="bt_up" href="#" data-role="button" data-icon="arrow-u" data-iconpos="top" data-theme="a" style= "height:65px; width:65px" ><font size="2" style="normal" ></font> </a></td>
+                        <td><a id="bt_info" href="#" data-role="button" data-icon="info" data-iconpos="bottom" data-theme="f" style= "height:60px; width:60px" ><font size="1" style="normal" >정보</p>표시</font> </a></td>
+                    </tr>
+                    <tr>
+                        <td><a id="bt_left" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left" data-theme="a" style= "height:65px; width:65px" ><font size="1" style="normal" ></font> </a></td>
+                        <td><a id="bt_select" href="#" data-role="button" data-icon="check" data-iconpos="bottom" data-theme="a"style= "height:65px; width:65px" ><font size="2" style="normal" ></font> </a></td>
+                        <td><a id="bt_right" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" data-theme="a"style= "height:65px; width:65px" ><font size="1" style="normal" ></font> </a></td>
+                    </tr>
+                    <tr>
+                        <td><a id="bt_back" href="#" data-role="button" data-icon="back" data-iconpos="bottom" data-theme="f"style= "height:60px; width:60px" ><font size="1" style="normal" >복귀</font> </a></td>
+                        <td><a id="bt_down" href="#" data-role="button" data-icon="arrow-d" data-iconpos="bottom" data-theme="a"style= "height:65px; width:65px" ><font size="2" style="normal" ></font> </a></td>
+                        <td><a id="bt_exit" href="#" data-role="button" data-icon="home" data-iconpos="bottom" data-theme="f"style= "height:60px; width:60px" ><font size="1" style="normal" >종료</font> </a></td>
+                    </tr>
+                </table>
+                <table style="text-align: center;" border="0" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <td style="vertical-align: middle; width:120px; text-align: center;"><center><a id="bt_volume_up" href="#" data-role="button" data-icon="plus" data-iconpos="top"  data-theme="h" style= "height:75px; width:75px" ><font size="2" style="normal" >음</font></a></center></td>
+                        <td align="center" ><a id="bt_mute" href="#" data-role="button" data-theme="a"style= "height:40px; width:40px" ><font size="1" style="normal" >조용</font> </a></td>
+                        <td style="vertical-align: middle; width:120px; text-align: center;"><center><a id="bt_channel_up" href="#" data-role="button" data-icon="arrow-u" data-iconpos="top" data-theme="h"style= "height:75px; width:75px" ><font size="2" style="normal" >채</font> </a></center></td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; width:120px; text-align: center;"><center><a id="bt_volume_down" href="#" data-role="button" data-icon="minus" data-iconpos="bottom" data-theme="h"style= "height:75px; width:75px" ><font size="2" style="normal" >량</font> </a></center></td>
+                        <td align="center"><a id="bt_channel_list" href="#" data-role="button" data-theme="a"style= "height:40px; width:55px" ><font size="1" style="normal" >채널</p>목록</font> </a></td>
+                        <td style="vertical-align: middle; width:120px; text-align: center;"><center><a id="bt_channel_down" href="#" data-role="button" data-icon="arrow-d" data-iconpos="bottom" data-theme="h"style= "height:75px; width:75px" ><font size="2" style="normal" >널</font> </a></center></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- /content -->
+
+        <div data-role="footer" data-tap-toggle="false" data-position="fixed">
+            <div data-role="navbar" data-grid="b">
+                <ul>
+                    <li><a href="#" id="sys_btn_menu" data-icon="bars"  data-transition="flip">메 뉴</a></li>
+                    <li><a href="#" id="sys_btn_home" data-icon="home">Smart Home</a></li>
+                    <li><a href="#" id="sys_btn_back" data-icon="back">복 귀</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /footer -->
+    </div>
+<!-- End page 1 -->
+
+<!--Start page 2 -->
+        <div id="keymode"  data-role="page" data-theme="a" data-fullscreen="true">
+
+        <div data-role="header" style="line-height:0em">
+<!--            <h1><table align=left border=0 width=100% ><tr><td align=right style="text-align:center; vertical-align:super;"><img width=35 src="wifikeyboard.png"></td><td align="center" >Tizen Remote Input</td><td align=left><a href="#tvmode" data-transition="flip"><img width=35 src="remocon.png"></a></td></tr></table></h1>-->
+             <h1><table align="left" border="0" width="100%"><tr><td align="right" width="25%"><img width=35 src="wifikeyboard.png"></td><td align=center >Tizen Remote Input</td><td align="right" width="25%"><right><a  href="#tvmode" data-transition="flip" data-role="button" data-theme="a" style= "height:30px; width:50px" ><font size="1" style="normal" >모드</p>전환</font></a></right></td></tr></table></h1>
+
+<!--             <h1><table align=left border=0 width=100% ><tr><td align=right style="text-align:center; vertical-align:super;"><img width=35 src="wifikeyboard.png"></td><td align="left" >Tizen Remote Input</td><td></td></tr></table></h1> -->
+        </div>
+        <!-- /header -->
+
+        <div id ="content_div2" data-role="content">
+            <textarea name="entry" wrap="off"  style="overflow:hidden;" rows="1" id="entry"></textarea>
+<!--             <label><input type="checkbox" id="search_link_checker" name="search_link"> <font size ="2"> search_link_checker </font></input></label> -->
+            <div>
+                <div id="mousepad" style="background-image:url(mouse_pad.png); float:left; background-size: 100% 100%; background-repeat: no-repeat;width:88%;height:340px;"></div>
+                <div id="mousescroll" style="background-image:url(scrollbar.png); float:left; background-size: 100% 100%; background-repeat: no-repeat;width:12%;height:340px;"></div>
+            </div>
+            <fieldset class="ui-grid-c">
+<!--
+                <div class="ui-block-a">
+                    <button id="arrow_left" type="button" data-inline="true" data-icon="arrow-l"
+                    data-iconpos="left" data-theme="c"><font size="1" style="nomal" weight="300">TV MODE</font></button>
+                </div>
+
+                <div class="ui-block-b">
+                    <button id="arrow_right" type="button" data-icon="arrow-r"
+                    data-iconpos="left" data-theme="c"><font size="1" style="nomal" weight="300">복 귀</font></button>
+                </div>
+
+                <div class="ui-block-c">
+                    <button id="arrow_up" type="button" data-icon="arrow-u"
+                    data-iconpos="left" data-theme="b"><font size="1" style="nomal" weight="300">&nbsp;</font></button>
+                </div>
+                <div class="ui-block-d">
+                    <button id="arrow_down" type="button" data-icon="arrow-d"
+                    data-iconpos="left" data-theme="b"><font size="1" style="nomal" weight="300">&nbsp;</font></button>
+                </div> -->
+            </fieldset>
+            <!--<textarea name="logbox" id="log_box" style="overflow:auto; height:10px;width:100%;letter-spacing:0; padding:8; border-style:dotted; font-size:12px" ></textarea>  -->
+        </div>
+        <!-- /content -->
+
+        <div data-role="footer" data-tap-toggle="false" data-position="fixed"  >
+            <div data-role="navbar" class="nav-glyphish-example" data-grid="b">
+                <ul>
+                    <li><a href="#" id="sys_btn_menu2" data-icon="bars"  data-transition="flip">메 뉴</a></li>
+                    <li><a href="#" id="sys_btn_home2" data-icon="home">Smart Home</a></li>
+                    <li><a href="#" id="sys_btn_back2" data-icon="back">복 귀</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /footer -->
+    </div>
+
+<!-- page 2 -->
+</body>
+</html>
+
+
