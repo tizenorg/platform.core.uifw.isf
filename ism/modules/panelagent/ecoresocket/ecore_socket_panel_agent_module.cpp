@@ -2877,6 +2877,10 @@ private:
                     trans.put_command(SCIM_TRANS_CMD_OK);
                     trans.write_to_socket(client_socket);
                     m_info_manager->hide_helper_ise ();
+                } else if (cmd == ISM_TRANS_CMD_ENABLE_REMOTE_INPUT) {
+                    m_info_manager->enable_remote_input ();
+                } else if (cmd == ISM_TRANS_CMD_DISABLE_REMOTE_INPUT) {
+                    m_info_manager->disable_remote_input ();
                 } else {
                     LOGW ("unknow cmd: %d\n", cmd);
                 }

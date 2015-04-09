@@ -64,6 +64,8 @@ public:
     bool is_helper_ise_enabled (const char* appid, int &enabled);
     bool get_recent_ime_geometry (int *x, int *y, int *w, int *h, int angle = -1);
     bool hide_helper_ise (void);
+    void enable_remote_input (void);
+    void disable_remote_input (void);
 };
 
 }
