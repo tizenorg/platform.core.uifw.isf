@@ -371,6 +371,9 @@ class InfoManager::InfoManagerImpl
 
     InfoManagerSignalIntRect             m_signal_get_recent_ise_geometry;
 
+    InfoManagerSignalVoid                m_signal_enable_remote_input;
+    InfoManagerSignalVoid                m_signal_disable_remote_input;
+
     InfoManagerSignalIntString2          m_signal_check_privilege_by_sockfd;
 
     PanelAgentManager                    m_panel_agent_manager;
@@ -1255,6 +1258,19 @@ public:
         SCIM_DEBUG_MAIN (4) << "InfoManager::show_isf_panel ()\n";
         m_signal_show_panel ();
     }
+
+    void enable_remote_input (void)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::enable_remote_input ()\n";
+        m_signal_enable_remote_input ();
+    }
+
+    void disable_remote_input (void)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::disable_remote_input ()\n";
+        m_signal_disable_remote_input ();
+    }
+
     //ISM_TRANS_CMD_HIDE_ISF_CONTROL
     void hide_isf_panel (int client_id) {
         LOGD ("");
@@ -1907,6 +1923,78 @@ public:
         return m_signal_check_privilege_by_sockfd (client_id, privilege);
     }
 
+    bool update_preedit_string (const WideString &str, const AttributeList &attrs)
+    {
+        SCIM_DEBUG_MAIN(1) << "PanelAgent::update_preedit_string ()\n";
+        int    client = -1;
+        uint32 context = 0;
+
+        lock ();
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            
+        }
+
+        unlock ();
+
+        return client >= 0;
+    }
+    
+    bool commit_string (const WideString &str)
+    {
+        SCIM_DEBUG_MAIN(1) << "PanelAgent::commit_string ()\n";
+        int    client = -1;
+        uint32 context = 0;
+
+        lock ();
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            
+        }
+
+        unlock ();
+
+        return client >= 0;
+    }
+    
+    bool send_key_event (const KeyEvent &key)
+    {
+        SCIM_DEBUG_MAIN(1) << "PanelAgent::send_key_event ()\n";
+        int    client = -1;
+        uint32 context = 0;
+
+        lock ();
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            
+        }
+
+        unlock ();
+
+        return client >= 0;
+    }
+    
+    bool forward_key_event (const KeyEvent &key)
+    {
+        SCIM_DEBUG_MAIN(1) << "PanelAgent::forward_key_event ()\n";
+        int    client = -1;
+        uint32 context = 0;
+
+        lock ();
+
+        get_focused_context (client, context);
+        if (client >= 0) {
+            
+        }
+
+        unlock ();
+
+        return client >= 0;
+    }
+
     Connection signal_connect_turn_on (InfoManagerSlotVoid*                slot) {
         return m_signal_turn_on.connect (slot);
     }
@@ -2211,6 +2299,16 @@ public:
     Connection signal_connect_check_privilege_by_sockfd  (InfoManagerSlotIntString2* slot)
     {
         return m_signal_check_privilege_by_sockfd.connect (slot);
+    }
+
+    Connection signal_connect_enable_remote_input        (InfoManagerSlotVoid*                slot)
+    {
+        return m_signal_enable_remote_input.connect (slot);
+    }
+
+    Connection signal_connect_disable_remote_input        (InfoManagerSlotVoid*                slot)
+    {
+        return m_signal_disable_remote_input.connect (slot);
     }
 
     //ISM_TRANS_CMD_REGISTER_PANEL_CLIENT
@@ -4032,6 +4130,27 @@ InfoManager::update_ise_list (std::vector<String>& strList)
     m_impl->update_ise_list (strList);
 }
 
+bool
+InfoManager::update_preedit_string (const WideString &str, const AttributeList &attrs)
+{
+    return m_impl->update_preedit_string (str, attrs);
+}
+bool
+InfoManager::commit_string (const WideString &str)
+{
+    return m_impl->commit_string (str);
+}
+bool
+InfoManager::send_key_event (const KeyEvent &key)
+{
+    return m_impl->send_key_event (key);
+}
+bool
+InfoManager::forward_key_event (const KeyEvent &key)
+{
+    return m_impl->forward_key_event (key);
+}
+
 /////////////////////////////////Message function begin/////////////////////////////////////////
 
 //ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE
@@ -4322,6 +4441,18 @@ void InfoManager::contract_candidate ()
 void InfoManager::get_recent_ise_geometry (int client_id, uint32 angle, _OUT_ struct rectinfo& info)
 {
     m_impl->get_recent_ise_geometry (client_id, angle, info);
+}
+
+//ISM_TRANS_CMD_ENABLE_REMOTE_INPUT
+void InfoManager::enable_remote_input ()
+{
+    m_impl->enable_remote_input ();
+}
+
+//ISM_TRANS_CMD_DISABLE_REMOTE_INPUT
+void InfoManager::disable_remote_input ()
+{
+    m_impl->disable_remote_input ();
 }
 
 //ISM_TRANS_CMD_REGISTER_PANEL_CLIENT
@@ -5202,6 +5333,17 @@ InfoManager::signal_connect_check_privilege_by_sockfd  (InfoManagerSlotIntString
     return m_impl->signal_connect_check_privilege_by_sockfd (slot);
 }
 
+Connection
+InfoManager::signal_connect_enable_remote_input         (InfoManagerSlotVoid*                slot)
+{
+    return m_impl->signal_connect_enable_remote_input (slot);
+}
+
+Connection
+InfoManager::signal_connect_disable_remote_input         (InfoManagerSlotVoid*                slot)
+{
+    return m_impl->signal_connect_disable_remote_input (slot);
+}
 
 } /* namespace scim */
 

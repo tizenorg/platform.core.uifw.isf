@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tizen Remote Input</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+     <script src="ajaxCaller.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="remote_input.css" type="text/css"/>
+     <script src="util.js" type="text/javascript"> </script>
+    <script src="jquery-2.0.2.min.js"></script>
+
+
+
+</head>
+
+<body id="by">
+<script>
+
+
+        // Callback incremental index
+        var id_num = 0;
+        var ori;
+        var MOUSE_CLICK = 555;
+        var KEY_MENU = 10001;
+        var KEY_HOME = 10002;
+        var KEY_BACK = 10003;
+        var scroll_pre_x = 0;
+        var scroll_pre_y = 0;
+        var cur_air_mode = 0;
+
+        function cbAjax(text, headers, callingContext){
+            id_num++;
+            return true;
+        }
+        function sendKeyEvent(keyCode){
+            var bodyVars = {id:id_num, key:'event', value:keyCode}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+        function sendMouse_KeyEvent(mouseCode) {
+            var bodyVars = {id:id_num, key:'mouse_key', value:mouseCode}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function sendMouse_MoveEvent(coordinate) {
+            var bodyVars = {id:id_num, key:'mouse_move', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function sendWheel_MoveEvent(coordinate) {
+            var bodyVars = {id:id_num, key:'wheel_move', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function sendAir_Input(coordinate) {
+            var bodyVars = {id:id_num, key:'air_input', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+
+        function airModeChanged(to) {
+                event.preventDefault();
+                var air_input_bt = document.getElementById('air_input_mode');
+                air_input_bt.style.background = "url(imgs/" + to + ")";
+                air_input_bt.style.backgroundRepeat = "no-repeat";
+                air_input_bt.style.backgroundSize = "auto 100%";
+                air_input_bt.style.backgroundPosition = "center";
+            }
+        function gyro_event_listener(event) {
+        
+                    var x = event.accelerationIncludingGravity.x;
+                    var y = event.accelerationIncludingGravity.y;
+                    var z = event.accelerationIncludingGravity.z;
+                    var r = event.rotationRate;
+                    var data;
+                    
+                    
+
+                        
+                    if(x!=null || y!=null || z!=null || r!=null) {
+                    
+                        var gyro_a = r.alpha;
+                        var gyro_b = r.beta;
+                        var gyro_g = r.gamma;
+                        
+                        var UserAgent = navigator.userAgent.toLowerCase();
+                        if(UserAgent.indexOf("android") != -1 ) {
+                            gyro_a *=100;
+                            gyro_b *=100;
+                            gyro_g *=100;
+                        }
+                        tb_gyro.innerHTML ="Acceleration</br> x:0.01,y:-0.05,z:10</br>"+"x: " + x + " ,</br>y: " + y + " ,</br>z: " + z +"</br></br>Rotation Rate</br>a:-4, b:0.8, g:-0.2 </br>"+ "a: " + gyro_a + " ,</br>b: " + gyro_b + " ,</br>g: " + gyro_g;
+                        
+                        //var x_offset = (- x_sin * gyro_a - z_sin * gyro_g);
+                        //var y_offset = (x_sin * gyro_g - z_sin * gyro_a);
+                        //data = parseInt(x_offset).toString() + "," + parseInt(y_offset).toString();
+                        //tb_gyro.innerHTML = data;
+                       // sendAir_Input(data);
+                    }
+        }
+
+        function sendevent(form){
+            if (form == "sys_btn_home2"){
+                sendKeyEvent(KEY_HOME);
+            }
+            else if (form == "sys_btn_back2"){
+                sendKeyEvent(KEY_BACK);
+            }
+            else if (form == "bt_air_click"){
+                sendMouse_KeyEvent(MOUSE_CLICK);
+            }
+            else if (form == "air_input_mode"){
+                if (cur_air_mode == 0 ) {
+                    airModeChanged("air_bt.png");
+                    cur_air_mode = 1;
+                    if(window.DeviceMotionEvent) {
+                        window.addEventListener('devicemotion', gyro_event_listener);
+                    }
+                }
+                else{
+                    airModeChanged("air_bt_pressed.png");
+                    cur_air_mode = 0;
+                    if(window.DeviceMotionEvent) {
+                        window.removeEventListener('devicemotion', gyro_event_listener);
+                    }
+                }
+            }
+
+        }
+        function home_icon_add(title){
+            var home_page_uri = "http://moakey.com/tizen_tv/list.php";
+            var home_icon_uri = "http://" + document.domain +":8182/shortcut_icon.png";
+
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";    
+            var UserAgent = navigator.userAgent.toLowerCase();
+        
+            if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
+                alert('Add the ' + title +'shortCut icon');
+                var home_icon_add_frame=document.getElementById("home_icon_add_frame");
+                    home_icon_add_frame.src=naver_UrlScheme;
+            }else{
+                alert("Not surpport in iOS, Tizen ");
+            }
+        }
+
+        $(document).ready(function() {
+
+            var obj = document.getElementById('by');
+            obj.style.height =  $(document).height() + "px";
+
+        });
+
+</script>
+    <!-- MOUSE MODE -->
+    <div id="keymode"  data-role="page" data-fullscreen="true" class ="visible">
+       <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_width33 cell_height7 logo" onclick="home_icon_add('Tizen_Input')"></td>
+                <td class="t_cell cell_width33 "></td>
+                <td id ="air_input_mode" class="t_cell cell_width33 air_input_mode" onclick="javascript:sendevent(this.id)"></td>
+            </tr>
+            <tr>
+                <td  class="t_cell" colspan="3">
+                        <!-- Content -->
+                        <table class="tb1">
+                                <!-- Content_space-top -->
+                                <tr>
+                                    <td class="t_cell cell_height15 t_cell_vertical_align_bottom" >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table id="air_panel" class="tb1_thin_border air_panel ">
+                                            <tr>
+                                                <td class="t_cell_thin_border cell_height25" colspan="3">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell_thin_border cell_width15">
+                                                </td>
+                                                <td id="bt_air_click" class="t_cell_thin_border air_bt" ontouchstart="javascript:sendevent(this.id)">
+                                                </td>
+                                                <td class="t_cell_thin_border cell_width15">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell_thin_border ">
+                                                </td>
+                                                <td id ="tb_gyro" class="t_cell_thin_border">
+                                                </td>
+                                                <td class="t_cell_thin_border">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Content_space-bottom -->
+                        </table>
+                </td>
+            </tr>
+        <!-- Footer -->
+            <tr>
+                <td id="sys_btn_home2" class="t_cell_footer apps" ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id="sys_btn_modechange2" class="t_cell_footer modeswitcher_to_tv" ></td>
+                <td id="sys_btn_back2" class="t_cell_footer back" ontouchstart="sendevent(this.id)"></td>
+            </tr>
+
+        </table>
+    </div>
+<iframe id="home_icon_add_frame" style="display:none;width:0px;height:0px;"></iframe>
+<!-- end page 2 -->
+</body>
+</html>
+
+

@@ -333,6 +333,12 @@ PKG_CHECK_MODULES(APP_CONTROL, [capi-appfw-app-control])
 # Check appfw library
 PKG_CHECK_MODULES(APPFW, [capi-appfw-application])
 
+# Check package manager
+PKG_CHECK_MODULES(OPENCV, [opencv])
+
+# Check package manager
+PKG_CHECK_MODULES(LIBWEBSOCKETS, [libwebsockets])
+
 # Check core package manager
 PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info],
                   [ISF_HAS_PKGMGR_INFO=yes],
