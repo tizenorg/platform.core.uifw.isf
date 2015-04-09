@@ -283,6 +283,40 @@ public:
         return true;
     }
 
+    void enable_remote_input (void) {
+        int cmd;
+
+        m_trans.put_command (ISM_TRANS_CMD_ENABLE_REMOTE_INPUT);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+            ;
+        } else {
+            std::cerr << __func__ << " get_command() is failed!!!\n";
+        }
+
+    }
+
+    void disable_remote_input (void) {
+        int cmd;
+
+        m_trans.put_command (ISM_TRANS_CMD_DISABLE_REMOTE_INPUT);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+            ;
+        } else {
+            std::cerr << __func__ << " get_command() is failed!!!\n";
+        }
+
+    }
+
     bool get_ise_list (int* count, char*** iselist) {
         int cmd;
         uint32 count_temp = 0;
@@ -634,6 +668,16 @@ bool IMControlClient::set_active_ise_by_uuid (const char* uuid)
 bool IMControlClient::set_initial_ise_by_uuid (const char* uuid)
 {
     return m_impl->set_initial_ise_by_uuid (uuid);
+}
+
+void IMControlClient::enable_remote_input (void)
+{
+    m_impl->enable_remote_input ();
+}
+
+void IMControlClient::disable_remote_input (void)
+{
+    m_impl->disable_remote_input ();
 }
 
 bool IMControlClient::get_active_ise (String &uuid)
