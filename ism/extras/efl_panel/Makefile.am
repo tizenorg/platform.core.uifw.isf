@@ -17,7 +17,11 @@ AM_CPPFLAGS = -I$(top_builddir) \
            -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\" \
            -DSCIM_TEMPDIR=\"@SCIM_TEMPDIR@\"
 
-noinst_HEADERS = isf_panel_utility.h
+noinst_HEADERS = isf_panel_utility.h \
+              websocketserver.h \
+              motion_input.h \
+              remote_input.h
+
 
 if ISF_BUILD_PANEL_EFL
 CONFIG_SCIM_PANEL_EFL  = isf-panel-efl
@@ -26,6 +30,9 @@ endif
 bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
+                         motion_input.cpp \
+                         remote_input.cpp \
+                         websocketserver.cpp \
                          isf_panel_utility.cpp
 
 isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
@@ -39,6 +46,8 @@ isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
                          @TTS_CFLAGS@ \
                          @EDBUS_CFLAGS@ \
                          @BLUETOOTH_CFLAGS@ \
+                         @OPENCV_CFLAGS@ \
+                         @LIBWEBSOCKETS_CFLAGS@ \
                          @FEEDBACK_CFLAGS@ \
                          @APP_CONTROL_CFLAGS@ \
                          @PKGMGR_INFO_CFLAGS@ \
@@ -56,6 +65,8 @@ isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @TTS_LIBS@ \
                          @EDBUS_LIBS@ \
                          @BLUETOOTH_LIBS@ \
+                         @OPENCV_LIBS@ \
+                         @LIBWEBSOCKETS_LIBS@ \
                          @FEEDBACK_LIBS@ \
                          @APP_CONTROL_LIBS@ \
                          @PKGMGR_INFO_LIBS@ \
