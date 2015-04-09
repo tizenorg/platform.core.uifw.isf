@@ -65,7 +65,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "security-server.h"
 
 
 EAPI scim::CommonLookupTable g_isf_candidate_table;
@@ -3763,26 +3762,12 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
                         ISF_SAVE_LOG ("setting active ise\n");
                         set_active_ise_by_uuid (client_id);
-                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
                         ISF_SAVE_LOG ("setting initial ise\n");
                         set_initial_ise_by_uuid (client_id);
-                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);

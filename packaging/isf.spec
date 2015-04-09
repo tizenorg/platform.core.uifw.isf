@@ -29,7 +29,6 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(tts)
-BuildRequires:  pkgconfig(security-server)
 BuildRequires:  pkgconfig(edbus)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
 BuildRequires:  efl-extension-devel
