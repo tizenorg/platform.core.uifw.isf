@@ -142,7 +142,7 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  isf_imcontrol_client.cpp \
 			  isf_query_utility.cpp
 
-libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@ @DLOG_CFLAGS@ @SECURITY_SERVER_CFLAGS@ @VCONF_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@
+libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@ @DLOG_CFLAGS@ @VCONF_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@
 
 libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
 			  -export-dynamic \
@@ -152,7 +152,6 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBTOOL_EXPORT_OPTIONS@ \
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
-			  @SECURITY_SERVER_LIBS@ \
 			  @EFL_LIBS@ \
 			  @VCONF_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
