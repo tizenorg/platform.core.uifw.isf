@@ -556,6 +556,31 @@ public:
      * @return none.
      */
     void update_ise_list (std::vector<String>& strList);
+
+
+    bool update_preedit_string (const WideString &str, const AttributeList &attrs) ;
+
+    bool commit_string (const WideString &str) ;
+
+    bool send_key_event (const KeyEvent &key) ;
+
+    bool forward_key_event (const KeyEvent &key) ;
+
+
+    /**
+     * @brief Enable remote input.
+     *
+     * @return none.
+     */
+    void enable_remote_input (void);
+
+    /**
+     * @brief Disable remote input.
+     *
+     * @return none.
+     */
+    void disable_remote_input (void);
+
 /////////////////////////////////Message function begin/////////////////////////////////////////
 
 //ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE
@@ -1499,6 +1524,20 @@ public:
      * slot prototype: void get_recent_ise_geometry (int angle, rectinfo &info);
      */
     Connection signal_connect_get_recent_ise_geometry (InfoManagerSlotIntRect*             slot);
+
+    /**
+     * @brief Signal: Enable remote input.
+     *
+     * slot prototype: void enabl_remote_input (void);
+     */
+    Connection signal_connect_enable_remote_input (InfoManagerSlotVoid*                slot);
+
+    /**
+     * @brief Signal: Disable remote input.
+     *
+     * slot prototype: void disable_remote_input (void);
+     */
+    Connection signal_connect_disable_remote_input (InfoManagerSlotVoid*                slot);
 
     Connection signal_connect_check_privilege_by_sockfd  (InfoManagerSlotIntString2* slot);
 };

@@ -18,3 +18,4 @@
 /SupportHWKeyboardMode = true
 /DefaultKbdModeChangerProgram = org.tizen.isf-kbd-mode-changer
 /LockScreenClassName = LOCK_SCREEN, hub-idlescreen
+/LaunchRemoteInput = true
