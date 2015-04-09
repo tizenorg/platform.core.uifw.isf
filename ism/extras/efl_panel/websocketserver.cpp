@@ -179,7 +179,7 @@ static int callback_http(struct libwebsocket_context *context,
         enum libwebsocket_callback_reasons reason, void *user,
                                void *in, size_t len)
 {
-    //LOGD(" ");
+    LOGD(" ");
 #if 0
     char client_name[128];
     char client_ip[128];
@@ -403,7 +403,7 @@ callback_keyboard(struct libwebsocket_context *context,
             enum libwebsocket_callback_reasons reason,
                            void *user, void *in, size_t len)
 {
-    //LOGD(" %d",reason);
+    LOGD(" %d",reason);
     static int last_session_id = 0;
     const int bufsize = 512;
     int n = 0;
@@ -451,10 +451,10 @@ callback_keyboard(struct libwebsocket_context *context,
         break;
 
     case LWS_CALLBACK_RECEIVE:
-        //LOGD("LWS_CALLBACK_RECEIVE");
+        LOGD("LWS_CALLBACK_RECEIVE");
         if (in) {
             std::string str = (const char *)in;
-            //LOGD("Receive MSG :|%s|", str.c_str());
+            LOGD("Receive MSG :|%s|", str.c_str());
             ISE_MESSAGE message = CISEMessageSerializer::deserialize(str);
 /*
             if (message.command.compare(ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_LOGIN]) == 0) {
@@ -493,7 +493,7 @@ callback_keyboard(struct libwebsocket_context *context,
 
 void *process_ws_server(void *data)
 {
-    //LOGD(" ");
+    LOGD(" ");
     unsigned int oldus = 0;
 
     while (!force_exit && !g_ws_server_exit) {
@@ -529,13 +529,13 @@ void *process_ws_server(void *data)
 
 void log_func(int level, const char *line)
 {
-    //LOGD(" ");
+    LOGD(" ");
 
 }
 
 WebSocketServer::WebSocketServer()
 {
-    //LOGD(" ");
+    LOGD(" ");
     if (m_current_instance != NULL) {
         LOGD("WARNING : m_current_instance is NOT NULL");
     }
@@ -545,7 +545,7 @@ WebSocketServer::WebSocketServer()
 
 WebSocketServer::~WebSocketServer()
 {
-    //LOGD(" ");
+    LOGD(" ");
     if (m_current_instance == this) {
         m_current_instance = NULL;
     }
@@ -558,7 +558,7 @@ WebSocketServer::~WebSocketServer()
 
 static void recv_message_pipe_handler(void *data, void *buffer, unsigned int nbyte)
 {
-    //LOGD(" ");
+    LOGD(" ");
     WebSocketServer *agent = WebSocketServer::get_current_instance();
     if (agent) {
         agent->process_recved_messages();
@@ -626,7 +626,7 @@ bool WebSocketServer::init()
 
 bool WebSocketServer::exit()
 {
-    //LOGD(" ");
+    LOGD(" ");
     on_exit();
 
     g_ws_server_exit = true;
@@ -654,7 +654,7 @@ bool WebSocketServer::exit()
 
 void WebSocketServer::signal(int sig)
 {
-    //LOGD(" ");
+    LOGD(" ");
     force_exit = 1;
 }
 
@@ -671,7 +671,7 @@ std::string to_string(T i)
 
 void WebSocketServer::on_init()
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_INIT];
@@ -685,7 +685,7 @@ void WebSocketServer::on_init()
 
 void WebSocketServer::on_exit()
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_EXIT];
@@ -699,7 +699,7 @@ void WebSocketServer::on_exit()
 
 void WebSocketServer::on_focus_in(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_FOCUS_IN];
@@ -714,7 +714,7 @@ void WebSocketServer::on_focus_in(int ic)
 
 void WebSocketServer::on_focus_out(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_FOCUS_OUT];
@@ -729,7 +729,7 @@ void WebSocketServer::on_focus_out(int ic)
 
 void WebSocketServer::on_show(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SHOW];
@@ -746,7 +746,7 @@ void WebSocketServer::on_show(int ic)
 
 void WebSocketServer::on_hide(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_HIDE];
@@ -761,7 +761,7 @@ void WebSocketServer::on_hide(int ic)
 
 void WebSocketServer::on_set_rotation(int degree)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_ROTATION];
@@ -776,7 +776,7 @@ void WebSocketServer::on_set_rotation(int degree)
 
 void WebSocketServer::on_update_cursor_position(int ic, int cursor_pos)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_UPDATE_CURSOR_POSITION];
@@ -792,7 +792,7 @@ void WebSocketServer::on_update_cursor_position(int ic, int cursor_pos)
 
 void WebSocketServer::on_set_language(unsigned int language)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_LANGUAGE];
@@ -816,7 +816,7 @@ void WebSocketServer::on_set_language(unsigned int language)
 
 void WebSocketServer::on_set_imdata(char *buf, unsigned int len)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_IMDATA];
@@ -831,7 +831,7 @@ void WebSocketServer::on_set_imdata(char *buf, unsigned int len)
 
 void WebSocketServer::on_get_imdata(char **buf, unsigned int *len)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_IMDATA];
@@ -867,7 +867,7 @@ void WebSocketServer::on_get_imdata(char **buf, unsigned int *len)
 
 void WebSocketServer::on_set_return_key_type(unsigned int type)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_RETURN_KEY_TYPE];
@@ -891,7 +891,7 @@ void WebSocketServer::on_set_return_key_type(unsigned int type)
 
 void WebSocketServer::on_get_return_key_type(unsigned int *type)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_RETURN_KEY_TYPE];
@@ -925,7 +925,7 @@ void WebSocketServer::on_get_return_key_type(unsigned int *type)
 
 void WebSocketServer::on_set_return_key_disable(unsigned int disabled)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_RETURN_KEY_DISABLE];
@@ -949,7 +949,7 @@ void WebSocketServer::on_set_return_key_disable(unsigned int disabled)
 
 void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_RETURN_KEY_DISABLE];
@@ -983,7 +983,7 @@ void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
 
 void WebSocketServer::on_set_layout(unsigned int layout)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_LAYOUT];
@@ -1007,7 +1007,7 @@ void WebSocketServer::on_set_layout(unsigned int layout)
 
 void WebSocketServer::on_get_layout(unsigned int *layout)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_LAYOUT];
@@ -1041,7 +1041,7 @@ void WebSocketServer::on_get_layout(unsigned int *layout)
 
 void WebSocketServer::on_reset_input_context(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_RESET_INPUT_CONTEXT];
@@ -1056,7 +1056,7 @@ void WebSocketServer::on_reset_input_context(int ic)
 
 void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask, unsigned int layout, unsigned int *ret)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_PROCESS_KEY_EVENT];
@@ -1093,31 +1093,31 @@ void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask,
 
 WebSocketServer* WebSocketServer::get_current_instance()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_current_instance;
 }
 
 std::queue<ISE_MESSAGE>& WebSocketServer::get_send_message_queue()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_send_message_queue;
 }
 
 std::queue<ISE_MESSAGE>& WebSocketServer::get_recv_message_queue()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_recv_message_queue;
 }
 
 Ecore_Pipe* WebSocketServer::get_recv_message_pipe()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_recv_message_pipe;
 }
 
 void WebSocketServer::wait_for_reply_message()
 {
-    //LOGD(" ");
+    LOGD(" ");
     /* Let's wait for at most REPLY_TIMEOUT */
     struct timeval now;
     struct timespec timeout;
@@ -1132,7 +1132,7 @@ void WebSocketServer::wait_for_reply_message()
 
 void WebSocketServer::process_recved_messages()
 {
-    //LOGD(" ");
+    LOGD(" ");
     pthread_mutex_lock(&g_ws_server_mutex);
 
     while (m_recv_message_queue.size() > 0) {
@@ -1148,7 +1148,7 @@ void WebSocketServer::process_recved_messages()
 
 bool WebSocketServer::process_recved_messages_until_reply_found(std::string command, std::vector<std::string> &values)
 {
-    //LOGD(" ");
+    LOGD(" ");
 
     bool ret = false;
 
@@ -1174,8 +1174,8 @@ bool WebSocketServer::process_recved_messages_until_reply_found(std::string comm
 
 void WebSocketServer::handle_recved_message(ISE_MESSAGE &message)
 {
-    //LOGD(" ");
-    //LOGD("Received message : %s, %s, %s", message.type.c_str(), message.command.c_str() , message.values.at(0).c_str());
+    LOGD(" ");
+    LOGD("Received message : %s, %s, %s", message.type.c_str(), message.command.c_str() , message.values.at(0).c_str());
     /*FIXME delte login
     if (message.command.compare(ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_LOGIN]) == 0) {
         libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
