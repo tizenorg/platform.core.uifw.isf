@@ -292,6 +292,28 @@ EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled)
     return 0;
 }
 
+EAPI int isf_control_show_ime_list (void)
+{
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.show_helper_ise_list ();
+    imcontrol_client.send ();
+    imcontrol_client.close_connection ();
+    return 0;
+}
+
+EAPI int isf_control_show_ime_selector (void)
+{
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.show_helper_ise_selector ();
+    imcontrol_client.send ();
+    imcontrol_client.close_connection ();
+    return 0;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */

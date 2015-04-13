@@ -348,6 +348,8 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalBoolHelperInfo      m_signal_get_all_helper_ise_info;
     PanelAgentSignalStringBool          m_signal_set_has_option_helper_ise_info;
     PanelAgentSignalStringBool          m_signal_set_enable_helper_ise_info;
+    PanelAgentSignalVoid                m_signal_show_helper_ise_list;
+    PanelAgentSignalVoid                m_signal_show_helper_ise_selector;
     PanelAgentSignalBoolString4int2     m_signal_get_ise_information;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
     PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
@@ -2449,6 +2451,18 @@ public:
         trans.write_to_socket (client_socket);
     }
 
+    void show_helper_ise_list (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::show_helper_ise_list ()\n";
+        m_signal_show_helper_ise_list ();
+    }
+
+    void show_helper_ise_selector (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << "PanelAgent::show_helper_ise_selector ()\n";
+        m_signal_show_helper_ise_selector ();
+    }
+
     void get_ise_information (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
@@ -3282,6 +3296,16 @@ public:
         return m_signal_set_enable_helper_ise_info.connect (slot);
     }
 
+    Connection signal_connect_show_helper_ise_list       (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_show_helper_ise_list.connect (slot);
+    }
+
+    Connection signal_connect_show_helper_ise_selector   (PanelAgentSlotVoid                *slot)
+    {
+        return m_signal_show_helper_ise_selector.connect (slot);
+    }
+
     Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2        *slot)
     {
         return m_signal_get_ise_information.connect (slot);
@@ -3431,6 +3455,21 @@ private:
             m_signal_accept_connection (client.get_id ());
         }
         unlock ();
+    }
+
+    static bool _check_privilege_by_sockfd (int client_id, const char *mode, bool need_failed_reply, int cmd)
+    {
+        int priv_ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", mode);
+        if (priv_ret != SECURITY_SERVER_API_SUCCESS && need_failed_reply) {
+            Socket client_socket (client_id);
+            Transaction trans;
+            trans.clear ();
+            trans.put_command (SCIM_TRANS_CMD_REPLY);
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+            trans.write_to_socket (client_socket);
+            ISF_SAVE_LOG ("Failed to deal with cmd(%d) due to privilege check failed, error code(%d)\n", cmd, priv_ret);
+        }
+        return priv_ret == SECURITY_SERVER_API_SUCCESS;
     }
 
     void socket_receive_callback                (SocketServer   *server,
@@ -3956,6 +3995,16 @@ private:
                     show_isf_panel (client_id);
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW)
                     show_ise_option_window (client_id);
+                else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST) {
+                    if (_check_privilege_by_sockfd (client_id, "x", false, cmd)) {
+                        show_helper_ise_list (client_id);
+                    }
+                }
+                else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR) {
+                    if (_check_privilege_by_sockfd (client_id, "x", false, cmd)) {
+                        show_helper_ise_selector (client_id);
+                    }
+                }
             }
 
             socket_transaction_end ();
@@ -6639,6 +6688,18 @@ Connection
 PanelAgent::signal_connect_set_enable_helper_ise_info      (PanelAgentSlotStringBool    *slot)
 {
     return m_impl->signal_connect_set_enable_helper_ise_info (slot);
+}
+
+Connection
+PanelAgent::signal_connect_show_helper_ise_list       (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_show_helper_ise_list (slot);
+}
+
+Connection
+PanelAgent::signal_connect_show_helper_ise_selector   (PanelAgentSlotVoid                *slot)
+{
+    return m_impl->signal_connect_show_helper_ise_selector (slot);
 }
 
 Connection

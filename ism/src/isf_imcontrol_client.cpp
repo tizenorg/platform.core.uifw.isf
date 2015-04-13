@@ -426,6 +426,14 @@ public:
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
         }
     }
+
+    void show_helper_ise_list (void) {
+        m_trans.put_command (ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST);
+    }
+
+    void show_helper_ise_selector (void) {
+        m_trans.put_command (ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR);
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -525,6 +533,16 @@ void IMControlClient::get_all_helper_ise_info (HELPER_ISE_INFO &info)
 void IMControlClient::set_enable_helper_ise_info (const char *appid, bool is_enabled)
 {
     m_impl->set_enable_helper_ise_info (appid, is_enabled);
+}
+
+void IMControlClient::show_helper_ise_list (void)
+{
+    m_impl->show_helper_ise_list ();
+}
+
+void IMControlClient::show_helper_ise_selector (void)
+{
+    m_impl->show_helper_ise_selector ();
 }
 
 };

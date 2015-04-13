@@ -52,7 +52,7 @@ typedef struct {
     char label[256];
     bool is_enabled;
     bool is_preinstalled;
-    int has_option; // 0: no keyboard option, 1: keyboard option is available, -1: unknown
+    int has_option; // 0: no keyboard option, 1: keyboard option is available, -1: unknown yet
 } ime_info_s;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -229,6 +229,29 @@ EAPI int isf_control_set_active_ime (const char *appid);
  * @return 0 if successfully, otherwise return -1;
  */
 EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
+
+/**
+ * @brief Requests to open the installed IME list application.
+ *
+ * @remarks This API should not be used by inputmethod-setting application.
+ *
+ * @since_tizen 2.4
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_show_ime_list (void);
+
+/**
+ * @brief Requests to open the IME selector application.
+ *
+ * @remarks This API should not be used by inputmethod-setting application.
+ *
+ * @since_tizen 2.4
+ *
+ * @return 0 if successfully, otherwise return -1;
+ */
+EAPI int isf_control_show_ime_selector (void);
+
 
 #ifdef __cplusplus
 }

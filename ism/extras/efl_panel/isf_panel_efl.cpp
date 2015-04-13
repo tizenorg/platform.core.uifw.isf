@@ -79,6 +79,7 @@
 #include "isf_panel_efl.h"
 #include "isf_panel_utility.h"
 #include "isf_query_utility.h"
+#include <app_control.h>
 
 using namespace scim;
 
@@ -195,6 +196,8 @@ static bool       slot_get_ise_list                    (std::vector<String> &lis
 static bool       slot_get_all_helper_ise_info         (HELPER_ISE_INFO &info);
 static void       slot_set_has_option_helper_ise_info  (const String &appid, bool has_option);
 static void       slot_set_enable_helper_ise_info      (const String &appid, bool is_enabled);
+static void       slot_show_helper_ise_list            (void);
+static void       slot_show_helper_ise_selector        (void);
 static bool       slot_get_ise_information             (String uuid, String &name, String &language, int &type, int &option, String &module_name);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name_list);
 static void       slot_get_language_list               (std::vector<String> &name);
@@ -3434,6 +3437,8 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_get_all_helper_ise_info    (slot (slot_get_all_helper_ise_info));
     _panel_agent->signal_connect_set_has_option_helper_ise_info(slot (slot_set_has_option_helper_ise_info));
     _panel_agent->signal_connect_set_enable_helper_ise_info (slot (slot_set_enable_helper_ise_info));
+    _panel_agent->signal_connect_show_helper_ise_list       (slot (slot_show_helper_ise_list));
+    _panel_agent->signal_connect_show_helper_ise_selector   (slot (slot_show_helper_ise_selector));
     _panel_agent->signal_connect_get_ise_information        (slot (slot_get_ise_information));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
@@ -4763,6 +4768,90 @@ static void slot_set_enable_helper_ise_info (const String &appid, bool is_enable
             }
         }
     }
+}
+
+/**
+ * @brief Requests to open the installed IME list application.
+ */
+static void slot_show_helper_ise_list (void)
+{
+    // Lauch org.tizen.inputmethod-setting-list
+    int ret;
+    app_control_h app_control;
+    const char *app_id = "org.tizen.inputmethod-setting-list"; // This is temporary. AppId can be got using pkgmgr-info later.
+
+    ret = app_control_create (&app_control);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_create returned %d", ret);
+        return;
+    }
+
+    ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_set_operation returned %d", ret);
+        app_control_destroy(app_control);
+        return;
+    }
+
+    ret = app_control_set_app_id (app_control, app_id);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_set_app_id returned %d", ret);
+        app_control_destroy(app_control);
+        return;
+    }
+
+    ret = app_control_send_launch_request(app_control, NULL, NULL);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_send_launch_request returned %d", ret);
+        app_control_destroy(app_control);
+        return;
+    }
+
+    app_control_destroy(app_control);
+
+    SECURE_LOGD("Launch %s", app_id);
+}
+
+/**
+ * @brief Requests to open the installed IME selector application.
+ */
+static void slot_show_helper_ise_selector (void)
+{
+    // Lauch org.tizen.inputmethod-setting-selector
+    int ret;
+    app_control_h app_control;
+    const char *app_id = "org.tizen.inputmethod-setting-selector"; // This is temporary. AppId can be got using pkgmgr-info later.
+
+    ret = app_control_create (&app_control);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_create returned %d", ret);
+        return;
+    }
+
+    ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_set_operation returned %d", ret);
+        app_control_destroy(app_control);
+        return;
+    }
+
+    ret = app_control_set_app_id (app_control, app_id);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_set_app_id returned %d", ret);
+        app_control_destroy(app_control);
+        return;
+    }
+
+    ret = app_control_send_launch_request(app_control, NULL, NULL);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW("app_control_send_launch_request returned %d", ret);
+        app_control_destroy(app_control);
+        return;
+    }
+
+    app_control_destroy(app_control);
+
+    SECURE_LOGD("Launch %s", app_id);
 }
 
 /**

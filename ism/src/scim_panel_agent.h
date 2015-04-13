@@ -1042,6 +1042,20 @@ public:
     Connection signal_connect_set_enable_helper_ise_info     (PanelAgentSlotStringBool     *slot);
 
     /**
+     * @brief Signal: Launch inputmethod-setting-list application
+     *
+     * slot prototype: void show_helper_ise_list (void);
+     */
+    Connection signal_connect_show_helper_ise_list  (PanelAgentSlotVoid       *slot);
+
+    /**
+     * @brief Signal: Launch inputmethod-setting-selector application
+     *
+     * slot prototype: void show_helper_ise_selector (void);
+     */
+    Connection signal_connect_show_helper_ise_selector  (PanelAgentSlotVoid   *slot);
+
+    /**
      * @brief Signal: Get the ISE information according to UUID.
      *
      * slot prototype: bool get_ise_information (String, String &, String &, int &, int &);

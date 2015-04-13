@@ -54,11 +54,13 @@ public:
     void reset_ise_option (void);
     void set_active_ise_to_default (void);
     void set_initial_ise_by_uuid (const char* uuid);
-    void show_ise_selector ();
-    void show_ise_option_window ();
+    void show_ise_selector (void);
+    void show_ise_option_window (void);
 
     void get_all_helper_ise_info (HELPER_ISE_INFO &info);
     void set_enable_helper_ise_info (const char *appid, bool is_enabled);
+    void show_helper_ise_list (void);
+    void show_helper_ise_selector (void);
 };
 
 }
