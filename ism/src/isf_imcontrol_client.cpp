@@ -220,46 +220,57 @@ public:
         return false;
     }
 
-    void set_active_ise_by_uuid (const char* uuid) {
+    bool set_active_ise_by_uuid (const char* uuid) {
         int cmd;
         m_trans.put_command (ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID);
         m_trans.put_data (uuid, strlen (uuid)+1);
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
+
+        return true;
     }
 
-    void set_initial_ise_by_uuid (const char* uuid) {
+    bool set_initial_ise_by_uuid (const char* uuid) {
         int cmd;
         m_trans.put_command (ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID);
         m_trans.put_data (uuid, strlen (uuid)+1);
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
 
         vconf_set_str ("db/isf/csc_initial_uuid", uuid);
+        return true;
     }
 
-    void get_active_ise (String &uuid) {
+    bool get_active_ise (String &uuid) {
         int    cmd;
         String strTemp;
 
         m_trans.put_command (ISM_TRANS_CMD_GET_ACTIVE_ISE);
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
@@ -267,10 +278,13 @@ public:
             uuid = strTemp;
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
+
+        return true;
     }
 
-    void get_ise_list (int* count, char*** iselist) {
+    bool get_ise_list (int* count, char*** iselist) {
         int cmd;
         uint32 count_temp = 0;
         char **buf = NULL;
@@ -279,8 +293,10 @@ public:
 
         m_trans.put_command (ISM_TRANS_CMD_GET_ISE_LIST);
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
@@ -291,6 +307,7 @@ public:
             if (count)
                 *count = 0;
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
 
         if (iselist) {
@@ -310,9 +327,11 @@ public:
 
             *iselist = buf;
         }
+
+        return true;
     }
 
-    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)
+    bool get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)
     {
         int    cmd;
         uint32 tmp_type, tmp_option;
@@ -321,8 +340,10 @@ public:
         m_trans.put_command (ISM_TRANS_CMD_GET_ISE_INFORMATION);
         m_trans.put_data (String (uuid));
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
@@ -333,24 +354,30 @@ public:
             type     = tmp_type;
             option   = tmp_option;
             module_name = tmp_module_name;
+
+            return true;
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
     }
 
-    void reset_ise_option (void) {
+    bool reset_ise_option (void) {
         int cmd;
 
         m_trans.put_command (ISM_TRANS_CMD_RESET_ISE_OPTION);
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
-            ;
+            return true;
         } else {
             std::cerr << __func__ << " get_command() is failed!!!\n";
+            return false;
         }
     }
 
@@ -366,7 +393,7 @@ public:
         m_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW);
     }
 
-    void get_all_helper_ise_info (HELPER_ISE_INFO &info) {
+    bool get_all_helper_ise_info (HELPER_ISE_INFO &info) {
         int cmd;
         std::vector<String> appid;
         std::vector<String> label;
@@ -382,14 +409,17 @@ public:
 
         m_trans.put_command (ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO);
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
                 m_trans.get_data (appid) ) {
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
 
         if (appid.size () > 0) {
@@ -403,27 +433,34 @@ public:
                 info.is_enabled = is_enabled;
                 info.is_preinstalled = is_preinstalled;
                 info.has_option = has_option;
+                return true;
             }
         }
+
+        return false;
     }
 
-    void set_enable_helper_ise_info (const char *appid, bool is_enabled) {
+    bool set_enable_helper_ise_info (const char *appid, bool is_enabled) {
         int cmd;
 
         if (!appid)
-            return;
+            return false;
 
         m_trans.put_command (ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO);
         m_trans.put_data (String (appid));
         m_trans.put_data (static_cast<uint32>(is_enabled));
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
             m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+            return true;
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
     }
 
@@ -435,7 +472,7 @@ public:
         m_trans.put_command (ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR);
     }
 
-    void is_helper_ise_enabled (const char* appid, int &enabled)
+    bool is_helper_ise_enabled (const char* appid, int &enabled)
     {
         int    cmd;
         uint32 tmp_enabled;
@@ -443,15 +480,19 @@ public:
         m_trans.put_command (ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED);
         m_trans.put_data (String (appid));
         m_trans.write_to_socket (m_socket_imclient2panel);
-        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
             std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
 
         if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
                 m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
                 m_trans.get_data (tmp_enabled)) {
             enabled = static_cast<int>(tmp_enabled);
+            return true;
         } else {
             std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
         }
     }
 };
@@ -500,34 +541,34 @@ IMControlClient::send (void)
     return m_impl->send ();
 }
 
-void IMControlClient::set_active_ise_by_uuid (const char* uuid)
+bool IMControlClient::set_active_ise_by_uuid (const char* uuid)
 {
-    m_impl->set_active_ise_by_uuid (uuid);
+    return m_impl->set_active_ise_by_uuid (uuid);
 }
 
-void IMControlClient::set_initial_ise_by_uuid (const char* uuid)
+bool IMControlClient::set_initial_ise_by_uuid (const char* uuid)
 {
-    m_impl->set_initial_ise_by_uuid (uuid);
+    return m_impl->set_initial_ise_by_uuid (uuid);
 }
 
-void IMControlClient::get_active_ise (String &uuid)
+bool IMControlClient::get_active_ise (String &uuid)
 {
-    m_impl->get_active_ise (uuid);
+    return m_impl->get_active_ise (uuid);
 }
 
-void IMControlClient::get_ise_list (int* count, char*** iselist)
+bool IMControlClient::get_ise_list (int* count, char*** iselist)
 {
-    m_impl->get_ise_list (count, iselist);
+    return m_impl->get_ise_list (count, iselist);
 }
 
-void IMControlClient::get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)
+bool IMControlClient::get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name)
 {
-    m_impl->get_ise_info (uuid, name, language, type, option, module_name);
+    return m_impl->get_ise_info (uuid, name, language, type, option, module_name);
 }
 
-void IMControlClient::reset_ise_option (void)
+bool IMControlClient::reset_ise_option (void)
 {
-    m_impl->reset_ise_option ();
+    return m_impl->reset_ise_option ();
 }
 
 void IMControlClient::set_active_ise_to_default (void)
@@ -545,14 +586,14 @@ void IMControlClient::show_ise_option_window (void)
     m_impl->show_ise_option_window ();
 }
 
-void IMControlClient::get_all_helper_ise_info (HELPER_ISE_INFO &info)
+bool IMControlClient::get_all_helper_ise_info (HELPER_ISE_INFO &info)
 {
-    m_impl->get_all_helper_ise_info (info);
+    return m_impl->get_all_helper_ise_info (info);
 }
 
-void IMControlClient::set_enable_helper_ise_info (const char *appid, bool is_enabled)
+bool IMControlClient::set_enable_helper_ise_info (const char *appid, bool is_enabled)
 {
-    m_impl->set_enable_helper_ise_info (appid, is_enabled);
+    return m_impl->set_enable_helper_ise_info (appid, is_enabled);
 }
 
 void IMControlClient::show_helper_ise_list (void)
@@ -565,9 +606,9 @@ void IMControlClient::show_helper_ise_selector (void)
     m_impl->show_helper_ise_selector ();
 }
 
-void IMControlClient::is_helper_ise_enabled (const char* appid, int &enabled)
+bool IMControlClient::is_helper_ise_enabled (const char* appid, int &enabled)
 {
-    m_impl->is_helper_ise_enabled (appid, enabled);
+    return m_impl->is_helper_ise_enabled (appid, enabled);
 }
 
 };

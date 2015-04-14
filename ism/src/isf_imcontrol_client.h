@@ -47,21 +47,21 @@ public:
     bool prepare                (void);
     bool send                   (void);
 
-    void set_active_ise_by_uuid (const char* uuid);
-    void get_active_ise (String &uuid);
-    void get_ise_list (int* count, char*** iselist);
-    void get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name);
-    void reset_ise_option (void);
+    bool set_active_ise_by_uuid (const char* uuid);
+    bool get_active_ise (String &uuid);
+    bool get_ise_list (int* count, char*** iselist);
+    bool get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name);
+    bool reset_ise_option (void);
     void set_active_ise_to_default (void);
-    void set_initial_ise_by_uuid (const char* uuid);
-    void show_ise_selector (void);
-    void show_ise_option_window (void);
+    bool set_initial_ise_by_uuid (const char* uuid);
+    void show_ise_selector ();
+    void show_ise_option_window ();
 
-    void get_all_helper_ise_info (HELPER_ISE_INFO &info);
-    void set_enable_helper_ise_info (const char *appid, bool is_enabled);
+    bool get_all_helper_ise_info (HELPER_ISE_INFO &info);
+    bool set_enable_helper_ise_info (const char *appid, bool is_enabled);
     void show_helper_ise_list (void);
     void show_helper_ise_selector (void);
-    void is_helper_ise_enabled (const char* appid, int &enabled);
+    bool is_helper_ise_enabled (const char* appid, int &enabled);
 };
 
 }

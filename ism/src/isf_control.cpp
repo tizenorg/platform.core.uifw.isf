@@ -42,11 +42,17 @@ EAPI int isf_control_set_active_ise_by_uuid (const char *uuid)
         return -1;
 
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.set_active_ise_by_uuid (uuid);
+    if (!imcontrol_client.set_active_ise_by_uuid (uuid))
+        ret = -1;
+
     imcontrol_client.close_connection ();
-    return 0;
+
+    return ret;
 }
 
 EAPI int isf_control_get_active_ise (char **uuid)
@@ -56,9 +62,14 @@ EAPI int isf_control_get_active_ise (char **uuid)
 
     String strUuid;
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.get_active_ise (strUuid);
+    if (!imcontrol_client.get_active_ise (strUuid))
+        return -1;
+
     imcontrol_client.close_connection ();
 
     *uuid = strUuid.length () ? strdup (strUuid.c_str ()) : strdup ("");
@@ -73,10 +84,16 @@ EAPI int isf_control_get_ise_list (char ***uuid_list)
 
     int count;
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.get_ise_list (&count, uuid_list);
+    if (!imcontrol_client.get_ise_list (&count, uuid_list))
+        return -1;
+
     imcontrol_client.close_connection ();
+
     return count;
 }
 
@@ -95,9 +112,13 @@ EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name
     String strName, strLanguage, strModuleName;
 
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption, strModuleName);
+    if (!imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption, strModuleName))
+        return -1;
+
     imcontrol_client.close_connection ();
 
     if (name != NULL)
@@ -121,22 +142,33 @@ EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name
 EAPI int isf_control_set_active_ise_to_default (void)
 {
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
     imcontrol_client.set_active_ise_to_default ();
-    imcontrol_client.send ();
+    if (!imcontrol_client.send ())
+        ret = -1;
+
     imcontrol_client.close_connection ();
 
-    return 0;
+    return ret;
 }
 
 EAPI int isf_control_reset_ise_option (void)
 {
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.reset_ise_option ();
+    if (!imcontrol_client.reset_ise_option ())
+        return -1;
+
     imcontrol_client.close_connection ();
+
     return 0;
 }
 
@@ -146,10 +178,15 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
         return -1;
 
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.set_initial_ise_by_uuid (uuid);
+    if (!imcontrol_client.set_initial_ise_by_uuid (uuid))
+        return -1;
+
     imcontrol_client.close_connection ();
+
     return 0;
 }
 
@@ -168,12 +205,18 @@ EAPI int isf_control_get_initial_ise (char **uuid)
 EAPI int isf_control_show_ise_selector (void)
 {
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
     imcontrol_client.show_ise_selector ();
-    imcontrol_client.send ();
+    if (!imcontrol_client.send ())
+        ret = -1;
+
     imcontrol_client.close_connection ();
-    return 0;
+
+    return ret;
 }
 
 EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
@@ -209,17 +252,24 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
 EAPI int isf_control_show_ise_option_window (void)
 {
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
     imcontrol_client.show_ise_option_window ();
-    imcontrol_client.send ();
+    if (!imcontrol_client.send ())
+        ret = -1;
+
     imcontrol_client.close_connection ();
-    return 0;
+
+    return ret;
 }
 
 EAPI int isf_control_get_all_ime_info (ime_info_s **info)
 {
     int count = -1, i = 0;
+    int ret = 0;
     HELPER_ISE_INFO helper_info;
     ime_info_s *ime_info = NULL;
 
@@ -227,10 +277,17 @@ EAPI int isf_control_get_all_ime_info (ime_info_s **info)
         return count;
 
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.get_all_helper_ise_info (helper_info);
+    if (!imcontrol_client.get_all_helper_ise_info (helper_info))
+        ret = -1;
+
     imcontrol_client.close_connection ();
+
+    if (ret == -1)
+        return -1;
 
     count = static_cast<int>(helper_info.label.size());
     if (count > 0) {
@@ -259,11 +316,19 @@ EAPI int isf_control_get_active_ime (char **appid)
         return -1;
 
     String strUuid;
+    int ret = 0;
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.get_active_ise (strUuid);
+    if (!imcontrol_client.get_active_ise (strUuid))
+        ret = -1;
+
     imcontrol_client.close_connection ();
+
+    if (ret == -1)
+        return -1;
 
     *appid = strUuid.length () ? strdup (strUuid.c_str ()) : NULL;
 
@@ -284,34 +349,55 @@ EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled)
         return -1;
 
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
-    imcontrol_client.set_enable_helper_ise_info (appid, is_enabled);
+
+    if (!imcontrol_client.set_enable_helper_ise_info (appid, is_enabled))
+        ret = -1;
+
     imcontrol_client.close_connection ();
 
-    return 0;
+    return ret;
 }
 
 EAPI int isf_control_show_ime_list (void)
 {
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
     imcontrol_client.show_helper_ise_list ();
-    imcontrol_client.send ();
+    if (!imcontrol_client.send ())
+        ret = -1;
+
     imcontrol_client.close_connection ();
-    return 0;
+
+    return ret;
 }
 
 EAPI int isf_control_show_ime_selector (void)
 {
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    int ret = 0;
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
     imcontrol_client.prepare ();
     imcontrol_client.show_helper_ise_selector ();
-    imcontrol_client.send ();
+    if (!imcontrol_client.send ())
+        ret = -1;
+
     imcontrol_client.close_connection ();
-    return 0;
+
+    return ret;
 }
 
 EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
@@ -320,19 +406,25 @@ EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
         return -1;
 
     int nEnabled = -1;
+    int ret = 0;
 
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
-    imcontrol_client.is_helper_ise_enabled (appid, nEnabled);
+    if (!imcontrol_client.is_helper_ise_enabled (appid, nEnabled))
+        ret = -1;
+
     imcontrol_client.close_connection ();
+
+    if (ret == -1)
+        return -1;
 
     if (nEnabled < 0)
         return -1;
     else
         *enabled = static_cast<bool>(nEnabled);
 
-    return 0;
+    return ret;
 }
 
 /*
