@@ -198,6 +198,7 @@ static void       slot_set_has_option_helper_ise_info  (const String &appid, boo
 static void       slot_set_enable_helper_ise_info      (const String &appid, bool is_enabled);
 static void       slot_show_helper_ise_list            (void);
 static void       slot_show_helper_ise_selector        (void);
+static bool       slot_is_helper_ise_enabled           (String appid, int &enabled);
 static bool       slot_get_ise_information             (String uuid, String &name, String &language, int &type, int &option, String &module_name);
 static bool       slot_get_keyboard_ise_list           (std::vector<String> &name_list);
 static void       slot_get_language_list               (std::vector<String> &name);
@@ -2966,7 +2967,7 @@ static void ui_settle_candidate_window (void)
         spot_x = _spot_location_x;
         spot_y = _spot_location_y;
 
-        rectinfo ise_rect = {0, 0, ise_width, ise_height};
+        rectinfo ise_rect = {0, 0, (uint32)ise_width, (uint32)ise_height};
         if (_candidate_angle == 90 || _candidate_angle == 270) {
             if (ise_rect.height <= (uint32)0 || ise_rect.height >= (uint32)_screen_width)
                 ise_rect.height = ISE_DEFAULT_HEIGHT_LANDSCAPE * _width_rate;
@@ -3439,6 +3440,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_set_enable_helper_ise_info (slot (slot_set_enable_helper_ise_info));
     _panel_agent->signal_connect_show_helper_ise_list       (slot (slot_show_helper_ise_list));
     _panel_agent->signal_connect_show_helper_ise_selector   (slot (slot_show_helper_ise_selector));
+    _panel_agent->signal_connect_is_helper_ise_enabled      (slot (slot_is_helper_ise_enabled));
     _panel_agent->signal_connect_get_ise_information        (slot (slot_get_ise_information));
     _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
     _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
@@ -4852,6 +4854,27 @@ static void slot_show_helper_ise_selector (void)
     app_control_destroy(app_control);
 
     SECURE_LOGD("Launch %s", app_id);
+}
+
+static bool slot_is_helper_ise_enabled (String appid, int &enabled)
+{
+    bool is_enabled = false;
+
+    if (appid.length() == 0) {
+        LOGW("Invalid appid");
+        return false;
+    }
+
+    if (_ime_info.size() == 0)
+        isf_db_select_all_ime_info(_ime_info);
+
+    if (isf_db_select_is_enabled_by_appid(appid.c_str(), &is_enabled)) {
+        enabled = static_cast<int>(is_enabled);
+    }
+    else
+        return false;
+
+    return true;
 }
 
 /**

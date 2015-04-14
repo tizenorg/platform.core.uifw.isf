@@ -150,6 +150,9 @@ typedef Signal2<void, char *, std::vector <String> &>
 typedef Signal2<bool, const String &, ISE_INFO &>
         PanelAgentSignalStringISEINFO;
 
+typedef Signal2<bool, String, int &>
+        PanelAgentSignalStringInt;
+
 typedef Signal1<void, const KeyEvent &>
         PanelAgentSignalKeyEvent;
 
@@ -349,6 +352,7 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalStringBool          m_signal_set_enable_helper_ise_info;
     PanelAgentSignalVoid                m_signal_show_helper_ise_list;
     PanelAgentSignalVoid                m_signal_show_helper_ise_selector;
+    PanelAgentSignalStringInt           m_signal_is_helper_ise_enabled;
     PanelAgentSignalBoolString4int2     m_signal_get_ise_information;
     PanelAgentSignalBoolStringVector    m_signal_get_keyboard_ise_list;
     PanelAgentSignalIntIntIntInt        m_signal_update_ise_geometry;
@@ -2462,6 +2466,32 @@ public:
         m_signal_show_helper_ise_selector ();
     }
 
+    void is_helper_ise_enabled (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        String strAppid;
+        int nEnabled = 0;
+        bool ret = false;
+
+        if (m_recv_trans.get_data (strAppid)) {
+            ret = m_signal_is_helper_ise_enabled (strAppid, nEnabled);
+        }
+
+        Transaction trans;
+        Socket client_socket (client_id);
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        if (ret) {
+            trans.put_command (SCIM_TRANS_CMD_OK);
+            trans.put_data (static_cast<uint32>(nEnabled));
+        }
+        else {
+            trans.put_command (SCIM_TRANS_CMD_FAIL);
+        }
+        trans.write_to_socket (client_socket);
+    }
+
     void get_ise_information (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
@@ -3305,6 +3335,11 @@ public:
         return m_signal_show_helper_ise_selector.connect (slot);
     }
 
+    Connection signal_connect_is_helper_ise_enabled   (PanelAgentSlotStringInt                *slot)
+    {
+        return m_signal_is_helper_ise_enabled.connect (slot);
+    }
+
     Connection signal_connect_get_ise_information        (PanelAgentSlotBoolString4int2        *slot)
     {
         return m_signal_get_ise_information.connect (slot);
@@ -3974,6 +4009,9 @@ private:
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR) {
                     show_helper_ise_selector (client_id);
+                }
+                else if (cmd == ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED) {
+                    is_helper_ise_enabled (client_id);
                 }
             }
 
@@ -6670,6 +6708,12 @@ Connection
 PanelAgent::signal_connect_show_helper_ise_selector   (PanelAgentSlotVoid                *slot)
 {
     return m_impl->signal_connect_show_helper_ise_selector (slot);
+}
+
+Connection
+PanelAgent::signal_connect_is_helper_ise_enabled      (PanelAgentSlotStringInt           *slot)
+{
+    return m_impl->signal_connect_is_helper_ise_enabled (slot);
 }
 
 Connection

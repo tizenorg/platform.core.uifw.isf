@@ -73,7 +73,7 @@ EAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
  * @param uuid The parameter is used to store active ISE's UUID.
  *             Application needs free *uuid if it is not used.
  *
- * @return the length of UUID if successfully, otherwise return -1;
+ * @return the length of UUID if successfully, otherwise return -1
  */
 EAPI int isf_control_get_active_ise (char **uuid);
 
@@ -96,7 +96,7 @@ EAPI int isf_control_get_ise_list (char ***uuid_list);
  * @param type     The parameter is used to store ISE's type.
  * @param option   The parameter is used to store ISE's option.
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 if successfully, otherwise return -1
  */
 EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
 
@@ -110,14 +110,14 @@ EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **languag
  * @param option   The parameter is used to store ISE's option.
  * @param module_name The parameter is used to store ISE's module file name.
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 if successfully, otherwise return -1
  */
 EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name);
 
 /**
  * @brief Set active ISE to default ISE.
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 if successfully, otherwise return -1
  */
 EAPI int isf_control_set_active_ise_to_default (void);
 
@@ -133,7 +133,7 @@ EAPI int isf_control_reset_ise_option (void);
  *
  * @param uuid The initial ISE's UUID.
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 if successfully, otherwise return -1
  */
 EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
 
@@ -166,7 +166,7 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
 /**
  * @brief Show ISE's option window.
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 if successfully, otherwise return -1
  */
 EAPI int isf_control_show_ise_option_window ();
 
@@ -214,7 +214,7 @@ EAPI int isf_control_get_active_ime (char **appid);
  *
  * @param[in] appid Application ID of IME to set as active one
  *
- * @return 0 on success, otherwise -1
+ * @return 0 on success, otherwise return -1
  */
 EAPI int isf_control_set_active_ime (const char *appid);
 
@@ -226,7 +226,7 @@ EAPI int isf_control_set_active_ime (const char *appid);
  * @param[in] appid Application ID of IME to enable or disable
  * @param[in] is_enabled @c true to enable the IME, otherwise @c false
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 on success, otherwise return -1
  */
 EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
 
@@ -237,7 +237,7 @@ EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
  *
  * @since_tizen 2.4
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 on success, otherwise return -1
  */
 EAPI int isf_control_show_ime_list (void);
 
@@ -248,10 +248,21 @@ EAPI int isf_control_show_ime_list (void);
  *
  * @since_tizen 2.4
  *
- * @return 0 if successfully, otherwise return -1;
+ * @return 0 on success, otherwise return -1
  */
 EAPI int isf_control_show_ime_selector (void);
 
+/**
+ * @brief Checks if the specific IME is enabled or disabled in the system keyboard setting.
+ *
+ * @since_tizen 2.4
+ *
+ * @param[in] appid The application ID of the IME
+ * @param[out] enabled The On (enabled) and Off (disabled) state of the IME
+ *
+ * @return 0 on success, otherwise return -1
+ */
+EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled);
 
 #ifdef __cplusplus
 }

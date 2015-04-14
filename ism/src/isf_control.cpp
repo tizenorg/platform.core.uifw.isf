@@ -314,6 +314,27 @@ EAPI int isf_control_show_ime_selector (void)
     return 0;
 }
 
+EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
+{
+    if (!appid || !enabled)
+        return -1;
+
+    int nEnabled = -1;
+
+    IMControlClient imcontrol_client;
+    imcontrol_client.open_connection ();
+    imcontrol_client.prepare ();
+    imcontrol_client.is_helper_ise_enabled (appid, nEnabled);
+    imcontrol_client.close_connection ();
+
+    if (nEnabled < 0)
+        return -1;
+    else
+        *enabled = static_cast<bool>(nEnabled);
+
+    return 0;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */

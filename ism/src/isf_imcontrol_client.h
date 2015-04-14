@@ -61,6 +61,7 @@ public:
     void set_enable_helper_ise_info (const char *appid, bool is_enabled);
     void show_helper_ise_list (void);
     void show_helper_ise_selector (void);
+    void is_helper_ise_enabled (const char* appid, int &enabled);
 };
 
 }

@@ -160,6 +160,9 @@ typedef Slot2<void, char *, std::vector<String> &>
 typedef Slot2<bool, const String &, ISE_INFO &>
         PanelAgentSlotStringISEINFO;
 
+typedef Slot2<bool, String, int &>
+        PanelAgentSlotStringInt;
+
 typedef Slot1<void, const KeyEvent &>
         PanelAgentSlotKeyEvent;
 
@@ -1054,6 +1057,13 @@ public:
      * slot prototype: void show_helper_ise_selector (void);
      */
     Connection signal_connect_show_helper_ise_selector  (PanelAgentSlotVoid   *slot);
+
+    /**
+     * @brief Signal: Checks if the specific IME is enabled or disabled in the system keyboard setting
+     *
+     * slot prototype: bool is_helper_ise_enabled (const String, int &);
+     */
+    Connection signal_connect_is_helper_ise_enabled  (PanelAgentSlotStringInt   *slot);
 
     /**
      * @brief Signal: Get the ISE information according to UUID.

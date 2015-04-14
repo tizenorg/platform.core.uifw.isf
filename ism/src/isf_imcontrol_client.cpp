@@ -434,6 +434,26 @@ public:
     void show_helper_ise_selector (void) {
         m_trans.put_command (ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR);
     }
+
+    void is_helper_ise_enabled (const char* appid, int &enabled)
+    {
+        int    cmd;
+        uint32 tmp_enabled;
+
+        m_trans.put_command (ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED);
+        m_trans.put_data (String (appid));
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout))
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (tmp_enabled)) {
+            enabled = static_cast<int>(tmp_enabled);
+        } else {
+            std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+        }
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -543,6 +563,11 @@ void IMControlClient::show_helper_ise_list (void)
 void IMControlClient::show_helper_ise_selector (void)
 {
     m_impl->show_helper_ise_selector ();
+}
+
+void IMControlClient::is_helper_ise_enabled (const char* appid, int &enabled)
+{
+    m_impl->is_helper_ise_enabled (appid, enabled);
 }
 
 };

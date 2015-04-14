@@ -579,6 +579,52 @@ out:
 }
 
 /**
+ * @brief Select "is_enabled" by appid in ime_info table.
+ *
+ * @param[in] appid appid in ime_info table.
+ * @param[out] is_enabled Helper ISE enabled or not.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static int _db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
+{
+    int ret = 0, i = 0;
+    sqlite3_stmt* pStmt = NULL;
+    static const char* pQuery = "SELECT is_enabled FROM ime_info WHERE appid = ?";
+
+    if (!appid || !is_enabled)
+        return i;
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        return i;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_ROW) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+    }
+    else {
+        *is_enabled = (bool)sqlite3_column_int(pStmt, 0);
+        i = 1;
+        SECURE_LOGD("is_enabled=%d by appid=\"%s\"", *is_enabled, appid);
+    }
+
+out:
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
+    sqlite3_finalize(pStmt);
+    return i;
+}
+
+/**
  * @brief Gets the count of the same module name in ime_info table.
  *
  * @param module_name Module name
@@ -1248,6 +1294,34 @@ EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &a
 }
 
 /**
+ * @brief Select "is_enabled" by appid in ime_info table.
+ *
+ * @param[in] appid appid in ime_info table.
+ * @param[out] is_enabled Helper ISE enabled or not.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+EAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
+{
+    int ret = 0;
+
+    if (!appid || !is_enabled) {
+        LOGW("Input parameter is null.");
+        return 0;
+    }
+
+    if (_db_connect() == 0) {
+        ret = _db_select_is_enabled_by_appid(appid, is_enabled);
+        _db_disconnect();
+    }
+    else
+        LOGW("failed");
+
+    return ret;
+}
+
+
+/**
  * @brief Gets the count of the same module name in ime_info table.
  *
  * @param module_name Module name
@@ -1299,7 +1373,7 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
  * @brief Update "is_enabled" data by appid in ime_info table.
  *
  * @param appid appid in ime_info table.
- * @param enabled Helper ISE enabled or not.
+ * @param is_enabled Helper ISE enabled or not.
  *
  * @return 1 if it is successful, otherwise return 0.
  */
