@@ -130,7 +130,8 @@ struct _EcoreIMFContextISFImpl {
 typedef enum {
     INPUT_LANG_URDU,
     INPUT_LANG_HINDI,
-    INPUT_LANG_BENGALI,
+    INPUT_LANG_BENGALI_IN,
+    INPUT_LANG_BENGALI_BD,
     INPUT_LANG_ASSAMESE,
     INPUT_LANG_PUNJABI,
     INPUT_LANG_NEPALI,
@@ -153,21 +154,22 @@ struct __Punctuations {
 };
 
 static __Punctuations __punctuations [] = {
-    { "ur_PK",  INPUT_LANG_URDU,    0x06D4 },
-    { "hi_IN",  INPUT_LANG_HINDI,   0x0964 },
-    { "bn_IN",  INPUT_LANG_BENGALI, 0x0964 },
-    { "as_IN",  INPUT_LANG_ASSAMESE,0x0964 },
-    { "pa_IN",  INPUT_LANG_PUNJABI, 0x0964 },
-    { "ne_NP",  INPUT_LANG_NEPALI,  0x0964 },
-    { "or_IN",  INPUT_LANG_ORIYA,   0x0964 },
-    { "hy_AM",  INPUT_LANG_ARMENIAN,0x0589 },
-    { "zh_CN",  INPUT_LANG_CN,      0x3002 },
-    { "zh_HK",  INPUT_LANG_CN_HK,   0x3002 },
-    { "zh_TW",  INPUT_LANG_CN_TW,   0x3002 },
-    { "ja_JP",  INPUT_LANG_JAPANESE,0x3002 },
-    { "km_KH",  INPUT_LANG_KHMER,   0x17D4 },
-    { "my_MM",  INPUT_LANG_MYANMAR, 0x104A },
-    { "z1_MM",  INPUT_LANG_BURMESE, 0x104A },
+    { "ur_PK",  INPUT_LANG_URDU,        0x06D4 },
+    { "hi_IN",  INPUT_LANG_HINDI,       0x0964 },
+    { "bn_IN",  INPUT_LANG_BENGALI_IN,  0x0964 },
+    { "bn_BD",  INPUT_LANG_BENGALI_BD,  0x0964 },
+    { "as_IN",  INPUT_LANG_ASSAMESE,    0x0964 },
+    { "pa_IN",  INPUT_LANG_PUNJABI,     0x0964 },
+    { "ne_NP",  INPUT_LANG_NEPALI,      0x0964 },
+    { "or_IN",  INPUT_LANG_ORIYA,       0x0964 },
+    { "hy_AM",  INPUT_LANG_ARMENIAN,    0x0589 },
+    { "zh_CN",  INPUT_LANG_CN,          0x3002 },
+    { "zh_HK",  INPUT_LANG_CN_HK,       0x3002 },
+    { "zh_TW",  INPUT_LANG_CN_TW,       0x3002 },
+    { "ja_JP",  INPUT_LANG_JAPANESE,    0x3002 },
+    { "km_KH",  INPUT_LANG_KHMER,       0x17D4 },
+    { "my_MM",  INPUT_LANG_MYANMAR,     0x104A },
+    { "z1_MM",  INPUT_LANG_BURMESE,     0x104A },
 };
 
 /* Input Context handling functions. */
