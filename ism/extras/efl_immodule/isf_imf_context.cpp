@@ -136,13 +136,13 @@ typedef enum {
     INPUT_LANG_PUNJABI,
     INPUT_LANG_NEPALI,
     INPUT_LANG_ORIYA,
+    INPUT_LANG_MAITHILI,
     INPUT_LANG_ARMENIAN,
     INPUT_LANG_CN,
     INPUT_LANG_CN_HK,
     INPUT_LANG_CN_TW,
     INPUT_LANG_JAPANESE,
     INPUT_LANG_KHMER,
-    INPUT_LANG_MYANMAR,
     INPUT_LANG_BURMESE,
     INPUT_LANG_OTHER
 } Input_Language;
@@ -162,13 +162,13 @@ static __Punctuations __punctuations [] = {
     { "pa_IN",  INPUT_LANG_PUNJABI,     0x0964 },
     { "ne_NP",  INPUT_LANG_NEPALI,      0x0964 },
     { "or_IN",  INPUT_LANG_ORIYA,       0x0964 },
+    { "mai_IN", INPUT_LANG_MAITHILI,    0x0964 },
     { "hy_AM",  INPUT_LANG_ARMENIAN,    0x0589 },
     { "zh_CN",  INPUT_LANG_CN,          0x3002 },
     { "zh_HK",  INPUT_LANG_CN_HK,       0x3002 },
     { "zh_TW",  INPUT_LANG_CN_TW,       0x3002 },
     { "ja_JP",  INPUT_LANG_JAPANESE,    0x3002 },
     { "km_KH",  INPUT_LANG_KHMER,       0x17D4 },
-    { "my_MM",  INPUT_LANG_MYANMAR,     0x104A },
     { "z1_MM",  INPUT_LANG_BURMESE,     0x104A },
 };
 
