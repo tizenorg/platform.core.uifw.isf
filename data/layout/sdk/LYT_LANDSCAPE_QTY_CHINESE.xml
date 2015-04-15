@@ -367,7 +367,7 @@
       </key_value>
     </key>
   </row>
-  <row x="16" sub_layout="EMAIL" key_width="128" key_spacing="13">
+  <row x="16" sub_layout="EMAIL" key_width="128">
     <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
       <label>
         <rec>?123</rec>

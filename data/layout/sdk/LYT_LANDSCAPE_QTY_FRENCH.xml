@@ -592,7 +592,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-305" popup_offset_y="-162" widht="81">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-305" popup_offset_y="-162" width="81">
       <label>
         <rec>.</rec>
       </label>
@@ -722,7 +722,7 @@
       </key_value>
     </key>
   </row>
-  <row x="16" sub_layout="EMAIL" key_width="128" key_spacing="13">
+  <row x="16" sub_layout="EMAIL" key_width="128">
     <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
       <label>
         <rec>?123</rec>
