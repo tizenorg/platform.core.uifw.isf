@@ -91,7 +91,7 @@ _scim_get_module_paths (std::vector <String> &paths, const String &type)
 EAPI int
 scim_get_module_list (std::vector <String>& mod_list, const String& type)
 {
-    int i = 0;
+    unsigned int i = 0;
     std::vector<String> mname;
     std::vector<String> paths;
 
@@ -186,7 +186,7 @@ Module::load (const String &name, const String &type)
     if (is_resident ())
         return false;
 
-    int i = 0;
+    unsigned int i = 0;
     std::vector<String> mpath;
     std::vector <String> paths;
     std::vector <String>::iterator it;

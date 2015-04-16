@@ -39,6 +39,7 @@ namespace scim
 
 typedef Signal1<void, int> IMControlClientSignalVoid;
 
+#if ENABLE_LAZY_LAUNCH
 static bool check_panel (const String &display)
 {
     SocketAddress address;
@@ -120,6 +121,7 @@ launch_socket_frontend ()
         "socket",
         NULL);
 }
+#endif
 
 class IMControlClient::IMControlClientImpl
 {
