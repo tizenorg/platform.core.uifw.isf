@@ -1221,6 +1221,12 @@ public:
      */
     Connection signal_connect_get_ise_state              (PanelAgentSlotInt2                *slot);
 
+    /**
+     * @brief Signal: Get the recent input panel geometry information.
+     *
+     * slot prototype: void get_recent_ise_geometry (rectinfo &info);
+     */
+    Connection signal_connect_get_recent_ise_geometry    (PanelAgentSlotRect                *slot);
 };
 
 /**  @} */

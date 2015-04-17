@@ -62,6 +62,7 @@ public:
     void show_helper_ise_list (void);
     void show_helper_ise_selector (void);
     bool is_helper_ise_enabled (const char* appid, int &enabled);
+    bool get_recent_ime_geometry (int *x, int *y, int *w, int *h);
 };
 
 }

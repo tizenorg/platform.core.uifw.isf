@@ -497,6 +497,44 @@ public:
             return false;
         }
     }
+
+    bool get_recent_ime_geometry (int *x, int *y, int *w, int *h)
+    {
+        int    cmd;
+        uint32 tmp_x, tmp_y, tmp_w, tmp_h;
+
+        m_trans.put_command (ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+                m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK &&
+                m_trans.get_data (tmp_x) && m_trans.get_data (tmp_y) &&
+                m_trans.get_data (tmp_w) && m_trans.get_data (tmp_h)) {
+            if (x)
+                *x = (int)tmp_x;
+
+            if (y)
+                *y = (int)tmp_y;
+
+            if (w)
+                *w = (int)tmp_w;
+
+            if (h)
+                *h = (int)tmp_h;
+
+            if (*w == -1 && *h == -1)
+                return false;
+
+            return true;
+        } else {
+            std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
+        }
+    }
 };
 
 IMControlClient::IMControlClient ()
@@ -613,6 +651,10 @@ bool IMControlClient::is_helper_ise_enabled (const char* appid, int &enabled)
     return m_impl->is_helper_ise_enabled (appid, enabled);
 }
 
+bool IMControlClient::get_recent_ime_geometry (int *x, int *y, int *w, int *h)
+{
+    return m_impl->get_recent_ime_geometry (x, y, w, h);
+}
 };
 
 /*

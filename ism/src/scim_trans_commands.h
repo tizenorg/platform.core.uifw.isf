@@ -636,6 +636,7 @@ const int ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO        = 1020;
 const int ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST              = 1021;
 const int ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR          = 1022;
 const int ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED             = 1023;
+const int ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY           = 1024;
 
 /* IMControl to ISE */
 const int ISM_TRANS_CMD_SET_ISE_MODE                      = 1108;

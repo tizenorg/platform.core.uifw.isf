@@ -44,6 +44,7 @@ static void test_get_ise_count (void *data, Evas_Object *obj, void *event_info);
 static void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info);
 static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info);
+static void test_get_recent_ise_geometry_get (void *data, Evas_Object *obj, void *event_info);
 
 static struct _menu_item imcontrol_menu_its[] = {
     { "PANEL GEOMETRY GET", test_input_panel_geometry_get },
@@ -62,6 +63,7 @@ static struct _menu_item imcontrol_menu_its[] = {
     { "RESET DEFAULT ISE", test_reset_default_ise },
     { "SHOW ISE SELECTOR", test_show_ise_selector },
     { "SHOW ISE OPTION", test_show_ise_option },
+    { "GET RECENT ISE GEOMETRY", test_get_recent_ise_geometry_get },
 
     /* do not delete below */
     { NULL, NULL}
@@ -228,8 +230,22 @@ static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info
     int ret = isf_control_get_initial_ise (&uuid);
     if (ret > 0 && uuid)
         LOGD ("Get initial ISE: %s\n", uuid);
+    else
+        LOGW ("Failed to get initial ISE\n");
+
     if (uuid)
         free (uuid);
+}
+
+static void test_get_recent_ise_geometry_get (void *data, Evas_Object *obj, void *event_info)
+{
+    int x, y, w, h;
+    if (isf_control_get_recent_ime_geometry (&x, &y, &w, &h) == 0) {
+        LOGD ("x=%d, y=%d, width=%d, height=%d\n", x, y, w, h);
+    }
+    else {
+        LOGW ("Failed to get recent ime geometry\n");
+    }
 }
 
 static char *gli_label_get (void *data, Evas_Object *obj, const char *part)

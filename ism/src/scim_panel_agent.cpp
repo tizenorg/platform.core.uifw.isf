@@ -382,6 +382,8 @@ class PanelAgent::PanelAgentImpl
 
     PanelAgentSignalVoid                m_signal_candidate_will_hide_ack;
     PanelAgentSignalInt2                m_signal_get_ise_state;
+
+    PanelAgentSignalRect                m_signal_get_recent_ise_geometry;
 public:
     PanelAgentImpl ()
         : m_should_exit (false),
@@ -3085,6 +3087,26 @@ public:
         }
     }
 
+    void get_recent_ise_geometry (int client_id)
+    {
+        SCIM_DEBUG_MAIN(4) << __func__ << "\n";
+
+        struct rectinfo info = {0, 0, 0, 0};
+        m_signal_get_recent_ise_geometry (info);
+
+        Transaction trans;
+        Socket client_socket (client_id);
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.put_data (info.pos_x);
+        trans.put_data (info.pos_y);
+        trans.put_data (info.width);
+        trans.put_data (info.height);
+        trans.write_to_socket (client_socket);
+    }
+
     Connection signal_connect_reload_config              (PanelAgentSlotVoid                *slot)
     {
         return m_signal_reload_config.connect (slot);
@@ -3453,6 +3475,11 @@ public:
     Connection signal_connect_get_ise_state              (PanelAgentSlotInt2                *slot)
     {
         return m_signal_get_ise_state.connect (slot);
+    }
+
+    Connection signal_connect_get_recent_ise_geometry    (PanelAgentSlotRect                *slot)
+    {
+        return m_signal_get_recent_ise_geometry.connect (slot);
     }
 
 private:
@@ -4013,6 +4040,8 @@ private:
                 else if (cmd == ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED) {
                     is_helper_ise_enabled (client_id);
                 }
+                else if (cmd == ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY)
+                    get_recent_ise_geometry (client_id);
             }
 
             socket_transaction_end ();
@@ -6854,6 +6883,11 @@ PanelAgent::signal_connect_get_ise_state              (PanelAgentSlotInt2       
     return m_impl->signal_connect_get_ise_state (slot);
 }
 
+Connection
+PanelAgent::signal_connect_get_recent_ise_geometry    (PanelAgentSlotRect                *slot)
+{
+    return m_impl->signal_connect_get_recent_ise_geometry (slot);
+}
 } /* namespace scim */
 
 /*

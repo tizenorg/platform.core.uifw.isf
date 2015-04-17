@@ -207,6 +207,7 @@ static void       slot_get_ise_language                (char *name, std::vector<
 static bool       slot_get_ise_info                    (const String &uuid, ISE_INFO &info);
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_get_input_panel_geometry        (struct rectinfo &info);
+static void       slot_get_recent_ise_geometry         (struct rectinfo &info);
 static void       slot_set_keyboard_ise                (const String &uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_accept_connection               (int fd);
@@ -460,7 +461,10 @@ struct GeometryCache
     int angle;                 /* For which angle this information is useful */
     struct rectinfo geometry;  /* Geometry information */
 };
+
 static struct GeometryCache _ise_reported_geometry          = {0, 0, {0, 0, 0, 0}};
+static struct GeometryCache _portrait_recent_ise_geometry   = {0, 0, {0, 0, 0, 0}};
+static struct GeometryCache _landscape_recent_ise_geometry  = {0, 0, {0, 0, 0, 0}};
 
 static void show_soft_keyboard (void)
 {
@@ -1016,6 +1020,17 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
         ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
     } else {
         ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+
+        int angle = efl_get_ise_window_angle ();
+
+        if (angle == 0 || angle == 180) {
+            _portrait_recent_ise_geometry.valid = true;
+            _portrait_recent_ise_geometry.geometry = ise_rect;
+        }
+        else {
+            _landscape_recent_ise_geometry.valid = true;
+            _landscape_recent_ise_geometry.geometry = ise_rect;
+        }
     }
 }
 
@@ -3467,6 +3482,8 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
     _panel_agent->signal_connect_show_panel                 (slot (slot_show_ise_selector));
 
+    _panel_agent->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
+
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
 
@@ -4638,6 +4655,36 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
     LOGD ("%d %d %d %d", info.pos_x, info.pos_y, info.width, info.height);
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << info.pos_x << " y:" << info.pos_y
                         << " width:" << info.width << " height:" << info.height << "\n";
+}
+
+/**
+ * @brief Get the recent input panel geometry slot function for PanelAgent.
+ *
+ * @param info The data is used to store input panel position and size.
+ */
+static void slot_get_recent_ise_geometry (struct rectinfo &info)
+{
+    LOGD ("slot_get_recent_ise_geometry\n");
+
+    /* If we have geometry reported by ISE, use the geometry information */
+    int angle = efl_get_app_window_angle ();
+    if (angle == 0 || angle == 180) {
+        if (_portrait_recent_ise_geometry.valid) {
+            info = _portrait_recent_ise_geometry.geometry;
+            return;
+        }
+    }
+    else {
+        if (_landscape_recent_ise_geometry.valid) {
+            info = _landscape_recent_ise_geometry.geometry;
+            return;
+        }
+    }
+
+    info.pos_x = -1;
+    info.pos_y = -1;
+    info.width = -1;
+    info.height = -1;
 }
 
 /**

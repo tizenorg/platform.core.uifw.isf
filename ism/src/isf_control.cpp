@@ -427,6 +427,40 @@ EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
     return ret;
 }
 
+EAPI int isf_control_get_recent_ime_geometry (int *x, int *y, int *w, int *h)
+{
+    int ime_x = -1, ime_y = -1, ime_w = -1, ime_h = -1;
+
+    IMControlClient imcontrol_client;
+    int ret = 0;
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
+    imcontrol_client.prepare ();
+    if (!imcontrol_client.get_recent_ime_geometry (&ime_x, &ime_y, &ime_w, &ime_h))
+        ret = -1;
+
+    imcontrol_client.close_connection ();
+
+    if (ret == -1)
+        return -1;
+
+    if (x)
+        *x = ime_x;
+
+    if (y)
+        *y = ime_y;
+
+    if (w)
+        *w = ime_w;
+
+    if (h)
+        *h = ime_h;
+
+    return ret;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */
