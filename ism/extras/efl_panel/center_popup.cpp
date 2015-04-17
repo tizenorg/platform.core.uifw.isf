@@ -93,6 +93,8 @@ center_popup_add(Evas_Object *parent, const char *name, const char *title)
     Evas_Object *popup;
 
     cp_data = (Center_Popup_Data *)calloc(1, sizeof(Center_Popup_Data));
+    if (!cp_data) return NULL;
+
     cp_data->parent = parent;
     if (parent)
         cp_data->parent_win = evas_object_top_get(evas_object_evas_get(parent));

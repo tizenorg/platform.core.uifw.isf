@@ -106,10 +106,11 @@ scim_get_module_list (std::vector <String>& mod_list, const String& type)
             while (file) {
                 struct stat filestat;
                 String absfn = *i + String (SCIM_PATH_DELIM_STRING) + file->d_name;
-                stat (absfn.c_str (), &filestat);
-                if (S_ISREG (filestat.st_mode)) {
-                    String mod_name = String (file->d_name);
-                    mod_list.push_back (mod_name.substr (0, mod_name.find_last_of ('.')));
+                if (stat (absfn.c_str (), &filestat) == 0) {
+                    if (S_ISREG (filestat.st_mode)) {
+                        String mod_name = String (file->d_name);
+                        mod_list.push_back (mod_name.substr (0, mod_name.find_last_of ('.')));
+                    }
                 }
 
                 if (readdir_r (dir, &direntp, &file) != 0){

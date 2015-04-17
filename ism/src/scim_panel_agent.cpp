@@ -380,6 +380,7 @@ public:
           m_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE),
           m_current_helper_option (0),
           m_pending_active_imcontrol_id (-1),
+          m_show_request_client_id (-1),
           m_active_client_id (-1),
           m_should_shared_ise (false),
           m_ise_exiting (false), m_is_imengine_aux (false), m_is_imengine_candidate (false),

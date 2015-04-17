@@ -423,7 +423,9 @@ scim_global_config_flush ()
                            String ("global");
 
     if (access (usr_conf_dir.c_str (), R_OK | W_OK) != 0) {
-        mkdir (usr_conf_dir.c_str (), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+        if (mkdir (usr_conf_dir.c_str (), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0)
+            return false;
+
         if (access (usr_conf_dir.c_str (), R_OK | W_OK) != 0)
             return false;
     }

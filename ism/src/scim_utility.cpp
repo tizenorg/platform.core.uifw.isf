@@ -781,7 +781,9 @@ scim_make_dir (const String &dir)
 
         //Make the dir if it's not exist.
         if (access (path.c_str (), R_OK) != 0) {
-            mkdir (path.c_str (), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+            if (mkdir (path.c_str (), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0)
+                return false;
+
             if (access (path.c_str (), R_OK) != 0)
                 return false;
         }
@@ -1406,7 +1408,7 @@ void ISF_PROF_DEBUG_TIME_BEGIN ()
     _p_t0 = times (&tms);
 }
 
-/* Measure elapased time */
+/* Measure elapsed time */
 void ISF_PROF_DEBUG_TIME_END (char const* format, char const* func, int line)
 {
     float etime = 0.0;
@@ -1427,7 +1429,7 @@ void ISF_PROF_DEBUG_TIME_END (char const* format, char const* func, int line)
     return;
 }
 
-/* Measure elapased time */
+/* Measure elapsed time */
 void ISF_PROF_DEBUG_TIME (char const* func, int line, char const* str)
 {
     float etime = 0.0;

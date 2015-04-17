@@ -373,7 +373,9 @@ SimpleConfig::flush()
     String userconf_dir = get_userconf_dir ();
 
     if (access (userconf_dir.c_str (), R_OK | W_OK) != 0) {
-        mkdir (userconf_dir.c_str (), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+        if (mkdir (userconf_dir.c_str (), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0)
+            return false;
+
         if (access (userconf_dir.c_str (), R_OK | W_OK) != 0)
             return false;
     }

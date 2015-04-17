@@ -122,7 +122,8 @@ struct _EcoreIMFContextISFImpl {
                                 need_commit_preedit(false),
                                 prediction_allow(false),
                                 next_shift_status(0),
-                                shift_mode_enabled(0)
+                                shift_mode_enabled(0),
+                                next(NULL)
     {
     }
 };
