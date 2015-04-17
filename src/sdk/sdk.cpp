@@ -103,16 +103,19 @@ CSDKISE::process_key_type_char(const SclUIEventDesc& event_desc)
     // patch for Chinese symbol ^
     // Chinese engine will regards ^ as ……
     // this patch is to avoid this
-    if (0 == strcmp(_language_manager.get_current_language(), "Chinese")) {
-        if (event_desc.key_event == '^') {
-            ise_forward_key_event(event_desc.key_event);
-            return SCL_EVENT_DONE;
+    const sclchar * cur_lang = _language_manager.get_current_language();
+    if (cur_lang) {
+        if (0 == strcmp(cur_lang, "Chinese")) {
+            if (event_desc.key_event == '^') {
+                ise_forward_key_event(event_desc.key_event);
+                return SCL_EVENT_DONE;
+            }
         }
     }
     // patch for Chinese symbol ^ end
     /* If longkey symbol was pressed, let's flush the preedit buffer */
     if (event_desc.key_modifier == KEY_MODIFIER_LONGKEY) {
-        flush_imengine(_language_manager.get_current_language());
+        flush_imengine(cur_lang);
     }
 
 
@@ -122,17 +125,18 @@ CSDKISE::process_key_type_char(const SclUIEventDesc& event_desc)
 SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
+    const sclchar * cur_lang = _language_manager.get_current_language();
 
     switch (event_desc.key_type) {
         case KEY_TYPE_CHAR:
             ret = process_key_type_char(event_desc);
             break;
         case KEY_TYPE_STRING:
-            flush_imengine(_language_manager.get_current_language());
+            flush_imengine(cur_lang);
             break;
         case KEY_TYPE_MODECHANGE:
             {
-                flush_imengine(_language_manager.get_current_language());
+                flush_imengine(cur_lang);
             }
             break;
         case KEY_TYPE_CONTROL:
@@ -143,7 +147,7 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
             event_desc.key_event != MVK_Shift_Lock &&
             event_desc.key_event != MVK_space &&
             event_desc.key_event != MVK_Return) {
-            flush_imengine(_language_manager.get_current_language());
+            flush_imengine(cur_lang);
         }
         if (event_desc.key_event == MVK_space) {
             if (_language_manager.get_enabled_languages_num() > 1) {
@@ -157,25 +161,27 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                     _language_manager.select_next_language();
                     ret = SCL_EVENT_DONE;
                 }
-                LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
-                if (info) {
-                    if (info->accepts_caps_mode) {
-                        // FIXME this if condition means the AC is off
-                        if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
+                if (cur_lang) {
+                    LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
+                    if (info) {
+                        if (info->accepts_caps_mode) {
+                            // FIXME this if condition means the AC is off
+                            if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
+                                g_ui->set_autocapital_shift_state(TRUE);
+                                g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
+                            }
+
+                            // normal layout means the AC is on
+                            else {
+                                g_ui->set_autocapital_shift_state(FALSE);
+                                ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
+                                set_caps_mode(g_keyboard_state.caps_mode);
+                            }
+                        } else {
                             g_ui->set_autocapital_shift_state(TRUE);
+                            ise_send_event(MVK_Shift_Disable, KEY_MASK_NULL);
                             g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
                         }
-
-                        // normal layout means the AC is on
-                        else {
-                            g_ui->set_autocapital_shift_state(FALSE);
-                            ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
-                            set_caps_mode(g_keyboard_state.caps_mode);
-                        }
-                    } else {
-                        g_ui->set_autocapital_shift_state(TRUE);
-                        ise_send_event(MVK_Shift_Disable, KEY_MASK_NULL);
-                        g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
                     }
                 }
             } else {

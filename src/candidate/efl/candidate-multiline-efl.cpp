@@ -59,18 +59,15 @@ EflMultiLineCandidate::item_pressed(Evas_Object *item)
     const char *str = edje_object_part_text_get(
         item, "candidate");
 
-    int index;
-    vector<string>::const_iterator it =
-        find(cur_candidates.begin(), cur_candidates.end(), str);
-    if (it != cur_candidates.end()) {
-        index = it-cur_candidates.begin();
-    } else {
-        index = -1;
-    }
-    if (it != cur_candidates.end()) {
-        index = it-cur_candidates.begin();
-    } else {
-        index = -1;
+    int index = -1;
+    if (str) {
+        vector<string>::const_iterator it =
+            find(cur_candidates.begin(), cur_candidates.end(), str);
+        if (it != cur_candidates.end()) {
+            index = it-cur_candidates.begin();
+        } else {
+            index = -1;
+        }
     }
 
     //hide_more_view();
@@ -78,7 +75,7 @@ EflMultiLineCandidate::item_pressed(Evas_Object *item)
     MultiEventDesc desc;
     desc.type = MultiEventDesc::CANDIDATE_ITEM_MOUSE_DOWN;
     desc.index = index;
-    desc.text = str;
+    desc.text = str? str : "";
     notify_listeners(desc);
 }
 

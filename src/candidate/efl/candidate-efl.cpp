@@ -51,18 +51,21 @@ EflCandidate::item_pressed(Evas_Object *item)
     const char *str = edje_object_part_text_get(
         item, "candidate");
 
-    int index;
-    vector<string>::const_iterator it =
-        find(cur_candidates.begin(), cur_candidates.end(), str);
-    if (it != cur_candidates.end()) {
-        index = it-cur_candidates.begin();
-    } else {
-        index = -1;
+    int index = -1;
+    if (str) {
+        vector<string>::const_iterator it =
+            find(cur_candidates.begin(), cur_candidates.end(), str);
+        if (it != cur_candidates.end()) {
+            index = it-cur_candidates.begin();
+        } else {
+            index = -1;
+        }
     }
+
     // notify listners the event happend
     EventDesc desc;
     desc.type = EventDesc::CANDIDATE_ITEM_MOUSE_DOWN;
-    desc.text = str;
+    desc.text = str? str : "";
     desc.index = index;
     notify_listeners(desc);
 }
@@ -76,7 +79,7 @@ EflCandidate::item_released(Evas_Object *item)
     // notify listners the event happend
     EventDesc desc;
     desc.type = EventDesc::CANDIDATE_ITEM_MOUSE_UP;
-    desc.text = str;
+    desc.text = str? str : "";
     notify_listeners(desc);
 }
 
@@ -89,7 +92,7 @@ EflCandidate::item_moved(Evas_Object *item)
     // notify listners the event happend
     EventDesc desc;
     desc.type = EventDesc::CANDIDATE_ITEM_MOUSE_MOVE;
-    desc.text = str;
+    desc.text = str? str : "";
     notify_listeners(desc);
 }
 

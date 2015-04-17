@@ -433,14 +433,18 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
                 ret = _language_manager.select_next_language();
             }
         }
-        LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
-        if (info) {
-            if (info->accepts_caps_mode) {
-                ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
-                set_caps_mode(g_keyboard_state.caps_mode);
-            } else {
-                ise_send_event(MVK_Shift_Disable, KEY_MASK_NULL);
-                g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
+
+        const sclchar * cur_lang = _language_manager.get_current_language();
+        if (cur_lang) {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
+            if (info) {
+                if (info->accepts_caps_mode) {
+                    ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
+                    set_caps_mode(g_keyboard_state.caps_mode);
+                } else {
+                    ise_send_event(MVK_Shift_Disable, KEY_MASK_NULL);
+                    g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
+                }
             }
         }
     }
@@ -456,21 +460,24 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
 
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
         if (g_need_send_shift_event) {
-            LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
-            SclNotiShiftStateChangeDesc *desc = static_cast<SclNotiShiftStateChangeDesc*>(etc_info);
-            if (info && desc) {
-                if (info->accepts_caps_mode) {
-                    LOGD ("shift state: %d", desc->shift_state);
-                    if (desc->shift_state == SCL_SHIFT_STATE_OFF) {
-                        ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
+            const sclchar * cur_lang = _language_manager.get_current_language();
+            if (cur_lang) {
+                LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
+                SclNotiShiftStateChangeDesc *desc = static_cast<SclNotiShiftStateChangeDesc*>(etc_info);
+                if (info && desc) {
+                    if (info->accepts_caps_mode) {
+                        LOGD ("shift state: %d", desc->shift_state);
+                        if (desc->shift_state == SCL_SHIFT_STATE_OFF) {
+                            ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
+                        }
+                        else if (desc->shift_state == SCL_SHIFT_STATE_ON) {
+                            ise_send_event(MVK_Shift_On, KEY_MASK_NULL);
+                        }
+                        else if (desc->shift_state == SCL_SHIFT_STATE_LOCK) {
+                            ise_send_event(MVK_Shift_Lock, KEY_MASK_NULL);
+                        }
+                        ret = SCL_EVENT_PASS_ON;
                     }
-                    else if (desc->shift_state == SCL_SHIFT_STATE_ON) {
-                        ise_send_event(MVK_Shift_On, KEY_MASK_NULL);
-                    }
-                    else if (desc->shift_state == SCL_SHIFT_STATE_LOCK) {
-                        ise_send_event(MVK_Shift_Lock, KEY_MASK_NULL);
-                    }
-                    ret = SCL_EVENT_PASS_ON;
                 }
             }
             g_need_send_shift_event = FALSE;
@@ -707,8 +714,11 @@ ise_show(int ic)
         }
         g_keyboard_state.ic = ic;
         /* Reset input mode if the current language is not the selected language */
-        if (g_config_values.selected_language.compare(_language_manager.get_current_language()) != 0) {
-            reset_inputmode = TRUE;
+        const sclchar * cur_lang = _language_manager.get_current_language();
+        if (cur_lang) {
+            if (g_config_values.selected_language.compare(cur_lang) != 0) {
+                reset_inputmode = TRUE;
+            }
         }
         /* No matter what, just reset the inputmode if it needs to */
         if (g_keyboard_state.need_reset) {
@@ -965,12 +975,15 @@ ise_set_caps_mode(unsigned int mode)
     } else {
         g_keyboard_state.caps_mode = FALSE;
     }
-    LANGUAGE_INFO *info = _language_manager.get_language_info(_language_manager.get_current_language());
-    if (info) {
-        if (info->accepts_caps_mode) {
-            set_caps_mode(g_keyboard_state.caps_mode);
-        } else {
-            g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
+    const sclchar * cur_lang = _language_manager.get_current_language();
+    if (cur_lang) {
+        LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
+        if (info) {
+            if (info->accepts_caps_mode) {
+                set_caps_mode(g_keyboard_state.caps_mode);
+            } else {
+                g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
+            }
         }
     }
 }
