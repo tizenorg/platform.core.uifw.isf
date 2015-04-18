@@ -3,7 +3,7 @@ html {
 }
 body {
 /*    background:#111121;*/
-    background-image:url(imgs/remotekeyboard_remocon_bg.png);
+    background-image:url(imgs/game_background.png);
     background-repeat:no-repeat;
     background-size: 100% 100%;
     margin:0;
@@ -97,6 +97,9 @@ div {
     background-size:100% 90%;
     background-position:top center;
 }
+.cell_width3 {
+    width:3%;
+}
 .cell_width5 {
     width:5%;
 }
@@ -105,6 +108,9 @@ div {
 }
 .cell_width10 {
     width:10%;
+}
+.cell_width13 {
+    width:13%;
 }
 .cell_width15 {
     width:15%;
@@ -115,11 +121,38 @@ div {
 .cell_width25 {
     width:25%;
 }
+.cell_width27 {
+    width:27%;
+}
+.cell_width28 {
+    width:28%;
+}
+.cell_width29 {
+    width:29%;
+}
 .cell_width30 {
     width:30%;
 }
+.cell_width31 {
+    width:31%;
+}
+.cell_width32 {
+    width:32%;
+}
 .cell_width33 {
-    width:33.33%;
+    width:33%;
+}
+.cell_width34 {
+    width:34%;
+}
+.cell_width35 {
+    width:35%;
+}
+.cell_width36 {
+    width:36%;
+}
+.cell_width37 {
+    width:37%;
 }
 .cell_width50 {
     width:50%;
@@ -181,20 +214,44 @@ div {
 .cell_height20 {
     height:20%;
 }
+.cell_height23 {
+    height:23%;
+}
 .cell_height25 {
     height:25%;
 }
 .cell_height30 {
     height:30%;
 }
+.cell_height32 {
+    height:32%;
+}
+.cell_height33 {
+    height:33%;
+}
 .cell_height34 {
     height:34%;
+}
+.cell_height37 {
+    height:37%;
+}
+.cell_height38 {
+    height:38%;
 }
 .cell_height40 {
     height:40%;
 }
 .cell_height43 {
     height:43%;
+}
+.cell_height45 {
+    height:45%;
+}
+.cell_height46 {
+    height:46%;
+}
+.cell_height48 {
+    height:48%;
 }
 .cell_height50 {
     height:50%;
@@ -596,27 +653,27 @@ div {
 }
 .g_menu {
     background:url(imgs/game_menu.png);
-    background-size: auto 100%;
+    background-size: 100% auto;
     background-repeat:no-repeat;
     background-position:left center;
 }
 .g_menu:active {
     background:url(imgs/game_menu_pressed.png);
-    background-size: auto 100%;
+    background-size: 100% auto;
     background-repeat:no-repeat;
     background-position:left center;
 }
 .g_exit {
     background:url(imgs/game_exit.png);
-    background-size: auto 100%;
+    background-size: 100% auto;
     background-repeat:no-repeat;
-    background-position:left center;
+    background-position:left top;
 }
 .g_exit:active {
     background:url(imgs/game_exit_pressed.png);
-    background-size: auto 100%;
+    background-size: 100% auto;
     background-repeat:no-repeat;
-    background-position:left center;
+    background-position:left top;
 }
 .g_title {
     background:url(imgs/game_title.png);
@@ -629,6 +686,42 @@ div {
     background-size: auto 100%;
     background-repeat:no-repeat;
     background-position: right center;
+}
+.g_air {
+    background:url(imgs/game_air_pressed.png);
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+.g_air:active {
+    background:url(imgs/game_air.png);
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+.g_set {
+    background:url(imgs/game_set_pressed.png);
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+.g_set:active {
+    background:url(imgs/game_set.png);
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+.g_select {
+    background:url(imgs/game_select.png);
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position:left bottom;
+}
+.g_select:active {
+    background:url(imgs/game_select_pressed.png);
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position:left bottom;
 }
 .cell_gray_font{
     font-size:180%;

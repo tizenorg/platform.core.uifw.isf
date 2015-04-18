@@ -2,38 +2,31 @@
 <html>
 <head>
     <title>Tizen Remote Input</title>
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable = 0"/>
-    <link rel="stylesheet" href="custom3.css" type="text/css"/>
-    <link rel="stylesheet" href="jquery.mobile-1.3.1.css" type="text/css"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
     <script src="ajaxCaller.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="remote_input_game.css" type="text/css"/>
     <script src="util.js" type="text/javascript"> </script>
     <script src="jquery-2.0.2.min.js"></script>
-    <script src="jquery.mobile-1.3.1.min.js"></script>
-    <style type="text/css">
-        #bt_circle_X, #bt_circle_Y, #bt_circle_A, #bt_circle_B{
-        width: 65x !important;
-        height: 65px !important;
-        border-radius: 50% !important;
-        }
-     </style>
-
-    <script>
-
-    </script>
-
-
+    <script type="text/javascript" src="web-helper-client.js"></script>
 </head>
 
-<body>
-    <script>
+<body id="by">
+<script>
+
+        // Callback incremental index
+        var id_num = 0;
+        var ori;
+        var CAL_FLUSH_TIMEOUT = 3000;
+
         // Callback incremental index
         var id_num = 0;
 
         var KEY_MENU = 10001;
         var KEY_HOME = 10002;
         var KEY_BACK = 10003;
+        var TV_KEY_SELECT = 36;
 
         var GAME_KEY_UP = 111;
         var GAME_KEY_LEFT = 113;
@@ -43,257 +36,403 @@
         var GAME_B = 305;
         var GAME_X = 307;
         var GAME_Y = 308;
-
         var GAME_SELECT = 314;
         var GAME_START = 315;
 
-        var multi_touched = 0;
-        var touch_started_x = 0;
-        var touch_started_y = 0;
-        var touch_contentarea_Pressed=0;
-        var touch_contentarea_Moved=0;
-        var touch_contentarea_pre_x=0;
-        var touch_contentarea_pre_y=0;
+        var MOUSE_CLICK = 555;
+        var KEY_MENU = 10001;
+        var KEY_HOME = 10002;
+        var KEY_BACK = 10003;
+        var scroll_pre_x = 0;
+        var scroll_pre_y = 0;
+        var cur_air_mode = 0;
+        var cur_reset_mode = 0;
+        var gry_basic_a = 0;
+        var gry_basic_b = 0;
+        var gry_basic_g = 0;
+        var gry_sum_a = 0;
+        var gry_sum_b = 0;
+        var gry_sum_g = 0;
+        var gry_sum_count = 0;
+        var progress = ["",".","..","...","...."];
+        var progress_count=0;
+        var event_checker = false;
+        var timer;
+        var EVENT_DELAY =300;
 
-        function cbAjax(text, headers, callingContext){
+        var WebHelperClientHandler = {
+            onInit : function () {
+                WebHelperClient.log("ON INIT");
+            }
+        };
+
+        WebHelperClient.initialize(WebHelperClientHandler);
+
+        function cbAjax(text, headers, callingContext) {
             id_num++;
             return true;
         }
-        function sendKeyEvent(keyCode){
-            var bodyVars = {id:id_num, key:'event', value:keyCode}
-            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        function sendKeyEvent(keyCode) {
+            event.preventDefault();
+            WebHelperClient.sendKeyEvent(keyCode);
         }
-        function absorbEvent_(event) {
-
-            var e = event || window.event;
-            sendKeyEvent(GAME_KEY_UP);
-            e.preventDefault && e.preventDefault();
-            e.stopPropagation && e.stopPropagation();
-            e.cancelBubble = true;
-            e.returnValue = false;
-            return false;
+        function sendMouse_KeyEvent(mouseCode) {
+            event.preventDefault();
+            if (event.touches.length < 2) {
+                WebHelperClient.sendMouse_KeyEvent(mouseCode);
+            }
         }
-        function preventLongPressMenu(node) {
-            node.ontouchmove = node.ontouchstart;
-            //node.ontouchend = absorbEvent_;
-            //node.ontouchcancel = absorbEvent_;
+        function sendMouse_MoveEvent(coordinate) {
+            event.preventDefault();
+            if (event.touches.length < 2) {
+                WebHelperClient.sendMouse_MoveEvent(coordinate);
+            }
+        }
+        function sendWheel_MoveEvent(coordinate) {
+            event.preventDefault();
+            if (event.touches.length < 2) {
+                WebHelperClient.sendWheel_MoveEvent(coordinate);
+            }
+        }
+        function sendAir_Input(coordinate) {
+            event.preventDefault();
+            WebHelperClient.sendAir_Input(coordinate);
+        }
+        function sendAir_Setting(coordinate) {
+            event.preventDefault();
+            WebHelperClient.sendAir_Setting(coordinate);
+        }
+        function delay_timer (checker) {
+            event_checker = checker;
+        }
+        function airModeChanged(to) {
+            event.preventDefault();
+            var air_input_bt = document.getElementById('g_air');
+            air_input_bt.style.background = "url(imgs/" + to + ")";
+            air_input_bt.style.backgroundRepeat = "no-repeat";
+            air_input_bt.style.backgroundSize = "100% auto";
+            air_input_bt.style.backgroundPosition = "right center";
+        }
+        function make_calibration(gry_a, gry_b, gry_g) {
+            gry_sum_a +=gry_a;
+            gry_sum_b +=gry_b;
+            gry_sum_g +=gry_g;
+            gry_sum_count++;
+            gry_basic_a = (gry_sum_a/gry_sum_count).toFixed(3);
+            gry_basic_b = (gry_sum_b/gry_sum_count).toFixed(3);
+            gry_basic_g = (gry_sum_g/gry_sum_count).toFixed(3);
+
+            if (gry_sum_count%4==0) {
+                progress_count++;
+                if(progress_count >= 5) {
+                    progress_count = 0;
+                }
+            }
         }
 
+        function get_gyro_calibration(event) {
+            event.preventDefault();
+            var r = event.rotationRate;
+            if(r!=null) {
+                //make_calibration(r.alpha, r.beta, r.gamma);
+                make_calibration(event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.x);
+            }
+        }
+        function gyro_event_listener(event) {
 
-        function checkOrientation(){
-              var currMode = "";
-              alert(window.orientation);
-                console.log("check_orientation")
-              switch(window.orientation){
-                   case 0:
-                   currMode = "landscape";
-                   break;
-                   case -90:
-                   currMode = "landscape";
-                   break;
-                   case 90:
-                   currMode = "landscape";
-                   break;
-                   case 180:
-                   currMode = "landscape";
-                   break;
-             }
-             document.getElementsByTagName("body")[0].setAttribute("class", currMode);
+            event.preventDefault();
+            var x = event.accelerationIncludingGravity.x;
+            var y = event.accelerationIncludingGravity.y;
+            var z = event.accelerationIncludingGravity.z;
+            var r = event.rotationRate;
+            var data;
+
+            var gyro_a = x - gry_basic_a;
+            var gyro_b = y - gry_basic_b;
+            var gyro_g = z - gry_basic_g;
+
+            if((x!=null || y!=null || z!=null || r!=null)) {
+
+                if ( event_checker == false) {
+                    if (gyro_a <= 2.5) {
+                        sendKeyEvent(GAME_KEY_UP);
+                    }
+                    else if (gyro_a >= 8) {
+                        sendKeyEvent(GAME_KEY_DOWN);
+                    }
+                    if (gyro_b <= -3.5) {
+                        sendKeyEvent(GAME_KEY_LEFT);
+                    }
+                    else if (gyro_b >= 3.5) {
+                        sendKeyEvent(GAME_KEY_RIGHT);
+                    }
+                    event_checker = true;
+                    timer = setTimeout(function() { delay_timer (false); }, EVENT_DELAY);
+                }
+            }
+        }
+        function imageModeChanged(image, object) {
+            //event.preventDefault();
+            var bt = document.getElementById(object);
+            bt.style.background = "url(imgs/" + image + ")";
+            bt.style.backgroundRepeat = "no-repeat";
+            bt.style.backgroundSize = "100% auto";
+            bt.style.backgroundPosition = "right center";
+        }
+        function Enable_calibration(checker) {
+            if (checker == true) {
+                imageModeChanged("game_set.png","g_set");
+                cur_reset_mode = 1;
+                window.addEventListener('devicemotion', get_gyro_calibration);
+            }
+            else {
+                imageModeChanged("game_set_pressed.png","g_set");
+                window.removeEventListener('devicemotion', get_gyro_calibration);
+                cur_reset_mode = 0;
+            }
+        }
+        function sendevent(form) {
+            if (form == "g_up") {
+                sendKeyEvent(GAME_KEY_UP);
+            }
+            else if (form == "g_down") {
+                sendKeyEvent(GAME_KEY_DOWN);
+            }
+            else if (form == "g_left") {
+                sendKeyEvent(GAME_KEY_LEFT);
+            }
+            else if (form == "g_right") {
+                sendKeyEvent(GAME_KEY_RIGHT);
+            }
+            else if (form == "g_a") {
+                sendKeyEvent(GAME_A);
+            }
+            else if (form == "g_b") {
+                sendKeyEvent(GAME_B);
+            }
+            else if (form == "g_c") {
+                sendKeyEvent(GAME_X);
+            }
+            else if (form == "g_d") {
+                sendKeyEvent(GAME_Y);
+            }
+            else if (form == "g_menu") {
+                sendKeyEvent(KEY_MENU);
+            }
+            else if (form == "g_select") {
+                sendKeyEvent(TV_KEY_SELECT);
+            }
+            else if (form == "g_exit") {
+                sendKeyEvent(KEY_BACK);
+            }
+            else if (form == "bt_air_click") {
+                sendMouse_KeyEvent(MOUSE_CLICK);
+            }
+            else if (form == "g_set") {
+                Enable_calibration(true);
+                cal_flush_timeout = window.setTimeout(function() {
+                    alert("Finished Gyro Calibration.");
+                    Enable_calibration(false);
+                }, CAL_FLUSH_TIMEOUT);
+            }
+            else if (form == "g_air") {
+                if (cur_air_mode == 0 ) {
+                    airModeChanged("game_air.png");
+                    cur_air_mode = 1;
+                    if(window.DeviceMotionEvent) {
+                        window.addEventListener('devicemotion', gyro_event_listener);
+                    }
+                }
+                else {
+                    airModeChanged("game_air_pressed.png");
+                    cur_air_mode = 0;
+                    if(window.DeviceMotionEvent) {
+                        window.removeEventListener('devicemotion', gyro_event_listener);
+                    }
+                    clearTimeout(timer);
+                }
+            }
+        }
+        function home_icon_add(title) {
+            var home_page_uri = document.domain;
+            var home_icon_uri = "/shortcut_icon.png";
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
+            var UserAgent = navigator.userAgent.toLowerCase();
+
+            if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
+                alert('Add the ' + title +'shortCut icon');
+                var home_icon_add_frame=document.getElementById("home_icon_add_frame");
+                    home_icon_add_frame.src=naver_UrlScheme;
+            } else {
+                alert("Not surpport in iOS, Tizen ");
+            }
         }
 
         $(document).ready(function() {
 
-         checkOrientation();
-
-          setTimeout(function(){
-            window.scrollTo(0, 1);
-            }, 0);
-            // Disable the long press window
-            preventLongPressMenu(document.getElementById('bt_up'));
-            preventLongPressMenu(document.getElementById('bt_left'));
-            preventLongPressMenu(document.getElementById('bt_right'));
-            preventLongPressMenu(document.getElementById('bt_down'));
-
-            // 3 system hw buttons
-            $("#sys_btn_menu").click(function(event) {
-                sendKeyEvent(KEY_MENU);
-            });
-            $("#sys_btn_home").click(function(event) {
-                sendKeyEvent(KEY_HOME);
-            });
-            $("#sys_btn_back").click(function(event) {
-                sendKeyEvent(KEY_BACK);
-            });
-            window.onorientationchange = function(){
-              checkOrientation();
-               }
-
-/*
-            // GamePAD control buttons
-            $("#bt_up").click(function(event) {
-                sendKeyEvent(GAME_KEY_UP);
-                //console.log("bt_up");
-            });
-            $("#bt_left").click(function(event) {
-                //console.log("bt_left");
-                sendKeyEvent(GAME_KEY_LEFT);
-            });
-            $("#bt_right").click(function(event) {
-                sendKeyEvent(GAME_KEY_RIGHT);
-            });
-            $("#bt_down").click(function(event) {
-                sendKeyEvent(GAME_KEY_DOWN);
-            });
-*/
-
-            $("#bt_circle_X").click(function(event) {
-                sendKeyEvent(GAME_X);
-            });
-            $("#bt_circle_Y").click(function(event) {
-                sendKeyEvent(GAME_Y);
-            });
-            $("#bt_circle_A").click(function(event) {
-                sendKeyEvent(GAME_A);
-            });
-            $("#bt_circle_B").click(function(event) {
-                sendKeyEvent(GAME_B);
-            });
-            $("#bt_select").click(function(event) {
-                sendKeyEvent(GAME_MODE);
-            });
-            $("#bt_start").click(function(event) {
-                sendKeyEvent(GAME_START);
-            });
-
-            bt_up.addEventListener("touchstart", function(event) {
-                var e = event || window.event;
-                sendKeyEvent(GAME_KEY_UP);
-                //e.preventDefault && e.preventDefault();
-                e.returnValue = false;
-                return false;
-            });
-            bt_down.addEventListener("touchstart", function(event) {
-                var e = event || window.event;
-                sendKeyEvent(GAME_KEY_DOWN);
-                //e.preventDefault && e.preventDefault();
-                e.returnValue = false;
-                return false;
-            });
-            bt_left.addEventListener("touchstart", function(event) {
-                var e = event || window.event;
-                sendKeyEvent(GAME_KEY_LEFT);
-                //e.preventDefault && e.preventDefault();
-                e.returnValue = false;
-                return false;
-            });
-            bt_right.addEventListener("touchstart", function(event) {
-                var e = event || window.event;
-                sendKeyEvent(GAME_KEY_RIGHT);
-                //e.preventDefault && e.preventDefault();
-                e.returnValue = false;
-                return false;
-            });
-            //multi touch drag action for change mode
-            content_div.addEventListener("touchstart", function(event) {
-                touch_started_x = event.touches[0].pageX;
-                touch_started_y = event.touches[0].pageY;
-                multi_touched = event.touches.length;
-                touch_contentarea_Pressed=1;
-                touch_contentarea_Moved=0;
-                touch_contentarea_pre_x = event.touches[0].pageX;
-                touch_contentarea_pre_y = event.touches[0].pageY;
-
-            });
-
-            content_div.addEventListener("touchmove", function(event) {
-                event.preventDefault();
-                touch_contentarea_Moved = 1;
-                touch_contentarea_pre_x = event.touches[0].pageX;
-                touch_contentarea_pre_y = event.touches[0].pageY;
-                event.preventDefault();
-            });
-            content_div.addEventListener("touchend", function(event) {
-                if(touch_contentarea_Moved==1 && touch_contentarea_Pressed==1 && multi_touched == 2){
-                    if(touch_contentarea_pre_x-touch_started_x == 0){
-                        return;
-                    }
-
-                    coordinate2= touch_contentarea_pre_x-touch_started_x;
-                    if (Math.abs(coordinate2) >=130){
-                        window.location='tv_mode.htm';
-                    }
-                }
-                touch_contentarea_Pressed=0;
-                touch_contentarea_Moved=0;
-            });
+            var obj = document.getElementById('by');
+            obj.style.height =  $(document).height() + "px";
         });
 
-    </script>
+</script>
+    <!-- MOUSE MODE -->
+    <div id="keymode"  data-role="page" data-fullscreen="true" class ="visible">
+       <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_height3">
+                </td>
+            </tr>
+            <tr>
+                <td  class="t_cell" colspan="3">
+                        <!-- Content -->
+                        <table class="tb1">
+                                <tr >
+                                <!-- Content_space-left -->
+                                    <td class="t_cell_thin_border cell_width13">
+                                        <table  class="tb1_thin_border">
+                                            <tr>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="g_select" class="t_cell_thin_border g_select" ontouchstart="sendevent(this.id)">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="g_menu" class="t_cell_thin_border g_menu" ontouchstart="sendevent(this.id)">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td id="g_exit"  class="t_cell_thin_border g_exit" ontouchstart="sendevent(this.id)">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
-    <div data-role="page" data-theme="a">
+                                    <td class="t_cell ">
+                                        <table class="tb1_thin_border">
 
-        <div data-role="header">
-            <h1><table align=left border=0 width=100%><tr><td align=right><img width=35 src="wifikeyboard.png"></td><td align="center" >Tizen Remote Input</td><td align=left><a href="#" id="mode_change"><img width=35 onclick="window.location='key_mode.htm'" src="keyboard.png"></a></td></tr></table></h1>
-        </div> <!-- /header -->
+                                        <!-- arrow table -->
+                                        <tr class="cell_height45">
+                                        <td>
+                                            <table  class="tb1_thin_border">
+                                                <tr>
+                                                    <td class="t_cell cell_width32">
+                                                    </td>
+                                                    <td id="g_left" class="t_cell cell_width33 g_left" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                    <td class="t_cell">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td id="g_down" class="t_cell g_down" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                    <td class="t_cell">
+                                                    </td>
+                                                    <td id="g_up" class="t_cell g_up" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                </tr>
+                                                <tr >
+                                                    <td class="t_cell">
+                                                    </td>
+                                                    <td id="g_right" class="t_cell g_right" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                    <td class="t_cell">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        </tr>
+                                        <tr class="cell_height16">
+                                        <td>
+                                        </td>
+                                        </tr>
 
-        <div id ="content_div" data-role="content" >
 
-            <div align="center" style="line-height:0em;" >
-                <table style="text-align: center;" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td></td>
-                        <td><a id="bt_up" href="#" data-role="button" data-icon="arrow-u" data-iconpos="top" data-theme="a" style= "height:65px; width:65px" ><font size="2" style="normal" ></font> </a></td>
-                        <td></td>
-                        <td colspan="5" rowspan="1"><font size="2" style="font-weight:bold" >TIZEN GAME PAD3</font></td>
-                        <td></td>
-                        <td style="vertical-align: middle;" align="center"><a id="bt_circle_Y" href="#" data-role="button" data-theme="h" style= "height:60px; width:60px" ><font size="2" style="normal" >Y</font></a></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><a id="bt_left" href="#" data-role="button" data-icon="arrow-l" data-iconpos="top" data-theme="a" style= "height:65px; width:65px" ><font size="1" style="normal" ></font> </a></td>
-                        <td></td>
-                        <td><a id="bt_right" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" data-theme="a"style= "height:65px; width:65px" ><font size="1" style="normal" ></font> </a></td>
-                        <td style="width:20px;"></td>
-                        <td style="width:40px;"></td>
-                        <td style="width:5px;"></td>
-                        <td style="width:40px;"></td>
-                        <td style="width:20px;"></td>
-                        <td style="vertical-align: middle;" align="center"><a id="bt_circle_X" href="#" data-role="button" data-theme="h"style= "height:60px; width:60px" ><font size="2" style="normal" >X</font> </a></td>
-                        <td></td>
-                        <td style="vertical-align: middle;" align="center"><a id="bt_circle_B" href="#" data-role="button" data-theme="i"style= "height:60px; width:60px" ><font size="2" style="normal" >B</font> </a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><a id="bt_down" href="#" data-role="button" data-icon="arrow-d" data-iconpos="bottom" data-theme="a"style= "height:65px; width:65px" ><font size="2" style="normal" ></font> </a></td>
-                        <td></td>
-                        <td></td>
-                        <td valign="bottom"><a id="bt_select" href="#" data-role="button" data-theme="a" style= "height:10px; width:10px" ></a><font size="2" style="normal" ><p>select</font></td>
-                        <td></td>
-                        <td valign="bottom"><a id="bt_start" href="#" data-role="button" data-theme="i" style= "height:10px; width:10px" ></a><font size="2" style="normal" ><p>start</font></td>
-                        <td></td>
-                        <td></td>
-                        <td style="vertical-align: middle;" align="center"><a id="bt_circle_A" href="#" data-role="button" data-theme="i"style= "height:65px; width:65px" ><font size="2" style="normal" >A</font> </a></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <!-- /content -->
+                                        <!-- button table -->
+                                        <tr class="cell_height37">
+                                        <td>
 
-        <div data-role="footer" data-tap-toggle="false" data-position="fixed" style="height:40px">
-            <div data-role="navbar" data-grid="b">
-                <ul>
-                    <li ><a href="#" id="sys_btn_menu" data-icon="bars">Menu</a></li>
-                    <li ><a href="#" id="sys_btn_home" data-icon="home">home</a></li>
-                    <li><a href="#" id="sys_btn_back" data-icon="back">Back</a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- /footer -->
+                                            <table class="tb1_thin_border">
+                                                <tr class="cell_height13">
+                                                    <td class="t_cell cell_width33">
+                                                    </td>
+                                                    <td id="g_a" class="t_cell cell_width29 g_a" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                    <td class="t_cell ">
+                                                    </td>
+                                                </tr>
+                                                <tr class="cell_height13">
+                                                    <td id="g_c" class="t_cell g_c" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                    <td class="t_cell">
+                                                    </td>
+                                                    <td id="g_b" class="t_cell g_b" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                </tr>
+                                                <tr class="cell_height13">
+                                                    <td  class="t_cell">
+                                                    </td>
+                                                    <td id="g_d" class="t_cell g_d" ontouchstart="sendevent(this.id)">
+                                                    </td>
+                                                    <td class="t_cell">
+                                                    </td>
+                                                </tr>
+                                                <tr class="cell_height1">
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        </tr>
+                                        </table>
+                                    </td>
+
+                                    <td class="t_cell cell_width15">
+                                        <table  class="tb1">
+                                            <tr class="cell_height23">
+                                                <td class="t_cell g_logo">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell g_title">
+                                                </td>
+                                            </tr>
+                                            <tr class="cell_height10">
+                                                <td  id="g_set" class="t_cell g_set" ontouchstart="sendevent(this.id)">
+                                                </td>
+                                            </tr>
+                                            <tr class="cell_height10">
+                                                <td  id="g_air" class="t_cell g_air" ontouchstart="sendevent(this.id)">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                               <!-- Content_space-bottom -->
+                        </table>
+                </td>
+            </tr>
+            <tr class="cell_height5">
+                <td>
+                </td>
+            </tr>
+        </table>
     </div>
-    <!-- /page -->
-
+<iframe id="home_icon_add_frame" style="display:none;width:0px;height:0px;"></iframe>
+<!-- end page 2 -->
 </body>
 </html>
-
-
