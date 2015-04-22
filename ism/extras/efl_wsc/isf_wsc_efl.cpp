@@ -689,6 +689,11 @@ _wsc_setup(struct weescim *wsc)
         return;
     }
 
+    if (wsc->im == NULL) {
+        fprintf(stderr, "Failed because wl_input_method is null\n");
+        return;
+    }
+
     wsc->key_handler = _wsc_im_key_handler;
 
     wsc->wsc_ctx = isf_wsc_context_new ();
