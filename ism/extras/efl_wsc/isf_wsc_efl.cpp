@@ -709,6 +709,11 @@ _wsc_setup(struct weescim *wsc)
             wsc->seat = (wl_seat*)wl_registry_bind (registry, global->id, &wl_seat_interface, 1);
     }
 
+    if (wsc->im == NULL) {
+        fprintf(stderr, "Failed because wl_input_method is null\n");
+        return;
+    }
+
     /* Input method listener */
     ISF_LOG ("Adding wl_input_method listener");
     wl_input_method_add_listener (wsc->im, &wsc_im_listener, wsc);
