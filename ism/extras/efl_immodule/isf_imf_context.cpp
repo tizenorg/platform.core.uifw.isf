@@ -2094,6 +2094,9 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
         timestamp = ev->timestamp;
 
+        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+            return EINA_TRUE;
+
         /* Hardware input detect code */
 #ifdef _TV
         if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE && _support_hw_keyboard_mode &&
@@ -2112,9 +2115,6 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, ev->keyname);
             LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
         }
-
-        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
-            return EINA_TRUE;
     }
     else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
