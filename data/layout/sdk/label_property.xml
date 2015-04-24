@@ -37,7 +37,7 @@
   <label_properties_table label_type="QTY_SPACE">
     <label_properties font_name="Tizen:style=Regular" font_size="18" label_alignment="center_top" padding_X="0" padding_Y="8">
       <font_color_record>
-        <color button="normal">0x171717ff</color>
+        <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
@@ -46,7 +46,7 @@
   <label_properties_table label_type="QTY_SPACE_MALAYALAM">
     <label_properties font_name="Tizen:style=medium" font_size="20" label_alignment="center_top" padding_X="0" padding_Y="5" inner_width="0" inner_height="20">
       <font_color_record>
-        <color button="normal">0x171717ff</color>
+        <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
