@@ -436,9 +436,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     elm_win_autodel_set(m_main_window, EINA_TRUE);
     elm_win_title_set(m_main_window, "Tizen Keyboard");
 
-#ifdef WAYLAND
-    evas_object_resize(m_main_window, IME_WIDTH, IME_HEIGHT);
-#else
+#ifndef WAYLAND
     unsigned int set = 1;
     ecore_x_window_prop_card32_set(elm_win_xwindow_get(m_main_window),
             ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
@@ -447,6 +445,12 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
 #ifdef FULL_SCREEN_TEST
     elm_win_fullscreen_set(m_main_window, EINA_TRUE);
+#else
+#ifdef WAYLAND
+    int scr_width;
+    elm_win_screen_size_get(m_main_window, NULL, NULL, &scr_width, NULL);
+    evas_object_resize(m_main_window, scr_width, IME_HEIGHT);
+#endif
 #endif
 
     if (m_event_callback) {

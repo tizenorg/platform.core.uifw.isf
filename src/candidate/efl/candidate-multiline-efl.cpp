@@ -20,6 +20,12 @@
 #include <string>
 #include <assert.h>
 #include <algorithm>
+#ifdef WAYLAND
+#include <Ecore_Wayland.h>
+#else
+#include <Ecore_X.h>
+#endif
+
 using namespace std;
 
 #define CANDIDATE_EDJ_FILE_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/candidate-multiline.edj"
@@ -68,7 +74,7 @@ EflMultiLineCandidate::item_pressed(Evas_Object *item)
     }
 
     //hide_more_view();
-    // notify listners the event happend
+    // notify listeners the event happened
     MultiEventDesc desc;
     desc.type = MultiEventDesc::CANDIDATE_ITEM_MOUSE_DOWN;
     desc.index = index;
@@ -303,7 +309,15 @@ EflMultiLineCandidate::make_more_view()
         throw "failed loading candidate layout.";
     }
 
-    evas_object_resize(more_view.layout, 720, 444);
+    Evas_Coord scr_w, scr_h;
+
+#ifdef WAYLAND
+    ecore_wl_screen_size_get(&scr_w, &scr_h);
+#else
+    ecore_x_window_size_get(ecore_x_window_root_first_get(), &scr_w, &scr_h);
+#endif
+
+    evas_object_resize(more_view.layout, scr_w, 444);
     evas_object_move(more_view.layout, 0, 86);
     evas_object_show(more_view.layout);
 
@@ -334,8 +348,15 @@ EflMultiLineCandidate::make_view()
         printf("error while loading candidate layout\n");
         throw "failed loading candidate layout.";
     }
+    Evas_Coord scr_w, scr_h;
 
-    evas_object_resize(view.layout, 720, 84);
+#ifdef WAYLAND
+    ecore_wl_screen_size_get(&scr_w, &scr_h);
+#else
+    ecore_x_window_size_get(ecore_x_window_root_first_get(), &scr_w, &scr_h);
+#endif
+
+    evas_object_resize(view.layout, scr_w, 84);
     evas_object_show(view.layout);
 
     view.table = elm_table_add(m_window);
@@ -406,16 +427,24 @@ EflMultiLineCandidate::update(const vector<string> &vec_str)
 void
 EflMultiLineCandidate::rotate(int degree) {
     m_degree = degree;
+    Evas_Coord scr_w, scr_h;
+
+#ifdef WAYLAND
+    ecore_wl_screen_size_get(&scr_w, &scr_h);
+#else
+    ecore_x_window_size_get(ecore_x_window_root_first_get(), &scr_w, &scr_h);
+#endif
+
     switch (degree) {
         case 0:
         case 180:
-            evas_object_resize(view.layout, 720, 84);
-            evas_object_resize(more_view.layout, 720, 444);
+            evas_object_resize(view.layout, scr_w, 84);
+            evas_object_resize(more_view.layout, scr_w, 444);
             break;
         case 90:
         case 270:
-            evas_object_resize(view.layout, 1280, 84);
-            evas_object_resize(more_view.layout, 1280, 444);
+            evas_object_resize(view.layout, scr_h, 84);
+            evas_object_resize(more_view.layout, scr_h, 444);
             break;
         default:
             break;

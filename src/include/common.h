@@ -31,7 +31,6 @@
 #include <ise_context.h>
 #include "candidate.h"
 
-#define IME_WIDTH 720
 #define IME_HEIGHT 444
 
 //SCL_BEGIN_DECLS
