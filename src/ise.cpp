@@ -394,9 +394,10 @@ ise_show(int ic)
 
         _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
-    LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
-            g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
-            g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
+        LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
+                g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
+                g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
+
         if (check_ic_temporary(ic) && !check_ic_temporary(g_keyboard_state.focused_ic)) {
             ic = g_keyboard_state.focused_ic;
         }

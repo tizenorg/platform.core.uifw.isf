@@ -274,7 +274,7 @@ CISECommon::~CISECommon()
 }
 
 #ifdef WAYLAND
-static void
+static bool
 _wskb_setup(struct WeescimKeyboard *wskb)
 {
     Eina_Inlist *globals;
@@ -283,10 +283,10 @@ _wskb_setup(struct WeescimKeyboard *wskb)
     struct wl_input_panel_surface *ips;
 
     if (!(registry = ecore_wl_registry_get()))
-        return;
+        return false;
 
     if (!(globals = ecore_wl_globals_get()))
-        return;
+        return false;
 
     EINA_INLIST_FOREACH(globals, global)
     {
@@ -296,13 +296,40 @@ _wskb_setup(struct WeescimKeyboard *wskb)
             wskb->output = (wl_output *)wl_registry_bind(registry, global->id, &wl_output_interface, 1);
     }
 
+    if (!wskb->ip) {
+        LOGW ("Can't get wayland input panel interface\n");
+        return false;
+    }
+
+    if (!wskb->output) {
+        LOGW ("Can't get wayland output interface\n");
+        return false;
+    }
+
     /* Set input panel surface */
-    fprintf(stderr,"Setting up input panel");
+    LOGD ("Setting up input panel\n");
     wskb->wl_win = ecore_evas_wayland_window_get(wskb->ee);
+    if (!wskb->wl_win) {
+        LOGW ("Couldn't get wayland window\n");
+        return false;
+    }
+
     ecore_wl_window_type_set(wskb->wl_win, ECORE_WL_WINDOW_TYPE_NONE);
     wskb->surface = ecore_wl_window_surface_create(wskb->wl_win);
+    if (!wskb->surface) {
+        LOGW ("Couldn't create surface\n");
+        return false;
+    }
+
     ips = wl_input_panel_get_input_panel_surface(wskb->ip, wskb->surface);
+    if (!ips) {
+        LOGW ("Couldn't get input panel surface\n");
+        return false;
+    }
+
     wl_input_panel_surface_set_toplevel(ips, wskb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
+
+    return true;
 }
 
 static Eina_Bool
@@ -317,12 +344,12 @@ _wskb_check_evas_engine(struct WeescimKeyboard *wskb)
         else if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_EGL))
             env = "wayland_egl";
         else {
-            fprintf(stderr,"ERROR: Ecore_Evas does must be compiled with support for Wayland engines");
+            LOGW ("ERROR: Ecore_Evas does must be compiled with support for Wayland engines\n");
             goto err;
         }
     }
     else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0) {
-        fprintf(stderr,"ERROR: ECORE_EVAS_ENGINE must be set to either 'wayland_shm' or 'wayland_egl'");
+        LOGW ("ERROR: ECORE_EVAS_ENGINE must be set to either 'wayland_shm' or 'wayland_egl'\n");
         goto err;
     }
 
@@ -380,10 +407,10 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
 #ifdef WAYLAND
     if (!_wskb_check_evas_engine(&wskb)) {
-        fprintf(stderr,"_wskb_check_evas_engine error!\n");
+        LOGW ("_wskb_check_evas_engine error!\n");
         goto end;
     }
-    fprintf(stderr,"Selected engine: '%s'\n", wskb.ee_engine);
+    LOGD ("Selected engine: '%s'\n", wskb.ee_engine);
 #endif
 
     m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
@@ -392,11 +419,14 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     wskb.ee = ecore_evas_ecore_evas_get (evas_object_evas_get (m_main_window));
 
     if (!wskb.ee) {
-        fprintf(stderr,"ERROR: Unable to create Ecore_Evas object");
+        LOGW ("ERROR: Unable to create Ecore_Evas object");
         goto end;
     }
 
-    _wskb_setup(&wskb);
+    if (!_wskb_setup(&wskb)) {
+        LOGW ("ERROR: Unable to setup input panel.\n");
+        goto end;
+    }
 #endif
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
