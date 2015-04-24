@@ -60,7 +60,7 @@ static void _isf_wsc_context_init (void)
 static int _get_context_id (WSCContextISF *ctx)
 {
     WSCContextISF *context_scim = ctx;
-    
+
     if (!context_scim) return -1;
 
     return context_scim->id;
@@ -119,7 +119,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
         iseContext.prediction_allow = EINA_FALSE;
 
     isf_wsc_context_prediction_allow_set (ctx, iseContext.prediction_allow);
-    
+
     if (hw_kbd_num != 0) {
         LOGD ("H/W keyboard is existed.\n");
         return;
@@ -146,7 +146,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
-    
+
     /* calculate packet size */
     length = sizeof (iseContext);
     length += iseContext.imdata_size;
@@ -162,9 +162,9 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     int context_id = _get_context_id (ctx);
 
     _isf_wsc_context_input_panel_show (get_panel_client_id (), context_id, packet, length, input_panel_show);
-    
+
     free (packet);
-    
+
     caps_mode_check (ctx, EINA_TRUE, EINA_TRUE);
 }
 
