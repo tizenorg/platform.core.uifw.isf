@@ -39,6 +39,7 @@
 #include "option.h"
 #include "languages.h"
 #include "candidate-factory.h"
+#include "ise-emoticon-mode.h"
 #define CANDIDATE_WINDOW_HEIGHT 84
 using namespace scl;
 #include <vector>
@@ -447,6 +448,13 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
                 }
             }
         }
+        if(is_emoticon_show()){
+            ise_destroy_emoticon_window();
+        }
+        const sclchar *input_mode = g_ui->get_input_mode();
+        if(!strcmp(key_value, "EMOTICON_LAYOUT")){
+            ise_show_emoticon_window(EMOTICON_GROUP_1, 0, false, g_core.get_main_window());
+        }
     }
 
     return ret;
@@ -603,6 +611,21 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                 //open_option_window(NULL, ROTATION_TO_DEGREE(g_ui->get_rotation()));
                 g_core.create_option_window();
                 ret = SCL_EVENT_DONE;
+            }
+            else{
+                const sclchar *input_mode = g_ui->get_input_mode();
+                if((NULL != input_mode) && (!strcmp(input_mode, "EMOTICON_LAYOUT")))
+                {
+                    if(is_emoticon_show())
+                    {
+                        ise_destroy_emoticon_window();
+                    }
+                    emoticon_group_t group_id = ise_get_emoticon_group_id(event_desc.key_value);
+                    if((group_id >= 0) && (group_id < MAX_EMOTICON_GROUP))
+                    {
+                        ise_show_emoticon_window(group_id, 0, false, g_core.get_main_window());
+                    }
+                }
             }
             break;
         default:
@@ -772,6 +795,12 @@ ise_show(int ic)
                     }
                 }
                 g_ui->set_cur_sublayout(g_ise_default_values[layout_index].sublayout_name);
+                if(is_emoticon_show()){
+                    ise_destroy_emoticon_window();
+                }
+                if(g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON){
+                    ise_show_emoticon_window(EMOTICON_GROUP_1, 0, false, g_core.get_main_window());
+                }
             }
         }
 

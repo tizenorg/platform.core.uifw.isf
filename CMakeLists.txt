@@ -14,6 +14,9 @@ SET(BASIC_ISE_SRCS
     src/candidate/candidate.cpp
     src/candidate/efl/candidate-efl.cpp
     src/candidate/efl/candidate-multiline-efl.cpp
+
+    src/ise-emoticon-list.cpp
+    src/ise-emoticon-mode.cpp
 )
 
 IF (with_wayland)
@@ -73,6 +76,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -g")
 ADD_DEFINITIONS("-DPACKAGE=\"${ISE_PACKAGE}\"")
 ADD_DEFINITIONS("-DPACKAGE_NAME=\"${ISE_PKGNAME}\"")
 ADD_DEFINITIONS(-DISE_NAME=\"/ise-default\")
+ADD_DEFINITIONS(-DSUPPORTS_EMOTICONS)
 
 ADD_LIBRARY(${PROJECT_NAME} SHARED ${ISE_SRCS})
 

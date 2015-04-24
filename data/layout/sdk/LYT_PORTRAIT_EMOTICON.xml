@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="540" height="333" magnifier="true" key_width="47" key_height="62" key_spacing="7" row_spacing="10" hit_left="3" hit_right="4" hit_top="10" hit_bottom="10" label_type="QTY_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_panel.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
+    <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+    <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
+  </background_image>
+  <row x="3" y="261">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="74">
+      <label>
+        <rec>abc</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_cue.png</rec>
+        <rec button="pressed">B09_icon_cue.png</rec>
+        <rec button="disabled">B09_icon_cue.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>CUR_LANG</rec>
+      </key_value>
+    </key>
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123">
+      <label>
+        <rec>?123</rec>
+      </label>
+      <image_label>
+        <rec button="normal">B09_icon_cue.png</rec>
+        <rec button="pressed">B09_icon_cue.png</rec>
+        <rec button="disabled">B09_icon_cue.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+      <image_label>
+        <rec button="normal">emoticon/icon_recent.png</rec>
+        <rec button="pressed">emoticon/icon_recent_press.png</rec>
+        <rec button="disabled">emoticon/icon_recent_dim.png</rec>
+      </image_label>
+      <key_value>
+      <rec>EMOTICON_GROUP_RECENTLY_USED</rec>
+      </key_value>
+    </key>
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+      <image_label>
+        <rec button="normal">emoticon/icon_emotion.png</rec>
+        <rec button="pressed">emoticon/icon_emotion_press.png</rec>
+        <rec button="disabled">emoticon/icon_emotion_dim.png</rec>
+      </image_label>
+      <key_value>
+        <rec>EMOTICON_GROUP_FACE</rec>
+      </key_value>
+    </key>
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+      <image_label>
+        <rec button="normal">emoticon/icon_crown.png</rec>
+        <rec button="pressed">emoticon/icon_crown_press.png</rec>
+        <rec button="disabled">emoticon/icon_crown_dim.png</rec>
+      </image_label>
+      <key_value>
+        <rec>EMOTICON_GROUP_CROWN</rec>
+      </key_value>
+    </key>
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+      <image_label>
+        <rec button="normal">emoticon/icon_dog.png</rec>
+        <rec button="pressed">emoticon/icon_dog_press.png</rec>
+        <rec button="disabled">emoticon/icon_dog_dim.png</rec>
+      </image_label>
+      <key_value>
+        <rec>EMOTICON_GROUP_DOG</rec>
+      </key_value>
+    </key>
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+      <image_label>
+        <rec button="normal">emoticon/icon_house.png</rec>
+        <rec button="pressed">emoticon/icon_house_press.png</rec>
+        <rec button="disabled">emoticon/icon_house_dim.png</rec>
+      </image_label>
+      <key_value>
+        <rec>EMOTICON_GROUP_HOUSE</rec>
+      </key_value>
+    </key>
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+      <image_label>
+        <rec button="normal">emoticon/icon_star.png</rec>
+        <rec button="pressed">emoticon/icon_star_press.png</rec>
+        <rec button="disabled">emoticon/icon_star_dim.png</rec>
+      </image_label>
+      <key_value>
+        <rec>EMOTICON_GROUP_STAR</rec>
+      </key_value>
+    </key>
+    <key button_type="selfish" key_type="control" use_magnifier="true" hit_right="6" use_repeat_key="true" width="74">
+      <image_label>
+        <rec button="normal">B09_icon_back_50x50.png</rec>
+        <rec button="pressed">B09_icon_back_50x50_press.png</rec>
+        <rec button="disabled">B09_icon_back_50x50_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
+        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
+        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>
