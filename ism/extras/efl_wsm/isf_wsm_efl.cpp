@@ -398,7 +398,7 @@ static struct rectinfo get_ise_geometry ()
     } else {
         /* READ ISE's SIZE HINT HERE */
         int pos_x, pos_y, width, height;
-        
+
         // FIXME: Get the ISE's SIZE.
         pos_x = 0;
         pos_y = 0;
@@ -4083,7 +4083,7 @@ static void check_hardware_keyboard (void)
     }
 
     _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
-    
+
     //FIXME:
     String uuid, name;
     String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
