@@ -373,7 +373,7 @@ static void get_pkginfo (const char *appid, PKGINFO *info)
 			info->app_path = std::string(imeInfo.exec.c_str());
 			info->package_name = std::string(imeInfo.pkgid.c_str());
 		}
-		else if (imeInfo.pkgtype.compare("tpk") == 0) {
+		else if (imeInfo.pkgtype.compare("coretpk") == 0) {
 			info->package_type = NATIVE_PACKAGE_TYPE;
 			info->app_path = std::string(imeInfo.exec.c_str());
 			info->package_name = std::string(imeInfo.pkgid.c_str());
