@@ -667,7 +667,10 @@ scim_get_home_dir ()
         home_dir = getenv ("HOME");
     }
 
-    return String (home_dir);
+    if (home_dir)
+        return String (home_dir);
+    else
+        return String ("");
 }
 
 EAPI String
