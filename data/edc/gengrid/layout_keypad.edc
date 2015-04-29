@@ -1,0 +1,181 @@
+/*
+ * Copyright (c) 2011 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+#define CANDIDATE_WINDOW_HEIGHT						60
+
+#define EMOTICON_AREA_WIDTH_PORT					480
+#define EMOTICON_AREA_HEIGHT_PORT					220
+
+#define EMOTICON_AREA_HEIGHT_OFFSET_FROM_BOTTOM_PORT		90
+#define EMOTICON_AREA_HEIGHT_OFFSET_FROM_BOTTOM_LAND		64
+
+#define EMOTICON_AREA_WIDTH_LAND					800
+#define EMOTICON_AREA_HEIGHT_LAND					158
+
+#define TOP_VERTICAL_BORDER_LAND_CANDIDATE_ON		(6 + CANDIDATE_WINDOW_HEIGHT)
+#define TOP_VERTICAL_BORDER_LAND_CANDIDATE_OFF		6
+
+#define BG( COLOR ) \
+	part { name: "bg"; \
+		type: RECT; \
+		scale : 1; \
+		description { state: "default" 0.0; \
+			rel1.relative: 0.0 0.0; \
+			rel2.relative: 1.0 1.0; \
+			color: COLOR; \
+			visible: 1; \
+		}	\
+	} 	\
+
+#define PAD( l, r, t, b) \
+    part { name: "pad_tl"; \
+       type: SPACER; \
+       scale: 1; \
+       description { state: "default" 0.0; \
+    	  align: 0.0 0.0; \
+    	  min: l t; \
+    	  fixed: 1 1; \
+    	  rel1 { \
+    		 relative: 0.0 0.0; \
+    	  } \
+    	  rel2 { \
+    		 relative: 0.0 0.0; \
+    	  } \
+    	} \
+    } \
+    part { name: "pad_rb"; \
+       type: SPACER; \
+       scale: 1; \
+       description { state: "default" 0.0; \
+		  align: 1.0 1.0; \
+          min: r b; \
+    	  fixed: 1 1; \
+    	  rel1 { \
+    		 relative: 1.0 1.0; \
+    	  } \
+    	  rel2 { \
+    		 relative: 1.0 1.0; \
+    	  } \
+       } \
+    } \
+
+
+collections
+{
+	base_scale: 1.8;
+	group
+	{
+		name:	"emoticon.main.portrait.candidate.on";
+		parts
+		{
+			BG( 0 0 0 0)
+			PAD( 0, 0, TOP_VERTICAL_BORDER_LAND_CANDIDATE_ON, EMOTICON_AREA_HEIGHT_OFFSET_FROM_BOTTOM_PORT)
+			part
+			{
+				name:"emoticon.swallow.gengrid";
+				type: SWALLOW;
+				scale: 1;
+				description
+				{
+					state: "default" 0.0;
+					//min: EMOTICON_AREA_WIDTH_PORT EMOTICON_AREA_HEIGHT_PORT + CANDIDATE_WINDOW_HEIGHT;
+					//fixed: 1 1;
+					//align: 0 0;
+					rel1 { relative: 1.0 1.0; to: "pad_tl"; }
+					rel2 { relative: 0.0 0.0; to: "pad_rb"; }
+				}
+			}
+		}
+	}
+
+	group
+	{
+		name:	"emoticon.main.portrait.candidate.off";
+		parts
+		{
+			BG( 0 0 0 0)
+			PAD( 0, 0, TOP_VERTICAL_BORDER_LAND_CANDIDATE_OFF, EMOTICON_AREA_HEIGHT_OFFSET_FROM_BOTTOM_PORT)
+			part
+			{
+				name:"emoticon.swallow.gengrid";
+				type: SWALLOW;
+				scale: 1;
+				description
+				{
+					state: "default" 0.0;
+					//min: EMOTICON_AREA_WIDTH_PORT EMOTICON_AREA_HEIGHT_PORT;
+					//fixed: 1 1;
+					//align: 0 0;
+					rel1 { relative: 1.0 1.0; to: "pad_tl"; }
+					rel2 { relative: 0.0 0.0; to: "pad_rb"; }
+				}
+			}
+		}
+	}
+
+	group
+	{
+		name:	"emoticon.main.landscape.candidate.on";
+		parts
+		{
+
+			BG( 0 0 0 0)
+			PAD( 0, 0, TOP_VERTICAL_BORDER_LAND_CANDIDATE_ON, EMOTICON_AREA_HEIGHT_OFFSET_FROM_BOTTOM_LAND)
+			part
+			{
+				name:"emoticon.swallow.gengrid";
+				type: SWALLOW;
+				scale: 1;
+				description
+				{
+					state: "default" 0.0;
+					//min: EMOTICON_AREA_WIDTH_LAND EMOTICON_AREA_HEIGHT_LAND;
+					//fixed: 1 1;
+					//align: 0 0;
+					rel1 { relative: 1.0 1.0; to: "pad_tl"; }
+					rel2 { relative: 0.0 0.0; to: "pad_rb"; }
+				}
+			}
+		}
+	}
+
+	group
+	{
+		name:	"emoticon.main.landscape.candidate.off";
+		parts
+		{
+			BG( 0 0 0 0)
+			PAD( 0, 0, TOP_VERTICAL_BORDER_LAND_CANDIDATE_OFF, EMOTICON_AREA_HEIGHT_OFFSET_FROM_BOTTOM_LAND)
+			part
+			{
+				name:"emoticon.swallow.gengrid";
+				type: SWALLOW;
+				scale: 1;
+				description
+				{
+					state: "default" 0.0;
+					//min: EMOTICON_AREA_WIDTH_LAND EMOTICON_AREA_HEIGHT_LAND;
+					//fixed: 1 1;
+					//align: 0 0;
+					rel1 { relative: 1.0 1.0; to: "pad_tl"; }
+					rel2 { relative: 0.0 0.0; to: "pad_rb"; }
+				}
+			}
+		}
+	}
+
+}

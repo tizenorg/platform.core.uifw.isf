@@ -32,6 +32,7 @@
 #define ISE_CONFIG_SOUND_ON             "/ise-default/sound_on"
 #define ISE_CONFIG_VIBRATION_ON         "/ise-default/vibration_on"
 #define ISE_CONFIG_PREVIEW_ON           "/ise-default/preview_on"
+#define ISE_CONFIG_RECENT_EMOTICONS_LIST "/ise-default/recent_emoticons_list"
 
 using namespace scl;
 

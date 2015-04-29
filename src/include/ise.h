@@ -86,7 +86,7 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
     {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_TERMINAL */
     {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_PASSWORD */
     {"DATETIME_3X4",    "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_DATETIME */
-    {"EMOTICON_LAYOUT",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_EMOTICON */
+    {"EMOTICON_LAYOUT", "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_EMOTICON */
 
     {"NUMONLY_3X4_SIG",    "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY_SIG */
     {"NUMONLY_3X4_DEC",    "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY_DEC */

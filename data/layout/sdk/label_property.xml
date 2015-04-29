@@ -34,6 +34,15 @@
       </font_color_record>
     </label_properties>
   </label_properties_table>
+  <label_properties_table label_type="QTY_?123_2">
+    <label_properties font_name="Tizen:style=Regular" font_size="18" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
   <label_properties_table label_type="QTY_SPACE">
     <label_properties font_name="Tizen:style=Regular" font_size="18" label_alignment="center_top" padding_X="0" padding_Y="8">
       <font_color_record>

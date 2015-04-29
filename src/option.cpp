@@ -18,15 +18,6 @@
 #include <string.h>
 #include <sclcommon.h>
 #include <Ecore.h>
-
-#ifdef WAYLAND
-#include <Ecore_Wayland.h>
-#else
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <Ecore_X.h>
-#endif
-
 #include <vconf.h>
 #include <vconf-keys.h>
 #include <glib.h>

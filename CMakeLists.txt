@@ -106,6 +106,27 @@ ADD_CUSTOM_TARGET(
 ADD_DEPENDENCIES(${PROJECT_NAME} candidate-multiline.edj)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-multiline.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
 # For edc File end
+# For edc File
+ADD_CUSTOM_TARGET(
+    customised_gengrid.edj
+    COMMAND edje_cc -no-save
+        -id ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid
+        -sd ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid
+        ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid/customised_gengrid.edc
+        ${CMAKE_BINARY_DIR}/customised_gengrid.edj
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid/customised_gengrid.edc)
+ADD_DEPENDENCIES(${PROJECT_NAME} customised_gengrid.edj)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/customised_gengrid.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+
+ADD_CUSTOM_TARGET(
+    layout_keypad.edj
+    COMMAND edje_cc -no-save
+        ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid/layout_keypad.edc
+        ${CMAKE_BINARY_DIR}/layout_keypad.edj
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid/layout_keypad.edc)
+ADD_DEPENDENCIES(${PROJECT_NAME} layout_keypad.edj)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/layout_keypad.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+# For edc File end
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${ISE_PKGS_LDFLAGS})
 

@@ -573,7 +573,7 @@
   <mode name="EMOTICON_LAYOUT">
     <layouts>
       <portrait>LYT_PORTRAIT_EMOTICON.xml</portrait>
-      <landscape>LYT_LANDSCAPE_3X4_PASSWD.xml</landscape>
+      <landscape>LYT_LANDSCAPE_EMOTICON.xml</landscape>
     </layouts>
   </mode>
   <mode name="EMOTICON_POPUP" dim_window="true">

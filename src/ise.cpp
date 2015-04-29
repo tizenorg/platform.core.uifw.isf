@@ -54,6 +54,9 @@ CSCLUI *g_ui = NULL;
 static CCoreEventCallback g_core_event_callback;
 CSCLCore g_core(&g_core_event_callback);
 
+extern emoticon_group_t current_emoticon_group;
+extern std::vector <int> emoticon_list_recent;
+
 extern CONFIG_VALUES g_config_values;
 static sclboolean g_need_send_shift_event = FALSE;
 #ifdef WAYLAND
@@ -258,6 +261,14 @@ void CCoreEventCallback::on_set_accessibility_state(const sclboolean state)
 void CCoreEventCallback::on_set_rotation_degree(sclint degree)
 {
     ise_set_screen_rotation(degree);
+
+    LOGD ("degree=%d", degree);
+    if(is_emoticon_show()){
+        ise_destroy_emoticon_window();
+    }
+    if(g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON){
+        ise_show_emoticon_window(current_emoticon_group, degree, false, g_core.get_main_window());
+    }
 }
 
 void CCoreEventCallback::on_set_caps_mode(sclu32 mode)
@@ -453,7 +464,12 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         }
         const sclchar *input_mode = g_ui->get_input_mode();
         if(!strcmp(key_value, "EMOTICON_LAYOUT")){
-            ise_show_emoticon_window(EMOTICON_GROUP_1, 0, false, g_core.get_main_window());
+            if(emoticon_list_recent.size() == 0)
+                current_emoticon_group = EMOTICON_GROUP_1;
+            else
+                current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
+            SCLRotation rotation = g_ui->get_rotation();
+            ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
         }
     }
 
@@ -623,7 +639,8 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                     emoticon_group_t group_id = ise_get_emoticon_group_id(event_desc.key_value);
                     if((group_id >= 0) && (group_id < MAX_EMOTICON_GROUP))
                     {
-                        ise_show_emoticon_window(group_id, 0, false, g_core.get_main_window());
+                        SCLRotation rotation = g_ui->get_rotation();
+                        ise_show_emoticon_window(group_id, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
                     }
                 }
             }
@@ -799,7 +816,12 @@ ise_show(int ic)
                     ise_destroy_emoticon_window();
                 }
                 if(g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON){
-                    ise_show_emoticon_window(EMOTICON_GROUP_1, 0, false, g_core.get_main_window());
+                    if(emoticon_list_recent.size() == 0)
+                        current_emoticon_group = EMOTICON_GROUP_1;
+                    else
+                        current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
+                    SCLRotation rotation = g_ui->get_rotation();
+                    ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
                 }
             }
         }
