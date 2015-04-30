@@ -212,7 +212,10 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key key_type="user" width="81">
+    <key key_type="user" width="81" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+      <label>
+        <rec>...</rec>
+      </label>
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
@@ -226,6 +229,9 @@
       <key_value>
         <rec>OPTION</rec>
       </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>CM_POPUP</popup_input_mode>
+      </popup_input_mode_record>
     </key>
     <key button_type="direction" key_type="control" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="457">
       <image_label>
@@ -290,7 +296,10 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key key_type="user" width="81">
+    <key key_type="user" width="81" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+      <label>
+        <rec>...</rec>
+      </label>
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
@@ -304,6 +313,9 @@
       <key_value>
         <rec>OPTION</rec>
       </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>CM_POPUP</popup_input_mode>
+      </popup_input_mode_record>
     </key>
     <key key_type="string" label_type="QTY_ATSLASH" width="81">
       <label>
@@ -383,7 +395,10 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key key_type="user" width="81">
+    <key key_type="user" width="81" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+      <label>
+        <rec>...</rec>
+      </label>
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
@@ -397,6 +412,9 @@
       <key_value>
         <rec>OPTION</rec>
       </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>CM_POPUP</popup_input_mode>
+      </popup_input_mode_record>
     </key>
     <key key_type="string" label_type="QTY_ATSLASH" width="81">
       <label>

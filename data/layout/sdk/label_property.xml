@@ -517,4 +517,13 @@
     <label_properties label_alignment="right_top" padding_X="0" padding_Y="0">
     </label_properties>
   </label_properties_table>
+  <label_properties_table label_type="SETTING_CUE">
+    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="right_top" padding_X="6" padding_Y="-15">
+      <font_color_record>
+        <color button="normal">0x1717177f</color>
+        <color button="pressed">0x1717177f</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
 </label_properties_frame>

@@ -45,5 +45,7 @@ void ise_destroy_emoticon_window(void);
 void ise_init_emoticon_list(void);
 bool is_emoticon_show(void);
 emoticon_group_t ise_get_emoticon_group_id(const char *group_name);
+const char *ise_get_emoticon_group_name(int id);
+void ise_set_private_key_for_emoticon_mode(const emoticon_group_t emoticon_group);
 #endif /* SUPPORTS_EMOTICONS */
 #endif /* ISE_EMOTICON_MODE_H_ */

@@ -35,7 +35,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_RECENTLY_USED" multitouch_type="settle_previous">
       <image_label>
         <rec button="normal">emoticon/icon_recent.png</rec>
         <rec button="pressed">emoticon/icon_recent_press.png</rec>
@@ -45,7 +45,7 @@
       <rec>EMOTICON_GROUP_RECENTLY_USED</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_FACE" multitouch_type="settle_previous">
       <image_label>
         <rec button="normal">emoticon/icon_emotion.png</rec>
         <rec button="pressed">emoticon/icon_emotion_press.png</rec>
@@ -55,7 +55,7 @@
         <rec>EMOTICON_GROUP_FACE</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_CROWN" multitouch_type="settle_previous">
       <image_label>
         <rec button="normal">emoticon/icon_crown.png</rec>
         <rec button="pressed">emoticon/icon_crown_press.png</rec>
@@ -65,7 +65,7 @@
         <rec>EMOTICON_GROUP_CROWN</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_DOG" multitouch_type="settle_previous">
       <image_label>
         <rec button="normal">emoticon/icon_dog.png</rec>
         <rec button="pressed">emoticon/icon_dog_press.png</rec>
@@ -75,7 +75,7 @@
         <rec>EMOTICON_GROUP_DOG</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_HOUSE" multitouch_type="settle_previous">
       <image_label>
         <rec button="normal">emoticon/icon_house.png</rec>
         <rec button="pressed">emoticon/icon_house_press.png</rec>
@@ -85,7 +85,7 @@
         <rec>EMOTICON_GROUP_HOUSE</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" multitouch_type="settle_previous">
+    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_STAR" multitouch_type="settle_previous">
       <image_label>
         <rec button="normal">emoticon/icon_star.png</rec>
         <rec button="pressed">emoticon/icon_star_press.png</rec>

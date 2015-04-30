@@ -263,11 +263,15 @@ void CCoreEventCallback::on_set_rotation_degree(sclint degree)
     ise_set_screen_rotation(degree);
 
     LOGD ("degree=%d", degree);
-    if(is_emoticon_show()){
-        ise_destroy_emoticon_window();
+    if (is_emoticon_show ()) {
+        ise_destroy_emoticon_window ();
     }
-    if(g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON){
-        ise_show_emoticon_window(current_emoticon_group, degree, false, g_core.get_main_window());
+    if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON) {
+        ise_show_emoticon_window (current_emoticon_group, degree, false, g_core.get_main_window ());
+    } else if (g_ui) {
+        const sclchar *input_mode = g_ui->get_input_mode ();
+        if (!(strcmp(input_mode, "EMOTICON_LAYOUT")))
+            ise_show_emoticon_window (current_emoticon_group, degree, false, g_core.get_main_window ());
     }
 }
 
@@ -462,8 +466,8 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if(is_emoticon_show()){
             ise_destroy_emoticon_window();
         }
-        const sclchar *input_mode = g_ui->get_input_mode();
         if(!strcmp(key_value, "EMOTICON_LAYOUT")){
+            ise_init_emoticon_list();
             if(emoticon_list_recent.size() == 0)
                 current_emoticon_group = EMOTICON_GROUP_1;
             else
@@ -816,6 +820,7 @@ ise_show(int ic)
                     ise_destroy_emoticon_window();
                 }
                 if(g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON){
+                    ise_init_emoticon_list();
                     if(emoticon_list_recent.size() == 0)
                         current_emoticon_group = EMOTICON_GROUP_1;
                     else

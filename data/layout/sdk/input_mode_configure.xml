@@ -594,4 +594,10 @@
       <landscape>LYT_URL_POPUP.xml</landscape>
     </layouts>
   </mode>
+  <mode name="CM_POPUP" dim_window="true">
+    <layouts>
+      <portrait>LYT_CM_POPUP.xml</portrait>
+      <landscape>LYT_CM_POPUP.xml</landscape>
+    </layouts>
+  </mode>
 </input_mode_table>

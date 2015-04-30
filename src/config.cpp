@@ -43,40 +43,51 @@ CONFIG_VALUES g_config_values;
 
 void read_ise_config_values() {
     g_core.config_reload();
-    sclint integer_value;
+    sclint integer_value = 0;
     std::string string_value;
 
-    if (g_core.config_read_int(ISE_CONFIG_KEYPAD_MODE, integer_value)) {
-        g_config_values.keypad_mode = static_cast<KEYPAD_MODE>(integer_value);
-    }
-    if (g_core.config_read_int(ISE_CONFIG_PREDICTION_ON, integer_value)) {
-        g_config_values.prediction_on = integer_value;
-    }
-    if (g_core.config_read_string(ISE_CONFIG_ENABLED_LANGUAGES, string_value)) {
+    integer_value = KEYPAD_MODE_QTY;
+    g_core.config_read_int(ISE_CONFIG_KEYPAD_MODE, integer_value);
+    g_config_values.keypad_mode = static_cast<KEYPAD_MODE>(integer_value);
+
+    integer_value = 0;
+    g_core.config_read_int(ISE_CONFIG_PREDICTION_ON, integer_value);
+    g_config_values.prediction_on = integer_value;
+
+    string_value = "";
+    g_core.config_read_string(ISE_CONFIG_ENABLED_LANGUAGES, string_value);
+    if (string_value.length () > 0) {
         std::stringstream ss(string_value);
         std::istream_iterator<std::string> begin(ss);
         std::istream_iterator<std::string> end;
         std::vector<std::string> vstrings(begin, end);
         g_config_values.enabled_languages = vstrings;
     }
-    if (g_core.config_read_string(ISE_CONFIG_SELECTED_LANGUAGE, string_value)) {
+    string_value = "";
+    g_core.config_read_string(ISE_CONFIG_SELECTED_LANGUAGE, string_value);
+    if (string_value.length () > 0) {
         g_config_values.selected_language = string_value;
     }
-    if (g_core.config_read_int(ISE_CONFIG_AUTO_CAPITALISE, integer_value)) {
-        g_config_values.auto_capitalise = integer_value;
-    }
-    if (g_core.config_read_int(ISE_CONFIG_AUTO_PUNCTUATE, integer_value)) {
-        g_config_values.auto_punctuate = integer_value;
-    }
-    if (g_core.config_read_int(ISE_CONFIG_SOUND_ON, integer_value)) {
-        g_config_values.sound_on = integer_value;
-    }
-    if (g_core.config_read_int(ISE_CONFIG_VIBRATION_ON, integer_value)) {
-        g_config_values.vibration_on = integer_value;
-    }
-    if (g_core.config_read_int(ISE_CONFIG_PREVIEW_ON, integer_value)) {
-        g_config_values.preview_on = integer_value;
-    }
+
+    integer_value = 1;
+    g_core.config_read_int(ISE_CONFIG_AUTO_CAPITALISE, integer_value);
+    g_config_values.auto_capitalise = integer_value;
+
+    integer_value = 1;
+    g_core.config_read_int(ISE_CONFIG_AUTO_PUNCTUATE, integer_value);
+    g_config_values.auto_punctuate = integer_value;
+
+    integer_value = 1;
+    g_core.config_read_int(ISE_CONFIG_SOUND_ON, integer_value);
+    g_config_values.sound_on = integer_value;
+
+    integer_value = 1;
+    g_core.config_read_int(ISE_CONFIG_VIBRATION_ON, integer_value);
+    g_config_values.vibration_on = integer_value;
+
+    integer_value = 1;
+    g_core.config_read_int(ISE_CONFIG_PREVIEW_ON, integer_value);
+    g_config_values.preview_on = integer_value;
 }
 
 void write_ise_config_values() {
