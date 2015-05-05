@@ -199,12 +199,16 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
         else
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_LAND_CANDIDATE_ON);
     } else {
+        sclint width = 0;
+        sclint height = 0;
+        g_ui->get_screen_resolution (&width, &height);
+        LOGD ("screen width:%d, height:%d", width, height);
         if(screen_degree == 0 || screen_degree == 180) {
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_PORT_CANDIDATE_OFF);
-            evas_object_resize (layout, ISE_WIDTH_PORT, ISE_HEIGHT_PORT);
+            evas_object_resize (layout, width, g_ui->get_scaled_y (ISE_HEIGHT_PORT));
         } else {
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_LAND_CANDIDATE_OFF);
-            evas_object_resize (layout, ISE_WIDTH_LAND, ISE_HEIGHT_LAND);
+            evas_object_resize (layout, width, g_ui->get_scaled_y (ISE_HEIGHT_LAND));
         }
     }
 
