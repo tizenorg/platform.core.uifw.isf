@@ -1793,8 +1793,21 @@ static void ui_play_tts (const char* str)
                 LOGW ("Fail to stop TTS : ret(%d)\n", r);
             }
         }
-        /* FIXME: Should support for all languages */
-        r = tts_add_text (_tts, str, "en_US", TTS_VOICE_TYPE_FEMALE, TTS_SPEED_NORMAL, &utt_id);
+
+        /* Get ISE language */
+        String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
+        String language = String ("en_US");
+        if (default_uuid.length () > 0) {
+            language = _langs [get_ise_index (default_uuid)];
+            if (language.length () > 0) {
+                std::vector<String> ise_langs;
+                scim_split_string_list (ise_langs, language);
+                language = ise_langs[0];
+            }
+        }
+        LOGD ("TTS language:%s, str:%s\n", language.c_str (), str);
+
+        r = tts_add_text (_tts, str, language.c_str (), TTS_VOICE_TYPE_AUTO, TTS_SPEED_AUTO, &utt_id);
         if (TTS_ERROR_NONE == r) {
             r = tts_play (_tts);
             if (TTS_ERROR_NONE != r) {
