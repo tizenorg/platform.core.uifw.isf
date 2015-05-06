@@ -1794,7 +1794,7 @@ static void ui_play_tts (const char* str)
             }
         }
         /* FIXME: Should support for all languages */
-        r = tts_add_text (_tts, str, "en_US", TTS_VOICE_TYPE_FEMALE, TTS_SPEED_NORMAL, &utt_id);
+        r = tts_add_text (_tts, str, language.c_str (), TTS_VOICE_TYPE_AUTO, TTS_SPEED_AUTO, &utt_id);
         if (TTS_ERROR_NONE == r) {
             r = tts_play (_tts);
             if (TTS_ERROR_NONE != r) {
