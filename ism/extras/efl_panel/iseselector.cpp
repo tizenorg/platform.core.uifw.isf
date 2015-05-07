@@ -28,6 +28,7 @@
 #include <Ecore_X.h>
 #include <efl_extension.h>
 #include <dlog.h>
+#include <app_control_internal.h>
 #include "scim_private.h"
 #include "scim.h"
 #include "iseselector.h"
