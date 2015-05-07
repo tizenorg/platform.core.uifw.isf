@@ -8,7 +8,6 @@ License:    LGPL-2.1+
 Source0:    %{name}-%{version}.tar.gz
 Source1001: isf.manifest
 BuildRequires:  edje-bin
-BuildRequires:  embryo-bin
 BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(appcore-efl)
 BuildRequires:  pkgconfig(libprivilege-control)
