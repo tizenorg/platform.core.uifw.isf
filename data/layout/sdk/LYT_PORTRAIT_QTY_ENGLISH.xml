@@ -559,7 +559,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
@@ -636,7 +636,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
@@ -723,7 +723,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>

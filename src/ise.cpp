@@ -69,7 +69,7 @@ static void update_recent_used_punctuation(const char *key_value);
 static sclboolean g_punctuation_popup_opened = FALSE;
 static sclboolean g_popup_opened = FALSE;
 static vector<string> g_recent_used_punctuation;
-const int MAX_DEFAULT_PUNCTUATION = 6;
+static const int MAX_DEFAULT_PUNCTUATION = 6;
 static string g_default_punctuation[MAX_DEFAULT_PUNCTUATION] = {"-", "@", "'", "!", "?", ","};
 static string g_current_punctuation[MAX_DEFAULT_PUNCTUATION-1] = {"RCENT1", "RCENT2", "RCENT3", "RCENT4", "RCENT5"};
 
@@ -84,9 +84,9 @@ KEYBOARD_STATE g_keyboard_state = {
 };
 
 #define ISE_LAYOUT_NUMBERONLY_VARIATION_MAX 4
-const sclchar *g_ise_numberonly_variation_name[ISE_LAYOUT_NUMBERONLY_VARIATION_MAX] = {
+/*static const sclchar *_ise_numberonly_variation_name[ISE_LAYOUT_NUMBERONLY_VARIATION_MAX] = {
     "DEFAULT", "SIG", "DEC", "SIGDEC"
-};
+};*/
 
 #define SIG_DEC_SIZE        2
 static scluint              _click_count = 0;
@@ -128,7 +128,13 @@ static ISELanguageManager _language_manager;
 #define MVK_Shift_Enable 0x9fe7
 #define MVK_Shift_Disable 0x9fe8
 
-#define USER_KEYSTRING_OPTION "OPTION"
+#define CM_KEY_LIST_SIZE        2
+#define USER_KEYSTRING_OPTION   "OPTION"
+#define USER_KEYSTRING_EMOTICON "EMOTICON_LAYOUT"
+
+static sclboolean           _cm_popup_opened = FALSE;
+static const char          *_cm_key_list [CM_KEY_LIST_SIZE] = {USER_KEYSTRING_OPTION, USER_KEYSTRING_EMOTICON};
+static scluint              _current_cm_key_id = 0;
 
 /*
  * This callback class will receive all response events from SCL
@@ -165,6 +171,37 @@ static void _reset_shift_state (void)
         }
         LOGD ("Shift state changed from (%d) to (%d)", (int)old_shift_state, (int)new_shift_state);
     }
+}
+
+static void ise_set_cm_private_key (scluint cm_key_id)
+{
+    if (cm_key_id >= CM_KEY_LIST_SIZE || g_ui == NULL) {
+        LOGE ("cm_key_id=%d", cm_key_id);
+        return;
+    }
+
+    if (strcmp (_cm_key_list[cm_key_id], USER_KEYSTRING_EMOTICON) == 0) {
+        sclchar* imagelabel[SCL_BUTTON_STATE_MAX] = {
+            const_cast<sclchar*>("emoticon/icon_emotion.png"),
+            const_cast<sclchar*>("emoticon/icon_emotion_press.png"),
+            const_cast<sclchar*>("emoticon/icon_emotion_dim.png")};
+        g_ui->set_private_key("CM_KEY", "", imagelabel, NULL, 0, USER_KEYSTRING_EMOTICON, TRUE);
+    } else if (strcmp (_cm_key_list[cm_key_id], USER_KEYSTRING_OPTION) == 0) {
+        sclchar* imagelabel[SCL_BUTTON_STATE_MAX] = {
+            const_cast<sclchar*>("setting icon/B09_icon_setting_50x50.png"),
+            const_cast<sclchar*>("setting icon/B09_icon_setting_50x50_press.png"),
+            const_cast<sclchar*>("setting icon/B09_icon_setting_50x50_dim.png")};
+        g_ui->set_private_key("CM_KEY", "", imagelabel, NULL, 0, USER_KEYSTRING_OPTION, TRUE);
+    }
+}
+
+static scluint ise_get_cm_key_id (const sclchar *key_value)
+{
+    for (int i = 0; i < CM_KEY_LIST_SIZE; ++i) {
+        if (0 == strcmp (key_value, _cm_key_list[i]))
+            return i;
+    }
+    return 0;
 }
 
 void CCoreEventCallback::on_init()
@@ -466,7 +503,7 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if(is_emoticon_show()){
             ise_destroy_emoticon_window();
         }
-        if(!strcmp(key_value, "EMOTICON_LAYOUT")){
+        if(!strcmp(key_value, USER_KEYSTRING_EMOTICON)){
             ise_init_emoticon_list();
             if(emoticon_list_recent.size() == 0)
                 current_emoticon_group = EMOTICON_GROUP_1;
@@ -525,8 +562,10 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
     {
         g_popup_opened = TRUE;
         SclNotiPopupOpenedDesc *openedDesc = (SclNotiPopupOpenedDesc *)etc_info;
-        if(0 == strcmp(openedDesc->input_mode, "PUNCTUATION_POPUP")){
+        if (0 == strcmp (openedDesc->input_mode, "PUNCTUATION_POPUP")) {
             g_punctuation_popup_opened = TRUE;
+        } else if (0 == strcmp (openedDesc->input_mode, "CM_POPUP")) {
+            _cm_popup_opened = TRUE;
         }
     }
 
@@ -622,8 +661,21 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                 break;
            }
         case KEY_TYPE_MODECHANGE:
-            if (on_input_mode_changed(event_desc.key_value, event_desc.key_event, event_desc.key_type)) {
+            if (strcmp (event_desc.key_value, USER_KEYSTRING_OPTION) == 0) {
+                g_core.create_option_window ();
                 ret = SCL_EVENT_DONE;
+            } else if (on_input_mode_changed (event_desc.key_value, event_desc.key_event, event_desc.key_type)) {
+                ret = SCL_EVENT_DONE;
+            }
+            if (_cm_popup_opened) {
+                if (strcmp (event_desc.key_value, USER_KEYSTRING_EMOTICON) == 0) {
+                    sclint id = ise_get_cm_key_id (USER_KEYSTRING_EMOTICON);
+                    if (id != _current_cm_key_id) {
+                        _current_cm_key_id = id;
+                        ise_set_cm_private_key (_current_cm_key_id);
+                    }
+                }
+                _cm_popup_opened = FALSE;
             }
             break;
         case KEY_TYPE_USER:
@@ -647,6 +699,16 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                         ise_show_emoticon_window(group_id, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
                     }
                 }
+            }
+            if (_cm_popup_opened) {
+                if (strcmp (event_desc.key_value, USER_KEYSTRING_OPTION) == 0) {
+                    sclint id = ise_get_cm_key_id (USER_KEYSTRING_OPTION);
+                    if (id != _current_cm_key_id) {
+                        _current_cm_key_id = id;
+                        ise_set_cm_private_key (_current_cm_key_id);
+                    }
+                }
+                _cm_popup_opened = FALSE;
             }
             break;
         default:

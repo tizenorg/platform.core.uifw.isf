@@ -212,7 +212,7 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key key_type="user" width="81" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="81" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
@@ -296,7 +296,7 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key key_type="user" width="81" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="81" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
@@ -395,7 +395,7 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key key_type="user" width="81" use_magnifier="false" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="81" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
