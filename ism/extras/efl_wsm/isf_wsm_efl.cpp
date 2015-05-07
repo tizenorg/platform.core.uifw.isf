@@ -875,10 +875,7 @@ static bool set_helper_ise (const String &uuid, const String &module_name)
     if (TOOLBAR_HELPER_MODE == mode) {
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  stop helper(%s)\n",
-            time (0), getpid (), __FILE__, __func__, pre_uuid.c_str ());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("stop helper : %s\n", pre_uuid.c_str ());
     }
 
     /* Set ComposeKey as keyboard ISE */
@@ -892,10 +889,8 @@ static bool set_helper_ise (const String &uuid, const String &module_name)
         String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
         _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, kbd_uuid);
     }
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Start helper(%s)\n",
-        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-    isf_save_log (buf);
+
+    ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
     _panel_agent->start_helper (uuid);
     _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
@@ -913,10 +908,7 @@ static bool set_helper_ise (const String &uuid, const String &module_name)
 static bool set_active_ise (const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    char buf[256] = {0};
-    snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  set ISE(%s)\n",
-        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-    isf_save_log (buf);
+    ISF_SAVE_LOG ("set ISE (%s)\n", uuid.c_str ());
 
     if (uuid.length () <= 0)
         return false;
