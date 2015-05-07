@@ -22,7 +22,6 @@ BuildRequires:  pkgconfig(x11)
 %endif
 BuildRequires:  pkgconfig(isf)
 BuildRequires:  pkgconfig(vconf)
-BuildRequires:  pkgconfig(aul)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(libscl-ui)
 BuildRequires:  pkgconfig(libscl-core)
