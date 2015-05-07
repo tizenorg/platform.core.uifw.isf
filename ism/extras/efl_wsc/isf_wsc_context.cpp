@@ -2050,7 +2050,6 @@ initialize (void)
             }
             for (it = helper_list.begin (); it != helper_list.end (); it++)
                 load_engine_list.push_back (*it);
-            //const char *new_argv [] = { "--no-stay", 0 };
             const char *new_argv [] = { 0 };
             scim_launch (true,
                          config_module_name,
