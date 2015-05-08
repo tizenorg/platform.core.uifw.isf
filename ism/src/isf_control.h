@@ -152,7 +152,7 @@ EAPI int isf_control_get_initial_ise (char **uuid);
  *
  * @return 0 if successfully, otherwise return -1;
  */
-EAPI int isf_control_show_ise_selector ();
+EAPI int isf_control_show_ise_selector (void);
 
 /**
  * @brief Get the number of S/W or H/W keyboard ISEs
@@ -168,10 +168,10 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
  *
  * @return 0 if successfully, otherwise return -1
  */
-EAPI int isf_control_show_ise_option_window ();
+EAPI int isf_control_show_ise_option_window (void);
 
 /**
- * @brief Gets the information of all Software (on-screen) IME.
+ * @brief Gets the information of all IME (on-screen keyboard).
  *
  * @remarks This API should not be used by IME process.
  *
@@ -195,6 +195,19 @@ EAPI int isf_control_show_ise_option_window ();
  * @endcode
  */
 EAPI int isf_control_get_all_ime_info (ime_info_s **info);
+
+/**
+ * @brief Requests to open the current IME's option window.
+ *
+ * @remarks Each IME might have its option (setting) or not. This function should be called only if the current IME provides its option.
+ *
+ * @since_tizen 2.4
+ *
+ * @return 0 on success, otherwise return -1
+ *
+ * @pre The availibility of IME option can be found using isf_control_get_all_ime_info() and isf_control_get_active_ime() functions.
+ */
+EAPI int isf_control_open_ime_option_window (void);
 
 /**
  * @brief Gets active IME's Application ID.

@@ -310,6 +310,11 @@ EAPI int isf_control_get_all_ime_info (ime_info_s **info)
     return count;
 }
 
+EAPI int isf_control_open_ime_option_window (void)
+{
+    return isf_control_show_ise_option_window ();
+}
+
 EAPI int isf_control_get_active_ime (char **appid)
 {
     if (appid == NULL)
