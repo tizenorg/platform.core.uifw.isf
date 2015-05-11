@@ -150,7 +150,7 @@ wsc_commit_preedit(weescim *ctx)
 {
     char *surrounding_text;
 
-    if (!ctx->preedit_str ||
+    if (!ctx || !ctx->preedit_str ||
         strlen(ctx->preedit_str) == 0)
         return;
 
@@ -182,6 +182,8 @@ wsc_commit_preedit(weescim *ctx)
 static void
 wsc_send_preedit(weescim *ctx, int32_t cursor)
 {
+    if (!ctx) return;
+
     uint32_t index = strlen(ctx->preedit_str);
 
     if (ctx->preedit_style)
@@ -217,6 +219,9 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx)
 {
     Ecore_IMF_Input_Panel_Layout layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
 
+    if (!ctx)
+        return layout;
+
     switch (ctx->content_purpose) {
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
         case WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER:
@@ -247,6 +252,9 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx)
 
 bool wsc_context_input_panel_caps_lock_mode_get(weescim *ctx)
 {
+    if (!ctx)
+        return false;
+
     if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
         return true;
 
@@ -263,6 +271,9 @@ void wsc_context_delete_surrounding (weescim *ctx, int offset, int len)
 
 void wsc_context_commit_string(weescim *ctx, const char *str)
 {
+    if (!ctx)
+        return;
+
     if (ctx->preedit_str) {
         free(ctx->preedit_str);
         ctx->preedit_str = NULL;
@@ -366,9 +377,9 @@ static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
 {
     struct weescim *wsc = (weescim*)data;
+    if (!wsc) return;
 
-    if (wsc)
-        isf_wsc_context_reset(wsc->wsc_ctx);
+    isf_wsc_context_reset(wsc->wsc_ctx);
 }
 
 static void
@@ -398,12 +409,12 @@ static void
 _wsc_im_ctx_invoke_action(void *data, struct wl_input_method_context *im_ctx, uint32_t button, uint32_t index)
 {
     struct weescim *wsc = (weescim*)data;
+    if (!wsc) return;
 
     if (button != BTN_LEFT)
         return;
 
-    if (wsc)
-        wsc_context_send_preedit_string (wsc);
+    wsc_context_send_preedit_string (wsc);
 }
 
 static void
