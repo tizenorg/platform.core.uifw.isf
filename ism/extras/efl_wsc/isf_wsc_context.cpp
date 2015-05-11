@@ -2416,7 +2416,7 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
     sym = _keyname_to_keysym(key.code, &modifiers);
 
     if (ic)
-        wsc_context_send_key(ic->ctx, sym, modifiers, time, key.is_key_press());
+        wsc_context_send_key(ic->ctx, key.code, modifiers, time, key.is_key_press());
 }
 
 static void

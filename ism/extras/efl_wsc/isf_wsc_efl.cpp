@@ -325,35 +325,18 @@ void wsc_context_send_preedit_string(weescim *ctx)
 
 void wsc_context_send_key(weescim *ctx, uint32_t keysym, uint32_t modifiers, uint32_t time, bool press)
 {
-    uint32_t keycode;
-    KeycodeRepository::iterator it = _keysym2keycode.find(keysym);
-
     if (!ctx || !ctx->im_ctx)
         return;
 
-    if(it == _keysym2keycode.end())
-        return;
-
-    keycode = it->second;
     ctx->modifiers = modifiers;
 
     if (press) {
-        if (ctx->modifiers) {
-            wl_input_method_context_modifiers(ctx->im_ctx, ctx->serial,
-                                              ctx->modifiers, 0, 0, 0);
-        }
-
-        wl_input_method_context_key(ctx->im_ctx, ctx->serial, time,
-                                    keycode, WL_KEYBOARD_KEY_STATE_PRESSED);
+        wl_input_method_context_keysym(ctx->im_ctx, ctx->serial, time,
+                                        keysym, WL_KEYBOARD_KEY_STATE_PRESSED, ctx->modifiers);
     }
     else {
-        wl_input_method_context_key(ctx->im_ctx, ctx->serial, time,
-                                    keycode, WL_KEYBOARD_KEY_STATE_RELEASED);
-
-        if (ctx->modifiers) {
-            wl_input_method_context_modifiers(ctx->im_ctx, ctx->serial,
-                                              0, 0, 0, 0);
-        }
+        wl_input_method_context_keysym(ctx->im_ctx, ctx->serial, time,
+                                        keysym, WL_KEYBOARD_KEY_STATE_RELEASED, ctx->modifiers);
     }
 }
 
