@@ -3422,8 +3422,10 @@ static bool initialize_panel_agent (const String &config, const String &display,
 
     _panel_agent = new PanelAgent ();
 
-    if (!_panel_agent || !_panel_agent->initialize (config, display, resident))
+    if (!_panel_agent || !_panel_agent->initialize (config, display, resident)) {
+        ISF_SAVE_LOG ("panel_agent initialize fail!\n");
         return false;
+    }
 
     _panel_agent->signal_connect_reload_config              (slot (slot_reload_config));
     _panel_agent->signal_connect_focus_in                   (slot (slot_focus_in));

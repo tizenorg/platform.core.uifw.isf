@@ -437,8 +437,10 @@ public:
         /* If our helper manager could not connect to the HelperManager process,
            this panel agent's initialization has failed - since we are assuming
            the helper manager process should be launched beforehand */
-        if (m_helper_manager.get_connection_number() == -1)
+        if (m_helper_manager.get_connection_number() == -1) {
+            ISF_SAVE_LOG ("Fail to get connection with HelperManager!\n");
             return false;
+        }
 
         return m_socket_server.create (SocketAddress (m_socket_address));
     }
