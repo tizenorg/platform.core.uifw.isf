@@ -63,6 +63,7 @@ isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @TTS_LIBS@ \
                          @EDBUS_LIBS@ \
                          @BLUETOOTH_LIBS@ \
+                         @FEEDBACK_LIBS@ \
                          @UIGADGET_LIBS@ \
                          @PACKAGE_MANAGER_LIBS@ \
                          @PKGMGR_INFO_LIBS@ \
