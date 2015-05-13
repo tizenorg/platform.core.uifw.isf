@@ -122,6 +122,9 @@ static Evas_Object*
 create_main_window(int degree)
 {
     Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
+    if (!window)
+        return NULL;
+
     elm_win_fullscreen_set(window, EINA_TRUE);
 
 #ifndef WAYLAND
@@ -813,6 +816,10 @@ open_option_window(Evas_Object *parent, sclint degree)
 
         /* create option window */
         Evas_Object *window = create_main_window(degree);
+        if (!window) {
+            LOGE("Failed to create option window\n");
+            return;
+        }
 
         elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
         elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);

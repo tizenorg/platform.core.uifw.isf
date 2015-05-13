@@ -416,6 +416,10 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     elm_config_preferred_engine_set("wayland_shm");
 #endif
     m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
+    if (!m_main_window) {
+        LOGE("Failed to create main window\n");
+        return;
+    }
 
 #ifdef WAYLAND
     wskb.ee = ecore_evas_ecore_evas_get (evas_object_evas_get (m_main_window));
