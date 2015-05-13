@@ -31,9 +31,7 @@ BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(edbus)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
-%if "%{profile}" != "tv"
 BuildRequires:  pkgconfig(feedback)
-%endif
 BuildRequires:  efl-extension-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
