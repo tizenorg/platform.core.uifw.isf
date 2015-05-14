@@ -311,6 +311,9 @@ PKG_CHECK_MODULES(FEEDBACK, [feedback],
 # Check package manager
 PKG_CHECK_MODULES(PACKAGE_MANAGER, [capi-appfw-package-manager])
 
+# Check App Control
+PKG_CHECK_MODULES(APP_CONTROL, [capi-appfw-app-control])
+
 # Check core package manager
 PKG_CHECK_MODULES(PKGMGR_INFO, [pkgmgr-info],
                   [ISF_HAS_PKGMGR_INFO=yes],

@@ -35,6 +35,7 @@ BuildRequires:  efl-extension-devel
 BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(pkgmgr-info)
 BuildRequires:  pkgconfig(db-util)
+BuildRequires:  pkgconfig(capi-appfw-app-control)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig

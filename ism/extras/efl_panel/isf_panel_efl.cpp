@@ -4826,7 +4826,7 @@ static void slot_set_enable_helper_ise_info (const String &appid, bool is_enable
  */
 static void slot_show_helper_ise_list (void)
 {
-    // Lauch org.tizen.inputmethod-setting-list
+    // Launch org.tizen.inputmethod-setting-list
     int ret;
     app_control_h app_control;
     const char *app_id = "org.tizen.inputmethod-setting-list"; // This is temporary. AppId can be got using pkgmgr-info later.
@@ -4868,7 +4868,7 @@ static void slot_show_helper_ise_list (void)
  */
 static void slot_show_helper_ise_selector (void)
 {
-    // Lauch org.tizen.inputmethod-setting-selector
+    // Launch org.tizen.inputmethod-setting-selector
     int ret;
     app_control_h app_control;
     const char *app_id = "org.tizen.inputmethod-setting-selector"; // This is temporary. AppId can be got using pkgmgr-info later.

@@ -50,6 +50,7 @@ isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
                          @UIGADGET_CFLAGS@ \
                          @PACKAGE_MANAGER_CFLAGS@ \
                          @PKGMGR_INFO_CFLAGS@ \
+                         @APP_CONTROL_CFLAGS@ \
                          -fPIE
 
 isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
@@ -68,6 +69,7 @@ isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @UIGADGET_LIBS@ \
                          @PACKAGE_MANAGER_LIBS@ \
                          @PKGMGR_INFO_LIBS@ \
+                         @APP_CONTROL_LIBS@ \
                          -pie
 
 isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
