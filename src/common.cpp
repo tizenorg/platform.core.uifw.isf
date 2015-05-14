@@ -412,9 +412,7 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     }
     LOGD ("Selected engine: '%s'\n", wskb.ee_engine);
 #endif
-#ifdef WAYLAND
-    elm_config_preferred_engine_set("wayland_shm");
-#endif
+
     m_main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
 
 #ifdef WAYLAND
