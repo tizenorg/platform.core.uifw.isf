@@ -234,11 +234,13 @@ void CCoreEventCallback::on_detach_input_context(sclint ic, const sclchar *ic_uu
 
 void CCoreEventCallback::on_focus_in(sclint ic, const sclchar *ic_uuid)
 {
+    LOGD("Enter");
     ise_focus_in(ic);
 }
 
 void CCoreEventCallback::on_focus_out(sclint ic, const sclchar *ic_uuid)
 {
+    LOGD("Enter");
     ise_focus_out(ic);
 }
 
@@ -292,6 +294,7 @@ void CCoreEventCallback::on_set_display_language(const sclchar *language)
 
 void CCoreEventCallback::on_set_accessibility_state(const sclboolean state)
 {
+    LOGD ("state=%d", state);
     ise_set_accessibility_state(state);
 }
 

@@ -559,7 +559,10 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+      <label>
+        <rec>...</rec>
+      </label>
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
@@ -573,6 +576,9 @@
       <key_value>
         <rec>OPTION</rec>
       </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>CM_POPUP</popup_input_mode>
+      </popup_input_mode_record>
     </key>
     <key button_type="direction" key_type="control" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="263">
       <label>
@@ -630,7 +636,10 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+      <label>
+        <rec>...</rec>
+      </label>
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
@@ -644,6 +653,9 @@
       <key_value>
         <rec>OPTION</rec>
       </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>CM_POPUP</popup_input_mode>
+      </popup_input_mode_record>
     </key>
     <key key_type="string" label_type="QTY_LINE1">
       <label>
@@ -711,7 +723,10 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+      <label>
+        <rec>...</rec>
+      </label>
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
@@ -725,6 +740,9 @@
       <key_value>
         <rec>OPTION</rec>
       </key_value>
+      <popup_input_mode_record>
+        <popup_input_mode>CM_POPUP</popup_input_mode>
+      </popup_input_mode_record>
     </key>
     <key key_type="string" label_type="QTY_LINE1">
       <label>
