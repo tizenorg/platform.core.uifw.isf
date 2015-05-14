@@ -223,7 +223,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
         m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
         return;
     }
-    ISF_SAVE_LOG ("uuid(%s)\n", uuid.c_str ());
+    ISF_SAVE_LOG ("uuid(%s), config(%s), display(%s)\n", uuid.c_str (), config.c_str (), display.c_str ());
 
     for (size_t i = 0; i < __helpers.size (); ++i) {
         if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
