@@ -36,7 +36,6 @@ module_la_SOURCES  = isf_imf_module.cpp \
 
 module_la_CXXFLAGS = @EFL_CFLAGS@ \
                      @ECOREX_CFLAGS@ \
-                     @UTILX_CFLAGS@ \
                      @VCONF_CFLAGS@ \
                      @DLOG_CFLAGS@
 
@@ -48,7 +47,6 @@ module_la_LIBADD   = -lstdc++ \
                      $(LD_VERSION_SCRIPT_OPTION) \
                      @EFL_LIBS@ \
                      @ECOREX_LIBS@ \
-                     @UTILX_LIBS@ \
                      @VCONF_LIBS@ \
                      @DLOG_LIBS@ \
                      $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

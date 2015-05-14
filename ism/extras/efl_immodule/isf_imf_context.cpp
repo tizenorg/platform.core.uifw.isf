@@ -45,7 +45,6 @@
 #include <X11/keysym.h>
 #include <X11/Xutil.h>
 #include <glib.h>
-#include <utilX.h>
 #include <vconf.h>
 #include <vconf-keys.h>
 

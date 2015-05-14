@@ -35,6 +35,7 @@ isf_panel_efl_SOURCES  += minicontrol.cpp
 endif
 
 isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
+                         @ECOREX_CFLAGS@ \
                          @EFL_EXTENSION_CFLAGS@ \
                          @VCONF_CFLAGS@ \
                          @X11_CFLAGS@ \

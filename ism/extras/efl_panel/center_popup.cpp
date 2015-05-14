@@ -24,8 +24,6 @@
 #include "center_popup.h"
 #include "isf_panel_efl.h"
 
-#include <Ecore_X.h>
-
 typedef struct _Center_Popup_Data Center_Popup_Data;
 struct _Center_Popup_Data
 {
