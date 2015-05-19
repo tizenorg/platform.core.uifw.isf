@@ -8,6 +8,55 @@
     <category name="http://tizen.org/category/ime"/>
     <label>Tizen keyboard</label>
     <label xml:lang="en-gb">Tizen keyboard</label>
+    <label xml:lang="ar-ae">Tizen keyboard</label>
+    <label xml:lang="hy-am">Tizen keyboard</label>
+    <label xml:lang="az-az">Tizen keyboard</label>
+    <label xml:lang="eu-es">Tizen keyboard</label>
+    <label xml:lang="bg-bg">Tizen keyboard</label>
+    <label xml:lang="ca-es">Tizen keyboard</label>
+    <label xml:lang="zh-cn">Tizen keyboard</label>
+    <label xml:lang="zh-hk">Tizen keyboard</label>
+    <label xml:lang="zh-sg">Tizen keyboard</label>
+    <label xml:lang="zh-tw">Tizen keyboard</label>
+    <label xml:lang="hr-hr">Tizen keyboard</label>
+    <label xml:lang="cs-cz">Tizen keyboard</label>
+    <label xml:lang="da-dk">Tizen keyboard</label>
+    <label xml:lang="nl-nl">Tizen keyboard</label>
+    <label xml:lang="en-ph">Tizen keyboard</label>
+    <label xml:lang="en-us">Tizen keyboard</label>
+    <label xml:lang="et-ee">Tizen keyboard</label>
+    <label xml:lang="fi-fi">Tizen keyboard</label>
+    <label xml:lang="fr-fr">Tizen keyboard</label>
+    <label xml:lang="fr-ca">Tizen keyboard</label>
+    <label xml:lang="gl-es">Tizen keyboard</label>
+    <label xml:lang="ka-ge">Tizen keyboard</label>
+    <label xml:lang="de-de">Tizen keyboard</label>
+    <label xml:lang="el-gr">Tizen keyboard</label>
+    <label xml:lang="hi-in">Tizen keyboard</label>
+    <label xml:lang="hu-hu">Tizen keyboard</label>
+    <label xml:lang="is-is">Tizen keyboard</label>
+    <label xml:lang="ga-ie">Tizen keyboard</label>
+    <label xml:lang="it-it">Tizen keyboard</label>
+    <label xml:lang="ja-jp">Tizen keyboard</label>
+    <label xml:lang="kk-kz">Tizen keyboard</label>
+    <label xml:lang="ko-kr">Tizen keyboard</label>
+    <label xml:lang="lv-lv">Tizen keyboard</label>
+    <label xml:lang="lt-lt">Tizen keyboard</label>
+    <label xml:lang="mk-mk">Tizen keyboard</label>
+    <label xml:lang="nb-no">Tizen keyboard</label>
+    <label xml:lang="pl-pl">Tizen keyboard</label>
+    <label xml:lang="pt-pt">Tizen keyboard</label>
+    <label xml:lang="pt-br">Tizen keyboard</label>
+    <label xml:lang="ro-ro">Tizen keyboard</label>
+    <label xml:lang="ru-ru">Tizen keyboard</label>
+    <label xml:lang="sr-rs">Tizen keyboard</label>
+    <label xml:lang="sk-sk">Tizen keyboard</label>
+    <label xml:lang="sl-si">Tizen keyboard</label>
+    <label xml:lang="es-es">Tizen keyboard</label>
+    <label xml:lang="sv-se">Tizen keyboard</label>
+    <label xml:lang="tr-tr">Tizen keyboard</label>
+    <label xml:lang="uk-ua">Tizen keyboard</label>
+    <label xml:lang="uz-uz">Tizen keyboard</label>
     <icon/>
 </ui-application>
 </manifest>
