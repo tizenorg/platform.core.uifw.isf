@@ -224,11 +224,15 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx)
 
     switch (ctx->content_purpose) {
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY;
+            break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER:
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBER;
+            break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DATE:
         case WL_TEXT_INPUT_CONTENT_PURPOSE_TIME:
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DATETIME:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBER;
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_DATETIME;
             break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_PHONE:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PHONENUMBER;
@@ -241,6 +245,9 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx)
             break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL:
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL;
             break;
         default:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
@@ -386,6 +393,8 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
     //FIXME: process hint like layout.
 
     wsc->context_changed = EINA_FALSE;
+
+    isf_wsc_context_input_panel_show (wsc->wsc_ctx);
 }
 
 static void
