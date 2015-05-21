@@ -206,8 +206,12 @@ bool wsc_context_surrounding_get(weescim *ctx, char **text, int *cursor_pos)
     if (!ctx)
         return false;
 
-    if (text)
-        *text = strdup (ctx->surrounding_text);
+    if (text) {
+        if (ctx->surrounding_text)
+            *text = strdup (ctx->surrounding_text);
+        else
+            *text = strdup ("");
+    }
 
     if (cursor_pos)
         *cursor_pos = ctx->surrounding_cursor;
