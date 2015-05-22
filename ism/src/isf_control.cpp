@@ -407,7 +407,7 @@ EAPI int isf_control_show_ime_selector (void)
 
 EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
 {
-    if (!appid || !enabled)
+    if (!appid || !enabled || strlen(appid) < 1)
         return -1;
 
     int nEnabled = -1;
