@@ -161,12 +161,18 @@ static int create_demo_view (struct appdata *ad)
     Evas_Object *li = NULL;
     int idx = 0;
 
-    Evas_Object *l_button = elm_button_add (ad->naviframe);
-    elm_object_style_set (l_button, "naviframe/end_btn/default");
+    Evas_Object *l_button = elm_button_add (ad->win_main);
+    if (!l_button) return -1;
+
+    if (!elm_object_style_set (l_button, "naviframe/end_btn/default"))
+        LOGW ("Failed to set style of button\n");
+
     evas_object_smart_callback_add (l_button, "clicked", _quit_cb, NULL);
 
     // Create list
-    ad->li = li = elm_list_add (ad->naviframe);
+    ad->li = li = elm_list_add (ad->win_main);
+    if (!li) return -1;
+
     elm_list_mode_set (li, ELM_LIST_COMPRESS);
     evas_object_smart_callback_add (ad->li, "selected", _list_click, ad);
 
@@ -182,7 +188,6 @@ static int create_demo_view (struct appdata *ad)
     return 0;
 }
 
-#ifndef WAYLAND
 static int lang_changed (void *event_info, void *data)
 {
 #if HAVE_UIGADGET
@@ -190,7 +195,6 @@ static int lang_changed (void *event_info, void *data)
 #endif
     return 0;
 }
-#endif
 
 static void win_del (void *data, Evas_Object *obj, void *event)
 {
@@ -201,12 +205,16 @@ static Evas_Object* create_win (const char *name)
 {
     Evas_Object *eo = NULL;
     const int rots[4] = { 0, 90, 180, 270 };
+    int w, h;
 
     eo = elm_win_util_standard_add (name, name);
     if (eo != NULL) {
         evas_object_smart_callback_add (eo, "delete,request",
                                         win_del, NULL);
-        elm_win_fullscreen_set (eo, EINA_TRUE);
+
+        elm_win_screen_size_get (eo, NULL, NULL, &w, &h);
+        LOGD ("resize window as %d x %d\n", w, h);
+        evas_object_resize (eo, w, h);
     }
 
     if (elm_win_wm_rotation_supported_get (eo)) {
@@ -327,7 +335,10 @@ static int app_create (void *data)
     appcore_measure_start ();
 
     ad->win_main = create_win ("isf-demo-efl");
-    evas_object_show (ad->win_main);
+    if (!ad->win_main) {
+        LOGE ("Failed to create window\n");
+        return -1;
+    }
 
     ad->evas = evas_object_evas_get (ad->win_main);
     /* get width and height of main window */
@@ -344,19 +355,15 @@ static int app_create (void *data)
     //init the content in conformant.
     create_demo_view (ad);
 
-#ifndef WAYLAND
     lang_changed (NULL, ad);
-#endif
 
     evas_object_show (ad->win_main);
 
     vconf_notify_key_changed (VCONFKEY_ISF_INPUT_PANEL_STATE, input_panel_state_changed_cb, NULL);
 
-#ifndef WAYLAND
     /* add system event callback */
     appcore_set_event_callback (APPCORE_EVENT_LANG_CHANGE,
                                 lang_changed, ad);
-#endif
 
     ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _keydown_event, ad);
     ecore_event_handler_add (ECORE_EVENT_KEY_UP, _keyup_event, ad);
@@ -481,7 +488,9 @@ void add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title
 
     // create back key
     Evas_Object *back_btn = elm_button_add (ad->naviframe);
-    elm_object_style_set (back_btn, "naviframe/end_btn/default");
+    if (!elm_object_style_set (back_btn, "naviframe/end_btn/default"))
+        LOGW ("Failed to set style of button\n");
+
     evas_object_smart_callback_add (back_btn, "clicked",  _back_btn_clicked_cb, ad);
 
     elm_naviframe_item_push (ad->naviframe, title, back_btn, NULL, scroller, NULL);
