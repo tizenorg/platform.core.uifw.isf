@@ -4838,46 +4838,88 @@ static void slot_set_enable_helper_ise_info (const String &appid, bool is_enable
     }
 }
 
+static int _filtered_inputmethod_setting_app_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
+{
+    if (user_data) {
+        char **result = static_cast<char **>(user_data);
+        char *appid = NULL;
+        int ret = 0;
+
+        /* Get appid */
+        ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
+        if (ret == PMINFO_R_OK) {
+            *result = strdup(appid);
+        }
+        else {
+            LOGW("pkgmgrinfo_appinfo_get_appid failed!");
+        }
+    }
+    else {
+        LOGW("user_data is null!");
+    }
+
+    return -1;  // This callback is no longer called.
+}
+
 /**
  * @brief Requests to open the installed IME list application.
  */
 static void slot_show_helper_ise_list (void)
 {
-    // Launch org.tizen.inputmethod-setting-list
+    // Launch IME List application; e.g., org.tizen.inputmethod-setting-list
     int ret;
     app_control_h app_control;
-    const char *app_id = "org.tizen.inputmethod-setting-list"; // This is temporary. AppId can be got using pkgmgr-info later.
+    char *app_id = NULL;
+    pkgmgrinfo_appinfo_filter_h handle;
 
-    ret = app_control_create (&app_control);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_create returned %d", ret);
-        return;
+    ret = pkgmgrinfo_appinfo_filter_create(&handle);
+    if (ret == PMINFO_R_OK) {
+        ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-list");
+        if (ret == PMINFO_R_OK) {
+            ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_inputmethod_setting_app_cb, &app_id);
+        }
+        pkgmgrinfo_appinfo_filter_destroy(handle);
     }
 
-    ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_set_operation returned %d", ret);
+    if (app_id) {
+        ret = app_control_create (&app_control);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_create returned %d", ret);
+            free(app_id);
+            return;
+        }
+
+        ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_set_operation returned %d", ret);
+            app_control_destroy(app_control);
+            free(app_id);
+            return;
+        }
+
+        ret = app_control_set_app_id (app_control, app_id);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_set_app_id returned %d", ret);
+            app_control_destroy(app_control);
+            free(app_id);
+            return;
+        }
+
+        ret = app_control_send_launch_request(app_control, NULL, NULL);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_send_launch_request returned %d", ret);
+            app_control_destroy(app_control);
+            free(app_id);
+            return;
+        }
+
         app_control_destroy(app_control);
-        return;
+        SECURE_LOGD("Launch %s", app_id);
+        free(app_id);
     }
-
-    ret = app_control_set_app_id (app_control, app_id);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_set_app_id returned %d", ret);
-        app_control_destroy(app_control);
-        return;
+    else {
+      SECURE_LOGW("AppID with http://tizen.org/category/ime-list category is not available");
     }
-
-    ret = app_control_send_launch_request(app_control, NULL, NULL);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_send_launch_request returned %d", ret);
-        app_control_destroy(app_control);
-        return;
-    }
-
-    app_control_destroy(app_control);
-
-    SECURE_LOGD("Launch %s", app_id);
 }
 
 /**
@@ -4885,41 +4927,60 @@ static void slot_show_helper_ise_list (void)
  */
 static void slot_show_helper_ise_selector (void)
 {
-    // Launch org.tizen.inputmethod-setting-selector
+    // Launch IME Selector application; e.g., org.tizen.inputmethod-setting-selector
     int ret;
     app_control_h app_control;
-    const char *app_id = "org.tizen.inputmethod-setting-selector"; // This is temporary. AppId can be got using pkgmgr-info later.
+    char *app_id = NULL;
+    pkgmgrinfo_appinfo_filter_h handle;
 
-    ret = app_control_create (&app_control);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_create returned %d", ret);
-        return;
+    ret = pkgmgrinfo_appinfo_filter_create(&handle);
+    if (ret == PMINFO_R_OK) {
+        ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-selector");
+        if (ret == PMINFO_R_OK) {
+            ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_inputmethod_setting_app_cb, &app_id);
+        }
+        pkgmgrinfo_appinfo_filter_destroy(handle);
     }
 
-    ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_set_operation returned %d", ret);
+    if (app_id) {
+        ret = app_control_create (&app_control);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_create returned %d", ret);
+            free(app_id);
+            return;
+        }
+
+        ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_set_operation returned %d", ret);
+            app_control_destroy(app_control);
+            free(app_id);
+            return;
+        }
+
+        ret = app_control_set_app_id (app_control, app_id);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_set_app_id returned %d", ret);
+            app_control_destroy(app_control);
+            free(app_id);
+            return;
+        }
+
+        ret = app_control_send_launch_request(app_control, NULL, NULL);
+        if (ret != APP_CONTROL_ERROR_NONE) {
+            LOGW("app_control_send_launch_request returned %d", ret);
+            app_control_destroy(app_control);
+            free(app_id);
+            return;
+        }
+
         app_control_destroy(app_control);
-        return;
+        SECURE_LOGD("Launch %s", app_id);
+        free(app_id);
     }
-
-    ret = app_control_set_app_id (app_control, app_id);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_set_app_id returned %d", ret);
-        app_control_destroy(app_control);
-        return;
+    else {
+        SECURE_LOGW("AppID with http://tizen.org/category/ime-selector category is not available");
     }
-
-    ret = app_control_send_launch_request(app_control, NULL, NULL);
-    if (ret != APP_CONTROL_ERROR_NONE) {
-        LOGW("app_control_send_launch_request returned %d", ret);
-        app_control_destroy(app_control);
-        return;
-    }
-
-    app_control_destroy(app_control);
-
-    SECURE_LOGD("Launch %s", app_id);
 }
 
 static bool slot_is_helper_ise_enabled (String appid, int &enabled)
