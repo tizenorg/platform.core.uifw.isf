@@ -480,11 +480,6 @@ AC_ARG_ENABLE(wsc-efl,
               enable_wsc_efl=no,
               enable_wsc_efl=yes)
 
-AC_ARG_ENABLE(setting-efl,
-              [  --disable-setting-efl     Do not build EFL Setting],
-              enable_setting_efl=no,
-              enable_setting_efl=check)
-
 AC_ARG_ENABLE(tray-icon,
               [  --disable-tray-icon       Do not build Tray Icon],
               enable_tray_icon=no,
@@ -636,15 +631,6 @@ if test "$enable_wsm_efl" != "no"; then
   fi
 fi
 
-ISF_BUILD_SETTING_EFL=0
-if test "$enable_setting_efl" != "no"; then
-  enable_setting_efl=no
-  if test "$ISF_HAS_EFL" = "yes" -a "$ISF_HAS_VCONF" = "yes"; then
-    ISF_BUILD_SETTING_EFL=1
-    enable_setting_efl=yes
-  fi
-fi
-
 #if nothing needs libscim-gtkutils, just disable it
 if test "$enable_panel_gtk" != "yes"; then
   enable_gtk_utils=no
@@ -705,9 +691,6 @@ AM_CONDITIONAL(ISF_BUILD_PANEL_EFL,
 AM_CONDITIONAL(ISF_BUILD_WSM_EFL,
                 [test "$enable_wsm_efl" = "yes"])
 
-AM_CONDITIONAL(ISF_BUILD_SETTING_EFL,
-                [test "$enable_setting_efl" = "yes"])
-
 AM_CONDITIONAL(ISF_BUILD_WITH_GCONF,
                 [test "$ISF_HAS_GCONF" = "yes"])
 
@@ -729,7 +712,6 @@ AC_SUBST(SCIM_BUILD_GTK_UTILS)
 AC_SUBST(SCIM_BUILD_X11_UTILS)
 AC_SUBST(ISF_BUILD_EFL_IMMODULE)
 AC_SUBST(ISF_BUILD_PANEL_EFL)
-AC_SUBST(ISF_BUILD_SETTING_EFL)
 AC_SUBST(ISF_BUILD_WITH_GCONF)
 
 ISF_BUILDING_DLL="-DISF_BUILDING_DLL"
@@ -821,7 +803,6 @@ Module options:
   EFL  Panel GUI           $enable_panel_efl
   EFL  Wsm GUI             $enable_wsm_efl
   EFL  Wsc GUI             $enable_wsc_efl
-  EFL  Setting             $enable_setting_efl
 
   Enable TrayIcon          $enable_tray_icon
   Enable MultiWindow       $enable_multiwindow_support

@@ -93,7 +93,6 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 		--disable-filter-sctc \
 %if %{with wayland}
         --disable-panel-efl \
-        --disable-setting-efl \
         --disable-efl-immodule \
 %else
         --disable-wsm-efl \
