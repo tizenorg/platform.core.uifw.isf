@@ -138,9 +138,9 @@ typedef enum _WINDOW_STATE {
 
 typedef struct NotiData
 {
-    char* title;
+    const char* title;
     const char* content;
-    char* icon;
+    const char* icon;
     const char* launch_app;
     int noti_id;
 } NotificationData;
@@ -248,8 +248,6 @@ static void       update_ise_locale                    ();
 static void       delete_notification                  (NotificationData *noti_data);
 static void       create_notification                  (NotificationData *noti_data);
 #endif
-static Eina_Bool  ise_launch_timeout                   (void *data);
-static Eina_Bool  delete_ise_launch_timer              ();
 static void       set_language_and_locale              (void);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -390,7 +388,6 @@ static Ecore_Timer       *_longpress_timer                  = NULL;
 static Ecore_Timer       *_destroy_timer                    = NULL;
 static Ecore_Timer       *_off_prepare_done_timer           = NULL;
 static Ecore_Timer       *_candidate_hide_timer             = NULL;
-static Ecore_Timer       *_ise_launch_timer                 = NULL;
 static Ecore_Timer       *_ise_hide_timer                   = NULL;
 
 static Ecore_X_Window     _ise_window                       = 0;
@@ -629,28 +626,6 @@ static void create_notification (NotificationData *noti_data)
     notification_free (notification);
 }
 #endif
-
-static Eina_Bool delete_ise_launch_timer ()
-{
-    if (_ise_launch_timer) {
-        ecore_timer_del (_ise_launch_timer);
-        _ise_launch_timer = NULL;
-        return EINA_TRUE;
-    }
-    else
-        return EINA_FALSE;
-}
-
-static Eina_Bool ise_launch_timeout (void *data)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    LOGW ("ISE launching timeout\n");
-#ifdef HAVE_NOTIFICATION
-    delete_notification (&ise_selector_module_noti);
-#endif
-    return ECORE_CALLBACK_CANCEL;
-}
 
 static bool tokenize_tag (const String& str, struct image *image_token)
 {
@@ -6633,7 +6608,6 @@ cleanup:
     ui_candidate_delete_longpress_timer ();
     ui_candidate_delete_destroy_timer ();
     delete_ise_directory_em ();
-    delete_ise_launch_timer ();
     ui_close_tts ();
 
     unregister_edbus_signal_handler ();
