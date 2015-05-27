@@ -36,6 +36,7 @@
 #include "isf_wsc_context.h"
 #include "isf_wsc_control.h"
 #include "ise_context.h"
+#include "text-client-protocol.h"
 
 using namespace scim;
 
@@ -94,11 +95,14 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
         _isf_wsc_context_init ();
     }
 
+    if (!ctx || !ctx->ctx)
+        return;
+
     /* set password mode */
-    iseContext.password_mode = EINA_FALSE;
+    iseContext.password_mode = wsc_context_input_panel_password_mode_get (ctx->ctx);
 
     /* set language */
-    iseContext.language = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
+    iseContext.language = wsc_context_input_panel_language_get (ctx->ctx);
 
     /* set layout in ise context info */
     iseContext.layout = wsc_context_input_panel_layout_get (ctx->ctx);
@@ -141,7 +145,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     //ecore_imf_context_surrounding_get (ctx, NULL, &iseContext.cursor_pos);
     iseContext.cursor_pos = 0;
 
-    iseContext.autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
+    iseContext.autocapital_type = wsc_context_autocapital_type_get (ctx->ctx);
 
     LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
@@ -243,10 +247,9 @@ void isf_wsc_context_input_panel_language_set (WSCContextISF *ctx, Ecore_IMF_Inp
     }
 }
 
-Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (WSCContextISF *ctx)
+Ecore_IMF_Input_Panel_Lang isf_wsc_context_input_panel_language_get (WSCContextISF *ctx)
 {
     if (!IfInitContext)
         _isf_wsc_context_init ();
     return iseContext.language;
 }
-

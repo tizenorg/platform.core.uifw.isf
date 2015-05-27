@@ -83,273 +83,11 @@ static KeycodeRepository _keysym2keycode;
 #define LOG_TAG                                         "ISF_WSC_EFL"
 
 /* This structure stores the wayland input method information */
-struct weescim;
-
 #define MOD_SHIFT_MASK      0x01
 #define MOD_ALT_MASK        0x02
 #define MOD_CONTROL_MASK    0x04
 
-typedef void (*keyboard_input_key_handler_t)(struct weescim *wsc,
-                                             uint32_t serial,
-                                             uint32_t time, uint32_t key, uint32_t unicode,
-                                             enum wl_keyboard_key_state state);
-
-struct weescim
-{
-    struct wl_input_method *im;
-    struct wl_input_method_context *im_ctx;
-    struct wl_seat *seat;
-    struct wl_keyboard *keyboard;
-
-    struct xkb_context *xkb_context;
-
-    uint32_t modifiers;
-
-    struct xkb_keymap *keymap;
-    struct xkb_state *state;
-    xkb_mod_mask_t control_mask;
-    xkb_mod_mask_t alt_mask;
-    xkb_mod_mask_t shift_mask;
-
-    keyboard_input_key_handler_t key_handler;
-
-    char *surrounding_text;
-    char *preedit_str;
-    char *language;
-
-    uint32_t serial;
-    uint32_t text_direction;
-    uint32_t preedit_style;
-    uint32_t content_hint;
-    uint32_t content_purpose;
-    uint32_t surrounding_cursor;
-
-    Eina_Bool context_changed;
-    Eina_Bool hw_kbd;
-
-    WSCContextISF *wsc_ctx;
-};
 static struct weescim _wsc                                  = {0};
-
-static char *
-insert_text(const char *text, uint32_t offset, const char *insert)
-{
-    int tlen = strlen(text), ilen = strlen(insert);
-    char *new_text = (char*)malloc(tlen + ilen + 1);
-
-    memcpy(new_text, text, offset);
-    memcpy(new_text + offset, insert, ilen);
-    memcpy(new_text + offset + ilen, text + offset, tlen - offset);
-    new_text[tlen + ilen] = '\0';
-
-    return new_text;
-}
-
-static void
-wsc_commit_preedit(weescim *ctx)
-{
-    char *surrounding_text;
-
-    if (!ctx || !ctx->preedit_str ||
-        strlen(ctx->preedit_str) == 0)
-        return;
-
-    wl_input_method_context_cursor_position(ctx->im_ctx,
-                                            0, 0);
-
-    wl_input_method_context_commit_string(ctx->im_ctx,
-                                          ctx->serial,
-                                          ctx->preedit_str);
-
-    if (ctx->surrounding_text) {
-        surrounding_text = insert_text(ctx->surrounding_text,
-                                       ctx->surrounding_cursor,
-                                       ctx->preedit_str);
-        free(ctx->surrounding_text);
-        ctx->surrounding_text = surrounding_text;
-        ctx->surrounding_cursor += strlen(ctx->preedit_str);
-    } else {
-        ctx->surrounding_text = strdup(ctx->preedit_str);
-        ctx->surrounding_cursor = strlen(ctx->preedit_str);
-    }
-
-    if (ctx->preedit_str)
-        free (ctx->preedit_str);
-
-    ctx->preedit_str = strdup("");
-}
-
-static void
-wsc_send_preedit(weescim *ctx, int32_t cursor)
-{
-    if (!ctx) return;
-
-    uint32_t index = strlen(ctx->preedit_str);
-
-    if (ctx->preedit_style)
-        wl_input_method_context_preedit_styling(ctx->im_ctx,
-                                                0,
-                                                strlen(ctx->preedit_str),
-                                                ctx->preedit_style);
-    if (cursor > 0)
-        index = cursor;
-
-    wl_input_method_context_preedit_cursor(ctx->im_ctx, index);
-    wl_input_method_context_preedit_string(ctx->im_ctx,
-                                           ctx->serial,
-                                           ctx->preedit_str,
-                                           ctx->preedit_str);
-}
-
-bool wsc_context_surrounding_get(weescim *ctx, char **text, int *cursor_pos)
-{
-    if (!ctx)
-        return false;
-
-    if (text) {
-        if (ctx->surrounding_text)
-            *text = strdup (ctx->surrounding_text);
-        else
-            *text = strdup ("");
-    }
-
-    if (cursor_pos)
-        *cursor_pos = ctx->surrounding_cursor;
-
-    return true;
-}
-
-Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx)
-{
-    Ecore_IMF_Input_Panel_Layout layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
-
-    if (!ctx)
-        return layout;
-
-    switch (ctx->content_purpose) {
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBER;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_DATE:
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_TIME:
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_DATETIME:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_DATETIME;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_PHONE:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PHONENUMBER;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_URL:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_URL;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_EMAIL:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_EMAIL;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL;
-            break;
-        default:
-            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
-            break;
-    }
-
-    return layout;
-}
-
-bool wsc_context_input_panel_caps_lock_mode_get(weescim *ctx)
-{
-    if (!ctx)
-        return false;
-
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
-        return true;
-
-    return false;
-}
-
-void wsc_context_delete_surrounding (weescim *ctx, int offset, int len)
-{
-    if (!ctx)
-        return;
-
-    wl_input_method_context_delete_surrounding_text(ctx->im_ctx, offset, len);
-}
-
-void wsc_context_commit_string(weescim *ctx, const char *str)
-{
-    if (!ctx)
-        return;
-
-    if (ctx->preedit_str) {
-        free(ctx->preedit_str);
-        ctx->preedit_str = NULL;
-    }
-
-    ctx->preedit_str = strdup (str);
-    wsc_commit_preedit(ctx);
-}
-
-void wsc_context_commit_preedit_string(weescim *ctx)
-{
-    char *preedit_str = NULL;
-    int cursor_pos = 0;
-
-    if (!ctx)
-        return;
-
-    if (ctx->wsc_ctx)
-        isf_wsc_context_preedit_string_get(ctx->wsc_ctx, &preedit_str, &cursor_pos);
-
-    if (ctx->preedit_str) {
-        free(ctx->preedit_str);
-        ctx->preedit_str = NULL;
-    }
-
-    ctx->preedit_str = preedit_str;
-    wsc_commit_preedit(ctx);
-}
-
-void wsc_context_send_preedit_string(weescim *ctx)
-{
-    char *preedit_str = NULL;
-    int cursor_pos = 0;
-
-    if (!ctx)
-        return;
-
-    if (ctx->wsc_ctx)
-        isf_wsc_context_preedit_string_get(ctx->wsc_ctx, &preedit_str, &cursor_pos);
-
-    if (ctx->preedit_str) {
-        free(ctx->preedit_str);
-        ctx->preedit_str = NULL;
-    }
-
-    ctx->preedit_str = preedit_str;
-    wsc_send_preedit(ctx, cursor_pos);
-}
-
-void wsc_context_send_key(weescim *ctx, uint32_t keysym, uint32_t modifiers, uint32_t time, bool press)
-{
-    if (!ctx || !ctx->im_ctx)
-        return;
-
-    ctx->modifiers = modifiers;
-
-    if (press) {
-        wl_input_method_context_keysym(ctx->im_ctx, ctx->serial, time,
-                                        keysym, WL_KEYBOARD_KEY_STATE_PRESSED, ctx->modifiers);
-    }
-    else {
-        wl_input_method_context_keysym(ctx->im_ctx, ctx->serial, time,
-                                        keysym, WL_KEYBOARD_KEY_STATE_RELEASED, ctx->modifiers);
-    }
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of Wayland Input Method functions.
@@ -387,14 +125,17 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
         return;
 
     wsc->content_hint = hint;
+
     wsc->content_purpose = purpose;
 
     isf_wsc_context_input_panel_layout_set (wsc->wsc_ctx,
                                             wsc_context_input_panel_layout_get (wsc));
 
-    caps_mode_check(wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
+    isf_wsc_context_autocapital_type_set (wsc->wsc_ctx, wsc_context_autocapital_type_get(wsc));
 
-    //FIXME: process hint like layout.
+    isf_wsc_context_input_panel_language_set (wsc->wsc_ctx, wsc_context_input_panel_language_get(wsc));
+
+    caps_mode_check (wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
 
     wsc->context_changed = EINA_FALSE;
 
