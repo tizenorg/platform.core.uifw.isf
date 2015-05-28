@@ -150,6 +150,9 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
+    LOGD ("password mode : %d, prediction_allow : %d\n", iseContext.password_mode, iseContext.prediction_allow);
+    LOGD ("input hint : %#x\n", iseContext.input_hint);
+    LOGD ("bidi direction : %d\n", iseContext.bidi_direction);
 
     /* calculate packet size */
     length = sizeof (iseContext);
