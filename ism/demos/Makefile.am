@@ -39,7 +39,8 @@ isf_demo_efl_SOURCES  = isf_demo_efl.cpp \
                         isf_focus_movement_efl.cpp \
                         isf_language_efl.cpp \
                         isf_ondemand_efl.cpp \
-                        isf_input_hint_efl.cpp
+                        isf_input_hint_efl.cpp \
+                        isf_password_mode_efl.cpp
 
 isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @ECOREX_CFLAGS@ \

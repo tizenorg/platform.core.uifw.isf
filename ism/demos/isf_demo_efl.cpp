@@ -45,6 +45,7 @@
 #include "isf_language_efl.h"
 #include "isf_ondemand_efl.h"
 #include "isf_input_hint_efl.h"
+#include "isf_password_mode_efl.h"
 
 #if HAVE_UIGADGET
 #include <ui-gadget.h>
@@ -60,6 +61,7 @@ static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Return Key Type", ise_return_key_type_bt },
     { "ISF Return Key Disable", ise_return_key_disable_bt },
     { "ISF Input hint", ise_input_hint_bt },
+    { "ISF Password Mode", ise_password_mode_bt },
     { "ISF IM Data", ise_imdata_set_bt },
     { "ISF ondemand", ise_ondemand_bt },
     { "ISF Focus Movement", isf_focus_movement_bt },
