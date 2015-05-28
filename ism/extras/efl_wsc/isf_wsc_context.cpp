@@ -1343,6 +1343,26 @@ bool wsc_context_input_panel_password_mode_get (weescim *ctx)
     return false;
 }
 
+Ecore_IMF_Input_Hints wsc_context_input_hint_get (weescim *ctx)
+{
+    int input_hint = ECORE_IMF_INPUT_HINT_NONE;
+
+    if (!ctx)
+        return (Ecore_IMF_Input_Hints)input_hint;
+
+    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_SENSITIVE_DATA)
+        input_hint |= ECORE_IMF_INPUT_HINT_SENSITIVE_DATA;
+    else
+        input_hint &= ~ECORE_IMF_INPUT_HINT_SENSITIVE_DATA;
+
+    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_COMPLETION)
+        input_hint |= ECORE_IMF_INPUT_HINT_AUTO_COMPLETE;
+    else
+        input_hint &= ~ECORE_IMF_INPUT_HINT_AUTO_COMPLETE;
+
+    return (Ecore_IMF_Input_Hints)input_hint;
+}
+
 void wsc_context_delete_surrounding (weescim *ctx, int offset, int len)
 {
     if (!ctx)

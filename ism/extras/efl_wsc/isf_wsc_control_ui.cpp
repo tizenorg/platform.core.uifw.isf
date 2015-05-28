@@ -147,6 +147,8 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
 
     iseContext.autocapital_type = wsc_context_autocapital_type_get (ctx->ctx);
 
+    iseContext.input_hint = wsc_context_input_hint_get (ctx->ctx);
+
     LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
