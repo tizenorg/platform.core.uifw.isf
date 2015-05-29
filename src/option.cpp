@@ -125,11 +125,10 @@ create_main_window(int degree)
     if (!window)
         return NULL;
 
-    elm_win_fullscreen_set(window, EINA_TRUE);
+    int w, h;
 
-#ifndef WAYLAND
-    elm_win_profile_set(window, "mobile");
-#endif
+    elm_win_screen_size_get (window, NULL, NULL, &w, &h);
+    evas_object_resize (window, w, h);
 
     elm_win_borderless_set(window, EINA_TRUE);
 
@@ -649,6 +648,8 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 void
 close_option_window()
 {
+    destroy_genlist_item_classes();
+
     if (ad.option_window) {
         evas_object_del(ad.option_window);
         ad.option_window = NULL;
@@ -658,8 +659,6 @@ close_option_window()
         ecore_event_handler_del(ad.event_handler);
         ad.event_handler = NULL;
     }
-
-    destroy_genlist_item_classes();
 }
 
 void read_options()
@@ -809,9 +808,6 @@ open_option_window(Evas_Object *parent, sclint degree)
     }
     else
     {
-#ifdef WAYLAND
-        elm_theme_overlay_add(NULL, OPTION_GENLIST_OBJ_DIR);
-#endif
         memset(&ad, 0x0, sizeof(OPTION_ELEMENTS));
 
         /* create option window */
