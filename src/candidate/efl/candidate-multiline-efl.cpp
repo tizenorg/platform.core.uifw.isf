@@ -311,11 +311,7 @@ EflMultiLineCandidate::make_more_view()
 
     Evas_Coord scr_w, scr_h;
 
-#ifdef WAYLAND
-    ecore_wl_screen_size_get(&scr_w, &scr_h);
-#else
-    ecore_x_window_size_get(ecore_x_window_root_first_get(), &scr_w, &scr_h);
-#endif
+    elm_win_screen_size_get (m_window, NULL, NULL, &scr_w, &scr_h);
 
     evas_object_resize(more_view.layout, scr_w, 444);
     evas_object_move(more_view.layout, 0, 86);
@@ -350,12 +346,7 @@ EflMultiLineCandidate::make_view()
     }
     Evas_Coord scr_w, scr_h;
 
-#ifdef WAYLAND
-    ecore_wl_screen_size_get(&scr_w, &scr_h);
-#else
-    ecore_x_window_size_get(ecore_x_window_root_first_get(), &scr_w, &scr_h);
-#endif
-
+    elm_win_screen_size_get (m_window, NULL, NULL, &scr_w, &scr_h);
     evas_object_resize(view.layout, scr_w, 84);
     evas_object_show(view.layout);
 
@@ -429,11 +420,7 @@ EflMultiLineCandidate::rotate(int degree) {
     m_degree = degree;
     Evas_Coord scr_w, scr_h;
 
-#ifdef WAYLAND
-    ecore_wl_screen_size_get(&scr_w, &scr_h);
-#else
-    ecore_x_window_size_get(ecore_x_window_root_first_get(), &scr_w, &scr_h);
-#endif
+    elm_win_screen_size_get (m_window, NULL, NULL, &scr_w, &scr_h);
 
     switch (degree) {
         case 0:
