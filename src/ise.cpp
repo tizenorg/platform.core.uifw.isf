@@ -244,7 +244,7 @@ void CCoreEventCallback::on_focus_out(sclint ic, const sclchar *ic_uuid)
     ise_focus_out(ic);
 }
 
-void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context context)
+void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context &context)
 {
     //g_ise_common->set_keyboard_ise_by_uuid(KEYBD_ISE_UUID);
 
@@ -310,8 +310,10 @@ void CCoreEventCallback::on_set_rotation_degree(sclint degree)
         ise_show_emoticon_window (current_emoticon_group, degree, false, g_core.get_main_window ());
     } else if (g_ui) {
         const sclchar *input_mode = g_ui->get_input_mode ();
-        if (!(strcmp(input_mode, "EMOTICON_LAYOUT")))
-            ise_show_emoticon_window (current_emoticon_group, degree, false, g_core.get_main_window ());
+        if (input_mode) {
+            if (!(strcmp(input_mode, "EMOTICON_LAYOUT")))
+                ise_show_emoticon_window (current_emoticon_group, degree, false, g_core.get_main_window ());
+        }
     }
 }
 
@@ -506,14 +508,16 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if(is_emoticon_show()){
             ise_destroy_emoticon_window();
         }
-        if(!strcmp(key_value, USER_KEYSTRING_EMOTICON)){
-            ise_init_emoticon_list();
-            if(emoticon_list_recent.size() == 0)
-                current_emoticon_group = EMOTICON_GROUP_1;
-            else
-                current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
-            SCLRotation rotation = g_ui->get_rotation();
-            ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
+        if (key_value) {
+            if(!strcmp(key_value, USER_KEYSTRING_EMOTICON)){
+                ise_init_emoticon_list();
+                if(emoticon_list_recent.size() == 0)
+                    current_emoticon_group = EMOTICON_GROUP_1;
+                else
+                    current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
+                SCLRotation rotation = g_ui->get_rotation();
+                ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
+            }
         }
     }
 
@@ -597,7 +601,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
             }
             if(!g_popup_opened){
                 const sclchar *input_mode = g_ui->get_input_mode();
-                if((0 == strcmp(input_mode, "SYM_QTY_1")) || (0 == strcmp(input_mode, "SYM_QTY_2"))){
+                if(input_mode && ((0 == strcmp(input_mode, "SYM_QTY_1")) || (0 == strcmp(input_mode, "SYM_QTY_2")))){
                     update_recent_used_punctuation(event_desc.key_value);
                 }
             }else if(g_punctuation_popup_opened){
@@ -640,8 +644,10 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                         ise_send_event(event_desc.key_event, KEY_MASK_NULL);
                     }
                 }
-                if((strcmp(input_mode, "SYM_QTY_1") == 0) || (0 == strcmp(input_mode, "SYM_QTY_2"))){
-                    update_recent_used_punctuation(event_desc.key_value);
+                if (input_mode){
+                    if((strcmp(input_mode, "SYM_QTY_1") == 0) || (0 == strcmp(input_mode, "SYM_QTY_2"))){
+                        update_recent_used_punctuation(event_desc.key_value);
+                    }
                 }
                 break;
             }

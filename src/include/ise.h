@@ -128,7 +128,7 @@ class CCoreEventCallback : public ISCLCoreEventCallback
     void on_focus_out(sclint ic, const sclchar *ic_uuid);
     void on_focus_in(sclint ic, const sclchar *ic_uuid);
 
-    void on_ise_show(sclint ic, const sclint degree, Ise_Context context);
+    void on_ise_show(sclint ic, const sclint degree, Ise_Context &context);
     void on_ise_hide(sclint ic, const sclchar *ic_uuid);
 
     void on_reset_input_context(sclint ic, const sclchar *uuid);
