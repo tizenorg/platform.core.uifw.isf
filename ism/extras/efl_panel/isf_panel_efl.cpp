@@ -141,7 +141,7 @@ typedef struct NotiData
     const char* title;
     const char* content;
     const char* icon;
-    const char* launch_app;
+    String launch_app;
     int noti_id;
 } NotificationData;
 
@@ -590,7 +590,7 @@ static void delete_notification (NotificationData *noti_data)
 
     if (noti_data->noti_id != 0) {
         notification_delete_by_priv_id ("isf-panel-efl", NOTIFICATION_TYPE_ONGOING, noti_data->noti_id);
-        LOGD ("deleted notification : %s\n", noti_data->launch_app);
+        LOGD ("deleted notification : %s\n", noti_data->launch_app.c_str ());
         noti_data->noti_id = 0;
     }
 }
@@ -618,7 +618,7 @@ static void create_notification (NotificationData *noti_data)
     app_control_h service = NULL;
     app_control_create (&service);
     app_control_set_operation (service, APP_CONTROL_OPERATION_DEFAULT);
-    app_control_set_app_id (service, noti_data->launch_app);
+    app_control_set_app_id (service, noti_data->launch_app.c_str ());
 
     notification_set_launch_option (notification, NOTIFICATION_LAUNCH_OPTION_APP_CONTROL, (void *)service);
     notification_insert (notification, &noti_data->noti_id);
@@ -5250,21 +5250,21 @@ static void slot_show_ise_selector (void)
 
     /* Read configuations for notification app (ise-selector) */
     String ise_selector = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_SELECTOR_PROGRAM), String (""));
-    ise_selector_module_noti.launch_app = ise_selector.c_str ();
+    ise_selector_module_noti.launch_app = ise_selector;
 
     app_control_h app_control;
 
     app_control_create (&app_control);
     app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
-    app_control_set_app_id (app_control, ise_selector_module_noti.launch_app);
+    app_control_set_app_id (app_control, ise_selector_module_noti.launch_app.c_str ());
 
     if (app_control_send_launch_request (app_control, NULL, NULL) == APP_CONTROL_ERROR_NONE)
     {
-        LOGD ("Succeeded to launch %s", ise_selector_module_noti.launch_app);
+        LOGD ("Succeeded to launch %s", ise_selector_module_noti.launch_app.c_str ());
     }
     else
     {
-        LOGD ("Failed to launch %s", ise_selector_module_noti.launch_app);
+        LOGD ("Failed to launch %s", ise_selector_module_noti.launch_app.c_str ());
     }
 
     app_control_destroy (app_control);
@@ -5694,7 +5694,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 
         /* Read configuations for notification app (isf-kbd-mode-changer) */
         String kbd_mode_changer = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_KBD_MODE_CHANGER_PROGRAM), String (""));
-        hwkbd_module_noti.launch_app = kbd_mode_changer.c_str ();
+        hwkbd_module_noti.launch_app = kbd_mode_changer;
         LOGD ("Create kbd_mode_changer notification with : %s", kbd_mode_changer.c_str ());
         create_notification (&hwkbd_module_noti);
 #endif
