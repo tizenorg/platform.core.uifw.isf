@@ -526,7 +526,7 @@ public:
             if (h)
                 *h = (int)tmp_h;
 
-            if (*w == -1 && *h == -1)
+            if (tmp_w == -1 && tmp_h == -1)
                 return false;
 
             return true;
