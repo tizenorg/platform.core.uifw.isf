@@ -128,21 +128,21 @@ Ise_Lang::parsing_languages() {
 
     doc = xmlReadFile(LANG_TABLE_XML_PATH, NULL, 0);
     if (doc == NULL) {
-        LOGD("Could not load file.\n");
-        exit(1);
+        LOGE("Could not load file.\n");
+        return;
     }
 
     cur_node = xmlDocGetRootElement(doc);
     if (cur_node == NULL) {
-        LOGD("empty document.\n");
+        LOGE("empty document.\n");
         xmlFreeDoc(doc);
-        exit(1);
+        return;
     }
     if (0 != xmlStrcmp(cur_node->name, (const xmlChar*)"languages"))
     {
-        LOGD("root name %s error!\n", cur_node->name);
+        LOGE("root name %s error!\n", cur_node->name);
         xmlFreeDoc(doc);
-        exit(1);
+        return;
     }
 
     cur_node = cur_node->xmlChildrenNode;

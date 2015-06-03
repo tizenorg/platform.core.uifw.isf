@@ -157,7 +157,7 @@ void ise_write_recent_emoticon_list_to_scim(void)
     for(std::vector<int>::iterator it = emoticon_list_recent.begin();
         it != emoticon_list_recent.end(); std::advance(it, 1)) {
             char buf[10]= {0};
-            sprintf (buf, "%d", *it);
+            snprintf (buf, sizeof(buf), "%d", *it);
             string_value += std::string(buf);
             string_value += " ";
     }

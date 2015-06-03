@@ -19,6 +19,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <dlog.h>
+
 using namespace std;
 
 #define CANDIDATE_EDJ_FILE_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/candidate-single.edj"
@@ -104,7 +106,7 @@ EflCandidate::create_item() {
     item = edje_object_add(evas_object_evas_get(win));
     ret = edje_object_file_set(item, CANDIDATE_EDJ_FILE_PATH, "candidate_item");
     if (!ret) {
-        printf("getting candidate item failed.\n");
+        LOGW("getting candidate item failed.");
         return NULL;
     }
 
@@ -125,7 +127,7 @@ EflCandidate::create_seperate_line() {
     seperate_line = edje_object_add (evas_object_evas_get (win));
     ret = edje_object_file_set (seperate_line, CANDIDATE_EDJ_FILE_PATH, "seperate_line");
     if (!ret) {
-        printf("getting seperate line failed.\n");
+        LOGW("getting seperate line failed.");
         return NULL;
     }
     evas_object_show (seperate_line);

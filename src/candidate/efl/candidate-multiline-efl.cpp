@@ -20,6 +20,7 @@
 #include <string>
 #include <assert.h>
 #include <algorithm>
+#include <dlog.h>
 #ifdef WAYLAND
 #include <Ecore_Wayland.h>
 #else
@@ -107,7 +108,7 @@ EflMultiLineCandidate::get_candidate_item()
     ret = edje_object_file_set(edje,
         CANDIDATE_EDJ_FILE_PATH, "candidate_item");
     if (!ret) {
-        printf("getting candidate edje failed.\n");
+        LOGW("getting candidate edje failed.");
         return NULL;
     }
 
@@ -287,7 +288,7 @@ _get_seperate_line(Evas_Object *win) {
     edje = edje_object_add (evas_object_evas_get (win));
     ret = edje_object_file_set (edje, CANDIDATE_EDJ_FILE_PATH, "seperate_line");
     if (!ret) {
-        printf("getting seperate line failed.\n");
+        LOGW("getting seperate line failed.");
         return NULL;
     }
     evas_object_show (edje);
@@ -302,7 +303,7 @@ EflMultiLineCandidate::make_more_view()
     int ret = edje_object_file_set(more_view.layout,
         CANDIDATE_EDJ_FILE_PATH, "candidate_more_view");
     if (!ret) {
-        printf("error while loading more candidate layout\n");
+        LOGW("error while loading more candidate layout");
         throw "failed loading candidate layout.";
     }
 
@@ -338,7 +339,7 @@ EflMultiLineCandidate::make_view()
     int ret = edje_object_file_set(view.layout,
         CANDIDATE_EDJ_FILE_PATH, "candidate");
     if (!ret) {
-        printf("error while loading candidate layout\n");
+        LOGW("error while loading candidate layout");
         throw "failed loading candidate layout.";
     }
     Evas_Coord scr_w, scr_h;

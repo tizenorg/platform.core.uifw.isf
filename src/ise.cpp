@@ -1225,7 +1225,7 @@ static void update_recent_used_punctuation(const char * key_value)
     for(int i=0; i<10; ++i)
     {
         char buf[5] = {0};
-        sprintf(buf, "%d", i);
+        snprintf(buf, sizeof(buf), "%d", i);
         if(strcmp(key_value, buf) == 0)
         {
             return;
