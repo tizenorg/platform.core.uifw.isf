@@ -390,6 +390,15 @@ void CCoreEventCallback::on_check_option_window_availability(sclboolean *ret)
 }
 
 /**
+* This is only for the TV profile to handle remote control button
+* It will be called in the TV profile by ISF logic.
+*/
+void CCoreEventCallback::on_process_key_event(scim::KeyEvent &key, sclu32 *ret)
+{
+    ise_process_key_event(key, *ret);
+}
+
+/**
  * Send the given string to input framework
  */
 void
@@ -1220,12 +1229,12 @@ void ise_update_table(const vector<string> &vec_str)
     }
 }
 
-sclboolean ise_process_key_event(const char *key)
+void ise_process_key_event(scim::KeyEvent& key, sclu32 &ret)
 {
+    ret = 0;
     if (g_ui) {
-        return g_ui->process_key_event(key);
+        ret = g_ui->process_key_event(key.get_key_string().c_str());
     }
-    return FALSE;
 }
 
 static void init_recent_used_punctuation()

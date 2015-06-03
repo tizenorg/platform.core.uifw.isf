@@ -182,6 +182,8 @@ class CCoreEventCallback : public ISCLCoreEventCallback
     void on_create_option_window(sclwindow window, SCLOptionWindowType type);
     void on_destroy_option_window(sclwindow window);
     void on_check_option_window_availability(sclboolean *ret);
+
+    void on_process_key_event(scim::KeyEvent &key, sclu32 *ret);// only for TV profile to handle remote control button
 };
 
 void ise_send_string(const sclchar *key_value);
@@ -208,6 +210,6 @@ void ise_set_return_key_type(unsigned int type);
 void ise_set_return_key_disable(unsigned int disabled);
 void ise_get_language_locale(char **locale);
 void ise_update_table(const std::vector<std::string> &vec_str);
-sclboolean ise_process_key_event(const char *key);
+void ise_process_key_event(scim::KeyEvent &key, sclu32 &ret);
 
 #endif
