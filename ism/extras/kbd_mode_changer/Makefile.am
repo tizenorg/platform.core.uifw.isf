@@ -32,10 +32,12 @@ isf_kbd_mode_changer_SOURCES  = main.cpp
 
 isf_kbd_mode_changer_CXXFLAGS = @EFL_CFLAGS@ \
                                 @DLOG_CFLAGS@ \
-                                @APPFW_CFLAGS@
+                                @APPFW_CFLAGS@ \
+                                -fPIE
 
 isf_kbd_mode_changer_LDFLAGS  = @EFL_LIBS@ -rpath $(libdir)\
                                 @DLOG_LIBS@ \
-                                @APPFW_LIBS@
+                                @APPFW_LIBS@ \
+                                -pie
 
 isf_kbd_mode_changer_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
