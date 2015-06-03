@@ -192,7 +192,8 @@ static inline int _db_init(void)
     }
 
     if (lstat(databaseInfo.pPath, &stat) < 0) {
-        LOGE("%s", strerror(errno));
+        char buf_err[256];
+        LOGE("%s", strerror_r (errno, buf_err, sizeof (buf_err)));
         db_util_close(databaseInfo.pHandle);
         databaseInfo.pHandle = NULL;
         return -EIO;
