@@ -6,7 +6,7 @@ Requires=enlightenment.service
 [Service]
 #ExecStart=/usr/bin/scim -d
 ExecStart=/usr/bin/isf-wsc-efl
-Environment="DISPLAY=:0.0" "HOME=%h" "XDG_RUNTIME_DIR=/run/display" USE_OZONE_WAYLAND_VKB=1 OZONE_WAYLAND_USE_XDG_SHELL='defined'
+Environment="DISPLAY=:0.0" "HOME=%h" USE_OZONE_WAYLAND_VKB=1 OZONE_WAYLAND_USE_XDG_SHELL='defined'
 EnvironmentFile=-/run/tizen-system-env
 Nice=5
 Restart=always
