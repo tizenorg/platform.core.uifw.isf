@@ -297,7 +297,6 @@ public:
         } else {
             std::cerr << __func__ << " get_command() is failed!!!\n";
         }
-
     }
 
     void disable_remote_input (void) {
@@ -314,7 +313,6 @@ public:
         } else {
             std::cerr << __func__ << " get_command() is failed!!!\n";
         }
-
     }
 
     bool get_ise_list (int* count, char*** iselist) {

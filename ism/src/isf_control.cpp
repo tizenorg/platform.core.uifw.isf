@@ -90,7 +90,6 @@ EXAPI int isf_control_get_active_ise (char **uuid)
 
 EXAPI int isf_control_enable_remote_input (void)
 {
-
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();
@@ -101,7 +100,6 @@ EXAPI int isf_control_enable_remote_input (void)
 
 EXAPI int isf_control_disable_remote_input (void)
 {
-
     IMControlClient imcontrol_client;
     imcontrol_client.open_connection ();
     imcontrol_client.prepare ();

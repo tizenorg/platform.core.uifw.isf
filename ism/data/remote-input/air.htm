@@ -66,30 +66,30 @@
                 air_input_bt.style.backgroundPosition = "center";
             }
         function gyro_event_listener(event) {
-        
+
                     var x = event.accelerationIncludingGravity.x;
                     var y = event.accelerationIncludingGravity.y;
                     var z = event.accelerationIncludingGravity.z;
                     var r = event.rotationRate;
                     var data;
-                    
-                    
 
-                        
+
+
+
                     if(x!=null || y!=null || z!=null || r!=null) {
-                    
+
                         var gyro_a = r.alpha;
                         var gyro_b = r.beta;
                         var gyro_g = r.gamma;
-                        
+
                         var UserAgent = navigator.userAgent.toLowerCase();
                         if(UserAgent.indexOf("android") != -1 ) {
                             gyro_a *=100;
                             gyro_b *=100;
                             gyro_g *=100;
                         }
-                        tb_gyro.innerHTML ="Acceleration</br> x:0.01,y:-0.05,z:10</br>"+"x: " + x + " ,</br>y: " + y + " ,</br>z: " + z +"</br></br>Rotation Rate</br>a:-4, b:0.8, g:-0.2 </br>"+ "a: " + gyro_a + " ,</br>b: " + gyro_b + " ,</br>g: " + gyro_g;
-                        
+                        tb_gyro.innerHTML ="Acceleration</br> x:0.01,y:-0.05,z:10</br>"+"x: " + x + " ,</br>y: " + y + " ,</br>z: " + z +"</br></br>Rotation Rate</br>a:-4, b:0.8, g:-0.2 </br>"+ "a: " + gyro_a + " ,</br>b: " + gyro_b + " ,</br>g: " +gyro_g;
+
                         //var x_offset = (- x_sin * gyro_a - z_sin * gyro_g);
                         //var y_offset = (x_sin * gyro_g - z_sin * gyro_a);
                         //data = parseInt(x_offset).toString() + "," + parseInt(y_offset).toString();
@@ -130,9 +130,9 @@
             var home_page_uri = "http://moakey.com/tizen_tv/list.php";
             var home_icon_uri = "http://" + document.domain +":8182/shortcut_icon.png";
 
-            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";    
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
             var UserAgent = navigator.userAgent.toLowerCase();
-        
+
             if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
                 alert('Add the ' + title +'shortCut icon');
                 var home_icon_add_frame=document.getElementById("home_icon_add_frame");

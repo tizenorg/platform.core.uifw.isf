@@ -206,9 +206,9 @@
             var home_page_uri = "http://moakey.com/tizen_tv/list.php";
             var home_icon_uri = "http://" + document.domain +":8182/shortcut_icon.png";
 
-            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";    
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
             var UserAgent = navigator.userAgent.toLowerCase();
-        
+
             if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
                 alert('Add the ' + title +'shortCut icon');
                 var home_icon_add_frame=document.getElementById("home_icon_add_frame");
@@ -234,7 +234,7 @@
             }
            // air_click_area.innerHTML="a:"+gry_basic_a + " ,b: " + gry_basic_b + ", g:" + gry_basic_g;
         }
-        
+
         function get_gyro_calibration(event) {
             event.preventDefault();
             var r = event.rotationRate;
@@ -275,7 +275,7 @@
                 var z_sin = y / xz_force;
                 //air_click_area.innerHTML = parseInt(x*100) +", y:"+ parseInt(y*100) +", z:"+ parseInt(z*100) +", a:"+ parseInt(gyro_a*100) +", b:"+ parseInt(gyro_b*100) +", g:"+ parseInt(gyro_g*100);
 
-                
+
                 var x_offset = (- x_sin * gyro_a - z_sin * gyro_b);
                 var y_offset = (x_sin * gyro_b - z_sin * gyro_a);
                */
@@ -285,11 +285,11 @@
                 var z_sin = z / xz_force;
                 //air_click_area.innerHTML = parseInt(x*100) +", y:"+ parseInt(y*100) +", z:"+ parseInt(z*100) +", a:"+ parseInt(gyro_a*100) +", b:"+ parseInt(gyro_b*100) +", g:"+ parseInt(gyro_g*100);
 
-                
+
                 var x_offset = (- x_sin * gyro_a - z_sin * gyro_g);
                 var y_offset = (x_sin * gyro_g - z_sin * gyro_a);
-                
-                
+
+
                 air_delta = parseInt(Math.sqrt(x_offset*x_offset + y_offset*y_offset));
                 data = parseInt(x_offset).toString() + "," + parseInt(y_offset).toString();
               /*  if (air_delta <= 3){
@@ -334,7 +334,7 @@
                 air_click_area.innerHTML=""
             }
         }
-        
+
         function DisableMode(mode)
         {
             cur_mode = 0;
@@ -403,7 +403,7 @@
                 }
             }
         }
-        
+
         function EnableAirinput(checker){
             if (checker == true){
                 imageModeChanged("air_bt.png","air_input_mode");
@@ -423,7 +423,7 @@
                 }
             }
         }
-        
+
         function sendevent(form){
             //alert(form);
             if (form == "sys_btn_modechange") {
@@ -488,7 +488,7 @@
                     {
                     EnableMode(form.charAt(5));
                     }
-                else 
+                else
                     {
                     DisableMode(form.charAt(5));
                     }
@@ -510,7 +510,7 @@
                         Enable_calibration(false);}, CAL_FLUSH_TIMEOUT);
             }
             else if (form == "air_click_area"){
-                if (cur_mode == "a" ||cur_mode == "b"){ 
+                if (cur_mode == "a" ||cur_mode == "b"){
                 sendMouse_KeyEvent(MOUSE_CLICK);
                 }
             }
@@ -543,7 +543,7 @@
             }, 300);
 
 
-        
+
         /*
             mousepad2.addEventListener("touchstart", function(event) {
                 //hideTheKeyBoard();
@@ -615,19 +615,19 @@
                 click_start_time = new Date;
                 touch_Pressed=1;
             });
-            
+
             air_click_area.addEventListener("touchend", function(event) {
                 event.preventDefault();
                 var coordinate, coordinate2;
                 var direction = 0, count = 0;
                 var click_end_time = new Date;
                 var click_time = click_end_time - click_start_time;
-            
+
                 if(touch_Pressed==1 && click_time < 350){
                         sendMouse_KeyEvent(MOUSE_CLICK);
                         touch_Pressed=0;
                 }
-                
+
             });
             */
             mousepad.addEventListener("touchstart", function(event) {
@@ -689,7 +689,7 @@
                         window.removeEventListener('devicemotion', gyro_event_listener);
                         cur_air_mode = 0;
                     }
-                    
+
                 }
                 */
                 if(window.DeviceMotionEvent && cur_mode == "a" ) {
@@ -736,7 +736,7 @@
                     cur_air_mode = 1;
                 }
                 cur_touch_mode = 0;
-                
+
 
             });
 

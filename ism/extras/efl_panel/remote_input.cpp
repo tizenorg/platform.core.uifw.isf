@@ -24,9 +24,7 @@
 
 #include "remote_input.h"
 #include <math.h>
-
-#include<iostream>
-//#include<curl/curl.h>
+#include <iostream>
 
 using namespace scim;
 
@@ -54,9 +52,8 @@ char tv_id[128] = {0};
 char db_server_ip[128] = {0};
 
 static WebSocketServer *g_web_socket_server = NULL;
-Remote_Input* Remote_Input::m_instance = NULL; 
+Remote_Input* Remote_Input::m_instance = NULL;
 
-//HelperAgent  helper_agent;
 int entry_focused = 0;
 static Motion_Input motion_input;
 
@@ -76,7 +73,6 @@ enum {
 } ;
 
 static size_t showSize( void *source , size_t size , size_t nmemb , void *userData ){
-
     // we don't touch the data here, so the cast is commented out
     const char* data = static_cast< const char* >( source ) ;
     const int bufferSize = size * nmemb ;
@@ -84,7 +80,6 @@ static size_t showSize( void *source , size_t size , size_t nmemb , void *userDa
     strcpy(tv_id, data);
 
     return bufferSize;
-
 }
 
 void get_current_ip()
@@ -132,111 +127,9 @@ void get_current_ip()
     strcat(tv_ip_address, inet_ntoa(sin->sin_addr));
     strcat(tv_ip_address, ":7172");
 
-/*
-    if (noti_count == 0)
-    {
-        ongoing_notification(tv_ip_address,"Wifi Input Address: ");
-        if (ret == NOTIFICATION_ERROR_NONE)
-        {
-            noti_count++;
-            memcpy(pre_tv_ip_address,tv_ip_address,sizeof(tv_ip_address));
-        }
-    }
-
-    if (strcmp(tv_ip_address, pre_tv_ip_address) != 0)
-    {gg wh
-        del_notification();
-        ongoing_notification(tv_ip_address,"Wifi Input Address: ");
-        if (ret == NOTIFICATION_ERROR_NONE)
-        {
-            noti_count++;
-        }
-    }
-    memcpy(pre_tv_ip_address,tv_ip_address,sizeof(tv_ip_address));
-  */
     close(sock_fd);
 }
 
-/*
-static void set_tvid_To_tvserver () {
-
-    char urlmessage [256] = {0};
-    get_current_ip ();
-
-    //tv_ip_address is current TV IP address
-    if (!strcmp (tv_ip_address,"") || !strcmp(db_server_ip, tv_ip_address)) {
-        LOGD("Fail to set tv IP Because ip not valid or already registered :%s\n", tv_ip_address);
-        return;
-    }
-
-    LOGD ("TV ip address is  : %s\n", tv_ip_address);
-
-    const char* url = "http://www.moakey.com/tizen_tv/register.php?ip=";
-    strcat (urlmessage, url);
-    strcat (urlmessage, "http://");
-    strcat (urlmessage, tv_ip_address);
-    LOGD ("URL Message  : %s\n",urlmessage);
-
-    // lubcURL init
-    curl_global_init (CURL_GLOBAL_ALL);
-
-    // create context object
-    CURL* ctx = curl_easy_init ();
-
-    if (NULL == ctx) {
-        strcpy (db_server_ip, "");
-        strcpy (tv_id, "");
-        return;
-    }
-
-    // set the context obj
-    curl_easy_setopt (ctx, CURLOPT_URL, urlmessage);
-    // no progress bar
-    curl_easy_setopt (ctx, CURLOPT_NOPROGRESS, OPTION_TRUE);
-    // 1 s connect timeout
-    curl_easy_setopt (ctx, CURLOPT_CONNECTTIMEOUT, 1);
-    curl_easy_setopt (ctx, CURLOPT_WRITEFUNCTION, showSize) ;
-
-    // get the web page
-    const CURLcode rc = curl_easy_perform (ctx);
-
-    if (CURLE_OK != rc) {
-        LOGD ("Error from cURL");
-        strcpy (db_server_ip, "");
-        strcpy (tv_id, "");
-        return;
-    }else {
-
-        // get some info about the xfer:
-        double statDouble ;
-        long statLong ;
-        char* statString = NULL ;
-
-        // get the  HTTP response code
-        if (CURLE_OK == curl_easy_getinfo(ctx, CURLINFO_HTTP_CODE, &statLong)) {
-            LOGD ("Response code:  %d ",statLong);
-        }
-        // get the Content-Type
-        if (CURLE_OK == curl_easy_getinfo(ctx , CURLINFO_CONTENT_TYPE , &statString)) {
-            LOGD ("Content type:  %s ",statString);
-        }
-        // get the size of document
-        if (CURLE_OK == curl_easy_getinfo(ctx , CURLINFO_SIZE_DOWNLOAD, &statDouble)) {
-            LOGD ("Download size: %d bytes ",statDouble);
-        }
-        if (CURLE_OK == curl_easy_getinfo(ctx, CURLINFO_SPEED_DOWNLOAD, &statDouble)) {
-            LOGD ("Download speed: %d bytes",statDouble);
-        }
-    }
-
-    strncpy (db_server_ip, tv_ip_address, sizeof(db_server_ip));
-
-    // cleanup
-    curl_easy_cleanup (ctx);
-    curl_global_cleanup ();
-
-}
-*/
 Remote_Input::Remote_Input()
 {
     if (m_instance != NULL) {
@@ -254,7 +147,7 @@ Remote_Input::~Remote_Input()
     }
 }
 
-Remote_Input* 
+Remote_Input*
 Remote_Input::get_instance()
 {
     return m_instance;
@@ -262,7 +155,6 @@ Remote_Input::get_instance()
 
 void Remote_Input::init (InfoManager* info_manager)
 {
-
     LOGD("Remote Input init");
     /* Create web socket server for remote input */
     g_web_socket_server = new WebSocketServer();
@@ -279,7 +171,7 @@ void Remote_Input::init (InfoManager* info_manager)
     {
         LOGD ("Fail to create uinput device for mouse");
     }
-    
+
     if (info_manager != NULL) {
         _info_manager = info_manager;
     } else {
@@ -292,7 +184,6 @@ void Remote_Input::exit()
 {
     /* Delete web socket server */
     if (g_web_socket_server) delete g_web_socket_server;
-
 
     /* Close uinput device */
     if(ioctl(fd_uinput_keyboard, UI_DEV_DESTROY) < 0)
@@ -310,9 +201,7 @@ void Remote_Input::exit()
 }
 
 bool Remote_Input::init_uinput_keyboard_device() {
-
     //For initialize uinput device for keyboard
-
      struct uinput_user_dev device_key;
      int uinput_keys[] = {KEY_POWER, KEY_F6, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9, KEY_MINUS, KEY_0, KEY_REDO, KEY_F10, KEY_F9, KEY_F8, KEY_F7, KEY_F12, KEY_F11, KEY_LEFTMETA, KEY_HOMEPAGE, KEY_BOOKMARKS, KEY_MENU, KEY_F18, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_BACK, KEY_EXIT, KEY_ESC, KEY_BACKSPACE};
      memset(&device_key, 0, sizeof device_key);
@@ -364,7 +253,6 @@ bool Remote_Input::init_uinput_keyboard_device() {
 }
 
 bool Remote_Input::init_uinput_mouse_device() {
-
     //For initialize uinput device for mouse
     //     int fd_uinput_mouse = 0;
 
@@ -460,12 +348,11 @@ void Remote_Input::send_uinput_event(UINPUT_DEVICE device, __u16 type, __u16 cod
 
 void Remote_Input::panel_send_uinput_event(UINPUT_DEVICE device, __u16 type, __u16 code, __s32 value)
 {
-        send_uinput_event(device, type, code, value);
+    send_uinput_event(device, type, code, value);
 }
 
 void Remote_Input::panel_send_uinput_event_for_key(UINPUT_DEVICE device, __u16 code)
 {
-
     panel_send_uinput_event (device, EV_KEY, code, 1);
     panel_send_uinput_event (device, EV_SYN, SYN_REPORT, 0);
     panel_send_uinput_event (device, EV_KEY, code, 0);
@@ -475,26 +362,25 @@ void Remote_Input::panel_send_uinput_event_for_key(UINPUT_DEVICE device, __u16 c
 
 void Remote_Input::panel_send_uinput_event_for_touch_mouse(UINPUT_DEVICE device, __s32 value_x, __s32 value_y)
 {
-
     struct timespec sleeptime = {0, 50};//speed (low value: fast, high value: slow)
     __s32 x, y, delta;
 
     //mouse accelerate
     delta = sqrt((value_x*value_x)+(value_y*value_y));
 
-    if(delta > 10){
+    if (delta > 10){
         x = (value_x*7);
         y = (value_y*7);
     }
-    else if(delta > 7){
+    else if (delta > 7){
         x = (value_x*5);
         y = (value_y*5);
     }
-    else if(delta > 3){
+    else if (delta > 3){
         x = (value_x*3);
         y = (value_y*3);
     }
-    else{
+    else {
         x = (value_x*2);
         y = (value_y*2);
     }
@@ -508,7 +394,6 @@ void Remote_Input::panel_send_uinput_event_for_touch_mouse(UINPUT_DEVICE device,
 
 void Remote_Input::panel_send_uinput_event_for_wheel(UINPUT_DEVICE device, __s32 value_y)
 {
-
     struct timespec sleeptime = {0, 800000};
     __s32 y;
 
@@ -518,12 +403,10 @@ void Remote_Input::panel_send_uinput_event_for_wheel(UINPUT_DEVICE device, __s32
     panel_send_uinput_event (device, EV_REL, REL_WHEEL, y);
     panel_send_uinput_event (device, EV_SYN, SYN_REPORT, 0);
     nanosleep(&sleeptime, NULL);
-
 }
 
 void Remote_Input::panel_send_uinput_event_for_air_mouse(UINPUT_DEVICE device, double data[])
 {
-
     struct timespec sleeptime = {0, 100};//speed (low value: fast, high value: slow)
     Point3Df AccData = Point3Df(data[0], data[1], data[2]);
     Point3Df GyrData = Point3Df(data[3], data[4], data[5]);
@@ -540,12 +423,10 @@ void Remote_Input::panel_send_uinput_event_for_air_mouse(UINPUT_DEVICE device, d
     panel_send_uinput_event (device, EV_REL, REL_Y, Cursor_delta.y);
     panel_send_uinput_event (device, EV_SYN, SYN_REPORT, 0);
     nanosleep (&sleeptime, NULL);
-
 }
 
 void Remote_Input::reset_setting_value_for_air_mouse(double data[])
 {
-
     LOGD("ISE_AIR_SETTING acc :%f, gain: %f, smooth: %f, speed: %f, filter: %f ", data[0], data[1],data[2],data[3],data[4]);
 
     motion_input.Set_cursor_movement_acceleration(data[0]);
@@ -823,7 +704,6 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
             panel_send_uinput_event_for_air_mouse(UINPUT_MOUSE, dataBuf);
         }
     }
-    
 }
 
 void Remote_Input::post_notification(const char* _ptitle, const char* _ptext)

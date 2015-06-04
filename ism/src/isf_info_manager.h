@@ -559,11 +559,11 @@ public:
 
 
     bool update_preedit_string (const WideString &str, const AttributeList &attrs) ;
-    
+
     bool commit_string (const WideString &str) ;
-    
+
     bool send_key_event (const KeyEvent &key) ;
-    
+
     bool forward_key_event (const KeyEvent &key) ;
 
 

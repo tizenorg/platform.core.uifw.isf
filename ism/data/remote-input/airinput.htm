@@ -22,7 +22,7 @@
         var id_num = 0;
         var ori;
         var CAL_FLUSH_TIMEOUT = 3000;
-        
+
         var MOUSE_CLICK = 555;
         var KEY_MENU = 10001;
         var KEY_HOME = 10002;
@@ -40,7 +40,7 @@
         var gry_sum_count = 0;
         var progress = ["",".","..","...","...."];
         var progress_count=0;
-        
+
         function cbAjax(text, headers, callingContext){
             id_num++;
             return true;
@@ -72,9 +72,9 @@
             var bodyVars = {id:id_num, key:'air_set', value:coordinate}
             ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
            alert("Set the new config value");
-            
+
         }
-        
+
         function airModeChanged(to) {
                 event.preventDefault();
                 var air_input_bt = document.getElementById('air_input_mode');
@@ -91,7 +91,7 @@
             gry_basic_a = (gry_sum_a/gry_sum_count).toFixed(3);
             gry_basic_b = (gry_sum_b/gry_sum_count).toFixed(3);
             gry_basic_g = (gry_sum_g/gry_sum_count).toFixed(3);
-            
+
             if (gry_sum_count%4==0){
                 //tb_gyro.innerHTML="Calibrating" + progress[progress_count];
                 progress_count++;
@@ -101,7 +101,7 @@
             }
            // air_click_area.innerHTML="a:"+gry_basic_a + " ,b: " + gry_basic_b + ", g:" + gry_basic_g;
         }
-        
+
         function get_gyro_calibration(event) {
             event.preventDefault();
             var r = event.rotationRate;
@@ -110,20 +110,20 @@
             }
         }
         function gyro_event_listener(event) {
-        
+
                     var x = event.accelerationIncludingGravity.x;
                     var y = event.accelerationIncludingGravity.y;
                     var z = event.accelerationIncludingGravity.z;
                     var r = event.rotationRate;
                     var data;
-                    
+
                     var acc_basic_x = 16.00;
                     var acc_basic_y = -3.0;
                     var acc_basic_z = 65.00;
-                    
+
                     if(x!=null || y!=null || z!=null || r!=null) {
 //                        tb_gyro.innerHTML ="Acceleration</br> x:0.01,y:-0.05,z:10</br>"+"x: " + x + " ,</br>y: " + y + " ,</br>z: " + z +"</br></br>Rotation Rate</br>a:-4, b:0.8, g:-0.2 </br>"+ "a: " + r.alpha*100 + " ,</br>b: " + r.beta*100 + " ,</br>g: " + r.gamma*100;
-                        
+
                         var gyro_a = r.alpha - gry_basic_a;
                         var gyro_b = r.beta - gry_basic_b;
                         var gyro_g = r.gamma - gry_basic_g;
@@ -131,7 +131,7 @@
                         var acc_x = x;
                         var acc_y = y;
                         var acc_z = z;
-  */                     
+*/
                         var acc_x = x*10;
                         var acc_y = y*10;
                         var acc_z = z*10;
@@ -147,9 +147,9 @@
                             gyro_g *=100;
                         }
                         data = acc_x.toFixed(4) + "," + acc_y.toFixed(4) + "," + acc_z.toFixed(4) + "," + gyro_a.toFixed(4) + "," + gyro_b.toFixed(4) + "," + gyro_g.toFixed(4) + ",";
-                        
+
                         sendAir_Input(data);
-                        
+
                         //var x_offset = (- x_sin * gyro_a - z_sin * gyro_g);
                         //var y_offset = (x_sin * gyro_g - z_sin * gyro_a);
                         //data = parseInt(x_offset).toString() + "," + parseInt(y_offset).toString();
@@ -214,11 +214,11 @@
         }
         function home_icon_add(title){
             var home_page_uri = document.domain;
-        
+
             var home_icon_uri = "/shortcut_icon.png";
-            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";    
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
             var UserAgent = navigator.userAgent.toLowerCase();
-        
+
             if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
                 alert('Add the ' + title +'shortCut icon');
                 var home_icon_add_frame=document.getElementById("home_icon_add_frame");
@@ -227,19 +227,19 @@
                 alert("Not surpport in iOS, Tizen ");
             }
         }
-        
+
         function send_setting(){
-            
-            var data = document.getElementById("ACC_FW_GAIN").value + "," + document.getElementById("GYRO_FW_GAIN").value + "," 
-                        + document.getElementById("FACTOR_WEIGHT").value + "," + document.getElementById("MIN_MOVING_DELTA").value + "," 
-                        + document.getElementById("max_tremor_speed").value + "," + document.getElementById("sensor_speed").value + "," + document.getElementById("set_max_tremor").value + "," 
-                        + document.getElementById("set_cursor_acceleration").value + "," + document.getElementById("set_cursor_gain").value + "," 
-                        + document.getElementById("set_gyro_max_noise").value + "," + document.getElementById("set_filtering_level").value + ",";
+
+            var data = document.getElementById("ACC_FW_GAIN").value + "," + document.getElementById("GYRO_FW_GAIN").value + ","
+                        + document.getElementById("FACTOR_WEIGHT").value + "," + document.getElementById("MIN_MOVING_DELTA").value + ","
+                        + document.getElementById("max_tremor_speed").value + "," + document.getElementById("sensor_speed").value + "," + document.getElementById("set_max_tremor").value + ","
+                        + document.getElementById("set_cursor_acceleration").value + "," + document.getElementById("set_cursor_gain").value + ","
+                        + document.getElementById("set_gyro_max_noise").value + "," + document.getElementById("set_filtering_level").value+ ",";
             sendAir_Set(data);
         }
-        
+
         function reset_sliderbar (){
-        
+
             document.getElementById("ACC_FW_GAIN").value = 0.000244140625;
             document.getElementById("GYRO_FW_GAIN").value = 0.00106422515;
             document.getElementById("FACTOR_WEIGHT").value = 0.1;
@@ -264,20 +264,20 @@
             showValue("set_gyro_max_noise", 0.05);
             showValue("set_filtering_level", 0);
 
-            
+
         }
-        
+
         function showValue(obj, newValue)
         {
             document.getElementById((obj+"1")).innerHTML=newValue;
         }
-        
+
 
         $(document).ready(function() {
 
             var obj = document.getElementById('by');
             obj.style.height =  $(document).height() + "px";
-            
+
             reset_sliderbar();
             /*
             showValue("ACC_FW_GAIN", 0.000244140625);
@@ -353,7 +353,7 @@
                                                 set_filtering_level (0 Nor-Low-No)</br>
                                                 <input id="set_filtering_level" type="range" min="0" max="2" style="width:200px" step="1" onchange="showValue(this.id,this.value)" /> <span id="set_filtering_level1"></span></br>
 
-                                                </br><input id="send_setting" type="button" value="send setting" onclick="send_setting()"/>                  
+                                                </br><input id="send_setting" type="button" value="send setting" onclick="send_setting()"/>
                                                 <input id="reset_setting" type="button" value="reset setting" onclick="reset_sliderbar()"/>
                                                 </td>
                                                 <td class="t_cell_thin_border">

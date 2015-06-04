@@ -11,222 +11,222 @@
 </head>
 
 <body>
-	<script>
-		// Callback incremental index
-		var id_num = 0;
+    <script>
+        // Callback incremental index
+        var id_num = 0;
 
-		var MOUSE_CLICK = 555;
-		var MOUSE_SCROLL_UP = 556;
-		var MOUSE_SCROLL_DOWN = 557;
+        var MOUSE_CLICK = 555;
+        var MOUSE_SCROLL_UP = 556;
+        var MOUSE_SCROLL_DOWN = 557;
 
-		var KEY_MENU = 10001;
-		var KEY_HOME = 10002;
-		var KEY_BACK = 10003;
+        var KEY_MENU = 10001;
+        var KEY_HOME = 10002;
+        var KEY_BACK = 10003;
 
-		// Mouse prior coordinate, click flag
-		var pre_x = 0;
-		var pre_y = 0;
-		var touch_Pressed=0;
-		var touch_Moved=0;
-		var scroll_pre_y = 0;
+        // Mouse prior coordinate, click flag
+        var pre_x = 0;
+        var pre_y = 0;
+        var touch_Pressed=0;
+        var touch_Moved=0;
+        var scroll_pre_y = 0;
 
-		function delay(){
-			return;
-		}
+        function delay(){
+            return;
+        }
 
-		function cbAjax(text, headers, callingContext){
-			id_num++;
-			return true;
-		}
-		function sendKeyEvent(keyCode){
-			printLog("Send_Key_Event :("+ keyCode +")");
-			var bodyVars = {id:id_num, key:'event', value:keyCode}
-			ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
-		}
-		function sendMouse_KeyEvent(mouseCode){
-			//printLog("Send_Mouse_KeyEvent :("+ mouseCode +")");
-			var bodyVars = {id:id_num, key:'mouse_key', value:mouseCode}
-			ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
-		}
-		function sendMouse_MoveEvent(coordinate){
-			printLog("Send_Mouse_MoveEvent :("+ coordinate +")");
-			var bodyVars = {id:id_num, key:'mouse_move', value:coordinate}
-			ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
-		}
-		function printLog(str){
-			if (!$("#use_debug_checker").prop("checked")){
-				return;
-			}
-			log_box.value = log_box.value +"\n"+ str;
-			var psconsole = $('#log_box');
-			psconsole.scrollTop(
-				psconsole[0].scrollHeight - psconsole.height()
-			);
-		}
-		function clearLog(){
-			log_box.value = "";log_box.value +"\n"+ str;
-		}
-		function sendScroll(direction, count){
+        function cbAjax(text, headers, callingContext){
+            id_num++;
+            return true;
+        }
+        function sendKeyEvent(keyCode){
+            printLog("Send_Key_Event :("+ keyCode +")");
+            var bodyVars = {id:id_num, key:'event', value:keyCode}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+        function sendMouse_KeyEvent(mouseCode){
+            //printLog("Send_Mouse_KeyEvent :("+ mouseCode +")");
+            var bodyVars = {id:id_num, key:'mouse_key', value:mouseCode}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+        function sendMouse_MoveEvent(coordinate){
+            printLog("Send_Mouse_MoveEvent :("+ coordinate +")");
+            var bodyVars = {id:id_num, key:'mouse_move', value:coordinate}
+            ajaxCaller.postForPlainText("/tizen-temp.htm", bodyVars, cbAjax);
+        }
+        function printLog(str){
+            if (!$("#use_debug_checker").prop("checked")){
+                return;
+            }
+            log_box.value = log_box.value +"\n"+ str;
+            var psconsole = $('#log_box');
+            psconsole.scrollTop(
+                psconsole[0].scrollHeight - psconsole.height()
+            );
+        }
+        function clearLog(){
+            log_box.value = "";log_box.value +"\n"+ str;
+        }
+        function sendScroll(direction, count){
 
-			for (i = 0 ; i < count ; i++)
-			{
-				sendMouse_KeyEvent(direction);
-			}
-		}
+            for (i = 0 ; i < count ; i++)
+            {
+                sendMouse_KeyEvent(direction);
+            }
+        }
 
-//		$(document).bind("touchmove",function(event){
-//			event.preventDefault();
-//		});
-		$(document).ready(function() {
-			var pad = document.getElementById( "mousepad" );
-			pad.focus();
+//      $(document).bind("touchmove",function(event){
+//          event.preventDefault();
+//      });
+        $(document).ready(function() {
+            var pad = document.getElementById( "mousepad" );
+            pad.focus();
 
-			// 3 system hw buttons
-			$("#sys_btn_menu").click(function(event) {
-				//printLog("menu btn is clicked");
-				sendKeyEvent(KEY_MENU);
-				pad.focus();
-			});
+            // 3 system hw buttons
+            $("#sys_btn_menu").click(function(event) {
+                //printLog("menu btn is clicked");
+                sendKeyEvent(KEY_MENU);
+                pad.focus();
+            });
 
-			$("#sys_btn_home").click(function(event) {
-				//printLog("home btn is clicked");
-				sendKeyEvent(KEY_HOME);
-				pad.focus();
-			});
+            $("#sys_btn_home").click(function(event) {
+                //printLog("home btn is clicked");
+                sendKeyEvent(KEY_HOME);
+                pad.focus();
+            });
 
-			$("#sys_btn_back").click(function(event) {
-				//printLog("back btn is clicked");
-				sendKeyEvent(KEY_BACK);
-				pad.focus();
-			});
+            $("#sys_btn_back").click(function(event) {
+                //printLog("back btn is clicked");
+                sendKeyEvent(KEY_BACK);
+                pad.focus();
+            });
 
-			mousepad.addEventListener("touchstart", function(event) {
-				printLog("touch start");
-				pre_x=0;
-				pre_y=0;
-				pre_x = event.touches[0].pageX;
-				pre_y = event.touches[0].pageY;
+            mousepad.addEventListener("touchstart", function(event) {
+                printLog("touch start");
+                pre_x=0;
+                pre_y=0;
+                pre_x = event.touches[0].pageX;
+                pre_y = event.touches[0].pageY;
 
-				touch_Pressed=1;
-				touch_Moved=0;
-			});
+                touch_Pressed=1;
+                touch_Moved=0;
+            });
 
-			mousepad.addEventListener("touchmove", function(event) {
+            mousepad.addEventListener("touchmove", function(event) {
 
-				var coordinate;
-				touch_Moved=1;
-				event.preventDefault();
+                var coordinate;
+                touch_Moved=1;
+                event.preventDefault();
 
-				if(pre_x==0||pre_y==0){
-					pre_x = event.touches[0].pageX;
-					pre_y = event.touches[0].pageY;
-					return;
-				}
-				if((event.touches[0].pageX-pre_x == 0) && (event.touches[0].pageY-pre_y == 0)){
-				return;
-				}
-				coordinate = (event.touches[0].pageX-pre_x).toString() + "," + (event.touches[0].pageY-pre_y).toString();
+                if(pre_x==0||pre_y==0){
+                    pre_x = event.touches[0].pageX;
+                    pre_y = event.touches[0].pageY;
+                    return;
+                }
+                if((event.touches[0].pageX-pre_x == 0) && (event.touches[0].pageY-pre_y == 0)){
+                return;
+                }
+                coordinate = (event.touches[0].pageX-pre_x).toString() + "," + (event.touches[0].pageY-pre_y).toString();
 
-				//printLog("coordinate :"+coordinate);
-				pre_x = event.touches[0].pageX;
-				pre_y = event.touches[0].pageY;
-				sendMouse_MoveEvent(coordinate);
-			});
+                //printLog("coordinate :"+coordinate);
+                pre_x = event.touches[0].pageX;
+                pre_y = event.touches[0].pageY;
+                sendMouse_MoveEvent(coordinate);
+            });
 
-			mousepad.addEventListener("touchend", function(event) {
-				//printLog("touch end");
-				pre_x=0;
-				pre_y=0;
+            mousepad.addEventListener("touchend", function(event) {
+                //printLog("touch end");
+                pre_x=0;
+                pre_y=0;
 
-				if(touch_Moved==0&&touch_Pressed==1){
-					sendMouse_KeyEvent(MOUSE_CLICK);
-				}
-				touch_Moved=0;
-				touch_Pressed=0;
-			});
+                if(touch_Moved==0&&touch_Pressed==1){
+                    sendMouse_KeyEvent(MOUSE_CLICK);
+                }
+                touch_Moved=0;
+                touch_Pressed=0;
+            });
 
-			mousescroll.addEventListener("touchstart", function(event) {
-				scroll_pre_y=0;
-				scroll_pre_y = event.touches[0].pageY;
+            mousescroll.addEventListener("touchstart", function(event) {
+                scroll_pre_y=0;
+                scroll_pre_y = event.touches[0].pageY;
 
-			});
-			mousescroll.addEventListener("touchmove", function(event) {
+            });
+            mousescroll.addEventListener("touchmove", function(event) {
 
-				var coordinate = event.touches[0].pageY-scroll_pre_y;
-				var direction = 0, count = 0;
+                var coordinate = event.touches[0].pageY-scroll_pre_y;
+                var direction = 0, count = 0;
 
-				if( scroll_pre_y == 0 || coordinate == 0){
-					scroll_pre_y = event.touches[0].pageY;
-					return;
-				}
-				//printLog("scroll move : "+coordinate);
+                if( scroll_pre_y == 0 || coordinate == 0){
+                    scroll_pre_y = event.touches[0].pageY;
+                    return;
+                }
+                //printLog("scroll move : "+coordinate);
 
-				if(coordinate > 0){
-					direction = MOUSE_SCROLL_DOWN;
-				}
-				else{
-					direction = MOUSE_SCROLL_UP;
-				}
+                if(coordinate > 0){
+                    direction = MOUSE_SCROLL_DOWN;
+                }
+                else{
+                    direction = MOUSE_SCROLL_UP;
+                }
 
-				if((Math.abs(coordinate)) > 20){
-					count = 5;
-				}
-				else if ((Math.abs(coordinate)) > 10){
-					count = 3;
-				}
-				else{
-					count = 2;
-				}
+                if((Math.abs(coordinate)) > 20){
+                    count = 5;
+                }
+                else if ((Math.abs(coordinate)) > 10){
+                    count = 3;
+                }
+                else{
+                    count = 2;
+                }
 
-				sendScroll(direction, count);
-				scroll_pre_y = event.touches[0].pageY;
-				//pre_coordinate = coordinate;
-			});
+                sendScroll(direction, count);
+                scroll_pre_y = event.touches[0].pageY;
+                //pre_coordinate = coordinate;
+            });
 
-			mousescroll.addEventListener("touchend", function(event) {
-				//printLog("scroll touch end");
-				scroll_pre_y=0;
+            mousescroll.addEventListener("touchend", function(event) {
+                //printLog("scroll touch end");
+                scroll_pre_y=0;
 
-			});
+            });
 
-//			$("#mousepad").on("mousemove", function(event) {
-//				printLog("mouse move");
-//			});
+//          $("#mousepad").on("mousemove", function(event) {
+//              printLog("mouse move");
+//          });
 
-		});
+        });
 
-	</script>
+    </script>
 
-	<div data-role="page" data-theme="a" data-fullscreen="true">
+    <div data-role="page" data-theme="a" data-fullscreen="true">
 
-		<div data-role="header">
-			<h1><table align=left border=0 width=100%><tr><td align=right><img width=35 src="wifikeyboard.png"></td><td align=left >Tizen Remote Input</td><td align=left><a href="#" id="mode_change"><img width=35 onclick="window.location='index.htm'" src="keyboard.png"></a></td></tr></table></h1>
-		</div>
-		<!-- /header -->
+        <div data-role="header">
+            <h1><table align=left border=0 width=100%><tr><td align=right><img width=35 src="wifikeyboard.png"></td><td align=left >Tizen Remote Input</td><td align=left><a href="#" id="mode_change"><img width=35 onclick="window.location='index.htm'" src="keyboard.png"></a></td></tr></table></h1>
+        </div>
+        <!-- /header -->
 
-		<div data-role="content">
-			<div>
-			<div id="mousepad" style="background-image:url(mouse_pad.png); float:left; background-size: 100% 100%; background-repeat: no-repeat;width:88%;height:350px;"></div>
-			<div id="mousescroll" style="background-image:url(scrollbar.png); float:left; background-size: 100% 100%; background-repeat: no-repeat;width:12%;height:350px;"></div>
-			</div>
-			<textarea name="logbox" disabled="disabled" id="log_box" style="overflow:auto; height:40px; width:100%;letter-spacing:0; padding:8; border-style:dotted; font-size:12px" ></textarea>
-					<label><input type="checkbox" id="use_debug_checker" name="use_debug_checker"> <font size ="2">Debug mode</font></input></label>
+        <div data-role="content">
+            <div>
+            <div id="mousepad" style="background-image:url(mouse_pad.png); float:left; background-size: 100% 100%; background-repeat: no-repeat;width:88%;height:350px;"></div>
+            <div id="mousescroll" style="background-image:url(scrollbar.png); float:left; background-size: 100% 100%; background-repeat: no-repeat;width:12%;height:350px;"></div>
+            </div>
+            <textarea name="logbox" disabled="disabled" id="log_box" style="overflow:auto; height:40px; width:100%;letter-spacing:0; padding:8; border-style:dotted; font-size:12px" ></textarea>
+                    <label><input type="checkbox" id="use_debug_checker" name="use_debug_checker"> <font size ="2">Debug mode</font></input></label>
 
-		</div>
-		<!-- /content -->
-		<div data-role="footer" >
-			<div data-role="navbar" class="nav-glyphish-example" data-grid="b">
-				<ul>
-					<li><a href="#" id="sys_btn_menu" data-icon="bars">Menu</a></li>
-					<li><img onclick="javascript:clearLog();" width=100%  src="tizenbrand.png"></li>
-					<li><a href="#" id="sys_btn_back" data-icon="back">Back</a></li>
-				</ul>
-			</div>
+        </div>
+        <!-- /content -->
+        <div data-role="footer" >
+            <div data-role="navbar" class="nav-glyphish-example" data-grid="b">
+                <ul>
+                    <li><a href="#" id="sys_btn_menu" data-icon="bars">Menu</a></li>
+                    <li><img onclick="javascript:clearLog();" width=100%  src="tizenbrand.png"></li>
+                    <li><a href="#" id="sys_btn_back" data-icon="back">Back</a></li>
+                </ul>
+            </div>
 
-		</div>
+        </div>
 
-	</div>
-	<!-- /page -->
+    </div>
+    <!-- /page -->
 
 </body>
 </html>

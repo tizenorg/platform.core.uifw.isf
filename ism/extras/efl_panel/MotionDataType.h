@@ -13,28 +13,28 @@
 
 struct Point2D
 {
-	int x;
-	int y;
+    int x;
+    int y;
 
-	Point2D() : x(0), y(0){};
-	Point2D(int x, int y) : x(x), y(y){};
+    Point2D() : x(0), y(0){};
+    Point2D(int x, int y) : x(x), y(y){};
 };
 struct Point2Df
 {
-	double x;
-	double y;
+    double x;
+    double y;
 
-	Point2Df() : x(0), y(0){};
-	Point2Df(double x, double y) : x(x), y(y){};
+    Point2Df() : x(0), y(0){};
+    Point2Df(double x, double y) : x(x), y(y){};
 };
 struct Point3Df
 {
-	double x;
-	double y;
-	double z;
+    double x;
+    double y;
+    double z;
 
-	Point3Df() : x(0), y(0), z(0){};
-	Point3Df(double x, double y, double z) : x(x), y(y), z(z){};
+    Point3Df() : x(0), y(0), z(0){};
+    Point3Df(double x, double y, double z) : x(x), y(y), z(z){};
 };
 
 #endif //MotionDataType
