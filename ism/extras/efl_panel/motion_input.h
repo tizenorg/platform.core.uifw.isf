@@ -13,8 +13,8 @@ public :
     Point2D _Cursor_delta;      // Mouse delta X,Y in screen
 
 private:
-	deque<Point3Df>  _GyrFilterBuffer;
-	deque<Point3Df>  _AccFilterBuffer;
+    deque<Point3Df>  _GyrFilterBuffer;
+    deque<Point3Df>  _AccFilterBuffer;
 
     double _Cursor_acc_val;
     double _Cursor_gain_val;  //16:9
@@ -25,8 +25,8 @@ private:
 
 public:
 
-	Motion_Input();
-	~Motion_Input();
+    Motion_Input();
+    ~Motion_Input();
 
     void init_motion_input();
 
@@ -45,8 +45,8 @@ public:
     bool Set_filter_number(int filter_number);
 
     //calculate history mean gyroscope value
-	double cal_gyr_mean();
+    double cal_gyr_mean();
 
-	bool copy_sensor_data(Point3Df *source_Data, Point3Df *Data);
+    bool copy_sensor_data(Point3Df *source_Data, Point3Df *Data);
 
 };

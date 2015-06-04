@@ -49,8 +49,6 @@ public:
 
     bool set_active_ise_by_uuid (const char* uuid);
     bool get_active_ise (String &uuid);
-    void enable_remote_input (void);
-    void disable_remote_input (void);
     bool get_ise_list (int* count, char*** iselist);
     bool get_ise_info (const char* uuid, String &name, String &language, int &type, int &option, String &module_name);
     bool reset_ise_option (void);
@@ -66,6 +64,8 @@ public:
     bool is_helper_ise_enabled (const char* appid, int &enabled);
     bool get_recent_ime_geometry (int *x, int *y, int *w, int *h, int angle = -1);
     bool hide_helper_ise (void);
+    void enable_remote_input (void);
+    void disable_remote_input (void);
 };
 
 }

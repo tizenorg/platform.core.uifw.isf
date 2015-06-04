@@ -21,10 +21,10 @@
 <script>
  var startBtn = document.getElementById('startBtn'),
      debug = document.getElementById('debugconsole');
- 
+
 
  var WebHelper = new function() {
-     
+
      this.MessageTypes = {
          PLAIN:"plain",
          QUERY:"query",
@@ -66,7 +66,7 @@
          SET_KEYBOARD_SIZES:"set_keyboard_sizes",
          CONNECT:"connect"
      };
-     
+
      this.connectWebSocket = function(pcol) {
          if (typeof MozWebSocket != "undefined") {
              this.socket =
@@ -76,7 +76,7 @@
                  new WebSocket(pcol, "keyboard-protocol");
          }
      };
-     
+
      this.log = function() {
          if (this.socket !== "undefined") {
              debug.innerHTML += "<br>send log!";
@@ -88,7 +88,7 @@
              debug.innerHTML += "<br>fail to send log!";
              }
      };
-     
+
      this.activate = function() {
          for (var num = 2; num < 255; num++) {
             var pcol = "ws://192.168.0." + num +":7172";
@@ -111,11 +111,11 @@
                      var items = msg.data.split("|");
                      handler.defaultHandler(items);
                      debug.innerHTML += "<br>Find server IP!" + items[1];
-                     
+
                  };
                  this.socket.onerror = function(msg) {
                      debug.innerHTML += "<br>Error!" + msg;
-                     
+
                  };
                  this.socket.onclose = function(evt) {
                      debug.innerHTML += "<br>Close socket!";

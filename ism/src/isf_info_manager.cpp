@@ -1933,14 +1933,13 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            
         }
 
         unlock ();
 
         return client >= 0;
     }
-    
+
     bool commit_string (const WideString &str)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::commit_string ()\n";
@@ -1951,14 +1950,13 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            
         }
 
         unlock ();
 
         return client >= 0;
     }
-    
+
     bool send_key_event (const KeyEvent &key)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::send_key_event ()\n";
@@ -1969,14 +1967,13 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            
         }
 
         unlock ();
 
         return client >= 0;
     }
-    
+
     bool forward_key_event (const KeyEvent &key)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::forward_key_event ()\n";
@@ -1987,7 +1984,6 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            
         }
 
         unlock ();

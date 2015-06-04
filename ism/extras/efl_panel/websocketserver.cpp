@@ -1,23 +1,20 @@
 /*
- * libwebsockets-test-server - libwebsockets test implementation
+ * Copyright (c) 2012 - 2016 Samsung Electronics Co., Ltd All Rights Reserved
  *
- * Copyright (C) 2010-2011 Andy Green <andy@warmcat.com>
+ * Licensed under the Apache License, Version 2.0 (the License);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation:
- *  version 2.1 of the License.
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- *  MA  02110-1301  USA
  */
+
 #ifdef CMAKE_BUILD
 #include "lws_config.h"
 #endif
@@ -178,194 +175,194 @@ struct per_session_data__http {
 /* this protocol server (always the first one) just knows how to do HTTP */
 
 static int callback_http(struct libwebsocket_context *context,
-		struct libwebsocket *wsi,
-		enum libwebsocket_callback_reasons reason, void *user,
-							   void *in, size_t len)
+        struct libwebsocket *wsi,
+        enum libwebsocket_callback_reasons reason, void *user,
+                               void *in, size_t len)
 {
-    //LOGD(" ");
+    LOGD(" ");
 #if 0
-	char client_name[128];
-	char client_ip[128];
+    char client_name[128];
+    char client_ip[128];
 #endif
-	char buf[256];
-	int n, m;
-	unsigned char *p;
-	static unsigned char buffer[4096];
-	struct stat stat_buf;
-	struct per_session_data__http *pss = (struct per_session_data__http *)user;
+    char buf[256];
+    int n, m;
+    unsigned char *p;
+    static unsigned char buffer[4096];
+    struct stat stat_buf;
+    struct per_session_data__http *pss = (struct per_session_data__http *)user;
 #ifdef EXTERNAL_POLL
-	int fd = (int)(long)in;
+    int fd = (int)(long)in;
 #endif
 
-	switch (reason) {
-	case LWS_CALLBACK_HTTP:
+    switch (reason) {
+    case LWS_CALLBACK_HTTP:
 
-		/* check for the "send a big file by hand" example case */
+        /* check for the "send a big file by hand" example case */
 
-		if (!strcmp((const char *)in, "/leaf.jpg")) {
+        if (!strcmp((const char *)in, "/leaf.jpg")) {
 
-			/* well, let's demonstrate how to send the hard way */
+            /* well, let's demonstrate how to send the hard way */
 
-			p = buffer;
+            p = buffer;
 
-			pss->fd = open(LOCAL_RESOURCE_PATH"/leaf.jpg", O_RDONLY);
-			if (pss->fd < 0)
-				return -1;
+            pss->fd = open(LOCAL_RESOURCE_PATH"/leaf.jpg", O_RDONLY);
+            if (pss->fd < 0)
+                return -1;
 
-			fstat(pss->fd, &stat_buf);
+            fstat(pss->fd, &stat_buf);
 
-			/*
-			 * we will send a big jpeg file, but it could be
-			 * anything.  Set the Content-Type: appropriately
-			 * so the browser knows what to do with it.
-			 */
+            /*
+             * we will send a big jpeg file, but it could be
+             * anything.  Set the Content-Type: appropriately
+             * so the browser knows what to do with it.
+             */
 
-			p += sprintf((char *)p,
-				"HTTP/1.0 200 OK\x0d\x0a"
-				"Server: libwebsockets\x0d\x0a"
-				"Content-Type: image/jpeg\x0d\x0a"
-					"Content-Length: %u\x0d\x0a\x0d\x0a",
-					(unsigned int)stat_buf.st_size);
+            p += sprintf((char *)p,
+                "HTTP/1.0 200 OK\x0d\x0a"
+                "Server: libwebsockets\x0d\x0a"
+                "Content-Type: image/jpeg\x0d\x0a"
+                    "Content-Length: %u\x0d\x0a\x0d\x0a",
+                    (unsigned int)stat_buf.st_size);
 
-			/*
-			 * send the http headers...
-			 * this won't block since it's the first payload sent
-			 * on the connection since it was established
-			 * (too small for partial)
-			 */
+            /*
+             * send the http headers...
+             * this won't block since it's the first payload sent
+             * on the connection since it was established
+             * (too small for partial)
+             */
 
-			n = libwebsocket_write(wsi, buffer,
-				   p - buffer, LWS_WRITE_HTTP);
+            n = libwebsocket_write(wsi, buffer,
+                   p - buffer, LWS_WRITE_HTTP);
 
-			if (n < 0) {
-				close(pss->fd);
-				return -1;
-			}
-			/*
-			 * book us a LWS_CALLBACK_HTTP_WRITEABLE callback
-			 */
-			libwebsocket_callback_on_writable(context, wsi);
-			break;
-		}
+            if (n < 0) {
+                close(pss->fd);
+                return -1;
+            }
+            /*
+             * book us a LWS_CALLBACK_HTTP_WRITEABLE callback
+             */
+            libwebsocket_callback_on_writable(context, wsi);
+            break;
+        }
 
-		/* if not, send a file the easy way */
+        /* if not, send a file the easy way */
 
-		for (n = 0; n < (sizeof(whitelist) / sizeof(whitelist[0]) - 1); n++)
-			if (in && strcmp((const char *)in, whitelist[n].urlpath) == 0)
-				break;
+        for (n = 0; n < (sizeof(whitelist) / sizeof(whitelist[0]) - 1); n++)
+            if (in && strcmp((const char *)in, whitelist[n].urlpath) == 0)
+                break;
 
-		sprintf(buf, LOCAL_RESOURCE_PATH"%s", whitelist[n].urlpath);
+        sprintf(buf, LOCAL_RESOURCE_PATH"%s", whitelist[n].urlpath);
 
-		if (libwebsockets_serve_http_file(context, wsi, buf, whitelist[n].mimetype))
-			return -1; /* through completion or error, close the socket */
+        if (libwebsockets_serve_http_file(context, wsi, buf, whitelist[n].mimetype))
+            return -1; /* through completion or error, close the socket */
 
-		/*
-		 * notice that the sending of the file completes asynchronously,
-		 * we'll get a LWS_CALLBACK_HTTP_FILE_COMPLETION callback when
-		 * it's done
-		 */
+        /*
+         * notice that the sending of the file completes asynchronously,
+         * we'll get a LWS_CALLBACK_HTTP_FILE_COMPLETION callback when
+         * it's done
+         */
 
-		break;
+        break;
 
-	case LWS_CALLBACK_HTTP_FILE_COMPLETION:
-//		lwsl_info("LWS_CALLBACK_HTTP_FILE_COMPLETION seen\n");
-		/* kill the connection after we sent one file */
-		return -1;
+    case LWS_CALLBACK_HTTP_FILE_COMPLETION:
+//      lwsl_info("LWS_CALLBACK_HTTP_FILE_COMPLETION seen\n");
+        /* kill the connection after we sent one file */
+        return -1;
 
-	case LWS_CALLBACK_HTTP_WRITEABLE:
-		/*
-		 * we can send more of whatever it is we were sending
-		 */
+    case LWS_CALLBACK_HTTP_WRITEABLE:
+        /*
+         * we can send more of whatever it is we were sending
+         */
 
-		do {
-			n = read(pss->fd, buffer, sizeof buffer);
-			/* problem reading, close conn */
-			if (n < 0)
-				goto bail;
-			/* sent it all, close conn */
-			if (n == 0)
-				goto bail;
-			/*
-			 * because it's HTTP and not websocket, don't need to take
-			 * care about pre and postamble
-			 */
-			m = libwebsocket_write(wsi, buffer, n, LWS_WRITE_HTTP);
-			if (m < 0)
-				/* write failed, close conn */
-				goto bail;
-			if (m != n)
-				/* partial write, adjust */
-				lseek(pss->fd, m - n, SEEK_CUR);
+        do {
+            n = read(pss->fd, buffer, sizeof buffer);
+            /* problem reading, close conn */
+            if (n < 0)
+                goto bail;
+            /* sent it all, close conn */
+            if (n == 0)
+                goto bail;
+            /*
+             * because it's HTTP and not websocket, don't need to take
+             * care about pre and postamble
+             */
+            m = libwebsocket_write(wsi, buffer, n, LWS_WRITE_HTTP);
+            if (m < 0)
+                /* write failed, close conn */
+                goto bail;
+            if (m != n)
+                /* partial write, adjust */
+                lseek(pss->fd, m - n, SEEK_CUR);
 
-		} while (!lws_send_pipe_choked(wsi));
-		libwebsocket_callback_on_writable(context, wsi);
-		break;
+        } while (!lws_send_pipe_choked(wsi));
+        libwebsocket_callback_on_writable(context, wsi);
+        break;
 
 bail:
-		close(pss->fd);
-		return -1;
+        close(pss->fd);
+        return -1;
 
-	/*
-	 * callback for confirming to continue with client IP appear in
-	 * protocol 0 callback since no websocket protocol has been agreed
-	 * yet.  You can just ignore this if you won't filter on client IP
-	 * since the default uhandled callback return is 0 meaning let the
-	 * connection continue.
-	 */
+    /*
+     * callback for confirming to continue with client IP appear in
+     * protocol 0 callback since no websocket protocol has been agreed
+     * yet.  You can just ignore this if you won't filter on client IP
+     * since the default uhandled callback return is 0 meaning let the
+     * connection continue.
+     */
 
-	case LWS_CALLBACK_FILTER_NETWORK_CONNECTION:
+    case LWS_CALLBACK_FILTER_NETWORK_CONNECTION:
 #if 0
-		libwebsockets_get_peer_addresses(context, wsi, (int)(long)in, client_name,
-			     sizeof(client_name), client_ip, sizeof(client_ip));
+        libwebsockets_get_peer_addresses(context, wsi, (int)(long)in, client_name,
+                 sizeof(client_name), client_ip, sizeof(client_ip));
 
-		fprintf(stderr, "Received network connect from %s (%s)\n",
-							client_name, client_ip);
+        fprintf(stderr, "Received network connect from %s (%s)\n",
+                            client_name, client_ip);
 #endif
-		/* if we returned non-zero from here, we kill the connection */
-		break;
+        /* if we returned non-zero from here, we kill the connection */
+        break;
 
 #ifdef EXTERNAL_POLL
-	/*
-	 * callbacks for managing the external poll() array appear in
-	 * protocol 0 callback
-	 */
+    /*
+     * callbacks for managing the external poll() array appear in
+     * protocol 0 callback
+     */
 
-	case LWS_CALLBACK_ADD_POLL_FD:
+    case LWS_CALLBACK_ADD_POLL_FD:
 
-		if (count_pollfds >= max_poll_elements) {
-			lwsl_err("LWS_CALLBACK_ADD_POLL_FD: too many sockets to track\n");
-			return 1;
-		}
+        if (count_pollfds >= max_poll_elements) {
+            lwsl_err("LWS_CALLBACK_ADD_POLL_FD: too many sockets to track\n");
+            return 1;
+        }
 
-		fd_lookup[fd] = count_pollfds;
-		pollfds[count_pollfds].fd = fd;
-		pollfds[count_pollfds].events = (int)(long)len;
-		pollfds[count_pollfds++].revents = 0;
-		break;
+        fd_lookup[fd] = count_pollfds;
+        pollfds[count_pollfds].fd = fd;
+        pollfds[count_pollfds].events = (int)(long)len;
+        pollfds[count_pollfds++].revents = 0;
+        break;
 
-	case LWS_CALLBACK_DEL_POLL_FD:
-		if (!--count_pollfds)
-			break;
-		m = fd_lookup[fd];
-		/* have the last guy take up the vacant slot */
-		pollfds[m] = pollfds[count_pollfds];
-		fd_lookup[pollfds[count_pollfds].fd] = m;
-		break;
+    case LWS_CALLBACK_DEL_POLL_FD:
+        if (!--count_pollfds)
+            break;
+        m = fd_lookup[fd];
+        /* have the last guy take up the vacant slot */
+        pollfds[m] = pollfds[count_pollfds];
+        fd_lookup[pollfds[count_pollfds].fd] = m;
+        break;
 
-	case LWS_CALLBACK_SET_MODE_POLL_FD:
-		pollfds[fd_lookup[fd]].events |= (int)(long)len;
-		break;
+    case LWS_CALLBACK_SET_MODE_POLL_FD:
+        pollfds[fd_lookup[fd]].events |= (int)(long)len;
+        break;
 
-	case LWS_CALLBACK_CLEAR_MODE_POLL_FD:
-		pollfds[fd_lookup[fd]].events &= ~(int)(long)len;
-		break;
+    case LWS_CALLBACK_CLEAR_MODE_POLL_FD:
+        pollfds[fd_lookup[fd]].events &= ~(int)(long)len;
+        break;
 #endif
 
-	default:
-		break;
-	}
+    default:
+        break;
+    }
 
-	return 0;
+    return 0;
 }
 
 
@@ -386,10 +383,10 @@ struct libwebsocket *wsi,
 static struct libwebsocket_protocols protocols[] = {
     /* first protocol must always be HTTP handler */
     {
-        "http-only",		/* name */
-        callback_http,		/* callback */
-        sizeof(struct per_session_data__http),	/* per_session_data_size */
-        0,			/* max frame size / rx buffer */
+        "http-only",        /* name */
+        callback_http,      /* callback */
+        sizeof(struct per_session_data__http),  /* per_session_data_size */
+        0,          /* max frame size / rx buffer */
     },
     {
         "keyboard-protocol",
@@ -406,7 +403,7 @@ callback_keyboard(struct libwebsocket_context *context,
             enum libwebsocket_callback_reasons reason,
                            void *user, void *in, size_t len)
 {
-    //LOGD(" %d",reason);
+    LOGD(" %d",reason);
     static int last_session_id = 0;
     const int bufsize = 512;
     int n = 0;
@@ -454,10 +451,10 @@ callback_keyboard(struct libwebsocket_context *context,
         break;
 
     case LWS_CALLBACK_RECEIVE:
-        //LOGD("LWS_CALLBACK_RECEIVE");
+        LOGD("LWS_CALLBACK_RECEIVE");
         if (in) {
             std::string str = (const char *)in;
-            //LOGD("Receive MSG :|%s|", str.c_str());
+            LOGD("Receive MSG :|%s|", str.c_str());
             ISE_MESSAGE message = CISEMessageSerializer::deserialize(str);
 /*
             if (message.command.compare(ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_LOGIN]) == 0) {
@@ -496,7 +493,7 @@ callback_keyboard(struct libwebsocket_context *context,
 
 void *process_ws_server(void *data)
 {
-    //LOGD(" ");
+    LOGD(" ");
     unsigned int oldus = 0;
 
     while (!force_exit && !g_ws_server_exit) {
@@ -532,13 +529,13 @@ void *process_ws_server(void *data)
 
 void log_func(int level, const char *line)
 {
-    //LOGD(" ");
+    LOGD(" ");
 
 }
 
 WebSocketServer::WebSocketServer()
 {
-    //LOGD(" ");
+    LOGD(" ");
     if (m_current_instance != NULL) {
         LOGD("WARNING : m_current_instance is NOT NULL");
     }
@@ -548,7 +545,7 @@ WebSocketServer::WebSocketServer()
 
 WebSocketServer::~WebSocketServer()
 {
-    //LOGD(" ");
+    LOGD(" ");
     if (m_current_instance == this) {
         m_current_instance = NULL;
     }
@@ -561,7 +558,7 @@ WebSocketServer::~WebSocketServer()
 
 static void recv_message_pipe_handler(void *data, void *buffer, unsigned int nbyte)
 {
-    //LOGD(" ");
+    LOGD(" ");
     WebSocketServer *agent = WebSocketServer::get_current_instance();
     if (agent) {
         agent->process_recved_messages();
@@ -592,7 +589,7 @@ bool WebSocketServer::init()
     info.gid = -1;
     info.uid = -1;
     info.options = 0;
-    
+
     feedback_initialize(); // Initialize feedback
 
     /* The WebSocket server is running on a separate thread, and let the thread send a message
@@ -629,7 +626,7 @@ bool WebSocketServer::init()
 
 bool WebSocketServer::exit()
 {
-    //LOGD(" ");
+    LOGD(" ");
     on_exit();
 
     g_ws_server_exit = true;
@@ -657,7 +654,7 @@ bool WebSocketServer::exit()
 
 void WebSocketServer::signal(int sig)
 {
-    //LOGD(" ");
+    LOGD(" ");
     force_exit = 1;
 }
 
@@ -674,7 +671,7 @@ std::string to_string(T i)
 
 void WebSocketServer::on_init()
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_INIT];
@@ -688,7 +685,7 @@ void WebSocketServer::on_init()
 
 void WebSocketServer::on_exit()
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_EXIT];
@@ -702,7 +699,7 @@ void WebSocketServer::on_exit()
 
 void WebSocketServer::on_focus_in(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_FOCUS_IN];
@@ -717,7 +714,7 @@ void WebSocketServer::on_focus_in(int ic)
 
 void WebSocketServer::on_focus_out(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_FOCUS_OUT];
@@ -732,7 +729,7 @@ void WebSocketServer::on_focus_out(int ic)
 
 void WebSocketServer::on_show(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SHOW];
@@ -749,7 +746,7 @@ void WebSocketServer::on_show(int ic)
 
 void WebSocketServer::on_hide(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_HIDE];
@@ -764,7 +761,7 @@ void WebSocketServer::on_hide(int ic)
 
 void WebSocketServer::on_set_rotation(int degree)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_ROTATION];
@@ -779,7 +776,7 @@ void WebSocketServer::on_set_rotation(int degree)
 
 void WebSocketServer::on_update_cursor_position(int ic, int cursor_pos)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_UPDATE_CURSOR_POSITION];
@@ -795,7 +792,7 @@ void WebSocketServer::on_update_cursor_position(int ic, int cursor_pos)
 
 void WebSocketServer::on_set_language(unsigned int language)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_LANGUAGE];
@@ -819,7 +816,7 @@ void WebSocketServer::on_set_language(unsigned int language)
 
 void WebSocketServer::on_set_imdata(char *buf, unsigned int len)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_IMDATA];
@@ -834,7 +831,7 @@ void WebSocketServer::on_set_imdata(char *buf, unsigned int len)
 
 void WebSocketServer::on_get_imdata(char **buf, unsigned int *len)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_IMDATA];
@@ -870,7 +867,7 @@ void WebSocketServer::on_get_imdata(char **buf, unsigned int *len)
 
 void WebSocketServer::on_set_return_key_type(unsigned int type)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_RETURN_KEY_TYPE];
@@ -894,7 +891,7 @@ void WebSocketServer::on_set_return_key_type(unsigned int type)
 
 void WebSocketServer::on_get_return_key_type(unsigned int *type)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_RETURN_KEY_TYPE];
@@ -928,7 +925,7 @@ void WebSocketServer::on_get_return_key_type(unsigned int *type)
 
 void WebSocketServer::on_set_return_key_disable(unsigned int disabled)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_RETURN_KEY_DISABLE];
@@ -952,7 +949,7 @@ void WebSocketServer::on_set_return_key_disable(unsigned int disabled)
 
 void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_RETURN_KEY_DISABLE];
@@ -986,7 +983,7 @@ void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
 
 void WebSocketServer::on_set_layout(unsigned int layout)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_LAYOUT];
@@ -1010,7 +1007,7 @@ void WebSocketServer::on_set_layout(unsigned int layout)
 
 void WebSocketServer::on_get_layout(unsigned int *layout)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_LAYOUT];
@@ -1044,7 +1041,7 @@ void WebSocketServer::on_get_layout(unsigned int *layout)
 
 void WebSocketServer::on_reset_input_context(int ic)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_RESET_INPUT_CONTEXT];
@@ -1059,7 +1056,7 @@ void WebSocketServer::on_reset_input_context(int ic)
 
 void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask, unsigned int layout, unsigned int *ret)
 {
-    //LOGD(" ");
+    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_PROCESS_KEY_EVENT];
@@ -1096,31 +1093,31 @@ void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask,
 
 WebSocketServer* WebSocketServer::get_current_instance()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_current_instance;
 }
 
 std::queue<ISE_MESSAGE>& WebSocketServer::get_send_message_queue()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_send_message_queue;
 }
 
 std::queue<ISE_MESSAGE>& WebSocketServer::get_recv_message_queue()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_recv_message_queue;
 }
 
 Ecore_Pipe* WebSocketServer::get_recv_message_pipe()
 {
-    //LOGD(" ");
+    LOGD(" ");
     return m_recv_message_pipe;
 }
 
 void WebSocketServer::wait_for_reply_message()
 {
-    //LOGD(" ");
+    LOGD(" ");
     /* Let's wait for at most REPLY_TIMEOUT */
     struct timeval now;
     struct timespec timeout;
@@ -1135,7 +1132,7 @@ void WebSocketServer::wait_for_reply_message()
 
 void WebSocketServer::process_recved_messages()
 {
-    //LOGD(" ");
+    LOGD(" ");
     pthread_mutex_lock(&g_ws_server_mutex);
 
     while (m_recv_message_queue.size() > 0) {
@@ -1151,7 +1148,7 @@ void WebSocketServer::process_recved_messages()
 
 bool WebSocketServer::process_recved_messages_until_reply_found(std::string command, std::vector<std::string> &values)
 {
-    //LOGD(" ");
+    LOGD(" ");
 
     bool ret = false;
 
@@ -1177,9 +1174,9 @@ bool WebSocketServer::process_recved_messages_until_reply_found(std::string comm
 
 void WebSocketServer::handle_recved_message(ISE_MESSAGE &message)
 {
-    //LOGD(" ");
-    //LOGD("Received message : %s, %s, %s", message.type.c_str(), message.command.c_str() , message.values.at(0).c_str());
-    /*FIXME delte login 
+    LOGD(" ");
+    LOGD("Received message : %s, %s, %s", message.type.c_str(), message.command.c_str() , message.values.at(0).c_str());
+    /*FIXME delte login
     if (message.command.compare(ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_LOGIN]) == 0) {
         libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
     }

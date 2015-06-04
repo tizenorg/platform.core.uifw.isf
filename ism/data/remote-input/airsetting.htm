@@ -23,7 +23,7 @@
         var id_num = 0;
         var ori;
         var CAL_FLUSH_TIMEOUT = 3000;
-        
+
         var MOUSE_CLICK = 555;
         var KEY_MENU = 10001;
         var KEY_HOME = 10002;
@@ -51,7 +51,7 @@
 
         WebHelperClient.initialize(WebHelperClientHandler);
 
-        
+
         function cbAjax(text, headers, callingContext){
             id_num++;
             return true;
@@ -108,7 +108,7 @@
             gry_basic_a = (gry_sum_a/gry_sum_count).toFixed(3);
             gry_basic_b = (gry_sum_b/gry_sum_count).toFixed(3);
             gry_basic_g = (gry_sum_g/gry_sum_count).toFixed(3);
-            
+
             if (gry_sum_count%4==0){
                 //tb_gyro.innerHTML="Calibrating" + progress[progress_count];
                 progress_count++;
@@ -118,7 +118,7 @@
             }
            // air_click_area.innerHTML="a:"+gry_basic_a + " ,b: " + gry_basic_b + ", g:" + gry_basic_g;
         }
-        
+
         function get_gyro_calibration(event) {
             event.preventDefault();
             var r = event.rotationRate;
@@ -135,12 +135,12 @@
             var r = event.rotationRate;
             var data;
 
-            
+
                 var gyro_a = r.alpha - gry_basic_a;
                 var gyro_b = r.beta - gry_basic_b;
                 var gyro_g = r.gamma - gry_basic_g;
 
-                
+
                 var UserAgent = navigator.userAgent.toLowerCase();
                 if(UserAgent.indexOf("android") != -1 ) {
                     gyro_a *=100;
@@ -212,11 +212,11 @@
         }
         function home_icon_add(title){
             var home_page_uri = document.domain;
-        
+
             var home_icon_uri = "/shortcut_icon.png";
-            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";    
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
             var UserAgent = navigator.userAgent.toLowerCase();
-        
+
             if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
                 alert('Add the ' + title +'shortCut icon');
                 var home_icon_add_frame=document.getElementById("home_icon_add_frame");
@@ -225,23 +225,23 @@
                 alert("Not surpport in iOS, Tizen ");
             }
         }
-        
+
         function send_setting(){
-            
-            var data = document.getElementById("CUR_MOVE_ACC").value + "," 
-                        + document.getElementById("CUR_MOVE_GAIN").value + "," 
-                        + document.getElementById("CUR_MOVE_SMOOTH").value + "," 
-                        + document.getElementById("CUR_MOVE_SPEED").value + "," 
-                        + document.getElementById("FILTER_NUMBER").value + ","; 
+
+            var data = document.getElementById("CUR_MOVE_ACC").value + ","
+                        + document.getElementById("CUR_MOVE_GAIN").value + ","
+                        + document.getElementById("CUR_MOVE_SMOOTH").value + ","
+                        + document.getElementById("CUR_MOVE_SPEED").value + ","
+                        + document.getElementById("FILTER_NUMBER").value + ",";
 
             sendAir_Setting(data);
             alert("Set New value");
-            
+
         }
-        
+
         function reset_sliderbar (){
 
-            
+
             document.getElementById("CUR_MOVE_ACC").value = 1.0;
             document.getElementById("CUR_MOVE_GAIN").value = 1.0;
             document.getElementById("CUR_MOVE_SMOOTH").value = 20;
@@ -253,20 +253,20 @@
             showValue("CUR_MOVE_SMOOTH", 20);
             showValue("CUR_MOVE_SPEED", 1.0);
             showValue("FILTER_NUMBER", 20);
-            
+
         }
-        
+
         function showValue(obj, newValue)
         {
             document.getElementById((obj+"1")).innerHTML=newValue;
         }
-        
+
 
         $(document).ready(function() {
 
             var obj = document.getElementById('by');
             obj.style.height =  $(document).height() + "px";
-            
+
             reset_sliderbar();
             /*
             showValue("ACC_FW_GAIN", 0.000244140625);
@@ -331,7 +331,7 @@
                                                 <input id="FILTER_NUMBER" type="range" min="5" max="60" style="width:250px; height:30px" step="5" onchange="showValue(this.id,this.value)" /> <span id="FILTER_NUMBER1"></span></br>
 
 
-                                                </br><input id="send_setting" type="button" value="send setting" onclick="send_setting()"/>                  
+                                                </br><input id="send_setting" type="button" value="send setting" onclick="send_setting()"/>
                                                 <input id="reset_setting" type="button" value="reset setting" onclick="reset_sliderbar()"/>
                                                 </td>
                                                 <td class="t_cell_thin_border">

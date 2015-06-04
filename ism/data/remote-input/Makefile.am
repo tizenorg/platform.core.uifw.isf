@@ -25,7 +25,6 @@ web_DATA = index.htm\
             tv_mode.htm\
             tv.htm\
             game_mode.htm\
-            ajax-loader.gif\
             icons-18-black.png\
             icons-18-white.png\
             icons-36-black.png\

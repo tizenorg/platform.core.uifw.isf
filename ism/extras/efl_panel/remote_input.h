@@ -65,12 +65,12 @@ enum UINPUT_DEVICE{
 class Remote_Input
 {
 public :
-    
+
 private:
     static Remote_Input*    m_instance;
     int fd_uinput_keyboard;
     int fd_uinput_mouse;
-    
+
 public:
     Remote_Input();
     ~Remote_Input();
@@ -100,7 +100,7 @@ public:
     void reset_setting_value_for_air_mouse(double data[]);
 
     void handle_websocket_message(ISE_MESSAGE &message);
-    
+
     void del_notification();
 
     void ongoing_notification(const char* _ptitle, const char* _ptext);
