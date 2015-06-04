@@ -40,7 +40,6 @@ isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
                          @EDBUS_CFLAGS@ \
                          @BLUETOOTH_CFLAGS@ \
                          @FEEDBACK_CFLAGS@ \
-                         @UIGADGET_CFLAGS@ \
                          @PACKAGE_MANAGER_CFLAGS@ \
                          @PKGMGR_INFO_CFLAGS@ \
                          @APP_CONTROL_CFLAGS@ \
@@ -58,7 +57,6 @@ isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @EDBUS_LIBS@ \
                          @BLUETOOTH_LIBS@ \
                          @FEEDBACK_LIBS@ \
-                         @UIGADGET_LIBS@ \
                          @PACKAGE_MANAGER_LIBS@ \
                          @PKGMGR_INFO_LIBS@ \
                          @APP_CONTROL_LIBS@ \

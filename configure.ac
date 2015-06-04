@@ -252,11 +252,6 @@ PKG_CHECK_MODULES(X11, [x11],
                   [ISF_HAS_X11=yes],
                   [ISF_HAS_X11=no])
 
-# Check ui-gadget library
-PKG_CHECK_MODULES(UIGADGET, [ui-gadget-1],
-                  [ISF_HAS_UIGADGET=yes],
-                  [ISF_HAS_UIGADGET=no])
-
 # Check utilX library
 PKG_CHECK_MODULES(UTILX, [utilX],
                   [ISF_HAS_UTILX=yes],
@@ -336,10 +331,6 @@ fi
 
 if test "$ISF_HAS_NOTIFICATION" = "yes"; then
   AC_DEFINE(HAVE_NOTIFICATION,1,[Have Notification functions.])
-fi
-
-if test "$ISF_HAS_UIGADGET" = "yes"; then
-  AC_DEFINE(HAVE_UIGADGET,1,[Have UI gadget functions.])
 fi
 
 if test "$ISF_HAS_PKGMGR_INFO" = "yes"; then
