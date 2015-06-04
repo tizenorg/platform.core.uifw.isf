@@ -150,6 +150,7 @@ static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
             return strdup(item_data->main_text);
         }
         if (!strcmp(part, "elm.text.sub.left.bottom") ||
+            !strcmp(part, "elm.text.sub") ||
             !strcmp(part, "elm.text.2")) {
             return strdup(item_data->sub_text);
         }
@@ -317,7 +318,8 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
     ITEMDATA *item_data = (ITEMDATA*)data;
 
     if (item_data) {
-        if (strcmp(part, "elm.icon.right") == 0) {
+        if (!strcmp(part, "elm.icon.right") ||
+            !strcmp(part, "elm.swallow.end")) {
             if (item_data->mode >= 0 && item_data->mode < OPTION_MAX_LANGUAGES) {
                 LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
                 if (info) {
@@ -417,7 +419,7 @@ create_genlist_item_classes() {
         ad.itc_main_text_only = elm_genlist_item_class_new();
 
     if (ad.itc_main_text_only) {
-        ad.itc_main_text_only->item_style = "2line.top";
+        ad.itc_main_text_only->item_style = "double_label";
         ad.itc_main_text_only->func.text_get = _main_gl_text_get;
         ad.itc_main_text_only->func.content_get = _main_gl_content_get;
         ad.itc_main_text_only->func.state_get = _main_gl_state_get;
@@ -428,7 +430,7 @@ create_genlist_item_classes() {
         ad.itc_language_subitems = elm_genlist_item_class_new();
 
     if (ad.itc_language_subitems) {
-        ad.itc_language_subitems->item_style = "1line";
+        ad.itc_language_subitems->item_style = "default";
         ad.itc_language_subitems->func.text_get = _language_gl_text_get;
         ad.itc_language_subitems->func.content_get = _language_gl_content_get;
     }
