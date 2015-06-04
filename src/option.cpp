@@ -363,6 +363,7 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
 
     if (item_data) {
         if (!strcmp(part, "elm.icon.right") ||
+            !strcmp(part, "elm.icon") ||
             !strcmp(part, "elm.swallow.end")) {
             if (item_data->mode >= 0 && item_data->mode < OPTION_MAX_LANGUAGES) {
                 LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
@@ -636,6 +637,11 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
 
     if (obj) {
         evas_object_smart_callback_del(obj, "clicked", language_selection_finished_cb);
+        Evas_Object *naviframe = (Evas_Object *)data;
+        if (naviframe) {
+            elm_naviframe_item_pop (naviframe);
+            read_options (naviframe);
+        }
     }
 
     sclboolean selected_language_found = FALSE;
@@ -829,12 +835,11 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 
     evas_object_show(genlist);
 
-    Elm_Object_Item *navi_it = elm_naviframe_item_push(naviframe, LANGUAGE, NULL, NULL, genlist,NULL);
-
-    Evas_Object *back_btn = elm_object_item_part_content_get(navi_it, "elm.swallow.prev_btn");
-    evas_object_data_set(genlist, "back_button", back_btn);
-    evas_object_smart_callback_add (back_btn, "clicked", language_selection_finished_cb, NULL);
-    elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, naviframe);
+    Evas_Object *back_button = elm_button_add (naviframe);
+    elm_object_style_set (back_button, "naviframe/back_btn/default");
+    evas_object_smart_callback_add (back_button, "clicked", language_selection_finished_cb, naviframe);
+    Elm_Object_Item *navi_it = elm_naviframe_item_push (naviframe, LANGUAGE, back_button, NULL, genlist, NULL);
+    elm_naviframe_item_pop_cb_set (navi_it, _pop_cb, naviframe);
 
     return genlist;
 }
