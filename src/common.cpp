@@ -451,9 +451,9 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     elm_win_fullscreen_set(m_main_window, EINA_TRUE);
 #else
 #ifdef WAYLAND
-    int scr_width;
-    elm_win_screen_size_get(m_main_window, NULL, NULL, &scr_width, NULL);
-    evas_object_resize(m_main_window, scr_width, IME_HEIGHT);
+    int scr_width, scr_height;
+    elm_win_screen_size_get(m_main_window, NULL, NULL, &scr_width, &scr_height);
+    evas_object_resize(m_main_window, scr_width, IME_HEIGHT*(scr_height/1080));
 #endif
 #endif
 
