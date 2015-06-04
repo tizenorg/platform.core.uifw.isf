@@ -7314,6 +7314,15 @@ int main (int argc, char *argv [])
          LOGW ("bt_hid_host_initialize failed\n");
 #endif
 
+    launch_remote_input = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_LAUNCH_REMOTE_INPUT), launch_remote_input);
+     /* Create remote input */
+    if (launch_remote_input) {
+         LOGD("remote input start");
+         remote_input_impl = new Remote_Input();
+         if (remote_input_impl) {
+             remote_input_impl->init(_info_manager);
+         }
+    }
     _system_scale = elm_config_scale_get ();
 
     /* Set elementary scale */
@@ -7354,15 +7363,6 @@ int main (int argc, char *argv [])
     if (ret != BT_ERROR_NONE)
         LOGW ("bt_deinitialize failed: %d\n", ret);
 #endif
-    launch_remote_input = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_LAUNCH_REMOTE_INPUT), launch_remote_input);
-     /* Create remote input */
-    if (launch_remote_input) {
-         LOGD("remote input start");
-         remote_input_impl = new Remote_Input();
-         if (remote_input_impl) {
-             remote_input_impl->init(_info_manager);
-         }
-    }
 
 #if HAVE_ECOREX
     if (xclient_message_handler) {
