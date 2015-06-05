@@ -449,12 +449,6 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
 
 #ifdef FULL_SCREEN_TEST
     elm_win_fullscreen_set(m_main_window, EINA_TRUE);
-#else
-#ifdef WAYLAND
-    int scr_width, scr_height;
-    elm_win_screen_size_get(m_main_window, NULL, NULL, &scr_width, &scr_height);
-    evas_object_resize(m_main_window, scr_width, IME_HEIGHT*(scr_height/1080));
-#endif
 #endif
 
     if (m_event_callback) {
@@ -562,7 +556,12 @@ Evas_Object* CISECommon::get_main_window()
 
 void CISECommon::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
-#ifndef WAYLAND
+    LOGD ("portrait w : %d, h : %d, landscape w : %d, h : %d\n", portrait.width, portrait.height, landscape.width, landscape.height);
+
+#ifdef WAYLAND
+    // FIXME : rotation doesn't be supported yet
+    evas_object_resize(m_main_window, portrait.width, portrait.height);
+#else
     /* Temporary code, this should be automatically calculated when changing input mode */
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),   0, 0, 0, portrait.width, portrait.height);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(m_main_window),  90, 0, 0, landscape.height, landscape.width);
