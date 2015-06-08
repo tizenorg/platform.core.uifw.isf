@@ -496,6 +496,8 @@ void CISECommon::run(const sclchar *uuid, const scim::ConfigPointer &config, con
     signal(SIGINT,  signal_handler);
     signal(SIGHUP,  signal_handler);
 
+    evas_object_show (m_main_window);
+
     elm_run();
 
     vconf_ignore_key_changed(VCONFKEY_LANGSET, language_changed_cb);
