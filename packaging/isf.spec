@@ -140,13 +140,6 @@ ln -sf %{_prefix}/lib/systemd/user/scim.service %{_sysconfdir}/systemd/default-e
 %endif
 
 
-/usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -s User || :
-/usr/bin/vconftool set -t bool file/private/isf/autoperiod_allow 0 -s User || :
-/usr/bin/vconftool set -t string db/isf/input_language "en_US" -s User || :
-/usr/bin/vconftool set -t string db/isf/csc_initial_uuid "" -s User || :
-/usr/bin/vconftool set -t string db/isf/input_keyboard_uuid "isf-default" -s User || :
-/usr/bin/vconftool set -t int memory/isf/input_panel_state 0 -s User -i || :
-
 %postun -p /sbin/ldconfig
 
 
