@@ -3423,8 +3423,6 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     elm_win_prop_focus_skip_set (win, EINA_TRUE);
     efl_set_showing_effect_for_app_window (win, strEffect);
 
-    elm_win_profile_set (win, "mobile");
-
     return win;
 }
 
