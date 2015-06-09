@@ -1106,6 +1106,7 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         ime_db.module_name = ime_db.pkgid;
         ime_db.is_enabled = 1;
         ime_db.is_preinstalled = 1;
+        ime_db.has_option = 0; // It doesn't matter. No option for IMEngine...
     }
     else {
         ime_db.mode = TOOLBAR_HELPER_MODE;
@@ -1117,6 +1118,7 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
             ime_db.module_name = ime_db.pkgid;
             ime_db.is_enabled = 1;
             ime_db.is_preinstalled = 1;
+            ime_db.has_option = 1;  // Let's assume the inhouse IME always has an option menu.
         }
         else if (ime_db.pkgtype.compare("wgt") == 0)    //1 Download Web IME
         {
@@ -1133,6 +1135,7 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
                ime_db.is_enabled = 0;
                ime_db.is_preinstalled = 0;
             }
+            ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
         }
         else if (ime_db.pkgtype.compare("coretpk") == 0)    //1 Download Native IME
         {
@@ -1151,14 +1154,13 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
                 ime_db.is_enabled = 0;
                 ime_db.is_preinstalled = 0;
             }
+            ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
         }
         else {
             LOGE("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str());
             return 0;
         }
     }
-
-    ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
 
     ime_info.push_back(ime_db);
     ret = _db_insert_ime_info(ime_info);
