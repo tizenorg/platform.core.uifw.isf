@@ -1,5 +1,5 @@
 # This file is encoded in UTF-8 encoding.
-/DefaultIMEngineFactory/~other = d75857a5-4148-4745-89e2-1da7ddaf7999
+/DefaultIMEngineFactory/~other = org.tizen.ise-engine-default
 /FrontEnd/OnTheSpot = true
 /FrontEnd/ChangeFactoryGlobally = false
 /FrontEnd/SharedInputMethod = true
