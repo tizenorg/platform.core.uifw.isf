@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <languages>
 <keyboard_uuid_table>
-    <rec name="uuid_default" uuid="d75857a5-4148-4745-89e2-1da7ddaf7999"/>
-    <rec name="uuid_korean" uuid="d75857a5-4148-4745-89e2-1da7ddaf70a9"/>
-    <rec name="uuid_sunpinyin" uuid="3240fe82-585a-4f4a-96b3-0cad779c3b51"/>
-    <rec name="uuid_anthy" uuid="065d7b20-dda2-47fb-8f94-3306d9a25e56"/>
-    <rec name="uuid_zhuyin_big" uuid="6137b317-cffc-4e39-80a1-eabb903ed855"/>
-    <rec name="uuid_cangjie_3" uuid="5da9d4ff-ccdd-45af-b1a5-7bd4ac0aeb5f"/>
+    <rec name="uuid_default" uuid="org.tizen.ise-engine-default"/>
+    <rec name="uuid_korean" uuid="org.tizen.ise-engine-hangul"/>
+    <rec name="uuid_sunpinyin" uuid="org.tizen.ise-engine-sunpinyin"/>
+    <rec name="uuid_anthy" uuid="org.tizen.ise-engine-anthy"/>
+    <rec name="uuid_zhuyin_big" uuid="org.tizen.ise-engine-tables.zhuyin-big"/>
+    <rec name="uuid_cangjie_3" uuid="org.tizen.ise-engine-tables.cangjie3"/>
 </keyboard_uuid_table>
 <language_table>
   <rec language="English" language_name="English" inputmode_QTY="ENGLISH_QTY" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="uk" is_latin_language="true" accepts_caps_mode="true" locale_string="en_US"/>
