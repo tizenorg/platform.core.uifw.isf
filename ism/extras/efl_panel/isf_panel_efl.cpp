@@ -232,7 +232,6 @@ static void       slot_set_keyboard_mode               (int mode);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
-static void       slot_show_ise_selector               (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
@@ -442,6 +441,9 @@ static E_DBus_Connection     *edbus_conn;
 static E_DBus_Signal_Handler *edbus_handler;
 
 static Ecore_Event_Handler *_candidate_show_handler         = NULL;
+
+static String ime_selector_app = "";
+static String ime_list_app = "";
 
 enum {
     EMOJI_IMAGE_WIDTH = 0,
@@ -3474,7 +3476,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
     _panel_agent->signal_connect_start_default_ise          (slot (slot_start_default_ise));
     _panel_agent->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
-    _panel_agent->signal_connect_show_panel                 (slot (slot_show_ise_selector));
+    _panel_agent->signal_connect_show_panel                 (slot (slot_show_helper_ise_selector));
 
     _panel_agent->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
 
@@ -4813,7 +4815,12 @@ static void slot_set_enable_helper_ise_info (const String &appid, bool is_enable
     }
 }
 
-static int _filtered_inputmethod_setting_app_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
+/**
+ * @brief Finds appid with specific category
+ *
+ * @return 0 if success, negative value(<0) if fail. Callback is not called if return value is negative
+ */
+static int _find_appid_from_category (const pkgmgrinfo_appinfo_h handle, void *user_data)
 {
     if (user_data) {
         char **result = static_cast<char **>(user_data);
@@ -4847,14 +4854,21 @@ static void slot_show_helper_ise_list (void)
     char *app_id = NULL;
     pkgmgrinfo_appinfo_filter_h handle;
 
-    ret = pkgmgrinfo_appinfo_filter_create(&handle);
-    if (ret == PMINFO_R_OK) {
-        ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-list");
+    if (ime_list_app.length() < 1) {
+        ret = pkgmgrinfo_appinfo_filter_create(&handle);
         if (ret == PMINFO_R_OK) {
-            ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_inputmethod_setting_app_cb, &app_id);
+            ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-list");
+            if (ret == PMINFO_R_OK) {
+                ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _find_appid_from_category, &app_id);
+            }
+            pkgmgrinfo_appinfo_filter_destroy(handle);
+
+            if (app_id)
+                ime_list_app = String(app_id);
         }
-        pkgmgrinfo_appinfo_filter_destroy(handle);
     }
+    else
+        app_id = strdup(ime_list_app.c_str());
 
     if (app_id) {
         ret = app_control_create (&app_control);
@@ -4882,7 +4896,7 @@ static void slot_show_helper_ise_list (void)
 
         ret = app_control_send_launch_request(app_control, NULL, NULL);
         if (ret != APP_CONTROL_ERROR_NONE) {
-            LOGW("app_control_send_launch_request returned %d", ret);
+            LOGW("app_control_send_launch_request returned %d, app_id=%s", ret, app_id);
             app_control_destroy(app_control);
             free(app_id);
             return;
@@ -4908,14 +4922,21 @@ static void slot_show_helper_ise_selector (void)
     char *app_id = NULL;
     pkgmgrinfo_appinfo_filter_h handle;
 
-    ret = pkgmgrinfo_appinfo_filter_create(&handle);
-    if (ret == PMINFO_R_OK) {
-        ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-selector");
+    if (ime_selector_app.length() < 1) {
+        ret = pkgmgrinfo_appinfo_filter_create(&handle);
         if (ret == PMINFO_R_OK) {
-            ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_inputmethod_setting_app_cb, &app_id);
+            ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-selector");
+            if (ret == PMINFO_R_OK) {
+                ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _find_appid_from_category, &app_id);
+            }
+            pkgmgrinfo_appinfo_filter_destroy(handle);
+
+            if (app_id)
+                ime_selector_app = String(app_id);
         }
-        pkgmgrinfo_appinfo_filter_destroy(handle);
     }
+    else
+        app_id = strdup(ime_selector_app.c_str());
 
     if (app_id) {
         ret = app_control_create (&app_control);
@@ -4943,7 +4964,7 @@ static void slot_show_helper_ise_selector (void)
 
         ret = app_control_send_launch_request(app_control, NULL, NULL);
         if (ret != APP_CONTROL_ERROR_NONE) {
-            LOGW("app_control_send_launch_request returned %d", ret);
+            LOGW("app_control_send_launch_request returned %d, app_id=%s", ret, app_id);
             app_control_destroy(app_control);
             free(app_id);
             return;
@@ -5240,34 +5261,6 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
         delete_notification (&ise_selector_module_noti);
 #endif
     }
-}
-
-static void slot_show_ise_selector (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    elm_config_scale_set (_system_scale);
-
-    /* Read configuations for notification app (ise-selector) */
-    String ise_selector = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_SELECTOR_PROGRAM), String (""));
-    ise_selector_module_noti.launch_app = ise_selector;
-
-    app_control_h app_control;
-
-    app_control_create (&app_control);
-    app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
-    app_control_set_app_id (app_control, ise_selector_module_noti.launch_app.c_str ());
-
-    if (app_control_send_launch_request (app_control, NULL, NULL) == APP_CONTROL_ERROR_NONE)
-    {
-        LOGD ("Succeeded to launch %s", ise_selector_module_noti.launch_app.c_str ());
-    }
-    else
-    {
-        LOGD ("Failed to launch %s", ise_selector_module_noti.launch_app.c_str ());
-    }
-
-    app_control_destroy (app_control);
 }
 
 static void slot_show_ise (void)
@@ -5826,11 +5819,31 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
 
                         ise_selector_module_noti.content = ise_name.c_str ();
 
-                        /* Read configuations for notification app (ise-selector) */
-                        String ise_selector = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_SELECTOR_PROGRAM), String (""));
-                        ise_selector_module_noti.launch_app = ise_selector.c_str ();
-                        LOGD ("Create ise_selector notification with : %s", ise_selector.c_str ());
-                        create_notification (&ise_selector_module_noti);
+                        /* Find IME Selector appid for notification */
+                        if (ime_selector_app.length() < 1) {
+                            char *app_id = NULL;
+                            pkgmgrinfo_appinfo_filter_h handle;
+                            int ret = pkgmgrinfo_appinfo_filter_create(&handle);
+                            if (ret == PMINFO_R_OK) {
+                                ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-selector");
+                                if (ret == PMINFO_R_OK) {
+                                    ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _find_appid_from_category, &app_id);
+                                }
+                                pkgmgrinfo_appinfo_filter_destroy(handle);
+
+                                if (app_id) {
+                                    ime_selector_app = String(app_id);
+                                    free (app_id);
+                                }
+                            }
+                        }
+                        if (ime_selector_app.length() > 0) {
+                            ise_selector_module_noti.launch_app = ime_selector_app;
+                            LOGD ("Create ise_selector notification with : %s", ime_selector_app.c_str ());
+                            create_notification (&ise_selector_module_noti);
+                        }
+                        else
+                            LOGW("AppID with http://tizen.org/category/ime-selector category is not available");
 #endif
                     }
                 }

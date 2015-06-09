@@ -59,6 +59,8 @@ typedef struct {
 // Declaration of global functions.
 /////////////////////////////////////////////////////////////////////////////
 /**
+ * @deprecated Deprecated since tizen 2.4. [Use isf_control_set_active_ime() instead]
+ *
  * @brief Set active ISE by UUID.
  *
  * @param uuid The active ISE's UUID.
@@ -68,6 +70,8 @@ typedef struct {
 EAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
 
 /**
+ * @deprecated Deprecated since tizen 2.4. [Use isf_control_get_active_ime() instead]
+ *
  * @brief Get active ISE's UUID.
  *
  * @param uuid The parameter is used to store active ISE's UUID.
@@ -148,6 +152,8 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
 EAPI int isf_control_get_initial_ise (char **uuid);
 
 /**
+ * @deprecated Deprecated since tizen 2.4. [Use isf_control_show_ime_selector() instead]
+ *
  * @brief Show ISE selector.
  *
  * @return 0 if successfully, otherwise return -1;
@@ -164,6 +170,8 @@ EAPI int isf_control_show_ise_selector (void);
 EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
 
 /**
+ * @deprecated Deprecated since tizen 2.4. [Use isf_control_open_ime_option_window() instead]
+ *
  * @brief Show ISE's option window.
  *
  * @return 0 if successfully, otherwise return -1

@@ -204,19 +204,7 @@ EAPI int isf_control_get_initial_ise (char **uuid)
 
 EAPI int isf_control_show_ise_selector (void)
 {
-    IMControlClient imcontrol_client;
-    int ret = 0;
-    if (!imcontrol_client.open_connection ())
-        return -1;
-
-    imcontrol_client.prepare ();
-    imcontrol_client.show_ise_selector ();
-    if (!imcontrol_client.send ())
-        ret = -1;
-
-    imcontrol_client.close_connection ();
-
-    return ret;
+    return isf_control_show_ime_selector();
 }
 
 EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
