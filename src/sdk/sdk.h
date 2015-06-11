@@ -29,6 +29,10 @@
 
 #define LANGUAGE_STRING "_LANGUAGE_"
 
+#ifdef _TV
+#define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/tv/main_entry.xml"
+#else
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry.xml"
+#endif
 
 #endif

@@ -88,6 +88,14 @@ void read_ise_config_values() {
     integer_value = 1;
     g_core.config_read_int(ISE_CONFIG_PREVIEW_ON, integer_value);
     g_config_values.preview_on = integer_value;
+#ifdef _TV
+    g_config_values.enabled_languages.push_back ("English");
+    g_config_values.enabled_languages.push_back ("Chinese");
+    g_config_values.enabled_languages.push_back ("Korean");
+    g_config_values.enabled_languages.push_back ("Japanese");
+    g_config_values.enabled_languages.push_back ("Hongkong");
+    g_config_values.selected_language = std::string ("English");
+#endif
 }
 
 void write_ise_config_values() {

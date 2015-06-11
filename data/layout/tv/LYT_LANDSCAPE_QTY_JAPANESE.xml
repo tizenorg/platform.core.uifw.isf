@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="1920" height="444" magnifier="false" key_width="101" key_height="68" key_spacing="14" row_spacing="14" hit_left="7" hit_right="7" hit_top="7" hit_bottom="7" label_type="QTY_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>ime_bg.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">ime_key_bg_1.png</rec>
+    <rec button="pressed">ime_bg.png</rec>
+    <rec button="disabled">ime_key_bg_1.png</rec>
+  </background_image>
+  <row x="162" y="30">
+    <key button_type="uiitem" label_type="QTY_DEFAULT_DISABLED" width="216">
+      <label>
+        <rec>Caps</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>CapsLock</rec>
+      </key_value>
+    </key>
+    <key>
+      <label>
+        <rec>1</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>2</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>3</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>4</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>5</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>6</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>7</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>8</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>9</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>0</rec>
+      </label>
+    </key>
+    <key key_type="control" use_repeat_key="true" width="216">
+      <image_label>
+        <rec>ime_icon_delete.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="162">
+    <key key_type="string" width="216">
+      <label>
+        <rec>，</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">q</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">w</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">e</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">r</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">t</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">y</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">u</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">i</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">o</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">p</rec>
+      </label>
+    </key>
+    <key key_type="control" custom_id="Enter" label_type="QTY_?123" width="216" height="151">
+      <label>
+        <rec>Enter</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="162">
+    <key key_type="modechange" label_type="QTY_?123" width="216">
+      <label>
+        <rec>123#&amp;</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>SYM_QTY_1</rec>
+      </key_value>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">a</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">s</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">d</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">f</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">g</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">h</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">j</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">k</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">l</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">ー</rec>
+      </label>
+      <key_value>
+        <rec>-</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="162">
+    <key key_type="modechange" width="216">
+      <image_label>
+        <rec>ime_icon_global.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>NEXT_LANG</rec>
+      </key_value>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">z</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">x</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">c</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">v</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">b</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">n</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec auto_upper="true">m</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>@</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>.</rec>
+      </label>
+    </key>
+    <key>
+      <label>
+        <rec>/</rec>
+      </label>
+    </key>
+    <key key_type="control" label_type="QTY_?123" width="216">
+      <label>
+        <rec>Delete All</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>DeleteAll</rec>
+      </key_value>
+      <key_event>
+        <rec>65505</rec>
+      </key_event>
+    </key>
+  </row>
+  <row x="162">
+    <key key_type="control">
+      <image_label>
+        <rec>ime_icon_lmw.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Left</rec>
+      </key_value>
+    </key>
+    <key key_type="control">
+      <image_label>
+        <rec>ime_icon_rmw.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Right</rec>
+      </key_value>
+    </key>
+    <key key_type="string" width="216">
+      <label>
+        <rec>http://</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" width="216">
+      <label>
+        <rec>www.</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" width="216">
+      <label>
+        <rec>.com</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+    </key>
+    <key key_type="control" label_type="QTY_DEFAULT_DISABLED" width="446">
+      <label>
+        <rec>_LANGUAGE_</rec>
+      </label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="control" width="216">
+      <image_label>
+        <rec>ime_icon_hide.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">ime_key_bg_2.png</rec>
+        <rec button="pressed">ime_bg.png</rec>
+        <rec button="disabled">ime_key_bg_2.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Hide</rec>
+      </key_value>
+      <key_event>
+        <rec>65505</rec>
+      </key_event>
+    </key>
+  </row>
+</layout>

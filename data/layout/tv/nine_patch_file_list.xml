@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<nine_patch_file_list>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_btn_01.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_btn_02.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_btn_press.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_key_btn_01.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_key_btn_02.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_key_btn_press.png</file>
+  <file left="13" right="13" top="9" bottom="9">B09_bubble_bg.png</file>
+  <file left="11" right="10" top="38" bottom="37">B09_bubble_bg_02.png</file>
+  <file left="11" right="10" top="38" bottom="37">B09_popup_bg.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_l_btn_01.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_l_btn_02.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_l_btn_press.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_btn_doubletab.png</file>
+  <file left="17" right="16" top="15" bottom="18">B09_Qwerty_btn_highlight.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_bottom_center.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_bottom_left.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_bottom_right.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_center.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_left.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_middle_center.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_middle_left.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_middle_right.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_right.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_top_center.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_top_left.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_top_right.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_sym_btn.png</file>
+  <file left="11" right="10" top="11" bottom="10">popup_line_sym_btn_press.png</file>
+  <!--
+  <file left="7" right="7" top="9" bottom="9">B09_bg_Popup.png</file>
+  <file left="7" right="7" top="9" bottom="9">B09_bubble_bg.png</file>
+  <file left="4" right="4" top="4" bottom="5">B09_key_btn_01.png</file>
+  <file left="4" right="4" top="4" bottom="5">B09_key_btn_02.png</file>
+  <file left="4" right="4" top="4" bottom="5">B09_key_btn_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button1_nml.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button1_function.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button1_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button1_press_drag.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button1_press_drag_back.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button1_press_drag_back_Diagonal.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button2_nml.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button2_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button2_press_drag.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_moa_button2_press_drag_back.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_qwerty_button_nml.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_qwerty_button_function.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_qwerty_button_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_qwerty_button_capslock_press.png</file>
+  <file left="10" right="10" top="10" bottom="10">textinput_qwerty_press_bubble.png</file>
+  <file left="10" right="10" top="10" bottom="10">textinput_qwerty_press_bubble_yellow.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_bottom_button_nml.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_bottom_button_function.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_bottom_button_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_popup_button_nml.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_popup_button_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_3x4_button_nml.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_3x4_button_press.png</file>
+  <file left="3" right="3" top="3" bottom="3">textinput_3x4_button_function.png</file>
+  -->
+</nine_patch_file_list>

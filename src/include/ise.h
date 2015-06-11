@@ -29,7 +29,12 @@
 #define LOCALEDIR "/usr/share/locale"
 
 #define PRIMARY_LATIN_LANGUAGE "English"
+
+#ifdef _TV
+#define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/tv/main_entry.xml"
+#else
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry.xml"
+#endif
 
 #define DEFAULT_KEYBOARD_ISE_UUID "org.tizen.ise-engine-default"
 
@@ -72,6 +77,30 @@ typedef struct {
     const sclboolean force_latin;
 } ISE_DEFAULT_VALUES;
 
+#ifdef _TV
+const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NORMAL */
+    {"SYM_QTY_1",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NUMBER */
+    {"",                "EMAIL",        TRUE },     /* ISE_LAYOUT_STYLE_EMAIL */
+    {"",                "URL",          TRUE },     /* ISE_LAYOUT_STYLE_URL */
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_PHONENUMBER */
+    {"NUMONLY_QTY",     "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_IP */
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_MONTH */
+    {"NUMONLY_QTY",     "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY */
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_INVALID */
+    {"SYM_QTY_1",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_HEX */
+    {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_TERMINAL */
+    {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_PASSWORD */
+    {"NUMONLY_QTY",     "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_DATETIME */
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_EMOTICON */
+
+    {"NUMONLY_QTY",     "DEFAULT",   FALSE },       /* ISE_LAYOUT_STYLE_NUMBERONLY_SIG */
+    {"NUMONLY_QTY",     "DEFAULT",   FALSE },       /* ISE_LAYOUT_STYLE_NUMBERONLY_DEC */
+    {"NUMONLY_QTY",     "DEFAULT",   FALSE },       /* ISE_LAYOUT_STYLE_NUMBERONLY_SIGDEC */
+
+    {"NUMONLY_QTY",     "DEFAULT",   FALSE },       /* ISE_LAYOUT_STYLE_PASSWD_3X4 */
+};
+#else
 const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
     {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NORMAL */
     {"SYM_QTY_1",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NUMBER */
@@ -94,6 +123,7 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
 
     {"PASSWD_3X4",         "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_PASSWD_3X4 */
 };
+#endif
 
 #define ISE_RETURN_KEY_LABEL_DONE   gettext("IDS_IME_SK_DONE_ABB")
 #define ISE_RETURN_KEY_LABEL_GO     gettext("IDS_IME_BUTTON_GO_M_KEYBOARD")
@@ -139,6 +169,7 @@ class CCoreEventCallback : public ISCLCoreEventCallback
 
     void on_set_caps_mode(sclu32 mode);
     void on_update_cursor_position(sclint ic, const sclchar *ic_uuid, sclint cursor_pos);
+    void on_update_surrounding_text(sclint ic, const sclchar *text, sclint cursor);
 
     void on_set_return_key_type(sclu32 type);
     void on_set_return_key_disable(sclu32 disabled);

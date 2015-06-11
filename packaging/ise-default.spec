@@ -78,7 +78,11 @@ cp LICENSE %{buildroot}/usr/share/license/%{name}
 
 %make_install
 
-%files 
+%post
+
+%postun
+
+%files
 %defattr(-,root,root,-)
 %{_libdir}/scim-1.0/1.4.0/Helper/ise-default.so
 %{_datadir}/isf/ise/ise-default/*

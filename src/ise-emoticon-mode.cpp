@@ -32,10 +32,14 @@
 #include <dlog.h>
 
 #define EVAS_CANDIDATE_LAYER    32000
-#define ISE_WIDTH_PORT          540
+
+#ifdef _TV
+#define ISE_HEIGHT_PORT         398
+#define ISE_HEIGHT_LAND         398
+#else
 #define ISE_HEIGHT_PORT         333
-#define ISE_WIDTH_LAND          960
 #define ISE_HEIGHT_LAND         238
+#endif
 
 #define EMOTICON_DIR "/usr/share/emoticons/"
 #define EMOTICON_EDJ_FILE_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/layout_keypad.edj"
@@ -169,6 +173,9 @@ void ise_write_recent_emoticon_list_to_scim(void)
 
 void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_degree, const bool is_candidate_on, void *main_window)
 {
+#ifdef _TV
+    return;
+#endif
     //xt9_send_flush(0);
     ise_init_emoticon_list();
     ise_set_private_key_for_emoticon_mode (emoticon_group);

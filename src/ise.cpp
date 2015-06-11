@@ -327,6 +327,12 @@ void CCoreEventCallback::on_update_cursor_position(sclint ic, const sclchar *ic_
     ise_update_cursor_position(cursor_pos);
 }
 
+void CCoreEventCallback::on_update_surrounding_text(sclint ic, const sclchar *text, sclint cursor)
+{
+    LOGD ("surrounding text:%s, cursor=%d", text, cursor);
+    g_core.delete_surrounding_text (-cursor, strlen (text));
+}
+
 void CCoreEventCallback::on_set_return_key_type (sclu32 type)
 {
     ise_set_return_key_type(type);
@@ -655,11 +661,27 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                 commit_timeout (NULL);
                 if (event_desc.key_event) {
                     const char *long_shift = "LongShift";
+                    const char *caps_lock = "CapsLock";
+                    const char *delete_all = "DeleteAll";
+                    const char *hide_panel = "Hide";
                     if (strncmp (event_desc.key_value, long_shift, strlen (long_shift)) == 0) {
                         LOGD ("shift key is longpress");
                         g_ui->set_shift_state (SCL_SHIFT_STATE_ON);
                         g_need_send_shift_event = TRUE;
                         //ise_send_event (MVK_Shift_Lock, KEY_MASK_NULL);
+                    } else if (strncmp (event_desc.key_value, caps_lock, strlen (caps_lock)) == 0) {
+                        if (g_ui->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
+                            g_ui->set_shift_state (SCL_SHIFT_STATE_LOCK);
+                            ise_send_event (MVK_Shift_Lock, KEY_MASK_NULL);
+                        } else {
+                            g_ui->set_shift_state (SCL_SHIFT_STATE_OFF);
+                            ise_send_event (MVK_Shift_Off, KEY_MASK_NULL);
+                        }
+                        //g_need_send_shift_event = TRUE;
+                    } else if (strncmp (event_desc.key_value, delete_all, strlen (delete_all)) == 0) {
+                        g_core.get_surrounding_text (NULL, -1, -1);
+                    } else if (strncmp (event_desc.key_value, hide_panel, strlen (hide_panel)) == 0) {
+                        ::ise_hide();
                     } else {
                         ise_send_event(event_desc.key_event, KEY_MASK_NULL);
                         if (event_desc.key_event == MVK_Shift_L) {
@@ -678,7 +700,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
             }
             if (_cm_popup_opened) {
                 if (strcmp (event_desc.key_value, USER_KEYSTRING_EMOTICON) == 0) {
-                    sclint id = ise_get_cm_key_id (USER_KEYSTRING_EMOTICON);
+                    scluint id = ise_get_cm_key_id (USER_KEYSTRING_EMOTICON);
                     if (id != _current_cm_key_id) {
                         _current_cm_key_id = id;
                         ise_set_cm_private_key (_current_cm_key_id);
@@ -711,7 +733,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
             }
             if (_cm_popup_opened) {
                 if (strcmp (event_desc.key_value, USER_KEYSTRING_OPTION) == 0) {
-                    sclint id = ise_get_cm_key_id (USER_KEYSTRING_OPTION);
+                    scluint id = ise_get_cm_key_id (USER_KEYSTRING_OPTION);
                     if (id != _current_cm_key_id) {
                         _current_cm_key_id = id;
                         ise_set_cm_private_key (_current_cm_key_id);
@@ -1119,11 +1141,13 @@ void
 ise_update_cursor_position(int position)
 {
     if (g_ui) {
+#ifndef _TV
         if (position > 0) {
             g_ui->set_string_substitution("www.", ".com");
         } else {
             g_ui->unset_string_substitution("www.");
         }
+#endif
     }
 }
 
