@@ -1086,6 +1086,9 @@ ise_destroy()
         delete g_candidate;
         g_candidate = NULL;
     }
+
+    /* This is necessary. If this is not called, 3rd party IME might have auto period input regardless its settings */
+    vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, false);
 }
 
 // when it is the time to auto_cap, the
