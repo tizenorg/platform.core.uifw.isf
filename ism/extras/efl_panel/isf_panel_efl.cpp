@@ -6217,20 +6217,6 @@ static void launch_default_soft_keyboard (keynode_t *key, void* data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    char *csc_initial_uuid = vconf_get_str ("db/isf/csc_initial_uuid");
-    if (csc_initial_uuid) {
-        if (strlen (csc_initial_uuid) > 0) {
-            _config->write (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (csc_initial_uuid));
-            scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (csc_initial_uuid));
-
-            _config->flush ();
-            scim_global_config_flush ();
-        }
-        free (csc_initial_uuid);
-
-        vconf_set_str ("db/isf/csc_initial_uuid", "");
-    }
-
     /* Start default ISE */
     change_keyboard_mode (TOOLBAR_HELPER_MODE);
 }

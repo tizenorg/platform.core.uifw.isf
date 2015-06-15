@@ -259,7 +259,6 @@ public:
             return false;
         }
 
-        vconf_set_str ("db/isf/csc_initial_uuid", uuid);
         return true;
     }
 
