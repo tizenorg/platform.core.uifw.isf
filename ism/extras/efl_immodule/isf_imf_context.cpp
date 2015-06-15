@@ -596,7 +596,12 @@ _key_down_cb (void *data, int type, void *event)
                 _panel_client.process_key_event (key, (int*) pvoid);
                 _panel_client.send ();
             }
-            return ECORE_CALLBACK_DONE;
+            if (ret) {
+                return ECORE_CALLBACK_DONE;
+            }
+            else if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
+                return ECORE_CALLBACK_DONE;
+            }
         }
     }
     return ECORE_CALLBACK_PASS_ON;
@@ -637,11 +642,14 @@ _key_up_cb (void *data, int type, void *event)
                 _panel_client.process_key_event (key, (int*) pvoid);
                 _panel_client.send ();
             }
-            if (!ret) {
+            if (ret) {
+                return ECORE_CALLBACK_DONE;
+            }
+            else if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 isf_imf_context_reset (active_ctx);
                 isf_imf_context_input_panel_instant_hide (active_ctx);
+                return ECORE_CALLBACK_DONE;
             }
-            return ECORE_CALLBACK_DONE;
         }
     }
 
@@ -2109,6 +2117,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
 
     if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
+        scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
         timestamp = ev->timestamp;
 
         /* Hardware input detect code */
@@ -2153,12 +2162,14 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
+        scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
         key.mask |= _ecore_imf_modifier_to_scim_mask (ev->modifiers);
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);
     } else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
+        scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
         key.mask = SCIM_KEY_ReleaseMask;
         key.mask |= _ecore_imf_modifier_to_scim_mask (ev->modifiers);
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);

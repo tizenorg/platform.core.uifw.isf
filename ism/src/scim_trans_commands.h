@@ -650,6 +650,7 @@ const int ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE            = 1121;
 const int ISM_TRANS_CMD_SET_INPUT_MODE                    = 1122;
 const int ISM_TRANS_CMD_SET_INPUT_HINT                    = 1123;
 const int ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION             = 1124;
+const int ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW            = 1125;
 
 /* ISE/Panel to IMControl */
 const int ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT          = 1151;

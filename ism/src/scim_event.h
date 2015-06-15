@@ -2079,6 +2079,15 @@ EAPI KeyboardLayout scim_get_default_keyboard_layout ();
 EAPI void scim_set_default_keyboard_layout (KeyboardLayout layout);
 
 /**
+ * @brief Set a device name of KeyEvent.
+ * @param key - the result KeyEvent will be stored here.
+ * @param str - the device name.
+ * @param dev_class - the device class.
+ * @param dev_subclass - the device subclass.
+ */
+EAPI void scim_set_device_info (KeyEvent &key, String str, uint16 dev_class, uint16 dev_subclass);
+
+/**
  * @brief The class to store a keyboard event.
  *
  * A keyboard event contains a key code and a set of key masks.
@@ -2093,6 +2102,9 @@ struct EAPI KeyEvent
     uint32 code;    /**< key code */
     uint16 mask;    /**< modifier keys' mask */
     uint16 layout;  /**< keyboard layout identifier */
+    String dev_name;  /**< The device name of the key pressed */
+    uint16 dev_class; /**< The device class of the key pressed */
+    uint16 dev_subclass; /**< The device subclass of the key pressed */
 
     /**
      * @brief Default constructor.
@@ -2100,8 +2112,8 @@ struct EAPI KeyEvent
      * @param m - the key masks.
      * @param l - the keyboard layout
      */
-    KeyEvent (uint32 c = 0, uint16 m = 0, uint16 l = 0)
-        : code (c), mask (m), layout (l) { }
+    KeyEvent (uint32 c = 0, uint16 m = 0, uint16 l = 0, uint16 dc = 0, uint16 ds = 0, String d = "")
+        : code (c), mask (m), layout (l), dev_name (d), dev_class (dc), dev_subclass (ds) { }
 
     /**
      * @brief Constructor, construct a key event from a string.
@@ -2109,7 +2121,7 @@ struct EAPI KeyEvent
      * @param str the key string, eg. "Control+space"
      */
     KeyEvent (const String &str)
-        : code (0), mask (0), layout (0) { scim_string_to_key (*this, str); }
+        : code (0), mask (0), layout (0), dev_name (""), dev_class (0), dev_subclass (0) { scim_string_to_key (*this, str); }
 
     /**
      * @brief Check if this KeyEvent is empty.

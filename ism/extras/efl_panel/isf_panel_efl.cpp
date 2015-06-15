@@ -157,6 +157,7 @@ static void       ui_candidate_show                    (bool bSetVirtualKbd = tr
 static void       ui_create_candidate_window           (void);
 static void       update_table                         (int table_type, const LookupTable &table);
 static void       ui_candidate_window_close_button_cb  (void *data, Evas *e, Evas_Object *button, void *event_info);
+static void       set_soft_candidate_geometry          (int x, int y, int width, int height);
 static void       set_highlight_color                  (Evas_Object *item, uint32 nForeGround, uint32 nBackGround, bool bSetBack);
 static void       ui_tts_focus_rect_hide               (void);
 
@@ -265,6 +266,8 @@ static int                _candidate_x                      = 0;
 static int                _candidate_y                      = 0;
 static int                _candidate_width                  = 0;
 static int                _candidate_height                 = 0;
+static int                _soft_candidate_width             = 0;
+static int                _soft_candidate_height            = 0;
 static int                _candidate_valid_height           = 0;
 
 static bool               _candidate_area_1_visible         = false;
@@ -965,9 +968,15 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
 
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         ise_rect.pos_x = 0;
-        if (_candidate_window && _candidate_state == WINDOW_STATE_SHOW) {
-            ise_rect.width  = _candidate_width;
-            ise_rect.height = _candidate_height;
+
+        if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
+            if (_candidate_window && _candidate_state == WINDOW_STATE_SHOW) {
+                ise_rect.width  = _candidate_width;
+                ise_rect.height = _candidate_height;
+            }
+        } else if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
+                ise_rect.width  = _soft_candidate_width;
+                ise_rect.height = _soft_candidate_height;
         }
         int angle = efl_get_app_window_angle ();
         if (angle == 90 || angle == 270)
@@ -1392,6 +1401,8 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 _ise_state  = WINDOW_STATE_HIDE;
                 _candidate_mode      = FIXED_CANDIDATE_WINDOW;
                 _candidate_port_line = ONE_LINE_CANDIDATE;
+                _soft_candidate_width = 0;
+                _soft_candidate_height = 0;
                 if (_candidate_window)
                     ui_create_candidate_window ();
 
@@ -3033,6 +3044,31 @@ static void ui_settle_candidate_window (void)
     }
 }
 
+/**
+ * @brief Set soft candidate geometry.
+ *
+ * @param x      The x position in screen.
+ * @param y      The y position in screen.
+ * @param width  The candidate window width.
+ * @param height The candidate window height.
+ */
+static void set_soft_candidate_geometry (int x, int y, int width, int height)
+{
+    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << x << " y:" << y << " width:" << width << " height:" << height << "...\n";
+
+    LOGD ("candidate geometry x: %d , y: %d , width: %d , height: %d, _ise_state: %d, candidate_mode: %d", x, y, width, height, _ise_state, _candidate_mode);
+
+    if ((_candidate_mode != SOFT_CANDIDATE_WINDOW) || (_panel_agent->get_current_toolbar_mode () != TOOLBAR_KEYBOARD_MODE))
+        return;
+
+     _soft_candidate_width  = width;
+     _soft_candidate_height = height;
+
+     set_keyboard_geometry_atom_info (_app_window, get_ise_geometry());
+    _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+
+}
+
 //////////////////////////////////////////////////////////////////////
 // End of Candidate Functions
 //////////////////////////////////////////////////////////////////////
@@ -3642,6 +3678,8 @@ static void slot_set_candidate_style (int portrait_line, int mode)
     if ((portrait_line != _candidate_port_line) || (mode != _candidate_mode)) {
         _candidate_mode      = (ISF_CANDIDATE_MODE_T)mode;
         _candidate_port_line = (ISF_CANDIDATE_PORTRAIT_LINE_T)portrait_line;
+        _soft_candidate_width = 0;
+        _soft_candidate_height = 0;
 
         if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
             if (_candidate_window)
@@ -3760,8 +3798,14 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 
     LOGD ("x : %d , y : %d , width : %d , height : %d, _ise_state : %d", x, y, width, height, _ise_state);
 
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
+    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
+            /*IF ISE sent the ise_geometry infomation when the current_keyboard_mode is H/W mode and candidate_mode is SOFT_CANDIDATE,
+             It means that given geometry information is for the candidate window */
+            set_soft_candidate_geometry (x, y, width, height);
+        }
         return;
+    }
 
     _ise_width  = width;
     _ise_height = height;
@@ -4541,9 +4585,15 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
         info.pos_x = 0;
         info.width = 0;
         info.height = 0;
-        if (_candidate_window && _candidate_state == WINDOW_STATE_SHOW) {
-            info.width  = _candidate_width;
-            info.height = _candidate_height;
+
+        if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
+            if (_candidate_window && _candidate_state == WINDOW_STATE_SHOW) {
+                info.width  = _candidate_width;
+                info.height = _candidate_height;
+            }
+        } else if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
+            info.width  = _soft_candidate_width;
+            info.height = _soft_candidate_height;
         }
         int angle = efl_get_app_window_angle ();
         if (angle == 90 || angle == 270)
@@ -5300,6 +5350,8 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         else {
             uuid = default_uuid;
         }
+        _soft_candidate_width = 0;
+        _soft_candidate_height = 0;
         _ise_state = WINDOW_STATE_HIDE;
         _panel_agent->set_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE);
         _panel_agent->hide_helper (helper_uuid);
