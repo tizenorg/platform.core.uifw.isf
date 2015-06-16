@@ -290,9 +290,6 @@ if test "$ISF_HAS_TTS" = "yes"; then
   AC_DEFINE(HAVE_TTS,1,[Have TTS functions.])
 fi
 
-# Check security server
-PKG_CHECK_MODULES(SECURITY_SERVER, [security-server])
-
 # Check vconf library
 PKG_CHECK_MODULES(VCONF, [vconf],
                   [ISF_HAS_VCONF=yes],

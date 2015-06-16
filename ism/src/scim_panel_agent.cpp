@@ -65,7 +65,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "security-server.h"
 
 
 EAPI scim::CommonLookupTable g_isf_candidate_table;
@@ -3457,21 +3456,6 @@ private:
         unlock ();
     }
 
-    static bool _check_privilege_by_sockfd (int client_id, const char *mode, bool need_failed_reply, int cmd)
-    {
-        int priv_ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", mode);
-        if (priv_ret != SECURITY_SERVER_API_SUCCESS && need_failed_reply) {
-            Socket client_socket (client_id);
-            Transaction trans;
-            trans.clear ();
-            trans.put_command (SCIM_TRANS_CMD_REPLY);
-            trans.put_command (SCIM_TRANS_CMD_FAIL);
-            trans.write_to_socket (client_socket);
-            ISF_SAVE_LOG ("Failed to deal with cmd(%d) due to privilege check failed, error code(%d)\n", cmd, priv_ret);
-        }
-        return priv_ret == SECURITY_SERVER_API_SUCCESS;
-    }
-
     void socket_receive_callback                (SocketServer   *server,
                                                  const Socket   &client)
     {
@@ -3963,11 +3947,9 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("setting active ise\n");
                     set_active_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    ISF_SAVE_LOG ("setting initial ise\n");
                     set_initial_ise_by_uuid (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
@@ -3975,14 +3957,6 @@ private:
                 else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO)
                     get_all_helper_ise_info (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO) {
-                    ISF_SAVE_LOG ("checking sockfd privilege...\n");
-                    int ret = security_server_check_privilege_by_sockfd (client_id, "isf::manager", "w");
-                    if (ret == SECURITY_SERVER_API_ERROR_ACCESS_DENIED) {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api error. Access denied\n";
-                    } else {
-                        SCIM_DEBUG_MAIN (2) <<"Security server api success\n";
-                    }
-                    ISF_SAVE_LOG ("enable helper ise\n");
                     set_enable_helper_ise_info (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION)
@@ -3996,14 +3970,10 @@ private:
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW)
                     show_ise_option_window (client_id);
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST) {
-                    if (_check_privilege_by_sockfd (client_id, "x", false, cmd)) {
-                        show_helper_ise_list (client_id);
-                    }
+                    show_helper_ise_list (client_id);
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR) {
-                    if (_check_privilege_by_sockfd (client_id, "x", false, cmd)) {
-                        show_helper_ise_selector (client_id);
-                    }
+                    show_helper_ise_selector (client_id);
                 }
             }
 
