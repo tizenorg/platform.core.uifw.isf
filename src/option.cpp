@@ -188,7 +188,7 @@ static void reset_settings_popup (void *data, Evas_Object *obj, void *event_info
 {
     Evas_Object *popup = elm_popup_add (elm_object_top_widget_get (obj));
     elm_popup_align_set (popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-    ea_object_event_callback_add (popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+    eext_object_event_callback_add (popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
     evas_object_size_hint_weight_set (popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     elm_object_domain_translatable_text_set (popup, PACKAGE, RESET_SETTINGS_POPUP_TEXT);
     elm_object_domain_translatable_part_text_set (popup, "title,text", PACKAGE, RESET_SETTINGS_POPUP_TITLE_TEXT);
