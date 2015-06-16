@@ -167,6 +167,7 @@ class CCoreEventCallback : public ISCLCoreEventCallback
     void on_set_accessibility_state(const sclboolean state);
     void on_set_rotation_degree(sclint degree);
 
+    void on_set_layout(sclu32 layout);
     void on_set_caps_mode(sclu32 mode);
     void on_update_cursor_position(sclint ic, const sclchar *ic_uuid, sclint cursor_pos);
     void on_update_surrounding_text(sclint ic, const sclchar *text, sclint cursor);

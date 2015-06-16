@@ -317,6 +317,20 @@ void CCoreEventCallback::on_set_rotation_degree(sclint degree)
     }
 }
 
+void CCoreEventCallback::on_set_layout(sclu32 layout)
+{
+    LOGD ("layout=%d", layout);
+    /* Check if the layoutIdx is in the valid range */
+    if (layout < ISE_LAYOUT_STYLE_MAX) {
+        if (g_keyboard_state.layout != layout) {
+            g_keyboard_state.need_reset = TRUE;
+        }
+        g_keyboard_state.layout = layout;
+    }
+    if (g_keyboard_state.visible_state)
+        ise_show (g_keyboard_state.ic);
+}
+
 void CCoreEventCallback::on_set_caps_mode(sclu32 mode)
 {
     ise_set_caps_mode(mode);
