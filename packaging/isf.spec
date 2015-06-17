@@ -135,6 +135,7 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 
 %files -f isf.lang
 %manifest %{name}.manifest
+/etc/udev/rules.d/99-input.rules
 %defattr(-,root,root,-)
 %dir /etc/scim/conf
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
