@@ -207,12 +207,16 @@ static Evas_Object* create_win (const char *name)
 {
     Evas_Object *eo = NULL;
     const int rots[4] = { 0, 90, 180, 270 };
+    int w, h;
 
     eo = elm_win_util_standard_add (name, name);
     if (eo != NULL) {
         evas_object_smart_callback_add (eo, "delete,request",
                                         win_del, NULL);
-        elm_win_fullscreen_set (eo, EINA_TRUE);
+
+        elm_win_screen_size_get (eo, NULL, NULL, &w, &h);
+        LOGD ("resize window as %d x %d\n", w, h);
+        evas_object_resize (eo, w, h);
     }
 
     if (elm_win_wm_rotation_supported_get (eo)) {
