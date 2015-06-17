@@ -1,27 +1,3 @@
-/*
- * libwebsockets-test-server - libwebsockets test implementation
- *
- * Copyright (C) 2010-2011 Andy Green <andy@warmcat.com>
- *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation:
- *  version 2.1 of the License.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- *  MA  02110-1301  USA
- */
-#ifdef CMAKE_BUILD
-#include "lws_config.h"
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -37,22 +13,7 @@
 #include "websocketserver.h"
 #include "remote_input.h"
 
-#ifdef WIN32
-
-#ifdef EXTERNAL_POLL
-    #ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-    #endif
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #include <stddef.h>
-
-    #include "websock-w32.h"
-#endif
-
-#else // NOT WIN32
 #include <syslog.h>
-#endif
 
 #include <signal.h>
 
