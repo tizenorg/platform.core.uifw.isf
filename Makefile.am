@@ -59,6 +59,9 @@ pkgconfig_DATA          = isf.pc scim.pc \
 kbdmodechangerxmldir = @RO_PACKAGES_DIR@
 kbdmodechangerxml_DATA = org.tizen.isf-kbd-mode-changer.xml
 
+udevdir = /etc/udev/rules.d/
+udev_DATA = 99-input.rules
+
 ACLOCAL_AMFLAGS = -I ism/m4
 
 .PHONY: update-ChangeLog
