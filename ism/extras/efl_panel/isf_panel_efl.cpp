@@ -3806,7 +3806,7 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
-            /*IF ISE sent the ise_geometry infomation when the current_keyboard_mode is H/W mode and candidate_mode is SOFT_CANDIDATE,
+            /*IF ISE sent the ise_geometry information when the current_keyboard_mode is H/W mode and candidate_mode is SOFT_CANDIDATE,
              It means that given geometry information is for the candidate window */
             set_soft_candidate_geometry (x, y, width, height);
         }
