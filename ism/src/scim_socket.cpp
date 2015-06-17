@@ -601,7 +601,7 @@ public:
                 // Set correct permission for the socket file
 #ifdef DISABLE_MULTIPLE_SOCKETS
                 if (m_family == SCIM_SOCKET_LOCAL) {
-                    ::chmod (data_un->sun_path, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+                    ::chmod (data_un->sun_path, S_IRUSR | S_IWUSR | S_IROTH | S_IWOTH);
                 }
 #else
                 if (m_family == SCIM_SOCKET_LOCAL) {
