@@ -17,7 +17,6 @@
 
 #include <string.h>
 #include <sclcommon.h>
-#include <Ecore.h>
 #include <vconf.h>
 #include <vconf-keys.h>
 #include <glib.h>

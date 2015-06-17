@@ -13,13 +13,6 @@ BuildRequires:  gettext-tools
 BuildRequires:  edje-bin
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(elementary)
-%if %{with wayland}
-BuildRequires:  pkgconfig(ecore-wayland)
-BuildRequires:  pkgconfig(wayland-client)
-%else
-BuildRequires:  pkgconfig(utilX)
-BuildRequires:  pkgconfig(x11)
-%endif
 BuildRequires:  pkgconfig(isf)
 BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(dlog)

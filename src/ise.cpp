@@ -21,16 +21,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <vconf.h>
-
-#ifndef WAYLAND
-#include <Ecore_X.h>
-#endif
 #include <Ecore_IMF.h>
 #include <Elementary.h>
-
-#ifndef WAYLAND
-#include <X11/XF86keysym.h>
-#endif
 
 #include "sclui.h"
 #include "sclcore.h"
