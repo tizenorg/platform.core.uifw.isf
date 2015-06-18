@@ -41,11 +41,18 @@
 #include <glib.h>
 #include <Evas.h>
 #include <Ecore.h>
+#if HAVE_ECOREX
 #include <Ecore_X.h>
+#endif
+#if HAVE_ECOREWL
+#include <Ecore_Wayland.h>
+#endif
 #include <Ecore_File.h>
 #include <Elementary.h>
+#if HAVE_X11
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#endif
 #include <malloc.h>
 #include "scim_private.h"
 #include "scim.h"
@@ -236,8 +243,10 @@ static void       slot_stop_default_ise                (void);
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
 static Eina_Bool  efl_create_control_window            (void);
+#if HAVE_ECOREX
 static Ecore_X_Window efl_get_app_window               (void);
 static Ecore_X_Window efl_get_quickpanel_window        (void);
+#endif
 static void       change_keyboard_mode                 (TOOLBAR_MODE_T mode);
 static unsigned int get_ise_index                      (const String uuid);
 static bool       set_active_ise                       (const String &uuid, bool launch_ise);
@@ -389,10 +398,12 @@ static Ecore_Timer       *_off_prepare_done_timer           = NULL;
 static Ecore_Timer       *_candidate_hide_timer             = NULL;
 static Ecore_Timer       *_ise_hide_timer                   = NULL;
 
+#if HAVE_ECOREX
 static Ecore_X_Window     _ise_window                       = 0;
 static Ecore_X_Window     _app_window                       = 0;
 static Ecore_X_Window     _control_window                   = 0;
 static Ecore_X_Window     _input_win                        = 0;
+#endif
 
 static Ecore_File_Monitor *_inh_helper_ise_em               = NULL;
 static Ecore_File_Monitor *_inh_keyboard_ise_em             = NULL;
@@ -479,11 +490,14 @@ static void show_soft_keyboard (void)
         LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning", _panel_agent->get_current_toolbar_mode ());
         return;
     }
+#if HAVE_ECOREX
     if (_ise_state == WINDOW_STATE_HIDE) {
         ecore_x_test_fake_key_press ("XF86MenuKB");
     }
+#endif
 }
 
+#if HAVE_ECOREX
 static void get_input_window (void)
 {
     int win_ret = -1;
@@ -499,6 +513,7 @@ static void get_input_window (void)
         }
     }
 }
+#endif
 
 static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
 {
@@ -913,6 +928,7 @@ static struct rectinfo get_ise_geometry ()
         }
     } else {
         /* READ ISE's SIZE HINT HERE */
+#if HAVE_ECOREX
         int pos_x, pos_y, width, height;
         if (ecore_x_e_window_rotation_geometry_get (_ise_window, angle,
                 &pos_x, &pos_y, &width, &height)) {
@@ -953,6 +969,13 @@ static struct rectinfo get_ise_geometry ()
             width = 0;
             height = 0;
         }
+#else
+        // FIXME: Get the ISE's SIZE.
+        info.pos_x = 0;
+        info.pos_y = 0;
+        info.width = 0;
+        info.height = 0;
+#endif
     }
 
     _ise_width  = info.width;
@@ -961,6 +984,7 @@ static struct rectinfo get_ise_geometry ()
     return info;
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Set keyboard geometry for autoscroll.
  *        This includes the ISE geometry together with candidate window
@@ -1027,6 +1051,7 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
         }
     }
 }
+#endif
 
 /**
  * @brief Get ISE index according to uuid.
@@ -1531,8 +1556,9 @@ static void ui_candidate_window_resize (int new_width, int new_height)
             (_ise_height > 0 && (_candidate_height - height) > _ise_height) ||
             ((_candidate_angle == 90 || _candidate_angle == 270) && (_ise_width < _screen_height)) ||
             ((_candidate_angle == 0  || _candidate_angle == 180) && (_ise_width > _screen_width ))) {
-
+#if HAVE_ECOREX
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
+#endif
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
     }
@@ -1561,7 +1587,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
             land_height = _candidate_land_height_max_2;
         }
     }
-
+#if HAVE_ECOREX
     LOGD ("ecore_x_e_window_rotation_geometry_set (_candidate_window), port (%d, %d), land (%d, %d)\n",
             port_width, port_height, land_width, land_height);
 
@@ -1573,6 +1599,9 @@ static void ui_candidate_window_resize (int new_width, int new_height)
             180, 0, 0, port_width, port_height);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
             270, 0, 0, land_height, land_width);
+#else
+    // FIXME: ECORE_X dependency.
+#endif
 }
 
 /**
@@ -1588,6 +1617,7 @@ static void ui_candidate_window_adjust (void)
     int x, y, width, height;
 
     /* Get candidate window size */
+#if HAVE_ECOREX
     if (_candidate_angle == 90 || _candidate_angle == 270) {
         ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
                 &x, &y, &height, &width);
@@ -1595,6 +1625,11 @@ static void ui_candidate_window_adjust (void)
         ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
                 &x, &y, &width, &height);
     }
+#else
+    // FIXME:
+    width = _candidate_width;
+    height = _candidate_height;
+#endif
 
     if (_aux_area_visible && _candidate_area_2_visible) {
         evas_object_show (_aux_line);
@@ -1839,11 +1874,12 @@ static Eina_Bool off_prepare_done_timeout (void *data)
 
     /* WMSYNC, #8 Let the Window Manager to actually hide keyboard window */
     // WILL_HIDE_REQUEST_DONE Ack to WM
+#if HAVE_ECOREX
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
     ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
     LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
-
+#endif
     _off_prepare_done_timer = NULL;
 
     return ECORE_CALLBACK_CANCEL;
@@ -1917,6 +1953,7 @@ static void delete_candidate_show_handler (void)
     }
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Callback function for window show completion event
  *
@@ -1961,6 +1998,7 @@ static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
 
     return ECORE_CALLBACK_CANCEL;
 }
+#endif
 
 /**
  * @brief Show candidate window.
@@ -2002,6 +2040,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         _candidate_state = WINDOW_STATE_WILL_SHOW;
     }
 
+#if HAVE_ECOREX
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         /* WMSYNC, #3 Clear the existing application's conformant area and set transient_for */
         // Unset conformant area
@@ -2014,17 +2053,20 @@ static void ui_candidate_show (bool bSetVirtualKbd)
             _app_window = current_app_window;
         }
     }
+
     if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
         if (bSetVirtualKbd) {
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
         }
     }
+    efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
+#endif
 
     ui_candidate_delete_check_size_timer ();
     _check_size_timer = ecore_timer_add (0.02, ui_candidate_check_size_timeout, NULL);
 
     SCIM_DEBUG_MAIN (3) << "    Show candidate window\n";
-    efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
+
     if (_ise_state == WINDOW_STATE_SHOW) {
         edje_object_file_set (_more_btn, _candidate_edje_file.c_str (), "more_button");
         edje_object_file_set (_close_btn, _candidate_edje_file.c_str (), "close_button");
@@ -2041,6 +2083,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         }
     }
 
+#if HAVE_ECOREX
     if (_candidate_state != WINDOW_STATE_SHOW) {
         if (_candidate_show_handler) {
             LOGD ("Was still waiting for CANDIDATE_WINDOW_SHOW....");
@@ -2049,7 +2092,9 @@ static void ui_candidate_show (bool bSetVirtualKbd)
             LOGD ("Registering ECORE_X_EVENT_WINDOW_SHOW event, %d", _candidate_state);
             _candidate_show_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_SHOW, x_event_window_show_cb, NULL);
         }
-    } else {
+    } else
+#endif
+    {
         LOGD ("The candidate window was already in SHOW state, update geometry information");
         _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         _panel_agent->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
@@ -2104,6 +2149,7 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
             _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
             /* FIXME : should check if bSetVirtualKbd flag is really needed in this case */
+#if HAVE_ECOREX
             if (_ise_state == WINDOW_STATE_SHOW) {
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
             } else {
@@ -2111,6 +2157,7 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
                     set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 }
             }
+#endif
             if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                 _panel_agent->update_input_panel_event
                     ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
@@ -2708,6 +2755,7 @@ static void ui_create_native_candidate_window (void)
             _candidate_width  = _candidate_port_width;
             _candidate_height = _candidate_port_height_min;
         }
+#if HAVE_ECOREX
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 0, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
@@ -2716,7 +2764,7 @@ static void ui_create_native_candidate_window (void)
                 180, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 270, 0, 0, _candidate_land_height_min, _candidate_land_width);
-
+#endif
         /* Add dim background */
         Evas_Object *dim_bg = elm_bg_add (_candidate_window);
         evas_object_color_set (dim_bg, 0, 0, 0, 153);
@@ -2840,10 +2888,11 @@ static void ui_create_candidate_window (void)
     ui_create_native_candidate_window ();
 
     unsigned int set = 1;
+#if HAVE_ECOREX
     ecore_x_window_prop_card32_set (elm_win_xwindow_get (_candidate_window),
             ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
             &set, 1);
-
+#endif
     int angle = efl_get_app_window_angle ();
     if (_candidate_angle != angle) {
         _candidate_angle = angle;
@@ -2945,11 +2994,12 @@ static void ui_settle_candidate_window (void)
     /* Get candidate window position */
     ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
 
+#if HAVE_ECOREX
     if (_candidate_angle == 90 || _candidate_angle == 270)
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_height, &ise_width);
     else
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_width, &ise_height);
-
+#endif
     if ((_ise_state != WINDOW_STATE_SHOW && _ise_state != WINDOW_STATE_WILL_HIDE) ||
             (get_geometry_result == false) || (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
         ise_height = 0;
@@ -3079,8 +3129,9 @@ static void set_soft_candidate_geometry (int x, int y, int width, int height)
 
      _soft_candidate_width  = width;
      _soft_candidate_height = height;
-
+#if HAVE_ECOREX
      set_keyboard_geometry_atom_info (_app_window, get_ise_geometry());
+#endif
     _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
 
 }
@@ -3088,7 +3139,7 @@ static void set_soft_candidate_geometry (int x, int y, int width, int height)
 //////////////////////////////////////////////////////////////////////
 // End of Candidate Functions
 //////////////////////////////////////////////////////////////////////
-
+#if HAVE_ECOREX
 /**
  * @brief Set transient for app window.
  *
@@ -3128,7 +3179,7 @@ static int efl_get_window_rotate_angle (Ecore_X_Window win)
 
     return angle;
 }
-
+#endif
 /**
  * @brief Get angle for app window.
  *
@@ -3139,8 +3190,12 @@ static int efl_get_window_rotate_angle (Ecore_X_Window win)
 static int efl_get_app_window_angle ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     return efl_get_window_rotate_angle (efl_get_app_window ());
+#else
+    //FIXME:
+    return 0;
+#endif
 }
 
 /**
@@ -3153,8 +3208,12 @@ static int efl_get_app_window_angle ()
 static int efl_get_ise_window_angle ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     return efl_get_window_rotate_angle (_ise_window);
+#else
+    //FIXME:
+    return 0;
+#endif
 }
 
 /**
@@ -3165,8 +3224,12 @@ static int efl_get_ise_window_angle ()
 static int efl_get_quickpanel_window_angle ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     return efl_get_window_rotate_angle (efl_get_quickpanel_window ());
+#else
+    //FIXME:
+    return 0;
+#endif
 }
 
 /**
@@ -3178,7 +3241,9 @@ static int efl_get_quickpanel_window_angle ()
 static void efl_set_showing_effect_for_app_window (Evas_Object *win, const char* strEffect)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+#if HAVE_ECOREX
     ecore_x_icccm_name_class_set (elm_win_xwindow_get (static_cast<Evas_Object*>(win)), strEffect, "ISF");
+#endif
 }
 
 /**
@@ -3207,6 +3272,7 @@ static Evas_Object *efl_create_window (const char *strWinName, const char *strEf
     return win;
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Create elementary control window.
  *
@@ -3368,7 +3434,7 @@ static Eina_Bool efl_get_default_zone_geometry_info (Ecore_X_Window root, uint *
 
     return ret;
 }
-
+#endif
 /**
  * @brief Get screen resolution.
  *
@@ -3378,7 +3444,7 @@ static Eina_Bool efl_get_default_zone_geometry_info (Ecore_X_Window root, uint *
 static void efl_get_screen_resolution (int &width, int &height)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     static Evas_Coord scr_w = 0, scr_h = 0;
 
     if (scr_w == 0 || scr_h == 0) {
@@ -3393,6 +3459,11 @@ static void efl_get_screen_resolution (int &width, int &height)
 
     width  = scr_w;
     height = scr_h;
+#else
+    //FIXME:
+    width = 720;
+    height = 1280;
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -3511,9 +3582,9 @@ static void hide_ise ()
         _updated_hide_state_geometry = false;
     }
     _ise_angle = -1;
-
+#if HAVE_ECOREX
     ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
-
+#endif
     if (_candidate_window) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
             ui_candidate_hide (true, true, true);
@@ -3847,7 +3918,9 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
         _ise_reported_geometry.geometry.pos_y = y;
         _ise_reported_geometry.geometry.width = width;
         _ise_reported_geometry.geometry.height = height;
+#if HAVE_ECOREX
         set_keyboard_geometry_atom_info (_app_window, _ise_reported_geometry.geometry);
+#endif
         _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
     }
 }
@@ -3927,11 +4000,13 @@ static void slot_show_candidate_table (void)
     if (_candidate_window == NULL)
         ui_create_candidate_window ();
 
+#if HAVE_ECOREX
     if (_candidate_state == WINDOW_STATE_SHOW &&
         (_candidate_area_1_visible || _candidate_area_2_visible)) {
         efl_set_transient_for_app_window (elm_win_xwindow_get (_candidate_window));
         return;
     }
+#endif
 
     evas_object_show (_candidate_area_1);
     _candidate_area_1_visible = true;
@@ -5201,8 +5276,9 @@ static void slot_accept_connection (int fd)
 
     Ecore_Fd_Handler *panel_agent_read_handler = ecore_main_fd_handler_add (fd, ECORE_FD_READ, panel_agent_handler, NULL, NULL, NULL);
     _read_handler_list.push_back (panel_agent_read_handler);
-
+#if HAVE_ECOREX
     get_input_window ();
+#endif
 }
 
 /**
@@ -5239,7 +5315,7 @@ static void slot_exit (void)
 static void slot_register_helper_properties (int id, const PropertyList &props)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     /* WMSYNC, #2 Receiving X window ID from ISE */
     /* FIXME : We should add an API to set window id of ISE */
     Property prop = props[0];
@@ -5261,6 +5337,7 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
         delete_notification (&ise_selector_module_noti);
 #endif
     }
+#endif
 }
 
 static void slot_show_ise (void)
@@ -5277,7 +5354,7 @@ static void slot_show_ise (void)
     LOGD ("slot_show_ise ()\n");
 
     delete_ise_hide_timer ();
-
+#if HAVE_ECOREX
     /* WMSYNC, #3 Clear the existing application's conformant area and set transient_for */
     // Unset conformant area
     Ecore_X_Window current_app_window = efl_get_app_window ();
@@ -5320,6 +5397,11 @@ static void slot_show_ise (void)
     if (_ise_state != WINDOW_STATE_SHOW) {
         _ise_state = WINDOW_STATE_WILL_SHOW;
     }
+#else
+    _ise_angle = 0;
+    _candidate_angle = 0;
+    _ise_state = WINDOW_STATE_SHOW;
+#endif
 }
 
 static void slot_hide_ise (void)
@@ -5335,7 +5417,7 @@ static void slot_hide_ise (void)
 static void slot_will_hide_ack (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     /* WMSYNC, #8 Let the Window Manager to actually hide keyboard window */
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
@@ -5357,16 +5439,18 @@ static void slot_will_hide_ack (void)
         ecore_timer_del (_off_prepare_done_timer);
         _off_prepare_done_timer = NULL;
     }
+#endif
 }
 
 static void slot_candidate_will_hide_ack (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+#if HAVE_ECOREX
     LOGD ("candidate_will_hide_ack");
     if (_candidate_state == WINDOW_STATE_WILL_HIDE) {
         candidate_window_hide ();
     }
+#endif
 }
 
 static void slot_set_keyboard_mode (int mode)
@@ -5679,8 +5763,9 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
             _panel_agent->stop_helper (helper_uuid);
             _soft_keyboard_launched = false;
         }
-
+#if HAVE_ECOREX
         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+#endif
 
 #ifdef HAVE_NOTIFICATION
         notification_status_message_post (_("Input detected from hardware keyboard"));
@@ -5692,10 +5777,12 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         create_notification (&hwkbd_module_noti);
 #endif
 
+#if HAVE_ECOREX
         /* Set input detected property for isf setting */
         val = 1;
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+#endif
     } else if (mode == TOOLBAR_HELPER_MODE) {
         LOGD ("SOFTWARE KEYBOARD MODE");
         /* When switching back to S/W keyboard mode, let's hide candidate window first */
@@ -5715,10 +5802,12 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         delete_notification (&hwkbd_module_noti);
 #endif
 
+#if HAVE_ECOREX
         /* Set input detected property for isf setting */
         val = 0;
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+#endif
     }
     _config->reload ();
 }
@@ -5745,6 +5834,7 @@ static void _bt_cb_hid_state_changed (int result, bool connected, const char *re
 }
 #endif
 
+#if HAVE_ECOREX
 /**
  * @brief Callback function for ECORE_X_EVENT_WINDOW_PROPERTY.
  *
@@ -6141,10 +6231,13 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     return ECORE_CALLBACK_RENEW;
 }
 
+#endif
+
 Eina_Bool check_focus_out_by_popup_win ()
 {
-    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
     Eina_Bool ret = EINA_FALSE;
+#if HAVE_ECOREX
+    Ecore_X_Window focus_win = ecore_x_window_focus_get ();
     Ecore_X_Window_Type win_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 
     if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
@@ -6156,10 +6249,11 @@ Eina_Bool check_focus_out_by_popup_win ()
         win_type == ECORE_X_WINDOW_TYPE_NOTIFICATION) {
         ret = EINA_TRUE;
     }
-
+#endif
     return ret;
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Callback function for focus out event of application window
  *
@@ -6209,6 +6303,7 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
 
     return ECORE_CALLBACK_RENEW;
 }
+#endif
 
 /**
  * @brief : Launches default soft keyboard for performance enhancement (It's not mandatory)
@@ -6270,10 +6365,11 @@ int main (int argc, char *argv [])
 
     Ecore_Fd_Handler *panel_agent_read_handler = NULL;
     Ecore_Fd_Handler *helper_manager_handler   = NULL;
+#if HAVE_ECOREX
     Ecore_Event_Handler *xclient_message_handler  = NULL;
     Ecore_Event_Handler *xwindow_property_handler = NULL;
     Ecore_Event_Handler *xwindow_focus_out_handler = NULL;
-
+#endif
     perm_app_set_privilege ("isf", NULL, NULL);
 
     check_time ("\nStarting ISF Panel EFL...... ");
@@ -6468,10 +6564,12 @@ int main (int argc, char *argv [])
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
+#if HAVE_ECOREX
     if (!efl_create_control_window ()) {
         LOGW ("Failed to create control window\n");
         goto cleanup;
     }
+#endif
 
     efl_get_screen_resolution (_screen_width, _screen_height);
 
@@ -6522,10 +6620,11 @@ int main (int argc, char *argv [])
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
     }
-
+#if HAVE_ECOREX
     xclient_message_handler  = ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, x_event_client_message_cb, NULL);
     xwindow_property_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, x_event_window_property_cb, NULL);
     xwindow_focus_out_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_FOCUS_OUT, x_event_window_focus_out_cb, NULL);
+#endif
 
 #if HAVE_BLUETOOTH
     /* Register the callback function of Bluetooth connection */
@@ -6572,6 +6671,7 @@ int main (int argc, char *argv [])
         LOGW ("bt_deinitialize failed: %d", ret);
 #endif
 
+#if HAVE_ECOREX
     if (xclient_message_handler) {
         ecore_event_handler_del (xclient_message_handler);
         xclient_message_handler = NULL;
@@ -6586,6 +6686,7 @@ int main (int argc, char *argv [])
         ecore_event_handler_del (xwindow_focus_out_handler);
         xwindow_focus_out_handler = NULL;
     }
+#endif
 
     if (helper_manager_handler) {
         ecore_main_fd_handler_del (helper_manager_handler);
