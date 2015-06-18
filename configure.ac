@@ -475,11 +475,6 @@ AC_ARG_ENABLE(panel-efl,
               enable_panel_efl=no,
               enable_panel_efl=check)
 
-AC_ARG_ENABLE(wsm-efl,
-              [  --disable-wsm-efl       Do not build EFL Wsm],
-              enable_wsm_efl=no,
-              enable_wsm_efl=check)
-
 AC_ARG_ENABLE(wsc-efl,
               [  --disable-wsc-efl       Do not build EFL Wsc],
               enable_wsc_efl=no,
@@ -632,15 +627,6 @@ if test "$enable_panel_efl" != "no"; then
   fi
 fi
 
-ISF_BUILD_WSM_EFL=0
-if test "$enable_wsm_efl" != "no"; then
-  enable_wsm_efl=no
-  if test "$ISF_HAS_EFL" = "yes"; then
-    ISF_BUILD_WSM_EFL=1
-    enable_wsm_efl=yes
-  fi
-fi
-
 #if nothing needs libscim-gtkutils, just disable it
 if test "$enable_panel_gtk" != "yes"; then
   enable_gtk_utils=no
@@ -704,9 +690,6 @@ AM_CONDITIONAL(ISF_BUILD_WSC_EFL,
 
 AM_CONDITIONAL(ISF_BUILD_PANEL_EFL,
                 [test "$enable_panel_efl" = "yes"])
-
-AM_CONDITIONAL(ISF_BUILD_WSM_EFL,
-                [test "$enable_wsm_efl" = "yes"])
 
 AM_CONDITIONAL(ISF_BUILD_WITH_GCONF,
                 [test "$ISF_HAS_GCONF" = "yes"])
@@ -786,7 +769,6 @@ AC_CONFIG_FILES([Makefile
                  ism/extras/efl_immodule/Makefile
                  ism/extras/efl_panel/Makefile
                  ism/extras/kbd_mode_changer/Makefile
-                 ism/extras/efl_wsm/Makefile
                  ism/extras/efl_wsc/Makefile
                  ism/demos/Makefile
                  intltool-extract
@@ -828,7 +810,6 @@ Module options:
   EFL  IMModule            $enable_efl_immodule
   EFL  IMModule dir        $EFL_IM_MODULEDIR
   EFL  Panel GUI           $enable_panel_efl
-  EFL  Wsm GUI             $enable_wsm_efl
   EFL  Wsc GUI             $enable_wsc_efl
 
   Enable TrayIcon          $enable_tray_icon

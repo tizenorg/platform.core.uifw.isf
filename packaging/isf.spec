@@ -102,10 +102,8 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 		--disable-tray-icon \
 		--disable-filter-sctc \
 %if %{with wayland}
-        --disable-wsm-efl \
         --disable-efl-immodule \
 %else
-        --disable-wsm-efl \
         --disable-wsc-efl \
 %endif
 		--disable-frontend-x11 \
@@ -163,11 +161,10 @@ cat scim.lang > isf.lang
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
 %{_optexecdir}/isf-demo-efl
-%if %{with wayland}
 %{_bindir}/isf-panel-efl
+%if %{with wayland}
 %{_bindir}/isf-wsc-efl
 %else
-%{_bindir}/isf-panel-efl
 %{_libdir}/ecore_imf/modules/*/*/*.so
 %endif
 %{_bindir}/scim
