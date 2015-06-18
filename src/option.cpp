@@ -116,7 +116,7 @@ extern CSCLUI *g_ui;
 static Evas_Object* create_option_language_view(Evas_Object *naviframe);
 
 /* This function is called by setup_module.cpp : create_ise_setup_eo() also */
-Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe);
+Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe, SCLOptionWindowType type);
 
 static void language_selected(void *data, Evas_Object *obj, void *event_info);
 
