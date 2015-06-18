@@ -1,6 +1,5 @@
 /SupportedUnicodeLocales = en_US.UTF-8
 /DefaultPanelProgram = isf-panel-efl
-/DefaultPanelProgram2 = isf-wsm-efl
 /DefaultConfigModule = simple
 /DefaultSocketFrontEndAddress = local:/tmp/scim-socket-frontend
 /DefaultSocketIMEngineAddress = local:/tmp/scim-socket-frontend

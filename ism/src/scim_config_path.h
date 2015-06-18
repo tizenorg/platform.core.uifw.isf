@@ -70,11 +70,7 @@ namespace scim {
 #define SCIM_GLOBAL_CONFIG_DISABLED_IMENGINE_FACTORIES              "/DisabledIMEngineFactories"
 #define SCIM_GLOBAL_CONFIG_SUPPORTED_UNICODE_LOCALES                "/SupportedUnicodeLocales"
 #define SCIM_GLOBAL_CONFIG_DEFAULT_KEYBOARD_LAYOUT                  "/DefaultKeyboardLayout"
-#ifdef WAYLAND
-#define SCIM_GLOBAL_CONFIG_DEFAULT_PANEL_PROGRAM                    "/DefaultPanelProgram2"
-#else
 #define SCIM_GLOBAL_CONFIG_DEFAULT_PANEL_PROGRAM                    "/DefaultPanelProgram"
-#endif
 #define SCIM_GLOBAL_CONFIG_DEFAULT_CONFIG_MODULE                    "/DefaultConfigModule"
 #define SCIM_GLOBAL_CONFIG_DEFAULT_SOCKET_FRONTEND_ADDRESS          "/DefaultSocketFrontEndAddress"
 #define SCIM_GLOBAL_CONFIG_DEFAULT_SOCKET_IMENGINE_ADDRESS          "/DefaultSocketIMEngineAddress"
