@@ -226,9 +226,17 @@ PKG_CHECK_MODULES(ECOREX, [ecore-x],
                   [ISF_HAS_ECOREX=yes],
                   [ISF_HAS_ECOREX=no])
 
+if test "$ISF_HAS_ECOREX" = "yes"; then
+  AC_DEFINE(HAVE_ECOREX,1,[Have ecore-x functions.])
+fi
+
 PKG_CHECK_MODULES(WAYLAND, [ecore-wayland wayland-client >= 1.2.0 xkbcommon],
                   [ISF_HAS_ECOREWL=yes],
                   [ISF_HAS_ECOREWL=no])
+
+if test "$ISF_HAS_ECOREWL" = "yes"; then
+  AC_DEFINE(HAVE_ECOREWL,1,[Have ecore-wayland functions.])
+fi
 
 if test "$ISF_HAS_EFL" = "yes"; then
   EFL_LIBDIR=`$PKG_CONFIG --variable=libdir ecore-imf`
@@ -251,6 +259,10 @@ PKG_CHECK_MODULES(TZPLATFORM_CONFIG, [libtzplatform-config])
 PKG_CHECK_MODULES(X11, [x11],
                   [ISF_HAS_X11=yes],
                   [ISF_HAS_X11=no])
+
+if test "$ISF_HAS_X11" = "yes"; then
+  AC_DEFINE(HAVE_X11,1,[Have X11 functions.])
+fi
 
 # Check utilX library
 PKG_CHECK_MODULES(UTILX, [utilX],

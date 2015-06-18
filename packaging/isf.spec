@@ -102,7 +102,7 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 		--disable-tray-icon \
 		--disable-filter-sctc \
 %if %{with wayland}
-        --disable-panel-efl \
+        --disable-wsm-efl \
         --disable-efl-immodule \
 %else
         --disable-wsm-efl \
@@ -164,7 +164,7 @@ cat scim.lang > isf.lang
 %{_datadir}/scim/icons/*
 %{_optexecdir}/isf-demo-efl
 %if %{with wayland}
-%{_bindir}/isf-wsm-efl
+%{_bindir}/isf-panel-efl
 %{_bindir}/isf-wsc-efl
 %else
 %{_bindir}/isf-panel-efl
