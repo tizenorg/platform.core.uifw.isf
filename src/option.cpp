@@ -974,7 +974,7 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-    Evas_Object *list = create_option_main_view(conformant, naviframe);
+    Evas_Object *list = create_option_main_view(conformant, naviframe, type);
 
     /* add a back button to naviframe */
     Evas_Object *back_btn = elm_button_add(naviframe);

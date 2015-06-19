@@ -21,16 +21,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <vconf.h>
-
-#ifndef WAYLAND
-#include <Ecore_X.h>
-#endif
 #include <Ecore_IMF.h>
 #include <Elementary.h>
-
-#ifndef WAYLAND
-#include <X11/XF86keysym.h>
-#endif
 
 #include "sclui.h"
 #include "sclcore.h"
@@ -59,9 +51,6 @@ extern std::vector <int> emoticon_list_recent;
 
 extern CONFIG_VALUES g_config_values;
 static sclboolean g_need_send_shift_event = FALSE;
-#ifdef WAYLAND
-int gLastIC = 0;
-#endif
 
 extern void set_ise_imdata(const char * buf, size_t &len);
 static void init_recent_used_punctuation();

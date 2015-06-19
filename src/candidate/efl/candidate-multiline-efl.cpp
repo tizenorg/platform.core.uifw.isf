@@ -21,11 +21,6 @@
 #include <assert.h>
 #include <algorithm>
 #include <dlog.h>
-#ifdef WAYLAND
-#include <Ecore_Wayland.h>
-#else
-#include <Ecore_X.h>
-#endif
 
 using namespace std;
 
