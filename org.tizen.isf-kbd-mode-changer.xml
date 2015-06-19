@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.isf-kbd-mode-changer" version="0.0.1-1" install-location="internal-only" support-mode="screen-reader">
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.isf-kbd-mode-changer" version="0.0.1-1" install-location="internal-only">
 	<label>isf-kbd-mode-changer</label>
 	<author email="jihoon48.kim@samsung.com" href="www.samsung.com">Jihoon Kim</author>
 	<description>isf-kbd-mode-changer</description>
