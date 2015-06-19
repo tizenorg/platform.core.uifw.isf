@@ -70,7 +70,7 @@ ADD_LIBRARY(${PROJECT_NAME} SHARED ${ISE_SRCS})
 # For edc File
 ADD_CUSTOM_TARGET(
     candidate-single.edj
-    COMMAND edje_cc
+    COMMAND edje_cc -no-save
         -id ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single
         -sd ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single
         ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single/candidate.edc
@@ -83,7 +83,7 @@ INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-single.edj DESTINATION ${ISE_RESDIR}
 # For edc File
 ADD_CUSTOM_TARGET(
     candidate-multiline.edj
-    COMMAND edje_cc
+    COMMAND edje_cc -no-save
         -id ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline
         -sd ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline
         ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline/candidate.edc
