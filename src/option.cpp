@@ -115,7 +115,7 @@ extern CSCLUI *g_ui;
 static Evas_Object* create_option_language_view(Evas_Object *naviframe);
 
 /* This function is called by setup_module.cpp : create_ise_setup_eo() also */
-Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe);
+Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe, SCLOptionWindowType type);
 
 static void language_selected(void *data, Evas_Object *obj, void *event_info);
 
@@ -973,7 +973,7 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(naviframe, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-    Evas_Object *list = create_option_main_view(conformant, naviframe);
+    Evas_Object *list = create_option_main_view(conformant, naviframe, type);
 
     /* add a back button to naviframe */
     Evas_Object *back_btn = elm_button_add(naviframe);

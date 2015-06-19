@@ -1,5 +1,3 @@
-%bcond_with wayland
-
 Name:       ise-default
 Summary:    Tizen keyboard
 Version:    1.1.0
@@ -34,9 +32,6 @@ Description: Tizen keyboard
 
 
 %build
-rm -rf CMakeFiles
-rm -rf CMakeCache.txt
-
 export CFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
@@ -56,11 +51,9 @@ CFLAGS+=" -D_TV";
 CXXFLAGS+=" -D_TV";
 %endif
 
-%if %{with wayland}
-cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir} -Dwith_wayland=TRUE
-%else
+rm -rf CMakeFiles
+rm -rf CMakeCache.txt
 cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir}
-%endif
 
 make %{?jobs:-j%jobs}
 

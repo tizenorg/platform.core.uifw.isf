@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(ise-default)
+PROJECT(ise-default CXX)
 
-SET(BASIC_ISE_SRCS
+SET(ISE_SRCS
     src/ise.cpp
     src/languages.cpp
     src/config.cpp
@@ -18,12 +18,6 @@ SET(BASIC_ISE_SRCS
     src/ise-emoticon-list.cpp
     src/ise-emoticon-mode.cpp
 )
-
-IF (with_wayland)
-    SET(ISE_SRCS ${BASIC_ISE_SRCS} src/input-method-protocol.c)
-ELSE (with_wayland)
-    SET(ISE_SRCS ${BASIC_ISE_SRCS})
-ENDIF (with_wayland)
 
 SET(ISE_PACKAGE ${PROJECT_NAME})
 SET(ISE_PKGNAME ${PACKAGE})
@@ -45,7 +39,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/include
 )
 
 INCLUDE(FindPkgConfig)
-SET(PKGS_CHECK_MODULES
+pkg_check_modules(ISE_PKGS REQUIRED
         elementary
         efl-extension
         dlog
@@ -56,13 +50,6 @@ SET(PKGS_CHECK_MODULES
         vconf
         libxml-2.0
         )
-
-IF (with_wayland)
-    ADD_DEFINITIONS("-DWAYLAND")
-    pkg_check_modules(ISE_PKGS REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client)
-ELSE (with_wayland)
-    pkg_check_modules(ISE_PKGS REQUIRED ${PKGS_CHECK_MODULES})
-ENDIF (with_wayland)
 
 FOREACH(flag ${ISE_PKGS_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
