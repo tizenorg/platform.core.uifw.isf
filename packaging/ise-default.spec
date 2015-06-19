@@ -65,8 +65,10 @@ cp LICENSE %{buildroot}/usr/share/license/%{name}
 %make_install
 
 %post
+pkg_initdb
 
 %postun
+pkg_initdb
 
 %files
 %defattr(-,root,root,-)
