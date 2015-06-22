@@ -254,6 +254,7 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
     ImeInfoDB info;
     sqlite3_stmt* pStmt = NULL;
     static const char* pQuery = "SELECT * FROM ime_info";
+    char *db_text;
 
     do {
         if (i == 0) {
@@ -266,15 +267,33 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 
         ret = sqlite3_step(pStmt);
         if (ret == SQLITE_ROW) {
-            info.appid = String((char *)sqlite3_column_text(pStmt, 0));
-            info.label = String((char *)sqlite3_column_text(pStmt, 1));
-            info.languages = String((char *)sqlite3_column_text(pStmt, 2));
-            info.iconpath = String((char *)sqlite3_column_text(pStmt, 3));
-            info.pkgid = String((char *)sqlite3_column_text(pStmt, 4));
-            info.pkgtype = String((char *)sqlite3_column_text(pStmt, 5));
-            info.exec = String((char *)sqlite3_column_text(pStmt, 6));
-            info.module_name = String((char *)sqlite3_column_text(pStmt, 7));
-            info.module_path = String((char *)sqlite3_column_text(pStmt, 8));
+            db_text = (char *)sqlite3_column_text(pStmt, 0);
+            info.appid = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 1);
+            info.label = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 2);
+            info.languages = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 3);
+            info.iconpath = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 4);
+            info.pkgid = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 5);
+            info.pkgtype = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 6);
+            info.exec = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 7);
+            info.module_name = String(db_text ? db_text : "");
+
+            db_text = (char *)sqlite3_column_text(pStmt, 8);
+            info.module_path = String(db_text ? db_text : "");
+
             info.mode = (TOOLBAR_MODE_T)sqlite3_column_int(pStmt, 9);
             info.options = (uint32)sqlite3_column_int(pStmt, 10);
             info.is_enabled = (uint32)sqlite3_column_int(pStmt, 11);
@@ -344,6 +363,7 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
     static const char* pQuery = "SELECT * FROM ime_info WHERE appid = ?";
+    char *db_text;
 
     pImeInfo->appid.clear();
     pImeInfo->label.clear();
@@ -379,15 +399,33 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     }
     i = 1;
 
-    pImeInfo->appid = String((char*)sqlite3_column_text(pStmt, 0));
-    pImeInfo->label = String((char*)sqlite3_column_text(pStmt, 1));
-    pImeInfo->languages = String((char*)sqlite3_column_text(pStmt, 2));
-    pImeInfo->iconpath = String((char*)sqlite3_column_text(pStmt, 3));
-    pImeInfo->pkgid = String((char*)sqlite3_column_text(pStmt, 4));
-    pImeInfo->pkgtype = String((char*)sqlite3_column_text(pStmt, 5));
-    pImeInfo->exec = String((char*)sqlite3_column_text(pStmt, 6));
-    pImeInfo->module_name = String((char *)sqlite3_column_text(pStmt, 7));
-    pImeInfo->module_path = String((char *)sqlite3_column_text(pStmt, 8));
+    db_text = (char*)sqlite3_column_text(pStmt, 0);
+    pImeInfo->appid = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 1);
+    pImeInfo->label = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 2);
+    pImeInfo->languages = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 3);
+    pImeInfo->iconpath = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 4);
+    pImeInfo->pkgid = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 5);
+    pImeInfo->pkgtype = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 6);
+    pImeInfo->exec = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 7);
+    pImeInfo->module_name = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 8);
+    pImeInfo->module_path = String(db_text ? db_text : "");
+
     pImeInfo->mode = (TOOLBAR_MODE_T)sqlite3_column_int(pStmt, 9);
     pImeInfo->options = (uint32)sqlite3_column_int(pStmt, 10);
     pImeInfo->is_enabled = (uint32)sqlite3_column_int(pStmt, 11);
@@ -449,7 +487,8 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
 
         ret = sqlite3_step(pStmt);
         if (ret == SQLITE_ROW) {
-            mname.push_back(String((char *)sqlite3_column_text(pStmt, 0)));
+            char *db_text = (char *)sqlite3_column_text(pStmt, 0);
+            mname.push_back(String(db_text ? db_text : ""));
             SECURE_LOGD("%s: \"%s\"", (mode? "Helper": "IMEngine"), mname.back().c_str());
             i++;
         }
@@ -514,7 +553,8 @@ static int _db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
     do {
         ret = sqlite3_step(pStmt);
         if (ret == SQLITE_ROW) {
-            mpath.push_back(String((char *)sqlite3_column_text(pStmt, 0)));
+            char *db_text = (char *)sqlite3_column_text(pStmt, 0);
+            mpath.push_back(String(db_text ? db_text : ""));
             SECURE_LOGD("%s: \"%s\"", (mode? "Helper": "IMEngine"), mpath.back().c_str());
             i++;
         }
@@ -562,7 +602,8 @@ static int _db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &ap
     do {
         ret = sqlite3_step(pStmt);
         if (ret == SQLITE_ROW) {
-            appids.push_back(String((char *)sqlite3_column_text(pStmt, 0)));
+            char *db_text = (char *)sqlite3_column_text(pStmt, 0);
+            appids.push_back(String(db_text ? db_text : ""));
             SECURE_LOGD("appid=\"%s\"", appids.back().c_str());
             i++;
         }
@@ -1040,31 +1081,30 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
     /* appid */
     ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
     if (ret == PMINFO_R_OK)
-        ime_db.appid = String(appid);
+        ime_db.appid = String(appid ? appid : "");
     else {
         LOGE("appid is not available!");
         return 0;
     }
 
     /* iconpath */
-    ret = pkgmgrinfo_appinfo_get_icon( handle, &icon);
+    ret = pkgmgrinfo_appinfo_get_icon(handle, &icon);
     if (ret == PMINFO_R_OK)
-        ime_db.iconpath = String(icon);
+        ime_db.iconpath = String(icon ? icon : "");
 
     /* pkgid */
     ret = pkgmgrinfo_appinfo_get_pkgid(handle, &pkgid);
     if (ret == PMINFO_R_OK)
-        ime_db.pkgid = String(pkgid);
+        ime_db.pkgid = String(pkgid ? pkgid : "");
     else {
         LOGE("pkgid is not available!");
         return 0;
     }
 
-
     /* exec path */
     ret = pkgmgrinfo_appinfo_get_exec(handle, &exec);
     if (ret == PMINFO_R_OK)
-        ime_db.exec = String(exec);
+        ime_db.exec = String(exec ? exec : "");
     else {
         LOGE("exec is not available!");
         return 0;
@@ -1073,7 +1113,7 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
     /* label */
     ret = pkgmgrinfo_appinfo_get_label(handle, &label);
     if (ret == PMINFO_R_OK)
-        ime_db.label = String(label);
+        ime_db.label = String(label ? label : "");
 
     /* get pkgmgrinfo_pkginfo_h */
     ret = pkgmgrinfo_pkginfo_get_pkginfo(pkgid, &pkginfo_handle);
@@ -1087,7 +1127,7 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
 
         if (ret == PMINFO_R_OK)
-            ime_db.pkgtype = String(pkgtype);
+            ime_db.pkgtype = String(pkgtype ? pkgtype : "");
         else {
             LOGE("pkgtype is not available!");
             return 0;
