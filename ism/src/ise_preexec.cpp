@@ -33,9 +33,6 @@
 #include <sys/prctl.h>
 #include <unistd.h>
 #include <dlog.h>
-#if HAVE_PKGMGR_INFO
-#include <pkgmgr-info.h>
-#endif
 #include <privilege-control.h>
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
