@@ -954,9 +954,6 @@ ise_show(int ic)
 
     g_candidate->show();
     g_keyboard_state.visible_state = TRUE;
-#ifdef WAYLAND
-    gLastIC = ic;
-#endif
 }
 
 /**
@@ -1039,9 +1036,7 @@ ise_create()
                 g_candidate = CandidateFactory::make_candidate(CANDIDATE_MULTILINE, g_core.get_main_window());
             }
             g_candidate->add_event_listener(&g_candidate_event_listener);
-#ifndef WAYLAND
             g_ui->set_longkey_duration(elm_config_longpress_timeout_get() * 1000);
-#endif
 
             /* Default ISE callback */
             g_ui->set_ui_event_callback(&callback);

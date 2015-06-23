@@ -210,8 +210,4 @@ void ise_get_language_locale(char **locale);
 void ise_update_table(const std::vector<std::string> &vec_str);
 sclboolean ise_process_key_event(const char *key);
 
-#ifdef WAYLAND
-extern int gLastIC;
-#endif
-
 #endif
