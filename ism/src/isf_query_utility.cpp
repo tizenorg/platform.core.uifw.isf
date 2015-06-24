@@ -1124,12 +1124,11 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         /* pkgtype */
         ret = pkgmgrinfo_pkginfo_get_type(pkginfo_handle, &pkgtype);
 
-        pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
-
         if (ret == PMINFO_R_OK)
             ime_db.pkgtype = String(pkgtype ? pkgtype : "");
         else {
             LOGE("pkgtype is not available!");
+            pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
             return 0;
         }
     }
@@ -1198,12 +1197,21 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
         }
         else {
             LOGE("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str());
+            if (pkginfo_handle) {
+                pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
+                pkginfo_handle = NULL;
+            }
             return 0;
         }
     }
 
     ime_info.push_back(ime_db);
     ret = _db_insert_ime_info(ime_info);
+
+    if (pkginfo_handle) {
+        pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
+        pkginfo_handle = NULL;
+    }
 
     if (result && ret)
         *result = true;
