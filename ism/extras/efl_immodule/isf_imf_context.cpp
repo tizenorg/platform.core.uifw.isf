@@ -571,7 +571,7 @@ _key_down_cb (void *data, int type, void *event)
     Eina_Bool ret = EINA_FALSE;
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
-    if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_RENEW;
+    if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_PASS_ON;
 
     EcoreIMFContextISF *ic = (EcoreIMFContextISF*) ecore_imf_context_data_get (active_ctx);
     if (!ic) return ECORE_CALLBACK_PASS_ON;
@@ -672,7 +672,7 @@ _key_up_cb (void *data, int type, void *event)
         }
     }
 
-    return ECORE_CALLBACK_RENEW;
+    return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -4445,7 +4445,7 @@ slot_delete_surrounding_text (IMEngineInstanceBase *si,
 
 static bool
 slot_get_selection (IMEngineInstanceBase *si,
-                           WideString            &text)
+                    WideString            &text)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
@@ -4470,8 +4470,8 @@ slot_get_selection (IMEngineInstanceBase *si,
 
 static bool
 slot_set_selection (IMEngineInstanceBase *si,
-                              int              start,
-                              int              end)
+                    int              start,
+                    int              end)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
