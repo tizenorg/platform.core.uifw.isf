@@ -116,14 +116,6 @@ rm -rf %{buildroot}
 %make_install
 mkdir -p %{buildroot}/opt/etc/dump.d/module.d
 cp -af ism/dump/isf_log_dump.sh %{buildroot}/opt/etc/dump.d/module.d
-mkdir -p %{buildroot}/opt/usr/dbspace
-if [ ! -s %{buildroot}/opt/usr/dbspace/.ime_info.db ]; then
-echo "The database file for ime will be created."
-sqlite3 %{buildroot}/opt/usr/dbspace/.ime_info.db <<EOF
-CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, languages TEXT, iconpath TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER, is_enabled INTEGER, is_preinstalled INTEGER, has_option INTEGER);
-EOF
-fi
-
 mkdir -p %{buildroot}/etc/scim/conf
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
@@ -178,7 +170,6 @@ cat scim.lang > isf.lang
 %{_libdir}/libscim-*.so*
 %license COPYING
 /opt/etc/dump.d/module.d/*
-%attr(660,root,app) /opt/usr/dbspace/.ime_info.db*
 
 %files devel
 %defattr(-,root,root,-)
