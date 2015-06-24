@@ -219,9 +219,9 @@ static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info
 {
     int ret = isf_control_show_ise_option_window ();
     if (ret == 0)
-        printf (" Show ISE option window is successful!\n");
+        LOGD ("Show ISE option window is successful!\n");
     else
-        printf (" Show ISE option window is failed!!!\n");
+        LOGW ("Show ISE option window is failed!!!\n");
 }
 
 static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info)
