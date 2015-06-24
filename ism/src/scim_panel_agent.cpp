@@ -1810,10 +1810,7 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW);
             m_send_trans.write_to_socket (client_socket);
 
-            char buf[256] = {0};
-            snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message\n",
-                time (0), getpid (), __FILE__, __func__);
-            isf_save_log (buf);
+            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message\n");
 
             return true;
         }
@@ -3079,10 +3076,7 @@ public:
         String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
-        char buf[256] = {0};
-        snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to show ISE option window %d [%s] [%s]\n",
-            time (0), getpid (), __FILE__, __func__, client_id, initial_uuid.c_str(), default_uuid.c_str());
-        isf_save_log (buf);
+        ISF_SAVE_LOG ("prepare to show ISE option window %d [%s] [%s]\n", client_id, initial_uuid.c_str(), default_uuid.c_str());
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
             show_helper_option_window (m_current_helper_uuid);
