@@ -71,6 +71,7 @@ pkg_initdb
 pkg_initdb
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root,-)
 %{_libdir}/scim-1.0/1.4.0/Helper/ise-default.so
 %{_datadir}/isf/ise/ise-default/*
