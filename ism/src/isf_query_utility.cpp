@@ -1176,15 +1176,15 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
             }
             ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
         }
-        else if (ime_db.pkgtype.compare("coretpk") == 0)    //1 Download Native IME
+        else if (ime_db.pkgtype.compare("tpk") == 0)    //1 Download Native IME
         {
             ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
                 | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
             if (path)
-                ime_db.module_path = String(path);
+                ime_db.module_path = String(path) + String("/lib");
             else
                 ime_db.module_path = String("/opt/usr/apps/") + ime_db.pkgid + String("/lib");
-            ime_db.module_name = ime_db.appid;
+            ime_db.module_name = String("lib") + ime_db.exec.substr(ime_db.exec.find_last_of(SCIM_PATH_DELIM) + 1);
             if (ime_db.exec.compare(0, 5, "/usr/") == 0) {
                 ime_db.is_enabled = 1;
                 ime_db.is_preinstalled = 1;

@@ -51,10 +51,8 @@
 #define DEFAULT_PACKAGE_NAME "libisf-bin"
 #define DEFAULT_APPLICATION_PATH "/usr/lib/scim-1.0/scim-helper-launcher"
 
-#define NATIVE_APPLICATION_TYPE "c++app"
 #define NATIVE_PACKAGE_TYPE "tpk"
 
-#define WEB_APPLICATION_TYPE "webapp"
 #define WEB_PACKAGE_TYPE "wgt"
 
 #ifdef LOG_TAG
@@ -360,19 +358,20 @@ static void get_pkginfo (const char *appid, PKGINFO *info)
 			return;
 		}
 
-		if (imeInfo.pkgtype.compare("rpm") == 0) {
+		if (imeInfo.pkgtype.compare(DEFAULT_PACKAGE_TYPE) == 0) {
 			info->package_type = DEFAULT_PACKAGE_TYPE;
 			info->app_path = std::string(imeInfo.exec.c_str());	//DEFAULT_APPLICATION_PATH;
 			info->package_name = DEFAULT_PACKAGE_NAME;
 		}
-		else if (imeInfo.pkgtype.compare("wgt") == 0) {
+		else if (imeInfo.pkgtype.compare(WEB_PACKAGE_TYPE) == 0) {
 			info->package_type = WEB_PACKAGE_TYPE;
 			info->app_path = std::string(imeInfo.exec.c_str());
 			info->package_name = std::string(imeInfo.pkgid.c_str());
 		}
-		else if (imeInfo.pkgtype.compare("coretpk") == 0) {
+		else if (imeInfo.pkgtype.compare(NATIVE_PACKAGE_TYPE) == 0) {
 			info->package_type = NATIVE_PACKAGE_TYPE;
-			info->app_path = std::string(imeInfo.exec.c_str());
+			info->app_path = std::string(imeInfo.module_path.c_str()) + std::string(SCIM_PATH_DELIM_STRING) +
+				std::string(imeInfo.module_name.c_str()) + std::string(".so");
 			info->package_name = std::string(imeInfo.pkgid.c_str());
 		}
 		else {
