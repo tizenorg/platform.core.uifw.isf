@@ -410,7 +410,7 @@ static void check_autocapitalise_change_callback(void *data, Evas_Object *obj, v
     if(obj) {
         state = elm_check_state_get(obj);
     } else {
-        state = (int)(data);
+        state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.auto_capitalise = state;
     write_ise_config_values ();
@@ -424,7 +424,7 @@ static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, vo
     if(obj) {
         state = elm_check_state_get(obj);
     } else {
-        state = (int)(data);
+        state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.auto_punctuate = state;
     write_ise_config_values ();
@@ -438,7 +438,7 @@ static void check_sound_change_callback(void *data, Evas_Object *obj, void *even
     if(obj) {
         state = elm_check_state_get(obj);
     } else {
-        state = (int)(data);
+        state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.sound_on = state;
     write_ise_config_values ();
@@ -451,7 +451,7 @@ static void check_vibration_change_callback(void *data, Evas_Object *obj, void *
     if(obj) {
         state = elm_check_state_get(obj);
     } else {
-        state = (int)(data);
+        state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.vibration_on = state;
     write_ise_config_values ();
@@ -464,7 +464,7 @@ static void check_character_pre_change_callback(void *data, Evas_Object *obj, vo
     if(obj) {
         state = elm_check_state_get(obj);
     } else {
-        state = (int)(data);
+        state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.preview_on = state;
     write_ise_config_values ();
