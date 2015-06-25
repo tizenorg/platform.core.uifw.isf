@@ -5426,8 +5426,7 @@ private:
             m_recv_trans.get_data (info.icon) &&
             m_recv_trans.get_data (info.description) &&
             m_recv_trans.get_data (info.option) &&
-            info.uuid.length () &&
-            info.name.length ()) {
+            info.uuid.length ()) {
 
             SCIM_DEBUG_MAIN(4) << "New Helper uuid=" << info.uuid << " name=" << info.name << "\n";
 
