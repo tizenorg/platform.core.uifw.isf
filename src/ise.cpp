@@ -985,7 +985,6 @@ ise_hide()
     delete_commit_timer ();
     if (g_ui) {
         g_ui->disable_input_events(TRUE);
-        g_ui->hide();
     }
     g_keyboard_state.visible_state = FALSE;
     if (g_candidate) {
