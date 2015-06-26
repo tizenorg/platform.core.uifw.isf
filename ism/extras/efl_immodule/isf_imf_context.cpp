@@ -3536,8 +3536,12 @@ finalize (void)
         // In case in "shared input method" mode,
         // all contexts share only one instance,
         // so we need point the reference pointer correctly before finalizing.
-        _used_ic_impl_list->si->set_frontend_data (static_cast <void*> (_used_ic_impl_list->parent));
-        isf_imf_context_del (_used_ic_impl_list->parent->ctx);
+        if (_used_ic_impl_list->si) {
+            _used_ic_impl_list->si->set_frontend_data (static_cast <void*> (_used_ic_impl_list->parent));
+        }
+        if (_used_ic_impl_list->parent && _used_ic_impl_list->parent->ctx) {
+            isf_imf_context_del (_used_ic_impl_list->parent->ctx);
+        }
     }
 
     delete_all_ic_impl ();
