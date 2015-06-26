@@ -41,6 +41,10 @@
 #include <glib.h>
 #include <Evas.h>
 #include <Ecore.h>
+#include <malloc.h>
+#include "scim_private.h"
+#include "scim.h"
+#include "scim_stl_map.h"
 #if HAVE_ECOREX
 #include <Ecore_X.h>
 #endif
@@ -53,10 +57,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #endif
-#include <malloc.h>
-#include "scim_private.h"
-#include "scim.h"
-#include "scim_stl_map.h"
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
