@@ -1412,6 +1412,7 @@ String scim_get_default_panel_socket_address (const String &display)
     if (!sockaddr.valid ())
         return String ();
 
+#ifndef WAYLAND
     String::size_type colon_pos = display.rfind (':');
     String disp_name = display;
     int    disp_num  = 0;
@@ -1440,6 +1441,7 @@ String scim_get_default_panel_socket_address (const String &display)
             address = scim_combine_string_list (varlist, ':');
         }
     }
+#endif
 
     sockaddr.set_address (address);
 
