@@ -928,7 +928,7 @@ static int _db_update_ime_info(std::vector<ImeInfoDB> &ime_info)
 
         if (iter->pkgtype.compare("wgt") == 0 || iter->pkgtype.compare("tpk") == 0)
             has_option = -1;
-        else if (iter->mode = TOOLBAR_HELPER_MODE)
+        else if (iter->mode == TOOLBAR_HELPER_MODE)
             has_option = 1;
         else
             has_option = 0;
