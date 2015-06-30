@@ -876,6 +876,104 @@ out:
 }
 
 /**
+ * @brief Update data to ime_info table except for a few columns.
+ *
+ * @param ime_info The list to store ImeInfoDB
+ *
+ * @return the number of updated data.
+ */
+static int _db_update_ime_info(std::vector<ImeInfoDB> &ime_info)
+{
+    int ret = 0, i = 0, has_option = 0;
+    sqlite3_stmt* pStmt = NULL;
+    std::vector<ImeInfoDB>::iterator iter;
+    static const char* pQuery = "UPDATE ime_info SET label = ?, iconpath = ?, exec = ?, mname = ?, mpath = ?, has_option = ? WHERE appid = ?";
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        return 0;
+    }
+
+    for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
+        ret = sqlite3_bind_text(pStmt, 1, iter->label.c_str(), -1, SQLITE_TRANSIENT);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_bind_text(pStmt, 2, iter->iconpath.c_str(), -1, SQLITE_TRANSIENT);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_bind_text(pStmt, 3, iter->exec.c_str(), -1, SQLITE_TRANSIENT);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_bind_text(pStmt, 4, iter->module_name.c_str(), -1, SQLITE_TRANSIENT);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_bind_text(pStmt, 5, iter->module_path.c_str(), -1, SQLITE_TRANSIENT);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        if (iter->pkgtype.compare("wgt") == 0 || iter->pkgtype.compare("tpk") == 0)
+            has_option = -1;
+        else if (iter->mode = TOOLBAR_HELPER_MODE)
+            has_option = 1;
+        else
+            has_option = 0;
+
+        ret = sqlite3_bind_int(pStmt, 6, has_option);
+        if (ret != SQLITE_OK) {
+            LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_bind_text(pStmt, 7, iter->appid.c_str(), -1, SQLITE_TRANSIENT);
+        if (ret != SQLITE_OK) {
+            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+            goto out;
+        }
+
+        ret = sqlite3_step(pStmt);
+        if (ret != SQLITE_DONE) {
+            ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+            LOGE("sqlite3_step returned %d, appid=%s, %s", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+            ret = SQLITE_ERROR;
+            goto out;
+        }
+        else {
+            SECURE_LOGD("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+                iter->appid.c_str(), iter->label.c_str(), iter->iconpath.c_str(),
+                iter->exec.c_str(), iter->module_name.c_str(), iter->module_path.c_str());
+            ret = SQLITE_OK;
+            i++;
+        }
+        sqlite3_reset(pStmt);
+        sqlite3_clear_bindings(pStmt);
+    }
+
+out:
+    if (ret != SQLITE_OK) {
+        sqlite3_reset(pStmt);
+        sqlite3_clear_bindings(pStmt);
+    }
+    sqlite3_finalize(pStmt);
+
+    return i;
+}
+
+/**
  * @brief Insert data to ime_info table.
  *
  * @param ime_info The list to store ImeInfoDB
@@ -1207,6 +1305,8 @@ static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_
 
     ime_info.push_back(ime_db);
     ret = _db_insert_ime_info(ime_info);
+    if (ret < 1)
+        ret = _db_update_ime_info(ime_info);
 
     if (pkginfo_handle) {
         pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
