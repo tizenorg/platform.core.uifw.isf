@@ -53,7 +53,7 @@ CXXFLAGS+=" -D_TV";
 
 rm -rf CMakeFiles
 rm -rf CMakeCache.txt
-cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}  -DLIB_INSTALL_DIR:PATH=%{_libdir} -DTARGET=%{?profile}
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir}
 
 make %{?jobs:-j%jobs}
 
