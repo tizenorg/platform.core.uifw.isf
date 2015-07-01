@@ -210,6 +210,7 @@ static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
             return strdup(item_data->main_text);
         }
         if (!strcmp(part, "elm.text.sub.left.bottom") ||
+            !strcmp(part, "elm.text.multiline") ||
             !strcmp(part, "elm.text.sub") ||
             !strcmp(part, "elm.text.2")) {
             return strdup(item_data->sub_text);
@@ -720,13 +721,11 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     Evas_Object *genlist = elm_genlist_add(naviframe);
     option_elements[type].genlist = genlist;
 
-    elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
-    elm_genlist_homogeneous_set (genlist, EINA_TRUE);
     evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
     elm_genlist_tree_effect_enabled_set(genlist, EINA_FALSE);
 
-    /* Input langauges */
+    /* Input languages */
     strncpy(main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE].main_text, LANGUAGE, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE].mode = SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE;
     elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE],
@@ -812,7 +811,6 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 {
     Evas_Object *genlist = elm_genlist_add(naviframe);
-    elm_genlist_mode_set (genlist, ELM_LIST_COMPRESS);
     elm_genlist_homogeneous_set (genlist, EINA_TRUE);
 
     SCLOptionWindowType type = find_option_window_type(naviframe);
@@ -968,6 +966,8 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     evas_object_show(bg);
 
     Evas_Object *naviframe = elm_naviframe_add(conformant);
+    option_elements[type].naviframe = naviframe;
+
     elm_naviframe_prev_btn_auto_pushed_set(naviframe, EINA_FALSE);
     eext_object_event_callback_add(naviframe, EEXT_CALLBACK_BACK, _naviframe_back_cb, NULL);
     evas_object_size_hint_weight_set(naviframe, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -975,13 +975,16 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
 
     Evas_Object *list = create_option_main_view(conformant, naviframe, type);
 
-    /* add a back button to naviframe */
-    Evas_Object *back_btn = elm_button_add(naviframe);
-    elm_object_style_set(back_btn, "naviframe/back_btn/default");
-    evas_object_smart_callback_add (back_btn, "clicked", navi_back_cb, NULL);
-    elm_naviframe_item_push(naviframe, OPTIONS, back_btn, NULL, list, NULL);
+    /* Add a back button to naviframe */
+    Evas_Object *back_button = elm_button_add(naviframe);
+    option_elements[type].back_button = back_button;
+
+    elm_object_style_set(back_button, "naviframe/back_btn/default");
+    evas_object_smart_callback_add (back_button, "clicked", navi_back_cb, NULL);
+    elm_naviframe_item_push(naviframe, OPTIONS, back_button, NULL, list, NULL);
 
     elm_object_content_set(conformant, naviframe);
+
     evas_object_show(naviframe);
     evas_object_show(window);
 }
