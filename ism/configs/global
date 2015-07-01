@@ -18,4 +18,5 @@
 /SupportHWKeyboardMode = true
 /DefaultKbdModeChangerProgram = org.tizen.isf-kbd-mode-changer
 /LockScreenClassName = LOCK_SCREEN, hub-idlescreen
+/DefaultTVAddress = 192.168.0.77
 /LaunchRemoteInput = true
