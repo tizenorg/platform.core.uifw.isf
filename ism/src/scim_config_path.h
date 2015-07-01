@@ -91,6 +91,7 @@ namespace scim {
 #define SCIM_GLOBAL_CONFIG_HIDE_ISE_BASED_ON_FOCUS                  "/HideIseBasedOnFocus"
 #define SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE                 "/SupportHWKeyboardMode"
 #define SCIM_GLOBAL_CONFIG_DEFAULT_KBD_MODE_CHANGER_PROGRAM         "/DefaultKbdModeChangerProgram"
+#define SCIM_GLOBAL_CONFIG_DEFAULT_TV_ADDRESS                       "/DefaultTVAddress"
 #define SCIM_GLOBAL_CONFIG_LAUNCH_REMOTE_INPUT                      "/LaunchRemoteInput"
 #define SCIM_GLOBAL_CONFIG_LOCK_SCREEN_CLASS_NAME                   "/LockScreenClassName"
 
