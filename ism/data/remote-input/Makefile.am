@@ -59,6 +59,7 @@ web_DATA = index.htm\
             remotekeyboard_39.png\
             remotekeyboard_bg.png\
             remotekeyboard_remocon_bg.png\
+            remotekeyboard_remocon_bg3.png\
             remocon.png\
             mouse.png\
             keyboard.png\
