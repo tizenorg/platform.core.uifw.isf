@@ -103,6 +103,7 @@ static const struct serveable whitelist[] = {
     { "/imgs/remote_keyboard_logo.png", "image/png" },
     { "/imgs/remotekeyboard_bg.png", "image/png" },
     { "/imgs/remotekeyboard_remocon_bg.png", "image/png" },
+    { "/imgs/remotekeyboard_remocon_bg3.png", "image/png" },
     { "/imgs/return_pressed.png", "image/png" },
     { "/imgs/return.png", "image/png" },
     { "/imgs/scrollbar.png", "image/png" },
