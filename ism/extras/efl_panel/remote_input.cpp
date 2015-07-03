@@ -203,7 +203,7 @@ void Remote_Input::exit()
 bool Remote_Input::init_uinput_keyboard_device() {
     //For initialize uinput device for keyboard
      struct uinput_user_dev device_key;
-     int uinput_keys[] = {KEY_POWER, KEY_F6, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9, KEY_MINUS, KEY_0, KEY_REDO, KEY_F10, KEY_F9, KEY_F8, KEY_F7, KEY_F12, KEY_F11, KEY_LEFTMETA, KEY_HOMEPAGE, KEY_BOOKMARKS, KEY_MENU, KEY_F18, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_BACK, KEY_EXIT, KEY_ESC, KEY_BACKSPACE};
+     int uinput_keys[] = {KEY_POWER, KEY_F6, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9, KEY_MINUS, KEY_0, KEY_REDO, KEY_F10, KEY_F9, KEY_F8, KEY_F7, KEY_F12, KEY_F11, KEY_LEFTMETA, KEY_HOMEPAGE, KEY_BOOKMARKS, KEY_MENU, KEY_F18, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_BACK, KEY_EXIT, KEY_ESC, KEY_BACKSPACE, KEY_POWER, KEY_PHONE};
      memset(&device_key, 0, sizeof device_key);
 
      fd_uinput_keyboard = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
@@ -459,18 +459,18 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
 
                 case 10001://Menu
                     LOGD ("menu");
-                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_LEFTMETA);
+                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_PHONE);
                     break;
 
                 case 10002://Home
                     LOGD ("home");
-                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_HOMEPAGE);
+                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_MENU);
                     break;
 
                 case 10003://Back
                     LOGD ("back");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_BACK); //for TDC, 2.4 binary
-                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_ESC); //for tv product binary
+                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_BACK); //for TDC, 2.4 binary
+                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_ESC); //for tv product binary
                     break;
 
                 case 124://TV_KEY_POWER
