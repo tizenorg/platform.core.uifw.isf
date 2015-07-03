@@ -3,7 +3,7 @@ html {
 }
 body {
 /*    background:#111121;*/
-    background-image:url(imgs/remotekeyboard_remocon_bg.png);
+    background-image:url(imgs/remotekeyboard_remocon_bg3.png);
     background-repeat:no-repeat;
     background-size: 100% 100%;
     margin:0;
@@ -180,25 +180,25 @@ div {
 }
 .type_a {
     background:url(imgs/a_bt_pressed.png);
-    background-size:auto 100%;
+    background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .type_b {
     background:url(imgs/b_bt_pressed.png);
-    background-size:auto 100%;
+    background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .type_c {
     background:url(imgs/c_bt_pressed.png);
-    background-size:auto 100%;
+    background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .reset_bt {
     background:url(imgs/reset_bt_pressed.png);
-    background-size:auto 100%;
+    background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
