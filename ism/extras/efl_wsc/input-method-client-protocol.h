@@ -57,7 +57,7 @@ extern const struct wl_interface wl_input_panel_surface_interface;
  * @preferred_language: (none)
  *
  * Corresponds to a text model on input method side. An input method
- * context is created on text mode activation on the input method side. It
+ * context is created on text model activation on the input method side. It
  * allows to receive information about the text model from the application
  * via events. Input method contexts do not keep state after deactivation
  * and should be destroyed after deactivation is handled.
@@ -276,7 +276,7 @@ wl_input_method_context_text_direction(struct wl_input_method_context *wl_input_
 /**
  * wl_input_method - input method
  * @activate: activate event
- * @deactivate: activate event
+ * @deactivate: deactivate event
  *
  * An input method object is responsible to compose text in response to
  * input from hardware or virtual keyboards. There is one input method
@@ -296,7 +296,7 @@ struct wl_input_method_listener {
 			 struct wl_input_method *wl_input_method,
 			 struct wl_input_method_context *id);
 	/**
-	 * deactivate - activate event
+	 * deactivate - deactivate event
 	 * @context: (none)
 	 *
 	 * The text model corresponding to the context argument was

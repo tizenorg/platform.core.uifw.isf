@@ -242,7 +242,7 @@ struct wl_text_input_listener {
 	 * (for example on unfocus).
 	 *
 	 * The text input should also handle all preedit_style and
-	 * preedit_cursor events occuring directly before preedit_string.
+	 * preedit_cursor events occurring directly before preedit_string.
 	 */
 	void (*preedit_string)(void *data,
 			       struct wl_text_input *wl_text_input,
