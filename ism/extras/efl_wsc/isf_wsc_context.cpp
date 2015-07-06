@@ -56,6 +56,8 @@ struct _WSCContextISFImpl {
     WideString               preedit_string;
     AttributeList            preedit_attrlist;
     Ecore_IMF_Autocapital_Type autocapital_type;
+    Ecore_IMF_Input_Hints    input_hint;
+    Ecore_IMF_BiDi_Direction bidi_direction;
     void                    *imdata;
     int                      imdata_size;
     int                      preedit_caret;
@@ -74,6 +76,34 @@ struct _WSCContextISFImpl {
     int                      shift_mode_enabled;
 
     WSCContextISFImpl        *next;
+
+    /* Constructor */
+    _WSCContextISFImpl() : parent(NULL),
+                           client_window(0),
+                           client_canvas(NULL),
+                           input_mode(ECORE_IMF_INPUT_MODE_FULL),
+                           autocapital_type(ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE),
+                           input_hint(ECORE_IMF_INPUT_HINT_NONE),
+                           bidi_direction(ECORE_IMF_BIDI_DIRECTION_NEUTRAL),
+                           imdata(NULL),
+                           imdata_size(0),
+                           preedit_caret(0),
+                           cursor_x(0),
+                           cursor_y(0),
+                           cursor_top_y(0),
+                           cursor_pos(-1),
+                           use_preedit(true),
+                           is_on(true),
+                           shared_si(false),
+                           preedit_started(false),
+                           preedit_updating(false),
+                           need_commit_preedit(false),
+                           prediction_allow(false),
+                           next_shift_status(0),
+                           shift_mode_enabled(0),
+                           next(NULL)
+    {
+    }
 };
 
 /* private functions */
@@ -323,15 +353,10 @@ new_ic_impl (WSCContextISF *parent)
             return NULL;
     }
 
-    impl->autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
-    impl->next_shift_status = 0;
-    impl->shift_mode_enabled = 1;
     impl->next = _used_ic_impl_list;
     _used_ic_impl_list = impl;
 
     impl->parent = parent;
-    impl->imdata = NULL;
-    impl->imdata_size = 0;
 
     return impl;
 }
