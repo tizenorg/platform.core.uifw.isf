@@ -463,7 +463,6 @@ static void
 autoperiod_insert (WSCContextISF *ctx)
 {
     char *plain_str = NULL;
-    char *markup_str = NULL;
     int cursor_pos = 0;
     Eina_Unicode *ustr = NULL;
     Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
@@ -484,11 +483,7 @@ autoperiod_insert (WSCContextISF *ctx)
     if ((ecore_time_get () - space_key_time) > DOUBLE_SPACE_INTERVAL)
         goto done;
 
-    wsc_context_surrounding_get (ctx->ctx, &markup_str, &cursor_pos);
-    if (!markup_str) goto done;
-
-    // Convert into plain string
-    plain_str = evas_textblock_text_markup_to_utf8 (NULL, markup_str);
+    wsc_context_surrounding_get (ctx->ctx, &plain_str, &cursor_pos);
     if (!plain_str) goto done;
 
     // Convert string from UTF-8 to unicode
@@ -516,7 +511,6 @@ autoperiod_insert (WSCContextISF *ctx)
     }
 
 done:
-    if (markup_str) free (markup_str);
     if (plain_str) free (plain_str);
     if (ustr) free (ustr);
     space_key_time = ecore_time_get ();
@@ -526,7 +520,6 @@ static Eina_Bool
 analyze_surrounding_text (WSCContextISF *ctx)
 {
     char *plain_str = NULL;
-    char *markup_str = NULL;
     Eina_Unicode puncs[] = {'\n','.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */, 0x3002 /* 。 */};
     Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
     Eina_Unicode *ustr = NULL;
@@ -553,17 +546,13 @@ analyze_surrounding_text (WSCContextISF *ctx)
     if (context_scim->impl->cursor_pos == 0)
         return EINA_TRUE;
 
-    wsc_context_surrounding_get (ctx->ctx, &markup_str, &cursor_pos);
-    if (!markup_str) goto done;
+    wsc_context_surrounding_get (ctx->ctx, &plain_str, &cursor_pos);
+    if (!plain_str) goto done;
 
     if (cursor_pos == 0) {
         ret = EINA_TRUE;
         goto done;
     }
-
-    // Convert into plain string
-    plain_str = evas_textblock_text_markup_to_utf8 (NULL, markup_str);
-    if (!plain_str) goto done;
 
     // Convert string from UTF-8 to unicode
     ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
@@ -613,7 +602,6 @@ analyze_surrounding_text (WSCContextISF *ctx)
 
 done:
     if (ustr) free (ustr);
-    if (markup_str) free (markup_str);
     if (plain_str) free (plain_str);
 
     return ret;
