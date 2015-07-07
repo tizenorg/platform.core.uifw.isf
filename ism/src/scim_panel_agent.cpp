@@ -61,10 +61,19 @@
 
 #include <string.h>
 #include <sys/types.h>
+#include <sys/times.h>
+#include <dlog.h>
 #include <unistd.h>
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "ISF_PANEL_AGENT"
+
+#define MIN_REPEAT_TIME     2.0
 
 
 EAPI scim::CommonLookupTable g_isf_candidate_table;
@@ -4226,8 +4235,23 @@ private:
                 m_helper_info_repository.erase (hiit);
 
                 if (restart && !m_ise_exiting) {
-                    m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
-                    std::cerr << "Auto restart soft ISE:" << uuid << "\n";
+                    struct tms     tiks_buf;
+                    static clock_t start_tiks = times (&tiks_buf);
+                    static double  clock_tiks = (double)sysconf (_SC_CLK_TCK);
+                    clock_t curr_tiks = times (&tiks_buf);
+                    double  secs = (double)(curr_tiks - start_tiks) / clock_tiks;
+                    //LOGE ("time second:%f\n", secs);
+
+                    static String  restart_uuid;
+                    if (restart_uuid != uuid || secs > MIN_REPEAT_TIME) {
+                        m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
+                        restart_uuid = uuid;
+                        LOGE ("Auto restart soft ISE:%s\n", uuid.c_str ());
+                    } else {
+                        reset_default_ise (0);
+                        LOGE ("Auto restart is abnormal, reset default ISE\n");
+                    }
+                    start_tiks = curr_tiks;
                 }
             }
 
