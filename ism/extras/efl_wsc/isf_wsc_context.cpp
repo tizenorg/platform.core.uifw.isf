@@ -1068,16 +1068,18 @@ isf_wsc_context_focus_out (WSCContextISF *ctx)
             _panel_client.send ();
         }
 
-        _panel_client.prepare (context_scim->id);
+        if (context_scim->impl->si) {
+            _panel_client.prepare (context_scim->id);
 
-        context_scim->impl->si->focus_out ();
-        context_scim->impl->si->reset ();
-        context_scim->impl->cursor_pos = -1;
+            context_scim->impl->si->focus_out ();
+            context_scim->impl->si->reset ();
+            context_scim->impl->cursor_pos = -1;
 
 //          if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
 
-        _panel_client.focus_out (context_scim->id);
-        _panel_client.send ();
+            _panel_client.focus_out (context_scim->id);
+            _panel_client.send ();
+        }
         _focused_ic = 0;
     }
     _x_key_event_is_valid = false;
@@ -1091,10 +1093,12 @@ isf_wsc_context_reset (WSCContextISF *ctx)
     WSCContextISF *context_scim = ctx;
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        _panel_client.prepare (context_scim->id);
-        context_scim->impl->si->reset ();
-        _panel_client.reset_input_context (context_scim->id);
-        _panel_client.send ();
+        if (context_scim->impl->si) {
+            _panel_client.prepare (context_scim->id);
+            context_scim->impl->si->reset ();
+            _panel_client.reset_input_context (context_scim->id);
+            _panel_client.send ();
+        }
 
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
@@ -1821,7 +1825,7 @@ panel_slot_update_candidate_item_layout (int context, const std::vector<uint32> 
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " row size=" << row_items.size () << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->update_candidate_item_layout (row_items);
         _panel_client.send ();
@@ -1833,7 +1837,7 @@ panel_slot_update_lookup_table_page_size (int context, int page_size)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " page_size=" << page_size << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->update_lookup_table_page_size (page_size);
         _panel_client.send ();
@@ -1845,7 +1849,7 @@ panel_slot_lookup_table_page_up (int context)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->lookup_table_page_up ();
         _panel_client.send ();
@@ -1857,7 +1861,7 @@ panel_slot_lookup_table_page_down (int context)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->lookup_table_page_down ();
         _panel_client.send ();
@@ -1869,7 +1873,7 @@ panel_slot_trigger_property (int context, const String &property)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " property=" << property << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si) {
         _panel_client.prepare (ic->id);
         ic->impl->si->trigger_property (property);
         _panel_client.send ();
@@ -1882,8 +1886,9 @@ panel_slot_process_helper_event (int context, const String &target_uuid, const S
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " target=" << target_uuid
                            << " helper=" << helper_uuid << " ic=" << ic << " ic->impl=" << (ic != NULL ? ic->impl : 0) << " ic-uuid="
-                           << ((ic && ic->impl) ? ic->impl->si->get_factory_uuid () : "" ) << "\n";
-    if (ic && ic->impl && ic->impl->si->get_factory_uuid () == target_uuid) {
+                           << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "" ) << " _focused_ic=" << _focused_ic << "\n";
+    if (ic && ic->impl && _focused_ic == ic && ic->impl->is_on && ic->impl->si &&
+        ic->impl->si->get_factory_uuid () == target_uuid) {
         _panel_client.prepare (ic->id);
         SCIM_DEBUG_FRONTEND(2) << "call process_helper_event\n";
         ic->impl->si->process_helper_event (helper_uuid, trans);
@@ -1896,7 +1901,7 @@ panel_slot_move_preedit_caret (int context, int caret_pos)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " caret=" << caret_pos << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->move_preedit_caret (caret_pos);
         _panel_client.send ();
@@ -1929,7 +1934,7 @@ panel_slot_select_aux (int context, int aux_index)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " aux=" << aux_index << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->select_aux (aux_index);
         _panel_client.send ();
@@ -1941,7 +1946,7 @@ panel_slot_select_candidate (int context, int cand_index)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " candidate=" << cand_index << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->select_candidate (cand_index);
         _panel_client.send ();
@@ -1984,10 +1989,10 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
             key.code == SHIFT_MODE_ON ||
             key.code == SHIFT_MODE_LOCK) {
             ic->impl->next_shift_status = _key.code;
-        } else if (key.code == SHIFT_MODE_ENABLE ) {
+        } else if (key.code == SHIFT_MODE_ENABLE) {
             ic->impl->shift_mode_enabled = true;
             caps_mode_check (ic, EINA_TRUE, EINA_TRUE);
-        } else if (key.code == SHIFT_MODE_DISABLE ) {
+        } else if (key.code == SHIFT_MODE_DISABLE) {
             ic->impl->shift_mode_enabled = false;
         }
     }
@@ -2090,7 +2095,7 @@ panel_slot_change_factory (int context, const String &uuid)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " factory=" << uuid << " ic=" << ic << "\n";
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si) {
         _panel_client.prepare (ic->id);
         ic->impl->si->reset ();
         open_specific_factory (ic, uuid);
@@ -2250,7 +2255,7 @@ panel_slot_get_surrounding_text (int context, int maxlen_before, int maxlen_afte
 
     WSCContextISF *ic = find_ic (context);
 
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         int cursor = 0;
         WideString text = WideString ();
         slot_get_surrounding_text (ic->impl->si, text, cursor, maxlen_before, maxlen_after);
@@ -2267,7 +2272,7 @@ panel_slot_delete_surrounding_text (int context, int offset, int len)
 
     WSCContextISF *ic = find_ic (context);
 
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si)
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
         slot_delete_surrounding_text (ic->impl->si, offset, len);
 }
 
@@ -2276,7 +2281,7 @@ panel_slot_update_displayed_candidate_number (int context, int number)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " number=" << number << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->update_displayed_candidate_number (number);
         _panel_client.send ();
@@ -2288,7 +2293,7 @@ panel_slot_candidate_more_window_show (int context)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->candidate_more_window_show ();
         _panel_client.send ();
@@ -2300,7 +2305,7 @@ panel_slot_candidate_more_window_hide (int context)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->candidate_more_window_hide ();
         _panel_client.send ();
@@ -2312,7 +2317,7 @@ panel_slot_longpress_candidate (int context, int index)
 {
     WSCContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " index=" << index << " ic=" << ic << "\n";
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->si) {
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
         _panel_client.prepare (ic->id);
         ic->impl->si->longpress_candidate (index);
         _panel_client.send ();
@@ -2471,8 +2476,12 @@ finalize (void)
         // In case in "shared input method" mode,
         // all contexts share only one instance,
         // so we need point the reference pointer correctly before finalizing.
-        _used_ic_impl_list->si->set_frontend_data (static_cast <void*> (_used_ic_impl_list->parent));
-        isf_wsc_context_del (_used_ic_impl_list->parent);
+        if (_used_ic_impl_list->si) {
+            _used_ic_impl_list->si->set_frontend_data (static_cast <void*> (_used_ic_impl_list->parent));
+        }
+        if (_used_ic_impl_list->parent && _used_ic_impl_list->parent->ctx) {
+            isf_wsc_context_del (_used_ic_impl_list->parent);
+        }
     }
 
     delete_all_ic_impl ();
@@ -2571,7 +2580,7 @@ open_specific_factory (WSCContextISF *ic,
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
 
     // The same input method is selected, just turn on the IC.
-    if (ic->impl->si->get_factory_uuid () == uuid) {
+    if (ic->impl->si && (ic->impl->si->get_factory_uuid () == uuid)) {
         turn_on_ic (ic);
         return;
     }
@@ -2596,11 +2605,11 @@ open_specific_factory (WSCContextISF *ic,
         }
     } else {
         std::cerr << "open_specific_factory () is failed!!!!!!\n";
-        LOGE ("open_specific_factory () is failed. ic : %x uuid : %s", ic->id, uuid.c_str ());
+        LOGW ("open_specific_factory () is failed. uuid : %s", uuid.c_str ());
 
         // turn_off_ic comment out panel_req_update_factory_info ()
         //turn_off_ic (ic);
-        if (ic && ic->impl->is_on) {
+        if (ic->impl->is_on) {
             ic->impl->is_on = false;
 
             if (ic == _focused_ic) {
@@ -3084,7 +3093,7 @@ slot_start_helper (IMEngineInstanceBase *si,
 
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " helper= " << helper_uuid << " context="
                            << (ic != NULL ? ic->id : -1) << " ic=" << ic
-                           << " ic-uuid=" << ((ic != NULL && ic->impl != NULL) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
+                           << " ic-uuid=" << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
 
     if (ic && ic->impl)
         _panel_client.start_helper (ic->id, helper_uuid);
@@ -3111,7 +3120,7 @@ slot_send_helper_event (IMEngineInstanceBase *si,
 
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " helper= " << helper_uuid << " context="
                            << (ic != NULL ? ic->id : -1) << " ic=" << ic
-                           << " ic-uuid=" << ((ic != NULL && ic->impl != NULL) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
+                           << " ic-uuid=" << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
 
     if (ic && ic->impl)
         _panel_client.send_helper_event (ic->id, helper_uuid, trans);
@@ -3178,7 +3187,7 @@ slot_delete_surrounding_text (IMEngineInstanceBase *si,
 
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 
-    if (ic && ic->impl && _focused_ic == ic) {
+    if (ic && _focused_ic == ic) {
         wsc_context_delete_surrounding (_focused_ic->ctx, offset, len);
         return true;
     }
