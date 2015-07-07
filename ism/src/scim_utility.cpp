@@ -153,7 +153,9 @@ utf8_wctomb (unsigned char *dest, ucs4_t wc, int dest_size)
         return 0;
 
     int count;
-    if (wc < 0x80) { // most offen case
+    if (wc < 0)
+        return RET_ILSEQ;
+    else if (wc < 0x80) { // most offen case
         if (dest_size < 1)
             return RET_TOOSMALL;
         dest[0] = wc;
@@ -167,10 +169,9 @@ utf8_wctomb (unsigned char *dest, ucs4_t wc, int dest_size)
         count = 4;
     else if (wc < 0x4000000)
         count = 5;
-    else if (wc <= 0x7fffffff)
+    else //if (wc <= 0x7fffffff)
         count = 6;
-    else
-        return RET_ILSEQ;
+
     if (dest_size < count)
         return RET_TOOSMALL;
     switch (count) { /* note: code falls through cases! */
