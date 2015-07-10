@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="ise-default" type="rpm" version="1.0.0" install-location="internal-only">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="ise-default" type="rpm" version="1.1.1" install-location="internal-only">
 <author/>
 <description/>
 <label>Tizen keyboard</label>
