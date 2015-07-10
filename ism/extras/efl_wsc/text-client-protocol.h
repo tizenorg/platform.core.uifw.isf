@@ -106,6 +106,9 @@ enum wl_text_input_content_hint {
  * @WL_TEXT_INPUT_CONTENT_PURPOSE_TIME: input a time
  * @WL_TEXT_INPUT_CONTENT_PURPOSE_DATETIME: input a date and time
  * @WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL: input for a terminal
+ * @WL_TEXT_INPUT_CONTENT_PURPOSE_IP: input for a IP (number and a-f for
+ *	Ipv6)
+ * @WL_TEXT_INPUT_CONTENT_PURPOSE_EMOTICON: input for an emoticon
  *
  * The content purpose allows to specify the primary purpose of a text
  * input.
@@ -127,8 +130,18 @@ enum wl_text_input_content_purpose {
 	WL_TEXT_INPUT_CONTENT_PURPOSE_TIME = 10,
 	WL_TEXT_INPUT_CONTENT_PURPOSE_DATETIME = 11,
 	WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL = 12,
+	WL_TEXT_INPUT_CONTENT_PURPOSE_IP = 13,
+	WL_TEXT_INPUT_CONTENT_PURPOSE_EMOTICON = 14,
 };
 #endif /* WL_TEXT_INPUT_CONTENT_PURPOSE_ENUM */
+
+#ifndef WL_TEXT_INPUT_INPUT_PANEL_STATE_ENUM
+#define WL_TEXT_INPUT_INPUT_PANEL_STATE_ENUM
+enum wl_text_input_input_panel_state {
+	WL_TEXT_INPUT_INPUT_PANEL_STATE_HIDE = 0,
+	WL_TEXT_INPUT_INPUT_PANEL_STATE_SHOW = 1,
+};
+#endif /* WL_TEXT_INPUT_INPUT_PANEL_STATE_ENUM */
 
 #ifndef WL_TEXT_INPUT_PREEDIT_STYLE_ENUM
 #define WL_TEXT_INPUT_PREEDIT_STYLE_ENUM

@@ -1296,6 +1296,12 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (weescim *ctx)
         case WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL;
             break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_IP:
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_IP;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_EMOTICON:
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_EMOTICON;
+            break;
         default:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
             break;
