@@ -70,7 +70,7 @@ HelperModule::load (const String &name)
         if (!m_module.load (name, "Helper"))
             return false;
 
-        module_name = name; // Module name is PkgID for Inhouse IME, "ise-web-helper-agent" for Web IME or AppID for Native IME.
+        module_name = name; // PkgID for Inhouse IME, "ise-web-helper-agent" for Web IME and "lib"{Exec name} for Native IME.
 
         m_run_helper =
             (HelperModuleRunHelperFunc) m_module.symbol ("scim_helper_module_run_helper");

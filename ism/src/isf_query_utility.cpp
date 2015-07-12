@@ -54,9 +54,9 @@ using namespace scim;
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
 #ifdef LOG_TAG
-# undef LOG_TAG
+#undef LOG_TAG
 #endif
-#define LOG_TAG                                         "ISF_QUERY"
+#define LOG_TAG "ISF_QUERY"
 
 /*!
  * \note
@@ -253,7 +253,7 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
     bool firsttry = true;
     ImeInfoDB info;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT * FROM ime_info";
+    static const char* pQuery = "SELECT * FROM ime_info;";
     char *db_text;
 
     do {
@@ -362,7 +362,7 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
 {
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT * FROM ime_info WHERE appid = ?";
+    static const char* pQuery = "SELECT * FROM ime_info WHERE appid = ?;";
     char *db_text;
 
     pImeInfo->appid.clear();
@@ -468,7 +468,7 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
     int ret = 0, i = 0;
     bool firsttry = true;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT mname FROM ime_info WHERE mode = ?";
+    static const char* pQuery = "SELECT mname FROM ime_info WHERE mode = ?;";
 
     do {
         if (i == 0) {
@@ -536,7 +536,7 @@ static int _db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
 {
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT mpath FROM ime_info WHERE mode = ?";
+    static const char* pQuery = "SELECT mpath FROM ime_info WHERE mode = ?;";
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -583,7 +583,7 @@ static int _db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &ap
 {
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT appid FROM ime_info WHERE pkgid = ?";
+    static const char* pQuery = "SELECT appid FROM ime_info WHERE pkgid = ?;";
 
     appids.clear();
 
@@ -632,7 +632,7 @@ static int _db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
 {
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT is_enabled FROM ime_info WHERE appid = ?";
+    static const char* pQuery = "SELECT is_enabled FROM ime_info WHERE appid = ?;";
 
     if (!appid || !is_enabled)
         return i;
@@ -677,7 +677,7 @@ static int _db_select_count_by_module_name(const char *module_name)
 {
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "SELECT COUNT(*) FROM ime_info WHERE mname = ?";
+    static const char* pQuery = "SELECT COUNT(*) FROM ime_info WHERE mname = ?;";
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -718,7 +718,7 @@ static int _db_update_label_by_appid(const char *appid, const char *label)
 {
     int ret = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "UPDATE ime_info SET label = ? WHERE appid = ?";
+    static const char* pQuery = "UPDATE ime_info SET label = ? WHERE appid = ?;";
 
     if (appid == NULL || label == NULL) {
         LOGE("input is NULL.");
@@ -775,7 +775,7 @@ static int _db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 {
     int ret = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "UPDATE ime_info SET is_enabled = ? WHERE appid = ?";
+    static const char* pQuery = "UPDATE ime_info SET is_enabled = ? WHERE appid = ?;";
 
     if (appid == NULL) {
         LOGE("input is NULL.");
@@ -831,7 +831,7 @@ static int _db_update_has_option_by_appid(const char *appid, bool has_option)
 {
     int ret = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "UPDATE ime_info SET has_option = ? WHERE appid = ?";
+    static const char* pQuery = "UPDATE ime_info SET has_option = ? WHERE appid = ?;";
 
     if (appid == NULL) {
         LOGE("input is NULL.");
@@ -887,7 +887,7 @@ static int _db_update_ime_info(std::vector<ImeInfoDB> &ime_info)
     int ret = 0, i = 0, has_option = 0;
     sqlite3_stmt* pStmt = NULL;
     std::vector<ImeInfoDB>::iterator iter;
-    static const char* pQuery = "UPDATE ime_info SET label = ?, iconpath = ?, exec = ?, mname = ?, mpath = ?, has_option = ? WHERE appid = ?";
+    static const char* pQuery = "UPDATE ime_info SET label = ?, iconpath = ?, exec = ?, mname = ?, mpath = ?, has_option = ? WHERE appid = ?;";
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -985,7 +985,7 @@ static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
     std::vector<ImeInfoDB>::iterator iter;
-    static const char* pQuery = "INSERT INTO ime_info (appid, label, languages, iconpath, pkgid, pkgtype, exec, mname, mpath, mode, options, is_enabled, is_preinstalled, has_option) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    static const char* pQuery = "INSERT INTO ime_info (appid, label, languages, iconpath, pkgid, pkgtype, exec, mname, mpath, mode, options, is_enabled, is_preinstalled, has_option) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -1119,7 +1119,7 @@ static int _db_delete_ime_info_by_pkgid(const char *pkgid)
 {
     int i = 0, ret = 0;
     sqlite3_stmt* pStmt = NULL;
-    static const char* pQuery = "DELETE FROM ime_info WHERE pkgid = ?"; // There might be more than one appid for one pkgid.
+    static const char* pQuery = "DELETE FROM ime_info WHERE pkgid = ?;"; // There might be more than one appid for one pkgid.
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
