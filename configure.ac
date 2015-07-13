@@ -234,6 +234,13 @@ PKG_CHECK_MODULES(WAYLAND, [ecore-wayland wayland-client >= 1.2.0 xkbcommon],
                   [ISF_HAS_ECOREWL=yes],
                   [ISF_HAS_ECOREWL=no])
 
+AC_PATH_PROG([wayland_scanner], [wayland-scanner])
+if test x$wayland_scanner = x; then
+    AC_MSG_ERROR([wayland-scanner is needed to compile])
+fi
+
+PKG_CHECK_MODULES(WAYLAND_SCANNER, [wayland-scanner])
+
 if test "$ISF_HAS_ECOREWL" = "yes"; then
   AC_DEFINE(HAVE_ECOREWL,1,[Have ecore-wayland functions.])
 fi
