@@ -3442,10 +3442,10 @@ static Eina_Bool efl_get_default_zone_geometry_info (Ecore_X_Window root, uint *
 static void efl_get_screen_resolution (int &width, int &height)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-#if HAVE_ECOREX
-    static Evas_Coord scr_w = 0, scr_h = 0;
 
+    static Evas_Coord scr_w = 0, scr_h = 0;
     if (scr_w == 0 || scr_h == 0) {
+#if HAVE_ECOREX
         uint w = 0, h = 0;
         if (efl_get_default_zone_geometry_info (ecore_x_window_root_first_get (), NULL, NULL, &w, &h)) {
             scr_w = w;
@@ -3453,15 +3453,13 @@ static void efl_get_screen_resolution (int &width, int &height)
         } else {
             ecore_x_window_size_get (ecore_x_window_root_first_get (), &scr_w, &scr_h);
         }
+#else
+        ecore_wl_screen_size_get(&scr_w, &scr_h);
+#endif
     }
 
     width  = scr_w;
     height = scr_h;
-#else
-    //FIXME:
-    width = 720;
-    height = 1280;
-#endif
 }
 
 //////////////////////////////////////////////////////////////////////
