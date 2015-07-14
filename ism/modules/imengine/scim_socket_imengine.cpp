@@ -1023,7 +1023,7 @@ SocketInstance::commit_transaction (Transaction &trans)
         }
     }
 
-    if (global->create_connection ())
+    if (global->create_connection () && m_peer_id >= 0)
         reset ();
 
     return ret;
