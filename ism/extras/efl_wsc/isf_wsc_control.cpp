@@ -50,6 +50,7 @@ int _isf_wsc_context_input_panel_show (int client_id, int context, void *data, i
     int temp = 0;
     _panel_client.prepare (context);
     _panel_client.show_ise (client_id, context, data, length, &temp);
+    _panel_client.send ();
     input_panel_show = (bool)temp;
     return 0;
 }
@@ -90,6 +91,7 @@ int _isf_wsc_context_input_panel_language_locale_get (int context, char **locale
 {
     _panel_client.prepare (context);
     _panel_client.get_ise_language_locale (locale);
+    _panel_client.send ();
     return 0;
 }
 
@@ -105,6 +107,7 @@ int _isf_wsc_context_input_panel_imdata_get (int context, void *data, int *len)
 {
     _panel_client.prepare (context);
     _panel_client.get_imdata ((char *)data, len);
+    _panel_client.send ();
     return 0;
 }
 
@@ -112,6 +115,7 @@ int _isf_wsc_context_input_panel_geometry_get (int context, int *x, int *y, int 
 {
     _panel_client.prepare (context);
     _panel_client.get_ise_window_geometry (x, y, w, h);
+    _panel_client.send ();
     return 0;
 }
 
@@ -128,6 +132,7 @@ int _isf_wsc_context_input_panel_return_key_type_get (int context, Ecore_IMF_Inp
     int temp = 0;
     _panel_client.prepare (context);
     _panel_client.get_return_key_type (temp);
+    _panel_client.send ();
     type = (Ecore_IMF_Input_Panel_Return_Key_Type)temp;
     return 0;
 }
@@ -145,6 +150,7 @@ int _isf_wsc_context_input_panel_return_key_disabled_get (int context, Eina_Bool
     int temp = 0;
     _panel_client.prepare (context);
     _panel_client.get_return_key_disable (temp);
+    _panel_client.send ();
     disabled = (Eina_Bool)temp;
     return 0;
 }
@@ -162,7 +168,7 @@ int _isf_wsc_context_input_panel_layout_get (int context, Ecore_IMF_Input_Panel_
     int layout_temp;
     _panel_client.prepare (context);
     _panel_client.get_layout (&layout_temp);
-
+    _panel_client.send ();
     *layout = (Ecore_IMF_Input_Panel_Layout)layout_temp;
     return 0;
 }
@@ -172,7 +178,7 @@ int _isf_wsc_context_input_panel_state_get (int context, Ecore_IMF_Input_Panel_S
     int temp = 0;
     _panel_client.prepare (context);
     _panel_client.get_ise_state (temp);
-
+    _panel_client.send ();
     state = (Ecore_IMF_Input_Panel_State)temp;
     return 0;
 }
@@ -189,6 +195,7 @@ int _isf_wsc_context_candidate_window_geometry_get (int context, int *x, int *y,
 {
     _panel_client.prepare (context);
     _panel_client.get_candidate_window_geometry (x, y, w, h);
+    _panel_client.send ();
     return 0;
 }
 
