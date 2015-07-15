@@ -17,13 +17,14 @@ INCLUDES = -I$(top_builddir) \
            -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\" \
            -DSCIM_TEMPDIR=\"@SCIM_TEMPDIR@\"
 
-noinst_HEADERS = input-method-client-protocol.h \
-					text-client-protocol.h \
-					isf_wsc_context.h \
+noinst_HEADERS = isf_wsc_context.h \
 					isf_wsc_control.h \
 					isf_wsc_control_ui.h
 
 if ISF_BUILD_WSC_EFL
+noinst_HEADERS += input-method-client-protocol.h \
+                  text-client-protocol.h
+
 CONFIG_WSC_EFL  = isf-wsc-efl
 endif
 
