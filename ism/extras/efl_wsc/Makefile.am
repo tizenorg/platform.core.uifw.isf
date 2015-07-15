@@ -17,11 +17,9 @@ INCLUDES = -I$(top_builddir) \
            -DSCIM_MODULE_PATH=\"@SCIM_MODULE_PATH@\" \
            -DSCIM_TEMPDIR=\"@SCIM_TEMPDIR@\"
 
-noinst_HEADERS = input-method-client-protocol.h \
-					text-client-protocol.h \
-					isf_wsc_context.h \
-					isf_wsc_control.h \
-					isf_wsc_control_ui.h
+noinst_HEADERS =   isf_wsc_context.h \
+                   isf_wsc_control.h \
+                   isf_wsc_control_ui.h
 
 if ISF_BUILD_WSC_EFL
 CONFIG_WSC_EFL  = isf-wsc-efl
@@ -51,6 +49,9 @@ isf_wsc_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                        @FEEDBACK_LIBS@
 
 isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
+
+BUILT_SOURCES = input-method-client-protocol.h \
+                text-client-protocol.h
 
 if ISF_BUILD_WSC_EFL
 %-protocol.c : $(top_srcdir)/ism/protocol/%.xml
