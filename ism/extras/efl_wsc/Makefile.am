@@ -52,6 +52,7 @@ isf_wsc_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
 
 isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
 
+if ISF_BUILD_WSC_EFL
 %-protocol.c : $(top_srcdir)/ism/protocol/%.xml
 	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) code < $< > $@
 
@@ -60,4 +61,4 @@ isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
 
 %-client-protocol.h : $(top_srcdir)/ism/protocol/%.xml
 	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) client-header < $< > $@
-
+endif

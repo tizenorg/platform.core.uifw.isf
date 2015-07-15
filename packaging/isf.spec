@@ -15,6 +15,7 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(vconf)
 %if %{with wayland}
 BuildRequires:  pkgconfig(ecore-wayland)
+BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
 %else
 BuildRequires:  pkgconfig(utilX)
