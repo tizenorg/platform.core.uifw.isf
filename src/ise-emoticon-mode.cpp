@@ -26,6 +26,8 @@
 #include "ise-emoticon-mode.h"
 #include "ise.h"
 #include "config.h"
+#include "sclutils.h"
+#include "sclfeedback.h"
 
 #undef LOG_TAG
 #define LOG_TAG "ISE_DEFAULT"
@@ -93,6 +95,7 @@ bool is_recently_used_emoticon_mode_disabled = true;
 extern CSCLUI *g_ui;
 extern CSCLCore g_core;
 extern int * emoticon_list[];
+extern CONFIG_VALUES g_config_values;
 
 unsigned short int emoticon_group_items[MAX_EMOTICON_GROUP] =
 {
@@ -517,11 +520,13 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
 
     std::vector<int>::iterator it;
 
-/*  static CSCLUtils *utils = CSCLUtils::get_instance();
+    static CSCLUtils *utils = CSCLUtils::get_instance();
     if (utils) {
-        utils->play_sound(FB_SOUND_STYLE_01);
-        utils->play_vibration(FB_VIBE_STYLE_01, DEFAULT_VIBE_DURATION);
-    }*/
+        if (g_config_values.sound_on)
+            utils->play_sound(DEFAULT_SOUND_STYLE);
+        if (g_config_values.vibration_on)
+            utils->play_vibration(DEFAULT_VIBRATION_STYLE, DEFAULT_VIBRATION_DURATION);
+    }
 
     if(event_info) {
         elm_gengrid_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
