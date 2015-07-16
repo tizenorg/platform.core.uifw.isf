@@ -159,10 +159,15 @@ typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
 // Declaration of internal functions.
 /////////////////////////////////////////////////////////////////////////////
 static Evas_Object *efl_create_window                  (const char *strWinName, const char *strEffect);
+
+#if HAVE_ECOREX
 static void       efl_set_transient_for_app_window     (Ecore_X_Window window);
+#endif
 static int        efl_get_app_window_angle             (void);
 static int        efl_get_ise_window_angle             (void);
+#if HAVE_ECOREX
 static int        efl_get_quickpanel_window_angle      (void);
+#endif
 
 static int        ui_candidate_get_valid_height        (void);
 static void       ui_candidate_hide                    (bool bForce, bool bSetVirtualKbd = true, bool will_hide = false);
@@ -242,8 +247,8 @@ static void       slot_stop_default_ise                (void);
 
 static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
-static Eina_Bool  efl_create_control_window            (void);
 #if HAVE_ECOREX
+static Eina_Bool  efl_create_control_window            (void);
 static Ecore_X_Window efl_get_app_window               (void);
 static Ecore_X_Window efl_get_quickpanel_window        (void);
 #endif
