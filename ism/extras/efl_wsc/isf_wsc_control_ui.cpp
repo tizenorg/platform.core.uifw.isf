@@ -130,7 +130,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     }
 
     /* set return key type */
-    iseContext.return_key_type = ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
+    iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)ctx->ctx->return_key_type;
 
     /* set return key disabled */
     iseContext.return_key_disabled = EINA_FALSE;
