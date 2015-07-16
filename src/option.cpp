@@ -162,6 +162,12 @@ static void reset_settings_popup_response_ok_cb (void *data, Evas_Object *obj, v
     SCLOptionWindowType type = find_option_window_type (genlist);
     read_options (option_elements[type].naviframe);
 
+    g_ui->enable_sound (g_config_values.sound_on);
+    g_ui->enable_vibration (g_config_values.vibration_on);
+    g_ui->enable_magnifier (g_config_values.preview_on);
+    vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, g_config_values.auto_capitalise);
+    vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, g_config_values.auto_punctuate);
+
     Evas_Object *popup = (Evas_Object *)data;
     if (popup)
         evas_object_del (popup);
