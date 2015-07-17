@@ -103,6 +103,13 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
 
     wsc->surrounding_text = strdup (text);
     wsc->surrounding_cursor = cursor;
+
+    if (wsc->cursor_pos != cursor) {
+        wsc->cursor_pos = cursor;
+        caps_mode_check (wsc->wsc_ctx, EINA_FALSE, EINA_TRUE);
+    }
+
+    LOGD ("text : '%s', cursor : %d", text, cursor);
 }
 
 static void
@@ -146,6 +153,8 @@ _wsc_im_ctx_invoke_action(void *data, struct wl_input_method_context *im_ctx, ui
 {
     struct weescim *wsc = (weescim*)data;
     if (!wsc) return;
+
+    LOGD ("invoke action. button : %d", button);
 
     if (button != BTN_LEFT)
         return;
@@ -392,6 +401,7 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wsc->preedit_str = strdup ("");
     wsc->content_hint = WL_TEXT_INPUT_CONTENT_HINT_NONE;
     wsc->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
+    wsc->cursor_pos = -1;
 
     if (wsc->language) {
         free (wsc->language);
