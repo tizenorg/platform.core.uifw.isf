@@ -65,6 +65,7 @@ struct weescim
     uint32_t content_purpose;
     uint32_t surrounding_cursor;
     uint32_t return_key_type;
+    int      cursor_pos;
 
     Eina_Bool context_changed;
     Eina_Bool hw_kbd;
