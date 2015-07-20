@@ -173,7 +173,7 @@ _wsc_im_ctx_commit_state(void *data, struct wl_input_method_context *im_ctx, uin
     if (wsc->surrounding_text)
         LOGD ("Surrounding text updated: %s", wsc->surrounding_text);
 
-    if(wsc->language)
+    if (wsc->language)
         wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
 
     wl_input_method_context_text_direction (im_ctx, wsc->serial, wsc->text_direction);
@@ -419,6 +419,11 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wsc->keyboard = wl_input_method_context_grab_keyboard(im_ctx);
     wl_keyboard_add_listener(wsc->keyboard, &wsc_im_keyboard_listener, wsc);
 
+    if (wsc->language)
+        wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
+
+    wl_input_method_context_text_direction (im_ctx, wsc->serial, wsc->text_direction);
+
     wsc->context_changed = EINA_TRUE;
     isf_wsc_context_focus_in (wsc->wsc_ctx);
     isf_wsc_context_input_panel_show (wsc->wsc_ctx);
@@ -560,8 +565,6 @@ _wsc_free (struct weescim *wsc)
         wsc->wsc_ctx = NULL;
     }
 
-    isf_wsc_context_shutdown ();
-
     if (wsc->preedit_str) {
         free (wsc->preedit_str);
         wsc->preedit_str = NULL;
@@ -571,6 +574,13 @@ _wsc_free (struct weescim *wsc)
         free (wsc->surrounding_text);
         wsc->surrounding_text = NULL;
     }
+
+    if (wsc->language) {
+        free (wsc->language);
+        wsc->language = NULL;
+    }
+
+    isf_wsc_context_shutdown ();
 }
 
 int main (int argc EINA_UNUSED, char **argv EINA_UNUSED)
