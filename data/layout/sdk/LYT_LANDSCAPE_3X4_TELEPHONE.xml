@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout direction="landscape" width="960" height="238" key_width="227" key_height="54" key_spacing="10" row_spacing="3" hit_left="5" hit_right="5" hit_top="2" hit_bottom="1" label_type="3X4_BTN_1_2" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout direction="landscape" width="1280" height="318" key_width="308" key_height="73" key_spacing="11" row_spacing="3" hit_left="6" hit_right="5" hit_top="2" hit_bottom="1" label_type="3X4_BTN_1_2_LANDSCAPE" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -8,8 +8,8 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="11" y="6">
-    <key hit_left="11" hit_top="6">
+  <row x="8" y="8">
+    <key hit_left="8" hit_top="8">
       <label>
         <rec>1</rec>
       </label>
@@ -27,7 +27,7 @@
       </key_value>
     </key>
     <key>
-      <label hit_top="6">
+      <label hit_top="8">
         <rec>3</rec>
         <rec multi="1">      DEF</rec>
       </label>
@@ -35,10 +35,10 @@
         <rec>3</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="11" hit_top="6">
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="8" hit_top="8">
       <image_label>
-        <rec button="normal">B09_icon_back.png</rec>
-        <rec button="pressed">B09_icon_back_press.png</rec>
+        <rec button="normal">B09_icon_back_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -50,8 +50,8 @@
       </key_value>
     </key>
   </row>
-  <row x="11">
-    <key hit_left="11">
+  <row x="8">
+    <key hit_left="8">
       <label>
         <rec>4</rec>
         <rec multi="1">      GHI</rec>
@@ -78,11 +78,11 @@
         <rec>6</rec>
       </key_value>
     </key>
-    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="11">
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="8">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -94,8 +94,8 @@
       </key_value>
     </key>
   </row>
-  <row x="11">
-    <key hit_left="11">
+  <row x="8">
+    <key hit_left="8">
       <label>
         <rec>7</rec>
         <rec multi="1">      PQRS</rec>
@@ -122,7 +122,7 @@
         <rec>9</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2" hit_right="11">
+    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2_LANDSCAPE" hit_right="8">
       <label>
         <rec>Sym</rec>
       </label>
@@ -136,8 +136,8 @@
       </key_value>
     </key>
   </row>
-  <row x="11">
-    <key hit_left="11" hit_bottom="7">
+  <row x="8" y="237">
+    <key hit_left="8" hit_top="4" hit_bottom="8">
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
@@ -150,7 +150,7 @@
         <rec>*</rec>
       </key_value>
     </key>
-    <key long_key_value="+" hit_bottom="7">
+    <key long_key_value="+" hit_top="4" hit_bottom="8">
       <label>
         <rec>0</rec>
         <rec multi="1">      +</rec>
@@ -159,7 +159,7 @@
         <rec>0</rec>
       </key_value>
     </key>
-    <key hit_bottom="7">
+    <key hit_top="4" hit_bottom="8">
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
@@ -172,11 +172,11 @@
         <rec>#</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user" hit_right="11" hit_bottom="7">
+    <key button_type="selfish" key_type="user" hit_right="8" hit_top="4" hit_bottom="8">
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>

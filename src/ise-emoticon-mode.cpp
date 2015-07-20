@@ -39,8 +39,8 @@
 #define ISE_HEIGHT_PORT         398
 #define ISE_HEIGHT_LAND         398
 #else
-#define ISE_HEIGHT_PORT         333
-#define ISE_HEIGHT_LAND         238
+#define ISE_HEIGHT_PORT         442
+#define ISE_HEIGHT_LAND         318
 #endif
 
 #define EMOTICON_DIR "/usr/share/emoticons/"

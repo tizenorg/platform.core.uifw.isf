@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="540" height="333" key_width="125" key_height="74" key_spacing="8" row_spacing="6" hit_left="4" hit_right="4" hit_top="3" hit_bottom="3" label_type="3X4_BTN_1" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="720" height="442" key_width="168" key_height="95" key_spacing="8" row_spacing="7" hit_left="4" hit_right="4" hit_top="3" hit_bottom="4" label_type="3X4_BTN_1" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -8,8 +8,8 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="7" y="9">
-    <key hit_left="7" hit_top="9">
+  <row x="12" y="13">
+    <key hit_left="12" hit_top="13">
       <label>
         <rec>1</rec>
       </label>
@@ -17,7 +17,7 @@
         <rec>1</rec>
       </key_value>
     </key>
-    <key hit_top="9">
+    <key hit_top="13">
       <label>
         <rec multi="0">2</rec>
       </label>
@@ -25,7 +25,7 @@
         <rec>2</rec>
       </key_value>
     </key>
-    <key hit_top="9">
+    <key hit_top="13">
       <label>
         <rec multi="0">3</rec>
       </label>
@@ -33,10 +33,10 @@
         <rec>3</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="control" use_repeat_key="true" hit_right="7" hit_top="9">
+    <key button_type="selfish" key_type="control" use_repeat_key="true" hit_right="12" hit_top="13">
       <image_label>
-        <rec button="normal">B09_icon_back.png</rec>
-        <rec button="pressed">B09_icon_back_press.png</rec>
+        <rec button="normal">B09_icon_back_nor_65x65.png</rec>
+        <rec button="pressed">B09_icon_back_press_65x65.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -48,8 +48,8 @@
       </key_value>
     </key>
   </row>
-  <row x="7">
-    <key hit_left="7">
+  <row x="12">
+    <key hit_left="12">
       <label>
         <rec multi="0">4</rec>
       </label>
@@ -73,11 +73,11 @@
         <rec>6</rec>
       </key_value>
     </key>
-    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="7">
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+        <rec button="normal">B09_icon_enter_nor_65x65.png</rec>
+        <rec button="pressed">B09_icon_enter_press_65x65.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_65x65.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -89,8 +89,8 @@
       </key_value>
     </key>
   </row>
-  <row x="7">
-    <key hit_left="7">
+  <row x="12">
+    <key hit_left="12">
       <label>
         <rec multi="0">7</rec>
       </label>
@@ -114,7 +114,7 @@
         <rec>9</rec>
       </key_value>
     </key>
-    <key label_type="3X4_BTN_9" hit_right="7">
+    <key label_type="3X4_BTN_9" hit_right="12">
       <label>
         <rec>.-</rec>
       </label>
@@ -128,8 +128,8 @@
       </key_value>
     </key>
   </row>
-  <row x="7">
-    <key button_type="uiitem" label_type="3X4_BTN_5_2_DISABLED" hit_left="7" hit_bottom="10">
+  <row x="12" y="320">
+    <key button_type="uiitem" label_type="3X4_BTN_5_2_DISABLED" hit_left="12" hit_top="4" hit_bottom="27">
       <label>
         <rec>Sym</rec>
         <rec multi="1">123</rec>
@@ -140,7 +140,7 @@
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
     </key>
-    <key hit_bottom="10">
+    <key hit_top="4" hit_bottom="27">
       <label>
         <rec>0</rec>
       </label>
@@ -148,9 +148,9 @@
         <rec>0</rec>
       </key_value>
     </key>
-    <key button_type="uiitem" hit_bottom="10">
+    <key button_type="uiitem" hit_top="4" hit_bottom="27">
       <image_label>
-        <rec button="normal">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -158,9 +158,9 @@
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
     </key>
-    <key button_type="uiitem" hit_right="7" hit_bottom="10">
+    <key button_type="uiitem" hit_right="12" hit_top="4" hit_bottom="27">
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_dim_65x65.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>

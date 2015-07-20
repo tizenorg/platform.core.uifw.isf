@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <label_properties_frame>
   <label_properties_table label_type="QTY_DEFAULT">
-    <label_properties font_name="Tizen:style=Regular" font_size="32" label_alignment="center_bottom" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="45" label_alignment="center_bottom" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="17" label_alignment="right_top" padding_X="6" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="23" label_alignment="right_top" padding_X="6" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
@@ -17,7 +17,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_LINE1">
-    <label_properties font_name="Tizen:style=Regular" font_size="32" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="40" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -26,7 +26,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_?123">
-    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="35" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -35,7 +35,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_?123_2">
-    <label_properties font_name="Tizen:style=Regular" font_size="18" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -44,7 +44,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_SPACE">
-    <label_properties font_name="Tizen:style=Regular" font_size="18" label_alignment="center_top" padding_X="0" padding_Y="8">
+    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="center_top" padding_X="0" padding_Y="8">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
@@ -71,7 +71,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_WWWCOM">
-    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="32" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -178,14 +178,14 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_MONTH">
-    <label_properties font_name="Tizen:style=Regular" font_size="36" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="51" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x0000007f</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="34" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="48" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -210,7 +210,16 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_1">
-    <label_properties font_name="Tizen:style=Light" font_size="54" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Light" font_size="70" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_1_LANDSCAPE">
+    <label_properties font_name="Tizen:style=Light" font_size="61" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -219,14 +228,30 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_1_2">
-    <label_properties font_name="Tizen:style=Light" font_size="54" label_alignment="left_middle" padding_X="15" padding_Y="0">
+    <label_properties font_name="Tizen:style=Light" font_size="72" label_alignment="left_middle" padding_X="15" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="22" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="29" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x1717177f</color>
+        <color button="pressed">0x0000007f</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_1_2_LANDSCAPE">
+    <label_properties font_name="Tizen:style=Light" font_size="61" label_alignment="left_middle" padding_X="15" padding_Y="-5">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=Regular" font_size="29" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x0000007f</color>
@@ -235,14 +260,14 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_1_PWD">
-    <label_properties font_name="Tizen:style=Light" font_size="54" label_alignment="left_middle" padding_X="30" padding_Y="0">
+    <label_properties font_name="Tizen:style=Light" font_size="72" label_alignment="left_middle" padding_X="30" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="22" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="29" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x0000007f</color>
@@ -251,7 +276,16 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_2">
-    <label_properties font_name="Tizen:style=Regular" font_size="28" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="40" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_2_LANDSCAPE">
+    <label_properties font_name="Tizen:style=Regular" font_size="35" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -260,7 +294,16 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_3">
-    <label_properties font_name="Tizen:style=Regular" font_size="30" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="37" label_alignment="center_middle" padding_X="0" padding_Y="0">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_BTN_3_LANDSCAPE">
+    <label_properties font_name="Tizen:style=Regular" font_size="35" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -278,7 +321,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_5">
-    <label_properties font_name="Tizen:style=Light" font_size="50" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Light" font_size="70" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -303,14 +346,14 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_5_2_DISABLED">
-    <label_properties font_name="Tizen:style=Regular" font_size="28" label_alignment="center_top" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="38" label_alignment="center_top" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717174c</color>
         <color button="pressed">0x1717174c</color>
         <color button="disabled">0x1717174c</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="28" label_alignment="center_bottom" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="38" label_alignment="center_bottom" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717174c</color>
         <color button="pressed">0x1717174c</color>
@@ -319,7 +362,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_5_2_DISABLED_LANDSCAPE">
-    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="32" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717174c</color>
         <color button="pressed">0x1717174c</color>
@@ -355,7 +398,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_9">
-    <label_properties font_name="Tizen:style=Regular" font_size="36" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="45" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -364,7 +407,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_BTN_9_DISABLED">
-    <label_properties font_name="Tizen:style=Regular" font_size="36" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="45" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x1717174c</color>
         <color button="pressed">0x1717174c</color>
@@ -427,7 +470,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_LAND_DEFAULT">
-    <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=medium" font_size="45" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -443,7 +486,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="QTY_LAND_SPACE">
-    <label_properties font_name="Tizen:style=Regular" font_size="15" label_alignment="center_top" padding_X="0" padding_Y="3" inner_width="0" inner_height="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="center_top" padding_X="0" padding_Y="3" inner_width="0" inner_height="0">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
@@ -477,7 +520,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_NUMONLY_LAND">
-    <label_properties font_name="Tizen:style=Light" font_size="38" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Light" font_size="61" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
@@ -486,14 +529,30 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_MONTH_LAND">
-    <label_properties font_name="Tizen:style=Regular" font_size="30" label_alignment="left_middle" padding_X="69" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="40" label_alignment="left_middle" padding_X="69" padding_Y="0" inner_width="100">
       <font_color_record>
         <color button="normal">0x171717ff</color>
         <color button="pressed">0x000000ff</color>
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="32" label_alignment="left_middle" padding_X="20" padding_Y="0" inner_width="40">
+    <label_properties font_name="Tizen:style=Regular" font_size="42" label_alignment="left_middle" padding_X="10" padding_Y="0" inner_width="60">
+      <font_color_record>
+        <color button="normal">0x1717177f</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_PWD_ONLY_LAND">
+    <label_properties font_name="Tizen:style=Regular" font_size="40" label_alignment="left_middle" padding_X="50" padding_Y="0" inner_width="140">
+      <font_color_record>
+        <color button="normal">0x171717ff</color>
+        <color button="pressed">0x000000ff</color>
+        <color button="disabled">0x17171733</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=Regular" font_size="42" label_alignment="left_middle" padding_X="10" padding_Y="0" inner_width="40">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>
@@ -518,7 +577,7 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="SETTING_CUE">
-    <label_properties font_name="Tizen:style=Regular" font_size="24" label_alignment="right_top" padding_X="6" padding_Y="-15">
+    <label_properties font_name="Tizen:style=Regular" font_size="30" label_alignment="right_top" padding_X="6" padding_Y="-20">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x1717177f</color>

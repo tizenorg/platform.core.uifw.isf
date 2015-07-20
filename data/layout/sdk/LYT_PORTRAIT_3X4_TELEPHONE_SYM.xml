@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="540" height="333" key_width="125" key_height="74" key_spacing="8" row_spacing="6" hit_left="4" hit_right="4" hit_top="3" hit_bottom="3" label_type="3X4_BTN_1" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="720" height="442" key_width="168" key_height="95" key_spacing="8" row_spacing="7" hit_left="4" hit_right="4" hit_top="3" hit_bottom="4" label_type="3X4_BTN_1" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -8,26 +8,26 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="7" y="9">
-    <key hit_left="7" hit_top="9">
+  <row x="12" y="13">
+    <key hit_left="12" hit_top="13">
       <label>
         <rec>(</rec>
       </label>
     </key>
-    <key label_type="3X4_BTN_5" hit_top="9">
+    <key label_type="3X4_BTN_5" hit_top="13">
       <label>
         <rec>/</rec>
       </label>
     </key>
-    <key hit_top="9">
+    <key hit_top="13">
       <label>
         <rec>)</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="7" hit_top="9">
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="12" hit_top="13">
       <image_label>
-        <rec button="normal">B09_icon_back.png</rec>
-        <rec button="pressed">B09_icon_back_press.png</rec>
+        <rec button="normal">B09_icon_back_nor_65x65.png</rec>
+        <rec button="pressed">B09_icon_back_press_65x65.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -39,8 +39,8 @@
       </key_value>
     </key>
   </row>
-  <row x="7">
-    <key label_type="3X4_BTN_5" hit_left="7">
+  <row x="12">
+    <key label_type="3X4_BTN_5" hit_left="12">
       <label>
         <rec>N</rec>
       </label>
@@ -53,16 +53,16 @@
         <rec>,</rec>
       </key_value>
     </key>
-    <key label_type="3X4_BTN_4">
+    <key>
       <label>
         <rec>.</rec>
       </label>
     </key>
-    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="7">
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+        <rec button="normal">B09_icon_enter_nor_65x65.png</rec>
+        <rec button="pressed">B09_icon_enter_press_65x65.png</rec>
+		<rec button="disabled">B09_icon_enter_dim_65x65.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -74,8 +74,8 @@
       </key_value>
     </key>
   </row>
-  <row x="7">
-    <key label_type="3X4_BTN_4" hit_left="7">
+  <row x="12">
+    <key hit_left="12">
       <label>
         <rec>*</rec>
       </label>
@@ -88,12 +88,12 @@
         <rec>;</rec>
       </key_value>
     </key>
-    <key label_type="3X4_BTN_4">
+    <key>
       <label>
         <rec>#</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2" hit_right="7">
+    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2" hit_right="12">
       <label>
         <rec>123</rec>
       </label>
@@ -107,8 +107,8 @@
       </key_value>
     </key>
   </row>
-  <row x="7">
-    <key label_type="3X4_BTN_4" hit_left="7" hit_bottom="10">
+  <row x="12" y="320">
+    <key hit_left="12" hit_top="4" hit_bottom="27">
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
@@ -118,16 +118,16 @@
         <rec>-</rec>
       </label>
     </key>
-    <key label_type="3X4_BTN_4" hit_bottom="10">
+    <key hit_top="4" hit_bottom="27">
       <label>
         <rec>+</rec>
       </label>
     </key>
-    <key button_type="direction" key_type="control" label_type="QTY_SPACE" hit_bottom="10">
+    <key button_type="direction" key_type="control" label_type="QTY_SPACE" hit_top="4" hit_bottom="27">
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
@@ -138,11 +138,11 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user" hit_right="7" hit_bottom="10">
+    <key button_type="selfish" key_type="user" hit_right="12" hit_top="4" hit_bottom="27">
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_65x65.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_65x65.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_65x65.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>

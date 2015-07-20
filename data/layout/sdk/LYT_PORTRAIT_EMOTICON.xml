@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="540" height="333" magnifier="true" key_width="47" key_height="62" key_spacing="7" row_spacing="10" hit_left="3" hit_right="4" hit_top="10" hit_bottom="10" label_type="QTY_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="720" height="442" magnifier="true" key_width="65" key_height="81" key_spacing="6" row_spacing="10" hit_left="3" hit_right="3" hit_top="12" hit_bottom="23" label_type="QTY_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
@@ -8,8 +8,8 @@
     <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
     <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
   </background_image>
-  <row x="3" y="261">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="74">
+  <row x="9" y="338">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="100">
       <label>
         <rec>abc</rec>
       </label>
@@ -95,11 +95,11 @@
         <rec>EMOTICON_GROUP_STAR</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" width="74">
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" width="100">
       <image_label>
-        <rec button="normal">B09_icon_back_50x50.png</rec>
-        <rec button="pressed">B09_icon_back_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_back_50x50_dim.png</rec>
+        <rec button="normal">B09_icon_back_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_back_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>

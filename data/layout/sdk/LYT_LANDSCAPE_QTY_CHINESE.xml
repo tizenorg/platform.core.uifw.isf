@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout direction="landscape" width="960" height="238" magnifier="true" key_width="81" key_height="48" key_spacing="13" row_spacing="11" hit_left="6" hit_right="7" hit_top="6" hit_bottom="5" label_type="QTY_LAND_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout direction="landscape" width="1280" height="318" magnifier="true" key_width="96" key_height="65" key_spacing="16" row_spacing="14" hit_left="8" hit_right="8" hit_top="7" hit_bottom="7" label_type="QTY_LAND_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel_h.png</button_normal>
   </image_path>
@@ -8,8 +8,8 @@
     <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
     <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
   </background_image>
-  <row x="16" y="6">
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous" hit_left="16">
+  <row x="87" y="8">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous" hit_left="87">
       <label>
         <rec auto_upper="true">q</rec>
         <rec multi="1">1</rec>
@@ -63,15 +63,15 @@
         <rec multi="1">9</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="0" multitouch_type="settle_previous" hit_right="17">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="0" multitouch_type="settle_previous" hit_right="87">
       <label>
         <rec auto_upper="true">p</rec>
         <rec multi="1">0</rec>
       </label>
     </key>
   </row>
-  <row x="63">
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="-" multitouch_type="settle_previous" hit_left="63">
+  <row x="144">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="-" multitouch_type="settle_previous" hit_left="144">
       <label>
         <rec auto_upper="true">a</rec>
         <rec multi="1">-</rec>
@@ -119,15 +119,15 @@
         <rec multi="1">）</rec>
       </label>
     </key>
-    <key use_magnifier="true" longkey_magnifier="true" long_key_value="~" multitouch_type="settle_previous" hit_right="64">
+    <key use_magnifier="true" longkey_magnifier="true" long_key_value="~" multitouch_type="settle_previous" hit_right="144">
       <label>
         <rec auto_upper="true">l</rec>
         <rec multi="1">~</rec>
       </label>
     </key>
   </row>
-  <row x="63">
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="63">
+  <row x="144">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="144">
       <label>
         <rec>，</rec>
       </label>
@@ -174,11 +174,11 @@
         <rec multi="1">！</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" hit_right="64" use_repeat_key="true">
+    <key button_type="selfish" key_type="control" use_magnifier="true" hit_right="144" use_repeat_key="true">
       <image_label>
-        <rec button="normal">B09_icon_back.png</rec>
-        <rec button="pressed">B09_icon_back_press.png</rec>
-        <rec button="disabled">B09_icon_back_dim.png</rec>
+        <rec button="normal">B09_icon_back_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_back_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -190,8 +190,8 @@
       </key_value>
     </key>
   </row>
-  <row x="16" sub_layout="DEFAULT" key_width="128">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
+  <row x="87" sub_layout="DEFAULT" key_width="153">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="87">
       <label>
         <rec>?123</rec>
       </label>
@@ -204,14 +204,14 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="81" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -225,14 +225,14 @@
         <popup_input_mode>CM_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="direction" key_type="control" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="457">
+    <key button_type="direction" key_type="control" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="544">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -243,14 +243,14 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-305" popup_offset_y="-162" width="81">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-305" popup_offset_y="-162" width="96">
       <label>
         <rec>。</rec>
       </label>
       <image_label>
-        <rec button="normal">B09_icon_cue.png</rec>
-        <rec button="pressed">B09_icon_cue.png</rec>
-        <rec button="disabled">B09_icon_cue.png</rec>
+        <rec button="normal">B09_icon_question_45x30.png</rec>
+        <rec button="pressed">B09_icon_question_45x30.png</rec>
+        <rec button="disabled">B09_icon_question_45x30.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -261,11 +261,11 @@
         <popup_input_mode>PUNCTUATION_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="128" hit_right="17">
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="153" hit_right="87">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_dim.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -277,8 +277,8 @@
       </key_value>
     </key>
   </row>
-  <row x="16" sub_layout="URL" key_width="128">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
+  <row x="87" sub_layout="URL" key_width="153">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="87">
       <label>
         <rec>?123</rec>
       </label>
@@ -291,14 +291,14 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="81" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -312,7 +312,7 @@
         <popup_input_mode>CM_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key key_type="string" label_type="QTY_ATSLASH" width="81">
+    <key key_type="string" label_type="QTY_ATSLASH" width="96">
       <label>
         <rec>/</rec>
       </label>
@@ -322,14 +322,14 @@
         <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
       </background_image>
     </key>
-    <key button_type="direction" key_type="control" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="222">
+    <key button_type="direction" key_type="control" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="263">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -340,7 +340,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" label_type="QTY_DOT" width="81">
+    <key key_type="string" label_type="QTY_DOT" width="96">
       <label>
         <rec>。</rec>
       </label>
@@ -363,11 +363,11 @@
         <popup_input_mode>URL_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" hit_right="17">
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" hit_right="87">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_dim.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -379,8 +379,8 @@
       </key_value>
     </key>
   </row>
-  <row x="16" sub_layout="EMAIL" key_width="128">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="16">
+  <row x="87" sub_layout="EMAIL" key_width="153">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="87">
       <label>
         <rec>?123</rec>
       </label>
@@ -393,14 +393,14 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="81" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
       <label>
         <rec>...</rec>
       </label>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -414,7 +414,7 @@
         <popup_input_mode>CM_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key key_type="string" label_type="QTY_ATSLASH" width="81">
+    <key key_type="string" label_type="QTY_ATSLASH" width="96">
       <label>
         <rec>@</rec>
       </label>
@@ -424,14 +424,14 @@
         <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
       </background_image>
     </key>
-    <key button_type="direction" key_type="control" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="222">
+    <key button_type="direction" key_type="control" label_type="QTY_LAND_SPACE" image_label_type="LAND_IMAGE_SPACE" width="263">
       <label>
         <rec>_LANGUAGE_</rec>
       </label>
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
@@ -442,7 +442,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" label_type="QTY_DOT" width="81">
+    <key key_type="string" label_type="QTY_DOT" width="96">
       <label>
         <rec>。</rec>
       </label>
@@ -465,11 +465,11 @@
         <popup_input_mode>URL_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" hit_right="17">
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" hit_right="87">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_dim.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_l_btn_02.png</rec>
