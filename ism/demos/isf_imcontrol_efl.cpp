@@ -36,6 +36,7 @@ static void test_input_panel_imdata_get (void *data, Evas_Object *obj, void *eve
 static void test_input_panel_layout_set (void *data, Evas_Object *obj, void *event_info);
 static void test_input_panel_layout_get (void *data, Evas_Object *obj, void *event_info);
 static void test_input_panel_state_get (void *data, Evas_Object *obj, void *event_info);
+static void test_input_panel_language_locale_get (void *data, Evas_Object *obj, void *event_info);
 static void test_get_active_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_get_ise_list (void *data, Evas_Object *obj, void *event_info);
 static void test_get_ise_info (void *data, Evas_Object *obj, void *event_info);
@@ -55,6 +56,7 @@ static struct _menu_item imcontrol_menu_its[] = {
     { "INPUT PANEL LAYOUT SET", test_input_panel_layout_set },
     { "INPUT PANEL LAYOUT GET", test_input_panel_layout_get },
     { "INPUT PANEL STATE GET", test_input_panel_state_get },
+    { "LANGUAGE LOCALE GET", test_input_panel_language_locale_get },
     { "GET ACTIVE ISE", test_get_active_ise },
     { "GET ACTIVE ISE INFO", test_get_ise_info },
     { "GET INITIAL ISE", test_get_initial_ise },
@@ -139,6 +141,19 @@ static void test_input_panel_state_get (void *data, Evas_Object *obj, void *even
         state = ecore_imf_context_input_panel_state_get (imf_context);
         LOGD ("ise state : %d \n", (int)state);
     }
+}
+
+static void test_input_panel_language_locale_get (void *data, Evas_Object *obj, void *event_info)
+{
+    char *locale = NULL;
+
+    if (imf_context != NULL) {
+        ecore_imf_context_input_panel_language_locale_get (imf_context, &locale);
+        LOGD ("locale : %s\n", locale);
+    }
+
+    if (locale)
+        free (locale);
 }
 
 static void test_get_active_ise (void *data, Evas_Object *obj, void *event_info)
@@ -261,7 +276,8 @@ static void test_api (void *data, Evas_Object *obj, void *event_info)
     if (it)
         elm_genlist_item_selected_set (it, EINA_FALSE);
 
-    imcontrol_menu_its[j].func (NULL, obj, event_info);
+    if (imcontrol_menu_its[j].func)
+        imcontrol_menu_its[j].func (NULL, obj, event_info);
 }
 
 static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
