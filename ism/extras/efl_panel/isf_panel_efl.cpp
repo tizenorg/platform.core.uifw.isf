@@ -6613,6 +6613,22 @@ int main (int argc, char *argv [])
         /* Load initial ISE information */
         _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
 
+        /* Check if SCIM_CONFIG_DEFAULT_HELPER_ISE is available. If it's not, set it as _initial_ise_uuid.
+           e.g., This might be necessary when the platform is upgraded from 2.3 to 2.4. */
+        String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+        if (helper_uuid.length() > 0 && _initial_ise_uuid.length() > 0 && helper_uuid != _initial_ise_uuid) {
+            bool match = false;
+            for (unsigned int u = 0; u < _ime_info.size (); u++) {
+                if (_ime_info[u].mode == TOOLBAR_HELPER_MODE && helper_uuid == _ime_info[u].appid) {
+                    match = true;
+                    break;
+                }
+            }
+            if (!match) {
+                _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), _initial_ise_uuid);
+            }
+        }
+
         /* Launches default soft keyboard when all conditions are satisfied */
         launch_default_soft_keyboard ();
 
