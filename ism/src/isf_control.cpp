@@ -32,6 +32,11 @@
 #include "scim.h"
 #include "isf_control.h"
 
+#include <dlog.h>
+#ifdef LOG_TAG
+#undef LOG_TAG
+#endif
+#define LOG_TAG "ISF_CONTROL"
 
 using namespace scim;
 
@@ -311,12 +316,16 @@ EAPI int isf_control_get_active_ime (char **appid)
     String strUuid;
     int ret = 0;
     IMControlClient imcontrol_client;
-    if (!imcontrol_client.open_connection ())
+    if (!imcontrol_client.open_connection ()) {
+        LOGW("open_connection failed");
         return -1;
+    }
 
     imcontrol_client.prepare ();
-    if (!imcontrol_client.get_active_ise (strUuid))
+    if (!imcontrol_client.get_active_ise (strUuid)) {
+        LOGW("get_active_ise failed");
         ret = -1;
+    }
 
     imcontrol_client.close_connection ();
 
@@ -325,8 +334,10 @@ EAPI int isf_control_get_active_ime (char **appid)
 
     *appid = strUuid.length () ? strdup (strUuid.c_str ()) : NULL;
 
-    if (*appid == NULL)
+    if (*appid == NULL) {
+        LOGW("appid is invalid");
         return -1;
+    }
     else
         return strUuid.length ();
 }
@@ -395,25 +406,35 @@ EAPI int isf_control_show_ime_selector (void)
 
 EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
 {
-    if (!appid || !enabled || strlen(appid) < 1)
+    if (!appid || !enabled || strlen(appid) < 1) {
+        LOGW("Invalid parameter");
         return -1;
+    }
 
     int nEnabled = -1;
     int ret = 0;
 
     IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
+    if (!imcontrol_client.open_connection ()) {
+        LOGW("open_connection failed");
+        return -1;
+    }
+
     imcontrol_client.prepare ();
-    if (!imcontrol_client.is_helper_ise_enabled (appid, nEnabled))
+    if (!imcontrol_client.is_helper_ise_enabled (appid, nEnabled)) {
+        LOGW("is_helper_ise_enabled failed");
         ret = -1;
+    }
 
     imcontrol_client.close_connection ();
 
     if (ret == -1)
         return -1;
 
-    if (nEnabled < 0)
+    if (nEnabled < 0) {
+        LOGW("Failed; appid(%s), nEnabled=%d", appid, nEnabled);
         return -1;
+    }
     else
         *enabled = static_cast<bool>(nEnabled);
 
