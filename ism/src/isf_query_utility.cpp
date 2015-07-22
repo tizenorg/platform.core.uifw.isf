@@ -585,8 +585,6 @@ static int _db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &ap
     sqlite3_stmt* pStmt = NULL;
     static const char* pQuery = "SELECT appid FROM ime_info WHERE pkgid = ?;";
 
-    appids.clear();
-
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
         LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
@@ -1430,6 +1428,8 @@ EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Stri
 EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids)
 {
     int ret = 0;
+
+    appids.clear();
 
     if (!pkgid) {
         LOGW("pkgid is null.");

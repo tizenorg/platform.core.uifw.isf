@@ -53,37 +53,37 @@ void app_control (app_control_h app_control, void *user_data)
     TOOLBAR_MODE_T     kbd_mode = TOOLBAR_HELPER_MODE;
     Ecore_X_Window     _control_win = 0;
     Ecore_X_Window     _input_win = 0;
-    int ret = 0;
     unsigned int val = 0;
 
     LOGD ("isf_extra_hwkbd_module start");
 
     Ecore_X_Atom atom = ecore_x_atom_get (E_PROP_DEVICEMGR_CONTROLWIN);
-    ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_control_win, 1);
+    if (ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_control_win, 1) >= 0) {
+        if (!prop_x_keyboard_input_detected)
+            prop_x_keyboard_input_detected = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED);
 
-    if (!prop_x_keyboard_input_detected)
-        prop_x_keyboard_input_detected = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED);
-
-    if (ecore_x_window_prop_card32_get (_control_win, prop_x_keyboard_input_detected, &val, 1) > 0) {
-        if (val == 1) {
-            kbd_mode = TOOLBAR_KEYBOARD_MODE;
+        if (ecore_x_window_prop_card32_get (_control_win, prop_x_keyboard_input_detected, &val, 1) > 0) {
+            if (val == 1) {
+                kbd_mode = TOOLBAR_KEYBOARD_MODE;
+            } else {
+                kbd_mode = TOOLBAR_HELPER_MODE;
+            }
         } else {
             kbd_mode = TOOLBAR_HELPER_MODE;
         }
-    } else {
-        kbd_mode = TOOLBAR_HELPER_MODE;
+
+        // get the input window
+        atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
+        if (ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_input_win, 1) >= 0) {
+            //Set the window property value;
+            if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
+                val = 0;
+                ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
+                LOGD ("keyboard mode is changed HW -> SW by isf-kbd-mode-changer");
+            }
+        }
     }
 
-    // get the input window
-    atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
-    ret = ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_input_win, 1);
-
-    //Set the window property value;
-    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-        val = 0;
-        ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
-        LOGD ("keyboard mode is changed HW -> SW by isf-kbd-mode-changer");
-    }
     ui_app_exit ();
 }
 
