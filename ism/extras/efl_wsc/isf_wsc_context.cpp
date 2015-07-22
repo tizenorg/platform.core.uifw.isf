@@ -35,14 +35,13 @@
 #include <glib.h>
 #include <vconf.h>
 #include <vconf-keys.h>
+#include <input-method-client-protocol.h>
+#include <text-client-protocol.h>
 
 #include "scim_private.h"
 #include "scim.h"
 #include "isf_wsc_context.h"
 #include "isf_wsc_control_ui.h"
-#include "input-method-client-protocol.h"
-#include "text-client-protocol.h"
-
 #define ENABLE_BACKKEY 1
 
 using namespace scim;

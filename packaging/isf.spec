@@ -17,6 +17,8 @@ BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(ecore-wayland)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
+BuildRequires:  pkgconfig(text-client)
+BuildRequires:  pkgconfig(input-method-client)
 %else
 BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)

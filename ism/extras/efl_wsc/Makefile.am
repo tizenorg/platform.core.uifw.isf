@@ -22,17 +22,12 @@ noinst_HEADERS = isf_wsc_context.h \
 					isf_wsc_control_ui.h
 
 if ISF_BUILD_WSC_EFL
-noinst_HEADERS += input-method-client-protocol.h \
-                  text-client-protocol.h
-
 CONFIG_WSC_EFL  = isf-wsc-efl
 endif
 
 bin_PROGRAMS           = $(CONFIG_WSC_EFL)
 
 isf_wsc_efl_SOURCES  = isf_wsc_efl.cpp \
-						 input-method-protocol.c \
-						 text-protocol.c \
 						 isf_wsc_context.cpp \
 						 isf_wsc_control.cpp \
 						 isf_wsc_control_ui.cpp
@@ -52,19 +47,3 @@ isf_wsc_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                        @FEEDBACK_LIBS@
 
 isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
-
-if ISF_BUILD_WSC_EFL
-BUILT_SOURCES = input-method-client-protocol.h \
-                input-method-protocol.c \
-                text-client-protocol.h \
-                text-protocol.c
-
-%-protocol.c : $(top_srcdir)/ism/protocol/%.xml
-	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) code < $< > $@
-
-%-server-protocol.h : $(top_srcdir)/ism/protocol/%.xml
-	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) server-header < $< > $@
-
-%-client-protocol.h : $(top_srcdir)/ism/protocol/%.xml
-	$(AM_V_GEN)$(MKDIR_P) $(dir $@) && $(wayland_scanner) client-header < $< > $@
-endif

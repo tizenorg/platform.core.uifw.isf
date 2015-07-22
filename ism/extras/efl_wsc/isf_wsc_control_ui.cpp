@@ -31,12 +31,13 @@
 #include <Ecore_Evas.h>
 #include <Ecore_IMF.h>
 #include <glib.h>
+#include <text-client-protocol.h>
+
 #include "scim.h"
 #include "isf_wsc_control_ui.h"
 #include "isf_wsc_context.h"
 #include "isf_wsc_control.h"
 #include "ise_context.h"
-#include "text-client-protocol.h"
 
 using namespace scim;
 

@@ -56,8 +56,8 @@
 #include <linux/input.h>
 #include <xkbcommon/xkbcommon.h>
 #include <sys/mman.h>
-#include "input-method-client-protocol.h"
-#include "text-client-protocol.h"
+#include <input-method-client-protocol.h>
+#include <text-client-protocol.h>
 #include "isf_wsc_context.h"
 #include "isf_wsc_control_ui.h"
 #include "scim_stl_map.h"
