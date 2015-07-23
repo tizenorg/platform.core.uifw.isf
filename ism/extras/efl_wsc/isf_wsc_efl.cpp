@@ -101,12 +101,14 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
     if (wsc->surrounding_text)
         free (wsc->surrounding_text);
 
-    wsc->surrounding_text = strdup (text);
+    wsc->surrounding_text = strdup (text ? text : "");
     wsc->surrounding_cursor = cursor;
 
     if (wsc->cursor_pos != cursor) {
         wsc->cursor_pos = cursor;
-        caps_mode_check (wsc->wsc_ctx, EINA_FALSE, EINA_TRUE);
+
+        if (wsc->wsc_ctx)
+            caps_mode_check (wsc->wsc_ctx, EINA_FALSE, EINA_TRUE);
     }
 
     LOGD ("text : '%s', cursor : %d", text, cursor);
@@ -116,7 +118,7 @@ static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
 {
     struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    if (!wsc || !wsc->wsc_ctx) return;
 
     isf_wsc_context_reset(wsc->wsc_ctx);
 }
@@ -134,18 +136,20 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
     wsc->content_hint = hint;
     wsc->content_purpose = purpose;
 
-    isf_wsc_context_input_panel_layout_set (wsc->wsc_ctx,
-                                            wsc_context_input_panel_layout_get (wsc));
+    if (wsc->wsc_ctx) {
+        isf_wsc_context_input_panel_layout_set (wsc->wsc_ctx,
+                                                wsc_context_input_panel_layout_get (wsc));
 
-    isf_wsc_context_autocapital_type_set (wsc->wsc_ctx, wsc_context_autocapital_type_get(wsc));
+        isf_wsc_context_autocapital_type_set (wsc->wsc_ctx, wsc_context_autocapital_type_get(wsc));
 
-    isf_wsc_context_input_panel_language_set (wsc->wsc_ctx, wsc_context_input_panel_language_get(wsc));
+        isf_wsc_context_input_panel_language_set (wsc->wsc_ctx, wsc_context_input_panel_language_get(wsc));
 
-    caps_mode_check (wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
+        caps_mode_check (wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
 
-    wsc->context_changed = EINA_FALSE;
+        wsc->context_changed = EINA_FALSE;
 
-    isf_wsc_context_input_panel_show (wsc->wsc_ctx);
+        isf_wsc_context_input_panel_show (wsc->wsc_ctx);
+    }
 }
 
 static void
@@ -205,6 +209,7 @@ _wsc_im_ctx_return_key_type(void *data, struct wl_input_method_context *im_ctx, 
     struct weescim *wsc = (weescim*)data;
 
     LOGD ("im_context = %p return key type = %d", im_ctx, return_key_type);
+    if (!wsc || !wsc->wsc_ctx) return;
 
     wsc->return_key_type = return_key_type;
 
