@@ -3806,12 +3806,16 @@ static void slot_set_candidate_style (int portrait_line, int mode)
     }
 }
 
-static unsigned int get_ise_size (TOOLBAR_MODE_T mode)
+static unsigned int get_ise_count (TOOLBAR_MODE_T mode, bool valid_helper)
 {
     unsigned int ise_count = 0;
     for (unsigned int i = 0; i < _ime_info.size (); i++) {
-        if (mode == _ime_info[i].mode)
-            ise_count++;
+        if (mode == _ime_info[i].mode) {
+            if (mode == TOOLBAR_KEYBOARD_MODE || !valid_helper)
+                ise_count++;
+            else if (_ime_info[i].is_enabled)
+                ise_count++;
+        }
     }
 
     return ise_count;
@@ -3848,7 +3852,7 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
     if (old_ise != ise_name) {
         if (TOOLBAR_KEYBOARD_MODE == mode) {
             char noti_msg[256] = {0};
-            unsigned int keyboard_ise_count = get_ise_size (TOOLBAR_KEYBOARD_MODE);
+            unsigned int keyboard_ise_count = get_ise_count (TOOLBAR_KEYBOARD_MODE, false);
             if (keyboard_ise_count == 0) {
                 LOGD ("the number of keyboard ise is %d\n", keyboard_ise_count);
                 return;
@@ -5915,7 +5919,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW);
 
                 if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
-                    if (get_ise_size (TOOLBAR_HELPER_MODE) >= 2) {
+                    if (get_ise_count (TOOLBAR_HELPER_MODE, true) >= 2) {
                         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 #ifdef HAVE_NOTIFICATION
                         String ise_name;
