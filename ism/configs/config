@@ -5,8 +5,8 @@
 /FrontEnd/SharedInputMethod = true
 /FrontEnd/Socket/ConfigReadOnly = false
 /FrontEnd/Socket/MaxClients = 512
-/Hotkeys/FrontEnd/NextFactory = Control+Alt+Down,Shift+Control+KeyRelease+Shift_L,Shift+Control+KeyRelease+Shift_R
-/Hotkeys/FrontEnd/PreviousFactory = Control+Alt+Up,Shift+Control+KeyRelease+Control_L,Shift+Control+KeyRelease+Control_R
+/Hotkeys/FrontEnd/NextFactory = Shift+Control+KeyRelease+Shift_L,Shift+Control+KeyRelease+Shift_R
+/Hotkeys/FrontEnd/PreviousFactory = Shift+Control+KeyRelease+Control_L,Shift+Control+KeyRelease+Control_R
 /Hotkeys/FrontEnd/ShowFactoryMenu = Control+Alt+Right
 /Hotkeys/FrontEnd/Trigger = Shift+space,Hangul
 /Hotkeys/FrontEnd/ValidKeyMask = Shift+Control+Alt+CapsLock+Meta+QuirkKanaRo
