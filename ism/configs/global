@@ -15,5 +15,5 @@
 /ChangeKeyboardModeByTouch = false
 /ChangeKeyboardModeByFocusMove = false
 /HideIseBasedOnFocus = false
-/SupportHWKeyboardMode = false
+/SupportHWKeyboardMode = true
 /DefaultKbdModeChangerProgram = org.tizen.isf-kbd-mode-changer
