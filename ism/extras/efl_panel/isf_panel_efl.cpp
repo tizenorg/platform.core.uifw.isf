@@ -366,6 +366,8 @@ static int                _spot_location_top_y              = -1;
 static int                _candidate_angle                  = 0;
 static int                _ise_angle                        = -1;
 
+static int                _ise_x                            = 0;
+static int                _ise_y                            = 0;
 static int                _ise_width                        = 0;
 static int                _ise_height                       = 0;
 static WINDOW_STATE       _ise_state                        = WINDOW_STATE_HIDE;
@@ -1618,7 +1620,10 @@ static void ui_candidate_window_resize (int new_width, int new_height)
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
             270, 0, 0, land_height, land_width);
 #else
-    // FIXME: ECORE_X dependency.
+    if (_candidate_angle == 90 || _candidate_angle == 270)
+        evas_object_resize (_candidate_window, land_width, land_height);
+    else
+        evas_object_resize (_candidate_window, port_width, port_height);
 #endif
 }
 
@@ -1644,9 +1649,10 @@ static void ui_candidate_window_adjust (void)
                 &x, &y, &width, &height);
     }
 #else
-    // FIXME:
-    width = _candidate_width;
-    height = _candidate_height;
+    if (_candidate_angle == 90 || _candidate_angle == 270)
+        ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &height, &width);
+    else
+        ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
 #endif
 
     if (_aux_area_visible && _candidate_area_2_visible) {
@@ -2101,8 +2107,8 @@ static void ui_candidate_show (bool bSetVirtualKbd)
         }
     }
 
-#if HAVE_ECOREX
     if (_candidate_state != WINDOW_STATE_SHOW) {
+#if HAVE_ECOREX
         if (_candidate_show_handler) {
             LOGD ("Was still waiting for CANDIDATE_WINDOW_SHOW....");
         } else {
@@ -2110,9 +2116,8 @@ static void ui_candidate_show (bool bSetVirtualKbd)
             LOGD ("Registering ECORE_X_EVENT_WINDOW_SHOW event, %d", _candidate_state);
             _candidate_show_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_SHOW, x_event_window_show_cb, NULL);
         }
-    } else
 #endif
-    {
+    } else {
         LOGD ("The candidate window was already in SHOW state, update geometry information");
         _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         _panel_agent->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
@@ -2763,7 +2768,7 @@ static void ui_create_native_candidate_window (void)
 
     /* Create candidate window */
     if (_candidate_window == NULL) {
-        _candidate_window = efl_create_window ("candidate", "Prediction Window");
+        _candidate_window = efl_create_window ("ISF Popup", "Prediction Window");
         int rots [4] = {0, 90, 180, 270};
         elm_win_wm_rotation_available_rotations_set (_candidate_window, rots, 4);
         if (_candidate_angle == 90 || _candidate_angle == 270) {
@@ -2782,6 +2787,8 @@ static void ui_create_native_candidate_window (void)
                 180, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 270, 0, 0, _candidate_land_height_min, _candidate_land_width);
+#else
+        evas_object_resize (_candidate_window, _candidate_width, _candidate_height);
 #endif
         /* Add dim background */
         Evas_Object *dim_bg = elm_bg_add (_candidate_window);
@@ -3017,6 +3024,12 @@ static void ui_settle_candidate_window (void)
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_height, &ise_width);
     else
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_width, &ise_height);
+#else
+    spot_x = _ise_x;
+    spot_y = _ise_y;
+    ise_width = _ise_width;
+    ise_height = _ise_height;
+    get_geometry_result = true;
 #endif
     if ((_ise_state != WINDOW_STATE_SHOW && _ise_state != WINDOW_STATE_WILL_HIDE) ||
             (get_geometry_result == false) || (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
@@ -3924,6 +3937,8 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
         return;
     }
 
+    _ise_x = x;
+    _ise_y = y;
     _ise_width  = width;
     _ise_height = height;
 
