@@ -2704,7 +2704,7 @@ static void ui_create_preedit_window (void)
     _preedit_width  = 100;
     _preedit_height = _preedit_height * _height_rate;
     if (_preedit_window == NULL) {
-        _preedit_window = efl_create_window ("preedit", "Preedit Window");
+        _preedit_window = efl_create_window ("ISF Popup", "Preedit Window");
         evas_object_resize (_preedit_window, _preedit_width, _preedit_height);
         int rots [4] = {0, 90, 180, 270};
         elm_win_wm_rotation_available_rotations_set (_preedit_window, rots, 4);
