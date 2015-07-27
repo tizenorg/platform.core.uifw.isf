@@ -3692,12 +3692,6 @@ static bool update_ise_list (std::vector<String> &list)
         }
     }
 
-    char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
-    if (lang_str) {
-        _locale_string = String (lang_str);
-        free (lang_str);
-    }
-
 #if HAVE_PKGMGR_INFO
     if (!pkgmgr) {
         int ret = package_manager_create (&pkgmgr);
