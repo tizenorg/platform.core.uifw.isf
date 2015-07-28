@@ -25,7 +25,9 @@ BuildRequires:  pkgconfig(x11)
 %endif
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
+%if "%{?profile}" != "tv"
 BuildRequires:  pkgconfig(notification)
+%endif
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(edbus)
