@@ -39,6 +39,11 @@
 #include "isf_wsc_control.h"
 #include "ise_context.h"
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG                                         "ISF_WSC_EFL"
+
 using namespace scim;
 
 /* IM control related variables */
@@ -112,7 +117,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     iseContext.layout_variation = 0;
 
     /* set prediction allow */
-    iseContext.prediction_allow = EINA_TRUE;
+    iseContext.prediction_allow = wsc_context_prediction_allow_get (ctx->ctx);
 
     if (iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD)
         iseContext.password_mode = EINA_TRUE;

@@ -112,6 +112,7 @@ Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (weescim *ctx);
 Ecore_IMF_Input_Panel_Lang wsc_context_input_panel_language_get (weescim *ctx);
 bool wsc_context_input_panel_password_mode_get (weescim *ctx);
 Ecore_IMF_Input_Hints wsc_context_input_hint_get (weescim *ctx);
+Eina_Bool wsc_context_prediction_allow_get (weescim *ctx);
 void wsc_context_commit_preedit_string(weescim *ctx);
 void wsc_context_commit_string(weescim *ctx, const char *str);
 void wsc_context_send_preedit_string(weescim *ctx);

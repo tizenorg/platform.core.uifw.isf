@@ -44,6 +44,11 @@
 #include "isf_wsc_control_ui.h"
 #define ENABLE_BACKKEY 1
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG                                         "ISF_WSC_EFL"
+
 using namespace scim;
 
 struct _WSCContextISFImpl {
@@ -1381,6 +1386,17 @@ Ecore_IMF_Input_Hints wsc_context_input_hint_get (weescim *ctx)
         input_hint &= ~ECORE_IMF_INPUT_HINT_AUTO_COMPLETE;
 
     return (Ecore_IMF_Input_Hints)input_hint;
+}
+
+Eina_Bool wsc_context_prediction_allow_get (weescim *ctx)
+{
+    if (!ctx)
+        return EINA_FALSE;
+
+    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_COMPLETION)
+        return EINA_TRUE;
+    else
+        return EINA_FALSE;
 }
 
 void wsc_context_delete_surrounding (weescim *ctx, int offset, int len)
