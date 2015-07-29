@@ -3693,6 +3693,13 @@ static bool update_ise_list (std::vector<String> &list)
         }
     }
 
+    char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
+    if (lang_str) {
+        if (_ime_info.size () > 0 && _ime_info[0].display_lang.compare(lang_str) == 0)
+            _locale_string = String (lang_str);
+        free (lang_str);
+    }
+
 #if HAVE_PKGMGR_INFO
     if (!pkgmgr) {
         int ret = package_manager_create (&pkgmgr);
@@ -5630,8 +5637,7 @@ static void signalhandler (int sig)
 static void update_ise_locale ()
 {
     char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
-
-    if (lang_str && _locale_string == String (lang_str)) {
+    if (lang_str && _locale_string.compare(lang_str) == 0) {
         free (lang_str);
         return;
     }
@@ -5664,6 +5670,7 @@ static void update_ise_locale ()
             pkgmgrinfo_appinfo_destroy_appinfo(handle);
         }
     }
+    isf_db_update_disp_lang(lang_str);
 
     if (lang_str) {
         _locale_string = String (lang_str);

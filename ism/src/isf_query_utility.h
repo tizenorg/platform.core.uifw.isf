@@ -62,6 +62,7 @@ typedef struct {
     uint32 is_enabled;
     uint32 is_preinstalled;
     int has_option;
+    String display_lang;
 } ImeInfoDB;
 
 EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
@@ -72,6 +73,7 @@ EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &a
 EAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled);
 EAPI int isf_db_select_count_by_module_name(const char *module_name);
 EAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
+EAPI int isf_db_update_disp_lang(const char *disp_lang);
 EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled);
 EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option);
 EAPI int isf_db_insert_ime_info_by_pkgid(const char *pkgid);
