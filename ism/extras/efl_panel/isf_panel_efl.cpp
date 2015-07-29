@@ -401,7 +401,9 @@ static clock_t            _clock_start;
 static Ecore_Timer       *_check_size_timer                 = NULL;
 static Ecore_Timer       *_longpress_timer                  = NULL;
 static Ecore_Timer       *_destroy_timer                    = NULL;
+#if HAVE_ECOREX
 static Ecore_Timer       *_off_prepare_done_timer           = NULL;
+#endif
 static Ecore_Timer       *_candidate_hide_timer             = NULL;
 static Ecore_Timer       *_ise_hide_timer                   = NULL;
 
@@ -1885,6 +1887,7 @@ static Eina_Bool ui_candidate_destroy_timeout (void *data)
     return ECORE_CALLBACK_CANCEL;
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Callback function for off_prepare_done.
  *
@@ -1898,16 +1901,15 @@ static Eina_Bool off_prepare_done_timeout (void *data)
 
     /* WMSYNC, #8 Let the Window Manager to actually hide keyboard window */
     // WILL_HIDE_REQUEST_DONE Ack to WM
-#if HAVE_ECOREX
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
     ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
     LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
-#endif
     _off_prepare_done_timer = NULL;
 
     return ECORE_CALLBACK_CANCEL;
 }
+#endif
 
 /**
  * @brief Delete candidate hide timer.
@@ -1964,6 +1966,7 @@ static Eina_Bool candidate_hide_timer (void *data)
     return ECORE_CALLBACK_CANCEL;
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Delete candidate show handler.
  *
@@ -1977,7 +1980,6 @@ static void delete_candidate_show_handler (void)
     }
 }
 
-#if HAVE_ECOREX
 /**
  * @brief Callback function for window show completion event
  *
@@ -2912,8 +2914,9 @@ static void ui_create_candidate_window (void)
 
     ui_create_native_candidate_window ();
 
-    unsigned int set = 1;
 #if HAVE_ECOREX
+    unsigned int set = 1;
+
     ecore_x_window_prop_card32_set (elm_win_xwindow_get (_candidate_window),
             ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
             &set, 1);
@@ -3013,13 +3016,14 @@ static void ui_settle_candidate_window (void)
 
     int spot_x, spot_y;
     int x, y, width, height;
-    int pos_x = 0, pos_y = 0, ise_width = 0, ise_height = 0;
+    int ise_width = 0, ise_height = 0;
     bool get_geometry_result = false;
 
     /* Get candidate window position */
     ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
 
 #if HAVE_ECOREX
+    int pos_x = 0, pos_y = 0;
     if (_candidate_angle == 90 || _candidate_angle == 270)
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_height, &ise_width);
     else
@@ -3247,6 +3251,7 @@ static int efl_get_ise_window_angle ()
 #endif
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Get angle of quickpanel window.
  *
@@ -3255,13 +3260,9 @@ static int efl_get_ise_window_angle ()
 static int efl_get_quickpanel_window_angle ()
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-#if HAVE_ECOREX
     return efl_get_window_rotate_angle (efl_get_quickpanel_window ());
-#else
-    //FIXME:
-    return 0;
-#endif
 }
+#endif
 
 /**
  * @brief Set showing effect for application window.
@@ -5734,8 +5735,10 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 
     uint32 option = 0;
     String uuid, name;
-    unsigned int val = 0;
     bool _support_hw_keyboard_mode = false;
+#ifdef HAVE_ECOREX
+    unsigned int val = 0;
+#endif
 
     String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
