@@ -26,13 +26,12 @@
 #include "isf_layout_efl.h"
 #ifndef WAYLAND
 #include <Ecore_X.h>
-#include <utilX.h>
 #endif
 
 #ifndef WAYLAND
 static void _back_key_cb (void *data, Evas_Object *obj, void *event_info)
 {
-    ecore_x_test_fake_key_press (KEY_END);
+    ecore_x_test_fake_key_press ("XF86Back");
 }
 #endif
 

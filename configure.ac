@@ -264,11 +264,6 @@ if test "$ISF_HAS_X11" = "yes"; then
   AC_DEFINE(HAVE_X11,1,[Have X11 functions.])
 fi
 
-# Check utilX library
-PKG_CHECK_MODULES(UTILX, [utilX],
-                  [ISF_HAS_UTILX=yes],
-                  [ISF_HAS_UTILX=no])
-
 # Check appcore-efl library
 PKG_CHECK_MODULES(APPCORE_EFL, [appcore-efl])
 

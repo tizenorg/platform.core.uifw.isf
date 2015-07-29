@@ -20,7 +20,6 @@ BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires:  pkgconfig(text-client)
 BuildRequires:  pkgconfig(input-method-client)
 %else
-BuildRequires:  pkgconfig(utilX)
 BuildRequires:  pkgconfig(x11)
 %endif
 BuildRequires:  pkgconfig(ecore)
