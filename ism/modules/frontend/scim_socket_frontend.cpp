@@ -213,6 +213,8 @@ void SocketFrontEnd::run_helper (const Socket &client)
     String uuid;
     String config;
     String display;
+    size_t i;
+
     if (!(m_receive_trans.get_data (uuid) && uuid.length ()
              && m_receive_trans.get_data (config)
              && m_receive_trans.get_data (display)))
@@ -222,7 +224,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
     }
     ISF_SAVE_LOG ("uuid(%s), config(%s), display(%s)\n", uuid.c_str (), config.c_str (), display.c_str ());
 
-    for (size_t i = 0; i < __helpers.size (); ++i) {
+    for (i = 0; i < __helpers.size (); ++i) {
         if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
 
             __active_helpers.push_back (__helpers [i].first.name);
@@ -254,12 +256,16 @@ void SocketFrontEnd::run_helper (const Socket &client)
             //waitpid (pid, &status, 0);
 
             break;
-        } else {
-            ISF_SAVE_LOG ("Can't find and exec scim_helper_launcher uuid : %s\n", uuid.c_str ());
         }
     }
 
-    m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+    if (i > 0 && i == __helpers.size ()) {
+        ISF_SAVE_LOG ("Can't find and exec scim_helper_launcher appid=\"%s\"\n", uuid.c_str ());
+        m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+    }
+    else
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+
     SCIM_DEBUG_MAIN (2) << " exit run_helper ().\n";
 }
 

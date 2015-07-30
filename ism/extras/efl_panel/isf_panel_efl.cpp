@@ -153,6 +153,7 @@ typedef struct NotiData
     int noti_id;
 } NotificationData;
 
+typedef std::vector < std::pair <String, uint32> >    VectorPairStringUint32;
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal functions.
@@ -1078,6 +1079,55 @@ static unsigned int get_ise_index (const String uuid)
     return index;
 }
 
+static void _update_ime_info(void)
+{
+    std::vector<String> ise_langs;
+
+    _ime_info.clear();
+    isf_pkg_select_all_ime_info_db(_ime_info);
+
+    /* Update _groups */
+    _groups.clear();
+    for (size_t i = 0; i < _ime_info.size (); ++i) {
+        scim_split_string_list(ise_langs, _ime_info[i].languages);
+        for (size_t j = 0; j < ise_langs.size (); j++) {
+            if (std::find (_groups[ise_langs[j]].begin (), _groups[ise_langs[j]].end (), i) == _groups[ise_langs[j]].end ())
+                _groups[ise_langs[j]].push_back (i);
+        }
+        ise_langs.clear ();
+    }
+}
+
+static void _initialize_ime_info (void)
+{
+    std::vector<ImeInfoDB>::iterator iter;
+    VectorPairStringUint32   ime_on_off;
+    // Store is_enabled values of each keyboard
+    for (iter = _ime_info.begin (); iter != _ime_info.end (); iter++) {
+        if (iter->mode == TOOLBAR_HELPER_MODE) {
+            ime_on_off.push_back (std::make_pair (iter->appid, iter->is_enabled));
+        }
+    }
+    // Delete the whole ime_info DB and reload
+    isf_db_delete_ime_info ();
+    _update_ime_info ();
+    // Restore is_enabled value to valid keyboards
+    for (iter = _ime_info.begin (); iter != _ime_info.end (); iter++) {
+        if (iter->mode == TOOLBAR_HELPER_MODE) {
+            for (VectorPairStringUint32::iterator it = ime_on_off.begin (); it != ime_on_off.end (); it++) {
+                if (it->first.compare (iter->appid) == 0) {
+                    if (it->second != iter->is_enabled) {
+                        iter->is_enabled = it->second;
+                        isf_db_update_is_enabled_by_appid (iter->appid.c_str (), static_cast<bool>(iter->is_enabled));
+                    }
+                    ime_on_off.erase (it);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 #if HAVE_PKGMGR_INFO
 /**
  * @brief Insert ime_info data with pkgid.
@@ -1136,25 +1186,6 @@ static Eina_Bool _start_default_helper_timer(void *data)
 
     g_start_default_helper_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
-}
-
-static void _update_ime_info(void)
-{
-    std::vector<String> ise_langs;
-
-    _ime_info.clear();
-    isf_pkg_select_all_ime_info_db(_ime_info);
-
-    /* Update _groups */
-    _groups.clear();
-    for (size_t i = 0; i < _ime_info.size (); ++i) {
-        scim_split_string_list(ise_langs, _ime_info[i].languages);
-        for (size_t j = 0; j < ise_langs.size (); j++) {
-            if (std::find (_groups[ise_langs[j]].begin (), _groups[ise_langs[j]].end (), i) == _groups[ise_langs[j]].end ())
-                _groups[ise_langs[j]].push_back (i);
-        }
-        ise_langs.clear ();
-    }
 }
 
 /**
@@ -1392,12 +1423,14 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
 
     TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
     String pre_uuid = _panel_agent->get_current_helper_uuid ();
+    LOGD("pre_appid=%s, appid=%s, launch_ise=%d, %d", pre_uuid.c_str(), uuid.c_str(), launch_ise, _soft_keyboard_launched);
     if (pre_uuid == uuid && _soft_keyboard_launched)
         return false;
 
     if (TOOLBAR_HELPER_MODE == mode && pre_uuid.length () > 0 && _soft_keyboard_launched) {
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
+        _soft_keyboard_launched = false;
         ISF_SAVE_LOG("stop helper : %s\n", pre_uuid.c_str ());
     }
 
@@ -1428,14 +1461,30 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
     if (uuid.length () <= 0)
         return false;
 
-    bool ise_changed = false;
+    bool ise_changed = false, valid = false;
 
     for (unsigned int i = 0; i < _ime_info.size (); i++) {
         if (!uuid.compare (_ime_info[i].appid)) {
             if (TOOLBAR_KEYBOARD_MODE == _ime_info[i].mode)
                 ise_changed = set_keyboard_ise (_ime_info[i].appid);
-            else if (TOOLBAR_HELPER_MODE == _ime_info[i].mode)
-                ise_changed = set_helper_ise (_ime_info[i].appid, launch_ise);
+            else if (TOOLBAR_HELPER_MODE == _ime_info[i].mode) {
+                if (_ime_info[i].is_enabled) {
+                    /* If IME so is deleted somehow, main() in scim_helper_launcher.cpp will return -1.
+                       Checking HelperModule validity seems necessary here. */
+                    HelperModule helper_module (_ime_info[i].module_name);
+                    if (helper_module.valid ())
+                        valid = true;
+                    helper_module.unload ();
+
+                    if (valid)
+                        ise_changed = set_helper_ise (_ime_info[i].appid, launch_ise);
+                    else
+                        LOGW("Helper ISE(appid=\"%s\") is not valid.", _ime_info[i].appid.c_str ());
+                }
+                else {
+                    LOGW("Helper ISE(appid=\"%s\") is not enabled.", _ime_info[i].appid.c_str ());
+                }
+            }
             _panel_agent->set_current_toolbar_mode (_ime_info[i].mode);
             if (ise_changed) {
                 _panel_agent->set_current_helper_option (_ime_info[i].options);
@@ -1460,7 +1509,7 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 vconf_set_str (VCONFKEY_ISF_ACTIVE_KEYBOARD_UUID, uuid.c_str ());
             }
 
-            return true;
+            return ise_changed;
         }
     }
 
@@ -3665,7 +3714,10 @@ static bool update_ise_list (std::vector<String> &list)
                 if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
                     active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
                 }
-                set_active_ise (active_uuid, _soft_keyboard_launched);
+                if (set_active_ise (active_uuid, _soft_keyboard_launched) == false) {
+                    if (_initial_ise_uuid.compare (active_uuid))
+                        set_active_ise (_initial_ise_uuid, _soft_keyboard_launched);
+                }
             } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
                 String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
                 String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
@@ -4791,7 +4843,29 @@ static void slot_get_recent_ise_geometry (struct rectinfo &info)
 static void slot_set_active_ise (const String &uuid, bool changeDefault)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << uuid << ")\n";
-    set_active_ise (uuid, _soft_keyboard_launched);
+
+    /* When changing the active (default) keyboard, initialize ime_info DB if appid is invalid.
+       This may be necessary if IME packages are changed while panel process is terminated. */
+    pkgmgrinfo_appinfo_h handle = NULL;
+    bool invalid = false;
+    int ret = pkgmgrinfo_appinfo_get_appinfo (uuid.c_str (), &handle);
+    if (ret != PMINFO_R_OK) {
+        LOGW("appid \"%s\" is invalid.", uuid.c_str ());
+        /* This might happen if IME is uninstalled while the panel process is inactive.
+           The variable uuid would be invalid, so set_active_ise() would return false. */
+        invalid = true;
+    }
+    if (handle)
+        pkgmgrinfo_appinfo_destroy_appinfo (handle);
+
+    if (invalid) {
+        _initialize_ime_info ();
+        set_active_ise (_initial_ise_uuid, _soft_keyboard_launched);
+    }
+    else if (set_active_ise (uuid, _soft_keyboard_launched) == false) {
+        if (_initial_ise_uuid.compare (uuid))
+            set_active_ise (_initial_ise_uuid, _soft_keyboard_launched);
+    }
 }
 
 /**
@@ -5636,6 +5710,7 @@ static void update_ise_locale ()
     bool exist = false;
     char *label = NULL;
     pkgmgrinfo_appinfo_h handle = NULL;
+    bool need_to_init_db = false;
 
     /* Read DB from ime_info table */
     isf_load_ise_information(ALL_ISE, _config);
@@ -5654,8 +5729,20 @@ static void update_ise_locale ()
                     }
                 }
             }
+            else {
+                // The appid is invalid.. Need to initialize ime_info DB.
+                need_to_init_db = true;
+            }
             pkgmgrinfo_appinfo_destroy_appinfo(handle);
         }
+        else {
+            // The appid is invalid.. Need to initialize ime_info DB.
+            need_to_init_db = true;
+        }
+    }
+
+    if (need_to_init_db) {
+        _initialize_ime_info ();
     }
 
     if (lang_str) {
@@ -5818,10 +5905,18 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         _config->flush ();
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
-            if (_launch_ise_on_request)
-                set_active_ise (uuid, false);
-            else
-                set_active_ise (uuid, true);
+            if (_launch_ise_on_request) {
+                if (set_active_ise (uuid, false) == false) {
+                    if (_initial_ise_uuid.compare(uuid))
+                        set_active_ise (_initial_ise_uuid, false);
+                }
+            }
+            else {
+                if (set_active_ise (uuid, true) == false) {
+                    if (_initial_ise_uuid.compare(uuid))
+                        set_active_ise (_initial_ise_uuid, true);
+                }
+            }
         }
 
 #ifdef HAVE_NOTIFICATION
