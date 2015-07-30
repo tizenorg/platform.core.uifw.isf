@@ -152,8 +152,6 @@ typedef struct NotiData
     int noti_id;
 } NotificationData;
 
-typedef std::map <String, Ecore_File_Monitor *>  OSPEmRepository;
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal functions.
@@ -414,12 +412,6 @@ static Ecore_X_Window     _control_window                   = 0;
 static Ecore_X_Window     _input_win                        = 0;
 #endif
 
-static Ecore_File_Monitor *_inh_helper_ise_em               = NULL;
-static Ecore_File_Monitor *_inh_keyboard_ise_em             = NULL;
-static Ecore_File_Monitor *_osp_helper_ise_em               = NULL;
-static Ecore_File_Monitor *_osp_keyboard_ise_em             = NULL;
-static OSPEmRepository     _osp_bin_em;
-static OSPEmRepository     _osp_info_em;
 #if HAVE_PKGMGR_INFO
 static package_manager_h   pkgmgr                           = NULL;
 std::vector<String>        g_pkgid_to_be_removed;
@@ -1314,52 +1306,6 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
     }
 }
 #endif
-
-/**
- * @brief Delete keyboard ISE file monitor.
- */
-static void delete_ise_directory_em (void) {
-    if (_inh_keyboard_ise_em) {
-        ecore_file_monitor_del (_inh_keyboard_ise_em);
-        _inh_keyboard_ise_em = NULL;
-    }
-    if (_inh_helper_ise_em) {
-        ecore_file_monitor_del (_inh_helper_ise_em);
-        _inh_helper_ise_em = NULL;
-    }
-
-    if (_osp_keyboard_ise_em) {
-        ecore_file_monitor_del (_osp_keyboard_ise_em);
-        _osp_keyboard_ise_em = NULL;
-    }
-    if (_osp_helper_ise_em) {
-        ecore_file_monitor_del (_osp_helper_ise_em);
-        _osp_helper_ise_em = NULL;
-    }
-
-    OSPEmRepository::iterator iter;
-    for (iter = _osp_bin_em.begin (); iter != _osp_bin_em.end (); iter++) {
-        if (iter->second) {
-            ecore_file_monitor_del (iter->second);
-            iter->second = NULL;
-        }
-    }
-    for (iter = _osp_info_em.begin (); iter != _osp_info_em.end (); iter++) {
-        if (iter->second) {
-            ecore_file_monitor_del (iter->second);
-            iter->second = NULL;
-        }
-    }
-    _osp_bin_em.clear ();
-    _osp_info_em.clear ();
-
-#if HAVE_PKGMGR_INFO
-    if (pkgmgr) {
-        package_manager_destroy (pkgmgr);
-        pkgmgr = NULL;
-    }
-#endif
-}
 
 /**
  * @brief Set keyboard ISE.
@@ -6762,7 +6708,12 @@ cleanup:
     ui_candidate_delete_check_size_timer ();
     ui_candidate_delete_longpress_timer ();
     ui_candidate_delete_destroy_timer ();
-    delete_ise_directory_em ();
+#if HAVE_PKGMGR_INFO
+    if (pkgmgr) {
+        package_manager_destroy (pkgmgr);
+        pkgmgr = NULL;
+    }
+#endif
     ui_close_tts ();
 
     unregister_edbus_signal_handler ();
