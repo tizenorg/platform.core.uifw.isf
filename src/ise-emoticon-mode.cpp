@@ -183,9 +183,9 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
     ise_init_emoticon_list();
     ise_set_private_key_for_emoticon_mode (emoticon_group);
 
-    if(emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
+    if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         //ise_read_recent_emoticon_list_from_scim();
-        if(emoticon_list_recent.size() == 0) {
+        if (emoticon_list_recent.size() == 0) {
             //PRINTFUNC(DLOG_ERROR,"Cannot display recently used emoticons group. No recently used emoticons available");
             return;
         }
@@ -203,8 +203,8 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
     LOGD ("screen width:%d, height:%d", width, height);*/
     evas_object_move (layout, 0, 0);
 
-    if(is_candidate_on) {
-        if(screen_degree == 0 || screen_degree == 180)
+    if (is_candidate_on) {
+        if (screen_degree == 0 || screen_degree == 180)
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_PORT_CANDIDATE_ON);
         else
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_LAND_CANDIDATE_ON);
@@ -213,7 +213,7 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
         sclint height = 0;
         g_ui->get_screen_resolution (&width, &height);
         LOGD ("screen width:%d, height:%d", width, height);
-        if(screen_degree == 0 || screen_degree == 180) {
+        if (screen_degree == 0 || screen_degree == 180) {
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_PORT_CANDIDATE_OFF);
             evas_object_resize (layout, width, g_ui->get_scaled_y (ISE_HEIGHT_PORT));
         } else {
@@ -251,18 +251,18 @@ void ise_destroy_emoticon_window(void)
      * This approach is currently used below
      */
 
-    if(gengrid) {
+    if (gengrid) {
         elm_gengrid_clear(gengrid);
         evas_object_del(gengrid);
         gengrid = NULL;
     }
 
-    if(layout) {
+    if (layout) {
         evas_object_del(layout);
         layout = NULL;
     }
 
-    if(theme) {
+    if (theme) {
         elm_theme_free(theme);
         theme = NULL;
     }
@@ -270,15 +270,15 @@ void ise_destroy_emoticon_window(void)
 
 void ise_change_emoticon_mode(emoticon_group_t emoticon_group)
 {
-    if(emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
+    if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         //ise_read_recent_emoticon_list_from_scim();
-        if(emoticon_list_recent.size() == 0) {
+        if (emoticon_list_recent.size() == 0) {
             //PRINTFUNC(DLOG_ERROR,"Cannot display recently used emoticons group. No recently used emoticons available");
             return;
         }
     }
 
-    if(gengrid) {
+    if (gengrid) {
         elm_gengrid_clear(gengrid);
     }
 
@@ -337,7 +337,7 @@ static void __ise_emoticon_create_gengrid(unsigned short int screen_degree)
     evas_object_size_hint_weight_set(gengrid, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(gengrid, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-    if(screen_degree == 0 || screen_degree == 180)
+    if (screen_degree == 0 || screen_degree == 180)
         elm_gengrid_item_size_set(gengrid, ELM_SCALE_SIZE(EMOTICON_WIDTH_PORT), ELM_SCALE_SIZE(EMOTICON_HEIGHT_PORT));
     else
         elm_gengrid_item_size_set(gengrid, ELM_SCALE_SIZE(EMOTICON_WIDTH_LAND), ELM_SCALE_SIZE(EMOTICON_HEIGHT_LAND));
@@ -358,7 +358,7 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
     short int items = 0;
     std::string file_path = "";
 
-    if(emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
+    if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         items = emoticon_list_recent.size();
 
         for(int i = 0; i < items; i++) {
@@ -369,13 +369,13 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
             emoticon_items[i].item = elm_gengrid_item_append(gengrid, gic, &(emoticon_items[i]), _item_selected, &(emoticon_items[i]));
         }
     } else {
-        if(emoticon_group != EMOTICON_GROUP_DESTROY) {
+        if (emoticon_group != EMOTICON_GROUP_DESTROY) {
             items = emoticon_group_items[emoticon_group];
         }
         for (int i = 0; i < items; i++) {
             snprintf(img_name, 10, "%x", emoticon_list[emoticon_group-1][i]);
             file_path = (std::string)EMOTICON_DIR + (std::string)"u" + (std::string)img_name + (std::string)".png";
-            if(ise_util_does_file_exists(file_path)) {
+            if (ise_util_does_file_exists(file_path)) {
                 emoticon_items[i].code = emoticon_list[emoticon_group-1][i];
                 emoticon_items[i].keyevent = emoticon_list[emoticon_group-1][i];
                 emoticon_items[i].path = file_path;
@@ -391,10 +391,10 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
 
 static void __ise_emoticon_create_item_class(unsigned short int screen_degree)
 {
-    if(!gic)
+    if (!gic)
         gic = elm_gengrid_item_class_new();
 
-    if(screen_degree == 0 || screen_degree == 180)
+    if (screen_degree == 0 || screen_degree == 180)
         gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_PORT2;
     else
         gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_LAND2;
@@ -409,7 +409,7 @@ static void __ise_emoticon_create_item_class(unsigned short int screen_degree)
 static Evas_Object * grid_content_get(void *data, Evas_Object *obj, const char *part)
 {
     emoticon_item_t *ti = (emoticon_item_t *)data;
-    if(ti == NULL)
+    if (ti == NULL)
         return NULL;
 
     if (!strcmp(part, "elm.swallow.icon")) {
@@ -417,7 +417,7 @@ static Evas_Object * grid_content_get(void *data, Evas_Object *obj, const char *
             Eina_Bool is_image_file_set = false;
             Evas_Object *icon = elm_image_add(obj);
             is_image_file_set = elm_image_file_set(icon, ti->path.c_str(), NULL);
-            if(!is_image_file_set) {
+            if (!is_image_file_set) {
                 //PRINTFUNC(SECURE_ERROR,"image \"%s\" not set",ti->path.c_str());
             } else {
                 elm_image_aspect_fixed_set(icon, EINA_FALSE);
@@ -435,11 +435,11 @@ static Evas_Object * grid_content_get(void *data, Evas_Object *obj, const char *
 static void grid_content_del(void *data, Evas_Object *obj)
 {
     emoticon_item_t *ti = (emoticon_item_t *)data;
-    if(!ti)
+    if (!ti)
         return;
 
     Evas_Object *icon = elm_object_item_part_content_get(ti->item, "elm.swallow.icon");
-    if(icon) {
+    if (icon) {
         evas_object_data_del(icon, "code");
     }
     return;
@@ -451,7 +451,7 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
     short int items = 0;
     std::string file_path = "";
 
-    if(emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
+    if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         items = emoticon_list_recent.size();
 
         for(int i = 0; i < items; i++) {
@@ -461,7 +461,7 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
             emoticon_items[i].item = elm_gengrid_item_append(gengrid, gic, &(emoticon_items[i]), _item_selected, &(emoticon_items[i]));
         }
     } else {
-        if(emoticon_group != EMOTICON_GROUP_DESTROY) {
+        if (emoticon_group != EMOTICON_GROUP_DESTROY) {
             items = emoticon_group_items[emoticon_group];
         }
         for (int i = 0; i < items; i++) {
@@ -478,10 +478,10 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
 
 static void __ise_emoticon_create_item_class(unsigned short int screen_degree)
 {
-    if(!gic)
+    if (!gic)
         gic = elm_gengrid_item_class_new();
 
-    if(screen_degree == 0 || screen_degree == 180)
+    if (screen_degree == 0 || screen_degree == 180)
         gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_PORT2;
     else
         gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_LAND2;
@@ -500,7 +500,7 @@ static char * grid_text_get(void *data, Evas_Object *obj, const char *part)
     int length = 0;
 
     if (!strcmp(part, "elm.text")) {
-        if(ti && !(ti->path.empty())) {
+        if (ti && !(ti->path.empty())) {
             const Eina_Unicode unicode_event[2] = {ti->keyevent,0};
             utf_8 = eina_unicode_unicode_to_utf8(unicode_event, &length);
             return (utf_8);
@@ -528,9 +528,9 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
             utils->play_vibration(DEFAULT_VIBRATION_STYLE, DEFAULT_VIBRATION_DURATION);
     }
 
-    if(event_info) {
+    if (event_info) {
         elm_gengrid_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
-        if(ti && ti->keyevent) {
+        if (ti && ti->keyevent) {
             const Eina_Unicode unicode_event[2] = {ti->keyevent,0};
 //          PRINTFUNC(DLOG_DEBUG,"unicode_event is %x",unicode_event);
             utf_8 = eina_unicode_unicode_to_utf8(unicode_event, &length);
@@ -540,10 +540,10 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
                 free(utf_8);
             }
 
-            if(current_emoticon_group != EMOTICON_GROUP_RECENTLY_USED) {
-                if(emoticon_list_recent.size() < EMOTICON_GROUP_RECENTLY_USED_NUM) {
+            if (current_emoticon_group != EMOTICON_GROUP_RECENTLY_USED) {
+                if (emoticon_list_recent.size() < EMOTICON_GROUP_RECENTLY_USED_NUM) {
                     it = find(emoticon_list_recent.begin(), emoticon_list_recent.end(), ti->keyevent);
-                    if(it == emoticon_list_recent.end()) {    // Item not found
+                    if (it == emoticon_list_recent.end()) {    // Item not found
                         emoticon_list_recent.insert(emoticon_list_recent.begin(),ti->keyevent);
                     } else {
                         emoticon_list_recent.erase(it);
@@ -552,11 +552,12 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
                 }
                 else {
                     it = find(emoticon_list_recent.begin(), emoticon_list_recent.end(), ti->keyevent);
-                    emoticon_list_recent.erase(it);
+                    if (it != emoticon_list_recent.end())
+                        emoticon_list_recent.erase(it);
                     emoticon_list_recent.insert(emoticon_list_recent.begin(),ti->keyevent);
                 }
                 ise_write_recent_emoticon_list_to_scim();
-                if(is_recently_used_emoticon_mode_disabled)
+                if (is_recently_used_emoticon_mode_disabled)
                     ;//ise_disable_recently_used_emoticon_key(false);
             }
         }
