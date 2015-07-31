@@ -180,7 +180,7 @@
     <key button_type="selfish" key_type="control" use_magnifier="true" longkey_magnifier="true" use_repeat_key="true" width="100" hit_right="8">
       <image_label>
         <rec button="normal">B09_icon_back_nor_54x54.png</rec>
-        <rec button="pressed">B09_icon_back_press_54x54_press.png</rec>
+        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
         <rec button="disabled">B09_icon_back_dim_54x54.png</rec>
       </image_label>
       <background_image>

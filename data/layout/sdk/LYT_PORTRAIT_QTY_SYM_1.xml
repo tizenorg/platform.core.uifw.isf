@@ -184,9 +184,9 @@
     </key>
     <key button_type="selfish" key_type="control" use_magnifier="true" longkey_magnifier="true" use_repeat_key="true" width="100" hit_right="8">
       <image_label>
-        <rec button="normal">B09_icon_back_50x50.png</rec>
-        <rec button="pressed">B09_icon_back_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_back_50x50_dim.png</rec>
+        <rec button="normal">B09_icon_back_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_back_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
@@ -217,9 +217,9 @@
         <rec>...</rec>
       </label>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_50x50_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
@@ -235,9 +235,9 @@
     </key>
     <key button_type="direction" key_type="control" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="349">
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <key_value>
         <rec>Space</rec>
@@ -248,9 +248,9 @@
         <rec>.</rec>
       </label>
       <image_label>
-        <rec button="normal">B09_icon_cue.png</rec>
-        <rec button="pressed">B09_icon_cue.png</rec>
-        <rec button="disabled">B09_icon_cue.png</rec>
+        <rec button="normal">B09_icon_question_45x30.png</rec>
+        <rec button="pressed">B09_icon_question_45x30.png</rec>
+        <rec button="disabled">B09_icon_question_45x30.png</rec>
       </image_label>
       <popup_input_mode_record>
         <popup_input_mode>PUNCTUATION_POPUP</popup_input_mode>
@@ -258,9 +258,9 @@
     </key>
     <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="100" hit_right="8">
       <image_label>
-        <rec button="normal">B09_icon_enter_50x50.png</rec>
-        <rec button="pressed">B09_icon_enter_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_enter_50x50_dim.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
@@ -291,9 +291,9 @@
         <rec>...</rec>
       </label>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_50x50_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
@@ -314,9 +314,9 @@
     </key>
     <key button_type="direction" key_type="control" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="172">
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <key_value>
         <rec>Space</rec>
@@ -342,9 +342,9 @@
     </key>
     <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="100" hit_right="8">
       <image_label>
-        <rec button="normal">B09_icon_enter_50x50.png</rec>
-        <rec button="pressed">B09_icon_enter_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_enter_50x50_dim.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
@@ -375,9 +375,9 @@
         <rec>...</rec>
       </label>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_50x50_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
@@ -398,9 +398,9 @@
     </key>
     <key button_type="direction" key_type="control" label_type="QTY_SPACE" image_label_type="IMAGE_SPACE" width="172">
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
       </image_label>
       <key_value>
         <rec>Space</rec>
@@ -426,9 +426,9 @@
     </key>
     <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="100" hit_right="8">
       <image_label>
-        <rec button="normal">B09_icon_enter_50x50.png</rec>
-        <rec button="pressed">B09_icon_enter_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_enter_50x50_dim.png</rec>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
