@@ -43,7 +43,6 @@
 #include "scim.h"
 #include "isf_query_utility.h"
 #include "scim_helper.h"
-#include <pkgmgr-info.h>
 #include <db-util.h>
 
 
@@ -81,8 +80,6 @@ static struct {
 } databaseInfo = {
     DB_PATH, NULL
 };
-
-static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data);
 
 static inline int _begin_transaction(void)
 {
@@ -250,7 +247,6 @@ static inline int _db_disconnect(void)
 static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 {
     int ret = 0, i = 0;
-    bool firsttry = true;
     ImeInfoDB info;
     sqlite3_stmt* pStmt = NULL;
     static const char* pQuery = "SELECT * FROM ime_info;";
@@ -318,25 +314,6 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 
             ime_info.push_back(info);
             i++;
-        }
-        else if (i == 0 && firsttry) {
-            LOGD("sqlite3_step returned %d, empty DB", ret);
-            firsttry = false;
-
-            sqlite3_reset(pStmt);
-            sqlite3_clear_bindings(pStmt);
-            sqlite3_finalize(pStmt);
-
-            pkgmgrinfo_appinfo_filter_h handle;
-            ret = pkgmgrinfo_appinfo_filter_create(&handle);
-            if (ret == PMINFO_R_OK) {
-                ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime");
-                if (ret == PMINFO_R_OK) {
-                    ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_app_list_cb, NULL);
-                }
-                pkgmgrinfo_appinfo_filter_destroy(handle);
-            }
-            ret = SQLITE_ROW;
         }
     } while (ret == SQLITE_ROW);
 
@@ -467,7 +444,6 @@ out:
 static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname)
 {
     int ret = 0, i = 0;
-    bool firsttry = true;
     sqlite3_stmt* pStmt = NULL;
     static const char* pQuery = "SELECT mname FROM ime_info WHERE mode = ?;";
 
@@ -492,25 +468,6 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
             mname.push_back(String(db_text ? db_text : ""));
             SECURE_LOGD("%s: \"%s\"", (mode? "Helper": "IMEngine"), mname.back().c_str());
             i++;
-        }
-        else if (i == 0 && firsttry) {
-            LOGD("sqlite3_step returned %d, mode=%d, empty DB", ret, mode);
-            firsttry = false;
-
-            sqlite3_reset(pStmt);
-            sqlite3_clear_bindings(pStmt);
-            sqlite3_finalize(pStmt);
-
-            pkgmgrinfo_appinfo_filter_h handle;
-            ret = pkgmgrinfo_appinfo_filter_create(&handle);
-            if (ret == PMINFO_R_OK) {
-                ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime");
-                if (ret == PMINFO_R_OK) {
-                    ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _filtered_app_list_cb, NULL);
-                }
-                pkgmgrinfo_appinfo_filter_destroy(handle);
-            }
-            ret = SQLITE_ROW;
         }
     } while (ret == SQLITE_ROW);
 
@@ -927,16 +884,20 @@ out:
 /**
  * @brief Update data to ime_info table except for a few columns.
  *
- * @param ime_info The list to store ImeInfoDB
+ * @param ime_db The pointer of ImeInfoDB
  *
  * @return the number of updated data.
  */
-static int _db_update_ime_info(std::vector<ImeInfoDB> &ime_info)
+static int _db_update_ime_info(ImeInfoDB *ime_db)
 {
     int ret = 0, i = 0, has_option = 0;
     sqlite3_stmt* pStmt = NULL;
-    std::vector<ImeInfoDB>::iterator iter;
     static const char* pQuery = "UPDATE ime_info SET label = ?, exec = ?, mname = ?, mpath = ?, has_option = ? WHERE appid = ?;";
+
+    if (!ime_db) {
+        LOGE("Input parameter is null");
+        return 0;
+    }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -944,66 +905,64 @@ static int _db_update_ime_info(std::vector<ImeInfoDB> &ime_info)
         return 0;
     }
 
-    for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
-        ret = sqlite3_bind_text(pStmt, 1, iter->label.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 2, iter->exec.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 3, iter->module_name.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 4, iter->module_path.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        if (iter->pkgtype.compare("wgt") == 0 || iter->pkgtype.compare("tpk") == 0)
-            has_option = -1;
-        else if (iter->mode == TOOLBAR_HELPER_MODE)
-            has_option = 1;
-        else
-            has_option = 0;
-
-        ret = sqlite3_bind_int(pStmt, 5, has_option);
-        if (ret != SQLITE_OK) {
-            LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 6, iter->appid.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_step(pStmt);
-        if (ret != SQLITE_DONE) {
-            ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
-            LOGE("sqlite3_step returned %d, appid=%s, %s", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
-            ret = SQLITE_ERROR;
-            goto out;
-        }
-        else {
-            SECURE_LOGD("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
-                iter->appid.c_str(), iter->label.c_str(), iter->exec.c_str(), iter->module_name.c_str(), iter->module_path.c_str());
-            ret = SQLITE_OK;
-            i++;
-        }
-        sqlite3_reset(pStmt);
-        sqlite3_clear_bindings(pStmt);
+    ret = sqlite3_bind_text(pStmt, 1, ime_db->label.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
     }
+
+    ret = sqlite3_bind_text(pStmt, 2, ime_db->exec.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 3, ime_db->module_name.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 4, ime_db->module_path.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    if (ime_db->pkgtype.compare("wgt") == 0 || ime_db->pkgtype.compare("tpk") == 0)
+        has_option = -1;
+    else if (ime_db->mode == TOOLBAR_HELPER_MODE)
+        has_option = 1;
+    else
+        has_option = 0;
+
+    ret = sqlite3_bind_int(pStmt, 5, has_option);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 6, ime_db->appid.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_DONE) {
+        ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+        ret = SQLITE_ERROR;
+        goto out;
+    }
+    else {
+        SECURE_LOGD("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+            ime_db->appid.c_str(), ime_db->label.c_str(), ime_db->exec.c_str(), ime_db->module_name.c_str(), ime_db->module_path.c_str());
+        ret = SQLITE_OK;
+        i++;
+    }
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
 
 out:
     if (ret != SQLITE_OK) {
@@ -1018,16 +977,20 @@ out:
 /**
  * @brief Insert data to ime_info table.
  *
- * @param ime_info The list to store ImeInfoDB
+ * @param ime_db The pointer of ImeInfoDB
  *
  * @return the number of inserted data.
  */
-static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
+static int _db_insert_ime_info(ImeInfoDB *ime_db)
 {
     int ret = 0, i = 0;
     sqlite3_stmt* pStmt = NULL;
-    std::vector<ImeInfoDB>::iterator iter;
     static const char* pQuery = "INSERT INTO ime_info (appid, label, pkgid, pkgtype, exec, mname, mpath, mode, options, is_enabled, is_preinstalled, has_option, disp_lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    if (!ime_db) {
+        LOGE("Input parameter is null");
+        return 0;
+    }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
@@ -1035,103 +998,101 @@ static int _db_insert_ime_info(std::vector<ImeInfoDB> &ime_info)
         return 0;
     }
 
-    for (iter = ime_info.begin (); iter != ime_info.end (); iter++) {
-        ret = sqlite3_bind_text(pStmt, 1, iter->appid.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 2, iter->label.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 3, iter->pkgid.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 4, iter->pkgtype.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 5, iter->exec.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 6, iter->module_name.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 7, iter->module_path.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_int(pStmt, 8, iter->mode);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_int(pStmt, 9, (int)iter->options);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_int(pStmt, 10, (int)iter->is_enabled);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_int(pStmt, 11, (int)iter->is_preinstalled);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_int(pStmt, 12, iter->has_option);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_bind_text(pStmt, 13, iter->display_lang.c_str(), -1, SQLITE_TRANSIENT);
-        if (ret != SQLITE_OK) {
-            LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
-            goto out;
-        }
-
-        ret = sqlite3_step(pStmt);
-        if (ret != SQLITE_DONE) {
-            ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
-            LOGE("sqlite3_step returned %d, appid=%s, %s", ret, iter->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
-            ret = SQLITE_ERROR;
-            goto out;
-        }
-        else {
-            SECURE_LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u %d \"%s\"",
-                iter->appid.c_str(), iter->label.c_str(), iter->pkgid.c_str(), iter->pkgtype.c_str(),
-                iter->module_name.c_str(), iter->exec.c_str(), iter->module_path.c_str(), iter->mode,
-                iter->options, iter->is_enabled, iter->is_preinstalled, iter->has_option, iter->display_lang.c_str());
-            ret = SQLITE_OK;
-            i++;
-        }
-        sqlite3_reset(pStmt);
-        sqlite3_clear_bindings(pStmt);
+    ret = sqlite3_bind_text(pStmt, 1, ime_db->appid.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
     }
+
+    ret = sqlite3_bind_text(pStmt, 2, ime_db->label.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 3, ime_db->pkgid.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 4, ime_db->pkgtype.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 5, ime_db->exec.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 6, ime_db->module_name.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 7, ime_db->module_path.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_int(pStmt, 8, ime_db->mode);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_int(pStmt, 9, (int)ime_db->options);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_int(pStmt, 10, (int)ime_db->is_enabled);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_int(pStmt, 11, (int)ime_db->is_preinstalled);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_int(pStmt, 12, ime_db->has_option);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 13, ime_db->display_lang.c_str(), -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_DONE) {
+        ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+        ret = SQLITE_ERROR;
+        goto out;
+    }
+    else {
+        SECURE_LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u %d \"%s\"",
+            ime_db->appid.c_str(), ime_db->label.c_str(), ime_db->pkgid.c_str(), ime_db->pkgtype.c_str(),
+            ime_db->module_name.c_str(), ime_db->exec.c_str(), ime_db->module_path.c_str(), ime_db->mode,
+            ime_db->options, ime_db->is_enabled, ime_db->is_preinstalled, ime_db->has_option, ime_db->display_lang.c_str());
+        ret = SQLITE_OK;
+        i++;
+    }
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
 
 out:
     if (ret != SQLITE_OK) {
@@ -1183,175 +1144,6 @@ out:
     sqlite3_clear_bindings(pStmt);
     sqlite3_finalize(pStmt);
     return i;
-}
-
-/**
- * @brief Read data from ime category manifest and insert initial db
- *
- * @param handle    pkgmgrinfo_appinfo_h pointer
- * @param user_data The data to pass to this callback.
- *
- * @return 0 if success, negative value(<0) if fail. Callback is not called if return value is negative.
- */
-static int _filtered_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
-{
-    int ret = 0;
-    char *appid = NULL, *pkgid = NULL, *pkgtype = NULL, *exec = NULL, *label = NULL, *path = NULL;
-    pkgmgrinfo_pkginfo_h  pkginfo_handle = NULL;
-    ImeInfoDB ime_db;
-    std::vector<ImeInfoDB> ime_info;
-    bool *result = static_cast<bool*>(user_data);
-
-    if (result) /* in this case, need to check category */ {
-        bool exist = true;
-        ret = pkgmgrinfo_appinfo_is_category_exist(handle, "http://tizen.org/category/ime", &exist);
-        if (ret != PMINFO_R_OK || !exist) {
-            LOGD("ime category is not available!");
-            return 0;
-        }
-    }
-
-    /* appid */
-    ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
-    if (ret == PMINFO_R_OK)
-        ime_db.appid = String(appid ? appid : "");
-    else {
-        LOGE("appid is not available!");
-        return 0;
-    }
-
-    ime_db.iconpath = "";
-
-    /* pkgid */
-    ret = pkgmgrinfo_appinfo_get_pkgid(handle, &pkgid);
-    if (ret == PMINFO_R_OK)
-        ime_db.pkgid = String(pkgid ? pkgid : "");
-    else {
-        LOGE("pkgid is not available!");
-        return 0;
-    }
-
-    /* exec path */
-    ret = pkgmgrinfo_appinfo_get_exec(handle, &exec);
-    if (ret == PMINFO_R_OK)
-        ime_db.exec = String(exec ? exec : "");
-    else {
-        LOGE("exec is not available!");
-        return 0;
-    }
-
-    /* label */
-    ret = pkgmgrinfo_appinfo_get_label(handle, &label);
-    if (ret == PMINFO_R_OK)
-        ime_db.label = String(label ? label : "");
-
-    /* get pkgmgrinfo_pkginfo_h */
-    ret = pkgmgrinfo_pkginfo_get_pkginfo(pkgid, &pkginfo_handle);
-    if (ret == PMINFO_R_OK && pkginfo_handle) {
-        /* pkgrootpath */
-        ret = pkgmgrinfo_pkginfo_get_root_path(pkginfo_handle, &path);
-
-        /* pkgtype */
-        ret = pkgmgrinfo_pkginfo_get_type(pkginfo_handle, &pkgtype);
-
-        if (ret == PMINFO_R_OK)
-            ime_db.pkgtype = String(pkgtype ? pkgtype : "");
-        else {
-            LOGE("pkgtype is not available!");
-            pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
-            return 0;
-        }
-    }
-
-    ime_db.languages = "en";
-    ime_db.display_lang = "";
-
-    if (ime_db.pkgtype.compare("rpm") == 0 &&   //1 Inhouse IMEngine ISE(IME)
-        ime_db.exec.find("scim-launcher") != String::npos)  // Some IMEngine's pkgid doesn't have "ise-engine" prefix.
-    {
-        ime_db.mode = TOOLBAR_KEYBOARD_MODE;
-        ime_db.options = 0;
-        ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
-            + String(SCIM_PATH_DELIM_STRING) + String("IMEngine");
-        ime_db.module_name = ime_db.pkgid;
-        ime_db.is_enabled = 1;
-        ime_db.is_preinstalled = 1;
-        ime_db.has_option = 0; // It doesn't matter. No option for IMEngine...
-    }
-    else {
-        ime_db.mode = TOOLBAR_HELPER_MODE;
-        if (ime_db.pkgtype.compare("rpm") == 0) //1 Inhouse Helper ISE(IME)
-        {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
-            ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
-                + String(SCIM_PATH_DELIM_STRING) + String("Helper");
-            ime_db.module_name = ime_db.pkgid;
-            ime_db.is_enabled = 1;
-            ime_db.is_preinstalled = 1;
-            ime_db.has_option = 1;  // Let's assume the inhouse IME always has an option menu.
-        }
-#ifdef _WEARABLE
-        else if (ime_db.pkgtype.compare("wgt") == 0)    //1 Download Web IME
-        {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
-                | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
-            ime_db.module_path = String(SCIM_MODULE_PATH) + String(SCIM_PATH_DELIM_STRING) + String(SCIM_BINARY_VERSION)
-                + String(SCIM_PATH_DELIM_STRING) + String("Helper");
-            ime_db.module_name = String("ise-web-helper-agent");
-            if (ime_db.exec.compare(0, 5, "/usr/") == 0) {
-                ime_db.is_enabled = 1;
-                ime_db.is_preinstalled = 1;
-            }
-            else {
-               ime_db.is_enabled = 0;
-               ime_db.is_preinstalled = 0;
-            }
-            ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
-        }
-#endif
-        else if (ime_db.pkgtype.compare("tpk") == 0)    //1 Download Native IME
-        {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
-                | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
-            if (path)
-                ime_db.module_path = String(path) + String("/lib");
-            else
-                ime_db.module_path = String("/opt/usr/apps/") + ime_db.pkgid + String("/lib");
-            ime_db.module_name = String("lib") + ime_db.exec.substr(ime_db.exec.find_last_of(SCIM_PATH_DELIM) + 1);
-            if (ime_db.exec.compare(0, 5, "/usr/") == 0) {
-                ime_db.is_enabled = 1;
-                ime_db.is_preinstalled = 1;
-            }
-            else {
-                ime_db.is_enabled = 0;
-                ime_db.is_preinstalled = 0;
-            }
-            ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
-        }
-        else {
-            LOGE("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str());
-            if (pkginfo_handle) {
-                pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
-                pkginfo_handle = NULL;
-            }
-            return 0;
-        }
-    }
-
-    ime_info.push_back(ime_db);
-    ret = _db_insert_ime_info(ime_info);
-    if (ret < 1)
-        ret = _db_update_ime_info(ime_info);
-
-    if (pkginfo_handle) {
-        pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
-        pkginfo_handle = NULL;
-    }
-
-    if (result && ret)
-        *result = true;
-
-    return 0;
 }
 
 /**
@@ -1623,44 +1415,51 @@ EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
 }
 
 /**
- * @brief Insert ime_info data with pkgid.
+ * @brief Update data to ime_info table except for a few columns.
  *
- * @param pkgid pkgid to insert/update ime_info table.
+ * @param ime_db The pointer of ImeInfoDB
  *
- * @return 1 if it is successful, otherwise return 0.
+ * @return the number of updated data.
  */
-EAPI int isf_db_insert_ime_info_by_pkgid(const char *pkgid)
+EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
 {
     int ret = 0;
-    pkgmgrinfo_pkginfo_h handle = NULL;
-    bool isImePkg = false;
 
-    if (!pkgid) {
-        LOGW("pkgid is null.");
-        return 0;
-    }
-
-    ret = pkgmgrinfo_pkginfo_get_pkginfo(pkgid, &handle);
-    if (ret != PMINFO_R_OK) {
-        LOGW("pkgmgrinfo_pkginfo_get_pkginfo(\"%s\",~) returned %d", pkgid, ret);
-        return 0;
+    if (!ime_db) {
+        return ret;
     }
 
     if (_db_connect() == 0) {
-        ret = pkgmgrinfo_appinfo_get_list(handle, PMINFO_UI_APP, _filtered_app_list_cb, (void *)&isImePkg);
-        if (ret != PMINFO_R_OK) {
-            LOGW("pkgmgrinfo_appinfo_get_list failed(%d)", ret);
-            ret = 0;
-        }
-        else if (isImePkg)
-            ret = 1;
-
+        ret = _db_update_ime_info(ime_db);
         _db_disconnect();
     }
     else
         LOGW("failed");
 
-    pkgmgrinfo_pkginfo_destroy_pkginfo(handle);
+    return ret;
+}
+
+/**
+ * @brief Insert data to ime_info table.
+ *
+ * @param ime_db The pointer of ImeInfoDB
+ *
+ * @return the number of inserted data.
+ */
+EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
+{
+    int ret = 0;
+
+    if (!ime_db) {
+        return ret;
+    }
+
+    if (_db_connect() == 0) {
+        ret = _db_insert_ime_info(ime_db);
+        _db_disconnect();
+    }
+    else
+        LOGW("failed");
 
     return ret;
 }

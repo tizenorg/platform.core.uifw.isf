@@ -76,7 +76,8 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
 EAPI int isf_db_update_disp_lang(const char *disp_lang);
 EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled);
 EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option);
-EAPI int isf_db_insert_ime_info_by_pkgid(const char *pkgid);
+EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db);
+EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db);
 EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
 
 #endif /* __ISF_QUERY_UTILITY_H */
