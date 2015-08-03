@@ -32,12 +32,10 @@ typedef enum
     TOOLBAR_HELPER_MODE         /* Software keyboard ISE */
 } TOOLBAR_MODE_T;
 
-
 #define E_PROP_DEVICEMGR_INPUTWIN                        "DeviceMgr Input Window"
 #define E_PROP_DEVICEMGR_CONTROLWIN                      "_ISF_CONTROL_WINDOW"
 #define PROP_X_EXT_KEYBOARD_INPUT_DETECTED               "HW Keyboard Input Started"
 #define PROP_X_EXT_KEYBOARD_EXIST                        "X External Keyboard Exist"
-
 
 bool app_create (void *user_data)
 {
@@ -94,7 +92,6 @@ void app_terminate (void *user_data)
 
 int main (int argc, char *argv [])
 {
-
     ui_app_lifecycle_callback_s event_callback = {0,};
 
     event_callback.create = app_create;
@@ -104,5 +101,4 @@ int main (int argc, char *argv [])
     LOGD ("start org.tizen.isf-kbd-mode-changer");
 
     return ui_app_main (argc, argv, &event_callback, NULL);
-
 }

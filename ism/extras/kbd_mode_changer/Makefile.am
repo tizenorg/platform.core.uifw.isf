@@ -39,5 +39,3 @@ isf_kbd_mode_changer_LDFLAGS  = @EFL_LIBS@ -rpath $(libdir)\
                                 @DLOG_LIBS@ \
                                 @APPFW_LIBS@ \
                                 -pie
-
-isf_kbd_mode_changer_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
