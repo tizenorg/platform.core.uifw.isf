@@ -171,15 +171,15 @@ static void ise_set_cm_private_key (scluint cm_key_id)
 
     if (strcmp (_cm_key_list[cm_key_id], USER_KEYSTRING_EMOTICON) == 0) {
         sclchar* imagelabel[SCL_BUTTON_STATE_MAX] = {
-            const_cast<sclchar*>("emoticon/icon_emotion.png"),
-            const_cast<sclchar*>("emoticon/icon_emotion_press.png"),
-            const_cast<sclchar*>("emoticon/icon_emotion_dim.png")};
+            const_cast<sclchar*>("emoticon/icon_emotion_nor_55x55.png"),
+            const_cast<sclchar*>("emoticon/icon_emotion_press_55x55.png"),
+            const_cast<sclchar*>("emoticon/icon_emotion_dim_55x55.png")};
         g_ui->set_private_key("CM_KEY", "", imagelabel, NULL, 0, USER_KEYSTRING_EMOTICON, TRUE);
     } else if (strcmp (_cm_key_list[cm_key_id], USER_KEYSTRING_OPTION) == 0) {
         sclchar* imagelabel[SCL_BUTTON_STATE_MAX] = {
-            const_cast<sclchar*>("setting icon/B09_icon_setting_50x50.png"),
-            const_cast<sclchar*>("setting icon/B09_icon_setting_50x50_press.png"),
-            const_cast<sclchar*>("setting icon/B09_icon_setting_50x50_dim.png")};
+            const_cast<sclchar*>("setting icon/B09_icon_setting_nor_54x54.png"),
+            const_cast<sclchar*>("setting icon/B09_icon_setting_press_54x54.png"),
+            const_cast<sclchar*>("setting icon/B09_icon_setting_dim_54x54.png")};
         g_ui->set_private_key("CM_KEY", "", imagelabel, NULL, 0, USER_KEYSTRING_OPTION, TRUE);
     }
 }

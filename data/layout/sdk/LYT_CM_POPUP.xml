@@ -12,9 +12,9 @@
         <rec>OPTION</rec>
       </key_value>
       <image_label>
-        <rec button="normal">setting icon/B09_icon_setting_50x50.png</rec>
-        <rec button="pressed">setting icon/B09_icon_setting_50x50_press.png</rec>
-        <rec button="disabled">setting icon/B09_icon_setting_50x50_dim.png</rec>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">popup_line/popup_line_left.png</rec>
@@ -25,9 +25,9 @@
         <rec>EMOTICON_LAYOUT</rec>
       </key_value>
       <image_label>
-        <rec button="normal">emoticon/icon_emotion.png</rec>
-        <rec button="pressed">emoticon/icon_emotion_press.png</rec>
-        <rec button="disabled">emoticon/icon_emotion_dim.png</rec>
+        <rec button="normal">emoticon/icon_emotion_nor_55x55.png</rec>
+        <rec button="pressed">emoticon/icon_emotion_press_55x55.png</rec>
+        <rec button="disabled">emoticon/icon_emotion_dim_55x55.png</rec>
       </image_label>
       <background_image>
         <rec button="normal">popup_line/popup_line_right.png</rec>
