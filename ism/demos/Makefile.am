@@ -44,6 +44,7 @@ isf_demo_efl_SOURCES  = isf_demo_efl.cpp \
 
 isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @ECOREX_CFLAGS@ \
+                        @ELEMENTARY_CFLAGS@ \
                         @APPCORE_EFL_CFLAGS@ \
                         @VCONF_CFLAGS@ \
                         @PRIVILEGE_CONTROL_CFLAGS@ \
@@ -54,6 +55,7 @@ isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
 
 isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @ECOREX_LIBS@ \
+                        @ELEMENTARY_LIBS@ \
                         @VCONF_LIBS@ \
                         @APPCORE_EFL_LIBS@ \
                         @PRIVILEGE_CONTROL_LIBS@ \

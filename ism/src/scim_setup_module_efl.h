@@ -28,7 +28,7 @@
 #define __SCIM_SETUP_MODULE_EFL_H
 
 
-#include <Elementary.h>
+#include <Evas.h>
 #include <string.h>
 
 using namespace scim;
