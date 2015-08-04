@@ -217,8 +217,11 @@ fi
 # Check ECORE
 PKG_CHECK_MODULES(ECORE, [ecore])
 
+# Check ECORE_IPC library
+PKG_CHECK_MODULES(ECORE_IPC, [ecore-ipc])
+
 # Check EFL library
-PKG_CHECK_MODULES(EFL, [elementary evas ecore ecore-evas ecore-file edje ecore-input ecore-ipc ecore-imf],
+PKG_CHECK_MODULES(EFL, [elementary evas ecore ecore-evas ecore-file edje ecore-input ecore-imf],
                   [ISF_HAS_EFL=yes],
                   [ISF_HAS_EFL=no])
 
