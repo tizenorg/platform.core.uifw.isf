@@ -51,6 +51,7 @@ isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @EFL_EXTENSION_CFLAGS@ \
                         @DLOG_CFLAGS@ \
                         @APP_CONTROL_CFLAGS@ \
+                        @PKGMGR_INFO_CFLAGS@ \
                         -fPIE
 
 isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
@@ -62,6 +63,7 @@ isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @EFL_EXTENSION_LIBS@ \
                         @DLOG_LIBS@ \
                         @APP_CONTROL_LIBS@ \
+                        @PKGMGR_INFO_LIBS@ \
                         -pie
 
 isf_demo_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
