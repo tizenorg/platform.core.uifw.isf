@@ -40,6 +40,8 @@
 #include "isf_panel_efl.h"
 #include "isf_panel_utility.h"
 #include "isf_query_utility.h"
+#include <pkgmgr-info.h>
+#include "isf_pkg.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
@@ -171,7 +173,7 @@ void isf_load_ise_information (LOAD_ISE_TYPE type, const ConfigPointer &config)
 {
     /* Load IME info */
     if (_ime_info.size() == 0)
-        isf_db_select_all_ime_info(_ime_info);
+        isf_pkg_select_all_ime_info_db(_ime_info);
 
     /* Update _groups */
     _groups.clear();

@@ -78,6 +78,7 @@ EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option);
 EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db);
 EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db);
 EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
+EAPI int isf_db_delete_ime_info(void);
 
 #endif /* __ISF_QUERY_UTILITY_H__ */
 

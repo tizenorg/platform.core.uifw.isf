@@ -902,7 +902,7 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
         LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
-        return 0;
+        return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, ime_db->label.c_str(), -1, SQLITE_TRANSIENT);
@@ -995,7 +995,7 @@ static int _db_insert_ime_info(ImeInfoDB *ime_db)
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
         LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
-        return 0;
+        return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, ime_db->appid.c_str(), -1, SQLITE_TRANSIENT);
@@ -1120,7 +1120,7 @@ static int _db_delete_ime_info_by_pkgid(const char *pkgid)
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
         LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
-        return 0;
+        return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, pkgid, -1, SQLITE_TRANSIENT);
@@ -1140,6 +1140,39 @@ static int _db_delete_ime_info_by_pkgid(const char *pkgid)
     }
 
 out:
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
+    sqlite3_finalize(pStmt);
+    return i;
+}
+
+/**
+ * @brief Delete all ime_info data.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static int _db_delete_ime_info(void)
+{
+    int i = 0, ret = 0;
+    sqlite3_stmt* pStmt = NULL;
+    static const char* pQuery = "DELETE FROM ime_info;"; // There might be more than one appid for one pkgid.
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        return i;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_DONE) {
+        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+    }
+    else {
+        // If there is no pkgid to delete, ret is still SQLITE_DONE.
+        SECURE_LOGD("DELETE FROM ime_info;");
+        i = 1;
+    }
+
     sqlite3_reset(pStmt);
     sqlite3_clear_bindings(pStmt);
     sqlite3_finalize(pStmt);
@@ -1260,7 +1293,7 @@ EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &a
 
     if (!pkgid) {
         LOGW("pkgid is null.");
-        return 0;
+        return ret;
     }
 
     if (_db_connect() == 0) {
@@ -1287,7 +1320,7 @@ EAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
 
     if (!appid || !is_enabled) {
         LOGW("Input parameter is null.");
-        return 0;
+        return ret;
     }
 
     if (_db_connect() == 0) {
@@ -1314,7 +1347,7 @@ EAPI int isf_db_select_count_by_module_name(const char *module_name)
 
     if (!module_name) {
         LOGW("module_name is null.");
-        return 0;
+        return ret;
     }
 
     if (_db_connect() == 0) {
@@ -1339,6 +1372,11 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
 {
     int ret = 0;
 
+    if (!appid || !label) {
+        LOGW("Input parameter is null.");
+        return ret;
+    }
+
     if (_db_connect() == 0) {
         ret = _db_update_label_by_appid(appid, label);
         _db_disconnect();
@@ -1359,6 +1397,11 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
 EAPI int isf_db_update_disp_lang(const char *disp_lang)
 {
     int ret = 0;
+
+    if (!disp_lang) {
+        LOGW("Input parameter is null.");
+        return ret;
+    }
 
     if (_db_connect() == 0) {
         ret = _db_update_disp_lang(disp_lang);
@@ -1382,6 +1425,11 @@ EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 {
     int ret = 0;
 
+    if (!appid) {
+        LOGW("Input parameter is null.");
+        return ret;
+    }
+
     if (_db_connect() == 0) {
         ret = _db_update_is_enabled_by_appid(appid, is_enabled);
         _db_disconnect();
@@ -1403,6 +1451,11 @@ EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
 {
     int ret = 0;
+
+    if (!appid) {
+        LOGW("Input parameter is null.");
+        return ret;
+    }
 
     if (_db_connect() == 0) {
         ret = _db_update_has_option_by_appid(appid, has_option);
@@ -1426,6 +1479,7 @@ EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
     int ret = 0;
 
     if (!ime_db) {
+        LOGW("Input parameter is null.");
         return ret;
     }
 
@@ -1476,12 +1530,26 @@ EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
     int ret = 0;
 
     if (!pkgid) {
-        LOGW("pkgid is null.");
-        return 0;
+        LOGW("Input parameter is null.");
+        return ret;
     }
 
     if (_db_connect() == 0) {
         ret = _db_delete_ime_info_by_pkgid(pkgid);
+        _db_disconnect();
+    }
+    else
+        LOGW("failed");
+
+    return ret;
+}
+
+EAPI int isf_db_delete_ime_info(void)
+{
+    int ret = 0;
+
+    if (_db_connect() == 0) {
+        ret = _db_delete_ime_info();
         _db_disconnect();
     }
     else

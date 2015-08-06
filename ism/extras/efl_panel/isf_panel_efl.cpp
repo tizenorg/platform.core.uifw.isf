@@ -1086,7 +1086,7 @@ static unsigned int get_ise_index (const String uuid)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-int _db_insert_ime_info_by_pkgid(const char *pkgid)
+int _isf_insert_ime_info_by_pkgid(const char *pkgid)
 {
     int ret = 0;
     pkgmgrinfo_pkginfo_h handle = NULL;
@@ -1143,7 +1143,7 @@ static void _update_ime_info(void)
     std::vector<String> ise_langs;
 
     _ime_info.clear();
-    isf_db_select_all_ime_info(_ime_info);
+    isf_pkg_select_all_ime_info_db(_ime_info);
 
     /* Update _groups */
     _groups.clear();
@@ -1199,7 +1199,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                 }
             }
 
-            if (_db_insert_ime_info_by_pkgid(package)) {
+            if (_isf_insert_ime_info_by_pkgid(package)) {
                 if (is_enabled >= 0) {
                     isf_db_update_is_enabled_by_appid(g_stopped_helper_appid.c_str(), (bool)is_enabled);
                 }
@@ -1225,7 +1225,6 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                     if (std::find(appids.begin(), appids.end(), current_ime_appid) != appids.end()) { // If the current ISE package is updated, restart it.
                         for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                             if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
-                                //set_helper_ise();
                                 _panel_agent->hide_helper (current_ime_appid);
                                 _panel_agent->stop_helper (current_ime_appid);
                                 _panel_agent->start_helper (current_ime_appid);
@@ -3632,7 +3631,7 @@ static bool update_ise_list (std::vector<String> &list)
     bool result = true;
 
     if (_ime_info.size() == 0) {
-        if (isf_db_select_all_ime_info(_ime_info) == 0)
+        if (isf_pkg_select_all_ime_info_db(_ime_info) == 0)
             result = false;
     }
 
@@ -4842,7 +4841,7 @@ static bool slot_get_all_helper_ise_info (HELPER_ISE_INFO &info)
     info.has_option.clear ();
 
     if (_ime_info.size() == 0)
-        isf_db_select_all_ime_info (_ime_info);
+        isf_pkg_select_all_ime_info_db (_ime_info);
 
     //active_ime_appid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
     if (_panel_agent) {
@@ -4879,7 +4878,7 @@ static void slot_set_has_option_helper_ise_info (const String &appid, bool has_o
     }
 
     if (_ime_info.size() == 0)
-        isf_db_select_all_ime_info(_ime_info);
+        isf_pkg_select_all_ime_info_db(_ime_info);
 
     if (isf_db_update_has_option_by_appid(appid.c_str(), has_option)) {    // Update ime_info DB
         for (unsigned int i = 0; i < _ime_info.size (); i++) {
@@ -4904,7 +4903,7 @@ static void slot_set_enable_helper_ise_info (const String &appid, bool is_enable
     }
 
     if (_ime_info.size() == 0)
-        isf_db_select_all_ime_info(_ime_info);
+        isf_pkg_select_all_ime_info_db(_ime_info);
 
     if (isf_db_update_is_enabled_by_appid(appid.c_str(), is_enabled)) {    // Update ime_info DB
         for (unsigned int i = 0; i < _ime_info.size (); i++) {
@@ -5089,7 +5088,7 @@ static bool slot_is_helper_ise_enabled (String appid, int &enabled)
     }
 
     if (_ime_info.size() == 0)
-        isf_db_select_all_ime_info(_ime_info);
+        isf_pkg_select_all_ime_info_db(_ime_info);
 
     if (isf_db_select_is_enabled_by_appid(appid.c_str(), &is_enabled)) {
         enabled = static_cast<int>(is_enabled);
@@ -5735,7 +5734,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
     unsigned int val = 0;
 #endif
 
-    String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+    String helper_uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
     String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
@@ -6634,17 +6633,14 @@ int main (int argc, char *argv [])
     try {
         /* Update ISE list */
         std::vector<String> list;
-        if (update_ise_list (list) == false) {  // If there is no IME, that is, if ime_info DB is empty... But probably it's already made by scim process.
-            isf_pkg_reload_ime_info_db();
-            update_ise_list (list);
-        }
+        update_ise_list (list);
 
         /* Load initial ISE information */
         _initial_ise_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (SCIM_COMPOSE_KEY_FACTORY_UUID));
 
         /* Check if SCIM_CONFIG_DEFAULT_HELPER_ISE is available. If it's not, set it as _initial_ise_uuid.
            e.g., This might be necessary when the platform is upgraded from 2.3 to 2.4. */
-        String helper_uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
+        String helper_uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
         if (helper_uuid.length() > 0 && _initial_ise_uuid.length() > 0 && helper_uuid != _initial_ise_uuid) {
             bool match = false;
             for (unsigned int u = 0; u < _ime_info.size (); u++) {

@@ -27,6 +27,7 @@
 
 int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data);
 void isf_pkg_reload_ime_info_db(void);
+int isf_pkg_select_all_ime_info_db(std::vector<ImeInfoDB> &ime_info);
 
 #endif /* __ISF_PKG_H__ */
 

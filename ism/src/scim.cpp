@@ -46,6 +46,8 @@
 #include <sys/resource.h>
 #include <sched.h>
 #include <pkgmgr-info.h>
+#include <scim_panel_common.h>
+#include "isf_query_utility.h"
 #include "isf_pkg.h"
 
 using namespace scim;

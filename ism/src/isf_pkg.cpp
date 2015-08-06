@@ -229,6 +229,24 @@ void isf_pkg_reload_ime_info_db(void)
     }
 }
 
+/**
+ * @brief Select all ime_info table. If ime_info table is empty, this will reload data through pkgmgr-info.
+ *
+ * @param ime_info The list to store ImeInfoDB
+ *
+ * @return the number of selected row.
+ */
+int isf_pkg_select_all_ime_info_db(std::vector<ImeInfoDB> &ime_info)
+{
+    int result = isf_db_select_all_ime_info(ime_info);
+    if (result == 0) {   // Probably ime_info DB's already added by scim process. But isf_db_delete_ime_info() can delete it, so try to make one here.
+        isf_pkg_reload_ime_info_db();
+
+        return isf_db_select_all_ime_info(ime_info);
+    }
+    return result;
+}
+
 /*
 vi:ts=4:ai:nowrap:expandtab
 */
