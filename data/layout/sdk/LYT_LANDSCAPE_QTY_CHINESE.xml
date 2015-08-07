@@ -204,7 +204,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
@@ -243,7 +243,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-305" popup_offset_y="-162" width="96">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-360" popup_offset_y="-254" width="96">
       <label>
         <rec>。</rec>
       </label>
@@ -291,7 +291,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
@@ -350,7 +350,7 @@
         <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
       </background_image>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-82" popup_offset_y="-302">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-265" popup_offset_y="-230">
       <label>
         <rec>www.</rec>
       </label>
@@ -393,7 +393,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key key_type="modechange" width="96" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
@@ -452,7 +452,7 @@
         <rec button="disabled">button/B09_Qwerty_l_btn_02.png</rec>
       </background_image>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-82" popup_offset_y="-302">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-265" popup_offset_y="-230">
       <label>
         <rec>.com</rec>
       </label>

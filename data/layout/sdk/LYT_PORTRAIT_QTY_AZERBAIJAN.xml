@@ -603,7 +603,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
@@ -637,7 +637,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-339" popup_offset_y="-162">
+    <key popup_type="longpress_popup_once" label_type="QTY_DOT" image_label_type="IMAGE_CUE" popup_offset_x="-391" popup_offset_y="-254">
       <label>
         <rec>.</rec>
       </label>
@@ -680,7 +680,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
@@ -724,7 +724,7 @@
         <rec>.</rec>
       </label>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-136" popup_offset_y="-302" width="100">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-318" popup_offset_y="-230" width="100">
       <label>
         <rec>www.</rec>
       </label>
@@ -767,7 +767,7 @@
         <rec>SYM_QTY_1</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
@@ -811,7 +811,7 @@
         <rec>.</rec>
       </label>
     </key>
-    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-136" popup_offset_y="-302" width="100">
+    <key key_type="string" popup_type="longpress_popup_once" label_type="QTY_WWWCOM" popup_offset_x="-318" popup_offset_y="-230" width="100">
       <label>
         <rec>.com</rec>
       </label>
