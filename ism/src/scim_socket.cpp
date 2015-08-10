@@ -55,9 +55,15 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #include <sys/prctl.h>
+#include <dlog.h>
 
 #include "scim_private.h"
 #include "scim.h"
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG "ISF_SOCKET"
 
 /* Experimental modification for avoiding multiple scim process problem */
 #define DISABLE_MULTIPLE_SOCKETS
@@ -498,12 +504,12 @@ public:
             if (fcntl (m_id, F_SETFL, flags | O_NONBLOCK) == -1) {
                 char buf_err[256];
                 m_err = errno;
-                ISF_SAVE_LOG ("ppid : %d fcntl() failed, %d %s\n", getppid (), m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
+                LOGW ("ppid : %d fcntl() failed, %d %s\n", getppid (), m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
             }
 
             char proc_name[17] = {0}; /* the buffer provided shall at least be 16+1 bytes long */
             if (-1 != prctl (PR_GET_NAME, proc_name, 0, 0, 0)) {
-                ISF_SAVE_LOG ("ppid:%d  trying connect() to %s, %s\n", getppid (), addr.get_address ().c_str (), proc_name);
+                LOGD ("ppid:%d  trying connect() to %s, %s\n", getppid (), addr.get_address ().c_str (), proc_name);
             }
 
             if ((m_err = ::connect (m_id, data, len)) == 0) {
@@ -512,7 +518,7 @@ public:
                 }
                 m_address = addr;
 
-                ISF_SAVE_LOG ("connect() succeeded\n");
+                LOGD ("connect() succeeded\n");
 
                 return true;
             }
@@ -529,15 +535,15 @@ public:
                 tval.tv_sec = nsec;
                 tval.tv_usec = 0;
 
-                ISF_SAVE_LOG ("EINPROGRESS, select() with timeout %d\n", nsec);
+                LOGW ("EINPROGRESS, select() with timeout %d\n", nsec);
 
                 if (select (m_id + 1, &rset, &wset, NULL, nsec ? &tval : NULL) == 0) {
                     m_err = ETIMEDOUT;
 
-                    ISF_SAVE_LOG ("timeout in select()\n");
+                    LOGW ("timeout in select()\n");
                 } else {
                     // We've got something, connection succeeded
-                    ISF_SAVE_LOG ("finally connected\n");
+                    LOGD ("finally connected\n");
 
                     if (fcntl (m_id, F_SETFL, flags) == -1) {
                         m_err = errno;
@@ -548,7 +554,7 @@ public:
             } else {
                 char buf_err[256];
                 m_err = errno;
-                ISF_SAVE_LOG ("connect() failed with %d (%s)\n", m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
+                LOGW ("connect() failed with %d (%s)\n", m_err, strerror_r (m_err, buf_err, sizeof (buf_err)));
             }
             if (fcntl (m_id, F_SETFL, flags) == -1) {
                 m_err = errno;
@@ -1525,7 +1531,7 @@ scim_socket_open_connection   (uint32       &key,
             if (trans.write_to_socket (socket))
                 return true;
         } else {
-            ISF_SAVE_LOG ("read_from_socket() failed %d\n", timeout);
+            LOGW ("read_from_socket() failed %d\n", timeout);
 
             trans.clear ();
             trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -1533,7 +1539,7 @@ scim_socket_open_connection   (uint32       &key,
             trans.write_to_socket (socket);
         }
     } else {
-        ISF_SAVE_LOG ("write_to_socket() failed\n");
+        LOGW ("write_to_socket() failed\n");
     }
 
     return false;
