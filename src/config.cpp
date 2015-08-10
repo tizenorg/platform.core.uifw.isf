@@ -114,6 +114,7 @@ void write_ise_config_values() {
     g_core.config_write_int(ISE_CONFIG_SOUND_ON, g_config_values.sound_on);
     g_core.config_write_int(ISE_CONFIG_VIBRATION_ON, g_config_values.vibration_on);
     g_core.config_write_int(ISE_CONFIG_PREVIEW_ON, g_config_values.preview_on);
+    g_core.config_flush();
     g_core.config_reload();
 }
 

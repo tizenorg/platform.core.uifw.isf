@@ -170,6 +170,7 @@ void ise_write_recent_emoticon_list_to_scim(void)
     }
     if (string_value.length () > 0) {
         g_core.config_write_string(ISE_CONFIG_RECENT_EMOTICONS_LIST, string_value);
+        g_core.config_flush();
         LOGD ("write recent emoticon:%s", string_value.c_str ());
     }
 }
