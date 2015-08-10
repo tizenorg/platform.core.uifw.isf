@@ -43,8 +43,10 @@ static void test_get_ise_info (void *data, Evas_Object *obj, void *event_info);
 static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info);
 static void test_get_ise_count (void *data, Evas_Object *obj, void *event_info);
 static void test_reset_default_ise (void *data, Evas_Object *obj, void *event_info);
+static void test_show_ime_list (void *data, Evas_Object *obj, void *event_info);
 static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info);
 static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info);
+static void test_is_ime_enabled (void *data, Evas_Object *obj, void *event_info);
 static void test_get_recent_ise_geometry_get (void *data, Evas_Object *obj, void *event_info);
 
 static struct _menu_item imcontrol_menu_its[] = {
@@ -63,8 +65,10 @@ static struct _menu_item imcontrol_menu_its[] = {
     { "GET ISE LIST", test_get_ise_list },
     { "GET ISE COUNT", test_get_ise_count },
     { "RESET DEFAULT ISE", test_reset_default_ise },
+    { "SHOW IME LIST", test_show_ime_list },
     { "SHOW ISE SELECTOR", test_show_ise_selector },
     { "SHOW ISE OPTION", test_show_ise_option },
+    { "IS IME ENABLED", test_is_ime_enabled },
     { "GET RECENT ISE GEOMETRY", test_get_recent_ise_geometry_get },
 
     /* do not delete below */
@@ -221,6 +225,15 @@ static void test_reset_default_ise (void *data, Evas_Object *obj, void *event_in
         LOGW ("Reset default ISE is failed!!!\n");
 }
 
+static void test_show_ime_list (void *data, Evas_Object *obj, void *event_info)
+{
+    int ret = isf_control_show_ime_list ();
+    if (ret == 0)
+        LOGD ("Show IME list is successful!\n");
+    else
+        LOGW ("Show IME list is failed!!!\n");
+}
+
 static void test_show_ise_selector (void *data, Evas_Object *obj, void *event_info)
 {
     int ret = isf_control_show_ise_selector ();
@@ -237,6 +250,29 @@ static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info
         LOGD ("Show ISE option window is successful!\n");
     else
         LOGW ("Show ISE option window is failed!!!\n");
+}
+
+static void test_is_ime_enabled (void *data, Evas_Object *obj, void *event_info)
+{
+    char *uuid = NULL;
+    bool enabled;
+    int ret = isf_control_get_initial_ise (&uuid);
+    if (ret > 0 && uuid) {
+        LOGD ("Get initial ISE: %s\n", uuid);
+
+        int ret = isf_control_is_ime_enabled (uuid, &enabled);
+        if (ret == 0) {
+            LOGD ("is_ime_enabled is successful! enabled : %d\n", enabled);
+        }
+        else {
+            LOGW ("is_ime_enabled is failed!\n");
+        }
+    }
+    else
+        LOGW ("Failed to get initial ISE\n");
+
+    if (uuid)
+        free (uuid);
 }
 
 static void test_get_initial_ise (void *data, Evas_Object *obj, void *event_info)
