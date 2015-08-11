@@ -29,6 +29,8 @@
 #endif
 
 #ifndef WAYLAND
+static Ecore_Event_Handler *prop_handler = NULL;
+
 static void _back_key_cb (void *data, Evas_Object *obj, void *event_info)
 {
     ecore_x_test_fake_key_press ("XF86Back");
@@ -146,6 +148,7 @@ _prop_change_cb (void *data, int type, void *event)
 {
     Ecore_X_Event_Window_Property *ev;
     ev = (Ecore_X_Event_Window_Property *)event;
+    if (!ev) return ECORE_CALLBACK_PASS_ON;
 
     if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
         LOGD ("[ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE] ");
@@ -202,6 +205,15 @@ static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, c
     }
 
     return ef;
+}
+
+static void
+_layout_del_cb (void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+    if (prop_handler) {
+        ecore_event_handler_del (prop_handler);
+        prop_handler = NULL;
+    }
 }
 
 static Evas_Object * create_inner_layout (void *data)
@@ -302,8 +314,10 @@ static Evas_Object * create_inner_layout (void *data)
     elm_box_pack_end (bx, rotate_btn);
 
 #ifndef WAYLAND
-    ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change_cb, NULL);
+    prop_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change_cb, NULL);
 #endif
+
+    evas_object_event_callback_add (bx, EVAS_CALLBACK_DEL, _layout_del_cb, NULL);
 
     return bx;
 }

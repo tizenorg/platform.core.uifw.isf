@@ -47,6 +47,9 @@ struct appdata {
     Evas_Object *naviframe;
     Evas_Object *menu_popup;
 
+    Ecore_Event_Handler *key_down_handler;
+    Ecore_Event_Handler *key_up_handler;
+
     int is_frameview;
 
     // Add more variables here

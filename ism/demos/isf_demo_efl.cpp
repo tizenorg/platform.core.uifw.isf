@@ -362,8 +362,8 @@ static int app_create (void *data)
     appcore_set_event_callback (APPCORE_EVENT_LANG_CHANGE,
                                 lang_changed, ad);
 
-    ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _keydown_event, ad);
-    ecore_event_handler_add (ECORE_EVENT_KEY_UP, _keyup_event, ad);
+    ad->key_down_handler = ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _keydown_event, ad);
+    ad->key_up_handler = ecore_event_handler_add (ECORE_EVENT_KEY_UP, _keyup_event, ad);
 
     appcore_measure_time ();
 
@@ -373,6 +373,17 @@ static int app_create (void *data)
 static int app_exit (void *data)
 {
     struct appdata *ad = (struct appdata *)data;
+
+    if (ad->key_down_handler) {
+        ecore_event_handler_del (ad->key_down_handler);
+        ad->key_down_handler = NULL;
+    }
+
+    if (ad->key_up_handler) {
+        ecore_event_handler_del (ad->key_up_handler);
+        ad->key_up_handler = NULL;
+    }
+
     if (ad->li != NULL) {
         evas_object_del (ad->li);
         ad->li = NULL;
