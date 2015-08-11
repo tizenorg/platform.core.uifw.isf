@@ -26,7 +26,8 @@ endif
 bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
-                         isf_panel_utility.cpp
+                         isf_panel_utility.cpp \
+                         $(top_builddir)/ism/src/isf_pkg.cpp
 
 isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
                          @ECOREX_CFLAGS@ \

@@ -46,8 +46,7 @@
 #include <sys/resource.h>
 #include <sched.h>
 #include <pkgmgr-info.h>
-#include <scim_panel_common.h>
-#include "isf_query_utility.h"
+#include "isf_pkg.h"
 
 using namespace scim;
 using std::cout;
@@ -99,168 +98,6 @@ static bool check_panel (const String &display)
 
     return true;
 }
-
-/**
- * @brief Read data from ime category manifest and insert initial db
- *
- * @param handle    pkgmgrinfo_appinfo_h pointer
- * @param user_data The data to pass to this callback.
- *
- * @return 0 if success, negative value(<0) if fail. Callback is not called if return value is negative.
- *
- * @see _filtered_app_list_cb function in isf_panel_efl.cpp; it's slightly different.
- */
-static int _ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
-{
-    int ret = 0;
-    char *appid = NULL, *pkgid = NULL, *pkgtype = NULL, *exec = NULL, *label = NULL, *path = NULL;
-    pkgmgrinfo_pkginfo_h  pkginfo_handle = NULL;
-    ImeInfoDB ime_db;
-
-    /* appid */
-    ret = pkgmgrinfo_appinfo_get_appid (handle, &appid);
-    if (ret == PMINFO_R_OK)
-        ime_db.appid = String (appid ? appid : "");
-    else {
-        ISF_SAVE_LOG ("appid is not available!\n");
-        return 0;
-    }
-
-    ime_db.iconpath = "";
-
-    /* pkgid */
-    ret = pkgmgrinfo_appinfo_get_pkgid (handle, &pkgid);
-    if (ret == PMINFO_R_OK)
-        ime_db.pkgid = String (pkgid ? pkgid : "");
-    else {
-        ISF_SAVE_LOG ("pkgid is not available!\n");
-        return 0;
-    }
-
-    /* exec path */
-    ret = pkgmgrinfo_appinfo_get_exec (handle, &exec);
-    if (ret == PMINFO_R_OK)
-        ime_db.exec = String (exec ? exec : "");
-    else {
-        ISF_SAVE_LOG ("exec is not available!\n");
-        return 0;
-    }
-
-    /* label */
-    ret = pkgmgrinfo_appinfo_get_label (handle, &label);
-    if (ret == PMINFO_R_OK)
-        ime_db.label = String (label ? label : "");
-
-    /* get pkgmgrinfo_pkginfo_h */
-    ret = pkgmgrinfo_pkginfo_get_pkginfo (pkgid, &pkginfo_handle);
-    if (ret == PMINFO_R_OK && pkginfo_handle) {
-        /* pkgtype */
-        ret = pkgmgrinfo_pkginfo_get_type(pkginfo_handle, &pkgtype);
-
-        if (ret == PMINFO_R_OK)
-            ime_db.pkgtype = String(pkgtype ? pkgtype : "");
-        else {
-            ISF_SAVE_LOG ("pkgtype is not available!");
-            pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
-            return 0;
-        }
-
-        /* pkgrootpath */
-        ret = pkgmgrinfo_pkginfo_get_root_path (pkginfo_handle, &path);
-    }
-
-    ime_db.languages = "en";
-    ime_db.display_lang = "";
-
-    if (ime_db.pkgtype.compare ("rpm") == 0 &&   //1 Inhouse IMEngine ISE(IME)
-        ime_db.exec.find ("scim-launcher") != String::npos)  // Some IMEngine's pkgid doesn't have "ise-engine" prefix.
-    {
-        ime_db.mode = TOOLBAR_KEYBOARD_MODE;
-        ime_db.options = 0;
-        ime_db.module_path = String (SCIM_MODULE_PATH) + String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION)
-            + String (SCIM_PATH_DELIM_STRING) + String ("IMEngine");
-        ime_db.module_name = ime_db.pkgid;
-        ime_db.is_enabled = 1;
-        ime_db.is_preinstalled = 1;
-        ime_db.has_option = 0; // It doesn't matter. No option for IMEngine...
-    }
-    else {
-        ime_db.mode = TOOLBAR_HELPER_MODE;
-        if (ime_db.pkgtype.compare ("rpm") == 0) //1 Inhouse Helper ISE(IME)
-        {
-#ifdef _TV
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT;
-#else
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
-#endif
-            ime_db.module_path = String (SCIM_MODULE_PATH) + String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION)
-                + String (SCIM_PATH_DELIM_STRING) + String ("Helper");
-            ime_db.module_name = ime_db.pkgid;
-            ime_db.is_enabled = 1;
-            ime_db.is_preinstalled = 1;
-            ime_db.has_option = 1;  // Let's assume the inhouse IME always has an option menu.
-        }
-#ifdef _WEARABLE
-        else if (ime_db.pkgtype.compare ("wgt") == 0)    //1 Download Web IME
-        {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
-                | SCIM_HELPER_NEED_SPOT_LOCATION_INFO | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
-            ime_db.module_path = String (SCIM_MODULE_PATH) + String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION)
-                + String (SCIM_PATH_DELIM_STRING) + String ("Helper");
-            ime_db.module_name = String ("ise-web-helper-agent");
-            if (ime_db.exec.compare (0, 5, "/usr/") == 0) {
-                ime_db.is_enabled = 1;
-                ime_db.is_preinstalled = 1;
-            }
-            else {
-               ime_db.is_enabled = 0;
-               ime_db.is_preinstalled = 0;
-            }
-            ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
-        }
-#endif
-        else if (ime_db.pkgtype.compare ("tpk") == 0)    //1 Download Native IME
-        {
-            ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
-                | ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT | ISM_HELPER_WITHOUT_IMENGINE;
-            if (path)
-                ime_db.module_path = String (path) + String ("/lib");
-            else
-                ime_db.module_path = String ("/opt/usr/apps/") + ime_db.pkgid + String ("/lib");
-            ime_db.module_name = String ("lib") + ime_db.exec.substr (ime_db.exec.find_last_of (SCIM_PATH_DELIM) + 1);
-            if (ime_db.exec.compare (0, 5, "/usr/") == 0) {
-                ime_db.is_enabled = 1;
-                ime_db.is_preinstalled = 1;
-            }
-            else {
-                ime_db.is_enabled = 0;
-                ime_db.is_preinstalled = 0;
-            }
-            ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
-        }
-        else {
-            ISF_SAVE_LOG ("Unsupported pkgtype(%s)\n", ime_db.pkgtype.c_str ());
-            if (pkginfo_handle) {
-                pkgmgrinfo_pkginfo_destroy_pkginfo (pkginfo_handle);
-                pkginfo_handle = NULL;
-            }
-            return 0;
-        }
-    }
-
-    ret = isf_db_insert_ime_info (&ime_db);
-    if (ret < 1) {
-        ISF_SAVE_LOG("isf_db_insert_ime_info failed(%d). appid=%s pkgid=%s\n", ret, ime_db.appid.c_str(), ime_db.pkgid.c_str());
-    }
-
-    if (pkginfo_handle) {
-        pkgmgrinfo_pkginfo_destroy_pkginfo (pkginfo_handle);
-        pkginfo_handle = NULL;
-    }
-
-    return 0;
-}
-
 
 /* The broker for launching OSP based IMEs */
 // {
@@ -480,16 +317,7 @@ int main (int argc, char *argv [])
 
     scim_get_helper_module_list (helper_list);
     if (helper_list.size () < 1) {  // If there is no IME, that is, if ime_info DB is empty...
-        pkgmgrinfo_appinfo_filter_h handle;
-        int ret = pkgmgrinfo_appinfo_filter_create (&handle);
-        if (ret == PMINFO_R_OK) {
-            ret = pkgmgrinfo_appinfo_filter_add_string (handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime");
-            if (ret == PMINFO_R_OK) {
-                ret = pkgmgrinfo_appinfo_filter_foreach_appinfo (handle, _ime_app_list_cb, NULL);
-            }
-            pkgmgrinfo_appinfo_filter_destroy (handle);
-        }
-
+        isf_pkg_reload_ime_info_db();
         scim_get_helper_module_list (helper_list);  // Assuming ime_info DB is initialized, try again.
     }
 

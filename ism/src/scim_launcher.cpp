@@ -33,6 +33,7 @@
 #define Uses_C_LOCALE
 #define Uses_SCIM_UTILITY
 #define Uses_SCIM_PANEL_AGENT
+#define Uses_SCIM_HELPER_MODULE
 
 #include "scim_private.h"
 #include "scim.h"
@@ -42,13 +43,16 @@
 #include <signal.h>
 #include <privilege-control.h>
 #include <vconf.h>
-#include "isf_query_utility.h"
+#include <pkgmgr-info.h>
+#include "isf_pkg.h"
 
 using namespace scim;
 
 static FrontEndModule *frontend_module = 0;
 static ConfigModule   *config_module = 0;
 static ConfigPointer   config;
+
+#define USER_ENGINE_LIST_PATH           "/home/app/.scim"
 
 void signalhandler (int sig)
 {
@@ -86,6 +90,7 @@ int main (int argc, char *argv [])
 
     String config_name   ("simple");
     String frontend_name ("socket");
+    String list;
 
     int   new_argc = 0;
     char *new_argv [40];
@@ -134,19 +139,61 @@ int main (int argc, char *argv [])
                 std::cerr << "No argument for option " << argv [i-1] << "\n";
                 return -1;
             }
+
+            new_argv [new_argc ++] = const_cast <char *> ("-e");
+
             if (String (argv [i]) == "all") {
                 scim_get_imengine_module_list (engine_list);
+                if (engine_list.size () <= 1) {  // If there is no IME, only "socket" is given by scim_get_imengine_module_list().
+                    isf_pkg_reload_ime_info_db();
+                    scim_get_imengine_module_list (engine_list);  // Assuming ime_info DB is initialized, try again.
+                }
+
                 for (size_t j = 0; j < engine_list.size (); ++j) {
                     if (engine_list [j] == "socket") {
                         engine_list.erase (engine_list.begin () + j);
                         break;
                     }
                 }
-            } else if (String (argv [i]) != "none") {
-                scim_split_string_list (engine_list, String (argv [i]), ',');
+
+                list = scim_combine_string_list(engine_list, ',');
+                if (list.length () < 1)
+                    new_argv [new_argc ++] = argv [i];
+                else
+                    new_argv [new_argc ++] = const_cast<char *>(list.c_str ());
             }
-            new_argv [new_argc ++] = const_cast <char *> ("-e");
-            new_argv [new_argc ++] = argv [i];
+            else if (String (argv [i]) == "none") { // If ime_info DB is empty, scim_launch() function gives "none" argument as engine list because of pkgmgr-info dependency change
+                std::vector<String>     imengine_list;
+                std::vector<String>     helper_list;
+                std::vector<String>::iterator it;
+
+                //get modules list
+                scim_get_imengine_module_list (imengine_list);
+                if (imengine_list.size () <= 1) {  // If there is no IME, only "socket" is given by scim_get_imengine_module_list().
+                    isf_pkg_reload_ime_info_db();
+                    scim_get_imengine_module_list (imengine_list);  // Assuming ime_info DB is initialized, try again.
+                }
+                scim_get_helper_module_list (helper_list);
+
+                for (it = imengine_list.begin (); it != imengine_list.end (); it++) {
+                    if (*it != "socket")
+                        engine_list.push_back (*it);
+                }
+                for (it = helper_list.begin (); it != helper_list.end (); it++)
+                    engine_list.push_back (*it);
+
+                list = scim_combine_string_list(engine_list, ',');
+                if (list.length () < 1)
+                    new_argv [new_argc ++] = argv [i];
+                else
+                    new_argv [new_argc ++] = const_cast<char *>(list.c_str ());
+            }
+            else {
+                scim_split_string_list (engine_list, String (argv [i]), ',');
+
+                new_argv [new_argc ++] = argv [i];
+            }
+
             continue;
         }
 
