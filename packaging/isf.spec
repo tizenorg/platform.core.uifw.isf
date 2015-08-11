@@ -41,6 +41,9 @@ BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
+%if %{without wayland}
+Requires: org.tizen.isf-kbd-mode-changer
+%endif
 
 %define _optexecdir /opt/usr/devel/usr/bin/
 %define APP_PREFIX %{_prefix}/apps/org.tizen.isf-kbd-mode-changer/bin/
