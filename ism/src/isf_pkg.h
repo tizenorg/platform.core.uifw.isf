@@ -4,7 +4,7 @@
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
  * Copyright (c) 2012-2014 Samsung Electronics Co., Ltd.
  *
- * Contact: Jihoon Kim <jihoon48.kim@samsung.com>
+ * Contact: Sungmin Kwak <sungmin.kwak@samsung.com>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -22,14 +22,11 @@
  *
  */
 
-#ifndef __ISF_PANEL_EFL_H__
-#define __ISF_PANEL_EFL_H__
+#ifndef __ISF_PKG_H__
+#define __ISF_PKG_H__
 
-#include <dlog.h>
+int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data);
+void isf_pkg_reload_ime_info_db(void);
 
-#ifdef LOG_TAG
-# undef LOG_TAG
-#endif
-#define LOG_TAG                                         "ISF_PANEL_EFL"
+#endif /* __ISF_PKG_H__ */
 
-#endif /* __ISF_PANEL_EFL_H__ */

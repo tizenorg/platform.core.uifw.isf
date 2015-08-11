@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __ISF_QUERY_UTILITY_H
-#define __ISF_QUERY_UTILITY_H
+#ifndef __ISF_QUERY_UTILITY_H__
+#define __ISF_QUERY_UTILITY_H__
 
 /* For multi-user support */
 #include <tzplatform_config.h>
@@ -34,7 +34,6 @@ using namespace scim;
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
 /////////////////////////////////////////////////////////////////////////////
-#define USER_ENGINE_LIST_PATH           "/home/app/.scim"
 
 typedef struct {
     String name;
@@ -80,7 +79,7 @@ EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db);
 EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db);
 EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
 
-#endif /* __ISF_QUERY_UTILITY_H */
+#endif /* __ISF_QUERY_UTILITY_H__ */
 
 /*
 vi:ts=4:ai:nowrap:expandtab

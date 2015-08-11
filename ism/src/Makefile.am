@@ -43,7 +43,8 @@ noinst_HEADERS		= ltdl.h \
 			  scim_keyboard_layout_data.h \
 			  scim_keyevent_data.h \
 			  scim_stl_map.h \
-			  isf_query_utility.h
+			  isf_query_utility.h \
+			  isf_pkg.h
 
 libscimincludedir       = $(includedir)/scim@SCIM_EPOCH@
 
@@ -174,7 +175,7 @@ libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 
 bin_PROGRAMS		= scim isf-log
 
-scim_SOURCES	 	= scim.cpp
+scim_SOURCES	 	= scim.cpp isf_pkg.cpp
 scim_CXXFLAGS		= @EFL_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ @VCONF_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @ECORE_IPC_CFLAGS@ -fPIE
 scim_LDADD		= libscim@SCIM_EPOCH@.la
 scim_LDFLAGS		= @LTLIBINTL@ @EFL_LIBS@ @PRIVILEGE_CONTROL_LIBS@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ @ECORE_IPC_LIBS@ -pie
@@ -197,10 +198,10 @@ endif
 libexecdir		= $(libdir)/scim@SCIM_EPOCH@
 libexec_PROGRAMS        = scim-launcher scim-helper-launcher
 
-scim_launcher_SOURCES 	= scim_launcher.cpp
+scim_launcher_SOURCES 	= scim_launcher.cpp isf_pkg.cpp
 scim_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_launcher_CXXFLAGS  = @PRIVILEGE_CONTROL_CFLAGS@ @VCONF_CFLAGS@ -fPIE
-scim_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @VCONF_LIBS@ -pie
+scim_launcher_CXXFLAGS  = @PRIVILEGE_CONTROL_CFLAGS@ @VCONF_CFLAGS@ @PKGMGR_INFO_CFLAGS@ -fPIE
+scim_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ -pie
 
 scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp ise_preexec.cpp
 scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@ @EFL_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ @ECORE_IPC_CFLAGS@ -fPIE
