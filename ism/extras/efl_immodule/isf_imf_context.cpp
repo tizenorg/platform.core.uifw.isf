@@ -394,7 +394,6 @@ static double                                           space_key_time          
 
 static Eina_Bool                                        autoperiod_allow            = EINA_FALSE;
 static Eina_Bool                                        autocap_allow               = EINA_FALSE;
-static Eina_Bool                                        desktop_mode                = EINA_FALSE;
 
 static bool                                             _x_key_event_is_valid       = false;
 
@@ -438,12 +437,6 @@ EAPI int
 get_panel_client_id (void)
 {
     return _panel_client_id;
-}
-
-EAPI Eina_Bool
-get_desktop_mode ()
-{
-    return desktop_mode;
 }
 
 /* Function Implementations */
@@ -670,35 +663,6 @@ _key_up_cb (void *data, int type, void *event)
                 _click_timer = ecore_timer_add (0.4, _click_check, NULL);
             }
         }
-    }
-
-    return ECORE_CALLBACK_PASS_ON;
-}
-
-static void
-_check_desktop_mode (Ecore_X_Window win)
-{
-    char *profile = ecore_x_e_window_profile_get (win);
-    if (profile && (strcmp (profile, "desktop") == 0)) {
-        desktop_mode = EINA_TRUE;
-    } else {
-        desktop_mode = EINA_FALSE;
-    }
-
-    if (profile)
-        free (profile);
-}
-
-static Eina_Bool
-_x_prop_change (void *data, int type, void *event)
-{
-    Ecore_X_Event_Window_Property *e = (Ecore_X_Event_Window_Property *)event;
-    Ecore_X_Window xwin = (Ecore_X_Window)(reinterpret_cast<long>(data));
-
-    if (!e || e->win != xwin) return ECORE_CALLBACK_PASS_ON;
-
-    if (e->atom == ECORE_X_ATOM_E_PROFILE) {
-        _check_desktop_mode (e->win);
     }
 
     return ECORE_CALLBACK_PASS_ON;
@@ -1413,10 +1377,6 @@ isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window)
         if ((context_scim->impl->client_window != 0) &&
                 (context_scim->impl->client_window != _client_window)) {
             _client_window = context_scim->impl->client_window;
-
-            _check_desktop_mode (_client_window);
-
-            ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _x_prop_change, window);
         }
     }
 }

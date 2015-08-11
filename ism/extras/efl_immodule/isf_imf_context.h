@@ -57,7 +57,6 @@ EAPI int register_key_handler ();
 EAPI int unregister_key_handler ();
 
 EAPI int get_panel_client_id ();
-EAPI Eina_Bool get_desktop_mode ();
 EAPI Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti);
 
 EAPI EcoreIMFContextISF *get_focused_ic ();
