@@ -111,7 +111,8 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
         --disable-wsc-efl \
 %endif
 		--disable-frontend-x11 \
-		--disable-multiwindow-support
+		--disable-multiwindow-support \
+		--disable-ime-embed-app
 make %{?_smp_mflags}
 
 %install

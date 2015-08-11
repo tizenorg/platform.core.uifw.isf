@@ -496,6 +496,11 @@ AC_ARG_ENABLE(lazy-launch,
               enable_lazy_launch=yes,
               enable_lazy_launch=no)
 
+AC_ARG_ENABLE(ime-embed-app,
+              [  --disable-ime-embed-app      Do not load IME in application when socket invalidate],
+              enable_ime_embed_app=no,
+              enable_ime_embed_app=yes)
+
 if test "$have_x" = "yes"; then
   SCIM_BUILD_X11_UTILS=1
   enable_x11_utils=yes
@@ -642,6 +647,10 @@ if test "$enable_lazy_launch" = "yes"; then
   ISF_INSTALL_SYSTEMD_SCRIPT=0
 else
   ISF_INSTALL_SYSTEMD_SCRIPT=1
+fi
+
+if test "$enable_ime_embed_app" = "yes"; then
+  AC_DEFINE(ENABLE_IME_EMBED_APP,1,[Load imengine in application side when socket invalidate])
 fi
 
 AM_CONDITIONAL(SCIM_LD_VERSION_SCRIPT,
@@ -816,5 +825,6 @@ Module options:
   Enable TrayIcon          $enable_tray_icon
   Enable MultiWindow       $enable_multiwindow_support
   Enable LazyLaunch        $enable_lazy_launch
+  Enable IME Embed         $enable_ime_embed_app
 ])
 

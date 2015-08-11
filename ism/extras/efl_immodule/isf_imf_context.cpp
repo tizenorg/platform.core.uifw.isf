@@ -3375,6 +3375,7 @@ initialize (void)
         }
 
         if (!check_result) {
+#if ENABLE_IME_EMBED_APP
             //get modules list
             scim_get_imengine_module_list (engine_list);
             scim_get_helper_module_list (helper_list);
@@ -3385,7 +3386,7 @@ initialize (void)
             }
             for (it = helper_list.begin (); it != helper_list.end (); it++)
                 load_engine_list.push_back (*it);
-
+#endif
             launch_socket_frontend ();
             manual = false;
         }
