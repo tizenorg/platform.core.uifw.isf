@@ -260,6 +260,15 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
         elm_list_item_selected_set (it, EINA_FALSE);
 }
 
+static void _back_btn_clicked_cb (void *data, Evas_Object *obj, void *event_info)
+{
+    struct appdata *ad = (struct appdata *)data;
+
+    if (!ad->vkbd_state) {
+        elm_naviframe_item_pop (ad->naviframe);
+    }
+}
+
 void isf_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
@@ -271,7 +280,14 @@ void isf_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     elm_list_item_append (ad->ev_li, "Entry Event", NULL, NULL, isf_entry_event_demo_bt, ad);
     elm_list_go (ad->ev_li);
 
-    elm_naviframe_item_push (ad->naviframe, _("Event"), NULL, NULL, ad->ev_li, NULL);
+    // create back key
+    Evas_Object *back_btn = elm_button_add (ad->naviframe);
+    if (!elm_object_style_set (back_btn, "naviframe/end_btn/default"))
+        LOGW ("Failed to set style of button\n");
+
+    evas_object_smart_callback_add (back_btn, "clicked",  _back_btn_clicked_cb, ad);
+
+    elm_naviframe_item_push (ad->naviframe, _("Event"), back_btn, NULL, ad->ev_li, NULL);
 }
 
 /*
