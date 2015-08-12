@@ -207,6 +207,7 @@ static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, c
     return ef;
 }
 
+#ifndef WAYLAND
 static void
 _layout_del_cb (void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
@@ -215,6 +216,7 @@ _layout_del_cb (void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EI
         prop_handler = NULL;
     }
 }
+#endif
 
 static Evas_Object * create_inner_layout (void *data)
 {
@@ -315,9 +317,8 @@ static Evas_Object * create_inner_layout (void *data)
 
 #ifndef WAYLAND
     prop_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_PROPERTY, _prop_change_cb, NULL);
-#endif
-
     evas_object_event_callback_add (bx, EVAS_CALLBACK_DEL, _layout_del_cb, NULL);
+#endif
 
     return bx;
 }
