@@ -65,9 +65,6 @@
 #endif
 #define LOG_TAG "ISF_SOCKET"
 
-/* Experimental modification for avoiding multiple scim process problem */
-#define DISABLE_MULTIPLE_SOCKETS
-
 #define SCIM_SOCKET_SERVER_MAX_CLIENTS  256
 
 namespace scim {
