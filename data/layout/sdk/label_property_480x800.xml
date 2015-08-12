@@ -8,7 +8,7 @@
         <color button="disabled">0x17171733</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=Regular" font_size="23" label_alignment="right_top" padding_X="6" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="23" label_alignment="right_top" padding_X="10" padding_Y="2">
       <font_color_record>
         <color button="normal">0x1717177f</color>
         <color button="pressed">0x000000ff</color>

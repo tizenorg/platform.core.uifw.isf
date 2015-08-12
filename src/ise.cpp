@@ -26,6 +26,7 @@
 
 #include "sclui.h"
 #include "sclcore.h"
+#include "sclutils.h"
 #include "ise.h"
 #include "utils.h"
 #include "option.h"
@@ -1030,6 +1031,23 @@ ise_create()
         if (g_core.get_main_window()) {
             sclboolean succeeded = FALSE;
 
+            const sclchar *entry_path = MAIN_ENTRY_XML_PATH;
+            int nwidth  = 0;
+            int nheight = 0;
+            CSCLUtils *utils = CSCLUtils::get_instance();
+            if (utils) {
+                utils->get_screen_resolution(&nwidth, &nheight);
+            }
+            if ((480 == nwidth) && (800 == nheight)) {
+                entry_path = MAIN_ENTRY_XML_PATH_480X800;
+            }
+            else if ((540 == nwidth) && (960 == nheight)) {
+                entry_path = MAIN_ENTRY_XML_PATH_540X960;
+            }
+            else if ((1440 == nwidth) && (2560 == nheight)) {
+                entry_path = MAIN_ENTRY_XML_PATH_1440X2560;
+            }
+            _language_manager.set_resource_file_path(entry_path);
             const sclchar *resource_file_path = _language_manager.get_resource_file_path();
 
             if (resource_file_path) {
