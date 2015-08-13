@@ -1038,6 +1038,7 @@ ise_create()
             if (utils) {
                 utils->get_screen_resolution(&nwidth, &nheight);
             }
+#ifndef _TV
             if ((480 == nwidth) && (800 == nheight)) {
                 entry_path = MAIN_ENTRY_XML_PATH_480X800;
             }
@@ -1047,6 +1048,7 @@ ise_create()
             else if ((1440 == nwidth) && (2560 == nheight)) {
                 entry_path = MAIN_ENTRY_XML_PATH_1440X2560;
             }
+#endif
             _language_manager.set_resource_file_path(entry_path);
             const sclchar *resource_file_path = _language_manager.get_resource_file_path();
 
