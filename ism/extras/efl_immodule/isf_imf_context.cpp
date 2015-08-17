@@ -661,6 +661,7 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
     Ecore_IMF_Event_Delete_Surrounding ev;
     char *fullstop_mark = NULL;
     size_t ulen = 0;
+    int del_chars = 0;
 
     if (autoperiod_allow == EINA_FALSE)
         return;
@@ -685,30 +686,44 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
 
     if (cursor_pos < 2 || cursor_pos > (int)ulen) goto done;
 
-    if (check_space_symbol (ustr[cursor_pos-1]) &&
-        !(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
-        ev.ctx = ctx;
-        ev.n_chars = 1;
-        ev.offset = -1;
-        ecore_imf_context_delete_surrounding_event_add (ctx, -1, 1);
-        ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, &ev);
-
-        if (input_lang == INPUT_LANG_OTHER) {
-            fullstop_mark = strdup (".");
+    if (check_space_symbol (ustr[cursor_pos-1])) {
+        // any character + press space key twice in short time
+        if (!(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
+            del_chars = 1;
         }
-        else {
-            wchar_t wbuf[2] = {0};
-            wbuf[0] = __punctuations[input_lang].punc_code;
-
-            WideString wstr = WideString (wbuf);
-            fullstop_mark = strdup (utf8_wcstombs (wstr).c_str ());
+        // any character + space + press space key twice in short time
+        else if (cursor_pos >= 3 &&
+                check_space_symbol (ustr[cursor_pos-2]) &&
+                !(iswpunct (ustr[cursor_pos-3]) || check_space_symbol (ustr[cursor_pos-3]))) {
+            del_chars = 2;
         }
 
-        ecore_imf_context_commit_event_add (ctx, fullstop_mark);
-        ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)fullstop_mark);
+        if (del_chars > 0) {
+            ev.ctx = ctx;
+            ev.n_chars = del_chars;
+            ev.offset = del_chars * -1;
+            ecore_imf_context_delete_surrounding_event_add (ctx, ev.offset, ev.n_chars);
+            ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, &ev);
 
-        if (fullstop_mark) {
-            free (fullstop_mark);
+            // insert regional fullstop mark
+            if (input_lang == INPUT_LANG_OTHER) {
+                fullstop_mark = strdup (".");
+            }
+            else {
+                wchar_t wbuf[2] = {0};
+                wbuf[0] = __punctuations[input_lang].punc_code;
+
+                WideString wstr = WideString (wbuf);
+                fullstop_mark = strdup (utf8_wcstombs (wstr).c_str ());
+            }
+
+            ecore_imf_context_commit_event_add (ctx, fullstop_mark);
+            ecore_imf_context_event_callback_call (ctx, ECORE_IMF_CALLBACK_COMMIT, (void *)fullstop_mark);
+
+            if (fullstop_mark) {
+                free (fullstop_mark);
+                fullstop_mark = NULL;
+            }
         }
     }
 
