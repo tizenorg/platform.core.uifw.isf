@@ -591,8 +591,11 @@ _key_down_cb (void *data, int type, void *event)
             if (ret) {
                 return ECORE_CALLBACK_DONE;
             }
-            else if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-                return ECORE_CALLBACK_DONE;
+            else {
+                Ecore_IMF_Input_Panel_State state = ecore_imf_context_input_panel_state_get (active_ctx);
+                if (state == ECORE_IMF_INPUT_PANEL_STATE_SHOW ||
+                    state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW)
+                    return ECORE_CALLBACK_DONE;
             }
         }
     }
@@ -637,10 +640,14 @@ _key_up_cb (void *data, int type, void *event)
             if (ret) {
                 return ECORE_CALLBACK_DONE;
             }
-            else if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-                isf_imf_context_reset (active_ctx);
-                isf_imf_context_input_panel_instant_hide (active_ctx);
-                return ECORE_CALLBACK_DONE;
+            else {
+                Ecore_IMF_Input_Panel_State state = ecore_imf_context_input_panel_state_get (active_ctx);
+                if (state == ECORE_IMF_INPUT_PANEL_STATE_SHOW ||
+                    state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) {
+                    isf_imf_context_reset (active_ctx);
+                    isf_imf_context_input_panel_instant_hide (active_ctx);
+                    return ECORE_CALLBACK_DONE;
+                }
             }
         }
     }
