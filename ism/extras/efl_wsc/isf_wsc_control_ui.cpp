@@ -139,7 +139,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)ctx->ctx->return_key_type;
 
     /* set return key disabled */
-    iseContext.return_key_disabled = EINA_FALSE;
+    iseContext.return_key_disabled = ctx->ctx->return_key_disabled;
 
     /* set caps mode */
     iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
@@ -263,4 +263,12 @@ Ecore_IMF_Input_Panel_Lang isf_wsc_context_input_panel_language_get (WSCContextI
     if (!IfInitContext)
         _isf_wsc_context_init ();
     return iseContext.language;
+}
+
+void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled)
+{
+   if (!IfInitContext)
+        _isf_wsc_context_init ();
+    LOGD ("ctx : %p, disabled : %d\n", ctx, disabled);
+    _isf_wsc_context_input_panel_return_key_disabled_set (_get_context_id (ctx), disabled);
 }
