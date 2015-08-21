@@ -216,6 +216,19 @@ _wsc_im_ctx_return_key_type(void *data, struct wl_input_method_context *im_ctx, 
     isf_wsc_context_input_panel_show (wsc->wsc_ctx);
 }
 
+static void
+_wsc_im_ctx_return_key_disabled(void *data, struct wl_input_method_context *im_ctx, uint32_t disabled)
+{
+    struct weescim *wsc = (weescim*)data;
+
+    LOGD ("im_context = %p return key disabled = %d", im_ctx, disabled);
+    if (!wsc || !wsc->wsc_ctx) return;
+
+    wsc->return_key_disabled = !!disabled;
+
+    isf_wsc_context_input_panel_show (wsc->wsc_ctx);
+}
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_surrounding_text,
      _wsc_im_ctx_reset,
@@ -224,6 +237,7 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_commit_state,
      _wsc_im_ctx_preferred_language,
      _wsc_im_ctx_return_key_type,
+     _wsc_im_ctx_return_key_disabled
 };
 
 static void

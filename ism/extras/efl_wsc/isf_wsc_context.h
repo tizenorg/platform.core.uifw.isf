@@ -69,6 +69,7 @@ struct weescim
 
     Eina_Bool context_changed;
     Eina_Bool hw_kbd;
+    Eina_Bool return_key_disabled;
 
     WSCContextISF *wsc_ctx;
 };

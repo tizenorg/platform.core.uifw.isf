@@ -139,7 +139,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)ctx->ctx->return_key_type;
 
     /* set return key disabled */
-    iseContext.return_key_disabled = EINA_FALSE;
+    iseContext.return_key_disabled = ctx->ctx->return_key_disabled;
 
     /* set caps mode */
     iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
