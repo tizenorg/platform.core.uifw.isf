@@ -676,7 +676,7 @@ public:
             return false;
         }
 
-        if (ret > 0) {
+        if (ret >= 0) {
             if (m_id >= 0) close ();
             m_no_close = false;
             m_binded = false;
