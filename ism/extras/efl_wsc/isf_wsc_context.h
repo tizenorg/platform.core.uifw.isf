@@ -33,6 +33,7 @@ typedef struct _WSCContextISFImpl  WSCContextISFImpl;
 typedef void (*keyboard_input_key_handler_t)(struct weescim *wsc,
                                              uint32_t serial,
                                              uint32_t time, uint32_t key, uint32_t unicode,
+                                             char *keyname,
                                              enum wl_keyboard_key_state state);
 
 struct weescim
@@ -100,6 +101,11 @@ EAPI void isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, in
 EAPI void isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction);
 EAPI Eina_Bool isf_wsc_context_prediction_allow_get (WSCContextISF* ctx);
 EAPI void isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
+EAPI void isf_wsc_context_filter_key_event (struct weescim *wsc,
+                                             uint32_t serial,
+                                             uint32_t timestamp, uint32_t key, uint32_t unicode,
+                                             char *keyname,
+                                             enum wl_keyboard_key_state state);
 
 EAPI WSCContextISF* isf_wsc_context_new      (void);
 EAPI void           isf_wsc_context_shutdown (void);

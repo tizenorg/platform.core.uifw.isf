@@ -82,10 +82,6 @@ static KeycodeRepository _keysym2keycode;
 #endif
 #define LOG_TAG                                         "ISF_WSC_EFL"
 
-/* This structure stores the wayland input method information */
-#define MOD_SHIFT_MASK      0x01
-#define MOD_ALT_MASK        0x02
-#define MOD_CONTROL_MASK    0x04
 
 static struct weescim _wsc                                  = {0};
 
@@ -332,6 +328,7 @@ _wsc_im_keyboard_key(void *data,
     uint32_t num_syms;
     const xkb_keysym_t *syms;
     xkb_keysym_t sym;
+    char keyname[64] = {0};
     enum wl_keyboard_key_state state = (wl_keyboard_key_state)state_w;
 
     if (!wsc || !wsc->state)
@@ -342,10 +339,13 @@ _wsc_im_keyboard_key(void *data,
 
     sym = XKB_KEY_NoSymbol;
     if (num_syms == 1)
+    {
         sym = syms[0];
+        xkb_keysym_get_name(sym, keyname, 64);
+    }
 
     if (wsc->key_handler)
-        (*wsc->key_handler)(wsc, serial, time, key, sym,
+        (*wsc->key_handler)(wsc, serial, time, key, sym, keyname,
                 state);
 }
 
@@ -372,11 +372,11 @@ _wsc_im_keyboard_modifiers(void *data,
 
     wsc->modifiers = 0;
     if (mask & wsc->control_mask)
-        wsc->modifiers |= MOD_CONTROL_MASK;
+        wsc->modifiers |= SCIM_KEY_ControlMask;
     if (mask & wsc->alt_mask)
-        wsc->modifiers |= MOD_ALT_MASK;
+        wsc->modifiers |= SCIM_KEY_AltMask;
     if (mask & wsc->shift_mask)
-        wsc->modifiers |= MOD_SHIFT_MASK;
+        wsc->modifiers |= SCIM_KEY_ShiftMask;
 
     wl_input_method_context_modifiers(context, serial,
             mods_depressed, mods_depressed,
@@ -472,13 +472,6 @@ static const struct wl_seat_listener wsc_seat_listener = {
     _wsc_seat_handle_capabilities,
 };
 
-static void
-_wsc_im_key_handler(struct weescim *wsc,
-                    uint32_t serial, uint32_t time, uint32_t key, uint32_t sym,
-                    enum wl_keyboard_key_state state)
-{
-}
-
 static bool
 _wsc_setup(struct weescim *wsc)
 {
@@ -494,7 +487,7 @@ _wsc_setup(struct weescim *wsc)
         return false;
     }
 
-    wsc->key_handler = _wsc_im_key_handler;
+    wsc->key_handler = isf_wsc_context_filter_key_event;
 
     wsc->wsc_ctx = isf_wsc_context_new ();
     if (!wsc->wsc_ctx) return false;
