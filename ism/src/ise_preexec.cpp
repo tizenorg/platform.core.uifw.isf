@@ -312,34 +312,6 @@ static inline int __set_dac ()
 #endif
 }
 
-static inline int __set_smack (char* path)
-{
-    /*
-     * This is additional option.
-     * Though such a application fails in this function, that error is ignored.
-     */
-    char label[LABEL_LEN + 1] = {0, };
-    int fd = 0;
-    int result = -1;
-
-    result = lgetxattr (path, "security.SMACK64EXEC", label, LABEL_LEN);
-    if (result < 0)  // fail to get extended attribute
-        return 0;   // ignore error
-
-    fd = open ("/proc/self/attr/current", O_RDWR);
-    if (fd < 0)      // fail to open file
-        return 0;   // ignore error
-
-    result = write (fd, label, strlen (label));
-    if (result < 0) {    // fail to write label
-        close (fd);
-        return 0;   // ignore error
-    }
-
-    close (fd);
-    return 0;
-}
-
 typedef struct {
     std::string package_type;
     std::string package_name;
@@ -451,9 +423,6 @@ int ise_preexec (const char *helper, const char *uuid)
 
     /* SET OOM*/
     __set_oom ();
-
-    /* SET SMACK LABEL */
-    __set_smack (const_cast<char*>(info.app_path.c_str ()));
 
     /* SET DAC*/
     if (__set_dac() != PC_OPERATION_SUCCESS) {
