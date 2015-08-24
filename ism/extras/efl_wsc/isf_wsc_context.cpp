@@ -174,6 +174,9 @@ static Eina_Bool panel_iochannel_handler                (void                   
 /* utility functions */
 static bool     filter_hotkeys                          (WSCContextISF     *ic,
                                                          const KeyEvent         &key);
+static bool     filter_keys                             (const char *keyname,
+                                                         const char *config_path);
+
 static void     turn_on_ic                              (WSCContextISF     *ic);
 static void     turn_off_ic                             (WSCContextISF     *ic);
 static void     set_ic_capabilities                     (WSCContextISF     *ic);
@@ -278,6 +281,7 @@ static IMEngineFactoryPointer                           _fallback_factory;
 static IMEngineInstancePointer                          _fallback_instance;
 PanelClient                                             _panel_client;
 static int                                              _panel_client_id            = 0;
+static int                                              _active_helper_option       = 0;
 
 static Ecore_Fd_Handler                                *_panel_iochannel_read_handler = 0;
 static Ecore_Fd_Handler                                *_panel_iochannel_err_handler  = 0;
@@ -1191,6 +1195,114 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_
     }
 }
 
+EAPI void
+isf_wsc_context_filter_key_event (struct weescim *wsc,
+                                  uint32_t serial,
+                                  uint32_t timestamp, uint32_t keycode, uint32_t unicode,
+                                  char *keyname,
+                                  enum wl_keyboard_key_state state)
+
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (!wsc) return;
+
+    Eina_Bool ret = EINA_FALSE;
+    KeyEvent key(keycode, wsc->modifiers);
+
+    if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
+        key.mask = SCIM_KEY_ReleaseMask;
+    }
+
+    if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+        if (filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+            return;
+
+        /* Hardware input detect code */
+#ifdef _TV
+        if (timestamp > 1 && _active_helper_option && key.code != 0xFF69 && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down)) && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67 && key.code != 0xff13 && key.code != 0x1008ff26 &&
+             !((key.code >= SCIM_KEY_0) && (key.code <= SCIM_KEY_9))) {
+                 /* Cancel (Power + Volume down), Right, Left, Up, Down, OK, minus, menu, pause, XF86back key, 0~9 key*/
+#else
+        if (timestamp > 1 && _active_helper_option && key.code != 0x1008ff26 && key.code != 0xFF69 /* XF86back, Cancel (Power + Volume down) key */) {
+#endif
+            isf_wsc_context_set_keyboard_mode (wsc->wsc_ctx, TOOLBAR_KEYBOARD_MODE);
+            _panel_client.prepare (wsc->wsc_ctx->id);
+            _panel_client.get_active_helper_option (&_active_helper_option);
+            _panel_client.send ();
+            ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
+            LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
+        }
+    }
+    else if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
+        if (filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+            return;
+    }
+
+    _panel_client.prepare (wsc->wsc_ctx->id);
+
+    ret = EINA_TRUE;
+    if (!filter_hotkeys (wsc->wsc_ctx, key)) {
+        if (timestamp == 0) {
+            ret = EINA_FALSE;
+            // in case of generated event
+            if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+                char code = key.get_ascii_code ();
+                if (isgraph (code)) {
+                    char string[2] = {0};
+                    snprintf (string, sizeof (string), "%c", code);
+
+                    if (strlen (string) != 0) {
+                        wsc_context_commit_string(wsc, string);
+                        caps_mode_check (wsc->wsc_ctx, EINA_FALSE, EINA_TRUE);
+                        ret = EINA_TRUE;
+                    }
+                } else {
+                    if (key.code == SCIM_KEY_space ||
+                        key.code == SCIM_KEY_KP_Space)
+                        autoperiod_insert (wsc->wsc_ctx);
+                }
+            }
+            _panel_client.send ();
+            return;
+        }
+        if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
+            ret = EINA_FALSE;
+#ifdef _TV
+        } else if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+            void *pvoid = &ret;
+            _panel_client.process_key_event (key, (int*)pvoid);
+            if (!ret) {
+                ret = _focused_ic->impl->si->process_key_event (key);
+            }
+#else
+        } else if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+            void *pvoid = &ret;
+            _panel_client.process_key_event (key, (int*)pvoid);
+            if (!ret && !(_active_helper_option & ISM_HELPER_WITHOUT_IMENGINE)) {
+                ret = _focused_ic->impl->si->process_key_event (key);
+            }
+#endif
+        } else {
+            ret = _focused_ic->impl->si->process_key_event (key);
+        }
+
+        if (ret == EINA_FALSE) {
+            if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+                if (key.code == SCIM_KEY_space ||
+                    key.code == SCIM_KEY_KP_Space)
+                    autoperiod_insert (wsc->wsc_ctx);
+            }
+        }
+    }
+    _panel_client.send ();
+
+    if(ret == EINA_FALSE)
+    {
+        send_wl_key_event(wsc->wsc_ctx, key, false);
+    }
+}
+
 static void
 wsc_commit_preedit (weescim *ctx)
 {
@@ -1743,6 +1855,26 @@ filter_hotkeys (WSCContextISF *ic, const KeyEvent &key)
         ret = true;
     }
     return ret;
+}
+
+static bool
+filter_keys (const char *keyname, const char *config_path)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (!keyname)
+        return false;
+
+    std::vector <String> keys;
+    scim_split_string_list (keys, _config->read (String (config_path), String ("")), ',');
+
+    for (unsigned int i = 0; i < keys.size (); ++i) {
+        if (!strcmp (keyname, keys [i].c_str ())) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 static bool
