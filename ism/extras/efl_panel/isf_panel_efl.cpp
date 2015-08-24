@@ -455,7 +455,9 @@ static bool               feedback_initialized              = false;
 static E_DBus_Connection     *edbus_conn;
 static E_DBus_Signal_Handler *edbus_handler;
 
+#if HAVE_ECOREX
 static Ecore_Event_Handler *_candidate_show_handler         = NULL;
+#endif
 
 static String ime_selector_app = "";
 static String ime_list_app = "";
