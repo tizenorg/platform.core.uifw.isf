@@ -362,7 +362,7 @@ _wsc_im_keyboard_key(void *data,
     }
 
     if (wsc->key_handler)
-        (*wsc->key_handler)(wsc, serial, time, key, sym, keyname,
+        (*wsc->key_handler)(wsc, serial, time, code, sym, keyname,
                 state);
 }
 
