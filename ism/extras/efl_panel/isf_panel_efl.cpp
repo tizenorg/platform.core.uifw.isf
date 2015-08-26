@@ -5671,7 +5671,7 @@ static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_
     if (_panel_agent->has_helper_manager_pending_event ()) {
         if (!_panel_agent->filter_helper_manager_event ()) {
             std::cerr << "_panel_agent->filter_helper_manager_event () is failed!!!\n";
-            ISF_SAVE_LOG ("_panel_agent->filter_helper_manager_event () is failed!!!\n")
+            ISF_SAVE_LOG ("_panel_agent->filter_helper_manager_event () is failed!!!\n");
             elm_exit ();
         }
     } else {
