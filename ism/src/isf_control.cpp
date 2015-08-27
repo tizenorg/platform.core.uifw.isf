@@ -67,15 +67,20 @@ EXAPI int isf_control_get_active_ise (char **uuid)
 
     String strUuid;
     IMControlClient imcontrol_client;
+    int ret = 0;
 
     if (!imcontrol_client.open_connection ())
         return -1;
 
     imcontrol_client.prepare ();
-    if (!imcontrol_client.get_active_ise (strUuid))
-        return -1;
+    if (!imcontrol_client.get_active_ise (strUuid)) {
+        ret = -1;
+    }
 
     imcontrol_client.close_connection ();
+
+    if (ret == -1)
+        return -1;
 
     *uuid = strUuid.length () ? strdup (strUuid.c_str ()) : strdup ("");
 
@@ -95,7 +100,7 @@ EXAPI int isf_control_get_ise_list (char ***uuid_list)
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.get_ise_list (&count, uuid_list))
-        return -1;
+        count = -1;
 
     imcontrol_client.close_connection ();
 
@@ -114,6 +119,7 @@ EXAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **nam
 
     int nType   = 0;
     int nOption = 0;
+    int ret = 0;
     String strName, strLanguage, strModuleName;
 
     IMControlClient imcontrol_client;
@@ -121,10 +127,14 @@ EXAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **nam
         return -1;
 
     imcontrol_client.prepare ();
-    if (!imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption, strModuleName))
-        return -1;
+    if (!imcontrol_client.get_ise_info (uuid, strName, strLanguage, nType, nOption, strModuleName)) {
+        ret = -1;
+    }
 
     imcontrol_client.close_connection ();
+
+    if (ret == -1)
+        return ret;
 
     if (name != NULL)
         *name = strName.length () ? strdup (strName.c_str ()) : strdup ("");
@@ -141,7 +151,7 @@ EXAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **nam
     if (module_name != NULL)
         *module_name = strModuleName.length () ? strdup (strModuleName.c_str ()) : strdup ("");
 
-    return 0;
+    return ret;
 }
 
 EXAPI int isf_control_set_active_ise_to_default (void)
@@ -165,16 +175,17 @@ EXAPI int isf_control_set_active_ise_to_default (void)
 EXAPI int isf_control_reset_ise_option (void)
 {
     IMControlClient imcontrol_client;
+    int ret = 0;
     if (!imcontrol_client.open_connection ())
         return -1;
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.reset_ise_option ())
-        return -1;
+        ret = -1;
 
     imcontrol_client.close_connection ();
 
-    return 0;
+    return ret;
 }
 
 EXAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
@@ -182,17 +193,18 @@ EXAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
     if (uuid == NULL)
         return -1;
 
+    int ret = 0;
     IMControlClient imcontrol_client;
     if (!imcontrol_client.open_connection ())
         return -1;
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.set_initial_ise_by_uuid (uuid))
-        return -1;
+        ret = -1;
 
     imcontrol_client.close_connection ();
 
-    return 0;
+    return ret;
 }
 
 EXAPI int isf_control_get_initial_ise (char **uuid)
