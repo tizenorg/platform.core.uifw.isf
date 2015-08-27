@@ -30,6 +30,7 @@
 
 #include <Evas.h>
 #include <string.h>
+#include "scim.h"
 
 using namespace scim;
 typedef Evas_Object * (*SetupModuleCreateUIFunc) (Evas_Object *parent, Evas_Object *layout);
