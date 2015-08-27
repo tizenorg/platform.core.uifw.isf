@@ -28,7 +28,7 @@
 namespace scim
 {
 
-class EAPI IMControlClient
+class EXAPI IMControlClient
 {
     class IMControlClientImpl;
     IMControlClientImpl *m_impl;

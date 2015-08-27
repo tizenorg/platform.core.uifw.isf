@@ -130,7 +130,7 @@ using namespace scim;
 extern MapStringVectorSizeT         _groups;
 extern std::vector<ImeInfoDB>       _ime_info;
 
-extern EAPI CommonLookupTable       g_isf_candidate_table;
+extern EXAPI CommonLookupTable       g_isf_candidate_table;
 
 
 /////////////////////////////////////////////////////////////////////////////

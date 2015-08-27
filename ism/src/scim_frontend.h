@@ -57,7 +57,7 @@ namespace scim {
  * scim::FrontEndBase and its derived classes must throw
  * scim::FrontEndError object when error.
  */
-class EAPI FrontEndError: public Exception
+class EXAPI FrontEndError: public Exception
 {
 public:
     FrontEndError (const String& what_arg)
@@ -80,7 +80,7 @@ typedef Pointer <FrontEndBase> FrontEndPointer;
  * and the user applications. It forward the user requests to
  * IMEngineFactory/IMEngineInstance objects, and handle the requests sent back.
  */
-class EAPI FrontEndBase : public ReferencedObject
+class EXAPI FrontEndBase : public ReferencedObject
 {
     class FrontEndBaseImpl;
 

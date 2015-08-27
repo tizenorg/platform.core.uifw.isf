@@ -88,7 +88,7 @@ _scim_get_module_paths (std::vector <String> &paths, const String &type)
     }
 }
 
-EAPI int
+EXAPI int
 scim_get_module_list (std::vector <String>& mod_list, const String& type)
 {
     unsigned int i = 0;

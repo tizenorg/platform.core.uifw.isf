@@ -67,7 +67,7 @@ typedef struct {
  *
  * @return 0 if successfully, otherwise return -1;
  */
-EAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
+EXAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
 
 /**
  * @deprecated Deprecated since tizen 2.4. [Use isf_control_get_active_ime() instead]
@@ -79,7 +79,7 @@ EAPI int isf_control_set_active_ise_by_uuid (const char *uuid);
  *
  * @return the length of UUID if successfully, otherwise return -1
  */
-EAPI int isf_control_get_active_ise (char **uuid);
+EXAPI int isf_control_get_active_ise (char **uuid);
 
 /**
  * @brief Get the list of all ISEs' UUID.
@@ -89,7 +89,7 @@ EAPI int isf_control_get_active_ise (char **uuid);
  *
  * @return the count of UUID list if successfully, otherwise return -1;
  */
-EAPI int isf_control_get_ise_list (char ***uuid_list);
+EXAPI int isf_control_get_ise_list (char ***uuid_list);
 
 /**
  * @brief Get ISE's information according to ISE's UUID.
@@ -102,7 +102,7 @@ EAPI int isf_control_get_ise_list (char ***uuid_list);
  *
  * @return 0 if successfully, otherwise return -1
  */
-EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
+EXAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option);
 
 /**
  * @brief Get ISE's information according to ISE's UUID.
@@ -116,21 +116,21 @@ EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **languag
  *
  * @return 0 if successfully, otherwise return -1
  */
-EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name);
+EXAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name);
 
 /**
  * @brief Set active ISE to default ISE.
  *
  * @return 0 if successfully, otherwise return -1
  */
-EAPI int isf_control_set_active_ise_to_default (void);
+EXAPI int isf_control_set_active_ise_to_default (void);
 
 /**
  * @brief Reset all ISEs' options.
  *
  * @return 0 if successfully, otherwise return -1;
  */
-EAPI int isf_control_reset_ise_option (void);
+EXAPI int isf_control_reset_ise_option (void);
 
 /**
  * @brief Set initial ISE by UUID.
@@ -139,7 +139,7 @@ EAPI int isf_control_reset_ise_option (void);
  *
  * @return 0 if successfully, otherwise return -1
  */
-EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
+EXAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
 
 /**
  * @brief Get initial ISE UUID.
@@ -149,7 +149,7 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid);
  *
  * @return the length of UUID if successfully, otherwise return -1;
  */
-EAPI int isf_control_get_initial_ise (char **uuid);
+EXAPI int isf_control_get_initial_ise (char **uuid);
 
 /**
  * @deprecated Deprecated since tizen 2.4. [Use isf_control_show_ime_selector() instead]
@@ -158,7 +158,7 @@ EAPI int isf_control_get_initial_ise (char **uuid);
  *
  * @return 0 if successfully, otherwise return -1;
  */
-EAPI int isf_control_show_ise_selector (void);
+EXAPI int isf_control_show_ise_selector (void);
 
 /**
  * @brief Get the number of S/W or H/W keyboard ISEs
@@ -167,7 +167,7 @@ EAPI int isf_control_show_ise_selector (void);
  *
  * @return the count of ISEs if successfully, otherwise return -1;
  */
-EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
+EXAPI int isf_control_get_ise_count (ISE_TYPE_T type);
 
 /**
  * @deprecated Deprecated since tizen 2.4. [Use isf_control_open_ime_option_window() instead]
@@ -176,7 +176,7 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type);
  *
  * @return 0 if successfully, otherwise return -1
  */
-EAPI int isf_control_show_ise_option_window (void);
+EXAPI int isf_control_show_ise_option_window (void);
 
 /**
  * @brief Gets the information of all IME (on-screen keyboard).
@@ -202,7 +202,7 @@ EAPI int isf_control_show_ise_option_window (void);
      }
  * @endcode
  */
-EAPI int isf_control_get_all_ime_info (ime_info_s **info);
+EXAPI int isf_control_get_all_ime_info (ime_info_s **info);
 
 /**
  * @brief Requests to open the current IME's option window.
@@ -215,7 +215,7 @@ EAPI int isf_control_get_all_ime_info (ime_info_s **info);
  *
  * @pre The availibility of IME option can be found using isf_control_get_all_ime_info() and isf_control_get_active_ime() functions.
  */
-EAPI int isf_control_open_ime_option_window (void);
+EXAPI int isf_control_open_ime_option_window (void);
 
 /**
  * @brief Gets active IME's Application ID.
@@ -226,7 +226,7 @@ EAPI int isf_control_open_ime_option_window (void);
  *
  * @return The length of @a appid on success, otherwise -1
  */
-EAPI int isf_control_get_active_ime (char **appid);
+EXAPI int isf_control_get_active_ime (char **appid);
 
 /**
  * @brief Sets active IME by Application ID.
@@ -237,7 +237,7 @@ EAPI int isf_control_get_active_ime (char **appid);
  *
  * @return 0 on success, otherwise return -1
  */
-EAPI int isf_control_set_active_ime (const char *appid);
+EXAPI int isf_control_set_active_ime (const char *appid);
 
 /**
  * @brief Sets On/Off of installed IME by Application ID.
@@ -249,7 +249,7 @@ EAPI int isf_control_set_active_ime (const char *appid);
  *
  * @return 0 on success, otherwise return -1
  */
-EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
+EXAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
 
 /**
  * @brief Requests to open the installed IME list application.
@@ -260,7 +260,7 @@ EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled);
  *
  * @return 0 on success, otherwise return -1
  */
-EAPI int isf_control_show_ime_list (void);
+EXAPI int isf_control_show_ime_list (void);
 
 /**
  * @brief Requests to open the IME selector application.
@@ -271,7 +271,7 @@ EAPI int isf_control_show_ime_list (void);
  *
  * @return 0 on success, otherwise return -1
  */
-EAPI int isf_control_show_ime_selector (void);
+EXAPI int isf_control_show_ime_selector (void);
 
 /**
  * @brief Checks if the specific IME is enabled or disabled in the system keyboard setting.
@@ -283,7 +283,7 @@ EAPI int isf_control_show_ime_selector (void);
  *
  * @return 0 on success, otherwise return -1
  */
-EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled);
+EXAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled);
 
 /**
  * @brief Get the recent geometry of S/W keyboard
@@ -297,7 +297,7 @@ EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled);
  *
  * @return 0 if successfully, otherwise return -1;
  */
-EAPI int isf_control_get_recent_ime_geometry (int *x, int *y, int *w, int *h);
+EXAPI int isf_control_get_recent_ime_geometry (int *x, int *y, int *w, int *h);
 
 #ifdef __cplusplus
 }

@@ -89,7 +89,7 @@ enum IMEngineOption
  * scim::IMEngineBase and its derived classes must throw
  * scim::IMEngineError object when error.
  */
-class EAPI IMEngineError: public Exception
+class EXAPI IMEngineError: public Exception
 {
 public:
     IMEngineError (const String& what_arg)
@@ -179,7 +179,7 @@ typedef Slot3<void, IMEngineInstanceBase*,ISF_CANDIDATE_PORTRAIT_LINE_T,ISF_CAND
  * Each input method should implement a class derived from scim::IMEngineFactoryBase,
  * which takes charge of holding shared data, creating IMEngineInstances etc.
  */
-class EAPI IMEngineFactoryBase : public ReferencedObject
+class EXAPI IMEngineFactoryBase : public ReferencedObject
 {
     class IMEngineFactoryBaseImpl;
 
@@ -415,7 +415,7 @@ protected:
  * Each input method should implement a class derived from scim::IMEngineInstanceBase,
  * which takes charge of recording Input Context status and processing user input events.
  */
-class EAPI IMEngineInstanceBase : public ReferencedObject
+class EXAPI IMEngineInstanceBase : public ReferencedObject
 {
     class IMEngineInstanceBaseImpl;
 
@@ -1062,7 +1062,7 @@ protected:
 /**
  * @brief A trivial IMEngine that do nothing.
  */
-class EAPI DummyIMEngineFactory : public IMEngineFactoryBase
+class EXAPI DummyIMEngineFactory : public IMEngineFactoryBase
 {
 public:
     DummyIMEngineFactory ();
@@ -1081,7 +1081,7 @@ public:
     virtual IMEngineInstancePointer create_instance (const String& encoding, int id = -1);
 };
 
-class EAPI DummyIMEngineInstance : public IMEngineInstanceBase
+class EXAPI DummyIMEngineInstance : public IMEngineInstanceBase
 {
 public:
     DummyIMEngineInstance (DummyIMEngineFactory *factory,

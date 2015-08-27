@@ -53,7 +53,7 @@ namespace scim {
  * @brief This class is used to manage all helper objects.
  *
  */
-class EAPI HelperManager
+class EXAPI HelperManager
 {
     class HelperManagerImpl;
     HelperManagerImpl *m_impl;

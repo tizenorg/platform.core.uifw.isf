@@ -47,7 +47,7 @@ namespace scim {
  * scim::BackEndBase and its derived classes must throw
  * scim::BackEndError object when error.
  */
-class EAPI BackEndError: public Exception
+class EXAPI BackEndError: public Exception
 {
 public:
     BackEndError (const String& what_arg)
@@ -65,7 +65,7 @@ public:
  * Most developer should just use the default implementation
  * scim::CommonBackEnd.
  */
-class EAPI BackEndBase : public ReferencedObject
+class EXAPI BackEndBase : public ReferencedObject
 {
     class BackEndBaseImpl;
 
@@ -215,7 +215,7 @@ typedef Pointer <BackEndBase> BackEndPointer;
 /**
  * @brief The default implementation of scim::BackEndBase interface.
  */
-class EAPI CommonBackEnd : public BackEndBase
+class EXAPI CommonBackEnd : public BackEndBase
 {
     class CommonBackEndImpl;
     CommonBackEndImpl *m_impl;

@@ -40,7 +40,7 @@
 
 using namespace scim;
 
-class EAPI X11FrontEnd : public FrontEndBase
+class EXAPI X11FrontEnd : public FrontEndBase
 {
 // first = UUID.
 // second= siid.

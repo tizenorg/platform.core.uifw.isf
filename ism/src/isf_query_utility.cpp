@@ -1186,7 +1186,7 @@ static int _db_delete_ime_info(void)
  *
  * @return the number of selected row.
  */
-EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
+EXAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
 {
     int ret = 0;
 
@@ -1210,7 +1210,7 @@ EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
+EXAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
 {
     int ret = 0;
 
@@ -1237,7 +1237,7 @@ EAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
  *
  * @return the number of selected row.
  */
-EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname)
+EXAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname)
 {
     int ret = 0;
 
@@ -1261,7 +1261,7 @@ EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Stri
  *
  * @return the number of selected row.
  */
-EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath)
+EXAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath)
 {
     int ret = 0;
 
@@ -1285,7 +1285,7 @@ EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Stri
  *
  * @return the number of selected row.
  */
-EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids)
+EXAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids)
 {
     int ret = 0;
 
@@ -1314,7 +1314,7 @@ EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &a
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
+EXAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
 {
     int ret = 0;
 
@@ -1341,7 +1341,7 @@ EAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
  *
  * @return the number of selected row.
  */
-EAPI int isf_db_select_count_by_module_name(const char *module_name)
+EXAPI int isf_db_select_count_by_module_name(const char *module_name)
 {
     int ret = 0;
 
@@ -1368,7 +1368,7 @@ EAPI int isf_db_select_count_by_module_name(const char *module_name)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
+EXAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
 {
     int ret = 0;
 
@@ -1394,7 +1394,7 @@ EAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_update_disp_lang(const char *disp_lang)
+EXAPI int isf_db_update_disp_lang(const char *disp_lang)
 {
     int ret = 0;
 
@@ -1421,7 +1421,7 @@ EAPI int isf_db_update_disp_lang(const char *disp_lang)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
+EXAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 {
     int ret = 0;
 
@@ -1448,7 +1448,7 @@ EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
+EXAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
 {
     int ret = 0;
 
@@ -1474,7 +1474,7 @@ EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
  *
  * @return the number of updated data.
  */
-EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
+EXAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
 {
     int ret = 0;
 
@@ -1500,7 +1500,7 @@ EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
  *
  * @return the number of inserted data.
  */
-EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
+EXAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
 {
     int ret = 0;
 
@@ -1525,7 +1525,7 @@ EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
  *
  * @return 1 if it is successful, otherwise return 0.
  */
-EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
+EXAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
 {
     int ret = 0;
 
@@ -1544,7 +1544,7 @@ EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
     return ret;
 }
 
-EAPI int isf_db_delete_ime_info(void)
+EXAPI int isf_db_delete_ime_info(void)
 {
     int ret = 0;
 
