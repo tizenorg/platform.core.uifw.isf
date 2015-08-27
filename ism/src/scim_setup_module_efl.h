@@ -43,7 +43,7 @@ typedef bool (*SetupModuleQueryChangedFunc) (void);
 typedef bool (*SetupModuleKeyProceedingFunc) (int);
 typedef bool (*SetupModuleOptionResetFunc) (const ConfigPointer &config);
 
-class EAPI SetupModule
+class EXAPI SetupModule
 {
     Module      m_module;
 
@@ -82,7 +82,7 @@ public:
     bool option_reset (const ConfigPointer &config) const;
 };
 
-EAPI int scim_get_setup_module_list (std::vector <String>& mod_list);
+EXAPI int scim_get_setup_module_list (std::vector <String>& mod_list);
 
 #endif // __SCIM_SETUP_MODULE_EFL_H
 

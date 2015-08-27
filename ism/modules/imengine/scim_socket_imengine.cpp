@@ -122,13 +122,13 @@ static SocketIMEngineGlobal *global = 0;
 static std::map<String, ISEINFO> ise_info_repository;
 
 extern "C" {
-    EAPI void scim_module_init (void)
+    EXAPI void scim_module_init (void)
     {
         if (!global)
             global = new SocketIMEngineGlobal;
     }
 
-    EAPI void scim_module_exit (void)
+    EXAPI void scim_module_exit (void)
     {
         if (global) {
             delete global;
@@ -136,14 +136,14 @@ extern "C" {
         }
     }
 
-    EAPI unsigned int scim_imengine_module_init (const ConfigPointer &config)
+    EXAPI unsigned int scim_imengine_module_init (const ConfigPointer &config)
     {
         if (global)
             return global->number_of_factories ();
         return 0;
     }
 
-    EAPI IMEngineFactoryPointer scim_imengine_module_create_factory (unsigned int index)
+    EXAPI IMEngineFactoryPointer scim_imengine_module_create_factory (unsigned int index)
     {
         if (!global)
             return 0;

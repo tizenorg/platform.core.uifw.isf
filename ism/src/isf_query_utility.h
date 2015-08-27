@@ -64,21 +64,21 @@ typedef struct {
     String display_lang;
 } ImeInfoDB;
 
-EAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
-EAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo);
-EAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname);
-EAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath);
-EAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids);
-EAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled);
-EAPI int isf_db_select_count_by_module_name(const char *module_name);
-EAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
-EAPI int isf_db_update_disp_lang(const char *disp_lang);
-EAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled);
-EAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option);
-EAPI int isf_db_update_ime_info(ImeInfoDB *ime_db);
-EAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db);
-EAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
-EAPI int isf_db_delete_ime_info(void);
+EXAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info);
+EXAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo);
+EXAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mname);
+EXAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<String> &mpath);
+EXAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &appids);
+EXAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled);
+EXAPI int isf_db_select_count_by_module_name(const char *module_name);
+EXAPI int isf_db_update_label_by_appid(const char *appid, const char *label);
+EXAPI int isf_db_update_disp_lang(const char *disp_lang);
+EXAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled);
+EXAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option);
+EXAPI int isf_db_update_ime_info(ImeInfoDB *ime_db);
+EXAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db);
+EXAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid);
+EXAPI int isf_db_delete_ime_info(void);
 
 #endif /* __ISF_QUERY_UTILITY_H__ */
 

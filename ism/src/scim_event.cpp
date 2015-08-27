@@ -260,14 +260,14 @@ KeyEvent::map_to_layout (KeyboardLayout new_layout) const
     return evt;
 }
 
-EAPI bool
+EXAPI bool
 scim_key_to_string (String &str, const KeyEvent & key)
 {
     str = key.get_key_string ();
     return str.length () != 0;
 }
 
-EAPI bool
+EXAPI bool
 scim_string_to_key (KeyEvent &key, const String & str)
 {
     std::vector <String> list;
@@ -308,7 +308,7 @@ scim_string_to_key (KeyEvent &key, const String & str)
     return key.code != 0;
 }
 
-EAPI bool
+EXAPI bool
 scim_key_list_to_string (String &str, const std::vector<KeyEvent> & keylist)
 {
     std::vector<String> strlist;
@@ -323,7 +323,7 @@ scim_key_list_to_string (String &str, const std::vector<KeyEvent> & keylist)
     return str.length () != 0;
 }
 
-EAPI bool
+EXAPI bool
 scim_string_to_key_list (std::vector<KeyEvent> &keylist, const String &str)
 {
     std::vector <String> strlist;
@@ -340,7 +340,7 @@ scim_string_to_key_list (std::vector<KeyEvent> &keylist, const String &str)
 }
 
 
-EAPI String
+EXAPI String
 scim_keyboard_layout_to_string (KeyboardLayout layout)
 {
     if (layout >= 0 && layout < SCIM_KEYBOARD_NUM_LAYOUTS)
@@ -349,7 +349,7 @@ scim_keyboard_layout_to_string (KeyboardLayout layout)
     return String (__scim_keyboard_layout_ids_by_code [0].name);
 }
 
-EAPI KeyboardLayout
+EXAPI KeyboardLayout
 scim_string_to_keyboard_layout (const String &str)
 {
     if (str == __scim_keyboard_layout_ids_by_code [0].name) return SCIM_KEYBOARD_Unknown;
@@ -367,7 +367,7 @@ scim_string_to_keyboard_layout (const String &str)
     return SCIM_KEYBOARD_Unknown;
 }
 
-EAPI String
+EXAPI String
 scim_keyboard_layout_get_display_name (KeyboardLayout layout)
 {
     if (layout >= 0 && layout < SCIM_KEYBOARD_NUM_LAYOUTS)
@@ -376,7 +376,7 @@ scim_keyboard_layout_get_display_name (KeyboardLayout layout)
     return String (_(__scim_keyboard_layout_names [0]));
 }
 
-EAPI KeyboardLayout
+EXAPI KeyboardLayout
 scim_get_default_keyboard_layout ()
 {
     String layout_name (__scim_keyboard_layout_ids_by_code [0].name);
@@ -385,14 +385,14 @@ scim_get_default_keyboard_layout ()
     return scim_string_to_keyboard_layout (layout_name);
 }
 
-EAPI void
+EXAPI void
 scim_set_default_keyboard_layout (KeyboardLayout layout)
 {
     String layout_name = scim_keyboard_layout_to_string (layout);
     scim_global_config_write (SCIM_GLOBAL_CONFIG_DEFAULT_KEYBOARD_LAYOUT, layout_name);
 }
 
-EAPI void
+EXAPI void
 scim_set_device_info (KeyEvent &key, String str, uint16 dev_class, uint16 dev_subclass)
 {
     key.dev_class = dev_class;

@@ -45,7 +45,7 @@ namespace scim {
 
 class SocketFactory;
 
-class EAPI SocketFactory : public IMEngineFactoryBase
+class EXAPI SocketFactory : public IMEngineFactoryBase
 {
     WideString m_name;
 
@@ -83,7 +83,7 @@ private:
     int  create_peer_instance (const String &encoding);
 };
 
-class EAPI SocketInstance : public IMEngineInstanceBase
+class EXAPI SocketInstance : public IMEngineInstanceBase
 {
     SocketFactory *m_factory;
     int            m_peer_id;

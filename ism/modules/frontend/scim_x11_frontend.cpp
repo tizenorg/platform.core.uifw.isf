@@ -83,18 +83,18 @@ static Pointer <X11FrontEnd> _scim_frontend (0);
 
 //Module Interface
 extern "C" {
-    EAPI void scim_module_init (void)
+    EXAPI void scim_module_init (void)
     {
         SCIM_DEBUG_FRONTEND(1) << "Initializing X11 FrontEnd module...\n";
     }
 
-    EAPI void scim_module_exit (void)
+    EXAPI void scim_module_exit (void)
     {
         SCIM_DEBUG_FRONTEND(1) << "Exiting X11 FrontEnd module...\n";
         _scim_frontend.reset ();
     }
 
-    EAPI void scim_frontend_module_init (const BackEndPointer &backend,
+    EXAPI void scim_frontend_module_init (const BackEndPointer &backend,
                                     const ConfigPointer &config,
                                     int argc,
                                      char **argv)
@@ -109,7 +109,7 @@ extern "C" {
         }
     }
 
-    EAPI void scim_frontend_module_run (void)
+    EXAPI void scim_frontend_module_run (void)
     {
         if (!_scim_frontend.null ()) {
             SCIM_DEBUG_FRONTEND(1) << "Starting X11 FrontEnd module...\n";

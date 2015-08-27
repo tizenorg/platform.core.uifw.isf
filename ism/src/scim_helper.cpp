@@ -52,7 +52,7 @@
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 
-EAPI scim::CommonLookupTable g_helper_candidate_table;
+EXAPI scim::CommonLookupTable g_helper_candidate_table;
 
 namespace scim {
 

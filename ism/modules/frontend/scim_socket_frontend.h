@@ -50,7 +50,7 @@
 
 using namespace scim;
 
-class EAPI SocketFrontEnd : public FrontEndBase
+class EXAPI SocketFrontEnd : public FrontEndBase
 {
     enum ClientType {
         NONE_CLIENT             = -1, //Client does not find in SocketClientRepository

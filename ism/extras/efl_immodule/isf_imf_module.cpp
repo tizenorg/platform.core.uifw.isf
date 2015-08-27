@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <dlog.h>
+#include <scim_visibility.h>
 #include "isf_imf_context.h"
 #include "isf_imf_control_ui.h"
 

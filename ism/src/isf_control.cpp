@@ -41,7 +41,7 @@
 using namespace scim;
 
 
-EAPI int isf_control_set_active_ise_by_uuid (const char *uuid)
+EXAPI int isf_control_set_active_ise_by_uuid (const char *uuid)
 {
     if (uuid == NULL)
         return -1;
@@ -60,7 +60,7 @@ EAPI int isf_control_set_active_ise_by_uuid (const char *uuid)
     return ret;
 }
 
-EAPI int isf_control_get_active_ise (char **uuid)
+EXAPI int isf_control_get_active_ise (char **uuid)
 {
     if (uuid == NULL)
         return -1;
@@ -82,7 +82,7 @@ EAPI int isf_control_get_active_ise (char **uuid)
     return strUuid.length ();
 }
 
-EAPI int isf_control_get_ise_list (char ***uuid_list)
+EXAPI int isf_control_get_ise_list (char ***uuid_list)
 {
     if (uuid_list == NULL)
         return -1;
@@ -102,12 +102,12 @@ EAPI int isf_control_get_ise_list (char ***uuid_list)
     return count;
 }
 
-EAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option)
+EXAPI int isf_control_get_ise_info (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option)
 {
     return isf_control_get_ise_info_and_module_name (uuid, name, language, type, option, NULL);
 }
 
-EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name)
+EXAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name, char **language, ISE_TYPE_T *type, int *option, char **module_name)
 {
     if (uuid == NULL)
         return -1;
@@ -144,7 +144,7 @@ EAPI int isf_control_get_ise_info_and_module_name (const char *uuid, char **name
     return 0;
 }
 
-EAPI int isf_control_set_active_ise_to_default (void)
+EXAPI int isf_control_set_active_ise_to_default (void)
 {
     IMControlClient imcontrol_client;
     int ret = 0;
@@ -162,7 +162,7 @@ EAPI int isf_control_set_active_ise_to_default (void)
     return ret;
 }
 
-EAPI int isf_control_reset_ise_option (void)
+EXAPI int isf_control_reset_ise_option (void)
 {
     IMControlClient imcontrol_client;
     if (!imcontrol_client.open_connection ())
@@ -177,7 +177,7 @@ EAPI int isf_control_reset_ise_option (void)
     return 0;
 }
 
-EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
+EXAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
 {
     if (uuid == NULL)
         return -1;
@@ -195,7 +195,7 @@ EAPI int isf_control_set_initial_ise_by_uuid (const char *uuid)
     return 0;
 }
 
-EAPI int isf_control_get_initial_ise (char **uuid)
+EXAPI int isf_control_get_initial_ise (char **uuid)
 {
     if (uuid == NULL)
         return -1;
@@ -207,12 +207,12 @@ EAPI int isf_control_get_initial_ise (char **uuid)
     return strUuid.length ();
 }
 
-EAPI int isf_control_show_ise_selector (void)
+EXAPI int isf_control_show_ise_selector (void)
 {
     return isf_control_show_ime_selector();
 }
 
-EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
+EXAPI int isf_control_get_ise_count (ISE_TYPE_T type)
 {
     char **iselist = NULL;
     int all_ise_count, ise_count = 0;
@@ -242,7 +242,7 @@ EAPI int isf_control_get_ise_count (ISE_TYPE_T type)
     return ise_count;
 }
 
-EAPI int isf_control_show_ise_option_window (void)
+EXAPI int isf_control_show_ise_option_window (void)
 {
     IMControlClient imcontrol_client;
     int ret = 0;
@@ -259,7 +259,7 @@ EAPI int isf_control_show_ise_option_window (void)
     return ret;
 }
 
-EAPI int isf_control_get_all_ime_info (ime_info_s **info)
+EXAPI int isf_control_get_all_ime_info (ime_info_s **info)
 {
     int count = -1, i = 0;
     int ret = 0;
@@ -303,12 +303,12 @@ EAPI int isf_control_get_all_ime_info (ime_info_s **info)
     return count;
 }
 
-EAPI int isf_control_open_ime_option_window (void)
+EXAPI int isf_control_open_ime_option_window (void)
 {
     return isf_control_show_ise_option_window ();
 }
 
-EAPI int isf_control_get_active_ime (char **appid)
+EXAPI int isf_control_get_active_ime (char **appid)
 {
     if (appid == NULL)
         return -1;
@@ -342,12 +342,12 @@ EAPI int isf_control_get_active_ime (char **appid)
         return strUuid.length ();
 }
 
-EAPI int isf_control_set_active_ime (const char *appid)
+EXAPI int isf_control_set_active_ime (const char *appid)
 {
     return isf_control_set_active_ise_by_uuid(appid);
 }
 
-EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled)
+EXAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled)
 {
     if (!appid)
         return -1;
@@ -368,7 +368,7 @@ EAPI int isf_control_set_enable_ime (const char *appid, bool is_enabled)
     return ret;
 }
 
-EAPI int isf_control_show_ime_list (void)
+EXAPI int isf_control_show_ime_list (void)
 {
     IMControlClient imcontrol_client;
     int ret = 0;
@@ -386,7 +386,7 @@ EAPI int isf_control_show_ime_list (void)
     return ret;
 }
 
-EAPI int isf_control_show_ime_selector (void)
+EXAPI int isf_control_show_ime_selector (void)
 {
     IMControlClient imcontrol_client;
     int ret = 0;
@@ -404,7 +404,7 @@ EAPI int isf_control_show_ime_selector (void)
     return ret;
 }
 
-EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
+EXAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
 {
     if (!appid || !enabled || strlen(appid) < 1) {
         LOGW("Invalid parameter");
@@ -441,7 +441,7 @@ EAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
     return ret;
 }
 
-EAPI int isf_control_get_recent_ime_geometry (int *x, int *y, int *w, int *h)
+EXAPI int isf_control_get_recent_ime_geometry (int *x, int *y, int *w, int *h)
 {
     int ime_x = -1, ime_y = -1, ime_w = -1, ime_h = -1;
 
