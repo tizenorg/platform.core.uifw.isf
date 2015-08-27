@@ -293,17 +293,20 @@ static void __set_oom ()
     fclose (fp);
 }
 
-static inline int __set_dac ()
+static inline int __set_dac (const char *pkg_type, const char *app_path)
 {
 #ifdef WAYLAND
     return 0;
 #else
     //Copied from control_privilege () in the libprivilege-control package
 
+    if (!pkg_type || !app_path)
+        return PC_ERR_INVALID_PARAM;
+
     if (getuid () == APP_UID) // current user is 'app'
         return PC_OPERATION_SUCCESS;
 
-    if (perm_app_set_privilege ("com.samsung.", NULL, NULL) == PC_OPERATION_SUCCESS) {
+    if (perm_app_set_privilege ("com.samsung.", pkg_type, app_path) == PC_OPERATION_SUCCESS) {
         return PC_OPERATION_SUCCESS;
     } else {
         LOGW ("perm_app_set_privilege failed (not permitted).");
@@ -425,7 +428,7 @@ int ise_preexec (const char *helper, const char *uuid)
     __set_oom ();
 
     /* SET DAC*/
-    if (__set_dac() != PC_OPERATION_SUCCESS) {
+    if (__set_dac (info.package_type.c_str (), info.app_path.c_str ()) < 0) {
         LOGW ("fail to set DAC - check your package's credential\n");
         return -2;
     }
