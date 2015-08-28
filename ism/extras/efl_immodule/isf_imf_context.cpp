@@ -1179,9 +1179,7 @@ isf_imf_context_new (void)
         _context_count = getpid () % 50000;
     }
     context_scim->id = _context_count++;
-#if !(ENABLE_LAZY_LAUNCH)
-     _scim_initialize ();
-#endif
+
     return context_scim;
 }
 
@@ -1403,10 +1401,10 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 
     if (!context_scim)
         return;
-#if ENABLE_LAZY_LAUNCH
-    _scim_initialize ();
-#endif
+
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__<< "(" << context_scim->id << ")...\n";
+
+    _scim_initialize ();
 
     if (_focused_ic) {
         if (_focused_ic == context_scim) {
