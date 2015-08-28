@@ -1196,7 +1196,6 @@ isf_imf_context_shutdown (void)
     ConfigBase::set (0);
     _default_instance.reset();
     _scim_finalize ();
-
 }
 
 EXAPI void
@@ -2251,10 +2250,10 @@ isf_imf_context_input_hint_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Hints hi
 
     if (context_scim && context_scim->impl) {
         if (context_scim->impl->input_hint != hint) {
-            LOGD ("ctx : %p, input hint : %#x\n", ctx, hint);
             context_scim->impl->input_hint = hint;
 
             if (context_scim->impl->si && context_scim == _focused_ic) {
+                LOGD ("ctx : %p, input hint : %#x\n", ctx, hint);
                 _panel_client.prepare (context_scim->id);
                 context_scim->impl->si->set_input_hint (hint);
                 panel_req_set_input_hint (context_scim, hint);
@@ -2273,10 +2272,10 @@ isf_imf_context_bidi_direction_set (Ecore_IMF_Context *ctx, Ecore_IMF_BiDi_Direc
 
     if (context_scim && context_scim->impl) {
         if (context_scim->impl->bidi_direction != direction) {
-            LOGD ("ctx : %p, bidi direction : %#x\n", ctx, direction);
             context_scim->impl->bidi_direction = direction;
 
             if (context_scim->impl->si && context_scim == _focused_ic) {
+                LOGD ("ctx : %p, bidi direction : %#x\n", ctx, direction);
                 _panel_client.prepare (context_scim->id);
                 context_scim->impl->si->update_bidi_direction (direction);
                 panel_req_update_bidi_direction (context_scim, direction);
