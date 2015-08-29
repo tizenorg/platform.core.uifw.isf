@@ -75,6 +75,7 @@ void signalhandler (int sig)
         config_module = 0;
     }
 
+    ISF_SAVE_LOG ("sig:%d\n", sig);
     std::cerr << "Successfully exited.\n";
 
     exit (0);
