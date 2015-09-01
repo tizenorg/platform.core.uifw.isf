@@ -4136,8 +4136,8 @@ static void slot_hide_aux_string (void)
     elm_scroller_region_show (_aux_area, 0, 0, 10, 10);
     ui_candidate_window_adjust ();
 
-    LOGD ("calling ui_candidate_hide (false)");
-    ui_candidate_hide (false);
+    LOGD ("calling ui_candidate_hide (false, true, true)");
+    ui_candidate_hide (false, true, true);
     ui_settle_candidate_window ();
 
     if (ui_candidate_can_be_hide ()) {
