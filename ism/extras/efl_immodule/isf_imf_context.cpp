@@ -1237,8 +1237,12 @@ isf_imf_context_add (Ecore_IMF_Context *ctx)
         context_scim->next = _ic_list;
     _ic_list = context_scim;
 
-    if (_shared_input_method)
-        context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+    if (_shared_input_method) {
+        if (_config)
+            context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+        else
+            LOGW ("Failed to read in config\n");
+    }
 
     SCIM_DEBUG_FRONTEND(2) << "input context created: id = " << context_scim->id << "\n";
 }
@@ -1459,7 +1463,11 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
                 context_scim->impl->shared_si = true;
                 context_scim->impl->si = _default_instance;
 
-                context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+                if (_config)
+                    context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+                else
+                    LOGW ("Failed to load in config\n");
+
                 context_scim->impl->preedit_string.clear ();
                 context_scim->impl->preedit_attrlist.clear ();
                 context_scim->impl->preedit_caret = 0;
@@ -2634,7 +2642,8 @@ panel_slot_update_keyboard_ise (int context)
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
 
-    _backend->add_module (_config, "socket", false);
+    if (_config)
+        _backend->add_module (_config, "socket", false);
 }
 
 static void
@@ -3067,7 +3076,7 @@ filter_keys (const char *keyname, const char *config_path)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (!keyname)
+    if (!keyname || !_config)
         return false;
 
     std::vector <String> keys;
@@ -3169,7 +3178,7 @@ panel_initialize (void)
         if (p) display_name = String (p);
     }
 
-    if (_panel_client.open_connection (_config->get_name (), display_name) >= 0) {
+    if (_config && (_panel_client.open_connection (_config->get_name (), display_name) >= 0)) {
         if (_panel_client.get_client_id (_panel_client_id)) {
             _panel_client.prepare (0);
             _panel_client.register_client (_panel_client_id);
@@ -3273,8 +3282,12 @@ turn_on_ic (EcoreIMFContextISF *ic)
 
         //Record the IC on/off status
         if (_shared_input_method) {
-            _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), true);
-            _config->flush ();
+            if (_config) {
+                _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), true);
+                _config->flush ();
+            }
+            else
+                LOGW ("Failed to write in config\n");
         }
 
         if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
@@ -3312,8 +3325,12 @@ turn_off_ic (EcoreIMFContextISF *ic)
 
         //Record the IC on/off status
         if (_shared_input_method) {
-            _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
-            _config->flush ();
+            if (_config) {
+                _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
+                _config->flush ();
+            }
+            else
+                LOGW ("Failed to write in config\n");
         }
 
         if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
@@ -3518,7 +3535,9 @@ finalize (void)
     _backend.reset ();
 
     SCIM_DEBUG_FRONTEND(2) << " Releasing Config...\n";
-    _config.reset ();
+    if (_config)
+      _config.reset ();
+
     _config_connection.disconnect ();
     ConfigBase::set (0);
     _focused_ic = NULL;
@@ -3637,8 +3656,12 @@ open_specific_factory (EcoreIMFContextISF *ic,
 
             //Record the IC on/off status
             if (_shared_input_method) {
-                _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
-                _config->flush ();
+                if (_config) {
+                    _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
+                    _config->flush ();
+                }
+                else
+                    LOGW ("Failed to write in config\n");
             }
 
             if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
