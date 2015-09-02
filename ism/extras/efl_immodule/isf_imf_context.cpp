@@ -714,7 +714,7 @@ set_prediction_allow (Ecore_IMF_Context *ctx, bool prediction)
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+    if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
         _panel_client.prepare (context_scim->id);
         context_scim->impl->si->set_prediction_allow (prediction);
         _panel_client.send ();
@@ -1098,7 +1098,7 @@ imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout
 {
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+    if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
         _panel_client.prepare (context_scim->id);
         context_scim->impl->si->set_layout (layout);
         _panel_client.send ();
@@ -1277,7 +1277,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
     if (context_scim && context_scim->impl) {
         _panel_client.prepare (context_scim->id);
 
-        if (context_scim == _focused_ic)
+        if (context_scim == _focused_ic && context_scim->impl->si)
             context_scim->impl->si->focus_out ();
 
         if (input_panel_ctx == ctx && _scim_initialized) {
@@ -1493,34 +1493,36 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
             }
         }
 
-        context_scim->impl->si->set_frontend_data (static_cast <void*> (context_scim));
+        if (context_scim->impl->si) {
+            context_scim->impl->si->set_frontend_data (static_cast <void*> (context_scim));
 
-        if (need_reg) _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
-        if (need_cap) set_ic_capabilities (context_scim);
+            if (need_reg) _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
+            if (need_cap) set_ic_capabilities (context_scim);
 
-        save_current_xid (ctx);
+            save_current_xid (ctx);
 
-        panel_req_focus_in (context_scim);
-//        panel_req_update_spot_location (context_scim);
-//        panel_req_update_factory_info (context_scim);
+            panel_req_focus_in (context_scim);
+            //        panel_req_update_spot_location (context_scim);
+            //        panel_req_update_factory_info (context_scim);
 
-        if (need_reset) context_scim->impl->si->reset ();
-        if (context_scim->impl->is_on) {
-            _panel_client.turn_on (context_scim->id);
-//            _panel_client.hide_preedit_string (context_scim->id);
-//            _panel_client.hide_aux_string (context_scim->id);
-//            _panel_client.hide_lookup_table (context_scim->id);
-            context_scim->impl->si->focus_in ();
-            context_scim->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ctx));
-            context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
-            LOGD ("ctx : %p. set autocapital type : %d\n", ctx, context_scim->impl->autocapital_type);
-            context_scim->impl->si->set_autocapital_type (context_scim->impl->autocapital_type);
-            context_scim->impl->si->set_input_hint (context_scim->impl->input_hint);
-            context_scim->impl->si->update_bidi_direction (context_scim->impl->bidi_direction);
-            if (context_scim->impl->imdata)
-                context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
-        } else {
-            _panel_client.turn_off (context_scim->id);
+            if (need_reset) context_scim->impl->si->reset ();
+            if (context_scim->impl->is_on) {
+                _panel_client.turn_on (context_scim->id);
+                //            _panel_client.hide_preedit_string (context_scim->id);
+                //            _panel_client.hide_aux_string (context_scim->id);
+                //            _panel_client.hide_lookup_table (context_scim->id);
+                context_scim->impl->si->focus_in ();
+                context_scim->impl->si->set_layout (ecore_imf_context_input_panel_layout_get (ctx));
+                context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
+                LOGD ("ctx : %p. set autocapital type : %d\n", ctx, context_scim->impl->autocapital_type);
+                context_scim->impl->si->set_autocapital_type (context_scim->impl->autocapital_type);
+                context_scim->impl->si->set_input_hint (context_scim->impl->input_hint);
+                context_scim->impl->si->update_bidi_direction (context_scim->impl->bidi_direction);
+                if (context_scim->impl->imdata)
+                    context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
+            } else {
+                _panel_client.turn_off (context_scim->id);
+            }
         }
 
         _panel_client.get_active_helper_option (&_active_helper_option);
@@ -2182,11 +2184,17 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             void *pvoid = &ret;
             _panel_client.process_key_event (key, (int*)pvoid);
             if (!ret && !(_active_helper_option & ISM_HELPER_WITHOUT_IMENGINE)) {
-                ret = _focused_ic->impl->si->process_key_event (key);
+                if (_focused_ic->impl->si)
+                    ret = _focused_ic->impl->si->process_key_event (key);
+                else
+                    ret = EINA_FALSE;
             }
 #endif
         } else {
-            ret = _focused_ic->impl->si->process_key_event (key);
+            if (_focused_ic->impl->si)
+                ret = _focused_ic->impl->si->process_key_event (key);
+            else
+                ret = EINA_FALSE;
         }
 
         if (ret == EINA_FALSE) {
@@ -2518,7 +2526,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
         if (feed_key_event (ic, _key, false)) return;
         _panel_client.prepare (ic->id);
         if (!filter_hotkeys (ic, _key)) {
-            if (!_focused_ic || !_focused_ic->impl->is_on ||
+            if (!_focused_ic || !_focused_ic->impl->is_on || !_focused_ic->impl->si ||
                     !_focused_ic->impl->si->process_key_event (_key)) {
                 _fallback_instance->process_key_event (_key);
             }
@@ -2630,9 +2638,12 @@ panel_slot_reset_keyboard_ise (int context)
                     return;
             }
         }
-        _panel_client.prepare (ic->id);
-        ic->impl->si->reset ();
-        _panel_client.send ();
+
+        if (ic->impl->si) {
+            _panel_client.prepare (ic->id);
+            ic->impl->si->reset ();
+            _panel_client.send ();
+        }
     }
 }
 
@@ -3553,6 +3564,9 @@ open_next_factory (EcoreIMFContextISF *ic)
     if (!check_valid_ic (ic))
         return;
 
+    if (!ic->impl->si)
+        return;
+
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
     IMEngineFactoryPointer sf = _backend->get_next_factory ("", "UTF-8", ic->impl->si->get_factory_uuid ());
 
@@ -3580,6 +3594,9 @@ static void
 open_previous_factory (EcoreIMFContextISF *ic)
 {
     if (!check_valid_ic (ic))
+        return;
+
+    if (!ic->impl->si)
         return;
 
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
@@ -3612,10 +3629,13 @@ open_specific_factory (EcoreIMFContextISF *ic,
     if (!check_valid_ic (ic))
         return;
 
+    if (!ic->impl->si)
+        return;
+
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
 
     // The same input method is selected, just turn on the IC.
-    if (ic->impl->si && (ic->impl->si->get_factory_uuid () == uuid)) {
+    if (ic->impl->si->get_factory_uuid () == uuid) {
         turn_on_ic (ic);
         return;
     }

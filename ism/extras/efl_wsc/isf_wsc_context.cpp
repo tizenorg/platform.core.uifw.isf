@@ -448,7 +448,7 @@ set_prediction_allow (WSCContextISF *ctx, bool prediction)
 {
     WSCContextISF *context_scim = ctx;
 
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+    if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
         _panel_client.prepare (context_scim->id);
         context_scim->impl->si->set_prediction_allow (prediction);
         _panel_client.send ();
@@ -719,7 +719,7 @@ imengine_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout)
 {
     WSCContextISF *context_scim = ctx;
 
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+    if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
         _panel_client.prepare (context_scim->id);
         context_scim->impl->si->set_layout (layout);
         _panel_client.send ();
@@ -916,7 +916,7 @@ isf_wsc_context_del (WSCContextISF *ctx)
     if (context_scim && context_scim->impl) {
         _panel_client.prepare (context_scim->id);
 
-        if (context_scim == _focused_ic)
+        if (context_scim == _focused_ic && context_scim->impl->si)
             context_scim->impl->si->focus_out ();
 
         // Delete the instance.
@@ -1021,33 +1021,35 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
             }
         }
 
-        context_scim->impl->si->set_frontend_data (static_cast <void*> (context_scim));
+        if (context_scim->impl->si) {
+            context_scim->impl->si->set_frontend_data (static_cast <void*> (context_scim));
 
-        if (need_reg) _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
-        if (need_cap) set_ic_capabilities (context_scim);
+            if (need_reg) _panel_client.register_input_context (context_scim->id, context_scim->impl->si->get_factory_uuid ());
+            if (need_cap) set_ic_capabilities (context_scim);
 
-        panel_req_focus_in (context_scim);
-//        panel_req_update_spot_location (context_scim);
-//        panel_req_update_factory_info (context_scim);
+            panel_req_focus_in (context_scim);
+    //        panel_req_update_spot_location (context_scim);
+    //        panel_req_update_factory_info (context_scim);
 
-        if (need_reset) context_scim->impl->si->reset ();
-        if (context_scim->impl->is_on) {
-            _panel_client.turn_on (context_scim->id);
-//            _panel_client.hide_preedit_string (context_scim->id);
-//            _panel_client.hide_aux_string (context_scim->id);
-//            _panel_client.hide_lookup_table (context_scim->id);
-            context_scim->impl->si->focus_in ();
-            context_scim->impl->si->set_layout (wsc_context_input_panel_layout_get (ctx->ctx));
-            context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
-            if (context_scim->impl->imdata)
-                context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
-        } else {
-            _panel_client.turn_off (context_scim->id);
-        }
+            if (need_reset) context_scim->impl->si->reset ();
+            if (context_scim->impl->is_on) {
+                _panel_client.turn_on (context_scim->id);
+    //            _panel_client.hide_preedit_string (context_scim->id);
+    //            _panel_client.hide_aux_string (context_scim->id);
+    //            _panel_client.hide_lookup_table (context_scim->id);
+                context_scim->impl->si->focus_in ();
+                context_scim->impl->si->set_layout (wsc_context_input_panel_layout_get (ctx->ctx));
+                context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
+                if (context_scim->impl->imdata)
+                    context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
+            } else {
+                _panel_client.turn_off (context_scim->id);
+            }
 
-        _panel_client.send ();
-        if (caps_mode_check (ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
-            context_scim->impl->next_shift_status = 0;
+            _panel_client.send ();
+            if (caps_mode_check (ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
+                context_scim->impl->next_shift_status = 0;
+            }
         }
     }
 
@@ -1273,18 +1275,27 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
             void *pvoid = &ret;
             _panel_client.process_key_event (key, (int*)pvoid);
             if (!ret) {
-                ret = _focused_ic->impl->si->process_key_event (key);
+                if (_focused_ic->impl->si)
+                    ret = _focused_ic->impl->si->process_key_event (key);
+                else
+                    ret = EINA_FALSE;
             }
 #else
         } else if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             void *pvoid = &ret;
             _panel_client.process_key_event (key, (int*)pvoid);
             if (!ret && !(_active_helper_option & ISM_HELPER_WITHOUT_IMENGINE)) {
-                ret = _focused_ic->impl->si->process_key_event (key);
+                if (_focused_ic->impl->si)
+                    ret = _focused_ic->impl->si->process_key_event (key);
+                else
+                    ret = EINA_FALSE;
             }
 #endif
         } else {
-            ret = _focused_ic->impl->si->process_key_event (key);
+            if (_focused_ic->impl->si)
+                ret = _focused_ic->impl->si->process_key_event (key);
+            else
+                ret = EINA_FALSE;
         }
 
         if (ret == EINA_FALSE) {
@@ -1595,7 +1606,7 @@ turn_on_ic (WSCContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (ic && ic->impl && !ic->impl->is_on) {
+    if (ic && ic->impl && ic->impl->si && !ic->impl->is_on) {
         ic->impl->is_on = true;
 
         if (ic == _focused_ic) {
@@ -1632,7 +1643,7 @@ turn_off_ic (WSCContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (ic && ic->impl && ic->impl->is_on) {
+    if (ic && ic->impl && ic->impl->si && ic->impl->is_on) {
         ic->impl->is_on = false;
 
         if (ic == _focused_ic) {
@@ -1669,7 +1680,8 @@ set_ic_capabilities (WSCContextISF *ic)
         if (!_on_the_spot || !ic->impl->use_preedit)
             cap -= SCIM_CLIENT_CAP_ONTHESPOT_PREEDIT;
 
-        ic->impl->si->update_client_capabilities (cap);
+        if (ic->impl->si)
+            ic->impl->si->update_client_capabilities (cap);
     }
 }
 
@@ -1711,7 +1723,7 @@ panel_req_show_help (WSCContextISF *ic)
             String (SCIM_VERSION) +
             String (_("\n(C) 2002-2005 James Su <suzhe@tsinghua.org.cn>\n\n"));
 
-    if (ic && ic->impl) {
+    if (ic && ic->impl && ic->impl->si) {
         IMEngineFactoryPointer sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
         if (sf) {
             help += utf8_wcstombs (sf->get_name ());
@@ -2172,7 +2184,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 
     if (!filter_hotkeys (ic, _key)) {
         if (process_key) {
-            if (!_focused_ic || !_focused_ic->impl->is_on ||
+            if (!_focused_ic || !_focused_ic->impl->is_on || !_focused_ic->impl->si ||
                     !_focused_ic->impl->si->process_key_event (_key)) {
                 _fallback_instance->process_key_event (_key);
             }
@@ -2272,9 +2284,12 @@ panel_slot_reset_keyboard_ise (int context)
                     return;
             }
         }
-        _panel_client.prepare (ic->id);
-        ic->impl->si->reset ();
-        _panel_client.send ();
+
+        if (ic->impl->si) {
+            _panel_client.prepare (ic->id);
+            ic->impl->si->reset ();
+            _panel_client.send ();
+        }
     }
 }
 
@@ -2669,6 +2684,9 @@ open_next_factory (WSCContextISF *ic)
     if (!check_valid_ic (ic))
         return;
 
+    if (!ic->impl->si)
+        return;
+
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
     IMEngineFactoryPointer sf = _backend->get_next_factory ("", "UTF-8", ic->impl->si->get_factory_uuid ());
 
@@ -2689,7 +2707,6 @@ open_next_factory (WSCContextISF *ic)
             _default_instance = ic->impl->si;
             ic->impl->shared_si = true;
         }
-        //_popup_message (utf8_wcstombs (sf->get_name ()).c_str ());
     }
 }
 
@@ -2697,6 +2714,9 @@ static void
 open_previous_factory (WSCContextISF *ic)
 {
     if (!check_valid_ic (ic))
+        return;
+
+    if (!ic->impl->si)
         return;
 
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
@@ -2719,7 +2739,6 @@ open_previous_factory (WSCContextISF *ic)
             _default_instance = ic->impl->si;
             ic->impl->shared_si = true;
         }
-        //_popup_message (utf8_wcstombs (sf->get_name ()).c_str ());
     }
 }
 
@@ -2730,10 +2749,13 @@ open_specific_factory (WSCContextISF *ic,
     if (!check_valid_ic (ic))
         return;
 
+    if (!ic->impl->si)
+        return;
+
     SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
 
     // The same input method is selected, just turn on the IC.
-    if (ic->impl->si && (ic->impl->si->get_factory_uuid () == uuid)) {
+    if (ic->impl->si->get_factory_uuid () == uuid) {
         turn_on_ic (ic);
         return;
     }
