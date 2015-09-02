@@ -9,7 +9,7 @@
     <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
   </background_image>
   <row x="225" y="8" hit_top="8">
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="225">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec shift="off">ə</rec>
         <rec shift="on">Ə</rec>
@@ -65,7 +65,7 @@
         <rec shift="loc">Ө</rec>
       </label>
     </key>
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="225">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec shift="off">һ</rec>
         <rec shift="on">Һ</rec>
@@ -74,7 +74,7 @@
     </key>
   </row>
   <row x="84">
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="84">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec shift="off">й</rec>
         <rec shift="on">Й</rec>
@@ -151,7 +151,7 @@
         <rec shift="loc">Х</rec>
       </label>
     </key>
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="84">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous">
       <label>
         <rec shift="off">ъ</rec>
         <rec shift="on">Ъ</rec>
@@ -160,7 +160,7 @@
     </key>
   </row>
   <row x="131">
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="131">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_left="44">
       <label>
         <rec shift="off">ф</rec>
         <rec shift="on">Ф</rec>
@@ -230,7 +230,7 @@
         <rec shift="loc">Ж</rec>
       </label>
     </key>
-    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="131">
+    <key key_type="string" use_magnifier="true" multitouch_type="settle_previous" hit_right="44">
       <label>
         <rec shift="off">э</rec>
         <rec shift="on">Э</rec>
@@ -239,7 +239,7 @@
     </key>
   </row>
   <row x="84">
-    <key long_key_value="LongShift" long_key_event="65505" button_type="selfish" key_type="control" hit_left="84">
+    <key long_key_value="LongShift" long_key_event="65505" button_type="selfish" key_type="control">
       <image_label>
         <rec shift="off" button="normal">B09_icon_shift_50x50.png</rec>
         <rec shift="on" button="normal">B09_icon_shift_on_50x50.png</rec>
@@ -328,7 +328,7 @@
         <rec shift="loc">Ё</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="84">
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true">
       <image_label>
         <rec button="normal">B09_icon_back.png</rec>
         <rec button="pressed">B09_icon_back_press.png</rec>
@@ -345,7 +345,7 @@
     </key>
   </row>
   <row x="87" sub_layout="DEFAULT">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="153" hit_left="87">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="153">
       <label>
         <rec>?123</rec>
       </label>
@@ -415,7 +415,7 @@
         <popup_input_mode>PUNCTUATION_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="153" hit_right="87">
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" width="153">
       <image_label>
         <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
         <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
@@ -432,7 +432,7 @@
     </key>
   </row>
   <row x="87" sub_layout="URL" key_width="153">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="153" hit_left="87">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="153">
       <label>
         <rec>?123</rec>
       </label>
@@ -517,7 +517,7 @@
         <popup_input_mode>URL_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" hit_right="87">
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123">
       <image_label>
         <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
         <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
@@ -534,7 +534,7 @@
     </key>
   </row>
   <row x="87" sub_layout="EMAIL" key_width="153">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" hit_left="87">
+    <key button_type="selfish" key_type="modechange" label_type="QTY_?123">
       <label>
         <rec>?123</rec>
       </label>
@@ -619,7 +619,7 @@
         <popup_input_mode>URL_POPUP</popup_input_mode>
       </popup_input_mode_record>
     </key>
-    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123" hit_right="87">
+    <key button_type="selfish" key_type="control" custom_id="Enter" label_type="QTY_?123">
       <image_label>
         <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
         <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
