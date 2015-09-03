@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Akutė"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Išmaniosios įvesties funkcijos"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Atidaryti"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Aut. raš. didž. raidėmis"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Pasirinkta"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Nustatyti iš naujo"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Uždaryti"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "„Qwerty“ klaviatūra"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Pagalba"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Nėra"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Išjungta"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Įjungta"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Nustatymai"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Pašalinti"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "„Gear“ AZERTY klav."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "„Gear“ QWERTY klav."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "„Gear“ QWERTZ klav."
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Veidai"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Iškylantysis langas uždarytas."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Rodomas iškylantysis langas"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Skaičiai"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Vietos"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Nuolatinės įvesties naudojimas"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Numatytojo teksto naudojimas"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Įvesties būdo pakeitimas"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Įvesties režimo pakeitimas"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Kalbos pakeitimas"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Klaviatūros uždarymas"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Žymeklio perkėlimas"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Klaviatūros atidarymas"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Teksto pasirinkimas"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Samsung klaviatūros naud."
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Užbaigti ar pakeisti vedamą žodį labiausiai tikėtinu žodžiu bakstelėjus tarpo mygtuką."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Bakstelėkite du kartus ir uždarykite sąrašą."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Bakstelėkite du kartus, kad redaguotumėte šį lauką."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Bakstelėkite du kartus ir atidarykite sąrašą."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Išskleidžiamasis sąrašas"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Įjungimo / išjungimo mygtukas"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "„Samsung“ klaviatūra"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Daugiau nust."
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Klaviatūros nustatymuose turite pasirinkti bent vieną kalbą."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Rinktis įvesties kalbas"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Pasiektas didžiausias leistinas palaikomų kalbų skaičius (%d)."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Klaviatūra"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Nepasirinkta"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Pažymėta"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Pažymėti langelį"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Kada galime susitikti?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Kur esi?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Nekartoti"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Rodyt įrengin."
-
-msgid "IDS_ST_SK_OK"
-msgstr "Gerai"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Atšaukti"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Rinktis šabloną"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Kaip sekasi?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Kaip sekasi?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Netrukus pasikalbėsime."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Paskambinsiu vėliau."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Keisti kalbą"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Automatiškai rašyti didžiąją pirmą sakinio raidę."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Atl."
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Norėdami įjungti automatinį pakeitimą, suaktyvinkite bent vieną kalbą."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Bakstelėkite tarpo klavišą, jei norite pritaikyti numatomo teksto pataisymą, arba rodyklės klavišą, jei norite išsaugoti esamą tekstą."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "„Qwertz“ klaviatūra"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Pasiektas didžiausias leistinas palaikomų kalbų skaičius (%d)."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Kitas"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "„Kana“ klaviatūra"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "„Kana“ brūkšt. klaviatūra"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Vokiečių klaviatūra"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Įeiti"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "„Chunjiin“ klaviatūra"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bulgarų fonetinė klaviatūra"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bulgarų klaviatūra"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "AZERTY klaviatūra"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Dėmesio"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 klaviatūra"
@@ -211,29 +28,17 @@ msgstr "3 x 4 klaviatūra"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Vibracija"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Braukimas per tarpo mygt."
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Garsas"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Nustatyti iš naujo"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Braukimas per klaviatūrą"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Rinktis įvesties kalbas"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Simbolių peržiūra"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Automatinis pakeitimas"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Aut. įterpti skyr.ženklus"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Išmanusis rašymas"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Atsakas bakstelėjus mygtuką"
@@ -259,161 +64,14 @@ msgstr "Jungti"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Vykdyti"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Jena"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Vonas"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Balta žvaigždė"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Balta širdis"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI „Qwerty“ klaviatūra"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Virtualioji klaviatūra įjungta."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Jei naudosite žymeklio valdiklį, bus išjungtas nepertraukiamas įvedimas."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Naudojant nepertraukiamą įvedimą bus išjungtas žymeklio valdiklis."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Pabraukimo brūkšnys"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Turkiška „Qwerty“ klaviatūra"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Turkiška F klaviatūra"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Jei norite keisti kalbą, braukite horizontaliai per tarpo mygtuką."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Dauginimo ženklas"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Tildė"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "„Samsung“ klaviatūra įsisavina jūsų rašymo stilių ir, atsižvelgdama į jau įvestus žodžius, nuspėja žodį, kurį galite įvesti. Slaptažodžiai neįtraukiami, tačiau asmeninė informacija, pvz., kredito kortelės numeriai, bus išsaugoma"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "„Telex Qwerty“ klaviatūra"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Bakstelėkite ir naudokite virtualiąją klaviatūrą."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Bakstelėkite ir palaikykite šį klavišą, kad būtų parodytas simbolių sąrašas. Pasirinkite, kurį norite naudoti kaip trumpinį."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Simbolių klaviatūra %1$d iš %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Simboliai"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Tarpas"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Pasvirasis dešininis brūkšnys"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Viena kabutė"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Klaviatūros nustatymuose turite pasirinkti bent vieną kalbą."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Kai bakstelėjamas „Qwerty“ klaviatūros klavišas, rodyti didelį debesėlį su ženklu."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Mygtukas „Shift“ užrakintas."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Mygtukas „Shift“ įjungtas."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Mygtukas „Shift“ išjungtas."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Nustatymai"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "Rugsėjis"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Kabliataškis"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Dešiniosios pusės kabutės"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Kabutės"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Klaustukas"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "Iš išmoktų žodžių bus pašalinta „%s“."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Numatytojo teksto parinktys"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Nuspėjamasis tekstas"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Svaras"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Plius"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Vertikalusis brūkšnys"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Procentas"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Kairysis lenktinis skliaustas"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Kairysis laužtinis skliaustas"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Kairysis riestinis skliaustas"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Spalis"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Nepasirinkta jokia kalba."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "Lapkritis"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Perkelkite žymeklį slinkdami pirštu klaviatūra."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Gegužė"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Kovas"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Raidės"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Mažiau nei"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Kairiosios pusės kabutės"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Klaviatūros tipas"
@@ -421,282 +79,21 @@ msgstr "Klaviatūros tipas"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Klaviatūros nustatymai"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Birželis"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Liepa"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Sausis"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Apverstas klaustukas"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Apverstas šauktukas"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Aptikta įvestis iš aparatinės įrangos klaviatūros."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Jei asmeniniai duomenys įjungti, „Samsung“ klaviatūra gali įsisavinti jūsų rašymo stilių iš „Facebook“, „Gmail“, „Twitter“, žinučių ir adresatų bei pasiūlyti jums parinktus spėjimus ir taisymus"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Grotelės"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Daugiau nei"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Kairinis kirtis"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Brūkštelėkite aukštyn per klavišą, kad būtų parodyti simboliai ir alternatyvieji ženklai."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Brūkštelkite klaviatūrą žemyn, kad ją paslėptumėte."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Brūkštelėjimo įvestis"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Vasaris"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Šauktukas"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Euras"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Lygu"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Įveskite tekstą slinkdami pirštu klaviatūra. Ši funkcija pritaikyta „Qwerty“ klaviatūrai."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Įveskite tekstą slinkdami pirštu klaviatūra."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Įvesti"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Įjungti pritaikytus duomenis"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Jaustukai"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Taškas"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Doleris"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Padalinta iš"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Ištrinti tarpą"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Gruodis"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Brūkšnys"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Tinkintas klavišas"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Žymeklio valdiklis"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Valiutos ženklas"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Nuolatinė įvestis"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Kablelis"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Dvitaškis"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Dešinysis lenktinis skliaustas"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Dešinysis laužtinis skliaustas"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Dešinysis riestinis skliaustas"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Iškarpinė"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Stogelio ženklas"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Simbolių peržiūra"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Didžioji raidė"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Grįžties klavišas"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Pasvirasis kairinis brūkšnys"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Automatinis skyrimas tarpais"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Automatinis rašymas iš didžiosios raidės"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Automatiškai atskirti žodžius tarpeliais."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Automatiškai įterpti tašką dukart bakstelėjus tarpo mygtuką."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Automatiškai pradėti sakinį didžiąja raide."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Dėmesio"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Rugpjūtis"
+msgid "IDS_ST_SK_OK"
+msgstr "Gerai"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Eta"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Atšaukti"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Žvaigždutė"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Daugiau nust."
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Balandis"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Ampersendas"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Sąrašo išplėtimo mygtukas"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Balso įvestis"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Klaviatūroje įdiegtos funkcijos, pvz., nepertraukiamas įvedimas ir nuspėjamasis tekstas."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Bakstelėkite balso piktogramą ir naudokite balso funkciją."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Kad atsirastų rankenėlė, atidarę klaviatūrą bakstelėkite teksto įvedimo lauką. Jei norite perkelti žymeklį, perkelkite rankenėlę"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Bakstelėkite nustatymų piktogramą ir atidarykite „Samsung“ klaviatūros nustatymus."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Bakstelėkite režimo mygtuką, kad perjungtumėte raides ir simbolius."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Bakstelėkite klaviatūros piktogramą ant pranešimų skydelio įvesties būdui pakeisti."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Bakstelėkite jaustuko piktogramą ir įterpkite jaustukus."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Bakstelėkite iškarpinės piktogramą iškarpinei atidaryti."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Bakstelėkite teksto lauką, kad atidarytumėte klaviatūrą."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Bakstelėkite ir palaikykite pritaikomą klavišą, kad galėtumėte pasirinkti jaustukų, balso, iškarpinės, klaviatūros nustatymus arba skyrybos ženklus."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Bakstelėkite tinkinamą klavišą ir palaikykite, kad pasirinktumėte balso, iškarpinės, klaviatūros nustatymus ir skyrybos ženklus."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Bakstelėkite ir laikykite teksto dalį, kad ją pasirinktumėte. Žymeklio rankenėlę sudaro pradžios ir pabaigos rankenėlės. Norėdami pasirinkti tekstą, judinkite abi rankenėles. Atleiskite rankenėlę, kad pasirinktumėte kopijavimo, iškirpimo, įklijavimo ir kitas parinktis"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Spauskite grįžimo mygtuką ir uždarykite klaviatūrą."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Atidarykite nustatymus, pasirinkite Kalba ir klaviatūra > Klaviatūra > Klaviatūros nustatymai> Nuspėjamas tekstas."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Jei klaviatūros nustatymuose pasirenkate dvi ar daugiau kalbų, norėdami jas perjungti bakstelėkite gaublio klavišą."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Jei asmeniniai duomenys įjungti, „Samsung“ klaviatūra gali įsisavinti jūsų rašymo stilių iš „Gmail“, „Twitter“, žinučių ir adresatų bei pasiūlyti jums parinktus spėjimus ir taisymus."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Taisyklės ir sąlygos"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Viskas"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Kalba"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Nepažymėta"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Sutikti"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "„Qwerty“ klaviatūra"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Pritaikyti duomenys"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Paskambinkite vėliau."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Svetainė bus atidaryta mobiliojo įrenginio ekrane."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Bakstelėkite „Gerai“ norėdami naudoti šią funkciją. Pritaikytus duomenis iš mobiliojo įrenginio naudos ir %s. Jei nenorite, kad asmeniniai duomenys būtų saugomi, eikite į klaviatūros nustatymus ir panaikinkite žymėjimą prie parinkties „Įjungti pritaikytus duomenis“."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Klaviatūros nustatymai, išskyrus atsisiųstas kalbas, bus nustatyti iš naujo."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Kontekstą atitinkantis laiškas bus įvestas automatiškai."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Bakstelėkite ir palaikykite tarpo klavišą norėdami naudoti balso įvestį."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Bakstelėkite ir laikykite parinkčių mygtuką, kad galėtumėte peržiūrėti parinkčių sąrašą."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Braukite tarpo mygtuką į kairę ar dešinę ir pakeiskite kalbas."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Šablonų nėra"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Išmaniosios įvesties funkcijos"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Aut. raš. didž. raidėmis"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Automatiškai rašyti didžiąją pirmą sakinio raidę."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Automatinis skyrybos ženklų naudojimas"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Nustatyti iš naujo"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Klaviatūros nustatymai bus nustatyti iš naujo. Tęsti?"
 

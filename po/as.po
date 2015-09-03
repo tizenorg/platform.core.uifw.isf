@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "ৰেডিঅ' বুটাম"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "স্মাৰ্ট ইনপুট ফাংচনসমূহ"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "খোলক"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "স্বয়ং বৰফলাকৰণ"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "চয়নিত"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "পুনঃছেট"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "বন্ধ কৰক"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "কুৱেৰ্টি কীব'র্ড"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "সহায়"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "একো নাই"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "অফ"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "অন"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "ছেটিংছ"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "আঁতৰাওক"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "গীয়েৰ এজেৰ্টি কীব'ৰ্ড"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "গীয়েৰ কুৱেৰ্টি কীব'ৰ্ড"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "গীয়েৰ কুৱেৰ্টিজ কীব'ৰ্ড"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "ফেচেছ"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "প'প-আপ বন্ধ হৈছে৷"
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "প'প-আপ প্ৰদৰ্শিত হৈছে"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "নম্বৰ"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "স্থানসমূহ"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "ক্ৰমাগত ইনপুটৰ ব্যৱহাৰ"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "পূৰ্বানুমান পাঠৰ ব্যৱহাৰ"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "ইনপুট পদ্ধতি পৰিৱৰ্তন হৈ আছে"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "ইনপুট ম'ড পৰিৱৰ্তন কৰক"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "ভাষা পৰিৱৰ্তন কৰক"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "কীব'ৰ্ড বন্ধ কৰক"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "কাৰ্চাৰডাল লৈ যাওক"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "কীব'ৰ্ড খোলক"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "পাঠ চয়ন"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "চেমচাং কীৱৰ্ড ব্যৱহাৰ কৰি আছে"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "যেতিয়া আপুনি স্পেচ বাৰ টিপে, আপুনি লিখা শব্দটো অতি নিকটবৰ্তী শব্দৰ দ্বাৰা সম্পূৰ্ণ বা স্থানান্তৰ কৰক৷"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "তালিকা বন্ধ কৰিবৰ বাবে দুবাৰ টিপক৷"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "এই ফিল্ড সম্পাদনা কৰিবৰ বাবে দুবাৰ টিপক৷"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "তালিকা খুলিবৰ বাবে দুবাৰ টিপক৷"
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "বিস্তাৰণযোগ্য সূচী"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "অন/অফ বুটাম"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "চেমচাং কীব'ৰ্ড"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "অধিক ছেটিংছ"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "কীবোর্ড সেটিংসে আপনাকে অবশ্যই কমপক্ষে একটি ভাষা নির্বাচন করতে হবে৷"
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "ইনপুট ভাষা চয়ন কৰক"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "সৰ্বাধিক সংখ্যক সমৰ্থিত ভাষা (%d) উপনীত হৈছে৷"
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "কীব'ৰ্ড"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "চয়ন নকৰা"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "টিক হৈছে"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "টিক বাকচ"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "আমি কেতিয়া লগ পাম?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "আপুনি ক'ত আছে?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "পুনৰাই নকৰিব।"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "ডিভাইচত দেখুৱাওক"
-
-msgid "IDS_ST_SK_OK"
-msgstr "ঠিক"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "বাতিল কৰক"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "টেম্পলেট চয়ন কৰক"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "কেনে চলি আছে?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "কি খবৰ?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "সোনকালে মই আপোনৰ লগত কথা পাতিম৷"
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "মই পিছত কল কৰিম৷"
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "ভাষা পৰিৱৰ্তন কৰক"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "প্ৰতিটো বাক্যৰ প্ৰথম আখৰটো স্বয়ংক্ৰিয়ভাৱে বৰফলা কৰক৷"
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "ঠিক"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "স্বয়ং স্থানান্তৰণ সক্ষম কৰিবলৈ, কমেও এটা ভাষা সক্ষম কৰক৷"
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "পূৰ্বানুমান পাঠ শুদ্ধতা স্বীকাৰ কৰিবলৈ স্পেচ কী টিপক বা বৰ্তমানৰ পাঠ ৰাখিবৰ বাবে কাঁড় কী টিপক৷"
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz কীব'ৰ্ড"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "সৰ্বাধিক সংখ্যক সমৰ্থিত ভাষা (%d) উপনীত হৈছে৷"
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "পৰৱৰ্তী"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "কানা কীব'ৰ্ড"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "কানা ফ্লিক কীব'ৰ্ড"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "জার্মান কীব'র্ড"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "প্ৰৱিষ্ট কৰক"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "চুনজীন কীব'ৰ্ড"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "বুলগেৰিয়ান ফোনেটিক কীব'ৰ্ড"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "বুলগেৰিয়ান কীব'ৰ্ড"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty কীব'ৰ্ড"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "মনোযোগ"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 কীব'ৰ্ড"
@@ -211,29 +28,17 @@ msgstr "3 x 4 কীব'ৰ্ড"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "ভাইব্ৰেশ্বন"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "স্পেচবাৰ চোয়াইপ"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "ধ্বনি"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "ছেটিংছ পুনঃছেট কৰক"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "কীব'ৰ্ড ঘহাঁওক"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "ইনপুট ভাষা চয়ন কৰক"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "বৰ্ণ পূৰ্বলোকন"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "স্বয়ং প্রতিস্থাপন"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "স্বয়ং চিহ্ন দিয়া"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "স্মাৰ্ট টাইপিং"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "কী-টেপ ফীডবেক"
@@ -259,161 +64,14 @@ msgstr "যোগদান"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "যাওক"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "য়েন"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "বিজয়ী"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "শ্বেত তৰা"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "শ্বেত হৃদয়"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI কুৱেৰ্টি কীব'ৰ্ড"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "ভাৰ্ছুৱেল কীবৰ্ড সক্ষম কৰা হৈছে৷"
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "কার্চৰ নিয়ন্ট্রনৰ প্রয়োগে নিয়মীয়া ইনপুটক অক্ষম কৰিব পাৰে৷"
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "একেৰাহে ইনপুটৰ প্রয়োগে কার্চৰ নিয়ন্ট্রনক অক্ষম কৰিব পাৰে৷"
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "আণ্ডাৰস্ক'ৰ"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "তুৰ্কী কুৱেৰ্টি কীব'ৰ্ড"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "তুৰ্কিচ F কীব'ৰ্ড"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "ভাষা পৰিৱৰ্তন কৰিবলৈ, স্পেচবাৰৰ ওপৰত আনুভূমিকভাৱে চোয়াইপ কৰক৷"
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "পূৰণ"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "টিল্ডড"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "চেমচাং কীব'ৰ্ডে আপোনাৰ লিখন শৈলী শিকে আৰু আপুনি কি প্ৰৱিষ্ট কৰে, তাক মনত ৰাখি আপুনি কি লিখিব বিচাৰিছে তাৰ পূৰ্বানুমান প্ৰদান কৰে৷ পাচৱৰ্ডসমূহ অন্তৰ্ভুক্ত নকৰাকৈ, কিন্তু ব্যক্তিগত তথ্য যেনে ক্ৰেডিট কাৰ্ডৰ নম্বৰ সংগ্ৰহ কৰা হ'ব৷"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "টেলেক্স কুৱেৰ্টি কীব'ৰ্ড"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "ভাৰ্ছুৱেল কীবৰ্ড ব্যৱহাৰ কৰিবৰ বাবে টিপক৷"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "চিহ্ন সূচীখন চাবৰ বাবে এই কীটো টিপক আৰু ধৰি ৰাখক৷ ইয়াক এটা চৰ্টকাট ৰূপে ব্যৱহাৰ কৰিবৰ বাবে এটা চয়ন কৰক৷"
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "%2$d ৰ %1$d প্ৰতীক কীব'ৰ্ড"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "প্ৰতীক"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "স্পেচ"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "শ্লেচ্"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "একক উদ্ধৃতি"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "কীবোর্ড সেটিংসে আপনাকে অবশ্যই কমপক্ষে একটি ভাষা নির্বাচন করতে হবে৷"
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "কুৱেৰ্টি কীব'র্ডত কী এটা টিপাৰ সময়ত ডাঙৰ বৰ্ণ বাবুল দেখুৱাওক৷"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "চিফ্ট লক হৈছে৷"
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "চিফ্ট অন হৈ আছে৷"
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "চিফ্ট অফ হৈছে৷"
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "ছেটিংছ"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "ছেপ্টেম্বৰ"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "ছেমিকল'ন"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "সোঁ কৌণিক উদ্ধৃতি"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "উদ্ধৃতিসমূহ"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "প্ৰশ্নবোধক চিহ্ন"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "শিকা শব্দৰ পৰা ‘%s’ আঁতৰাব লাগিব৷"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "পূৰ্বানুমান পাঠ বিকল্পসমূহ"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "পূৰ্বানুমান পাঠ"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "পাউণ্ড"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "যোগ"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "পাইপ"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "শতাংশ"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "সনুখৰ চন্দ্ৰ বন্ধনী"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "সন্মুখৰ বৰ বন্ধনী"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "সন্মুখৰ কুটীল বন্ধনী"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "অক্টোবৰ"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "কোনো ভাষা চয়ন কৰা নাই৷"
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "নৱেম্বৰ"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "কীব'ৰ্ডৰ ওপৰেৰে আঙুলি চলাই থকাৰ দ্বাৰা কাৰ্চাৰ লৈ যাওক৷"
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "মে'"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "মাৰ্চ"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "চিঠিসমূহ"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "লেচ ডেন"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "বাঁও কৌণিক উদ্ধৃতি"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "কীব'ৰ্ডৰ প্ৰকাৰ"
@@ -421,282 +79,21 @@ msgstr "কীব'ৰ্ডৰ প্ৰকাৰ"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "কীব'ৰ্ড ছেটিংছ"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "জুন"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "জুলাই"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "জানুৱাৰি"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "প্ৰশ্নবোধক চিহ্ন"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ভাৱবোধক চিহ্ন"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "হাৰ্ডৱেৰ কীবৰ্ডৰ পৰা ইনপুট চিনাক্ত কৰা হৈছে৷"
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "যদি ব্যক্তিগতকৰণ কৰা ডাটা সক্ষম কৰা থাকে, চেমচাং কীব'ৰ্ডে ফেচবুক, জিমেইল, টুইটাৰ, মেচেজিং আৰু সম্পৰ্কৰ পৰা আপোনাৰ লিখন শৈলী শিকিব পাৰে আৰু আপোনাৰ বাবে প্ৰয়োজনীয় পূৰ্বানুমান আৰু সংশোধনসমূহ আগবঢ়াব পাৰে৷"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "হেচ্"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "গ্ৰেটাৰ ডেন"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "গ্ৰেভ এচেণ্ট"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "চিহ্ন আৰু বৈকল্পিক বৰ্ণসমূহ দৰ্শন কৰিবৰ বাবে এটা কীত ওপৰলৈ ফ্লিক কৰক৷"
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "ইয়াক লুকুৱাবলৈ তললৈ কীব'ৰ্ড ফ্লিক কৰক৷"
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "ফ্লিক ইনপুট"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "ফেব্ৰুৱাৰি"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ভাৱবোধক শব্দ"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "ইউৰ'"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "সমান"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "কীব'ৰ্ডৰ ওপৰেৰে আপোনাৰ আঙুলি চলাই থাকি পাঠ প্ৰৱিষ্ট কৰক। এই কাৰ্যকলাপ কুৱেৰ্টি কীব'ৰ্ডৰ কাৰণে সঠিক কৰা হৈছে৷"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "কীব'ৰ্ডৰ ওপৰেৰে লাহে লাহে আঙুলি চলাই পাঠ প্ৰৱিষ্ট কৰক৷"
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "প্ৰৱিষ্ট কৰক"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "ব্যক্তিগত ডাটা সক্ষম কৰক"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "ইম'টিকনবোৰ"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "ডট"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "ড'লাৰ"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "হৰণ কৰা হৈছে"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "স্থান বিলোপ কৰক"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "ডিচেম্বৰ"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "ডেচ্"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "অনুকোলনযোগ্য কী"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "কার্চৰ নিয়ন্ত্ৰণ"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "মুদ্ৰা চিহ্ন"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "একেৰাহে ইনপুট"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "কমা"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "কল'ন"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "চন্দ্ৰবন্ধনী"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "সৰু বন্ধনী"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "কুটীলবন্ধনী"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "ক্লিপব'ৰ্ড"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "চাৰ্কামফ্লেক্স"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "বৰ্ণ পূৰ্বলোকন"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "বৰফলা"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "বেকস্পেচ"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "বেকশ্লেচ"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "স্বয়ং স্থানকৰণ"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "স্বয়ং বৰফলাকৰণ"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "শব্দৰ মাজত স্বয়ংক্ৰিয়ভাৱে স্থান আন্তঃসংযোগ কৰক৷"
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "স্পেচ দণ্ডিকা দুবাৰ দবাই স্বয়ংক্ৰিয়ভাৱে পূৰ্ণ বিৰতি আন্তঃসংযোগ কৰক৷"
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "বাক্যৰ প্ৰথম আখৰ স্বয়ংক্ৰিয়ভাৱে বৰ-ফলা কৰক৷"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "মনোযোগ"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "আগষ্ট"
+msgid "IDS_ST_SK_OK"
+msgstr "ঠিক"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "ইয়াত"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "বাতিল কৰক"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "তৰা চিহ্ন"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "অধিক ছেটিংছ"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "এপ্ৰিল"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "আৰু"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "সূচী বিস্তাৰ কৰাৰ বুটাম"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "মাত ইনপুট"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "কীব'র্ডে ধাৰাবাহিক ইনপুট আৰু পূৰ্বানুমান পাঠৰ দৰে কার্যসমূহ আগবঢ়ায়।"
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "মাত ইনপুট ব্যৱহাৰ কৰিবৰ বাবে মাত আইকনটো টিপক৷"
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "কীব'ৰ্ড খোলা অৱস্থাত হেণ্ডল দৃশ্যমান কৰাবৰ বাবে পাঠ প্ৰৱিষ্টি ঠাই টিপিব৷ কাৰ্চাৰ লৈ যাবলৈ হেণ্ডেল লৈ যাওক৷"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "চেমচাং কীব'ৰ্ড ছেটিংছ খোলিবলৈ ছেটিংছ আইকন টিপক"
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "আখৰ আৰু প্ৰতীকসমূহ ট'গ'ল কৰিবলৈ ম'ড বুটাম টিপক।"
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "ইনপুট পদ্ধতি সলনি কৰিবলৈ অধিসূচনা পেনেলৰ কীব'ৰ্ড আইকনটো টিপক৷"
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "ইম'টিকনসমূহ আন্তঃসংযোগ কৰিবলৈ ইম'টিকন আইকন টিপক৷"
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "ক্লিপব'ৰ্ড খুলিবলৈ ক্লিপব'ৰ্ড আইকন টিপক৷"
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "কীব'ৰ্ড খুলিবলৈ যিকোনো পাঠ ফিল্ডত টিপক৷"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "ইম'টিকন, মাত, ক্লিপব'ৰ্ড, কীব'র্ড ছেটিংছ অথবা যতিচিহ্ন চয়ন কৰিবলৈ অনুকূলনযোগ্য কী টিপক আৰু ধৰি ৰাখক৷"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "মাত, ক্লিপব'ৰ্ড আৰু কীব'ৰ্ড ছেটিংছ আৰু যতিচিহ্ন চয়ন কৰিবলৈ অনুকূলনযোগ্য কী টিপক আৰু ধৰি ৰাখক৷"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "ইয়াক চয়ন কৰিবৰ বাবে কিছুমান পাঠ টিপক আৰু ধৰি থাকক৷ এডাল কাৰ্চৰ হেণ্ডেল আৰম্ভণিৰ হেণ্ডেল আৰু সমাপ্তিৰ হেণ্ডেলেৰে যুক্ত৷ পাঠ চয়ন কৰিবৰ বাবে দুয়োডাল হেণ্ডেল লৰাওক৷ প্ৰতিলিপি, কাটক, লেপন আৰু অন্য বিকল্পসমূহ চয়ন কৰিবৰ বাবে হেণ্ডেল এৰক৷"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "কীব'ৰ্ড বন্ধ কৰিবৰ বাবে বেক কী টিপক৷"
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "ছেটিংছ খোলক, ইয়াৰ পিছত ভাষা আৰু কীব'ৰ্ড > কীব'ৰ্ড > কীব'ৰ্ড ছেটিংছ > পূৰ্বানুমান পাঠ চয়ন কৰক৷"
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "যদি এটা বা অধিক ভাষা কীব'ৰ্ড ছেটিংছত চয়ন কৰে, তাৰ মাজত সলনি কৰিবলৈ গ্ল'ব কী টিপক৷"
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "যদি ব্যক্তিগতকৰণ কৰা ডাটা সক্ষম কৰা থাকে, চেমচাং কীব'ৰ্ডে জিমেইল, টুইটাৰ, মেচেজিং আৰু সম্পৰ্কৰ পৰা আপোনাৰ লিখন শৈলী শিকিব পাৰে আৰু আপোনাৰ বাবে প্ৰয়োজনীয় পূৰ্বানুমান আৰু সংশোধনসমূহ আগবঢ়াব পাৰে৷"
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "নিয়ম আৰু চৰ্ত্তসমূহ"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "সকলো"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "ভাষা"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "টিক নকৰা"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "একমত"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "কুৱেৰ্টি কীব'র্ড"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "ব্যক্তিগতকৰণ ডাটা"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "মোক পিছত কল কৰক৷"
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "ৱেবপৃষ্ঠাক আপোনাৰ ম'বাইল ডিভাইচৰ স্ক্ৰীণত খোলা হ'ব৷"
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "এই বৈশিষ্ট ব্যৱহাৰ কৰিবলৈ ঠিক টিপক৷ আপোনাৰ ম'বাইল ডিভাইচৰ পৰা ব্যক্তিকৰণ ডাটাও %s-ৰ দ্বাৰা ব্যৱহাৰ কৰিব পাৰিব৷ যদি আপুনি আপোনাৰ ব্যক্তিগত ডাটা সংগ্ৰহ কৰিব নিবিচাৰে, কীব'ৰ্ড ছেটিংছলৈ যাওক আৰু ব্যক্তিগতকৰণ ডাটা সক্ষম কৰক আনচেক কৰক৷"
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "ডাউনলোড কৰা ভাষাসমূহৰ বাহিৰে কীব'ৰ্ড ছেটিংছ পুনঃছেট কৰা হ'ব৷"
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "সন্দৰ্ভৰ সৈতে ফিট হোৱা আখৰটোক স্বয়ংক্ৰিয়ভাৱে প্ৰৱিষ্ট কৰা হ'ব৷"
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "মাত ইনপুট ব্যৱহাৰ কৰিবলৈ স্পেচ কীটো টিপক আৰু ধৰি থাকক৷"
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "বিকল্পসমূহৰ এখন সূচী দৰ্শন কৰিবলৈ বিকল্প কীটো টিপক আৰু ধৰি থাকক৷"
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "ভাষাসমূহৰ সাল-সলনি কৰিবলৈ স্পেচ বাৰ বাঁও বা সোঁ দিশলৈ ঘঁহাওক৷"
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "কোনো টেমপ্লেট নাই"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "স্মাৰ্ট ইনপুট ফাংচনসমূহ"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "স্বয়ং বৰফলাকৰণ"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "প্ৰতিটো বাক্যৰ প্ৰথম আখৰটো স্বয়ংক্ৰিয়ভাৱে বৰফলা কৰক৷"
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "স্বয়ং চিহ্ন দিয়া"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "পুনঃছেট"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "কীপেড ছেটিংছ পুনঃছেট কৰিব লাগিব৷ জাৰী ৰাখিবনে?"
 

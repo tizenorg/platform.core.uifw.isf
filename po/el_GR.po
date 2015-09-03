@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Κουμπί επιλογής"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Λειτουργίες έξυπνης εισαγωγής"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Άνοιγμα"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Αυτόματη κεφαλαιοποίηση"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Επιλεγμένο"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Μηδενισμός"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Κλείσιμο"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Πληκτρολόγιο Qwerty"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Βοήθεια"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Κανένα"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Ανενεργό"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Ενεργό"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Ρυθμίσεις"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Κατάργηση"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Πληκτρ. Gear Azerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Πληκτρ. Gear Qwerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Πληκτρ. Gear Qwertz"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Πρόσωπα"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Το αναδυόμενο παράθυρο έκλεισε."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Εμφανίζεται αναδυόμενο παράθυρο"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Αριθμοί"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Τοποθεσίες"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Χρήση συνεχούς εισόδου"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Χρήση προβλεπόμενου κειμένου"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Αλλαγή μεθόδου εισαγωγής"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Αλλαγή λειτουργίας εισαγωγής"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Αλλαγή γλώσσας"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Κλείσιμο πληκτρολογίου"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Μετακίνηση του δρομέα"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Άνοιγμα πληκτρολογίου"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Επιλογή κειμένου"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Χρήση πληκτρολ. Samsung"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Πατήστε το πλήκτρο κενού διαστήματος, για να ολοκληρώσετε ή να αντικαταστήσετε τη λέξη που πληκτρολογείτε με την πιο πιθανή λέξη."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Πατήστε δύο φορές για κλείσιμο της λίστας."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Πατήστε δύο φορές για να επεξεργαστείτε αυτό το πεδίο."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Πατήστε δύο φορές για άνοιγμα της λίστας."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Λίστα με δυνατότητα ανάπτυξης"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Κουμπί ενεργοποίησης/απενεργοποίησης"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Πληκτρολόγιο Samsung"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Περισ. ρυθμ"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Πρέπει να κάνετε τουλάχιστον μία γλώσσα στις ρυθμίσεις πληκτρολογίου."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Επιλογή γλωσσών εισαγωγής"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Συμπληρώθηκε ο μέγιστος αριθμός υποστηριζόμενων γλωσσών (%d)."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Πληκτρολόγιο"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Δεν έχει επιλεγεί"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Επιλέχθηκε"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Πλαίσιο επιλογής"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Πού μπορούμε να βρεθούμε;"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Που είστε;"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Όχι επανάλ."
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Εμφ. σε συσκ."
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Άκυρο"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Επιλογή προτύπου"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Τι κάνεις;"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Τι συμβαίνει;"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Θα τα πούμε σύντομα."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Θα σας καλέσω αργότερα."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Αλλαγή γλώσσας"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Αυτόματη κεφαλαιοποίηση του πρώτου γράμματος κάθε πρότασης."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Ok"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Για την ενεργοποίηση της αυτόματης αντικατάστασης, ενεργοποιήστε τουλάχιστον μία γλώσσα."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Πατήστε το πλήκτρο διαστήματος για την αποδοχή της διόρθωσης πρόβλεψης κειμένου ή πατήστε το πλήκτρο με το βέλος για να διατηρηθεί το τρέχον κείμενο."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Πληκτρολόγιο Qwertz"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Συμπληρώθηκε ο μέγιστος αριθμός υποστηριζόμενων γλωσσών (%d)."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Επόμ."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Πληκτρολόγιο Kana"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Πληκτρολ. απ.αγγ. Kana"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Πληκτρολόγιο Γερμανικών"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Εισαγ."
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Πληκτρολόγιο Chunjiin"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Φωνητικό πληκτρολόγιο Βουλγαρικών"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Πληκτρολόγιο Βουλγαρικών"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Πληκτρολόγιο Azerty"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Προσοχή"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "Πληκτρολόγιο 3 x 4"
@@ -211,29 +28,17 @@ msgstr "Πληκτρολόγιο 3 x 4"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Δόνηση"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Σάρωση πλήκτρου διαστήμ."
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Ήχος"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Επαναφορά ρυθμίσεων"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Κύλιση πληκτρολογίου"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Επιλογή γλωσσών εισαγωγής"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Προεπισκόπηση χαρακτήρα"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Αυτόματη αντικατάσταση"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Αυτόματη στίξη"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Έξυπνη πληκτρολόγηση"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Ανταπόκριση πατήματος πλήκτρων"
@@ -259,161 +64,14 @@ msgstr "Σύνδεση"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Μετ."
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Γιεν"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Γουόν"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Λευκό αστέρι"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Λευκή καρδιά"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "Πληκτρολόγιο Qwerty VNI"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Το εικονικό πληκτρολόγιο ενεργοποιήθηκε."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Με τη χρήση της δυνατότητας ελέγχου του δρομέα θα απενεργοποιηθεί η δυνατότητα συνεχούς εισόδου."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Με τη χρήση της δυνατότητας συνεχούς εισόδου θα απενεργοποιηθεί η δυνατότητα ελέγχου του δρομέα."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Χαρακτήρας υπογράμμισης"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Τουρκικό πληκτρολόγιο Qwerty"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Τουρκικό πληκτρολόγιο F"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Για να αλλάξετε γλώσσα, σύρετε οριζόντια κατά μήκος του πλήκτρου διαστήματος."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Επί"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Περισπωμένη"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Το πληκτρολόγιο Samsung μαθαίνει το στυλ γραψίματός σας και προσπαθεί να προβλέψει τι θέλετε να πληκτρολογήσετε, απομνημονεύοντας τα δεδομένα που καταχωρείτε. Οι κωδικοί πρόσβασης εξαιρούνται, αλλά τα προσωπικά σας δεδομένα, όπως οι αριθμοί πιστωτικών καρτών, αποθηκεύονται"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Πληκτρολόγιο Qwerty Telex"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Πατήστε για να χρησιμοποιήσετε το εικονικό πληκτρολόγιο."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Πατήστε παρατεταμένα αυτό το πλήκτρο για να δείτε μια λίστα συμβόλων. Επιλέξτε ένα για να το χρησιμοποιήσετε ως συντόμευση."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Πληκτρολόγιο συμβόλων %1$d από %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Σύμβολα"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Διάστημα"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Κάθετος"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Μονό εισαγωγικό"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Πρέπει να κάνετε τουλάχιστον μία γλώσσα στις ρυθμίσεις πληκτρολογίου."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Εμφάνιση ενός μεγάλου σύννεφου χαρακτήρων, όταν ένα πλήκτρο στο πληκτρολόγιο QWERTY είναι πατημένο."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Το Shift είναι κλειδωμένο."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Το Shift είναι ενεργό."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Το Shift είναι ανενεργό."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Ρυθμίσεις"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "Σεπτέμβριος"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Ελληνικό ερωτηματικό"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Δεξιά διπλά εισαγωγικά"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Εισαγωγικά"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Ερωτηματικό"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "Το λήμμα «%s» θα καταργηθεί από τις λέξεις της λίστας προτάσεων."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Επιλογές προβλεπόμενου κειμένου"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Έξυπνη δημιουργία κειμένου"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Λίρα"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Συν"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Κατακόρυφη γραμμή"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Σύμβολο ποσοστού"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Αριστερή παρένθεση"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Αριστερή αγκύλη"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Αριστερό άγκιστρο"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Οκτώβριος"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Καμία επιλεγμένη γλώσσα."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "Νοέμβριος"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Μετακινήστε το δρομέα περνώντας το δάχτυλό σας κατά μήκος του πληκτρολογίου."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Μάης"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Μάρτιος"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Γράμματα"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Μικρότερο από"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Αριστερά διπλά εισαγωγικά"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Τύπος πληκτρολογίου"
@@ -421,282 +79,21 @@ msgstr "Τύπος πληκτρολογίου"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Ρυθμίσεις πληκτρολογίου"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Ιούνιος"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Ιούλιος"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Ιανουάριος"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Αντίστροφο ερωτηματικό"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Αντίστροφο θαυμαστικό"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Εντοπίστηκαν δεδομένα εισόδου από πληκτρολόγιο υλικού."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Αν έχουν ενεργοποιηθεί τα εξατομικευμένα δεδομένα, το πληκτρολόγιο Samsung μπορεί να απομνημονεύσει το στυλ γραφής σας από το Facebook, το Gmail, το Twitter, τα Μηνύματα και τις Επαφές, ώστε να εμφανίζει προβλέψεις και διορθώσεις ειδικά για εσάς"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Δίεση"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Μεγαλύτερο από"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Βαρεία"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Αγγίξτε ένα κουμπί απαλά προς τα πάνω για να προβάλλεται σύμβολα και εναλλακτικούς χαρακτήρες."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Αγγίξτε απαλά το πληκτρολόγιο προς τα κάτω για απόκρυψη."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Εισαγωγή με απαλό άγγιγμα"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Φεβρουάριος"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Θαυμαστικό"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Ευρώ"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Ίσον"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Εισαγάγετε κείμενο περνώντας το δάχτυλό σας κατά μήκος του πληκτρολογίου. Αυτή η δυνατότητα είναι βελτιστοποιημένη για το πληκτρολόγιο Qwerty."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Εισαγάγετε κείμενο περνώντας το δάχτυλό σας κατά μήκος του πληκτρολογίου."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Πλήκτρο Enter"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Ενεργοποίηση εξατομικευμένων δεδομένων"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Emoticons"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Κουκίδα"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Δολάριο"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Δια"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Διαγραφή κενού διαστήματος"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Δεκέμβριος"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Παύλα"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Προσαρμόσιμο πλήκτρο"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Έλεγχος δρομέα"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Σύμβολο νομίσματος"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Συνεχής είσοδος"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Κόμμα"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Άνω και κάτω τελεία"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Δεξιά παρένθεση"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Δεξιά αγκύλη"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Δεξιό άγκιστρο"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Πρόχειρο"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Σιρκουμφλέξ"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Προεπισκόπηση χαρακτήρα"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Κεφαλαίο"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Πλήκτρο backspace"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Ανάστροφη κάθετος"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Αυτόματη εισαγωγή κενών"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Αυτόματη κεφαλαιοποίηση"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Αυτόματη εισαγωγή κενών μεταξύ λέξεων."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Εισάγετε αυτόματα μια τελεία, πατώντας δύο φορές το πλήκτρο κενού."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Αυτόματη κεφαλαιοποίηση του πρώτου γράμματος της πρότασης."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Προσοχή"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Αύγουστος"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Σύμβολο At"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Άκυρο"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Αστερίσκος"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Περισ. ρυθμ"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Απρίλιος"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Και"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Κουμπί για την ανάπτυξη της λίστας"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Είσοδος φωνής"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Το πληκτρολόγιο προσφέρει λειτουργίες, όπως η συνεχής εισαγωγή και προβλεπόμενο κείμενο."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Πατήστε το εικονίδιο φωνής, για να χρησιμοποιήσετε την είσοδο φωνής."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Πατήστε το πεδίο εισαγωγής κειμένου, όταν είναι ανοιχτό το πληκτρολόγιο, για να εμφανιστεί η λαβή χειρισμού. Μετακινήστε τη λαβή χειρισμού για τη μετακίνηση του δρομέα"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Πατήστε το εικονίδιο των ρυθμίσεων για να ανοίξετε τις ρυθμίσεις πληκτρολογίου Samsung."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Πατήστε το κουμπί λειτουργίας για εναλλαγή χαρακτήρων και συμβόλων."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Πατήστε το εικονίδιο πληκτρολογίου στο πλαίσιο ειδοποιήσεων, για να αλλάξετε τη μέθοδο εισαγωγής."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Πατήστε το εικονίδιο emoticon, για να προσθέσετε ένα emoticon."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Πατήστε το εικονίδιο «Πρόχειρο» για να το ανοίξετε."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Πατήστε οποιοδήποτε πεδίο κειμένου για να ανοίξετε το πληκτρολόγιο."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Πατήστε παρατεταμένα το πλήκτρο με δυνατότητα προσαρμογής, για να επιλέξετε emoticon, φωνή, πρόχειρο, ρυθμίσεις πληκτρολογίου ή σημεία στίξης."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Πατήστε παρατεταμένα το πλήκτρο με δυνατότητα προσαρμογής, για να επιλέξετε τις ρυθμίσεις φωνής, προχείρου και πληκτρολογίου, καθώς και τα σημεία στίξης."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Πατήστε παρατεταμένα το κείμενο για να το επιλέξετε. Ο δείκτης χειρισμού δρομέα αποτελείται από το δείκτη έναρξης και το δείκτη λήξης. Μετακινήστε και τους δύο δείκτες χειρισμού για την επιλογή κειμένου. Απελευθερώστε το δείκτη χειρισμού, για να επιλέξετε την αντιγραφή, την αποκοπή, την επικόλληση και άλλες δυνατότητες"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Πατήστε το πλήκτρο επιστροφής, για να κλείσετε το πληκτρολόγιο."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Ανοίξτε τις Ρυθμίσεις και, κατόπιν, επιλέξτε Γλώσσα και πληκτρολόγιο > Πληκτρολόγιο > Ρυθμίσεις πληκτρολογίου > Προβλεπόμενο κείμενο."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Εάν είναι επιλεγμένες δύο ή περισσότερες γλώσσες στις ρυθμίσεις πληκτρολογίου, πατήστε το πλήκτρο με την υδρόγειο για να κάνετε εναλλαγή μεταξύ των γλωσσών."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Αν έχουν ενεργοποιηθεί τα εξατομικευμένα δεδομένα, το πληκτρολόγιο Samsung μπορεί να απομνημονεύσει το στυλ γραφής σας, από το Gmail, το Twitter, τα Μηνύματα και τις Επαφές, ώστε να σας προσφέρει προβλέψεις και διορθώσεις στα δικά σας μέτρα."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Όροι και προϋποθέσεις"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Όλα"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Γλώσσα"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Δεν έχει επιλεγεί"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Αποδοχή"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Πληκτρολόγιο Qwerty"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Εξ/μένα δεδομένα"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Καλέστε αργότερα."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Αυτή η ιστοσελίδα θα ανοιχτεί στην οθόνη της κινητής συσκευής σας."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Πατήστε ΟΚ για να χρησιμοποιήσετε αυτήν τη λειτουργία. Τα εξατομικευμένα δεδομένα από την κινητή συσκευή σας θα χρησιμοποιηθούν και από το %s. Αν δεν θέλετε να αποθηκευτούν τα προσωπικά σας δεδομένα, μεταβείτε στις ρυθμίσεις πληκτρολογίου και καταργήστε την επιλογή «Ενεργοποίηση εξατομικευμένων δεδομένων»."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Θα γίνει επαναφορά των ρυθμίσεων πληκτρολογίου, εκτός των γλωσσών που έχουν ληφθεί."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Θα γίνει αυτόματη εισαγωγή του γράμματος που ταιριάζει στο περιεχόμενο."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Πατήστε παρατεταμένα το πλήκτρο διαστήματος, για να χρησιμοποιήσετε τη φωνητική εισαγωγή."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Πατήστε παρατεταμένα το πλήκτρο επιλογών για να εμφανιστεί μια λίστα από επιλογές."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Σαρώστε το πλήκτρο διαστήματος προς τα αριστερά ή τα δεξιά για εναλλαγή γλωσσών."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Κανένα πρότυπο"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Λειτουργίες έξυπνης εισαγωγής"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Αυτόματη κεφαλαιοποίηση"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Αυτόματη κεφαλαιοποίηση του πρώτου γράμματος κάθε πρότασης."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Αυτόματη θέση σημείων στίξης"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Μηδενισμός"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Θα γίνει επαναφορά των ρυθμίσεων πληκτρολογίου. Συνέχεια;"
 

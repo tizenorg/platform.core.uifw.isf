@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Raadio nupp"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Nutikad sisestusfunktsioonid"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Ava"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Autom. suurtäht alguses"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Valitud"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Lähtesta"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Sulge"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty-klaviatuur"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Spikker"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Puudub"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Väljas"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Sees"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Seaded"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Eemalda"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty-klaviat."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear Qwerty-klaviat."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz-klaviat."
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Näod"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Hüpik on suletud."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Hüpik kuvatakse"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Numbrid"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Kohad"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Pideva sisestamise kasutamine"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Tekstiennustuse kasutamine"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Sisestusviisi muutmine"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Sisestusrežiimi muutmine"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Keele muutmine"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Klaviatuuri sulgemine"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Kursori liigutamine"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Klaviatuuri avamine"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Teksti valimine"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Samsungi klav. kasutamine"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Kirjutage sona lopuni voi asendage see koige toenaolisema sonaga, toksates tuhikut."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Toksake kaks korda, et sulgeda loendit."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Toksake kaks korda, et redigeerida seda välja."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Toksake kaks korda, et avada loendit."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Laiendatav loend"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Sisse-/väljalülitamise nupp"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsungi klaviatuur"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Veel seadeid"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Te peate valima klaviatuuri seadetest vahemalt uhe keele."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Vali sisestuskeeled"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Toetatud keelte maksimaalne arv (%d) on saavutatud."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Klahvistik"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Pole valitud"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Märgistatud"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Märkeruut"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Millal saame kohtuda?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Kus sa oled?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Ära korda"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Näita seadmes"
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Tühista"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Vali mall"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Kuidas läheb?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Mis toimub?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Räägime varsti."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Helistan sulle hiljem."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Muuda keelt"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Iga lause algustäht muudetakse automaatselt suurtäheks."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Valm."
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Automaatse asendamise aktiveerimiseks aktiveerige vahemalt uks keel."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Toksake tühikuklahvi, et nõustuda tekstiennustuse parandusega või toksake nooleklahvi, et säilitada praegust teksti."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz-klaviatuur"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Toetatud keelte maksimaalne arv (%d) on saavutatud."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Järg."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana klaviatuur"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana nipsam. klaviatuur"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Saksa klaviatuur"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Sises."
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiini klaviatuur"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bulgaaria häälduslik klaviatuur"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bulgaaria klaviatuur"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty-klaviatuur"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Tähelepanu!"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 klaviatuur"
@@ -211,29 +28,17 @@ msgstr "3 x 4 klaviatuur"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Värin"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Tühikuklahvil liigutamine"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Heli"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Lähtesta seaded"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Klaviatuuril libistamine"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Vali sisestuskeeled"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Märgi eelvaade"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Automaatne asendamine"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Lisa punkt automaatselt"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Nutikas kirjutamine"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Klahvil toksamise tagasiside"
@@ -259,161 +64,14 @@ msgstr "Liitu"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Mine"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Jeen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Von"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Valge täht"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Valge süda"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty-klaviatuur"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Virtuaalne klaviatuur on aktiveeritud."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Kursori juhtimise kasutamine desaktiveerib pideva sisestamise."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Pideva sisestamise kasutamine desaktiveerib kursori juhtimise."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Allkriips"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Türgi qwerty-klaviatuur"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Türgi F-klaviatuur"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Keele muutmiseks liigutage sorme horisontaalselt ule tuhikuklahvi."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Korrutusmärk"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Tilde"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsungi klaviatuur õpib teie kirjutamisstiili ja ennustab sõnu, mida soovite võibolla sisestada, jättes meelde teie sisestused. Paroolid jäetakse välja, kuid isiklikud andmed, nagu krediitkaardi numbrid, salvestatakse"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telexi Qwerty-klaviatuur"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Toksake, et kasutada virtuaalset klaviatuuri."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Toksake ja hoidke seda klahvi all, et näha sümbolite loendit. Valige üks, et kasutada seda otseteena."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Sümboli klaviatuur %1$d/%2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Sümbolid"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Tühik"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Kaldkriips"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Ülakoma"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Te peate valima klaviatuuri seadetest vahemalt uhe keele."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Naita suurt tahemargi mulli, kui Qwerty-klaviatuuril on toksatud klahvi."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Tõstuklahv on lukus."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Tõstuklahv on sees."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Tõstuklahv on väljas."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Seaded"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "September"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Semikoolon"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Parem nurkjutumärk"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Jutumärgid"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Küsimärk"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "„%s” eemaldatakse õpitud sõnade hulgast."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Ennustava teksti valikud"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Ennustav tekst"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Nael"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Pluss"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Püstkriips"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Protsent"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Vasak ümarsulg"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Vasak sulg"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Vasak looksulg"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Oktoober"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Ühtegi keelt pole valitud."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "November"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Liigutage kursorit, libistades sorme ule klaviatuuri."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Mai"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Märts"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Tähed"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Vähem kui"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Vasak nurkjutumärk"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Klaviatuuri tüüp"
@@ -421,282 +79,21 @@ msgstr "Klaviatuuri tüüp"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Klaviatuuri seaded"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Juuni"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Juuli"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Jaanuar"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Pööratud küsimärk"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Pööratud hüüumärk"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Riistvara klaviatuurilt on tuvastatud sisestus."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Kui isikupärastatud andmed on aktiveeritud, saab Samsungi klaviatuur õppida teie kirjutamisstiili Facebookist, Gmailist, Twitterist, sõnumitest ja kontaktidest ning pakub teile mõeldud ennustusi ja parandusi"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Trellid"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Suurem kui"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Graavis"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Nipsake klahvil ülespoole, et vaadata sümboleid ja alternatiivseid tähemärke."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Klaviatuuri peitmiseks libistage seda alla."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Raputusega sisestamine"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Veebruar"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Hüüumärk"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Euro"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Võrdusmärk"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Sisestage teksti, libistades sõrme üle klaviatuuri. See funktsioon on optimeeritud Qwerty-klaviatuuri jaoks."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Sisestage teksti, libistades sorme ule klaviatuuri."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Sisesta"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Aktiveerige isikupärastatud andmed"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Emotikonid"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Punkt"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dollar"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Jagamismärk"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Kustuta tühik"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Detsember"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Mõttekriips"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Kohandatav klahv"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Kursori juhtimine"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Valuuta märk"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Pidev sisestamine"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Koma"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Koolon"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Parem ümarsulg"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Parem sulg"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Parem looksulg"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Lõikelaud"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Tsirkumfleks"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Märgi eelvaade"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Algsuurtäht"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Tagasilüke"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Kurakriips"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Automaatsed tühikud"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Automaatne suur esitäht"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Sisesta sonade vahele automaatselt tuhikud."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Sisestage automaatselt punkt, toksates kaks korda tuhikuklahvi."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Automaatne suur lause algustaht."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Tähelepanu!"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "August"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Ät"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Tühista"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Tärn"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Veel seadeid"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Aprill"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Ja"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Loendi laiendamise nupp"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Helisisend"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Klaviatuur pakub funktsioone nagu pidev sisestamine ja ennustav tekst."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Häälsisestuse kasutamiseks toksake hääle ikooni."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Sanga kuvamiseks toksake teksti sisestusvälja, kui klaviatuur on avatud. Kursori liigutamiseks liigutage sanga"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Samsungi klaviatuuriseadete avamiseks toksake seadeteikoonil."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Toksake tähemärkide ja sümbolite vahetamiseks režiiminuppu."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Sisestusviisi muutmiseks toksake teavituste paneelil klaviatuuri ikooni."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Emotikonide lisamiseks toksake emotikonide ikooni."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Lõikelaua avamiseks toksake lõikelaua ikooni."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Klaviatuuri avamiseks toksake ükskõik millist tekstivälja."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Emotikonide, hääle, lõikelaua, klaviatuuri seadete või kirjavahemärkide vahel valimiseks toksake ja hoidke all kohandatavat klahvi."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Hääle, lõikelaua, klaviatuuri seadete ning kirjavahemärkide vahel valimiseks toksake ja hoidke all kohandatavat klahvi."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Toksake ja hoidke sõrme tekstil, et seda valida. Kursori sang koosneb algussangast ja lõpusangast. Teksti valimiseks liigutage mõlemat sanga. Vabastage sang, et valida kopeerimist, lõikamist, kleepimist või teha muid valikuid"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Klaviatuuri sulgemiseks vajutage tagasiliikumise klahvi."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Avage menüü Seaded ning seejärel valige Keel ja klaviatuur > Klaviatuuri seaded > Ennustav tekst."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Kui klaviatuuri seadetes on valitud kaks või enam keelt, toksake keele vahetamiseks gloobuseklahvi."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Kui isikupärastatud andmed on aktiveeritud, saab Samsungi klaviatuur õppida teie kirjutamisstiili Gmailist, Twitterist, sõnumitest ja kontaktidest ning pakub teile mõeldud ennustusi ja parandusi."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Tingimused"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Kõik"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Keel"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Pole märgistatud"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Nõustu"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty-klaviatuur"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Isikupärastatud andmed"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Helista mulle hiljem."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Veebileht avatakse teie mobiilsideseadme ekraanil."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Selle funktsiooni kasutamiseks toksake valikut OK. Isikupärastatud andmeid teie mobiilsideseadmest kasutab ka seade %s. Kui te ei soovi oma isiklike andmete salvestamist, avage klaviatuuri seaded ning eemaldage märgistus käsult Aktiveeri isikupärastatud andmed."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Klaviatuuri seaded, v.a allalaaditud keeled, lähtestatakse."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Konteksti sobiv täht sisestatakse automaatselt."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Häälsisestuse kasutamiseks toksake ja hoidke sõrme tühikuklahvil."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Toksake ja hoidke sõrme valikute klahvil, et kuvada valikute loendit."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Keele muutmiseks libistage sõrme tühikuklahvil vasakule või paremale."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Malle pole"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Nutikad sisestusfunktsioonid"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Autom. suurtäht alguses"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Iga lause algustäht muudetakse automaatselt suurtäheks."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Automaatsed kirjavahemärgid"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Lähtesta"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Klahvistikuseaded lähtestatakse. Kas jätkata?"
 

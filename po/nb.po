@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Radioknapp"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Smarte inndatafunksjoner"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Åpne"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Auto. stor forbokstav"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Valgt"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Nullstill"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Lukk"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty-tastatur"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Hjelp"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Ingen"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Av"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "På"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Innstillinger"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Fjern"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty-tastatur"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear Qwerty-tastatur"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz-tastatur"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Ansikter"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Sprettoppvindu lukket."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Sprettopp vises"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Numre"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Steder"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Bruke fortløpende inndata"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Bruke ordforslag"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Endre inndatametoden"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Endre inndatamodusen"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Endre språk"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Lukke tastaturet"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Flytte markøren"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Åpne tastaturet"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Merke tekst"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Bruke Samsung-tastatur"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Du kan fullføre eller erstatte det ordet du skriver inn, med det mest sannsynlige ordet ved å trykke på mellomromstasten."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Trykk raskt to ganger for å lukke listen."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Trykk raskt to ganger for å redigere dette feltet."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Trykk raskt to ganger for å åpne listen."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Utvidbar liste"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "På/av-tast"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsung-tastatur"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Flere innstillinger"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Du må velge minst ett språk i tastaturinnstillinger."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Velg inndataspråk"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Maksimalt antall støttede språk (%d) er nådd."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Tastatur"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Ikke valgt"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Merket av"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Avmerkingsboks"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Når kan vi møtes?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Hvor er du?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Ikke gjenta."
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Vis på enheten"
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Avbryt"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Velg mal"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Hvordan går det?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Hva skjer?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Vi snakkes snart."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Jeg ringer senere."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Bytt språk"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Bruk stor bokstav i begynnelsen av hver setning automatisk."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "OK"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Aktiver minst ett språk for å aktivere erstatt automatisk."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Trykk på mellomromstasten for å godta foreslått tekstretting, eller trykk på piltasten for å beholde den gjeldende teksten."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz-tastatur"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Maksimalt antall støttede språk (%d) er nådd."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Neste"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana-tastatur"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana flikk-tastatur"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Tysk tastatur"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Angi"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin-tastatur"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bulgarsk fonetisk tastatur"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bulgarsk tastatur"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty-tastatur"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "OBS!"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4-tastatur"
@@ -211,29 +28,17 @@ msgstr "3 x 4-tastatur"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Vibrasjon"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Stryking på mellomromst."
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Lyd"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Nullstill innstillinger"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Tastaturstryking"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Velg inndataspråk"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Forhåndsvis tegn"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Erstatt automatisk"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Automatisk tegnsetting"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Smart inntasting"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Tilbakemelding ved tastetrykk"
@@ -259,161 +64,14 @@ msgstr "Bli med"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Gå"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Yen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Won"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Hvit stjerne"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Hvitt hjerte"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty-tastatur"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Virtuelt tastatur aktivert."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Hvis markørkontroll brukes, deaktiveres fortløpende inndata."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Hvis fortløpende inndata brukes, deaktiveres markørkontroll."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Understrek"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Tyrkisk Qwerty-tastatur"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Tyrkisk F-tastatur"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Stryk horisontalt langs mellomromstasten for å endre språk."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Ganger"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Tilde"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsung-tastaturet lærer seg skrivestilen din og forsøker å forutsi det du vil skrive inn ved å huske det du legger inn. Passord blir ikke husket, men personlig informasjon, for eksempel kredittkortnumre, vil bli lagret"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty-tastatur"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Trykk for å bruke virtuelt tastatur."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Trykk på og hold denne tasten for å se symbollisten. Velg ett for å bruke det som snarvei."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Symboltastatur %1$d av %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Symboler"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Mellomrom"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Skråstrek"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Enkel apostrof"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Du må velge minst ett språk i tastaturinnstillinger."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Vis en stor tegnboble når en tast på QWERTY-tastaturet blir trykket på."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Skift er låst."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Skift er på."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Skift er av."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Innstillinger"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "september"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Semikolon"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Høyre anførselstegn"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Anførselstegn"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Spørsmålstegn"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "“%s” vil bli fjernet fra lærte ord."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Alternativer for ordforslag"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Ordforslag"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Pund"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Pluss"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Vertikalstrek"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Prosent"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Venstreparentes"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Venstre firkantparentes"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Venstre klammeparentes"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "oktober"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Ingen språk valgt."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "november"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Beveg markøren ved å skyve fingeren over tastaturet."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "mai"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "mars"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Bokstaver"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Mindre enn"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Venstre anførselstegn"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Tastaturtype"
@@ -421,282 +79,21 @@ msgstr "Tastaturtype"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Tastaturinnstillinger"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "juni"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "juli"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "januar"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Omvendt spørsmålstegn"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Omvendt utropstegn"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Signaler oppdaget fra det fysiske tastaturet."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Hvis tilpasset data er aktivert, kan Samsung-tastaturet lære skrivestilen din fra Facebook, Gmail, Twitter, Meldinger og Kontakter og gi forslag og rettelser som er skreddersydd for deg."
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Nummertegn"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Større enn"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Venstreaksent"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Dra fingeren oppover på en tast for å vise symboler og alternative tegn."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Flikk tastaturet nedover for å skjule det."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Flikkeinndata"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "februar"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Utropstegn"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Euro"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Er lik"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Skriv inn tekst ved å skyve en finger over tastaturet. Denne funksjonen er optimalisert for Qwerty-tastaturet."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Skriv inn tekst ved å skyve fingeren over tastaturet."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Enter"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Aktiver tilpasset data"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Humørikoner"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Punktum"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dollar"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Delt på"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Slett mellomrom"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "desember"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Bindestrek"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Tilpassbar tast"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Markørkontroll"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Valutategn"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Fortløpende inndata"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Komma"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Kolon"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Høyreparentes"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Høyre firkantparentes"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Høyre klammeparentes"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Utklippstavle"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Cirkumfleks"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Forhåndsvis tegn"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Stor"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Tilbake"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Omvendt skråstrek"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Automatisk mellomrom"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Automatisk stor forbokstav"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Sett inn mellomrom automatisk mellom ord."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Sett inn punktum automatisk ved å trykke to ganger på mellomromstasten."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Bruk stor bokstav automatisk i nye setninger."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "OBS!"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "august"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Alfakrøll"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Avbryt"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Stjerne"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Flere innstillinger"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "april"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Og"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Tast for å utvide listen"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Tale inndata"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Tastaturet støtter funksjoner som fortløpende inndata og ordforslag."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Trykk på taleikonet for å bruke taleinndata."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Trykk på feltet for tekstinndata mens tastaturet er åpent for å vise håndtaket. Flytt på håndtaket for å bevege markøren."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Trykk på innstillingsikonet for å åpne innstillinger for Samsung-tastaturet."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Trykk på modusknappen for å veksle mellom tegn og symboler."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Trykk på tastaturikonet på varselspanelet for å endre inndatametoden."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Trykk på humørikonet for å sette inn humørikoner."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Trykk på utklippstavleikonet for å åpne utklippstavlen."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Trykk på et tekstfelt for å åpne tastaturet."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Trykk på og hold den tilpassbare tasten for å velge humørikoner, tale, utklippstavle, tastaturinnstillinger eller tegnsetting."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Trykk på og hold den tilpassbare tasten for å velge tale-, utklippstavle- og tastaturinnstillinger og tegnsetting."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Trykk på og hold noe tekst for å velge den. Et markørhåndtak består av et starthåndtak og et slutthåndtak. Beveg begge håndtakene for å velge tekst. Slipp håndtaket for å velge kopier, klipp ut, lim inn og andre alternativer."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Trykk på tilbaketasten for å lukke tastaturet."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Åpne Innstillinger, og velg deretter Språk og tastatur > Tastatur > Tastaturinnstillinger > Ordforslag."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Hvis to eller flere språk er valgt i tastaturinnstillinger, kan du trykke på klodetasten for å veksle mellom dem."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Hvis personlig data er aktivert, kan Samsung-tastaturet lære skrivestilen din fra Gmail, Twitter, Meldinger og Kontakter og gi forslag og rettelser som er skreddersydd for deg."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Betingelser og vilkår"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Alle"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Språk"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Ikke merket av"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Godta"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty-tastatur"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Tilpasset data"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Ring meg senere."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Nettsiden blir åpnet på skjermen til mobilenheten din."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Trykk på OK for å bruke denne funksjonen. Tilpassede data fra mobilenheten blir også brukt av %s. Hvis du ikke vil at tilpassede data skal lagres, går du til tastaturinnstillingene og fjerner markeringen for Aktiver tilpasset data."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Tastaturinnstillingene, unntatt nedlastede språk, tilbakestilles."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Bokstaven som passer konteksten, blir angitt automatisk."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Trykk på og hold mellomromstasten for å bruke taleinndata."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Trykk på og hold alternativtasten for å vise en liste over alternativer."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Stryk mellomromstasten til venstre eller høyre for å endre språk."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Ingen maler"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Smarte inndatafunksjoner"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Auto. stor forbokstav"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Bruk stor bokstav i begynnelsen av hver setning automatisk."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Automatisk punktum"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Nullstill"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Tastaturinnstillinger blir tilbakestilt. Fortsette?"
 

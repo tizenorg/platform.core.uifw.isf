@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Radio button"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Smart kiritish funksiyalari"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Ochish"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Bosh harf b-n avto-yoz"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Selected"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Birlamchiga tashla"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Yopish"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty klaviaturasi"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Yordam"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Hech qaysi"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "O‘ch."
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Yoq."
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Parametrlar"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Olib tashlash"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty klvtr"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear Qwerty klvtr"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz klvtr"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Yuzlar"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Qalqib chiquvchi oyna yopildi."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Qalqib chiquvchi oyna ko‘rsatildi"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Raqamlar"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Joylar"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Davomiy kiritishdan foydalanish"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Taxminiy matndan foydalanish"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Kiritish usulini o‘zgartirish"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Kiritish rejimini o‘zgartirish"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Tilni o‘zgartirish"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Klaviaturani yopish"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Kursorni surish"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Klaviaturani ochish"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Matnni tanlash"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Samsung klvt-dan foydalan"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Bo‘shliq tugmasiga tekkaningizda, Siz kiritayotgan so‘zni oxiriga yetkazish yoki eng mos keluvchi taxminiy so‘z bilan almashtirish."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Ro‘yxatni yopish uchun ikki marta cherting."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Ushbu maydonni tahrirlash uchun ikki marta bosing."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Ro‘yxatni ochish uchun ikki marta cherting."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Kengaytiriladigan ro‘yxat"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Yoqish/o‘chirish tugmasi"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsung klaviaturasi"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Qo‘shimcha parametrlar"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Klaviatura parametrlarida kamida bir til tanlashingiz lozim."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Kiritish tilini tanlang"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Qo‘llab-quvvatlanadigan tillar soni maksimal miqdorga (%d) yetdi."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Klaviatura"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Tanlanmagan"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Belgi qo‘yilgan"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Belgilash katakchasi"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Qachon uchrashishimiz mumkin?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Qayerdasiz?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Takrorlama"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Qrl-da ko‘rsat"
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Bekor qilish"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Shablon tanlash"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Ahvollar qalay?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Ishlar qalay?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Keyinroq gaplashamiz."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Keyinroq qo‘n. qilaman."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Tilni o‘zgartirish"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Har bir gapning birinchi harfini avtomatik ravishda katta harf bilan yozish."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Baj."
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Avtomatik almashtirishni yoqish uchun kamida bitta tilni yoqing."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Taxmin qilingan matn tuzatishini qabul qilish uchun bo‘shliqni cherting yoki joriy matnni saqlab qolish uchun mil tugmasini cherting."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz klaviatura"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Qo‘llab-quvvatlanadigan tillar soni maksimal miqdorga (%d) yetdi."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Key."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana klaviaturasi"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana chert. klaviaturasi"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Nemischa klaviatura"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Kiritish"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin klaviaturasi"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bolgarcha fonetik klaviatura"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bolgarcha klaviatura"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty klaviaturasi"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Diqqat"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 klaviatura"
@@ -211,29 +28,17 @@ msgstr "3 x 4 klaviatura"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Vibratsiya"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Bo‘shliq tugmasini surish"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Ohang"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Parametrlarni tashlash"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Klaviaturani surish"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Kiritish tilini tanlang"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Belgi dastlabki ko‘r/chiq"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Avtomatik almashtirish"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Tinish belgini avto-qo‘y"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Smart terish"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Tugmada tegish javobi"
@@ -259,161 +64,14 @@ msgstr "Qo‘shil"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "O‘tish"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Iyena"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Von"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Oq yulduzcha"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Oq yurak"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty klaviaturasi"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Virtual klaviatura yoqildi."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Kursor nazoratidan foydalanish davomiy kiritishni o‘chiradi."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Davomiy kiritishdan foydalanish kursor nazoratini o‘chiradi."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Tagiga chizish"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Turkcha Qwerty klaviatura"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Turkcha F klaviatura"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Tilni o‘zgartirish uchun bo‘shliq tugmasini gorizontaliga suring."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Marta"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Tilda belgisi"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsung klaviaturasi yozish uslubingizni o‘rganadi va kiritganlaringizni eslab qolish orqali kiritmoqchi bo‘lgan so‘zlaringizni taxmin qilishga urinadi. Parollar saqlanmaydi, lekin kredit kartochka raqamlari kabi shaxsiy ma’lumotlar saqlab qolinadi"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty klaviaturasi"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Virtual klaviaturadan foydalanish uchun teging."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Simvollar ro‘yxatini ko‘rish uchun ushbu tugmani bosib turing. Yorliq sifatida foydalanish uchun birini tanlang."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "%1$d/%2$d simvollar klaviaturasi"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Belgilar"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Bo‘shliq"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Og‘ma chiziq"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Yakka qo‘shtirnoq"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Klaviatura parametrlarida kamida bir til tanlashingiz lozim."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Qwerty klaviaturadagi tugma bosilganda, katta belgi pufakchasi ko‘rsatilsin."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Shift bloklangan."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Shift yoqilgan."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Shift o‘chirilgan."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Parametrlar"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "Sentyabr"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Nuqtali vergul"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "O‘ng uchburchak qavs"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Qo‘shtirnoqlar"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "So‘rov belgisi"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ o‘rganilgan so‘zlardan olib tashlanadi."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Taxminiy matn variantlari"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Taxminiy matn"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Funt"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Plyus"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Truba"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Foiz"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Ochish qavslari"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Ochish qavsi"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Ochish shaklli qavs"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Oktabr"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Tillar tanlanmagan."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "Noyabr"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Klaviatura bo‘ylab barmog‘ingizni surish orqali kursorni harakatlantiring."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "May"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Mart"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Harflar"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Kamroq belgisi"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Chap burchak qo‘shtirnog‘i"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Klaviatura turi"
@@ -421,282 +79,21 @@ msgstr "Klaviatura turi"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Klaviatura parametrlari"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Iyun"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Iyul"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Yanvar"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "O‘girilgan so‘rov belgisi"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "O‘girilgan undov belgisi"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Apparat klaviaturasidan kiritish aniqlandi."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Shaxsiylashtirilgan ma’lumot yoqilgan bo‘lsa, Samsung klaviaturasi Facebook, Gmail, Twitter, Xabarlar va Kontaktlardan yozish uslubingizni o‘rganishi va Siz uchun mo‘ljallangan taxmin va tuzatishlarni taklif qilishi mumkin"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Chiqindi"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Ko‘proq belgisi"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Ochish qo‘shtirnog‘i"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Simvollar va belgilarni ko‘rish uchun tugma ustida yuqoriga suring."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Klaviaturani yashirish uchun uni cherting."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Chertib kiritish"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Fevral"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Undov belgisi"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Yevro"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Teng"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Barmog‘ingizni klaviatura ustida yurgizish orqali matn kiriting. Ushbu funksiya Qwerty klaviaturasi uchun optimallashtirilgan."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Klaviatura bo‘ylab barmog‘ingizni yurgizish orqali matn kiriting."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Kiritish"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Shaxsiylashtirilgan ma’lumotni yoqish"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Emotikonlar"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Nuqta"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dollar"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Bo‘luvchi"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Bo‘shliqni yo‘q qilish"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Dekabr"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Tire"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Sozlanadigan tugma"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Kursor nazorati"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Valyuta belgisi"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Davomiy kiritish"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Vergul"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Ikki nuqta"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Yopish qavslari"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Yopish qavsi"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Yopish shaklli qavs"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Bufer"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Sirkumfleks"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Belgini ko‘rib chiqish"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Bosh harf"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Orqaga qaytarish"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Teskari og‘ma chiziq"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Avto-bo‘shliq qo‘yish"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Avt. bosh harflar bilan boshlash"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "So‘zlar orasidagi bo‘shliqni avtomatik ravishda kiritish."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Bo‘shliq tugmasini ikki marta tegish orqali nuqtani avtomatik ravishda kiriting."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Gapning birinchi harfini avtomatik ravishda kattalashtirish."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Diqqat"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Avgust"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Quyidagida"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Bekor qilish"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Yulduzcha"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Qo‘shimcha parametrlar"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Aprel"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Va"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Ro‘yxatni kengaytirish tugmasi"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Ovozli kiritish"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Klaviatura davomiy kiritish va taxminiy matn kabi funksiyalarni taklif qiladi."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Ovozli kiritishdan foydalanish uchun ovoz ikonchasiga teging."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Klaviatura ochilganligida deskriptor ko‘rinishi uchun matn kiritish maydoniga cherting. Kursorni harakatlantirish uchun deskriptorni suring."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Samsung klaviaturasi parametrlarini ochish uchun parametrlar ikonchasini bosing."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Belgi va simvollarni o‘zgartirish uchun rejim tugmasini bosing."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Kiritish usulini o‘zgartirish uchun bildirishnoma panelidagi klaviatura ikonchasini bosing."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Emotikonlarni kiritish orqali emotikonni bosing."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Buferni ochish uchun unga teging."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Klaviaturani ochish uchun matn maydonining istalgan joyiga bosing."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Hissiyot ikonachalari, ovoz, almashish buferi, klaviatura parametrlari yoki tinish belgilarini tanlash uchun sozlanadigan tugmani bosib turing."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Ovoz, almashish buferi, klaviatura parametrlari va tinish belgilarini tanlash uchun, sozlanadigan tugmani bosib turing."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Ba’zi matnni tanlash uchun bosib turing. Kursor deskriptori boshlanish va tugash deskriptorlaridan tashkil topadi. Matn tanlash uchun har ikki deskriptorni harakatlantiring. Nusxa olish, Qirqish, Qo‘shib qo‘yish va boshqa opsiyani tanlash uchun deskriptorni qo‘yib yuboring."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Klaviaturasini yopish uchun orqaga tugmasini bosing."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Parametrlarni oching, so‘ngra Til va klaviatura > Klaviatura > Klaviatura parametrlari > Taxminiy matnni tanlang"
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Agar klaviatura parametrlarida ikkitadan ko‘proq tillar tanlangan bo‘lsa, ularni almashtirish uchun globus tugmasini suring."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Shaxsiylashtirilgan ma’lumot yoqilgan bo‘lsa, Samsung klaviaturasi Gmail, Twitter, Xabarlar va Kontaktlardan yozish uslubingizni o‘rganishi va Siz uchun mo‘ljallangan taxmin va tuzatishlarni taklif qilishi mumkin."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Talab va shartlar"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Hammasi"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Til"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Belgi qo‘yilmagan"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Roziman"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty klaviaturasi"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Shaxsiylash-gan ma’lumot"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Call me later."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Veb-sahifa mobil qurilmangiz ekranida ochiladi."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Ushbu funksiyadan foydalanish uchun OKga teging. Mobil qurilmangizdagi shaxsiylashtirilgan ma’lumotlar %s tomonidan ishlatiladi. Agar shaxsiy ma’lumotingiz saqlanishini istamasangiz, klaviatura parametrlariga o‘ting va Shaxsiylashtirilgan ma’lumotlarni yoqishdan belgilashni olib tashlang."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Klaviatura parametrlari birlamchi holatiga qaytariladi, yuklab olingan tillar bundan mustasno."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Kontekstga mos keluvchi harh avtomatik ravishda kiritiladi."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Ovozli kiritishdan foydalanish uchun bo‘shliq tugmasini bosib turing."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Opsiyalar ro‘yxatini ko‘rib chiqish uchun opsiyalar tugmasini bosib turing."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Tillarni o‘zgartirish uhcun bo‘shliq tugmasini chap yoki o‘ngga suring."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Qoliplar yo‘q"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Smart kiritish funksiyalari"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Bosh harf b-n avto-yoz"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Har bir gapning birinchi harfini avtomatik ravishda katta harf bilan yozish."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Tinish belgilarni avtomatik qo‘yish"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Birlamchiga tashla"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Klaviatura parametrlari tashlanadi. Davom ettirilsinmi?"
 

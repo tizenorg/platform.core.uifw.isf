@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Prepínač"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Funkcie inteligentného vstupu"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Otvoriť"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Aut. počiat. veľké písm."
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Vybraté"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Vynulovať"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Zavrieť"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Klávesnica qwerty"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Pomocník"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Prvé slovo každej vety sa bude automaticky začínať veľkým písmenom."
 
-msgid "IDS_ST_BODY_NONE"
-msgstr "Žiadny"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Vyp."
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Zap."
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Nastavenia"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Odstrániť"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Kláves. Gear Azerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Kláves. Gear Qwerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Kláves. Gear Qwertz"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Tváre"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Kontextové okno sa zavrelo."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Zobrazené kontextové okno"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Čísla"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Miesta"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Používanie súvislého vstupu"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Používanie prediktívneho textu"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Zmena metódy vstupu"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Zmena režimu vstupu"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Zmena jazyka"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Zatvorenie klávesnice"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Ovládanie kurzora"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Otvorenie klávesnice"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Výber textu"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Použ. klávesnice Samsung"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Dokončenie alebo nahradenie písaného slova za najpravdepodobnejšie slovo ťuknutím na medzerník."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Dvojitým ťuknutím môžete zavrieť zoznam."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Dvojitým ťuknutím môžete upraviť toto pole."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Dvojitým ťuknutím môžete otvoriť zoznam."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Rozbaľovací zoznam"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Tlačidlo zapnutia/vypnutia"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Klávesnica Samsung"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Ďalšie nast."
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Musíte vybrať aspoň jeden jazyk v nastaveniach klávesnice."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Vstupný jazyk"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Ok"
 
 msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
 msgstr "Dosiahol sa maximálny počet podporovaných jazykov (%d)."
 
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Klávesnica"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Nevybraté"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Začiarknuté"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Začiarkavacie políčko"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Kedy sa môžeme stretnúť?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Kde si?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Neopakovať"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Zobr. v zar."
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Zrušiť"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Vyberte šablónu"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Ako sa máš?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Čo sa deje?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Ozvem sa čoskoro."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Zavolám neskôr."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Zmeniť jazyk"
-
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "Hot."
-
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Ak chcete aktivovať automatické nahrádzanie, aktivujte aspoň jeden jazyk."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Ťuknutím na medzerník môžete akceptovať navrhovanú korekciu textu alebo ťuknutím na tlačidlo so šípkou môžete ponechať aktuálny text."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Klávesnica Qwertz"
-
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Nasl."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Klávesnica Kana"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Ťahová klávesnica Kana"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Nemecká klávesnica"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Zadať"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Klávesnica Chunjiin"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bulharská fonetická klávesnica"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bulharská klávesnica"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Klávesnica Azerty"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Pozor"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "Klávesnica 3 x 4"
@@ -211,29 +28,17 @@ msgstr "Klávesnica 3 x 4"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Vibrovanie"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Potiahnutie po medzerníku"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Zvuk"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Vynulovať"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Swype"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Vstupný jazyk"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Ukážka znakov"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Automatická náhrada"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Automatická interpunkcia"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Inteligentné písanie"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Ťuknutie"
@@ -259,161 +64,14 @@ msgstr "Pripoj."
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Prejsť"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Jen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Won"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Biela hviezda"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Biele srdce"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI klávesnica Qwerty"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Virtuálna klávesnica je zapnutá."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Použitím ovládania kurzora sa zakáže súvislý vstup."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Použitím súvislého vstupu sa zakáže ovládanie kurzora."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Podčiarkovník"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Turecká klávesnica Qwerty"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Turecká klávesnica F"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Jazyk môžete zmeniť horizontálnym potiahnutím po medzerníku."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Krát"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Vlnovka"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Klávesnica Samsung sa učí váš štýl písania a snaží sa predpovedať, čo chcete napísať, zapamätávaním si toho, čo zadávate. Heslá budú vylúčené, ale osobné údaje, ako napríklad čísla kreditných kariet, sa budú ukladať"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telexová klávesnica Qwerty"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Ťuknutím môžete použiť virtuálnu klávesnicu."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Ťuknutím na toto tlačidlo a jeho podržaním zobrazíte zoznam symbolov. Výberom jedného z nich ho môžete použiť ako skratku."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Klávesnica symbolov %1$d z %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Symboly"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Medzera"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Lomka"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Jednoduché úvodzovky"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Musíte vybrať aspoň jeden jazyk v nastaveniach klávesnice."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Zobraziť veľkú znakovú bublinu po ťuknutí na kláves na klávesnici QWERTY"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Kláves Shift je zamknutý."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Kláves Shift je zapnutý."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Kláves Shift je vypnutý."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Nastavenia"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "September"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Bodkočiarka"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Pravé šikmé úvodzovky"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Úvodzovky"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Otáznik"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "Slovo „%s“ sa odstráni z naučených slov."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Možnosti prediktívneho textu"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Prediktívny text"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Libra"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Plus"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Zvislá prerušovaná čiara"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Percento"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Ľavá okrúhla zátvorka"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Ľavá hranatá zátvorka"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Ľavá zložená zátvorka"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Október"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Žiadne vybraté jazyky."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "November"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Premiestnite kurzor posunutím prsta po klávesnici."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Máj"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Marec"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Písmená"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Menšie než"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Ľavé šikmé úvodzovky"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Typ klávesnice"
@@ -421,282 +79,21 @@ msgstr "Typ klávesnice"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Nastavenia klávesnice"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Jún"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Júl"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Január"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Prevrátený otáznik"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Prevrátený výkričník"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Zistil sa vstup z hardvérovej klávesnice."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Ak sú zapnuté prispôsobené údaje, klávesnica Samsung sa môže učiť váš štýl písania z aplikácií Facebook, Gmail, Twitter, Správy a Kontakty a ponúkať predikcie a korekcie prispôsobené pre vás"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Mriežka"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Väčšie než"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Opačný dĺžeň"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Rýchlym potiahnutím nahor cez niektoré tlačidlo môžete zobraziť symboly a alternatívne znaky."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Rýchlym potiahnutím klávesnice smerom nadol ju môžete skryť."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Vstup rýchlym pohybom"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Február"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Výkričník"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Euro"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Znamienko rovnosti"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Zadajte text posúvaním prsta po klávesnici. Táto funkcia je optimalizovaná pre klávesnicu Qwerty."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Zadajte text posúvaním prsta po klávesnici."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Kláves Enter"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Zapnúť prispôsobené údaje"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Emotikony"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Bodka"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dolár"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Znamienko delenia"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Odstrániť medzeru"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "December"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Pomlčka"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Prispôsobiteľné tlačidlo"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Pohyb kurzora"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Symbol meny"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Súvislý vstup"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Čiarka"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Dvojbodka"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Pravá okrúhla zátvorka"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Pravá hranatá zátvorka"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Pravá zložená zátvorka"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Schránka"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Strieška"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Ukážka znakov"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Veľké písmeno"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Kláves Backspace"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "﻿Opačná lomka"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Automatické medzery"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Automatická kapitalizácia"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Automaticky vkladať medzery medzi slová."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Automaticky vložiť bodku dvojitým ťuknutím na medzerník."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Automaticky nastaviť veľké písmeno na začiatku vety."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Pozor"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "August"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Zavináč"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Zrušiť"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Hviezdička"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Ďalšie nast."
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Apríl"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "A"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Tlačidlo na rozbalenie zoznamu"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Hlasový vstup"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Klávesnica ponúka funkcie ako súvislý vstup a prediktívny text."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Ťuknutím na ikonu hlasu môžete použiť hlasový vstup."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Ťuknutím na pole na zadávanie textu pri otvorenej klávesnici zobrazíte rukoväť. Premiestnením rukoväte môžete premiestniť kurzor"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Ťuknutím na ikonu nastavení môžete otvoriť nastavenia klávesnice Samsung."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Ťuknutím na tlačidlo režimu môžete prepínať znaky a symboly."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Ťuknutím na ikonu klávesnice na paneli oznámení môžete zmeniť metódu vstupu."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Ťuknutím na ikonu emotikon môžete vložiť emotikony."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Ťuknutím na ikonu schránky môžete otvoriť schránku."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Ťuknutím na ľubovoľné textové pole otvoríte klávesnicu."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Ťuknutím na prispôsobiteľné tlačidlo a jeho podržaním môžete vyberať medzi nastaveniami emotikon, hlasu, schránky alebo klávesnice a interpunkčnými znamienkami."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Ťuknutím na prispôsobiteľné tlačidlo a jeho podržaním môžete vyberať medzi nastaveniami hlasu, schránky a klávesnice a interpunkčnými znamienkami."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Ťuknutím na nejaký text a jeho podržaním vykonáte jeho výber. Rukoväť kurzora obsahuje počiatočnú rukoväť a koncovú rukoväť. Premiestnením oboch rukovätí môžete vybrať text. Po uvoľnení rukoväte môžete zvoliť kopírovanie, vystrihnutie, prilepenie a ďalšie možnosti"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Stlačením tlačidla návratu môžete zavrieť klávesnicu."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Otvorte aplikáciu Nastavenia a potom vyberte položku Jazyk a klávesnica > Klávesnica > Nastavenia klávesnice > Prediktívny text."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Ak sú v nastaveniach klávesnice vybraté najmenej dva jazyky, ťuknutím na tlačidlo glóbusu ich môžete prepínať."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Ak sú zapnuté prispôsobené údaje, klávesnica Samsung sa môže učiť váš štýl písania z aplikácií Gmail, Twitter, Správy a Kontakty a ponúkať predikcie a korekcie prispôsobené pre vás."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Ustanovenia a podmienky"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Všetko"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Jazyk"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Nezačiarknuté"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Súhlasím"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Klávesnica qwerty"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Prispôsobené údaje"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Zavolajte mi neskôr."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Webová stránka sa otvorí na obrazovke mobilného zariadenia."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Ťuknutím na tlačidlo OK použijete túto funkciu. Prispôsobené údaje z vášho mobilného zariadenie použije aj zariadenie %s. Ak nechcete, aby sa ukladali vaše osobné údaje, prejdite na nastavenia klávesnice a zrušte začiarknutie možnosti Zapnúť prispôsobené údaje."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Vynulujú sa nastavenia klávesnice okrem stiahnutých jazykov."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Automaticky sa zadá písmeno, ktoré vyhovuje aktuálnemu kontextu."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Ťuknutím na medzerník a jeho podržaním môžete použiť hlasový vstup."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Ťuknutím na tlačidlo možností a jeho podržaním zobrazíte zoznam možností."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Potiahnutím po medzerníku doľava alebo doprava môžete prepínať jazyky."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Žiadne šablóny"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Funkcie inteligentného vstupu"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Aut. počiat. veľké písm."
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Prvé slovo každej vety sa bude automaticky začínať veľkým písmenom."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Automatická interpunkcia"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Vynulovať"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Nastavenia klávesníc sa vynulujú. Pokračovať?"
 

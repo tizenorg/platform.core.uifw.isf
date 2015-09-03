@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "రేడియో బటన్"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "స్మార్ట్ ఇన్‌పుట్ విధులు"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "తెరువు"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "స్వీయంగా క్యాపిటలైజ్ చేయి"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "ఎంచుకున్న"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "రీసెట్ చేయి"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "మూసివేయి"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "క్వర్టీ కీబోర్డ్"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "సహాయం"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "ఏదీకాదు"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "ఆఫ్"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "ఆన్"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "సెట్టింగులు"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "తొలగించు"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "గేర్ అజర్టీ కీబోర్డ్"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "గేర్ క్వర్టీ కీబోర్డ్"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "గేర్ క్వర్టీ కీబోర్డ్"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "ముఖాలు"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "పాప్-అప్ మూసివేయబడింది."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "పాప్-అప్ డిసేబుల్ చేయబడింది"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "నంబర్‌లు"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "స్థలాలు"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "నిరంతరాయ ఇన్‌పుట్‌ని ఉపయోగించడం"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "సూచనా టెక్స్ట్‌ని ఉపయోగించడం"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "ఇన్‌పుట్ విధానాన్ని మార్చడం"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "ఇన్‌పుట్ మోడ్‌ని మార్చడం"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "భాషను మార్చడం"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "కీబోర్డ్‌ని మూసివేయడం"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "కర్సర్‌ని కదిలించడం"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "కీబోర్డ్‌ని తెరవడం"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "టెక్స్ట్‌ను ఎంచుకోవడం"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "సామ్‌సంగ్ కీబోర్డ్ ఉపయోగించడం"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "మీరు స్పేస్ బార్‌ని ట్యాప్ చేసినప్పుడు అత్యంత సాధ్యమైన పదంతో మీరు టైప్ చేసే పదాన్ని పూర్తి చేయండి లేదా భర్తీ చేయండి."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "జాబితాని తెరవడానికి డబుల్ ట్యాప్ చేయండి."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "ఈ ఫీల్డ్‌ని ఎడిట్ చేయడానికి డబుల్ ట్యాప్ చేయండి."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "జాబితాని తెరవడానికి డబుల్ ట్యాప్ చేయండి."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "విస్తరించగల జాబితా"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "ఆన్/ఆఫ్ చేయి బటన్"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "స్యామ్‌సంగ్ కీబోర్డు"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "మరిన్ని సెట్టింగులు"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "మీరు కీబోర్డ్ సెట్టింగులలో కనీసం ఒక భాష ఎంచుకోవాలి."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "ఇన్‌పుట్ భాషలను ఎంచుకోండి"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "మద్దతు గల గరిష్ట భాషల సంఖ్యకు (%d) చేరుకున్నారు."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "కీబోర్డు"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "ఎంచుకోలేదు"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "ఎంచుకోబడ్డాయి"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "ఎంపిక పెట్టె"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "మనము ఎప్పుడు కలుద్దాం?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "మీరు ఎక్కడ ఉన్నారు?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "పునరావృతం చేయవద్దు."
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "పరికరంలో చూపు"
-
-msgid "IDS_ST_SK_OK"
-msgstr "సరే"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "రద్దు"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "టెంప్లేట్‌ను ఎంచుకోండి"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "ఇది ఎలా జరుగుతుంది?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "ఏమి జరుగుతుంది?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "నేను త్వరలో మీతో మాట్లాడుతాను."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "నేను మీకు తర్వాత కాల్ చేస్తాను."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "భాషను మార్చు"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "ప్రతి వాక్యం యొక్క మొదటి అక్షరాన్ని స్వయంచాలకంగా క్యాపిటలైజ్ చేస్తుంది."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "పూర్తయిం."
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "స్వీయ భర్తీని ప్రారంభించడానికి, కనీసం ఒక భాషను ఎంచుకోండి."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "సూచిత టెక్స్ట్ సవరణని ఆమోదించడానికి స్పేస్ కీని ట్యాప్ చేయండి లేదా ప్రస్తుత టెక్స్ట్‌ని ఉంచడానికి బాణం కీని ట్యాప్ చేయండి."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "క్వెర్టజ్ కీబోర్డ్"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "మద్దతు గల గరిష్ట భాషల సంఖ్యకు (%d) చేరుకున్నారు."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "తరువాత"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "కానా కీబోర్డ్"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "కానా ఫ్లిక్ కీబోర్డ్"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "జర్మన్ కీబోర్డ్"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "నమోదు చేయండి"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin కీబోర్డ్"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "బల్గేరియన్ ఫొనెటిక్ కీబోర్డ్"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "బల్గేరియన్ కీబోర్డ్"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "అజెర్తి కీబోర్డ్"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "అటెన్షన్"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 కీబోర్డ్"
@@ -211,29 +28,17 @@ msgstr "3 x 4 కీబోర్డ్"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "వైబ్రేషన్"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "స్పేస్ బార్ స్వైప్"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "ధ్వని"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "సెట్టింగులు రీసెట్"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "కీబోర్డ్‌ను స్వైప్ చేయి"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "ఇన్‌పుట్ భాషలను ఎంచుకోండి"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "అక్షరం ప్రివ్యూ"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "స్వీయ భర్తీ"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "స్వీయ విరామ చిహ్నాన్ని ఉంచు"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "స్మార్ట్ టైపింగ్"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "కీ-ట్యాప్ స్పందన"
@@ -259,161 +64,14 @@ msgstr "చేరండి"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "వెళ్లు"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "యెన్"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "గెలిచారు"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "తెలుపు నక్షత్రం"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "తెలుపు హృదయం"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI క్వర్టీ కీబోర్డ్"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "వర్చువల్ కీబోర్డ్ ఎనేబుల్ చేయబడింది."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "కర్సర్ నియంత్రణను ఉపయోగించడం వలన నిరంతర ఇన్‌పుట్ నిలిపివేయబడుతుంది."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "నిరంతర ఇన్‌పుట్‌ను ఉపయోగించడం వలన కర్సర్ నియంత్రణ నిలిపివేయబడుతుంది."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "అండర్‌స్కోర్"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "టర్కీష్ క్వర్టీ కీబోర్డ్"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "టర్కీష్ F కీబోర్డ్"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "భాషను మార్చడానికి, స్పేస్ బార్‌పై సమాంతరంగా స్వైప్ చేయండి."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "సమయాలు"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "టైల్డ్"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "స్యామ్‌సంగ్ కీబోర్డ్ మీరు నమోదు చేసినదానిని గుర్తు పెట్టుకోవడం ద్వారా మీ వ్రాత శైలి నుంచి నేర్చుకుంటుంది మరియు మీరు టైప్ చేయాలనుకుంటున్న దానిని ఊహించేందుకు ప్రయత్నిస్తుంది. పాస్‌వర్డ్‌లు మినహాయించబడతాయి, కానీ వ్యక్తిగత సమాచారం, అంటే క్రెడిట్ కార్డ్ నెంబర్‌ల వంటివి, నిల్వ చేయబడతాయి."
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "టెలెక్స్ క్వర్టీ కీబోర్డ్"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "వర్చువల్ కీబోర్డ్‌ని ఉపయోగించడానికి ట్యాప్ చేయండి."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "చిహ్నం జాబితాని చూడటానికి ఈ కీని ట్యాప్ చేసి, పట్టుకోండి. దీన్ని సత్వరమార్గంగా ఉపయోగించడానికి ఒకదాన్ని ఎంచుకోండి."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "%2$d యొక్క గుర్తుల కీబోర్డ్ %1$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "చిహ్నాలు"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "స్పేస్"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "స్లాష్"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "సింగిల్ కోట్"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "మీరు కీబోర్డ్ సెట్టింగులలో కనీసం ఒక భాష ఎంచుకోవాలి."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "క్వర్టీ కీబోర్డ్‌పై కీని నొక్కినప్పుడు పెద్ద అక్షరం బబుల్‌ను చూపు."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "షిఫ్ట్ లాక్ చేయబడింది."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "షిఫ్ట్ ఆన్ చేయబడింది."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "షిఫ్ట్ ఆఫ్ చేయబడింది."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "సెట్టింగ్‌లు"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "సెప్టెంబర్"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "సెమీకోలన్"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "కుడి కోణం కోట్‌లు"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "కోట్స్"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ప్రశ్న గుర్తు"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ నేర్చుకున్న పదాలు నుండి తీసివేయబడుతుంది."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "సూచిత టెక్స్ట్ ఎంపికలు"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "భవిష్యత్ టెక్స్ట్"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "పౌండ్"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "ప్లస్"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "పైపు"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "శాతం"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "తెరిచే కుండలీకరణములు"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "తెరిచే బ్రాకెట్"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "తెరిచే బ్రేస్"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "అక్టోబర్"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "ఏ భాషలు ఎంపిక కాలేవు."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "నవంబర్"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "కీబోర్డ్‌పై వేలును స్లయిడ్ చేయడం ద్వారా కర్సర్‌ను తరలించండి."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "మే"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "మార్చి"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "లేఖలు"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "దీని కంటే తక్కువ"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "ఎడమ కోణం కోట్‌లు"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "కీబోర్డు రకం"
@@ -421,282 +79,21 @@ msgstr "కీబోర్డు రకం"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "కీబోర్డు సెట్టింగులు"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "జూన్"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "జూలై"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "జనవరి"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "విలోమ ప్రశ్న గుర్తు"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "విలోమ ఆశ్చర్యార్థకం గుర్తు"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "హార్డ్‌వేర్ కీబోర్డ్ నుండి ఇన్‌పుట్ గుర్తించబడింది."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "వ్యక్తిగతీకరించిన డేటా ప్రారంభించబడినట్లయితే, స్యామ్‌సంగ్ కీబోర్డు మీరు వ్రాసే శైలి, ఫేస్‌బుక్‌, జీమెయిల్ను, ట్విట్టర్, సందేశాలు మరియు పరిచయాలు నుండి తెలుసుకుంటుంది మరియు మీకు ప్రత్యేకించిన సూచనలు మరియు దిద్దుబాట్లు అందిస్తుంది."
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "హ్యాష్"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "దీని కంటే ఎక్కువ"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "గంభీర స్వరం"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "చిహ్నాలు మరియు ప్రత్యామ్నాయ అక్షరాలను వీక్షించడానికి కీని పైకి ఫ్లిక్ చేయండి."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "కీబోర్డ్‌ను దాచడానికి దానిని కిందికి ఫ్లిక్ చేయండి."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "ఫ్లిక్ ఇన్‌పుట్"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "ఫిబ్రవరి"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ఆశ్చర్యార్థక గుర్తు"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "యూరో"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "సమానాలు"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "కీబోర్డ్ మీద మీ వేలిని స్లయిడ్ చేయడం ద్వారా టెక్స్ట్‌ని నమోదు చేయండి. ఈ ఫీచర్ క్వర్టీ కీబోర్డ్ కోసం ఆప్టిమైజ్ చేయబడింది."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "కీబోర్డ్ అంతటా వేలును తరలించడం ద్వారా వచనాన్ని నమోదు చేయండి."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "నమోదు చేయి"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "వ్యక్తిగతీకరించిన డేటాని ప్రారంభించు"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "ఎమోటికాన్‌లు"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "డాట్"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "డాలర్"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "దీని ద్వారా విభజించబడింది"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "ఖాళీని తొలగించండి"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "డిసెంబర్"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "డాష్"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "అనుకూలీకరించగల కీ"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "కర్సర్ నియంత్రణ"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "కరెన్సీ చిహ్నం"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "వరుసగా ఇన్‌పుట్"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "కామా"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "కోలన్"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "మూసివేసే కుండలీకరణములు"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "మూసివేసే బ్రాకెట్"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "మూసివేసే బ్రేస్"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "క్లిప్‌బోర్డ్"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "స్వరితం"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "అక్షరం ప్రివ్యూ"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "క్యాపిటల్"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "బ్యాక్‌స్పేస్"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "బ్యాక్‌స్లాష్"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "స్వయం స్పేసింగ్"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "స్వయం క్యాపిటలైజేషన్"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "ఆటోమేటిక్‌గా పదాల మధ్య స్థలాలను చొప్పించండి."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "స్పేస్ బార్‌ను రెండు సార్లు నొక్కడం ద్వారా ఆటోమేటిక్‌గా ఒక ఫుల్ స్టాఫ్ చొప్పించబడుతుంది."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "ఆటోమేటిక్‌గా వాక్యము యొక్క మొదటి అక్షరాన్ని క్యాపిటలైస్ చేస్తుంది."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "అటెన్షన్"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "ఆగష్టు"
+msgid "IDS_ST_SK_OK"
+msgstr "సరే"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "దీనిలో"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "రద్దు"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "నక్షత్రం"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "మరిన్ని సెట్టింగులు"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "ఏప్రిల్"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "మరియు"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "జాబితాని విస్తరింప చేయడానికి బటన్"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "వాయిస్ ఇన్పుట్"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "కీబోర్డ్ నిరంతర ఇన్‌పుట్ మరియు సూచనా టెక్స్ట్ వంటి విధులను ఆఫర్ చేస్తుంది."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "వాయిస్ ఇన్‌పుట్‌ని ఉపయోగించడానికి వాయిస్ ఐకాన్‌ని ట్యాప్ చేయండి."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "హ్యాండిల్ కనిపించేలా చేయడానికి కీబోర్డ్ తెరవబడి ఉన్నప్పుడు టెక్స్ట్‌ను ప్రవేశపెట్టే భాగాన్ని ట్యాప్ చేయండి. కర్సర్‌ని కదిలించడానికి హ్యాండిల్‌ని కదిలించండి."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "స్యామ్‌సంగ్ కీబోర్డ్ సెట్టింగులకు తెరుచేందుకు సెట్టింగుల చిహ్నాన్ని నొక్కండి."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "అక్షరాలు మరియు చిహ్నాలను టోగుల్ చేయడానికి మోడ్ బటన్ నొక్కండి."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "ఇన్‌పుట్ పద్ధతిని మార్చడానికి నోటిఫికేషన్ ప్యానెల్‌లో ఉన్న కీబోర్డ్ ఐకాన్‌ని ట్యాప్ చేయండి."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "ఎమోటీకాన్‌లను చొప్పించడానికి ఎమోటికాన్ చిహ్నాన్ని నొక్కండి."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "క్లిప్‌బోర్డ్ తెరవడానికి క్లిప్‌బోర్డ్ ఐకాన్ క్లిక్ చేయి."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "కీబోర్డును తెరవడానికి ఏదైనా టెక్స్ట్ ఫీల్డ్‌ని ట్యాప్ చేయండి."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "ఎమోటికాన్‌లు, వాయిస్, క్లిప్‌బోర్డ్, కీబోర్డ్ సెట్టింగ్‌లు లేదా విరామ చిహ్నాలను ఎంచుకోవడానికి అనుకూల కీని ట్యాప్ చేసి, పట్టుకోండి."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "వాయిస్, క్లిప్‌బోర్డ్ మరియు కీబోర్డ్ సెట్టింగ్‌లు మరియు విరామ గుర్తులను ఎంచుకోవడానికి అనుకూల కీని ట్యాప్ చేసి, పట్టుకోండి."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "దీన్ని ఎంచుకోవడానికి కొంత టెక్స్ట్‌ని ట్యాప్ చేసి, పట్టుకోండి. ఒక కర్సర్ హ్యాండిల్‌లో ఒక ప్రారంభ హ్యాండిల్ మరియు ఒక ముగింపు హ్యాండిల్ ఉంటాయి. టెక్స్ట్‌ను ఎంపిక చేసేందుకు రెండు హ్యాండిళ్లను కదిలించండి. కాపీ, కత్తిరింపు, పేస్ట్ మరియు ఇతర ఎంపికలను ఎంచుకునేందుకు హ్యాండిల్‌ను విడిచిపెట్టండి."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "కీబోర్డ్‌ని మూసివేయడానికి వెనుక కీని నొక్కండి."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "సెట్టింగ్‌లను తెరిచి, ఆపై భాష మరియు కీబోర్డ్ > కీబోర్డ్ > కీబోర్డ్ సెట్టింగ్‌లు > సూచనా టెక్స్ట్‌ని ఎంచుకోండి."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "కీబోర్డ్ సెట్టింగ్‌లలో రెండు లేదా అంత కంటే ఎక్కువ భాషలు ఎంచుకోబడి ఉంటే, వాటి మధ్య మారడానికి గ్లోబ్ కీని స్వైప్ చేయండి."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "వ్యక్తిగతీకరించిన డేటా ప్రారంభించబడి ఉంటే, జీమెయిల్ను, ట్విట్టర్, సందేశాలు మరియు పరిచయాలు నుండి స్యామ్‌సంగ్ కీబోర్డ్ మీ వ్రాత శైలిని తెలుసుకుంటుంది మరియు మీకు తగిన సూచనలు మరియు దిద్దుబాట్లును అందిస్తుంది."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "నిబంధనలు మరియు షరతులు"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "అన్ని"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "భాష"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "ఎంచుకోలేదు"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "ఆమోదించు"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "క్వర్టీ కీబోర్డ్"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "వ్యక్తిగతీకరించిన డేటా"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "నాకు తర్వాత కాల్ చెయ్యండి."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "వెబ్‌పేజీ మీ మొబైల్ పరికరం యొక్క స్క్రీన్‌లో తెరవబడుతుంది."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "ఈ ఫీచర్‌ని ఉపయోగించడానికి సరేని ట్యాప్ చేయండి. మీ మొబైల్ పరికరం నుండి వ్యక్తిగతీకరించిన డేటా %s ద్వారా ఉపయోగించబడుతుంది. మీరు మీ వ్యక్తిగత డేటాని నిల్వ చేయకూడదనుకుంటే, కీబోర్డ్ సెట్టింగ్‌లకు వెళ్లి, వ్యక్తిగతీకరించి డేటాని ప్రారంభించు ఎంపికను తీసివేయండి."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "డౌన్‌లోడ్ చేసిన భాషలు మినహా కీబోర్డ్ సెట్టింగ్‌లు రీసెట్ చేయబడతాయి."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "సందర్భానికి సరిపోయే అక్షరం స్వయంచాలకంగా నమోదు చేయబడుతుంది."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "వాయిస్ ఇన్‌పుట్‌ని ఉపయోగించడానికి స్పేస్ కీని ట్యాప్ చేసి, పట్టుకోండి."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "ఎంపికల జాబితాను వీక్షించడానికి ఎంపికల కీని ట్యాప్ చేసి, పట్టుకోండి."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "భాషలను మార్చడానికి ఎడమ లేదా కుడివైపుకి స్పేస్ బార్ స్వైప్ చేయండి."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "టెంప్లేట్‌లు లేవు"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "స్మార్ట్ ఇన్‌పుట్ విధులు"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "స్వీయంగా క్యాపిటలైజ్ చేయి"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "ప్రతి వాక్యం యొక్క మొదటి అక్షరాన్ని స్వయంచాలకంగా క్యాపిటలైజ్ చేస్తుంది."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "స్వీయ-అవరోధం"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "రీసెట్ చేయి"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "కీప్యాడ్ సెట్టింగులు రీసెట్ చేయబడుతాయి. కొనసాగాలా?"
 

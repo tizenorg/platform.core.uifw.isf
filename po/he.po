@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "לחצן אפשרויות"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "פונקציות הזנה חכמה"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "פתח"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "הצבת ריישיות אוט'"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "נבחר"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "אפס"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "סגור"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "מקלדת Qwerty"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "עזרה"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "ללא"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "כבוי"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "מופעל"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "הגדרות"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "הסר"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "מקלדת Azerty ב-Gear"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "מקלדת Qwerty ב-Gear"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "מקלדת Qwertz ב-Gear"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "פרצופים"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "חלון קופץ נסגר."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "חלון קופץ מוצג"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "מספרים"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "מקומות"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "שימוש בקלט רציף"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "שימוש בהשלמת מילים"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "שינוי שיטת הקלט"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "שינוי מצב הקלט"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "שינוי שפה"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "סגירת המקלדת"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "הזזת הסמן"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "פתיחת המקלדת"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "בחירת טקסט"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "שימוש ב’מקלדת Samsung‘"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "השלם או החלף את המילה שאתה מקליד במילה הסבירה ביותר בעת הקשה על מקש הרווח."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "הקש הקשה כפולה כדי לסגור את הרשימה."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "הקש פעמיים לעריכת שדה זה."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "הקש הקשה כפולה כדי לפתוח את הרשימה."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "רשימה ניתנת להרחבה"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "לחצן מופעל/כבוי"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "מקלדת של Samsung"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "הגדרות נוספות"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "עליך לבחור שפה אחת לפחות בהגדרות המקלדת."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "בחר שפות קלט"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "הגעת למגבלה של (%d)‏ שפות נתמכות."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "מקלדת"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "לא נבחר"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "מסומנת"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "תיבת סימון"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "מתי נוכל להיפגש?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "איפה אתה?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "אל תציג שוב"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "הצג במכשיר"
-
-msgid "IDS_ST_SK_OK"
-msgstr "אישור"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "ביטול"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "בחר תבנית"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "מה העניינים?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "מה נשמע?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "אדבר איתך בקרוב."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "אתקשר מאוחר יותר."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "שנה שפה"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "הצב אות רישית באופן אוטומטי בתחילת כל משפט."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "בוצע"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "כדי להפעיל החלפה אוטומטית, הפעל לפחות שפה אחת."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "הקש על מקש הרווח כדי לקבל את תיקון הטקסט החזוי או על מקש החץ כדי להשאיר את הטקסט כמו שהוא."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "מקלדת Qwertz"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "הגעת למגבלה של (%d)‏ שפות נתמכות."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "הבא"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "מקלדת Kana"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "מקלדת מגע של Kana"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "מקלדת בגרמנית"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "הזן"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "מקלדת Chunjiin"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "מקלדת בולגרית פונטית"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "מקלדת בולגרית"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "מקלדת Azerty"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "שים לב"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "מקלדת 3 x‏ 4"
@@ -211,29 +28,17 @@ msgstr "מקלדת 3 x‏ 4"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "רטט"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "החלקה על פני מקש הרווח"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "צלילים"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "איפוס הגדרות"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "החלקת מקלדת"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "בחר שפות קלט"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "תצוגה מקדימה של תו"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "החלפה אוטומטית"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "בצע פיסוק אוטומטי"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "הקלדה חכמה"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "משוב הקשת מקשים"
@@ -259,161 +64,14 @@ msgstr "הצטרף"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "עבור"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "ין"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "לוכסן שמאלי"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "כוכב לבן"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "לב לבן"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "מקלדת Qwerty של VNI"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "המקלדת הווירטואלית מופעלת."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "שימוש בבקרת סמן יבטל קלט רציף."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "שימוש בקלט רציף יבטל בקרת סמן."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "קו תחתון"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "מקלדת Qwerty בטורקית‬"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "מקלדת F בטורקית‬"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "כדי לשנות את השפה, החלק הצידה על פני מקש הרווח."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "כפול"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "טילדה"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "מקלדת Samsung לומדת את סגנון הכתיבה שלך ומנסה לחזות את המילה שברצונך להקליד בכך שהיא זוכרת את ההקלדות שלך. סיסמאות אינן נכללות בתכונה זו, אך פרטים אישיים, כגון מספרי כרטיס אשראי, יאוחסנו."
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "מקלדת Qwerty של טלקס"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "הקש כדי להשתמש במקלדת וירטואלית"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "לחץ לחיצה ארוכה על מקש זה כדי להציג את רשימת הסמלים. בחר את הרצוי והשתמש בו כקיצור דרך."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "מקלדת סמלים %1$d מתוך %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "סימנים"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "רווח"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "לוכסן"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "גרש"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "עליך לבחור שפה אחת לפחות בהגדרות המקלדת."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "הצג בועת תו גדולה בעת הקשה על מקש במקלדת QWERTY."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Shift נעול."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Shift פועל."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Shift כבוי."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "הגדרות"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "ספטמבר"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "נקודה ופסיק"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "סוגריים משולשים כפולים ימניים"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "מירכאות"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "סימן שאלה"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "’%s’ יוסרו ממילים שנלמדו."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "אפשרויות טקסט חזוי"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "השלמת מילים"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "פאונד"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "פלוס"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "קו ניצב"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "אחוז"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "סוגר רגיל פותח"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "סוגר מרובע פותח"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "סוגר מסולסל פותח"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "אוקטובר"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "לא נבחרו שפות."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "נובמבר"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "הזז את הסמן על ידי החלקת האצבע לרוחב המקלדת."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "מאי"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "מרץ"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "אותיות"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "קטן מ"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "סוגריים משולשים כפולים שמאליים"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "סוג מקלדת"
@@ -421,282 +79,21 @@ msgstr "סוג מקלדת"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "הגדרות מקלדת"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "יוני"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "יולי"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "ינואר"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "סימן שאלה הפוך"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "סימן קריאה הפוך"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "זוהה קלט ממקלדת החומרה."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "אם נתונים מותאמים אישית מופעלים, המקלדת של Samsung יכולה ללמוד את סגנון הכתיבה שלך מתוך Facebook, ‏Gmail, ‏Twitter, הודעות ואנשי הקשר שלך, ולהציע תחזיות ותיקונים המותאמים לך במיוחד"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "סולמית"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "גדול מ"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "סימן התאמה משני"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "החלק מעלה על מקש כדי להציג את הסמלים והתווים החלופיים."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "גע במקלדת במהירות כלפי מטה כדי להסתיר אותה."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "קלט של תנועת מגע"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "פברואר"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "סימן קריאה"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "אירו"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "שווה"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "הזן את הטקסט על-ידי החלקת האצבע על-פני המקלדת. תכונה זו ממוטבת לשימוש עם מקלדת Qwerty."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "הזן טקסט על ידי החלקת האצבע לאורך המקלדת."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Enter"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "הפעל נתונים מותאמים אישית"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "סמלי הבעה"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "נקודה"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "דולר"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "חלקי"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "מחק רווח"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "דצמבר"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "מקף"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "מפתח הניתן להתאמה אישית"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "בקרת סמן"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "סמל מטבע"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "הקלדה רציפה"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "פסיק"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "נקודתיים"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "סוגר רגיל"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "סוגר מרובע"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "סוגר מסולסל"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "לוח"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "גג"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "תצוגה מקדימה של תו"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "אותיות גדולות"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Backspace"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "לוכסן שמאלי"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "ריווח אוטומטי"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "הפיכה אוטומטית לאותיות גדולות"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "הוסף באופן אוטומטי רווחים בין מילים."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "הזן נקודה באופן אוטומטי על-ידי הקשה פעמיים על מקש הרווח."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "אות גדולה אוטומטית בתחילת מילה במשפט."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "שים לב"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "אוגוסט"
+msgid "IDS_ST_SK_OK"
+msgstr "אישור"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "כרוכית"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "ביטול"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "כוכבית"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "הגדרות נוספות"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "אפריל"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "סימן 'וגם'"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "לחצן להרחבת הרשימה"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "קלט קול"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "המקלדת מציעה פונקציות כגון קלט רציף והשלמת מילים."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "הקש על סמל הקול כדי להשתמש בקלט קול."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "הקש על שדה הזנת הטקסט כאשר המקלדת פתוחה כדי ש‏‫תו הסמן יופיע. הזז את תו הסמן להזזת הסמן."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "הקש על סמל ההגדרות כדי לפתוח את הגדרות מקלדת Samsung."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "הקש על לחצן המצב כדי לעבור בין תווים לסימנים."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "הקש על סמל המקלדת בחלונית ההתראות כדי לשנות את שיטת הקלט."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "הקש על סמל סמל ההבעה כדי להוסיף סמלי הבעה."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "הקש על סמל הלוח כדי לפתוח את הלוח."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "הקש על שדה טקסט כלשהו כדי לפתוח את המקלדת."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "לחץ לחיצה ארוכה על המקש הניתן להתאמה אישית כדי לבחור מבין סמלי ההבעה, הגדרות הקול, הלוח והמקלדת, או מסימני הפיסוק."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "לחץ לחיצה ארוכה על המקש הניתן להתאמה אישית כדי לבחור מבין הגדרות הקול, הלוח והמקלדת, וכן מסימני הפיסוק."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "‏‫הקש והחזק טקסט מסוים כדי לבחור בו. תו הסמן מורכב מתו התחלה ותו סיום. הזז את שני תווי הסמן כדי לבחור טקסט. שחרר את תו הסמן כדי לבחור העתקה, גזירה, הדבקה ואפשרויות אחרות."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "לחץ על מקש ’הקודם‘ כדי לסגור את המקלדת."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "פתח את ’הגדרות‘ ובחר באפשרות ’שפה ומקלדת‘ > ’מקלדת‘ > ’הגדרות מקלדת‘ > ’השלמת מילים‘."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "אם נבחרו שתי שפות או יותר בהגדרות המקלדת, הקש על מקש הגלובוס כדי לעבור ביניהן."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "כאשר התכונה 'נתונים מותאמים אישית' מופעלת, מקלדת Samsung יכולה ללמוד את סגנון הכתיבה שלך מתוך ‏Gmail, ‏Twitter, ’הודעות‘ ו’אנשי קשר‘, ולהציע תחזיות ותיקונים מותאמים במיוחד לך."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "תנאי שימוש"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "הכל"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "שפה"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "לא מסומנת"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "מסכים"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "מקלדת Qwerty"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "נתונים מותאמים אישית"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "התקשר אלי מאוחר יותר."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "דף אינטרנט זה ייפתח במסך המכשיר הנייד."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "הקש על ’אישור‘ כדי להשתמש בתכונה זו.  %s ישתמש גם בנתונים אישיים מהמכשיר הנייד שלך. אם אינך מעוניין שהנתונים האישיים שלך יישמרו, עבור אל הגדרות המקלדת ובטל את הסימון של הפריט ’הפעל נתונים מותאמים אישית‘."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "יתבצע איפוס של הגדרות המקלדת, למעט שפות שהורדו."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "תתבצע הזנה של האות המתאימה ביותר לפי ההקשר."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "לחץ לחיצה ארוכה על מקש הרווח כדי להשתמש בקלט קולי."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "לחץ לחיצה ארוכה על מקש האפשרויות כדי להציג רשימת אפשרויות."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "כדי להחליף שפות, החלק לשמאל או לימין על מקש הרווח."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "אין תבניות"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "פונקציות הזנה חכמה"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "הצבת ריישיות אוט'"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "הצב אות רישית באופן אוטומטי בתחילת כל משפט."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "פיסוק אוטומטי"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "אפס"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "הגדרות המקלדת יאופסו. להמשיך?"
 

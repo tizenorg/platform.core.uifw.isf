@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Радио бутон"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Функции за умно въвеждане"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Отвори"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Авто преобразув. в главни"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Избрани"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Нyлиране"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Затвори"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty клавиатура"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Помощ"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Няма"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Изключено"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Включено"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Настройки"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Маxни"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty клав. на Gear"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty клав. на Gear"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz клав. на Gear"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Лица"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Изскачащият прозорец е затворен."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Показан е изскачащ прозорец"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Номера"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Места"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Използване на непрекъснато въвеждане"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Използване на текст с предвиждане"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Промяна на метода на въвеждане"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Промяна на режима на въвеждане"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Промяна на езика"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Затваряне на клавиатурата"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Преместване на курсора"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Отваряне на клавиатурата"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Избиране на текст"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Изп. клавиат. на Samsung"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Попълнете или заменете думата, която въвеждате, с най-вероятната дума, като чукнете интервала."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Чукнете двукратно, за да затворите списъка."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Чукнете двукратно, за да редактирате това поле."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Чукнете двукратно, за да отворите списъка."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Разгъваем списък"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Бутон за включване/изключване"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Клавиатура Samsung"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Още настройки"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Трябва да изберете поне един език в настройките на клавиатурата."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Избер. езици на въвеждане"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Достигнат е максималният брой поддържани езици (%d)."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Клавиатура"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Не е избрано"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Отметнато"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Поле за отметка"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Кога може да се срещнем?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Къде си?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Не повтаряй"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Показ. устр."
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Отмени"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Избор на шаблон"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Как са нещата?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Какво става?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Ще се чуем скоро."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Ще ти се обадя по-късно."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Промяна на езика"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Правене на главна първа буква в началото на всяко изречение автоматично."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Готв"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "За да активирате автоматичната подмяна, активирайте поне един език."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Чукнете клавиша за интервал, за да приемете поправката на предсказания текст, или чукнете клавиша със стрелка, за да запазите текущия текст."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz клавиатура"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Достигнат е максималният брой поддържани езици (%d)."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "След."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Кана клавиатура"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Кана клавиат. с драсване"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Немска клавиатура"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Въведи"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin клавиатура"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Българска фонетична клавиатура"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Българска клавиатура"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty клавиатура"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Внимание"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 х 4 клавиатура"
@@ -211,29 +28,17 @@ msgstr "3 х 4 клавиатура"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Вибрация"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Плъзгане на интервала"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Звук"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Нyлиране на настройките"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Плъзгане на клавиатура"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Избер. езици на въвеждане"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Визуализация на символа"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Автоматична смяна"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Автоматична пунктуация"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Умно писане"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Обр. вр. при чукване на клавиш"
@@ -259,161 +64,14 @@ msgstr "Прис."
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Давай"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Йена"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Вон"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Бяла звезда"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Бяло сърце"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty клавиатура"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Виртуалната клавиатура е активирана."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Използването на контрола на курсора ще деактивира продължителното въвеждане."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Използването на продължителното въвеждане ще деактивира контрола на курсора."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Долна черта"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Турска Qwerty клавиатура"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Турска F клавиатура"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "За да промените езика, плъзнете хоризонтално през интервала."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Умножение"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Тилда"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Клавиатурата на Samsung научава вашия стил на писане и се опитва да предсказва какво искате да въведете, като помни какво въвеждате. Паролите ще бъдат изключени, но лични данни, като номера на кредитни карти, ще се съхраняват"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty клавиатура"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Чукнете, за да използвате виртуална клавиатура."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Чукнете и задръжте този бутон, за да видите списъка със символи. Изберете един, за да го използвате като бърза команда."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Клавиатура със символи %1$d от %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Символи"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Интервал"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Наклонена черта"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Единични кавички"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Трябва да изберете поне един език в настройките на клавиатурата."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Показване на голямо балонче на знака при чукване на клавиш от QWERTY клавиатура"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Клавишът Shift е заключен."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Клавишът Shift е включен."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Клавишът Shift е изключен."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Настройки"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "Септември"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Точка и запетая"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Десни ъглови кавички"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Кавички"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Въпросителен знак"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "„%s“ ще бъде премахната от научените думи."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Опции за текст с предвиждане"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Текст с предвиждане"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Паунд"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Плюс"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Вертикална черта"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Процент"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Отваряща скоба"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Отваряща квадратна скоба"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Отваряща скоба"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Октомври"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Няма избрани езици."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "Ноември"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Придвижете курсора, като плъзгате пръста си по клавиатурата."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Май"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Март"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Букви"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "По-малко от"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Леви ъглови кавички"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Тип клавиатура"
@@ -421,282 +79,21 @@ msgstr "Тип клавиатура"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Настройки на клавиатурата"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Юни"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Юли"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Януари"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Обратен въпросителен знак"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Обратен удивителен знак"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Вход открит от хардуерна клавиатура."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Ако са активирани персонализираните данни, клавиатурата Samsung може да се учи от вашия стил на писане, от Facebook, Gmail, Twitter, Съобщения и Записи, и да предлага предсказвания и поправки, избрани специално за вас"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Диез"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "По-голямо от"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Ляво ударение"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Драснете нагоре върху бутон, за да видите символите и алтернативните знаци."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Драснете клавиатурата надолу, за да я скриете."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Въвеждане с чукване"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Февруари"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Удивителен знак"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Евро"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Равно"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Въведете текст, като плъзнете пръста си по клавиатурата. Тази функция е оптимизирана за клавиатурата Qwerty."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Въведете текст, като плъзгате пръста си по клавиатурата."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Клавиш за въвеждане"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Активиране на персонализирани данни"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Емотикони"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Точка"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Долар"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Делено на"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Изтриване на интервал"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Декември"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Тире"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Персонализуем клавиш"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Контрол на курсора"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Знак за валута"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Непрекъснато въвеждане"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Запетая"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Двоеточие"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Затваряща скоба"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Затваряща квадратна скоба"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Затваряща кръгла скоба"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Системен буфер"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Двойно ударение"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Визуализация на символа"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Главна"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Backspace"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Обратно наклонена черта"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Автоматични интервали"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Автоматично преобразуване в главни"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Автоматично вмъкване на интервали между думите"
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Автоматично вмъкване на точка с двукратно чукване на клавиша за интервал"
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Автоматично главна първа буква в изречението"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Внимание"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Август"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Кльомба"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Отмени"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Звездичка"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Още настройки"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Април"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "И"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Бутон за разгъване на списъка"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Гласово въвеждане"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Клавиатурата предлага функции, като продължително въвеждане и текст с предвиждане."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Чукнете иконата за глас, за да използвате гласово въвеждане."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Чукнете върху полето за въвеждане, когато клавиатурата е отворена, за да накарате манипулатора да се появи. Преместете манипулатора, за да преместите курсора"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Чукнете иконата за настройки, за да отворите настройките за клавиатура на Samsung."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Натискайте бутона за режим, за да превключвате между знаци и символи."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Чукнете иконата за клавиатура в панела за известяване, за да промените метода на въвеждане."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Чукнете иконата за емотикона, за да вмъкнете емотикони."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Чукнете иконата за клипборд, за да отворите клипборда."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Чукнете текстово поле, за да отворите клавиатурата."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Чукнете и задръжте персонализуемия клавиш, за да изберете настройките за емотикони, глас, клипборд, клавиатура или пунктуационни знаци."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Чукнете и задръжте персонализуемия клавиш, за да изберете настройките за глас, клипборд и клавиатура и пунктуационни знаци."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Чукнете и задръжте текст, за да го изберете. Манипулаторът на курсора се състои от начален и краен манипулатор. Придвижете и двата манипулатора, за да изберете текст. Освободете манипулатора, за да изберете копиране, поставяне и други опции"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Натиснете клавиша назад, за да затворите клавиатурата."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Отворете Настройки, след което изберете Език и клавиатура > Клавиатура > Настройки на клавиатура > Текст с предвиждане."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Ако в настройките за клавиатурата са избрани два или повече езика, чукнете клавиша с глобуса, за да превключвате между тях."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Ако са активирани персонализираните данни, клавиатурата Samsung може да се учи от вашия стил на писане, от Gmail, Twitter, Съобщения и Контакти, и да предлага предсказвания и поправки, избрани специално за вас."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Правила и условия"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Всички"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Език"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Не са отметнати"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Съгласен"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty клавиатура"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Персонализирани данни"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Обади ми се по-късно."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Уеб страницата ще бъде отворена на екрана на мобилното ви устройство."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Докоснете OK, за да използвате тази функция. Персонализираните данни от мобилното ви устройство също ще се използват от %s. Ако не искате личните ви данни да се съхраняват, отидете в настройките на клавиатурата и махнете отметката от „Активиране на Персонализирани данни“."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Настройките на клавиатурата, с изключение на изтеглените езици, ще бъдат нулирани."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Буквата, която отговаря на контекста, ще бъде въведена автоматично."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Натиснете и задръжте клавиша за интервал, за да използвате гласово въвеждане."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Докоснете и задръжте клавиша за опции, за да видите списък с опции."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Плъзнете бутона за интервал наляво или надясно, за да смените езика."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Няма шаблони"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Функции за умно въвеждане"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Авто преобразув. в главни"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Правене на главна първа буква в началото на всяко изречение автоматично."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Автоматична пунктуация"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Нyлиране"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Настройките за клавиатурата ще бъдат нулирани. Продължаване?"
 

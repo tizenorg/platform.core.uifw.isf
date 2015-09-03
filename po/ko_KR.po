@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "라디오 버튼"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "스마트 입력 기능"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "열기"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "자동 대문자 전환"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "선택 완료"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "초기화"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "닫기"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "쿼티 키보드"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "도움말"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "설정 안 함"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "해제"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "사용"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "설정"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "제거"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty 키보드"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear 쿼티 키보드"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz 키보드"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "얼굴"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "팝업을 닫았습니다."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "팝업을 표시하였습니다."
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "숫자"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "장소"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "슬라이드 입력 사용하기"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "문구 자동 완성 사용하기"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "입력 방식 변경하기"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "입력 모드 변경하기"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "언어 변경하기"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "키보드 닫기"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "커서 이동하기"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "키보드 열기"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "텍스트 선택하기"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "삼성 키보드 사용하기"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "스페이스 키를 누르면 현재까지 입력된 단어에서 예측 가능한 단어로 자동 완성하거나 대체합니다."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "목록을 닫으려면 두 번 누르세요."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "이곳의 내용을 편집하려면 두 번 누르세요."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "목록을 열려면 두 번 누르세요."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "확장 가능 목록"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "사용/해제 버튼"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "삼성 키보드"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "설정 더보기"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "키보드 설정에서 언어를 최소 1개 이상 선택하세요."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "입력 언어 선택"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "최대 지원 언어 수(%d)에 도달하였습니다."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "키보드"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "선택하지 않았습니다."
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "선택된 상태입니다."
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "체크박스"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "언제 만날까요?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "어디에 있나요?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "다시 보지 않기"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "디바이스로 보기"
-
-msgid "IDS_ST_SK_OK"
-msgstr "확인"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "취소"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "상용구 선택"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "어떻게 지내요?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "무슨 일이에요?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "나중에 이야기해요."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "나중에 전화할게요."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "언어 변경"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "문장의 첫 글자를 대문자로 자동 변환합니다."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "완료"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "[문구 자동 대체]를 실행하려면 언어를 최소 1개 이상 선택하세요."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "자동 완성 텍스트를 입력하려면 스페이스 키를, 현재 문구를 유지하려면 화살표 키를 누르세요."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz 키보드"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "최대 지원 언어 수(%d)에 도달하였습니다."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "다음"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana 키보드"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana 드래그 키보드"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "독일어 키보드"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "줄 바꿈"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "천지인 키보드"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "불가리아어 표음 키보드"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "불가리아어 키보드"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty 키보드"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "주의"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3x4 키보드"
@@ -211,29 +28,17 @@ msgstr "3x4 키보드"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "진동"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "입력 언어 변경"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "소리"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "설정 초기화"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "슬라이드 동작 사용"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "입력 언어 선택"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "글자 미리보기"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "문구 자동 대체"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "마침표 자동 입력"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "스마트 입력"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "키 입력 시 반응"
@@ -259,161 +64,14 @@ msgstr "참여"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "이동"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "엔"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "원"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "흰색 별"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "흰색 하트"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI 쿼티 키보드"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "가상 키보드를 실행하였습니다."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "[키보드에서 커서 이동]을 사용하면 [슬라이드 입력]이 해제됩니다."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "[슬라이드 입력]을 사용하면 [키보드에서 커서 이동]이 해제됩니다."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "밑줄"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "터키어 쿼티 키보드"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "터키어 F 키보드"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "스페이스 키를 수평으로 드래그하여 입력 언어를 변경합니다."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "곱하기"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "물결표"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "삼성 키보드는 사용자가 입력한 내용을 기억함으로써 사용자의 문체를 학습하여 사용자가 입력하려는 내용을 예측해서 제시합니다. 비밀번호는 학습되지 않지만, 신용카드 번호와 같은 개인정보는 학습될 수 있습니다."
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex 쿼티 키보드"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "가상 키보드를 사용하려면 누르세요."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "이 버튼을 길게 눌러 기호 목록을 열고, 바로가기로 사용할 기호를 선택하세요."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "특수문자 키보드 %2$d의 %1$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "기호"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "띄어쓰기"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "슬래시"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "작은따옴표"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "키보드 설정에서 언어를 최소 1개 이상 선택하세요."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "쿼티 키보드를 누르면 선택한 문자를 크게 표시합니다."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "시프트가 잠겼습니다."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "시프트가 켜졌습니다."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "시프트가 꺼졌습니다."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "설정"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "9월"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "세미콜론"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "닫는 겹꺾쇠표"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "큰따옴표"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "물음표"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ 단어를 단어장에서 제거합니다."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "문구 자동 완성 옵션"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "문구 자동 완성"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "파운드"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "더하기"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "세로줄"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "퍼센트"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "여는 소괄호"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "여는 대괄호"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "여는 중괄호"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "10월"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "선택한 언어가 없습니다."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "11월"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "손가락으로 키보드 위를 움직여 커서를 이동합니다."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "5월"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "3월"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "문자"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "왼쪽 부등호"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "여는 겹꺾쇠표"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "키보드 형식"
@@ -421,282 +79,21 @@ msgstr "키보드 형식"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "키보드 설정"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "6월"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "7월"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "1월"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "역물음표"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "역느낌표"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "하드웨어 키보드에서 입력을 감지하였습니다."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "[개인 데이터]를 실행하면 삼성 키보드가 Facebook, Gmail, Twitter, 연락처에서 사용자의 문체를 기억하여 사용자에게 최적화된 예측 단어 및 교정 단어를 제공합니다."
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "샵"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "오른쪽 부등호"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "그레이브 액센트"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "손가락으로 키를 밀어 올려 대체할 수 있는 문자 또는 핵심 기호를 입력합니다."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "키보드를 숨기려면 아래로 끌어 내리세요."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "플릭 입력"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "2월"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "느낌표"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "유로"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "등호"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "키보드 위에서 손가락으로 선을 그리듯이 움직여 문자를 입력합니다. 쿼티 키보드에 최적화된 기능입니다."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "키보드에서 손가락을 움직여 텍스트를 입력합니다."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "엔터"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "개인 데이터 사용"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "이모티콘"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "마침표"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "달러"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "나누기"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "띄어쓰기 삭제"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "12월"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "대시"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "직접 설정 키"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "커서 이동"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "화폐 기호"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "단어 입력"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "쉼표"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "콜론"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "닫는 소괄호"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "닫는 대괄호"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "닫는 중괄호"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "클립보드"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "캐럿"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "문자 미리보기"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "대문자"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "지우기"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "역슬래시"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "자동 띄어쓰기"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "자동 대문자 전환"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "단어 사이에 자동으로 공백을 삽입합니다."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "스페이스 키를 두 번 누르면 마침표가 자동 삽입됩니다."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "문장의 첫 글자를 대문자로 자동 전환합니다."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "주의"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "8월"
+msgid "IDS_ST_SK_OK"
+msgstr "확인"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "앳"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "취소"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "별표"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "설정 더보기"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "4월"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "앤드"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "목록을 확대하는 버튼입니다."
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "음성 입력"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "키보드는 단어 입력, 문구 자동 완성 등의 기능을 제공합니다."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "음성 입력을 사용하려면 음성 아이콘을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "핸들이 나타나게 하려면 키보드가 열려 있는 상태에서 텍스트 입력란을 누르세요. 핸들을 움직여 커서를 이동하세요."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "[삼성 키보드 설정]을 실행하려면 설정 아이콘을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "문자나 기호로 전환하려면 모드 버튼을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "입력 방식을 변경하려면 알림창에서 키보드 아이콘을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "이모티콘을 삽입하려면 이모티콘 아이콘을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "클립보드를 열려면 클립보드 아이콘을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "키보드를 열려면 문자 입력창을 누르세요."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "직접 설정 키를 길게 눌러 이모티콘, 음성, 클립보드, 키보드 설정, 문장 부호 등을 선택할 수 있습니다."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "직접 설정 키를 길게 눌러 음성, 클립보드, 키보드 설정, 문장 부호 등을 선택합니다."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "선택하려는 텍스트를 길게 누르세요. 커서 핸들은 시작 핸들과 종료 핸들로 구성되어 있습니다. 두 개의 핸들을 움직여 문자를 선택하세요. 핸들을 놓은 후 복사, 잘라내기, 붙여넣기, 기타 옵션을 선택하세요."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "키보드를 닫으려면 뒤로가기 버튼을 누르세요."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "[설정]을 실행한 후 [언어 및 키보드] > [키보드] > [키보드 설정] > [문구 자동 완성]을 선택하세요."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "키보드 설정에서 언어를 2개 이상 선택한 경우, 지구본 버튼을 눌러 언어를 전환하세요."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "[개인 데이터]를 실행하면 삼성 키보드가 Gmail, Twitter, 메시지, 연락처에서 사용자의 문체를 학습하여 사용자에게 최적화된 예측 단어 및 교정 단어를 제공합니다."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "이용약관"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "전체"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "언어"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "선택 안 됨"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "동의"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "쿼티 키보드"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "개인 입력 데이터 활용"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "나중에 전화해 주세요."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "웹페이지를 모바일 디바이스 화면에서 엽니다."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "이 기능을 사용하려면 [확인]을 누르세요. 모바일 디바이스의 개인 데이터는 %s에서도 사용됩니다. 개인 데이터가 저장되는 것을 원하지 않으면, 키보드 설정에서 [개인 데이터 사용]을 해제하세요."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "다운로드한 언어 설정을 제외한 키보드 설정을 초기화합니다."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "문맥에 맞는 문자를 자동 입력합니다."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "음성 입력을 사용하려면 스페이스 키를 길게 누르세요."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "옵션 목록을 보려면 옵션 버튼을 길게 누르세요."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "삼성 키보드는 이전에 입력된 텍스트를 기반으로 문구 자동 대체 기능을 강화하고, 더 정확한 예측 단어를 제공합니다. 비밀번호, 신용카드 번호 등의 보안정보는 입력 스타일 분석에서 제외됩니다."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "언어를 변경하려면 스페이스 키를 왼쪽 또는 오른쪽으로 움직이세요."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "상용구가 없습니다"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "스마트 입력 기능"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "자동 대문자 전환"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "문장의 첫 글자를 대문자로 자동 변환합니다."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "자동 마침표 입력"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "초기화"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "키패드 설정을 초기화합니다. 계속할까요?"
 

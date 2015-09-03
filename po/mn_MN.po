@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Радио товч"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Ухаалаг бичих функцүүд"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Нээх"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Үсэг автоматаар том болго"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Сонгосон"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Дахин тохируулах"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Хаах"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty гар товчлуур"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Тусламж"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Алга"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Унтраах"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Асаах"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Тохиргоо"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Арилгах"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear-ийн Azerty гар"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear-ийн Qwerty гар"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear-ийн Qwertz гар"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Нүүрнүүд"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Жижиг цонх хаагдсан."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Жижиг цонх гарч ирлээ"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Тоонууд"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Газрууд"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Тасралтгүй оролт ашиглах"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Урьдчилан таамаглах бичвэр ашиглах"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Оруулах аргыг өөрчлөх"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Оруулах горимыг өөрчлөх"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Хэлийг өөрчлөх"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Гарыг хаах"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Курсорыг зөөх"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Гарыг нээх"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Бичвэр сонгох"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Samsung гар товчлр ашигла"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Таныг зай авдаг хөндөл товшиход байж болох хамгийн их магадлалтай үгээр таны шивж буй үгийг гүйцээх буюу солих"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Жагсаалт хаахын тулд хоёр товш."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Энэ талбарыг засварлахын тулд хоёр товш."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Жагсаалт нээхийн тулд хоёр товш."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Дэлгэдэг жагсаалт"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Асаах/унтраах товч"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsung товчлуур"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Илүү их тохиргоо"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "You must select at least one language in keyboard settings."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Оруулах хэлнүүдийг сонгох"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Дэмжих хэлний (%d) тооны дээд хязгаарт хүрсэн."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Гар товчлуур"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Сонгоогүй"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Тэмдэглэсэн"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Тэмдэглэх нүд"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Хэзээ уулзаж болох вэ?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Та хаана байна вэ?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Бүү давт"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Төх.д харуул"
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Цуцлах"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Загвар сонгох"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Сонин сайхан юу байна?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Юу байна?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Би тантай удахгүй ярина."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Би дараа залгая."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Хэл өөрчлөх"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Өгүүлбэр бүрийн эхний үсгийг автоматаар том болго."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Дууслаа"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Автомат орлуулалтыг идэвхжүүлэхийн тулд дор хаяж нэг хэл идэвхжүүл"
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Урьдчилан таамагласан бичвэрийн засварыг зөвшөөрөхийн тулд зай авах товчлуурыг товших буюу одоогийн бичвэрийг хадгалахын тулд сумны товчлуурыг товш."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz гар товчлуур"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Дэмжих хэлний (%d) тооны дээд хязгаарт хүрсэн."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Дараа"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana гар товчлуур"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana хуруу гулс. товчлуур"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Герман гар товчлуур"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Орох"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin гар товчлуур"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Болгар авиан гар товчлуур"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Болгар гар товчлуур"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty гар товчлуур"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Хэнд"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 keyboard"
@@ -211,29 +28,17 @@ msgstr "3 x 4 keyboard"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Чичиргээ"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Зай авдаг хөндлийг шудрах"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Дуу"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Тохир. хэвэнд нь оруулах"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Гар шудрах"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Оруулах хэлнүүдийг сонгох"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Тэмдэгтийг урьдчилан хар"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Автомат орлуулалт"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Auto punctuate"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Ухаалаг шивэлт"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Товчлуур товших хариу үйлдэл"
@@ -259,161 +64,14 @@ msgstr "Нэгдэх"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Явах"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Иен"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Вон"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Цагаан од"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Цагаан зүрх"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty гар товчлуур"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Виртуал гар товчлуур идэвхжүүлсэн"
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Курсорын удирдлагыг ашиглахад тасралтгүй оролтыг идэвхгүй болгоно"
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Тасралтгүй оролтыг ашиглахад курсорын удирдлагыг идэвхгүй болгоно"
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Доогуур зураас"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Турк Qwerty гар товчлуур"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Турк F гар товчлуур"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Хэлийг солихын тулд зай авдаг хөндөлд хөндлөн хэвтээ чиглэлд шудар"
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Үржих"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Долгион"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsung товчлуур таны бичих хэв маягийг таньж, бичсэн зүйлийг санах замаар урьдчилан таамаглахыг оролдоно. Нууц үгийг санахгүй ч картын дугаар гэх мэт хувийн мэдээллийг санах болно."
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty гар товчлуур"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Виртуал гар товчлуур ашиглахын тулд товш"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Тэмдгийн жагсаалтыг харахын тулд энэ товчлуурыг товшиж барь. Холбоосоор ашиглахын тулд нэгийг нь сонго."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Тэмдэглэгээний гар товчлуур %1$d / %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Тэмдгүүд"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Зай"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Урагшаа налуу зураас"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Дан хашилт"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "You must select at least one language in keyboard settings."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Qwerty гар товчлуур дээрх нэг товчлуурыг товшиход тэмдэгтийн том хөөс харуул"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Shift түгжээтэй байна."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Shift идэвхтэй байна."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Shift идэвхгүй байна."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Тохиргоо"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "9-р сар"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Цэг таслал"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Баруун талын гурвалжин хашилт"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Хашилт"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Асуултын тэмдэг"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "Сурсан үгсээс ‘%s’-г арилгана"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Урьдчилан таах бичвэрийн сонголтууд"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Текст таамаглах"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Фунт"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Нэмэх"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Босоо зураас"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Хувь"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Нээх дугуй хаалт"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Нээх дөрвөлжин хаалт"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Нээх нуман хаалт"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "10-р сар"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Сонгосон хэл алга."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "11-р сар"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Гар товчлуур дээгүүр хуруугаа гулсуулж курсорыг хөдөлгө"
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "5-р сар"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "3-р сар"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Үсэгнүүд"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Бага"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Зүүн талын гурвалжин хашилт"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Товчлуурт самбарын төрөл"
@@ -421,282 +79,21 @@ msgstr "Товчлуурт самбарын төрөл"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Гар товчлуурын тохиргоо"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "6-р сар"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "7-р сар"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "1-р сар"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Уруу харсан асуултын тэмдэг"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Уруу харсан анхаарлын тэмдэг"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Гар товчлуураас оролт илэрсэн."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Хэрэв тохируулан өөрчилсөн өгөгдөл идэвхжсэн бол, Samsung гар товчлуур нь Facebook, Gmail, Twitter, Зурвас болон Харилцагчдаас таны бичих хэв маягийг суралцах ба танд тохирсон таамаглалууд болон залруулгуудыг санал болгоно"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Чагт"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Их"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Өргөлтийн тэмдэг"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Тэмдэг болон хувилбар тэмдэгтүүдийг харахын тулд товчлуур дээр дээшээ гулсуул."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Flick the keyboard down to hide it."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Гулсуулах оролт"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "2-р сар"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Анхаарлын тэмдэг"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Евро"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Тэнцүү"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Гар товчлуур дээр хуруугаа гулсуулах замаар текст оруулна. Энэ үйлдлийг Qwerty товчлуур дээр ашиглах боломжтой."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Гар товчлуур дээгүүр хуруугаа гулсуулж бичвэр оруул"
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Оруулах"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Хувийн мэдээллийг идэвхжүүлэх"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Сэтгэл хөдлөлийн тэмдэгнүүд"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Цэг"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Доллар"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Хуваах"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Зай устгах"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "12-р сар"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Зураас"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Тохируулан өөрчлөх товчлуур"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Курсорын удирдлага"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Валютын тэмдэг"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Тасралтгүй оролт"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Таслал"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Тодорхойлох цэг"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Хаах дугуй хаалт"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Хаах дөрвөлжин хаалт"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Хаах нуман хаалт"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Түр санах ой"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Гурвалжин өргөлт"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Тэмдэгтийг урьдчилан хар"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Том үсэг"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Backspace"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Хойшоо налуу зураас"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Автомат зай авалт"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Автоматаар том үсгээр бичих"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Үгсийн хооронд автоматаар зай авна"
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Зай авдаг хөндлийг хоёр удаа товшиж автоматаар цэг оруул"
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Өгүүлбэрийн эхний үсгийг автоматаар том болго"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Хэнд"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "8-р сар"
+msgid "IDS_ST_SK_OK"
+msgstr "Батлах"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Хулгана"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Цуцлах"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Од"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Илүү их тохиргоо"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "4-р сар"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Ба"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Жагсаалт дэлгэх товч"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Дуу хоолойн оролт"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Гар товчлуур нь тасралтгүй оролт болон урьдчилан таамаглах бичвэр зэрэг функцууд санал болгоно."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Дуу оруулах тохиолдолд дууны тэмдэг дээр товшино."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Гар товчлуур нээлттэй үед бичвэр оруулах талбар дээр товшиж бариулыг гаргаж ир. Курсорыг хөдөлгөхийн тулд бариулыг хөдөлгө."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Тохиргооны дүрсэн дээр товшиж Samsung гар товчлуурын тохиргоог нээ."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Горимын товчлуур дээр дарж тэмдэгтүүд болон тэмдэг хооронд шилж."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Өгөгдөл оруулах аргыг солихдоо сануулах самбар дээрх гар товчлуурын тэмдэг дээр товшино."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Эмотикон оруулахын тулд эмотиконы дүрс товш."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Түр санах ойн дүрсийг товшиж түр санах ойг нээ."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Гар товчлуур автоматаар нээхийн тулд аль нэг бичвэрийн талбарыг товш."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Эмотикон, дуу хоолой, түр санах ой, гар товчлуурын тохиргоо, эсвэл цэг тэмдгийг сонгохдоо тусгайлан өөрчлөх боломжтой товчийг дарж барь."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Дуу хоолой, түр санах ой, гар товчлуурын тохиргоо, цэг тэмдгийг сонгохдоо тусгайлан өөрчлөх боломжтой товчийг дарж барь."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Хэсэг бичвэр сонгохын тулд товшиж барь. Курсорын бариул нь эхлэх бариул ба дуусах бариулаас бүрдэнэ. Бичвэр сонгохдоо хоёр бариулыг хоёуланг нь хөдөлгө. Хуулах, хайчлах, наах болон бусад сонголтыг сонгохын тулд бариулыг сул тавь."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Гар товчлуурыг хаахдаа буцаах товчлуурыг дарна."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Тохиргоог нээгээд Хэл ба гар товчлуур > Гар товчлуур > Гар товчлуурын тохиргоо > Урьдчилан таамаглах бичвэрийг сонго."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Хэрэв гар товчлуурын тохиргоонд хоёр буюу түүнээс олон хэл сонговол, тэдгээрийн хооронд шилжихдээ бөмбөрцөгтэй товчлуурыг товш."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Хэрэв тохируулан өөрчилсөн өгөгдөл идэвхжсэн бол, Samsung гар товчлуур нь Gmail, Twitter, Зурвас болон Харилцагчдаас таны бичих хэв маягийг суралцах ба танд тохирсон таамаглалууд болон залруулгуудыг санал болгоно."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Нөхцөл, болзлууд"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Бүгд"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Хэл"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Тэмдэглээгүй"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Зөвшөөрнө"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty гар товчлуур"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Өөриймшүүлсэн өгөгдөл"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Call me later."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Вэб хуудас таны мобайл төхөөрөмжийн дэлгэц дээр нээгдэнэ."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Энэ функцийг ашиглахын тулд OK-г товш. Таны мобайл төхөөрөмжийн өөриймшүүлсэн өгөгдлийг %s мөн ашиглана. Хэрэв та хувийн өгөгдлөө хадгалуулахыг хүсэхгүй байвал, гарны тохиргоо руу очиж, Өөриймшүүлсэн өгөгдөл идэвхжүүлэхийг тэмдэглэснээ боль."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Татсан хэлнүүдээс бусад гарны тохиргоог дахин тохируулна."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Хам сэдэвт таарах захиаг автоматаар оруулна."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Дуу хоолойн оролт ашиглахын тулд зай авдаг товчийг товшиж барь."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Сонголтуудын жагсаалтыг харахын тулд сонголтын товчийг товшиж барь."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Хэл солихын тулд зай авдаг хөндлийг зүүн эсвэл баруун тийш шудар."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Загвар алга"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Ухаалаг бичих функцүүд"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Үсэг автоматаар том болго"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Өгүүлбэр бүрийн эхний үсгийг автоматаар том болго."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Автоматаар цэглэх"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Дахин тохируулах"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Keypad settings will be reset. Continue?"
 

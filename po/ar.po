@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "زر الراديو"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "وظائف الإدخال الذكي"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "فتح"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "تكبير تلقائي"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "تم التحديد"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "إعادة تعيين"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "إغلاق"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "لوحة مفاتيح Qwerty"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "مساعدة"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "لا شيء"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "غير مفعل"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "مفعل"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "الضبط"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "حذف"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Gear‏ من نوع Azerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Gear‏ من نوع Qwerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Gear‏ من نوع Qwertz"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "وجوه"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "تم إغلاق النافذة المنبثقة."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "يتم عرض نافذة منبثقة"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "الأرقام"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "الأماكن"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "استخدام الإدخال المستمر"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "استخدام النص التنبؤي"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "تغيير طريقة الإدخال"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "تغيير وضع الإدخال"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "تغيير اللغة"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "إغلاق لوحة المفاتيح"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "تحريك المؤشر"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "فتح لوحة المفاتيح"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "تحديد النص"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "استخدام لوحة مفاتيح Samsung"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "أكمل الكلمة التي تكتبها أو استبدلها بأكثر الكلمات احتمالاً عند النقر فوق شريط المسافة."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "انقر نقرا مزدوجا لإغلاق القائمة."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "انقر نقرا مزدوجا لتعديل هذا الحقل."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "انقر نقرا مزدوجا لفتح القائمة."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "قائمة قابلة للتوسيع"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "زر تشغيل/إيقاف تشغيل"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "لوحة مفاتيح Samsung"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "المزيد من الضبط"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "يجب تحديد لغة واحدة على الأقل في إعدادات لوحة المفاتيح."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "تحديد لغات الإدخال"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "تم بلوغ الحد الأقصى لعدد اللغات المدعومة (%d)."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "لوحة المفاتيح"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "لم يتم اختياره"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "محدد"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "مربع التحديد"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "متى يمكننا اللقاء؟"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "أين أنت؟"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "عدم التكرار"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "عرض على الجهاز"
-
-msgid "IDS_ST_SK_OK"
-msgstr "موافق"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "إلغاء"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "تحديد قالب"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "كيف تسير الأمور؟"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "ما أخبارك؟"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "سأتحدث معك قريبا."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "سأتصل بك لاحقا."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "تغيير اللغة"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "تكبير الحرف الأول من كل جملة تلقائيًا."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "تمت"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "لتفعيل الاستبدال التلقائي‬، قم بتفعيل لغة واحدة على الأقل."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "انقر فوق مفتاح المسافة لقبول تصحيح النص المُتوقّع أو انقر فوق مفتاح السهم لإبقاء النص الحالي."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Qwertz"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "تم بلوغ الحد الأقصى لعدد اللغات المدعومة (%d)."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "تالي"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "لوحة مفاتيح Kana"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "لوحة مفاتيح Kana flick"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "لوحة المفاتيح الألمانية"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "إدخال"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Chunjiin"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "لوحة مفاتيح صوتية بلغارية"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "لوحة مفاتيح بلغارية"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Azerty"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "انتباه"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "لوحة مفاتيح 4 × 3"
@@ -211,29 +28,17 @@ msgstr "لوحة مفاتيح 4 × 3"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "الاهتزاز"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "سحب شريط المسافة"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "الصوت"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "إعادة ضبط الإعدادات"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "سحب لوحة المفاتيح"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "تحديد لغات الإدخال"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "معاينة الحرف"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "استبدال تلقائي"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "وضع علامات ترقيم تلقائيا"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "الكتابة الذكية"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "ملاحظات نقر المفاتيح‬"
@@ -259,161 +64,14 @@ msgstr "ضم"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "انتقال"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "ين"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "وون"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "نجمة بيضاء"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "قلب أبيض"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "لوحة مفاتيح VNI Qwerty"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "تم تفعيل لوحة المفاتيح الظاهرية."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "سيؤدي استخدام ميزة التحكم بالمؤشر إلى إلغاء تفعيل الإدخال المستمر‬."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "سيؤدي استخدام الإدخال المستمر إلى إلغاء تفعيل التحكم بالمؤشر."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "علامة التسطير السفلي"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "لوحة مفاتيح Qwerty التركية"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "لوحة مفاتيح F التركية"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "لتغيير اللغة، ‏‫‏‫اسحب أفقيا عبر شريط المسافة."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "الأوقات"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "التلدة"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "تتعرف لوحة مفاتيح Samsung على نمط الكتابة وتحاول التنبؤ بما تريد كتابته من خلال تذكر ما تدخله. سيتم استبعاد كلمات المرور، ولكن سيتم تخزين المعلومات الشخصية، مثل أرقام بطاقات الائتمان"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "لوحة مفاتيح Qwerty الخاصة بالتلكس"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "انقر لاستخدام لوحة المفاتيح الظاهرية"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "انقر مع الاستمرار فوق هذا المفتاح لرؤية قائمة الرموز. حدد رمزًا لاستخدامه كاختصار."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "لوحة مفاتيح الرموز %1$d من %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "رموز"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "مسافة"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "شرطة"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "اقتباس واحد"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "يجب تحديد لغة واحدة على الأقل في إعدادات لوحة المفاتيح."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "عرض فقاعة ذات أحرف كبيرة عند النقر فوق مفتاح بلوحة مفاتيح QWERTY."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "تم قفل مفتاح التحويل."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "مفتاح التحويل قيد التنشيط."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "مفتاح التحويل قيد إيقاف التشغيل."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "الضبط"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "٠‎٩"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "نقطة وفاصلة"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "اقتباسات الزاوية اليمنى"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "اقتباسات"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "علامة استفهام"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "ستتم إزالة ’%s’‬ من الكلمات التي تم التعرف عليها."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "خيارات النص التنبؤي"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "نص تنبؤي"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "جنيه"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "المزيد"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "أنبوب"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "بالمئة"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "أقواس الفتح"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "قوس الفتح"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "قوس الفتح"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "١‎٠"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "لم يتم تحديد أية لغات."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "نوفمبر"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "حرك المؤشر من خلال سحب الإصبع عبر لوحة المفاتيح."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "مايو"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "٠‎٣"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "الحروف"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "أقل من"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "اقتباسات الزاوية اليسرى"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "نوع لوحة المفاتيح"
@@ -421,282 +79,21 @@ msgstr "نوع لوحة المفاتيح"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "إعدادات لوحة المفاتيح"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "٠‎٦‎"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "٠‎٧"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "٠‎١‎"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "علامة استفهام مقلوبة"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "علامة تعجب مقلوبة"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "تم اكتشاف الإدخال من لوحة مفاتيح الجهاز."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "في حالة تفعيل البيانات المخصصة، تستطيع لوحة مفاتيح Samsung التعرف على أسلوب الكتابة، من Facebook وGmail وTwitter والرسائل وجهات الاتصال وعرض التنبؤات والتصحيحات المخصصة لك"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "هاش"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "أكبر من"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "نبر الإطالة"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "حرك لأعلى على أحد المفاتيح لعرض الرموز والأحرف البديلة."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "حرك لوحة المفاتيح لأسفل لإخفائها."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "الإدخال بالتحريك"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "٠‎٢‎"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "علامة تعجّب"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "يورو"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "يساوي"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "أدخل النص بتمرير الإصبع عبر لوحة المفاتيح. يتم تحسين هذه الميزة للوحة مفاتيح Qwerty."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "أدخل النص من خلال سحب الإصبع عبر لوحة المفاتيح."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "إدخال"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "تفعيل البيانات المخصصة"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "أيقونات التعبير"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "نقطة"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "دولار"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "مقسومًا على"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "حذف مسافة"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "١‎٢"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "شرطة"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "المفتاح القابل للتخصيص"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "التحكم بالمؤشر"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "علامة العملة"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "إدخال مستمر"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "فاصلة"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "علامة النقطتين"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "أقواس إغلاق"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "قوس الإغلاق"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "قوس الإغلاق"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "الحافظة"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "إشارة المدّ"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "معاينة الحرف"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "حرف كبير"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "مسافة للخلف"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "شرطة مائلة للخلف"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "تباعد تلقائي"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "تكبير تلقائي"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "أدخل المسافات بين الكلمات تلقائيا."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "أدخل نقطة توقف تلقائيا عبر لمس شريط المسافة لمرتين."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "قم بتكبير الحرف الأول من الجملة تلقائيا."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "انتباه"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "٠‎٨"
-
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "عند"
-
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "علامة النجمة"
-
-msgid "IDS_IME_BODY_APRIL"
-msgstr "٠‎٤"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "و"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "زر لتوسيع القائمة"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "دخل الصوت"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "تقدم لوحة المفاتيح وظائف مثل الإدخال المتواصل والنص التنبئي‬."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "انقر فوق رمز الصوت لاستخدام إدخال الصوت."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "انقر فوق حقل إدخال النص أثناء فتح لوحة المفاتيح لإظهار المقبض. حرك المقبض لتحريك المؤشر."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "انقر فوق رمز الإعدادات لفتح إعدادات لوحة مفاتيح Samsung‬."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "اضغط زر الوضع لتبديل الأحرف والرموز."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "انقر فوق رمز لوحة المفاتيح في لوحة الإخطارات لتغيير طريقة الإدخال."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "انقر فوق الرمز التعبيري لإدراج رموز تعبيرية‬."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "انقر فوق رمز الحافظة‬ لفتح الحافظة‬."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "اضغط على أي حقل نصي لفتح لوحة المفاتيح."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "انقر مع الاستمرار فوق ‏‫المفتاح القابل للتخصيص لتحديد إعدادات الرموز التعبيرية‬ أو الصوت أو الحافظة أو لوحة المفاتيح أو علامات الترقيم."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "انقر مع الاستمرار فوق المفتاح القابل للتخصيص لتحديد إعدادات الصوت والحافظة ولوحة المفاتيح وعلامات الترقيم."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "انقر باستمرار فوق جزء من النص لتحديده. يتكون مقبض رأس المؤشر من مقبض بدء ومقبض انتهاء. حرك كلا المقبضين لتحديد النص. حرر المقبض لتحديد خيارات النسخ والقص واللصق وخيارات أخرى."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "اضغط على مفتاح الرجوع لإغلاق لوحة المفاتيح."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "افتح الضبط، ثم حدد اللغة ولوحة المفاتيح > لوحة المفاتيح > ضبط لوحة المفاتيح > ‏‫نص تنبؤي‬."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "إذا تم تحديد لغتين أو أكثر في ضبط لوحة المفاتيح، انقر فوق مفتاح الكرة الأرضية للتبديل بينها."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "في حال تفعيل البيانات المخصصة، تستطيع لوحة مفاتيح Samsung التعرف على أسلوب الكتابة من Gmail وTwitter والرسائل وجهات الاتصال وعرض التنبؤات والتصحيحات المخصصة لك."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "البنود والشروط"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "الكل"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "اللغة"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "غير محدد"
-
-msgid "IDS_ST_BUTTON_AGREE"
+msgid "IDS_ST_SK_OK"
 msgstr "موافق"
 
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "لوحة مفاتيح Qwerty"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "إلغاء"
 
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "البيانات المخصصة"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "المزيد من الضبط"
 
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "اتصل بي فيما بعد."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "سيتم فتح صفحة الويب على شاشة الجهاز المحمول."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "انقر فوق موافق لاستخدام هذه الميزة. سيتم أيضاً استخدام البيانات المخصصة من هاتفك المحمول من قبل %s. إذا كنت لا تريد تخزين بياناتك الشخصية، انتقل إلى ضبط لوحة المفاتيح وقم بإلغاء تحديد خيار تفعيل البيانات المخصصة."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "ستتم إعادة ضبط ضبط لوحة المفاتيح، باستثناء اللغات التي تم تنزيلها."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "سيتم تلقائياً إدخال الحرف الذي يلائم السياق."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "انقر مع الاستمرار فوق مفتاح المسافة لاستخدام إدخال الصوت."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "انقر مع الاستمرار فوق مفتاح الخيارات لعرض قائمة خيارات."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "اسحب شريط المسافة لليسار أو لليمين لتغيير اللغات."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "ما من قوالب"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "وظائف الإدخال الذكي"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "تكبير تلقائي"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "تكبير الحرف الأول من كل جملة تلقائيًا."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "ترقيم تلقائي"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "إعادة تعيين"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "ستتم استعادة إعدادات لوحة المفاتيح. هل تريد المتابعة؟"
 

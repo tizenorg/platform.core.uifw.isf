@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "එක්තේරුම් බොත්තම"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "ස්මාර්ට් ආදාන ක්‍රියාදාම"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "විවෘත ක."
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "ස්වයං මහකුරු කරන්න"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "තේරිණ"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "යළි සකසන්න"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "වසන්න"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "ක්වර්ටි ඉංග්‍රීසි යතුරුපු."
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "සහාය"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "නොමැත"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "අක්‍රියයි"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "සක්‍රියයි"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "සැකසුම්"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "ඉවත් කර."
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "ගියර් ඇසර්ටි යතුරුපු."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "ගියර් ක්වර්ටි යතුරුපු."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "ගියර් ක්වර්ට්ස් යතුරුපු."
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "මුහුණු"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "උත්පතනය වසන ලදී."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "උත්පතන දිස් වේ"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "සංඛ්‍යා"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "ස්ථාන"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "අඛණ්ඩ ආදානය භාවිතා කිරීම"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "පුරෝකථන පෙළ භාවිතා කිරීම"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "ආදාන ක්‍රමය වෙනස් කිරීම"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "ආදාන ප්‍රකාරය වෙනස් කිරීම"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "භාෂාව වෙනස් කිරීම"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "යතුරු පුවරුව වැසීම"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "කර්සරය එහා මෙහා ගෙන යාම"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "යතුරු පුවරුව විවෘත කිරීම"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "පෙළ තේරීම"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "සැම්සුං යතුරුපුවරුව භාවිතා කර."
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "ඔබ ඉඩ යතුර තට්ටු කළ විට ඔබ ටයිප් කරමින් සිටින වදන වඩාත්ම සම්භාවී වදන සමගින් සම්පූර්ණ කරයි නැතහොත් ප්‍රතිස්ථාපනය කරයි."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "ලැයිස්තුව වැසීමට දෙවරක් තට්ටු කරන්න."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "මෙම ක්ෂේත්‍රය සංස්කරණය කිරීමට ද්වි තට්ටු කරන්න."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "ලැයිස්තුව විවෘත කිරීමට දෙවරක් තට්ටු කරන්න."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "විහිදීමට හැකි ලැයිස්තුව"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "සක්‍රිය/අක්‍රියා බොත්තම"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "සැම්සුං යතුරු පුවරුව"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "වැඩිදුර සැකසුම්"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "යතුරුපුවරු සැකසුම් වෙතින් ඔබ අවම වශයෙන් එක් භාෂාවක්වත් තේරිය යුතුය."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "ආදාන භාෂා තෝරන්න"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "සහය දක්වන භාෂා ගණනේ උපරිමට (%d) ට ළඟාවිය."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "යතුරු පුවරුව"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "තෝරා නැත"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "ලකුණු කෙරිණ"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "ලකුණු කරන කොටුව"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "අපට හමුවිය හැක්කේ කවදාද?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "ඔබ කොහේද?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "පුනරා.නය නොකර."
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "උපාංගය මත පෙන්ව."
-
-msgid "IDS_ST_SK_OK"
-msgstr "හරි"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "අව. කර."
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "අච්චුව තෝරන්න"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "කොහොමද එහි වැඩකටයුතු?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "අලුත් තොරතුරු මොනවාද?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "ඔබට ඉක්මනින් කථාකරන්නම්."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "මා ඔබට පසුව අමතන්නම්."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "භාෂාව වෙනස් කරන්න"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "එක් එක් වාක්‍යයේ පළමු අකුර ස්වයංක්‍රියව මහකුරු කරන්න."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "නිමයි"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "ස්වයං ප්‍රතිස්ථාපනය සක්‍රිය කිරීමට, අඩු තරමින් එක් භාෂාවක් හෝ සක්‍රිය කරන්න."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "පුරෝකථ පෙළ නිවැරදිකරණය පිළිගැනීමට අවකාශ යතුර තට්ටු කරන්න පවතින පෙළම තබා ගැනීමට ඊතල යතුර තට්ටු කරන්න."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "ක්වර්ට්ස් යතුරුපුවරුව"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "සහය දක්වන භාෂා ගණනේ උපරිමට (%d) ට ළඟාවිය."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "ඊළඟ"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "කානා යතුරුපුවරුව"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "කානා ෆ්ලික් යතුරුපුවරුව"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "ජර්මානු යතුරුපුවරුව"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "ඇතුල් කරන්න"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "චුන්ජියානු යතුරු පුවරුව"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "බල්ගේරියානු ශබ්ද පිළිබඳ යතුරුපුවරුව"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "බල්ගේරියානු යතුරුපුවරුව"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty යතුරුපුවරුව"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "අවධානය යොමු කරන්න"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 යතුරුපුවරුව"
@@ -211,29 +28,17 @@ msgstr "3 x 4 යතුරුපුවරුව"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "කම්පනය"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "ස්පේස් යතුර ස්වයිප් කිරීම"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "ශබ්දය"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "සැකසුම් නැවත සකසන්න"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "යතුරුපුවරු පිසදැමුම"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "ආදාන භාෂා තෝරන්න"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "අක්ෂර පෙරදැක්ම"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "ස්වයං ප්‍රතිස්ථාපනය"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "ස්වයං විරාම"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "ස්මාර්ට් ටයිප් කිරීම"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "යතුර-තට්ටු කරන ප්‍රතිපෝෂණය"
@@ -259,161 +64,14 @@ msgstr "එක්වන්න"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "යන්න"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "යෙන්"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "වොන්"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "සුදු තරු ලකුණ"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "සුදු හදවත ලකුණ"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI ක්වර්ටි යතුරු පුවරුව"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "අතථ්‍ය යතුරුපුවරුව සක්‍රීයයි."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "කර්සර් පාලන භාවිතා කිරීමෙන් අඛණ්ඩ යෙදුම් අක්‍රිය වනු ඇත."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "අඛණ්ඩ යෙදුම් භාවිතා කිරීමෙන් කර්සර් පාලන අක්‍රිය වනු ඇත."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "යටි කඩඉර"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "තුර්කි ක්වර්ටි යතුරුපුවරුව"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "තුර්කි F යතුරුපුවරුව"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "භාෂාව වෙනස් කිරීමට, හිස්ඉඩ යතුර මතින් තිරස්ව ස්වයිප් කරන්න."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "වේලාවන්"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "නාසික්‍ය ලකුණ"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "සැම්සුං යතුරුපුවරුව ඔබගේ ලිවීමේ ශෛලිය හදාරා ඔබ ඇතුළු කරන දේ මතක තබා ගැනීමෙන් ඔබට ටයිප් කිරීමට අවශ්‍ය කුමක්දැයි පුරෝකථනය කරයි. මුරපද බැහැර කරනු ඇති නමුත්, ණයපත් අංක යනාදී, පුද්ගලික තොරතුරු ගබඩා කරනු ඇත."
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex ක්වර්ටි යතුරු පුවරුව"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "අතථ්‍ය යතුරු පුවරුව භාවිතා කිරීමට තට්ටු කරන්න."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "සංකේත ලැයිස්තුව බැලීමට මෙම යතුර ඔබා අල්ලාගෙන සිටින්න. එය කෙටිමග ලෙස භාවිතා කිරීමට එකක් තෝරන්න."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "සලකුණු යතුරුපුවරුව %2$d න් %1$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "සංකේත"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "ස්පේස්"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "ඇල ඉර"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "තනි උද්ධෘත"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "යතුරුපුවරු සැකසුම් වෙතින් ඔබ අවම වශයෙන් එක් භාෂාවක්වත් තේරිය යුතුය."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "ක්වර්ටි යතුරුපුවරුවේ යතුරක් මත තට්ටු වුනු විට විශාල අක්ෂර බුබුළක් පෙන්වන්න."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "මාරුව අගුලු ලා ඇත."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "මාරුව ක්‍රියාත්මකව ඇත."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "මාරුව ක්‍රියා විරහිත කොට ඇත."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "සැකසුම්"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "සැප්තැම්බර්"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "තිත් කොමාව"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "දකුණු උද්ධෘත"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "උද්ධෘත"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ප්‍රශ්නාර්ථ ලකුණ"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ උගත් වචන වෙතින් ඉවත් කරනු ඇත."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "පුරෝකථන පෙළ විකල්ප"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "පුරෝකථන පෙළ"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "රාත්තල"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "ධන"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "බෙදුම් ඉර"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "සියයට"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "විවෘත වරහන"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "විවෘත වරහන"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "විවෘත වරහන"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "ඔකතෝම්බර්"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "භාෂාවක් තෝරා නැත."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "නොවැම්බර්"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "යතුරුපුවරුව හරහා ඇඟිල්ල එහා මෙහා කිරීමෙන් කර්සරය ගෙන යන්න."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "මැයි"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "මාර්තු"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "අක්ෂර"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "අඩු"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "වම් උද්ධෘත"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "යතුරුපුවරු වර්ගය"
@@ -421,282 +79,21 @@ msgstr "යතුරුපුවරු වර්ගය"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "යතුරුපුවරු සැකසුම්"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "ජුනි"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "ජුලි"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "ජනවාරි"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "යටිකුරු ප්‍රශ්නාර්ථ ලකුණ"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "උඩුකුරු තිත්හුල"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "දෘඩ යතුරුපුවරුවෙන් අකුරු ඇතුළත් කිරීමක් හඳුනාගැනිණ."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "පුද්ගලාරෝපණය කළ දත්ත සක්‍රිය කළහොත්, ෆේස්බුක්, ජීමේල්, ට්වීටර්, පණිවිඩ සහ සබඳතා වෙතින් සැම්සුං යතුරුපුවරුවට ඔබගේ ලිවීමේ ශෛලිය හදාරා, ඔබට සරිලන පුරෝකථන සහ නිවැරදි කිරීම් පිරිනැමිය හැක."
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "කොටු ලකුණ"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "වැඩි"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "බල ස්වරණය"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "සංකේත සහ විකල්ප අනුලකුණු බැලීමට යතුරක් මත උඩු අතට ෆ්ලික් කරන්න."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "යතුරුපුවරුව සැඟවීමට එය පහතට ගස්සන්න."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "ෆ්ලික් ආදානය"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "පෙබරවාරි"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "තිත්‍හුල"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "යූරෝ"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "සමානයි"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "ඔබේ ඇඟිල්ල යතුරුපුවරුව හරහා ස්ලයිඩ් කරමින් වචන ඇතුල් කරන්න. මෙම විශේෂාංගය ක්වර්ටි යතුරුපුවරුව සඳහා උපරිමනය කර තිබේ."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "යතුරුපුවරුව පුරා ඇඟිලි යවා පෙළ ඇතුළත් කරන්න."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "ඇතුල් කරන්න"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "පුද්ගලාරෝපණය කළ දත්ත සක්‍රිය කරන්න"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "භාවාත්මක අයිකන"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "තිත"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "ඩොලර්"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "බෙදීම"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "හිස් ඉඩ මකන්න"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "දෙසැම්බර්"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "කෙටි ඉර"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "අභිමත කළ හැකි යතුර"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "කර්සර් පාලන"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "මුදල් ලකුණ"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "නොනවතින ආදානය"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "කොමාව"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "දෙතිත"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "සංවෘත සුළු වරහන"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "පසු වරහන"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "පසු සඟල වරහන"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "ක්ලිප් පුවරුව"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "ස්වරිත ලකුණ"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "අක්ෂර පෙරදැක්ම"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "මහකුර"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "පසු මැකුම"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "පසු ඇල-ඉර"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "ස්වයං හිස් ඉඩ තැබීම"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "ස්වයං ලොකු අකුරුකරණය"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "වදන් අතර ස්වයංක්‍රීයව හිස් ඉඩ ඇතුලත් කරන්න."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "හිස් ඉඩ යතුර දෙවරක් තට්ටු කිරීමෙන් ස්වයංක්‍රීයව නැවතීමේ තිතක් ඇතුල් කරන්න."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "වාක්‍යයක මුල් අකුර ස්වයංක්‍රීයව කැපිටල් අකුරක් කරන්න."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "අවධානය යොමු කරන්න"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "අගෝස්තු"
+msgid "IDS_ST_SK_OK"
+msgstr "හරි"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "හි"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "අව. කර."
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "තරු ලකුණ"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "වැඩිදුර සැකසුම්"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "අප්‍රේල්"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "සහ"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "ලැයිස්තුව විහිදීම සඳහා බොත්තම"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "හඬ ආදානය"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "අඛණ්ඩ ආදානය සහ පුරෝකථන පෙළ වැනි ක්‍රියාවන් යතුරු පුවරුව ලබා දෙයි."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "හඬ ඇතුළු කිරීම භාවිතා කිරීමට හඬ අයිකනයට තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "හසුරුව දිස්වන ලෙස සැකසීමට යතුරු පුවරුව විවෘතව ඇති අතරදී පෙළ ඇතුළු කිරීමේ ක්ෂේත්‍රය තට්ටු කරන්න. කර්සරය චලනය කිරීමට හසුරුව චලනය කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "සැම්සුං යතුරු පුවරු සැකසුම් විවෘත කිරීමට සැකසුම් අයිකනයට තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "අකුරු සහ සංකේත අතර මාරු වීමට මාදිලි බොත්තම මත තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "අකුරු ඇතුලත් කරන ආකාරය වෙනස් කිරීමට දැනුම්දීම් පැනලයේ ඇති යතුරුපුවරු අයිකනයට තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "හැඟුම් නිරූපක ඇතුළත් කිරීමට හැඟුම් නිරූපක අයිකනය තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "ක්ලිප්පුවරුව විවෘත කිරීමට ක්ලිප්පුවරු අයිකනයට තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "යතුරුපුවරුව විවෘත කිරීමට ඕනෑම පෙළ ක්ෂේත්‍රයක් තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "හැඟීම් නිරූපක, හඬ, පසුරුපුවරුව සහ යතුරුපුවරු සැකසුම් තේරීමට අභිමත කිරීමේ යතුර තට්ටු කර අල්ලාගෙන සිටින්න."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "හඬ, පසුරුපුවරුව සහ යතුරුපුවරු සැකසුම් සහ විරාම ලකුණු තේරීමට අභිමත කළ හැකි යතුර තට්ටු කර අල්ලාගෙන සිටින්න."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "එය තේරීමට පෙළ කීපයක් ටැප් කර අල්ලාගෙන සිටින්න. කර්සර හසුරුවක් ආරම්භක හසුරුවක් සහ අවසන් හසුරුවකින් සමන්විත වේ. පෙළ තේරීමට හසුරු දෙකම ගෙන යන්න. පිටපත් කරන්න, කපන්න, අලවන්න, සහ අනෙකුත් අභිරුචි තේරීම සඳහා හසුරුව මුදා හරින්න."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "යතුරු පුවරුව වැසීමට ආපසු යතුර ඔබන්න."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "සැකසුම් විවෘත කරන්න, අනතුරුව භාෂාව සහ යතුරුපුවරුව > යතුරුපුවරුව > යතුරුපුවරු සැකසුම් > පුරෝකථන පෙළ තෝරන්න."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "යතුරුපුවරු සැකසුම්වල භාෂා දෙකක් හෝ වැඩි ගණනක් තෝරා ඇත්නම්, ඒවා අතර මාරු වීමට ගෝල යතුර තට්ටු කරන්න."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "පුද්ගලායිත දත්ත සක්‍රිය කොට ඇත්නම් සැම්සුං යතුරු පුවරුවට ජීමේල්, ට්වීටර්, පණිවුඩ හා සබඳතා ඔස්සේ ඔබේ ලේඛන ශෛලිය හදාරා ඔබට සරිලන පුරෝකථන හා නිවැරදි කිරීම් ලබා දිය හැක."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "නියමයන් හා කොන්දේසි"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "සියල්ල"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "භාෂාව"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "ලකුණු කර නැත"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "එකඟයි"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "ක්වර්ටි ඉංග්‍රීසි යතුරුපු."
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "පුද්ගලීකරණය කළ දත්ත"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "මට පසුව අමතන්න."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "වෙබ් පිටුව ඔබේ ජංගම උපාංගයේ තිරය මත විවෘත වනු ඇත."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "මෙම විශේෂාංගය භාවිත කිරීමට හරි තට්ටු කරන්න. ඔබගේ ජංගම උපාංගයේ පුද්ගලායිත දත්ත %s විසින්ද භාවිත කරනු ඇත. ඔබට ඔබගේ පුද්ගලික දත්ත ගබඩා වීමට අවශ්‍ය නැතිනම්, යතුරු පුවරු සැකසුම් වෙත ගොස් පුද්ගලායිත දත්ත සක්‍රිය කරන්න සලකුණුහරණය කරන්න."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "බාගත් භාෂා හැර, යතුරු පුවරු සැකසුම් යළි සැකසෙනු ඇත."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "සන්දර්භයට ගැළපෙන අකුර ස්වයංක්‍රියව ඇතුළත් වනු ඇත."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "කටහඬ ආදානය භාවිතා කිරීමට ස්පේස් යතුර තට්ටු කර අල්ලාගෙන සිටින්න."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "විකල්ප ලැයිස්තුවක් බැලීමට විකල්ප යතුර තට්ටුකර අල්ලාගෙන සිටින්න."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "භාෂා වෙනස් කිරීමට ඉඩ යතුර වමට හෝ දකුණට ස්වයිප් කරන්න."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "අච්චු නැත"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "ස්මාර්ට් ආදාන ක්‍රියාදාම"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "ස්වයං මහකුරු කරන්න"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "එක් එක් වාක්‍යයේ පළමු අකුර ස්වයංක්‍රියව මහකුරු කරන්න."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "ස්වයං-විරාම තැබීම"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "යළි සකසන්න"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "යතුරුපුවරු සැකසුම් නැවතසැකසෙනු ඇත. ඉදිරියට යන්නද?"
 

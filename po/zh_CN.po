@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "单选按钮"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "智能输入功能"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "打开"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "自动大写"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "已选中"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "重置"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "关闭"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "普通键盘"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "帮助"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "无"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "关"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "开"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "设定"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "移除"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty 键盘"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear 标准键盘"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz 键盘"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "脸部"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "弹出窗口已关闭。"
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "已弹出显示"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "数字"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "地点"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "使用连续输入"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "使用智能输入法"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "更改输入法"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "更改输入模式"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "更改语言"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "关闭键盘"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "移动光标"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "打开键盘"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "选择文本"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "使用三星键盘"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "点击空格条时，用最可能的词语完成或替换正在输入的词语。"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "双击以关闭列表。"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "双击以编辑此字段。"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "双击以打开列表。"
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "可展開的清單"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "开/关按钮"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "三星键盘"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "更多设定"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "您必须在键盘设置中选择至少一种语言。"
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "选择输入语言"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "已达到最大支持语言数 (%d)。"
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "键盘"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "未选中"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "已勾选"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "勾选框"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "我们何时可会面？"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "你在哪？"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "不重复"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "在设备上显示"
-
-msgid "IDS_ST_SK_OK"
-msgstr "确定"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "取消"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "选择模板"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "怎么样了？"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "什么事？"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "我一会和你说。"
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "我会稍后打给您。"
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "更改语言"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "每个句首字母自动大写"
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "完成"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "若要启用自动替代，请至少启用一个语言。"
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "轻敲空格键以接受预测文本纠正或轻敲箭头键以保留当前文本。"
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz 键盘"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "已达到最大支持语言数 (%d)。"
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "下一个"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "日文假名键盘"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "日文假名虚拟键盘"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "德语键盘"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "输入"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin 键盘"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "保加利亚语音键盘"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "保加利亚键盘"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty 键盘"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "注意"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 键盘"
@@ -211,32 +28,20 @@ msgstr "3 x 4 键盘"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "振动"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "空格条滑动"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "声音"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "重置"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "键盘滑动"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "选择输入语言"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "字符预览"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "自动替换"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "自动标点"
 
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "智能输入"
-
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
-msgstr "轻敲按键回馈"
+msgstr "反馈"
 
 msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
 msgstr "输入语言"
@@ -259,161 +64,14 @@ msgstr "加入"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "进入"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "日元符号"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "韩元符号"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "白色星形"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "白色心形"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty 键盘"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "虚拟键盘已启用。"
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "使用光标控制将禁用连续输入。"
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "使用连续输入将禁用光标控制。"
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "下划线"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "土耳其语 Qwerty 键盘"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "土耳其语 F 键盘"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "若要更改语言，水平方向滑动空格条。"
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "乘号"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "波浪符号"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "三星键盘将仿真您的书写风格，并透过记忆输入过的内容来预测您可能想要打出的字词。设备将不会记忆密码，但是可能储存信用卡号等个人信息。"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty 键盘"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "轻敲以使用虚拟键盘。"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "轻敲并按住该按键以查看符号列表。选择一个符号以将其用作快捷方式。"
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "符号键盘，%1$d，共 %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "符号"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "空格"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "斜杠"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "单引号"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "您必须在键盘设置中选择至少一种语言。"
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "当轻敲全键盘上的按键时显示大字符气泡。"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Shift 已锁定。"
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Shift 已开启。"
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Shift 已关闭。"
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "设定"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "9月"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "分号"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "右角引号"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "引号"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "问号"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "“%s”将从已学习的词中移除。"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "联想文本选项"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "预测文本"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "英镑符号"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "加号"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "竖线"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "百分号"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "左圆括号"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "左方括号"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "左花括号"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "10月"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "未选中语言。"
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "11月"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "通过在键盘上滑动手指移动光标。"
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "5月"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "3月"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "字母"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "小于号"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "左角引号"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "键盘类型"
@@ -421,282 +79,21 @@ msgstr "键盘类型"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "键盘设置"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "6月"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "7月"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "1月"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "倒问号"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "倒感叹号"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "已从硬件键盘检测到输入。"
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "若启用个人化数据，三星键盘可从 Facebook、Gmail、Twitter、信息以及联系人仿真您的书写风格，并提供专为您打造的预测与修正功能"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "井号"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "大于号"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "重音符"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "在按键上向上拂动以查看符号和替代字符。"
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "向下浮动键盘以隐藏。"
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "拂动输入"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "2月"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "感叹号"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "欧元符号"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "等号"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "通过在键盘上滑动手指输入文字。该功能已针对 Qwerty 键盘优化。"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "通过在键盘上滑动手指输入文字。"
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "回车"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "启用个人化数据"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "图释"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "点号"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "美元符号"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "除号"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "删除空格"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "12月"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "破折号"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "可自定义按键"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "光标控制"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "货币符号"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "连续输入"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "逗号"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "冒号"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "右圆括号"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "右方括号"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "右花括号"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "剪贴板"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "抑扬符号"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "字符预览"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "大写"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "退格"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "反斜杠"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "自动空格"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "自动大写"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "在单词之间自动插入空格。"
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "点击空格栏两次以自动插入句号。"
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "句首字母自动大写。"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "注意"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "8月"
+msgid "IDS_ST_SK_OK"
+msgstr "确定"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "邮件标准符号"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "取消"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "星号"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "更多设定"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "4月"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "逻辑与符号"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "展开列表的按钮"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "语音输入"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "键盘提供连续输入和联想文本等功能。"
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "轻敲语音图标以使用语音输入。"
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "当键盘开启出现句柄时，轻敲文字输入字段。移动句柄来移动光标"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "轻敲设置图标以打开三星键盘设置。"
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "轻敲模式按钮以在字符与符号之间切换。"
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "轻敲通知面板上的键盘图标以更改输入方式。"
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "轻敲表情图示来插入表情。"
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "轻敲剪贴板图标以打开剪贴板。"
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "点击任何文本栏以打开键盘。"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "轻敲并按住可自定义键以选择表情、语音、剪贴板、键盘设置或标点符号。"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "长按可自定义键以选择语音、剪贴板、键盘设置和标点符号。"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "轻敲并按住部分文字以选择。游标句柄以起始句柄与结尾句柄组成。移动两个句柄以选择文字。放开句柄以选择复制、剪下、黏贴或其他选项"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "按返回键以关闭键盘。"
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "打开设置，然后选择语言和键盘 > 键盘 > 键盘设置 > 预测文本。"
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "如果在键盘设置中选择两种或两种以上语言，轻敲地球仪键以在它们之间切换。"
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "如果个性化数据已启用，三星键盘可从 Gmail、Twitter、信息和联系人了解您的书写风格，并为您提供量身打造的联想和纠正。"
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "条款和条件"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "全部"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "语言"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "未勾选"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "同意"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "普通键盘"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "个性化数据"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "稍候再打电话给我。"
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "该网页将在移动设备的屏幕上打开。"
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "点击确定以使用该功能。来自移动设备的个性化数据也会被 %s 使用。如果不想存储个人数据，请进入键盘设定并取消选择启用个性化数据。"
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "将重置除已下载语言以外的键盘设定。"
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "将自动输入适合上下文的字母。"
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "点住空格键以使用语音输入。"
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "点住选项键以查看选项的列表。"
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "三星键盘可模拟输入的文本以增强自动替换功能并提供更好的联想结果。安全信息，例如密码和信用卡编号不包含在内。"
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "向左或向右滑动空格键以更改语言。"
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "无模板"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "智能输入功能"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "自动大写"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "每个句首字母自动大写"
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "自动添加标点"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "重置"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "键盘设置将重置。继续？"
 

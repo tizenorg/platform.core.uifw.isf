@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Valhringur"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Eiginleikar snjallinnsláttar"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Opna"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Sjálfvirkir hástafir"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Valið"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Endurstilla"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Loka"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty-lyklaborð"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Hjálp"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Ekkert"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Slökkt"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Kveikt"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Stillingar"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Fjarlægja"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty-lyklab."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear Qwerty-lyklab."
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz-lyklab."
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Andlit"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Sprettiglugga lokað."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Sprettigluggi birtist"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Tölur"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Staðir"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Samfelldur innsláttur notaður"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Notkun flýtiritunar"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Skipt um innsláttaraðferð"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Innsláttarstillingu breytt"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Skipt um tungumál"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Lyklaborðinu lokað"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Bendillinn færður"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Lyklaborðið opnað"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Texti valinn"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Notkun Samsung-lyklaborðs"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Ljúktu við orðið sem þú ert að skrifa eða skiptu því út fyrir líklegasta orðið með því að pikka á bilslána."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Tvípikkaðu til að loka listanum."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Tvípikkaðu til að breyta þessum reit."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Tvípikkaðu til að opna listann."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Stækkanlegur listi"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Hnappur til að kveikja og slökkva"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsung-lyklaborð"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Fleiri stillingar"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Þú þarft að velja minnst eitt tungumál í lyklaborðsstillingum."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Velja tungumál innsláttar"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Hámarksfjölda studdra tungumála (%d) náð."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Lyklaborð"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Ekki valið"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Merkt"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Gátreitur"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Hvenær getum við hist?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Hvar ertu?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Ekki endurt."
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Sýna í tæki"
-
-msgid "IDS_ST_SK_OK"
-msgstr "Í lagi"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Hætta við"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Velja sniðmát"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Hvernig hefurðu það?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Hvað er að frétta?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Ég tala við þig bráðlega."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Ég hringi síðar."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Skipta um tungumál"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Setja stóran staf sjálfkrafa í upphafi hverrar setningar."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Lokið"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Til að kveikja á sjálfvirkri útskiptingu þarftu að gera minnst eitt tungumál virkt."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Pikkaðu á bilslána til að samþykkja leiðréttingartillögu flýtiritunar eða á örvalykilinn til að halda núverandi texta."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwerty-lyklaborð"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Hámarksfjölda studdra tungumála (%d) náð."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Næsta"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana-lyklaborð"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana-flettilyklaborð"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Þýskt lyklaborð"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Rita"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin lyklaborð"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Búlgarskt hljóðritunarlyklaborð"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Búlgarskt lyklaborð"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty-lyklaborð"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Athuga"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 lyklaborð"
@@ -211,29 +28,17 @@ msgstr "3 x 4 lyklaborð"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Titringur"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Strokið yfir bilslá"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Hljóð"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Núllstilla stillingar"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Lyklaborðsstroka"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Velja tungumál innsláttar"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Stafaforskoðun"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Skipta sjálfkrafa út"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Sjálfv. greinamerkjasetn."
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Snjallinnsláttur"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Takkasvörun við pikk"
@@ -259,161 +64,14 @@ msgstr "Tengja"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Áfram"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Yen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Vonn"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Ófyllt stjarna"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Ófyllt hjarta"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty-lyklaborð"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Kveikt á sýndarlyklaborði."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Slökkt er á samfelldum innslætti þegar stjórnun með bendli er valin."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Slökkt er á stjórnun með bendli þegar samfelldur innsláttur er valinn."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Undirstrik"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Tyrkneskt Qwerty-lyklaborð"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Tyrkneskt F-lyklaborð"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Til að skipta um tungumál skaltu strjúka lárétt yfir bilslána."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Sinnum"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Tilda"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsung-lyklaborðið lærir að þekkja ritstílinn þinn og reynir að stinga upp á orðum sem þú kannt að vilja slá inn á grunni þess sem þú hefur skrifað áður. Lykilorð eru undanskilin en persónuupplýsingar, t.d. kreditkortanúmer, eru vistaðar"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Qwerty-telexlyklaborð"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Pikkaðu til að nota sýndarlyklaborð."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Haltu fingri á þessum lykli til að skoða táknalistann. Veldu tákn til að nota það sem flýtileið."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Táknalyklaborð %1$d af %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Tákn"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Rými"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Skástrik"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Einfaldar gæsalappir"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Þú þarft að velja minnst eitt tungumál í lyklaborðsstillingum."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Sýna stóra stafablöðru þegar pikkað er á QWERTY-lyklaborð."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Hástafalás."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Kveikt er á hástöfum."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Slökkt er á hástöfum."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Stillingar"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "september"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Semíkomma"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Danskar gæsalappir lokast"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Gæsalappir"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Spurningarmerki"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ verður fjarlægt úr þekktum orðum."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Valkostir flýtiritunar"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Flýtiritun"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Pund"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Plús"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Lóðrétt strik"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Prósent"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Svigi opnast"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Hornklofi opnast"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Slaufusvigi opnast"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "október"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Engin tungumál valin."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "nóvember"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Færðu bendilinn með því að renna fingri eftir lyklaborðinu."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Maí"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Mars"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Bókstafir"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Minna en"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Danskar gæsalappir opnast"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Lyklaborðsgerð"
@@ -421,282 +79,21 @@ msgstr "Lyklaborðsgerð"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Stillingar lyklaborðs"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Júní"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Júlí"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Janúar"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Öfugt spurningarmerki"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Öfugt upphrópunarmerki"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Innsláttur frá vélbúnaðarlyklaborði greindist."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Ef kveikt er á sérsniðnum gögnum getur Samsung-lyklaborðið lært að þekkja ritstílinn þinn af Facebook, Gmail, Twitter, skilaboðum og tengiliðum og boðið þér flýtiritun og leiðréttingar sem henta þér"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Myllumerki"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Stærra en"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Öfugur broddur"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Flettu upp á lykli til að sjá tákn og aukastafi."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Strjúktu hratt niður lyklaborðið til að fela það."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Flettiinnsláttur"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Febrúar"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Upphrópunarmerki"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Evra"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Jafngildir"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Sláðu inn texta með því að renna fingri yfir lyklaborð. Þessi eiginleiki virkar best á Qwerty-lyklaborði."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Sláðu inn texta með því að renna fingri eftir lyklaborðinu."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Staðfesta"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Gera sérsniðin gögn virk"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Lyndistákn"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Punktur"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dollari"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Deilt með"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Eyða bili"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Desember"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Strik"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Sérsníðanlegur takki"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Stjórnun með bendli"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Gjaldmiðilstákn"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Samfelldur innsláttur"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Komma"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Tvípunktur"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Svigi lokast"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Hornklofi lokast"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Slaufusvigi lokast"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Klippiborð"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Tvíbroddur"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Stafaforskoðun"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Hástafur"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Bakktakki"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Öfugt skástrik"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Sjálfvirk bil"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Sjálfvirkir hástafir"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Setja sjálfkrafa bil á milli orða."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Setja sjálfkrafa inn punkt með því að pikka tvisvar á bilstöngina."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Setja sjálfkrafa hástaf í fyrsta orð í setningu."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Athuga"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "ágúst"
+msgid "IDS_ST_SK_OK"
+msgstr "Í lagi"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "At-merki"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Hætta við"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Stjarna"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Fleiri stillingar"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "apríl"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Og"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Hnappur til að stækka listann"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Raddupptaka"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Lyklaborðið hefur eiginleika á borð við samfelldan innslátt og flýtiritun."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Pikkaðu á raddtáknið til að nota raddinnlestur."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Pikkaðu á innsláttarreit texta á meðan lyklaborðið er opið svo að handfangið birtist. Færðu handfangið til að færa bendilinn."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Pikkaðu á stillingatáknið til að opna lyklaborðsstillingar Samsung."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Pikkaðu á stillingahnappinn til að skipta á milli stafa og tákna."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Pikkaðu á lyklaborðstáknið á tilkynningaskjánum til að skipta um innsláttaraðferð."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Pikkaðu á broskallatáknið til að setja inn broskall."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Pikkaðu á klemmuspjaldstáknið til að opna klemmuspjaldið."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Pikkaðu á hvaða textareit sem er til að opna lyklaborðið."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Haltu stillanlega takkanum inni til að skipta á milli broskarla, raddar, klippiborðs, lyklaborðsstillinga og greinarmerkja."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Haltu stillanlega takkanum inni til að velja rödd, klippiborð, lyklaborðsstillingar og greinarmerki."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Haltu fingri á texta til að velja hann. Bendlahandföng eru upphafshandfang og lokahandfang. Færðu bæði handföng til að velja texta. Slepptu handfanginu til að velja að afrita, klippa eða annað."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Ýttu á bakktakkann til að loka lyklaborðinu."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Opnaðu Stillingar og veldu síðan Tungumál og lyklaborð > Lyklaborð > Lyklaborðsstillingar > Flýtiritun."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Ef tvö eða fleiri tungumál eru valin í lyklaborðsstillingum skaltu pikka á hnattarlykilinn til að skipta á milli þeirra."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Ef kveikt er á sérsniðnum gögnum getur Samsung-lyklaborðið lært að þekkja ritstílinn þinn af Gmail, Twitter, skilaboðum og tengiliðum og boðið þér flýtiritun og leiðréttingar sem henta þér."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Skilmálar"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Allt"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Tungumál"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Ekki merkt"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Samþykkt"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty-lyklaborð"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Sérsniðin gögn"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Hringdu í mig síðar."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Vefsíðan verður opnuð á skjá fartækisins."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Pikkaðu á „Í lagi“ til að nota þennan eiginleika. %s mun einnig nota sérsniðin gögn úr fartækinu þínu. Ef þú vilt ekki að persónuleg gögn þín séu vistuð skaltu opna lyklaborðsstillingar og taka hakið af „Kveikja á sérsniðnum gögnum“."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Stillingar lyklaborðs, að sóttum tungumálum undanskildum, verða endurstilltar."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Stafurinn sem passar við samhengið verður sjálfkrafa færður inn."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Haltu fingri á bilslánni til að nota raddinntak."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Haltu fingri á valkostatakkanum til að fá lista yfir valkosti."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Strjúktu til vinstri eða hægri á bilslánni til að skipta um tungumál."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Engin sniðmát"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Eiginleikar snjallinnsláttar"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Sjálfvirkir hástafir"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Setja stóran staf sjálfkrafa í upphafi hverrar setningar."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Sjálfvirk greinamerkjasetning"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Endurstilla"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Takkaborð verður endurstillt. Viltu halda áfram?"
 

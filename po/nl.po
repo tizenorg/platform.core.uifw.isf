@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Keuzerondje"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Slimme invoegfuncties"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Openen"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Automatisch hoofdletters"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Geselecteerd"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Resetten"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Sluiten"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "QWERTY-toetsenbord"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Help"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Geen"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Uit"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Aan"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Instellingen"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Verwijderen"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty-toetsenb"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear Qwerty-toetsenb"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz-toetsenb"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Gezichten"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Pop-up gesloten."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Pop-up weergegeven"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Nummers"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Plaatsen"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Doorlopende invoer gebruiken"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Voorspellende tekst gebruiken"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Andere invoermethode"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Andere invoerstand"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Andere taal"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Toetsenbord sluiten"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "De cursor verplaatsen"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Het toetsenbord openen"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Tekst selecteren"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Met Samsung-toetsenbord"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Vul het getypte woord aan of vervang het door het meest waarschijnlijke woord wanneer u op de spatiebalk tikt."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Tik tweemaal om de lijst te sluiten."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Tik tweemaal om dit veld te bewerken."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Tik tweemaal om de lijst te openen."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Uitvouwbare lijst"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Aan/uit-knop"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsung-toetsenbord"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Meer instellingen"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Selecteer ten minste één taal in de toetsenbordinstellingen."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Invoertalen selecteren"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Maximumaantal ondersteunde talen (%d) bereikt."
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Toetsenbord"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Niet geselecteerd"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Geselecteerd"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Selectievakje"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Wanneer spreken we af?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Waar ben je?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Niet herhalen"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Toon op appar."
-
-msgid "IDS_ST_SK_OK"
-msgstr "OK"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Annuleren"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Sjabloon selecteren"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Hoe gaat het?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Wat is er aan de hand?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Tot gauw."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Ik bel later."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Taal wijzigen"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Plaats automatisch een hoofdletter aan het begin van elke zin."
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Klaar"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Als u automatisch vervangen wilt inschakelen, moet u tenminste één taal inschakelen."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Tik op de spatiebalk om de voorspelde tekstcorrectie te accepteren of tik op de pijltoets om de huidige tekst te behouden."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz-toetsenbord"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Maximumaantal ondersteunde talen (%d) bereikt."
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Volg."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana-toetsenbord"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana-veegtoetsenbord"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Duits toetsenbord"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Enter"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin-toetsenbord"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bulgaars fonetisch toetsenbord"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bulgaars toetsenbord"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty-toetsenbord"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Let op"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 toetsenbord"
@@ -211,29 +28,17 @@ msgstr "3 x 4 toetsenbord"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Trillen"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Vegen over spatiebalk"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Geluid"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Instellingen resetten"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Over toetsenbord vegen"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Invoertalen selecteren"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Pop-up bij toetsaanslag"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Automatische vervanging"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Automatische interpunctie"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Slim typen"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Feedback toetstik"
@@ -259,161 +64,14 @@ msgstr "Deeln."
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Ga"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Yen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Won"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Witte ster"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Wit hartje"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty-toetsenbord"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Virtueel toetsenbord ingeschakeld."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Als u cursorbesturing gebruikt, wordt doorlopende invoer uitgeschakeld."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Als u doorlopende invoer gebruikt, wordt cursorbesturing uitgeschakeld."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Liggend streepje"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Turks Qwerty-toetsenbord"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Turks F-toetsenbord"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Veeg horizontaal over de spatiebalk om een andere taal te kiezen."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Keer"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Tilde"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Het Samsung-toetsenbord leert uw schrijfstijl en probeert te voorspellen wat u wilt typen door te onthouden wat u invoert. Wachtwoorden worden uitgesloten, maar persoonlijke gegevens, zoals creditcardnummers worden opgeslagen"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty-toetsenbord"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Tik om virtueel toetsenbord te gebruiken."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Tik op deze toets en houd vast om de symbolenlijst weer te geven. Selecteer één toets om als sneltoets te gebruiken."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Symbooltoetsenbord %1$d van %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Symbolen"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Spatie"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Schuine streep"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Eén aanhalingsteken"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Selecteer ten minste één taal in de toetsenbordinstellingen."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Geef een grote tekstballon weer wanneer op een toets op een QWERTY-toetsenbord wordt getikt."
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Shift vergrendeld."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Shift is aan."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Shift is uit."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Instellingen"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "September"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Puntkomma"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Rechter punthaken"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Aanhalingstekens"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Vraagteken"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ wordt verwijderd uit geleerde woorden."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Opties voorspellende tekst"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Voorspellende tekst"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Pond"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Plus"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Verticale streep"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Procent"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Rond haakje openen"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Haakje openen"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Accolade openen"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Oktober"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Geen talen geselecteerd."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "November"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Verplaats cursor door met de vinger over het toetsenbord te schuiven."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Mei"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Maart"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Letters"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Minder dan"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Linker punthaken"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Toetsenbordtype"
@@ -421,282 +79,21 @@ msgstr "Toetsenbordtype"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Toetsenbordinstellingen"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Juni"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Juli"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Januari"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Omgedraaid vraagteken"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Omgedraaid uitroepteken"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Invoer gedetecteerd vanaf hardwaretoetsenbord."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Als aangepaste gegevens is ingeschakeld, kan Samsung-toetsenbord uw schrijfstijl vanuit Facebook, Gmail, Twitter, Berichten en Contacten onthouden, en voorspellingen en verbeteringen aanbieden die op u zijn afgestemd"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Hekje"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Groter dan"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Accent grave"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Veeg omhoog over een toets om symbolen en alternatieve tekens weer te geven."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Veeg het toetsenbord naar beneden om het te verbergen."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Veeginvoer"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Februari"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Uitroepteken"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Euro"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Is gelijk aan"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Voer tekst in door met uw vinger over het toetsenbord te schuiven. Deze functie is geoptimaliseerd voor het Qwerty-toetsenbord."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Voer tekst in door met de vinger over het toetsenbord te schuiven."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Invoeren"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Aangepaste gegevens inschakelen"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Emoticons"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Stip"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dollar"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Gedeeld door"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Verwijder spatie"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "December"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Streepje"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Instelbare toets"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Cursorbesturing"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Teken munteenheid"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Doorlopende invoer"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Komma"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Dubbele punt"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Rond haakje sluiten"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Vierkant haakje sluiten"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Accolade sluiten"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Klembord"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Dakje"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Pop-up bij toetsaanslag"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Hoofdletter"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Backspace"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Backslash"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Automatische spatiëring"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Automatisch hoofdletters"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Automatisch spaties tussen woorden invoegen."
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Voeg automatisch een punt in door tweemaal op de spatiebalk te tikken."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Automatische beginhoofdletter van zin."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Let op"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Augustus"
+msgid "IDS_ST_SK_OK"
+msgstr "OK"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Apenstaartje"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Annuleer"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Asterisk"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Meer instellingen"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "April"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Ampersand"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Knop voor het uitvouwen van de lijst"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Spraakinvoer"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Het toetsenbord biedt functies als handschrift, doorlopende invoer en voorspellende tekst."
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Tik op het spraakpictogram om de spraakinvoer te gebruiken."
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Tik op het tekstinvoerveld terwijl het toetsenbord is geopend om de handgreep weer te geven. Verplaats de handgreep om de cursor te verplaatsen."
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Tik op instellingenpictogram om de Samsung-toetsenbordinstellingen te openen."
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Tik op de knop om de invoerstand af te wisselen tussen tekens en symbolen."
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Tik op het toetsenbordpictogram in het meldingenscherm om de invoermethode te wijzigen."
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Tik op het emoticonpictogram om emoticons in te voegen."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Tik op het klembordpictogram om het klembord te openen."
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Tik op een willekeurig tekstveld om het toetsenbord te openen."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Tik op de instelbare toets en houd vast om te kiezen tussen emoticons, spraak, klembord, toetsenbordinstellingen of interpunctiemarkeringen."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Tik op de instelbare toets en houd vast om te kiezen tussen spraak, klembord, toetsenbordinstellingen en interpunctiemarkeringen."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Tik op tekst en houd vast om de tekst te selecteren. Cursorhandgreep bestaat uit begin- en eindhandgreep. Verplaats beide handgrepen om tekst te selecteren. Laat de handgreep los voor kopiëren, knippen, plakken en andere opties."
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Druk op de toets Terug om het toetsenbord te sluiten."
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Open Instellingen, selecteer Taal en toetsenbord > Toetsenbord > Toetsenbordinstellingen > Voorspellende tekst."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Als twee of meer talen zijn geselecteerd in de toetsenbordinstellingen, tikt u op de wereldboltoets om af te wisselen."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Als aangepaste gegevens zijn ingeschakeld, kan het Samsung-toetsenbord uw schrijfstijl via Gmail, Twitter, Berichten en Contacten leren en voorspellingen en verbeteringen aanbieden die op u zijn afgestemd."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Algemene voorwaarden"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Alles"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Taal"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Niet aangevinkt"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Akkoord"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "QWERTY-toetsenbord"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Aangepaste gegevens"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Bel me later."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "De webpagina wordt geopend op het scherm van uw mobiele apparaat."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Tik op OK om deze functie te gebruiken. Aangepaste gegevens van uw mobiele apparaat worden ook gebruikt door %s. Als u niet wilt dat uw persoonlijke gegevens worden opgeslagen, gaat u naar de toetsenbordinstellingen en schakelt u Aangepaste gegevens inschakelen uit."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Toetsenbordinstellingen, met uitzondering van gedownloade talen, worden gereset."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "De letter die bij de context past, wordt automatisch ingevoerd."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Tik op de spatietoets en houd vast om spraakinvoer te gebruiken."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Tik op de optietoets en houd vast om een lijst met opties weer te geven."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Veeg over de spatiebalk naar links of rechts om talen af te wisselen."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Geen sjablonen"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Slimme invoegfuncties"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Automatisch hoofdletters"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Plaats automatisch een hoofdletter aan het begin van elke zin."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Automatisch punt"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Resetten"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Toetsenblokinstellingen worden hersteld. Doorgaan?"
 

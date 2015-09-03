@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Ռադիոկոճակ"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Խելացի ներածման գործառույթներ"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Բացել"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Ինքնաբար մեծատառ"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Ընտրված"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Վերադնել"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Փակել"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Qwerty ստեղնաշար"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Օգնություն"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "Չկա"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Անջատված է"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Միացված է"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Պարամետրեր"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Հեռացնել"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Gear Azerty ստղնշր"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Gear Qwerty ստղնշր"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Gear Qwertz ստղնշր"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Դեմքեր"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Հայտնվող ծանուցումը փակվեց:"
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Ցուցադրվում է ելնող պատուհան"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Համարներ"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Վայրեր"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Շարունակական ներածման օգտագործում"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Կանխագուշակելի գրվածքի օգտագործում"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Ինչպես փոխել ներածման եղանակը"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Ինչպես փոխել ներածման ռեժիմը"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Ինչպես փոխել լեզուն"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Ինչպես փակել ստեղնաշարը"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Ինչպես տեղաշարժել շարժագիծը"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Ինչպես բացել ստեղնաշարը"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Գրվածքի ընտրում"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Samsung ստեղնաշարի օգտ."
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Մեքենագրվող բառն ավարտեք կամ փոխարինեք առավել հավանական բառով, երբ թակում եք բացատի ստեղնը:"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Կրկնակի թակեք՝ ցուցակը փակելու համար:"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Կրկնակի թակեք` այս դաշտը խմբագրելու համար:"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Կրկնակի թակեք՝ ցուցակը բացելու համար:"
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Ընդլայնելի ցուցակ"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Միաց/անջատ կոճակ"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Samsung ստեղնաշար"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Այլ կայանքներ"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Դուք պետք է ստեղնաշարի դրվածքներում ընտրեք առնվազն մեկ լեզու:"
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Ընտրել ներածման լեզուները"
-
-msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
-msgstr "Հասել է ապահովվող լեզուների առավելագույն քանակին (%d):"
-
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Ստեղնաշար"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "Չի ընտրվել"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Նշված"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Նշասալիկ"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "Ե՞րբ կարող ենք հանդիպել:"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "Որտե՞ղ ես:"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "Չկրկնել"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Ցուցդր. սարքին"
-
-msgid "IDS_ST_SK_OK"
-msgstr "Ընդունել"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Չեղարկել"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Ընտրել ձևանմուշ"
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "Գործերդ ո՞նց են:"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "Ի՞նչ է պատահել:"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Շուտով կխոսենք:"
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Ձեզ ավելի ուշ կզանգեմ:"
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Փոխել լեզուն"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Մեծատառ դարձնել յուրաքանչյուր նախադասության առաջին տառը:"
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "Պտրստ"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Մեքենայի փոխարինումը միացնելու համար միացրեք առնվազն մեկ լեզու:"
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Թակեք բացատի ստեղնը՝ կանխատեսված տեքստի ուղղումն ընդունելու համար, կամ թակեք սլաքի ստեղնը՝ ընթացիկ տեքստը պահելու համար:"
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz ստեղնաշար"
+msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
+msgstr "Հասել է ապահովվող լեզուների առավելագույն քանակին (%d):"
 
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Հջրդ"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Kana ստեղնաշար"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Kana մատնզարկով ստեղնաշար"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Գերմաներեն ստեղնաշար"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Մտքգրք"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Chunjiin ստեղնաշար"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Բուլղարերեն հնչյունային ստեղնաշար"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Բուլղարերեն ստեղնաշար"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "AZERTY ստեղնաշար"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Ուշադրություն"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 ստեղնաշար"
@@ -211,29 +28,17 @@ msgstr "3 x 4 ստեղնաշար"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Թրթռում"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Սահեցնել բացատի ստեղնով"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Ձայն"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Հետադարձել դրվածքները"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Ստեղնաշարի սահեցում"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Ընտրել ներածման լեզուները"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Նիշի նախադիտում"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Ինքնափոխարինում"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Ինքնաբերաբար կետադրել"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Խելացի մեքենագրում"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Հետադարձ արձգնք՝ ստեղն թակելով"
@@ -259,161 +64,14 @@ msgstr "Միանալ"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Գնալ"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Իեն"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Վոն"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Սպիտակ աստղ"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Սպիտակ սիրտ"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty ստեղնաշար"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Վիրտուալ ստեղնաշարը միացված է:"
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "Շարժագծի կառավարում օգտագործելը կկասեցնի անընդմեջ ներածումը:"
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "Անընդմեջ ներածում օգտագործելը կկասեցնի շարժագծի կառավարումը:"
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Ստորագիծ"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Թուրքական Qwerty ստեղնաշար"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Թուրքական F ստեղնաշար"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Լեզուն փոխելու համար մատը հորիզոնական սահեցրեք բացատի ստեղնով:"
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Բազմապատկման նշան"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Ալիքանշան"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsung ստեղնաշարը սովորում է Ձեր գրելաոճը և փորձում է կանխատեսել, թե ինչ եք ուզում մեքենագրել՝ հիշելով, թե ինչ եք մուտքագրում: Գաղտնաբառերը կբացառվեն, բայց անձնական տեղեկությունները, օրինակ՝ վարկային քարտերի համարները, կպահվեն"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty ստեղնաշար"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Թակեք՝ վիրտուալ ստեղնաշարն օգտագործելու համար:"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Թակեք և պահեք այս ստեղնը՝ սիմվոլների ցանկը տեսնելու համար: Ընտրեք մեկը՝ այն որպես դյուրանցում օգտագործելու համար:"
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Սիմվոլների ստեղնաշար %1$d՝ %2$d-ից"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Նշաններ"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Տարածություն"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Շեղագիծ"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Եզակի չակերտ"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Դուք պետք է ստեղնաշարի դրվածքներում ընտրեք առնվազն մեկ լեզու:"
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Ցույց տալ նիշերի մեծ պղպջակ, երբ Qwerty ստեղնաշարի ստեղն է թակվում:"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Shift ստեղնը կողպված է:"
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Shift ստեղնը միացված է:"
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Shift ստեղնը անջատված է:"
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Դրվածքներ"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "Սեպտեմբեր"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Կետ-ստորակետ"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Աջ անկյունավոր չակերտներ"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Չակերտներ"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Հարցական նշան"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’-ը կհեռացվի սովորած բառերից:"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Տեքստերի կանխատեսող ներածման ընտրանքներ"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Տեքստի խելացի մուտքագրում"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Ֆունտ"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Պլյուս"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Ուղղաձիգ գիծ"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Տոկոս"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Բացող կլոր փակագիծ"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Բացող ուղիղ փակագիծ"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Բացող ձևավոր փակագիծ"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Հոկտեմբեր"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "Լեզուներ չեն ընտրվել:"
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "Նոյեմբեր"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Տեղափոխեք շարժագիծը՝ մատը սահեցնելով ստեղնաշարի վրայով:"
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Մայ"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Մարտ"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Տառեր"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Փոքրի նշան"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Ձախ անկյունավոր չակերտներ"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Ստեղնաշարի տեսակը"
@@ -421,282 +79,21 @@ msgstr "Ստեղնաշարի տեսակը"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "Ստեղնաշարի դրվածքներ"
 
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Հունիս"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Հուլիս"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Հունվար"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Շրջված հարցական նշան"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Շրջված բացականչական նշան"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Զետեղել սարքաշարային ստեղնաշարից բացահայտվածը:"
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Երբ անհատականացված տվյալներն ընձեռված են, Samsung ստեղնաշարը կարող է սովորել Ձեր գրելաոճը՝ Facebook-ից, Gmail-ից, Twitter-ից, Հաղորդագրություններից և Կոնտակտներից, և առաջարկել Ձեր պահանջներին հարմարեցված կանխատեսումներ և ուղղումներ"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Վանդականիշ"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Մեծի նշան"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Իջնող շեշտ"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Ստեղնը թեթև զարկեք դեպի վերև՝ սիմվոլներ և այլընտրանքային նիշեր դիտելու համար:"
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Ստեղնաշարը թեթև զարկեք ներքև՝ այն թաքցնելու համար:"
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Թեթև զարկով ներածում"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Փետրվար"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Բացականչական նշան"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Եվրո"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Հավասար է"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Մուտքագրեք տեքստ՝ մատը սահեցնելով ստեղնաշարի վրայով: Այս առանձնահատկությունը լավարկված է Qwerty ստեղնաշարի համար:"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Մուտքագրել տեքստ՝ մատը սահեցնելով ստեղնաշարի վրայով:"
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Ներածում"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Ընձեռել անհատականացված տվյալներ"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Էմոցիաներ"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Կետ"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Դոլար"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Կոտորակի նշան"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Վերացնել բացատը"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Դեկտեմբեր"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Անջատման գիծ"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Ընտրակայելի ստեղն"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Շարժագծի կառավարում"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Տարադրամի նշան"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Անընդմեջ ներածում"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Ստորակետ"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Կրկնակետ"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Փակող կլոր փակագիծ"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Փակող ուղիղ փակագիծ"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Փակող ձևավոր փակագիծ"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Գզրոց"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Բարձրացող-իջնող շեշտ"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Նիշի նախադիտում"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Մեծատառ"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Ետշարժ"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Հակադարձ շեղագիծ"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Բացատի ինքնաբերաբար տեղադրում"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Ինքնաբերական մեծատառ"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Ինքնաբերաբար բացատներ մտցնել բառերի միջև:"
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Ինքնաբերաբար մտցնել վերջակետ՝ բացատի ստեղնը երկու անգամ թակելով:"
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Ինքնաբերաբար մեծատառ դարձնել նախադասության առաջին տառը:"
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Ուշադրություն"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Oգոստոս"
+msgid "IDS_ST_SK_OK"
+msgstr "Ընդունել"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Շնիկ"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Չեղարկել"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Աստղանիշ"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Այլ կայանքներ"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Ապրիլ"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Եվ"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Կոճակ ցուցակի ընդարձակման համար"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Ձայնի ներածում"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "Ստեղնաշարը տրամադրում է այնպիսի գործառույթներ, ինչպիսիք են անընդմեջ ներածումը և կանխատեսող տեքստը:"
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Թակեք ձայնի պատկերակը՝ ձայնի ներածումն օգտագործելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Ստեղնաշարը միացված լինելու ընթացքում թակեք տեքստի մուտքագրման դաշտը, որպեսզի բռնիչը հայտնվի: Տեղափոխեք բռնիչը՝ շարժագիծը տեղափոխելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Թակել դրվածքների պատկերակը՝ Samsung ստեղնաշարի դրվածքները բացելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Թակել ռեժիմի կոճակը՝ նիշեր և սիմվոլներ փոխանջատելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Թակեք ստեղնաշարի պատկերակը ծանուցումների վահանակում՝ ներածման եղանակը փոխելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Հպեք զմայլիիկների պատկերակը` զմայլիկ զետեղելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Թակել գզրոցի պատկերակը՝ գզրոցը բացելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Թակեք որևէ տեքստային դաշտ՝ ստեղնաշարը բացելու համար"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Թակեք և պահեք ընտրակայելի ստեղնը՝ հուզապատկերակներ, ձայն, գզրոց, ստեղնաշարի դրվածքներ կամ կետադրական նշաններ ընտրելու համար:"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Թակեք և պահեք ընտրակայելի ստեղնը՝ ձայնի, գզրոցի ու ստեղնաշարի դրվածքներ և կետադրական նշաններ ընտրելու համար"
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Թակեք և պահեք որոշ տեքստ՝ այն ընտրելու համար: Շարժագծի բռնիչը բաղկացած է մեկնարկի բռնիչից և ավարտի բռնիչից: Տեղափոխեք երկու բռնիչները՝ տեքստ ընտրելու համար: Բաց թողեք բռնիչը՝ պատճենելու, կտրելու, կպցնելու և այլ ընտրանքներ ընտրելու համար:"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Սեղմեք վերադարձի ստեղնը՝ ստեղնաշարը փակելու համար:"
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Բացեք Դրվածքները, հետո ընտրեք Լեզու և ստեղնաշար > Ստեղնաշար > Ստեղնաշարի դրվածքներ > Կանխատեսող տեքստ"
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Եթե ստեղնաշարի դրվածքներում ընտրվել են երկու կամ ավելի լեզուներ, թակեք գլոբուսի ստեղնը՝ մի լեզվից մյուսին անցնելու համար:"
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Եթե անհատականացված տվյալներն ընձեռված են, Samsung ստեղնաշարը կարող է սովորել Ձեր գրելաոճը՝ Gmail-ից, Twitter-ից, Հաղորդագրություններից ու Կոնտակտներից, և առաջարկել Ձեր պահանջներին հարմարեցված կանխատեսումներ և ուղղումներ:"
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Պայմաններ և դրույթներ"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Բոլորը"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Լեզու"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "Չի նշվել"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Հմձայն եմ"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Qwerty ստեղնաշար"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Անհատականացված տվյալներ"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Զանգահարեք ինձ ավելի ուշ:"
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "Կայքէջը կբացվի ձեր շարժական սարքի էկրանին:"
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Թակեք OK, որպեսզի օգտագործեք այս գործառական հնարավորությունը: Ձեր շարժական սարքի անհատականացված տվյալները նույնպես կօգտագործվեն %s-ի կողմից: Եթե չեք ուզում, որ Ձեր անձնական տվյալները պահվեն, գնացեք ստեղնաշարի դրվածքներ և նշումից հանեք «Ընձեռել Անհատականացված տվյալները»:"
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Ստեղնաշարի դրվածքները, բացի ներբեռնված լեզուներից, կվերադրվեն:"
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "Կտեղադրվի բովանդակությանը համապատասխանող նամակ:"
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Թակեք և պահեք բացատի ստեղնը՝ ձայնով ներածում օգտագործելու համար:"
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Թակեք և պահեք ընտրանքների ստեղնը՝ ընտրանքների ցանկը դիտելու համար:"
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "Samsung keyboard can learn entered text to enhance auto replacement and provide better prediction results. This excludes security information, such as passwords and credit card numbers."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Սահեցրեք բացատը ձախ կամ աջ՝ լեզուները փոխելու:"
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Ձևանմուշներ չկան"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Խելացի ներածման գործառույթներ"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Ինքնաբար մեծատառ"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Մեծատառ դարձնել յուրաքանչյուր նախադասության առաջին տառը:"
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Ինքնակետադրություն"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Վերադնել"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Ստեղնախմբի դրվածքները կվերադրվեն. շարունակե՞լ:"
 

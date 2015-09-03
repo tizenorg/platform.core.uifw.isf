@@ -1,209 +1,26 @@
-msgid "IDS_BR_BODY_RADIO_BUTTON_T_TTS"
-msgstr "Botón de encendido"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "Funciones de entrada inteligente"
 
-msgid "IDS_BT_SK_OPEN"
-msgstr "Abrir"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "Mayúsculas automáticas"
 
-msgid "IDS_CAM_BODY_SELECTED_T_TTS"
-msgstr "Seleccionado(s)"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "Restablecer"
 
-msgid "IDS_EMAIL_SK_CLOSE"
-msgstr "Cerrar"
+msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
+msgstr "Teclado Qwerty"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "Ayuda"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "Escribir automáticamente en mayúscula la primera letra de cada oración."
 
-msgid "IDS_ST_BODY_NONE"
-msgstr "Ninguno"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "Desactivado"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "Activado"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "Ajustes"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "Eliminar"
-
-msgid "IDS_KPD_MBODY_GEAR_AZERTY_KEYBOARD_ABB"
-msgstr "Teclado Gear Azerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTY_KEYBOARD_ABB"
-msgstr "Teclado Gear Qwerty"
-
-msgid "IDS_KPD_MBODY_GEAR_QWERTZ_KEYBOARD_ABB"
-msgstr "Teclado Gear Qwertz"
-
-msgid "IDS_CAM_OPT_FACES"
-msgstr "Rostros"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "Ventana emergente cerrada."
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "Ventana emergente mostrada"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "Números"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "Lugares"
-
-msgid "IDS_HELP_HEADER_USING_CONTINUOUS_INPUT"
-msgstr "Usar entrada continua"
-
-msgid "IDS_HELP_HEADER_USING_PREDICTIVE_TEXT"
-msgstr "Usar texto predictivo"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "Cambio del método de entrada"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "Cambiar el modo de entrada"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "Cambiar el idioma"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "Cerrar el teclado"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "Mover el cursor"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "Abrir el teclado"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "Seleccionar texto"
-
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Uso del teclado Samsung"
-
-msgid "IDS_KPD_BODY_COMPLETE_OR_REPLACE_THE_WORD_YOU_ARE_TYPING_WITH_THE_MOST_PROBABLE_WORD_WHEN_YOU_TAP_THE_SPACE_BAR"
-msgstr "Complete o sustituya la palabra que está escribiendo con la palabra más probable al pulsar la tecla de espacio."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "Presione dos veces para cerrar la lista."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "Pulse dos veces para editar este campo."
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "Presione dos veces para abrir la lista."
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "Lista desplegable"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "Botón de encendido/apagado"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "Teclado Samsung"
-
-msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "Más configuraciones"
-
-msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
-msgstr "Debe seleccionar al menos un idioma en las configuraciones del teclado."
-
-msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
-msgstr "Selec. idiomas de entrada"
+msgid "IDS_IME_SK_DONE_ABB"
+msgstr "Real."
 
 msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
 msgstr "El número máximo de idiomas admitidos (%d)."
 
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "Teclado"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "No seleccionados"
-
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "Marcados"
-
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "Casilla de verificación"
-
-msgid "IDS_MSG_BODY_WHEN_CAN_WE_MEET_Q_M_TEXT_TEMPLATE"
-msgstr "¿Cuándo podemos encontrarnos?"
-
-msgid "IDS_MSG_BODY_WHERE_ARE_YOU_Q_M_TEXT_TEMPLATE"
-msgstr "¿Dónde estás?"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "No volver a mostrar"
-
-msgid "IDS_WNOTI_BODY_SHOW_ON_DEVICE_ABB"
-msgstr "Most. en disp."
-
-msgid "IDS_ST_SK_OK"
-msgstr "Aceptar"
-
-msgid "IDS_ST_SK_CANCEL"
-msgstr "Cancelar"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "Seleccionar plant."
-
-msgid "IDS_WMGR_MBODY_HOWS_IT_GOING_Q_M_TEXT_TEMPLATE"
-msgstr "¿Qué está pasando?"
-
-msgid "IDS_WMGR_MBODY_WHATS_UP_Q_M_TEXT_TEMPLATE"
-msgstr "¿Qué sucede?"
-
-msgid "IDS_WMGR_MBODY_ILL_TALK_TO_YOU_SOON_M_TEXT_TEMPLATE"
-msgstr "Te llamaré pronto."
-
-msgid "IDS_WMGR_MBODY_ILL_CALL_YOU_LATER_M_TEXT_TEMPLATE"
-msgstr "Te llamaré más tarde."
-
-msgid "IDS_KPD_BODY_CHANGE_LANGUAGE"
-msgstr "Cambiar idioma"
-
-msgid "IDS_IME_SK_DONE_ABB"
-msgstr "Realiz."
-
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "Para activar la sustitución automática, active al menos un idioma."
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "Pulse la tecla de espacio para aceptar la corrección de texto predicha o pulse la tecla de flecha para mantener el texto actual."
-
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Teclado qwerty"
-
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "Sig."
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "Teclado Kana"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "Teclado deslizar Kana"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "Teclado alemán"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "Introducir"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "Teclado Chunjiin"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Teclado fonético búlgaro"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Teclado búlgaro"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Teclado azerty"
-
-msgid "IDS_IME_OPT_ATTENTION"
-msgstr "Atención"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "Teclado 3 x 4"
@@ -211,29 +28,17 @@ msgstr "Teclado 3 x 4"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "Vibración"
 
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "Deslizar barra de espacio"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "Sonido"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "Restablecer configuración"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "Teclado swipe"
+msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
+msgstr "Selec. idiomas de entrada"
 
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "Vista previa caracteres"
 
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "Sustitución automática"
-
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "Autopuntuar"
-
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "Escritura inteligente"
 
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "Respuesta táctil del teclado"
@@ -259,444 +64,36 @@ msgstr "Unirse"
 msgid "IDS_IME_BUTTON_GO_M_KEYBOARD"
 msgstr "Ir"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Yen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Won"
-
-msgid "IDS_IME_BODY_WHITE_STAR_M_KEYBOARD_SYMBOL"
-msgstr "Estrella blanca"
-
-msgid "IDS_IME_BODY_WHITE_HEART_M_KEYBOARD_SYMBOL"
-msgstr "Corazón blanco"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "Teclado VNI Qwerty"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "Teclado virtual activado."
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "El uso del control del cursor desactivará la entrada continua."
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "El uso de la introducción continua desactivará el control del cursor."
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "Guión bajo"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "Teclado Qwerty en turco"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "Teclado F en turco"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "Para cambiar el idioma, deslice la barra de espacio horizontalmente."
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "Multiplicar"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "Acento"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "El teclado Samsung aprende su estilo de escritura e intenta predecir lo que desea escribir al recordar lo que escribe. Las contraseñas se excluirán, pero se almacenará la información personal, como los números de tarjeta de crédito"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Teclado Telex Qwerty"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "Pulse para usar el teclado virtual."
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "Mantenga pulsada esta tecla para ver la lista de símbolos. Seleccione uno para usarlo como atajo."
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "Teclado de símbolos %1$d de %2$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "Símbolos"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "Espacio"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "Barra diagonal"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "Comilla simple"
+msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
+msgstr "Debe seleccionar al menos un idioma en los ajustes del teclado."
 
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
-msgstr "Muestra una burbuja grande con los caracteres cuando se pulsa una tecla del teclado QWERTY."
-
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "Tecla Shift bloqueada."
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "Tecla Shift activada."
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "Tecla Shift desactivada."
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "Configuración"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "Septiembre"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "Punto y coma"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Comillas latinas derechas"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Comillas"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Signo de interrogación"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "‘%s’ se eliminará de las palabras aprendidas."
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "Opciones de texto predictivo"
+msgstr "Muestra una burbuja grande con los caracteres cuando se pulsa una tecla del teclado Qwerty."
 
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "Texto predictivo"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "Libra"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "Más"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "Barra vertical"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "Porcentaje"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Paréntesis de apertura"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Corchete de apertura"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Llave de apertura"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "Octubre"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "No hay idiomas seleccionados."
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "Noviembre"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Mueva el cursor deslizando su dedo por el teclado."
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "Mayo"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "Marzo"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "Letras"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Menor que"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "Comillas latinas izquierdas"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "Tipo de teclado"
 
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
-msgstr "Configuración del teclado"
-
-msgid "IDS_IME_BODY_JUNE"
-msgstr "Junio"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "Julio"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "Enero"
-
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Signo de interrogación de apertura"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Signo de exclamación de apertura"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "Entrada detectada desde el teclado del hardware."
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "Si los datos personalizados están activados, el teclado Samsung puede aprender su estilo de escritura, desde Facebook, Gmail, Twitter, Mensajes y Contactos, y ofrecerle predicciones y correcciones personalizadas"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "Numeral"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "Mayor que"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "Acento grave"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "Deslice hacia arriba sobre una tecla para ver símbolos y otros caracteres."
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "Arrastre el teclado hacia abajo para ocultarlo."
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "Girar entrada"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "Febrero"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "Signo de exclamación"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "Euro"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "Igual"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "Introduzca texto al deslizar su dedo por el teclado. Esta función está optimizada para el teclado Qwerty."
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "Introducir texto deslizando su dedo por el teclado."
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "Introducir"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "Activar datos personalizados"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "Emoticones"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "Punto"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "Dólar"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "Dividir entre"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "Eliminar espacio"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "Diciembre"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "Guión"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "Tecla personalizada"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "Control del cursor"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "Símbolo de moneda"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "Introducción continua"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "Coma"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "Dos puntos"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "Paréntesis de cierre"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "Corchete de cierre"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "Llave de cierre"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "Portapapeles"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "Circunflejo"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "Previsualización de caracter"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "Mayúscula"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "Retroceso"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "Barra diagonal inversa"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "Espaciado automático"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "Mayúsculas automáticas"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "Introducir automáticamente espacios entre palabras."
+msgstr "Ajustes del teclado"
 
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "Introducir automáticamente un punto final pulsando dos veces la tecla de espacio."
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "Escribir automáticamente en mayúscula la primera letra de una oración."
+msgid "IDS_IME_OPT_ATTENTION"
+msgstr "Atención"
 
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "Agosto"
+msgid "IDS_ST_SK_OK"
+msgstr "Aceptar"
 
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "Arroba"
+msgid "IDS_ST_SK_CANCEL"
+msgstr "Cancelar"
 
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "Asterisco"
+msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
+msgstr "Más ajustes"
 
-msgid "IDS_IME_BODY_APRIL"
-msgstr "Abril"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "Ampersand"
-
-msgid "IDS_PB_BODY_BUTTON_FOR_EXPANDING_THE_LIST_T_TTS"
-msgstr "Botón para expandir la lista"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "Entrada de voz"
-
-msgid "IDS_HELP_BODY_THE_KEYBOARD_OFFERS_FUNCTIONS_SUCH_AS_CONTINUOUS_INPUT_AND_PREDICTIVE_TEXT"
-msgstr "El teclado ofrece funciones como entrada continua y texto predictivo"
-
-msgid "IDS_HELP_BODY_TAP_THE_VOICE_ICON_TO_USE_VOICE_INPUT"
-msgstr "Pulse el ícono de voz para usar la entrada de voz"
-
-msgid "IDS_HELP_BODY_TAP_THE_TEXT_ENTRY_FIELD_WHILE_THE_KEYBOARD_IS_OPEN_TO_MAKE_THE_HANDLE_APPEAR_MOVE_THE_HANDLE_TO_MOVE_THE_CURSOR"
-msgstr "Pulse el campo de entrada de texto mientras el teclado está abierto para hacer que aparezca el indicador. Mueva el indicador para mover el cursor"
-
-msgid "IDS_HELP_BODY_TAP_THE_SETTINGS_ICON_TO_OPEN_THE_SAMSUNG_KEYBOARD_SETTINGS"
-msgstr "Pulse el ícono de configuración para abrir la configuración del teclado Samsung"
-
-msgid "IDS_HELP_BODY_TAP_THE_MODE_BUTTON_TO_TOGGLE_CHARACTERS_AND_SYMBOLS"
-msgstr "Pulse el botón de modo para alternar caracteres y símbolos"
-
-msgid "IDS_HELP_BODY_TAP_THE_KEYBOARD_ICON_ON_THE_NOTIFICATION_PANEL_TO_CHANGE_THE_INPUT_METHOD"
-msgstr "Pulse el ícono del teclado en el panel de notificación para cambiar el método de entrada"
-
-msgid "IDS_HELP_BODY_TAP_THE_EMOTICON_ICON_TO_INSERT_EMOTICONS"
-msgstr "Pulse el icono de emoticón para insertar emoticones."
-
-msgid "IDS_HELP_BODY_TAP_THE_CLIPBOARD_ICON_TO_OPEN_THE_CLIPBOARD"
-msgstr "Pulse el ícono del portapapeles para abrirlo"
-
-msgid "IDS_HELP_BODY_TAP_ANY_TEXT_FIELD_TO_OPEN_KEYBOARD"
-msgstr "Pulse cualquier campo de introducción de texto para abrir el teclado."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_TO_SELECT_EMOTICONS_VOICE_CLIPBOARD_KEYBOARD_SETTINGS_OR_PUNCTUATION_MARKS"
-msgstr "Mantenga pulsada la tecla personalizada para seleccionar la configuración de emoticones, voz, portapapeles y teclado, o los signos de puntuación."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_THE_CUSTOMISABLE_KEY_MSG"
-msgstr "Mantenga pulsada la tecla personalizada para seleccionar la Configuración del teclado, portapapeles y voz, y los signos de puntuación."
-
-msgid "IDS_HELP_BODY_TAP_AND_HOLD_SOME_TEXT_TO_SELECT_IT_MSG"
-msgstr "Mantenga pulsado cierto texto para seleccionarlo. Un indicador de cursor consiste en un indicador inicial y uno final. Mueva ambos indicadores para seleccionar el texto. Libere el indicador para seleccionar copiar, cortar, pegar y otras opciones"
-
-msgid "IDS_HELP_BODY_PRESS_THE_BACK_KEY_TO_CLOSE_THE_KEYBOARD"
-msgstr "Presione la tecla Atrás para cerrar el teclado"
-
-msgid "IDS_HELP_BODY_OPEN_SETTINGS_THEN_SELECT_LANGUAGE_AND_KEYBOARD_KEYBOARD_KEYBOARD_SETTINGS_PREDICTIVE_TEXT"
-msgstr "Abra Configuración, luego seleccione Idioma y teclado > Teclado > Configuración del teclado > Texto predictivo."
-
-msgid "IDS_HELP_BODY_IF_TWO_OR_MORE_LANGUAGES_ARE_SELECTED_IN_KEYBOARD_SETTINGS_TAP_THE_GLOBE_KEY_TO_SWITCH_BETWEEN_THEM"
-msgstr "Si hay dos o más idiomas seleccionados en la configuración del teclado, deslice el dedo por la barra espaciadora para cambiar entre idiomas."
-
-msgid "IDS_HELP_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_YOUR_WRITING_STYLE_FROM_GMAIL_TWITTER_MESSAGES_MSG_T_HELP"
-msgstr "Si los datos personalizados están activados, el teclado Samsung puede aprender su estilo de escritura, desde Gmail, Twitter, Mensajes y Contactos, y ofrecerle predicciones y correcciones personalizadas."
-
-msgid "IDS_MA_HEADER_TERMS_AND_CONDITIONS"
-msgstr "Términos y condiciones"
-
-msgid "IDS_MUSIC_BUTTON_ALL"
-msgstr "Todo"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "Idioma"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "No marcados"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "Acepto"
-
-msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
-msgstr "Teclado Qwerty"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "Datos personalizados"
-
-msgid "IDS_CST_BODY_CALL_ME_LATER"
-msgstr "Llamarme más tarde."
-
-msgid "IDS_WMGR_POP_THE_WEBPAGE_WILL_BE_OPENED_ON_YOUR_MOBILE_DEVICES_SCREEN"
-msgstr "La página web se abrirá en la pantalla de su dispositivo móvil."
-
-msgid "IDS_KPD_POP_TAP_OK_TO_USE_THIS_FEATURE_PERSONALISED_DATA_FROM_YOUR_MOBILE_DEVICE_WILL_ALSO_BE_USED_BY_PS_IF_YOU_DO_NOT_WANT_YOUR_PERSONAL_DATA_TO_BE_STORED_MSG"
-msgstr "Pulse Aceptar para usar esta función. %s también usará los datos personalizados de su dispositivo móvil. Si no desea que se almacenen sus datos personales, vaya a configuración del teclado y quite la marca de la opción Activar datos personalizados."
-
-msgid "IDS_KPD_POP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET"
-msgstr "Se restablecerá la configuración del teclado, excepto los idiomas descargados."
-
-msgid "IDS_KPD_POP_THE_LETTER_THAT_FITS_THE_CONTEXT_WILL_BE_AUTOMATICALLY_ENTERED"
-msgstr "La letra que se adapte al contexto se introducirá de manera automática."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_SPACE_KEY_TO_USE_VOICE_INPUT"
-msgstr "Mantenga pulsada la tecla de espacio para usar la entrada de voz."
-
-msgid "IDS_KPD_POP_TAP_AND_HOLD_THE_OPTIONS_KEY_TO_VIEW_A_LIST_OF_OPTIONS"
-msgstr "Mantenga pulsada la tecla Opciones para ver una lista de opciones."
-
-msgid "IDS_KPD_POP_SAMSUNG_KEYBOARD_CAN_LEARN_ENTERED_TEXT_TO_ENHANCE_AUTO_REPLACEMENT_AND_PROVIDE_BETTER_PREDICTION_RESULTS_MSG_VZW"
-msgstr "El teclado Samsung puede aprender el texto introducido para mejorar la sustitución automática y proporcionar mejores resultados de predicción. Esto excluye la información de seguridad, como contraseñas y números de tarjetas de crédito."
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "Deslice la barra espaciadora hacia la izquierda o la derecha para cambiar de idioma."
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "Sin plantillas"
-
-msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
-msgstr "Funciones de entrada inteligente"
-
-msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
-msgstr "Mayúsculas automáticas"
-
-msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
-msgstr "Escribir automáticamente en mayúscula la primera letra de cada oración."
-
-msgid "IDS_ST_BODY_AUTO_PUNCTUATE"
-msgstr "Autopuntuar"
-
-msgid "IDS_IME_MBODY_RESET"
-msgstr "Restablecer"
+msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
+msgstr "Se restablecerá la configuración de teclado. ¿Continuar?"
 
