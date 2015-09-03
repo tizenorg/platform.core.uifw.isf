@@ -3,7 +3,7 @@
 SET(LOCALEDIR "${PREFIX}/share/locale")
 SET(POFILES
 		ar.po as.po az.po be_BY.po bg.po bn.po bn_BD.po ca.po cs.po da.po de.po el_GR.po en.po en_PH.po
-		en_US.po es_ES.po es_US.po et.po eu.po fa.po fi.po fr.po ga.po gl.po gu.po he.po
+		en_US.po es_ES.po es_US.po et.po eu.po fa.po fi.po fr.po fr_CA.po ga.po gl.po gu.po he.po
 		hi.po hr.po hu.po hy.po id.po is.po it_IT.po ja_JP.po ka.po kk.po km.po kn.po
 		ko_KR.po ky_KG.po lo.po lt.po lv.po mk.po ml.po mn_MN.po mr.po ms.po my.po my_ZG.po nb.po
 		ne.po nl.po or.po pa.po pl.po pt_BR.po pt_PT.po ro.po ru_RU.po si.po sk.po sl.po
