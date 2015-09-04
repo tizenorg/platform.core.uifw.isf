@@ -1,83 +1,26 @@
-msgid "IDS_MSG_BODY_TICK_BOX_T_TTS"
-msgstr "အမွတ္ျခစ္ရန္အတြက္"
+msgid "IDS_IME_HEADER_SMART_INPUT_FUNCTIONS_ABB"
+msgstr "စမတ္ ျဖည့္သြင္းအရာ လုပ္ေဆာင္ခ်က္မ်ား"
 
-msgid "IDS_IME_HEADER_KEYBOARD_SETTINGS_ABB"
-msgstr "ကီးဘုတ္ သတ္မွတ္ခ်က္မ်ား"
+msgid "IDS_IME_MBODY_AUTO_CAPITALISE"
+msgstr "အလိုလို အၾကီးလုပ္"
 
-msgid "IDS_IME_HEADER_SELECT_KEYBOARD_TYPE_ABB"
-msgstr "ကီးဘုတ္ အမ်ိဳးအစားကို ေရြးပါ"
+msgid "IDS_IME_MBODY_RESET"
+msgstr "ျပန္သတ္မွတ္ပါ"
 
 msgid "IDS_IME_OPT_QWERTY_KEYBOARD_ABB"
 msgstr "Qwerty keyboard"
 
-msgid "IDS_ST_BODY_HELP"
-msgstr "အကူအညီ"
-
-msgid "IDS_ST_BODY_LANGUAGE"
-msgstr "ဘာသာစကား"
-
-msgid "IDS_ST_BODY_OFF"
-msgstr "ပိတ္"
-
-msgid "IDS_ST_BODY_ON"
-msgstr "ဖြင့္"
-
-msgid "IDS_ST_BODY_SETTINGS"
-msgstr "သတ္မွတ္ခ်က္မ်ား"
-
-msgid "IDS_ST_SK_REMOVE"
-msgstr "ဖယ္"
-
-msgid "IDS_IME_BODY_ASTERISK_M_KEYBOARD_SYMBOL"
-msgstr "ခေရပြင့္"
-
-msgid "IDS_IME_BODY_HASH_M_KEYBOARD_SYMBOL"
-msgstr "ကိန္းဂဏန္းေရွ႕ျပ သေကၤတ"
-
-msgid "IDS_KPD_BODY_NUMBERS_T_TTS"
-msgstr "နံပါတ္မ်ား"
+msgid "IDS_IME_SBODY_CAPITALISE_THE_FIRST_LETTER_OF_EACH_SENTENCE_AUTOMATICALLY"
+msgstr "စာေၾကာင္းတိုင္း၏ အစ စာလံုးကို အလိုလို စာလုံးႀကီးအျဖစ္သို႔ ျပဳလုပ္ပါ။"
 
 msgid "IDS_IME_SK_DONE_ABB"
 msgstr "ၿပီးပါၿပီ"
 
-msgid "IDS_IME_POP_TO_ENABLE_AUTO_REPLACEMENT_ENABLE_AT_LEAST_ONE_LANGUAGE"
-msgstr "အလိုလို ဖလွယ္ျခင္း ရေစရန္ အနည္းဆံုး ဘာသာစကားတစ္ခုကို ရေအာင္လုပ္ပါ။"
-
-msgid "IDS_IME_POP_TAP_THE_SPACE_KEY_TO_ACCEPT_THE_PREDICTED_TEXT_CORRECTION_OR_TAP_THE_ARROW_KEY_TO_KEEP_THE_CURRENT_TEXT"
-msgstr "ခန္႔မွန္းစာသား အမွားျပင္မႈ လက္ခံရန္ စေပ့စ္ကီး ႏွိပ္ပါ (သို႔) လက္ရွိစာသား ဆက္ထားရန္ ျမႇားကီး ႏွိပ္ပါ။"
-
 msgid "IDS_IME_POP_MAXIMUM_NUMBER_OF_SUPPORTED_LANGUAGES_HPD_REACHED"
 msgstr "ေထာက္ပံ့မႈေပးေသာ ဘာသာစကား အေရအတြက္ (%d) ခုသို႔ ေရာက္ေနၿပီ။"
 
-msgid "IDS_IME_OPT_QWERTZ_KEYBOARD_ABB"
-msgstr "Qwertz ကီးဘုတ္"
-
 msgid "IDS_IME_OPT_NEXT_ABB"
 msgstr "ေနာက္"
-
-msgid "IDS_IME_OPT_KANA_KEYBOARD"
-msgstr "ကာနာ ကီးဘုတ္"
-
-msgid "IDS_IME_OPT_KANA_FLICK_KEYBOARD"
-msgstr "ကာနာ ဖလစ္ ကီးဘုတ္"
-
-msgid "IDS_IME_OPT_GERMAN_KEYBOARD_ABB"
-msgstr "ဂ်ာမန္ ကီးဘုတ္"
-
-msgid "IDS_IME_OPT_ENTER_ABB"
-msgstr "ျဖည့္သြင္းပါ"
-
-msgid "IDS_IME_OPT_CHUNJIIN_KEYBOARD_ABB"
-msgstr "ခၽြန္ဂ်င္း ကီးဘုတ္"
-
-msgid "IDS_IME_OPT_BULGARIAN_PHONETIC_KEYBOARD"
-msgstr "Bulgarian စာလံုးေပါင္းသံပါေသာ ကီးဘုတ္"
-
-msgid "IDS_IME_OPT_BULGARIAN_KEYBOARD"
-msgstr "Bulgarian ကီးဘုတ္"
-
-msgid "IDS_IME_OPT_AZERTY_KEYBOARD_ABB"
-msgstr "Azerty ကီးဘုတ္"
 
 msgid "IDS_IME_OPT_3_X_4_KEYBOARD"
 msgstr "3 x 4 ကီးဘုတ္"
@@ -85,65 +28,23 @@ msgstr "3 x 4 ကီးဘုတ္"
 msgid "IDS_IME_MBODY_VIBRATION"
 msgstr "တုန္ခါျခင္း"
 
-msgid "IDS_IME_MBODY_USING_SAMSUNG_KEYBOARD"
-msgstr "Samsung Keyboard ကို သံုးျခင္း"
-
-msgid "IDS_IME_MBODY_SPACE_BAR_SWIPE"
-msgstr "စေပ့စ္ ဘားပြတ္ျခင္း"
-
 msgid "IDS_IME_MBODY_SOUND"
 msgstr "အသံ"
 
 msgid "IDS_IME_MBODY_SELECT_INPUT_LANGUAGES"
 msgstr "ျဖည့္သြင္း ဘာသာစကားမ်ား ေရြးပါ"
 
-msgid "IDS_IME_MBODY_RESET_SETTINGS"
-msgstr "သတ္မွတ္ခ်က္မ်ား ျပန္သတ္မွတ္ပါ"
-
-msgid "IDS_IME_MBODY_KEYBOARD_SWIPE"
-msgstr "ကီးဘုတ္ကို ပြတ္ပါ"
-
 msgid "IDS_IME_MBODY_CHARACTER_PREVIEW"
 msgstr "ကာရိုက္တာ ႀကိဳတင္ၾကည့္ရႈျခင္း"
-
-msgid "IDS_IME_MBODY_AUTO_REPLACEMENT"
-msgstr "အလိုအေလ်ာက္ အစားထိုးျခင္း"
 
 msgid "IDS_IME_MBODY_AUTO_PUNCTUATE"
 msgstr "အလိုအေလ်ာက္ ပုဒ္ျဖတ္ပုဒ္ရပ္"
 
-msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "စမတ္ စာရိုက္ျခင္း"
-
-msgid "IDS_IME_HEADER_SELECTING_TEXT"
-msgstr "စာသား ေရြးျခင္း"
-
-msgid "IDS_IME_HEADER_OPENING_THE_KEYBOARD"
-msgstr "ကီးဘုတ္ ဖြင့္ျခင္း"
-
-msgid "IDS_IME_HEADER_MOVING_THE_CURSOR"
-msgstr "ကာဆာ ေရႊ႕ျခင္း"
-
 msgid "IDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
 msgstr "ကီး-တပ္ တုန္႔ျပန္မႈ"
 
-msgid "IDS_IME_HEADER_KEYBOARD"
-msgstr "ကီးဘုတ္"
-
 msgid "IDS_IME_HEADER_INPUT_LANGUAGES"
 msgstr "ထည့္သြင္းရန္ ဘာသာစကားမ်ား"
-
-msgid "IDS_IME_HEADER_CLOSING_THE_KEYBOARD"
-msgstr "ကီးဘုတ္ ပိတ္ျခင္း"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_LANGUAGE"
-msgstr "ဘာသာစကား ေျပာင္းျခင္း"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_MODE"
-msgstr "ျဖည့္သြင္း အေနအထား ေျပာင္းျခင္း"
-
-msgid "IDS_IME_HEADER_CHANGING_THE_INPUT_METHOD"
-msgstr "ျဖည့္သြင္းနည္း ေျပာင္းျခင္း"
 
 msgid "IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD"
 msgstr "ဆိုင္းအင္"
@@ -166,149 +67,11 @@ msgstr "သြားပါ"
 msgid "IDS_IME_BODY_YOU_MUST_SELECT_AT_LEAST_ONE_LANGUAGE_IN_KEYBOARD_SETTINGS"
 msgstr "သင့္ကီးဘုတ္ ဆက္တင္မ်ားထဲမွာ အနည္းဆံုး ဘာသာစကားတစ္ခု ေရြးရမည္။"
 
-msgid "IDS_IME_BODY_YEN_M_KEYBOARD_SYMBOL"
-msgstr "Yen"
-
-msgid "IDS_IME_BODY_WON_M_KEYBOARD_SYMBOL"
-msgstr "Won"
-
-msgid "IDS_IME_BODY_VNI_QWERTY_KEYBOARD"
-msgstr "VNI Qwerty ကီးဘုတ္"
-
-msgid "IDS_IME_BODY_VIRTUAL_KEYBOARD_ENABLED"
-msgstr "ဗာက်ဴရယ္ ကီးဘုတ္ ဖြင့္ထားသည္။"
-
-msgid "IDS_IME_BODY_USING_CURSOR_CONTROL_WILL_DISABLE_CONTINUOUS_INPUT"
-msgstr "ကာဆာ အထိန္း သံုးျခင္းသည္ ဆက္တိုက္ ျဖည့္သြင္းမႈကို မရႏိုင္ေအာင္ လုပ္လိမ့္မည္။"
-
-msgid "IDS_IME_BODY_USING_CONTINUOUS_INPUT_WILL_DISABLE_CURSOR_CONTROL"
-msgstr "ဆက္တိုက္ျဖည့္သြင္းမႈ သံုးျခင္းသည္ ကာဆာ အထိန္းကို မရႏိုင္ေအာင္ လုပ္လိမ့္မည္။"
-
-msgid "IDS_IME_BODY_UNDERSCORE_M_KEYBOARD_SYMBOL"
-msgstr "ေအာက္မ်ဥ္းသေကၤတ"
-
-msgid "IDS_IME_BODY_TURKISH_QWERTY_KEYBOARD"
-msgstr "တူရကီ Qwerty ကီးဘုတ္"
-
-msgid "IDS_IME_BODY_TURKISH_F_KEYBOARD"
-msgstr "တူရကီ F ကီးဘုတ္"
-
-msgid "IDS_IME_BODY_TO_CHANGE_THE_LANGUAGE_SWIPE_HORIZONTALLY_ACROSS_THE_SPACE_BAR"
-msgstr "အာသာစကားေျပာင္းရန္၊ စေပ့စ္ဘားအားေရျပင္ညီအတိုင္းပြတ္ပါ။"
-
-msgid "IDS_IME_BODY_TIMES_M_KEYBOARD_SYMBOL"
-msgstr "အႀကိမ္မ်ား"
-
-msgid "IDS_IME_BODY_TILDE_M_KEYBOARD_SYMBOL"
-msgstr "ေထးလ္ဒါ"
-
-msgid "IDS_IME_BODY_THE_SAMSUNG_KEYBOARD_LEARNS_YOUR_WRITING_STYLE_AND_TRIES_TO_PREDICT_MSG"
-msgstr "Samsung keyboard က သင္ ရိုက္ထည့္သည္ကို မွတ္မိကာ သင့္ လက္ေရးစတိုင္ကို ေလ့လာၿပီး သင္ရိုက္လိုသည္ကို ခန္႔မွန္းေပးဖို႔ ၾကိဳးစားသည္။ စကားဝွက္မ်ားကို ဖယ္ထုတ္မည္ျဖစ္ေသာ္လည္း ခရိဒစ္ကတ္ နံပါတ္ကဲ့သို႔ ကိုယ္ေရး အခ်က္အလက္မ်ားကိုမူ သိုေလွာင္ထားမည္။"
-
-msgid "IDS_IME_BODY_TELEX_QWERTY_KEYBOARD"
-msgstr "Telex Qwerty ကီးဘုတ္"
-
-msgid "IDS_IME_BODY_TAP_TO_USE_VIRTUAL_KEYBOARD"
-msgstr "ဗာက်ဴရယ္ ကီးဘုတ္ သံုးရန္ ႏွိပ္ပါ။"
-
-msgid "IDS_IME_BODY_TAP_AND_HOLD_THIS_KEY_TO_SEE_THE_SYMBOL_LIST_SELECT_ONE_TO_USE_IT_AS_A_SHORTCUT"
-msgstr "သေကၤတ စာရင္း ၾကည့္ရန္ ဤကီးကို ႏွိပ္၍ကိုင္ထားပါ။ ျဖတ္လမ္း တစ္ခုအျဖစ္ သံုးရန္ တစ္ခုေရြးပါ။"
-
-msgid "IDS_IME_BODY_SYMBOL_KEYBOARD_P1SD_OF_P2SD_T_TTS"
-msgstr "သေကၤတာ ကီးဘုတ္ %2$d ၏ %1$d"
-
-msgid "IDS_IME_BODY_SYMBOLS"
-msgstr "သေကၤတမ်ား"
-
-msgid "IDS_IME_BODY_SPACE"
-msgstr "စေပ့စ္"
-
-msgid "IDS_IME_BODY_SLASH_M_KEYBOARD_SYMBOL"
-msgstr "မ်ဥ္းေစာင္း သေကၤတ"
-
-msgid "IDS_IME_BODY_SINGLE_QUOTE_M_KEYBOARD_SYMBOL"
-msgstr "တစ္ထပ္ မ်က္ေတာင္အဖြင့္အပိတ္"
-
 msgid "IDS_IME_BODY_SHOW_A_BIG_CHARACTER_BUBBLE_WHEN_A_KEY_ON_A_QWERTY_KEYBOARD_IS_TAPPED"
 msgstr "Qwerty ကီးဘုတ္တခုအေပၚရွိ ခလုတ္တခုကို ေခါက္သည့္အခါ ႀကီးမားေသာစာလံုးပူေပါင္းတခု ျပပါ။"
 
-msgid "IDS_IME_BODY_SHIFT_LOCKED_T_TTS"
-msgstr "ေရႊ႕ေျပာင္းမႈ ေသာ့ခတ္ထားသည္။"
-
-msgid "IDS_IME_BODY_SHIFT_IS_ON_T_TTS"
-msgstr "ေရႊ႕ေျပာင္းမႈ ဖြင့္ထားသည္။"
-
-msgid "IDS_IME_BODY_SHIFT_IS_OFF_T_TTS"
-msgstr "ေရႊ႕ေျပာင္းမႈ ပိတ္ထားသည္။"
-
-msgid "IDS_IME_BODY_SETTINGS_M_KEYBOARD_SYMBOL"
-msgstr "သတ္မွတ္ခ်က္မ်ား"
-
-msgid "IDS_IME_BODY_SEMICOLON_M_KEYBOARD_SYMBOL"
-msgstr "အျဖတ္အရပ္ သေကၤတ"
-
-msgid "IDS_IME_BODY_SAMSUNG_KEYBOARD"
-msgstr "ဆမ္ေဆာင္း ကီးဘုတ္"
-
-msgid "IDS_IME_BODY_RIGHT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "ညာဘက္အၫႊန္း ျမားေခါင္းမ်ား"
-
-msgid "IDS_IME_BODY_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "အကိုးအကားမ်ား"
-
-msgid "IDS_IME_BODY_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ေမးခြန္းသေကၤတ"
-
-msgid "IDS_IME_BODY_PS_WILL_BE_REMOVED_FROM_LEARNED_WORDS"
-msgstr "ေလ့လာျပီး စကားလံုးမ်ားထဲမွ ‘%s’ အား ဖယ္ရွားလိုက္မည္။"
-
-msgid "IDS_IME_BODY_PREDICTIVE_TEXT_OPTIONS"
-msgstr "ခန္႔မွန္းႏုိင္ေသာ စာသား ေရြးခ်ယ္ရန္မ်ား"
-
 msgid "IDS_IME_BODY_PREDICTIVE_TEXT"
 msgstr "ခန္႔မွန္းႏုိင္ေသာ စာသား"
-
-msgid "IDS_IME_BODY_POUND_M_KEYBOARD_SYMBOL"
-msgstr "ေပါင္"
-
-msgid "IDS_IME_BODY_POP_UP_DISPLAYED_T_TTS"
-msgstr "ေပါ့အပ္ ျပထားသည္"
-
-msgid "IDS_IME_BODY_POP_UP_CLOSED_TTS"
-msgstr "ေပါ့အပ္ ပိတ္ၿပီးပါၿပီ။"
-
-msgid "IDS_IME_BODY_PLUS_M_KEYBOARD_SYMBOL"
-msgstr "အေပါင္း"
-
-msgid "IDS_IME_BODY_PIPE_M_KEYBOARD_SYMBOL"
-msgstr "မ်ဥ္းမတ္ သေကၤတ"
-
-msgid "IDS_IME_BODY_PERCENT_M_KEYBOARD_SYMBOL"
-msgstr "ရာခိုင္ႏႈန္း"
-
-msgid "IDS_IME_BODY_OPENING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "အဖြင့္ဝိုက္ကြင္း"
-
-msgid "IDS_IME_BODY_OPENING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "အဖြင့္ေထာင့္ကြင္း"
-
-msgid "IDS_IME_BODY_OPENING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "အဖြင့္တြန္႔ကြင္း"
-
-msgid "IDS_IME_BODY_NO_LANGUAGES_SELECTED"
-msgstr "ဘာသာစကားမ်ား ေရြးမထားပါ။"
-
-msgid "IDS_IME_BODY_MOVE_CURSOR_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "ကီးဘုတ္တေလွ်ာက္ လက္ေခ်ာင္း ေလွ်ာပြတ္ျခင္းျဖင့္ ကာဆာကို ေရႊ႕ပါ။"
-
-msgid "IDS_IME_BODY_LETTERS_M_KEYBOARD_SYMBOL"
-msgstr "စာမ်ား"
-
-msgid "IDS_IME_BODY_LESS_THAN_M_KEYBOARD_SYMBOL"
-msgstr "ပို၍ငယ္ေသာ သေကၤတ"
-
-msgid "IDS_IME_BODY_LEFT_ANGLE_QUOTES_M_KEYBOARD_SYMBOL"
-msgstr "ဘယ္ဘက္အၫႊန္း ျမားေခါင္းမ်ား"
 
 msgid "IDS_IME_BODY_KEYBOARD_TYPE"
 msgstr "ကီးဘုတ္ အမ်ဳိးအစား"
@@ -316,200 +79,11 @@ msgstr "ကီးဘုတ္ အမ်ဳိးအစား"
 msgid "IDS_IME_BODY_KEYBOARD_SETTINGS"
 msgstr "ကီးဘုတ္သတ္မွတ္ခ်က္မ်ား"
 
-msgid "IDS_IME_BODY_INVERTED_QUESTION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ေျပာင္းျပန္လွန္ထားေသာ ေမးခြန္းသေကၤတ"
-
-msgid "IDS_IME_BODY_INVERTED_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "ေျပာင္းျပန္လွန္ထားေသာ အာေမဍိတ္ သေကၤတ"
-
-msgid "IDS_IME_BODY_INPUT_DETECTED_FROM_HARDWARE_KEYBOARD"
-msgstr "ဟတ္ဝဲကီးဘုတ္မွ ျဖည့္သြင္းျခင္း ရွာသိထားသည္။"
-
-msgid "IDS_IME_BODY_IF_PERSONALISED_DATA_IS_ENABLED_SAMSUNG_KEYBOARD_CAN_LEARN_MSG"
-msgstr "ကိုယ္ပိုင္ျပဳထားေသာ ေဒတာ ရထားပါက သင့္ လက္ေရးစတိုင္ကို Facebook၊ Gmail၊ Twitter၊ မက္ေဆ့ခ်္မ်ားႏွင့္ အဆက္အသြယ္မ်ားမွ Samsung keyboard က ေလ့လာႏိုင္ၿပီး သင္ႏွင့္ အံကိုက္ေသာ အစေဖာ္မႈမ်ားႏွင့္ အမွားျပင္ခ်က္မ်ား ေပးႏိုင္သည္"
-
-msgid "IDS_IME_BODY_GREATER_THAN_M_KEYBOARD_SYMBOL"
-msgstr "ပို၍ႀကီးေသာ သေကၤတ"
-
-msgid "IDS_IME_BODY_GRAVE_ACCENT_M_KEYBOARD_SYMBOL"
-msgstr "အသံေလးေလးထြက္ရန္ သရအကၡရာေပၚ တင္ျပေသာ (`) သေကၤတ"
-
-msgid "IDS_IME_BODY_FLICK_UPWARDS_ON_A_KEY_TO_VIEW_SYMBOLS_AND_ALTERNATIVE_CHARACTERS"
-msgstr "သေကၤတမ်ားႏွင့္ အျခားေရြးစရာ အကၡရာမ်ား ၾကည့္ရန္ ကီးတစ္ခုေပၚ အေပၚသို႔ လွန္ပါ။"
-
-msgid "IDS_IME_BODY_FLICK_THE_KEYBOARD_DOWN_TO_HIDE_IT"
-msgstr "ကီးဘုတ္ကို ဝွက္ထားရန္ ၎ကို ေအာက္လွန္ဆြဲပါ။"
-
-msgid "IDS_IME_BODY_FLICK_INPUT"
-msgstr "ေတာက္လွန္ ျဖည့္သြင္းျခင္း"
-
-msgid "IDS_IME_BODY_EXCLAMATION_MARK_M_KEYBOARD_SYMBOL"
-msgstr "အာေမၮိတ္ သေကၤတ"
-
-msgid "IDS_IME_BODY_EURO_M_KEYBOARD_SYMBOL"
-msgstr "ယူ႐ို"
-
-msgid "IDS_IME_BODY_EQUALS_M_KEYBOARD_SYMBOL"
-msgstr "ညီမွ်ျခင္းမ်ား"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_YOUR_FINGER_ACROSS_THE_KEYBOARD_THIS_FEATURE_IS_OPTIMISED_FOR_THE_QWERTY_KEYBOARD"
-msgstr "ကီးဘုတ္ေပၚတြင္ သင့္လက္ကိုေလွ်ာခ်၍ စာသားရိုက္ထည့္ပါ။ ဤအစီအစဥ္ကို Qwerty ကီးဘုတ္ႏွင့္ သင့္ေလ်ာ္ေအာင္ လုပ္ထားသည္။"
-
-msgid "IDS_IME_BODY_ENTER_TEXT_BY_SLIDING_FINGER_ACROSS_KEYBOARD"
-msgstr "ကီးဘုတ္ တေလွ်ာက္ လက္ေခ်ာင္းျဖင့္ ကစားေပးလ်က္ စာသားကို ထည့္သြင္းပါ။"
-
-msgid "IDS_IME_BODY_ENTER_M_KEYBOARD_SYMBOL"
-msgstr "ထည့္ပါ"
-
-msgid "IDS_IME_BODY_ENABLE_PERSONALISED_DATA"
-msgstr "ကိုယ္ပိုင္လုပ္ထားေသာ ေဒတာ ဖြင့္ပါ"
-
-msgid "IDS_IME_BODY_DOT_M_KEYBOARD_SYMBOL"
-msgstr "အစက္"
-
-msgid "IDS_IME_BODY_DOLLAR_M_KEYBOARD_SYMBOL"
-msgstr "ေဒၚလာ"
-
-msgid "IDS_IME_BODY_DIVIDED_BY_M_KEYBOARD_SYMBOL"
-msgstr "စားကိန္း"
-
-msgid "IDS_IME_BODY_DELETE_SPACE"
-msgstr "ေနရာလြတ္မ်ားကို ဖ်က္ပစ္ပါ"
-
-msgid "IDS_IME_BODY_DASH_M_KEYBOARD_SYMBOL"
-msgstr "မ်ဥ္းတံုး"
-
-msgid "IDS_IME_BODY_CUSTOMIZABLE_KEY"
-msgstr "စိတ္ႀကိဳက္ျပဳလုပ္ႏိုင္ေသာ ခလုတ္"
-
-msgid "IDS_IME_BODY_CURSOR_CONTROL"
-msgstr "ကာဆာ အထိန္း"
-
-msgid "IDS_IME_BODY_CURRENCY_SIGN_M_KEYBOARD_SYMBOL"
-msgstr "ေငြေၾကးသေကၤတ"
-
-msgid "IDS_IME_BODY_CONTINUOUS_INPUT"
-msgstr "ဆက္တိုက္ ထည့္သြင္းမႈ"
-
-msgid "IDS_IME_BODY_COMMA_M_KEYBOARD_SYMBOL"
-msgstr "ပုဒ္ရပ္သေကၤတ"
-
-msgid "IDS_IME_BODY_COLON_M_KEYBOARD_SYMBOL"
-msgstr "ကိုလံု"
-
-msgid "IDS_IME_BODY_CLOSING_PARENTHESIS_M_KEYBOARD_SYMBOL"
-msgstr "အပိတ္ဝိုက္ကြင္း"
-
-msgid "IDS_IME_BODY_CLOSING_BRACKET_M_KEYBOARD_SYMBOL"
-msgstr "အပိတ္ေထာင့္ကြင္း"
-
-msgid "IDS_IME_BODY_CLOSING_BRACE_M_KEYBOARD_SYMBOL"
-msgstr "အပိတ္တြန္႔ကြင္း"
-
-msgid "IDS_IME_BODY_CLIPBOARD"
-msgstr "ကလစ္ဘုတ္"
-
-msgid "IDS_IME_BODY_CIRCUMFLEX_M_KEYBOARD_SYMBOL"
-msgstr "သရသံသေကၤတ"
-
-msgid "IDS_IME_BODY_CHARACTER_PREVIEW"
-msgstr "ကာရိုက္တာ ႀကိဳတင္ၾကည့္ရႈျခင္း"
-
-msgid "IDS_IME_BODY_CAPITAL_M_LETTERS"
-msgstr "စာလံုးႀကီး"
-
-msgid "IDS_IME_BODY_BACKSPACE_M_KEYBOARD_SYMBOL"
-msgstr "ေနာက္သို႔ျပန္ဖ်က္ျခင္း"
-
-msgid "IDS_IME_BODY_BACKSLASH_M_KEYBOARD_SYMBOL"
-msgstr "ေနာက္ျပန္ မ်ဥ္းေစာင္း သေကၤတ"
-
-msgid "IDS_IME_BODY_AUTO_SPACING"
-msgstr "အလိုအေလ်ာက္ ျခားထားမႈ"
-
-msgid "IDS_IME_BODY_AUTO_CAPITALISATION"
-msgstr "အလိုအေလ်ာက္အဂၤလိပ္စာလံုးအၾကီးသို႔ ေျပာင္းျခင္း"
-
-msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_SPACES_BETWEEN_WORDS"
-msgstr "စကားလံုးမ်ားအၾကား ေနရာလြတ္ အလိုအေလ်ာက္ထည့္သြင္းပါ။"
-
 msgid "IDS_IME_BODY_AUTOMATICALLY_INSERT_A_FULL_STOP_BY_TAPPING_THE_SPACE_BAR_TWICE"
 msgstr "ဖူးစေတာ့ ထည့္ရန္အတြက္ စေပ့ဘားကို ႏွစ္ခ်က္ႏွိပ္ပါ။"
 
-msgid "IDS_IME_BODY_AUTOMATICALLY_CAPITALISE_FIRST_LETTER_OF_SENTENCE_ABB"
-msgstr "စာေၾကာင္း၏ ပထမဆံုးစာလံုးကို အလိုအေလ်ာက္အၾကီးစာလံုးျပဳလုပ္ပါ။"
-
-msgid "IDS_IME_BODY_AT_M_KEYBOARD_SYMBOL"
-msgstr "၌"
-
-msgid "IDS_IME_BODY_AND_M_KEYBOARD_SYMBOL"
-msgstr "ႏွင့္"
-
-msgid "IDS_ST_BODY_PLACES"
-msgstr "ေနရာမ်ား"
-
-msgid "IDS_ST_BODY_ON_OFF_BUTTON"
-msgstr "ဖြင့္/ပိတ္ ခလုတ္"
-
-msgid "IDS_ST_BODY_EXPANDABLE_LIST"
-msgstr "တိုးခ်ဲ႕ႏိုင္ေသာ စာရင္း"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_LIST_T_TTS"
-msgstr "စာရင္း ဖြင့္ရန္ ႏွစ္ခ်က္ ႏွိပ္ပါ။"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
-msgstr "ဤေနရာကို ျပဳျပင္ရန္ ႏွစ္ခ်က္ ႏွိပ္ပါ။"
-
-msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_LIST_T_TTS"
-msgstr "စာရင္း ပိတ္ရန္ ႏွစ္ခ်က္ ႏွိပ္ပါ။"
-
-msgid "IDS_HELP_BODY_VOICE_INPUT"
-msgstr "အသံ ျဖည့္သြင္းခ်က္"
-
-msgid "IDS_MSGS_BODY_NOT_SELECTED_T_TTS"
-msgstr "ေရြးခ်ယ္မထားေသးပါ"
-
 msgid "IDS_IME_OPT_ATTENTION"
 msgstr "သတိ"
-
-msgid "IDS_IME_BODY_SEPTEMBER"
-msgstr "စက္တင္ဘာ"
-
-msgid "IDS_IME_BODY_OCTOBER"
-msgstr "ေအာက္တိုဘာ"
-
-msgid "IDS_IME_BODY_NOVEMBER"
-msgstr "ႏုိ၀င္ဘာ"
-
-msgid "IDS_IME_BODY_MAY"
-msgstr "ေမ"
-
-msgid "IDS_IME_BODY_MARCH"
-msgstr "မတ္"
-
-msgid "IDS_IME_BODY_JUNE"
-msgstr "ဇြန္"
-
-msgid "IDS_IME_BODY_JULY"
-msgstr "ဇူလုိင္"
-
-msgid "IDS_IME_BODY_JANUARY"
-msgstr "ဇန္န၀ါရီ"
-
-msgid "IDS_IME_BODY_FEBRUARY"
-msgstr "ေဖေဖၚ၀ါရီ"
-
-msgid "IDS_IME_BODY_EMOTICONS"
-msgstr "အီမုိတီကြန္း"
-
-msgid "IDS_IME_BODY_DECEMBER"
-msgstr "ဒီဇင္ဘာ"
-
-msgid "IDS_IME_BODY_AUGUST"
-msgstr "ၾသဂုတ္"
-
-msgid "IDS_IME_BODY_APRIL"
-msgstr "ဧၿပီ"
 
 msgid "IDS_ST_SK_OK"
 msgstr "အုိေက"
@@ -517,323 +91,8 @@ msgstr "အုိေက"
 msgid "IDS_ST_SK_CANCEL"
 msgstr "ပယ္ဖ်က္"
 
-msgid "IDS_MSG_BODY_TICKED_T_TTS"
-msgstr "အမွန္ျခစ္ထားသည္"
-
-msgid "IDS_ST_BODY_NONE"
-msgstr "မရွိ"
-
 msgid "IDS_IME_HEADER_MORE_SETTINGS_ABB"
 msgstr "ေနာက္ထပ္ သတ္မွတ္ခ်က္မ်ား"
-
-msgid "IDS_ST_BUTTON_AGREE"
-msgstr "သေဘာတူညီ"
-
-msgid "IDS_KPD_TPOP_ENTER_NUMBER"
-msgstr "နံပါတ္ ျဖည့္သြင္းပါ။"
-
-msgid "IDS_CLOCK_BODY_DONT_REPEAT_ABB"
-msgstr "ထပ္ခါထပ္ခါ မလုပ္ပါႏွင့္"
-
-msgid "IDS_MSG_HEADER_SELECT_TEMPLATE_M_TEXT_HEADER_ABB"
-msgstr "ပံုစံျပား ေရြးပါ"
-
-msgid "IDS_IME_MBODY_PERSONALISED_DATA"
-msgstr "ကိုယ္ပိုင္အမွတ္သညာျပဳ အခ်က္အလက္"
-
-msgid "IDS_IME_BODY_SWIPE_THE_SPACE_BAR_LEFT_OR_RIGHT_TO_CHANGE_LANGUAGES_TTS"
-msgstr "ဘာသာစကားမ်ားကုိ ေျပာင္းရန္ စေပ့စ္ဘားကုိ ဘယ္ဖက္ (သုိ႔) ညာဖက္သုိ႔ ပြတ္ဆြဲပါ။"
-
-msgid "IDS_CALL_NPBODY_NO_TEMPLATES_M_TEXT"
-msgstr "ပံုစံျပားမ်ား မရွိပါ"
-
-msgid "IDS_ST_BODY_NOT_TICKED_T_TTS"
-msgstr "အမွတ္ျခစ္မထားပါ"
-
-msgid "IDS_IME_BODY_SET_KEYBOARD_TYPE"
-msgstr "ကီးဘုတ္ အမ်ဳိးအစားကို သတ္မွတ္ပါ"
-
-msgid "IDS_IME_BODY_SELECT_KEYBOARD"
-msgstr "ကီးဘုတ္ ေရြးပါ"
-
-msgid "WDS_PN_OPT_VIBRATION_ABB"
-msgstr "တုန္ခါမႈ"
-
-msgid "WDS_PN_OPT_SOUND_ABB"
-msgstr "အသံ"
-
-msgid "WDS_IME_TPOP_UP_TO_PD_LANGUAGES_SUPPORTED_ABB"
-msgstr "ဘာသာစကားမ်ား %d အထိ ပံ့ပိုးထားသည္။"
-
-msgid "WDS_IME_TPOP_SELECT_AT_LEAST_ONE_ITEM_ABB"
-msgstr "အနည္းဆုံး အရာဝတၳဳတစ္ခု ေရြးခ်ယ္ပါ။"
-
-msgid "WDS_IME_TPOP_REMOVE_Q_NPS_WILL_BE_REMOVED_FROM_LEARNED_WORDS_ABB"
-msgstr "ဖယ္ရွားမလား?\nေလ့လာထားေသာ စကားလုံးမ်ားမွ ‘%s’ ကိုဖယ္ရွားထားလိမ့္မည္။"
-
-msgid "WDS_IME_TPOP_PD_UPDATES_AVAILABLE_ABB"
-msgstr "အပ္ဒိတ္ %d ခု ရႏိုင္သည္။"
-
-msgid "WDS_IME_TPOP_NO_UPDATES_AVAILABLE_ABB"
-msgstr "အပ္ဒိတ္မ်ား မရႏိုင္ပါ။"
-
-msgid "WDS_IME_TPOP_KEYBOARD_SETTINGS_EXCEPT_DOWNLOADED_LANGUAGES_WILL_BE_RESET_ABB"
-msgstr "ေဒါင္းလုပ္လုပ္ထားသည့္ ဘာသာစကားမ်ားမွလြဲ၍ ကီးဘုတ္ သတ္မွတ္ခ်က္မ်ားကို ျပန္သတ္မွတ္မည္။"
-
-msgid "WDS_IME_TPOP_ENABLE_PERSONALIZED_DATA_Q_MSG_ABB"
-msgstr "စိတ္ႀကိဳက္ျပဳလုပ္ထားေသာ ေဒတာ ဖြင့္မလား?\nသင့္ဖုန္းႏွင့္ Gear ေပၚတြင္ ယခင္ကထည့္သြင္းထားသည္မ်ားကို မွတ္မိျခင္းအားျဖင့္ Samsung Keyboard သည္ စာ႐ိုက္ျခင္းမ်ားကို ခန္႔မွန္းႏိုင္သည္။ စကားဝွက္မ်ားမွလြဲ၍ အေႂကြးဝယ္ကဒ္နံပါတ္မ်ားကဲ့သို႔ ကိုယ္ေရးသီးသန္႔ အခ်က္အလက္မ်ားကို သိုေလွာင္ထားလိမ့္မည္။ စိတ္ႀကိဳက္ျပဳလုပ္ထားေသာ ေဒတာကို ေနာက္ပိုင္းတြင္ ကီးဘုတ္သတ္မွတ္ခ်က္မ်ားအတြင္း ပိတ္ႏိုင္သည္။"
-
-msgid "WDS_IME_TPOP_DOWNLOAD_STOPPED_ABB"
-msgstr "ေဒါင္းလုတ္ကို ရပ္ထားသည္။"
-
-msgid "WDS_IME_TPOP_CANT_DOWNLOAD_MORE_THAN_PD_ITEMS_AT_SAME_TIME_ABB"
-msgstr "တစ္ၿပိဳင္တည္း အရာဝတၳဳ %d ခုထက္ပိုၿပီးေဒါင္းလုတ္လုပ္၍မရႏိုင္ပါ။"
-
-msgid "WDS_IME_TPOP_CANT_DELETE_WHILE_IN_USE_ABB"
-msgstr "အသုံးျပဳေနစဥ္ ဖ်က္၍မရႏိုင္ပါ။"
-
-msgid "WDS_IME_TPOP_CANT_DELETE_PRELOADED_ITEM_ABB"
-msgstr "ႀကိဳတင္လုပ္ေဆာင္ထားသည့္ အရာဝတၳဳကို ဖ်က္၍မရႏိုင္ပါ။"
-
-msgid "WDS_IME_TPOP_ALL_LANGUAGES_UP_TO_DATE_ABB"
-msgstr "ဘာသာစကားမ်ား အားလုံးကို အသစ္ျဖစ္သည္။"
-
-msgid "WDS_IME_TPOP_ALL_LANGUAGES_ARE_NOW_UP_TO_DATE_ABB"
-msgstr "ယခု ဘာသာစကားမ်ားအားလုံး အပ္ဒိတ္ျဖစ္သည္။"
-
-msgid "WDS_IME_TPOP_ADD_TEMPLATE_ON_YOUR_PHONE_ABB"
-msgstr "သင့္ဖုန္းတြင္ပုံစံထည့္ပါ။"
-
-msgid "WDS_IME_TPOP_1_UPDATE_AVAILABLE_ABB"
-msgstr "အပ္ဒိတ္ ၁ ခု ရႏိုင္သည္။"
-
-msgid "WDS_IME_SBODY_UPDATING_PD_LANGUAGES_ABB"
-msgstr "ဘာသာစကား %d ခု အပ္ဒိတ္လုပ္ေနသည္။"
-
-msgid "WDS_IME_SBODY_UPDATE_AVAILABLE_M_STATUS_ABB"
-msgstr "အပ္ဒိတ္ ရႏိုင္သည္"
-
-msgid "WDS_IME_SBODY_UPDATES_AVAILABLE_ABB"
-msgstr "အပ္ဒိတ္မ်ား ရရွိႏိုင္သည္။"
-
-msgid "WDS_IME_SBODY_TAP_TO_STOP_ABB"
-msgstr "ရပ္တန္႔ရန္ ႏွိပ္ပါ။"
-
-msgid "WDS_IME_SBODY_TAP_TO_DOWNLOAD_ABB"
-msgstr "ေဒါင္းလုတ္လုပ္ရန္ ႏွိပ္ပါ။"
-
-msgid "WDS_IME_SBODY_SAMSUNG_KEYBOARD_ABB"
-msgstr "Samsung keyboard"
-
-msgid "WDS_IME_SBODY_ROTARY_KEYBOARD_ABB"
-msgstr "လွည့္လည္ ကီးဘုတ္"
-
-msgid "WDS_IME_SBODY_PD_UPDATES_AVAILABLE_ABB"
-msgstr "အပ္ဒိတ္ %d ခု ရရွိႏိုင္သည္။"
-
-msgid "WDS_IME_SBODY_ON"
-msgstr "ဖြင့္"
-
-msgid "WDS_IME_SBODY_OFF"
-msgstr "ပိတ္"
-
-msgid "WDS_IME_SBODY_KANA_FLICK_KEYBOARD_ABB"
-msgstr "ကာနာ ဖလစ္ခ္ ကီးဘုတ္"
-
-msgid "WDS_IME_SBODY_CHUNJIIN_KEYBOARD_ABB"
-msgstr "ခၽြန္ဂ်င္း ကီးဘုတ္"
-
-msgid "WDS_IME_SBODY_3_X_4_KEYBOARD_ABB"
-msgstr "3 x 4 ကီးဘုတ္"
-
-msgid "WDS_IME_MBODY_SMART_TYPING_ABB"
-msgstr "စမတ္ စာ႐ိုက္ျခင္း"
-
-msgid "WDS_IME_MBODY_SELECT_INPUT_LANGUAGES_ABB"
-msgstr "ထည့္သြင္း ဘာသာစကားမ်ားကို ေရြးခ်ယ္ပါ"
-
-msgid "WDS_IME_MBODY_SAMSUNG_KEYBOARD_ABB"
-msgstr "Samsung keyboard"
-
-msgid "WDS_IME_MBODY_ROTARY_KEYBOARD_ABB"
-msgstr "လွည့္လည္ ကီးဘုတ္"
-
-msgid "WDS_IME_MBODY_RESET_SETTINGS_ABB"
-msgstr "သတ္မွတ္ခ်က္မ်ား ျပန္လည္သတ္မွတ္ပါ"
-
-msgid "WDS_IME_MBODY_PREDICTIVE_TEXT_ABB"
-msgstr "ခန္႔မွန္းေဖာ္ျပသည့္ စာသား"
-
-msgid "WDS_IME_MBODY_PERSONALISED_DATA_ABB"
-msgstr "စိတ္ႀကိဳက္ျပဳလုပ္ထားေသာ ေဒတာ"
-
-msgid "WDS_IME_MBODY_KEY_TAP_FEEDBACK_ABB"
-msgstr "ကီး-ႏွိပ္မႈ တုန္႔ျပန္ခ်က္"
-
-msgid "WDS_IME_MBODY_KEYBOARD_SWIPE_ABB"
-msgstr "ကီးဘုတ္ကို ပြတ္လႊဲျခင္း"
-
-msgid "WDS_IME_MBODY_KEYBOARD_SETTINGS_ABB"
-msgstr "ကီးဘုတ္သတ္မွတ္ခ်က္မ်ား"
-
-msgid "WDS_IME_MBODY_DEFAULT_KEYBOARD_ABB"
-msgstr "မူရင္းပါပုံစံ ကီးဘုတ္"
-
-msgid "WDS_IME_MBODY_CONTINUOUS_INPUT_ABB"
-msgstr "ဆက္တိုက္ ထည့္သြင္းမႈ"
-
-msgid "WDS_IME_MBODY_CHECK_UPDATE_ABB"
-msgstr "အပ္ဒိတ္ စစ္ေဆးပါ"
-
-msgid "WDS_IME_MBODY_CHARACTER_PREVIEW_ABB"
-msgstr "အကၡရာ ႀကိဳတင္ၾကည့္ျမင္ကြင္း"
-
-msgid "WDS_IME_MBODY_AUTO_SPACING_ABB"
-msgstr "အလိုအေလ်ာက္ ေနရာျခား"
-
-msgid "WDS_IME_MBODY_AUTO_REPLACE_ABB"
-msgstr "အလိုလို အစားထိုး"
-
-msgid "WDS_IME_MBODY_AUTO_PUNCTUATE_ABB"
-msgstr "အလိုအေလ်ာက္ ပုဒ္ျဖတ္ပုဒ္ရပ္"
-
-msgid "WDS_IME_MBODY_AUTO_CAPITALISE_ABB"
-msgstr "အလိုအေလ်ာက္ စာလုံးႀကီး"
-
-msgid "WDS_IME_MBODY_ADD_TEMPLATE_ABB"
-msgstr "ပုံစံထည့္ပါ"
-
-msgid "WDS_IME_MBODY_3_X_4_KEYBOARD_ABB"
-msgstr "3 x 4 ကီးဘုတ္"
-
-msgid "WDS_IME_HEADER_UPDATES_ABB"
-msgstr "အပ္ဒိတ္မ်ား"
-
-msgid "WDS_IME_HEADER_SMART_TYPING_ABB"
-msgstr "စမတ္ စာ႐ိုက္ျခင္း"
-
-msgid "WDS_IME_HEADER_PREDICTIVE_TEXT_ABB"
-msgstr "ခန္႔မွန္းႏိုင္ေသာ စာသား"
-
-msgid "WDS_IME_HEADER_PD_AVAILABLE_ABB"
-msgstr "%d ခု ရရွိႏိုင္သည္"
-
-msgid "WDS_IME_HEADER_MORE_SETTINGS_ABB"
-msgstr "ေနာက္ထပ္ သတ္မွတ္ခ်က္မ်ား"
-
-msgid "WDS_IME_HEADER_LANGUAGE_UPDATES_ABB"
-msgstr "ဘာသာစကား အပ္ဒိတ္မ်ား"
-
-msgid "WDS_IME_HEADER_KEY_TAP_FEEDBACK_ABB"
-msgstr "ကီး-ႏွိပ္မႈ တုန္႔ျပန္ခ်က္"
-
-msgid "WDS_IME_HEADER_KEYBOARD_SWIPE_ABB"
-msgstr "ကီးဘုတ္ကို ပြတ္ဆြဲျခင္း"
-
-msgid "WDS_IME_HEADER_INPUT_LANGUAGES_ABB"
-msgstr "ထည့္သြင္းရန္ ဘာသာစကားမ်ား"
-
-msgid "WDS_IME_HEADER_INPUT_ABB"
-msgstr "ထည့္သြင္းမႈ"
-
-msgid "WDS_IME_HEADER_DOWNLOADED_LANGUAGES_ABB"
-msgstr "ေဒါင္းလုတ္လုပ္ထားေသာ ဘာသာစကားမ်ား"
-
-msgid "WDS_IME_HEADER_DOWNLOADED_ITEMS_ABB"
-msgstr "ေဒါင္းလုတ္လုပ္ထားေသာ အရာဝတၳဳမ်ား"
-
-msgid "WDS_IME_HEADER_DEFAULT_KEYBOARD_ABB"
-msgstr "မူရင္းပါပုံစံ ကီးဘုတ္"
-
-msgid "WDS_IME_HEADER_AVAILABLE_LANGUAGES_ABB"
-msgstr "ရရွိႏိုင္ေသာ ဘာသာစကားမ်ား"
-
-msgid "WDS_IME_HEADER_AVAILABLE_ITEMS_ABB"
-msgstr "ရရွိႏိုင္ေသာ အရာဝတၳဳမ်ား"
-
-msgid "WDS_IME_HEADER_AUTO_REPLACE_ABB"
-msgstr "အလိုအေလ်ာက္ အစားထိုး"
-
-msgid "WDS_IME_BUTTON_UPDATE_LIST_ABB"
-msgstr "စာရင္း အပ္ဒိတ္လုပ္ပါ"
-
-msgid "WDS_IME_BUTTON_UNINSTALL_ABB"
-msgstr "ထည့္သြင္းမႈျဖဳတ္ပါ"
-
-msgid "WDS_IME_BUTTON_NEXT_ABB"
-msgstr "ေနာက္ထပ္"
-
-msgid "WDS_IME_BUTTON_GO_ABB"
-msgstr "သြားပါ"
-
-msgid "WDS_IME_BUTTON_DONE_ABB"
-msgstr "ၿပီးပါၿပီ"
-
-msgid "WDS_IME_BUTTON_CHECK_UPDATE_ABB"
-msgstr "အပ္ဒိတ္ စစ္ေဆးပါ"
-
-msgid "WDS_IME_BODY_USING_KEYBOARD_ABB"
-msgstr "ကီးဘုတ္ အသုံးျပဳျခင္း။"
-
-msgid "WDS_IME_BODY_CHECKING_ING_ABB"
-msgstr "စစ္ေဆးေနဆဲ..."
-
-msgid "WDS_IME_ACBUTTON_UNINSTALL_ABB"
-msgstr "ထည့္သြင္းမႈျဖဳတ္ပါ"
-
-msgid "WDS_IME_ACBUTTON_STOP_ABB"
-msgstr "ရပ္ပါ"
-
-msgid "WDS_IME_ACBUTTON_SEND"
-msgstr "ပို႔ပါ"
-
-msgid "WDS_IME_ACBUTTON_ADD_TEMPLATE_ABB"
-msgstr "ပုံစံထည့္ပါ"
-
-msgid "LDS_IME_BODY_GEAR_INPUT_AND_USE_OF_A_SPEECH_RECOGNITION_SERVICE_LEGALPHRASE_WC1"
-msgstr "Gear အသြင္း ႏွင့္ အသံ အသိအမွတ္ျပဳျခင္း ၀န္ေဆာင္မႈအသံုးျပဳျခင္း"
-
-msgid "IDS_IME_POP_NETWORK_CONNECTION_ERROR"
-msgstr "ကြန္ယက္ခ်ိတ္ဆက္မႈ အမွား။"
-
-msgid "IDS_IME_MBODY_VOICE_INPUT"
-msgstr "အသံ ထည့္သြင္းျခင္း"
-
-msgid "IDS_IME_BODY_SYMBOLS_HHALF"
-msgstr "သေကၤတမ်ား (တစ္၀က္)"
-
-msgid "IDS_IME_BODY_SYMBOLS_HFULL"
-msgstr "သေကၤတမ်ား (အျပည့္)"
-
-msgid "IDS_IME_BODY_SPEAK_NOW"
-msgstr "ယခုစကားေျပာပါ"
-
-msgid "IDS_IME_BODY_OK_HAND_SIGN_M_EMOTICON_NAME_TTS"
-msgstr "အိုေက လက္သေကၤတပုံစံ"
-
-msgid "IDS_IME_BODY_MAXIMUM_NUMBER_OF_SIMULTANEOUS_DOWNLOADING_LANGUAGES_HPD_REACHED"
-msgstr "ဘာသာစကားမ်ား တစ္ၿပိဳင္တည္း ေဒါင္းလုတ္လုပ္ျခင္း အမ်ားဆံုး အေရအတြက္ (%d) ေရာက္ပါၿပီ။"
-
-msgid "IDS_IME_BODY_CLIPBOARD_M_EMOTICON_NAME"
-msgstr "ကလစ္ဘုတ္"
-
-msgid "WDS_TTRL_HEADER_USING_KEYBOARD_ABB"
-msgstr "ကီးဘုတ္ အသုံးျပဳျခင္း"
-
-msgid "WDS_TTRL_BODY_USING_KEYBOARD_ON_YOUR_GEAR_ABB"
-msgstr "သင့္ Gear ေပၚတြင္ ကီးဘုတ္အသုံးျပဳေနသည္။"
-
-msgid "WDS_TTRL_BODY_THATS_IT_ABB"
-msgstr "ဒါပါပဲ။"
-
-msgid "WDS_TTRL_BODY_ROTATE_BEZEL_CLOCKWISE_TO_VIEW_NUMBERS_ABB"
-msgstr "နံပါတ္မ်ားၾကည့္ရန္လက္ယာရစ္ေနာက္တစ္ႀကိမ္လွည့္ပါ။"
-
-msgid "WDS_TTRL_BODY_ROTATE_BEZEL_AGAIN_TO_VIEW_SYMBOLS_ABB"
-msgstr "သေကၤတမ်ားကိုၾကည့္ရန္ေနာက္တစ္ႀကိမ္လွည့္ပါ။"
-
-msgid "WDS_TTRL_BODY_ROTATE_BEZEL_AGAIN_TO_ENTER_TEXT_ABB"
-msgstr "စာသားထည့္သြင္းရန္ေနာက္တစ္ႀကိမ္လွည့္ပါ။"
 
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "ကီးပက္ သတ္မွတ္ခ်က္မ်ား ျပန္သတ္မွတ္မည္။ ဆက္လုပ္မလား?"
