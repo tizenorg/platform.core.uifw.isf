@@ -252,87 +252,80 @@ int main (int argc, char *argv [])
 
     new_argv [new_argc] = 0;
 
-    try {
-        /* Try to load config module */
-        if (config_name != "dummy") {
-            /* load config module */
-            config_module = new ConfigModule (config_name);
+    /* Try to load config module */
+    if (config_name != "dummy") {
+        /* load config module */
+        config_module = new ConfigModule (config_name);
 
-            if (!config_module->valid ()) {
-                std::cerr << "Can not load " << config_name << " Config module. Using dummy module instead.\n";
-                delete config_module;
-                config_module = 0;
-            }
+        if (!config_module->valid ()) {
+            std::cerr << "Can not load " << config_name << " Config module. Using dummy module instead.\n";
+            delete config_module;
+            config_module = 0;
         }
+    }
 
-        if (config_module) {
-            config = config_module->create_config ();
-        } else {
-            config = new DummyConfig ();
-        }
+    if (config_module) {
+        config = config_module->create_config ();
+    } else {
+        config = new DummyConfig ();
+    }
 
-        if (config.null ()) {
-            std::cerr << "Can not create Config Object!\n";
-            return 1;
-        }
-        gettime (clock_start, "Create Config");
-
-        // Create folder for saving engine list
-        scim_make_dir (USER_ENGINE_LIST_PATH);
-
-        char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
-        if (lang_str) {
-            setenv ("LANG", lang_str, 1);
-            setlocale (LC_MESSAGES, lang_str);
-            free (lang_str);
-        } else {
-            setenv ("LANG", "en_US.utf8", 1);
-            setlocale (LC_MESSAGES, "en_US.utf8");
-        }
-
-        /* create backend */
-        backend = new CommonBackEnd (config, engine_list);
-        gettime (clock_start, "Create backend");
-
-        /* load FrontEnd module */
-        frontend_module = new FrontEndModule (frontend_name, backend, config, new_argc, new_argv);
-        gettime (clock_start, "Create frontend");
-
-        if (!frontend_module || !frontend_module->valid ()) {
-            std::cerr << "Failed to load " << frontend_name << " FrontEnd module.\n";
-            return 1;
-        }
-
-        signal (SIGQUIT, signalhandler);
-        signal (SIGTERM, signalhandler);
-        signal (SIGINT,  signalhandler);
-        signal (SIGHUP,  signalhandler);
-
-        if (daemon) {
-            gettime (clock_start, "Starting as daemon ...");
-            scim_daemon ();
-        } else {
-            std::cerr << "Starting ...\n";
-        }
-
-        bool is_load_info = true;
-        if (engine_list.size () == 1 && engine_list[0] == "socket")
-            is_load_info = false;
-        backend->initialize (config, engine_list, true, is_load_info);
-        gettime (clock_start, "backend->initialize");
-
-        /* reset backend pointer, in order to destroy backend automatically. */
-        backend.reset ();
-
-        ISF_SAVE_LOG ("now running frontend...\n");
-
-        frontend_module->run ();
-    } catch (const std::exception & err) {
-        ISF_SAVE_LOG ("caught an exception! : %s\n", err.what());
-
-        std::cerr << err.what () << "\n";
+    if (config.null ()) {
+        std::cerr << "Can not create Config Object!\n";
         return 1;
     }
+    gettime (clock_start, "Create Config");
+
+    // Create folder for saving engine list
+    scim_make_dir (USER_ENGINE_LIST_PATH);
+
+    char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
+    if (lang_str) {
+        setenv ("LANG", lang_str, 1);
+        setlocale (LC_MESSAGES, lang_str);
+        free (lang_str);
+    } else {
+        setenv ("LANG", "en_US.utf8", 1);
+        setlocale (LC_MESSAGES, "en_US.utf8");
+    }
+
+    /* create backend */
+    backend = new CommonBackEnd (config, engine_list);
+    gettime (clock_start, "Create backend");
+
+    /* load FrontEnd module */
+    frontend_module = new FrontEndModule (frontend_name, backend, config, new_argc, new_argv);
+    gettime (clock_start, "Create frontend");
+
+    if (!frontend_module || !frontend_module->valid ()) {
+        std::cerr << "Failed to load " << frontend_name << " FrontEnd module.\n";
+        return 1;
+    }
+
+    signal (SIGQUIT, signalhandler);
+    signal (SIGTERM, signalhandler);
+    signal (SIGINT,  signalhandler);
+    signal (SIGHUP,  signalhandler);
+
+    if (daemon) {
+        gettime (clock_start, "Starting as daemon ...");
+        scim_daemon ();
+    } else {
+        std::cerr << "Starting ...\n";
+    }
+
+    bool is_load_info = true;
+    if (engine_list.size () == 1 && engine_list[0] == "socket")
+        is_load_info = false;
+    backend->initialize (config, engine_list, true, is_load_info);
+    gettime (clock_start, "backend->initialize");
+
+    /* reset backend pointer, in order to destroy backend automatically. */
+    backend.reset ();
+
+    ISF_SAVE_LOG ("now running frontend...\n");
+
+    frontend_module->run ();
 
     return 0;
 }
