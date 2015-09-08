@@ -906,6 +906,8 @@ ise_show(int ic)
                     layout_index = ISE_LAYOUT_STYLE_PASSWD_3X4;
                 }
 
+                LOGD ("new layout index:%d", layout_index);
+                const sclchar *old_input_mode = g_ui->get_input_mode ();
                 /* If this layout requires specific input mode, set it */
                 if (strlen(g_ise_default_values[layout_index].input_mode) > 0) {
                     g_ui->set_input_mode(g_ise_default_values[layout_index].input_mode);
@@ -934,6 +936,30 @@ ise_show(int ic)
                         current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
                     SCLRotation rotation = g_ui->get_rotation();
                     ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
+                }
+                // Check whether inout panel geometry is changed.
+                const sclchar *new_input_mode = g_ui->get_input_mode ();
+                if (g_keyboard_state.visible_state && old_input_mode && new_input_mode && strcmp (old_input_mode, new_input_mode)) {
+                    SclSize new_portrait = g_ui->get_input_mode_size (new_input_mode, DISPLAYMODE_PORTRAIT);
+                    SclSize new_landscape = g_ui->get_input_mode_size (new_input_mode, DISPLAYMODE_LANDSCAPE);
+                    LOGD ("old input mode:%s, new input mode:%s, portrait(%d, %d), landscape(%d, %d)",
+                        old_input_mode, new_input_mode, new_portrait.width, new_portrait.height, new_landscape.width, new_landscape.height);
+
+                    sclint width = 0;
+                    sclint height = 0;
+                    g_ui->get_screen_resolution (&width, &height);
+
+                    SclSize old_size = {0, 0};
+                    SCLRotation rotation = g_ui->get_rotation ();
+                    if (rotation == ROTATION_90_CW || rotation == ROTATION_90_CCW) {
+                        old_size = g_ui->get_input_mode_size(old_input_mode, DISPLAYMODE_LANDSCAPE);
+                        if (old_size.width != new_landscape.width || old_size.height != new_landscape.height)
+                            g_core.update_geometry (0, 0, new_landscape.width, new_landscape.height);
+                    } else {
+                        old_size = g_ui->get_input_mode_size(old_input_mode, DISPLAYMODE_PORTRAIT);
+                        if (old_size.width != new_portrait.width || old_size.height != new_portrait.height)
+                            g_core.update_geometry (0, height - new_portrait.height, new_portrait.width, new_portrait.height);
+                    }
                 }
             }
         }
