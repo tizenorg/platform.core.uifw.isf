@@ -53,40 +53,40 @@ struct _EcoreIMFContextISF {
     _EcoreIMFContextISF () : ctx(NULL), impl(NULL), id(0), next(NULL) {}
 };
 
-EXAPI int register_key_handler ();
-EXAPI int unregister_key_handler ();
+int register_key_handler ();
+int unregister_key_handler ();
 
-EXAPI int get_panel_client_id ();
-EXAPI Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti);
+int get_panel_client_id ();
+Eina_Bool caps_mode_check (Ecore_IMF_Context *ctx, Eina_Bool force, Eina_Bool noti);
 
-EXAPI EcoreIMFContextISF *get_focused_ic ();
+EcoreIMFContextISF *get_focused_ic ();
 
-EXAPI void context_scim_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length);
-EXAPI void imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout);
+void context_scim_imdata_get (Ecore_IMF_Context *ctx, void* data, int* length);
+void imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout);
 
-EXAPI void isf_imf_context_add (Ecore_IMF_Context *ctx);
-EXAPI void isf_imf_context_del (Ecore_IMF_Context *ctx);
-EXAPI void isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window);
-EXAPI void isf_imf_context_client_canvas_set (Ecore_IMF_Context *ctx, void *window);
-EXAPI void isf_imf_context_focus_in (Ecore_IMF_Context *ctx);
-EXAPI void isf_imf_context_focus_out (Ecore_IMF_Context *ctx);
-EXAPI void isf_imf_context_reset (Ecore_IMF_Context *ctx);
-EXAPI void isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos);
-EXAPI void isf_imf_context_cursor_location_set (Ecore_IMF_Context *ctx, int x, int y, int w, int h);
-EXAPI void isf_imf_context_input_mode_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Mode input_mode);
-EXAPI void isf_imf_context_preedit_string_get (Ecore_IMF_Context *ctx, char** str, int *cursor_pos);
-EXAPI void isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char** str, Eina_List **attrs, int *cursor_pos);
-EXAPI void isf_imf_context_use_preedit_set (Ecore_IMF_Context* ctx, Eina_Bool use_preedit);
-EXAPI Eina_Bool  isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type, Ecore_IMF_Event *event);
-EXAPI void isf_imf_context_prediction_allow_set (Ecore_IMF_Context* ctx, Eina_Bool prediction);
-EXAPI void isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
-EXAPI void isf_imf_context_imdata_set (Ecore_IMF_Context* ctx, const void *data, int len);
-EXAPI void isf_imf_context_imdata_get (Ecore_IMF_Context* ctx, void *data, int *len);
-EXAPI void isf_imf_context_input_hint_set (Ecore_IMF_Context* ctx, Ecore_IMF_Input_Hints hint);
-EXAPI void isf_imf_context_bidi_direction_set (Ecore_IMF_Context* ctx, Ecore_IMF_BiDi_Direction direction);
+void isf_imf_context_add (Ecore_IMF_Context *ctx);
+void isf_imf_context_del (Ecore_IMF_Context *ctx);
+void isf_imf_context_client_window_set (Ecore_IMF_Context *ctx, void *window);
+void isf_imf_context_client_canvas_set (Ecore_IMF_Context *ctx, void *window);
+void isf_imf_context_focus_in (Ecore_IMF_Context *ctx);
+void isf_imf_context_focus_out (Ecore_IMF_Context *ctx);
+void isf_imf_context_reset (Ecore_IMF_Context *ctx);
+void isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos);
+void isf_imf_context_cursor_location_set (Ecore_IMF_Context *ctx, int x, int y, int w, int h);
+void isf_imf_context_input_mode_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Mode input_mode);
+void isf_imf_context_preedit_string_get (Ecore_IMF_Context *ctx, char** str, int *cursor_pos);
+void isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char** str, Eina_List **attrs, int *cursor_pos);
+void isf_imf_context_use_preedit_set (Ecore_IMF_Context* ctx, Eina_Bool use_preedit);
+Eina_Bool  isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type, Ecore_IMF_Event *event);
+void isf_imf_context_prediction_allow_set (Ecore_IMF_Context* ctx, Eina_Bool prediction);
+void isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
+void isf_imf_context_imdata_set (Ecore_IMF_Context* ctx, const void *data, int len);
+void isf_imf_context_imdata_get (Ecore_IMF_Context* ctx, void *data, int *len);
+void isf_imf_context_input_hint_set (Ecore_IMF_Context* ctx, Ecore_IMF_Input_Hints hint);
+void isf_imf_context_bidi_direction_set (Ecore_IMF_Context* ctx, Ecore_IMF_BiDi_Direction direction);
 
-EXAPI EcoreIMFContextISF* isf_imf_context_new      (void);
-EXAPI void                isf_imf_context_shutdown (void);
+EcoreIMFContextISF* isf_imf_context_new      (void);
+void                isf_imf_context_shutdown (void);
 
 #endif  /* __ISF_IMF_CONTEXT_H */
 
