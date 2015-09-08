@@ -2466,14 +2466,30 @@ public:
 
     void show_helper_ise_list (int client_id)
     {
+        Transaction trans;
+        Socket client_socket (client_id);
         SCIM_DEBUG_MAIN(4) << "PanelAgent::show_helper_ise_list ()\n";
+
         m_signal_show_helper_ise_list ();
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.write_to_socket (client_socket);
     }
 
     void show_helper_ise_selector (int client_id)
     {
+        Transaction trans;
+        Socket client_socket (client_id);
         SCIM_DEBUG_MAIN(4) << "PanelAgent::show_helper_ise_selector ()\n";
+
         m_signal_show_helper_ise_selector ();
+
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_OK);
+        trans.write_to_socket (client_socket);
     }
 
     void is_helper_ise_enabled (int client_id)

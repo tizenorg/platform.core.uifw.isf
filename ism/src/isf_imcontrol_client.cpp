@@ -28,7 +28,6 @@
 #define Uses_SCIM_IMENGINE_MODULE
 #define Uses_SCIM_HELPER_MODULE
 
-
 #include <string.h>
 #include <vconf.h>
 #include "scim.h"
@@ -465,12 +464,40 @@ public:
         }
     }
 
-    void show_helper_ise_list (void) {
+    bool show_helper_ise_list (void) {
+        int    cmd;
         m_trans.put_command (ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+            m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+            return true;
+        } else {
+            std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
+        }
     }
 
-    void show_helper_ise_selector (void) {
+    bool show_helper_ise_selector (void) {
+        int    cmd;
         m_trans.put_command (ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+            m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+            return true;
+        } else {
+            std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
+        }
     }
 
     bool is_helper_ise_enabled (const char* appid, int &enabled)
@@ -635,14 +662,14 @@ bool IMControlClient::set_enable_helper_ise_info (const char *appid, bool is_ena
     return m_impl->set_enable_helper_ise_info (appid, is_enabled);
 }
 
-void IMControlClient::show_helper_ise_list (void)
+bool IMControlClient::show_helper_ise_list (void)
 {
-    m_impl->show_helper_ise_list ();
+    return m_impl->show_helper_ise_list ();
 }
 
-void IMControlClient::show_helper_ise_selector (void)
+bool IMControlClient::show_helper_ise_selector (void)
 {
-    m_impl->show_helper_ise_selector ();
+    return m_impl->show_helper_ise_selector ();
 }
 
 bool IMControlClient::is_helper_ise_enabled (const char* appid, int &enabled)
