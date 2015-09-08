@@ -64,6 +64,8 @@ static Eina_Bool          received_candidate_will_hide_event = EINA_FALSE;
 static Eina_Bool          will_hide = EINA_FALSE;
 static bool               _support_hw_keyboard_mode = false;
 
+extern void scim_initialize (void);
+
 static void _send_input_panel_hide_request ();
 
 Ecore_IMF_Context *get_using_ic (Ecore_IMF_Input_Panel_Event type, int value) {
@@ -543,6 +545,8 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     char imdata[1024] = {0};
     bool input_panel_show = false;
     input_panel_ctx = ctx;
+
+    scim_initialize();
 
     if (IfInitContext == false) {
         _isf_imf_context_init ();

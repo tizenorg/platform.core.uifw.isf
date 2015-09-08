@@ -1105,8 +1105,8 @@ imengine_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Layout layout
     }
 }
 
-static void
-_scim_initialize (void)
+void
+scim_initialize (void)
 {
     if (!_scim_initialized) {
         _scim_initialized = true;
@@ -1407,7 +1407,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__<< "(" << context_scim->id << ")...\n";
 
-    _scim_initialize ();
+    scim_initialize ();
 
     if (_focused_ic) {
         if (_focused_ic == context_scim) {
