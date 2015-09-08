@@ -205,15 +205,6 @@ AC_CHECK_FUNCS([gethostbyname gethostbyname_r socket bind accept connect listen]
 
 AM_ICONV
 
-# Check gconf library
-PKG_CHECK_MODULES(GCONF, [gconf-2.0 phonestatus noti-service],
-                  [ISF_HAS_GCONF=yes],
-                  [ISF_HAS_GCONF=no])
-
-if test "$ISF_HAS_GCONF" = "yes"; then
-  AC_DEFINE(HAVE_GCONF,1,[Have GConf functions.])
-fi
-
 # Check ECORE
 PKG_CHECK_MODULES(ECORE, [ecore])
 
@@ -701,9 +692,6 @@ AM_CONDITIONAL(ISF_BUILD_WSC_EFL,
 AM_CONDITIONAL(ISF_BUILD_PANEL_EFL,
                 [test "$enable_panel_efl" = "yes"])
 
-AM_CONDITIONAL(ISF_BUILD_WITH_GCONF,
-                [test "$ISF_HAS_GCONF" = "yes"])
-
 AM_CONDITIONAL(ISF_BUILD_DB_UTIL,
                 [test "$ISF_HAS_DB_UTIL" = "yes"])
 
@@ -728,7 +716,6 @@ AC_SUBST(SCIM_BUILD_GTK_UTILS)
 AC_SUBST(SCIM_BUILD_X11_UTILS)
 AC_SUBST(ISF_BUILD_EFL_IMMODULE)
 AC_SUBST(ISF_BUILD_PANEL_EFL)
-AC_SUBST(ISF_BUILD_WITH_GCONF)
 AC_SUBST(ISF_BUILD_DB_UTIL)
 AC_SUBST(ISF_INSTALL_SYSTEMD_SCRIPT)
 AC_SUBST(ISF_BUILD_KBD_MODE_CHANGER)
