@@ -101,94 +101,26 @@ static bool check_panel (const String &display)
     return true;
 }
 
-/* The broker for launching OSP based IMEs */
+/* The broker for launching 3rd party IMEs */
 // {
 
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
-#ifdef _MOBILE
-#include <vconf.h>
-#endif
 
 #ifndef SCIM_HELPER_LAUNCHER_PROGRAM
 #define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
 #endif
 
-#ifdef _MOBILE
-#define ISF_SYSTEM_APPSERVICE_READY_VCONF               "memory/appservice/status"
-#define ISF_SYSTEM_APPSERVICE_READY_STATE               2
-#endif
-
 static Ecore_Ipc_Server *server = NULL;
-
 static Ecore_Event_Handler *exit_handler = NULL;
 static Ecore_Event_Handler *data_handler = NULL;
-
-#ifdef _MOBILE
-static bool _appsvc_callback_regist = false;
-#endif
 
 static char _ise_name[_POSIX_PATH_MAX + 1] = {0};
 static char _ise_uuid[_POSIX_PATH_MAX + 1] = {0};
 
-static void launch_helper (const char *name, const char *uuid);
-
-#ifdef _MOBILE
-static void vconf_appservice_ready_changed (keynode_t *node, void *user_data)
-{
-    int node_value = vconf_keynode_get_int(node);
-    if (node && node_value >= ISF_SYSTEM_APPSERVICE_READY_STATE) {
-        if (_appsvc_callback_regist) {
-            vconf_ignore_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, vconf_appservice_ready_changed);
-            _appsvc_callback_regist = false;
-        }
-
-        ISF_SAVE_LOG ("vconf_appservice_ready_changed val : %d)\n", node_value);
-
-        launch_helper (_ise_name, _ise_uuid);
-    }
-}
-
-static bool check_appservice_ready ()
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    int ret = 0;
-    int val = 0;
-    ret = vconf_get_int (ISF_SYSTEM_APPSERVICE_READY_VCONF, &val);
-
-    ISF_SAVE_LOG ("vconf returned : %d, val : %d)\n", ret, val);
-
-    if (ret == 0) {
-        if (val >= ISF_SYSTEM_APPSERVICE_READY_STATE)
-            return true;
-        else {
-            /* Register a call back function for checking system ready */
-            if (!_appsvc_callback_regist) {
-                if (vconf_notify_key_changed (ISF_SYSTEM_APPSERVICE_READY_VCONF, vconf_appservice_ready_changed, NULL)) {
-                    _appsvc_callback_regist = true;
-                }
-            }
-
-            return false;
-        }
-    } else {
-        /* No OSP support environment */
-        return true;
-    }
-}
-#endif
-
 static void launch_helper (const char *name, const char *uuid)
 {
-    int pid;
-
-#ifdef _MOBILE
-    /* If appservice is not ready yet, let's return here */
-    if (!check_appservice_ready ()) return;
-#endif
-
-    pid = fork ();
+    int pid = fork ();
 
     if (pid < 0) return;
 
