@@ -699,7 +699,7 @@ scim_get_user_name ()
 EXAPI String
 scim_get_user_data_dir ()
 {
-    String dir = scim_get_home_dir () + String ("/.scim");
+    String dir = scim_get_home_dir () + String ("/.config/.scim");
     scim_make_dir (dir);
     return dir;
 }

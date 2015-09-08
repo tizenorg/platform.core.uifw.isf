@@ -151,6 +151,8 @@ __initialize_config ()
 
     String usr_conf_file = scim_get_home_dir () +
                            String (SCIM_PATH_DELIM_STRING) +
+                           String (".config") +
+                           String (SCIM_PATH_DELIM_STRING) +
                            String (".scim") +
                            String (SCIM_PATH_DELIM_STRING) +
                            String ("global");
@@ -415,6 +417,8 @@ scim_global_config_flush ()
         return true;
 
     String usr_conf_dir  = scim_get_home_dir () +
+                           String (SCIM_PATH_DELIM_STRING) +
+                           String (".config") +
                            String (SCIM_PATH_DELIM_STRING) +
                            String (".scim");
 
