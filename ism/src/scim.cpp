@@ -455,6 +455,8 @@ int main (int argc, char *argv [])
                 manual = false;
             }
         } catch (scim::Exception &e) {
+            cerr << e.what () << "\n";
+            ISF_SAVE_LOG ("catch: %s\n", e.what ());
         }
 
         /* If there is one Socket FrontEnd running and it's not manual mode,
@@ -471,7 +473,10 @@ int main (int argc, char *argv [])
                     scim_usleep (100000);
                 }
             }
-        } catch (scim::Exception &e) {}
+        } catch (scim::Exception &e) {
+            cerr << e.what () << "\n";
+            ISF_SAVE_LOG ("catch: %s\n", e.what ());
+        }
     }
 
     cerr << "Launching a process with " << def_frontend << " FrontEnd...\n";
