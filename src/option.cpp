@@ -219,24 +219,12 @@ static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
             !strcmp(part, "elm.text.multiline") ||
             !strcmp(part, "elm.text.sub") ||
             !strcmp(part, "elm.text.2")) {
-            return strdup(item_data->sub_text);
+            if (strlen(item_data->sub_text) > 0)
+                return strdup(item_data->sub_text);
         }
     }
 
     return NULL;
-}
-
-static Evas_Object *_main_gl_content_get(void *data, Evas_Object *obj, const char *part)
-{
-    Evas_Object *item = NULL;
-    ITEMDATA *item_data = (ITEMDATA*)data;
-
-    if (item_data) {
-        if (!strcmp(part, "elm.icon.right")) {
-        }
-    }
-
-    return item;
 }
 
 static Eina_Bool _update_check_button_state (Elm_Object_Item *item, Evas_Object *obj)
@@ -245,7 +233,7 @@ static Eina_Bool _update_check_button_state (Elm_Object_Item *item, Evas_Object 
     if (item && obj) {
         elm_genlist_item_selected_set (item, EINA_FALSE);
         /* Update check button */
-        Evas_Object *ck = elm_object_item_part_content_get (item, "elm.icon.right");
+        Evas_Object *ck = elm_object_item_part_content_get (item, "elm.swallow.end");
         if (ck == NULL)
             ck = elm_object_item_part_content_get (item, "elm.icon");
         evas_object_data_set (ck, "parent_genlist", obj);
@@ -355,7 +343,8 @@ static char *_language_gl_text_get(void *data, Evas_Object *obj, const char *par
         if (!strcmp(part, "elm.text.sub.left.bottom") ||
             !strcmp(part, "elm.text.multiline") ||
             !strcmp(part, "elm.text.2")) {
-            return strdup(item_data->sub_text);
+            if (strlen(item_data->sub_text) > 0)
+                return strdup(item_data->sub_text);
         }
     }
 
@@ -401,7 +390,7 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
         elm_genlist_item_selected_set(item, EINA_FALSE);
 
         // Update check button
-        Evas_Object *ck = elm_object_item_part_content_get(item, "elm.icon.right");
+        Evas_Object *ck = elm_object_item_part_content_get(item, "elm.swallow.end");
         if (ck) {
             evas_object_data_set(ck, "parent_genlist", obj);
             Eina_Bool state = elm_check_state_get(ck);
@@ -497,7 +486,9 @@ static Evas_Object *_main_radio_gl_content_get(void *data, Evas_Object *obj, con
     Evas_Object *ck = NULL;
     if(NULL != data) {
         ITEMDATA *item_data = (ITEMDATA *)data;
-        if (!strcmp(part, "elm.icon.right") || !strcmp(part, "elm.icon")) {
+        if (!strcmp(part, "elm.swallow.end") ||
+            !strcmp(part, "elm.icon.right") ||
+            !strcmp(part, "elm.icon")) {
             switch (item_data->mode) {
                 case SETTING_ITEM_ID_AUTO_CAPITALISE:
                     ck = _create_check_button (obj, g_config_values.auto_capitalise);
@@ -554,16 +545,16 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
 {
     option_elements[type].itc_main_text_only = elm_genlist_item_class_new();
     if (option_elements[type].itc_main_text_only) {
-        option_elements[type].itc_main_text_only->item_style = "1line";
+        option_elements[type].itc_main_text_only->item_style = "type1";
         option_elements[type].itc_main_text_only->func.text_get = _main_gl_text_get;
-        option_elements[type].itc_main_text_only->func.content_get = _main_gl_content_get;
+        option_elements[type].itc_main_text_only->func.content_get = NULL;
         option_elements[type].itc_main_text_only->func.state_get = _main_gl_state_get;
         option_elements[type].itc_main_text_only->func.del = _main_gl_del;
     }
 
     option_elements[type].itc_language_subitems = elm_genlist_item_class_new();
     if (option_elements[type].itc_language_subitems) {
-        option_elements[type].itc_language_subitems->item_style = "1line";
+        option_elements[type].itc_language_subitems->item_style = "type1";
         option_elements[type].itc_language_subitems->func.text_get = _language_gl_text_get;
         option_elements[type].itc_language_subitems->func.content_get = _language_gl_content_get;
         option_elements[type].itc_language_subitems->func.state_get = _main_gl_state_get;
@@ -572,7 +563,7 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
 
     option_elements[type].itc_main_text_radio = elm_genlist_item_class_new();
     if (option_elements[type].itc_main_text_radio) {
-        option_elements[type].itc_main_text_radio->item_style = "1line";
+        option_elements[type].itc_main_text_radio->item_style = "type1";
         option_elements[type].itc_main_text_radio->func.text_get = _main_gl_text_get;
         option_elements[type].itc_main_text_radio->func.content_get = _main_radio_gl_content_get;
         option_elements[type].itc_main_text_radio->func.state_get = _main_gl_state_get;
@@ -581,7 +572,7 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
 
     option_elements[type].itc_main_sub_text_radio = elm_genlist_item_class_new();
     if (option_elements[type].itc_main_sub_text_radio) {
-        option_elements[type].itc_main_sub_text_radio->item_style = "2line.top";//"multiline_sub.main.1icon";
+        option_elements[type].itc_main_sub_text_radio->item_style = "type1";//"multiline_sub.main.1icon";
         option_elements[type].itc_main_sub_text_radio->func.text_get = _main_gl_text_get;
         option_elements[type].itc_main_sub_text_radio->func.content_get = _main_radio_gl_content_get;
         option_elements[type].itc_main_sub_text_radio->func.state_get = _main_gl_state_get;
@@ -590,9 +581,9 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
 
     option_elements[type].itc_group_title = elm_genlist_item_class_new();
     if (option_elements[type].itc_group_title) {
-        option_elements[type].itc_group_title->item_style = "groupindex";
+        option_elements[type].itc_group_title->item_style = "group_index";
         option_elements[type].itc_group_title->func.text_get = _main_gl_text_get;
-        option_elements[type].itc_group_title->func.content_get = _main_gl_content_get;
+        option_elements[type].itc_group_title->func.content_get = NULL;
         option_elements[type].itc_group_title->func.state_get = _main_gl_state_get;
         option_elements[type].itc_group_title->func.del = _main_gl_del;
     }
@@ -724,6 +715,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 {
     create_genlist_item_classes(type);
 
+    Elm_Object_Item *item = NULL;
     Evas_Object *genlist = elm_genlist_add(naviframe);
     option_elements[type].genlist = genlist;
 
@@ -735,8 +727,9 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     /* Input languages */
     strncpy(main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE].main_text, LANGUAGE, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE].mode = SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE;
-    elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE],
-                            NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+    item = elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE],
+                                   NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+    elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
     for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num (); loop++)
     {
@@ -764,8 +757,9 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     /* Smart input functions */
     strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_FUNCTIONS, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode = SETTING_ITEM_ID_SMART_INPUT_TITLE;
-    elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
-                            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    item = elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
+                                   NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
     strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].main_text, AUTO_CAPITALISE, ITEM_DATA_STRING_LEN - 1);
     strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].sub_text, CAPITALISE_DESC, ITEM_DATA_STRING_LEN - 1);
@@ -782,8 +776,10 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     /* Key-tap feedback */
     strncpy(main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].main_text, KEY_FEEDBACK, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].mode = SETTING_ITEM_ID_KEY_TAP_TITLE;
-    elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE],
-                            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    item = elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE],
+                                   NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
     strncpy(main_itemdata[SETTING_ITEM_ID_SOUND].main_text, SOUND, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_SOUND].mode = SETTING_ITEM_ID_SOUND;
     elm_genlist_item_append(genlist, option_elements[type].itc_main_text_radio, &main_itemdata[SETTING_ITEM_ID_SOUND],
@@ -801,8 +797,9 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     /* More settings */
     strncpy(main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE].main_text, MORE_SETTINGS, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE].mode = SETTING_ITEM_ID_MORE_SETTINGS_TITLE;
-    elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE],
-                            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    item = elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE],
+                                   NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
     strncpy(main_itemdata[SETTING_ITEM_ID_RESET].main_text, RESET, ITEM_DATA_STRING_LEN - 1);
     main_itemdata[SETTING_ITEM_ID_RESET].mode = SETTING_ITEM_ID_RESET;
