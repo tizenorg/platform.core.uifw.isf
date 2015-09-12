@@ -727,6 +727,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     Evas_Object *genlist = elm_genlist_add(naviframe);
     option_elements[type].genlist = genlist;
 
+    elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
     evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
     elm_genlist_tree_effect_enabled_set(genlist, EINA_FALSE);
@@ -817,6 +818,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 {
     Evas_Object *genlist = elm_genlist_add(naviframe);
+    elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
     elm_genlist_homogeneous_set (genlist, EINA_TRUE);
 
     SCLOptionWindowType type = find_option_window_type(naviframe);
