@@ -439,7 +439,8 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wl_input_method_context_add_listener (im_ctx, &wsc_im_context_listener, wsc);
 
     wsc->keyboard = wl_input_method_context_grab_keyboard(im_ctx);
-    wl_keyboard_add_listener(wsc->keyboard, &wsc_im_keyboard_listener, wsc);
+    if (wsc->keyboard)
+        wl_keyboard_add_listener(wsc->keyboard, &wsc_im_keyboard_listener, wsc);
 
     if (wsc->language)
         wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
@@ -457,8 +458,10 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     struct weescim *wsc = (weescim*)data;
     if (!wsc) return;
 
-    isf_wsc_context_input_panel_hide (wsc->wsc_ctx);
-    isf_wsc_context_focus_out (wsc->wsc_ctx);
+    if (wsc->wsc_ctx) {
+        isf_wsc_context_input_panel_hide (wsc->wsc_ctx);
+        isf_wsc_context_focus_out (wsc->wsc_ctx);
+    }
 
     if (wsc->im_ctx) {
         wl_input_method_context_destroy(wsc->im_ctx);
