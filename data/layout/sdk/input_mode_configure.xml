@@ -584,8 +584,8 @@
   </mode>
   <mode name="PUNCTUATION_POPUP" dim_window="true">
     <layouts>
-      <portrait>LYT_PUNCTUATION_POPUP.xml</portrait>
-      <landscape>LYT_PUNCTUATION_POPUP.xml</landscape>
+      <portrait>LYT_PORTRAIT_PUNCTUATION_POPUP.xml</portrait>
+      <landscape>LYT_LANDSCAPE_PUNCTUATION_POPUP.xml</landscape>
     </layouts>
   </mode>
   <mode name="URL_POPUP" dim_window="true">
