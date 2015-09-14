@@ -84,32 +84,32 @@ struct _WSCContextISF {
     _WSCContextISF *next;
 };
 
-EAPI void get_language(char **language);
-EAPI int get_panel_client_id ();
-EAPI Eina_Bool caps_mode_check (WSCContextISF *ctx, Eina_Bool force, Eina_Bool noti);
+void get_language(char **language);
+int get_panel_client_id ();
+Eina_Bool caps_mode_check (WSCContextISF *ctx, Eina_Bool force, Eina_Bool noti);
 
-EAPI WSCContextISF *get_focused_ic ();
+WSCContextISF *get_focused_ic ();
 
-EAPI void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length);
-EAPI void imengine_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout);
+void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length);
+void imengine_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout);
 
-EAPI void isf_wsc_context_add (WSCContextISF *ctx);
-EAPI void isf_wsc_context_del (WSCContextISF *ctx);
-EAPI void isf_wsc_context_focus_in (WSCContextISF *ctx);
-EAPI void isf_wsc_context_focus_out (WSCContextISF *ctx);
-EAPI void isf_wsc_context_reset (WSCContextISF *ctx);
-EAPI void isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_pos);
-EAPI void isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction);
-EAPI Eina_Bool isf_wsc_context_prediction_allow_get (WSCContextISF* ctx);
-EAPI void isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
-EAPI void isf_wsc_context_filter_key_event (struct weescim *wsc,
-                                             uint32_t serial,
-                                             uint32_t timestamp, uint32_t key, uint32_t unicode,
-                                             char *keyname,
-                                             enum wl_keyboard_key_state state);
+void isf_wsc_context_add (WSCContextISF *ctx);
+void isf_wsc_context_del (WSCContextISF *ctx);
+void isf_wsc_context_focus_in (WSCContextISF *ctx);
+void isf_wsc_context_focus_out (WSCContextISF *ctx);
+void isf_wsc_context_reset (WSCContextISF *ctx);
+void isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_pos);
+void isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction);
+Eina_Bool isf_wsc_context_prediction_allow_get (WSCContextISF* ctx);
+void isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_Type autocapital_type);
+void isf_wsc_context_filter_key_event (struct weescim *wsc,
+                                       uint32_t serial,
+                                       uint32_t timestamp, uint32_t key, uint32_t unicode,
+                                       char *keyname,
+                                       enum wl_keyboard_key_state state);
 
-EAPI WSCContextISF* isf_wsc_context_new      (void);
-EAPI void           isf_wsc_context_shutdown (void);
+WSCContextISF* isf_wsc_context_new      (void);
+void           isf_wsc_context_shutdown (void);
 
 bool wsc_context_surrounding_get (weescim *ctx, char **text, int *cursor_pos);
 Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx);
