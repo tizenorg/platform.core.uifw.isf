@@ -288,12 +288,15 @@ EXAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled);
 /**
  * @brief Get the recent geometry of S/W keyboard
  *
+ * @remarks If the keyboard has never been shown, this function will return -1 since the framework can't know its size.
+ * The caller application needs to assume the default height.
+ *
  * @since_tizen 2.4
  *
- * @param[out] x Pointer to an integer in which to store the X coordinate of the IME that appeared recently. -1 indicates unknown.
- * @param[out] y Pointer to an integer in which to store the Y coordinate of the IME that appeared recently. -1 indicates unknown.
- * @param[out] w Pointer to an integer in which to store the width of the IME that appeared recently. -1 indicates unknown.
- * @param[out] h Pointer to an integer in which to store the height of the IME that appeared recently. -1 indicates unknown.
+ * @param[out] x Pointer to an integer in which to store the X coordinate of the IME that appeared recently.
+ * @param[out] y Pointer to an integer in which to store the Y coordinate of the IME that appeared recently.
+ * @param[out] w Pointer to an integer in which to store the width of the IME that appeared recently.
+ * @param[out] h Pointer to an integer in which to store the height of the IME that appeared recently.
  *
  * @return 0 if successfully, otherwise return -1;
  */
