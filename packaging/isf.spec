@@ -134,6 +134,10 @@ mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 cat scim.lang > isf.lang
 %post
 /sbin/ldconfig
+%if "%{?tizen_profile_name}" == "mobile"
+mkdir -p %{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
+ln -sf %{_prefix}/lib/systemd/user/scim.service %{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
+%endif
 
 
 /usr/bin/vconftool set -t bool file/private/isf/autocapital_allow 1 -s User || :
