@@ -1200,7 +1200,7 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_
 EAPI void
 isf_wsc_context_filter_key_event (struct weescim *wsc,
                                   uint32_t serial,
-                                  uint32_t timestamp, uint32_t keycode, uint32_t unicode,
+                                  uint32_t timestamp, uint32_t keycode, uint32_t symcode,
                                   char *keyname,
                                   enum wl_keyboard_key_state state)
 
@@ -1210,7 +1210,7 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
     if (!wsc) return;
 
     Eina_Bool ret = EINA_FALSE;
-    KeyEvent key(keycode, wsc->modifiers);
+    KeyEvent key(symcode, wsc->modifiers);
 
     if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
         key.mask = SCIM_KEY_ReleaseMask;

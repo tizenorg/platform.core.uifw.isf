@@ -32,7 +32,7 @@ typedef struct _WSCContextISFImpl  WSCContextISFImpl;
 
 typedef void (*keyboard_input_key_handler_t)(struct weescim *wsc,
                                              uint32_t serial,
-                                             uint32_t time, uint32_t key, uint32_t unicode,
+                                             uint32_t time, uint32_t keycode, uint32_t symcode,
                                              char *keyname,
                                              enum wl_keyboard_key_state state);
 
