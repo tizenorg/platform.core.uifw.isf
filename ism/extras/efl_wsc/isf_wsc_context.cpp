@@ -309,25 +309,25 @@ static Input_Language                                   input_lang              
 #define SHIFT_MODE_ENABLE 0x9fe7
 #define SHIFT_MODE_DISABLE 0x9fe8
 
-EAPI WSCContextISF *
+WSCContextISF *
 get_focused_ic ()
 {
     return _focused_ic;
 }
 
-EAPI int
+int
 get_panel_client_id (void)
 {
     return _panel_client_id;
 }
 
-EAPI Eina_Bool
+Eina_Bool
 get_desktop_mode ()
 {
     return desktop_mode;
 }
 
-EAPI void
+void
 get_language (char **language)
 {
     *language = strdup (_language.c_str ());
@@ -615,7 +615,7 @@ done:
     return ret;
 }
 
-EAPI Eina_Bool
+Eina_Bool
 caps_mode_check (WSCContextISF *ctx, Eina_Bool force, Eina_Bool noti)
 {
     Eina_Bool uppercase;
@@ -699,7 +699,7 @@ static void input_language_changed_cb (keynode_t *key, void* data)
     get_input_language ();
 }
 
-EAPI void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length)
+void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length)
 {
     WSCContextISF *context_scim = ctx;
 
@@ -714,7 +714,7 @@ EAPI void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length)
     }
 }
 
-EAPI void
+void
 imengine_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout)
 {
     WSCContextISF *context_scim = ctx;
@@ -741,7 +741,7 @@ insert_text (const char *text, uint32_t offset, const char *insert)
 }
 
 /* Public functions */
-EAPI WSCContextISF *
+WSCContextISF *
 isf_wsc_context_new (void)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -791,7 +791,7 @@ isf_wsc_context_new (void)
     return context_scim;
 }
 
-EAPI void
+void
 isf_wsc_context_shutdown (void)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -809,7 +809,7 @@ isf_wsc_context_shutdown (void)
     }
 }
 
-EAPI void
+void
 isf_wsc_context_add (WSCContextISF *ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -887,7 +887,7 @@ isf_wsc_context_add (WSCContextISF *ctx)
     SCIM_DEBUG_FRONTEND(2) << "input context created: id = " << context_scim->id << "\n";
 }
 
-EAPI void
+void
 isf_wsc_context_del (WSCContextISF *ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -952,7 +952,7 @@ isf_wsc_context_del (WSCContextISF *ctx)
     }
 }
 
-EAPI void
+void
 isf_wsc_context_focus_in (WSCContextISF *ctx)
 {
     WSCContextISF *context_scim = ctx;
@@ -1056,7 +1056,7 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
     LOGD ("ctx : %p\n", ctx);
 }
 
-EAPI void
+void
 isf_wsc_context_focus_out (WSCContextISF *ctx)
 {
     WSCContextISF *context_scim = ctx;
@@ -1095,7 +1095,7 @@ isf_wsc_context_focus_out (WSCContextISF *ctx)
     _x_key_event_is_valid = false;
 }
 
-EAPI void
+void
 isf_wsc_context_reset (WSCContextISF *ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -1117,7 +1117,7 @@ isf_wsc_context_reset (WSCContextISF *ctx)
     }
 }
 
-EAPI void
+void
 isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_pos)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -1149,7 +1149,7 @@ isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_
     }
 }
 
-EAPI void
+void
 isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " = " << (prediction == EINA_TRUE ? "true" : "false") << "...\n";
@@ -1162,7 +1162,7 @@ isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction)
     }
 }
 
-EAPI Eina_Bool
+Eina_Bool
 isf_wsc_context_prediction_allow_get (WSCContextISF* ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -1178,7 +1178,7 @@ isf_wsc_context_prediction_allow_get (WSCContextISF* ctx)
     return ret;
 }
 
-EAPI void
+void
 isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_Type autocapital_type)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " = " << autocapital_type << "...\n";
@@ -1197,7 +1197,7 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_
     }
 }
 
-EAPI void
+void
 isf_wsc_context_filter_key_event (struct weescim *wsc,
                                   uint32_t serial,
                                   uint32_t timestamp, uint32_t keycode, uint32_t symcode,
@@ -3440,4 +3440,3 @@ fallback_commit_string_cb (IMEngineInstanceBase  *si,
         wsc_context_commit_string (_focused_ic->ctx, utf8_wcstombs (str).c_str ());
     }
 }
-
