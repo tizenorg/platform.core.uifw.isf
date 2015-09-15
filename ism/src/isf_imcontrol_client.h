@@ -59,8 +59,8 @@ public:
 
     bool get_all_helper_ise_info (HELPER_ISE_INFO &info);
     bool set_enable_helper_ise_info (const char *appid, bool is_enabled);
-    void show_helper_ise_list (void);
-    void show_helper_ise_selector (void);
+    bool show_helper_ise_list (void);
+    bool show_helper_ise_selector (void);
     bool is_helper_ise_enabled (const char* appid, int &enabled);
     bool get_recent_ime_geometry (int *x, int *y, int *w, int *h);
 };

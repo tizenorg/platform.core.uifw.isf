@@ -389,9 +389,10 @@ EXAPI int isf_control_show_ime_list (void)
         return -1;
 
     imcontrol_client.prepare ();
-    imcontrol_client.show_helper_ise_list ();
-    if (!imcontrol_client.send ())
+    if (!imcontrol_client.show_helper_ise_list ()) {
+        LOGW("show_helper_ise_list failed");
         ret = -1;
+    }
 
     imcontrol_client.close_connection ();
 
@@ -407,9 +408,10 @@ EXAPI int isf_control_show_ime_selector (void)
         return -1;
 
     imcontrol_client.prepare ();
-    imcontrol_client.show_helper_ise_selector ();
-    if (!imcontrol_client.send ())
+    if (!imcontrol_client.show_helper_ise_selector ()) {
+        LOGW("show_helper_ise_selector failed");
         ret = -1;
+    }
 
     imcontrol_client.close_connection ();
 
