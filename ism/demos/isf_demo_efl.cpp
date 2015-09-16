@@ -47,9 +47,6 @@
 #include "isf_input_hint_efl.h"
 #include "isf_password_mode_efl.h"
 #include <pkgmgr-info.h>
-#include <app_control.h>
-
-static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info);
 
 struct _menu_item {
     const char *name;
@@ -70,7 +67,6 @@ static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Focus Movement", isf_focus_movement_bt },
     { "ISF Event", isf_event_demo_bt },
     { "ISF IM Control", imcontrolapi_bt },
-    { "ISF Setting", isfsetting_bt },
 
     /* do not delete below */
     { NULL, NULL }
@@ -93,72 +89,6 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
 
     if (it != NULL)
         elm_list_item_selected_set (it, EINA_FALSE);
-}
-
-/**
- * @brief Finds appid with specific category
- *
- * @return 0 if success, negative value(<0) if fail. Callback is not called if return value is negative
- */
-static int _find_appid_from_category(const pkgmgrinfo_appinfo_h handle, void *user_data)
-{
-    if (user_data) {
-        char **result = (char **)user_data;
-        char *appid = NULL;
-        int ret = 0;
-
-        /* Get appid */
-        ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
-        if (ret == PMINFO_R_OK) {
-            *result = strdup(appid);
-        }
-        else {
-            LOGW("pkgmgrinfo_appinfo_get_appid failed!");
-        }
-    }
-    else {
-        LOGW("user_data is null!");
-    }
-
-    return -1;  // This callback is no longer called.
-}
-
-static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info)
-{
-    // Launch IME List application; e.g., org.tizen.inputmethod-setting-list
-    int ret;
-    app_control_h app_control;
-    char *app_id = NULL;
-    pkgmgrinfo_appinfo_filter_h handle;
-
-    // Find appid with "http://tizen.org/category/ime-list" category; appid might be different in models.
-    ret = pkgmgrinfo_appinfo_filter_create(&handle);
-    if (ret == PMINFO_R_OK) {
-        ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-list");
-        if (ret == PMINFO_R_OK) {
-            ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _find_appid_from_category, &app_id);
-        }
-        pkgmgrinfo_appinfo_filter_destroy(handle);
-    }
-
-    if (app_id) {
-        ret = app_control_create(&app_control);
-        if (ret == APP_CONTROL_ERROR_NONE) {
-            app_control_set_operation(app_control, APP_CONTROL_OPERATION_DEFAULT);
-            app_control_set_app_id(app_control, app_id);
-            app_control_add_extra_data(app_control, "caller", "settings");  // Indicates Settings application is caller.
-            app_control_set_launch_mode(app_control, APP_CONTROL_LAUNCH_MODE_GROUP);
-            ret = app_control_send_launch_request(app_control, NULL, NULL);
-            if (ret != APP_CONTROL_ERROR_NONE) {
-                LOGW("app_control_send_launch_request failed(%d): %s", ret, app_id);
-            }
-            app_control_destroy(app_control);
-        }
-        free(app_id);
-    }
-    else {
-        LOGW("AppID with http://tizen.org/category/ime-list category is not available");
-    }
 }
 
 static int create_demo_view (struct appdata *ad)

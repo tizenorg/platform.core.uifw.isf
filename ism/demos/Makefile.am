@@ -50,7 +50,6 @@ isf_demo_efl_CXXFLAGS = @EFL_CFLAGS@ \
                         @PRIVILEGE_CONTROL_CFLAGS@ \
                         @EFL_EXTENSION_CFLAGS@ \
                         @DLOG_CFLAGS@ \
-                        @APP_CONTROL_CFLAGS@ \
                         @PKGMGR_INFO_CFLAGS@ \
                         -fPIE
 
@@ -62,7 +61,6 @@ isf_demo_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                         @PRIVILEGE_CONTROL_LIBS@ \
                         @EFL_EXTENSION_LIBS@ \
                         @DLOG_LIBS@ \
-                        @APP_CONTROL_LIBS@ \
                         @PKGMGR_INFO_LIBS@ \
                         -pie
 
