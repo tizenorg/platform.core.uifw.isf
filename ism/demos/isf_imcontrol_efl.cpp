@@ -49,6 +49,11 @@ static void test_show_ise_option (void *data, Evas_Object *obj, void *event_info
 static void test_is_ime_enabled (void *data, Evas_Object *obj, void *event_info);
 static void test_get_recent_ise_geometry_get (void *data, Evas_Object *obj, void *event_info);
 
+struct _menu_item {
+    const char *name;
+    void (*func)(void *data, Evas_Object *obj, void *event_info);
+};
+
 static struct _menu_item imcontrol_menu_its[] = {
     { "PANEL GEOMETRY GET", test_input_panel_geometry_get },
     { "INPUT PANEL SHOW", test_input_panel_show },

@@ -51,6 +51,11 @@
 
 static void isfsetting_bt (void *data, Evas_Object *obj, void *event_info);
 
+struct _menu_item {
+    const char *name;
+    void (*func)(void *data, Evas_Object *obj, void *event_info);
+};
+
 static struct _menu_item isf_demo_menu_its[] = {
     { "ISF Layout", ise_layout_bt },
     { "ISF Autocapital", ise_autocapital_bt },

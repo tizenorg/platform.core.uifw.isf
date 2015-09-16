@@ -25,6 +25,20 @@
 #include "isf_demo_efl.h"
 #include "isf_imdata_set_efl.h"
 
+struct _menu_item {
+    const char *name;
+    const char *guide_text;
+    const char *imdata;
+};
+
+static struct _menu_item _menu_its[] = {
+    { N_("ko_KR"), N_("Korean Layout"), "LANG:ko_KR" },
+    { N_("en_US"), N_("English layout"), "LANG:en_US" },
+    { N_("Disable Emoticon"), N_("Disable Emoticon"), "action=disable_emoticons" },
+
+    /* do not delete below */
+    { NULL, NULL, NULL }
+};
 
 static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, const char *imdata)
 {
@@ -42,25 +56,19 @@ static Evas_Object * create_inner_layout (void *data)
     struct appdata *ad = (struct appdata *)data;
     Evas_Object *bx = NULL;
     Evas_Object *ef = NULL;
-
     Evas_Object *parent = ad->naviframe;
-    const char *imdata_ko = "LANG:ko_KR";
-    const char *imdata_en = "LANG:en_US";
-    const char *imdata_disable_emoticon = "action=disable_emoticons";
+    int idx = 0;
 
     bx = elm_box_add (parent);
     evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    ef = _create_ef_layout (parent, _("ko_KR"), _("Korean Layout"), imdata_ko);
-    elm_box_pack_end (bx, ef);
-
-    ef = _create_ef_layout (parent, _("en_US"), _("English layout"), imdata_en);
-    elm_box_pack_end (bx, ef);
-
-    ef = _create_ef_layout (parent, _("Disable Emoticon"), _("Disable Emoticon"), imdata_disable_emoticon);
-    elm_box_pack_end (bx, ef);
+    while (_menu_its[idx].name != NULL) {
+        ef = _create_ef_layout (parent, _menu_its[idx].name, _menu_its[idx].guide_text, _menu_its[idx].imdata);
+        elm_box_pack_end (bx, ef);
+        ++idx;
+    }
 
     return bx;
 }

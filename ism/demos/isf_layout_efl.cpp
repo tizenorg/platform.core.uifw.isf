@@ -28,6 +28,35 @@
 #include <Ecore_X.h>
 #endif
 
+struct _menu_item {
+    const char *name;
+    const char *guide_text;
+    Elm_Input_Panel_Layout layout;
+    int layout_variation;
+};
+
+static struct _menu_item _menu_its[] = {
+    { N_("NORMAL LAYOUT"), N_("click to enter TEXT"), ELM_INPUT_PANEL_LAYOUT_NORMAL, 0 },
+    { N_("NUMBER LAYOUT"), N_("click to enter NUMBER"), ELM_INPUT_PANEL_LAYOUT_NUMBER, 0 },
+    { N_("EMAIL LAYOUT"), N_("click to enter EMAIL"), ELM_INPUT_PANEL_LAYOUT_EMAIL, 0 },
+    { N_("URL LAYOUT"), N_("click to enter URL"), ELM_INPUT_PANEL_LAYOUT_URL, 0 },
+    { N_("PHONENUMBER LAYOUT"), N_("click to enter PHONENUMBER"), ELM_INPUT_PANEL_LAYOUT_PHONENUMBER, 0 },
+    { N_("IP LAYOUT"), N_("click to enter IP"), ELM_INPUT_PANEL_LAYOUT_IP, 0 },
+    { N_("MONTH LAYOUT"), N_("click to enter MONTH"), ELM_INPUT_PANEL_LAYOUT_MONTH, 0 },
+    { N_("NUMBERONLY LAYOUT"), N_("click to enter NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_NORMAL },
+    { N_("NUMBERONLY - SIGNED"), N_("click to enter NUMBERONLY WITH SIGNED"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED },
+    { N_("NUMBERONLY - DECIMAL"), N_("click to enter NUMBERONLY WITH DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL },
+    { N_("NUMBERONLY - SIGNED AND DECIMAL"), N_("click to enter NUMBERONLY WITH SIGNED AND DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL },
+    { N_("DATETIME LAYOUT"), N_("click to enter DATETIME"), ELM_INPUT_PANEL_LAYOUT_DATETIME, 0},
+    { N_("PASSWORD LAYOUT"), N_("click to enter PASSWORD"), ELM_INPUT_PANEL_LAYOUT_PASSWORD, 0},
+    { N_("PASSWORD NUMBERONLY LAYOUT"), N_("click to enter PASSWORD NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_PASSWORD, ELM_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY },
+    { N_("Emoticon LAYOUT"), N_("click to enter Emoticon"), ELM_INPUT_PANEL_LAYOUT_EMOTICON, 0},
+    { N_("TERMINAL LAYOUT"), N_("click to enter TERMINAL"), ELM_INPUT_PANEL_LAYOUT_TERMINAL, 0},
+
+    /* do not delete below */
+    { NULL, NULL, ELM_INPUT_PANEL_LAYOUT_NORMAL, 0 }
+};
+
 #ifndef WAYLAND
 static Ecore_Event_Handler *prop_handler = NULL;
 
@@ -224,75 +253,18 @@ static Evas_Object * create_inner_layout (void *data)
     Evas_Object *bx = NULL;
     Evas_Object *ef = NULL;
     Evas_Object *parent = ad->naviframe;
+    int idx = 0;
 
     bx = elm_box_add (parent);
     evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    /* Normal Layout */
-    ef = _create_ef_layout (parent, _("NORMAL LAYOUT"), _("click to enter TEXT"), ELM_INPUT_PANEL_LAYOUT_NORMAL);
-    elm_box_pack_end (bx, ef);
-
-    /* Number Layout */
-    ef = _create_ef_layout (parent, _("NUMBER LAYOUT"), _("click to enter NUMBER"), ELM_INPUT_PANEL_LAYOUT_NUMBER);
-    elm_box_pack_end (bx, ef);
-
-    /* Email Layout */
-    ef = _create_ef_layout (parent, _("EMAIL LAYOUT"), _("click to enter EMAIL"), ELM_INPUT_PANEL_LAYOUT_EMAIL);
-    elm_box_pack_end (bx, ef);
-
-    /* URL Layout */
-    ef = _create_ef_layout (parent, _("URL LAYOUT"), _("click to enter URL"), ELM_INPUT_PANEL_LAYOUT_URL);
-    elm_box_pack_end (bx, ef);
-
-    /* Phonenumber Layout */
-    ef = _create_ef_layout (parent, _("PHONENUMBER LAYOUT"), _("click to enter PHONENUMBER"), ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
-    elm_box_pack_end (bx, ef);
-
-    /* IP Layout */
-    ef = _create_ef_layout (parent, _("IP LAYOUT"), _("click to enter IP"), ELM_INPUT_PANEL_LAYOUT_IP);
-    elm_box_pack_end (bx, ef);
-
-    /* Month Layout */
-    ef = _create_ef_layout (parent, _("MONTH LAYOUT"), _("click to enter MONTH"), ELM_INPUT_PANEL_LAYOUT_MONTH);
-    elm_box_pack_end (bx, ef);
-
-    /* Number Only Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY LAYOUT"), _("click to enter NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_NORMAL);
-    elm_box_pack_end (bx, ef);
-
-    /* Number Only with signed Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY - SIGNED"), _("click to enter NUMBERONLY WITH SIGNED"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED);
-    elm_box_pack_end (bx, ef);
-
-    /* Number Only with decimal Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY - DECIMAL"), _("click to enter NUMBERONLY WITH DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL);
-    elm_box_pack_end (bx, ef);
-
-    /* Number Only with signed and decimal Layout */
-    ef = _create_ef_layout (parent, _("NUMBERONLY - SIGNED AND DECIMAL"), _("click to enter NUMBERONLY WITH SIGNED AND DECIMAL"), ELM_INPUT_PANEL_LAYOUT_NUMBERONLY, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL);
-    elm_box_pack_end (bx, ef);
-
-    /* Datetime Layout */
-    ef = _create_ef_layout (parent, _("DATETIME LAYOUT"), _("click to enter DATETIME"), ELM_INPUT_PANEL_LAYOUT_DATETIME);
-    elm_box_pack_end (bx, ef);
-
-    /* Password Layout */
-    ef = _create_ef_layout (parent, _("PASSWORD LAYOUT"), _("click to enter PASSWORD"), ELM_INPUT_PANEL_LAYOUT_PASSWORD);
-    elm_box_pack_end (bx, ef);
-
-    /* Password numberonly Layout */
-    ef = _create_ef_layout (parent, _("PASSWORD NUMBERONLY LAYOUT"), _("click to enter PASSWORD NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_PASSWORD, ELM_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY);
-    elm_box_pack_end (bx, ef);
-
-    /* Emoticon Layout */
-    ef = _create_ef_layout (parent, _("Emoticon LAYOUT"), _("click to enter Emoticon"), ELM_INPUT_PANEL_LAYOUT_EMOTICON);
-    elm_box_pack_end (bx, ef);
-
-    /* Terminal Layout */
-    ef = _create_ef_layout (parent, _("TERMINAL LAYOUT"), _("click to enter TERMINAL"), ELM_INPUT_PANEL_LAYOUT_TERMINAL);
-    elm_box_pack_end (bx, ef);
+    while (_menu_its[idx].name != NULL) {
+        ef = _create_ef_layout (parent, _menu_its[idx].name, _menu_its[idx].guide_text, _menu_its[idx].layout, _menu_its[idx].layout_variation);
+        elm_box_pack_end (bx, ef);
+        ++idx;
+    }
 
 #ifndef WAYLAND
     /* create back key event generation button */
