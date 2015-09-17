@@ -30,8 +30,6 @@ static Evas_Object * _entry2                 = NULL;
 static Evas_Object * _key_event_label        = NULL;
 static Evas_Object * _preedit_event_label    = NULL;
 static Evas_Object * _commit_event_label     = NULL;
-static Ecore_Event_Handler *_preedit_handler = NULL;
-static Ecore_Event_Handler *_commit_handler  = NULL;
 
 static void _input_panel_event_callback (void *data, Ecore_IMF_Context *ctx, int value)
 {
@@ -56,7 +54,7 @@ static void _evas_key_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_
     }
 }
 
-static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
+static void _ecore_imf_event_changed_cb (void *data, Ecore_IMF_Context *ctx, void *event)
 {
     int len;
     static char str [100];
@@ -74,23 +72,20 @@ static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
         snprintf (str, sizeof (str), "entry 2 get preedit string: %s", preedit_string);
         elm_object_text_set (_preedit_event_label, str);
     }
-
-    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool _ecore_imf_event_commit_cb (void *data, int type, void *event)
+static void _ecore_imf_event_commit_cb (void *data, Ecore_IMF_Context *ctx, void *event)
 {
     static char str [100];
-    Ecore_IMF_Event_Commit *ev = (Ecore_IMF_Event_Commit *) event;
+    char *commit_str = (char *)event;
 
     if (elm_object_focus_get (_entry1) == EINA_TRUE) {
-        snprintf (str, sizeof (str), "entry 1 get commit string: %s", (char *)(ev->str));
+        snprintf (str, sizeof (str), "entry 1 get commit string: %s", commit_str);
         elm_object_text_set (_commit_event_label, str);
     } else if (elm_object_focus_get (_entry2) == EINA_TRUE) {
-        snprintf (str, sizeof (str), "entry 2 get commit string: %s", (char *)(ev->str));
+        snprintf (str, sizeof (str), "entry 2 get commit string: %s", commit_str);
         elm_object_text_set (_commit_event_label, str);
     }
-    return ECORE_CALLBACK_RENEW;
 }
 
 void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
@@ -103,9 +98,6 @@ void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    _preedit_handler = ecore_event_handler_add (ECORE_IMF_EVENT_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
-    _commit_handler  = ecore_event_handler_add (ECORE_IMF_EVENT_COMMIT, _ecore_imf_event_commit_cb, NULL);
-
     /* Entry 1 */
     _entry1 = elm_entry_add (bx);
     elm_entry_entry_set (_entry1, "ENTRY 1");
@@ -116,8 +108,11 @@ void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     elm_box_pack_end (bx, _entry1);
 
     ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry1);
-    if (ic != NULL)
+    if (ic != NULL) {
+        ecore_imf_context_event_callback_add(ic, ECORE_IMF_CALLBACK_COMMIT, _ecore_imf_event_commit_cb, NULL);
+        ecore_imf_context_event_callback_add(ic, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
         ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_event_callback, NULL);
+    }
 
     /* Entry 2 */
     _entry2 = elm_entry_add (bx);
@@ -129,8 +124,11 @@ void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     elm_box_pack_end (bx, _entry2);
 
     ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry2);
-    if (ic != NULL)
+    if (ic != NULL) {
+        ecore_imf_context_event_callback_add(ic, ECORE_IMF_CALLBACK_COMMIT, _ecore_imf_event_commit_cb, NULL);
+        ecore_imf_context_event_callback_add(ic, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
         ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_event_callback, NULL);
+    }
 
     /* key event */
     _key_event_label = create_button (bx, "KEY EVENT");

@@ -34,8 +34,6 @@ static Evas_Object *_commit_event_label  = NULL;
 static Evas_Object *_set_focus_button1   = NULL;
 static Evas_Object *_set_focus_button2   = NULL;
 static Evas_Object *_ise_show_button     = NULL;
-static Ecore_Event_Handler *_preedit_handler = NULL;
-static Ecore_Event_Handler *_commit_handler  = NULL;
 static int focus_label_idx = 1;
 
 extern void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info);
@@ -86,7 +84,7 @@ static void _key_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_inf
     }
 }
 
-static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
+static void _ecore_imf_event_changed_cb (void *data, Ecore_IMF_Context *ctx, void *event)
 {
     static char str [100];
 
@@ -98,7 +96,7 @@ static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
         ecore_imf_context_preedit_string_get (_imf_context[focus_label_idx-1], &preedit_string, &cursor_pos);
 
     if (preedit_string == NULL)
-        return ECORE_CALLBACK_CANCEL;
+        return;
 
     snprintf (str, sizeof (str), "label %d get preedit string: %s", focus_label_idx, preedit_string);
 
@@ -106,18 +104,15 @@ static Eina_Bool _ecore_imf_event_changed_cb (void *data, int type, void *event)
 
     if (_preedit_event_label)
         elm_object_text_set (_preedit_event_label, str);
-
-    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool _ecore_imf_event_commit_cb (void *data, int type, void *event)
+static void _ecore_imf_event_commit_cb (void *data, Ecore_IMF_Context *ctx, void *event)
 {
     static char str [100];
-    Ecore_IMF_Event_Commit *ev = (Ecore_IMF_Event_Commit *) event;
+    char *commit_str = (char *)event;
 
-    snprintf (str, sizeof (str), "label %d get commit string: %s", focus_label_idx, (char *)(ev->str));
+    snprintf (str, sizeof (str), "label %d get commit string: %s", focus_label_idx, commit_str);
     elm_object_text_set (_commit_event_label, str);
-    return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
@@ -133,16 +128,6 @@ static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
             ecore_imf_context_del (_imf_context[i]);
             _imf_context[i] = NULL;
         }
-    }
-
-    if (_preedit_handler != NULL) {
-        ecore_event_handler_del (_preedit_handler);
-        _preedit_handler = NULL;
-    }
-
-    if (_commit_handler != NULL) {
-        ecore_event_handler_del (_commit_handler);
-        _commit_handler = NULL;
     }
 
     return EINA_TRUE;
@@ -165,11 +150,6 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
 
     const char *ctx_id = ecore_imf_context_default_id_get ();
 
-    /* register preedit (composing) event handler */
-    _preedit_handler = ecore_event_handler_add (ECORE_IMF_EVENT_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
-    /* register commit event handler */
-    _commit_handler = ecore_event_handler_add (ECORE_IMF_EVENT_COMMIT, _ecore_imf_event_commit_cb, NULL);
-
     /* create label1 */
     _label1 = elm_label_add (bx);
     elm_object_text_set (_label1, "LABEL 1");
@@ -184,6 +164,9 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     _imf_context[0] = ecore_imf_context_add (ctx_id);
     if (_imf_context[0]) {
         ecore_imf_context_client_canvas_set (_imf_context[0], evas_object_evas_get (_label1));
+        ecore_imf_context_event_callback_add(_imf_context[0], ECORE_IMF_CALLBACK_COMMIT, _ecore_imf_event_commit_cb, NULL);
+        ecore_imf_context_event_callback_add(_imf_context[0], ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
+
         ecore_imf_context_focus_in (_imf_context[0]);
     }
 
@@ -200,8 +183,10 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     /* create input context for label2 */
     _imf_context[1] = ecore_imf_context_add (ctx_id);
     if (_imf_context[1]) {
-        ecore_imf_context_client_window_set (_imf_context[1], (void *)ecore_win);
         ecore_imf_context_client_canvas_set (_imf_context[1], evas_object_evas_get (_label2));
+
+        ecore_imf_context_event_callback_add(_imf_context[1], ECORE_IMF_CALLBACK_COMMIT, _ecore_imf_event_commit_cb, NULL);
+        ecore_imf_context_event_callback_add(_imf_context[1], ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
     }
 
     _key_event_label = create_button (bx, "KEY EVENT");
