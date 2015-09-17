@@ -60,7 +60,9 @@ struct appdata {
 
 // Utility functions
 Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text, Evas_Object **entry = NULL);
-void         add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title);
+Evas_Object *create_button (Evas_Object *parent, const char *text);
+Elm_Object_Item *add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title);
+Evas_Object *create_naviframe_back_button (struct appdata *ad);
 
 #endif /* __ISF_DEMO_EFL_H */
 

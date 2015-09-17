@@ -96,57 +96,55 @@ static Eina_Bool _ecore_imf_event_commit_cb (void *data, int type, void *event)
 void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
-    Evas_Object *layout = NULL;
     Ecore_IMF_Context *ic = NULL;
 
-    layout = elm_layout_add (ad->naviframe);
-    evas_object_size_hint_weight_set (layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_show (layout);
+    Evas_Object *bx = elm_box_add (ad->naviframe);
+    evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
+    evas_object_show (bx);
 
     _preedit_handler = ecore_event_handler_add (ECORE_IMF_EVENT_PREEDIT_CHANGED, _ecore_imf_event_changed_cb, NULL);
     _commit_handler  = ecore_event_handler_add (ECORE_IMF_EVENT_COMMIT, _ecore_imf_event_commit_cb, NULL);
 
-    _entry1 = elm_entry_add (layout);
+    /* Entry 1 */
+    _entry1 = elm_entry_add (bx);
     elm_entry_entry_set (_entry1, "ENTRY 1");
-    evas_object_move (_entry1, 0, 100);
-    evas_object_resize (_entry1, ad->root_w, 50);
+    evas_object_size_hint_weight_set (_entry1, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (_entry1, EVAS_HINT_FILL, 0.0);
     evas_object_show (_entry1);
     evas_object_event_callback_add (_entry1, EVAS_CALLBACK_KEY_UP, _evas_key_up_cb, (void *)NULL);
+    elm_box_pack_end (bx, _entry1);
 
     ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry1);
     if (ic != NULL)
         ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_event_callback, NULL);
 
-    _entry2 = elm_entry_add (layout);
+    /* Entry 2 */
+    _entry2 = elm_entry_add (bx);
     elm_entry_entry_set (_entry2, "ENTRY 2");
-    evas_object_move (_entry2, 0, 150);
-    evas_object_resize (_entry2, ad->root_w, 50);
+    evas_object_size_hint_weight_set (_entry2, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (_entry2, EVAS_HINT_FILL, 0.0);
     evas_object_show (_entry2);
     evas_object_event_callback_add (_entry2, EVAS_CALLBACK_KEY_UP, _evas_key_up_cb, (void *)NULL);
+    elm_box_pack_end (bx, _entry2);
 
     ic = (Ecore_IMF_Context *)elm_entry_imf_context_get (_entry2);
     if (ic != NULL)
         ecore_imf_context_input_panel_event_callback_add (ic, ECORE_IMF_INPUT_PANEL_STATE_EVENT, _input_panel_event_callback, NULL);
 
-    _key_event_label = elm_button_add (layout);
-    elm_object_text_set (_key_event_label, "KEY EVENT");
-    evas_object_move (_key_event_label, 0, 200);
-    evas_object_resize (_key_event_label, ad->root_w, 50);
-    evas_object_show (_key_event_label);
+    /* key event */
+    _key_event_label = create_button (bx, "KEY EVENT");
+    elm_box_pack_end (bx, _key_event_label);
 
-    _preedit_event_label = elm_button_add (layout);
-    elm_object_text_set (_preedit_event_label, "PREEDIT EVENT");
-    evas_object_move (_preedit_event_label, 0, 250);
-    evas_object_resize (_preedit_event_label, ad->root_w, 50);
-    evas_object_show (_preedit_event_label);
+    /* preedit event */
+    _preedit_event_label = create_button (bx, "PREEDIT EVENT");
+    elm_box_pack_end (bx, _preedit_event_label);
 
-    _commit_event_label = elm_button_add (layout);
-    elm_object_text_set (_commit_event_label, "COMMIT EVENT");
-    evas_object_move (_commit_event_label, 0, 300);
-    evas_object_resize (_commit_event_label, ad->root_w, 50);
-    evas_object_show (_commit_event_label);
+    /* commit event */
+    _commit_event_label = create_button (bx, "COMMIT EVENT");
+    elm_box_pack_end (bx, _commit_event_label);
 
-    elm_naviframe_item_push (ad->naviframe, _("Entry Event"), NULL, NULL, layout, NULL);
+    add_layout_to_naviframe (ad, bx, _("Entry Event"));
 }
 
 /*

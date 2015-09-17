@@ -38,7 +38,7 @@ static Ecore_Event_Handler *_preedit_handler = NULL;
 static Ecore_Event_Handler *_commit_handler  = NULL;
 static int focus_label_idx = 1;
 
-void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info);
+extern void isf_entry_event_demo_bt (void *data, Evas_Object *obj, void *event_info);
 
 static void _set_focus_button_bt (void *data, Evas_Object *obj, void *event_info)
 {
@@ -151,13 +151,14 @@ static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
 static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
-    Evas_Object *layout = NULL;
     Evas *evas = NULL;
     Ecore_Window ecore_win;
 
-    layout = elm_layout_add (ad->naviframe);
-    evas_object_size_hint_weight_set (layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    evas_object_show (layout);
+    Evas_Object *bx;
+    bx = elm_box_add (ad->naviframe);
+    evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
+    evas_object_show (bx);
 
     evas = evas_object_evas_get (ad->win_main);
     ecore_win = ecore_evas_window_get (ecore_evas_ecore_evas_get (evas));
@@ -169,31 +170,32 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     /* register commit event handler */
     _commit_handler = ecore_event_handler_add (ECORE_IMF_EVENT_COMMIT, _ecore_imf_event_commit_cb, NULL);
 
-    /* create label2 */
-    _label1 = elm_label_add (layout);
+    /* create label1 */
+    _label1 = elm_label_add (bx);
     elm_object_text_set (_label1, "LABEL 1");
-    evas_object_move (_label1, 0, 100);
-    evas_object_resize (_label1, ad->root_w, 50);
+    evas_object_size_hint_weight_set (_label1, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (_label1, EVAS_HINT_FILL, 0.0);
     evas_object_show (_label1);
     evas_object_event_callback_add (_label1, EVAS_CALLBACK_KEY_UP, _key_up_cb, (void *)NULL);
     evas_object_event_callback_add (_label1, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, (void *)NULL);
+    elm_box_pack_end (bx, _label1);
 
     /* create input context for label1 */
     _imf_context[0] = ecore_imf_context_add (ctx_id);
     if (_imf_context[0]) {
-        ecore_imf_context_client_window_set (_imf_context[0], (void *)ecore_win);
         ecore_imf_context_client_canvas_set (_imf_context[0], evas_object_evas_get (_label1));
         ecore_imf_context_focus_in (_imf_context[0]);
     }
 
     /* create label2 */
-    _label2 = elm_label_add (layout);
+    _label2 = elm_label_add (bx);
     elm_object_text_set (_label2, "LABEL 2");
-    evas_object_move (_label2, 0, 150);
-    evas_object_resize (_label2, ad->root_w, 50);
+    evas_object_size_hint_weight_set (_label2, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (_label2, EVAS_HINT_FILL, 0.0);
     evas_object_show (_label2);
     evas_object_event_callback_add (_label2, EVAS_CALLBACK_KEY_UP, _key_up_cb, (void *)NULL);
     evas_object_event_callback_add (_label2, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, (void *)NULL);
+    elm_box_pack_end (bx, _label2);
 
     /* create input context for label2 */
     _imf_context[1] = ecore_imf_context_add (ctx_id);
@@ -202,46 +204,28 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
         ecore_imf_context_client_canvas_set (_imf_context[1], evas_object_evas_get (_label2));
     }
 
-    _key_event_label = elm_button_add (layout);
-    elm_object_text_set (_key_event_label, "KEY EVENT");
-    evas_object_move (_key_event_label, 0, 200);
-    evas_object_resize (_key_event_label, ad->root_w, 50);
-    evas_object_show (_key_event_label);
+    _key_event_label = create_button (bx, "KEY EVENT");
+    elm_box_pack_end (bx, _key_event_label);
 
-    _preedit_event_label = elm_button_add (layout);
-    elm_object_text_set (_preedit_event_label, "PREEDIT EVENT");
-    evas_object_move (_preedit_event_label, 0, 250);
-    evas_object_resize (_preedit_event_label, ad->root_w, 50);
-    evas_object_show (_preedit_event_label);
+    _preedit_event_label = create_button (bx, "PREEDIT EVENT");
+    elm_box_pack_end (bx, _preedit_event_label);
 
-    _commit_event_label = elm_button_add (layout);
-    elm_object_text_set (_commit_event_label, "COMMIT EVENT");
-    evas_object_move (_commit_event_label, 0, 300);
-    evas_object_resize (_commit_event_label, ad->root_w, 50);
-    evas_object_show (_commit_event_label);
+    _commit_event_label = create_button (bx, "COMMIT EVENT");
+    elm_box_pack_end (bx, _commit_event_label);
 
-    _set_focus_button1 = elm_button_add (layout);
-    elm_object_text_set (_set_focus_button1, "SET FOCUS TO LABEL 1");
-    evas_object_move (_set_focus_button1, 0, 350);
-    evas_object_resize (_set_focus_button1, ad->root_w, 50);
-    evas_object_show (_set_focus_button1);
+    _set_focus_button1 = create_button (bx, "SET FOCUS TO LABEL 1");
     evas_object_smart_callback_add (_set_focus_button1, "clicked", _set_focus_button_bt, (void *)1);
+    elm_box_pack_end (bx, _set_focus_button1);
 
-    _set_focus_button2 = elm_button_add (layout);
-    elm_object_text_set (_set_focus_button2, "SET FOCUS TO LABEL 2");
-    evas_object_move (_set_focus_button2, 0, 400);
-    evas_object_resize (_set_focus_button2, ad->root_w, 50);
-    evas_object_show (_set_focus_button2);
+    _set_focus_button2 = create_button (bx, "SET FOCUS TO LABEL 2");
     evas_object_smart_callback_add (_set_focus_button2, "clicked", _set_focus_button_bt, (void *)2);
+    elm_box_pack_end (bx, _set_focus_button2);
 
-    _ise_show_button = elm_button_add (layout);
-    elm_object_text_set (_ise_show_button, "ISE SHOW");
-    evas_object_move (_ise_show_button, 0, 450);
-    evas_object_resize (_ise_show_button, ad->root_w, 50);
-    evas_object_show (_ise_show_button);
+    _ise_show_button = create_button (bx, "ISE SHOW");
     evas_object_smart_callback_add (_ise_show_button, "clicked", _button_bt, NULL);
+    elm_box_pack_end (bx, _ise_show_button);
 
-    Elm_Object_Item *it = elm_naviframe_item_push (ad->naviframe, _("Label Event"), NULL, NULL, layout, NULL);
+    Elm_Object_Item *it = add_layout_to_naviframe (ad, bx, _("Label Event"));
     if (it)
         elm_naviframe_item_pop_cb_set (it, _nf_back_event_cb, ad);
 }
@@ -281,12 +265,7 @@ void isf_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
     elm_list_go (ad->ev_li);
 
     // create back key
-    Evas_Object *back_btn = elm_button_add (ad->naviframe);
-    if (!elm_object_style_set (back_btn, "naviframe/end_btn/default"))
-        LOGW ("Failed to set style of button\n");
-
-    evas_object_smart_callback_add (back_btn, "clicked",  _back_btn_clicked_cb, ad);
-
+    Evas_Object *back_btn = create_naviframe_back_button (ad);
     elm_naviframe_item_push (ad->naviframe, _("Event"), back_btn, NULL, ad->ev_li, NULL);
 }
 

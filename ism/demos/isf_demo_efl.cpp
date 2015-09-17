@@ -410,6 +410,17 @@ Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guid
     return bx;
 }
 
+Evas_Object *create_button (Evas_Object *parent, const char *text)
+{
+    Evas_Object *btn = elm_button_add (parent);
+    elm_object_text_set (btn, text);
+    evas_object_size_hint_weight_set (btn, EVAS_HINT_EXPAND, 0.0);
+    evas_object_size_hint_align_set (btn, EVAS_HINT_FILL, 0.0);
+    evas_object_show (btn);
+
+    return btn;
+}
+
 static void _back_btn_clicked_cb (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
@@ -419,7 +430,18 @@ static void _back_btn_clicked_cb (void *data, Evas_Object *obj, void *event_info
     }
 }
 
-void add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title)
+Evas_Object *create_naviframe_back_button (struct appdata *ad)
+{
+    Evas_Object *back_btn = elm_button_add (ad->naviframe);
+    if (!elm_object_style_set (back_btn, "naviframe/end_btn/default"))
+        LOGW ("Failed to set style of button\n");
+
+    evas_object_smart_callback_add (back_btn, "clicked",  _back_btn_clicked_cb, ad);
+
+    return back_btn;
+}
+
+Elm_Object_Item *add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title)
 {
     struct appdata *ad = (struct appdata *) data;
 
@@ -429,14 +451,8 @@ void add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title
 
     elm_object_content_set (scroller, lay_in);
 
-    // create back key
-    Evas_Object *back_btn = elm_button_add (ad->naviframe);
-    if (!elm_object_style_set (back_btn, "naviframe/end_btn/default"))
-        LOGW ("Failed to set style of button\n");
-
-    evas_object_smart_callback_add (back_btn, "clicked",  _back_btn_clicked_cb, ad);
-
-    elm_naviframe_item_push (ad->naviframe, title, back_btn, NULL, scroller, NULL);
+    Evas_Object *back_btn = create_naviframe_back_button (ad);
+    return elm_naviframe_item_push (ad->naviframe, title, back_btn, NULL, scroller, NULL);
 }
 
 /*

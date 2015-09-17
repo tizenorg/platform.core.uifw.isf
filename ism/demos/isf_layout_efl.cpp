@@ -268,23 +268,15 @@ static Evas_Object * create_inner_layout (void *data)
 
 #ifndef WAYLAND
     /* create back key event generation button */
-    Evas_Object *back_key_btn = elm_button_add (parent);
-    elm_object_text_set (back_key_btn, "Generate BACK key");
+    Evas_Object *back_key_btn = create_button (parent, "Generate BACK key");
     evas_object_smart_callback_add (back_key_btn, "clicked", _back_key_cb, (void *)ad);
-    evas_object_size_hint_weight_set (back_key_btn, EVAS_HINT_EXPAND, 0.0);
-    evas_object_size_hint_align_set (back_key_btn, EVAS_HINT_FILL, 0);
-    evas_object_show (back_key_btn);
     elm_box_pack_end (bx, back_key_btn);
     elm_object_focus_allow_set (back_key_btn, EINA_FALSE);
 #endif
 
     /* Click to rotate button */
-    Evas_Object *rotate_btn = elm_button_add (parent);
-    elm_object_text_set (rotate_btn, "rotate");
+    Evas_Object *rotate_btn = create_button (parent, "rotate");
     evas_object_smart_callback_add (rotate_btn, "clicked", _rotate_cb, (void *)ad);
-    evas_object_size_hint_weight_set (rotate_btn, EVAS_HINT_EXPAND, 0.0);
-    evas_object_size_hint_align_set (rotate_btn, EVAS_HINT_FILL, 0);
-    evas_object_show (rotate_btn);
     elm_box_pack_end (bx, rotate_btn);
 
 #ifndef WAYLAND

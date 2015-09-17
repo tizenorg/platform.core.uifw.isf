@@ -368,7 +368,8 @@ void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
 
     gl = _create_imcontrolapi_list (ad->naviframe);
 
-    Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("IM Control"), NULL, NULL, gl, NULL);
+    Evas_Object *back_btn = create_naviframe_back_button (ad);
+    Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("IM Control"), back_btn, NULL, gl, NULL);
     elm_naviframe_item_pop_cb_set (navi_it, _nf_back_event_cb, ad);
 }
 
