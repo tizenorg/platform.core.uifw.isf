@@ -300,7 +300,7 @@ static bool               _candidate_area_1_visible         = false;
 static bool               _candidate_area_2_visible         = false;
 static bool               _aux_area_visible                 = false;
 
-static ISF_CANDIDATE_MODE_T          _candidate_mode        = FIXED_CANDIDATE_WINDOW;
+static ISF_CANDIDATE_MODE_T          _candidate_mode        = SOFT_CANDIDATE_WINDOW;
 static ISF_CANDIDATE_PORTRAIT_LINE_T _candidate_port_line   = ONE_LINE_CANDIDATE;
 
 static int                _candidate_port_width             = 480;
@@ -1697,7 +1697,7 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 _ise_width  = 0;
                 _ise_height = 0;
                 _ise_state  = WINDOW_STATE_HIDE;
-                _candidate_mode      = FIXED_CANDIDATE_WINDOW;
+                _candidate_mode      = SOFT_CANDIDATE_WINDOW;
                 _candidate_port_line = ONE_LINE_CANDIDATE;
                 _soft_candidate_width = 0;
                 _soft_candidate_height = 0;

@@ -3579,7 +3579,7 @@ open_next_factory (EcoreIMFContextISF *ic)
         attach_instance (ic->impl->si);
         _backend->set_default_factory (_language, sf->get_uuid ());
         _panel_client.register_input_context (ic->id, sf->get_uuid ());
-        _panel_client.set_candidate_style (ic->id, ONE_LINE_CANDIDATE, FIXED_CANDIDATE_WINDOW);
+        _panel_client.set_candidate_style (ic->id, ONE_LINE_CANDIDATE, SOFT_CANDIDATE_WINDOW);
         set_ic_capabilities (ic);
         turn_on_ic (ic);
 
@@ -3611,7 +3611,7 @@ open_previous_factory (EcoreIMFContextISF *ic)
         attach_instance (ic->impl->si);
         _backend->set_default_factory (_language, sf->get_uuid ());
         _panel_client.register_input_context (ic->id, sf->get_uuid ());
-        _panel_client.set_candidate_style (ic->id, ONE_LINE_CANDIDATE, FIXED_CANDIDATE_WINDOW);
+        _panel_client.set_candidate_style (ic->id, ONE_LINE_CANDIDATE, SOFT_CANDIDATE_WINDOW);
         set_ic_capabilities (ic);
         turn_on_ic (ic);
 

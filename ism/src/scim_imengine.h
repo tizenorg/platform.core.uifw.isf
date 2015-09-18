@@ -1052,7 +1052,7 @@ protected:
      * @param mode          candidate window mode.
      */
     void set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line = ONE_LINE_CANDIDATE,
-                              ISF_CANDIDATE_MODE_T          mode = FIXED_CANDIDATE_WINDOW);
+                              ISF_CANDIDATE_MODE_T          mode = SOFT_CANDIDATE_WINDOW);
 
    void send_private_command (const String &command);
 
