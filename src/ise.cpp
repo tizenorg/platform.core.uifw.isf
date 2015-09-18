@@ -1161,6 +1161,7 @@ ise_create()
         g_core.set_keyboard_size_hints(size_portrait, size_landscape);
     }
     init_recent_used_punctuation();
+    g_core.enable_soft_candidate (false);
 }
 
 void
