@@ -23,9 +23,13 @@
 #define IMDATA_ITEM_MAX_NUM 16
 
 #define IMDATA_KEY_LANGUAGE "lang"
+#define IMDATA_KEY_ACTION   "action"
 #define IMDATA_KEY_VALUE_DELIMETER "="
 
+#define IMDATA_VALUE_DISABLE_EMOTICONS  "disable_emoticons"
+
 static ISELanguageManager _language_manager;
+extern int g_imdata_state;
 
 /* A macro that frees an array returned by eina_str_split() function -
  * We need to free the first element and the pointer itself. */
@@ -70,9 +74,16 @@ void set_ise_imdata(const char * buf, size_t &len)
             while(items[loop] && loop < IMDATA_ITEM_MAX_NUM) {
                 char **keyvalue = eina_str_split(items[loop], IMDATA_KEY_VALUE_DELIMETER, 2);
                 if(keyvalue[0]) {
+                    LOGD ("key (%s), value (%s)", keyvalue[0], keyvalue[1]);
                     /* If the key string requests us to change the language */
                     if(strncmp(keyvalue[0], IMDATA_KEY_LANGUAGE, strlen(IMDATA_KEY_LANGUAGE)) == 0) {
                         process_imdata_string_language(keyvalue[1]);
+                    } else if (strncmp (keyvalue[0], IMDATA_KEY_ACTION, strlen (IMDATA_KEY_ACTION)) == 0) {
+                        if (keyvalue[1] != NULL) {
+                            if (strncmp (keyvalue[1], IMDATA_VALUE_DISABLE_EMOTICONS, strlen (IMDATA_VALUE_DISABLE_EMOTICONS)) == 0) {  /* Hide Emoticon CM key */
+                                g_imdata_state = g_imdata_state | IMDATA_ACTION_DISABLE_EMOTICONS;
+                            }
+                        }
                     }
                 }
                 safe_release_splitted_eina_str(keyvalue);

@@ -20,17 +20,18 @@
         <rec button="normal">popup_line/popup_line_left.png</rec>
       </background_image>
     </key>
-    <key key_type="modechange" hit_right="4">
+    <key key_type="modechange" custom_id="EMOTICON_KEY" hit_right="4">
       <key_value>
         <rec>EMOTICON_LAYOUT</rec>
       </key_value>
       <image_label>
         <rec button="normal">emoticon/icon_emotion_nor_55x55.png</rec>
         <rec button="pressed">emoticon/icon_emotion_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_emotion_dim_55x55.png</rec>
+        <rec button="disabled"></rec>
       </image_label>
       <background_image>
         <rec button="normal">popup_line/popup_line_right.png</rec>
+        <rec button="disabled">popup_line/popup_line_right.png</rec>
       </background_image>
     </key>
   </row>

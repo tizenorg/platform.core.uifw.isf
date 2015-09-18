@@ -138,6 +138,10 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
 #define ISE_RETURN_KEY_LABEL_SEND   gettext("IDS_IME_BUTTON_SEND_M_KEYBOARD")
 #define ISE_RETURN_KEY_LABEL_SIGNIN gettext("IDS_IME_BUTTON_SIGN_IN_M_KEYBOARD")
 
+
+#define IMDATA_ACTION_DISABLE_EMOTICONS 0x0040
+
+
 typedef struct {
     int ic;
     int focused_ic;

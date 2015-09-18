@@ -46,6 +46,7 @@ CSCLUI *g_ui = NULL;
 
 static CCoreEventCallback g_core_event_callback;
 CSCLCore g_core(&g_core_event_callback);
+int g_imdata_state = 0;
 
 extern emoticon_group_t current_emoticon_group;
 extern std::vector <int> emoticon_list_recent;
@@ -194,6 +195,23 @@ static scluint ise_get_cm_key_id (const sclchar *key_value)
     return 0;
 }
 
+static bool ise_is_emoticons_disabled (void)
+{
+    bool ret = true;
+    sclu32 current_layout = g_keyboard_state.layout;
+    LOGD ("layout=%d", current_layout);
+
+    if ((current_layout == ISE_LAYOUT_STYLE_NORMAL) ||
+        (current_layout == ISE_LAYOUT_STYLE_NUMBER) ||
+        (current_layout == ISE_LAYOUT_STYLE_EMOTICON))
+        ret = false;
+
+    if (g_imdata_state & IMDATA_ACTION_DISABLE_EMOTICONS)
+        ret = true;
+
+    return ret;
+}
+
 void CCoreEventCallback::on_init()
 {
     LOGD("CCoreEventCallback::init()\n");
@@ -232,6 +250,7 @@ void CCoreEventCallback::on_focus_out(sclint ic, const sclchar *ic_uuid)
 {
     LOGD("Enter");
     ise_focus_out(ic);
+    g_imdata_state = 0;
 }
 
 void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context &context)
@@ -349,6 +368,8 @@ void CCoreEventCallback::on_set_return_key_disable (sclu32 disabled)
 
 void CCoreEventCallback::on_set_imdata(sclchar *buf, sclu32 len)
 {
+    LOGD ("Enter");
+    g_imdata_state = 0;
     size_t _len = len;
     set_ise_imdata(buf, _len);
 }
@@ -584,6 +605,13 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
             g_ui->set_string_substitution(g_current_punctuation[punc_pos].c_str(), iter->c_str());
             punc_pos++;
         }
+        SclNotiPopupOpeningDesc *openingDesc = (SclNotiPopupOpeningDesc *)etc_info;
+        if (0 == strcmp (openingDesc->input_mode, "CM_POPUP")) {
+            if (ise_is_emoticons_disabled ())
+                g_ui->enable_button ("EMOTICON_KEY", false);
+            else
+                g_ui->enable_button ("EMOTICON_KEY", true);
+        }
     }
     else if(noti_type == SCL_UINOTITYPE_POPUP_OPENED)
     {
@@ -714,7 +742,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
             }
             if (_cm_popup_opened) {
                 if (strcmp (event_desc.key_value, USER_KEYSTRING_EMOTICON) == 0) {
-                    scluint id = ise_get_cm_key_id (USER_KEYSTRING_EMOTICON);
+                    scluint id = ise_get_cm_key_id (event_desc.key_value);
                     if (id != _current_cm_key_id) {
                         _current_cm_key_id = id;
                         ise_set_cm_private_key (_current_cm_key_id);
@@ -985,11 +1013,21 @@ ise_show(int ic)
             g_ui->set_autocapital_shift_state(TRUE);
         }
 
+        // Update CM key button
+        if (strcmp (_cm_key_list[_current_cm_key_id], USER_KEYSTRING_EMOTICON) == 0) {
+            if (ise_is_emoticons_disabled ())
+                ise_set_cm_private_key (ise_get_cm_key_id (USER_KEYSTRING_OPTION));
+            else
+                ise_set_cm_private_key (_current_cm_key_id);
+        }
+
         g_ui->show();
         g_ui->disable_input_events(FALSE);
     }
 
-    g_candidate->show();
+    if (g_candidate) {
+        g_candidate->show();
+    }
     g_keyboard_state.visible_state = TRUE;
 }
 
