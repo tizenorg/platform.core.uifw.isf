@@ -1082,6 +1082,17 @@ static unsigned int get_ise_index (const String uuid)
     return index;
 }
 
+static void set_keyboard_engine (String active_uuid)
+{
+    String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
+    String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
+    if (active_uuid != keyboard_uuid) {
+        _panel_agent->change_factory (active_uuid);
+        _config->write (IMENGINE_KEY, active_uuid);
+        _config->flush ();
+    }
+}
+
 static void _update_ime_info(void)
 {
     std::vector<String> ise_langs;
@@ -1369,6 +1380,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
 
                                 LOGD("Restart IME(%s)", appids[0].c_str ());
                                 scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), appids[0]);
+                                set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                                 _panel_agent->start_helper (appids[0]);
                                 _soft_keyboard_launched = true;
 
@@ -1432,6 +1444,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                             if (it->mode == TOOLBAR_HELPER_MODE && it->pkgid.compare(package) == 0) {
                                 LOGD("Start IME(%s)", it->appid.c_str ());
                                 scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), it->appid);
+                                set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                                 _panel_agent->start_helper (it->appid);
                                 _soft_keyboard_launched = true;
                                 break;
@@ -1555,6 +1568,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                                 for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                                     if (it->appid.compare(appids[0]) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
                                         LOGD("Restart IME(%s)", appids[0].c_str ());
+                                        set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                                         _panel_agent->start_helper (appids[0]);
                                         _soft_keyboard_launched = true;
                                         break;
@@ -1642,6 +1656,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
     if (launch_ise) {
         ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
+        set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         if (_panel_agent->start_helper (uuid))
             _soft_keyboard_launched = true;
     }
@@ -3990,6 +4005,7 @@ static void slot_focus_in (void)
             if (uuid.length () > 0 && (_ime_info[get_ise_index(uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
                 ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
+                set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                 if (_panel_agent->start_helper (uuid))
                     _soft_keyboard_launched = true;
             }
@@ -5801,6 +5817,7 @@ static void slot_start_default_ise (void)
 
             ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
 
+            set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
             if (_panel_agent->start_helper (uuid))
                 _soft_keyboard_launched = true;
         }
