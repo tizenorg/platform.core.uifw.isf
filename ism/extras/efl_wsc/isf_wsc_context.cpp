@@ -158,6 +158,10 @@ static void     panel_slot_delete_surrounding_text      (int                    
                                                          int                     offset,
                                                          int                     len);
 
+static void     panel_slot_set_selection                (int                     context,
+                                                         int                     start,
+                                                         int                     end);
+
 static void     panel_req_focus_in                      (WSCContextISF     *ic);
 static void     panel_req_update_factory_info           (WSCContextISF     *ic);
 static void     panel_req_update_spot_location          (WSCContextISF     *ic);
@@ -238,6 +242,9 @@ static bool     slot_get_surrounding_text               (IMEngineInstanceBase   
 static bool     slot_delete_surrounding_text            (IMEngineInstanceBase   *si,
                                                          int                     offset,
                                                          int                     len);
+static bool     slot_set_selection                      (IMEngineInstanceBase   *si,
+                                                         int                     start,
+                                                         int                     end);
 
 static void     slot_expand_candidate                   (IMEngineInstanceBase   *si);
 static void     slot_contract_candidate                 (IMEngineInstanceBase   *si);
@@ -1530,6 +1537,14 @@ void wsc_context_delete_surrounding (weescim *ctx, int offset, int len)
     wl_input_method_context_delete_surrounding_text (ctx->im_ctx, offset, len);
 }
 
+void wsc_context_set_selection (weescim *ctx, int start, int end)
+{
+    if (!ctx)
+        return;
+
+    wl_input_method_context_selection_region (ctx->im_ctx, ctx->serial, start, end);
+}
+
 void wsc_context_commit_string (weescim *ctx, const char *str)
 {
     if (!ctx)
@@ -2445,6 +2460,17 @@ panel_slot_delete_surrounding_text (int context, int offset, int len)
 }
 
 static void
+panel_slot_set_selection (int context, int start, int end)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *ic = find_ic (context);
+
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
+        slot_set_selection (ic->impl->si, start, end);
+}
+
+static void
 panel_slot_update_displayed_candidate_number (int context, int number)
 {
     WSCContextISF *ic = find_ic (context);
@@ -2619,6 +2645,7 @@ initialize (void)
     _panel_client.signal_connect_update_preedit_string         (slot (panel_slot_update_preedit_string));
     _panel_client.signal_connect_get_surrounding_text          (slot (panel_slot_get_surrounding_text));
     _panel_client.signal_connect_delete_surrounding_text       (slot (panel_slot_delete_surrounding_text));
+    _panel_client.signal_connect_set_selection                 (slot (panel_slot_set_selection));
     _panel_client.signal_connect_update_displayed_candidate_number (slot (panel_slot_update_displayed_candidate_number));
     _panel_client.signal_connect_candidate_more_window_show    (slot (panel_slot_candidate_more_window_show));
     _panel_client.signal_connect_candidate_more_window_hide    (slot (panel_slot_candidate_more_window_hide));
@@ -2974,6 +3001,9 @@ attach_instance (const IMEngineInstancePointer &si)
 
     si->signal_connect_delete_surrounding_text (
         slot (slot_delete_surrounding_text));
+
+    si->signal_connect_set_selection (
+        slot (slot_set_selection));
 
     si->signal_connect_expand_candidate (
         slot (slot_expand_candidate));
@@ -3364,6 +3394,22 @@ slot_delete_surrounding_text (IMEngineInstanceBase *si,
 
     if (ic && _focused_ic == ic) {
         wsc_context_delete_surrounding (_focused_ic->ctx, offset, len);
+        return true;
+    }
+    return false;
+}
+
+static bool
+slot_set_selection (IMEngineInstanceBase *si,
+                    int              start,
+                    int              end)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
+
+    if (_focused_ic && _focused_ic == ic) {
+        wsc_context_set_selection (_focused_ic->ctx, start, end);
         return true;
     }
     return false;
