@@ -42,6 +42,7 @@ BuildRequires:  pkgconfig(cynara-client)
 BuildRequires:  pkgconfig(cynara-creds-socket)
 BuildRequires:  pkgconfig(cynara-session)
 BuildRequires:  capi-appfw-package-manager-devel
+BuildRequires:  pkgconfig(libsmack)
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 %if %{without wayland}

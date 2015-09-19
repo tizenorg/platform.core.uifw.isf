@@ -43,6 +43,9 @@
 #include <string.h>
 #include <sys/resource.h>
 #include <sched.h>
+#include <pkgmgr-info.h>
+#include <Ecore_File.h>
+#include <sys/smack.h>
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
@@ -123,6 +126,16 @@ static bool check_panel (const String &display)
     return true;
 }
 
+static bool check_lfile (const char* strFile)
+{
+    struct stat st;
+
+    if (lstat (strFile, &st) < 0)
+        return false;
+    else
+        return true;
+}
+
 /* The broker for launching 3rd party IMEs */
 // {
 
@@ -137,51 +150,48 @@ static Ecore_Ipc_Server *server = NULL;
 static Ecore_Event_Handler *exit_handler = NULL;
 static Ecore_Event_Handler *data_handler = NULL;
 
-static char _ise_name[_POSIX_PATH_MAX + 1] = {0};
-static char _ise_uuid[_POSIX_PATH_MAX + 1] = {0};
-
-static void launch_helper (const char *name, const char *uuid)
+static void launch_helper (const char *exe, const char *name, const char *appid)
 {
-    if (!name || !uuid) {
-        ISF_SAVE_LOG ("Invalid parameter\n");
-        return;
+    if (exe && name && appid) {
+        int pid = fork ();
+
+        if (pid < 0) return;
+
+        if (pid == 0) {
+            if (exit_handler) {
+                ecore_event_handler_del (exit_handler);
+                exit_handler = NULL;
+            }
+
+            if (data_handler) {
+                ecore_event_handler_del (data_handler);
+                data_handler = NULL;
+            }
+
+            if (server) {
+                ecore_ipc_server_del (server);
+                server = NULL;
+            }
+
+            ecore_ipc_shutdown ();
+
+            const char *argv [] = { exe,
+                "--daemon",
+                "--config", "socket",
+                "--display", ":0",
+                name,
+                appid,
+                0};
+
+            ISF_SAVE_LOG ("Exec %s (%s %s)\n", exe, name, appid);
+
+            setsid ();
+            execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
+            exit (-1);
+        }
     }
-
-    int pid = fork ();
-
-    if (pid < 0) return;
-
-    if (pid == 0) {
-        if (exit_handler) {
-            ecore_event_handler_del (exit_handler);
-            exit_handler = NULL;
-        }
-
-        if (data_handler) {
-            ecore_event_handler_del (data_handler);
-            data_handler = NULL;
-        }
-
-        if (server) {
-            ecore_ipc_server_del (server);
-            server = NULL;
-        }
-
-        ecore_ipc_shutdown ();
-
-        const char *argv [] = { SCIM_HELPER_LAUNCHER_PROGRAM,
-            "--daemon",
-            "--config", "socket",
-            "--display", ":0",
-            _ise_name,
-            _ise_uuid,
-            0};
-
-        ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", _ise_name, _ise_uuid);
-
-        setsid ();
-        execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
-        exit (-1);
+    else {
+        ISF_SAVE_LOG ("Invalid parameter\n");
     }
 }
 
@@ -215,11 +225,30 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
     }
     buffer[blank_index] = '\0';
 
-    /* Save the name and uuid for future use, just in case appservice was not ready yet */
-    strncpy (_ise_name, buffer, _POSIX_PATH_MAX);
-    strncpy (_ise_uuid, (char*)(buffer) + blank_index + 1, _POSIX_PATH_MAX);
+    char ise_name[_POSIX_PATH_MAX + 1] = {0};
+    char ise_appid[_POSIX_PATH_MAX + 1] = {0};
+    strncpy (ise_name, buffer, _POSIX_PATH_MAX);
+    strncpy (ise_appid, (char*)(buffer) + blank_index + 1, _POSIX_PATH_MAX);
 
-    launch_helper (_ise_name, _ise_uuid);
+    ImeInfoDB imeInfo;
+    if (isf_db_select_ime_info_by_appid (ise_appid, &imeInfo)) {
+        /* Only for Native IME, execute applicaiton's exec */
+        if (imeInfo.pkgtype.compare("tpk") == 0) {
+            if (!check_lfile (imeInfo.exec.c_str ())) {
+                if (EINA_FALSE == ecore_file_symlink (SCIM_HELPER_LAUNCHER_PROGRAM, imeInfo.exec.c_str ())) {
+                    ISF_SAVE_LOG ("Fail to make symlink file!\n");
+                }
+
+                if (smack_lsetlabel (imeInfo.exec.c_str (), imeInfo.pkgid.c_str (), SMACK_LABEL_ACCESS) < 0) {
+                    ISF_SAVE_LOG ("Fail to set smack label!\n");
+                }
+            }
+            launch_helper (imeInfo.exec.c_str (), ise_name, ise_appid);
+            return ECORE_CALLBACK_PASS_ON;
+        }
+    }
+
+    launch_helper (SCIM_HELPER_LAUNCHER_PROGRAM, ise_name, ise_appid);
 
     return ECORE_CALLBACK_RENEW;
 }

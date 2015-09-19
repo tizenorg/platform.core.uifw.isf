@@ -287,6 +287,9 @@ PKG_CHECK_MODULES(APPCORE_EFL, [appcore-efl])
 # Check dlog library
 PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 
+# Check smack library
+PKG_CHECK_MODULES(SMACK, [libsmack >= 0])
+
 # Check notification library
 PKG_CHECK_MODULES(NOTIFICATION, [notification],
                   [ISF_HAS_NOTIFICATION=yes],
