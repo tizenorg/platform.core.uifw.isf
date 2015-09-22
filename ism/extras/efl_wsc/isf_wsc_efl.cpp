@@ -228,6 +228,16 @@ _wsc_im_ctx_return_key_disabled(void *data, struct wl_input_method_context *im_c
     }
 }
 
+static void
+_wsc_im_ctx_input_panel_data(void *data, struct wl_input_method_context *im_ctx, const char *input_panel_data, uint32_t input_panel_data_length)
+{
+    struct weescim *wsc = (weescim*)data;
+    LOGD ("im_context = %p input panel data = %s len = %d", im_ctx, input_panel_data, input_panel_data_length);
+    if (!wsc || !wsc->wsc_ctx) return;
+
+    isf_wsc_context_input_panel_imdata_set (wsc->wsc_ctx, (void *)input_panel_data, input_panel_data_length);
+}
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_surrounding_text,
      _wsc_im_ctx_reset,
@@ -236,7 +246,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_commit_state,
      _wsc_im_ctx_preferred_language,
      _wsc_im_ctx_return_key_type,
-     _wsc_im_ctx_return_key_disabled
+     _wsc_im_ctx_return_key_disabled,
+     _wsc_im_ctx_input_panel_data
 };
 
 static void

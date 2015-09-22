@@ -272,3 +272,11 @@ void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Ei
     LOGD ("ctx : %p, disabled : %d\n", ctx, disabled);
     _isf_wsc_context_input_panel_return_key_disabled_set (_get_context_id (ctx), disabled);
 }
+
+void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imdata, int len)
+{
+   if (!IfInitContext)
+        _isf_wsc_context_init ();
+
+    _isf_wsc_context_input_panel_imdata_set (_get_context_id (ctx), imdata, len);
+}
