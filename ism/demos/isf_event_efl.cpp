@@ -137,7 +137,6 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
 {
     struct appdata *ad = (struct appdata *)data;
     Evas *evas = NULL;
-    Ecore_Window ecore_win;
 
     Evas_Object *bx;
     bx = elm_box_add (ad->naviframe);
@@ -146,7 +145,6 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     evas_object_show (bx);
 
     evas = evas_object_evas_get (ad->win_main);
-    ecore_win = ecore_evas_window_get (ecore_evas_ecore_evas_get (evas));
 
     const char *ctx_id = ecore_imf_context_default_id_get ();
 
@@ -227,15 +225,6 @@ static void _list_click (void *data, Evas_Object *obj, void *event_info)
 
     if (it != NULL)
         elm_list_item_selected_set (it, EINA_FALSE);
-}
-
-static void _back_btn_clicked_cb (void *data, Evas_Object *obj, void *event_info)
-{
-    struct appdata *ad = (struct appdata *)data;
-
-    if (!ad->vkbd_state) {
-        elm_naviframe_item_pop (ad->naviframe);
-    }
 }
 
 void isf_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
