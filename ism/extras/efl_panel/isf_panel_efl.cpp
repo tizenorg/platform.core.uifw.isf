@@ -1148,13 +1148,13 @@ static void _initialize_ime_info (void)
  *
  * @param pkgid pkgid to insert/update ime_info table.
  *
- * @return 1 on success, -1 if pkgid is not IME package, otherwise return 0.
+ * @return 1 on successfull insert, 2 on successful update, -1 if pkgid is not IME package, otherwise return 0.
  */
-int _isf_insert_ime_info_by_pkgid(const char *pkgid)
+static int _isf_insert_ime_info_by_pkgid(const char *pkgid)
 {
     int ret = -1;
     pkgmgrinfo_pkginfo_h handle = NULL;
-    bool isImePkg = false;
+    int result = 0;  // 0: not IME, 1: Inserted, 2: Updated (because of the same appid)
 
     if (!pkgid) {
         LOGW("pkgid is null.");
@@ -1167,13 +1167,13 @@ int _isf_insert_ime_info_by_pkgid(const char *pkgid)
         return 0;
     }
 
-    ret = pkgmgrinfo_appinfo_get_list(handle, PMINFO_UI_APP, isf_pkg_ime_app_list_cb, (void *)&isImePkg);
+    ret = pkgmgrinfo_appinfo_get_list(handle, PMINFO_UI_APP, isf_pkg_ime_app_list_cb, (void *)&result);
     if (ret != PMINFO_R_OK) {
         LOGW("pkgmgrinfo_appinfo_get_list failed(%d)", ret);
         ret = 0;
     }
-    else if (isImePkg)
-        ret = 1;
+    else if (result)
+        ret = result;
 
     pkgmgrinfo_pkginfo_destroy_pkginfo(handle);
 
@@ -1249,8 +1249,9 @@ INFO: Package install/update/uninstall scenario
 Install and Uninstall are obviously simple.
    Install: just INSTALL
    Uninstall: just UNINSTALL
-Update package (change the source codes in IME project and Run As again), there are three scenarios:
+Update package (change the source codes in IME project and Run As again), there are four scenarios:
 1. UPDATE
+   Source code change
 2. UNINSTALL -> INSTALL
    This happens when Tizen IDE Property > Tizen SDK > Rapid Development Support > Check "Enable Project specific settings"
    and change Application ID in tizen-manifest.xml file and Run As.
@@ -1258,6 +1259,9 @@ Update package (change the source codes in IME project and Run As again), there 
    This happens when Tizen IDE Property > Tizen SDK > Rapid Development Support > Uncheck "Enable Project specific settings"
    and change Application ID in tizen-manifest.xml file and Run As.
    At UPDATE event, pkgid (package parameter) is invalid...
+4. UPDATE
+   Exceptionally, only UPDATE can be called when Application ID in tizen-manifest.xml file is changed.
+   At UPDATE event, pkgid (package parameter) is valid, and only appid is changed; the previous appid is invalid.
 
 If multiple packages (including non-IME pkgs) are uninstalled and installed; Z300H UPS (ultra power saving) mode scenario.
 For example, A and B packages are uninstalled and installed, the package manager works in this order: A UNINSTALL ¡æB UNINSTALL ¡æA INSTALL ¡æB INSTALL
@@ -1282,9 +1286,39 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
         if (event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
             LOGD ("type=%s package=%s event_type=UPDATE event_state=COMPLETED progress=%d error=%d", type, package, progress, error);
 
-            ret = _isf_insert_ime_info_by_pkgid(package);   // If package is not IME, -1 would be returned.
-            if (ret == 1) { // In case IME package is updated...
-                _update_ime_info();
+            ret = _isf_insert_ime_info_by_pkgid (package);   // If package is not IME, -1 would be returned.
+            if (ret == 1) { // In case the package is updated with the changed appid. In this case, there will be two IMEs
+                ret = isf_db_select_appids_by_pkgid (package, appids);
+                if (ret > 1) {
+                    if (_ime_info.size () > 0 && _ime_info [get_ise_index (appids.front ())].is_enabled)
+                        isf_db_update_is_enabled_by_appid(appids.back ().c_str (), true);
+                    isf_db_delete_ime_info_by_appid (appids.front ().c_str ());
+                }
+
+                _update_ime_info ();
+
+                /* Let panel know that ise list is changed... */
+                for (it = _ime_info.begin(); it != _ime_info.end(); it++) {
+                    total_appids.push_back(it->appid);
+                }
+                if (total_appids.size() > 0)
+                    _panel_agent->update_ise_list (total_appids);
+
+                if (ret > 1 && _soft_keyboard_launched) { // If the previous appid of pkgid is the current IME, restart it with new appid.
+                    current_ime_appid = scim_global_config_read(String(SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
+                    if (current_ime_appid.compare (appids.front ()) == 0) {
+                        LOGD("Stop IME(%s)", current_ime_appid.c_str ());
+                        _panel_agent->hide_helper (current_ime_appid);
+                        _panel_agent->stop_helper (current_ime_appid);
+                        LOGD("Start IME(%s)", appids.back ().c_str ());
+                        scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), appids.back ());
+                        set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
+                        _panel_agent->start_helper (appids.back ());
+                    }
+                }
+            }
+            else if (ret == 2) {  // In case IME package is just updated...
+                _update_ime_info ();
 
                 if (_soft_keyboard_launched) { // If package is the current IME, restart it.
                     current_ime_appid = scim_global_config_read(String(SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
@@ -1359,7 +1393,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                 g_stopped_helper_pkgid = "";
 
                 ret = _isf_insert_ime_info_by_pkgid(package);
-                if (ret) {
+                if (ret > 0) {
                     /* Find appid by pkgid. There might be multiple appid, but assume Helper always has one appid.
                        And appid can be changed, but pkgid won't be changed. */
                     ret = isf_db_select_appids_by_pkgid(package, appids);
@@ -1408,7 +1442,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
             }
             else {  // If new package is installed...
                 ret = _isf_insert_ime_info_by_pkgid(package);   // If package is not IME, -1 would be returned.
-                if (ret == 1) { // In case package is IME...
+                if (ret > 0) { // In case package is IME...
                     ///////////////// INSTALL /////////////////
                     _update_ime_info();
 

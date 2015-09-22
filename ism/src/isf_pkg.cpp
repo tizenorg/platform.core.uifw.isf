@@ -52,7 +52,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     char *appid = NULL, *pkgid = NULL, *pkgtype = NULL, *exec = NULL, *label = NULL, *path = NULL;
     pkgmgrinfo_pkginfo_h  pkginfo_handle = NULL;
     ImeInfoDB ime_db;
-    bool *result = static_cast<bool*>(user_data);
+    int *result = static_cast<int*>(user_data); // 0: not IME, 1: Inserted, 2: Updated
 
     if (result) /* in this case, need to check category */ {
         bool exist = true;
@@ -195,19 +195,24 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 
     ret = isf_db_insert_ime_info (&ime_db);
     if (ret < 1) {
-        if (result)
+        if (result) {
             ret = isf_db_update_ime_info (&ime_db);
-        if (ret < 1)
+            if (ret) {
+                *result = 2;    // Updated
+            }
+        }
+        if (ret < 1) {
             ISF_SAVE_LOG("isf_db_%s_ime_info failed(%d). appid=%s pkgid=%s\n", (result? "update" : "insert"), ret, ime_db.appid.c_str(), ime_db.pkgid.c_str());
+        }
+    }
+    else if (result && ret) {
+        *result = 1;    // Inserted
     }
 
     if (pkginfo_handle) {
         pkgmgrinfo_pkginfo_destroy_pkginfo (pkginfo_handle);
         pkginfo_handle = NULL;
     }
-
-    if (result && ret)
-        *result = true;
 
     return 0;
 }

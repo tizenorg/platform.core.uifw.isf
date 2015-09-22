@@ -438,7 +438,7 @@ out:
 }
 
 /**
- * @brief Select ime_info table with mname.
+ * @brief Select ime_info table with module name.
  *
  * @remarks There can be multiple ime_info tables for one module naume. For now, assuming the module name is unique.
  *
@@ -1261,6 +1261,48 @@ out:
 }
 
 /**
+ * @brief Delete ime_info data with appid.
+ *
+ * @param appid appid to delete ime_info table.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static int _db_delete_ime_info_by_appid(const char *appid)
+{
+    int i = 0, ret = 0;
+    sqlite3_stmt* pStmt = NULL;
+    static const char* pQuery = "DELETE FROM ime_info WHERE appid = ?;";
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        return i;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_DONE) {
+        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+    }
+    else {
+        // If there is no appid to delete, ret is still SQLITE_DONE.
+        SECURE_LOGD("DELETE FROM ime_info WHERE appid = %s;", appid);
+        i = 1;
+    }
+
+out:
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
+    sqlite3_finalize(pStmt);
+    return i;
+}
+
+/**
  * @brief Delete all ime_info data.
  *
  * @return 1 if it is successful, otherwise return 0.
@@ -1344,7 +1386,7 @@ EXAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo
 }
 
 /**
- * @brief Select ime_info table with mname.
+ * @brief Select ime_info table with module name.
  *
  * @remarks There can be multiple ime_info tables for one module naume. For now, assuming the module name is unique.
  *
@@ -1687,6 +1729,37 @@ EXAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
     return ret;
 }
 
+/**
+ * @brief Delete ime_info data with appid.
+ *
+ * @param appid appid to delete ime_info table.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+EXAPI int isf_db_delete_ime_info_by_appid(const char *appid)
+{
+    int ret = 0;
+
+    if (!appid) {
+        LOGW("Input parameter is null.");
+        return ret;
+    }
+
+    if (_db_connect() == 0) {
+        ret = _db_delete_ime_info_by_appid(appid);
+        _db_disconnect();
+    }
+    else
+        LOGW("failed");
+
+    return ret;
+}
+
+/**
+ * @brief Delete all ime_info data.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
 EXAPI int isf_db_delete_ime_info(void)
 {
     int ret = 0;

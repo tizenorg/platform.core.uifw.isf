@@ -2057,56 +2057,36 @@ void
 SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
 {
     String strName;
-    std::vector<String> install_modules;
-    std::vector<String> imengine_list;
-    std::vector<String> helper_list;
-    size_t i = 0, j = 0;
+    size_t i = 0;
 
     if (m_receive_trans.get_data (strName) && strName.length () > 0) {
         //std::cout << "ISE name list:" << strName << "\n";
         //scim_split_string_list (name_list, strName);
 
-        scim_get_imengine_module_list (imengine_list);
-        scim_get_helper_module_list (helper_list);
-
-        for (i = 0; i < imengine_list.size (); ++i) {
-            install_modules.push_back (imengine_list [i]);
-            if (std::find (__load_engine_list.begin (), __load_engine_list.end (), imengine_list [i]) == __load_engine_list.end ()) {
-                SCIM_DEBUG_FRONTEND (3) << "add_module " << imengine_list [i]  << " in " << __FUNCTION__ << "\n";
-                //add_module (m_config, imengine_list [i], true);
-                add_module_info (m_config, imengine_list [i]);
-                __load_engine_list.push_back (imengine_list [i]);
-            }
-        }
-
-        ImeInfoDB imeInfo;
+        /* The strName has all appids but here module name is necessary. */
         HelperInfo   info;
-        for (i = 0; i < helper_list.size (); ++i) {
-            install_modules.push_back (helper_list [i]);
-            if (std::find (__load_engine_list.begin (), __load_engine_list.end (), helper_list [i]) == __load_engine_list.end ()) {
-                if (isf_db_select_ime_info_by_module_name (helper_list [i].c_str (), &imeInfo)) {
-                    info.uuid = imeInfo.appid;
-                    info.name = imeInfo.label;
-                    info.icon = imeInfo.iconpath;
-                    info.description = "";
-                    info.option = imeInfo.options;
-                    __helpers.push_back (std::make_pair (info, helper_list [i]));
-                    __load_engine_list.push_back (helper_list [i]);
+        std::vector<ImeInfoDB> ime_info;
+        isf_db_select_all_ime_info(ime_info);
+        if (ime_info.size () > 0) {
+            __load_engine_list.clear ();
+            __helpers.clear ();
+
+            for (i = 0; i < ime_info.size (); ++i) {
+                if (ime_info [i].mode == TOOLBAR_KEYBOARD_MODE) {
+                    /* add_module_info (m_config, ime_info [i].module_name); This seems unnecessary because IMEngine will not be added or deleted. */
+                    __load_engine_list.push_back (ime_info [i].module_name);
                 }
             }
-        }
-
-        /* Try to find uninstall ISEs */
-        for (i = 0; i < __load_engine_list.size (); ++i) {
-            if (std::find (install_modules.begin (), install_modules.end (), __load_engine_list [i]) == install_modules.end ()) {
-                HelperRepository tmp_helpers = __helpers;
-                __helpers.clear ();
-                for (j = 0; j < tmp_helpers.size (); ++j) {
-                    if (std::find (install_modules.begin (), install_modules.end (), tmp_helpers [j].second) != install_modules.end ())
-                        __helpers.push_back (tmp_helpers [j]);
+            for (i = 0; i < ime_info.size (); ++i) {
+                if (ime_info [i].mode == TOOLBAR_HELPER_MODE) {
+                    info.uuid = ime_info [i].appid;
+                    info.name = ime_info [i].label;
+                    info.icon = ime_info [i].iconpath;
+                    info.description = "";
+                    info.option = ime_info [i].options;
+                    __helpers.push_back (std::make_pair (info, ime_info [i].module_name));
+                    __load_engine_list.push_back (ime_info [i].module_name);
                 }
-                __load_engine_list = install_modules;
-                break;
             }
         }
     }
