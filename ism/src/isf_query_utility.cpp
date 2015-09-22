@@ -342,6 +342,10 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     static const char* pQuery = "SELECT * FROM ime_info WHERE appid = ?;";
     char *db_text;
 
+    if (!appid || !pImeInfo) {
+        return 0;
+    }
+
     pImeInfo->appid.clear();
     pImeInfo->label.clear();
     pImeInfo->languages.clear();
@@ -365,6 +369,118 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     }
 
     ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if (ret != SQLITE_ROW) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        goto out;
+    }
+    i = 1;
+
+    db_text = (char*)sqlite3_column_text(pStmt, 0);
+    pImeInfo->appid = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 1);
+    pImeInfo->label = String(db_text ? db_text : "");
+
+    pImeInfo->languages = "en";
+
+    pImeInfo->iconpath = "";
+
+    db_text = (char*)sqlite3_column_text(pStmt, 2);
+    pImeInfo->pkgid = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 3);
+    pImeInfo->pkgtype = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 4);
+    pImeInfo->exec = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 5);
+    pImeInfo->module_name = String(db_text ? db_text : "");
+
+    db_text = (char*)sqlite3_column_text(pStmt, 6);
+    pImeInfo->module_path = String(db_text ? db_text : "");
+
+    pImeInfo->mode = (TOOLBAR_MODE_T)sqlite3_column_int(pStmt, 7);
+    pImeInfo->options = (uint32)sqlite3_column_int(pStmt, 8);
+    pImeInfo->is_enabled = (uint32)sqlite3_column_int(pStmt, 9);
+    pImeInfo->is_preinstalled = (uint32)sqlite3_column_int(pStmt, 10);
+    pImeInfo->has_option = sqlite3_column_int(pStmt, 11);
+
+    db_text = (char*)sqlite3_column_text(pStmt, 12);
+    pImeInfo->display_lang = String(db_text ? db_text : "");
+
+    SECURE_LOGD("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"",
+        pImeInfo->appid.c_str(),
+        pImeInfo->label.c_str(),
+        pImeInfo->pkgid.c_str(),
+        pImeInfo->pkgtype.c_str(),
+        pImeInfo->exec.c_str(),
+        pImeInfo->module_name.c_str(),
+        pImeInfo->module_path.c_str(),
+        pImeInfo->mode,
+        pImeInfo->options,
+        pImeInfo->is_enabled,
+        pImeInfo->is_preinstalled,
+        pImeInfo->has_option,
+        pImeInfo->display_lang.c_str());
+
+out:
+    sqlite3_reset(pStmt);
+    sqlite3_clear_bindings(pStmt);
+    sqlite3_finalize(pStmt);
+    return i;
+}
+
+/**
+ * @brief Select ime_info table with mname.
+ *
+ * @remarks There can be multiple ime_info tables for one module naume. For now, assuming the module name is unique.
+ *
+ * @param mname Module name to get ime_info data
+ * @param pImeInfo The pointer of ImeInfoDB.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+static int _db_select_ime_info_by_module_name(const char *mname, ImeInfoDB *pImeInfo)
+{
+    int ret = 0, i = 0;
+    sqlite3_stmt* pStmt = NULL;
+    static const char* pQuery = "SELECT * FROM ime_info WHERE mname = ?;";
+    char *db_text;
+
+    if (!mname || !pImeInfo) {
+        return 0;
+    }
+
+    pImeInfo->appid.clear();
+    pImeInfo->label.clear();
+    pImeInfo->languages.clear();
+    pImeInfo->iconpath.clear();
+    pImeInfo->pkgid.clear();
+    pImeInfo->pkgtype.clear();
+    pImeInfo->exec.clear();
+    pImeInfo->module_name.clear();
+    pImeInfo->module_path.clear();
+    pImeInfo->mode = TOOLBAR_KEYBOARD_MODE;
+    pImeInfo->options = 0;
+    pImeInfo->is_enabled = 0;
+    pImeInfo->is_preinstalled = 0;
+    pImeInfo->has_option = -1;
+    pImeInfo->display_lang.clear();
+
+    ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
+    if (ret != SQLITE_OK) {
+        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        return 0;
+    }
+
+    ret = sqlite3_bind_text(pStmt, 1, mname, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
         LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
@@ -1219,6 +1335,35 @@ EXAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo
 
     if (_db_connect() == 0) {
         ret = _db_select_ime_info_by_appid(appid, pImeInfo);
+        _db_disconnect();
+    }
+    else
+        LOGW("failed");
+
+    return ret;
+}
+
+/**
+ * @brief Select ime_info table with mname.
+ *
+ * @remarks There can be multiple ime_info tables for one module naume. For now, assuming the module name is unique.
+ *
+ * @param mname Module name to get ime_info data
+ * @param pImeInfo The pointer of ImeInfoDB.
+ *
+ * @return 1 if it is successful, otherwise return 0.
+ */
+EXAPI int isf_db_select_ime_info_by_module_name(const char *mname, ImeInfoDB *pImeInfo)
+{
+    int ret = 0;
+
+    if (!mname || !pImeInfo) {
+        LOGW("invalid parameter.");
+        return 0;
+    }
+
+    if (_db_connect() == 0) {
+        ret = _db_select_ime_info_by_module_name(mname, pImeInfo);
         _db_disconnect();
     }
     else

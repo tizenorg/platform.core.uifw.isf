@@ -2078,20 +2078,20 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
             }
         }
 
-        HelperModule module;
+        ImeInfoDB imeInfo;
         HelperInfo   info;
         for (i = 0; i < helper_list.size (); ++i) {
             install_modules.push_back (helper_list [i]);
             if (std::find (__load_engine_list.begin (), __load_engine_list.end (), helper_list [i]) == __load_engine_list.end ()) {
-                if (module.load (helper_list [i]) && module.valid ()) {
-                    size_t num = module.number_of_helpers ();
-                    for (j = 0; j < num; ++j) {
-                        if (module.get_helper_info (j, info))
-                            __helpers.push_back (std::make_pair (info, helper_list [i]));
-                    }
+                if (isf_db_select_ime_info_by_module_name (helper_list [i].c_str (), &imeInfo)) {
+                    info.uuid = imeInfo.appid;
+                    info.name = imeInfo.label;
+                    info.icon = imeInfo.iconpath;
+                    info.description = "";
+                    info.option = imeInfo.options;
+                    __helpers.push_back (std::make_pair (info, helper_list [i]));
                     __load_engine_list.push_back (helper_list [i]);
                 }
-                module.unload ();
             }
         }
 
