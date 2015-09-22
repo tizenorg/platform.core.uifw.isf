@@ -140,6 +140,7 @@ static void launch_helper (const char *name, const char *uuid)
 
         ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", _ise_name, _ise_uuid);
 
+        setsid ();
         execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
         exit (-1);
     }

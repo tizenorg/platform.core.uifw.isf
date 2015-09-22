@@ -248,6 +248,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
                 SCIM_DEBUG_MAIN (2) << " Call scim-helper-launcher.\n";
                 ISF_SAVE_LOG ("Exec scim_helper_launcher(%s)\n", __helpers [i].second.c_str ());
 
+                setsid ();
                 execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
                 exit (-1);
             }
