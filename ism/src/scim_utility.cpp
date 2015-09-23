@@ -1340,12 +1340,12 @@ scim_usleep (unsigned int usec)
 EXAPI void scim_daemon ()
 {
 #if HAVE_DAEMON
-    ISF_SAVE_LOG ("ppid:%d  calling daemon()\n", getppid ());
+    LOGD ("ppid:%d  calling daemon()\n", getppid ());
 
     if (daemon (0, 0) == -1)
         std::cerr << "Error to make SCIM into a daemon!\n";
 
-    ISF_SAVE_LOG ("ppid:%d  daemon() called\n", getppid ());
+    LOGD ("ppid:%d  daemon() called\n", getppid ());
 
     return;
 #else
@@ -1384,7 +1384,7 @@ EXAPI void isf_save_log (const char *fmt, ...)
     vsnprintf (buf, sizeof (buf), fmt, ap);
     va_end (ap);
 
-    const int MAX_LOG_FILE_SIZE = 10 * 1024; /* 10KB */
+    const int MAX_LOG_FILE_SIZE = 12 * 1024; /* 12KB */
 
     static bool size_exceeded = false;
     static struct stat st;

@@ -34,6 +34,12 @@
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "ISF_PKG"
 
 using namespace scim;
 
@@ -67,7 +73,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.appid = String (appid ? appid : "");
     else {
-        ISF_SAVE_LOG ("appid is not available!\n");
+        LOGW ("appid is not available!");
         return 0;
     }
 
@@ -78,7 +84,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.pkgid = String (pkgid ? pkgid : "");
     else {
-        ISF_SAVE_LOG ("pkgid is not available!\n");
+        LOGW ("pkgid is not available!");
         return 0;
     }
 
@@ -87,7 +93,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.exec = String (exec ? exec : "");
     else {
-        ISF_SAVE_LOG ("exec is not available!\n");
+        LOGW ("exec is not available!");
         return 0;
     }
 

@@ -51,6 +51,12 @@
 #include "scim.h"
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "SCIM_HELPER"
 
 EXAPI scim::CommonLookupTable g_helper_candidate_table;
 
@@ -232,7 +238,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     }
     std::cerr << " Connected :" << i << "\n";
     ISF_LOG ("  Connected :%d\n", i);
-    ISF_SAVE_LOG ("Connection to PanelAgent succeeded, %d\n", i);
+    LOGD ("Connection to PanelAgent succeeded, %d", i);
 
     /* Let's retry 10 times when failed */
     int open_connection_retries = 0;
@@ -263,7 +269,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     }
 
     ISF_LOG ("scim_socket_open_connection () is successful.\n");
-    ISF_SAVE_LOG ("scim_socket_open_connection successful\n");
+    LOGD ("scim_socket_open_connection successful");
 
     bool match = false;
     std::vector<ImeInfoDB> ime_info_db;
@@ -517,7 +523,7 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_SHOW_ISE_PANEL:
             {
-                ISF_SAVE_LOG ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
+                LOGD ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message");
 
                 char   *data = NULL;
                 size_t  len;
@@ -529,7 +535,7 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_HIDE_ISE_PANEL:
             {
-                ISF_SAVE_LOG ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
+                LOGD ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message");
 
                 m_impl->signal_ise_hide (this, ic, ic_uuid);
                 break;

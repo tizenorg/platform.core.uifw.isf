@@ -49,6 +49,12 @@
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "SCIM"
 
 using namespace scim;
 using std::cout;
@@ -157,11 +163,11 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
     Ecore_Ipc_Event_Client_Data *e = (Ecore_Ipc_Event_Client_Data *)ev;
     if (!e) return ECORE_CALLBACK_RENEW;
 
-    ISF_SAVE_LOG ("client %p sent [%i] [%i] [%i]\n", e->client, e->major, e->minor, e->size);
+    LOGD ("client %p sent [%i] [%i] [%i]", e->client, e->major, e->minor, e->size);
 
     const char *message = "Done";
     if (ecore_ipc_client_send (e->client, 0, 0, 0, 0, 0, message, strlen (message)) == 0) {
-        ISF_SAVE_LOG ("ecore_ipc_client_send FAILED!!\n");
+        LOGW ("ecore_ipc_client_send FAILED!!");
     }
 
     char buffer[_POSIX_PATH_MAX + 1] = {0};
@@ -187,12 +193,12 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
 static void run_broker (int argc, char *argv [])
 {
     if (!ecore_init ()) {
-        ISF_SAVE_LOG ("Failed to init ecore!!\n");
+        LOGE ("Failed to init ecore!!");
         return;
     }
 
     if (!ecore_ipc_init ()) {
-        ISF_SAVE_LOG ("Failed to init ecore_ipc!!\n");
+        LOGE ("Failed to init ecore_ipc!!");
         ecore_shutdown ();
         return;
     }
@@ -203,7 +209,7 @@ static void run_broker (int argc, char *argv [])
     server = ecore_ipc_server_add (ECORE_IPC_LOCAL_SYSTEM, "scim-helper-broker", 0, NULL);
 
     if (server == NULL) {
-        ISF_SAVE_LOG ("ecore_ipc_server_add returned NULL!!\n");
+        LOGW ("ecore_ipc_server_add returned NULL!!");
     }
 
     ecore_main_loop_begin ();
@@ -440,7 +446,7 @@ int main (int argc, char *argv [])
 
     /* Try to start a SocketFrontEnd daemon first. */
     if (socket) {
-        ISF_SAVE_LOG ("ppid:%d Now socket frontend......\n", getppid ());
+        LOGD ("ppid:%d Now socket frontend....", getppid ());
 
         /* If no Socket FrontEnd is running, then launch one.
            And set manual to false. */
@@ -482,7 +488,7 @@ int main (int argc, char *argv [])
 
     cerr << "Launching a process with " << def_frontend << " FrontEnd...\n";
 
-    ISF_SAVE_LOG ("ppid:%d Now default frontend......\n", getppid ());
+    LOGD ("ppid:%d Now default frontend....", getppid ());
 
     /* Launch the scim process. */
     if (scim_launch (daemon,
@@ -497,13 +503,13 @@ int main (int argc, char *argv [])
 
         gettime (clock_start, "ISM launch time");
 
-        ISF_SAVE_LOG ("ppid:%d Now checking panel process......\n", getppid ());
+        LOGD ("ppid:%d Now checking panel process....", getppid ());
 
         /* When finished launching scim-launcher, let's create panel process also, for the default display :0 */
         try {
             if (!check_panel ("")) {
                cerr << "Launching Panel...\n";
-               ISF_SAVE_LOG ("ppid:%d Launching panel process......%s\n", getppid (), def_config.c_str ());
+               LOGD ("ppid:%d Launching panel process....%s", getppid (), def_config.c_str ());
 
                scim_launch_panel (true, "socket", "", NULL);
             }

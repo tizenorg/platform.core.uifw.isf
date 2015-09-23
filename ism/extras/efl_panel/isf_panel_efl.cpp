@@ -1684,11 +1684,11 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
         _panel_agent->hide_helper (pre_uuid);
         _panel_agent->stop_helper (pre_uuid);
         _soft_keyboard_launched = false;
-        ISF_SAVE_LOG("stop helper : %s\n", pre_uuid.c_str ());
+        LOGD ("stop helper : %s", pre_uuid.c_str ());
     }
 
     if (launch_ise) {
-        ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
+        LOGD ("Start helper (%s)", uuid.c_str ());
 
         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         if (_panel_agent->start_helper (uuid))
@@ -1710,7 +1710,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
 static bool set_active_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    ISF_SAVE_LOG ("set ISE (%s) %d\n", uuid.c_str(), launch_ise);
+    LOGD ("set ISE (%s) %d", uuid.c_str(), launch_ise);
 
     if (uuid.length () <= 0)
         return false;
@@ -3811,7 +3811,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    ISF_SAVE_LOG ("initializing panel agent\n");
+    LOGD ("initializing panel agent");
 
     _panel_agent = new PanelAgent ();
 
@@ -3882,7 +3882,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
 
-    ISF_SAVE_LOG ("initializing panel agent succeeded\n");
+    LOGD ("initializing panel agent succeeded");
 
     return true;
 }
@@ -4049,7 +4049,7 @@ static void slot_focus_in (void)
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
             if (uuid.length () > 0 && (_ime_info[get_ise_index(uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
-                ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
+                LOGD ("Start helper (%s)", uuid.c_str ());
 
                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                 if (_panel_agent->start_helper (uuid))
@@ -5861,7 +5861,7 @@ static void slot_start_default_ise (void)
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
 
-            ISF_SAVE_LOG ("Start helper (%s)\n", uuid.c_str ());
+            LOGD ("Start helper (%s)", uuid.c_str ());
 
             set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
             if (_panel_agent->start_helper (uuid))
@@ -5881,7 +5881,7 @@ static void slot_stop_default_ise (void)
             _panel_agent->hide_helper (uuid);
             _panel_agent->stop_helper (uuid);
             _soft_keyboard_launched = false;
-            ISF_SAVE_LOG ("stop helper (%s)\n", uuid.c_str ());
+            LOGD ("stop helper (%s)", uuid.c_str ());
         }
     }
 }
@@ -5937,12 +5937,13 @@ static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_
     if (_panel_agent->has_helper_manager_pending_event ()) {
         if (!_panel_agent->filter_helper_manager_event ()) {
             std::cerr << "_panel_agent->filter_helper_manager_event () is failed!!!\n";
-            ISF_SAVE_LOG ("_panel_agent->filter_helper_manager_event () is failed!!!\n");
+            LOGE ("_panel_agent->filter_helper_manager_event () is failed!!!");
+
             elm_exit ();
         }
     } else {
         std::cerr << "_panel_agent->has_helper_manager_pending_event () is failed!!!\n";
-        ISF_SAVE_LOG ("_panel_agent->has_helper_manager_pending_event () is failed!!!\n");
+        LOGE ("_panel_agent->has_helper_manager_pending_event () is failed!!!");
     }
 
     return ECORE_CALLBACK_RENEW;

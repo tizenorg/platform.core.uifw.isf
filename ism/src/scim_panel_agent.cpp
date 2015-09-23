@@ -1335,7 +1335,7 @@ public:
     bool start_helper (const String  &uuid, int client, uint32 context)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::start_helper (" << uuid << ")\n";
-        ISF_SAVE_LOG ("start ISE(%s)\n", uuid.c_str ());
+        LOGD ("start ISE(%s)", uuid.c_str ());
 
         if (uuid.length () <= 0)
             return false;
@@ -1358,7 +1358,7 @@ public:
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to stop ISE(%s)\n",
             time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-        ISF_SAVE_LOG ("prepare to stop ISE(%s)\n", uuid.c_str ());
+        LOGD ("prepare to stop ISE(%s)", uuid.c_str ());
 
         SCIM_DEBUG_MAIN(1) << "PanelAgent::stop_helper (" << uuid << ")\n";
         if (uuid.length () <= 0)
@@ -1381,7 +1381,7 @@ public:
             m_send_trans.put_command (SCIM_TRANS_CMD_EXIT);
             m_send_trans.write_to_socket (client_socket);
             SCIM_DEBUG_MAIN(1) << "Stop helper\n";
-            ISF_SAVE_LOG ("send SCIM_TRANS_CMD_EXIT message\n");
+            ISF_SAVE_LOG ("send SCIM_TRANS_CMD_EXIT message to %s\n", uuid.c_str ());
         }
 
         unlock ();
@@ -1438,10 +1438,12 @@ public:
             m_send_trans.put_data (data, len);
             m_send_trans.write_to_socket (client_socket);
 
-            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
+            LOGD ("Send ISM_TRANS_CMD_SHOW_ISE_PANEL message");
 
             return true;
         }
+
+        LOGW ("Can't find %s", m_current_helper_uuid.c_str ());
         return false;
     }
 
@@ -1466,7 +1468,7 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_HIDE_ISE_PANEL);
             m_send_trans.write_to_socket (client_socket);
 
-            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
+            LOGD ("Send ISM_TRANS_CMD_HIDE_ISE_PANEL message");
         }
     }
 
@@ -1819,7 +1821,7 @@ public:
             m_send_trans.put_command (ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW);
             m_send_trans.write_to_socket (client_socket);
 
-            ISF_SAVE_LOG ("Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message\n");
+            LOGD ("Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message");
 
             return true;
         }
@@ -1845,7 +1847,7 @@ public:
         String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
-        ISF_SAVE_LOG ("prepare to show ISE %d [%s] [%s]\n", client_id, initial_uuid.c_str(), default_uuid.c_str());
+        LOGD ("prepare to show ISE %d [%s] [%s]", client_id, initial_uuid.c_str(), default_uuid.c_str());
 
         char   *data = NULL;
         size_t  len;
@@ -1892,7 +1894,7 @@ public:
     void hide_ise_panel (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::hide_ise_panel ()\n";
-        ISF_SAVE_LOG ("prepare to hide ISE, %d %d\n", client_id, m_show_request_client_id);
+        LOGD ("prepare to hide ISE, %d %d", client_id, m_show_request_client_id);
 
         uint32 client;
         uint32 context;
@@ -2399,7 +2401,7 @@ public:
                         if (!trans.read_from_socket (client_socket, m_socket_timeout) ||
                             !trans.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY ||
                             !trans.get_data (avail)) {
-                            ISF_SAVE_LOG("ISM_TRANS_CMD_CHECK_OPTION_WINDOW failed\n");
+                            LOGW("ISM_TRANS_CMD_CHECK_OPTION_WINDOW failed");
                         }
                         if (avail < 2) {
                             info.has_option [i] = avail;
@@ -3101,7 +3103,7 @@ public:
         String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
 
-        ISF_SAVE_LOG ("prepare to show ISE option window %d [%s] [%s]\n", client_id, initial_uuid.c_str(), default_uuid.c_str());
+        LOGD ("prepare to show ISE option window %d [%s] [%s]", client_id, initial_uuid.c_str(), default_uuid.c_str());
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
             show_helper_option_window (m_current_helper_uuid);

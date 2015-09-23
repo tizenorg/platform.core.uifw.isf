@@ -707,7 +707,6 @@ static int _db_update_label_by_appid(const char *appid, const char *label)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
@@ -756,7 +755,6 @@ static int _db_update_disp_lang(const char *disp_lang)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
@@ -813,7 +811,6 @@ static int _db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
@@ -869,7 +866,6 @@ static int _db_update_has_option_by_appid(const char *appid, bool has_option)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
