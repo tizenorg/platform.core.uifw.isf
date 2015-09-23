@@ -1264,7 +1264,7 @@ Update package (change the source codes in IME project and Run As again), there 
    At UPDATE event, pkgid (package parameter) is valid, and only appid is changed; the previous appid is invalid.
 
 If multiple packages (including non-IME pkgs) are uninstalled and installed; Z300H UPS (ultra power saving) mode scenario.
-For example, A and B packages are uninstalled and installed, the package manager works in this order: A UNINSTALL ¡æB UNINSTALL ¡æA INSTALL ¡æB INSTALL
+For example, A and B packages are uninstalled and installed, the package manager works in this order: A UNINSTALL -> B UNINSTALL -> A INSTALL -> B INSTALL
 
 Assuming IMEngine won't be changed through this. IMEngine might have multiple appids for one pkgid.
 Assuming preinstalled IME won't be changed through this.
