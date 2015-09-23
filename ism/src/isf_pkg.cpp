@@ -73,6 +73,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.appid = String (appid ? appid : "");
     else {
+        ISF_SAVE_LOG ("appid is not available!\n");
         LOGW ("appid is not available!");
         return 0;
     }
@@ -84,6 +85,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.pkgid = String (pkgid ? pkgid : "");
     else {
+        ISF_SAVE_LOG ("pkgid is not available!\n");
         LOGW ("pkgid is not available!");
         return 0;
     }
@@ -93,6 +95,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.exec = String (exec ? exec : "");
     else {
+        ISF_SAVE_LOG ("exec is not available!\n");
         LOGW ("exec is not available!");
         return 0;
     }
@@ -236,7 +239,13 @@ void isf_pkg_reload_ime_info_db(void)
         if (ret == PMINFO_R_OK) {
             ret = pkgmgrinfo_appinfo_filter_foreach_appinfo (handle, isf_pkg_ime_app_list_cb, NULL);
         }
+        else {
+            ISF_SAVE_LOG ("pkgmgrinfo_appinfo_filter_add_string failed(%d)\n", ret);
+        }
         pkgmgrinfo_appinfo_filter_destroy (handle);
+    }
+    else {
+        ISF_SAVE_LOG ("pkgmgrinfo_appinfo_filter_create failed(%d)\n", ret);
     }
 }
 

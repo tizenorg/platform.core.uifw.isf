@@ -4014,10 +4014,12 @@ static bool update_ise_list (std::vector<String> &list)
                 LOGD("package_manager_set_event_cb succeeded.");
             }
             else {
+                ISF_SAVE_LOG("package_manager_set_event_cb failed(%d)\n", ret);
                 LOGW("package_manager_set_event_cb failed(%d)", ret);
             }
         }
         else {
+            ISF_SAVE_LOG("package_manager_create failed(%d)\n", ret);
             LOGW("package_manager_create failed(%d)", ret);
         }
     }

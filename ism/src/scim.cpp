@@ -274,6 +274,12 @@ int main (int argc, char *argv [])
         load_engine_list.push_back (*it);
     }
 
+    /* Unless the target is no-keyboard model, we have a problem. */
+    if (load_engine_list.size () < 1) {
+        LOGW ("*** There is no helper/imeengine!");
+        ISF_SAVE_LOG ("*** There is no helper/imeengine!\n");
+    }
+
     /* Use x11 FrontEnd as default if available. */
     if (frontend_list.size ()) {
         def_frontend = String ("x11");

@@ -901,6 +901,7 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
+        ISF_SAVE_LOG("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
@@ -950,6 +951,7 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
+        ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
         LOGW("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
         ret = SQLITE_ERROR;
         goto out;
@@ -993,6 +995,7 @@ static int _db_insert_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
+        ISF_SAVE_LOG("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
@@ -1552,8 +1555,9 @@ EXAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
         ret = _db_insert_ime_info(ime_db);
         _db_disconnect();
     }
-    else
-        LOGW("failed");
+    else {
+        ISF_SAVE_LOG("_db_connect() failed\n");
+    }
 
     return ret;
 }

@@ -184,6 +184,11 @@ int main (int argc, char *argv [])
                 for (it = helper_list.begin (); it != helper_list.end (); it++)
                     engine_list.push_back (*it);
 
+                /* Unless the target is no-keyboard model, we have a problem. */
+                if (engine_list.size () < 1) {
+                    ISF_SAVE_LOG ("*** There is no helper/imeengine!\n");
+                }
+
                 list = scim_combine_string_list(engine_list, ',');
                 if (list.length () < 1)
                     new_argv [new_argc ++] = argv [i];

@@ -1384,7 +1384,7 @@ EXAPI void isf_save_log (const char *fmt, ...)
     vsnprintf (buf, sizeof (buf), fmt, ap);
     va_end (ap);
 
-    const int MAX_LOG_FILE_SIZE = 12 * 1024; /* 12KB */
+    const int MAX_LOG_FILE_SIZE = 16 * 1024; /* 16KB */
 
     static bool size_exceeded = false;
     static struct stat st;
