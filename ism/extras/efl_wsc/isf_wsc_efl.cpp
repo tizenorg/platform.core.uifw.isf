@@ -100,7 +100,7 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
     wsc->surrounding_text = strdup (text ? text : "");
     wsc->surrounding_cursor = cursor;
 
-    if (wsc->cursor_pos != cursor) {
+    if (wsc->cursor_pos != (int)cursor) {
         wsc->cursor_pos = cursor;
 
         if (wsc->wsc_ctx)

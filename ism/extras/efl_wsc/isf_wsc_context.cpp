@@ -2902,7 +2902,7 @@ static uint32_t _keyname_to_keysym (uint32_t keyname, uint32_t *modifiers)
         case '|':
             *modifiers |= MOD_SHIFT_MASK;
             return '\\';
-        case '\:':
+        case ':':
             *modifiers |= MOD_SHIFT_MASK;
             return ';';
         case '\"':
