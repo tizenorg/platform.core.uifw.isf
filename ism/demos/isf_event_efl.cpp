@@ -136,15 +136,12 @@ static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
 static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
-    Evas *evas = NULL;
 
     Evas_Object *bx;
     bx = elm_box_add (ad->naviframe);
     evas_object_size_hint_weight_set (bx, EVAS_HINT_EXPAND, 0.0);
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
-
-    evas = evas_object_evas_get (ad->win_main);
 
     const char *ctx_id = ecore_imf_context_default_id_get ();
 
