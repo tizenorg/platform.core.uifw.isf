@@ -161,7 +161,8 @@ static void     panel_slot_delete_surrounding_text      (int                    
 static void     panel_slot_set_selection                (int                     context,
                                                          int                     start,
                                                          int                     end);
-
+static void     panel_slot_send_private_command         (int                     context,
+                                                         const String           &command);
 static void     panel_req_focus_in                      (WSCContextISF     *ic);
 static void     panel_req_update_factory_info           (WSCContextISF     *ic);
 static void     panel_req_update_spot_location          (WSCContextISF     *ic);
@@ -252,6 +253,9 @@ static void     slot_contract_candidate                 (IMEngineInstanceBase   
 static void     slot_set_candidate_style                (IMEngineInstanceBase   *si,
                                                          ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
                                                          ISF_CANDIDATE_MODE_T    mode);
+
+static void     slot_send_private_command               (IMEngineInstanceBase   *si,
+                                                         const String           &command);
 
 static void     reload_config_callback                  (const ConfigPointer    &config);
 
@@ -2471,6 +2475,17 @@ panel_slot_set_selection (int context, int start, int end)
 }
 
 static void
+panel_slot_send_private_command (int context, const String &command)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *ic = find_ic (context);
+
+    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
+        slot_send_private_command (ic->impl->si, command);
+}
+
+static void
 panel_slot_update_displayed_candidate_number (int context, int number)
 {
     WSCContextISF *ic = find_ic (context);
@@ -2652,6 +2667,7 @@ initialize (void)
     _panel_client.signal_connect_longpress_candidate           (slot (panel_slot_longpress_candidate));
     _panel_client.signal_connect_update_ise_input_context      (slot (panel_slot_update_ise_input_context));
     _panel_client.signal_connect_update_isf_candidate_panel    (slot (panel_slot_update_isf_candidate_panel));
+    _panel_client.signal_connect_send_private_command          (slot (panel_slot_send_private_command));
 
     if (!panel_initialize ()) {
         std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";
@@ -3012,6 +3028,9 @@ attach_instance (const IMEngineInstancePointer &si)
 
     si->signal_connect_set_candidate_style (
         slot (slot_set_candidate_style));
+
+    si->signal_connect_send_private_command (
+        slot (slot_send_private_command));
 }
 
 // Implementation of slot functions
@@ -3446,6 +3465,20 @@ slot_set_candidate_style (IMEngineInstanceBase *si, ISF_CANDIDATE_PORTRAIT_LINE_
 
     if (ic && ic->impl && _focused_ic == ic)
         _panel_client.set_candidate_style (ic->id, portrait_line, mode);
+}
+
+static void
+slot_send_private_command (IMEngineInstanceBase *si,
+                           const String &command)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
+
+    if (_focused_ic && _focused_ic == ic) {
+        if (_focused_ic->ctx && _focused_ic->ctx->im_ctx)
+            wl_input_method_context_private_command (_focused_ic->ctx->im_ctx, _focused_ic->ctx->serial, command.c_str ());
+    }
 }
 
 static void
