@@ -2062,7 +2062,7 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
     if (m_receive_trans.get_data (strName) && strName.length () > 0) {
         //std::cout << "ISE name list:" << strName << "\n";
         //scim_split_string_list (name_list, strName);
-
+        LOGD ("%s\n", strName.c_str ());
         /* The strName has all appids but here module name is necessary. */
         HelperInfo   info;
         std::vector<ImeInfoDB> ime_info;
