@@ -114,8 +114,10 @@ public:
             LOGW ("m_socket_client connection failed");
             return;
         }
-        if (!m_helpers.size ())
+        if (!m_helpers.size ()) {
             get_helper_list ();
+            LOGD ("helper size:%d", m_helpers.size ());
+        }
 
         Transaction trans;
         for (int i = 0; i < 3; ++i) {
