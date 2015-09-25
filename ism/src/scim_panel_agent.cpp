@@ -71,7 +71,7 @@
 #ifdef LOG_TAG
 # undef LOG_TAG
 #endif
-#define LOG_TAG             "ISF_PANEL_AGENT"
+#define LOG_TAG             "ISF_PANEL_EFL"
 
 #define MIN_REPEAT_TIME     2.0
 
