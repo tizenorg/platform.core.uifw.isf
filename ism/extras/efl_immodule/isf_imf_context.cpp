@@ -1255,7 +1255,6 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
     if (!_ic_list) return;
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF*)ecore_imf_context_data_get (ctx);
-    Ecore_IMF_Input_Panel_State l_input_panel_state = ecore_imf_context_input_panel_state_get (ctx);
 
     if (context_scim) {
         if (context_scim->id != _ic_list->id) {
@@ -1282,6 +1281,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
 
         if (input_panel_ctx == ctx && _scim_initialized) {
             LOGD ("ctx : %p\n", ctx);
+            Ecore_IMF_Input_Panel_State l_input_panel_state = ecore_imf_context_input_panel_state_get (ctx);
             if (l_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 l_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
                 ecore_imf_context_input_panel_hide (ctx);
