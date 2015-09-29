@@ -209,7 +209,7 @@ _wsc_im_ctx_return_key_type(void *data, struct wl_input_method_context *im_ctx, 
 
     if (wsc->return_key_type != return_key_type) {
         wsc->return_key_type = return_key_type;
-        isf_wsc_context_input_panel_show (wsc->wsc_ctx);
+        isf_wsc_context_input_panel_return_key_type_set (wsc->wsc_ctx, (Ecore_IMF_Input_Panel_Return_Key_Type)wsc->return_key_type);
     }
 }
 

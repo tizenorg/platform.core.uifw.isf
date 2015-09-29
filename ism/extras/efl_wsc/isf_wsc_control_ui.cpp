@@ -265,6 +265,12 @@ Ecore_IMF_Input_Panel_Lang isf_wsc_context_input_panel_language_get (WSCContextI
     return iseContext.language;
 }
 
+void isf_wsc_context_input_panel_return_key_type_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Return_Key_Type return_key_type)
+{
+    LOGD ("ctx : %p, return key type : %d\n", ctx, return_key_type);
+    _isf_wsc_context_input_panel_return_key_type_set (_get_context_id (ctx), return_key_type);
+}
+
 void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled)
 {
    if (!IfInitContext)

@@ -50,6 +50,7 @@ extern "C"
     void isf_wsc_context_input_panel_caps_mode_set (WSCContextISF *ctx, unsigned int mode);
     void isf_wsc_context_input_panel_caps_lock_mode_set (WSCContextISF *ctx, Eina_Bool mode);
     void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, scim::TOOLBAR_MODE_T mode);
+    void isf_wsc_context_input_panel_return_key_type_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Return_Key_Type return_key_type);
     void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled);
     void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imdata, int len);
 
