@@ -212,7 +212,7 @@
         <rec>CUR_LANG</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="0" popup_offset_y="-90">
+    <key button_type="selfish" key_type="modechange" use_magnifier="false" custom_id="CM_KEY" label_type="SETTING_CUE" popup_type="longpress_popup_once" popup_offset_x="-12" popup_offset_y="-136">
       <label>
         <rec>...</rec>
       </label>
