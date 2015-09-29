@@ -33,7 +33,6 @@ struct _menu_item {
 
 static struct _menu_item _menu_its[] = {
     { N_("DEFAULT"), N_("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT },
-    { N_("DEFAULT"), N_("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT },
     { N_("DONE"), N_("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE },
     { N_("GO"), N_("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_GO },
     { N_("JOIN"), N_("click to enter"), ELM_INPUT_PANEL_RETURN_KEY_TYPE_JOIN },
