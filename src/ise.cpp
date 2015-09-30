@@ -63,6 +63,11 @@ static vector<string> g_recent_used_punctuation;
 static const int MAX_DEFAULT_PUNCTUATION = 6;
 static string g_default_punctuation[MAX_DEFAULT_PUNCTUATION] = {"-", "@", "'", "!", "?", ","};
 static string g_current_punctuation[MAX_DEFAULT_PUNCTUATION-1] = {"RCENT1", "RCENT2", "RCENT3", "RCENT4", "RCENT5"};
+static vector<string> g_softcandidate_string;
+static bool g_softcandidate_show = false;
+
+#define SOFT_CANDIDATE_DELETE_TIME (1.0/100)
+static Ecore_Timer *g_softcandidate_hide_timer = NULL;
 
 KEYBOARD_STATE g_keyboard_state = {
     0,
@@ -210,6 +215,29 @@ static bool ise_is_emoticons_disabled (void)
         ret = true;
 
     return ret;
+}
+
+static Eina_Bool softcandidate_hide_timer_callback(void *data)
+{
+    if (g_candidate) {
+        g_candidate->hide();
+        g_softcandidate_show = false;
+    }
+    return ECORE_CALLBACK_CANCEL;
+}
+
+static void delete_softcandidate_hide_timer(void)
+{
+    if (g_softcandidate_hide_timer) {
+        ecore_timer_del(g_softcandidate_hide_timer);
+        g_softcandidate_hide_timer = NULL;
+    }
+}
+
+static void add_softcandidate_hide_timer(void)
+{
+    delete_softcandidate_hide_timer();
+    g_softcandidate_hide_timer = ecore_timer_add(SOFT_CANDIDATE_DELETE_TIME, softcandidate_hide_timer_callback, NULL);
 }
 
 void CCoreEventCallback::on_init()
@@ -381,16 +409,8 @@ void CCoreEventCallback::on_get_language_locale(sclint ic, sclchar **locale)
 
 void CCoreEventCallback::on_update_lookup_table(SclCandidateTable &table)
 {
-    vector<string> vec_str;
-    //printf("candidate num: %d, current_page_size: %d\n",
-    //    table.number_of_candidates(), table.get_current_page_size());
-    for (int i = table.current_page_start; i < table.current_page_start + table.page_size; ++i)
-    {
-        if (i < (int)table.candidate_labels.size()) {
-            vec_str.push_back(table.candidate_labels[i]);
-        }
-    }
-    ise_update_table(vec_str);
+    g_softcandidate_string = table.candidate;
+    ise_update_table(g_softcandidate_string);
 }
 
 void CCoreEventCallback::on_create_option_window(sclwindow window, SCLOptionWindowType type)
@@ -418,6 +438,20 @@ void CCoreEventCallback::on_check_option_window_availability(sclboolean *ret)
 void CCoreEventCallback::on_process_key_event(scim::KeyEvent &key, sclu32 *ret)
 {
     ise_process_key_event(key, *ret);
+}
+
+void CCoreEventCallback::on_candidate_show(sclint ic, const sclchar *ic_uuid)
+{
+    delete_softcandidate_hide_timer();
+    if (g_candidate){
+        g_candidate->show();
+        g_softcandidate_show = true;
+    }
+}
+
+void CCoreEventCallback::on_candidate_hide(sclint ic, const sclchar *ic_uuid)
+{
+    add_softcandidate_hide_timer();
 }
 
 /**
@@ -1025,9 +1059,6 @@ ise_show(int ic)
         g_ui->disable_input_events(FALSE);
     }
 
-    if (g_candidate) {
-        g_candidate->show();
-    }
     g_keyboard_state.visible_state = TRUE;
 }
 
@@ -1042,6 +1073,9 @@ ise_set_screen_rotation(int degree)
     }
     if (g_candidate) {
         g_candidate->rotate(degree);
+        if (g_softcandidate_show){
+            g_candidate->update(g_softcandidate_string);
+        }
     }
 }
 
@@ -1124,6 +1158,8 @@ ise_create()
             if (!succeeded) {
                 g_ui->init(g_core.get_main_window(), scl_parser_type, MAIN_ENTRY_XML_PATH);
             }
+
+            g_core.enable_soft_candidate(true);
             // FIXME whether to use global var, need to check
             if (g_candidate == NULL) {
                 g_candidate = CandidateFactory::make_candidate(CANDIDATE_MULTILINE, g_core.get_main_window());
@@ -1161,7 +1197,6 @@ ise_create()
         g_core.set_keyboard_size_hints(size_portrait, size_landscape);
     }
     init_recent_used_punctuation();
-    g_core.enable_soft_candidate (false);
 }
 
 void

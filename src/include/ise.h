@@ -192,6 +192,9 @@ class CCoreEventCallback : public ISCLCoreEventCallback
     void on_check_option_window_availability(sclboolean *ret);
 
     void on_process_key_event(scim::KeyEvent &key, sclu32 *ret);// only for TV profile to handle remote control button
+
+    void on_candidate_show(sclint ic, const sclchar *ic_uuid);
+    void on_candidate_hide(sclint ic, const sclchar *ic_uuid);
 };
 
 void ise_send_string(const sclchar *key_value);

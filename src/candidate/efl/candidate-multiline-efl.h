@@ -23,6 +23,12 @@
 #define CANDIDATE_BAR_NUM 8
 #define CANDIDATE_MORE_ONE_LINE 8
 
+typedef struct _candidate_item_size
+{
+    int width;
+    int height;
+} candidate_item_size;
+
 class EflMultiLineCandidate: public Candidate
 {
     public:
@@ -46,25 +52,28 @@ class EflMultiLineCandidate: public Candidate
         void show_view();
         void hide_view();
 
-        Evas_Object *get_candidate_close_button();
-        Evas_Object *get_candidate_more_button();
-        Evas_Object *get_candidate_item();
-        std::vector<std::string> cur_candidates;
+        Evas_Object *get_candidate_item(candidate_item_size item_text_size);
+        candidate_item_size get_candidate_item_text_size(std::string srcStr);
+        Evas_Object * get_candidate_seperate_line_vertical();
+        Evas_Object * get_candidate_seperate_line_horizon();
 
+        std::vector<std::string> cur_candidates;
         Evas_Object *m_window;
-        // used for normal candidate
-        struct View {
-            Evas_Object *layout;
-            Evas_Object *scroller;
-            Evas_Object *table;
-        }view;
-        // used when more button clicked
-        struct More_View {
-            Evas_Object *layout;
-            Evas_Object *more_scroller;
-            Evas_Object *more_table;
-        }more_view;
 
         int m_degree;
+        int m_screenWidth;
+        int m_screenHeight;
+        double m_screenRatio;
+        std::string m_candidateFontName;
+        int m_candidateFontSize;
+        Evas_Object * m_stringWidthCalObj;
+        Evas_Object * m_candidateScrollerBg;
+        Evas_Object * m_candidateScroller;
+        Evas_Object * m_candidateTable;
+        Evas_Object * m_candidateMoreBtn;
+        Evas_Object * m_candidateCloseBtn;
+        Evas_Object * m_candidateMoreScrollerBg;
+        Evas_Object * m_candidateMoreScroller;
+        Evas_Object * m_candidateMoreTable;
 };
 #endif

@@ -4,7 +4,9 @@
 #define FONT_NAME   "DejaVu"
 #define FONT_SIZE               38
 #define POPUP_LINE_VERTICAL     "images/soft_candidate/B09_predictive_vertical_line.png"
+#define POPUP_LINE_HORIZON      "images/soft_candidate/B09_predictive_horizon_line.png"
 #define COLOR_NORMAL_BUTTON     0 0 0 0
+#define COLOR_KEYPAD_BG         94 97 102 255
 #define BUTTON_IMAGE_BORDER     8
 #define BUTTON_NORMAL_BG        "images/soft_candidate/B09_key_btn_01.png"
 #define BUTTON_PRESS_BG         "images/soft_candidate/B09_key_btn_press.png"
@@ -12,6 +14,7 @@
 #define ARROW_UP                "images/soft_candidate/B09_predictive_icon_arrow_up.png"
 #define ARROW_UP_PRESS          "images/soft_candidate/B09_predictive_icon_arrow_up_press.png"
 #define ARROW_DOWN_PRESS        "images/soft_candidate/B09_predictive_icon_arrow_down_press.png"
+#define CANDIDATE_BG            "images/soft_candidate/textinput_qwerty_candidate_bg.#.png"
 
 color_classes {
     color_class {
@@ -71,7 +74,7 @@ collections {
             }
         }
     }
-    group { name: "seperate_line";
+    group { name: "seperate_line_vertical";
         images {
             image: POPUP_LINE_VERTICAL COMP;
         }
@@ -82,6 +85,21 @@ collections {
                     rel1.relative: 0.0 0.0;
                     rel2.relative: 1.0 1.0;
                     image.normal: POPUP_LINE_VERTICAL;
+                }
+            }
+        }
+    }
+    group { name: "seperate_line_horizon";
+        images {
+            image: POPUP_LINE_HORIZON COMP;
+        }
+        parts {
+            part { name: "bg";
+                mouse_events: 0;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    image.normal: POPUP_LINE_HORIZON;
                 }
             }
         }
@@ -330,6 +348,49 @@ collections {
                 action: STATE_SET "default" 0.0;
                 target: "bg";
                 target: "image";
+            }
+        }
+    }
+
+    group { name: "candidate_bg";
+        parts {
+            part { name: "bg";
+                type: RECT;
+                mouse_events: 0;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    color_class: "rect_color";
+                }
+            }
+           part { name: "bg_line";
+               type: RECT;
+               mouse_events: 0;
+               description { state: "default" 0.0;
+                   min: 0 2;
+                   fixed: 0 1;
+                   rel1.relative: 0.0 0.0;
+                   rel2.relative: 1.0 0.0;
+                   color_class: "rect_color";
+                }
+            }
+        }
+    }
+
+    group { name: "scroller_bg";
+        images {
+                 image: CANDIDATE_BG COMP;
+            }
+
+        parts {
+            part { name: "bg";
+                type: RECT;
+                mouse_events: 0;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel2.relative: 1.0 1.0;
+                    color_class: "rect_color";
+                }
             }
         }
     }
