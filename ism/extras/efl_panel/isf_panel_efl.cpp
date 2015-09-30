@@ -2994,6 +2994,9 @@ static void ui_create_preedit_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+    if (_candidate_mode == SOFT_CANDIDATE_WINDOW)
+        return;
+
     _preedit_width  = 100;
     _preedit_height = _preedit_height * _height_rate;
     if (_preedit_window == NULL) {
@@ -4274,9 +4277,12 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 static void slot_show_preedit_string (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
+
+    if (_candidate_mode == SOFT_CANDIDATE_WINDOW)
+        return;
+
     if (_preedit_window == NULL) {
         ui_create_preedit_window ();
-        int angle = efl_get_app_window_angle ();
 
         /* Move preedit window according to candidate window position */
         if (_candidate_window) {
@@ -4285,6 +4291,8 @@ static void slot_show_preedit_string (void)
             ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
 
             int height2 = ui_candidate_get_valid_height ();
+            int angle = efl_get_app_window_angle ();
+
             if (angle == 90) {
                 x -= _preedit_height;
                 y = _screen_height - _preedit_width;
