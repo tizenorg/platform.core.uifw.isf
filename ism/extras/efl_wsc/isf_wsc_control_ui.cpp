@@ -47,22 +47,8 @@
 using namespace scim;
 
 /* IM control related variables */
-static Ise_Context        iseContext;
-static bool               IfInitContext     = false;
 static unsigned int       hw_kbd_num = 0;
 WSCContextISF            *input_panel_ctx = NULL;
-
-static void _isf_wsc_context_init (void)
-{
-    iseContext.language            = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
-    iseContext.return_key_type     = ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
-    iseContext.return_key_disabled = FALSE;
-    iseContext.prediction_allow    = TRUE;
-
-    if (!IfInitContext) {
-        IfInitContext = true;
-    }
-}
 
 static int _get_context_id (WSCContextISF *ctx)
 {
@@ -96,10 +82,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     char imdata[1024] = {0};
     bool input_panel_show = false;
     input_panel_ctx = ctx;
-
-    if (IfInitContext == false) {
-        _isf_wsc_context_init ();
-    }
+    Ise_Context iseContext;
 
     if (!ctx || !ctx->ctx)
         return;
@@ -191,10 +174,6 @@ void isf_wsc_context_input_panel_hide (WSCContextISF *ctx)
 
 void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, TOOLBAR_MODE_T mode)
 {
-    if (IfInitContext == false) {
-        _isf_wsc_context_init ();
-    }
-
     hw_kbd_num = 1;
     SECURE_LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
     _isf_wsc_context_set_keyboard_mode (_get_context_id (ctx), mode);
@@ -204,9 +183,6 @@ void
 isf_wsc_context_input_panel_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout)
 {
     WSCContextISF *context_scim = ctx;
-
-    if (!IfInitContext)
-        _isf_wsc_context_init ();
 
     if (context_scim == get_focused_ic ()) {
         LOGD ("layout type : %d\n", layout);
@@ -218,8 +194,6 @@ isf_wsc_context_input_panel_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Pane
 Ecore_IMF_Input_Panel_Layout isf_wsc_context_input_panel_layout_get (WSCContextISF *ctx)
 {
     Ecore_IMF_Input_Panel_Layout layout;
-    if (!IfInitContext)
-        _isf_wsc_context_init ();
     _isf_wsc_context_input_panel_layout_get (_get_context_id (ctx), &layout);
 
     return layout;
@@ -227,8 +201,6 @@ Ecore_IMF_Input_Panel_Layout isf_wsc_context_input_panel_layout_get (WSCContextI
 
 void isf_wsc_context_input_panel_caps_mode_set (WSCContextISF *ctx, unsigned int mode)
 {
-    if (!IfInitContext)
-        _isf_wsc_context_init ();
     LOGD ("ctx : %p, mode : %d\n", ctx, mode);
     _isf_wsc_context_input_panel_caps_mode_set (_get_context_id (ctx), mode);
 }
@@ -236,9 +208,6 @@ void isf_wsc_context_input_panel_caps_mode_set (WSCContextISF *ctx, unsigned int
 void isf_wsc_context_input_panel_caps_lock_mode_set (WSCContextISF *ctx, Eina_Bool mode)
 {
     WSCContextISF *context_scim = ctx;
-
-    if (!IfInitContext)
-        _isf_wsc_context_init ();
 
     if (context_scim == get_focused_ic ())
         caps_mode_check (ctx, EINA_TRUE, EINA_TRUE);
@@ -248,21 +217,10 @@ void isf_wsc_context_input_panel_language_set (WSCContextISF *ctx, Ecore_IMF_Inp
 {
     WSCContextISF *context_scim = ctx;
 
-    if (!IfInitContext)
-        _isf_wsc_context_init ();
-    iseContext.language = language;
-
     if (context_scim == get_focused_ic ()) {
         LOGD ("language mode : %d\n", language);
         _isf_wsc_context_input_panel_language_set (_get_context_id (ctx), language);
     }
-}
-
-Ecore_IMF_Input_Panel_Lang isf_wsc_context_input_panel_language_get (WSCContextISF *ctx)
-{
-    if (!IfInitContext)
-        _isf_wsc_context_init ();
-    return iseContext.language;
 }
 
 void isf_wsc_context_input_panel_return_key_type_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Return_Key_Type return_key_type)
@@ -273,16 +231,11 @@ void isf_wsc_context_input_panel_return_key_type_set (WSCContextISF *ctx, Ecore_
 
 void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled)
 {
-   if (!IfInitContext)
-        _isf_wsc_context_init ();
     LOGD ("ctx : %p, disabled : %d\n", ctx, disabled);
     _isf_wsc_context_input_panel_return_key_disabled_set (_get_context_id (ctx), disabled);
 }
 
 void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imdata, int len)
 {
-   if (!IfInitContext)
-        _isf_wsc_context_init ();
-
     _isf_wsc_context_input_panel_imdata_set (_get_context_id (ctx), imdata, len);
 }

@@ -44,7 +44,6 @@ extern "C"
     void isf_wsc_context_input_panel_show (WSCContextISF *ctx);
     void isf_wsc_context_input_panel_hide (WSCContextISF *ctx);
     void isf_wsc_context_input_panel_language_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Lang lang);
-    Ecore_IMF_Input_Panel_Lang isf_wsc_context_input_panel_language_get (WSCContextISF *ctx);
     void isf_wsc_context_input_panel_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout);
     Ecore_IMF_Input_Panel_Layout isf_wsc_context_input_panel_layout_get (WSCContextISF *ctx);
     void isf_wsc_context_input_panel_caps_mode_set (WSCContextISF *ctx, unsigned int mode);
