@@ -46,6 +46,12 @@
 #include <pkgmgr-info.h>
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "SCIM_LAUNCHER"
 
 using namespace scim;
 
@@ -186,7 +192,7 @@ int main (int argc, char *argv [])
 
                 /* Unless the target is no-keyboard model, we have a problem. */
                 if (engine_list.size () < 1) {
-                    ISF_SAVE_LOG ("*** There is no helper/imeengine!\n");
+                    LOGW ("There is no helper/imeengine!");
                 }
 
                 list = scim_combine_string_list(engine_list, ',');

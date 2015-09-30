@@ -4264,7 +4264,7 @@ private:
                     if (restart_uuid != uuid || secs > MIN_REPEAT_TIME) {
                         m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
                         restart_uuid = uuid;
-                        ISF_SAVE_LOG ("Auto restart soft ISE:%s\n", uuid.c_str ());
+                        LOGE ("Auto restart soft ISE:%s", uuid.c_str ());
                     } else {
                         reset_default_ise (0);
                         ISF_SAVE_LOG ("Auto restart is abnormal, reset default ISE\n");

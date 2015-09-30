@@ -276,8 +276,7 @@ int main (int argc, char *argv [])
 
     /* Unless the target is no-keyboard model, we have a problem. */
     if (load_engine_list.size () < 1) {
-        LOGW ("*** There is no helper/imeengine!");
-        ISF_SAVE_LOG ("*** There is no helper/imeengine!\n");
+        LOGW ("There is no helper/imeengine!");
     }
 
     /* Use x11 FrontEnd as default if available. */

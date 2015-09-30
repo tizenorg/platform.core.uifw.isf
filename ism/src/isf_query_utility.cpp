@@ -184,7 +184,8 @@ static inline int _db_init(void)
 
     int ret = db_util_open(databaseInfo.pPath, &databaseInfo.pHandle, DB_UTIL_REGISTER_HOOK_METHOD);
     if (ret != SQLITE_OK) {
-        LOGE("db_util_open returned code: %d", ret);
+        ISF_SAVE_LOG("db_util_open(%s, ~) failed, error code: %d\n", databaseInfo.pPath, ret);
+        LOGE("db_util_open failed, error code: %d\n", ret);
         return -EIO;
     }
 
@@ -217,7 +218,7 @@ static inline int _db_connect(void)
         int ret = _db_init();
         if (ret < 0)
         {
-            LOGE("%d", ret);
+            LOGE("_db_init failed. error code=%d", ret);
             return -EIO;
         }
     }
@@ -901,7 +902,6 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        ISF_SAVE_LOG("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
@@ -951,7 +951,6 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        ISF_SAVE_LOG("sqlite3_step returned %d, appid=%s, %s\n", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
         LOGW("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
         ret = SQLITE_ERROR;
         goto out;
@@ -995,7 +994,6 @@ static int _db_insert_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        ISF_SAVE_LOG("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
@@ -1556,6 +1554,7 @@ EXAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
         _db_disconnect();
     }
     else {
+        LOGE("_db_connect() failed");
         ISF_SAVE_LOG("_db_connect() failed\n");
     }
 

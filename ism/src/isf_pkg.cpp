@@ -73,8 +73,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.appid = String (appid ? appid : "");
     else {
-        ISF_SAVE_LOG ("appid is not available!\n");
-        LOGW ("appid is not available!");
+        LOGE ("pkgmgrinfo_appinfo_get_appid failed! error code=%d", ret);
         return 0;
     }
 
@@ -85,8 +84,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.pkgid = String (pkgid ? pkgid : "");
     else {
-        ISF_SAVE_LOG ("pkgid is not available!\n");
-        LOGW ("pkgid is not available!");
+        LOGE ("pkgmgrinfo_appinfo_get_pkgid failed! error code=%d", ret);
         return 0;
     }
 
@@ -95,8 +93,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
     if (ret == PMINFO_R_OK)
         ime_db.exec = String (exec ? exec : "");
     else {
-        ISF_SAVE_LOG ("exec is not available!\n");
-        LOGW ("exec is not available!");
+        LOGE ("pkgmgrinfo_appinfo_get_exec failed! error code=%d", ret);
         return 0;
     }
 
@@ -193,7 +190,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
             ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
         }
         else {
-            ISF_SAVE_LOG ("Unsupported pkgtype(%s)\n", ime_db.pkgtype.c_str ());
+            LOGE ("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str ());
             if (pkginfo_handle) {
                 pkgmgrinfo_pkginfo_destroy_pkginfo (pkginfo_handle);
                 pkginfo_handle = NULL;
@@ -211,7 +208,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
             }
         }
         if (ret < 1) {
-            ISF_SAVE_LOG("isf_db_%s_ime_info failed(%d). appid=%s pkgid=%s\n", (result? "update" : "insert"), ret, ime_db.appid.c_str(), ime_db.pkgid.c_str());
+            LOGE ("isf_db_%s_ime_info failed(%d). appid=%s pkgid=%s", (result? "update" : "insert"), ret, ime_db.appid.c_str(), ime_db.pkgid.c_str());
         }
     }
     else if (result && ret) {
@@ -240,12 +237,12 @@ void isf_pkg_reload_ime_info_db(void)
             ret = pkgmgrinfo_appinfo_filter_foreach_appinfo (handle, isf_pkg_ime_app_list_cb, NULL);
         }
         else {
-            ISF_SAVE_LOG ("pkgmgrinfo_appinfo_filter_add_string failed(%d)\n", ret);
+            LOGE ("pkgmgrinfo_appinfo_filter_add_string failed(%d)", ret);
         }
         pkgmgrinfo_appinfo_filter_destroy (handle);
     }
     else {
-        ISF_SAVE_LOG ("pkgmgrinfo_appinfo_filter_create failed(%d)\n", ret);
+        LOGE ("pkgmgrinfo_appinfo_filter_create failed(%d)", ret);
     }
 }
 
