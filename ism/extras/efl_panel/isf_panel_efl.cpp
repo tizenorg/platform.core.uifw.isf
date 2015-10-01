@@ -2486,7 +2486,9 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
         if (!will_hide) {
             /* If we are not in will_hide state, hide the candidate window immediately */
             candidate_window_hide ();
-            evas_object_hide (_preedit_window);
+
+            if (_preedit_window)
+                evas_object_hide (_preedit_window);
         }
     }
 }
@@ -4304,15 +4306,19 @@ static void slot_show_preedit_string (void)
             } else {
                 y -= _preedit_height;
             }
-            evas_object_move (_preedit_window, x, y);
+
+            if (_preedit_window)
+                evas_object_move (_preedit_window, x, y);
         }
     }
 
-    if (evas_object_visible_get (_preedit_window))
+    if (_preedit_window && evas_object_visible_get (_preedit_window))
         return;
 
     slot_show_candidate_table ();
-    evas_object_show (_preedit_window);
+
+    if (_preedit_window)
+        evas_object_show (_preedit_window);
 }
 
 /**
