@@ -1806,19 +1806,10 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
 
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF*)ecore_imf_context_data_get (ctx);
 
+    isf_imf_context_preedit_string_get (ctx, str, cursor_pos);
+
     if (context_scim && context_scim->impl && context_scim->impl->is_on) {
         String mbs = utf8_wcstombs (context_scim->impl->preedit_string);
-
-        if (str) {
-            if (mbs.length ())
-                *str = strdup (mbs.c_str ());
-            else
-                *str = strdup ("");
-        }
-
-        if (cursor_pos) {
-            *cursor_pos = context_scim->impl->preedit_caret;
-        }
 
         if (attrs) {
             if (mbs.length ()) {
@@ -1909,12 +1900,6 @@ isf_imf_context_preedit_string_with_attributes_get (Ecore_IMF_Context *ctx, char
             }
         }
     } else {
-        if (str)
-            *str = strdup ("");
-
-        if (cursor_pos)
-            *cursor_pos = 0;
-
         if (attrs)
             *attrs = NULL;
     }
