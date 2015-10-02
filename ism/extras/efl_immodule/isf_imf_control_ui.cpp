@@ -523,6 +523,14 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     input_panel_ctx = ctx;
     Ise_Context iseContext;
 
+    /* Set the current XID of the active window into the root window property */
+    save_current_xid (ctx);
+
+    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
+        LOGD ("H/W keyboard is existed.\n");
+        return;
+    }
+
     scim_initialize();
 
     _win_focus_out_handler_del ();
@@ -555,14 +563,6 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     isf_imf_context_prediction_allow_set (ctx, iseContext.prediction_allow);
 
     active_context_canvas = (Evas *)ecore_imf_context_client_canvas_get (ctx);
-
-    /* Set the current XID of the active window into the root window property */
-    save_current_xid (ctx);
-
-    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-        LOGD ("H/W keyboard is existed.\n");
-        return;
-    }
 
     if (_clear_hide_timer ()) {
         hide_req_ic = NULL;
