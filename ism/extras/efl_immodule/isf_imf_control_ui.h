@@ -53,7 +53,6 @@ extern "C"
     void isf_imf_context_control_panel_show (Ecore_IMF_Context *ctx);
     void isf_imf_context_control_panel_hide (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Panel_Lang lang);
-    Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx);
     void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ctx, char **locale);
     void isf_imf_context_input_panel_imdata_set (Ecore_IMF_Context *ctx, const void* data, int len);
     void isf_imf_context_input_panel_imdata_get (Ecore_IMF_Context *ctx, void* data, int* len);

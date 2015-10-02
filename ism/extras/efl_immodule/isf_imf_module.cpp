@@ -64,7 +64,7 @@ extern "C"
         isf_imf_context_input_panel_layout_set,
         isf_imf_context_input_panel_layout_get,
         isf_imf_context_input_panel_language_set,
-        isf_imf_context_input_panel_language_get,
+        NULL, /* input_panel_language_get */
         isf_imf_context_cursor_location_set,
         isf_imf_context_imdata_set,
         isf_imf_context_imdata_get,
