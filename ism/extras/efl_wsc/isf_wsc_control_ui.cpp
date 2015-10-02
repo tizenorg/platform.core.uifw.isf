@@ -87,6 +87,11 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     if (!ctx || !ctx->ctx)
         return;
 
+    if (hw_kbd_num != 0) {
+        LOGD ("H/W keyboard is existed.\n");
+        return;
+    }
+
     /* set password mode */
     iseContext.password_mode = wsc_context_input_panel_password_mode_get (ctx->ctx);
 
@@ -112,11 +117,6 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
         iseContext.prediction_allow = EINA_FALSE;
 
     isf_wsc_context_prediction_allow_set (ctx, iseContext.prediction_allow);
-
-    if (hw_kbd_num != 0) {
-        LOGD ("H/W keyboard is existed.\n");
-        return;
-    }
 
     /* set return key type */
     iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)ctx->ctx->return_key_type;
