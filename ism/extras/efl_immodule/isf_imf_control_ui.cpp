@@ -702,13 +702,6 @@ void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF
     }
 }
 
-Ecore_IMF_Input_Panel_Lang isf_imf_context_input_panel_language_get (Ecore_IMF_Context *ctx)
-{
-    if (!IfInitContext)
-        _isf_imf_context_init ();
-    return iseContext.language;
-}
-
 void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ctx, char **locale)
 {
     if (!IfInitContext)
