@@ -1895,10 +1895,11 @@ static void ui_candidate_window_resize (int new_width, int new_height)
             land_height = _candidate_land_height_max_2;
         }
     }
-#if HAVE_ECOREX
-    LOGD ("ecore_x_e_window_rotation_geometry_set (_candidate_window), port (%d, %d), land (%d, %d)\n",
+
+    LOGD ("window_rotation_geometry_set (_candidate_window), port (%d, %d), land (%d, %d)\n",
             port_width, port_height, land_width, land_height);
 
+#if HAVE_ECOREX
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
             0, 0, 0, port_width, port_height);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
@@ -1908,10 +1909,14 @@ static void ui_candidate_window_resize (int new_width, int new_height)
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
             270, 0, 0, land_height, land_width);
 #else
-    if (_candidate_angle == 90 || _candidate_angle == 270)
-        evas_object_resize (_candidate_window, land_width, land_height);
-    else
-        evas_object_resize (_candidate_window, port_width, port_height);
+    ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+            0, 0, 0, port_width, port_height);
+    ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+            90, 0, 0, land_height, land_width);
+    ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+            180, 0, 0, port_width, port_height);
+    ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+            270, 0, 0, land_height, land_width);
 #endif
 }
 
@@ -3076,7 +3081,14 @@ static void ui_create_native_candidate_window (void)
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 270, 0, 0, _candidate_land_height_min, _candidate_land_width);
 #else
-        evas_object_resize (_candidate_window, _candidate_width, _candidate_height);
+        ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+                0, 0, 0, _candidate_port_width, _candidate_port_height_min);
+        ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+                90, 0, 0, _candidate_land_height_min, _candidate_land_width);
+        ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+                180, 0, 0, _candidate_port_width, _candidate_port_height_min);
+        ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
+                270, 0, 0, _candidate_land_height_min, _candidate_land_width);
 #endif
         /* Add dim background */
         Evas_Object *dim_bg = elm_bg_add (_candidate_window);
