@@ -252,7 +252,8 @@ static Eina_Bool panel_iochannel_handler                (void                   
 static bool     filter_hotkeys                          (EcoreIMFContextISF     *ic,
                                                          const KeyEvent         &key);
 static bool     filter_keys                             (const char             *keyname,
-                                                         const char             *config_path);
+                                                         std::vector <String>   &keys);
+
 static void     turn_on_ic                              (EcoreIMFContextISF     *ic);
 static void     turn_off_ic                             (EcoreIMFContextISF     *ic);
 static void     set_ic_capabilities                     (EcoreIMFContextISF     *ic);
@@ -407,6 +408,9 @@ static int                                              __current_meta_mask    =
 static int                                              __current_super_mask   = 0;
 static int                                              __current_hyper_mask   = 0;
 static int                                              __current_numlock_mask = Mod2Mask;
+
+static std::vector <String>                             hide_ise_keys;
+static std::vector <String>                             ignore_keys;
 
 extern Ecore_IMF_Input_Panel_State                      input_panel_state;
 extern Ecore_IMF_Input_Panel_State                      notified_state;
@@ -573,7 +577,7 @@ _key_down_cb (void *data, int type, void *event)
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
     if ((client_win == focus_win) && ((_hide_ise_based_on_focus) ? (_focused_ic != 0):(true))) {
-        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+        if (filter_keys (ev->keyname, hide_ise_keys)) {
             if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
                     return ECORE_CALLBACK_PASS_ON;
@@ -620,7 +624,7 @@ _key_up_cb (void *data, int type, void *event)
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
 
     if ((client_win == focus_win) && ((_hide_ise_based_on_focus) ? (_focused_ic != 0):(true))) {
-        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE)) {
+        if (filter_keys (ev->keyname, hide_ise_keys)) {
             if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
                     return ECORE_CALLBACK_PASS_ON;
@@ -1134,6 +1138,10 @@ scim_initialize (void)
         get_input_language ();
 
         vconf_notify_key_changed (VCONFKEY_ISF_INPUT_LANGUAGE, input_language_changed_cb, NULL);
+
+        scim_split_string_list (hide_ise_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_HIDE_ISE), String ("")), ',');
+
+        scim_split_string_list (ignore_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY), String ("")), ',');
     }
 }
 
@@ -2053,7 +2061,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
         timestamp = ev->timestamp;
 
-        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+        if (filter_keys (ev->keyname, ignore_keys))
             return EINA_TRUE;
 
         /* Hardware input detect code */
@@ -2079,7 +2087,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
         timestamp = ev->timestamp;
 
-        if (filter_keys (ev->keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY))
+        if (filter_keys (ev->keyname, ignore_keys))
             return EINA_TRUE;
     }
 
@@ -3068,15 +3076,12 @@ filter_hotkeys (EcoreIMFContextISF *ic, const KeyEvent &key)
 }
 
 static bool
-filter_keys (const char *keyname, const char *config_path)
+filter_keys (const char *keyname, std::vector <String> &keys)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (!keyname || !_config)
+    if (!keyname)
         return false;
-
-    std::vector <String> keys;
-    scim_split_string_list (keys, _config->read (String (config_path), String ("")), ',');
 
     for (unsigned int i = 0; i < keys.size (); ++i) {
         if (!strcmp (keyname, keys [i].c_str ())) {
