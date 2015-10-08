@@ -1143,6 +1143,10 @@ scim_initialize (void)
 
         scim_split_string_list (ignore_keys, _config->read (String (SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY), String ("")), ',');
     }
+
+    if (!_panel_client.is_connected ()) {
+        panel_initialize ();
+    }
 }
 
 static void
