@@ -88,20 +88,29 @@ static bool check_panel (const String &display)
 {
     SocketAddress address;
     SocketClient client;
-
     uint32 magic;
+    struct tms     tiks_buf;
+    static clock_t start_tiks = (clock_t)0;
+    static double  clock_tiks = (double)sysconf (_SC_CLK_TCK);
+    clock_t curr_tiks = times (&tiks_buf);
+    double  secs = (double)(curr_tiks - start_tiks) / clock_tiks;
 
-    address.set_address (scim_get_default_panel_socket_address (display));
+    if (secs > MIN_RETRY_TIME) {
+        address.set_address (scim_get_default_panel_socket_address (display));
 
-    if (!client.connect (address))
-        return false;
-
-    if (!scim_socket_open_connection (magic,
-        String ("ConnectionTester"),
-        String ("Panel"),
-        client,
-        1000)) {
+        if (!client.connect (address)) {
+            start_tiks = curr_tiks;
             return false;
+        }
+
+        if (!scim_socket_open_connection (magic,
+            String ("ConnectionTester"),
+            String ("Panel"),
+            client,
+            1000)) {
+                start_tiks = curr_tiks;
+                return false;
+        }
     }
 
     return true;
