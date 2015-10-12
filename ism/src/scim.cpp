@@ -56,6 +56,8 @@
 #endif
 #define LOG_TAG             "SCIM"
 
+#define MIN_RETRY_TIME              8.0
+
 using namespace scim;
 using std::cout;
 using std::cerr;
@@ -95,7 +97,7 @@ static bool check_panel (const String &display)
     clock_t curr_tiks = times (&tiks_buf);
     double  secs = (double)(curr_tiks - start_tiks) / clock_tiks;
 
-    if (secs > MIN_RETRY_TIME) {
+    if (secs > MIN_RETRY_TIME || secs < 0.0) {
         address.set_address (scim_get_default_panel_socket_address (display));
 
         if (!client.connect (address)) {
@@ -111,6 +113,9 @@ static bool check_panel (const String &display)
                 start_tiks = curr_tiks;
                 return false;
         }
+
+        if (secs < 0.0)
+            start_tiks = curr_tiks;
     }
 
     return true;
