@@ -169,7 +169,6 @@ static __Punctuations __punctuations [] = {
     { "zh_TW",  INPUT_LANG_CN_TW,       0x3002 },
     { "ja_JP",  INPUT_LANG_JAPANESE,    0x3002 },
     { "km_KH",  INPUT_LANG_KHMER,       0x17D4 },
-    { "z1_MM",  INPUT_LANG_BURMESE,     0x104A },
 };
 
 /* Input Context handling functions. */
