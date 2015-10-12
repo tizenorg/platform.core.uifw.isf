@@ -860,6 +860,7 @@ SocketFrontEnd::run ()
         if (_server_read_handler != NULL) {
             ecore_main_loop_begin ();
             ecore_main_fd_handler_del (_server_read_handler);
+            _server_read_handler = NULL;
         } else {
             SCIM_DEBUG_FRONTEND (1) << "Error occurred when calling ecore_main_fd_handler_add(server_fd)" << "\n";
         }
