@@ -119,13 +119,22 @@ void send_message_to_broker (const char *message)
         /* We need a ecore loop for sending the ipc message */
         ecore_main_loop_begin ();
 
-        if (exit_handler) ecore_event_handler_del (exit_handler);
-        if (data_handler) ecore_event_handler_del (data_handler);
+        if (exit_handler) {
+            ecore_event_handler_del (exit_handler);
+            exit_handler = NULL;
+        }
+
+        if (data_handler) {
+            ecore_event_handler_del (data_handler);
+            data_handler = NULL;
+        }
 
         ecore_ipc_server_del (server);
-        ecore_ipc_shutdown ();
-        ecore_shutdown ();
+        server = NULL;
     }
+
+    ecore_ipc_shutdown ();
+    ecore_shutdown ();
 }
 
 // }

@@ -140,14 +140,31 @@ static char _ise_uuid[_POSIX_PATH_MAX + 1] = {0};
 
 static void launch_helper (const char *name, const char *uuid)
 {
+    if (!name || !appid) {
+        ISF_SAVE_LOG ("Invalid parameter\n");
+        return;
+    }
+
     int pid = fork ();
 
     if (pid < 0) return;
 
     if (pid == 0) {
-        if (exit_handler) ecore_event_handler_del (exit_handler);
-        if (data_handler) ecore_event_handler_del (data_handler);
-        if (server) ecore_ipc_server_del (server);
+        if (exit_handler) {
+            ecore_event_handler_del (exit_handler);
+            exit_handler = NULL;
+        }
+
+        if (data_handler) {
+            ecore_event_handler_del (data_handler);
+            data_handler = NULL;
+        }
+
+        if (server) {
+            ecore_ipc_server_del (server);
+            server = NULL;
+        }
+
         ecore_ipc_shutdown ();
 
         const char *argv [] = { SCIM_HELPER_LAUNCHER_PROGRAM,
