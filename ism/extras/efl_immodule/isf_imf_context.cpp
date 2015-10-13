@@ -57,7 +57,6 @@
 # define CODESET "INVALID"
 #endif
 
-#define ENABLE_BACKKEY 1
 #define SHIFT_MODE_OFF  0xffe1
 #define SHIFT_MODE_ON   0xffe2
 #define SHIFT_MODE_LOCK 0xffe6
@@ -380,8 +379,7 @@ static Ecore_Fd_Handler                                *_panel_iochannel_err_han
 
 static Ecore_X_Window                                   _input_win                  = 0;
 static Ecore_X_Window                                   _client_window              = 0;
-static Ecore_Event_Handler                             *_key_down_handler           = 0;
-static Ecore_Event_Handler                             *_key_up_handler             = 0;
+static Ecore_Event_Filter                              *_ecore_event_filter_handler = NULL;
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
@@ -567,10 +565,10 @@ _key_down_cb (void *data, int type, void *event)
     Eina_Bool ret = EINA_FALSE;
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
-    if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_PASS_ON;
+    if (!ev || !ev->keyname || !active_ctx) return EINA_TRUE;
 
     EcoreIMFContextISF *ic = (EcoreIMFContextISF*) ecore_imf_context_data_get (active_ctx);
-    if (!ic) return ECORE_CALLBACK_PASS_ON;
+    if (!ic) return EINA_TRUE;
 
     Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
@@ -579,7 +577,7 @@ _key_down_cb (void *data, int type, void *event)
         if (filter_keys (ev->keyname, hide_ise_keys)) {
             if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
-                    return ECORE_CALLBACK_PASS_ON;
+                    return EINA_TRUE;
             }
             LOGD ("%s key is pressed.\n", ev->keyname);
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
@@ -592,17 +590,17 @@ _key_down_cb (void *data, int type, void *event)
                 _panel_client.send ();
             }
             if (ret) {
-                return ECORE_CALLBACK_DONE;
+                return EINA_FALSE;
             }
             else {
                 Ecore_IMF_Input_Panel_State state = ecore_imf_context_input_panel_state_get (active_ctx);
                 if (state == ECORE_IMF_INPUT_PANEL_STATE_SHOW ||
                     state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW)
-                    return ECORE_CALLBACK_DONE;
+                    return EINA_FALSE;
             }
         }
     }
-    return ECORE_CALLBACK_PASS_ON;
+    return EINA_TRUE;
 }
 
 static Eina_Bool
@@ -614,10 +612,10 @@ _key_up_cb (void *data, int type, void *event)
     Eina_Bool ret = EINA_FALSE;
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
-    if (!ev || !ev->keyname || !active_ctx) return ECORE_CALLBACK_PASS_ON;
+    if (!ev || !ev->keyname || !active_ctx) return EINA_TRUE;
 
     EcoreIMFContextISF *ic = (EcoreIMFContextISF*) ecore_imf_context_data_get (active_ctx);
-    if (!ic) return ECORE_CALLBACK_PASS_ON;
+    if (!ic) return EINA_TRUE;
 
     Ecore_X_Window client_win = client_window_id_get (active_ctx);
     Ecore_X_Window focus_win = ecore_x_window_focus_get ();
@@ -626,7 +624,7 @@ _key_up_cb (void *data, int type, void *event)
         if (filter_keys (ev->keyname, hide_ise_keys)) {
             if (get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
-                    return ECORE_CALLBACK_PASS_ON;
+                    return EINA_TRUE;
             }
             LOGD ("%s key is released.\n", ev->keyname);
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
@@ -641,7 +639,7 @@ _key_up_cb (void *data, int type, void *event)
                 _panel_client.send ();
             }
             if (ret) {
-                return ECORE_CALLBACK_DONE;
+                return EINA_FALSE;
             }
             else {
                 Ecore_IMF_Input_Panel_State state = ecore_imf_context_input_panel_state_get (active_ctx);
@@ -649,7 +647,7 @@ _key_up_cb (void *data, int type, void *event)
                     state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) {
                     isf_imf_context_reset (active_ctx);
                     isf_imf_context_input_panel_instant_hide (active_ctx);
-                    return ECORE_CALLBACK_DONE;
+                    return EINA_FALSE;
                 }
             }
         }
@@ -675,41 +673,40 @@ _key_up_cb (void *data, int type, void *event)
         }
     }
 
-    return ECORE_CALLBACK_PASS_ON;
+    return EINA_TRUE;
 }
 
-int
+static Eina_Bool
+_ecore_event_filter_cb (void *data, void *loop_data, int type, void *event)
+{
+    if (type == ECORE_EVENT_KEY_DOWN) {
+        return _key_down_cb (data, type, event);
+    }
+    else if (type == ECORE_EVENT_KEY_UP) {
+        return _key_up_cb (data, type, event);
+    }
+
+    return EINA_TRUE;
+}
+
+void
 register_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-#ifdef ENABLE_BACKKEY
-    if (!_key_down_handler)
-        _key_down_handler = ecore_event_handler_add (ECORE_EVENT_KEY_DOWN, _key_down_cb, NULL);
-
-    if (!_key_up_handler)
-        _key_up_handler = ecore_event_handler_add (ECORE_EVENT_KEY_UP, _key_up_cb, NULL);
-#endif
-
-    return EXIT_SUCCESS;
+    if (!_ecore_event_filter_handler)
+        _ecore_event_filter_handler = ecore_event_filter_add (NULL, _ecore_event_filter_cb, NULL, NULL);
 }
 
-int
+void
 unregister_key_handler ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (_key_down_handler) {
-        ecore_event_handler_del (_key_down_handler);
-        _key_down_handler = NULL;
+    if (_ecore_event_filter_handler) {
+        ecore_event_filter_del (_ecore_event_filter_handler);
+        _ecore_event_filter_handler = NULL;
     }
-
-    if (_key_up_handler) {
-        ecore_event_handler_del (_key_up_handler);
-        _key_up_handler = NULL;
-    }
-
-    return EXIT_SUCCESS;
 }
 
 static void
