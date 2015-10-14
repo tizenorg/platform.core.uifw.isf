@@ -1678,7 +1678,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
     String pre_uuid = _panel_agent->get_current_helper_uuid ();
     LOGD("pre_appid=%s, appid=%s, launch_ise=%d, %d", pre_uuid.c_str(), uuid.c_str(), launch_ise, _soft_keyboard_launched);
     if (pre_uuid == uuid && _soft_keyboard_launched)
-        return false;
+        return true;
 
     if (TOOLBAR_HELPER_MODE == mode && pre_uuid.length () > 0 && _soft_keyboard_launched) {
         _panel_agent->hide_helper (pre_uuid);
