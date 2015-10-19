@@ -175,7 +175,7 @@ int _isf_wsc_context_input_panel_layout_get (int context, Ecore_IMF_Input_Panel_
 
 int _isf_wsc_context_input_panel_state_get (int context, Ecore_IMF_Input_Panel_State &state)
 {
-    int temp = 0;
+    int temp = 1; // Hide state
     _panel_client.prepare (context);
     _panel_client.get_ise_state (temp);
     _panel_client.send ();
