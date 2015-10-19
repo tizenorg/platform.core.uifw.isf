@@ -3648,114 +3648,83 @@ static Eina_Bool efl_create_control_window (void)
 }
 
 /**
+ * @brief Get an window's x window id.
+ *
+ * @param name the property name.
+ * @return X window id.
+ */
+static Ecore_X_Window efl_get_window (const char *name)
+{
+    /* Gets the XID of the window from the root window property */
+    int  ret = 0;
+    Atom type_return;
+    int  format_return;
+    unsigned long    nitems_return;
+    unsigned long    bytes_after_return;
+    unsigned char   *data = NULL;
+    Ecore_X_Window   window = 0;
+
+    ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
+                              ecore_x_window_root_get (_control_window),
+                              ecore_x_atom_get (name),
+                              0, G_MAXLONG, False, XA_WINDOW, &type_return,
+                              &format_return, &nitems_return, &bytes_after_return,
+                              &data);
+
+    if (ret == Success) {
+        if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
+            window = *(Window *)data;
+            if (data)
+                XFree (data);
+        }
+    } else {
+        std::cerr << "XGetWindowProperty () is failed!!!\n";
+    }
+
+    return window;
+}
+
+/**
  * @brief Get app window's x window id.
  *
- * @param win_obj The Evas_Object handler of app window.
+ * @return the X window id of application to have focus or to request to show IME.
  */
 static Ecore_X_Window efl_get_app_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    /* Gets the current XID of the active window from the root window property */
-    int  ret = 0;
-    Atom type_return;
-    int  format_return;
-    unsigned long    nitems_return;
-    unsigned long    bytes_after_return;
-    unsigned char   *data = NULL;
-    Ecore_X_Window   xAppWindow = 0;
-
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
-                              ecore_x_window_root_get (_control_window),
-                              ecore_x_atom_get ("_ISF_ACTIVE_WINDOW"),
-                              0, G_MAXLONG, False, XA_WINDOW, &type_return,
-                              &format_return, &nitems_return, &bytes_after_return,
-                              &data);
-
-    if (ret == Success) {
-        if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
-            void *pvoid = data;
-            xAppWindow = *(Window *)pvoid;
-            if (data)
-                XFree (data);
-        }
-    } else {
-        std::cerr << "XGetWindowProperty () is failed!!!\n";
-    }
-
-    return xAppWindow;
+    return efl_get_window ("_ISF_ACTIVE_WINDOW");
 }
 
 /**
  * @brief Get clipboard window's x window id.
  *
+ * @return the X window id of clipboard.
  */
 static Ecore_X_Window efl_get_clipboard_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    /* Gets the XID of the clipboard window from the root window property */
-    int  ret = 0;
-    Atom type_return;
-    int  format_return;
-    unsigned long    nitems_return;
-    unsigned long    bytes_after_return;
-    unsigned char   *data = NULL;
-    Ecore_X_Window   clipboard_window = 0;
-
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
-                              ecore_x_window_root_get (_control_window),
-                              ecore_x_atom_get ("CBHM_ELM_WIN"),
-                              0, G_MAXLONG, False, XA_WINDOW, &type_return,
-                              &format_return, &nitems_return, &bytes_after_return,
-                              &data);
-
-    if (ret == Success) {
-        if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
-            clipboard_window = *(Window *)data;
-            if (data)
-                XFree (data);
-        }
-    } else {
-        std::cerr << "XGetWindowProperty () is failed!!!\n";
-    }
-
-    return clipboard_window;
+    return efl_get_window ("CBHM_ELM_WIN");
 }
 
+/**
+ * @brief Get global natigation window's x window id.
+ *
+ * @return the X window id of global navigation.
+ */
 static Ecore_X_Window efl_get_global_navigation_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    /* Gets the XID of the global navigation window from the root window property */
-    int  ret = 0;
-    Atom type_return;
-    int  format_return;
-    unsigned long    nitems_return;
-    unsigned long    bytes_after_return;
-    unsigned char   *data = NULL;
-    Ecore_X_Window   gnb_window = 0;
-
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get (),
-                              ecore_x_window_root_get (_control_window),
-                              ecore_x_atom_get ("GNB_WIN"),
-                              0, G_MAXLONG, False, XA_WINDOW, &type_return,
-                              &format_return, &nitems_return, &bytes_after_return,
-                              &data);
-
-    if (ret == Success) {
-        if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
-            gnb_window = *(Window *)data;
-            if (data)
-                XFree (data);
-        }
-    } else {
-        std::cerr << "XGetWindowProperty () is failed!!!\n";
-    }
-
-    return gnb_window;
+    return efl_get_window ("GNB_WIN");
 }
 
+/**
+ * @brief Get app window's x window id.
+ *
+ * @return the X window id of quick panel.
+ */
 static Ecore_X_Window efl_get_quickpanel_window (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
