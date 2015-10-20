@@ -48,6 +48,13 @@ collections {
       }
    }
 
+   plugins {
+      plugin {
+         name: "touch_sound"; // Name run by RUN_PLUGIN
+         source: "feedback"; // External edje plugin name
+         param: "1 0"; // feedback edje plugin parameters: FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_TAP
+	   }
+	}
    group { name: "elm/gengrid/item/ise/customized_default_style_port2/default";
       data.item: "texts" "elm.text";
       data.item: "contents" "elm.swallow.icon";
@@ -319,6 +326,7 @@ collections {
          program { name: "touch_snd";
             signal: "touch_snd,1";
             source: "elm";
+            action: RUN_PLUGIN "touch_sound";
 		}
 
          program { name: "go_reorder_disabled";
@@ -643,6 +651,7 @@ collections {
             program { name: "touch_snd";
                signal: "touch_snd,1";
                source: "elm";
+               action: RUN_PLUGIN "touch_sound";
 			   }
 
 			program { name: "go_reorder_disabled";
