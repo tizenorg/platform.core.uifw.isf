@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout direction="landscape" width="1280" height="318" magnifier="true" key_width="96" key_height="65" key_spacing="16" row_spacing="14" hit_left="8" hit_right="7" hit_top="7" hit_bottom="7" label_type="QTY_LAND_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout direction="landscape" width="1280" height="402" magnifier="true" key_width="96" key_height="65" key_spacing="16" row_spacing="14" hit_left="8" hit_right="7" hit_top="7" hit_bottom="7" label_type="QTY_LAND_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>B09_panel_h.png</button_normal>
   </image_path>
@@ -8,7 +8,7 @@
     <rec button="pressed">button/B09_Qwerty_l_btn_press.png</rec>
     <rec button="disabled">button/B09_Qwerty_l_btn_01.png</rec>
   </background_image>
-  <row x="87" y="8">
+  <row x="87" y="92">
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous">
       <label>
         <rec auto_upper="true">q</rec>
