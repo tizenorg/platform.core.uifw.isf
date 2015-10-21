@@ -328,6 +328,8 @@ static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
         imf_context = NULL;
     }
 
+    ecore_imf_shutdown ();
+
     return EINA_TRUE;
 }
 
@@ -355,11 +357,14 @@ static Evas_Object *_create_imcontrolapi_list (Evas_Object *parent)
 
 void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
 {
+    ecore_imf_init ();
+
     const char *ctx_id = ecore_imf_context_default_id_get ();
     if (ctx_id != NULL) {
         imf_context = ecore_imf_context_add (ctx_id);
     } else {
         LOGW ("Cannot create imf context\n");
+        ecore_imf_shutdown ();
         return;
     }
 

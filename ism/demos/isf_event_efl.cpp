@@ -130,6 +130,8 @@ static Eina_Bool _nf_back_event_cb (void *data, Elm_Object_Item *it)
         }
     }
 
+    ecore_imf_shutdown ();
+
     return EINA_TRUE;
 }
 
@@ -143,7 +145,13 @@ static void isf_label_event_demo_bt (void *data, Evas_Object *obj, void *event_i
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
+    ecore_imf_init ();
+
     const char *ctx_id = ecore_imf_context_default_id_get ();
+    if (!ctx_id) {
+        LOGW ("Cannot create imf context\n");
+        return;
+    }
 
     /* create label1 */
     _label1 = elm_label_add (bx);
