@@ -107,7 +107,7 @@ public:
      */
     ~Transaction ();
 
-    const Transaction & operator = (const Transaction &);
+    Transaction & operator = (const Transaction &);
 
     /**
      * @brief Check if the transaction is valid.

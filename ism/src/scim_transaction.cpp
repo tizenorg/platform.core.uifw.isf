@@ -170,7 +170,7 @@ Transaction::Transaction (size_t bufsize)
     m_reader->attach (*this);
 }
 
-const Transaction &
+Transaction &
 Transaction::operator = (const Transaction & _tran)
 {
     m_holder->request_buffer_size (_tran.get_size());
