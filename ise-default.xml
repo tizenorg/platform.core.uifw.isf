@@ -8,10 +8,12 @@
     <category name="http://tizen.org/category/ime"/>
     <label>Tizen keyboard</label>
     <label xml:lang="ar-ae">لوحة مفاتيح Tizen</label>
+    <label xml:lang="ar-il">لوحة مفاتيح Tizen</label>
     <label xml:lang="as-in">Tizen কীব'ৰ্ড</label>
     <label xml:lang="az-az">Tizen klaviaturası</label>
     <label xml:lang="bg-bg">Клавиатура на Tizen</label>
     <label xml:lang="bn-in">Tizen কীবোর্ড</label>
+    <label xml:lang="bn-bd">Tizen কীবোর্ড</label>
     <label xml:lang="ca-es">Teclat de Tizen</label>
     <label xml:lang="cs-cz">Klávesnice Tizen</label>
     <label xml:lang="da-dk">Tizen-tastatur</label>
@@ -21,7 +23,7 @@
     <label xml:lang="en-ph">Tizen keyboard</label>
     <label xml:lang="en-us">Tizen keyboard</label>
     <label xml:lang="es-es">Teclado de Tizen</label>
-    <label xml:lang="es-mx">Teclado Tizen</label>
+    <label xml:lang="es-us">Teclado Tizen</label>
     <label xml:lang="et-ee">Tizeni klaviatuur</label>
     <label xml:lang="eu-es">Tizen teklatua</label>
     <label xml:lang="fa-ir">صفحه کلید Tizen</label>
