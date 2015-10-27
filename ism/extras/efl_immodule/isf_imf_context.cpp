@@ -2106,6 +2106,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
         key.mask |= _ecore_imf_modifier_to_scim_mask (ev->modifiers);
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);
+        LOGD ("[key down] ev->modifiers:%x, key.mask:%x", ev->modifiers, key.mask);
     } else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
         timestamp = ev->timestamp;
@@ -2114,6 +2115,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         key.mask = SCIM_KEY_ReleaseMask;
         key.mask |= _ecore_imf_modifier_to_scim_mask (ev->modifiers);
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);
+        LOGD ("[key up] ev->modifiers:%x, key.mask:%x", ev->modifiers, key.mask);
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get (ctx)) {
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
@@ -2133,13 +2135,15 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         return ret;
     }
 
+    int is_mod5_mask = key.mask & SCIM_KEY_Mod5Mask;
     key.mask &= _valid_key_mask;
+    LOGD ("key.mask:%x, is_mod5_mask:%x", key.mask, is_mod5_mask);
 
     _panel_client.prepare (ic->id);
 
     ret = EINA_TRUE;
     if (!filter_hotkeys (ic, key)) {
-        if (timestamp == 0) {
+        if (timestamp == 0 && is_mod5_mask) {
             ret = EINA_FALSE;
             // in case of generated event
             if (type == ECORE_IMF_EVENT_KEY_DOWN) {
@@ -3820,10 +3824,11 @@ static XKeyEvent createKeyEvent (bool press, int keycode, int modifiers, bool fa
     event.window      = focus_win;
     event.root        = DefaultRootWindow (display);
     event.subwindow   = None;
-    if (fake)
-        event.time    = 0;
-    else
-        event.time    = 1;
+    event.time        = 0;
+    if (fake) {
+        modifiers     |= Mod5Mask;
+        LOGD ("Mod5Mask:%x", Mod5Mask);
+    }
 
     event.x           = 1;
     event.y           = 1;
