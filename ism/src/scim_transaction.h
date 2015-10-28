@@ -94,6 +94,7 @@ class EXAPI Transaction
     TransactionReader * m_reader;
 
     Transaction (const Transaction &);
+    Transaction & operator = (const Transaction &);
 public:
     /**
      * @brief Constructor.
@@ -107,7 +108,10 @@ public:
      */
     ~Transaction ();
 
-    Transaction & operator = (const Transaction &);
+    /**
+     * @brief Copy the transaction in a new data holder.
+     */
+    void deep_copy(const Transaction &);
 
     /**
      * @brief Check if the transaction is valid.
