@@ -2066,12 +2066,12 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
 
         /* Hardware input detect code */
 #ifdef _TV
-        if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE && _support_hw_keyboard_mode &&
+        if (ev->timestamp > 0 && get_keyboard_mode () == TOOLBAR_HELPER_MODE && _support_hw_keyboard_mode &&
             scim_string_to_key (key, ev->key) && key.code != 0xFF69 && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down)) && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67 && key.code != 0xff13 && key.code != 0x1008ff26 &&
              !((key.code >= SCIM_KEY_0) && (key.code <= SCIM_KEY_9))) {
                  /* Cancel (Power + Volume down), Right, Left, Up, Down, OK, minus, menu, pause, XF86back key, 0~9 key*/
 #else
-        if (ev->timestamp > 1 && get_keyboard_mode () == TOOLBAR_HELPER_MODE && _support_hw_keyboard_mode &&
+        if (ev->timestamp > 0 && get_keyboard_mode () == TOOLBAR_HELPER_MODE && _support_hw_keyboard_mode &&
             scim_string_to_key (key, ev->key) && key.code != 0x1008ff26 && 
             key.code != 0xFF69 /* XF86back, Cancel (Power + Volume down) key */) {
 #endif
@@ -2092,7 +2092,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
     }
 
     if (type == ECORE_IMF_EVENT_KEY_DOWN || type == ECORE_IMF_EVENT_KEY_UP) {
-        if ((timestamp == 0 || timestamp == 1) && !_x_key_event_is_valid) {
+        if ((timestamp == 0) && !_x_key_event_is_valid) {
             std::cerr << "    S/W key event is not valid!!!\n";
             LOGW ("S/W key event is not valid\n");
             return EINA_TRUE;
