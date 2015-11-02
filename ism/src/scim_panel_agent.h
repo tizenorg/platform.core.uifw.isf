@@ -175,6 +175,9 @@ typedef Slot2<void, const String &, bool>
 typedef Slot6<bool, String, String &, String &, int &, int &, String &>
         PanelAgentSlotBoolString4int2;
 
+typedef Slot2<void, int, struct rectinfo &>
+        PanelAgentSlotIntRect;
+
 typedef struct DefaultIse
 {
     TOOLBAR_MODE_T type;
@@ -1205,7 +1208,7 @@ public:
      *
      * slot prototype: void set_keyboard_mode (void);
      */
-    Connection signal_connect_set_keyboard_mode (PanelAgentSlotInt                *slot);
+    Connection signal_connect_set_keyboard_mode          (PanelAgentSlotInt                 *slot);
 
     /**
      * @brief Signal: Notifies the client finished handling WILL_HIDE event for candidate
@@ -1224,9 +1227,9 @@ public:
     /**
      * @brief Signal: Get the recent input panel geometry information.
      *
-     * slot prototype: void get_recent_ise_geometry (rectinfo &info);
+     * slot prototype: void get_recent_ise_geometry (int angle, rectinfo &info);
      */
-    Connection signal_connect_get_recent_ise_geometry    (PanelAgentSlotRect                *slot);
+    Connection signal_connect_get_recent_ise_geometry    (PanelAgentSlotIntRect             *slot);
 };
 
 /**  @} */

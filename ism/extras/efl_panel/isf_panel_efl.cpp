@@ -226,7 +226,7 @@ static void       slot_get_ise_language                (char *name, std::vector<
 static bool       slot_get_ise_info                    (const String &uuid, ISE_INFO &info);
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_get_input_panel_geometry        (struct rectinfo &info);
-static void       slot_get_recent_ise_geometry         (struct rectinfo &info);
+static void       slot_get_recent_ise_geometry         (int angle, struct rectinfo &info);
 static void       slot_set_keyboard_ise                (const String &uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_accept_connection               (int fd);
@@ -5106,14 +5106,18 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
 /**
  * @brief Get the recent input panel geometry slot function for PanelAgent.
  *
+ * @param angle the rotation angle of application window.
  * @param info The data is used to store input panel position and size.
  */
-static void slot_get_recent_ise_geometry (struct rectinfo &info)
+static void slot_get_recent_ise_geometry (int angle, struct rectinfo &info)
 {
     LOGD ("slot_get_recent_ise_geometry\n");
 
     /* If we have geometry reported by ISE, use the geometry information */
-    int angle = efl_get_app_window_angle ();
+    if (angle < 0) {
+        angle = efl_get_app_window_angle ();
+    }
+
     if (angle == 0 || angle == 180) {
         if (_portrait_recent_ise_geometry.valid) {
             info = _portrait_recent_ise_geometry.geometry;
