@@ -1188,6 +1188,10 @@ isf_imf_context_new (void)
     }
     context_scim->id = _context_count++;
 
+#if !(ENABLE_LAZY_LAUNCH)
+     scim_initialize ();
+#endif
+
     return context_scim;
 }
 
@@ -1413,9 +1417,11 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
     if (!context_scim)
         return;
 
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__<< "(" << context_scim->id << ")...\n";
-
+#if ENABLE_LAZY_LAUNCH
     scim_initialize ();
+#endif
+
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__<< "(" << context_scim->id << ")...\n";
 
     if (_focused_ic) {
         if (_focused_ic == context_scim) {
