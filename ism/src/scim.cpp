@@ -200,6 +200,7 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
     if (ecore_ipc_client_send (e->client, 0, 0, 0, 0, 0, message, strlen (message)) == 0) {
         LOGW ("ecore_ipc_client_send FAILED!!");
     }
+    ecore_ipc_client_flush (e->client);
 
     char buffer[_POSIX_PATH_MAX + 1] = {0};
     strncpy (buffer, (char*)(e->data), (e->size > _POSIX_PATH_MAX) ? _POSIX_PATH_MAX : e->size);

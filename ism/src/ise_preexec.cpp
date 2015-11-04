@@ -113,7 +113,7 @@ void send_message_to_broker (const char *message)
 
     if (server && message) {
         ecore_ipc_server_send (server, 0, 0, 0, 0, 0, message, strlen (message));
-
+        ecore_ipc_server_flush (server);
         LOGD ("send message : %s\n", message);
 
         /* We need a ecore loop for sending the ipc message */
