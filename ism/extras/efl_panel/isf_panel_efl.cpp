@@ -1062,9 +1062,7 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
     } else {
         ecore_x_e_virtual_keyboard_state_set (window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
 
-        int angle = efl_get_ise_window_angle ();
-
-        if (angle == 0 || angle == 180) {
+        if (_ise_angle == 0 || _ise_angle == 180) {
             _portrait_recent_ise_geometry.valid = true;
             _portrait_recent_ise_geometry.geometry = ise_rect;
         }
@@ -5115,7 +5113,7 @@ static void slot_get_recent_ise_geometry (int angle, struct rectinfo &info)
 
     /* If we have geometry reported by ISE, use the geometry information */
     if (angle < 0) {
-        angle = efl_get_app_window_angle ();
+        angle = _ise_angle;
     }
 
     if (angle == 0 || angle == 180) {
