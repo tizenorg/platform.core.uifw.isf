@@ -153,55 +153,55 @@ SCLOptionWindowType find_option_window_type(Evas_Object *obj)
     return OPTION_WINDOW_TYPE_MAX;
 }
 
-static void reset_settings_popup_response_ok_cb (void *data, Evas_Object *obj, void *event_info)
+static void reset_settings_popup_response_ok_cb(void *data, Evas_Object *obj, void *event_info)
 {
-    reset_ise_config_values ();
-    _language_manager.set_enabled_languages (g_config_values.enabled_languages);
+    reset_ise_config_values();
+    _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
-    Evas_Object *genlist = static_cast<Evas_Object*>(evas_object_data_get (obj, "parent_genlist"));
-    SCLOptionWindowType type = find_option_window_type (genlist);
-    read_options (option_elements[type].naviframe);
+    Evas_Object *genlist = static_cast<Evas_Object*>(evas_object_data_get(obj, "parent_genlist"));
+    SCLOptionWindowType type = find_option_window_type(genlist);
+    read_options(option_elements[type].naviframe);
 
-    g_ui->enable_sound (g_config_values.sound_on);
-    g_ui->enable_vibration (g_config_values.vibration_on);
-    g_ui->enable_magnifier (g_config_values.preview_on);
-    vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, g_config_values.auto_capitalise);
-    vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, g_config_values.auto_punctuate);
+    g_ui->enable_sound(g_config_values.sound_on);
+    g_ui->enable_vibration(g_config_values.vibration_on);
+    g_ui->enable_magnifier(g_config_values.preview_on);
+    vconf_set_bool(VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, g_config_values.auto_capitalise);
+    vconf_set_bool(VCONFKEY_AUTOPERIOD_ALLOW_BOOL, g_config_values.auto_punctuate);
 
     Evas_Object *popup = (Evas_Object *)data;
     if (popup)
-        evas_object_del (popup);
+        evas_object_del(popup);
 }
 
-static void reset_settings_popup_response_cancel_cb (void *data, Evas_Object *obj, void *event_info)
+static void reset_settings_popup_response_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *popup = (Evas_Object *)data;
     if (popup)
-        evas_object_del (popup);
+        evas_object_del(popup);
 }
 
-static void reset_settings_popup (void *data, Evas_Object *obj, void *event_info)
+static void reset_settings_popup(void *data, Evas_Object *obj, void *event_info)
 {
-    Evas_Object *popup = elm_popup_add (elm_object_top_widget_get (obj));
-    elm_popup_align_set (popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-    eext_object_event_callback_add (popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
-    evas_object_size_hint_weight_set (popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_object_domain_translatable_text_set (popup, PACKAGE, RESET_SETTINGS_POPUP_TEXT);
-    elm_object_domain_translatable_part_text_set (popup, "title,text", PACKAGE, RESET_SETTINGS_POPUP_TITLE_TEXT);
+    Evas_Object *popup = elm_popup_add(elm_object_top_widget_get(obj));
+    elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+    eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
+    evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    elm_object_domain_translatable_text_set(popup, PACKAGE, RESET_SETTINGS_POPUP_TEXT);
+    elm_object_domain_translatable_part_text_set(popup, "title,text", PACKAGE, RESET_SETTINGS_POPUP_TITLE_TEXT);
 
-    Evas_Object *btn_cancel = elm_button_add (popup);
-    elm_object_style_set (btn_cancel, "popup");
-    elm_object_domain_translatable_text_set (btn_cancel, PACKAGE, POPUP_CANCEL_BTN);
-    elm_object_part_content_set (popup, "button1", btn_cancel);
-    evas_object_smart_callback_add (btn_cancel, "clicked", reset_settings_popup_response_cancel_cb, popup);
+    Evas_Object *btn_cancel = elm_button_add(popup);
+    elm_object_style_set(btn_cancel, "popup");
+    elm_object_domain_translatable_text_set(btn_cancel, PACKAGE, POPUP_CANCEL_BTN);
+    elm_object_part_content_set(popup, "button1", btn_cancel);
+    evas_object_smart_callback_add(btn_cancel, "clicked", reset_settings_popup_response_cancel_cb, popup);
 
-    Evas_Object *btn_ok = elm_button_add (popup);
-    evas_object_data_set (btn_ok, "parent_genlist", obj);
-    elm_object_style_set (btn_ok, "popup");
-    elm_object_domain_translatable_text_set (btn_ok, PACKAGE, POPUP_OK_BTN);
-    elm_object_part_content_set (popup, "button2", btn_ok);
-    evas_object_smart_callback_add (btn_ok, "clicked", reset_settings_popup_response_ok_cb, popup);
-    evas_object_show (popup);
+    Evas_Object *btn_ok = elm_button_add(popup);
+    evas_object_data_set(btn_ok, "parent_genlist", obj);
+    elm_object_style_set(btn_ok, "popup");
+    elm_object_domain_translatable_text_set(btn_ok, PACKAGE, POPUP_OK_BTN);
+    elm_object_part_content_set(popup, "button2", btn_ok);
+    evas_object_smart_callback_add(btn_ok, "clicked", reset_settings_popup_response_ok_cb, popup);
+    evas_object_show(popup);
 }
 
 static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
@@ -227,18 +227,18 @@ static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
     return NULL;
 }
 
-static Eina_Bool _update_check_button_state (Elm_Object_Item *item, Evas_Object *obj)
+static Eina_Bool _update_check_button_state(Elm_Object_Item *item, Evas_Object *obj)
 {
     Eina_Bool state = EINA_FALSE;
     if (item && obj) {
-        elm_genlist_item_selected_set (item, EINA_FALSE);
+        elm_genlist_item_selected_set(item, EINA_FALSE);
         /* Update check button */
-        Evas_Object *ck = elm_object_item_part_content_get (item, "elm.swallow.end");
+        Evas_Object *ck = elm_object_item_part_content_get(item, "elm.swallow.end");
         if (ck == NULL)
-            ck = elm_object_item_part_content_get (item, "elm.icon");
-        evas_object_data_set (ck, "parent_genlist", obj);
-        state = !elm_check_state_get (ck);
-        elm_check_state_set (ck, state);
+            ck = elm_object_item_part_content_get(item, "elm.icon");
+        evas_object_data_set(ck, "parent_genlist", obj);
+        state = !elm_check_state_get(ck);
+        elm_check_state_set(ck, state);
     }
     return state;
 }
@@ -259,42 +259,42 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
             break;
             case SETTING_ITEM_ID_AUTO_CAPITALISE: {
                 if (item) {
-                    state = _update_check_button_state (item, obj);
+                    state = _update_check_button_state(item, obj);
                     check_autocapitalise_change_callback((void *)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_AUTO_PUNCTUATE: {
                 if (item) {
-                    state = _update_check_button_state (item, obj);
+                    state = _update_check_button_state(item, obj);
                     check_autopunctuate_change_callback((void *)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_SOUND: {
                 if (item) {
-                    state = _update_check_button_state (item, obj);
+                    state = _update_check_button_state(item, obj);
                     check_sound_change_callback((void *)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_VIBRATION: {
                 if (item) {
-                    state = _update_check_button_state (item, obj);
+                    state = _update_check_button_state(item, obj);
                     check_vibration_change_callback((void *)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_CHARACTER_PRE: {
                 if (item) {
-                    state = _update_check_button_state (item, obj);
+                    state = _update_check_button_state(item, obj);
                     check_character_pre_change_callback((void *)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_RESET: {
                 LOGD("reset keyboard settings");
-                reset_settings_popup (data, obj, event_info);
+                reset_settings_popup(data, obj, event_info);
             }
             break;
             default:
@@ -409,8 +409,8 @@ static void check_autocapitalise_change_callback(void *data, Evas_Object *obj, v
         state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.auto_capitalise = state;
-    write_ise_config_values ();
-    if (vconf_set_bool (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, state) == -1)
+    write_ise_config_values();
+    if (vconf_set_bool(VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, state) == -1)
         LOGE("Failed to set vconf autocapital");
 }
 
@@ -423,8 +423,8 @@ static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, vo
         state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.auto_punctuate = state;
-    write_ise_config_values ();
-    if (vconf_set_bool (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, state) == -1)
+    write_ise_config_values();
+    if (vconf_set_bool(VCONFKEY_AUTOPERIOD_ALLOW_BOOL, state) == -1)
         LOGE("Failed to set vconf autoperiod");
 }
 
@@ -437,8 +437,8 @@ static void check_sound_change_callback(void *data, Evas_Object *obj, void *even
         state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.sound_on = state;
-    write_ise_config_values ();
-    g_ui->enable_sound (state);
+    write_ise_config_values();
+    g_ui->enable_sound(state);
 }
 
 static void check_vibration_change_callback(void *data, Evas_Object *obj, void *event_info)
@@ -450,8 +450,8 @@ static void check_vibration_change_callback(void *data, Evas_Object *obj, void *
         state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.vibration_on = state;
-    write_ise_config_values ();
-    g_ui->enable_vibration (state);
+    write_ise_config_values();
+    g_ui->enable_vibration(state);
 }
 
 static void check_character_pre_change_callback(void *data, Evas_Object *obj, void *event_info)
@@ -463,19 +463,19 @@ static void check_character_pre_change_callback(void *data, Evas_Object *obj, vo
         state = (int)reinterpret_cast<long>(data);
     }
     g_config_values.preview_on = state;
-    write_ise_config_values ();
-    g_ui->enable_magnifier (state);
+    write_ise_config_values();
+    g_ui->enable_magnifier(state);
 }
 
-static Evas_Object *_create_check_button (Evas_Object *parent, sclboolean state)
+static Evas_Object *_create_check_button(Evas_Object *parent, sclboolean state)
 {
     Evas_Object *ck = NULL;
     if (parent) {
-        ck = elm_check_add (parent);
-        elm_object_style_set (ck, "on&off");
-        elm_check_state_set (ck, state);
-        evas_object_propagate_events_set (ck, EINA_FALSE);
-        evas_object_show (ck);
+        ck = elm_check_add(parent);
+        elm_object_style_set(ck, "on&off");
+        elm_check_state_set(ck, state);
+        evas_object_propagate_events_set(ck, EINA_FALSE);
+        evas_object_show(ck);
     }
 
     return ck;
@@ -491,24 +491,24 @@ static Evas_Object *_main_radio_gl_content_get(void *data, Evas_Object *obj, con
             !strcmp(part, "elm.icon")) {
             switch (item_data->mode) {
                 case SETTING_ITEM_ID_AUTO_CAPITALISE:
-                    ck = _create_check_button (obj, g_config_values.auto_capitalise);
-                    evas_object_smart_callback_add (ck, "changed", check_autocapitalise_change_callback, (void*)(item_data->mode));
+                    ck = _create_check_button(obj, g_config_values.auto_capitalise);
+                    evas_object_smart_callback_add(ck, "changed", check_autocapitalise_change_callback, (void*)(item_data->mode));
                     break;
                 case SETTING_ITEM_ID_AUTO_PUNCTUATE:
-                    ck = _create_check_button (obj, g_config_values.auto_punctuate);
-                    evas_object_smart_callback_add (ck, "changed", check_autopunctuate_change_callback, (void*)(item_data->mode));
+                    ck = _create_check_button(obj, g_config_values.auto_punctuate);
+                    evas_object_smart_callback_add(ck, "changed", check_autopunctuate_change_callback, (void*)(item_data->mode));
                     break;
                 case SETTING_ITEM_ID_SOUND:
-                    ck = _create_check_button (obj, g_config_values.sound_on);
-                    evas_object_smart_callback_add (ck, "changed", check_sound_change_callback, (void*)(item_data->mode));
+                    ck = _create_check_button(obj, g_config_values.sound_on);
+                    evas_object_smart_callback_add(ck, "changed", check_sound_change_callback, (void*)(item_data->mode));
                     break;
                 case SETTING_ITEM_ID_VIBRATION:
-                    ck = _create_check_button (obj, g_config_values.vibration_on);
-                    evas_object_smart_callback_add (ck, "changed", check_vibration_change_callback, (void*)(item_data->mode));
+                    ck = _create_check_button(obj, g_config_values.vibration_on);
+                    evas_object_smart_callback_add(ck, "changed", check_vibration_change_callback, (void*)(item_data->mode));
                     break;
                 case SETTING_ITEM_ID_CHARACTER_PRE:
-                    ck = _create_check_button (obj, g_config_values.preview_on);
-                    evas_object_smart_callback_add (ck, "changed", check_character_pre_change_callback, (void*)(item_data->mode));
+                    ck = _create_check_button(obj, g_config_values.preview_on);
+                    evas_object_smart_callback_add(ck, "changed", check_character_pre_change_callback, (void*)(item_data->mode));
                     break;
             }
         }
@@ -630,14 +630,14 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
     }
 
     SCLOptionWindowType type = find_option_window_type(obj);
-    elm_genlist_item_update (option_elements[type].languages_item);
+    elm_genlist_item_update(option_elements[type].languages_item);
 
     if (obj) {
         evas_object_smart_callback_del(obj, "clicked", language_selection_finished_cb);
         Evas_Object *naviframe = (Evas_Object *)data;
         if (naviframe) {
-            elm_naviframe_item_pop (naviframe);
-            read_options (naviframe);
+            elm_naviframe_item_pop(naviframe);
+            read_options(naviframe);
         }
     }
 
@@ -649,7 +649,7 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
         if (info) {
             if (info->enabled) {
                 enabled_languages.push_back(info->name);
-                LOGD ("Enabled language:%s", info->name.c_str ());
+                LOGD ("Enabled language:%s", info->name.c_str());
                 if (info->name.compare(g_config_values.selected_language) == 0) {
                     selected_language_found = TRUE;
                 }
@@ -658,7 +658,7 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
     }
     if (enabled_languages.size() > 0) {
         g_config_values.enabled_languages = enabled_languages;
-        LOGD ("Enabled languages size:%d", g_config_values.enabled_languages.size ());
+        LOGD ("Enabled languages size:%d", g_config_values.enabled_languages.size());
         if (!selected_language_found) {
             if (!(g_config_values.enabled_languages.at(0).empty())) {
                 g_config_values.selected_language = g_config_values.enabled_languages.at(0);
@@ -697,7 +697,7 @@ static void close_option_window(SCLOptionWindowType type)
     option_elements[type].option_window = NULL;
 }
 
-static void _naviframe_back_cb (void *data, Evas_Object *obj, void *event_info)
+static void _naviframe_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
     SCLOptionWindowType type = find_option_window_type(obj);
     Elm_Object_Item *top_it = elm_naviframe_top_item_get(obj);
@@ -731,13 +731,13 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
                                    NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
     elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num (); loop++)
+    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
     {
-        LANGUAGE_INFO *info = _language_manager.get_language_info (loop);
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info && info->enabled) {
-            strncpy (language_itemdata[loop].main_text, info->display_name.c_str (), ITEM_DATA_STRING_LEN - 1);
+            strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
             option_elements[type].selected_language_item[loop] =
-                elm_genlist_item_append (genlist, option_elements[type].itc_main_text_only, &language_itemdata[loop],
+                elm_genlist_item_append(genlist, option_elements[type].itc_main_text_only, &language_itemdata[loop],
                                         NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
         } else {
             option_elements[type].selected_language_item[loop] = NULL;
@@ -816,7 +816,7 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 {
     Evas_Object *genlist = elm_genlist_add(naviframe);
     elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
-    elm_genlist_homogeneous_set (genlist, EINA_TRUE);
+    elm_genlist_homogeneous_set(genlist, EINA_TRUE);
 
     SCLOptionWindowType type = find_option_window_type(naviframe);
 
@@ -837,11 +837,11 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 
     evas_object_show(genlist);
 
-    Evas_Object *back_button = elm_button_add (naviframe);
-    elm_object_style_set (back_button, "naviframe/back_btn/default");
-    evas_object_smart_callback_add (back_button, "clicked", language_selection_finished_cb, naviframe);
-    Elm_Object_Item *navi_it = elm_naviframe_item_push (naviframe, LANGUAGE, back_button, NULL, genlist, NULL);
-    elm_naviframe_item_pop_cb_set (navi_it, _pop_cb, naviframe);
+    Evas_Object *back_button = elm_button_add(naviframe);
+    elm_object_style_set(back_button, "naviframe/back_btn/default");
+    evas_object_smart_callback_add(back_button, "clicked", language_selection_finished_cb, naviframe);
+    Elm_Object_Item *navi_it = elm_naviframe_item_push(naviframe, LANGUAGE, back_button, NULL, genlist, NULL);
+    elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, naviframe);
 
     return genlist;
 }
@@ -849,31 +849,31 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 void read_options(Evas_Object *naviframe)
 {
     SCLOptionWindowType type = find_option_window_type(naviframe);
-    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num (); loop++)
+    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
     {
         if (option_elements[type].selected_language_item[loop] != NULL) {
-            elm_object_item_del (option_elements[type].selected_language_item[loop]);
+            elm_object_item_del(option_elements[type].selected_language_item[loop]);
             option_elements[type].selected_language_item[loop] = NULL;
         }
 
-        LANGUAGE_INFO *info = _language_manager.get_language_info (loop);
+        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
         if (info && info->enabled) {
-            strncpy (language_itemdata[loop].main_text, info->display_name.c_str (), ITEM_DATA_STRING_LEN - 1);
+            strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
             option_elements[type].selected_language_item[loop] =
-                elm_genlist_item_insert_before (option_elements[type].genlist, option_elements[type].itc_main_text_only, &language_itemdata[loop],
+                elm_genlist_item_insert_before(option_elements[type].genlist, option_elements[type].itc_main_text_only, &language_itemdata[loop],
                                         NULL, option_elements[type].languages_item, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
         }
     }
 
     Elm_Object_Item *top_it;
-    top_it = elm_naviframe_top_item_get (naviframe);
+    top_it = elm_naviframe_top_item_get(naviframe);
     Evas_Object *content;
-    content = elm_object_item_content_get (top_it);
+    content = elm_object_item_content_get(top_it);
     if (content) {
-        Elm_Object_Item *item = elm_genlist_first_item_get (content);
+        Elm_Object_Item *item = elm_genlist_first_item_get(content);
         while (item) {
-            elm_genlist_item_update (item);
-            item = elm_genlist_item_next_get (item);
+            elm_genlist_item_update(item);
+            item = elm_genlist_item_next_get(item);
         }
     }
 }
@@ -887,21 +887,21 @@ static void set_option_values()
 {
 }
 
-static void language_view_popup_show (Evas_Object *obj, SCLOptionWindowType type, const char *content_text, const char *btn_text)
+static void language_view_popup_show(Evas_Object *obj, SCLOptionWindowType type, const char *content_text, const char *btn_text)
 {
     if (content_text == NULL)
         return;
 
-    Evas_Object *top_level = elm_object_top_widget_get (obj);
-    option_elements[type].lang_popup = elm_popup_add (top_level);
-    elm_object_text_set (option_elements[type].lang_popup, content_text);
-    elm_popup_align_set (option_elements[type].lang_popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-    elm_popup_timeout_set (option_elements[type].lang_popup, 3.0);
-    evas_object_smart_callback_add (option_elements[type].lang_popup, "timeout", _popup_timeout_cb, obj);
-    elm_object_focus_allow_set (option_elements[type].lang_popup, EINA_TRUE);
-    evas_object_show (option_elements[type].lang_popup);
-    evas_object_raise (option_elements[type].lang_popup);
-    eext_object_event_callback_add (option_elements[type].lang_popup, EEXT_CALLBACK_BACK, _popup_timeout_cb, NULL);
+    Evas_Object *top_level = elm_object_top_widget_get(obj);
+    option_elements[type].lang_popup = elm_popup_add(top_level);
+    elm_object_text_set(option_elements[type].lang_popup, content_text);
+    elm_popup_align_set(option_elements[type].lang_popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+    elm_popup_timeout_set(option_elements[type].lang_popup, 3.0);
+    evas_object_smart_callback_add(option_elements[type].lang_popup, "timeout", _popup_timeout_cb, obj);
+    elm_object_focus_allow_set(option_elements[type].lang_popup, EINA_TRUE);
+    evas_object_show(option_elements[type].lang_popup);
+    evas_object_raise(option_elements[type].lang_popup);
+    eext_object_event_callback_add(option_elements[type].lang_popup, EEXT_CALLBACK_BACK, _popup_timeout_cb, NULL);
 }
 
 static void language_selected(void *data, Evas_Object *obj, void *event_info)
@@ -918,7 +918,7 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
                 if (_language_manager.get_enabled_languages_num() < MIN_SELECTED_LANGUAGES) {
                     info->enabled = TRUE;
                     elm_check_state_set(obj, EINA_TRUE);
-                    language_view_popup_show (obj, type, MSG_NONE_SELECTED, NULL);
+                    language_view_popup_show(obj, type, MSG_NONE_SELECTED, NULL);
                 }
             } else {
                 if (_language_manager.get_enabled_languages_num() > MAX_SELECTED_LANGUAGES) {
@@ -927,7 +927,7 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
 
                     char buf[256] = {0};
                     snprintf(buf, 256, SUPPORTED_MAX_LANGUAGES, MAX_SELECTED_LANGUAGES);
-                    language_view_popup_show (obj, type, buf, NULL);
+                    language_view_popup_show(obj, type, buf, NULL);
                 }
             }
         }
@@ -985,7 +985,7 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     option_elements[type].back_button = back_button;
 
     elm_object_style_set(back_button, "naviframe/back_btn/default");
-    evas_object_smart_callback_add (back_button, "clicked", navi_back_cb, NULL);
+    evas_object_smart_callback_add(back_button, "clicked", navi_back_cb, NULL);
     elm_naviframe_item_push(naviframe, OPTIONS, back_button, NULL, list, NULL);
 
     elm_object_content_set(conformant, naviframe);
