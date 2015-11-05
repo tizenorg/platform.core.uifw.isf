@@ -92,16 +92,20 @@ static bool check_panel (const String &display)
     SocketClient client;
     uint32 magic;
     struct tms     tiks_buf;
+    static bool check = true;   /* Added; 'start_tiks' can't be used to check if it's the first time because 'curr_tiks' could be also zero. */
     static clock_t start_tiks = (clock_t)0;
     static double  clock_tiks = (double)sysconf (_SC_CLK_TCK);
-    clock_t curr_tiks = times (&tiks_buf);
+    clock_t curr_tiks = times (&tiks_buf);  /* This can be a negative number or zero at boot up */
     double  secs = (double)(curr_tiks - start_tiks) / clock_tiks;
 
-    if (secs > MIN_RETRY_TIME || secs < 0.0) {
+    if (secs > MIN_RETRY_TIME ||
+            (start_tiks == (clock_t)0 && check == true) /* Make sure it goes through at first time */
+            ) {
         address.set_address (scim_get_default_panel_socket_address (display));
 
         if (!client.connect (address)) {
             start_tiks = curr_tiks;
+            check = false;
             return false;
         }
 
@@ -111,13 +115,14 @@ static bool check_panel (const String &display)
             client,
             1000)) {
                 start_tiks = curr_tiks;
+                check = false;
                 return false;
         }
-
-        if (secs < 0.0)
-            start_tiks = curr_tiks;
     }
 
+    if (check == true)
+        start_tiks = curr_tiks;
+    check = false;
     return true;
 }
 
