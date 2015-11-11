@@ -387,6 +387,9 @@ void CCoreEventCallback::on_update_surrounding_text(sclint ic, const sclchar *te
 void CCoreEventCallback::on_set_return_key_type (sclu32 type)
 {
     ise_set_return_key_type(type);
+
+    if (g_keyboard_state.visible_state)
+        ise_show (g_keyboard_state.ic);
 }
 
 void CCoreEventCallback::on_set_return_key_disable (sclu32 disabled)
