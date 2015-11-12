@@ -564,10 +564,12 @@ SocketFrontEnd::get_surrounding_text (int id, WideString &text, int &cursor, int
                  * but in previous frame of stack, m_receive_trans has not finished reading,
                  */
                 Transaction _tran;
+                int _id = m_current_instance;
                 _tran.deep_copy (m_receive_trans);
                 m_continue_mark = STATUS_NONE;
                 socket_receive_callback (&m_socket_server, socket_client);
                 m_receive_trans.deep_copy (_tran);
+                m_current_instance = _id;
                 ContinueMark status = get_continue_mark ();
                 if (status == STATUS_DISCONNECT)
                     return false;
@@ -638,10 +640,12 @@ SocketFrontEnd::get_selection (int id, WideString &text)
             cont = true;
             while (true) {
                 Transaction _tran;
+                int _id = m_current_instance;
                 _tran.deep_copy (m_receive_trans);
                 m_continue_mark = STATUS_NONE;
                 socket_receive_callback (&m_socket_server, socket_client);
                 m_receive_trans.deep_copy (_tran);
+                m_current_instance = _id;
                 ContinueMark status = get_continue_mark ();
                 if (status == STATUS_DISCONNECT)
                     return false;
