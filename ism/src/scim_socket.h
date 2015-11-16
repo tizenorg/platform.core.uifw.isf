@@ -37,6 +37,8 @@
 #ifndef __SCIM_SOCKET_H
 #define __SCIM_SOCKET_H
 
+#include "privilege_checker.h"
+
 namespace scim {
 
 /**
@@ -192,6 +194,8 @@ class EXAPI Socket
     Socket (const Socket&);
     const Socket& operator = (const Socket&);
 
+    mutable PrivilegeChecker privilegeChecker;
+
 public:
     /**
      * @brief Create a Socket object from an already created socket_id.
@@ -281,6 +285,13 @@ public:
      * @return
      */
     int set_nonblock_mode ();
+
+    /**
+     * @brief Get the privilege checker member.
+     *
+     * @return privilege checker
+     */
+    PrivilegeChecker& get_privilege_checker () const;
 
 protected:
 

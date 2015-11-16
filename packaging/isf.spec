@@ -38,6 +38,9 @@ BuildRequires:  pkgconfig(pkgmgr-info)
 BuildRequires:  pkgconfig(db-util)
 BuildRequires:  pkgconfig(capi-appfw-app-control)
 BuildRequires:  pkgconfig(capi-appfw-application)
+BuildRequires:  pkgconfig(cynara-client)
+BuildRequires:  pkgconfig(cynara-creds-socket)
+BuildRequires:  pkgconfig(cynara-session)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
