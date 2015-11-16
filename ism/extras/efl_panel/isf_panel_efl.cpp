@@ -4275,17 +4275,19 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
         ui_settle_candidate_window ();
     }
 
-    if (_ise_state == WINDOW_STATE_SHOW) {
+    if (_ise_state == WINDOW_STATE_SHOW || _ise_state == WINDOW_STATE_WILL_SHOW) {
         _ise_reported_geometry.valid = true;
         _ise_reported_geometry.angle = efl_get_ise_window_angle ();
         _ise_reported_geometry.geometry.pos_x = x;
         _ise_reported_geometry.geometry.pos_y = y;
         _ise_reported_geometry.geometry.width = width;
         _ise_reported_geometry.geometry.height = height;
+        if (_ise_state == WINDOW_STATE_SHOW) {
 #if HAVE_ECOREX
-        set_keyboard_geometry_atom_info (_app_window, _ise_reported_geometry.geometry);
+            set_keyboard_geometry_atom_info (_app_window, _ise_reported_geometry.geometry);
 #endif
-        _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+        }
     }
 }
 
