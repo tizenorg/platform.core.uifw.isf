@@ -60,6 +60,8 @@
 #include "scim_private.h"
 #include "scim.h"
 
+#include "privilege_checker.h"
+
 #ifdef LOG_TAG
 # undef LOG_TAG
 #endif
@@ -783,7 +785,7 @@ private:
 };
 
 Socket::Socket (int id)
-    : m_impl (new SocketImpl (id))
+    : m_impl (new SocketImpl (id)), privilegeChecker (id)
 {
 }
 
@@ -869,6 +871,12 @@ int
 Socket::set_nonblock_mode ()
 {
     return m_impl->set_nonblock_mode ();
+}
+
+PrivilegeChecker&
+Socket::get_privilege_checker () const
+{
+    return privilegeChecker;
 }
 
 bool

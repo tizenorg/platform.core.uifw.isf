@@ -92,7 +92,8 @@ libsciminclude_HEADERS 	= scim.h \
 			  isf_control.h \
 			  isf_imcontrol_client.h \
 			  ise_context.h \
-			  scim_visibility.h
+			  scim_visibility.h \
+			  privilege_checker.h
 
 noinst_LTLIBRARIES	= libltdlc.la
 
@@ -141,10 +142,12 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  scim_setup_module_efl.cpp \
 			  isf_control.cpp \
 			  isf_imcontrol_client.cpp \
-			  isf_query_utility.cpp
+			  isf_query_utility.cpp \
+			  privilege_checker.cpp
 
 libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@  @TZPLATFORM_CONFIG_CFLAGS@\
 			  @DLOG_CFLAGS@ \
+			  @CYNARA_CFLAGS@ \
 			  @VCONF_CFLAGS@
 
 libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
@@ -156,6 +159,7 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
 			  @EFL_LIBS@ \
+			  @CYNARA_LIBS@ \
 			  @VCONF_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
 			  -lstdc++
@@ -212,4 +216,3 @@ if HAVE_X
 scim_helper_launcher_CXXFLAGS += @ECOREX_CFLAGS@
 scim_helper_launcher_LDFLAGS  += @ECOREX_LIBS@
 endif
-

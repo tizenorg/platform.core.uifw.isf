@@ -67,6 +67,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
+#include "privilege_checker.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -74,6 +75,8 @@
 #define LOG_TAG             "ISF_PANEL_EFL"
 
 #define MIN_REPEAT_TIME     2.0
+
+#define IME_PRIVILEGE "http://tizen.org/privilege/imemanager"
 
 
 EXAPI scim::CommonLookupTable g_isf_candidate_table;
@@ -173,6 +176,8 @@ typedef Signal6<bool, String, String &, String &, int &, int &, String &>
 
 typedef Signal2<void, int, struct rectinfo &>
         PanelAgentSignalIntRect;
+
+cynara *p_cynara = NULL;
 
 enum ClientType {
     UNKNOWN_CLIENT,
@@ -425,6 +430,7 @@ public:
     ~PanelAgentImpl ()
     {
         delete_ise_context_buffer ();
+        cynara_finish (p_cynara);
     }
 
     void delete_ise_context_buffer (void)
@@ -438,6 +444,12 @@ public:
 
     bool initialize (const String &config, const String &display, bool resident)
     {
+        int ret = cynara_initialize (&p_cynara, NULL);
+        //cynara_log("cynara_initialize()", ret);
+        if (ret != CYNARA_API_SUCCESS) {
+            return false;
+        }
+
         m_config_name = config;
         m_display_name = display;
         m_should_resident = resident;
@@ -3565,6 +3577,7 @@ private:
         bool    last    = false;
 
         ClientInfo client_info;
+        PrivilegeChecker privilegeChecker (client_id);
 
         SCIM_DEBUG_MAIN (1) << "PanelAgent::socket_receive_callback (" << client_id << ")\n";
 
@@ -4044,10 +4057,16 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    set_active_ise_by_uuid (client_id);
+                    if (privilegeChecker.imePrivilege ())
+                        set_active_ise_by_uuid (client_id);
+                    else
+                        SCIM_DEBUG_MAIN (1) << "Access deined to set active ise";
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    set_initial_ise_by_uuid (client_id);
+                    if (privilegeChecker.imePrivilege ())
+                        set_initial_ise_by_uuid (client_id);
+                    else
+                        SCIM_DEBUG_MAIN (1) << "Access deined to set initial ise";
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
