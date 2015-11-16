@@ -145,6 +145,7 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 
 libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@  @TZPLATFORM_CONFIG_CFLAGS@\
 			  @DLOG_CFLAGS@ \
+			  @CYNARA_CFLAGS@ \
 			  @VCONF_CFLAGS@
 
 libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
@@ -156,6 +157,7 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
 			  @EFL_LIBS@ \
+			  @CYNARA_LIBS@ \
 			  @VCONF_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
 			  -lstdc++
