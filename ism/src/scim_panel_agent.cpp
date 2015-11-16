@@ -64,6 +64,9 @@
 #include <sys/times.h>
 #include <dlog.h>
 #include <unistd.h>
+#include <cynara-client.h>
+#include <cynara-creds-socket.h>
+#include <cynara-session.h>
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
@@ -74,6 +77,8 @@
 #define LOG_TAG             "ISF_PANEL_EFL"
 
 #define MIN_REPEAT_TIME     2.0
+
+#define IME_PRIVILEGE "http://tizen.org/privilege/imemanager"
 
 
 EXAPI scim::CommonLookupTable g_isf_candidate_table;
@@ -173,6 +178,139 @@ typedef Signal6<bool, String, String &, String &, int &, int &, String &>
 
 typedef Signal2<void, int, struct rectinfo &>
         PanelAgentSignalIntRect;
+
+cynara *p_cynara = NULL;
+
+class PrivilegeChecker {
+public:
+    PrivilegeChecker (int sockfd)
+    {
+        m_imePrivilege = PRIVILEGE_NOT_CHECKED;
+        m_creds_initialised = false;
+        m_client = NULL;
+        m_session = NULL;
+        m_user = NULL;
+    }
+
+    ~PrivilegeChecker ()
+    {
+        free (m_client);
+        free (m_session);
+        free (m_user);
+    }
+
+    inline bool imePrivilege ()
+    {
+        return checkPrivilege (m_imePrivilege, IME_PRIVILEGE);
+    }
+
+private:
+    enum PrivilegeStatus {
+        PRIVILEGE_NOT_CHECKED,
+        PRIVILEGE_ALLOWED,
+        PRIVILEGE_DENIED,
+        PRIVILEGE_NOT_RESOLVED
+    };
+
+    PrivilegeStatus m_imePrivilege;
+
+    bool m_creds_initialised;
+    char *m_client;
+    char *m_session;
+    char *m_user;
+    int m_sockfd;
+
+    bool initialiseCreditionals ()
+    {
+        if (m_creds_initialised)
+            return true;
+
+        int ret;
+        int pid;
+
+        ret = cynara_creds_socket_get_client (m_sockfd, CLIENT_METHOD_DEFAULT, &m_client);
+        if (ret != CYNARA_API_SUCCESS) {
+            goto CLEANUP;
+        }
+
+        ret = cynara_creds_socket_get_user (m_sockfd, USER_METHOD_DEFAULT, &m_user);
+        if (ret != CYNARA_API_SUCCESS) {
+            goto CLEANUP;
+        }
+
+        ret = cynara_creds_socket_get_pid (m_sockfd, &pid);
+        if (ret != CYNARA_API_SUCCESS) {
+            goto CLEANUP;
+        }
+
+        m_session = cynara_session_from_pid (pid);
+        if (!m_session) {
+            goto CLEANUP;
+        }
+
+        m_creds_initialised = true;
+        return true;
+CLEANUP:
+        free (m_client);
+        free (m_session);
+        free (m_user);
+
+        m_client = NULL;
+        m_session = NULL;
+        m_user = NULL;
+
+        return false;
+    }
+
+    bool checkPrivilege (PrivilegeStatus &status, const char *privilege)
+    {
+      int ret;
+
+      switch (status) {
+
+          case PRIVILEGE_NOT_CHECKED:
+              if (!initialiseCreditionals ())
+                  return false;
+
+              ret = cynara_simple_check (p_cynara, m_client, m_session, m_user, privilege);
+              switch (ret) {
+
+                  case CYNARA_API_ACCESS_ALLOWED:
+                      status = PRIVILEGE_ALLOWED;
+                      return true;
+
+                  case CYNARA_API_ACCESS_DENIED:
+                      status = PRIVILEGE_DENIED;
+                      return false;
+
+                  case CYNARA_API_ACCESS_NOT_RESOLVED:
+                      status = PRIVILEGE_NOT_RESOLVED;
+                      break;
+
+                  default:
+                    return false;
+
+              }
+
+          case PRIVILEGE_NOT_RESOLVED:
+              if (!initialiseCreditionals ())
+                  return false;
+
+              ret = cynara_check (p_cynara, m_client, m_session, m_user, privilege);
+              if (ret != CYNARA_API_ACCESS_ALLOWED)
+                  return false;
+              else
+                  return true;
+
+          case PRIVILEGE_ALLOWED:
+            return true;
+
+          case PRIVILEGE_DENIED:
+            return false;
+
+      }
+    }
+};
 
 enum ClientType {
     UNKNOWN_CLIENT,
@@ -425,6 +563,7 @@ public:
     ~PanelAgentImpl ()
     {
         delete_ise_context_buffer ();
+        cynara_finish (p_cynara);
     }
 
     void delete_ise_context_buffer (void)
@@ -438,6 +577,12 @@ public:
 
     bool initialize (const String &config, const String &display, bool resident)
     {
+        int ret = cynara_initialize (&p_cynara, NULL);
+        if (ret != CYNARA_API_SUCCESS) {
+            //cynara_log_error("cynara_initialize()", ret);
+            return false;
+        }
+
         m_config_name = config;
         m_display_name = display;
         m_should_resident = resident;
@@ -3565,6 +3710,7 @@ private:
         bool    last    = false;
 
         ClientInfo client_info;
+        PrivilegeChecker privilegeChecker (client_id);
 
         SCIM_DEBUG_MAIN (1) << "PanelAgent::socket_receive_callback (" << client_id << ")\n";
 
@@ -4044,10 +4190,16 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    set_active_ise_by_uuid (client_id);
+                    if (privilegeChecker.imePrivilege ())
+                        set_active_ise_by_uuid (client_id);
+                    else
+                        ISF_SAVE_LOG ("Access deined to set active ise");
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    set_initial_ise_by_uuid (client_id);
+                    if (privilegeChecker.imePrivilege ())
+                        set_initial_ise_by_uuid (client_id);
+                    else
+                        ISF_SAVE_LOG ("Access deined to set initial ise");
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
