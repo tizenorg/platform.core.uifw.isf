@@ -40,7 +40,7 @@ SCIM_CURRENT=10
 SCIM_REVISION=3
 
 # increment if any interfaces have been added; set to 0
-# if any interfaces have been removed. removal has 
+# if any interfaces have been removed. removal has
 # precedence over adding, so set to 0 if both happened.
 SCIM_AGE=2
 
@@ -109,7 +109,7 @@ DOXYGEN=no
 if test "x$with_doxygen" != "xno"; then
   AC_PATH_PROG(DOXYGEN, doxygen, no)
 fi
- 
+
 AM_CONDITIONAL(HAVE_DOXYGEN, test x$DOXYGEN != xno)
 AC_SUBST(DOXYGEN)
 
@@ -283,6 +283,9 @@ PKG_CHECK_MODULES(TTS, [tts],
 if test "$ISF_HAS_TTS" = "yes"; then
   AC_DEFINE(HAVE_TTS,1,[Have TTS functions.])
 fi
+
+# Check cynara liblaries
+PKG_CHECK_MODULES(CYNARA, [cynara-client, cynara-creds-socket, cynara-session])
 
 # Check vconf library
 PKG_CHECK_MODULES(VCONF, [vconf],
