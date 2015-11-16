@@ -67,6 +67,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
+#include "privilege_checker.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -74,7 +75,6 @@
 #define LOG_TAG             "ISF_PANEL_EFL"
 
 #define MIN_REPEAT_TIME     2.0
-
 
 EXAPI scim::CommonLookupTable g_isf_candidate_table;
 
@@ -425,6 +425,7 @@ public:
     ~PanelAgentImpl ()
     {
         delete_ise_context_buffer ();
+        isf_cynara_finish ();
     }
 
     void delete_ise_context_buffer (void)
@@ -438,6 +439,9 @@ public:
 
     bool initialize (const String &config, const String &display, bool resident)
     {
+        if (!isf_cynara_initialize ())
+            return false;
+
         m_config_name = config;
         m_display_name = display;
         m_should_resident = resident;
@@ -4044,10 +4048,16 @@ private:
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
                     get_active_ise (client_id);
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    set_active_ise_by_uuid (client_id);
+                    if (client.get_privilege_checker ().imePrivilege ())
+                        set_active_ise_by_uuid (client_id);
+                    else
+                        SCIM_DEBUG_MAIN (1) << "Access deined to set active ise";
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    set_initial_ise_by_uuid (client_id);
+                    if (client.get_privilege_checker ().imePrivilege ())
+                        set_initial_ise_by_uuid (client_id);
+                    else
+                        SCIM_DEBUG_MAIN (1) << "Access deined to set initial ise";
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
                     get_ise_list (client_id);
