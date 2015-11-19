@@ -951,6 +951,7 @@ static struct rectinfo get_ise_geometry ()
     } else {
         /* READ ISE's SIZE HINT HERE */
 #if HAVE_ECOREX
+        /*
         int pos_x, pos_y, width, height;
         if (ecore_x_e_window_rotation_geometry_get (_ise_window, angle,
                 &pos_x, &pos_y, &width, &height)) {
@@ -991,6 +992,7 @@ static struct rectinfo get_ise_geometry ()
             width = 0;
             height = 0;
         }
+        */
 #else
         // FIXME: Get the ISE's SIZE.
         info.pos_x = 0;
@@ -1914,6 +1916,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
             port_width, port_height, land_width, land_height);
 
 #if HAVE_ECOREX
+    /*
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
             0, 0, 0, port_width, port_height);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
@@ -1922,6 +1925,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
             180, 0, 0, port_width, port_height);
     ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
             270, 0, 0, land_height, land_width);
+    */
 #else
     ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
             0, 0, 0, port_width, port_height);
@@ -1948,6 +1952,7 @@ static void ui_candidate_window_adjust (void)
 
     /* Get candidate window size */
 #if HAVE_ECOREX
+    /*
     if (_candidate_angle == 90 || _candidate_angle == 270) {
         ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
                 &x, &y, &height, &width);
@@ -1955,6 +1960,7 @@ static void ui_candidate_window_adjust (void)
         ecore_x_e_window_rotation_geometry_get (elm_win_xwindow_get (_candidate_window), _candidate_angle,
                 &x, &y, &width, &height);
     }
+    */
 #else
     if (_candidate_angle == 90 || _candidate_angle == 270)
         ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &height, &width);
@@ -2207,7 +2213,7 @@ static Eina_Bool off_prepare_done_timeout (void *data)
     /* WMSYNC, #8 Let the Window Manager to actually hide keyboard window */
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
-    ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
+    //ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
     LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
     _off_prepare_done_timer = NULL;
@@ -3091,6 +3097,7 @@ static void ui_create_native_candidate_window (void)
             _candidate_height = _candidate_port_height_min;
         }
 #if HAVE_ECOREX
+        /*
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 0, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
@@ -3099,6 +3106,7 @@ static void ui_create_native_candidate_window (void)
                 180, 0, 0, _candidate_port_width, _candidate_port_height_min);
         ecore_x_e_window_rotation_geometry_set (elm_win_xwindow_get (_candidate_window),
                 270, 0, 0, _candidate_land_height_min, _candidate_land_width);
+        */
 #else
         ecore_wl_window_rotation_geometry_set (elm_win_wl_window_get (_candidate_window),
                 0, 0, 0, _candidate_port_width, _candidate_port_height_min);
@@ -3340,11 +3348,13 @@ static void ui_settle_candidate_window (void)
     ecore_evas_geometry_get (ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window)), &x, &y, &width, &height);
 
 #if HAVE_ECOREX
+    /*
     int pos_x = 0, pos_y = 0;
     if (_candidate_angle == 90 || _candidate_angle == 270)
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_height, &ise_width);
     else
         get_geometry_result = ecore_x_e_window_rotation_geometry_get (_ise_window, _candidate_angle, &pos_x, &pos_y, &ise_width, &ise_height);
+    */
 #else
     spot_x = _ise_x;
     spot_y = _ise_y;
@@ -3637,7 +3647,7 @@ static Eina_Bool efl_create_control_window (void)
 
     Ecore_X_Window root = ecore_x_window_root_first_get ();
     _control_window = ecore_x_window_input_new (root, -100, -100, 1, 1);
-    ecore_x_e_virtual_keyboard_control_window_set (root, _control_window, 0, EINA_TRUE);
+    //ecore_x_e_virtual_keyboard_control_window_set (root, _control_window, 0, EINA_TRUE);
 
     Ecore_X_Atom atom = ecore_x_atom_get ("_ISF_CONTROL_WINDOW");
     ecore_x_window_prop_xid_set (root, atom, ECORE_X_ATOM_WINDOW, &_control_window, 1);
@@ -5822,7 +5832,7 @@ static void slot_will_hide_ack (void)
     /* WMSYNC, #8 Let the Window Manager to actually hide keyboard window */
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
-    ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
+    //ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
     LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
     if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
@@ -6432,6 +6442,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     if (ev == NULL)
         return ECORE_CALLBACK_RENEW;
 
+#if 0
     if ((ev->win == _control_window)) {
         if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST) {
             /* WMSYNC, #4 Send WILL_SHOW event when the keyboard window is about to displayed */
@@ -6543,6 +6554,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << _candidate_angle << ")\n";
         }
     }
+#endif
 
     /* Screen reader feature */
     if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL) {
