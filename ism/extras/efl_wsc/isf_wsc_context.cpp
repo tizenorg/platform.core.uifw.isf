@@ -299,6 +299,7 @@ static Ecore_Fd_Handler                                *_panel_iochannel_err_han
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
+static bool                                             _support_hw_keyboard_mode   = false;
 static double                                           space_key_time              = 0.0;
 
 static Eina_Bool                                        autoperiod_allow            = EINA_FALSE;
@@ -1057,6 +1058,7 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
                 _panel_client.turn_off (context_scim->id);
             }
 
+            _panel_client.get_active_helper_option (&_active_helper_option);
             _panel_client.send ();
             if (caps_mode_check (ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
                 context_scim->impl->next_shift_status = 0;
@@ -1233,11 +1235,11 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
 
         /* Hardware input detect code */
 #ifdef _TV
-        if (timestamp > 1 && _active_helper_option && key.code != 0xFF69 && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down)) && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67 && key.code != 0xff13 && key.code != 0x1008ff26 &&
+        if (timestamp > 1 && _support_hw_keyboard_mode && key.code != 0xFF69 && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down)) && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67 && key.code != 0xff13 && key.code != 0x1008ff26 &&
              !((key.code >= SCIM_KEY_0) && (key.code <= SCIM_KEY_9))) {
                  /* Cancel (Power + Volume down), Right, Left, Up, Down, OK, minus, menu, pause, XF86back key, 0~9 key*/
 #else
-        if (timestamp > 1 && _active_helper_option && key.code != 0x1008ff26 && key.code != 0xFF69 /* XF86back, Cancel (Power + Volume down) key */) {
+        if (timestamp > 1 && _support_hw_keyboard_mode && key.code != 0x1008ff26 && key.code != 0xFF69 /* XF86back, Cancel (Power + Volume down) key */) {
 #endif
             isf_wsc_context_set_keyboard_mode (wsc->wsc_ctx, TOOLBAR_KEYBOARD_MODE);
             _panel_client.prepare (wsc->wsc_ctx->id);
@@ -3501,6 +3503,7 @@ reload_config_callback (const ConfigPointer &config)
 
     _on_the_spot = config->read (String (SCIM_CONFIG_FRONTEND_ON_THE_SPOT), _on_the_spot);
     _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
+    _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
     // Get keyboard layout setting
     // Flush the global config first, in order to load the new configs from disk.
