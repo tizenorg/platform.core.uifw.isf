@@ -1,0 +1,6 @@
+[Unit]
+Description=This path will tell you that isf (scim) daemons are ready to launch
+
+[Path]
+PathExists=/run/.wm_ready
+

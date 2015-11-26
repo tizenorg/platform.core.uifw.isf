@@ -62,7 +62,7 @@ kbdmodechangerxml_DATA = org.tizen.isf-kbd-mode-changer.xml
 endif
 
 if ISF_INSTALL_SYSTEMD_SCRIPT
-SYSTEMD_SCRIPT = scim.service
+SYSTEMD_SCRIPT = scim.service scim.path
 endif
 # $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
 systemduserunitdir = /usr/lib/systemd/user
@@ -81,5 +81,5 @@ uninstall-local:
 install-data-hook:
 if ISF_INSTALL_SYSTEMD_SCRIPT
 	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/default.target.wants
-	ln -sf ../scim.service $(DESTDIR)$(systemduserunitdir)/default.target.wants/scim.service
+	ln -sf ../scim.path $(DESTDIR)$(systemduserunitdir)/default.target.wants/scim.path
 endif

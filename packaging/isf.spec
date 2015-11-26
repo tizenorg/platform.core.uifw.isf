@@ -154,8 +154,9 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
 %dir /etc/scim/conf
-%{_prefix}/lib/systemd/user/default.target.wants/scim.service
+%{_prefix}/lib/systemd/user/default.target.wants/scim.path
 %{_prefix}/lib/systemd/user/scim.service
+%{_prefix}/lib/systemd/user/scim.path
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config
