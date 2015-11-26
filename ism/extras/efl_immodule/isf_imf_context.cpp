@@ -3892,7 +3892,7 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     // get x keysym, keycode, keyname, and key
     keysym = XStringToKeysym (keysym_str);
     if (keysym == NoSymbol) {
-        SECURE_LOGW ("NoSymbol\n");
+        LOGW ("NoSymbol\n");
         return;
     }
 
@@ -3907,34 +3907,8 @@ static void send_x_key_event (const KeyEvent &key, bool fake)
     }
 
     if (keycode == 0) {
-        static int mod = 0;
-        KeySym *keysyms;
-        int keycode_min, keycode_max, keycode_num;
-        int i;
-
-        XDisplayKeycodes (display, &keycode_min, &keycode_max);
-        keysyms = XGetKeyboardMapping (display, keycode_min,
-                keycode_max - keycode_min + 1,
-                &keycode_num);
-
-        if (keysyms) {
-            mod = (mod + 1) & 0x7;
-            i = (keycode_max - keycode_min - mod - 1) * keycode_num;
-
-            keysyms[i] = keysym;
-            XChangeKeyboardMapping (display, keycode_min, keycode_num,
-                    keysyms, (keycode_max - keycode_min));
-            XFree (keysyms);
-            XSync (display, False);
-            keycode = keycode_max - mod - 1;
-        }
-
-        if (XkbKeycodeToKeysym (display, keycode, 0, 0) != keysym) {
-            if (XkbKeycodeToKeysym (display, keycode, 0, 1) == keysym)
-                shift = true;
-        } else {
-            shift = false;
-        }
+        LOGW ("No Key code in the current keymap table\n");
+        return;
     }
 
     unsigned int modifier = scim_x11_keymask_scim_to_x11 (display, key.mask);
