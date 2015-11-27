@@ -1258,29 +1258,6 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
 
     ret = EINA_TRUE;
     if (!filter_hotkeys (wsc->wsc_ctx, key)) {
-        if (timestamp == 0) {
-            ret = EINA_FALSE;
-            // in case of generated event
-            if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
-                char code = key.get_ascii_code ();
-                if (isgraph (code)) {
-                    char string[2] = {0};
-                    snprintf (string, sizeof (string), "%c", code);
-
-                    if (strlen (string) != 0) {
-                        wsc_context_commit_string(wsc, string);
-                        caps_mode_check (wsc->wsc_ctx, EINA_FALSE, EINA_TRUE);
-                        ret = EINA_TRUE;
-                    }
-                } else {
-                    if (key.code == SCIM_KEY_space ||
-                        key.code == SCIM_KEY_KP_Space)
-                        autoperiod_insert (wsc->wsc_ctx);
-                }
-            }
-            _panel_client.send ();
-            return;
-        }
         if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
             ret = EINA_FALSE;
 #ifdef _TV
@@ -2183,19 +2160,6 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
         }
     }
 
-    if (key.code != SHIFT_MODE_OFF &&
-        key.code != SHIFT_MODE_ON &&
-        key.code != SHIFT_MODE_LOCK &&
-        key.code != SHIFT_MODE_ENABLE &&
-        key.code != SHIFT_MODE_DISABLE) {
-        if (ic->impl->preedit_string.length () < 1) {
-            if (!((key.code >= 'a' && key.code <= 'z') ||
-                (key.code >= 'A' && key.code <= 'Z'))) {
-                if (feed_key_event (ic, _key, false)) return;
-            }
-        }
-    }
-
     if (key.code == SHIFT_MODE_ENABLE ||
         key.code == SHIFT_MODE_DISABLE) {
         process_key = EINA_FALSE;
@@ -2203,11 +2167,25 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 
     _panel_client.prepare (ic->id);
 
-    if (!filter_hotkeys (ic, _key)) {
-        if (process_key) {
-            if (!_focused_ic || !_focused_ic->impl->is_on || !_focused_ic->impl->si ||
-                    !_focused_ic->impl->si->process_key_event (_key)) {
-                _fallback_instance->process_key_event (_key);
+    if (filter_hotkeys (ic, _key) == false && process_key) {
+        if (!_focused_ic || !_focused_ic->impl->is_on || !_focused_ic->impl->si ||
+                !_focused_ic->impl->si->process_key_event (_key)) {
+            if (_key.is_key_press ()) {
+                char code = _key.get_ascii_code ();
+                if (isgraph (code)) {
+                    char string[2] = {0};
+                    snprintf (string, sizeof (string), "%c", code);
+
+                    if (strlen (string) != 0) {
+                        wsc_context_commit_string(ic->ctx, string);
+                        caps_mode_check (ic, EINA_FALSE, EINA_TRUE);
+                    }
+                } else {
+                    if (key.code == SCIM_KEY_space ||
+                        key.code == SCIM_KEY_KP_Space)
+                        autoperiod_insert (ic);
+                    feed_key_event (ic, _key, false);
+                }
             }
         }
     }
