@@ -2521,8 +2521,8 @@ static __KeyName __scim_keys_by_code [] = {
   { 0xffed, "Hyper_L" },
   { 0xffee, "Hyper_R" },
   { 0xffff, "Delete" },
-  { 0x10100027, "XF86LSGT" },
-  { 0x1008ff26, "XF86Back" }
+  { 0x1008ff26, "XF86Back" },
+  { 0x10100027, "XF86LSGT" }
 };
 
 static __KeyName __scim_keys_by_name [] = {
