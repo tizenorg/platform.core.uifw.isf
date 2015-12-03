@@ -89,4 +89,7 @@
     <label xml:lang="zh-tw">Tizen 鍵盤</label>
     <icon/>
 </ui-application>
+<privileges>
+    <privilege>http://tizen.org/privilege/ime</privilege>
+</privileges>
 </manifest>
