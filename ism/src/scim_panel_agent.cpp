@@ -4045,45 +4045,89 @@ private:
             socket_transaction_start ();
 
             while (m_recv_trans.get_command (cmd)) {
-                if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE)
-                    get_active_ise (client_id);
+                if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        get_active_ise (client_id);
+                    else
+                        LOGW ("Access denied to get active ise");
+                }
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
                     if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
                         set_active_ise_by_uuid (client_id);
                     else
-                        SCIM_DEBUG_MAIN (1) << "Access denied to set active ise";
+                        LOGW ("Access denied to set active ise");
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
                     if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
                         set_initial_ise_by_uuid (client_id);
                     else
-                        SCIM_DEBUG_MAIN (1) << "Access denied to set initial ise";
+                        LOGW ("Access denied to set initial ise");
                 }
-                else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST)
-                    get_ise_list (client_id);
-                else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO)
-                    get_all_helper_ise_info (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        get_ise_list (client_id);
+                    else
+                        LOGW ("Access denied to get ise list");
+                }
+                else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        get_all_helper_ise_info (client_id);
+                    else
+                        LOGW ("Access denied to get all helper ise info");
+                }
                 else if (cmd == ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO) {
-                    set_enable_helper_ise_info (client_id);
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        set_enable_helper_ise_info (client_id);
+                    else
+                        LOGW ("Access denied to set enable helper ise info");
                 }
-                else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION)
-                    get_ise_information (client_id);
-                else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION)
-                    reset_ise_option (client_id);
-                else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE)
-                    reset_default_ise (client_id);
-                else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL)
-                    show_isf_panel (client_id);
-                else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW)
-                    show_ise_option_window (client_id);
+                else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        get_ise_information (client_id);
+                    else
+                        LOGW ("Access denied to get ise information");
+                }
+                else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        reset_ise_option (client_id);
+                    else
+                        LOGW ("Access denied to reset ise option");
+                }
+                else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        reset_default_ise (client_id);
+                    else
+                        LOGW ("Access denied to reset default ise");
+                }
+                else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        show_isf_panel (client_id);
+                    else
+                        LOGW ("Access denied to show isf control");
+                }
+                else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW) {
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        show_ise_option_window (client_id);
+                    else
+                        LOGW ("Access denied to show ise option window");
+                }
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST) {
-                    show_helper_ise_list (client_id);
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        show_helper_ise_list (client_id);
+                    else
+                        LOGW ("Access denied to show helper ise list");
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR) {
-                    show_helper_ise_selector (client_id);
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        show_helper_ise_selector (client_id);
+                    else
+                        LOGW ("Access denied to show helper ise selector");
                 }
                 else if (cmd == ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED) {
-                    is_helper_ise_enabled (client_id);
+                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                        is_helper_ise_enabled (client_id);
+                    else
+                        LOGW ("Access denied to check helper ise enabled");
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY)
                     get_recent_ise_geometry (client_id);
