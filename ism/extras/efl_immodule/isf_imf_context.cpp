@@ -3830,7 +3830,6 @@ static XKeyEvent createKeyEvent (bool press, int keycode, int modifiers, bool fa
     event.time        = 0;
     if (fake) {
         modifiers     |= Mod5Mask;
-        LOGD ("Mod5Mask:%x", Mod5Mask);
     }
 
     event.x           = 1;
