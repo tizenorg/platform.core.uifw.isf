@@ -37,13 +37,15 @@ isf_wsc_efl_CXXFLAGS = @EFL_CFLAGS@ \
                        @WAYLAND_CFLAGS@ \
                        @DLOG_CFLAGS@ \
                        @TTS_CFLAGS@ \
-                       @FEEDBACK_CFLAGS@
+                       @FEEDBACK_CFLAGS@ \
+                       -fPIE
 
 isf_wsc_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                        @VCONF_LIBS@ \
                        @WAYLAND_LIBS@ \
                        @DLOG_LIBS@ \
                        @TTS_LIBS@ \
-                       @FEEDBACK_LIBS@
+                       @FEEDBACK_LIBS@ \
+                       -pie
 
 isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
