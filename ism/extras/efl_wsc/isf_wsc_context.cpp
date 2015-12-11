@@ -1589,14 +1589,8 @@ void wsc_context_send_key (weescim *ctx, uint32_t keysym, uint32_t modifiers, ui
 
     ctx->modifiers = modifiers;
 
-    if (press) {
-        wl_input_method_context_keysym (ctx->im_ctx, ctx->serial, time,
-                                        keysym, WL_KEYBOARD_KEY_STATE_PRESSED, ctx->modifiers);
-    }
-    else {
-        wl_input_method_context_keysym (ctx->im_ctx, ctx->serial, time,
-                                        keysym, WL_KEYBOARD_KEY_STATE_RELEASED, ctx->modifiers);
-    }
+    wl_input_method_context_keysym (ctx->im_ctx, ctx->serial, time,
+            keysym, press ? WL_KEYBOARD_KEY_STATE_PRESSED : WL_KEYBOARD_KEY_STATE_RELEASED, ctx->modifiers);
 }
 
 static void
