@@ -3839,10 +3839,7 @@ static XKeyEvent createKeyEvent (bool press, int keycode, int modifiers, bool fa
     event.same_screen = True;
     event.state       = modifiers;
     event.keycode     = keycode;
-    if (press)
-        event.type = KeyPress;
-    else
-        event.type = KeyRelease;
+    event.type        = press ? KeyPress : KeyRelease;
     event.send_event  = False;
     event.serial      = 0;
 
