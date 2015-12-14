@@ -440,7 +440,10 @@ void CCoreEventCallback::on_check_option_window_availability(sclboolean *ret)
 */
 void CCoreEventCallback::on_process_key_event(scim::KeyEvent &key, sclu32 *ret)
 {
-    ise_process_key_event(key, *ret);
+    if (g_keyboard_state.visible_state)
+        ise_process_key_event(key, *ret);
+    else
+        ret = FALSE;
 }
 
 void CCoreEventCallback::on_candidate_show(sclint ic, const sclchar *ic_uuid)
