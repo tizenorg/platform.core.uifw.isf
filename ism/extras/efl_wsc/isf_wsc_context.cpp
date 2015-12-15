@@ -1241,16 +1241,21 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
         if (!ignore_key) {
             /* Hardware input detect code */
 #ifdef _TV
-            if (timestamp > 1 && _support_hw_keyboard_mode && key.code != 0xFF69 && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down)) && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67 && key.code != 0xff13 && key.code != 0x1008ff26 &&
-                 !((key.code >= SCIM_KEY_0) && (key.code <= SCIM_KEY_9))) {
-                     /* Cancel (Power + Volume down), Right, Left, Up, Down, OK, minus, menu, pause, XF86back key, 0~9 key*/
+            if (get_keyboard_mode() == TOOLBAR_HELPER_MODE && timestamp > 1
+                && _support_hw_keyboard_mode && key.code != 0xFF69
+                && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down))
+                && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67
+                && key.code != 0xff13 && key.code != 0x1008ff26
+                && !((key.code >= SCIM_KEY_0) && (key.code <= SCIM_KEY_9))) {
+                /* Cancel (Power + Volume down), Right, Left, Up, Down, OK,
+                minus, menu, pause, XF86back key, 0~9 key*/
 #else
-            if (timestamp > 1 && _support_hw_keyboard_mode && key.code != 0x1008ff26 && key.code != 0xFF69 /* XF86back, Cancel (Power + Volume down) key */) {
+            if (get_keyboard_mode() == TOOLBAR_HELPER_MODE && timestamp > 1
+                && _support_hw_keyboard_mode && key.code != 0x1008ff26
+                && key.code != 0xFF69) {
+                /* XF86back, Cancel (Power + Volume down) key */
 #endif
                 isf_wsc_context_set_keyboard_mode (wsc->wsc_ctx, TOOLBAR_KEYBOARD_MODE);
-                _panel_client.prepare (wsc->wsc_ctx->id);
-                _panel_client.get_active_helper_option (&_active_helper_option);
-                _panel_client.send ();
                 ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
                 LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
             }
@@ -1265,7 +1270,8 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
             if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
                 ret = EINA_FALSE;
 #ifdef _TV
-            } else if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+            } else if (get_keyboard_mode() == TOOLBAR_HELPER_MODE
+                       && _active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 void *pvoid = &ret;
                 _panel_client.process_key_event (key, (int*)pvoid);
                 if (!ret) {
@@ -1275,7 +1281,8 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
                         ret = EINA_FALSE;
                 }
 #else
-            } else if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+            } else if (get_keyboard_mode() == TOOLBAR_HELPER_MODE
+                       && _active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 void *pvoid = &ret;
                 _panel_client.process_key_event (key, (int*)pvoid);
                 if (!ret && !(_active_helper_option & ISM_HELPER_WITHOUT_IMENGINE)) {
