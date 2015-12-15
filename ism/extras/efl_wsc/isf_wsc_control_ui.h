@@ -35,7 +35,7 @@
 extern "C"
 {
 #endif /* __cplusplus */
-    int  hw_keyboard_num_get ();
+    scim::TOOLBAR_MODE_T get_keyboard_mode ();
     bool process_update_input_context (int type, int value);
     void clear_hide_request ();
 
