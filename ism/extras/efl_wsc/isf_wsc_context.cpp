@@ -299,6 +299,7 @@ static Ecore_Fd_Handler                                *_panel_iochannel_err_han
 
 static bool                                             _on_the_spot                = true;
 static bool                                             _shared_input_method        = false;
+static bool                                             _change_keyboard_mode_by_focus_move = false;
 static bool                                             _support_hw_keyboard_mode   = false;
 static double                                           space_key_time              = 0.0;
 
@@ -633,7 +634,7 @@ caps_mode_check (WSCContextISF *ctx, Eina_Bool force, Eina_Bool noti)
     Eina_Bool uppercase;
     WSCContextISF *context_scim;
 
-    if (hw_keyboard_num_get () > 0) return EINA_FALSE;
+    if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) return EINA_FALSE;
 
     if (!ctx) return EINA_FALSE;
     context_scim = ctx;
@@ -982,6 +983,12 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
         SCIM_DEBUG_FRONTEND(1) << "Focus out previous IC first: " << _focused_ic->id << "\n";
         if (_focused_ic->ctx)
             isf_wsc_context_focus_out (_focused_ic);
+    }
+
+    if (_change_keyboard_mode_by_focus_move) {
+        //if h/w keyboard mode, keyboard mode will be changed to s/w mode when the entry get the focus.
+        LOGD ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
+        isf_wsc_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
     }
 
     bool need_cap   = false;
@@ -3180,7 +3187,7 @@ slot_commit_string (IMEngineInstanceBase *si,
             if (wsc_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL &&
                 ic->impl->shift_mode_enabled &&
                 ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
-                hw_keyboard_num_get () == 0) {
+                get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
                 char converted[2] = {'\0'};
                 if (utf8_wcstombs (str).length () == 1) {
                     Eina_Bool uppercase;
@@ -3472,6 +3479,7 @@ reload_config_callback (const ConfigPointer &config)
 
     _on_the_spot = config->read (String (SCIM_CONFIG_FRONTEND_ON_THE_SPOT), _on_the_spot);
     _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
+    _change_keyboard_mode_by_focus_move = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_FOCUS_MOVE), _change_keyboard_mode_by_focus_move);
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
     // Get keyboard layout setting

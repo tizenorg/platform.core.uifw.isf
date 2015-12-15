@@ -23,7 +23,7 @@
  */
 
 #define Uses_SCIM_TRANSACTION
-
+#define Uses_SCIM_CONFIG_PATH
 
 /* IM control UI part */
 #include <Ecore.h>
@@ -47,8 +47,9 @@
 using namespace scim;
 
 /* IM control related variables */
-static unsigned int       hw_kbd_num = 0;
+static TOOLBAR_MODE_T     kbd_mode = TOOLBAR_HELPER_MODE;
 WSCContextISF            *input_panel_ctx = NULL;
+static bool               _support_hw_keyboard_mode = false;
 
 static int _get_context_id (WSCContextISF *ctx)
 {
@@ -59,16 +60,14 @@ static int _get_context_id (WSCContextISF *ctx)
     return context_scim->id;
 }
 
-int hw_keyboard_num_get ()
+TOOLBAR_MODE_T get_keyboard_mode ()
 {
-    return hw_kbd_num;
+    return kbd_mode;
 }
 
 void isf_wsc_input_panel_init (void)
 {
-    //FIXME: Use wl_input protocol to check hw keyboard.
-    hw_kbd_num = 0;
-    LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
+    _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 }
 
 void isf_wsc_input_panel_shutdown (void)
@@ -87,7 +86,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     if (!ctx || !ctx->ctx)
         return;
 
-    if (hw_kbd_num != 0) {
+    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
         LOGD ("H/W keyboard is existed.\n");
         return;
     }
@@ -174,9 +173,13 @@ void isf_wsc_context_input_panel_hide (WSCContextISF *ctx)
 
 void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, TOOLBAR_MODE_T mode)
 {
-    hw_kbd_num = 1;
-    SECURE_LOGD ("The number of connected H/W keyboard : %d\n", hw_kbd_num);
-    _isf_wsc_context_set_keyboard_mode (_get_context_id (ctx), mode);
+    _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
+
+    if (_support_hw_keyboard_mode) {
+        kbd_mode = mode;
+        SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
+        _isf_wsc_context_set_keyboard_mode (_get_context_id (ctx), mode);
+    }
 }
 
 void
