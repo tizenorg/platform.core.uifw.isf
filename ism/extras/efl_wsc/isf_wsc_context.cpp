@@ -1217,6 +1217,24 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_
     }
 }
 
+static
+bool is_number_key(const char *str)
+{
+    if (!str) return false;
+
+    int result = atoi(str);
+
+    if (result == 0)
+    {
+        if (!strcmp(str, "0"))
+            return true;
+        else
+            return false;
+    }
+    else
+        return true;
+}
+
 void
 isf_wsc_context_filter_key_event (struct weescim *wsc,
                                   uint32_t serial,
@@ -1241,14 +1259,22 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
         if (!ignore_key) {
             /* Hardware input detect code */
 #ifdef _TV
-            if (get_keyboard_mode() == TOOLBAR_HELPER_MODE && timestamp > 1
-                && _support_hw_keyboard_mode && key.code != 0xFF69
-                && !((key.code >= SCIM_KEY_Left) && (key.code <= SCIM_KEY_Down))
-                && key.code != 0xFF8D && key.code != 0x002d && key.code != 0xff67
-                && key.code != 0xff13 && key.code != 0x1008ff26
-                && !((key.code >= SCIM_KEY_0) && (key.code <= SCIM_KEY_9))) {
-                /* Cancel (Power + Volume down), Right, Left, Up, Down, OK,
-                minus, menu, pause, XF86back key, 0~9 key*/
+            if (get_keyboard_mode() == TOOLBAR_HELPER_MODE &&
+                timestamp > 1 &&
+                _support_hw_keyboard_mode &&
+                strcmp(keyname, "Down") &&
+                strcmp(keyname, "KP_Down") &&
+                strcmp(keyname, "Up") &&
+                strcmp(keyname, "KP_Up") &&
+                strcmp(keyname, "Right") &&
+                strcmp(keyname, "KP_Right") &&
+                strcmp(keyname, "Left") &&
+                strcmp(keyname, "KP_Left") &&
+                strcmp(keyname, "Return") &&
+                strcmp(keyname, "Pause") &&
+                strcmp(keyname, "NoSymbol") &&
+                strncmp(keyname, "XF86", 4) &&
+                is_number_key(keyname)) {
 #else
             if (get_keyboard_mode() == TOOLBAR_HELPER_MODE && timestamp > 1
                 && _support_hw_keyboard_mode && key.code != 0x1008ff26
