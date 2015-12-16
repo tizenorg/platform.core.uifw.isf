@@ -246,7 +246,7 @@ if test "$ISF_HAS_EFL" = "yes"; then
   AC_SUBST(EFL_IM_MODULEDIR)
 fi
 
-# Check EFL assist library
+# Check EFL extension library
 PKG_CHECK_MODULES(EFL_EXTENSION, [efl-extension])
 
 # Check tzplatform-config library
