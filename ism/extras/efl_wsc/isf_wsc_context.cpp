@@ -1274,7 +1274,7 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
                 strcmp(keyname, "Pause") &&
                 strcmp(keyname, "NoSymbol") &&
                 strncmp(keyname, "XF86", 4) &&
-                is_number_key(keyname)) {
+                !is_number_key(keyname)) {
 #else
             if (get_keyboard_mode() == TOOLBAR_HELPER_MODE && timestamp > 1
                 && _support_hw_keyboard_mode && key.code != 0x1008ff26
