@@ -1254,8 +1254,7 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
     if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
         key.mask = SCIM_KEY_ReleaseMask;
     }
-
-    if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+    else if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
         if (!ignore_key) {
             /* Hardware input detect code */
 #ifdef _TV
