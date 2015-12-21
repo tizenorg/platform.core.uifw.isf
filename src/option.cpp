@@ -160,7 +160,9 @@ static void reset_settings_popup_response_ok_cb(void *data, Evas_Object *obj, vo
 
     Evas_Object *genlist = static_cast<Evas_Object*>(evas_object_data_get(obj, "parent_genlist"));
     SCLOptionWindowType type = find_option_window_type(genlist);
-    read_options(option_elements[type].naviframe);
+
+    if (type < OPTION_WINDOW_TYPE_MAX)
+        read_options(option_elements[type].naviframe);
 
     g_ui->enable_sound(g_config_values.sound_on);
     g_ui->enable_vibration(g_config_values.vibration_on);
@@ -254,7 +256,9 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
         switch (id) {
             case SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE: {
                 SCLOptionWindowType type = find_option_window_type(obj);
-                create_option_language_view(option_elements[type].naviframe);
+
+                if (type < OPTION_WINDOW_TYPE_MAX)
+                    create_option_language_view(option_elements[type].naviframe);
             }
             break;
             case SETTING_ITEM_ID_AUTO_CAPITALISE: {
@@ -630,7 +634,9 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
     }
 
     SCLOptionWindowType type = find_option_window_type(obj);
-    elm_genlist_item_update(option_elements[type].languages_item);
+
+    if (type < OPTION_WINDOW_TYPE_MAX)
+        elm_genlist_item_update(option_elements[type].languages_item);
 
     if (obj) {
         evas_object_smart_callback_del(obj, "clicked", language_selection_finished_cb);
@@ -671,11 +677,14 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
 
 static void _popup_timeout_cb(void *data, Evas_Object * obj, void *event_info)
 {
-    SCLOptionWindowType type = find_option_window_type(obj);
     if (obj) {
+        SCLOptionWindowType type = find_option_window_type(obj);
+
         evas_object_smart_callback_del(obj, "timeout", _popup_timeout_cb);
         evas_object_del(obj);
-        option_elements[type].lang_popup = NULL;
+
+        if (type < OPTION_WINDOW_TYPE_MAX)
+            option_elements[type].lang_popup = NULL;
     }
 }
 
@@ -684,9 +693,13 @@ static Eina_Bool _pop_cb(void *data, Elm_Object_Item *it)
     Evas_Object *naviframe = static_cast<Evas_Object*>(data);
     SCLOptionWindowType type = find_option_window_type(naviframe);
     language_selection_finished_cb(NULL, NULL, NULL);
-    if (option_elements[type].lang_popup) {
-        _popup_timeout_cb(NULL, option_elements[type].lang_popup, NULL);
+
+    if (type < OPTION_WINDOW_TYPE_MAX) {
+        if (option_elements[type].lang_popup) {
+            _popup_timeout_cb(NULL, option_elements[type].lang_popup, NULL);
+        }
     }
+
     return EINA_TRUE;
 }
 
@@ -820,18 +833,20 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 
     SCLOptionWindowType type = find_option_window_type(naviframe);
 
-    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
-    {
-        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
-        if (info) {
-            strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
-            language_itemdata[loop].mode = loop;
-            option_elements[type].language_item[loop] =
-                elm_genlist_item_append(genlist, option_elements[type].itc_language_subitems,
-                &language_itemdata[loop], NULL, ELM_GENLIST_ITEM_NONE,
-                _language_gl_sel, (void*)(language_itemdata[loop].mode));
-        } else {
-            option_elements[type].language_item[loop] = NULL;
+    if (type < OPTION_WINDOW_TYPE_MAX) {
+        for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
+        {
+            LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
+            if (info) {
+                strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                language_itemdata[loop].mode = loop;
+                option_elements[type].language_item[loop] =
+                    elm_genlist_item_append(genlist, option_elements[type].itc_language_subitems,
+                            &language_itemdata[loop], NULL, ELM_GENLIST_ITEM_NONE,
+                            _language_gl_sel, (void*)(language_itemdata[loop].mode));
+            } else {
+                option_elements[type].language_item[loop] = NULL;
+            }
         }
     }
 
@@ -849,19 +864,22 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 void read_options(Evas_Object *naviframe)
 {
     SCLOptionWindowType type = find_option_window_type(naviframe);
-    for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
-    {
-        if (option_elements[type].selected_language_item[loop] != NULL) {
-            elm_object_item_del(option_elements[type].selected_language_item[loop]);
-            option_elements[type].selected_language_item[loop] = NULL;
-        }
 
-        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
-        if (info && info->enabled) {
-            strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
-            option_elements[type].selected_language_item[loop] =
-                elm_genlist_item_insert_before(option_elements[type].genlist, option_elements[type].itc_main_text_only, &language_itemdata[loop],
-                                        NULL, option_elements[type].languages_item, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+    if (type < OPTION_WINDOW_TYPE_MAX) {
+        for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
+        {
+            if (option_elements[type].selected_language_item[loop] != NULL) {
+                elm_object_item_del(option_elements[type].selected_language_item[loop]);
+                option_elements[type].selected_language_item[loop] = NULL;
+            }
+
+            LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
+            if (info && info->enabled) {
+                strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                option_elements[type].selected_language_item[loop] =
+                    elm_genlist_item_insert_before(option_elements[type].genlist, option_elements[type].itc_main_text_only, &language_itemdata[loop],
+                            NULL, option_elements[type].languages_item, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
+            }
         }
     }
 
@@ -998,7 +1016,8 @@ void
 option_window_destroyed(Evas_Object *window)
 {
     SCLOptionWindowType type = find_option_window_type(window);
-    if (option_elements[type].option_window == window) {
+
+    if (type < OPTION_WINDOW_TYPE_MAX && option_elements[type].option_window == window) {
         option_elements[type].option_window = NULL;
         option_elements[type].naviframe = NULL;
         option_elements[type].genlist = NULL;
