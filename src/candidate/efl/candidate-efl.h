@@ -41,7 +41,6 @@ class EflCandidate: public Candidate
         Evas_Object *create_seperate_line();
         Evas_Object *win;
         Evas_Object *layout;
-        Evas_Object *background;
         Evas_Object *scroller;
         Evas_Object *table;
         Evas_Object *candidates[MAX_CANDIDATE];
