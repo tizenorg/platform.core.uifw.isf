@@ -85,8 +85,6 @@
 #define MAX_SIZE_AMONG_FIRST_3_EMOTICON_GROUPS  (EMOTICON_GROUP_1_NUM > EMOTICON_GROUP_2_NUM ? (EMOTICON_GROUP_1_NUM > EMOTICON_GROUP_3_NUM ? EMOTICON_GROUP_1_NUM : EMOTICON_GROUP_3_NUM) : (EMOTICON_GROUP_2_NUM > EMOTICON_GROUP_3_NUM ? EMOTICON_GROUP_2_NUM : EMOTICON_GROUP_3_NUM))
 #define MAX_SIZE_AMONG_EMOTICON_GROUPS (EMOTICON_GROUP_4_NUM > EMOTICON_GROUP_5_NUM ? (EMOTICON_GROUP_4_NUM > MAX_SIZE_AMONG_FIRST_3_EMOTICON_GROUPS ? EMOTICON_GROUP_4_NUM : MAX_SIZE_AMONG_FIRST_3_EMOTICON_GROUPS) : (EMOTICON_GROUP_5_NUM > MAX_SIZE_AMONG_FIRST_3_EMOTICON_GROUPS ? EMOTICON_GROUP_5_NUM : MAX_SIZE_AMONG_FIRST_3_EMOTICON_GROUPS))
 
-
-
 bool is_emoticon_mode = false;
 emoticon_group_t current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
 std::vector <int> emoticon_list_recent;
@@ -514,7 +512,6 @@ static char * grid_text_get(void *data, Evas_Object *obj, const char *part)
 }
 #endif //SUPPORTS_EMOTICONS_BY_IMAGE
 
-
 static void _item_selected(void *data, Evas_Object *obj, void *event_info)
 {
     emoticon_item_t *ti = (emoticon_item_t *)data;
@@ -562,8 +559,10 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
                     emoticon_list_recent.insert(emoticon_list_recent.begin(),ti->keyevent);
                 }
                 ise_write_recent_emoticon_list_to_scim();
+                /*
                 if (is_recently_used_emoticon_mode_disabled)
-                    ;//ise_disable_recently_used_emoticon_key(false);
+                    ise_disable_recently_used_emoticon_key(false);
+                */
             }
         }
     }

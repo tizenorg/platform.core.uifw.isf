@@ -50,6 +50,7 @@ struct Candidate_Config {
         /* This part will be moved to the XML later*/
         width = 780;
         height = 84;
+        max_candidate = 0;
     }
     int width;
     int height;
