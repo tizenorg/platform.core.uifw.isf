@@ -6005,7 +6005,6 @@ static void signalhandler (int sig)
     std::cerr << __FUNCTION__ << " Signal=" << sig << "\n";
     ISF_SAVE_LOG ("Signal=%d\n", sig);
 
-    unregister_edbus_signal_handler ();
     elm_exit ();
 }
 
