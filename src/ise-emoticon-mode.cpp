@@ -482,15 +482,17 @@ static void __ise_emoticon_create_item_class(unsigned short int screen_degree)
     if (!gic)
         gic = elm_gengrid_item_class_new();
 
-    if (screen_degree == 0 || screen_degree == 180)
-        gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_PORT2;
-    else
-        gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_LAND2;
+    if (gic) {
+        if (screen_degree == 0 || screen_degree == 180)
+            gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_PORT2;
+        else
+            gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_LAND2;
 
-    gic->func.text_get = grid_text_get;
-    gic->func.content_get = NULL;
-    gic->func.state_get = NULL;
-    gic->func.del = NULL;
+        gic->func.text_get = grid_text_get;
+        gic->func.content_get = NULL;
+        gic->func.state_get = NULL;
+        gic->func.del = NULL;
+    }
 }
 
 static char * grid_text_get(void *data, Evas_Object *obj, const char *part)
