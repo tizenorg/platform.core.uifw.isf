@@ -113,7 +113,7 @@ struct emoticon_item_t
     Eina_Unicode keyevent;
 };
 
-emoticon_item_t emoticon_items[MAX_SIZE_AMONG_EMOTICON_GROUPS] = {{0,},};
+emoticon_item_t emoticon_items[MAX_SIZE_AMONG_EMOTICON_GROUPS] = {{0, }, };
 
 // Static variable declarations
 static Evas_Object *layout = NULL;
@@ -138,20 +138,20 @@ static void _multi_up(void *data, Evas *e, Evas_Object *o, void *event_info);
 
 void ise_read_recent_emoticon_list_from_scim(void)
 {
-    LOGD ("Enter");
+    LOGD("Enter");
     std::string string_value;
-    g_core.config_read_string (ISE_CONFIG_RECENT_EMOTICONS_LIST, string_value);
-    if (string_value.length () > 0) {
-        LOGD ("read recent emoticon:%s", string_value.c_str ());
+    g_core.config_read_string(ISE_CONFIG_RECENT_EMOTICONS_LIST, string_value);
+    if (string_value.length() > 0) {
+        LOGD("read recent emoticon:%s", string_value.c_str());
         std::stringstream ss(string_value);
         std::istream_iterator<std::string> begin(ss);
         std::istream_iterator<std::string> end;
         std::vector<std::string> vstrings(begin, end);
 
-        emoticon_list_recent.clear ();
+        emoticon_list_recent.clear();
         std::vector<std::string>::iterator it;
-        for (it = vstrings.begin (); it != vstrings.end (); it++) {
-            emoticon_list_recent.push_back (atoi((*it).c_str()));
+        for (it = vstrings.begin(); it != vstrings.end(); it++) {
+            emoticon_list_recent.push_back(atoi((*it).c_str()));
         }
     }
 }
@@ -159,17 +159,17 @@ void ise_read_recent_emoticon_list_from_scim(void)
 void ise_write_recent_emoticon_list_to_scim(void)
 {
     std::string string_value;
-    for(std::vector<int>::iterator it = emoticon_list_recent.begin();
+    for (std::vector<int>::iterator it = emoticon_list_recent.begin();
         it != emoticon_list_recent.end(); std::advance(it, 1)) {
             char buf[10]= {0};
             snprintf (buf, sizeof(buf), "%d", *it);
             string_value += std::string(buf);
             string_value += " ";
     }
-    if (string_value.length () > 0) {
+    if (string_value.length() > 0) {
         g_core.config_write_string(ISE_CONFIG_RECENT_EMOTICONS_LIST, string_value);
         g_core.config_flush();
-        LOGD ("write recent emoticon:%s", string_value.c_str ());
+        LOGD("write recent emoticon:%s", string_value.c_str());
     }
 }
 
@@ -180,7 +180,7 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
 #endif
     //xt9_send_flush(0);
     ise_init_emoticon_list();
-    ise_set_private_key_for_emoticon_mode (emoticon_group);
+    ise_set_private_key_for_emoticon_mode(emoticon_group);
 
     if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         //ise_read_recent_emoticon_list_from_scim();
@@ -200,7 +200,7 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
     int width  = DisplayWidth (display, DefaultScreen (display));
     int height = DisplayHeight (display, DefaultScreen (display));
     LOGD ("screen width:%d, height:%d", width, height);*/
-    evas_object_move (layout, 0, 0);
+    evas_object_move(layout, 0, 0);
 
     if (is_candidate_on) {
         if (screen_degree == 0 || screen_degree == 180)
@@ -210,14 +210,14 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
     } else {
         sclint width = 0;
         sclint height = 0;
-        g_ui->get_screen_resolution (&width, &height);
-        LOGD ("screen width:%d, height:%d", width, height);
+        g_ui->get_screen_resolution(&width, &height);
+        LOGD("screen width:%d, height:%d", width, height);
         if (screen_degree == 0 || screen_degree == 180) {
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_PORT_CANDIDATE_OFF);
-            evas_object_resize (layout, width, g_ui->get_scaled_y (ISE_HEIGHT_PORT));
+            evas_object_resize(layout, width, g_ui->get_scaled_y(ISE_HEIGHT_PORT));
         } else {
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_LAND_CANDIDATE_OFF);
-            evas_object_resize (layout, width, g_ui->get_scaled_y (ISE_HEIGHT_LAND));
+            evas_object_resize(layout, width, g_ui->get_scaled_y(ISE_HEIGHT_LAND));
         }
     }
 
@@ -289,10 +289,9 @@ static Eina_Bool _focus_done(void *data)
 {
     Elm_Object_Item *item = (Elm_Object_Item *)data;
 
-    elm_object_item_signal_emit(item,"mouse,up,1","reorder_bg");
+    elm_object_item_signal_emit(item, "mouse,up,1", "reorder_bg");
 
     return ECORE_CALLBACK_CANCEL;
-
 }
 
 static void _multi_down(void *data, Evas *e, Evas_Object *o, void *event_info)
@@ -306,9 +305,9 @@ static void _multi_down(void *data, Evas *e, Evas_Object *o, void *event_info)
     Elm_Object_Item *item;
     item = elm_gengrid_at_xy_item_get(o, ev->canvas.x, ev->canvas.y, NULL, NULL);
 
-    elm_object_item_signal_emit(item,"mouse,down,1","reorder_bg");
+    elm_object_item_signal_emit(item, "mouse,down,1", "reorder_bg");
 
-    ecore_timer_add (0.5, _focus_done, item );
+    ecore_timer_add(0.5, _focus_done, item);
 }
 
 static void _multi_up(void *data, Evas *e, Evas_Object *o, void *event_info)
@@ -321,7 +320,7 @@ static void _multi_up(void *data, Evas *e, Evas_Object *o, void *event_info)
     Elm_Object_Item *item = NULL;
     item = elm_gengrid_at_xy_item_get(o, ev->canvas.x, ev->canvas.y, NULL, NULL);
 
-    elm_object_item_signal_emit(item,"mouse,up,1","reorder_bg");
+    elm_object_item_signal_emit(item, "mouse,up,1", "reorder_bg");
 
     elm_gengrid_item_selected_set(item, EINA_TRUE);
 }
@@ -360,7 +359,7 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
     if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         items = emoticon_list_recent.size();
 
-        for(int i = 0; i < items; i++) {
+        for (int i = 0; i < items; i++) {
             snprintf(img_name, 10, "%x", emoticon_list_recent[i]);
             emoticon_items[i].code = emoticon_list_recent[i];
             emoticon_items[i].keyevent = emoticon_list_recent[i];
@@ -402,7 +401,6 @@ static void __ise_emoticon_create_item_class(unsigned short int screen_degree)
     gic->func.content_get = grid_content_get;
     gic->func.state_get = NULL;
     gic->func.del = grid_content_del;
-
 }
 
 static Evas_Object * grid_content_get(void *data, Evas_Object *obj, const char *part)
@@ -453,7 +451,7 @@ static void __ise_emoticon_append_items_to_gengrid(emoticon_group_t emoticon_gro
     if (emoticon_group == EMOTICON_GROUP_RECENTLY_USED) {
         items = emoticon_list_recent.size();
 
-        for(int i = 0; i < items; i++) {
+        for (int i = 0; i < items; i++) {
             snprintf(img_name, 10, "%x", emoticon_list_recent[i]);
             emoticon_items[i].keyevent = emoticon_list_recent[i];
             emoticon_items[i].path = (std::string)img_name;
@@ -502,7 +500,7 @@ static char * grid_text_get(void *data, Evas_Object *obj, const char *part)
 
     if (!strcmp(part, "elm.text")) {
         if (ti && !(ti->path.empty())) {
-            const Eina_Unicode unicode_event[2] = {ti->keyevent,0};
+            const Eina_Unicode unicode_event[2] = {ti->keyevent, 0};
             utf_8 = eina_unicode_unicode_to_utf8(unicode_event, &length);
             return (utf_8);
         }
@@ -531,7 +529,7 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
     if (event_info) {
         elm_gengrid_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
         if (ti && ti->keyevent) {
-            const Eina_Unicode unicode_event[2] = {ti->keyevent,0};
+            const Eina_Unicode unicode_event[2] = {ti->keyevent, 0};
 //          PRINTFUNC(DLOG_DEBUG,"unicode_event is %x",unicode_event);
             utf_8 = eina_unicode_unicode_to_utf8(unicode_event, &length);
 
@@ -544,10 +542,10 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
                 if (emoticon_list_recent.size() < EMOTICON_GROUP_RECENTLY_USED_NUM) {
                     it = find(emoticon_list_recent.begin(), emoticon_list_recent.end(), ti->keyevent);
                     if (it == emoticon_list_recent.end()) {    // Item not found
-                        emoticon_list_recent.insert(emoticon_list_recent.begin(),ti->keyevent);
+                        emoticon_list_recent.insert(emoticon_list_recent.begin(), ti->keyevent);
                     } else {
                         emoticon_list_recent.erase(it);
-                        emoticon_list_recent.insert(emoticon_list_recent.begin(),ti->keyevent);
+                        emoticon_list_recent.insert(emoticon_list_recent.begin(), ti->keyevent);
                     }
                 }
                 else {
@@ -556,7 +554,8 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
                         emoticon_list_recent.erase(it);
                     else
                         emoticon_list_recent.erase(emoticon_list_recent.end() - 1);
-                    emoticon_list_recent.insert(emoticon_list_recent.begin(),ti->keyevent);
+
+                    emoticon_list_recent.insert(emoticon_list_recent.begin(), ti->keyevent);
                 }
                 ise_write_recent_emoticon_list_to_scim();
                 /*
@@ -581,7 +580,7 @@ void ise_set_private_key_for_emoticon_mode(const emoticon_group_t emoticon_group
         for (int id = EMOTICON_GROUP_RECENTLY_USED; id < MAX_EMOTICON_GROUP; id++) {
             group_name = ise_get_emoticon_group_name(id);
             if (group_name)
-                g_ui->unset_private_key (group_name);
+                g_ui->unset_private_key(group_name);
         }
 
         group_name = ise_get_emoticon_group_name(emoticon_group);

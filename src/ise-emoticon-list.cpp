@@ -788,23 +788,23 @@ extern void ise_read_recent_emoticon_list_from_scim(void);
 void ise_init_emoticon_list(void)
 {
     static bool is_emoticon_list_initialised = false;
-    if(!is_emoticon_list_initialised) {
+    if (!is_emoticon_list_initialised) {
         ise_read_recent_emoticon_list_from_scim();
         is_emoticon_list_initialised = true;
     }
 }
 
-emoticon_group_t ise_get_emoticon_group_id (const char *group_name)
+emoticon_group_t ise_get_emoticon_group_id(const char *group_name)
 {
     int i = 0;
-    for(; i < MAX_EMOTICON_GROUP; ++i) {
+    for (; i < MAX_EMOTICON_GROUP; ++i) {
         if (0 == strcmp (group_name, emoticon_group_name[i]))
             return (emoticon_group_t)i;
     }
     return (emoticon_group_t)0;
 }
 
-const char *ise_get_emoticon_group_name (int id)
+const char *ise_get_emoticon_group_name(int id)
 {
     if (id >= 0 && id < MAX_EMOTICON_GROUP)
         return emoticon_group_name[id];

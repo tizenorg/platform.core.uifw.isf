@@ -56,7 +56,7 @@ void read_ise_config_values() {
 
     string_value = "";
     g_core.config_read_string(ISE_CONFIG_ENABLED_LANGUAGES, string_value);
-    if (string_value.length () > 0) {
+    if (string_value.length() > 0) {
         std::stringstream ss(string_value);
         std::istream_iterator<std::string> begin(ss);
         std::istream_iterator<std::string> end;
@@ -65,7 +65,7 @@ void read_ise_config_values() {
     }
     string_value = "";
     g_core.config_read_string(ISE_CONFIG_SELECTED_LANGUAGE, string_value);
-    if (string_value.length () > 0) {
+    if (string_value.length() > 0) {
         g_config_values.selected_language = string_value;
     }
 
@@ -89,12 +89,12 @@ void read_ise_config_values() {
     g_core.config_read_int(ISE_CONFIG_PREVIEW_ON, integer_value);
     g_config_values.preview_on = integer_value;
 #ifdef _TV
-    g_config_values.enabled_languages.push_back ("English");
-    g_config_values.enabled_languages.push_back ("Chinese");
-    g_config_values.enabled_languages.push_back ("Korean");
-    g_config_values.enabled_languages.push_back ("Japanese");
-    g_config_values.enabled_languages.push_back ("Hongkong");
-    g_config_values.selected_language = std::string ("English");
+    g_config_values.enabled_languages.push_back("English");
+    g_config_values.enabled_languages.push_back("Chinese");
+    g_config_values.enabled_languages.push_back("Korean");
+    g_config_values.enabled_languages.push_back("Japanese");
+    g_config_values.enabled_languages.push_back("Hongkong");
+    g_config_values.selected_language = std::string("English");
 #endif
 }
 
@@ -102,7 +102,7 @@ void write_ise_config_values() {
     std::string string_value;
     g_core.config_write_int(ISE_CONFIG_KEYPAD_MODE, g_config_values.keypad_mode);
     g_core.config_write_int(ISE_CONFIG_PREDICTION_ON, g_config_values.prediction_on);
-    for(std::vector<std::string>::iterator it = g_config_values.enabled_languages.begin();
+    for (std::vector<std::string>::iterator it = g_config_values.enabled_languages.begin();
         it != g_config_values.enabled_languages.end();std::advance(it, 1)) {
             string_value += *it;
             string_value += " ";
@@ -131,17 +131,17 @@ void erase_ise_config_values() {
     g_core.config_reload();
 }
 
-void reset_ise_config_values () {
+void reset_ise_config_values() {
     g_config_values.keypad_mode = KEYPAD_MODE_QTY;
     g_config_values.prediction_on = FALSE;
     g_config_values.selected_language = "English";
-    g_config_values.enabled_languages.clear ();
-    g_config_values.enabled_languages.push_back ("English");
+    g_config_values.enabled_languages.clear();
+    g_config_values.enabled_languages.push_back("English");
     g_config_values.auto_capitalise = TRUE;
     g_config_values.auto_punctuate = TRUE;
     g_config_values.sound_on = TRUE;
     g_config_values.vibration_on = TRUE;
     g_config_values.preview_on = TRUE;
 
-    write_ise_config_values ();
+    write_ise_config_values();
 }

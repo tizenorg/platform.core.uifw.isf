@@ -149,7 +149,7 @@ SCLOptionWindowType find_option_window_type(Evas_Object *obj)
                 return static_cast<SCLOptionWindowType>(loop);
         }
     }
-    LOGD ("OPTION_WINDOW_TYPE_MAX=%d", OPTION_WINDOW_TYPE_MAX);
+    LOGD("OPTION_WINDOW_TYPE_MAX=%d", OPTION_WINDOW_TYPE_MAX);
     return OPTION_WINDOW_TYPE_MAX;
 }
 
@@ -407,7 +407,7 @@ static void _language_gl_sel(void *data, Evas_Object *obj, void *event_info)
 static void check_autocapitalise_change_callback(void *data, Evas_Object *obj, void *event_info)
 {
     Eina_Bool state = EINA_FALSE;
-    if(obj) {
+    if (obj) {
         state = elm_check_state_get(obj);
     } else {
         state = (int)reinterpret_cast<long>(data);
@@ -421,7 +421,7 @@ static void check_autocapitalise_change_callback(void *data, Evas_Object *obj, v
 static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, void *event_info)
 {
     Eina_Bool state = EINA_FALSE;
-    if(obj) {
+    if (obj) {
         state = elm_check_state_get(obj);
     } else {
         state = (int)reinterpret_cast<long>(data);
@@ -435,7 +435,7 @@ static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, vo
 static void check_sound_change_callback(void *data, Evas_Object *obj, void *event_info)
 {
     Eina_Bool state = EINA_FALSE;
-    if(obj) {
+    if (obj) {
         state = elm_check_state_get(obj);
     } else {
         state = (int)reinterpret_cast<long>(data);
@@ -448,7 +448,7 @@ static void check_sound_change_callback(void *data, Evas_Object *obj, void *even
 static void check_vibration_change_callback(void *data, Evas_Object *obj, void *event_info)
 {
     Eina_Bool state = EINA_FALSE;
-    if(obj) {
+    if (obj) {
         state = elm_check_state_get(obj);
     } else {
         state = (int)reinterpret_cast<long>(data);
@@ -461,7 +461,7 @@ static void check_vibration_change_callback(void *data, Evas_Object *obj, void *
 static void check_character_pre_change_callback(void *data, Evas_Object *obj, void *event_info)
 {
     Eina_Bool state = EINA_FALSE;
-    if(obj) {
+    if (obj) {
         state = elm_check_state_get(obj);
     } else {
         state = (int)reinterpret_cast<long>(data);
@@ -488,7 +488,7 @@ static Evas_Object *_create_check_button(Evas_Object *parent, sclboolean state)
 static Evas_Object *_main_radio_gl_content_get(void *data, Evas_Object *obj, const char *part)
 {
     Evas_Object *ck = NULL;
-    if(NULL != data) {
+    if (NULL != data) {
         ITEMDATA *item_data = (ITEMDATA *)data;
         if (!strcmp(part, "elm.swallow.end") ||
             !strcmp(part, "elm.icon.right") ||
@@ -655,7 +655,7 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
         if (info) {
             if (info->enabled) {
                 enabled_languages.push_back(info->name);
-                LOGD ("Enabled language:%s", info->name.c_str());
+                LOGD("Enabled language:%s", info->name.c_str());
                 if (info->name.compare(g_config_values.selected_language) == 0) {
                     selected_language_found = TRUE;
                 }
@@ -664,7 +664,7 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
     }
     if (enabled_languages.size() > 0) {
         g_config_values.enabled_languages = enabled_languages;
-        LOGD ("Enabled languages size:%d", g_config_values.enabled_languages.size());
+        LOGD("Enabled languages size:%d", g_config_values.enabled_languages.size());
         if (!selected_language_found) {
             if (!(g_config_values.enabled_languages.at(0).empty())) {
                 g_config_values.selected_language = g_config_values.enabled_languages.at(0);
@@ -926,7 +926,7 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *genlist = static_cast<Evas_Object*>(evas_object_data_get(obj, "parent_genlist"));
     SCLOptionWindowType type = find_option_window_type(genlist);
-    LOGD ("type=%d", type);
+    LOGD("type=%d", type);
     ITEMDATA *item_data = (ITEMDATA*)data;
     if (item_data) {
         LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);

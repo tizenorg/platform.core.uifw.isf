@@ -36,8 +36,8 @@ extern int g_imdata_state;
 
 static void safe_release_splitted_eina_str(char **string_array)
 {
-    if(string_array) {
-        if(string_array[0]) {
+    if (string_array) {
+        if (string_array[0]) {
             free(string_array[0]);
         }
         free(string_array);
@@ -48,7 +48,7 @@ static void safe_release_splitted_eina_str(char **string_array)
 static void process_imdata_string_language(const char *language_string)
 {
     bool found = FALSE;
-    if(language_string) {
+    if (language_string) {
         for (scluint loop = 0;loop < _language_manager.get_languages_num() && !found;loop++) {
             LANGUAGE_INFO *language = _language_manager.get_language_info(loop);
             if (language) {
@@ -63,24 +63,24 @@ static void process_imdata_string_language(const char *language_string)
 
 void set_ise_imdata(const char * buf, size_t &len)
 {
-    if(buf) {
+    if (buf) {
         /* Make sure we're dealing with a NULL-terminated string */
         char imdatastr[IMDATA_STRING_MAX_LEN + 1] = {0};
         strncpy(imdatastr, buf, (IMDATA_STRING_MAX_LEN > len) ? len : IMDATA_STRING_MAX_LEN);
 
         char **items = eina_str_split(imdatastr, IMDATA_ITEM_DELIMETER, IMDATA_ITEM_MAX_NUM);
-        if(items) {
+        if (items) {
             int loop = 0;
-            while(items[loop] && loop < IMDATA_ITEM_MAX_NUM) {
+            while (items[loop] && loop < IMDATA_ITEM_MAX_NUM) {
                 char **keyvalue = eina_str_split(items[loop], IMDATA_KEY_VALUE_DELIMETER, 2);
-                if(keyvalue[0]) {
-                    LOGD ("key (%s), value (%s)", keyvalue[0], keyvalue[1]);
+                if (keyvalue[0]) {
+                    LOGD("key (%s), value (%s)", keyvalue[0], keyvalue[1]);
                     /* If the key string requests us to change the language */
-                    if(strncmp(keyvalue[0], IMDATA_KEY_LANGUAGE, strlen(IMDATA_KEY_LANGUAGE)) == 0) {
+                    if (strncmp(keyvalue[0], IMDATA_KEY_LANGUAGE, strlen(IMDATA_KEY_LANGUAGE)) == 0) {
                         process_imdata_string_language(keyvalue[1]);
-                    } else if (strncmp (keyvalue[0], IMDATA_KEY_ACTION, strlen (IMDATA_KEY_ACTION)) == 0) {
+                    } else if (strncmp(keyvalue[0], IMDATA_KEY_ACTION, strlen(IMDATA_KEY_ACTION)) == 0) {
                         if (keyvalue[1] != NULL) {
-                            if (strncmp (keyvalue[1], IMDATA_VALUE_DISABLE_EMOTICONS, strlen (IMDATA_VALUE_DISABLE_EMOTICONS)) == 0) {  /* Hide Emoticon CM key */
+                            if (strncmp(keyvalue[1], IMDATA_VALUE_DISABLE_EMOTICONS, strlen(IMDATA_VALUE_DISABLE_EMOTICONS)) == 0) {  /* Hide Emoticon CM key */
                                 g_imdata_state = g_imdata_state | IMDATA_ACTION_DISABLE_EMOTICONS;
                             }
                         }

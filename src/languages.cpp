@@ -206,7 +206,7 @@ ISELanguageManager::select_next_language()
 
     // get next position
     int next_pos = -1;
-    if (_current_language == (int)_language_vector.size() -1){
+    if (_current_language == (int)_language_vector.size()-1) {
         next_pos = 0;
     } else {
         next_pos = _current_language + 1;
