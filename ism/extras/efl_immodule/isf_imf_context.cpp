@@ -654,6 +654,9 @@ _key_up_cb (void *data, int type, void *event)
     }
 
     if (_support_hw_keyboard_mode && !strcmp (ev->keyname, "XF86MenuKB")) {
+        if (!ecore_imf_context_input_panel_enabled_get (active_ctx)) {
+            return ECORE_CALLBACK_PASS_ON;
+        }
         if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             ecore_imf_context_input_panel_hide (active_ctx);
         } else {
