@@ -25,8 +25,8 @@ enum Item_Status {
     MAX_ITEM_STATUS
 };
 
-struct Candidate_Item_Config{
-    Candidate_Item_Config () {
+struct Candidate_Item_Config {
+    Candidate_Item_Config() {
         /* This part will be moved to the XML later*/
         width = 200;
         height = 84;

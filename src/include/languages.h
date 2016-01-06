@@ -51,7 +51,7 @@ struct INPUT_MODE_INFO {
 };
 typedef std::vector<INPUT_MODE_INFO> INPUT_MODE_VECTOR;
 
-typedef struct _LANGUAGE_INFO{
+typedef struct _LANGUAGE_INFO {
     _LANGUAGE_INFO() {
         enabled = false;
         enabled_temporarily = false;
@@ -116,6 +116,7 @@ public:
     LANGUAGE_INFO* get_current_language_info();
     const sclchar* get_resource_file_path();
     bool set_resource_file_path(const char * resource_file);
+
 private:
     /* enable languages, if languages num is 0, return false */
     sclboolean enable_languages(const std::vector<std::string> &languages);

@@ -34,47 +34,47 @@
 //SCL_BEGIN_DECLS
 
 struct IISECommonEventCallback {
-    virtual void init () {}
-    virtual void exit (sclint ic, const sclchar *ic_uuid) {}
+    virtual void init() {}
+    virtual void exit(sclint ic, const sclchar *ic_uuid) {}
     virtual void attach_input_context(sclint ic, const sclchar *ic_uuid) {}
     virtual void detach_input_context(sclint ic, const sclchar *ic_uuid) {}
-    virtual void reload_config (sclint ic, const sclchar *ic_uuid) {}
-    virtual void update_spot_location (sclint ic, const sclchar *ic_uuid, sclint x, sclint y) {}
-    virtual void update_cursor_position (sclint ic, const sclchar *ic_uuid, sclint cursor_pos) {}
-    virtual void update_surrounding_text (sclint ic, const sclchar *text, sclint cursor) {}
-    virtual void focus_out (sclint ic, const sclchar *ic_uuid) {}
-    virtual void focus_in (sclint ic, const sclchar *ic_uuid) {}
-    virtual void ise_show (sclint ic, const int degree, Ise_Context context) {}
-    virtual void ise_hide (sclint ic, const sclchar *ic_uuid) {}
-    virtual void get_geometry (sclu32 *pos_x, sclu32 *pos_y, sclu32 *width, sclu32 *height) {}
-    virtual void set_mode (sclu32 mode) {}
-    virtual void set_language (sclu32 language) {}
-    virtual void set_imdata (sclchar *buf, sclu32 len) {}
-    virtual void get_imdata (sclchar **buf, sclu32 *len) {}
-    virtual void get_language_locale (sclint ic, sclchar **locale) {}
-    virtual void set_return_key_type (sclu32 type) {}
-    virtual void get_return_key_type (sclu32 *type) {}
-    virtual void set_return_key_disable (sclu32 disabled) {}
-    virtual void get_return_key_disable (sclu32 *disabled) {}
-    virtual void set_layout (sclu32 layout) {}
-    virtual void get_layout (sclu32 *layout) {}
-    virtual void set_caps_mode (sclu32 mode) {}
-    virtual void reset_input_context (sclint ic, const sclchar *uuid) {}
-    virtual void update_candidate_geometry (sclint ic, const sclchar *uuid, sclu32 pos_x, sclu32 pos_y, sclu32 width, sclu32 height) {}
-    virtual void update_keyboard_ise (sclint ic, const sclchar *uuid, const sclchar *ise_name, const sclchar *ise_uuid) {}
-    virtual void candidate_more_window_show (sclint ic, const sclchar *uuid) {}
-    virtual void candidate_more_window_hide (sclint ic, const sclchar *uuid) {}
-    virtual void select_aux (sclint ic, const sclchar *uuid, sclint index) {}
-    virtual void select_candidate (sclint ic, const sclchar *uuid, sclint index) {}
-    virtual void candidate_table_page_up (sclint ic, const sclchar *uuid) {}
-    virtual void candidate_table_page_down (sclint ic, const sclchar *uuid) {}
-    virtual void update_lookup_table (scim::LookupTable& table) {}
-    virtual void update_candidate_table_page_size (sclint ic, const sclchar *uuid, sclint page_size) {}
-    virtual void select_associate (sclint ic, const sclchar *uuid, sclint index) {}
-    virtual void associate_table_page_up (sclint ic, const sclchar *uuid) {}
-    virtual void associate_table_page_down (sclint ic, const sclchar *uuid) {}
-    virtual void update_associate_table_page_size (sclint ic, const sclchar *uuid, sclint page_size) {}
-    virtual void turn_on_log (sclu32 on) {}
+    virtual void reload_config(sclint ic, const sclchar *ic_uuid) {}
+    virtual void update_spot_location(sclint ic, const sclchar *ic_uuid, sclint x, sclint y) {}
+    virtual void update_cursor_position(sclint ic, const sclchar *ic_uuid, sclint cursor_pos) {}
+    virtual void update_surrounding_text(sclint ic, const sclchar *text, sclint cursor) {}
+    virtual void focus_out(sclint ic, const sclchar *ic_uuid) {}
+    virtual void focus_in(sclint ic, const sclchar *ic_uuid) {}
+    virtual void ise_show(sclint ic, const int degree, Ise_Context context) {}
+    virtual void ise_hide(sclint ic, const sclchar *ic_uuid) {}
+    virtual void get_geometry(sclu32 *pos_x, sclu32 *pos_y, sclu32 *width, sclu32 *height) {}
+    virtual void set_mode(sclu32 mode) {}
+    virtual void set_language(sclu32 language) {}
+    virtual void set_imdata(sclchar *buf, sclu32 len) {}
+    virtual void get_imdata(sclchar **buf, sclu32 *len) {}
+    virtual void get_language_locale(sclint ic, sclchar **locale) {}
+    virtual void set_return_key_type(sclu32 type) {}
+    virtual void get_return_key_type(sclu32 *type) {}
+    virtual void set_return_key_disable(sclu32 disabled) {}
+    virtual void get_return_key_disable(sclu32 *disabled) {}
+    virtual void set_layout(sclu32 layout) {}
+    virtual void get_layout(sclu32 *layout) {}
+    virtual void set_caps_mode(sclu32 mode) {}
+    virtual void reset_input_context(sclint ic, const sclchar *uuid) {}
+    virtual void update_candidate_geometry(sclint ic, const sclchar *uuid, sclu32 pos_x, sclu32 pos_y, sclu32 width, sclu32 height) {}
+    virtual void update_keyboard_ise(sclint ic, const sclchar *uuid, const sclchar *ise_name, const sclchar *ise_uuid) {}
+    virtual void candidate_more_window_show(sclint ic, const sclchar *uuid) {}
+    virtual void candidate_more_window_hide(sclint ic, const sclchar *uuid) {}
+    virtual void select_aux(sclint ic, const sclchar *uuid, sclint index) {}
+    virtual void select_candidate(sclint ic, const sclchar *uuid, sclint index) {}
+    virtual void candidate_table_page_up(sclint ic, const sclchar *uuid) {}
+    virtual void candidate_table_page_down(sclint ic, const sclchar *uuid) {}
+    virtual void update_lookup_table(scim::LookupTable& table) {}
+    virtual void update_candidate_table_page_size(sclint ic, const sclchar *uuid, sclint page_size) {}
+    virtual void select_associate(sclint ic, const sclchar *uuid, sclint index) {}
+    virtual void associate_table_page_up(sclint ic, const sclchar *uuid) {}
+    virtual void associate_table_page_down(sclint ic, const sclchar *uuid) {}
+    virtual void update_associate_table_page_size(sclint ic, const sclchar *uuid, sclint page_size) {}
+    virtual void turn_on_log(sclu32 on) {}
 
     virtual void set_display_language(const sclchar *language) {}
     virtual void set_theme_name(const sclchar *name) {}

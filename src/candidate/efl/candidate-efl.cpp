@@ -124,13 +124,13 @@ EflCandidate::create_seperate_line() {
     int ret;
     Evas_Object *seperate_line;
 
-    seperate_line = edje_object_add (evas_object_evas_get (win));
-    ret = edje_object_file_set (seperate_line, CANDIDATE_EDJ_FILE_PATH, "seperate_line");
+    seperate_line = edje_object_add(evas_object_evas_get(win));
+    ret = edje_object_file_set(seperate_line, CANDIDATE_EDJ_FILE_PATH, "seperate_line");
     if (!ret) {
         LOGW("getting seperate line failed.");
         return NULL;
     }
-    evas_object_show (seperate_line);
+    evas_object_show(seperate_line);
     evas_object_size_hint_min_set(seperate_line, 2, 80);
     return seperate_line;
 }
@@ -200,7 +200,7 @@ EflCandidate::update(const vector<string> &vec_str) {
     for (it = vec_str.begin(); it != vec_str.end();
             ++it) {
         candidates[i] = create_item();
-        edje_object_part_text_set (candidates[i], "candidate", it->c_str());
+        edje_object_part_text_set(candidates[i], "candidate", it->c_str());
         evas_object_show(candidates[i]);
         elm_table_pack(table, candidates[i], 2*i, 0, 1, 1);
 
@@ -220,5 +220,4 @@ EflCandidate::update(const vector<string> &vec_str) {
             break;
         }
     }
-
 }

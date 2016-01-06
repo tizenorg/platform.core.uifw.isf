@@ -212,7 +212,6 @@ SCLEventReturnType CSDKISE::on_event_drag_state_changed(SclUIEventDesc event_des
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
 
     if (event_desc.event_type == EVENT_TYPE_LONGPRESS) {
-
         const char *www_string = "www.";
         if (event_desc.key_value) {
             if (strncmp(event_desc.key_value, www_string, strlen(www_string)) == 0) {
@@ -281,7 +280,7 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                         std::string postfix = url_postfixes[inner_loop];
                         std::string::size_type offset = postfix.find(replace_target, 0);
 
-                        if(offset != postfix.npos) {
+                        if (offset != postfix.npos) {
                             postfix.replace(offset, strlen(replace_target), get_lang_table()[loop].country_code_URL);
                         }
 
@@ -355,7 +354,6 @@ sclboolean CSDKISE::flush_imengine(const sclchar *language)
             g_core.reset_keyboard_ise();
             bRet = true;
         }
-
     }
 
     return bRet;

@@ -84,6 +84,6 @@ erase_ise_config_values();
     @return     Nothing.
  *
  **/
-void reset_ise_config_values ();
+void reset_ise_config_values();
 
 #endif
