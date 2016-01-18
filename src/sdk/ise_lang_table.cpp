@@ -56,14 +56,29 @@ class Ise_Lang {
 };
 Ise_Lang::~Ise_Lang() {
     for (int i = 0; i < m_size; ++i) {
-        free(m_table[i].language);
-        free(m_table[i].language_name);
-        free(m_table[i].locale_string);
-        free(m_table[i].inputmode_QTY);
-        free(m_table[i].inputmode_QTY_name);
-        free(m_table[i].main_keyboard_name);
-        free(m_table[i].keyboard_ise_uuid);
-        free(m_table[i].country_code_URL);
+        if (m_table[i].language)
+            free(m_table[i].language);
+
+        if (m_table[i].language_name)
+            free(m_table[i].language_name);
+
+        if (m_table[i].locale_string)
+            free(m_table[i].locale_string);
+
+        if (m_table[i].inputmode_QTY)
+            free(m_table[i].inputmode_QTY);
+
+        if (m_table[i].inputmode_QTY_name)
+            free(m_table[i].inputmode_QTY_name);
+
+        if (m_table[i].main_keyboard_name)
+            free(m_table[i].main_keyboard_name);
+
+        if (m_table[i].keyboard_ise_uuid)
+            delete [] m_table[i].keyboard_ise_uuid;
+
+        if (m_table[i].country_code_URL)
+            free(m_table[i].country_code_URL);
     }
 }
 static int
