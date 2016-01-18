@@ -185,9 +185,14 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
 
         if (val == 0) {
             kbd_mode = TOOLBAR_HELPER_MODE;
-            LOGD ("keyboard mode(0:H/W Keyboard, 1:S/W Keyboard): %d\n", kbd_mode);
+            input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, (Ecore_IMF_Input_Panel_Keyboard_Mode)kbd_mode);
+        } else if (val == 1) {
+            kbd_mode = TOOLBAR_KEYBOARD_MODE;
+            input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, (Ecore_IMF_Input_Panel_Keyboard_Mode)kbd_mode);
         }
+
     }
+
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -259,6 +264,9 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
             break;
         case ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT:
             SECURE_LOGD ("[candidate geometry is changed] ctx : %p\n", using_ic);
+            break;
+        case ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT:
+            SECURE_LOGD ("[keyboard mode is changed] ctx : %p, mode(0:S/W, 1:H/W): %d \n", using_ic, value);
             break;
         default:
             break;
