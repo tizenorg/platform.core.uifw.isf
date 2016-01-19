@@ -41,9 +41,14 @@ PrivilegeChecker::PrivilegeChecker (int sockfd)
 
 PrivilegeChecker::~PrivilegeChecker ()
 {
-    free (m_client);
-    free (m_session);
-    free (m_user);
+    if (m_client)
+        free (m_client);
+
+    if (m_session)
+        free (m_session);
+
+    if (m_user)
+        free (m_user);
 }
 
 bool
@@ -81,9 +86,14 @@ PrivilegeChecker::initializeCreditionals ()
 
     return true;
 CLEANUP:
-    free (m_client);
-    free (m_session);
-    free (m_user);
+    if (m_client)
+        free (m_client);
+
+    if (m_session)
+        free (m_session);
+
+    if (m_user)
+        free (m_user);
 
     m_client = NULL;
     m_session = NULL;
@@ -98,6 +108,10 @@ PrivilegeChecker::checkPrivilege (const char *privilege)
 {
     if (!initializeCreditionals ())
         return false;
+
+    if (!p_cynara)
+        return false;
+
     int ret = cynara_check (p_cynara, m_client, m_session, m_user, privilege);
     cynara_log("cynara_check()", ret);
     if (ret != CYNARA_API_ACCESS_ALLOWED)
@@ -116,5 +130,8 @@ isf_cynara_initialize ()
 void
 isf_cynara_finish ()
 {
-    cynara_finish (p_cynara);
+    if (p_cynara)
+        cynara_finish (p_cynara);
+
+    p_cynara = NULL;
 }
