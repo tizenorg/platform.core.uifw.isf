@@ -177,6 +177,8 @@ Ise_Lang::parsing_languages() {
         }
         cur_node = cur_node->next;
     }
+
+    xmlFreeDoc(doc);
 }
 
 void
