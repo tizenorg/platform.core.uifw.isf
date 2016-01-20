@@ -29,13 +29,21 @@ using namespace scl;
 
 extern CSCLCore g_core;
 
+#ifdef _TV
+#define SOUND_ON        FALSE;
+#define VIBRATION_ON    FALSE;
+#else
+#define SOUND_ON        TRUE;
+#define VIBRATION_ON    TRUE;
+#endif
+
 CONFIG_VALUES::CONFIG_VALUES() {
     keypad_mode = KEYPAD_MODE_QTY; // keypad_mode
     prediction_on = FALSE; // prediction_on
     auto_capitalise = TRUE;
     auto_punctuate = TRUE;
-    sound_on = TRUE;
-    vibration_on = TRUE;
+    sound_on = SOUND_ON;
+    vibration_on = VIBRATION_ON;
     preview_on = TRUE;
 };
 
@@ -77,11 +85,11 @@ void read_ise_config_values() {
     g_core.config_read_int(ISE_CONFIG_AUTO_PUNCTUATE, integer_value);
     g_config_values.auto_punctuate = integer_value;
 
-    integer_value = 1;
+    integer_value = SOUND_ON;
     g_core.config_read_int(ISE_CONFIG_SOUND_ON, integer_value);
     g_config_values.sound_on = integer_value;
 
-    integer_value = 1;
+    integer_value = VIBRATION_ON;
     g_core.config_read_int(ISE_CONFIG_VIBRATION_ON, integer_value);
     g_config_values.vibration_on = integer_value;
 
@@ -139,8 +147,8 @@ void reset_ise_config_values() {
     g_config_values.enabled_languages.push_back("English");
     g_config_values.auto_capitalise = TRUE;
     g_config_values.auto_punctuate = TRUE;
-    g_config_values.sound_on = TRUE;
-    g_config_values.vibration_on = TRUE;
+    g_config_values.sound_on = SOUND_ON;
+    g_config_values.vibration_on = VIBRATION_ON;
     g_config_values.preview_on = TRUE;
 
     write_ise_config_values();
