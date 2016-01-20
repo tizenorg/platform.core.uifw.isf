@@ -251,7 +251,21 @@ static void run_broker (int argc, char *argv [])
 
     ecore_main_loop_begin ();
 
-    ecore_ipc_server_del (server);
+    if (exit_handler) {
+        ecore_event_handler_del (exit_handler);
+        exit_handler = NULL;
+    }
+
+    if (data_handler) {
+        ecore_event_handler_del (data_handler);
+        data_handler = NULL;
+    }
+
+    if (server) {
+        ecore_ipc_server_del (server);
+        server = NULL;
+    }
+
     ecore_ipc_shutdown ();
     ecore_shutdown ();
 }
