@@ -2637,6 +2637,7 @@ foreach_dirinpath (
       {
         if (filename[lendir -1] != '/')
           filename[lendir++] = '/';
+
         strncpy (filename + lendir, base_name, filenamesize - lendir);
       }
 

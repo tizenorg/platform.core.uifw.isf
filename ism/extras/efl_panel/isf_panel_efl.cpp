@@ -743,7 +743,7 @@ static Evas_Object* get_candidate (const String& str, Evas_Object *parent, int *
                     if (candidate_is_long)
                         break;
                     tokenize_result = tokenize_tag (sub_splited_string [j], &image_data);
-                    if (tokenize_result && _candidate_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
+                    if (tokenize_result && _candidate_image_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE && _candidate_text_count < SCIM_LOOKUP_TABLE_MAX_PAGESIZE) {
                         _candidate_image [_candidate_image_count] = elm_image_add (parent);
                         snprintf (image_key, sizeof (image_key), "%d",_candidate_image_count);
                         elm_image_file_set (_candidate_image [_candidate_image_count], image_data.path.c_str (), image_key);
