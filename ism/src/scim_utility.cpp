@@ -1218,7 +1218,14 @@ EXAPI int  scim_launch (bool          daemon,
 
     // In child process, start scim-launcher.
     if (child_pid == 0) {
-        return execv (SCIM_LAUNCHER, new_argv);
+        int ret = execv (SCIM_LAUNCHER, new_argv);
+        for (i = 0; i < new_argc; ++i) {
+            if (new_argv [i]) {
+                free (new_argv [i]);
+                new_argv [i] = NULL;
+            }
+        }
+        return ret;
     }
 
     // In parent process, wait the child exit.
@@ -1310,7 +1317,14 @@ EXAPI int scim_launch_panel (bool          daemon,
 
     // In child process, start scim-launcher.
     if (child_pid == 0) {
-        return execv (panel_program.c_str (), new_argv);
+        int ret = execv (panel_program.c_str (), new_argv);
+        for (i = 0; i < new_argc; ++i) {
+            if (new_argv [i]) {
+                free (new_argv [i]);
+                new_argv [i] = NULL;
+            }
+        }
+        return ret;
     }
 
     // In parent process, wait the child exit.
