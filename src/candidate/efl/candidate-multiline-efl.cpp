@@ -349,6 +349,7 @@ EflMultiLineCandidate::make_view()
 
 EflMultiLineCandidate::EflMultiLineCandidate(Evas_Object *window)
 {
+    m_degree = 0;
     m_window = window;
     make_view();
     make_more_view();
