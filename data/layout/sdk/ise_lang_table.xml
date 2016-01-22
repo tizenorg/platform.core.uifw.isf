@@ -60,7 +60,6 @@
   <rec language="Vietnamese" language_name="Tiếng Việt" inputmode_QTY="VIETNAMESE_QTY" inputmode_QTY_name="Vietnamese Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="vn" is_latin_language="true" accepts_caps_mode="true" locale_string="vi_VN"/>
   <!--
   <rec language="Thai" language_name="ภาษาไทย" inputmode_QTY="THAI_QTY" inputmode_QTY_name="Thai" keyboard_ise_uuid="uuid_default" country_code_URL="th"/>
-  <rec language="Hindi" language_name="हिन्दी" inputmode_QTY="HINDI_QTY" inputmode_QTY_name="Hindi" main_keyboard_name="कखग" keyboard_ise_uuid="uuid_default" country_code_URL="in"/>
   -->
   <!--
   <rec language="Tamil" language_name="தமிழ்" inputmode_QTY="TAMIL_QTY" inputmode_QTY_name="Tamil" main_keyboard_name="அஆ" keyboard_ise_uuid="uuid_default" country_code_URL="tn"/>
@@ -89,5 +88,10 @@
   <!--
   <rec language="Sinhala" language_name="﻿සිංහල" inputmode_QTY="SINHALA_QTY" inputmode_QTY_name="Sinhala" main_keyboard_name="සිංහල" keyboard_ise_uuid="uuid_default" country_code_URL="lk"/>
   -->
+
+ <rec language="Hindi" language_name="हिन्दी" inputmode_QTY="HINDI_QTY" inputmode_QTY_name="Hindi" keyboard_ise_uuid="uuid_default" country_code_URL="in" is_latin_language="true" accepts_caps_mode="true" locale_string="hi"/>
+ <rec language="Irish" language_name="Irish" inputmode_QTY="IRISH_QTY" inputmode_QTY_name="Irish Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="ga" is_latin_language="true" accepts_caps_mode="true" locale_string="ga_IE"/>
+ <rec language="Uzbek" language_name="Uzbek" inputmode_QTY="UZBEK_QTY" inputmode_QTY_name="Uzbek Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="uz" is_latin_language="true" accepts_caps_mode="true" locale_string="uz_UZ"/>
+
 </language_table>
 </languages>

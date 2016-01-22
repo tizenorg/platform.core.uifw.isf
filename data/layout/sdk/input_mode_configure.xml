@@ -278,6 +278,24 @@
       <landscape>LYT_LANDSCAPE_QTY_VIETNAMESE.xml</landscape>
     </layouts>
   </mode>
+  <mode name="HINDI_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_HINDI.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_HINDI.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="IRISH_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_IRISH.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_IRISH.xml</landscape>
+    </layouts>
+  </mode>
+  <mode name="UZBEK_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_UZBEK.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_UZBEK.xml</landscape>
+    </layouts>
+  </mode>
   <!--
   <mode name="THAI_QTY">
     <layouts>
