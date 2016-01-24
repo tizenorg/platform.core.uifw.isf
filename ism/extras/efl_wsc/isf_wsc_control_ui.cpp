@@ -101,7 +101,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     iseContext.layout = wsc_context_input_panel_layout_get (ctx->ctx);
 
     /* set layout variation in ise context info */
-    iseContext.layout_variation = 0;
+    iseContext.layout_variation = wsc_context_input_panel_layout_variation_get (ctx->ctx);
 
     /* set prediction allow */
     iseContext.prediction_allow = wsc_context_prediction_allow_get (ctx->ctx);

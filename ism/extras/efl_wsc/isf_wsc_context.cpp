@@ -1433,6 +1433,9 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (weescim *ctx)
 
     switch (ctx->content_purpose) {
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIG:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_DEC:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGDEC:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY;
             break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER:
@@ -1453,6 +1456,7 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (weescim *ctx)
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_EMAIL;
             break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD_DIGITS:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD;
             break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL:
@@ -1470,6 +1474,49 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (weescim *ctx)
     }
 
     return layout;
+}
+
+int wsc_context_input_panel_layout_variation_get (weescim *ctx)
+{
+    int layout_variation = 0;
+
+    if (!ctx)
+        return layout_variation;
+
+    switch (ctx->content_purpose) {
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_NORMAL;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIG:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_DEC:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGDEC:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NORMAL;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD_DIGITS:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_NORMAL;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL_FILENAME:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_FILENAME;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL_PERSONNAME:
+            layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_PERSON_NAME;
+            break;
+        default:
+            layout_variation = 0;
+            break;
+    }
+
+    return layout_variation;
 }
 
 Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (weescim *ctx)
