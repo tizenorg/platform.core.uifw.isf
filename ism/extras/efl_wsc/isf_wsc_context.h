@@ -122,6 +122,7 @@ void           isf_wsc_context_shutdown (void);
 
 bool wsc_context_surrounding_get (weescim *ctx, char **text, int *cursor_pos);
 Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(weescim *ctx);
+int wsc_context_input_panel_layout_variation_get (weescim *ctx);
 bool wsc_context_input_panel_caps_lock_mode_get(weescim *ctx);
 void wsc_context_delete_surrounding (weescim *ctx, int offset, int len);
 Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (weescim *ctx);
