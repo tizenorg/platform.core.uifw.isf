@@ -119,6 +119,50 @@ struct _WSCContextISFImpl {
     }
 };
 
+typedef enum {
+    INPUT_LANG_URDU,
+    INPUT_LANG_HINDI,
+    INPUT_LANG_BENGALI_IN,
+    INPUT_LANG_BENGALI_BD,
+    INPUT_LANG_ASSAMESE,
+    INPUT_LANG_PUNJABI,
+    INPUT_LANG_NEPALI,
+    INPUT_LANG_ORIYA,
+    INPUT_LANG_MAITHILI,
+    INPUT_LANG_ARMENIAN,
+    INPUT_LANG_CN,
+    INPUT_LANG_CN_HK,
+    INPUT_LANG_CN_TW,
+    INPUT_LANG_JAPANESE,
+    INPUT_LANG_KHMER,
+    INPUT_LANG_BURMESE,
+    INPUT_LANG_OTHER
+} Input_Language;
+
+struct __Punctuations {
+    const char *code;
+    Input_Language lang;
+    wchar_t punc_code;
+};
+
+static __Punctuations __punctuations [] = {
+    { "ur_PK",  INPUT_LANG_URDU,        0x06D4 },
+    { "hi_IN",  INPUT_LANG_HINDI,       0x0964 },
+    { "bn_IN",  INPUT_LANG_BENGALI_IN,  0x0964 },
+    { "bn_BD",  INPUT_LANG_BENGALI_BD,  0x0964 },
+    { "as_IN",  INPUT_LANG_ASSAMESE,    0x0964 },
+    { "pa_IN",  INPUT_LANG_PUNJABI,     0x0964 },
+    { "ne_NP",  INPUT_LANG_NEPALI,      0x0964 },
+    { "or_IN",  INPUT_LANG_ORIYA,       0x0964 },
+    { "mai_IN", INPUT_LANG_MAITHILI,    0x0964 },
+    { "hy_AM",  INPUT_LANG_ARMENIAN,    0x0589 },
+    { "zh_CN",  INPUT_LANG_CN,          0x3002 },
+    { "zh_HK",  INPUT_LANG_CN_HK,       0x3002 },
+    { "zh_TW",  INPUT_LANG_CN_TW,       0x3002 },
+    { "ja_JP",  INPUT_LANG_JAPANESE,    0x3002 },
+    { "km_KH",  INPUT_LANG_KHMER,       0x17D4 },
+};
+
 /* private functions */
 static void     panel_slot_reload_config                (int                     context);
 static void     panel_slot_exit                         (int                     context);
@@ -314,14 +358,8 @@ static double                                           space_key_time          
 
 static Eina_Bool                                        autoperiod_allow            = EINA_FALSE;
 static Eina_Bool                                        autocap_allow               = EINA_FALSE;
-static Eina_Bool                                        desktop_mode                = EINA_FALSE;
 
 static bool                                             _x_key_event_is_valid       = false;
-
-typedef enum {
-    INPUT_LANG_JAPANESE,
-    INPUT_LANG_OTHER
-} Input_Language;
 
 static Input_Language                                   input_lang                  = INPUT_LANG_OTHER;
 
@@ -483,16 +521,42 @@ check_symbol (Eina_Unicode ucode, Eina_Unicode symbols[], int symbol_num)
     return EINA_FALSE;
 }
 
+static Eina_Bool
+check_except_autocapital (Eina_Unicode *ustr, int cursor_pos)
+{
+    const char *except_str[] = {"e.g.", "E.g."};
+    unsigned int i = 0, j = 0, len = 0;
+    for (i = 0; i < (sizeof (except_str) / sizeof (except_str[0])); i++) {
+        len = strlen (except_str[i]);
+        if (cursor_pos < (int)len)
+            continue;
+
+        for (j = len; j > 0; j--) {
+            if (ustr[cursor_pos-j] != except_str[i][len-j])
+                break;
+        }
+
+        if (j == 0) return EINA_TRUE;
+    }
+
+    return EINA_FALSE;
+}
+
+static Eina_Bool
+check_space_symbol (Eina_Unicode uchar)
+{
+    Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
+    const int symbol_num = sizeof (space_symbols) / sizeof (space_symbols[0]);
+
+    return check_symbol (uchar, space_symbols, symbol_num);
+}
+
 static void
 autoperiod_insert (WSCContextISF *ctx)
 {
     char *plain_str = NULL;
     int cursor_pos = 0;
     Eina_Unicode *ustr = NULL;
-    Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
-    Eina_Unicode symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */,
-                              ':', ';', '.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */, 0x3002 /* 。 */};
-    const int symbol_num = sizeof (symbols) / sizeof (symbols[0]);
     char *fullstop_mark = NULL;
 
     if (autoperiod_allow == EINA_FALSE)
@@ -516,15 +580,19 @@ autoperiod_insert (WSCContextISF *ctx)
 
     if (cursor_pos < 2) goto done;
 
-    if (check_symbol (ustr[cursor_pos-1], space_symbols, (sizeof (space_symbols) / sizeof (space_symbols[0]))) &&
-        (!check_symbol (ustr[cursor_pos-2], symbols, symbol_num))) {
+    if (check_space_symbol (ustr[cursor_pos-1]) &&
+        !(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
         wsc_context_delete_surrounding (ctx->ctx, -1, 1);
 
-        if (input_lang == INPUT_LANG_JAPANESE) {
-            fullstop_mark = strdup ("。");
+        if (input_lang == INPUT_LANG_OTHER) {
+            fullstop_mark = strdup (".");
         }
         else {
-            fullstop_mark = strdup (".");
+            wchar_t wbuf[2] = {0};
+            wbuf[0] = __punctuations[input_lang].punc_code;
+
+            WideString wstr = WideString (wbuf);
+            fullstop_mark = strdup (utf8_wcstombs (wstr).c_str ());
         }
 
         wsc_context_commit_string (ctx->ctx, fullstop_mark);
@@ -544,8 +612,9 @@ static Eina_Bool
 analyze_surrounding_text (WSCContextISF *ctx)
 {
     char *plain_str = NULL;
-    Eina_Unicode puncs[] = {'\n','.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */, 0x3002 /* 。 */};
-    Eina_Unicode space_symbols[] = {' ', 0x00A0 /* no-break space */, 0x3000 /* ideographic space */};
+    Eina_Unicode puncs[] = {'\n','.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */,
+                            0x3002 /* 。 */, 0x06D4 /* Urdu */, 0x0964 /* Hindi */,
+                            0x0589 /* Armenian */, 0x17D4 /* Khmer */, 0x104A /* Myanmar */};
     Eina_Unicode *ustr = NULL;
     Eina_Bool ret = EINA_FALSE;
     Eina_Bool detect_space = EINA_FALSE;
@@ -570,6 +639,9 @@ analyze_surrounding_text (WSCContextISF *ctx)
     if (context_scim->impl->cursor_pos == 0)
         return EINA_TRUE;
 
+    if (context_scim->impl->preedit_updating)
+        return EINA_FALSE;
+
     wsc_context_surrounding_get (ctx->ctx, &plain_str, &cursor_pos);
     if (!plain_str) goto done;
 
@@ -587,7 +659,7 @@ analyze_surrounding_text (WSCContextISF *ctx)
     if (cursor_pos >= 1) {
         if (context_scim->impl->autocapital_type == ECORE_IMF_AUTOCAPITAL_TYPE_WORD) {
             // Check space or no-break space
-            if (check_symbol (ustr[cursor_pos-1], space_symbols, (sizeof (space_symbols) / sizeof (space_symbols[0])))) {
+            if (check_space_symbol (ustr[cursor_pos-1])) {
                 ret = EINA_TRUE;
                 goto done;
             }
@@ -601,14 +673,18 @@ analyze_surrounding_text (WSCContextISF *ctx)
 
         for (i = cursor_pos; i > 0; i--) {
             // Check space or no-break space
-            if (check_symbol (ustr[i-1], space_symbols, (sizeof (space_symbols) / sizeof (space_symbols[0])))) {
+            if (check_space_symbol (ustr[i-1])) {
                 detect_space = EINA_TRUE;
                 continue;
             }
 
             // Check punctuation and following the continuous space(s)
             if (detect_space && check_symbol (ustr[i-1], puncs, punc_num)) {
-                ret = EINA_TRUE;
+                if (check_except_autocapital (ustr, i))
+                    ret = EINA_FALSE;
+                else
+                    ret = EINA_TRUE;
+
                 goto done;
             }
             else {
@@ -686,10 +762,14 @@ get_input_language ()
     char *input_lang_str = vconf_get_str (VCONFKEY_ISF_INPUT_LANGUAGE);
     if (!input_lang_str) return;
 
-    if (strcmp (input_lang_str, "ja_JP") == 0)
-        input_lang = INPUT_LANG_JAPANESE;
-    else
-        input_lang = INPUT_LANG_OTHER;
+    input_lang = INPUT_LANG_OTHER;
+
+    for (unsigned int i = 0; i < (sizeof (__punctuations) / sizeof (__punctuations[0])); i++) {
+        if (strcmp (input_lang_str, __punctuations[i].code) == 0) {
+            input_lang = __punctuations[i].lang;
+            break;
+        }
+    }
 
     free (input_lang_str);
 }
