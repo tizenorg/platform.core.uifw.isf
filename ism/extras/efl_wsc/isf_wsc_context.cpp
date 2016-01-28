@@ -343,12 +343,6 @@ get_panel_client_id (void)
     return _panel_client_id;
 }
 
-Eina_Bool
-get_desktop_mode ()
-{
-    return desktop_mode;
-}
-
 void
 get_language (char **language)
 {
