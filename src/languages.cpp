@@ -19,6 +19,8 @@
 #include <stdio.h>
 #include <algorithm>
 #include <assert.h>
+#include <vconf.h>
+#include <vconf-keys.h>
 #include "utils.h"
 #include "config.h"
 #include "languages.h"
@@ -138,6 +140,8 @@ ISELanguageManager::do_select_language(int language_info_index) {
         g_config_values.selected_language = language_info.name;
         write_ise_config_values();
     }
+
+    vconf_set_str(VCONFKEY_ISF_INPUT_LANGUAGE, language_info.locale_string.c_str());
 
     return ret;
 }
