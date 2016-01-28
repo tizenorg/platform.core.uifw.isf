@@ -1147,6 +1147,33 @@ isf_wsc_context_reset (WSCContextISF *ctx)
 }
 
 void
+isf_wsc_context_cursor_position_set (WSCContextISF *ctx, int cursor_pos)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *context_scim = ctx;
+
+    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+        if (context_scim->impl->cursor_pos != cursor_pos) {
+            LOGD ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            context_scim->impl->cursor_pos = cursor_pos;
+
+            caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
+
+            if (context_scim->impl->preedit_updating)
+                return;
+
+            if (context_scim->impl->si) {
+                _panel_client.prepare (context_scim->id);
+                context_scim->impl->si->update_cursor_position (cursor_pos);
+                panel_req_update_cursor_position (context_scim, cursor_pos);
+                _panel_client.send ();
+            }
+        }
+    }
+}
+
+void
 isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_pos)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";

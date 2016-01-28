@@ -75,7 +75,6 @@ struct weescim
     uint32_t content_purpose;
     uint32_t surrounding_cursor;
     uint32_t return_key_type;
-    int      cursor_pos;
 
     Eina_Bool context_changed;
     Eina_Bool hw_kbd;
@@ -107,6 +106,7 @@ void isf_wsc_context_del (WSCContextISF *ctx);
 void isf_wsc_context_focus_in (WSCContextISF *ctx);
 void isf_wsc_context_focus_out (WSCContextISF *ctx);
 void isf_wsc_context_reset (WSCContextISF *ctx);
+void isf_wsc_context_cursor_position_set (WSCContextISF *ctx, int cursor_pos);
 void isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_pos);
 void isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction);
 Eina_Bool isf_wsc_context_prediction_allow_get (WSCContextISF* ctx);
