@@ -126,6 +126,9 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     /* set caps mode */
     iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
 
+    /* set client window */
+    iseContext.client_window = 0;
+
     /* set the size of imdata */
     context_scim_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
 
