@@ -1629,6 +1629,8 @@ Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (weescim *ctx)
 
     if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_CAPITALIZATION)
         autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE;
+    else if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_WORD_CAPITALIZATION)
+        autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_WORD;
     else if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
         autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_ALLCHARACTER;
     else
