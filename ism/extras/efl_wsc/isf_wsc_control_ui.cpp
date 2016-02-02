@@ -133,8 +133,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     context_scim_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
 
     /* set the cursor position of the editable widget */
-    //ecore_imf_context_surrounding_get (ctx, NULL, &iseContext.cursor_pos);
-    iseContext.cursor_pos = 0;
+    wsc_context_surrounding_get (ctx->ctx, NULL, &iseContext.cursor_pos);
 
     iseContext.autocapital_type = wsc_context_autocapital_type_get (ctx->ctx);
 
