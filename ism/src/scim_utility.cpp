@@ -664,7 +664,7 @@ scim_get_home_dir ()
     if (result && pw.pw_dir) {
         home_dir = pw.pw_dir;
     } else {
-        LOGD ("Fail to getpwuid_r");
+        LOGD ("Fail to getpwuid_r\n");
     }
 
     if (!home_dir) {
@@ -1440,7 +1440,7 @@ EXAPI void isf_save_log (const char *fmt, ...)
         }
     }
 
-    LOGD ("%s", buf);
+    LOGD ("%s\n", buf);
 }
 
 static struct timeval _t0 = {0, 0};

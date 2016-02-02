@@ -39,13 +39,13 @@ typedef enum
 
 bool app_create (void *user_data)
 {
-    LOGD ("app create");
+    LOGD ("app create\n");
     return true;
 }
 
 void app_control (app_control_h app_control, void *user_data)
 {
-    LOGD ("%s", __func__);
+    LOGD ("%s\n", __func__);
 
     Ecore_X_Atom       prop_x_keyboard_input_detected = 0;
     TOOLBAR_MODE_T     kbd_mode = TOOLBAR_HELPER_MODE;
@@ -53,7 +53,7 @@ void app_control (app_control_h app_control, void *user_data)
     Ecore_X_Window     _input_win = 0;
     unsigned int val = 0;
 
-    LOGD ("isf_extra_hwkbd_module start");
+    LOGD ("isf_extra_hwkbd_module start\n");
 
     Ecore_X_Atom atom = ecore_x_atom_get (E_PROP_DEVICEMGR_CONTROLWIN);
     if (ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_control_win, 1) >= 0) {
@@ -77,7 +77,7 @@ void app_control (app_control_h app_control, void *user_data)
             if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
                 val = 0;
                 ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
-                LOGD ("keyboard mode is changed HW -> SW by isf-kbd-mode-changer");
+                LOGD ("keyboard mode is changed HW -> SW by isf-kbd-mode-changer\n");
             }
         }
     }
@@ -87,7 +87,7 @@ void app_control (app_control_h app_control, void *user_data)
 
 void app_terminate (void *user_data)
 {
-    LOGD ("app terminated");
+    LOGD ("app terminated\n");
 }
 
 int main (int argc, char *argv [])
@@ -98,7 +98,7 @@ int main (int argc, char *argv [])
     event_callback.terminate = app_terminate;
     event_callback.app_control = app_control;
 
-    LOGD ("start org.tizen.isf-kbd-mode-changer");
+    LOGD ("start org.tizen.isf-kbd-mode-changer\n");
 
     return ui_app_main (argc, argv, &event_callback, NULL);
 }

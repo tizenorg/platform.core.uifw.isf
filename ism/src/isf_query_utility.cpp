@@ -88,13 +88,13 @@ static inline int _begin_transaction(void)
     int ret = sqlite3_prepare_v2(databaseInfo.pHandle, "BEGIN TRANSACTION", -1, &pStmt, NULL);
     if (ret != SQLITE_OK)
     {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return EXIT_FAILURE;
     }
 
     if (sqlite3_step(pStmt) != SQLITE_DONE)
     {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         sqlite3_finalize(pStmt);
         return EXIT_FAILURE;
     }
@@ -110,13 +110,13 @@ static inline int _rollback_transaction(void)
     int ret = sqlite3_prepare_v2(databaseInfo.pHandle, "ROLLBACK TRANSACTION", -1, &pStmt, NULL);
     if (ret != SQLITE_OK)
     {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return EXIT_FAILURE;
     }
 
     if (sqlite3_step(pStmt) != SQLITE_DONE)
     {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         sqlite3_finalize(pStmt);
         return EXIT_FAILURE;
     }
@@ -132,13 +132,13 @@ static inline int _commit_transaction(void)
     int ret = sqlite3_prepare_v2(databaseInfo.pHandle, "COMMIT TRANSACTION", -1, &pStmt, NULL);
     if (ret != SQLITE_OK)
     {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return EXIT_FAILURE;
     }
 
     if (sqlite3_step(pStmt) != SQLITE_DONE)
     {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         sqlite3_finalize(pStmt);
         return EXIT_FAILURE;
     }
@@ -153,13 +153,13 @@ static inline int _db_create_ime_info(void)
     static const char* pQuery = "CREATE TABLE ime_info (appid TEXT PRIMARY KEY NOT NULL, label TEXT, pkgid TEXT, pkgtype TEXT, exec TEXT, mname TEXT, mpath TEXT, mode INTEGER, options INTEGER, is_enabled INTEGER, is_preinstalled INTEGER, has_option INTEGER, disp_lang TEXT);";
     int ret = sqlite3_exec(databaseInfo.pHandle, pQuery, NULL, NULL, &pException);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_exec returned %d: %s", ret, pException);
+        LOGE ("sqlite3_exec returned %d: %s\n", ret, pException);
         sqlite3_free(pException);
         return -EIO;
     }
 
     if (sqlite3_changes(databaseInfo.pHandle) == 0) {
-        LOGD("The database is not changed.");
+        LOGD ("The database is not changed.\n");
     }
 
     return 0;
@@ -183,7 +183,7 @@ static inline int _db_init(void)
     struct stat stat;
     int ret = db_util_open(databaseInfo.pPath, &databaseInfo.pHandle, DB_UTIL_REGISTER_HOOK_METHOD);
     if (ret != SQLITE_OK) {
-        LOGE("db_util_open(\"%s\", ~) returned %d: %s\n", databaseInfo.pPath, ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("db_util_open(\"%s\", ~) returned %d: %s\n", databaseInfo.pPath, ret, sqlite3_errmsg(databaseInfo.pHandle));
         if (databaseInfo.pHandle)
             db_util_close(databaseInfo.pHandle);
         databaseInfo.pHandle = NULL;
@@ -192,7 +192,7 @@ static inline int _db_init(void)
 
     if (lstat(databaseInfo.pPath, &stat) < 0) {
         char buf_err[256];
-        LOGE("%s", strerror_r (errno, buf_err, sizeof (buf_err)));
+        LOGE("%s\n", strerror_r (errno, buf_err, sizeof (buf_err)));
         if (databaseInfo.pHandle)
             db_util_close(databaseInfo.pHandle);
         databaseInfo.pHandle = NULL;
@@ -200,7 +200,7 @@ static inline int _db_init(void)
     }
 
     if (!S_ISREG(stat.st_mode)) {
-        LOGE("S_ISREG failed.");
+        LOGE ("S_ISREG failed.\n");
         if (databaseInfo.pHandle)
             db_util_close(databaseInfo.pHandle);
         databaseInfo.pHandle = NULL;
@@ -208,7 +208,7 @@ static inline int _db_init(void)
     }
 
     if (!stat.st_size) {
-        LOGE("The RPM file has not been installed properly.");
+        LOGE ("The RPM file has not been installed properly.\n");
         _db_create_table();
     }
 
@@ -221,7 +221,7 @@ static inline int _db_connect(void)
         int ret = _db_init();
         if (ret < 0)
         {
-            LOGE("_db_init failed. error code=%d", ret);
+            LOGE ("_db_init failed. error code=%d\n", ret);
             return -EIO;
         }
     }
@@ -260,7 +260,7 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
         if (i == 0) {
             ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
             if (ret != SQLITE_OK) {
-                LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+                LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
                 return 0;
             }
         }
@@ -301,7 +301,7 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
             db_text = (char *)sqlite3_column_text(pStmt, 12);
             info.display_lang = String(db_text ? db_text : "");
 
-            SECURE_LOGD("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"",
+            SECURE_LOGD ("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"\n",
                 info.appid.c_str(),
                 info.label.c_str(),
                 info.pkgid.c_str(),
@@ -322,7 +322,7 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
     } while (ret == SQLITE_ROW);
 
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
     }
 
     sqlite3_reset(pStmt);
@@ -368,19 +368,19 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_ROW) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
     i = 1;
@@ -419,7 +419,7 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     db_text = (char*)sqlite3_column_text(pStmt, 12);
     pImeInfo->display_lang = String(db_text ? db_text : "");
 
-    SECURE_LOGD("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"",
+    SECURE_LOGD ("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"\n",
         pImeInfo->appid.c_str(),
         pImeInfo->label.c_str(),
         pImeInfo->pkgid.c_str(),
@@ -459,13 +459,13 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
         if (i == 0) {
             ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
             if (ret != SQLITE_OK) {
-                LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+                LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
                 return 0;
             }
 
             ret = sqlite3_bind_int(pStmt, 1, mode);
             if (ret != SQLITE_OK) {
-                LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+                LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
                 goto out;
             }
         }
@@ -474,13 +474,13 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             mname.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD("%s: \"%s\"", (mode? "Helper": "IMEngine"), mname.back().c_str());
+            SECURE_LOGD("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mname.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
 
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
     }
 
 out:
@@ -506,13 +506,13 @@ static int _db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_int(pStmt, 1, mode);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
@@ -521,13 +521,13 @@ static int _db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             mpath.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD("%s: \"%s\"", (mode? "Helper": "IMEngine"), mpath.back().c_str());
+            SECURE_LOGD ("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mpath.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
 
     if (ret != SQLITE_DONE) {
-        LOGW("sqlite3_step returned %d, mode=%d, %s", ret, mode, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGW ("sqlite3_step returned %d, mode=%d, %s\n", ret, mode, sqlite3_errmsg(databaseInfo.pHandle));
     }
 
 out:
@@ -553,13 +553,13 @@ static int _db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &ap
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, pkgid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
@@ -568,13 +568,13 @@ static int _db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &ap
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             appids.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD("appid=\"%s\"", appids.back().c_str());
+            SECURE_LOGD ("appid=\"%s\"\n", appids.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
 
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
     }
 
 out:
@@ -603,24 +603,24 @@ static int _db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_ROW) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
     }
     else {
         *is_enabled = (bool)sqlite3_column_int(pStmt, 0);
         i = 1;
-        SECURE_LOGD("is_enabled=%d by appid=\"%s\"", *is_enabled, appid);
+        SECURE_LOGD ("is_enabled=%d by appid=\"%s\"\n", *is_enabled, appid);
     }
 
 out:
@@ -645,19 +645,19 @@ static int _db_select_count_by_module_name(const char *module_name)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, module_name, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_ROW) {
-        LOGE("sqlite3_step: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
     }
     else {
         i = sqlite3_column_int(pStmt, 0);
@@ -685,37 +685,37 @@ static int _db_update_label_by_appid(const char *appid, const char *label)
     static const char* pQuery = "UPDATE ime_info SET label = ? WHERE appid = ?;";
 
     if (appid == NULL || label == NULL) {
-        LOGE("input is NULL.");
+        LOGE ("input is NULL.\n");
         return 0;
     }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, label, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 2, appid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
     else {
-        SECURE_LOGD("UPDATE ime_info SET label = %s WHERE appid = %s;", label, appid);
+        SECURE_LOGD ("UPDATE ime_info SET label = %s WHERE appid = %s;\n", label, appid);
         ret = 1;
     }
 
@@ -740,30 +740,30 @@ static int _db_update_disp_lang(const char *disp_lang)
     static const char* pQuery = "UPDATE ime_info SET disp_lang = ?;";
 
     if (disp_lang == NULL) {
-        LOGE("input is NULL.");
+        LOGE ("input is NULL.\n");
         return 0;
     }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, disp_lang, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
     else {
-        SECURE_LOGD("UPDATE ime_info SET disp_lang = %s;", disp_lang);
+        SECURE_LOGD ("UPDATE ime_info SET disp_lang = %s;\n", disp_lang);
         ret = 1;
     }
 
@@ -790,36 +790,36 @@ static int _db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
     static const char* pQuery = "UPDATE ime_info SET is_enabled = ? WHERE appid = ?;";
 
     if (appid == NULL) {
-        LOGE("input is NULL.");
+        LOGE ("input is NULL.\n");
         return 0;
     }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_int(pStmt, 1, (int)is_enabled);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 2, appid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
     else {
-        SECURE_LOGD("UPDATE ime_info SET enabled = %d WHERE appid = %s;", is_enabled, appid);
+        SECURE_LOGD ("UPDATE ime_info SET enabled = %d WHERE appid = %s;\n", is_enabled, appid);
         ret = 1;
     }
 
@@ -845,36 +845,36 @@ static int _db_update_has_option_by_appid(const char *appid, bool has_option)
     static const char* pQuery = "UPDATE ime_info SET has_option = ? WHERE appid = ?;";
 
     if (appid == NULL) {
-        LOGE("input is NULL.");
+        LOGE ("input is NULL.\n");
         return 0;
     }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return 0;
     }
 
     ret = sqlite3_bind_int(pStmt, 1, (int)has_option);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 2, appid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
         ret = 0;
     }
     else {
-        SECURE_LOGD("UPDATE ime_info SET enabled = %d WHERE appid = %s;", has_option, appid);
+        SECURE_LOGD ("UPDATE ime_info SET enabled = %d WHERE appid = %s;\n", has_option, appid);
         ret = 1;
     }
 
@@ -899,37 +899,37 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
     static const char* pQuery = "UPDATE ime_info SET label = ?, exec = ?, mname = ?, mpath = ?, has_option = ? WHERE appid = ?;";
 
     if (!ime_db) {
-        LOGE("Input parameter is null");
+        LOGE ("Input parameter is null\n");
         return 0;
     }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, ime_db->label.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 2, ime_db->exec.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 3, ime_db->module_name.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 4, ime_db->module_path.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
@@ -942,13 +942,13 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_bind_int(pStmt, 5, has_option);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 6, ime_db->appid.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
@@ -959,7 +959,7 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
         goto out;
     }
     else {
-        SECURE_LOGD("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+        SECURE_LOGD ("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
             ime_db->appid.c_str(), ime_db->label.c_str(), ime_db->exec.c_str(), ime_db->module_name.c_str(), ime_db->module_path.c_str());
         ret = SQLITE_OK;
         i++;
@@ -991,102 +991,102 @@ static int _db_insert_ime_info(ImeInfoDB *ime_db)
     static const char* pQuery = "INSERT INTO ime_info (appid, label, pkgid, pkgtype, exec, mname, mpath, mode, options, is_enabled, is_preinstalled, has_option, disp_lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     if (!ime_db) {
-        LOGE("Input parameter is null");
+        LOGE ("Input parameter is null\n");
         return 0;
     }
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_prepare_v2: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_prepare_v2: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, ime_db->appid.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 2, ime_db->label.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 3, ime_db->pkgid.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 4, ime_db->pkgtype.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 5, ime_db->exec.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 6, ime_db->module_name.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 7, ime_db->module_path.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_int(pStmt, 8, ime_db->mode);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_int: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_int(pStmt, 9, (int)ime_db->options);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_int: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_int(pStmt, 10, (int)ime_db->is_enabled);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_int: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_int(pStmt, 11, (int)ime_db->is_preinstalled);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_int: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_int(pStmt, 12, ime_db->has_option);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_int: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_int: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_bind_text(pStmt, 13, ime_db->display_lang.c_str(), -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGW("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+        LOGW ("sqlite3_step returned %d, appid=%s, %s\n", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
         ret = SQLITE_ERROR;
         goto out;
     }
     else {
-        SECURE_LOGD("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u %d \"%s\"",
+        SECURE_LOGD ("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u %d \"%s\"\n",
             ime_db->appid.c_str(), ime_db->label.c_str(), ime_db->pkgid.c_str(), ime_db->pkgtype.c_str(),
             ime_db->module_name.c_str(), ime_db->exec.c_str(), ime_db->module_path.c_str(), ime_db->mode,
             ime_db->options, ime_db->is_enabled, ime_db->is_preinstalled, ime_db->has_option, ime_db->display_lang.c_str());
@@ -1121,23 +1121,23 @@ static int _db_delete_ime_info_by_pkgid(const char *pkgid)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, pkgid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
     }
     else {
         // If there is no pkgid to delete, ret is still SQLITE_DONE.
-        SECURE_LOGD("DELETE FROM ime_info WHERE pkgid = %s;", pkgid);
+        SECURE_LOGD ("DELETE FROM ime_info WHERE pkgid = %s;\n", pkgid);
         i = 1;
     }
 
@@ -1163,23 +1163,23 @@ static int _db_delete_ime_info_by_appid(const char *appid)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
 
     ret = sqlite3_bind_text(pStmt, 1, appid, -1, SQLITE_TRANSIENT);
     if (ret != SQLITE_OK) {
-        LOGE("sqlite3_bind_text: %s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_bind_text: %s\n", sqlite3_errmsg(databaseInfo.pHandle));
         goto out;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
     }
     else {
         // If there is no appid to delete, ret is still SQLITE_DONE.
-        SECURE_LOGD("DELETE FROM ime_info WHERE appid = %s;", appid);
+        SECURE_LOGD ("DELETE FROM ime_info WHERE appid = %s;\n", appid);
         i = 1;
     }
 
@@ -1203,17 +1203,17 @@ static int _db_delete_ime_info(void)
 
     ret = sqlite3_prepare_v2(databaseInfo.pHandle, pQuery, -1, &pStmt, NULL);
     if (ret != SQLITE_OK) {
-        LOGE("%s", sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("%s\n", sqlite3_errmsg(databaseInfo.pHandle));
         return i;
     }
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGE("sqlite3_step returned %d, %s", ret, sqlite3_errmsg(databaseInfo.pHandle));
+        LOGE ("sqlite3_step returned %d, %s\n", ret, sqlite3_errmsg(databaseInfo.pHandle));
     }
     else {
         // If there is no pkgid to delete, ret is still SQLITE_DONE.
-        SECURE_LOGD("DELETE FROM ime_info;");
+        SECURE_LOGD ("DELETE FROM ime_info;\n");
         i = 1;
     }
 
@@ -1241,7 +1241,7 @@ EXAPI int isf_db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1259,7 +1259,7 @@ EXAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo
     int ret = 0;
 
     if (!appid || !pImeInfo) {
-        LOGW("invalid parameter.");
+        LOGW ("invalid parameter.\n");
         return 0;
     }
 
@@ -1268,7 +1268,7 @@ EXAPI int isf_db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1292,7 +1292,7 @@ EXAPI int isf_db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Str
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1316,7 +1316,7 @@ EXAPI int isf_db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Str
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1336,7 +1336,7 @@ EXAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &
     appids.clear();
 
     if (!pkgid) {
-        LOGW("pkgid is null.");
+        LOGW ("pkgid is null.\n");
         return ret;
     }
 
@@ -1345,7 +1345,7 @@ EXAPI int isf_db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1363,7 +1363,7 @@ EXAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
     int ret = 0;
 
     if (!appid || !is_enabled) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1372,7 +1372,7 @@ EXAPI int isf_db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1390,7 +1390,7 @@ EXAPI int isf_db_select_count_by_module_name(const char *module_name)
     int ret = 0;
 
     if (!module_name) {
-        LOGW("module_name is null.");
+        LOGW ("module_name is null.\n");
         return ret;
     }
 
@@ -1399,7 +1399,7 @@ EXAPI int isf_db_select_count_by_module_name(const char *module_name)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1417,7 +1417,7 @@ EXAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
     int ret = 0;
 
     if (!appid || !label) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1426,7 +1426,7 @@ EXAPI int isf_db_update_label_by_appid(const char *appid, const char *label)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1443,7 +1443,7 @@ EXAPI int isf_db_update_disp_lang(const char *disp_lang)
     int ret = 0;
 
     if (!disp_lang) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1452,7 +1452,7 @@ EXAPI int isf_db_update_disp_lang(const char *disp_lang)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1470,7 +1470,7 @@ EXAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
     int ret = 0;
 
     if (!appid) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1479,7 +1479,7 @@ EXAPI int isf_db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1497,7 +1497,7 @@ EXAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
     int ret = 0;
 
     if (!appid) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1506,7 +1506,7 @@ EXAPI int isf_db_update_has_option_by_appid(const char *appid, bool has_option)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1523,7 +1523,7 @@ EXAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
     int ret = 0;
 
     if (!ime_db) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1532,7 +1532,7 @@ EXAPI int isf_db_update_ime_info(ImeInfoDB *ime_db)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1557,7 +1557,7 @@ EXAPI int isf_db_insert_ime_info(ImeInfoDB *ime_db)
         _db_disconnect();
     }
     else {
-        LOGE("_db_connect() failed");
+        LOGE ("_db_connect() failed\n");
         ISF_SAVE_LOG("_db_connect() failed\n");
     }
 
@@ -1576,7 +1576,7 @@ EXAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
     int ret = 0;
 
     if (!pkgid) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1585,7 +1585,7 @@ EXAPI int isf_db_delete_ime_info_by_pkgid(const char *pkgid)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1602,7 +1602,7 @@ EXAPI int isf_db_delete_ime_info_by_appid(const char *appid)
     int ret = 0;
 
     if (!appid) {
-        LOGW("Input parameter is null.");
+        LOGW ("Input parameter is null.\n");
         return ret;
     }
 
@@ -1611,7 +1611,7 @@ EXAPI int isf_db_delete_ime_info_by_appid(const char *appid)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }
@@ -1630,7 +1630,7 @@ EXAPI int isf_db_delete_ime_info(void)
         _db_disconnect();
     }
     else
-        LOGW("failed");
+        LOGW ("failed\n");
 
     return ret;
 }

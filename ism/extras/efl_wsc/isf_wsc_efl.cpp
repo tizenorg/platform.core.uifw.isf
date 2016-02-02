@@ -82,7 +82,6 @@ static KeycodeRepository _keysym2keycode;
 #endif
 #define LOG_TAG                                         "ISF_WSC_EFL"
 
-
 static struct weescim _wsc                                  = {0};
 
 /////////////////////////////////////////////////////////////////////////////
@@ -102,7 +101,7 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
 
     isf_wsc_context_cursor_position_set(wsc->wsc_ctx, cursor);
 
-    LOGD ("text : '%s', cursor : %d", text, cursor);
+    LOGD ("text : '%s', cursor : %d\n", text, cursor);
 }
 
 static void
@@ -119,7 +118,7 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
 {
     struct weescim *wsc = (weescim*)data;
 
-    LOGD ("im_context = %p hint = %d purpose = %d", im_ctx, hint, purpose);
+    LOGD ("im_context = %p hint = %d purpose = %d\n", im_ctx, hint, purpose);
 
     if (!wsc || !wsc->context_changed)
         return;
@@ -149,7 +148,7 @@ _wsc_im_ctx_invoke_action(void *data, struct wl_input_method_context *im_ctx, ui
     struct weescim *wsc = (weescim*)data;
     if (!wsc) return;
 
-    LOGD ("invoke action. button : %d", button);
+    LOGD ("invoke action. button : %d\n", button);
 
     if (button != BTN_LEFT)
         return;
@@ -166,7 +165,7 @@ _wsc_im_ctx_commit_state(void *data, struct wl_input_method_context *im_ctx, uin
     wsc->serial = serial;
 
     if (wsc->surrounding_text)
-        LOGD ("Surrounding text updated: %s", wsc->surrounding_text);
+        LOGD ("Surrounding text updated: '%s'\n", wsc->surrounding_text);
 
     if (wsc->language)
         wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
@@ -190,7 +189,7 @@ _wsc_im_ctx_preferred_language(void *data, struct wl_input_method_context *im_ct
 
     if (language) {
         wsc->language = strdup (language);
-        LOGD ("Language changed, new: '%s'", language);
+        LOGD ("Language changed, new: '%s'\n", language);
     }
 }
 
@@ -199,7 +198,7 @@ _wsc_im_ctx_return_key_type(void *data, struct wl_input_method_context *im_ctx, 
 {
     struct weescim *wsc = (weescim*)data;
 
-    LOGD ("im_context = %p return key type = %d", im_ctx, return_key_type);
+    LOGD ("im_context = %p return key type = %d\n", im_ctx, return_key_type);
     if (!wsc || !wsc->wsc_ctx) return;
 
     if (wsc->return_key_type != return_key_type) {
@@ -214,7 +213,7 @@ _wsc_im_ctx_return_key_disabled(void *data, struct wl_input_method_context *im_c
     struct weescim *wsc = (weescim*)data;
     Eina_Bool return_key_disabled = !!disabled;
 
-    LOGD ("im_context = %p return key disabled = %d", im_ctx, return_key_disabled);
+    LOGD ("im_context = %p return key disabled = %d\n", im_ctx, return_key_disabled);
     if (!wsc || !wsc->wsc_ctx) return;
 
     if (wsc->return_key_disabled != return_key_disabled) {
@@ -227,7 +226,7 @@ static void
 _wsc_im_ctx_input_panel_data(void *data, struct wl_input_method_context *im_ctx, const char *input_panel_data, uint32_t input_panel_data_length)
 {
     struct weescim *wsc = (weescim*)data;
-    LOGD ("im_context = %p input panel data = %s len = %d", im_ctx, input_panel_data, input_panel_data_length);
+    LOGD ("im_context = %p input panel data = %s len = %d\n", im_ctx, input_panel_data, input_panel_data_length);
     if (!wsc || !wsc->wsc_ctx) return;
 
     isf_wsc_context_input_panel_imdata_set (wsc->wsc_ctx, (void *)input_panel_data, input_panel_data_length);
@@ -540,7 +539,7 @@ _wsc_setup(struct weescim *wsc)
     }
 
     /* Input method listener */
-    LOGD ("Adding wl_input_method listener");
+    LOGD ("Adding wl_input_method listener\n");
 
     if (wsc->im)
         wl_input_method_add_listener (wsc->im, &wsc_im_listener, wsc);

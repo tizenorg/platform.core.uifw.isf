@@ -1392,7 +1392,7 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
 #endif
                 isf_wsc_context_set_keyboard_mode (wsc->wsc_ctx, TOOLBAR_KEYBOARD_MODE);
                 ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
-                LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
+                LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
             }
         }
     }
@@ -2992,7 +2992,7 @@ open_specific_factory (WSCContextISF *ic,
         }
     } else {
         std::cerr << "open_specific_factory () is failed!!!!!!\n";
-        LOGW ("open_specific_factory () is failed. uuid : %s", uuid.c_str ());
+        LOGW ("open_specific_factory () is failed. uuid : %s\n", uuid.c_str ());
 
         // turn_off_ic comment out panel_req_update_factory_info ()
         //turn_off_ic (ic);

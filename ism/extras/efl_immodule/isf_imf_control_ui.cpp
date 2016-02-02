@@ -278,14 +278,14 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
     if (type == ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_CANDIDATE_PANEL_HIDE) {
             if (notified_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-                SECURE_LOGD ("received_candidate_will_hide_event = 1");
+                SECURE_LOGD ("received_candidate_will_hide_event = 1\n");
                 received_candidate_will_hide_event = TRUE;
                 isf_imf_context_input_panel_send_candidate_will_hide_ack (using_ic);
             } else {
-                SECURE_LOGD ("received_candidate_will_hide_event != 1, due to notified_state");
+                SECURE_LOGD ("received_candidate_will_hide_event != 1, due to notified_state\n");
             }
         } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-            SECURE_LOGD ("received_candidate_will_hide_event = 0");
+            SECURE_LOGD ("received_candidate_will_hide_event = 0\n");
             received_candidate_will_hide_event = EINA_FALSE;
         }
     }
@@ -513,7 +513,7 @@ void isf_imf_input_panel_shutdown (void)
     }
 
     candidate_conformant_reset_done = TRUE;
-    SECURE_LOGD ("candidate_conformant_reset_done = 1");
+    SECURE_LOGD ("candidate_conformant_reset_done = 1\n");
 
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     if (active_ctx) {

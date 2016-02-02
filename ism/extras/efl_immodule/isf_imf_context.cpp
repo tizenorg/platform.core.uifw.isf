@@ -583,7 +583,7 @@ _key_down_cb (void *data, int type, void *event)
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 KeyEvent key;
                 scim_string_to_key (key, ev->key);
-                LOGD ("process hide_ise_key_event to handle it in the helper: %s", ev->keyname);
+                LOGD ("process hide_ise_key_event to handle it in the helper: %s\n", ev->keyname);
                 void *pvoid = &ret;
                 _panel_client.prepare (ic->id);
                 _panel_client.process_key_event (key, (int*) pvoid);
@@ -632,7 +632,7 @@ _key_up_cb (void *data, int type, void *event)
                 scim_string_to_key (key, ev->key);
                 key.mask = SCIM_KEY_ReleaseMask;
                 key.mask &= _valid_key_mask;
-                LOGD ("process hide_ise_key_event to handle it in the helper: %s", ev->keyname);
+                LOGD ("process hide_ise_key_event to handle it in the helper: %s\n", ev->keyname);
                 void *pvoid = &ret;
                 _panel_client.prepare (ic->id);
                 _panel_client.process_key_event (key, (int*) pvoid);
@@ -669,7 +669,7 @@ _key_up_cb (void *data, int type, void *event)
                 }
                 _click_timer = ecore_timer_add (0.4, _click_check, NULL);
             } else {
-                LOGD ("Skip toggle key input");
+                LOGD ("Skip toggle key input\n");
                 ecore_timer_del (_click_timer);
                 _click_timer = ecore_timer_add (0.4, _click_check, NULL);
             }
@@ -2129,7 +2129,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             if (ic == _focused_ic) {
                 if (_change_keyboard_mode_by_touch && get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) {
                     isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
-                    LOGD("S/W keyboard mode by enabling ChangeKeyboardModeByTouch");
+                    LOGD ("S/W keyboard mode by enabling ChangeKeyboardModeByTouch\n");
                 } else {
                     ecore_imf_context_input_panel_show (ctx);
                 }
@@ -3660,7 +3660,7 @@ open_specific_factory (EcoreIMFContextISF *ic,
         }
     } else {
         std::cerr << "open_specific_factory () is failed!!!!!!\n";
-        LOGW ("open_specific_factory () is failed. uuid : %s", uuid.c_str ());
+        LOGW ("open_specific_factory () is failed. uuid : %s\n", uuid.c_str ());
 
         // turn_off_ic comment out panel_req_update_factory_info ()
         //turn_off_ic (ic);

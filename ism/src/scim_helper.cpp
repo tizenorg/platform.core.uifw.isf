@@ -238,7 +238,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     }
     std::cerr << " Connected :" << i << "\n";
     ISF_LOG ("  Connected :%d\n", i);
-    LOGD ("Connection to PanelAgent succeeded, %d", i);
+    LOGD ("Connection to PanelAgent succeeded, %d\n", i);
 
     /* Let's retry 10 times when failed */
     int open_connection_retries = 0;
@@ -269,7 +269,7 @@ HelperAgent::open_connection (const HelperInfo &info,
     }
 
     ISF_LOG ("scim_socket_open_connection () is successful.\n");
-    LOGD ("scim_socket_open_connection successful");
+    LOGD ("scim_socket_open_connection successful\n");
 
     bool match = false;
     std::vector<ImeInfoDB> ime_info_db;
@@ -523,7 +523,7 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_SHOW_ISE_PANEL:
             {
-                LOGD ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message");
+                LOGD ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
 
                 char   *data = NULL;
                 size_t  len;
@@ -535,7 +535,7 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_HIDE_ISE_PANEL:
             {
-                LOGD ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message");
+                LOGD ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
 
                 m_impl->signal_ise_hide (this, ic, ic_uuid);
                 break;
