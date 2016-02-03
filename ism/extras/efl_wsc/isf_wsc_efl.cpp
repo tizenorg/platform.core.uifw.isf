@@ -137,8 +137,6 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
         caps_mode_check (wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
 
         wsc->context_changed = EINA_FALSE;
-
-        isf_wsc_context_input_panel_show (wsc->wsc_ctx);
     }
 }
 
@@ -453,7 +451,6 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
 
     wsc->context_changed = EINA_TRUE;
     isf_wsc_context_focus_in (wsc->wsc_ctx);
-    isf_wsc_context_input_panel_show (wsc->wsc_ctx);
 }
 
 static void
@@ -473,9 +470,31 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     }
 }
 
+static void
+_wsc_im_show_input_panel(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx)
+{
+    struct weescim *wsc = (weescim*)data;
+    if (!wsc) return;
+
+    if (wsc->wsc_ctx)
+        isf_wsc_context_input_panel_show (wsc->wsc_ctx);
+}
+
+static void
+_wsc_im_hide_input_panel(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx)
+{
+    struct weescim *wsc = (weescim*)data;
+    if (!wsc) return;
+
+    if (wsc->wsc_ctx)
+        isf_wsc_context_input_panel_hide (wsc->wsc_ctx);
+}
+
 static const struct wl_input_method_listener wsc_im_listener = {
     _wsc_im_activate,
-    _wsc_im_deactivate
+    _wsc_im_deactivate,
+    _wsc_im_show_input_panel,
+    _wsc_im_hide_input_panel
 };
 
 static void

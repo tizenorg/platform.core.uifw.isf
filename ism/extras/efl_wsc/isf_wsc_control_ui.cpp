@@ -139,6 +139,9 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
 
     iseContext.input_hint = wsc_context_input_hint_get (ctx->ctx);
 
+    /* FIXME */
+    iseContext.bidi_direction = ECORE_IMF_BIDI_DIRECTION_NEUTRAL;
+
     LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
     LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
