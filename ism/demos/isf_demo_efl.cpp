@@ -356,6 +356,7 @@ int main (int argc, char *argv[])
 {
     struct appdata ad;
     struct appcore_ops ops;
+    int ret = 0;
 
     ops.create    = app_create;
     ops.terminate = app_exit;
@@ -366,24 +367,11 @@ int main (int argc, char *argv[])
     memset (&ad, 0x0, sizeof (struct appdata));
     ops.data = &ad;
 
-    elm_init (argc, argv);
-
-    app_create (&ad);
-
-    elm_run ();
-
-    int ret = 0;
-    /*
     try {
         ret = appcore_efl_main ("isf-demo-efl", &argc, &argv, &ops);
     } catch (...) {
         LOGW ("Exception is thrown from appcore_efl_main ()!!!\n");
     }
-    */
-
-    app_exit (&ad);
-
-    elm_shutdown ();
 
     return ret;
 }
