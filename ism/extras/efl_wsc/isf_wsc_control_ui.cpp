@@ -74,16 +74,16 @@ void isf_wsc_input_panel_shutdown (void)
 {
 }
 
-void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
+void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
 {
     int length = -1;
     void *packet = NULL;
     char imdata[1024] = {0};
     bool input_panel_show = false;
-    input_panel_ctx = ctx;
+    input_panel_ctx = wsc_ctx;
     Ise_Context iseContext;
 
-    if (!ctx || !ctx->ctx)
+    if (!wsc_ctx || !wsc_ctx->ctx)
         return;
 
     if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
@@ -92,19 +92,19 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     }
 
     /* set password mode */
-    iseContext.password_mode = wsc_context_input_panel_password_mode_get (ctx->ctx);
+    iseContext.password_mode = wsc_context_input_panel_password_mode_get (wsc_ctx);
 
     /* set language */
-    iseContext.language = wsc_context_input_panel_language_get (ctx->ctx);
+    iseContext.language = wsc_context_input_panel_language_get (wsc_ctx);
 
     /* set layout in ise context info */
-    iseContext.layout = wsc_context_input_panel_layout_get (ctx->ctx);
+    iseContext.layout = wsc_context_input_panel_layout_get (wsc_ctx);
 
     /* set layout variation in ise context info */
-    iseContext.layout_variation = wsc_context_input_panel_layout_variation_get (ctx->ctx);
+    iseContext.layout_variation = wsc_context_input_panel_layout_variation_get (wsc_ctx);
 
     /* set prediction allow */
-    iseContext.prediction_allow = wsc_context_prediction_allow_get (ctx->ctx);
+    iseContext.prediction_allow = wsc_context_prediction_allow_get (wsc_ctx);
 
     if (iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD)
         iseContext.password_mode = EINA_TRUE;
@@ -115,34 +115,34 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     if (iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL)
         iseContext.prediction_allow = EINA_FALSE;
 
-    isf_wsc_context_prediction_allow_set (ctx, iseContext.prediction_allow);
+    isf_wsc_context_prediction_allow_set (wsc_ctx, iseContext.prediction_allow);
 
     /* set return key type */
-    iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)ctx->ctx->return_key_type;
+    iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)wsc_ctx->return_key_type;
 
     /* set return key disabled */
-    iseContext.return_key_disabled = ctx->ctx->return_key_disabled;
+    iseContext.return_key_disabled = wsc_ctx->return_key_disabled;
 
     /* set caps mode */
-    iseContext.caps_mode = caps_mode_check (ctx, EINA_TRUE, EINA_FALSE);
+    iseContext.caps_mode = caps_mode_check (wsc_ctx, EINA_TRUE, EINA_FALSE);
 
     /* set client window */
     iseContext.client_window = 0;
 
     /* set the size of imdata */
-    context_scim_imdata_get (ctx, (void *)imdata, &iseContext.imdata_size);
+    context_scim_imdata_get (wsc_ctx, (void *)imdata, &iseContext.imdata_size);
 
     /* set the cursor position of the editable widget */
     wsc_context_surrounding_get (ctx->ctx, NULL, &iseContext.cursor_pos);
 
-    iseContext.autocapital_type = wsc_context_autocapital_type_get (ctx->ctx);
+    iseContext.autocapital_type = wsc_context_autocapital_type_get (wsc_ctx);
 
-    iseContext.input_hint = wsc_context_input_hint_get (ctx->ctx);
+    iseContext.input_hint = wsc_context_input_hint_get (wsc_ctx);
 
     /* FIXME */
     iseContext.bidi_direction = ECORE_IMF_BIDI_DIRECTION_NEUTRAL;
 
-    LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
+    LOGD ("ctx : %p, layout : %d, layout variation : %d\n", wsc_ctx, iseContext.layout, iseContext.layout_variation);
     LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
     LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
     LOGD ("password mode : %d, prediction_allow : %d\n", iseContext.password_mode, iseContext.prediction_allow);
@@ -161,13 +161,13 @@ void isf_wsc_context_input_panel_show (WSCContextISF* ctx)
     memcpy (packet, (void *)&iseContext, sizeof (iseContext));
     memcpy ((void *)((char *)packet + sizeof (iseContext)), (void *)imdata, iseContext.imdata_size);
 
-    int context_id = _get_context_id (ctx);
+    int context_id = _get_context_id (wsc_ctx);
 
     _isf_wsc_context_input_panel_show (get_panel_client_id (), context_id, packet, length, input_panel_show);
 
     free (packet);
 
-    caps_mode_check (ctx, EINA_TRUE, EINA_TRUE);
+    caps_mode_check (wsc_ctx, EINA_TRUE, EINA_TRUE);
 }
 
 void isf_wsc_context_input_panel_hide (WSCContextISF *ctx)

@@ -339,7 +339,6 @@ static WSCContextISF                                   *_focused_ic             
 static bool                                             _scim_initialized           = false;
 
 static int                                              _instance_count             = 0;
-static int                                              _context_count              = 0;
 
 static IMEngineFactoryPointer                           _fallback_factory;
 static IMEngineInstancePointer                          _fallback_instance;
@@ -552,7 +551,7 @@ check_space_symbol (Eina_Unicode uchar)
 }
 
 static void
-autoperiod_insert (WSCContextISF *ctx)
+autoperiod_insert (WSCContextISF *wsc_ctx)
 {
     char *plain_str = NULL;
     int cursor_pos = 0;
@@ -562,16 +561,16 @@ autoperiod_insert (WSCContextISF *ctx)
     if (autoperiod_allow == EINA_FALSE)
         return;
 
-    if (!ctx) return;
+    if (!wsc_ctx) return;
 
-    Ecore_IMF_Input_Panel_Layout layout = wsc_context_input_panel_layout_get (ctx->ctx);
+    Ecore_IMF_Input_Panel_Layout layout = wsc_context_input_panel_layout_get (wsc_ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
         return;
 
     if ((ecore_time_get () - space_key_time) > DOUBLE_SPACE_INTERVAL)
         goto done;
 
-    wsc_context_surrounding_get (ctx->ctx, &plain_str, &cursor_pos);
+    wsc_context_surrounding_get (wsc_ctx, &plain_str, &cursor_pos);
     if (!plain_str) goto done;
 
     // Convert string from UTF-8 to unicode
@@ -582,7 +581,7 @@ autoperiod_insert (WSCContextISF *ctx)
 
     if (check_space_symbol (ustr[cursor_pos-1]) &&
         !(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
-        wsc_context_delete_surrounding (ctx->ctx, -1, 1);
+        wsc_context_delete_surrounding (wsc_ctx, -1, 1);
 
         if (input_lang == INPUT_LANG_OTHER) {
             fullstop_mark = strdup (".");
@@ -595,7 +594,7 @@ autoperiod_insert (WSCContextISF *ctx)
             fullstop_mark = strdup (utf8_wcstombs (wstr).c_str ());
         }
 
-        wsc_context_commit_string (ctx->ctx, fullstop_mark);
+        wsc_context_commit_string (wsc_ctx, fullstop_mark);
 
         if (fullstop_mark) {
             free (fullstop_mark);
@@ -609,7 +608,7 @@ done:
 }
 
 static Eina_Bool
-analyze_surrounding_text (WSCContextISF *ctx)
+analyze_surrounding_text (WSCContextISF *wsc_ctx)
 {
     char *plain_str = NULL;
     Eina_Unicode puncs[] = {'\n','.', '!', '?', 0x00BF /* ¿ */, 0x00A1 /* ¡ */,
@@ -623,8 +622,8 @@ analyze_surrounding_text (WSCContextISF *ctx)
     const int punc_num = sizeof (puncs) / sizeof (puncs[0]);
     WSCContextISF *context_scim;
 
-    if (!ctx) return EINA_FALSE;
-    context_scim = ctx;
+    if (!wsc_ctx) return EINA_FALSE;
+    context_scim = wsc_ctx;
     if (!context_scim || !context_scim->impl) return EINA_FALSE;
 
     switch (context_scim->impl->autocapital_type) {
@@ -642,7 +641,7 @@ analyze_surrounding_text (WSCContextISF *ctx)
     if (context_scim->impl->preedit_updating)
         return EINA_FALSE;
 
-    wsc_context_surrounding_get (ctx->ctx, &plain_str, &cursor_pos);
+    wsc_context_surrounding_get (wsc_ctx, &plain_str, &cursor_pos);
     if (!plain_str) goto done;
 
     if (cursor_pos == 0) {
@@ -708,33 +707,33 @@ done:
 }
 
 Eina_Bool
-caps_mode_check (WSCContextISF *ctx, Eina_Bool force, Eina_Bool noti)
+caps_mode_check (WSCContextISF *wsc_ctx, Eina_Bool force, Eina_Bool noti)
 {
     Eina_Bool uppercase;
     WSCContextISF *context_scim;
 
     if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) return EINA_FALSE;
 
-    if (!ctx) return EINA_FALSE;
-    context_scim = ctx;
+    if (!wsc_ctx) return EINA_FALSE;
+    context_scim = wsc_ctx;
 
     if (!context_scim || !context_scim->impl)
         return EINA_FALSE;
 
     if (context_scim->impl->next_shift_status == SHIFT_MODE_LOCK) return EINA_TRUE;
 
-    Ecore_IMF_Input_Panel_Layout layout = wsc_context_input_panel_layout_get (ctx->ctx);
+    Ecore_IMF_Input_Panel_Layout layout = wsc_context_input_panel_layout_get (wsc_ctx);
     if (layout != ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL)
         return EINA_FALSE;
 
     // Check autocapital type
-    if (wsc_context_input_panel_caps_lock_mode_get (ctx->ctx)) {
+    if (wsc_context_input_panel_caps_lock_mode_get (wsc_ctx)) {
         uppercase = EINA_TRUE;
     } else {
         if (autocap_allow == EINA_FALSE)
             return EINA_FALSE;
 
-        if (analyze_surrounding_text (ctx)) {
+        if (analyze_surrounding_text (wsc_ctx)) {
             uppercase = EINA_TRUE;
         } else {
             uppercase = EINA_FALSE;
@@ -744,12 +743,12 @@ caps_mode_check (WSCContextISF *ctx, Eina_Bool force, Eina_Bool noti)
     if (force) {
         context_scim->impl->next_shift_status = uppercase ? SHIFT_MODE_ON : SHIFT_MODE_OFF;
         if (noti)
-            isf_wsc_context_input_panel_caps_mode_set (ctx, uppercase);
+            isf_wsc_context_input_panel_caps_mode_set (wsc_ctx, uppercase);
     } else {
         if (context_scim->impl->next_shift_status != (uppercase ? SHIFT_MODE_ON : SHIFT_MODE_OFF)) {
             context_scim->impl->next_shift_status = uppercase ? SHIFT_MODE_ON : SHIFT_MODE_OFF;
             if (noti)
-                isf_wsc_context_input_panel_caps_mode_set (ctx, uppercase);
+                isf_wsc_context_input_panel_caps_mode_set (wsc_ctx, uppercase);
         }
     }
 
@@ -795,9 +794,9 @@ static void input_language_changed_cb (keynode_t *key, void* data)
     get_input_language ();
 }
 
-void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length)
+void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length)
 {
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
@@ -811,9 +810,9 @@ void context_scim_imdata_get (WSCContextISF *ctx, void* data, int* length)
 }
 
 void
-imengine_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Layout layout)
+imengine_layout_set (WSCContextISF *wsc_ctx, Ecore_IMF_Input_Panel_Layout layout)
 {
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
         _panel_client.prepare (context_scim->id);
@@ -837,23 +836,12 @@ insert_text (const char *text, uint32_t offset, const char *insert)
 }
 
 /* Public functions */
-WSCContextISF *
-isf_wsc_context_new (void)
+void
+isf_wsc_context_init (void)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     int val;
-
-    WSCContextISF *context_scim = new WSCContextISF;
-    if (context_scim == NULL) {
-        std::cerr << "memory allocation failed in " << __FUNCTION__ << "\n";
-        return NULL;
-    }
-
-    if (_context_count == 0) {
-        _context_count = getpid () % 50000;
-    }
-    context_scim->id = _context_count++;
 
     if (!_scim_initialized) {
         ecore_wl_init (NULL);
@@ -883,8 +871,6 @@ isf_wsc_context_new (void)
 
         vconf_notify_key_changed (VCONFKEY_ISF_INPUT_LANGUAGE, input_language_changed_cb, NULL);
     }
-
-    return context_scim;
 }
 
 void
@@ -906,11 +892,11 @@ isf_wsc_context_shutdown (void)
 }
 
 void
-isf_wsc_context_add (WSCContextISF *ctx)
+isf_wsc_context_add (WSCContextISF *wsc_ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (!context_scim) return;
 
@@ -984,13 +970,13 @@ isf_wsc_context_add (WSCContextISF *ctx)
 }
 
 void
-isf_wsc_context_del (WSCContextISF *ctx)
+isf_wsc_context_del (WSCContextISF *wsc_ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     if (!_ic_list) return;
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim) {
         if (context_scim->id != _ic_list->id) {
@@ -1042,16 +1028,12 @@ isf_wsc_context_del (WSCContextISF *ctx)
     if (context_scim == _focused_ic)
         _focused_ic = 0;
 
-    if (context_scim) {
-        delete context_scim;
-        context_scim = 0;
-    }
 }
 
 void
-isf_wsc_context_focus_in (WSCContextISF *ctx)
+isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
 {
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (!context_scim)
         return;
@@ -1064,14 +1046,13 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
             return;
         }
         SCIM_DEBUG_FRONTEND(1) << "Focus out previous IC first: " << _focused_ic->id << "\n";
-        if (_focused_ic->ctx)
-            isf_wsc_context_focus_out (_focused_ic);
+        isf_wsc_context_focus_out (_focused_ic);
     }
 
     if (_change_keyboard_mode_by_focus_move) {
         //if h/w keyboard mode, keyboard mode will be changed to s/w mode when the entry get the focus.
         LOGD ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
-        isf_wsc_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
+        isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_HELPER_MODE);
     }
 
     bool need_cap   = false;
@@ -1140,7 +1121,7 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
     //            _panel_client.hide_aux_string (context_scim->id);
     //            _panel_client.hide_lookup_table (context_scim->id);
                 context_scim->impl->si->focus_in ();
-                context_scim->impl->si->set_layout (wsc_context_input_panel_layout_get (ctx->ctx));
+                context_scim->impl->si->set_layout (wsc_context_input_panel_layout_get (wsc_ctx));
                 context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
                 if (context_scim->impl->imdata)
                     context_scim->impl->si->set_imdata ((const char *)context_scim->impl->imdata, context_scim->impl->imdata_size);
@@ -1150,19 +1131,19 @@ isf_wsc_context_focus_in (WSCContextISF *ctx)
 
             _panel_client.get_active_helper_option (&_active_helper_option);
             _panel_client.send ();
-            if (caps_mode_check (ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
+            if (caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
                 context_scim->impl->next_shift_status = 0;
             }
         }
     }
 
-    LOGD ("ctx : %p\n", ctx);
+    LOGD ("ctx : %p\n", wsc_ctx);
 }
 
 void
-isf_wsc_context_focus_out (WSCContextISF *ctx)
+isf_wsc_context_focus_out (WSCContextISF *wsc_ctx)
 {
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (!context_scim) return;
 
@@ -1170,12 +1151,12 @@ isf_wsc_context_focus_out (WSCContextISF *ctx)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
 
-        LOGD ("ctx : %p\n", ctx);
+        LOGD ("ctx : %p\n", wsc_ctx);
 
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
 
-            wsc_context_commit_preedit_string (context_scim->ctx);
+            wsc_context_commit_preedit_string (context_scim);
             _panel_client.prepare (context_scim->id);
             _panel_client.reset_input_context (context_scim->id);
             _panel_client.send ();
@@ -1199,11 +1180,11 @@ isf_wsc_context_focus_out (WSCContextISF *ctx)
 }
 
 void
-isf_wsc_context_reset (WSCContextISF *ctx)
+isf_wsc_context_reset (WSCContextISF *wsc_ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->si) {
@@ -1215,24 +1196,24 @@ isf_wsc_context_reset (WSCContextISF *ctx)
 
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
-            wsc_context_commit_preedit_string (context_scim->ctx);
+            wsc_context_commit_preedit_string (context_scim);
         }
     }
 }
 
 void
-isf_wsc_context_cursor_position_set (WSCContextISF *ctx, int cursor_pos)
+isf_wsc_context_cursor_position_set (WSCContextISF *wsc_ctx, int cursor_pos)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->cursor_pos != cursor_pos) {
-            LOGD ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            LOGD ("ctx : %p, cursor pos : %d\n", wsc_ctx, cursor_pos);
             context_scim->impl->cursor_pos = cursor_pos;
 
-            caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
+            caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE);
 
             if (context_scim->impl->preedit_updating)
                 return;
@@ -1248,11 +1229,11 @@ isf_wsc_context_cursor_position_set (WSCContextISF *ctx, int cursor_pos)
 }
 
 void
-isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_pos)
+isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->is_on) {
         String mbs = utf8_wcstombs (context_scim->impl->preedit_string);
@@ -1280,24 +1261,24 @@ isf_wsc_context_preedit_string_get (WSCContextISF *ctx, char** str, int *cursor_
 }
 
 void
-isf_wsc_context_prediction_allow_set (WSCContextISF* ctx, Eina_Bool prediction)
+isf_wsc_context_prediction_allow_set (WSCContextISF* wsc_ctx, Eina_Bool prediction)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " = " << (prediction == EINA_TRUE ? "true" : "false") << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->prediction_allow != prediction) {
         context_scim->impl->prediction_allow = prediction;
-        set_prediction_allow (ctx, prediction);
+        set_prediction_allow (wsc_ctx, prediction);
     }
 }
 
 Eina_Bool
-isf_wsc_context_prediction_allow_get (WSCContextISF* ctx)
+isf_wsc_context_prediction_allow_get (WSCContextISF* wsc_ctx)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     Eina_Bool ret = EINA_FALSE;
     if (context_scim && context_scim->impl) {
@@ -1309,17 +1290,17 @@ isf_wsc_context_prediction_allow_get (WSCContextISF* ctx)
 }
 
 void
-isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_Type autocapital_type)
+isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " = " << autocapital_type << "...\n";
 
-    WSCContextISF *context_scim = ctx;
+    WSCContextISF *context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->autocapital_type != autocapital_type) {
         context_scim->impl->autocapital_type = autocapital_type;
 
         if (context_scim->impl->si && context_scim == _focused_ic) {
-            LOGD ("ctx : %p. set autocapital type : %d\n", ctx, autocapital_type);
+            LOGD ("ctx : %p. set autocapital type : %d\n", wsc_ctx, autocapital_type);
             _panel_client.prepare (context_scim->id);
             context_scim->impl->si->set_autocapital_type (autocapital_type);
             _panel_client.send ();
@@ -1327,6 +1308,7 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* ctx, Ecore_IMF_Autocapital_
     }
 }
 
+#ifdef _TV
 static
 bool is_number_key(const char *str)
 {
@@ -1344,9 +1326,10 @@ bool is_number_key(const char *str)
     else
         return true;
 }
+#endif
 
 void
-isf_wsc_context_filter_key_event (struct weescim *wsc,
+isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                   uint32_t serial,
                                   uint32_t timestamp, uint32_t keycode, uint32_t symcode,
                                   char *keyname,
@@ -1355,10 +1338,10 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
-    if (!wsc) return;
+    if (!wsc_ctx) return;
 
     Eina_Bool ret = EINA_FALSE;
-    KeyEvent key(symcode, wsc->modifiers);
+    KeyEvent key(symcode, wsc_ctx->modifiers);
     bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
 
     if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
@@ -1390,7 +1373,7 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
                 && key.code != 0xFF69) {
                 /* XF86back, Cancel (Power + Volume down) key */
 #endif
-                isf_wsc_context_set_keyboard_mode (wsc->wsc_ctx, TOOLBAR_KEYBOARD_MODE);
+                isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_KEYBOARD_MODE);
                 ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
                 LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
             }
@@ -1398,10 +1381,10 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
     }
 
     if (!ignore_key) {
-        _panel_client.prepare (wsc->wsc_ctx->id);
+        _panel_client.prepare (wsc_ctx->id);
 
         ret = EINA_TRUE;
-        if (!filter_hotkeys (wsc->wsc_ctx, key)) {
+        if (!filter_hotkeys (wsc_ctx, key)) {
             if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
                 ret = EINA_FALSE;
 #ifdef _TV
@@ -1438,7 +1421,7 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
                 if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
                     if (key.code == SCIM_KEY_space ||
                         key.code == SCIM_KEY_KP_Space)
-                        autoperiod_insert (wsc->wsc_ctx);
+                        autoperiod_insert (wsc_ctx);
                 }
             }
         }
@@ -1446,93 +1429,93 @@ isf_wsc_context_filter_key_event (struct weescim *wsc,
     }
 
     if (ret == EINA_FALSE) {
-        send_wl_key_event (wsc->wsc_ctx, key, false);
+        send_wl_key_event (wsc_ctx, key, false);
     }
 }
 
 static void
-wsc_commit_preedit (weescim *ctx)
+wsc_commit_preedit (WSCContextISF* wsc_ctx)
 {
     char *surrounding_text;
 
-    if (!ctx || !ctx->preedit_str ||
-        strlen (ctx->preedit_str) == 0)
+    if (!wsc_ctx || !wsc_ctx->preedit_str ||
+        strlen (wsc_ctx->preedit_str) == 0)
         return;
 
-    wl_input_method_context_cursor_position (ctx->im_ctx,
+    wl_input_method_context_cursor_position (wsc_ctx->im_ctx,
                                              0, 0);
 
-    wl_input_method_context_commit_string (ctx->im_ctx,
-                                           ctx->serial,
-                                           ctx->preedit_str);
+    wl_input_method_context_commit_string (wsc_ctx->im_ctx,
+                                           wsc_ctx->serial,
+                                           wsc_ctx->preedit_str);
 
-    if (ctx->surrounding_text) {
-        surrounding_text = insert_text (ctx->surrounding_text,
-                                        ctx->surrounding_cursor,
-                                        ctx->preedit_str);
+    if (wsc_ctx->surrounding_text) {
+        surrounding_text = insert_text (wsc_ctx->surrounding_text,
+                                        wsc_ctx->surrounding_cursor,
+                                        wsc_ctx->preedit_str);
 
-        free (ctx->surrounding_text);
-        ctx->surrounding_text = surrounding_text;
-        ctx->surrounding_cursor += strlen (ctx->preedit_str);
+        free (wsc_ctx->surrounding_text);
+        wsc_ctx->surrounding_text = surrounding_text;
+        wsc_ctx->surrounding_cursor += strlen (wsc_ctx->preedit_str);
     } else {
-        ctx->surrounding_text = strdup (ctx->preedit_str);
-        ctx->surrounding_cursor = strlen (ctx->preedit_str);
+        wsc_ctx->surrounding_text = strdup (wsc_ctx->preedit_str);
+        wsc_ctx->surrounding_cursor = strlen (wsc_ctx->preedit_str);
     }
 
-    if (ctx->preedit_str)
-        free (ctx->preedit_str);
+    if (wsc_ctx->preedit_str)
+        free (wsc_ctx->preedit_str);
 
-    ctx->preedit_str = strdup ("");
+    wsc_ctx->preedit_str = strdup ("");
 }
 
 static void
-wsc_send_preedit (weescim *ctx, int32_t cursor)
+wsc_send_preedit (WSCContextISF* wsc_ctx, int32_t cursor)
 {
-    if (!ctx) return;
+    if (!wsc_ctx) return;
 
-    uint32_t index = strlen (ctx->preedit_str);
+    uint32_t index = strlen (wsc_ctx->preedit_str);
 
-    if (ctx->preedit_style)
-        wl_input_method_context_preedit_styling (ctx->im_ctx,
+    if (wsc_ctx->preedit_style)
+        wl_input_method_context_preedit_styling (wsc_ctx->im_ctx,
                                                  0,
-                                                 strlen (ctx->preedit_str),
-                                                 ctx->preedit_style);
+                                                 strlen (wsc_ctx->preedit_str),
+                                                 wsc_ctx->preedit_style);
     if (cursor > 0)
         index = cursor;
 
-    wl_input_method_context_preedit_cursor (ctx->im_ctx, index);
-    wl_input_method_context_preedit_string (ctx->im_ctx,
-                                            ctx->serial,
-                                            ctx->preedit_str,
-                                            ctx->preedit_str);
+    wl_input_method_context_preedit_cursor (wsc_ctx->im_ctx, index);
+    wl_input_method_context_preedit_string (wsc_ctx->im_ctx,
+                                            wsc_ctx->serial,
+                                            wsc_ctx->preedit_str,
+                                            wsc_ctx->preedit_str);
 }
 
-bool wsc_context_surrounding_get (weescim *ctx, char **text, int *cursor_pos)
+bool wsc_context_surrounding_get (WSCContextISF *wsc_ctx, char **text, int *cursor_pos)
 {
-    if (!ctx)
+    if (!wsc_ctx)
         return false;
 
     if (text) {
-        if (ctx->surrounding_text)
-            *text = strdup (ctx->surrounding_text);
+        if (wsc_ctx->surrounding_text)
+            *text = strdup (wsc_ctx->surrounding_text);
         else
             *text = strdup ("");
     }
 
     if (cursor_pos)
-        *cursor_pos = ctx->surrounding_cursor;
+        *cursor_pos = wsc_ctx->surrounding_cursor;
 
     return true;
 }
 
-Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (weescim *ctx)
+Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (WSCContextISF *wsc_ctx)
 {
     Ecore_IMF_Input_Panel_Layout layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return layout;
 
-    switch (ctx->content_purpose) {
+    switch (wsc_ctx->content_purpose) {
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGNED:
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_DECIMAL:
@@ -1577,14 +1560,14 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (weescim *ctx)
     return layout;
 }
 
-int wsc_context_input_panel_layout_variation_get (weescim *ctx)
+int wsc_context_input_panel_layout_variation_get (WSCContextISF *wsc_ctx)
 {
     int layout_variation = 0;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return layout_variation;
 
-    switch (ctx->content_purpose) {
+    switch (wsc_ctx->content_purpose) {
         case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
             layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_NORMAL;
             break;
@@ -1620,18 +1603,18 @@ int wsc_context_input_panel_layout_variation_get (weescim *ctx)
     return layout_variation;
 }
 
-Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (weescim *ctx)
+Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (WSCContextISF *wsc_ctx)
 {
     Ecore_IMF_Autocapital_Type autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return autocapital_type;
 
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_CAPITALIZATION)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_CAPITALIZATION)
         autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE;
-    else if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_WORD_CAPITALIZATION)
+    else if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_WORD_CAPITALIZATION)
         autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_WORD;
-    else if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
+    else if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
         autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_ALLCHARACTER;
     else
         autocapital_type = ECORE_IMF_AUTOCAPITAL_TYPE_NONE;
@@ -1639,25 +1622,25 @@ Ecore_IMF_Autocapital_Type wsc_context_autocapital_type_get (weescim *ctx)
     return autocapital_type;
 }
 
-bool wsc_context_input_panel_caps_lock_mode_get (weescim *ctx)
+bool wsc_context_input_panel_caps_lock_mode_get (WSCContextISF *wsc_ctx)
 {
-    if (!ctx)
+    if (!wsc_ctx)
         return false;
 
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE)
         return true;
 
     return false;
 }
 
-Ecore_IMF_Input_Panel_Lang wsc_context_input_panel_language_get (weescim *ctx)
+Ecore_IMF_Input_Panel_Lang wsc_context_input_panel_language_get (WSCContextISF *wsc_ctx)
 {
     Ecore_IMF_Input_Panel_Lang language = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return language;
 
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_LATIN)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_LATIN)
         language = ECORE_IMF_INPUT_PANEL_LANG_ALPHABET;
     else
         language = ECORE_IMF_INPUT_PANEL_LANG_AUTOMATIC;
@@ -1665,30 +1648,30 @@ Ecore_IMF_Input_Panel_Lang wsc_context_input_panel_language_get (weescim *ctx)
     return language;
 }
 
-bool wsc_context_input_panel_password_mode_get (weescim *ctx)
+bool wsc_context_input_panel_password_mode_get (WSCContextISF *wsc_ctx)
 {
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_PASSWORD)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_PASSWORD)
         return true;
 
-    if (wsc_context_input_panel_layout_get (ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD)
+    if (wsc_context_input_panel_layout_get (wsc_ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD)
         return true;
 
     return false;
 }
 
-Ecore_IMF_Input_Hints wsc_context_input_hint_get (weescim *ctx)
+Ecore_IMF_Input_Hints wsc_context_input_hint_get (WSCContextISF *wsc_ctx)
 {
     int input_hint = ECORE_IMF_INPUT_HINT_NONE;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return (Ecore_IMF_Input_Hints)input_hint;
 
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_SENSITIVE_DATA)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_SENSITIVE_DATA)
         input_hint |= ECORE_IMF_INPUT_HINT_SENSITIVE_DATA;
     else
         input_hint &= ~ECORE_IMF_INPUT_HINT_SENSITIVE_DATA;
 
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_COMPLETION)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_COMPLETION)
         input_hint |= ECORE_IMF_INPUT_HINT_AUTO_COMPLETE;
     else
         input_hint &= ~ECORE_IMF_INPUT_HINT_AUTO_COMPLETE;
@@ -1696,96 +1679,94 @@ Ecore_IMF_Input_Hints wsc_context_input_hint_get (weescim *ctx)
     return (Ecore_IMF_Input_Hints)input_hint;
 }
 
-Eina_Bool wsc_context_prediction_allow_get (weescim *ctx)
+Eina_Bool wsc_context_prediction_allow_get (WSCContextISF *wsc_ctx)
 {
-    if (!ctx)
+    if (!wsc_ctx)
         return EINA_FALSE;
 
-    if (ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_COMPLETION)
+    if (wsc_ctx->content_hint & WL_TEXT_INPUT_CONTENT_HINT_AUTO_COMPLETION)
         return EINA_TRUE;
     else
         return EINA_FALSE;
 }
 
-void wsc_context_delete_surrounding (weescim *ctx, int offset, int len)
+void wsc_context_delete_surrounding (WSCContextISF *wsc_ctx, int offset, int len)
 {
-    if (!ctx)
+    if (!wsc_ctx)
         return;
 
-    wl_input_method_context_delete_surrounding_text (ctx->im_ctx, offset, len);
+    wl_input_method_context_delete_surrounding_text (wsc_ctx->im_ctx, offset, len);
 }
 
-void wsc_context_set_selection (weescim *ctx, int start, int end)
+void wsc_context_set_selection (WSCContextISF *wsc_ctx, int start, int end)
 {
-    if (!ctx)
+    if (!wsc_ctx)
         return;
 
-    wl_input_method_context_selection_region (ctx->im_ctx, ctx->serial, start, end);
+    wl_input_method_context_selection_region (wsc_ctx->im_ctx, wsc_ctx->serial, start, end);
 }
 
-void wsc_context_commit_string (weescim *ctx, const char *str)
+void wsc_context_commit_string (WSCContextISF *wsc_ctx, const char *str)
 {
-    if (!ctx)
+    if (!wsc_ctx)
         return;
 
-    if (ctx->preedit_str) {
-        free (ctx->preedit_str);
-        ctx->preedit_str = NULL;
+    if (wsc_ctx->preedit_str) {
+        free (wsc_ctx->preedit_str);
+        wsc_ctx->preedit_str = NULL;
     }
 
-    ctx->preedit_str = strdup (str);
-    wsc_commit_preedit (ctx);
+    wsc_ctx->preedit_str = strdup (str);
+    wsc_commit_preedit (wsc_ctx);
 }
 
-void wsc_context_commit_preedit_string (weescim *ctx)
+void wsc_context_commit_preedit_string (WSCContextISF *wsc_ctx)
 {
     char *preedit_str = NULL;
     int cursor_pos = 0;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return;
 
-    if (ctx->wsc_ctx)
-        isf_wsc_context_preedit_string_get (ctx->wsc_ctx, &preedit_str, &cursor_pos);
+    isf_wsc_context_preedit_string_get (wsc_ctx, &preedit_str, &cursor_pos);
 
-    if (ctx->preedit_str) {
-        free (ctx->preedit_str);
-        ctx->preedit_str = NULL;
+    if (wsc_ctx->preedit_str) {
+        free (wsc_ctx->preedit_str);
+        wsc_ctx->preedit_str = NULL;
     }
 
-    ctx->preedit_str = preedit_str;
-    wsc_commit_preedit (ctx);
+    wsc_ctx->preedit_str = preedit_str;
+    wsc_commit_preedit (wsc_ctx);
 }
 
-void wsc_context_send_preedit_string (weescim *ctx)
+void wsc_context_send_preedit_string (WSCContextISF *wsc_ctx)
 {
     char *preedit_str = NULL;
     int cursor_pos = 0;
 
-    if (!ctx)
+    if (!wsc_ctx)
         return;
 
-    if (ctx->wsc_ctx)
-        isf_wsc_context_preedit_string_get (ctx->wsc_ctx, &preedit_str, &cursor_pos);
+    isf_wsc_context_preedit_string_get (wsc_ctx, &preedit_str, &cursor_pos);
 
-    if (ctx->preedit_str) {
-        free (ctx->preedit_str);
-        ctx->preedit_str = NULL;
+    if (wsc_ctx->preedit_str) {
+        free (wsc_ctx->preedit_str);
+        wsc_ctx->preedit_str = NULL;
     }
 
-    ctx->preedit_str = preedit_str;
-    wsc_send_preedit (ctx, cursor_pos);
+    wsc_ctx->preedit_str = preedit_str;
+    wsc_send_preedit (wsc_ctx, cursor_pos);
 }
 
-void wsc_context_send_key (weescim *ctx, uint32_t keysym, uint32_t modifiers, uint32_t time, bool press)
+void wsc_context_send_key (WSCContextISF *wsc_ctx, uint32_t keysym, uint32_t modifiers, uint32_t time, bool press)
 {
-    if (!ctx || !ctx->im_ctx)
+    if (!wsc_ctx)
         return;
 
-    ctx->modifiers = modifiers;
+    wsc_ctx->modifiers = modifiers;
 
-    wl_input_method_context_keysym (ctx->im_ctx, ctx->serial, time,
-            keysym, press ? WL_KEYBOARD_KEY_STATE_PRESSED : WL_KEYBOARD_KEY_STATE_RELEASED, ctx->modifiers);
+    wl_input_method_context_keysym (wsc_ctx->im_ctx, wsc_ctx->serial, time,
+            keysym, press ? WL_KEYBOARD_KEY_STATE_PRESSED : WL_KEYBOARD_KEY_STATE_RELEASED, wsc_ctx->modifiers);
 }
 
 static void
@@ -2336,7 +2317,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 
     KeyEvent _key = key;
     if (key.is_key_press () &&
-        wsc_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL) {
+        wsc_context_input_panel_layout_get (ic) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL) {
         if (key.code == SHIFT_MODE_OFF ||
             key.code == SHIFT_MODE_ON ||
             key.code == SHIFT_MODE_LOCK) {
@@ -2366,7 +2347,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
                     snprintf (string, sizeof (string), "%c", code);
 
                     if (strlen (string) != 0) {
-                        wsc_context_commit_string(ic->ctx, string);
+                        wsc_context_commit_string(ic, string);
                         caps_mode_check (ic, EINA_FALSE, EINA_TRUE);
                     }
                 } else {
@@ -2397,7 +2378,7 @@ panel_slot_commit_string (int context, const WideString &wstr)
 
         if (ic->impl->need_commit_preedit)
             _hide_preedit_string (ic->id, false);
-        wsc_context_commit_string (ic->ctx, utf8_wcstombs (wstr).c_str ());
+        wsc_context_commit_string (ic, utf8_wcstombs (wstr).c_str ());
     }
 }
 
@@ -2467,7 +2448,7 @@ panel_slot_reset_keyboard_ise (int context)
             _hide_preedit_string (ic->id, false);
 
             if (wstr.length ()) {
-                wsc_context_commit_string (ic->ctx, utf8_wcstombs (wstr).c_str ());
+                wsc_context_commit_string (ic, utf8_wcstombs (wstr).c_str ());
                 if (!check_valid_ic (ic))
                     return;
             }
@@ -2544,7 +2525,7 @@ _hide_preedit_string (int context, bool update_preedit)
                     ic->impl->need_commit_preedit = false;
                 }
             }
-            wsc_context_send_preedit_string (ic->ctx);
+            wsc_context_send_preedit_string (ic);
         } else {
             _panel_client.prepare (ic->id);
             _panel_client.hide_preedit_string (ic->id);
@@ -2594,7 +2575,7 @@ panel_slot_update_preedit_string (int context,
                 ic->impl->preedit_updating = true;
                 if (check_valid_ic (ic))
                     ic->impl->preedit_updating = false;
-                wsc_context_send_preedit_string (ic->ctx);
+                wsc_context_send_preedit_string (ic);
             } else {
                 _panel_client.prepare (ic->id);
                 _panel_client.update_preedit_string (ic->id, str, attrs, caret);
@@ -3128,7 +3109,7 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
     sym = _keyname_to_keysym (key.code, &modifiers);
 
     if (ic)
-        wsc_context_send_key (ic->ctx, key.code, modifiers, time, key.is_key_press ());
+        wsc_context_send_key (ic, key.code, modifiers, time, key.is_key_press ());
 }
 
 static void
@@ -3262,7 +3243,7 @@ slot_hide_preedit_string (IMEngineInstanceBase *si)
                 if (check_valid_ic (ic))
                     ic->impl->preedit_started = false;
             }
-            wsc_context_send_preedit_string (ic->ctx);
+            wsc_context_send_preedit_string (ic);
         } else {
             _panel_client.hide_preedit_string (ic->id);
         }
@@ -3340,7 +3321,7 @@ slot_update_preedit_string (IMEngineInstanceBase *si,
             ic->impl->preedit_updating = true;
             if (check_valid_ic (ic))
                 ic->impl->preedit_updating = false;
-            wsc_context_send_preedit_string (ic->ctx);
+            wsc_context_send_preedit_string (ic);
         } else {
             _panel_client.update_preedit_string (ic->id, str, attrs, caret);
         }
@@ -3368,14 +3349,14 @@ slot_commit_string (IMEngineInstanceBase *si,
 
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 
-    if (ic && ic->ctx) {
+    if (ic) {
         if (utf8_wcstombs (str) == String (" ") || utf8_wcstombs (str) == String ("　"))
             autoperiod_insert (ic);
 
         Eina_Bool auto_capitalized = EINA_FALSE;
 
         if (ic->impl) {
-            if (wsc_context_input_panel_layout_get (ic->ctx) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL &&
+            if (wsc_context_input_panel_layout_get (ic) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL &&
                 ic->impl->shift_mode_enabled &&
                 ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
                 get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
@@ -3409,14 +3390,14 @@ slot_commit_string (IMEngineInstanceBase *si,
                             converted[0] += 32;
                     }
 
-                    wsc_context_commit_string (ic->ctx, converted);
+                    wsc_context_commit_string (ic, converted);
                     auto_capitalized = EINA_TRUE;
                 }
             }
         }
 
         if (!auto_capitalized) {
-            wsc_context_commit_string (ic->ctx, utf8_wcstombs (str).c_str ());
+            wsc_context_commit_string (ic, utf8_wcstombs (str).c_str ());
         }
     }
 }
@@ -3533,7 +3514,7 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
     if (ic && ic->impl && _focused_ic == ic) {
         char *surrounding = NULL;
         int   cursor_index;
-        if (wsc_context_surrounding_get (_focused_ic->ctx, &surrounding, &cursor_index)) {
+        if (wsc_context_surrounding_get (_focused_ic, &surrounding, &cursor_index)) {
             SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
             SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
 
@@ -3581,7 +3562,7 @@ slot_delete_surrounding_text (IMEngineInstanceBase *si,
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 
     if (ic && _focused_ic == ic) {
-        wsc_context_delete_surrounding (_focused_ic->ctx, offset, len);
+        wsc_context_delete_surrounding (_focused_ic, offset, len);
         return true;
     }
     return false;
@@ -3597,7 +3578,7 @@ slot_set_selection (IMEngineInstanceBase *si,
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 
     if (_focused_ic && _focused_ic == ic) {
-        wsc_context_set_selection (_focused_ic->ctx, start, end);
+        wsc_context_set_selection (_focused_ic, start, end);
         return true;
     }
     return false;
@@ -3645,8 +3626,8 @@ slot_send_private_command (IMEngineInstanceBase *si,
     WSCContextISF *ic = static_cast<WSCContextISF *> (si->get_frontend_data ());
 
     if (_focused_ic && _focused_ic == ic) {
-        if (_focused_ic->ctx && _focused_ic->ctx->im_ctx)
-            wl_input_method_context_private_command (_focused_ic->ctx->im_ctx, _focused_ic->ctx->serial, command.c_str ());
+        if (_focused_ic->im_ctx)
+            wl_input_method_context_private_command (_focused_ic->im_ctx, _focused_ic->serial, command.c_str ());
     }
 }
 
@@ -3687,6 +3668,6 @@ fallback_commit_string_cb (IMEngineInstanceBase  *si,
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     if (_focused_ic && _focused_ic->impl) {
-        wsc_context_commit_string (_focused_ic->ctx, utf8_wcstombs (str).c_str ());
+        wsc_context_commit_string (_focused_ic, utf8_wcstombs (str).c_str ());
     }
 }

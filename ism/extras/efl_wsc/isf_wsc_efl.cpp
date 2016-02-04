@@ -45,7 +45,6 @@
 #include <malloc.h>
 #include "scim_private.h"
 #include "scim.h"
-#include "scim_stl_map.h"
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -60,19 +59,8 @@
 #include <text-client-protocol.h>
 #include "isf_wsc_context.h"
 #include "isf_wsc_control_ui.h"
-#include "scim_stl_map.h"
 
 using namespace scim;
-
-#if SCIM_USE_STL_EXT_HASH_MAP
-    typedef __gnu_cxx::hash_map <uint32_t, uint32_t, __gnu_cxx::hash <uint32_t> >   KeycodeRepository;
-#elif SCIM_USE_STL_HASH_MAP
-    typedef std::hash_map <uint32_t, ClientInfo, std::hash <uint32_t> >             KeycodeRepository;
-#else
-    typedef std::map <uint32_t, uint32_t>                                           KeycodeRepository;
-#endif
-
-static KeycodeRepository _keysym2keycode;
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of macro.
@@ -83,6 +71,8 @@ static KeycodeRepository _keysym2keycode;
 #define LOG_TAG                                         "ISF_WSC_EFL"
 
 static struct weescim _wsc                                  = {0};
+static int            _context_count                        = 0;
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of Wayland Input Method functions.
@@ -90,16 +80,16 @@ static struct weescim _wsc                                  = {0};
 static void
 _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx, const char *text, uint32_t cursor, uint32_t anchor)
 {
-    struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
 
-    if (wsc->surrounding_text)
-        free (wsc->surrounding_text);
+    if (wsc_ctx->surrounding_text)
+        free (wsc_ctx->surrounding_text);
 
-    wsc->surrounding_text = strdup (text ? text : "");
-    wsc->surrounding_cursor = cursor;
+    wsc_ctx->surrounding_text = strdup (text ? text : "");
+    wsc_ctx->surrounding_cursor = cursor;
 
-    isf_wsc_context_cursor_position_set(wsc->wsc_ctx, cursor);
+    isf_wsc_context_cursor_position_set(wsc_ctx, cursor);
 
     LOGD ("text : '%s', cursor : %d\n", text, cursor);
 }
@@ -107,86 +97,83 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
 static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
 {
-    struct weescim *wsc = (weescim*)data;
-    if (!wsc || !wsc->wsc_ctx) return;
-
-    isf_wsc_context_reset(wsc->wsc_ctx);
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
+    isf_wsc_context_reset(wsc_ctx);
 }
 
 static void
 _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uint32_t hint, uint32_t purpose)
 {
-    struct weescim *wsc = (weescim*)data;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
 
     LOGD ("im_context = %p hint = %d purpose = %d\n", im_ctx, hint, purpose);
 
-    if (!wsc || !wsc->context_changed)
-        return;
+    if (!wsc_ctx->context_changed) return;
 
-    wsc->content_hint = hint;
-    wsc->content_purpose = purpose;
+    wsc_ctx->content_hint = hint;
+    wsc_ctx->content_purpose = purpose;
 
-    if (wsc->wsc_ctx) {
-        isf_wsc_context_input_panel_layout_set (wsc->wsc_ctx,
-                                                wsc_context_input_panel_layout_get (wsc));
+    isf_wsc_context_input_panel_layout_set (wsc_ctx,
+                                            wsc_context_input_panel_layout_get (wsc_ctx));
 
-        isf_wsc_context_autocapital_type_set (wsc->wsc_ctx, wsc_context_autocapital_type_get(wsc));
+    isf_wsc_context_autocapital_type_set (wsc_ctx, wsc_context_autocapital_type_get(wsc_ctx));
 
-        isf_wsc_context_input_panel_language_set (wsc->wsc_ctx, wsc_context_input_panel_language_get(wsc));
+    isf_wsc_context_input_panel_language_set (wsc_ctx, wsc_context_input_panel_language_get(wsc_ctx));
 
-        caps_mode_check (wsc->wsc_ctx, EINA_TRUE, EINA_TRUE);
+    caps_mode_check (wsc_ctx, EINA_TRUE, EINA_TRUE);
 
-        wsc->context_changed = EINA_FALSE;
-    }
+    wsc_ctx->context_changed = EINA_FALSE;
 }
 
 static void
 _wsc_im_ctx_invoke_action(void *data, struct wl_input_method_context *im_ctx, uint32_t button, uint32_t index)
 {
-    struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
 
     LOGD ("invoke action. button : %d\n", button);
 
     if (button != BTN_LEFT)
         return;
 
-    wsc_context_send_preedit_string (wsc);
+    wsc_context_send_preedit_string (wsc_ctx);
 }
 
 static void
 _wsc_im_ctx_commit_state(void *data, struct wl_input_method_context *im_ctx, uint32_t serial)
 {
-    struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
 
-    wsc->serial = serial;
+    wsc_ctx->serial = serial;
 
-    if (wsc->surrounding_text)
-        LOGD ("Surrounding text updated: '%s'\n", wsc->surrounding_text);
+    if (wsc_ctx->surrounding_text)
+        LOGD ("Surrounding text updated: '%s'\n", wsc_ctx->surrounding_text);
 
-    if (wsc->language)
-        wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
+    if (wsc_ctx->language)
+        wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
 
-    wl_input_method_context_text_direction (im_ctx, wsc->serial, wsc->text_direction);
+    wl_input_method_context_text_direction (im_ctx, wsc_ctx->serial, wsc_ctx->text_direction);
 }
 
 static void
 _wsc_im_ctx_preferred_language(void *data, struct wl_input_method_context *im_ctx, const char *language)
 {
-    struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
 
-    if (language && wsc->language && !strcmp (language, wsc->language))
+    if (language && wsc_ctx->language && !strcmp (language, wsc_ctx->language))
         return;
 
-    if (wsc->language) {
-        free (wsc->language);
-        wsc->language = NULL;
+    if (wsc_ctx->language) {
+        free (wsc_ctx->language);
+        wsc_ctx->language = NULL;
     }
 
     if (language) {
-        wsc->language = strdup (language);
+        wsc_ctx->language = strdup (language);
         LOGD ("Language changed, new: '%s'\n", language);
     }
 }
@@ -194,40 +181,40 @@ _wsc_im_ctx_preferred_language(void *data, struct wl_input_method_context *im_ct
 static void
 _wsc_im_ctx_return_key_type(void *data, struct wl_input_method_context *im_ctx, uint32_t return_key_type)
 {
-    struct weescim *wsc = (weescim*)data;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
     LOGD ("im_context = %p return key type = %d\n", im_ctx, return_key_type);
-    if (!wsc || !wsc->wsc_ctx) return;
+    if (!wsc_ctx) return;
 
-    if (wsc->return_key_type != return_key_type) {
-        wsc->return_key_type = return_key_type;
-        isf_wsc_context_input_panel_return_key_type_set (wsc->wsc_ctx, (Ecore_IMF_Input_Panel_Return_Key_Type)wsc->return_key_type);
+    if (wsc_ctx->return_key_type != return_key_type) {
+        wsc_ctx->return_key_type = return_key_type;
+        isf_wsc_context_input_panel_return_key_type_set (wsc_ctx, (Ecore_IMF_Input_Panel_Return_Key_Type)wsc_ctx->return_key_type);
     }
 }
 
 static void
 _wsc_im_ctx_return_key_disabled(void *data, struct wl_input_method_context *im_ctx, uint32_t disabled)
 {
-    struct weescim *wsc = (weescim*)data;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     Eina_Bool return_key_disabled = !!disabled;
 
     LOGD ("im_context = %p return key disabled = %d\n", im_ctx, return_key_disabled);
-    if (!wsc || !wsc->wsc_ctx) return;
+    if (!wsc_ctx) return;
 
-    if (wsc->return_key_disabled != return_key_disabled) {
-        wsc->return_key_disabled = return_key_disabled;
-        isf_wsc_context_input_panel_return_key_disabled_set (wsc->wsc_ctx, wsc->return_key_disabled);
+    if (wsc_ctx->return_key_disabled != return_key_disabled) {
+        wsc_ctx->return_key_disabled = return_key_disabled;
+        isf_wsc_context_input_panel_return_key_disabled_set (wsc_ctx, wsc_ctx->return_key_disabled);
     }
 }
 
 static void
 _wsc_im_ctx_input_panel_data(void *data, struct wl_input_method_context *im_ctx, const char *input_panel_data, uint32_t input_panel_data_length)
 {
-    struct weescim *wsc = (weescim*)data;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     LOGD ("im_context = %p input panel data = %s len = %d\n", im_ctx, input_panel_data, input_panel_data_length);
-    if (!wsc || !wsc->wsc_ctx) return;
+    if (!wsc_ctx) return;
 
-    isf_wsc_context_input_panel_imdata_set (wsc->wsc_ctx, (void *)input_panel_data, input_panel_data_length);
+    isf_wsc_context_input_panel_imdata_set (wsc_ctx, (void *)input_panel_data, input_panel_data_length);
 }
 
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
@@ -243,29 +230,29 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
 };
 
 static void
-_init_keysym2keycode(struct weescim *wsc)
+_init_keysym2keycode(WSCContextISF *wsc_ctx)
 {
     uint32_t i = 0;
     uint32_t code;
     uint32_t num_syms;
     const xkb_keysym_t *syms;
 
-    if (!wsc || !wsc->state)
+    if (!wsc_ctx || !wsc_ctx->state)
         return;
 
     for (i = 0; i < 256; i++) {
         code = i + 8;
-        num_syms = xkb_key_get_syms(wsc->state, code, &syms);
+        num_syms = xkb_key_get_syms(wsc_ctx->state, code, &syms);
 
         if (num_syms == 1)
-            _keysym2keycode[syms[0]] = i;
+            wsc_ctx->_keysym2keycode[syms[0]] = i;
     }
 }
 
 static void
-_fini_keysym2keycode(struct weescim *wsc)
+_fini_keysym2keycode(WSCContextISF *wsc_ctx)
 {
-    _keysym2keycode.clear();
+    wsc_ctx->_keysym2keycode.clear();
 }
 
 static void
@@ -275,21 +262,21 @@ _wsc_im_keyboard_keymap(void *data,
         int32_t fd,
         uint32_t size)
 {
-    struct weescim *wsc = (weescim*)data;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     char *map_str;
 
-    if (!wsc) return;
+    if (!wsc_ctx) return;
 
-    _fini_keysym2keycode(wsc);
+    _fini_keysym2keycode(wsc_ctx);
 
-    if (wsc->state) {
-        xkb_state_unref(wsc->state);
-        wsc->state = NULL;
+    if (wsc_ctx->state) {
+        xkb_state_unref(wsc_ctx->state);
+        wsc_ctx->state = NULL;
     }
 
-    if (wsc->keymap) {
-        xkb_map_unref(wsc->keymap);
-        wsc->keymap = NULL;
+    if (wsc_ctx->keymap) {
+        xkb_map_unref(wsc_ctx->keymap);
+        wsc_ctx->keymap = NULL;
     }
 
     if (format != WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1) {
@@ -303,8 +290,8 @@ _wsc_im_keyboard_keymap(void *data,
         return;
     }
 
-    wsc->keymap =
-        xkb_map_new_from_string(wsc->xkb_context,
+    wsc_ctx->keymap =
+        xkb_map_new_from_string(wsc_ctx->xkb_context,
                 map_str,
                 XKB_KEYMAP_FORMAT_TEXT_V1,
                 (xkb_keymap_compile_flags)0);
@@ -312,27 +299,27 @@ _wsc_im_keyboard_keymap(void *data,
     munmap(map_str, size);
     close(fd);
 
-    if (!wsc->keymap) {
+    if (!wsc_ctx->keymap) {
         LOGW ("failed to compile keymap\n");
         return;
     }
 
-    wsc->state = xkb_state_new(wsc->keymap);
-    if (!wsc->state) {
+    wsc_ctx->state = xkb_state_new(wsc_ctx->keymap);
+    if (!wsc_ctx->state) {
         LOGW ("failed to create XKB state\n");
-        xkb_map_unref(wsc->keymap);
+        xkb_map_unref(wsc_ctx->keymap);
         return;
     }
 
-    wsc->control_mask =
-        1 << xkb_map_mod_get_index(wsc->keymap, "Control");
-    wsc->alt_mask =
-        1 << xkb_map_mod_get_index(wsc->keymap, "Mod1");
-    wsc->shift_mask =
-        1 << xkb_map_mod_get_index(wsc->keymap, "Shift");
+    wsc_ctx->control_mask =
+        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Control");
+    wsc_ctx->alt_mask =
+        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Mod1");
+    wsc_ctx->shift_mask =
+        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Shift");
 
     LOGW ("create _keysym2keycode\n");
-    _init_keysym2keycode(wsc);
+    _init_keysym2keycode(wsc_ctx);
 }
 
 static void
@@ -343,7 +330,7 @@ _wsc_im_keyboard_key(void *data,
         uint32_t key,
         uint32_t state_w)
 {
-    struct weescim *wsc = (weescim*)data;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     uint32_t code;
     uint32_t num_syms;
     const xkb_keysym_t *syms;
@@ -351,11 +338,11 @@ _wsc_im_keyboard_key(void *data,
     char keyname[64] = {0};
     enum wl_keyboard_key_state state = (wl_keyboard_key_state)state_w;
 
-    if (!wsc || !wsc->state)
+    if (!wsc_ctx || !wsc_ctx->state)
         return;
 
     code = key + 8;
-    num_syms = xkb_key_get_syms(wsc->state, code, &syms);
+    num_syms = xkb_key_get_syms(wsc_ctx->state, code, &syms);
 
     sym = XKB_KEY_NoSymbol;
     if (num_syms == 1)
@@ -364,8 +351,8 @@ _wsc_im_keyboard_key(void *data,
         xkb_keysym_get_name(sym, keyname, 64);
     }
 
-    if (wsc->key_handler)
-        (*wsc->key_handler)(wsc, serial, time, code, sym, keyname,
+    if (wsc_ctx->key_handler)
+        (*wsc_ctx->key_handler)(wsc_ctx, serial, time, code, sym, keyname,
                 state);
 }
 
@@ -378,25 +365,25 @@ _wsc_im_keyboard_modifiers(void *data,
         uint32_t mods_locked,
         uint32_t group)
 {
-    struct weescim *wsc = (weescim*)data;
-    struct wl_input_method_context *context = wsc->im_ctx;
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    struct wl_input_method_context *context = wsc_ctx->im_ctx;
     xkb_mod_mask_t mask;
 
-    if (!wsc || !wsc->state)
+    if (!wsc_ctx || !wsc_ctx->state)
         return;
 
-    xkb_state_update_mask(wsc->state, mods_depressed,
+    xkb_state_update_mask(wsc_ctx->state, mods_depressed,
             mods_latched, mods_locked, 0, 0, group);
-    mask = xkb_state_serialize_mods(wsc->state,
+    mask = xkb_state_serialize_mods(wsc_ctx->state,
             (xkb_state_component)(XKB_STATE_DEPRESSED | XKB_STATE_LATCHED));
 
-    wsc->modifiers = 0;
-    if (mask & wsc->control_mask)
-        wsc->modifiers |= SCIM_KEY_ControlMask;
-    if (mask & wsc->alt_mask)
-        wsc->modifiers |= SCIM_KEY_AltMask;
-    if (mask & wsc->shift_mask)
-        wsc->modifiers |= SCIM_KEY_ShiftMask;
+    wsc_ctx->modifiers = 0;
+    if (mask & wsc_ctx->control_mask)
+        wsc_ctx->modifiers |= SCIM_KEY_ControlMask;
+    if (mask & wsc_ctx->alt_mask)
+        wsc_ctx->modifiers |= SCIM_KEY_AltMask;
+    if (mask & wsc_ctx->shift_mask)
+        wsc_ctx->modifiers |= SCIM_KEY_ShiftMask;
 
     wl_input_method_context_modifiers(context, serial,
             mods_depressed, mods_depressed,
@@ -417,77 +404,121 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     struct weescim *wsc = (weescim*)data;
     if (!wsc) return;
 
-    if (wsc->im_ctx)
-        wl_input_method_context_destroy (wsc->im_ctx);
-
-    if (wsc->preedit_str)
-        free (wsc->preedit_str);
-
-    wsc->preedit_str = strdup ("");
-    wsc->content_hint = WL_TEXT_INPUT_CONTENT_HINT_NONE;
-    wsc->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
-
-    if (wsc->language) {
-        free (wsc->language);
-        wsc->language = NULL;
+    WSCContextISF *wsc_ctx = new WSCContextISF;
+    if (!wsc_ctx) {
+        return;
     }
-
-    if (wsc->surrounding_text) {
-        free (wsc->surrounding_text);
-        wsc->surrounding_text = NULL;
+    wsc_ctx->xkb_context = xkb_context_new((xkb_context_flags)0);
+    if (wsc_ctx->xkb_context == NULL) {
+        LOGW ("Failed to create XKB context\n");
+        delete wsc_ctx;
+        return;
     }
+    if (_context_count == 0) {
+        _context_count = getpid () % 50000;
+    }
+    wsc_ctx->id = _context_count++;
+    wsc->wsc_ctx = wsc_ctx;
+    wsc_ctx->ctx = wsc;
+    wsc_ctx->state = NULL;
+    wsc_ctx->keymap = NULL;
+    wsc_ctx->surrounding_text = NULL;
+    wsc_ctx->key_handler = isf_wsc_context_filter_key_event;
 
-    wsc->im_ctx = im_ctx;
-    wl_input_method_context_add_listener (im_ctx, &wsc_im_context_listener, wsc);
+    get_language(&wsc_ctx->language);
 
-    wsc->keyboard = wl_input_method_context_grab_keyboard(im_ctx);
-    if (wsc->keyboard)
-        wl_keyboard_add_listener(wsc->keyboard, &wsc_im_keyboard_listener, wsc);
+    wsc_ctx->preedit_str = strdup ("");
+    wsc_ctx->content_hint = WL_TEXT_INPUT_CONTENT_HINT_NONE;
+    wsc_ctx->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
 
-    if (wsc->language)
-        wl_input_method_context_language (im_ctx, wsc->serial, wsc->language);
+    wsc_ctx->im_ctx = im_ctx;
+    wl_input_method_context_add_listener (im_ctx, &wsc_im_context_listener, wsc_ctx);
 
-    wl_input_method_context_text_direction (im_ctx, wsc->serial, wsc->text_direction);
+    wsc_ctx->keyboard = wl_input_method_context_grab_keyboard(im_ctx);
+    if (wsc_ctx->keyboard)
+        wl_keyboard_add_listener(wsc_ctx->keyboard, &wsc_im_keyboard_listener, wsc_ctx);
 
-    wsc->context_changed = EINA_TRUE;
-    isf_wsc_context_focus_in (wsc->wsc_ctx);
+    if (wsc_ctx->language)
+        wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
+
+    wl_input_method_context_text_direction (im_ctx, wsc_ctx->serial, wsc_ctx->text_direction);
+
+    isf_wsc_context_add (wsc_ctx);
+
+    wsc_ctx->context_changed = EINA_TRUE;
+
+    isf_wsc_context_focus_in (wsc_ctx);
 }
 
 static void
 _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx)
 {
     struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    if (!wsc || !wsc->wsc_ctx) return;
+    WSCContextISF *wsc_ctx = wsc->wsc_ctx;
 
-    if (wsc->wsc_ctx) {
-        isf_wsc_context_input_panel_hide (wsc->wsc_ctx);
-        isf_wsc_context_focus_out (wsc->wsc_ctx);
+    isf_wsc_context_input_panel_hide (wsc_ctx);
+    isf_wsc_context_focus_out (wsc_ctx);
+
+    if (wsc_ctx->keyboard) {
+        wl_keyboard_destroy (wsc_ctx->keyboard);
+        wsc_ctx->keyboard = NULL;
     }
 
-    if (wsc->im_ctx) {
-        wl_input_method_context_destroy(wsc->im_ctx);
-        wsc->im_ctx = NULL;
+    _fini_keysym2keycode (wsc_ctx);
+
+    if (wsc_ctx->state) {
+        xkb_state_unref (wsc_ctx->state);
+        wsc_ctx->state = NULL;
     }
+
+    if (wsc_ctx->keymap) {
+        xkb_map_unref (wsc_ctx->keymap);
+        wsc_ctx->keymap = NULL;
+    }
+
+    if (wsc_ctx->im_ctx) {
+        wl_input_method_context_destroy (wsc_ctx->im_ctx);
+        wsc_ctx->im_ctx = NULL;
+    }
+
+    if (wsc_ctx->preedit_str) {
+        free (wsc_ctx->preedit_str);
+        wsc_ctx->preedit_str = NULL;
+    }
+
+    if (wsc_ctx->surrounding_text) {
+        free (wsc_ctx->surrounding_text);
+        wsc_ctx->surrounding_text = NULL;
+    }
+
+    if (wsc_ctx->language) {
+        free (wsc_ctx->language);
+        wsc_ctx->language = NULL;
+    }
+
+    isf_wsc_context_del (wsc_ctx);
+    delete wsc_ctx;
+    wsc->wsc_ctx = NULL;
+
 }
 
 static void
 _wsc_im_show_input_panel(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx)
 {
     struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    if (!wsc || !wsc->wsc_ctx) return;
 
-    if (wsc->wsc_ctx)
-        isf_wsc_context_input_panel_show (wsc->wsc_ctx);
+    isf_wsc_context_input_panel_show (wsc->wsc_ctx);
 }
 
 static void
 _wsc_im_hide_input_panel(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx)
 {
     struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
+    if (!wsc || !wsc->wsc_ctx) return;
 
-    if (wsc->wsc_ctx)
-        isf_wsc_context_input_panel_hide (wsc->wsc_ctx);
+    isf_wsc_context_input_panel_hide (wsc->wsc_ctx);
 }
 
 static const struct wl_input_method_listener wsc_im_listener = {
@@ -505,9 +536,9 @@ _wsc_seat_handle_capabilities(void *data, struct wl_seat *seat,
     if (!wsc) return;
 
     if ((caps & WL_SEAT_CAPABILITY_KEYBOARD)) {
-        wsc->hw_kbd = true;
+
     } else if (!(caps & WL_SEAT_CAPABILITY_KEYBOARD)) {
-        wsc->hw_kbd = false;
+
     }
 }
 
@@ -523,21 +554,6 @@ _wsc_setup(struct weescim *wsc)
     Ecore_Wl_Global *global;
 
     if (!wsc) return false;
-
-    wsc->xkb_context = xkb_context_new((xkb_context_flags)0);
-    if (wsc->xkb_context == NULL) {
-        LOGW ("Failed to create XKB context\n");
-        return false;
-    }
-
-    wsc->key_handler = isf_wsc_context_filter_key_event;
-
-    wsc->wsc_ctx = isf_wsc_context_new ();
-    if (!wsc->wsc_ctx) return false;
-
-    wsc->wsc_ctx->ctx = wsc;
-
-    get_language(&wsc->language);
 
     if (!(registry = ecore_wl_registry_get()))
         return false;
@@ -574,68 +590,22 @@ _wsc_setup(struct weescim *wsc)
         return false;
     }
 
-    isf_wsc_context_add (wsc->wsc_ctx);
-
     return true;
-}
-
-static void
-_wsc_free (struct weescim *wsc)
-{
-    if (!wsc) return;
-
-    _fini_keysym2keycode (wsc);
-
-    if (wsc->state) {
-        xkb_state_unref (wsc->state);
-        wsc->state = NULL;
-    }
-
-    if (wsc->keymap) {
-        xkb_map_unref (wsc->keymap);
-        wsc->keymap = NULL;
-    }
-
-    if (wsc->im_ctx) {
-        wl_input_method_context_destroy (wsc->im_ctx);
-        wsc->im_ctx = NULL;
-    }
-
-    if (wsc->wsc_ctx) {
-        isf_wsc_context_del (wsc->wsc_ctx);
-        wsc->wsc_ctx = NULL;
-    }
-
-    if (wsc->preedit_str) {
-        free (wsc->preedit_str);
-        wsc->preedit_str = NULL;
-    }
-
-    if (wsc->surrounding_text) {
-        free (wsc->surrounding_text);
-        wsc->surrounding_text = NULL;
-    }
-
-    if (wsc->language) {
-        free (wsc->language);
-        wsc->language = NULL;
-    }
-
-    isf_wsc_context_shutdown ();
 }
 
 int main (int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {
     sleep(1);
 
+    isf_wsc_context_init ();
+
     if (!_wsc_setup (&_wsc)) {
-        _wsc_free (&_wsc);
         return 0;
     }
 
     ecore_main_loop_begin();
 
-    _wsc_free (&_wsc);
+    isf_wsc_context_shutdown ();
 
     return 0;
 }
