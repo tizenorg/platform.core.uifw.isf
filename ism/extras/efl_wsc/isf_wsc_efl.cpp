@@ -71,7 +71,6 @@ using namespace scim;
 #define LOG_TAG                                         "ISF_WSC_EFL"
 
 static struct weescim _wsc                                  = {0};
-static int            _context_count                        = 0;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -399,7 +398,7 @@ static const struct wl_keyboard_listener wsc_im_keyboard_listener = {
 };
 
 static void
-_wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx)
+_wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx, uint32_t text_input_id)
 {
     struct weescim *wsc = (weescim*)data;
     if (!wsc) return;
@@ -414,10 +413,7 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
         delete wsc_ctx;
         return;
     }
-    if (_context_count == 0) {
-        _context_count = getpid () % 50000;
-    }
-    wsc_ctx->id = _context_count++;
+    wsc_ctx->id = text_input_id;
     wsc->wsc_ctx = wsc_ctx;
     wsc_ctx->ctx = wsc;
     wsc_ctx->state = NULL;
