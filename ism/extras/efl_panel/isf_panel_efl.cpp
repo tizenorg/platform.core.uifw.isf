@@ -3994,6 +3994,8 @@ static void hide_ise ()
     if (_candidate_window) {
         if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
             ui_candidate_hide (true, true, true);
+        else
+            ui_candidate_hide (true, false, true);
     }
 }
 
