@@ -28,7 +28,6 @@
 #ifndef WAYLAND
 #include <Ecore_X.h>
 #endif
-#include <privilege-control.h>
 #include <vconf.h>
 #include <efl_extension.h>
 #include "scim_private.h"
@@ -46,7 +45,6 @@
 #include "isf_ondemand_efl.h"
 #include "isf_input_hint_efl.h"
 #include "isf_password_mode_efl.h"
-#include <pkgmgr-info.h>
 
 struct _menu_item {
     const char *name;
