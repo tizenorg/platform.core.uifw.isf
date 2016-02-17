@@ -49,7 +49,7 @@ int main (int argc, char *argv [])
     String display;
     String helper;
     String uuid;
-    bool   daemon = false;
+    //bool   daemon = false;
 
     char *p =  getenv ("DISPLAY");
     if (p) display = String (p);
@@ -71,7 +71,7 @@ int main (int argc, char *argv [])
 
         if (String ("-d") == argv [i] ||
             String ("--daemon") == argv [i]) {
-            daemon = true;
+            //daemon = true;
             continue;
         }
 

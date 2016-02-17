@@ -31,7 +31,6 @@
 #include <Ecore_Evas.h>
 #include <Ecore_IMF.h>
 #include <glib.h>
-#include <text-client-protocol.h>
 
 #include "scim.h"
 #include "isf_wsc_control_ui.h"

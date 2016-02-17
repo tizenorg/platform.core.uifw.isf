@@ -15,12 +15,13 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(vconf)
 %if %{with wayland}
 BuildRequires:  pkgconfig(ecore-wayland)
-BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires:  pkgconfig(text-client)
 BuildRequires:  pkgconfig(input-method-client)
 %else
+BuildRequires:  pkgconfig(ecore-x)
 BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(tts)
 %endif
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(edje)
@@ -28,7 +29,6 @@ BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(notification)
 %endif
 BuildRequires:  pkgconfig(dlog)
-BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(edbus)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
 BuildRequires:  pkgconfig(feedback)

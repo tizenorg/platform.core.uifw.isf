@@ -2743,6 +2743,7 @@ static void ui_mouse_moved_cb (void *data, Evas *e, Evas_Object *button, void *e
     }
 }
 
+#if HAVE_TTS
 /**
  * @brief Open TTS device.
  *
@@ -2752,7 +2753,6 @@ static bool ui_open_tts (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-#if HAVE_TTS
     int r = tts_create (&_tts);
     if (TTS_ERROR_NONE != r) {
         LOGW ("tts_create FAILED : result (%d)\n", r);
@@ -2778,9 +2778,6 @@ static bool ui_open_tts (void)
         }
     }
     return true;
-#else
-    return false;
-#endif
 }
 
 /**
@@ -2790,7 +2787,6 @@ static void ui_close_tts (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-#if HAVE_TTS
     if (_tts) {
         int r = tts_unprepare (_tts);
         if (TTS_ERROR_NONE != r) {
@@ -2802,7 +2798,6 @@ static void ui_close_tts (void)
             LOGW ("tts_destroy FAILED : result (%d)\n", r);
         }
     }
-#endif
 }
 
 /**
@@ -2816,7 +2811,6 @@ static void ui_play_tts (const char* str)
 
     if (!str) return;
 
-#if HAVE_TTS
     if (_tts == NULL) {
         if (!ui_open_tts ())
             return;
@@ -2858,8 +2852,8 @@ static void ui_play_tts (const char* str)
             LOGW ("Fail to play TTS : ret (%d)\n", r);
         }
     }
-#endif
 }
+#endif
 
 /**
  * @brief Show rect for candidate focus object when screen reader is enabled.
@@ -2922,6 +2916,7 @@ static void ui_candidate_scroller_stop_cb (void *data, Evas_Object *obj, void *e
     _wait_stop_event = false;
 }
 
+#if HAVE_ECOREX
 /**
  * @brief Mouse over (find focus object and play text by TTS) when screen reader is enabled.
  *
@@ -2942,7 +2937,9 @@ static void ui_mouse_over (int mouse_x, int mouse_y)
                 /* FIXME: Should consider emoji case */
                 String mbs = utf8_wcstombs (g_isf_candidate_table.get_candidate_in_current_page (i));
                 SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " play candidate string: " << mbs << "\n";
+#if HAVE_TTS
                 ui_play_tts (mbs.c_str ());
+#endif
                 _candidate_tts_focus_index = i;
                 ui_tts_focus_rect_show (x, y, width, height);
                 return;
@@ -2966,8 +2963,10 @@ static void ui_mouse_over (int mouse_x, int mouse_y)
             ui_tts_focus_rect_show (x, y, width, height);
         }
     }
+#if HAVE_TTS
     if (strTts.length () > 0)
         ui_play_tts (strTts.c_str ());
+#endif
 }
 
 /**
@@ -3008,6 +3007,7 @@ static void ui_mouse_click (int focus_index)
         }
     }
 }
+#endif
 
 /**
  * @brief Create preedit window.
@@ -6701,8 +6701,10 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                         ui_tts_focus_rect_hide ();
                     }
 
+#if HAVE_TTS
                     if (strTts.length () > 0)
                         ui_play_tts (strTts.c_str ());
+#endif
                     if (w > 0 && h > 0) {
                         if (!_wait_stop_event)
                             ui_tts_focus_rect_show (x, y, w, h);
@@ -6716,7 +6718,6 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
 
     return ECORE_CALLBACK_RENEW;
 }
-
 #endif
 
 Eina_Bool check_focus_out_by_popup_win ()
@@ -7216,7 +7217,10 @@ cleanup:
         pkgmgr = NULL;
     }
 #endif
+
+#if HAVE_TTS
     ui_close_tts ();
+#endif
 
     unregister_edbus_signal_handler ();
 

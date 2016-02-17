@@ -218,7 +218,6 @@ static void     panel_slot_send_private_command         (int                    
                                                          const String           &command);
 static void     panel_req_focus_in                      (WSCContextISF     *ic);
 static void     panel_req_update_factory_info           (WSCContextISF     *ic);
-static void     panel_req_update_spot_location          (WSCContextISF     *ic);
 static void     panel_req_update_cursor_position        (WSCContextISF     *ic, int cursor_pos);
 static void     panel_req_show_help                     (WSCContextISF     *ic);
 static void     panel_req_show_factory_menu             (WSCContextISF     *ic);
@@ -1111,7 +1110,6 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
             if (need_cap) set_ic_capabilities (context_scim);
 
             panel_req_focus_in (context_scim);
-    //        panel_req_update_spot_location (context_scim);
     //        panel_req_update_factory_info (context_scim);
 
             if (need_reset) context_scim->impl->si->reset ();
@@ -1779,7 +1777,6 @@ turn_on_ic (WSCContextISF *ic)
 
         if (ic == _focused_ic) {
             panel_req_focus_in (ic);
-//            panel_req_update_spot_location (ic);
             panel_req_update_factory_info (ic);
             _panel_client.turn_on (ic->id);
 //            _panel_client.hide_preedit_string (ic->id);
@@ -1953,15 +1950,6 @@ panel_req_focus_in (WSCContextISF *ic)
 
     if (ic && ic->impl && ic->impl->si)
         _panel_client.focus_in (ic->id, ic->impl->si->get_factory_uuid ());
-}
-
-static void
-panel_req_update_spot_location (WSCContextISF *ic)
-{
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-
-    if (ic && ic->impl)
-        _panel_client.update_spot_location (ic->id, ic->impl->cursor_x, ic->impl->cursor_y, ic->impl->cursor_top_y);
 }
 
 static void
@@ -3093,7 +3081,6 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
 
     uint32_t time = 0;
-    uint32_t sym = 0;
 
     if (!fake)
         time = get_time ();
@@ -3106,7 +3093,7 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
     if (key.is_control_down ())
         modifiers |= MOD_CONTROL_MASK;
 
-    sym = _keyname_to_keysym (key.code, &modifiers);
+    _keyname_to_keysym (key.code, &modifiers);
 
     if (ic)
         wsc_context_send_key (ic, key.code, modifiers, time, key.is_key_press ());

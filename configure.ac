@@ -227,7 +227,7 @@ if test "$ISF_HAS_ECOREX" = "yes"; then
   AC_DEFINE(HAVE_ECOREX,1,[Have ecore-x functions.])
 fi
 
-PKG_CHECK_MODULES(WAYLAND, [ecore-wayland text-client input-method-client wayland-client >= 1.2.0 xkbcommon],
+PKG_CHECK_MODULES(WAYLAND, [ecore-wayland text-client input-method-client xkbcommon],
                   [ISF_HAS_ECOREWL=yes],
                   [ISF_HAS_ECOREWL=no])
 
