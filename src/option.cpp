@@ -149,7 +149,7 @@ SCLOptionWindowType find_option_window_type(Evas_Object *obj)
                 return static_cast<SCLOptionWindowType>(loop);
         }
     }
-    LOGD("OPTION_WINDOW_TYPE_MAX=%d", OPTION_WINDOW_TYPE_MAX);
+    LOGD("OPTION_WINDOW_TYPE_MAX=%d\n", OPTION_WINDOW_TYPE_MAX);
     return OPTION_WINDOW_TYPE_MAX;
 }
 
@@ -297,7 +297,7 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
             break;
             }
             case SETTING_ITEM_ID_RESET: {
-                LOGD("reset keyboard settings");
+                LOGD("reset keyboard settings\n");
                 reset_settings_popup(data, obj, event_info);
             }
             break;
@@ -415,7 +415,7 @@ static void check_autocapitalise_change_callback(void *data, Evas_Object *obj, v
     g_config_values.auto_capitalise = state;
     write_ise_config_values();
     if (vconf_set_bool(VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, state) == -1)
-        LOGE("Failed to set vconf autocapital");
+        LOGE("Failed to set vconf autocapital\n");
 }
 
 static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, void *event_info)
@@ -429,7 +429,7 @@ static void check_autopunctuate_change_callback(void *data, Evas_Object *obj, vo
     g_config_values.auto_punctuate = state;
     write_ise_config_values();
     if (vconf_set_bool(VCONFKEY_AUTOPERIOD_ALLOW_BOOL, state) == -1)
-        LOGE("Failed to set vconf autoperiod");
+        LOGE("Failed to set vconf autoperiod\n");
 }
 
 static void check_sound_change_callback(void *data, Evas_Object *obj, void *event_info)
@@ -655,7 +655,7 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
         if (info) {
             if (info->enabled) {
                 enabled_languages.push_back(info->name);
-                LOGD("Enabled language:%s", info->name.c_str());
+                LOGD("Enabled language:%s\n", info->name.c_str());
                 if (info->name.compare(g_config_values.selected_language) == 0) {
                     selected_language_found = TRUE;
                 }
@@ -664,7 +664,7 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
     }
     if (enabled_languages.size() > 0) {
         g_config_values.enabled_languages = enabled_languages;
-        LOGD("Enabled languages size:%d", g_config_values.enabled_languages.size());
+        LOGD("Enabled languages size:%d\n", g_config_values.enabled_languages.size());
         if (!selected_language_found) {
             if (!(g_config_values.enabled_languages.at(0).empty())) {
                 g_config_values.selected_language = g_config_values.enabled_languages.at(0);
@@ -926,7 +926,7 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *genlist = static_cast<Evas_Object*>(evas_object_data_get(obj, "parent_genlist"));
     SCLOptionWindowType type = find_option_window_type(genlist);
-    LOGD("type=%d", type);
+    LOGD("type=%d\n", type);
     ITEMDATA *item_data = (ITEMDATA*)data;
     if (item_data) {
         LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);

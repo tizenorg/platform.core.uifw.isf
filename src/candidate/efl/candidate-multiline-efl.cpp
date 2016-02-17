@@ -112,7 +112,7 @@ EflMultiLineCandidate::get_candidate_item(candidate_item_size item_text_size)
     ret = edje_object_file_set(edje,
         CANDIDATE_EDJ_FILE_PATH, "candidate_item");
     if (!ret) {
-        LOGW("getting candidate edje failed.");
+        LOGW("getting candidate edje failed.\n");
         return NULL;
     }
 
@@ -243,7 +243,7 @@ EflMultiLineCandidate::get_candidate_seperate_line_vertical()
     edje = edje_object_add(evas_object_evas_get(m_window));
     ret = edje_object_file_set(edje, CANDIDATE_EDJ_FILE_PATH, "seperate_line_vertical");
     if (!ret) {
-        LOGW("getting seperate line failed.");
+        LOGW("getting seperate line failed.\n");
         return NULL;
     }
     evas_object_show(edje);
@@ -260,7 +260,7 @@ EflMultiLineCandidate::get_candidate_seperate_line_horizon()
     edje = edje_object_add(evas_object_evas_get(m_window));
     ret = edje_object_file_set(edje, CANDIDATE_EDJ_FILE_PATH, "seperate_line_horizon");
     if (!ret) {
-        LOGW("getting seperate line failed.");
+        LOGW("getting seperate line failed.\n");
         return NULL;
     }
     evas_object_show(edje);

@@ -138,11 +138,11 @@ static void _multi_up(void *data, Evas *e, Evas_Object *o, void *event_info);
 
 void ise_read_recent_emoticon_list_from_scim(void)
 {
-    LOGD("Enter");
+    LOGD("Enter\n");
     std::string string_value;
     g_core.config_read_string(ISE_CONFIG_RECENT_EMOTICONS_LIST, string_value);
     if (string_value.length() > 0) {
-        LOGD("read recent emoticon:%s", string_value.c_str());
+        LOGD("read recent emoticon:%s\n", string_value.c_str());
         std::stringstream ss(string_value);
         std::istream_iterator<std::string> begin(ss);
         std::istream_iterator<std::string> end;
@@ -169,7 +169,7 @@ void ise_write_recent_emoticon_list_to_scim(void)
     if (string_value.length() > 0) {
         g_core.config_write_string(ISE_CONFIG_RECENT_EMOTICONS_LIST, string_value);
         g_core.config_flush();
-        LOGD("write recent emoticon:%s", string_value.c_str());
+        LOGD("write recent emoticon:%s\n", string_value.c_str());
     }
 }
 
@@ -196,10 +196,6 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
     evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-/*  Display *display = (Display *)ecore_x_display_get ();
-    int width  = DisplayWidth (display, DefaultScreen (display));
-    int height = DisplayHeight (display, DefaultScreen (display));
-    LOGD ("screen width:%d, height:%d", width, height);*/
     evas_object_move(layout, 0, 0);
 
     if (is_candidate_on) {
@@ -211,7 +207,7 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
         sclint width = 0;
         sclint height = 0;
         g_ui->get_screen_resolution(&width, &height);
-        LOGD("screen width:%d, height:%d", width, height);
+        LOGD("screen width:%d, height:%d\n", width, height);
         if (screen_degree == 0 || screen_degree == 180) {
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_PORT_CANDIDATE_OFF);
             evas_object_resize(layout, width, g_ui->get_scaled_y(ISE_HEIGHT_PORT));

@@ -165,14 +165,14 @@ static void _reset_shift_state(void)
             g_need_send_shift_event = true;
             g_ui->set_shift_state(new_shift_state);
         }
-        LOGD("Shift state changed from (%d) to (%d)", (int)old_shift_state, (int)new_shift_state);
+        LOGD("Shift state changed from (%d) to (%d)\n", (int)old_shift_state, (int)new_shift_state);
     }
 }
 
 static void ise_set_cm_private_key(scluint cm_key_id)
 {
     if (cm_key_id >= CM_KEY_LIST_SIZE || g_ui == NULL) {
-        LOGE("cm_key_id=%d", cm_key_id);
+        LOGE("cm_key_id=%d\n", cm_key_id);
         return;
     }
 
@@ -204,7 +204,7 @@ static bool ise_is_emoticons_disabled(void)
 {
     bool ret = true;
     sclu32 current_layout = g_keyboard_state.layout;
-    LOGD("layout=%d", current_layout);
+    LOGD("layout=%d\n", current_layout);
 
     if ((current_layout == ISE_LAYOUT_STYLE_NORMAL) ||
         (current_layout == ISE_LAYOUT_STYLE_NUMBER) ||
@@ -270,13 +270,13 @@ void CCoreEventCallback::on_detach_input_context(sclint ic, const sclchar *ic_uu
 
 void CCoreEventCallback::on_focus_in(sclint ic, const sclchar *ic_uuid)
 {
-    LOGD("Enter");
+    LOGD("Enter\n");
     ise_focus_in(ic);
 }
 
 void CCoreEventCallback::on_focus_out(sclint ic, const sclchar *ic_uuid)
 {
-    LOGD("Enter");
+    LOGD("Enter\n");
     ise_focus_out(ic);
     g_imdata_state = 0;
 }
@@ -304,7 +304,7 @@ void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context
     if (!(g_keyboard_state.visible_state)) {
         ise_set_screen_rotation(degree);
     } else {
-        LOGD("Skipping rotation angle , %d", degree);
+        LOGD("Skipping rotation angle , %d\n", degree);
     }
 
     ::ise_show(ic);
@@ -331,7 +331,7 @@ void CCoreEventCallback::on_set_display_language(const sclchar *language)
 
 void CCoreEventCallback::on_set_accessibility_state(const sclboolean state)
 {
-    LOGD("state=%d", state);
+    LOGD("state=%d\n", state);
     ise_set_accessibility_state(state);
 }
 
@@ -339,7 +339,7 @@ void CCoreEventCallback::on_set_rotation_degree(sclint degree)
 {
     ise_set_screen_rotation(degree);
 
-    LOGD("degree=%d", degree);
+    LOGD("degree=%d\n", degree);
     if (is_emoticon_show()) {
         ise_destroy_emoticon_window();
     }
@@ -356,7 +356,7 @@ void CCoreEventCallback::on_set_rotation_degree(sclint degree)
 
 void CCoreEventCallback::on_set_layout(sclu32 layout)
 {
-    LOGD("layout=%d", layout);
+    LOGD("layout=%d\n", layout);
     /* Check if the layoutIdx is in the valid range */
     if (layout < ISE_LAYOUT_STYLE_MAX) {
         if (g_keyboard_state.layout != layout) {
@@ -380,7 +380,7 @@ void CCoreEventCallback::on_update_cursor_position(sclint ic, const sclchar *ic_
 
 void CCoreEventCallback::on_update_surrounding_text(sclint ic, const sclchar *text, sclint cursor)
 {
-    LOGD("surrounding text:%s, cursor=%d", text, cursor);
+    LOGD("surrounding text:%s, cursor=%d\n", text, cursor);
     g_core.delete_surrounding_text(-cursor, strlen(text));
 }
 
@@ -399,7 +399,7 @@ void CCoreEventCallback::on_set_return_key_disable(sclu32 disabled)
 
 void CCoreEventCallback::on_set_imdata(sclchar *buf, sclu32 len)
 {
-    LOGD("Enter");
+    LOGD("Enter\n");
     g_imdata_state = 0;
     size_t _len = len;
     set_ise_imdata(buf, _len);
@@ -472,7 +472,7 @@ ise_send_string(const sclchar *key_value)
     }
     g_core.hide_preedit_string(ic, "");
     g_core.commit_string(ic, "", key_value);
-    LOGD("ic : %x, %s", ic, key_value);
+    LOGD("ic : %x, %s\n", ic, key_value);
 }
 
 /**
@@ -486,7 +486,7 @@ ise_update_preedit_string(const sclchar *str)
         ic = g_keyboard_state.ic;
     }
     g_core.update_preedit_string(ic, "", str);
-    LOGD("ic : %x, %s", ic, str);
+    LOGD("ic : %x, %s\n", ic, str);
 }
 
 /**
@@ -501,7 +501,7 @@ ise_send_event(sclulong key_event, sclulong key_mask)
     }
     g_core.send_key_event(ic, "", key_event, KEY_MASK_NULL);
     g_core.send_key_event(ic, "", key_event, KEY_MASK_RELEASE);
-    LOGD("ic : %x, %x", ic, key_event);
+    LOGD("ic : %x, %x\n", ic, key_event);
 }
 
 /**
@@ -516,7 +516,7 @@ ise_forward_key_event(sclulong key_event)
     }
     g_core.forward_key_event(ic, "", key_event, KEY_MASK_NULL);
     g_core.forward_key_event(ic, "", key_event, KEY_MASK_RELEASE);
-    LOGD("ic : %x, %x", ic, key_event);
+    LOGD("ic : %x, %x\n", ic, key_event);
 }
 
 static void set_caps_mode(sclint mode) {
@@ -609,7 +609,7 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
 SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_type, SclNotiDesc *etc_info)
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
-    LOGD("noti type: %d, g_need_send_shift_event: %d", noti_type, g_need_send_shift_event);
+    LOGD("noti type: %d, g_need_send_shift_event: %d\n", noti_type, g_need_send_shift_event);
 
     if (noti_type == SCL_UINOTITYPE_SHIFT_STATE_CHANGE) {
         if (g_need_send_shift_event) {
@@ -619,7 +619,7 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
                 SclNotiShiftStateChangeDesc *desc = static_cast<SclNotiShiftStateChangeDesc*>(etc_info);
                 if (info && desc) {
                     if (info->accepts_caps_mode) {
-                        LOGD("shift state: %d", desc->shift_state);
+                        LOGD("shift state: %d\n", desc->shift_state);
                         if (desc->shift_state == SCL_SHIFT_STATE_OFF) {
                             ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
                         }
@@ -747,7 +747,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                     const char *delete_all = "DeleteAll";
                     const char *hide_panel = "Hide";
                     if (strncmp(event_desc.key_value, long_shift, strlen(long_shift)) == 0) {
-                        LOGD("shift key is longpress");
+                        LOGD("shift key is longpress\n");
                         g_ui->set_shift_state(SCL_SHIFT_STATE_ON);
                         g_need_send_shift_event = TRUE;
                         //ise_send_event (MVK_Shift_Lock, KEY_MASK_NULL);
@@ -843,7 +843,7 @@ ise_set_layout(sclu32 layout, sclu32 layout_variation)
         }
         g_keyboard_state.layout = layout;
         g_keyboard_state.layout_variation = layout_variation;
-        LOGD("layout:%d, variation:%d", g_keyboard_state.layout, g_keyboard_state.layout_variation);
+        LOGD("layout:%d, variation:%d\n", g_keyboard_state.layout, g_keyboard_state.layout_variation);
     }
 }
 
@@ -860,7 +860,7 @@ ise_reset_input_context()
 void
 ise_focus_in(int ic)
 {
-    LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
+    LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x\n", ic, check_ic_temporary(ic),
             g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
             g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
     if (check_ic_temporary(g_keyboard_state.ic) && !check_ic_temporary(ic)) {
@@ -886,7 +886,7 @@ ise_focus_out(int ic)
 void
 ise_attach_input_context(int ic)
 {
-    LOGD("attaching, ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
+    LOGD("attaching, ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x\n", ic, check_ic_temporary(ic),
             g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
             g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
     ise_focus_in(ic);
@@ -908,7 +908,7 @@ ise_show(int ic)
 
         _language_manager.set_enabled_languages(g_config_values.enabled_languages);
 
-        LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x", ic, check_ic_temporary(ic),
+        LOGD("ic : %x , %x , g_ic : %x , %x, g_focused_ic : %x , %x\n", ic, check_ic_temporary(ic),
                 g_keyboard_state.ic, check_ic_temporary(g_keyboard_state.ic),
                 g_keyboard_state.focused_ic, check_ic_temporary(g_keyboard_state.focused_ic));
 
@@ -977,7 +977,7 @@ ise_show(int ic)
                     layout_index = ISE_LAYOUT_STYLE_PASSWD_3X4;
                 }
 
-                LOGD("new layout index:%d", layout_index);
+                LOGD("new layout index : %d\n", layout_index);
                 const sclchar *old_input_mode = g_ui->get_input_mode();
                 /* If this layout requires specific input mode, set it */
                 if (strlen(g_ise_default_values[layout_index].input_mode) > 0) {
@@ -1014,7 +1014,7 @@ ise_show(int ic)
                 if (g_keyboard_state.visible_state && old_input_mode && new_input_mode && strcmp(old_input_mode, new_input_mode)) {
                     SclSize new_portrait = g_ui->get_input_mode_size(new_input_mode, DISPLAYMODE_PORTRAIT);
                     SclSize new_landscape = g_ui->get_input_mode_size(new_input_mode, DISPLAYMODE_LANDSCAPE);
-                    LOGD("old input mode:%s, new input mode:%s, portrait(%d, %d), landscape(%d, %d)",
+                    LOGD("old input mode:%s, new input mode:%s, portrait(%d, %d), landscape(%d, %d)\n",
                         old_input_mode, new_input_mode, new_portrait.width, new_portrait.height, new_landscape.width, new_landscape.height);
 
                     sclint width = 0;
@@ -1213,9 +1213,9 @@ void
 ise_destroy()
 {
     if (g_ui) {
-        LOGD("calling g_ui->fini()");
+        LOGD("calling g_ui->fini()\n");
         g_ui->fini();
-        LOGD("deleting g_ui");
+        LOGD("deleting g_ui\n");
         delete g_ui;
         g_ui = NULL;
     }

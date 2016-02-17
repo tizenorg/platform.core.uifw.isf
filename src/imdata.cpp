@@ -74,7 +74,7 @@ void set_ise_imdata(const char * buf, size_t &len)
             while (items[loop] && loop < IMDATA_ITEM_MAX_NUM) {
                 char **keyvalue = eina_str_split(items[loop], IMDATA_KEY_VALUE_DELIMETER, 2);
                 if (keyvalue[0]) {
-                    LOGD("key (%s), value (%s)", keyvalue[0], keyvalue[1]);
+                    LOGD("key (%s), value (%s)\n", keyvalue[0], keyvalue[1]);
                     /* If the key string requests us to change the language */
                     if (strncmp(keyvalue[0], IMDATA_KEY_LANGUAGE, strlen(IMDATA_KEY_LANGUAGE)) == 0) {
                         process_imdata_string_language(keyvalue[1]);

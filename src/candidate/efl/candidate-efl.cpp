@@ -106,7 +106,7 @@ EflCandidate::create_item() {
     item = edje_object_add(evas_object_evas_get(win));
     ret = edje_object_file_set(item, CANDIDATE_EDJ_FILE_PATH, "candidate_item");
     if (!ret) {
-        LOGW("getting candidate item failed.");
+        LOGW("getting candidate item failed.\n");
         return NULL;
     }
 
@@ -127,7 +127,7 @@ EflCandidate::create_seperate_line() {
     seperate_line = edje_object_add(evas_object_evas_get(win));
     ret = edje_object_file_set(seperate_line, CANDIDATE_EDJ_FILE_PATH, "seperate_line");
     if (!ret) {
-        LOGW("getting seperate line failed.");
+        LOGW("getting seperate line failed.\n");
         return NULL;
     }
     evas_object_show(seperate_line);
