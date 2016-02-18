@@ -29,8 +29,7 @@ isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
                          isf_panel_utility.cpp \
                          $(top_builddir)/ism/src/isf_pkg.cpp
 
-isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
-                         @ECOREX_CFLAGS@ \
+isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
                          @ELEMENTARY_CFLAGS@ \
                          @VCONF_CFLAGS@ \
                          @X11_CFLAGS@ \
@@ -47,7 +46,7 @@ isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
                          @WAYLAND_CFLAGS@ \
                          -fPIE
 
-isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
+isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @ECOREX_LIBS@ \
                          @ELEMENTARY_LIBS@ \
                          @VCONF_LIBS@ \
