@@ -219,6 +219,7 @@ PKG_CHECK_MODULES(EFL, [eina evas ecore ecore-evas ecore-file ecore-input ecore-
                   [ISF_HAS_EFL=yes],
                   [ISF_HAS_EFL=no])
 
+# Check ECORE X library
 PKG_CHECK_MODULES(ECOREX, [ecore-x],
                   [ISF_HAS_ECOREX=yes],
                   [ISF_HAS_ECOREX=no])
@@ -227,13 +228,29 @@ if test "$ISF_HAS_ECOREX" = "yes"; then
   AC_DEFINE(HAVE_ECOREX,1,[Have ecore-x functions.])
 fi
 
-PKG_CHECK_MODULES(WAYLAND, [ecore-wayland text-client input-method-client xkbcommon],
+# Check x11 library
+PKG_CHECK_MODULES(X11, [x11],
+                  [ISF_HAS_X11=yes],
+                  [ISF_HAS_X11=no])
+
+if test "$ISF_HAS_X11" = "yes"; then
+  AC_DEFINE(HAVE_X11,1,[Have X11 functions.])
+fi
+
+# Check XKBCOMMON library
+PKG_CHECK_MODULES(XKBCOMMON, [xkbcommon])
+
+# Check ECORE WAYLAND library
+PKG_CHECK_MODULES(WAYLAND, [ecore-wayland],
                   [ISF_HAS_ECOREWL=yes],
                   [ISF_HAS_ECOREWL=no])
 
 if test "$ISF_HAS_ECOREWL" = "yes"; then
   AC_DEFINE(HAVE_ECOREWL,1,[Have ecore-wayland functions.])
 fi
+
+# Check WAYLAND TEXT INPUT library
+PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client input-method-client])
 
 if test "$ISF_HAS_EFL" = "yes"; then
   EFL_LIBDIR=`$PKG_CONFIG --variable=libdir ecore-imf`
@@ -251,15 +268,6 @@ PKG_CHECK_MODULES(EFL_EXTENSION, [efl-extension])
 
 # Check tzplatform-config library
 PKG_CHECK_MODULES(TZPLATFORM_CONFIG, [libtzplatform-config])
-
-# Check x11 library
-PKG_CHECK_MODULES(X11, [x11],
-                  [ISF_HAS_X11=yes],
-                  [ISF_HAS_X11=no])
-
-if test "$ISF_HAS_X11" = "yes"; then
-  AC_DEFINE(HAVE_X11,1,[Have X11 functions.])
-fi
 
 # Check appcore-efl library
 PKG_CHECK_MODULES(APPCORE_EFL, [appcore-efl])
