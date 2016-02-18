@@ -39,7 +39,6 @@
 
 #include <Evas.h>
 #include <Ecore.h>
-#include <Ecore_Evas.h>
 #include <Ecore_Wayland.h>
 #include <glib.h>
 #include <vconf.h>
@@ -51,7 +50,6 @@
 #include "scim.h"
 #include "isf_wsc_context.h"
 #include "isf_wsc_control_ui.h"
-#define ENABLE_BACKKEY 1
 
 #ifdef LOG_TAG
 # undef LOG_TAG

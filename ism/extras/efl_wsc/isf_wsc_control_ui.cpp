@@ -28,7 +28,6 @@
 /* IM control UI part */
 #include <Ecore.h>
 #include <Ecore_Wayland.h>
-#include <Ecore_Evas.h>
 #include <Ecore_IMF.h>
 #include <glib.h>
 
