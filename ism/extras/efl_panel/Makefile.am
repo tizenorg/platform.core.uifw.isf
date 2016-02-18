@@ -32,7 +32,6 @@ isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
 isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
                          @ECOREX_CFLAGS@ \
                          @ELEMENTARY_CFLAGS@ \
-                         @EFL_EXTENSION_CFLAGS@ \
                          @VCONF_CFLAGS@ \
                          @X11_CFLAGS@ \
                          @PRIVILEGE_CONTROL_CFLAGS@ \
@@ -51,7 +50,6 @@ isf_panel_efl_CXXFLAGS = @EFL_CFLAGS@ \
 isf_panel_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                          @ECOREX_LIBS@ \
                          @ELEMENTARY_LIBS@ \
-                         @EFL_EXTENSION_LIBS@ \
                          @VCONF_LIBS@ \
                          @X11_LIBS@ \
                          @PRIVILEGE_CONTROL_LIBS@ \

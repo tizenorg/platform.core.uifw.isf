@@ -38,18 +38,11 @@
 #include <string.h>
 #include <list>
 #include <glib.h>
-#include <Evas.h>
 #include <Ecore.h>
 #include <Ecore_Wayland.h>
-#include <Ecore_File.h>
 #include <malloc.h>
 #include "scim_private.h"
 #include "scim.h"
-#if HAVE_VCONF
-#include <vconf.h>
-#include <vconf-keys.h>
-#endif
-#include <privilege-control.h>
 #include <dlog.h>
 
 #include <linux/input.h>
@@ -496,7 +489,6 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     isf_wsc_context_del (wsc_ctx);
     delete wsc_ctx;
     wsc->wsc_ctx = NULL;
-
 }
 
 static void

@@ -51,7 +51,6 @@
 #if HAVE_ECOREWL
 #include <Ecore_Wayland.h>
 #endif
-#include <Ecore_File.h>
 #include <Elementary.h>
 #if HAVE_X11
 #include <X11/Xlib.h>

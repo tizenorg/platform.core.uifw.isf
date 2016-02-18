@@ -26,11 +26,8 @@
 #define Uses_SCIM_CONFIG_PATH
 
 /* IM control UI part */
-#include <Ecore.h>
 #include <Ecore_Wayland.h>
-#include <Ecore_Evas.h>
 #include <Ecore_IMF.h>
-#include <glib.h>
 
 #include "scim.h"
 #include "isf_wsc_control_ui.h"
