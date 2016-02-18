@@ -36,8 +36,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <list>
-#include <glib.h>
 #include <Ecore.h>
 #include <Ecore_Wayland.h>
 #include <malloc.h>
