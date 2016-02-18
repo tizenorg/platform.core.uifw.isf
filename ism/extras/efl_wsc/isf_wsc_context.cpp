@@ -37,7 +37,7 @@
 #include <langinfo.h>
 #include <unistd.h>
 
-#include <Evas.h>
+#include <Eina.h>
 #include <Ecore.h>
 #include <Ecore_Wayland.h>
 #include <vconf.h>
@@ -61,7 +61,6 @@ struct _WSCContextISFImpl {
     WSCContextISF           *parent;
     IMEngineInstancePointer  si;
     Ecore_Wl_Window         *client_window;
-    Evas                    *client_canvas;
     Ecore_IMF_Input_Mode     input_mode;
     WideString               preedit_string;
     AttributeList            preedit_attrlist;
@@ -90,7 +89,6 @@ struct _WSCContextISFImpl {
     /* Constructor */
     _WSCContextISFImpl() : parent(NULL),
                            client_window(0),
-                           client_canvas(NULL),
                            input_mode(ECORE_IMF_INPUT_MODE_FULL),
                            autocapital_type(ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE),
                            input_hint(ECORE_IMF_INPUT_HINT_NONE),
@@ -935,7 +933,6 @@ isf_wsc_context_add (WSCContextISF *wsc_ctx)
 
     context_scim->impl->si                  = si;
     context_scim->impl->client_window       = 0;
-    context_scim->impl->client_canvas       = NULL;
     context_scim->impl->preedit_caret       = 0;
     context_scim->impl->cursor_x            = 0;
     context_scim->impl->cursor_y            = 0;

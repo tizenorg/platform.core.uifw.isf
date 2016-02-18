@@ -190,9 +190,7 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
             kbd_mode = TOOLBAR_KEYBOARD_MODE;
             input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, (Ecore_IMF_Input_Panel_Keyboard_Mode)kbd_mode);
         }
-
     }
-
 
     return ECORE_CALLBACK_PASS_ON;
 }
