@@ -35,17 +35,17 @@ isf_wsc_efl_SOURCES  = isf_wsc_efl.cpp \
 isf_wsc_efl_CXXFLAGS = @EFL_CFLAGS@ \
                        @VCONF_CFLAGS@ \
                        @WAYLAND_CFLAGS@ \
+                       @WL_TEXT_INPUT_CFLAGS@ \
+                       @XKB_CFLAGS@ \
                        @DLOG_CFLAGS@ \
-                       @TTS_CFLAGS@ \
-                       @FEEDBACK_CFLAGS@ \
                        -fPIE
 
 isf_wsc_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
                        @VCONF_LIBS@ \
                        @WAYLAND_LIBS@ \
+                       @WL_TEXT_INPUT_LIBS@ \
+                       @XKB_LIBS@ \
                        @DLOG_LIBS@ \
-                       @TTS_LIBS@ \
-                       @FEEDBACK_LIBS@ \
                        -pie
 
 isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
