@@ -205,19 +205,40 @@ AC_CHECK_FUNCS([gethostbyname gethostbyname_r socket bind accept connect listen]
 
 AM_ICONV
 
+# Check EINA
+PKG_CHECK_MODULES(EINA, [eina])
+
 # Check ECORE
 PKG_CHECK_MODULES(ECORE, [ecore])
+
 
 # Check ECORE_IPC library
 PKG_CHECK_MODULES(ECORE_IPC, [ecore-ipc])
 
-# Check ELEMENTARY library
-PKG_CHECK_MODULES(ELEMENTARY, [elementary edje])
+# Check ECORE FILE library
+PKG_CHECK_MODULES(ECORE_FILE, [ecore-file])
 
-# Check EFL library
-PKG_CHECK_MODULES(EFL, [eina evas ecore ecore-evas ecore-input ecore-imf],
-                  [ISF_HAS_EFL=yes],
-                  [ISF_HAS_EFL=no])
+# Check ECORE EVAS library
+PKG_CHECK_MODULES(ECORE_EVAS, [ecore-evas])
+
+# Check ECORE IMF
+PKG_CHECK_MODULES(ECORE_IMF, [ecore-imf],
+                  [ISF_HAS_ECORE_IMF=yes],
+                  [ISF_HAS_ECORE_IMF=no])
+
+if test "$ISF_HAS_ECORE_IMF" = "yes"; then
+  EFL_LIBDIR=`$PKG_CONFIG --variable=libdir ecore-imf`
+  ECORE_IMF_MODULE_ARCH=`$PKG_CONFIG --variable=module_arch ecore`
+  if test -z "$EFL_LIBDIR)"; then
+    EFL_LIBDIR="$libdir"
+  fi
+  EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/isf/$ECORE_IMF_MODULE_ARCH
+  AC_SUBST(EFL_LIBDIR)
+  AC_SUBST(EFL_IM_MODULEDIR)
+fi
+
+# Check EVAS
+PKG_CHECK_MODULES(EVAS, [evas])
 
 # Check ECORE X library
 PKG_CHECK_MODULES(ECOREX, [ecore-x],
@@ -252,16 +273,10 @@ fi
 # Check WAYLAND TEXT INPUT library
 PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client input-method-client])
 
-if test "$ISF_HAS_EFL" = "yes"; then
-  EFL_LIBDIR=`$PKG_CONFIG --variable=libdir ecore-imf`
-  ECORE_IMF_MODULE_ARCH=`$PKG_CONFIG --variable=module_arch ecore`
-  if test -z "$EFL_LIBDIR)"; then
-    EFL_LIBDIR="$libdir"
-  fi
-  EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/isf/$ECORE_IMF_MODULE_ARCH
-  AC_SUBST(EFL_LIBDIR)
-  AC_SUBST(EFL_IM_MODULEDIR)
-fi
+# Check ELEMENTARY library
+PKG_CHECK_MODULES(ELEMENTARY, [elementary edje],
+                  [ISF_HAS_ELM=yes],
+                  [ISF_HAS_ELM=no])
 
 # Check EFL extension library
 PKG_CHECK_MODULES(EFL_EXTENSION, [efl-extension])
@@ -612,14 +627,14 @@ else
   enable_multiwindow_support=no
 fi
 
-if test "$enable_efl_immodule" = "yes" -a "$ISF_HAS_EFL" = "yes"; then
+if test "$enable_efl_immodule" = "yes" -a "$ISF_HAS_ECORE_IMF" = "yes"; then
   ISF_BUILD_EFL_IMMODULE=1
 else
   ISF_BUILD_EFL_IMMODULE=0
   enable_efl_immodule=no
 fi
 
-if test "$enable_wsc_efl" = "yes" -a "$ISF_HAS_EFL" = "yes"; then
+if test "$enable_wsc_efl" = "yes" -a "$ISF_HAS_ELM" = "yes"; then
   ISF_BUILD_WSC_EFL=1
 else
   ISF_BUILD_WSC_EFL=0
@@ -629,7 +644,7 @@ fi
 ISF_BUILD_PANEL_EFL=0
 if test "$enable_panel_efl" != "no"; then
   enable_panel_efl=no
-  if test "$ISF_HAS_EFL" = "yes"; then
+  if test "$ISF_HAS_ELM" = "yes"; then
     ISF_BUILD_PANEL_EFL=1
     enable_panel_efl=yes
   fi

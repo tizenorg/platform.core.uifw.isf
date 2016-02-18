@@ -37,7 +37,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <list>
 #include <glib.h>
 #include <Evas.h>
 #include <Ecore.h>
