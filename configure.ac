@@ -205,8 +205,17 @@ AC_CHECK_FUNCS([gethostbyname gethostbyname_r socket bind accept connect listen]
 
 AM_ICONV
 
+# Check EINA
+PKG_CHECK_MODULES(EINA, [eina])
+
 # Check ECORE
 PKG_CHECK_MODULES(ECORE, [ecore])
+
+# Check EVAS
+PKG_CHECK_MODULES(EVAS, [evas])
+
+# Check ECORE IMF
+PKG_CHECK_MODULES(ECORE_IMF, [ecore-imf])
 
 # Check ECORE_IPC library
 PKG_CHECK_MODULES(ECORE_IPC, [ecore-ipc])

@@ -145,7 +145,8 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  isf_query_utility.cpp \
 			  privilege_checker.cpp
 
-libscim@SCIM_EPOCH@_la_CXXFLAGS = @EFL_CFLAGS@ \
+libscim@SCIM_EPOCH@_la_CXXFLAGS = @ECORE_CFLAGS@ \
+			  @EVAS_CFLAGS@ \
 			  @DLOG_CFLAGS@ \
 			  @CYNARA_CFLAGS@ \
 			  @VCONF_CFLAGS@ \
@@ -159,7 +160,8 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBTOOL_EXPORT_OPTIONS@ \
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
-			  @EFL_LIBS@ \
+			  @ECORE_LIBS@ \
+			  @EVAS_LIBS@ \
 			  @CYNARA_LIBS@ \
 			  @VCONF_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
@@ -209,9 +211,9 @@ scim_launcher_CXXFLAGS  = @PRIVILEGE_CONTROL_CFLAGS@ @VCONF_CFLAGS@ @PKGMGR_INFO
 scim_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ -pie
 
 scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp ise_preexec.cpp
-scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@ @EFL_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ @ECORE_IPC_CFLAGS@ -fPIE
+scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@ @ECORE_CFLAGS@ @DLOG_CFLAGS@ @ECORE_IPC_CFLAGS@ -fPIE
 scim_helper_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @EFL_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ @ECORE_IPC_LIBS@ -pie
+scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @ECORE_LIBS@ @DLOG_LIBS@ @ECORE_IPC_LIBS@ -pie
 
 if HAVE_X
 scim_helper_launcher_CXXFLAGS += @ECOREX_CFLAGS@

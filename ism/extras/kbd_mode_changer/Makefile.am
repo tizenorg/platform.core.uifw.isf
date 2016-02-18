@@ -32,14 +32,12 @@ isf_kbd_mode_changer_SOURCES  = main.cpp
 
 isf_kbd_mode_changer_CXXFLAGS = @EFL_CFLAGS@ \
                                 @ECOREX_CFLAGS@ \
-                                @ELEMENTARY_CFLAGS@ \
                                 @DLOG_CFLAGS@ \
                                 @APPFW_CFLAGS@ \
                                 -fPIE
 
 isf_kbd_mode_changer_LDFLAGS  = @EFL_LIBS@ -rpath $(libdir)\
                                 @ECOREX_LIBS@ \
-                                @ELEMENTARY_LIBS@ \
                                 @DLOG_LIBS@ \
                                 @APPFW_LIBS@ \
                                 -pie

@@ -32,7 +32,9 @@ isf_wsc_efl_SOURCES  = isf_wsc_efl.cpp \
 						 isf_wsc_control.cpp \
 						 isf_wsc_control_ui.cpp
 
-isf_wsc_efl_CXXFLAGS = @EFL_CFLAGS@ \
+isf_wsc_efl_CXXFLAGS = @ECORE_CFLAGS@ \
+                       @ECORE_IMF_CFLAGS@ \
+                       @EINA_CFLAGS@ \
                        @VCONF_CFLAGS@ \
                        @WAYLAND_CFLAGS@ \
                        @WL_TEXT_INPUT_CFLAGS@ \
@@ -40,7 +42,9 @@ isf_wsc_efl_CXXFLAGS = @EFL_CFLAGS@ \
                        @DLOG_CFLAGS@ \
                        -fPIE
 
-isf_wsc_efl_LDFLAGS  = @EFL_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
+isf_wsc_efl_LDFLAGS  = @ECORE_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
+                       @ECORE_IMF_LIBS@ \
+                       @EINA_LIBS@ \
                        @VCONF_LIBS@ \
                        @WAYLAND_LIBS@ \
                        @WL_TEXT_INPUT_LIBS@ \
