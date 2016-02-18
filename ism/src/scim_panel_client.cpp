@@ -861,6 +861,7 @@ public:
                 *len = datalen;
             } else {
                 std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+                *len = 0;
             }
             if (data_temp)
                 delete [] data_temp;

@@ -437,6 +437,12 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wsc_ctx->context_changed = EINA_TRUE;
 
     isf_wsc_context_focus_in (wsc_ctx);
+
+    int len = 1024;
+    char imdata[1024] = {0};
+    isf_wsc_context_input_panel_imdata_get (wsc_ctx, imdata, &len);
+    LOGD ("Get imdata:%s, length:%d\n", imdata, len);
+    wl_input_method_context_update_input_panel_data (im_ctx, wsc_ctx->serial, imdata, len);
 }
 
 static void
