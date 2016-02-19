@@ -144,8 +144,6 @@ _wsc_im_ctx_commit_state(void *data, struct wl_input_method_context *im_ctx, uin
 
     if (wsc_ctx->language)
         wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
-
-    wl_input_method_context_text_direction (im_ctx, wsc_ctx->serial, wsc_ctx->text_direction);
 }
 
 static void
@@ -444,8 +442,6 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     if (wsc_ctx->language)
         wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
 
-    wl_input_method_context_text_direction (im_ctx, wsc_ctx->serial, wsc_ctx->text_direction);
-
     isf_wsc_context_add (wsc_ctx);
 
     wsc_ctx->context_changed = EINA_TRUE;
@@ -530,24 +526,6 @@ static const struct wl_input_method_listener wsc_im_listener = {
     _wsc_im_hide_input_panel
 };
 
-static void
-_wsc_seat_handle_capabilities(void *data, struct wl_seat *seat,
-                              uint32_t caps)
-{
-    struct weescim *wsc = (weescim*)data;
-    if (!wsc) return;
-
-    if ((caps & WL_SEAT_CAPABILITY_KEYBOARD)) {
-
-    } else if (!(caps & WL_SEAT_CAPABILITY_KEYBOARD)) {
-
-    }
-}
-
-static const struct wl_seat_listener wsc_seat_listener = {
-    _wsc_seat_handle_capabilities,
-};
-
 static bool
 _wsc_setup(struct weescim *wsc)
 {
@@ -566,8 +544,6 @@ _wsc_setup(struct weescim *wsc)
     EINA_INLIST_FOREACH(globals, global) {
         if (strcmp (global->interface, "wl_input_method") == 0)
             wsc->im = (wl_input_method*)wl_registry_bind (registry, global->id, &wl_input_method_interface, 1);
-        else if (strcmp (global->interface, "wl_seat") == 0)
-            wsc->seat = (wl_seat*)wl_registry_bind (registry, global->id, &wl_seat_interface, 1);
     }
 
     if (wsc->im == NULL) {
@@ -582,13 +558,6 @@ _wsc_setup(struct weescim *wsc)
         wl_input_method_add_listener (wsc->im, &wsc_im_listener, wsc);
     else {
         LOGW ("Couldn't get wayland input method interface\n");
-        return false;
-    }
-
-    if (wsc->seat)
-        wl_seat_add_listener(wsc->seat, &wsc_seat_listener, wsc);
-    else {
-        LOGW ("Couldn't get wayland seat interface\n");
         return false;
     }
 
