@@ -209,6 +209,21 @@ _wsc_im_ctx_input_panel_data(void *data, struct wl_input_method_context *im_ctx,
     isf_wsc_context_input_panel_imdata_set (wsc_ctx, (void *)input_panel_data, input_panel_data_length);
 }
 
+static void
+_wsc_im_ctx_bidi_direction(void *data, struct wl_input_method_context *im_ctx, uint32_t bidi_direction)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+
+    LOGD ("im_context = %p bidi_direction = %d\n", im_ctx, bidi_direction);
+    if (!wsc_ctx) return;
+
+    if (wsc_ctx->bidi_direction != bidi_direction) {
+        wsc_ctx->bidi_direction = bidi_direction;
+
+        isf_wsc_context_bidi_direction_set (wsc_ctx, (Ecore_IMF_BiDi_Direction)wsc_ctx->bidi_direction);
+    }
+}
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_surrounding_text,
      _wsc_im_ctx_reset,
@@ -218,7 +233,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_preferred_language,
      _wsc_im_ctx_return_key_type,
      _wsc_im_ctx_return_key_disabled,
-     _wsc_im_ctx_input_panel_data
+     _wsc_im_ctx_input_panel_data,
+     _wsc_im_ctx_bidi_direction
 };
 
 static void
