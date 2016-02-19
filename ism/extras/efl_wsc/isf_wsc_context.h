@@ -94,6 +94,7 @@ struct _WSCContextISF {
     uint32_t content_purpose;
     uint32_t surrounding_cursor;
     uint32_t return_key_type;
+    uint32_t bidi_direction;
 
     Eina_Bool context_changed;
     Eina_Bool return_key_disabled;
@@ -123,6 +124,7 @@ void isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int
 void isf_wsc_context_prediction_allow_set (WSCContextISF* wsc_ctx, Eina_Bool prediction);
 Eina_Bool isf_wsc_context_prediction_allow_get (WSCContextISF* wsc_ctx);
 void isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type);
+void isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction);
 void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                        uint32_t serial,
                                        uint32_t timestamp, uint32_t key, uint32_t unicode,
