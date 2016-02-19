@@ -216,6 +216,7 @@ static void     panel_slot_send_private_command         (int                    
 static void     panel_req_focus_in                      (WSCContextISF     *ic);
 static void     panel_req_update_factory_info           (WSCContextISF     *ic);
 static void     panel_req_update_cursor_position        (WSCContextISF     *ic, int cursor_pos);
+static void     panel_req_update_bidi_direction         (WSCContextISF     *ic, int direction);
 static void     panel_req_show_help                     (WSCContextISF     *ic);
 static void     panel_req_show_factory_menu             (WSCContextISF     *ic);
 
@@ -1303,6 +1304,28 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapi
     }
 }
 
+void
+isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *context_scim = wsc_ctx;
+
+    if (context_scim && context_scim->impl) {
+        if (context_scim->impl->bidi_direction != direction) {
+            context_scim->impl->bidi_direction = direction;
+
+            if (context_scim->impl->si && context_scim == _focused_ic) {
+                LOGD ("ctx : %p, bidi direction : %#x\n", wsc_ctx, direction);
+                _panel_client.prepare (context_scim->id);
+                context_scim->impl->si->update_bidi_direction (direction);
+                panel_req_update_bidi_direction (context_scim, direction);
+                _panel_client.send ();
+            }
+        }
+    }
+}
+
 #ifdef _TV
 static
 bool is_number_key(const char *str)
@@ -1956,6 +1979,15 @@ panel_req_update_cursor_position (WSCContextISF *ic, int cursor_pos)
 
     if (ic)
         _panel_client.update_cursor_position (ic->id, cursor_pos);
+}
+
+static void
+panel_req_update_bidi_direction   (WSCContextISF *ic, int direction)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    if (ic)
+        _panel_client.update_bidi_direction (ic->id, direction);
 }
 
 static bool
