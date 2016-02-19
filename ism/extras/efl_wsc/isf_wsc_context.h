@@ -57,7 +57,6 @@ typedef void (*keyboard_input_key_handler_t)(WSCContextISF *wsc_ctx,
 struct weescim
 {
     struct wl_input_method *im;
-    struct wl_seat *seat;
 
     WSCContextISF *wsc_ctx;
 };
@@ -82,13 +81,11 @@ struct _WSCContextISF {
 
     keyboard_input_key_handler_t key_handler;
 
-
     char *surrounding_text;
     char *preedit_str;
     char *language;
 
     uint32_t serial;
-    uint32_t text_direction;
     uint32_t preedit_style;
     uint32_t content_hint;
     uint32_t content_purpose;
