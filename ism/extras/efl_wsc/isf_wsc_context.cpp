@@ -1604,10 +1604,10 @@ int wsc_context_input_panel_layout_variation_get (WSCContextISF *wsc_ctx)
         case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL:
             layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_NORMAL;
             break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL_FILENAME:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_FILENAME:
             layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_FILENAME;
             break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL_PERSONNAME:
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_NAME:
             layout_variation = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_PERSON_NAME;
             break;
         default:
