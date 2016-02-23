@@ -148,30 +148,22 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 libscim@SCIM_EPOCH@_la_CXXFLAGS = @EVAS_CFLAGS@ \
 			  @DLOG_CFLAGS@ \
 			  @CYNARA_CFLAGS@ \
+			  @DB_UTIL_CFLAGS@ \
 			  @TZPLATFORM_CONFIG_CFLAGS@
 
 libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION):$(SCIM_AGE) \
 			  -export-dynamic \
 			  -rpath $(libdir) \
 			  $(LD_VERSION_SCRIPT_OPTION) \
-			  @DLOG_LIBS@ \
 			  @LIBTOOL_EXPORT_OPTIONS@ \
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
 			  @EVAS_LIBS@ \
+			  @DLOG_LIBS@ \
 			  @CYNARA_LIBS@ \
+			  @DB_UTIL_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
 			  -lstdc++
-
-if ISF_BUILD_DB_UTIL
-libscim@SCIM_EPOCH@_la_CXXFLAGS  += @DB_UTIL_CFLAGS@
-libscim@SCIM_EPOCH@_la_LDFLAGS   += @DB_UTIL_LIBS@
-endif
-
-if HAVE_X
-libscim@SCIM_EPOCH@_la_CXXFLAGS += @ECOREX_CFLAGS@
-libscim@SCIM_EPOCH@_la_LDFLAGS  += @ECOREX_LIBS@
-endif
 
 libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 
@@ -182,11 +174,6 @@ scim_SOURCES	 	= scim.cpp isf_pkg.cpp
 scim_CXXFLAGS		= @ECORE_CFLAGS@ @ECORE_IPC_CFLAGS@ @PRIVILEGE_CONTROL_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ -fPIE
 scim_LDADD		= libscim@SCIM_EPOCH@.la
 scim_LDFLAGS		= @LTLIBINTL@ @ECORE_LIBS@ @ECORE_IPC_LIBS@ @PRIVILEGE_CONTROL_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ -pie
-
-if HAVE_X
-scim_CXXFLAGS += @ECOREX_CFLAGS@
-scim_LDFLAGS  += @ECOREX_LIBS@
-endif
 
 isf_log_SOURCES	 	= isf_log.cpp
 isf_log_LDADD		= libscim@SCIM_EPOCH@.la
@@ -210,9 +197,3 @@ scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp ise_preexec.cpp
 scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@ @ECORE_CFLAGS@ @DLOG_CFLAGS@ @ECORE_IPC_CFLAGS@ -fPIE
 scim_helper_launcher_LDADD	= libscim@SCIM_EPOCH@.la
 scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @ECORE_LIBS@ @DLOG_LIBS@ @ECORE_IPC_LIBS@ -pie
-
-if HAVE_X
-scim_helper_launcher_CXXFLAGS += @ECOREX_CFLAGS@
-scim_helper_launcher_LDFLAGS  += @ECOREX_LIBS@
-endif
-

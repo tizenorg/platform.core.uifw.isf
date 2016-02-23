@@ -30,6 +30,7 @@ isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
                          $(top_builddir)/ism/src/isf_pkg.cpp
 
 isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
+                         @EDJE_CFLAGS@ \
                          @ELEMENTARY_CFLAGS@ \
                          @VCONF_CFLAGS@ \
                          @X11_CFLAGS@ \
@@ -48,6 +49,7 @@ isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
 
 isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @ECOREX_LIBS@ \
+                         @EDJE_LIBS@ \
                          @ELEMENTARY_LIBS@ \
                          @VCONF_LIBS@ \
                          @X11_LIBS@ \

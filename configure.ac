@@ -272,8 +272,11 @@ fi
 # Check WAYLAND TEXT INPUT library
 PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client input-method-client])
 
+# Check EDJE library
+PKG_CHECK_MODULES(EDJE, [edje])
+
 # Check ELEMENTARY library
-PKG_CHECK_MODULES(ELEMENTARY, [elementary edje],
+PKG_CHECK_MODULES(ELEMENTARY, [elementary],
                   [ISF_HAS_ELM=yes],
                   [ISF_HAS_ELM=no])
 
