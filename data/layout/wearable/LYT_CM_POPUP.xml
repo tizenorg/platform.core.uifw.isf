@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="160" height="124" style="popup" key_width="75" key_height="116" key_spacing="2" row_spacing="2" hit_left="1" hit_right="1" hit_top="4" hit_bottom="4" label_type="PUNC_POPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_popup_bg.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="pressed">B09_bubble_popup_press.png</rec>
+  </background_image>
+  <row x="4" y="4">
+    <key key_type="user" hit_left="4">
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
+      <image_label>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_left.png</rec>
+      </background_image>
+    </key>
+    <key key_type="modechange" custom_id="EMOTICON_KEY" hit_right="4">
+      <key_value>
+        <rec>EMOTICON_LAYOUT</rec>
+      </key_value>
+      <image_label>
+        <rec button="normal">emoticon/icon_emotion_nor_55x55.png</rec>
+        <rec button="pressed">emoticon/icon_emotion_press_55x55.png</rec>
+        <rec button="disabled"></rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">popup_line/popup_line_right.png</rec>
+        <rec button="disabled">popup_line/popup_line_right.png</rec>
+      </background_image>
+    </key>
+  </row>
+</layout>

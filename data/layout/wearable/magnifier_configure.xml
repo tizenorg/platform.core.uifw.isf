@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<magnifier_configure>
+  <magnifier_style>label_only</magnifier_style>
+  <width>88</width>
+  <height>108</height>
+  <label_area>
+    <left>0</left>
+    <top>1</top>
+    <right>88</right>
+    <bottom>107</bottom>
+  </label_area>
+  <background_image_path>
+    <image state="normal">B09_bubble_bg_02.png</image>
+    <image state="shift">B09_bubble_bg_02.png</image>
+    <image state="lock">B09_bubble_bg_02.png</image>
+    <image state="longkey">B09_bubble_bg_02.png</image>
+  </background_image_path>
+  <use_window>true</use_window>
+  <label_type>MAGNIFIER</label_type>
+  <padding>
+    <x>0</x>
+    <y>-14</y>
+  </padding>
+  <show_shift_label>false</show_shift_label>
+</magnifier_configure>

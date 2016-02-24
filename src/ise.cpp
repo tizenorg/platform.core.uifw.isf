@@ -1146,7 +1146,7 @@ ise_create()
             if (utils) {
                 utils->get_screen_resolution(&nwidth, &nheight);
             }
-#ifndef _TV
+#ifdef _MOBILE
             if ((480 == nwidth) && (800 == nheight)) {
                 entry_path = MAIN_ENTRY_XML_PATH_480X800;
             }

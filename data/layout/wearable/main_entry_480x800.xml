@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<main-entry>
+  <files>
+    <input-mode-configure>input_mode_configure.xml</input-mode-configure>
+    <key-label-property>label_property_480x800.xml</key-label-property>
+    <modifier-decoration>modifier_decoration.xml</modifier-decoration>
+    <default-configure>default_configure.xml</default-configure>
+    <autopopup-configure>autopopup_configure.xml</autopopup-configure>
+    <magnifier-configure>magnifier_configure.xml</magnifier-configure>
+    <nine-patch-file-list>nine_patch_file_list.xml</nine-patch-file-list>
+  </files>
+</main-entry>

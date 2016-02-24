@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout direction="landscape" width="1280" height="318" key_width="308" key_height="73" key_spacing="11" row_spacing="3" hit_left="6" hit_right="5" hit_top="2" hit_bottom="1" label_type="3X4_BTN_1_LANDSCAPE" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_panel.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">button/B09_key_btn_01.png</rec>
+    <rec button="pressed">button/B09_key_btn_press.png</rec>
+    <rec button="disabled">button/B09_key_btn_01.png</rec>
+  </background_image>
+  <row x="8" y="8">
+    <key hit_left="8" hit_top="8">
+      <label>
+        <rec>(</rec>
+      </label>
+    </key>
+    <key hit_top="8">
+      <label>
+        <rec>/</rec>
+      </label>
+    </key>
+    <key hit_top="8">
+      <label>
+        <rec>)</rec>
+      </label>
+    </key>
+    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="8" hit_top="8">
+      <image_label>
+        <rec button="normal">B09_icon_back_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="8">
+    <key hit_left="8">
+      <label>
+        <rec>N</rec>
+      </label>
+    </key>
+    <key label_type="3X4_BTN_3_LANDSCAPE">
+      <label>
+        <rec>Pause(,)</rec>
+      </label>
+      <key_value>
+        <rec>,</rec>
+      </key_value>
+    </key>
+    <key label_type="3X4_BTN_4">
+      <label>
+        <rec>.</rec>
+      </label>
+    </key>
+    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="8">
+      <image_label>
+        <rec button="normal">B09_icon_enter_nor_54x54.png</rec>
+        <rec button="pressed">B09_icon_enter_press_54x54.png</rec>
+        <rec button="disabled">B09_icon_enter_dim_54x54.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="8">
+    <key hit_left="8">
+      <label>
+        <rec>*</rec>
+      </label>
+    </key>
+    <key label_type="3X4_BTN_3_LANDSCAPE">
+      <label>
+        <rec>Wait(;)</rec>
+      </label>
+      <key_value>
+        <rec>;</rec>
+      </key_value>
+    </key>
+    <key>
+      <label>
+        <rec>#</rec>
+      </label>
+    </key>
+    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2_LANDSCAPE" hit_right="8">
+      <label>
+        <rec>123</rec>
+      </label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>PHONE_3X4</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="8" y="237">
+    <key label_type="3X4_BTN_4" hit_top="4" hit_right="8" hit_bottom="8">
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <label>
+        <rec>-</rec>
+      </label>
+    </key>
+    <key label_type="3X4_BTN_4" hit_bottom="8">
+      <label>
+        <rec>+</rec>
+      </label>
+    </key>
+    <key button_type="direction" key_type="control" label_type="QTY_SPACE" hit_bottom="8">
+      <image_label>
+        <rec button="normal">B09_icon_space_nor_73x22.png</rec>
+        <rec button="pressed">B09_icon_space_press_73x22.png</rec>
+        <rec button="disabled">B09_icon_space_dim_73x22.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key button_type="selfish" key_type="user" hit_right="8" hit_bottom="8">
+      <image_label>
+        <rec button="normal">setting icon/B09_icon_setting_nor_54x54.png</rec>
+        <rec button="pressed">setting icon/B09_icon_setting_press_54x54.png</rec>
+        <rec button="disabled">setting icon/B09_icon_setting_dim_54x54.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>OPTION</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

@@ -128,7 +128,12 @@ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/tv/
         DESTINATION ${ISE_RESDIR}/tv/image)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/tv/ DESTINATION
         ${ISE_RESDIR}/tv FILES_MATCHING PATTERN "*.xml")
-else(${TARGET} STREQUAL "tv")
+elseif(${TARGET} STREQUAL "wearable")
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/wearable/
+        DESTINATION ${ISE_RESDIR}/wearable/image)
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/wearable/ DESTINATION
+        ${ISE_RESDIR}/wearable FILES_MATCHING PATTERN "*.xml")
+elseif(${TARGET} STREQUAL "mobile")
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/sdk/
         DESTINATION ${ISE_RESDIR}/sdk/image)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/sdk/ DESTINATION

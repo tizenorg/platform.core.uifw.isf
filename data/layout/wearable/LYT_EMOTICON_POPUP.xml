@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="454" height="212" style="popup" key_width="88" key_height="100" key_spacing="2" row_spacing="2" hit_left="1" hit_right="1" hit_top="1" hit_bottom="1" label_type="AUTOPOPUP" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>B09_popup_bg.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">B09_bg_Popup.png</rec>
+    <rec button="pressed">B09_bubble_popup_press.png</rec>
+    <rec button="disabled">B09_bg_Popup.png</rec>
+  </background_image>
+  <row x="5" y="5">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-[</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>o:-)</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-\</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:'(</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-D</rec>
+      </label>
+    </key>
+  </row>
+  <row>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-)</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>;-)</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-(</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-P</rec>
+      </label>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true">
+      <label>
+        <rec>:-O</rec>
+      </label>
+    </key>
+  </row>
+</layout>

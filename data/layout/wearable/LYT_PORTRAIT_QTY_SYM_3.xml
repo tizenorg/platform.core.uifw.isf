@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="720" height="490" magnifier="true" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>textinput_panel_bg.png</button_normal>
+  </image_path>
+  <row x="4" y="28" key_width="64" key_height="91">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="4" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec>#</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec>#</rec>
+      </key_value>
+      <key_event>
+        <rec>1</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="76" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">¿</rec>
+        <rec shift="on">¿</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">¿</rec>
+        <rec shift="on">¿</rec>
+      </key_value>
+      <key_event>
+        <rec>2</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="148" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">¡</rec>
+        <rec shift="on">¡</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">¡</rec>
+        <rec shift="on">¡</rec>
+      </key_value>
+      <key_event>
+        <rec>3</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="220" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">¤</rec>
+        <rec shift="on">¤</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">¤</rec>
+        <rec shift="on">¤</rec>
+      </key_value>
+      <key_event>
+        <rec>4</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="292" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">¢</rec>
+        <rec shift="on">¢</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">¢</rec>
+        <rec shift="on">¢</rec>
+      </key_value>
+      <key_event>
+        <rec>5</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="364" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">«</rec>
+        <rec shift="on">«</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">«</rec>
+        <rec shift="on">«</rec>
+      </key_value>
+      <key_event>
+        <rec>6</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="436" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">»</rec>
+        <rec shift="on">»</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">»</rec>
+        <rec shift="on">»</rec>
+      </key_value>
+      <key_event>
+        <rec>7</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="508" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">®</rec>
+        <rec shift="on">®</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">®</rec>
+        <rec shift="on">®</rec>
+      </key_value>
+      <key_event>
+        <rec>8</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="580" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">©</rec>
+        <rec shift="on">©</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">©</rec>
+        <rec shift="on">©</rec>
+      </key_value>
+      <key_event>
+        <rec>9</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="652" y="28" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="22" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">°</rec>
+        <rec shift="on">°</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">°</rec>
+        <rec shift="on">°</rec>
+      </key_value>
+      <key_event>
+        <rec>0</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="40" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="40" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">!</rec>
+        <rec shift="on">!</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="112" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">@</rec>
+        <rec shift="on">@</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="184" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec>#</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="256" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">$</rec>
+        <rec shift="on">$</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="328" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">%</rec>
+        <rec shift="on">%</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="400" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">^</rec>
+        <rec shift="on">^</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="472" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">&amp;</rec>
+        <rec shift="on">&amp;</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="544" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="8" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec>*</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="616" y="150" multitouch_type="settle_previous" popup_type="auto_popup" hit_right="40" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">-</rec>
+        <rec shift="on">-</rec>
+      </key_event>
+    </key>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="4" y="272" hit_left="4" hit_right="16" hit_top="16" hit_bottom="15" label_type="QTY_BOTTOMLINE" width="88">
+      <label>
+        <rec shift="off">3/3</rec>
+        <rec shift="on">3/3</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">0xd</rec>
+        <rec shift="on">0xd</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="112" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">=</rec>
+        <rec shift="on">=</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">=</rec>
+        <rec shift="on">=</rec>
+      </key_value>
+      <key_event>
+        <rec shift="off">(</rec>
+        <rec shift="on">(</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="184" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec>!</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec>!</rec>
+      </key_value>
+      <key_event>
+        <rec shift="off">)</rec>
+        <rec shift="on">)</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="256" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec shift="off">'</rec>
+        <rec shift="on">'</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec shift="off">'</rec>
+        <rec shift="on">'</rec>
+      </key_value>
+      <key_event>
+        <rec>.</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="328" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec>:</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec>:</rec>
+      </key_value>
+      <key_event>
+        <rec shift="off">,</rec>
+        <rec shift="on">,</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="400" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec>,</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec>,</rec>
+      </key_value>
+      <key_event>
+        <rec shift="off">?</rec>
+        <rec shift="on">?</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="472" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec>.</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_event>
+        <rec shift="off">!</rec>
+        <rec shift="on">!</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="544" y="272" multitouch_type="settle_previous" popup_type="auto_popup" hit_left="4" hit_right="4" hit_top="16" hit_bottom="15" label_type="label_name_9">
+      <label>
+        <rec>?</rec>
+      </label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_01.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_01.png</rec>
+      </background_image>
+      <key_value>
+        <rec>?</rec>
+      </key_value>
+      <key_event>
+        <rec shift="off">'</rec>
+        <rec shift="on">'</rec>
+      </key_event>
+    </key>
+    <key button_type="selfish" key_type="control" use_magnifier="true" longkey_magnifier="true" x="628" y="272" hit_left="16" hit_right="4" hit_top="16" hit_bottom="15" use_repeat_key="true" label_type="label_name_9" width="88">
+      <image_label>
+        <rec button="normal">textinput_qwerty_icon_clear.png</rec>
+        <rec button="pressed">textinput_qwerty_icon_clear.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+    <key key_type="modechange" x="4" y="394" long_key_value="Keypad" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" popup_offset_y="-225" width="88">
+      <label>
+        <rec>abc</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>CUR_LANG</rec>
+      </key_value>
+    </key>
+    <key key_type="modechange" x="100" y="394" long_key_value="OptionWindow" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE">
+      <image_label>
+        <rec button="normal">language_icon_port.png</rec>
+        <rec button="pressed">language_icon_port.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x15</rec>
+      </key_event>
+    </key>
+    <key key_type="control" x="172" y="394" long_key_value="Keypad" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" popup_offset_y="-168">
+      <label>
+        <rec>abc</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x9</rec>
+      </key_event>
+    </key>
+    <key key_type="modechange" x="244" y="394" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" width="280">
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x16</rec>
+      </key_event>
+    </key>
+    <key key_type="control" x="4" y="394" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" popup_offset_y="-225" width="88">
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_event>
+        <rec>0x16</rec>
+      </key_event>
+    </key>
+    <key button_type="direction" key_type="control" x="100" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_29" popup_offset_y="-168" width="88">
+      <image_label>
+        <rec button="normal">textinput_icon_space.png</rec>
+        <rec button="pressed">textinput_icon_space_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="off" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="off" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="on" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="on" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="pressed">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="string" x="196" y="394" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_22" width="328">
+      <label>
+        <rec multi="0">.</rec>
+      </label>
+      <background_image>
+        <rec button="normal">textinput_land_button_function.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_event>
+        <rec>.</rec>
+      </key_event>
+    </key>
+    <key button_type="direction" key_type="string" x="532" y="394" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" popup_offset_x="-442" popup_offset_y="-330" width="88">
+      <image_label>
+        <rec button="normal">camera_qwerty_kor-moa_port.png</rec>
+        <rec button="pressed">camera_qwerty_kor-moa_port.png</rec>
+        <rec button="disabled">camera_qwerty_kor-moa_port.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key button_type="direction" key_type="control" x="168" y="394" label_type="label_name_29" popup_offset_x="-90" popup_offset_y="-137" width="48" height="76">
+      <image_label>
+        <rec button="normal">textinput_icon_space.png</rec>
+        <rec button="pressed">textinput_icon_space_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="off" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="off" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="on" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="on" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="pressed">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="string" x="216" y="394" popup_type="longpress_popup_once" label_type="label_name_22" width="96" height="76">
+      <label>
+        <rec multi="0">.</rec>
+      </label>
+      <background_image>
+        <rec button="normal">textinput_land_button_function.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_event>
+        <rec>.</rec>
+      </key_event>
+    </key>
+    <key button_type="direction" key_type="control" use_magnifier="true" longkey_magnifier="true" x="312" y="394" label_type="label_name_29" popup_offset_x="-208" popup_offset_y="-262" width="72" height="76">
+      <image_label>
+        <rec button="normal">textinput_icon_space.png</rec>
+        <rec button="pressed">textinput_icon_space_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="off" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="off" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="on" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="on" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="pressed">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="4" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_9" popup_offset_y="-225" width="88">
+      <label>
+        <rec>/</rec>
+      </label>
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_press.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>/</rec>
+      </key_value>
+      <key_event>
+        <rec>/</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="100" y="394" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_16">
+      <label>
+        <rec>www.</rec>
+      </label>
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_press.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="172" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_9" popup_offset_y="-168">
+      <label>
+        <rec multi="0">.</rec>
+      </label>
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_press.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_event>
+        <rec>.</rec>
+      </key_event>
+    </key>
+    <key button_type="direction" key_type="control" use_magnifier="true" longkey_magnifier="true" x="244" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_29" width="136">
+      <image_label>
+        <rec button="normal">textinput_icon_space.png</rec>
+        <rec button="pressed">textinput_icon_space_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec shift="off" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="off" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="off" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="on" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="on" button="pressed">B09_key_btn_press.png</rec>
+        <rec shift="on" button="disabled">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="normal">B09_key_btn_press.png</rec>
+        <rec shift="loc" button="pressed">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="4" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_9" popup_offset_y="-225" width="88">
+      <label>
+        <rec>@</rec>
+      </label>
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_press.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_event>
+        <rec>@</rec>
+      </key_event>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="100" y="394" popup_type="longpress_popup_once" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_16" popup_offset_y="-168" width="88">
+      <label>
+        <rec>.com</rec>
+      </label>
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_press.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" x="196" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="label_name_9" width="184">
+      <label>
+        <rec multi="0">.</rec>
+      </label>
+      <image_label>
+        <rec button="normal"> </rec>
+        <rec button="pressed"> </rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_press.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_press.png</rec>
+      </background_image>
+      <key_event>
+        <rec>.</rec>
+      </key_event>
+    </key>
+    <key key_type="control" x="388" y="394" hit_left="4" hit_right="4" hit_top="16" hit_bottom="5" label_type="QTY_BOTTOMLINE" popup_offset_x="-163" popup_offset_y="-305">
+      <image_label>
+        <rec button="normal">textinput_qwerty_icon_enter.png</rec>
+        <rec button="pressed">textinput_qwerty_icon_enter.png</rec>
+        <rec button="disabled">textinput_qwerty_icon_enter_disabled.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

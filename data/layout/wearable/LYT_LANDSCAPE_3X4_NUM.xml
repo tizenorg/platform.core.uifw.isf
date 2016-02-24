@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout direction="landscape" width="1280" height="490" vibe_style="DEFAULT" sound_style="DEFAULT">
+  <image_path>
+    <button_normal>textinput_panel_bg.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">B09_key_btn_01.png</rec>
+    <rec button="pressed">B09_key_btn_press.png</rec>
+    <rec button="disabled">B09_key_btn_01.png</rec>
+  </background_image>
+  <row x="14" y="28" key_width="170" key_height="100">
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="5" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>1</rec>
+      </label>
+      <key_value>
+        <rec>1</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="185" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>2</rec>
+      </label>
+      <key_value>
+        <rec>2</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="365" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>3</rec>
+      </label>
+      <key_value>
+        <rec>3</rec>
+      </key_value>
+    </key>
+    <key button_type="selfish" key_type="control" use_magnifier="true" longkey_magnifier="true" x="545" y="28" hit_left="5" hit_right="5" hit_top="22" hit_bottom="9" use_repeat_key="true" label_type="label_name_3">
+      <image_label>
+        <rec button="normal">B09_icon_back.png</rec>
+        <rec button="pressed">B09_icon_back_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="5" y="147" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>4</rec>
+      </label>
+      <key_value>
+        <rec>4</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="185" y="147" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>5</rec>
+      </label>
+      <key_value>
+        <rec>5</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="365" y="147" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>6</rec>
+      </label>
+      <key_value>
+        <rec>6</rec>
+      </key_value>
+    </key>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="545" y="147" popup_type="longpress_popup_once" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="QTY_BOTTOMLINE" popup_offset_x="-200" popup_offset_y="-160">
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="5" y="266" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>7</rec>
+      </label>
+      <key_value>
+        <rec>7</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="185" y="266" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>8</rec>
+      </label>
+      <key_value>
+        <rec>8</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="365" y="266" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_6">
+      <label>
+        <rec>9</rec>
+      </label>
+      <key_value>
+        <rec>9</rec>
+      </key_value>
+    </key>
+    <key key_type="string" x="545" y="266" popup_type="release_popup_once" hit_left="5" hit_right="5" hit_top="10" hit_bottom="9" label_type="label_name_3" popup_offset_x="-450" popup_offset_y="-250">
+      <label>
+        <rec>.,?</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+    </key>
+    <key key_type="modechange" use_magnifier="true" longkey_magnifier="true" x="5" y="385" long_key_value="Keypad" hit_left="5" hit_right="5" hit_top="10" hit_bottom="5" label_type="label_name_2" width="80">
+      <label>
+        <rec multi="0">Sym</rec>
+        <rec multi="1">ABC</rec>
+      </label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>SYM_3X4_1</rec>
+      </key_value>
+    </key>
+    <key key_type="modechange" use_magnifier="true" longkey_magnifier="true" x="95" y="385" hit_left="5" hit_right="5" hit_top="10" hit_bottom="5" label_type="label_name_12" width="80">
+      <image_label>
+        <rec button="normal">B09_icon_language_port_no_t9.png</rec>
+        <rec button="pressed">B09_icon_language_port_no_t9_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>NEXT_LANG</rec>
+      </key_value>
+    </key>
+    <key key_type="string" use_magnifier="true" longkey_magnifier="true" vibe_style="1" sound_style="1" x="185" y="385" hit_left="5" hit_right="5" hit_top="10" hit_bottom="5" label_type="label_name_6">
+      <label>
+        <rec>0</rec>
+      </label>
+      <key_value>
+        <rec>0</rec>
+      </key_value>
+    </key>
+    <key button_type="direction" key_type="control" use_magnifier="true" longkey_magnifier="true" x="365" y="385" hit_left="5" hit_right="5" hit_top="10" hit_bottom="5" label_type="label_name_0">
+      <image_label>
+        <rec button="normal">B09_icon_space_multi_lang.png</rec>
+        <rec button="pressed">B09_icon_space_multi_lang_press.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+    <key key_type="control" use_magnifier="true" longkey_magnifier="true" x="545" y="385" custom_id="Enter" hit_left="5" hit_right="5" hit_top="10" hit_bottom="5" label_type="label_name_3">
+      <image_label>
+        <rec button="normal">B09_icon_enter.png</rec>
+        <rec button="pressed">B09_icon_enter_press.png</rec>
+        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">B09_key_btn_02.png</rec>
+        <rec button="pressed">B09_key_btn_press.png</rec>
+        <rec button="disabled">B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>
