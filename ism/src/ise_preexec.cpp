@@ -67,15 +67,15 @@
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 
-Ecore_Ipc_Server *server = NULL;
+static Ecore_Ipc_Server *server = NULL;
 
-Eina_Bool sig_exit_cb (void *data, int ev_type, void *ev)
+static Eina_Bool sig_exit_cb (void *data, int ev_type, void *ev)
 {
     ecore_main_loop_quit ();
     return ECORE_CALLBACK_CANCEL;
 }
 
-Eina_Bool handler_server_data (void *data, int ev_type, void *ev) {
+static Eina_Bool handler_server_data (void *data, int ev_type, void *ev) {
     Ecore_Ipc_Event_Server_Data *e = (Ecore_Ipc_Event_Server_Data *)ev;
     if (e) {
         char message[_POSIX_PATH_MAX] = {0};

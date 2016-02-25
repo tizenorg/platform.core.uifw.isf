@@ -192,7 +192,7 @@ scim_launcher_LDADD	= libscim@SCIM_EPOCH@.la
 scim_launcher_CXXFLAGS  = @VCONF_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ -fPIE
 scim_launcher_LDFLAGS	= @LTLIBINTL@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ -pie
 
-scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp ise_preexec.cpp
-scim_helper_launcher_CXXFLAGS	= @PRIVILEGE_CONTROL_CFLAGS@ @ECORE_CFLAGS@ @DLOG_CFLAGS@ @ECORE_IPC_CFLAGS@ -fPIE
+scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp
+scim_helper_launcher_CXXFLAGS	= -fPIE
 scim_helper_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ @PRIVILEGE_CONTROL_LIBS@ @ECORE_LIBS@ @DLOG_LIBS@ @ECORE_IPC_LIBS@ -pie
+scim_helper_launcher_LDFLAGS	= @LTLIBINTL@ -pie

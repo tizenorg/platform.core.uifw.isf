@@ -36,7 +36,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include <unistd.h>
-#include "ise_preexec.h"
 
 using namespace scim;
 
