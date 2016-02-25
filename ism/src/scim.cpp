@@ -42,7 +42,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
-#include <privilege-control.h>
 #include <sys/resource.h>
 #include <sched.h>
 #include <pkgmgr-info.h>

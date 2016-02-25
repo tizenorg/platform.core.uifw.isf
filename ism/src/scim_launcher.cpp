@@ -41,7 +41,6 @@
 #include <sys/times.h>
 #include <unistd.h>
 #include <signal.h>
-#include <privilege-control.h>
 #include <vconf.h>
 #include <pkgmgr-info.h>
 #include "isf_query_utility.h"
@@ -109,8 +108,6 @@ int main (int argc, char *argv [])
     new_argv [new_argc ++] = argv [0];
 
     ISF_SAVE_LOG ("Start scim-launcher\n");
-
-    perm_app_set_privilege ("isf", NULL, NULL);
 
     while (i < argc) {
         if (++i >= argc) break;

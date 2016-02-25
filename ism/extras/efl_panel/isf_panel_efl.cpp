@@ -59,7 +59,6 @@
 #include <vconf.h>
 #include <vconf-keys.h>
 #endif
-#include <privilege-control.h>
 #include <dlog.h>
 #if HAVE_NOTIFICATION
 #include <notification.h>
@@ -6855,7 +6854,6 @@ int main (int argc, char *argv [])
     Ecore_Event_Handler *xwindow_property_handler = NULL;
     Ecore_Event_Handler *xwindow_focus_out_handler = NULL;
 #endif
-    perm_app_set_privilege ("isf", NULL, NULL);
 
     check_time ("\nStarting ISF Panel EFL...... ");
     ISF_SAVE_LOG ("Starting ISF Panel EFL......\n");

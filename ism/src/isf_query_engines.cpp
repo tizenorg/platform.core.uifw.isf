@@ -38,7 +38,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "isf_query_utility.h"
-#include <privilege-control.h>
 
 
 using namespace scim;
@@ -58,8 +57,6 @@ int main (int argc, char *argv[])
     char *isename = NULL;
     int isetype = 0;
     int uninstall = 0;
-
-    perm_app_set_privilege ("isf", NULL, NULL);
 
     int i = 1;
     while (i < argc) {
