@@ -83,6 +83,7 @@
 #include "isf_query_utility.h"
 #include <app_control.h>
 #include "isf_pkg.h"
+#include "privilege_checker.h"
 
 using namespace scim;
 
@@ -224,6 +225,7 @@ static bool       slot_get_ise_info                    (const String &uuid, ISE_
 static void       slot_get_candidate_geometry          (struct rectinfo &info);
 static void       slot_get_input_panel_geometry        (struct rectinfo &info);
 static void       slot_get_recent_ise_geometry         (int angle, struct rectinfo &info);
+static bool       slot_check_privilege_by_sockfd       (int client_id, String privilege);
 static void       slot_set_keyboard_ise                (const String &uuid);
 static void       slot_get_keyboard_ise                (String &ise_name, String &ise_uuid);
 static void       slot_accept_connection               (int fd);
@@ -3953,6 +3955,7 @@ static bool initialize_panel_agent (const String &config, const String &display,
     _panel_agent->signal_connect_show_panel                 (slot (slot_show_helper_ise_selector));
 
     _panel_agent->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
+    _panel_agent->signal_connect_check_privilege_by_sockfd  (slot (slot_check_privilege_by_sockfd));
 
     std::vector<String> load_ise_list;
     _panel_agent->get_active_ise_list (load_ise_list);
@@ -5191,6 +5194,20 @@ static void slot_get_recent_ise_geometry (int angle, struct rectinfo &info)
     info.pos_y = -1;
     info.width = -1;
     info.height = -1;
+}
+
+static bool slot_check_privilege_by_sockfd (int client_id, String privilege)
+{
+    PrivilegeChecker privilegeChecker (client_id);
+
+    bool priv_ret = privilegeChecker.checkPrivilege (privilege.c_str ());
+
+    if (priv_ret == false)
+        LOGW ("Failed to check privilege (%s)\n", privilege.c_str ());
+    else
+        LOGD ("Succceeded to privilege check(%s)\n", privilege.c_str ());
+
+    return priv_ret;
 }
 
 /**
@@ -7154,7 +7171,12 @@ int main (int argc, char *argv [])
 
     check_time ("EFL Panel launch time");
 
+    if (!isf_cynara_initialize())
+        LOGW ("Failed to initialize cynara\n");
+
     elm_run ();
+
+    isf_cynara_finish();
 
     _config->flush ();
     ret = 0;
