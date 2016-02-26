@@ -10,7 +10,6 @@ Source1001: isf.manifest
 BuildRequires:  edje-bin
 BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(appcore-efl)
-BuildRequires:  pkgconfig(libprivilege-control)
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(vconf)
 %if %{with wayland}

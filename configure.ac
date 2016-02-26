@@ -292,9 +292,6 @@ PKG_CHECK_MODULES(APPCORE_EFL, [appcore-efl])
 # Check dlog library
 PKG_CHECK_MODULES(DLOG, [dlog >= 0])
 
-# Check privilege control library
-PKG_CHECK_MODULES(PRIVILEGE_CONTROL, [libprivilege-control >= 0])
-
 # Check notification library
 PKG_CHECK_MODULES(NOTIFICATION, [notification],
                   [ISF_HAS_NOTIFICATION=yes],
