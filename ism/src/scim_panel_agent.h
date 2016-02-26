@@ -178,6 +178,9 @@ typedef Slot6<bool, String, String &, String &, int &, int &, String &>
 typedef Slot2<void, int, struct rectinfo &>
         PanelAgentSlotIntRect;
 
+typedef Slot2<bool, int, String>
+        PanelAgentSlotIntString2;
+
 typedef struct DefaultIse
 {
     TOOLBAR_MODE_T type;
@@ -1230,6 +1233,8 @@ public:
      * slot prototype: void get_recent_ise_geometry (int angle, rectinfo &info);
      */
     Connection signal_connect_get_recent_ise_geometry    (PanelAgentSlotIntRect             *slot);
+
+    Connection signal_connect_check_privilege_by_sockfd  (PanelAgentSlotIntString2          *slot);
 };
 
 /**  @} */

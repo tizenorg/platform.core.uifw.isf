@@ -67,7 +67,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "privilege_checker.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -75,6 +74,8 @@
 #define LOG_TAG             "ISF_PANEL_EFL"
 
 #define MIN_REPEAT_TIME     2.0
+
+#define IMEMANAGER_PRIVILEGE "http://tizen.org/privilege/imemanager"
 
 EXAPI scim::CommonLookupTable g_isf_candidate_table;
 
@@ -173,6 +174,9 @@ typedef Signal6<bool, String, String &, String &, int &, int &, String &>
 
 typedef Signal2<void, int, struct rectinfo &>
         PanelAgentSignalIntRect;
+
+typedef Signal2<bool, int, String>
+        PanelAgentSignalIntString2;
 
 enum ClientType {
     UNKNOWN_CLIENT,
@@ -396,6 +400,8 @@ class PanelAgent::PanelAgentImpl
     PanelAgentSignalInt2                m_signal_get_ise_state;
 
     PanelAgentSignalIntRect             m_signal_get_recent_ise_geometry;
+
+    PanelAgentSignalIntString2          m_signal_check_privilege_by_sockfd;
 public:
     PanelAgentImpl ()
         : m_should_exit (false),
@@ -425,7 +431,6 @@ public:
     ~PanelAgentImpl ()
     {
         delete_ise_context_buffer ();
-        isf_cynara_finish ();
     }
 
     void delete_ise_context_buffer (void)
@@ -439,9 +444,6 @@ public:
 
     bool initialize (const String &config, const String &display, bool resident)
     {
-        if (!isf_cynara_initialize ())
-            return false;
-
         m_config_name = config;
         m_display_name = display;
         m_should_resident = resident;
@@ -3521,6 +3523,11 @@ public:
         return m_signal_get_recent_ise_geometry.connect (slot);
     }
 
+    Connection signal_connect_check_privilege_by_sockfd  (PanelAgentSlotIntString2            *slot)
+    {
+        return m_signal_check_privilege_by_sockfd.connect (slot);
+    }
+
 private:
     bool socket_check_client_connection (const Socket &client)
     {
@@ -3555,6 +3562,16 @@ private:
             m_signal_accept_connection (client.get_id ());
         }
         unlock ();
+    }
+
+    static void send_fail_reply (int client_id)
+    {
+        Socket client_socket (client_id);
+        Transaction trans;
+        trans.clear ();
+        trans.put_command (SCIM_TRANS_CMD_REPLY);
+        trans.put_command (SCIM_TRANS_CMD_FAIL);
+        trans.write_to_socket (client_socket);
     }
 
     void socket_receive_callback                (SocketServer   *server,
@@ -4046,88 +4063,130 @@ private:
 
             while (m_recv_trans.get_command (cmd)) {
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         get_active_ise (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to get active ise");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         set_active_ise_by_uuid (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to set active ise");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         set_initial_ise_by_uuid (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to set initial ise");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         get_ise_list (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to get ise list");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         get_all_helper_ise_info (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to get all helper ise info");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         set_enable_helper_ise_info (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to set enable helper ise info");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         get_ise_information (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to get ise information");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         reset_ise_option (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to reset ise option");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         reset_default_ise (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to reset default ise");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         show_isf_panel (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to show isf control");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         show_ise_option_window (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to show ise option window");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         show_helper_ise_list (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to show helper ise list");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         show_helper_ise_selector (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to show helper ise selector");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED) {
-                    if (client.get_privilege_checker ().checkPrivilege (IMEMANAGER_PRIVILEGE))
+                    if (m_signal_check_privilege_by_sockfd (client_id, IMEMANAGER_PRIVILEGE)) {
                         is_helper_ise_enabled (client_id);
-                    else
+                    }
+                    else {
                         LOGW ("Access denied to check helper ise enabled");
+                        send_fail_reply (client_id);
+                    }
                 }
                 else if (cmd == ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY)
                     get_recent_ise_geometry (client_id);
@@ -6989,6 +7048,12 @@ Connection
 PanelAgent::signal_connect_get_recent_ise_geometry    (PanelAgentSlotIntRect             *slot)
 {
     return m_impl->signal_connect_get_recent_ise_geometry (slot);
+}
+
+Connection
+PanelAgent::signal_connect_check_privilege_by_sockfd  (PanelAgentSlotIntString2          *slot)
+{
+    return m_impl->signal_connect_check_privilege_by_sockfd (slot);
 }
 } /* namespace scim */
 

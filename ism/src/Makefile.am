@@ -92,8 +92,7 @@ libsciminclude_HEADERS 	= scim.h \
 			  isf_control.h \
 			  isf_imcontrol_client.h \
 			  ise_context.h \
-			  scim_visibility.h \
-			  privilege_checker.h
+			  scim_visibility.h
 
 noinst_LTLIBRARIES	= libltdlc.la
 
@@ -142,12 +141,10 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  scim_setup_module_efl.cpp \
 			  isf_control.cpp \
 			  isf_imcontrol_client.cpp \
-			  isf_query_utility.cpp \
-			  privilege_checker.cpp
+			  isf_query_utility.cpp
 
 libscim@SCIM_EPOCH@_la_CXXFLAGS = @EVAS_CFLAGS@ \
 			  @DLOG_CFLAGS@ \
-			  @CYNARA_CFLAGS@ \
 			  @DB_UTIL_CFLAGS@ \
 			  @TZPLATFORM_CONFIG_CFLAGS@
 
@@ -159,7 +156,6 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
 			  @DLOG_LIBS@ \
-			  @CYNARA_LIBS@ \
 			  @DB_UTIL_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \
 			  -lstdc++
