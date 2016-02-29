@@ -5,7 +5,7 @@
 #--------------------------------------
 export DISPLAY=:0.0
 ISF_DEBUG=$1/isf
-ISF_HOME=/home/app/.scim
+ISF_HOME=~/.scim
 ISF_SCIM_HOME=/root/.scim
 ISF_DB=/opt/usr/dbspace
 /bin/mkdir -p ${ISF_DEBUG}

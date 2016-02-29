@@ -58,8 +58,6 @@ static FrontEndModule *frontend_module = 0;
 static ConfigModule   *config_module = 0;
 static ConfigPointer   config;
 
-#define USER_ENGINE_LIST_PATH           "/home/app/.scim"
-
 void signalhandler (int sig)
 {
     if (!config.null ())
@@ -283,9 +281,6 @@ int main (int argc, char *argv [])
         return 1;
     }
     gettime (clock_start, "Create Config");
-
-    // Create folder for saving engine list
-    scim_make_dir (USER_ENGINE_LIST_PATH);
 
     char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
     if (lang_str) {
