@@ -370,11 +370,11 @@ _wsc_im_keyboard_modifiers(void *data,
         uint32_t group)
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
-    struct wl_input_method_context *context = wsc_ctx->im_ctx;
-    xkb_mod_mask_t mask;
-
     if (!wsc_ctx || !wsc_ctx->state)
         return;
+
+    struct wl_input_method_context *context = wsc_ctx->im_ctx;
+    xkb_mod_mask_t mask;
 
     xkb_state_update_mask(wsc_ctx->state, mods_depressed,
             mods_latched, mods_locked, 0, 0, group);
