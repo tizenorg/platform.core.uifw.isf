@@ -917,8 +917,12 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     set_option_values();
 
     option_elements[type].option_window = window;
+#ifdef _MOBILE
     elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
     elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
+#else
+    elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_HIDE);
+#endif
 
     Evas_Object *conformant = elm_conformant_add(window);
     evas_object_size_hint_weight_set(conformant, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -927,11 +931,13 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     elm_win_conformant_set(window, EINA_TRUE);
     evas_object_show(conformant);
 
+#ifdef _MOBILE
     /* Create header bg */
     Evas_Object *bg = elm_bg_add(conformant);
     elm_object_style_set(bg, "indicator/headerbg");
     elm_object_part_content_set(conformant, "elm.swallow.indicator_bg", bg);
     evas_object_show(bg);
+#endif
 
     Evas_Object *naviframe = elm_naviframe_add(conformant);
     option_elements[type].naviframe = naviframe;
