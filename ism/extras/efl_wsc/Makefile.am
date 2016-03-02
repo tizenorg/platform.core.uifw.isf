@@ -38,16 +38,16 @@ isf_wsc_efl_CXXFLAGS = @ECORE_CFLAGS@ \
                        @VCONF_CFLAGS@ \
                        @WAYLAND_CFLAGS@ \
                        @WL_TEXT_INPUT_CFLAGS@ \
+                       @WL_INPUT_METHOD_CFLAGS@ \
                        @XKBCOMMON_CFLAGS@ \
                        @DLOG_CFLAGS@ \
                        -fPIE
 
 isf_wsc_efl_LDFLAGS  = @ECORE_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
-                       @ECORE_IMF_LIBS@ \
                        @EINA_LIBS@ \
                        @VCONF_LIBS@ \
                        @WAYLAND_LIBS@ \
-                       @WL_TEXT_INPUT_LIBS@ \
+                       @WL_INPUT_METHOD_LIBS@ \
                        @XKBCOMMON_LIBS@ \
                        @DLOG_LIBS@ \
                        -pie

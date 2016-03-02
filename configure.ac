@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script
 #AC_INIT(scim, 1.4.7, suzhe@tsinghua.org.cn)
-AC_INIT(isf, 3.0.52, isf@samsung.com)
+AC_INIT(isf, 3.0.53, isf@samsung.com)
 AC_CONFIG_SRCDIR([ism/src/scim.h])
 
 ###########################################################
@@ -10,7 +10,7 @@ AC_CONFIG_SRCDIR([ism/src/scim.h])
 # ISF version
 ISF_MAJOR_VERSION=3
 ISF_MINOR_VERSION=0
-ISF_MICRO_VERSION=52
+ISF_MICRO_VERSION=53
 
 ISF_VERSION=$ISF_MAJOR_VERSION.$ISF_MINOR_VERSION.$ISF_MICRO_VERSION
 
@@ -261,7 +261,10 @@ if test "$ISF_HAS_ECOREWL" = "yes"; then
 fi
 
 # Check WAYLAND TEXT INPUT library
-PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client input-method-client])
+PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client])
+
+# Check WAYLAND INPUT METHOD library
+PKG_CHECK_MODULES(WL_INPUT_METHOD, [input-method-client])
 
 # Check EDJE library
 PKG_CHECK_MODULES(EDJE, [edje])
