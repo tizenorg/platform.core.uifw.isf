@@ -261,7 +261,10 @@ if test "$ISF_HAS_ECOREWL" = "yes"; then
 fi
 
 # Check WAYLAND TEXT INPUT library
-PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client input-method-client])
+PKG_CHECK_MODULES(WL_TEXT_INPUT, [text-client])
+
+# Check WAYLAND INPUT METHOD library
+PKG_CHECK_MODULES(WL_INPUT_METHOD, [input-method-client])
 
 # Check EDJE library
 PKG_CHECK_MODULES(EDJE, [edje])
