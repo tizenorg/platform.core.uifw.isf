@@ -25,7 +25,7 @@ BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(edje)
-%if "%{?profile}" == "mobile"
+%if "%{?profile}" != "tv"
 BuildRequires:  pkgconfig(notification)
 %endif
 BuildRequires:  pkgconfig(dlog)
