@@ -24,7 +24,8 @@ isfshelldir    = /etc/profile.d/
 isfshell_DATA  = isf.sh
 
 webdir = /usr/share/scim/remote-input
-web_DATA =  remote-input/air.htm \
+web_DATA =  remote-input/*
+#web_DATA =  remote-input/air.htm \
             remote-input/airinput.htm \
             remote-input/airsetting.htm \
             remote-input/ajax-loader.gif \
@@ -53,5 +54,5 @@ web_DATA =  remote-input/air.htm \
             remote-input/util.js \
             remote-input/web-helper-client.js
 
-webimgsdir = /usr/share/scim/remote-input/imgs
-webimgs_DATA = remote-input/imgs/*
+#webimgsdir = /usr/share/scim/remote-input/imgs
+#webimgs_DATA = remote-input/imgs/*
