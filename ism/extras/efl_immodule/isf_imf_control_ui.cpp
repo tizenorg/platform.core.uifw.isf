@@ -186,6 +186,17 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
         if (val == 0) {
             kbd_mode = TOOLBAR_HELPER_MODE;
             input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, (Ecore_IMF_Input_Panel_Keyboard_Mode)kbd_mode);
+
+            Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
+
+            if (active_ctx) {
+                Ecore_X_Window client_win = client_window_id_get (active_ctx);
+                Ecore_X_Window focus_win = ecore_x_window_focus_get ();
+                if (client_win && focus_win && client_win == focus_win) {
+                    ecore_imf_context_input_panel_show (active_ctx);
+                }
+            }
+
         } else if (val == 1) {
             kbd_mode = TOOLBAR_KEYBOARD_MODE;
             input_panel_event_callback_call (ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, (Ecore_IMF_Input_Panel_Keyboard_Mode)kbd_mode);
