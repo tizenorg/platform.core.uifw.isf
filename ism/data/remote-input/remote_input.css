@@ -3,7 +3,7 @@ html {
 }
 body {
 /*    background:#111121;*/
-    background-image:url(imgs/remotekeyboard_remocon_bg3.png);
+    background-image:url(/remotekeyboard_remocon_bg3.png);
     background-repeat:no-repeat;
     background-size: 100% 100%;
     margin:0;
@@ -167,281 +167,281 @@ div {
 }
 
 .logo {
-    background:url(imgs/remote_keyboard_logo.png);
+    background:url(/remote_keyboard_logo.png);
     background-size:95% auto;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .air_input_mode {
-    background:url(imgs/air_bt_pressed.png);
+    background:url(/air_bt_pressed.png);
     background-size:auto 100%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .type_a {
-    background:url(imgs/a_bt_pressed.png);
+    background:url(/a_bt_pressed.png);
     background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .type_b {
-    background:url(imgs/b_bt_pressed.png);
+    background:url(/b_bt_pressed.png);
     background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .type_c {
-    background:url(imgs/c_bt_pressed.png);
+    background:url(/c_bt_pressed.png);
     background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .reset_bt {
-    background:url(imgs/reset_bt_pressed.png);
+    background:url(/reset_bt_pressed.png);
     background-size:auto 90%;
     background-repeat:no-repeat;
     background-position:center top;
 }
 .volume_up {
-	background:url(imgs/volume_up.png);
+	background:url(/volume_up.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 .volume_up:active{
-    background:url(imgs/volume_up_pressed.png);
+    background:url(/volume_up_pressed.png);
     background-size:auto 100%;
     background-repeat:no-repeat;
     background-position:center;
 }
 
 .volume_down {
-	background:url(imgs/volume_down.png);
+	background:url(/volume_down.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .volume_down:active{
-	background:url(imgs/volume_down_pressed.png);
+	background:url(/volume_down_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .channel_down {
-	background:url(imgs/channel_down.png);
+	background:url(/channel_down.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .channel_down:active{
-	background:url(imgs/channel_down_pressed.png);
+	background:url(/channel_down_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .channel_up {
-	background:url(imgs/channel_up.png);
+	background:url(/channel_up.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .channel_up:active{
-	background:url(imgs/channel_up_pressed.png);
+	background:url(/channel_up_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .power {
-	background:url(imgs/power.png);
+	background:url(/power.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .power:active{
-	background:url(imgs/power_pressed.png);
+	background:url(/power_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .mute {
-	background:url(imgs/mute.png);
+	background:url(/mute.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .mute:active{
-	background:url(imgs/mute_pressed.png);
+	background:url(/mute_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .chlist {
-	background:url(imgs/chlist.png);
+	background:url(/chlist.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .chlist:active{
-	background:url(imgs/chlist_pressed.png);
+	background:url(/chlist_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .exit {
-	background:url(imgs/exit.png);
+	background:url(/exit.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .exit:active{
-	background:url(imgs/exit_pressed.png);
+	background:url(/exit_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .source {
-	background:url(imgs/source.png);
+	background:url(/source.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .source:active{
-	background:url(imgs/source_pressed.png);
+	background:url(/source_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .return {
-	background:url(imgs/return.png);
+	background:url(/return.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .return:active{
-	background:url(imgs/return_pressed.png);
+	background:url(/return_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .menu {
-	background:url(imgs/menu.png);
+	background:url(/menu.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .menu:active{
-	background:url(imgs/menu_pressed.png);
+	background:url(/menu_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .info {
-	background:url(imgs/info.png);
+	background:url(/info.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .info:active{
-	background:url(imgs/info_pressed.png);
+	background:url(/info_pressed.png);
 	background-size:auto 100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .back {
-	background:url(imgs/back.png);
+	background:url(/back.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .back:active{
-	background:url(imgs/back_pressed.png);
+	background:url(/back_pressed.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .apps {
-	background:url(imgs/apps.png);
+	background:url(/apps.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .apps:active{
-	background:url(imgs/apps_pressed.png);
+	background:url(/apps_pressed.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .modeswitcher_to_mouse {
-	background:url(imgs/modeswitcher_to_mouse.png);
+	background:url(/modeswitcher_to_mouse.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 .modeswitcher_to_mouse:active{
-    background:url(imgs/modeswitcher_pressed.png);
+    background:url(/modeswitcher_pressed.png);
     background-size:100%;
     background-repeat:no-repeat;
     background-position:center;
 }
 .modeswitcher_to_tv {
-	background:url(imgs/modeswitcher_to_tv.png);
+	background:url(/modeswitcher_to_tv.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 .modeswitcher_to_tv:active {
-    background:url(imgs/modeswitcher_pressed.png);
+    background:url(/modeswitcher_pressed.png);
     background-size:100%;
     background-repeat:no-repeat;
     background-position:center;
 }
 .mouse_panel {
-	background:url(imgs/mouse_panel_bg.png);
+	background:url(/mouse_panel_bg.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 .air_panel {
-    background:url(imgs/air_panel_bg.png);
+    background:url(/air_panel_bg.png);
     background-size:100%;
     background-repeat:no-repeat;
     background-position:center;
 }
 .channel {
-	background:url(imgs/channel.png);
+	background:url(/channel.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
 }
 
 .volume {
-	background:url(imgs/volume.png);
+	background:url(/volume.png);
 	background-size:100%;
 	background-repeat:no-repeat;
 	background-position:center;
