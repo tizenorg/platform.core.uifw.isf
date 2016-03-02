@@ -153,9 +153,7 @@ utf8_wctomb (unsigned char *dest, ucs4_t wc, int dest_size)
         return 0;
 
     int count;
-    if (wc < 0)
-        return RET_ILSEQ;
-    else if (wc < 0x80) { // most offen case
+    if (wc < 0x80) { // most offen case
         if (dest_size < 1)
             return RET_TOOSMALL;
         dest[0] = wc;
