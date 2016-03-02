@@ -33,7 +33,6 @@
 #include <sys/prctl.h>
 #include <unistd.h>
 #include <dlog.h>
-#include <privilege-control.h>
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 
@@ -316,13 +315,6 @@ static inline int __set_dac (const char *pkg_type, const char *app_path)
 
     if (getuid () == APP_UID) // current user is 'app'
         return PC_OPERATION_SUCCESS;
-
-    if (perm_app_set_privilege ("com.samsung.", pkg_type, app_path) == PC_OPERATION_SUCCESS) {
-        return PC_OPERATION_SUCCESS;
-    } else {
-        LOGW ("perm_app_set_privilege failed (not permitted).");
-        return PC_ERR_NOT_PERMITTED;
-    }
 #endif
 }
 
