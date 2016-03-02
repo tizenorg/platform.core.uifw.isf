@@ -491,19 +491,6 @@ static struct GeometryCache _ise_reported_geometry          = {0, 0, {0, 0, 0, 0
 static struct GeometryCache _portrait_recent_ise_geometry   = {0, 0, {0, 0, 0, 0}};
 static struct GeometryCache _landscape_recent_ise_geometry  = {0, 0, {0, 0, 0, 0}};
 
-static void show_soft_keyboard (void)
-{
-    /* If the current toolbar mode is not HELPER_MODE, do not proceed */
-    if (_panel_agent->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
-        LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning\n", _panel_agent->get_current_toolbar_mode ());
-        return;
-    }
-#if HAVE_ECOREX
-    if (_ise_state == WINDOW_STATE_HIDE) {
-        ecore_x_test_fake_key_press ("XF86MenuKB");
-    }
-#endif
-}
 
 #if HAVE_ECOREX
 static void get_input_window (void)
@@ -5932,7 +5919,6 @@ static void slot_set_keyboard_mode (int mode)
     LOGD ("slot_set_keyboard_mode called (TOOLBAR_MODE : %d)\n",mode);
 
     change_keyboard_mode ((TOOLBAR_MODE_T)mode);
-    show_soft_keyboard ();
 }
 
 static void slot_get_ise_state (int &state)
@@ -6360,7 +6346,6 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 change_keyboard_mode (TOOLBAR_HELPER_MODE);
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
                 _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-                show_soft_keyboard ();
             }
         }
     } else if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
