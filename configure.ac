@@ -248,15 +248,6 @@ if test "$ISF_HAS_ECOREX" = "yes"; then
   AC_DEFINE(HAVE_ECOREX,1,[Have ecore-x functions.])
 fi
 
-# Check x11 library
-PKG_CHECK_MODULES(X11, [x11],
-                  [ISF_HAS_X11=yes],
-                  [ISF_HAS_X11=no])
-
-if test "$ISF_HAS_X11" = "yes"; then
-  AC_DEFINE(HAVE_X11,1,[Have X11 functions.])
-fi
-
 # Check XKBCOMMON library
 PKG_CHECK_MODULES(XKBCOMMON, [xkbcommon])
 

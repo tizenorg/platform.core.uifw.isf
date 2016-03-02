@@ -34,7 +34,7 @@ isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
                          @EDJE_CFLAGS@ \
                          @ELEMENTARY_CFLAGS@ \
                          @VCONF_CFLAGS@ \
-                         @X11_CFLAGS@ \
+                         @X_CFLAGS@ \
                          @DLOG_CFLAGS@ \
                          @NOTIFICATION_CFLAGS@ \
                          @TTS_CFLAGS@ \
@@ -53,7 +53,7 @@ isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @EDJE_LIBS@ \
                          @ELEMENTARY_LIBS@ \
                          @VCONF_LIBS@ \
-                         @X11_LIBS@ \
+                         @X_LIBS@ \
                          @DLOG_LIBS@ \
                          @NOTIFICATION_LIBS@ \
                          @TTS_LIBS@ \

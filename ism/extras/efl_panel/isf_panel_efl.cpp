@@ -47,14 +47,14 @@
 #if HAVE_ECOREX
 #include <Ecore_X.h>
 #endif
+#if HAVE_X
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#endif
 #if HAVE_ECOREWL
 #include <Ecore_Wayland.h>
 #endif
 #include <Elementary.h>
-#if HAVE_X11
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#endif
 #if HAVE_VCONF
 #include <vconf.h>
 #include <vconf-keys.h>
