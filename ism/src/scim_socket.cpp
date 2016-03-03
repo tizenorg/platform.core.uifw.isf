@@ -1528,8 +1528,10 @@ scim_socket_open_connection   (uint32       &key,
             trans.put_command (SCIM_TRANS_CMD_OK);
             if (trans.write_to_socket (socket))
                 return true;
+            else
+                LOGW ("write_to_socket() failed");
         } else {
-            LOGW ("read_from_socket() failed %d\n", timeout);
+            LOGW ("read_from_socket() failed %d", timeout);
 
             trans.clear ();
             trans.put_command (SCIM_TRANS_CMD_REPLY);
@@ -1537,7 +1539,7 @@ scim_socket_open_connection   (uint32       &key,
             trans.write_to_socket (socket);
         }
     } else {
-        LOGW ("write_to_socket() failed\n");
+        LOGW ("write_to_socket() failed");
     }
 
     return false;
@@ -1579,8 +1581,14 @@ scim_socket_accept_connection (uint32       &key,
 
                 // Client is ok, return the client type.
                 return (client_type == "ConnectionTester") ? String ("") : client_type;
+            } else {
+                LOGW ("write_to_socket() failed");
             }
+        } else {
+            LOGW ("wrong format of SCIM_TRANS_CMD_OPEN_CONNECTION transaction");
         }
+    } else {
+        LOGW ("read_from_socket() failed %d", timeout);
     }
     return String ("");
 }
