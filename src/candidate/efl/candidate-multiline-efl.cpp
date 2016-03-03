@@ -301,8 +301,8 @@ EflMultiLineCandidate::make_view()
     elm_win_screen_size_get(m_window, NULL, NULL, &scr_w, &scr_h);
     m_screenWidth = scr_w;
     m_screenHeight = scr_h;
-    double screenRatio_w = scr_w/720;
-    double screenRatio_h = scr_h/1280;
+    double screenRatio_w = scr_w/720.0;
+    double screenRatio_h = scr_h/1280.0;
     m_screenRatio = MIN(screenRatio_w, screenRatio_h);
 
     m_candidateScrollerBg = edje_object_add(evas_object_evas_get((Evas_Object*)m_window));
@@ -356,6 +356,9 @@ EflMultiLineCandidate::EflMultiLineCandidate(Evas_Object *window)
     m_candidateFontName = string("Tizen");
     m_candidateFontSize = 37*m_screenRatio;
     m_stringWidthCalObj = evas_object_text_add(m_window);
+    m_screenWidth = 0;
+    m_screenHeight = 0;
+    m_screenRatio = 0.0;
     evas_object_text_font_set(m_stringWidthCalObj, m_candidateFontName.c_str(), m_candidateFontSize);
 }
 
