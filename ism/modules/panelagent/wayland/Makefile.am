@@ -1,5 +1,6 @@
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES           = *.bak *.edj
+EXTRA_DIST		= wayland.version-script
 
 INCLUDES = -I$(top_builddir) \
            -I$(top_builddir)/ism/src \
@@ -21,18 +22,22 @@ noinst_HEADERS = isf_wsc_context.h \
 					isf_wsc_control.h \
 					isf_wsc_control_ui.h
 
-if ISF_BUILD_WSC_EFL
-CONFIG_WSC_EFL  = isf-wsc-efl
+#if ISF_BUILD_WSC_EFL
+CONFIG_WSC_PANELAGENT_MODULE  = wayland.la
+#endif
+
+if SCIM_LD_VERSION_SCRIPT
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/wayland.version-script"
 endif
 
-bin_PROGRAMS           = $(CONFIG_WSC_EFL)
+moduledir		= @SCIM_MODULE_PATH@/$(SCIM_BINARY_VERSION)/PanelAgent
+module_LTLIBRARIES	= $(CONFIG_WSC_PANELAGENT_MODULE)
 
-isf_wsc_efl_SOURCES  = isf_wsc_efl.cpp \
-						 isf_wsc_context.cpp \
+wayland_la_SOURCES  = wayland_panel_agent_module.cpp \
 						 isf_wsc_control.cpp \
 						 isf_wsc_control_ui.cpp
 
-isf_wsc_efl_CXXFLAGS = @ECORE_CFLAGS@ \
+wayland_la_CXXFLAGS = @ECORE_CFLAGS@ \
                        @ECORE_IMF_CFLAGS@ \
                        @EINA_CFLAGS@ \
                        @VCONF_CFLAGS@ \
@@ -40,16 +45,20 @@ isf_wsc_efl_CXXFLAGS = @ECORE_CFLAGS@ \
                        @WL_TEXT_INPUT_CFLAGS@ \
                        @WL_INPUT_METHOD_CFLAGS@ \
                        @XKBCOMMON_CFLAGS@ \
-                       @DLOG_CFLAGS@ \
-                       -fPIE
+                       @DLOG_CFLAGS@
 
-isf_wsc_efl_LDFLAGS  = @ECORE_LIBS@ @LTLIBINTL@ -rpath $(libdir) \
-                       @EINA_LIBS@ \
-                       @VCONF_LIBS@ \
-                       @WAYLAND_LIBS@ \
-                       @WL_INPUT_METHOD_LIBS@ \
-                       @XKBCOMMON_LIBS@ \
-                       @DLOG_LIBS@ \
-                       -pie
+wayland_la_LDFLAGS  = -avoid-version \
+			-rpath $(moduledir) \
+			-module \
+			$(LD_VERSION_SCRIPT_OPTION) \
+			@LIBTOOL_EXPORT_OPTIONS@ \
+			@LTLIBINTL@ \
+			@DLOG_LIBS@ \
+			@ECORE_LIBS@ \
+			@EINA_LIBS@ \
+			@VCONF_LIBS@ \
+			@WAYLAND_LIBS@ \
+			@WL_INPUT_METHOD_LIBS@ \
+			@XKBCOMMON_LIBS@
 
-isf_wsc_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
+wayland_la_LIBADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la

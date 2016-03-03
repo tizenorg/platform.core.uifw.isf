@@ -319,55 +319,18 @@ public:
         if (address.valid ()) {
             if (!m_socket_client.connect (address)) {
                 int  i = 0;
-                bool bConnected = false;
 
                 std::cerr << " Connecting to ISF(scim) server.";
 
                 /* Make sure we are not waiting for more than 10 second */
                 for (i = 0; i < 100; ++i) {
                     if (m_socket_client.connect (address)) {
-                        bConnected = true;
                         break;
                     }
                     scim_usleep (100000);
                     std::cerr << ".";
                 }
                 std::cerr << " Connected :" << i << "\n";
-
-                /* Do not launch SocketFrontEnd process here, let the immodule to create SocketFrontEnd process */
-                if (false && !bConnected) {
-                    /* Get modules list */
-                    std::vector<String> engine_list;
-                    std::vector<String> helper_list;
-                    std::vector<String> load_engine_list;
-                    scim_get_imengine_module_list (engine_list);
-                    scim_get_helper_module_list (helper_list);
-
-                    std::vector<String>::iterator it;
-                    for (it = engine_list.begin (); it != engine_list.end (); it++) {
-                        if (*it != "socket")
-                            load_engine_list.push_back (*it);
-                    }
-                    for (it = helper_list.begin (); it != helper_list.end (); it++)
-                        load_engine_list.push_back (*it);
-
-                    std::cerr << "Launching a ISF daemon with Socket FrontEnd...\n";
-                    const char *new_argv [] = { "--stay", 0 };
-                    scim_launch (true,
-                                 "simple",
-                                 (load_engine_list.size () ? scim_combine_string_list (load_engine_list, ',') : "none"),
-                                 "socket",
-                                 const_cast<char**>(new_argv));
-
-                    std::cerr << " Reconnecting to ISF(scim) server.";
-                    for (i = 0; i < 100; ++i) {
-                        if (m_socket_client.connect (address))
-                            break;
-                        scim_usleep (100000);
-                        std::cerr << ".";
-                    }
-                    std::cerr << " Reconnected :" << i << "\n";
-                }
             }
         }
 

@@ -28,7 +28,6 @@
 #define Uses_SCIM_FRONTEND_MODULE
 #define Uses_SCIM_IMENGINE_MODULE
 #define Uses_SCIM_HELPER_MODULE
-#define Uses_SCIM_BACKEND
 #define Uses_SCIM_CONFIG_PATH
 #define Uses_SCIM_TRANSACTION
 #define Uses_C_LOCALE
@@ -274,8 +273,6 @@ int main (int argc, char *argv [])
 {
     struct tms tiks_buf;
     clock_t clock_start = times (&tiks_buf);
-
-    BackEndPointer       backend;
 
     std::vector<String>  frontend_list;
     std::vector<String>  config_list;

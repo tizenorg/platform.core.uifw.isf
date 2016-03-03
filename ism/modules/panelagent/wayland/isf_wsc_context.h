@@ -128,9 +128,6 @@ void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                        char *keyname,
                                        enum wl_keyboard_key_state state);
 
-void           isf_wsc_context_init      (void);
-void           isf_wsc_context_shutdown (void);
-
 bool wsc_context_surrounding_get (WSCContextISF *wsc_ctx, char **text, int *cursor_pos);
 Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(WSCContextISF *wsc_ctx);
 int wsc_context_input_panel_layout_variation_get (WSCContextISF *wsc_ctx);

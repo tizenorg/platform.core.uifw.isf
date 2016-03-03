@@ -1,0 +1,16 @@
+SCIM_IMENGINE_1.0 {
+    global:
+        extern "C" {
+            *scim_panel_agent_module_create_instance*;
+            *scim_panel_agent_module_init*;
+            *scim_module_exit*;
+            *scim_module_init*;
+        };
+
+    local:
+        extern "C++" {
+            scim::*;
+            std::*;
+            __gnu_cxx::*;
+        };
+};

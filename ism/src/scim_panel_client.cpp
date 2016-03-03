@@ -56,6 +56,13 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "ISF_PANEL_CLIENT"
+
 namespace scim {
 
 typedef Signal1<void, int>
@@ -234,8 +241,10 @@ public:
         int cmd;
         uint32 context = (uint32)(-1);
 
-        if (!recv.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY)
+        if (!recv.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY) {
+            LOGW ("wrong format of transaction");
             return true;
+        }
 
         /* No context id available, so there will be some global command. */
         if (recv.get_data_type () == SCIM_TRANS_DATA_COMMAND) {
@@ -255,8 +264,10 @@ public:
         }
 
         /* Now for context related command. */
-        if (!recv.get_data (context))
+        if (!recv.get_data (context)) {
+            LOGW ("wrong format of transaction");
             return true;
+        }
 
         while (recv.get_command (cmd)) {
             switch (cmd) {
@@ -265,6 +276,8 @@ public:
                         std::vector<uint32> row_items;
                         if (recv.get_data (row_items))
                             m_signal_update_candidate_item_layout ((int) context, row_items);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE_PAGE_SIZE:
@@ -272,6 +285,8 @@ public:
                         uint32 size;
                         if (recv.get_data (size))
                             m_signal_update_lookup_table_page_size ((int) context, (int) size);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_UP:
@@ -294,6 +309,8 @@ public:
                         String property;
                         if (recv.get_data (property))
                             m_signal_trigger_property ((int) context, property);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_PROCESS_HELPER_EVENT:
@@ -303,6 +320,8 @@ public:
                         Transaction trans;
                         if (recv.get_data (target_uuid) && recv.get_data (helper_uuid) && recv.get_data (trans))
                             m_signal_process_helper_event ((int) context, target_uuid, helper_uuid, trans);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_MOVE_PREEDIT_CARET:
@@ -310,6 +329,8 @@ public:
                         uint32 caret;
                         if (recv.get_data (caret))
                             m_signal_move_preedit_caret ((int) context, (int) caret);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_SELECT_AUX:
@@ -317,6 +338,8 @@ public:
                         uint32 item;
                         if (recv.get_data (item))
                             m_signal_select_aux ((int) context, (int) item);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_SELECT_CANDIDATE:
@@ -324,6 +347,8 @@ public:
                         uint32 item;
                         if (recv.get_data (item))
                             m_signal_select_candidate ((int) context, (int) item);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_PROCESS_KEY_EVENT:
@@ -331,6 +356,8 @@ public:
                         KeyEvent key;
                         if (recv.get_data (key))
                             m_signal_process_key_event ((int) context, key);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_COMMIT_STRING:
@@ -338,6 +365,8 @@ public:
                         WideString wstr;
                         if (recv.get_data (wstr))
                             m_signal_commit_string ((int) context, wstr);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_FORWARD_KEY_EVENT:
@@ -345,6 +374,8 @@ public:
                         KeyEvent key;
                         if (recv.get_data (key))
                             m_signal_forward_key_event ((int) context, key);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_PANEL_REQUEST_HELP:
@@ -362,6 +393,8 @@ public:
                         String sfid;
                         if (recv.get_data (sfid))
                             m_signal_change_factory ((int) context, sfid);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE:
@@ -392,6 +425,8 @@ public:
                         if (recv.get_data (wstr) && recv.get_data (attrs)
                             && recv.get_data (caret))
                             m_signal_update_preedit_string ((int) context, wstr, attrs, (int)caret);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET:
@@ -399,6 +434,8 @@ public:
                         uint32 caret;
                         if (recv.get_data (caret))
                             m_signal_update_preedit_caret ((int) context, (int) caret);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_TURN_ON_LOG:
@@ -413,6 +450,8 @@ public:
                                 DebugOutput::set_verbose_level (0);
                             }
                         }
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_GET_SURROUNDING_TEXT:
@@ -421,6 +460,8 @@ public:
                         uint32 maxlen_after;
                         if (recv.get_data (maxlen_before) && recv.get_data (maxlen_after))
                             m_signal_get_surrounding_text ((int) context, (int)maxlen_before, (int)maxlen_after);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT:
@@ -429,6 +470,8 @@ public:
                         uint32 len;
                         if (recv.get_data (offset) && recv.get_data (len))
                             m_signal_delete_surrounding_text ((int) context, (int)offset, (int)len);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                  case SCIM_TRANS_CMD_GET_SELECTION:
@@ -442,6 +485,8 @@ public:
                         uint32 end;
                         if (recv.get_data (start) && recv.get_data (end))
                             m_signal_set_selection ((int) context, (int)start, (int)end);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
@@ -449,6 +494,8 @@ public:
                         uint32 number;
                         if (recv.get_data (number))
                             m_signal_update_displayed_candidate_number ((int) context, (int)number);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW:
@@ -466,6 +513,8 @@ public:
                         uint32 index;
                         if (recv.get_data (index))
                             m_signal_longpress_candidate ((int) context, (int)index);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT:
@@ -473,6 +522,8 @@ public:
                         uint32 type, value;
                         if (recv.get_data (type) && recv.get_data (value))
                             m_signal_update_ise_input_context ((int) context, (int)type, (int)value);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case ISM_TRANS_CMD_UPDATE_ISF_CANDIDATE_PANEL:
@@ -480,6 +531,8 @@ public:
                         uint32 type, value;
                         if (recv.get_data (type) && recv.get_data (value))
                             m_signal_update_isf_candidate_panel ((int) context, (int)type, (int)value);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 case SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND:
@@ -487,10 +540,15 @@ public:
                         String str;
                         if (recv.get_data (str))
                             m_signal_send_private_command ((int) context, str);
+                        else
+                            LOGW("wrong format of transaction");
                     }
                     break;
                 default:
-                    break;
+                    {
+                        LOGW("unknow cmd: %d", cmd);
+                        break;
+                    }
             }
         }
         return true;

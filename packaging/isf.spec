@@ -113,8 +113,6 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 		--disable-filter-sctc \
 %if %{with wayland}
         --disable-efl-immodule \
-%else
-        --disable-wsc-efl \
 %endif
 		--disable-frontend-x11 \
 		--disable-multiwindow-support \
@@ -131,7 +129,7 @@ mkdir -p %{buildroot}/etc/scim/conf
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-
+mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/PanelAgent
 %find_lang scim
 
 cat scim.lang > isf.lang
@@ -153,6 +151,7 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
 %dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
+%dir /opt/apps/scim/lib/scim-1.0/1.4.0/PanelAgent
 %dir /etc/scim/conf
 %{_prefix}/lib/systemd/user/default.target.wants/scim.path
 %{_prefix}/lib/systemd/user/scim.service
@@ -165,13 +164,14 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_optexecdir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
 %if %{with wayland}
-%{_bindir}/isf-wsc-efl
+
 %else
 %{_libdir}/ecore_imf/modules/*/*/*.so
 %endif
 %{_bindir}/scim
 %{_bindir}/isf-log
 %{_libdir}/scim-1.0/1.4.0/IMEngine/socket.so
+%{_libdir}/scim-1.0/1.4.0/PanelAgent/*.so
 %{_libdir}/scim-1.0/1.4.0/Config/simple.so
 %{_libdir}/scim-1.0/1.4.0/Config/socket.so
 %{_libdir}/scim-1.0/1.4.0/FrontEnd/*.so

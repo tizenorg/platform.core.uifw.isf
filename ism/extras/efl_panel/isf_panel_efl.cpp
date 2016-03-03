@@ -185,7 +185,7 @@ static bool       tokenize_tag                         (const String& str, struc
 static void       launch_default_soft_keyboard         (keynode_t *key = NULL, void* data = NULL);
 
 /* PanelAgent related functions */
-static bool       initialize_panel_agent               (const String &config, const String &display, bool resident);
+static bool       initialize_panel_agent               (const ConfigPointer& config, const String &display, bool resident);
 
 static void       slot_reload_config                   (void);
 static void       slot_focus_in                        (void);
@@ -243,8 +243,6 @@ static void       slot_set_keyboard_mode               (int mode);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
-
-static Eina_Bool  panel_agent_handler                  (void *data, Ecore_Fd_Handler *fd_handler);
 
 #if HAVE_ECOREX
 static Eina_Bool  efl_create_control_window            (void);
@@ -394,8 +392,7 @@ static bool               _is_click                         = true;
 static String             _initial_ise_uuid                 = String ("");
 static String             _locale_string                    = String ("");
 static ConfigPointer      _config;
-static PanelAgent        *_panel_agent                      = 0;
-static std::vector<Ecore_Fd_Handler *> _read_handler_list;
+static InfoManager       *_info_manager                      = 0;
 
 static clock_t            _clock_start;
 
@@ -494,8 +491,8 @@ static struct GeometryCache _landscape_recent_ise_geometry  = {0, 0, {0, 0, 0, 0
 static void show_soft_keyboard (void)
 {
     /* If the current toolbar mode is not HELPER_MODE, do not proceed */
-    if (_panel_agent->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
-        LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning\n", _panel_agent->get_current_toolbar_mode ());
+    if (_info_manager->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
+        LOGD ("Current toolbar mode should be TOOBAR_HELPER_MODE but is %d, returning\n", _info_manager->get_current_toolbar_mode ());
         return;
     }
 #if HAVE_ECOREX
@@ -554,7 +551,7 @@ static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
 
     if (!strncmp (str, HOST_REMOVED, strlen (HOST_REMOVED))) {
         LOGD ("HOST_REMOVED\n");
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             change_keyboard_mode (TOOLBAR_HELPER_MODE);
         }
         return;
@@ -966,7 +963,7 @@ static struct rectinfo get_ise_geometry ()
             }
 
             info.pos_x = (int)info.width > win_w ? 0 : (win_w - info.width) / 2;
-            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+            if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                 info.pos_x = 0;
                 info.pos_y = (win_h > win_w) ? win_h : win_w;
                 info.width = 0;
@@ -983,7 +980,7 @@ static struct rectinfo get_ise_geometry ()
 
             LOGD ("angle : %d, w_angle : %d, mode : %d, Geometry : %d %d %d %d\n",
                     angle, _ise_angle,
-                    _panel_agent->get_current_toolbar_mode (),
+                    _info_manager->get_current_toolbar_mode (),
                     info.pos_x, info.pos_y, info.width, info.height);
         } else {
             pos_x = 0;
@@ -1018,7 +1015,7 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+    if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         ise_rect.pos_x = 0;
 
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
@@ -1102,7 +1099,7 @@ static void set_keyboard_engine (String active_uuid)
     String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
     String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
     if (active_uuid != keyboard_uuid) {
-        _panel_agent->change_factory (active_uuid);
+        _info_manager->change_factory (active_uuid);
         _config->write (IMENGINE_KEY, active_uuid);
         _config->flush ();
     }
@@ -1214,7 +1211,7 @@ static Eina_Bool _start_default_helper_timer(void *data)
         total_appids.push_back(it->appid);
     }
     if (total_appids.size() > 0)
-        _panel_agent->update_ise_list (total_appids);
+        _info_manager->update_ise_list (total_appids);
 
     LOGD("Try to start the initial helper\n");
     set_active_ise(_initial_ise_uuid, true);
@@ -1317,18 +1314,18 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                     total_appids.push_back(it->appid);
                 }
                 if (total_appids.size() > 0)
-                    _panel_agent->update_ise_list (total_appids);
+                    _info_manager->update_ise_list (total_appids);
 
                 if (ret > 1 && _soft_keyboard_launched) { // If the previous appid of pkgid is the current IME, restart it with new appid.
                     current_ime_appid = scim_global_config_read(String(SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
                     if (current_ime_appid.compare (appids.front ()) == 0) {
                         LOGD ("Stop IME(%s)\n", current_ime_appid.c_str ());
-                        _panel_agent->hide_helper (current_ime_appid);
-                        _panel_agent->stop_helper (current_ime_appid);
+                        _info_manager->hide_helper (current_ime_appid);
+                        _info_manager->stop_helper (current_ime_appid);
                         LOGD ("Start IME(%s)\n", appids.back ().c_str ());
                         scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), appids.back ());
                         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-                        _panel_agent->start_helper (appids.back ());
+                        _info_manager->start_helper (appids.back ());
                     }
                 }
             }
@@ -1342,9 +1339,9 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                             for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                                 if (it->mode == TOOLBAR_HELPER_MODE && it->appid.compare(current_ime_appid) == 0) { // Make sure it's Helper ISE...
                                     LOGD ("Restart IME(%s)\n", current_ime_appid.c_str ());
-                                    _panel_agent->hide_helper (current_ime_appid);
-                                    _panel_agent->stop_helper (current_ime_appid);
-                                    _panel_agent->start_helper (current_ime_appid);
+                                    _info_manager->hide_helper (current_ime_appid);
+                                    _info_manager->stop_helper (current_ime_appid);
+                                    _info_manager->start_helper (current_ime_appid);
                                     break;
                                 }
                             }
@@ -1368,8 +1365,8 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                         for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                             if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
                                 LOGD ("Stop IME(%s)\n", current_ime_appid.c_str ());
-                                _panel_agent->hide_helper (current_ime_appid);
-                                _panel_agent->stop_helper (current_ime_appid);
+                                _info_manager->hide_helper (current_ime_appid);
+                                _info_manager->stop_helper (current_ime_appid);
                                 _soft_keyboard_launched = false;
                                 g_updated_helper_pkgid = package;
                                 break;
@@ -1387,7 +1384,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                            total_appids.push_back(it->appid);
                        }
                        if (total_appids.size() > 0)
-                           _panel_agent->update_ise_list (total_appids);
+                           _info_manager->update_ise_list (total_appids);
                     }
                 }
                 else {
@@ -1425,12 +1422,12 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                                     total_appids.push_back(it->appid);
                                 }
                                 if (total_appids.size() > 0)
-                                    _panel_agent->update_ise_list (total_appids);
+                                    _info_manager->update_ise_list (total_appids);
 
                                 LOGD ("Restart IME(%s)\n", appids[0].c_str ());
                                 scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), appids[0]);
                                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-                                _panel_agent->start_helper (appids[0]);
+                                _info_manager->start_helper (appids[0]);
                                 _soft_keyboard_launched = true;
 
                                 g_pkgids_to_be_uninstalled.erase (it3);
@@ -1448,7 +1445,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                             total_appids.push_back(it->appid);
                         }
                         if (total_appids.size() > 0)
-                            _panel_agent->update_ise_list (total_appids);
+                            _info_manager->update_ise_list (total_appids);
                     }
                 }
                 else {
@@ -1466,7 +1463,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                         total_appids.push_back(it->appid);
                     }
                     if (total_appids.size() > 0)
-                       _panel_agent->update_ise_list (total_appids);
+                       _info_manager->update_ise_list (total_appids);
                     ///////////////// END /////////////////
 
                     /* For example, the following happens if appid is changed in IME project and Run As again. The appid would be changed this time.
@@ -1494,7 +1491,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                                 LOGD ("Start IME(%s)\n", it->appid.c_str ());
                                 scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), it->appid);
                                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-                                _panel_agent->start_helper (it->appid);
+                                _info_manager->start_helper (it->appid);
                                 _soft_keyboard_launched = true;
                                 break;
                             }
@@ -1556,8 +1553,8 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                                 for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                                     if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
                                         LOGD ("Stop IME(%s)\n", current_ime_appid.c_str ());
-                                        _panel_agent->hide_helper (current_ime_appid);
-                                        _panel_agent->stop_helper (current_ime_appid);
+                                        _info_manager->hide_helper (current_ime_appid);
+                                        _info_manager->stop_helper (current_ime_appid);
                                         _soft_keyboard_launched = false;
                                         g_stopped_helper_pkgid = package;
                                         break;
@@ -1596,7 +1593,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                             total_appids.push_back(it->appid);
                         }
                         if (total_appids.size() > 0)
-                            _panel_agent->update_ise_list (total_appids);
+                            _info_manager->update_ise_list (total_appids);
 
                         break;
                     }
@@ -1618,7 +1615,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                                     if (it->appid.compare(appids[0]) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
                                         LOGD ("Restart IME(%s)\n", appids[0].c_str ());
                                         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-                                        _panel_agent->start_helper (appids[0]);
+                                        _info_manager->start_helper (appids[0]);
                                         _soft_keyboard_launched = true;
                                         break;
                                     }
@@ -1654,12 +1651,12 @@ static bool set_keyboard_ise (const String &uuid)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
+    TOOLBAR_MODE_T mode = _info_manager->get_current_toolbar_mode ();
 
     if (TOOLBAR_HELPER_MODE == mode) {
-        String pre_uuid = _panel_agent->get_current_helper_uuid ();
-        _panel_agent->hide_helper (pre_uuid);
-        _panel_agent->stop_helper (pre_uuid);
+        String pre_uuid = _info_manager->get_current_helper_uuid ();
+        _info_manager->hide_helper (pre_uuid);
+        _info_manager->stop_helper (pre_uuid);
         _soft_keyboard_launched = false;
     } else if (TOOLBAR_KEYBOARD_MODE == mode) {
         uint32 kbd_option = 0;
@@ -1669,7 +1666,7 @@ static bool set_keyboard_ise (const String &uuid)
             return false;
     }
 
-    _panel_agent->change_factory (uuid);
+    _info_manager->change_factory (uuid);
 
     String language = String ("~other");/*scim_get_locale_language (scim_get_current_locale ());*/
     _config->write (String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + language, uuid);
@@ -1689,15 +1686,15 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
-    String pre_uuid = _panel_agent->get_current_helper_uuid ();
+    TOOLBAR_MODE_T mode = _info_manager->get_current_toolbar_mode ();
+    String pre_uuid = _info_manager->get_current_helper_uuid ();
     LOGD ("pre_appid=%s, appid=%s, launch_ise=%d, %d\n", pre_uuid.c_str(), uuid.c_str(), launch_ise, _soft_keyboard_launched);
     if (pre_uuid == uuid && _soft_keyboard_launched)
         return true;
 
     if (TOOLBAR_HELPER_MODE == mode && pre_uuid.length () > 0 && _soft_keyboard_launched) {
-        _panel_agent->hide_helper (pre_uuid);
-        _panel_agent->stop_helper (pre_uuid);
+        _info_manager->hide_helper (pre_uuid);
+        _info_manager->stop_helper (pre_uuid);
         _soft_keyboard_launched = false;
         LOGD ("stop helper : %s\n", pre_uuid.c_str ());
     }
@@ -1706,7 +1703,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
         LOGD ("Start helper (%s)\n", uuid.c_str ());
 
         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-        if (_panel_agent->start_helper (uuid))
+        if (_info_manager->start_helper (uuid))
             _soft_keyboard_launched = true;
     }
     _config->write (String (SCIM_CONFIG_DEFAULT_HELPER_ISE), uuid);
@@ -1748,16 +1745,16 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                     if (valid)
                         ise_changed = set_helper_ise (_ime_info[i].appid, launch_ise);
                     else
-                        LOGW ("Helper ISE(appid=\"%s\") is not valid.\n", _ime_info[i].appid.c_str ());
+                        LOGW ("Helper ISE(appid=\"%s\",moudle_name=\"%s\") is not valid.\n", _ime_info[i].appid.c_str (),_ime_info[i].module_name.c_str ());
                 }
                 else {
                     LOGW ("Helper ISE(appid=\"%s\") is not enabled.\n", _ime_info[i].appid.c_str ());
                 }
             }
-            _panel_agent->set_current_toolbar_mode (_ime_info[i].mode);
+            _info_manager->set_current_toolbar_mode (_ime_info[i].mode);
             if (ise_changed) {
-                _panel_agent->set_current_helper_option (_ime_info[i].options);
-                _panel_agent->set_current_ise_name (_ime_info[i].label);
+                _info_manager->set_current_helper_option (_ime_info[i].options);
+                _info_manager->set_current_ise_name (_ime_info[i].label);
                 _ise_width  = 0;
                 _ise_height = 0;
                 _ise_state  = WINDOW_STATE_HIDE;
@@ -1773,7 +1770,7 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
 
                 _config->flush ();
                 _config->reload ();
-                _panel_agent->reload_config ();
+                _info_manager->reload_config ();
 
                 vconf_set_str (VCONFKEY_ISF_ACTIVE_KEYBOARD_UUID, uuid.c_str ());
             }
@@ -1795,7 +1792,7 @@ static void load_config (void)
     /* Read configurations. */
     if (!_config.null ()) {
         bool shared_ise = _config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), false);
-        _panel_agent->set_should_shared_ise (shared_ise);
+        _info_manager->set_should_shared_ise (shared_ise);
     }
     _launch_ise_on_request = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_LAUNCH_ISE_ON_REQUEST), _launch_ise_on_request);
 
@@ -1870,7 +1867,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
     _candidate_width  = new_width;
     _candidate_height = new_height;
     if (_candidate_state == WINDOW_STATE_SHOW)
-        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+        _info_manager->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
 
     if (_candidate_state == WINDOW_STATE_SHOW && _candidate_mode == FIXED_CANDIDATE_WINDOW) {
         height = ui_candidate_get_valid_height ();
@@ -1882,7 +1879,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
 #if HAVE_ECOREX
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
 #endif
-            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
     }
 
@@ -2162,7 +2159,7 @@ static Eina_Bool ui_candidate_longpress_timeout (void *data)
     int index = (int)GPOINTER_TO_INT (data);
     ui_candidate_delete_longpress_timer ();
     _is_click = false;
-    _panel_agent->send_longpress_event (_click_object, index);
+    _info_manager->send_longpress_event (_click_object, index);
     return ECORE_CALLBACK_CANCEL;
 }
 
@@ -2313,16 +2310,16 @@ static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
 
             /* Update the geometry information for auto scrolling */
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-            _panel_agent->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
 
             /* And the state event */
-            _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
+            _info_manager->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
 
             /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
             if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-                if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-                    _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+                if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+                    _info_manager->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
                 }
             }
         }
@@ -2354,7 +2351,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     /* FIXME : SHOULD UNIFY THE METHOD FOR CHECKING THE HW KEYBOARD EXISTENCE */
     /* If the ISE is not visible currently, wait for the ISE to be opened and then show our candidate window */
     _candidate_show_requested = true;
-    if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) && (_ise_state != WINDOW_STATE_SHOW)) {
+    if ((_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) && (_ise_state != WINDOW_STATE_SHOW)) {
         LOGD ("setting _show_candidate_requested to TRUE\n");
         return;
     }
@@ -2377,7 +2374,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     }
 
 #if HAVE_ECOREX
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+    if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         /* WMSYNC, #3 Clear the existing application's conformant area and set transient_for */
         // Unset conformant area
         Ecore_X_Window current_app_window = efl_get_app_window ();
@@ -2413,9 +2410,9 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 
     /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
     if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             LOGD ("sending ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW\n");
-            _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
+            _info_manager->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
         }
     }
 
@@ -2431,16 +2428,16 @@ static void ui_candidate_show (bool bSetVirtualKbd)
 #endif
     } else {
         LOGD ("The candidate window was already in SHOW state, update geometry information\n");
-        _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-        _panel_agent->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+        _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+        _info_manager->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
 
         /* And the state event */
-        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
+        _info_manager->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_SHOW);
 
         /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-                _panel_agent->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
+            if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+                _info_manager->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_SHOW);
             }
         }
     }
@@ -2467,7 +2464,7 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
             _candidate_area_2_visible = false;
             evas_object_hide (_scroller_bg);
             evas_object_hide (_close_btn);
-            _panel_agent->candidate_more_window_hide ();
+            _info_manager->candidate_more_window_hide ();
             ui_candidate_window_adjust ();
         }
     }
@@ -2482,7 +2479,7 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
         }
 
         if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
-            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
             /* FIXME : should check if bSetVirtualKbd flag is really needed in this case */
 #if HAVE_ECOREX
             if (_ise_state == WINDOW_STATE_SHOW) {
@@ -2493,14 +2490,14 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
                 }
             }
 #endif
-            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-                _panel_agent->update_input_panel_event
+            if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+                _info_manager->update_input_panel_event
                     ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
         }
 
         /* Update the new keyboard geometry first, and then send the candidate hide event */
-        _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
+        _info_manager->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT, (uint32)ECORE_IMF_CANDIDATE_PANEL_HIDE);
 
         if (!will_hide) {
             /* If we are not in will_hide state, hide the candidate window immediately */
@@ -2524,7 +2521,7 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    _panel_agent->candidate_more_window_show ();
+    _info_manager->candidate_more_window_show ();
 
     if (candidate_expanded == false) {
         candidate_expanded = true;
@@ -2581,7 +2578,7 @@ static void ui_candidate_window_close_button_cb (void *data, Evas *e, Evas_Objec
     if (_candidate_area_2 == NULL || !_candidate_area_2_visible)
         return;
 
-    _panel_agent->candidate_more_window_hide ();
+    _info_manager->candidate_more_window_hide ();
 
     evas_object_hide (_candidate_area_2);
     _candidate_area_2_visible = false;
@@ -2696,7 +2693,7 @@ static void ui_mouse_button_released_cb (void *data, Evas *e, Evas_Object *butto
                     edje_object_signal_emit (_aux_items [i], "aux,state,unselected", "aux");
             }
             edje_object_signal_emit (button, "aux,state,selected", "aux");
-            _panel_agent->select_aux (index);
+            _info_manager->select_aux (index);
         }*/
         int r, g, b, a, r2, g2, b2, a2, r3, g3, b3, a3;
         edje_object_color_class_get (_aux_items [index], "text_color", &r, &g, &b, &a, &r2, &g2, &b2, &a2, &r3, &g3, &b3, &a3);
@@ -2706,14 +2703,14 @@ static void ui_mouse_button_released_cb (void *data, Evas *e, Evas_Object *butto
                 edje_object_color_class_set (_aux_items [i], "text_color", 249, 249, 249, 255, r2, g2, b2, a2, r3, g3, b3, a3);
             }
             edje_object_color_class_set (_aux_items [index], "text_color", 62, 207, 255, 255, r2, g2, b2, a2, r3, g3, b3, a3);
-            _panel_agent->select_aux (index);
+            _info_manager->select_aux (index);
         }
     } else if (_click_object == ISF_EFL_CANDIDATE_0 && _is_click) {
         ui_candidate_window_close_button_cb (NULL, NULL, _close_btn, NULL);
-        _panel_agent->select_candidate (index);
+        _info_manager->select_candidate (index);
     } else if (_click_object == ISF_EFL_CANDIDATE_ITEMS && _is_click) {
         ui_candidate_window_close_button_cb (NULL, NULL, _close_btn, NULL);
-        _panel_agent->select_candidate (index);
+        _info_manager->select_candidate (index);
     }
 }
 
@@ -3409,7 +3406,7 @@ static void ui_settle_candidate_window (void)
     get_geometry_result = true;
 #endif
     if ((_ise_state != WINDOW_STATE_SHOW && _ise_state != WINDOW_STATE_WILL_HIDE) ||
-            (get_geometry_result == false) || (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
+            (get_geometry_result == false) || (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
         ise_height = 0;
         ise_width = 0;
     }
@@ -3513,7 +3510,7 @@ static void ui_settle_candidate_window (void)
             evas_object_move (_preedit_window, spot_x, spot_y);
         }
         if (_candidate_state == WINDOW_STATE_SHOW) {
-            _panel_agent->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_candidate_panel_event ((uint32)ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
         }
     }
 }
@@ -3532,7 +3529,7 @@ static void set_soft_candidate_geometry (int x, int y, int width, int height)
 
     LOGD ("candidate geometry x: %d , y: %d , width: %d , height: %d, _ise_state: %d, candidate_mode: %d\n", x, y, width, height, _ise_state, _candidate_mode);
 
-    if ((_candidate_mode != SOFT_CANDIDATE_WINDOW) || (_panel_agent->get_current_toolbar_mode () != TOOLBAR_KEYBOARD_MODE))
+    if ((_candidate_mode != SOFT_CANDIDATE_WINDOW) || (_info_manager->get_current_toolbar_mode () != TOOLBAR_KEYBOARD_MODE))
         return;
 
      _soft_candidate_width  = width;
@@ -3540,7 +3537,7 @@ static void set_soft_candidate_geometry (int x, int y, int width, int height)
 #if HAVE_ECOREX
      set_keyboard_geometry_atom_info (_app_window, get_ise_geometry());
 #endif
-    _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+    _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
 
 }
 
@@ -3884,81 +3881,80 @@ static void efl_get_screen_resolution (int &width, int &height)
  *
  * @return true if initialize is successful, otherwise return false.
  */
-static bool initialize_panel_agent (const String &config, const String &display, bool resident)
+static bool initialize_panel_agent (const ConfigPointer& config, const String &display, bool resident)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     LOGD ("initializing panel agent\n");
 
-    _panel_agent = new PanelAgent ();
+    _info_manager = new InfoManager ();
 
-    if (!_panel_agent || !_panel_agent->initialize (config, display, resident)) {
+    if (!_info_manager || !_info_manager->initialize (_info_manager, config, display, resident)) {
         ISF_SAVE_LOG ("panel_agent initialize fail!\n");
         return false;
     }
 
-    _panel_agent->signal_connect_reload_config              (slot (slot_reload_config));
-    _panel_agent->signal_connect_focus_in                   (slot (slot_focus_in));
-    _panel_agent->signal_connect_focus_out                  (slot (slot_focus_out));
-    _panel_agent->signal_connect_expand_candidate           (slot (slot_expand_candidate));
-    _panel_agent->signal_connect_contract_candidate         (slot (slot_contract_candidate));
-    _panel_agent->signal_connect_set_candidate_ui           (slot (slot_set_candidate_style));
-    _panel_agent->signal_connect_update_factory_info        (slot (slot_update_factory_info));
-    _panel_agent->signal_connect_update_spot_location       (slot (slot_update_spot_location));
-    _panel_agent->signal_connect_update_input_context       (slot (slot_update_input_context));
-    _panel_agent->signal_connect_update_ise_geometry        (slot (slot_update_ise_geometry));
-    _panel_agent->signal_connect_show_preedit_string        (slot (slot_show_preedit_string));
-    _panel_agent->signal_connect_show_aux_string            (slot (slot_show_aux_string));
-    _panel_agent->signal_connect_show_lookup_table          (slot (slot_show_candidate_table));
-    _panel_agent->signal_connect_hide_preedit_string        (slot (slot_hide_preedit_string));
-    _panel_agent->signal_connect_hide_aux_string            (slot (slot_hide_aux_string));
-    _panel_agent->signal_connect_hide_lookup_table          (slot (slot_hide_candidate_table));
-    _panel_agent->signal_connect_update_preedit_string      (slot (slot_update_preedit_string));
-    _panel_agent->signal_connect_update_preedit_caret       (slot (slot_update_preedit_caret));
-    _panel_agent->signal_connect_update_aux_string          (slot (slot_update_aux_string));
-    _panel_agent->signal_connect_update_lookup_table        (slot (slot_update_candidate_table));
-    _panel_agent->signal_connect_select_candidate           (slot (slot_select_candidate));
-    _panel_agent->signal_connect_get_candidate_geometry     (slot (slot_get_candidate_geometry));
-    _panel_agent->signal_connect_get_input_panel_geometry   (slot (slot_get_input_panel_geometry));
-    _panel_agent->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise));
-    _panel_agent->signal_connect_get_ise_list               (slot (slot_get_ise_list));
-    _panel_agent->signal_connect_get_all_helper_ise_info    (slot (slot_get_all_helper_ise_info));
-    _panel_agent->signal_connect_set_has_option_helper_ise_info(slot (slot_set_has_option_helper_ise_info));
-    _panel_agent->signal_connect_set_enable_helper_ise_info (slot (slot_set_enable_helper_ise_info));
-    _panel_agent->signal_connect_show_helper_ise_list       (slot (slot_show_helper_ise_list));
-    _panel_agent->signal_connect_show_helper_ise_selector   (slot (slot_show_helper_ise_selector));
-    _panel_agent->signal_connect_is_helper_ise_enabled      (slot (slot_is_helper_ise_enabled));
-    _panel_agent->signal_connect_get_ise_information        (slot (slot_get_ise_information));
-    _panel_agent->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
-    _panel_agent->signal_connect_get_language_list          (slot (slot_get_language_list));
-    _panel_agent->signal_connect_get_all_language           (slot (slot_get_all_language));
-    _panel_agent->signal_connect_get_ise_language           (slot (slot_get_ise_language));
-    _panel_agent->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info));
-    _panel_agent->signal_connect_set_keyboard_ise           (slot (slot_set_keyboard_ise));
-    _panel_agent->signal_connect_get_keyboard_ise           (slot (slot_get_keyboard_ise));
-    _panel_agent->signal_connect_accept_connection          (slot (slot_accept_connection));
-    _panel_agent->signal_connect_close_connection           (slot (slot_close_connection));
-    _panel_agent->signal_connect_exit                       (slot (slot_exit));
+    _info_manager->signal_connect_reload_config              (slot (slot_reload_config));
+    _info_manager->signal_connect_focus_in                   (slot (slot_focus_in));
+    _info_manager->signal_connect_focus_out                  (slot (slot_focus_out));
+    _info_manager->signal_connect_expand_candidate           (slot (slot_expand_candidate));
+    _info_manager->signal_connect_contract_candidate         (slot (slot_contract_candidate));
+    _info_manager->signal_connect_set_candidate_ui           (slot (slot_set_candidate_style));
+    _info_manager->signal_connect_update_factory_info        (slot (slot_update_factory_info));
+    _info_manager->signal_connect_update_spot_location       (slot (slot_update_spot_location));
+    _info_manager->signal_connect_update_input_context       (slot (slot_update_input_context));
+    _info_manager->signal_connect_update_ise_geometry        (slot (slot_update_ise_geometry));
+    _info_manager->signal_connect_show_preedit_string        (slot (slot_show_preedit_string));
+    _info_manager->signal_connect_show_aux_string            (slot (slot_show_aux_string));
+    _info_manager->signal_connect_show_lookup_table          (slot (slot_show_candidate_table));
+    _info_manager->signal_connect_hide_preedit_string        (slot (slot_hide_preedit_string));
+    _info_manager->signal_connect_hide_aux_string            (slot (slot_hide_aux_string));
+    _info_manager->signal_connect_hide_lookup_table          (slot (slot_hide_candidate_table));
+    _info_manager->signal_connect_update_preedit_string      (slot (slot_update_preedit_string));
+    _info_manager->signal_connect_update_preedit_caret       (slot (slot_update_preedit_caret));
+    _info_manager->signal_connect_update_aux_string          (slot (slot_update_aux_string));
+    _info_manager->signal_connect_update_lookup_table        (slot (slot_update_candidate_table));
+    _info_manager->signal_connect_select_candidate           (slot (slot_select_candidate));
+    _info_manager->signal_connect_get_candidate_geometry     (slot (slot_get_candidate_geometry));
+    _info_manager->signal_connect_get_input_panel_geometry   (slot (slot_get_input_panel_geometry));
+    _info_manager->signal_connect_set_active_ise_by_uuid     (slot (slot_set_active_ise));
+    _info_manager->signal_connect_get_ise_list               (slot (slot_get_ise_list));
+    _info_manager->signal_connect_get_all_helper_ise_info    (slot (slot_get_all_helper_ise_info));
+    _info_manager->signal_connect_set_has_option_helper_ise_info(slot (slot_set_has_option_helper_ise_info));
+    _info_manager->signal_connect_set_enable_helper_ise_info (slot (slot_set_enable_helper_ise_info));
+    _info_manager->signal_connect_show_helper_ise_list       (slot (slot_show_helper_ise_list));
+    _info_manager->signal_connect_show_helper_ise_selector   (slot (slot_show_helper_ise_selector));
+    _info_manager->signal_connect_is_helper_ise_enabled      (slot (slot_is_helper_ise_enabled));
+    _info_manager->signal_connect_get_ise_information        (slot (slot_get_ise_information));
+    _info_manager->signal_connect_get_keyboard_ise_list      (slot (slot_get_keyboard_ise_list));
+    _info_manager->signal_connect_get_language_list          (slot (slot_get_language_list));
+    _info_manager->signal_connect_get_all_language           (slot (slot_get_all_language));
+    _info_manager->signal_connect_get_ise_language           (slot (slot_get_ise_language));
+    _info_manager->signal_connect_get_ise_info_by_uuid       (slot (slot_get_ise_info));
+    _info_manager->signal_connect_set_keyboard_ise           (slot (slot_set_keyboard_ise));
+    _info_manager->signal_connect_get_keyboard_ise           (slot (slot_get_keyboard_ise));
+    _info_manager->signal_connect_accept_connection          (slot (slot_accept_connection));
+    _info_manager->signal_connect_close_connection           (slot (slot_close_connection));
+    _info_manager->signal_connect_exit                       (slot (slot_exit));
 
-    _panel_agent->signal_connect_register_helper_properties (slot (slot_register_helper_properties));
-    _panel_agent->signal_connect_show_ise                   (slot (slot_show_ise));
-    _panel_agent->signal_connect_hide_ise                   (slot (slot_hide_ise));
+    _info_manager->signal_connect_register_helper_properties (slot (slot_register_helper_properties));
+    _info_manager->signal_connect_show_ise                   (slot (slot_show_ise));
+    _info_manager->signal_connect_hide_ise                   (slot (slot_hide_ise));
 
-    _panel_agent->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
+    _info_manager->signal_connect_will_hide_ack              (slot (slot_will_hide_ack));
 
-    _panel_agent->signal_connect_set_keyboard_mode          (slot (slot_set_keyboard_mode));
+    _info_manager->signal_connect_set_keyboard_mode          (slot (slot_set_keyboard_mode));
 
-    _panel_agent->signal_connect_candidate_will_hide_ack    (slot (slot_candidate_will_hide_ack));
-    _panel_agent->signal_connect_get_ise_state              (slot (slot_get_ise_state));
-    _panel_agent->signal_connect_start_default_ise          (slot (slot_start_default_ise));
-    _panel_agent->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
-    _panel_agent->signal_connect_show_panel                 (slot (slot_show_helper_ise_selector));
+    _info_manager->signal_connect_candidate_will_hide_ack    (slot (slot_candidate_will_hide_ack));
+    _info_manager->signal_connect_get_ise_state              (slot (slot_get_ise_state));
+    _info_manager->signal_connect_start_default_ise          (slot (slot_start_default_ise));
+    _info_manager->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
+    _info_manager->signal_connect_show_panel                 (slot (slot_show_helper_ise_selector));
 
-    _panel_agent->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
-    _panel_agent->signal_connect_check_privilege_by_sockfd  (slot (slot_check_privilege_by_sockfd));
-
+    _info_manager->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
+    _info_manager->signal_connect_check_privilege_by_sockfd  (slot (slot_check_privilege_by_sockfd));
     std::vector<String> load_ise_list;
-    _panel_agent->get_active_ise_list (load_ise_list);
+    _info_manager->get_active_ise_list (load_ise_list);
 
     LOGD ("initializing panel agent succeeded\n");
 
@@ -3977,8 +3973,8 @@ static void delete_ise_hide_timer (void)
 static void hide_ise ()
 {
     LOGD ("send request to hide helper\n");
-    String uuid = _panel_agent->get_current_helper_uuid ();
-    _panel_agent->hide_helper (uuid);
+    String uuid = _info_manager->get_current_helper_uuid ();
+    _info_manager->hide_helper (uuid);
 
     /* Only if we are not already in HIDE state */
     if (_ise_state != WINDOW_STATE_HIDE) {
@@ -3992,7 +3988,7 @@ static void hide_ise ()
     ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
 #endif
     if (_candidate_window) {
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
+        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)
             ui_candidate_hide (true, true, true);
         else
             ui_candidate_hide (true, false, true);
@@ -4051,25 +4047,25 @@ static bool update_ise_list (std::vector<String> &list)
         list.clear ();
         list = uuids;
 
-        _panel_agent->update_ise_list (list);
+        _info_manager->update_ise_list (list);
 
         if (_initial_ise_uuid.length () > 0) {
             String active_uuid   = _initial_ise_uuid;
             String default_uuid  = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
             if (std::find (uuids.begin (), uuids.end (), default_uuid) == uuids.end ()) {
-                if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
+                if ((_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (modes[get_ise_index (_initial_ise_uuid)] != TOOLBAR_KEYBOARD_MODE)) {
                     active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
                 }
                 if (set_active_ise (active_uuid, _soft_keyboard_launched) == false) {
                     if (_initial_ise_uuid.compare (active_uuid))
                         set_active_ise (_initial_ise_uuid, _soft_keyboard_launched);
                 }
-            } else if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
+            } else if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {    // Check whether keyboard engine is installed
                 String IMENGINE_KEY  = String (SCIM_CONFIG_DEFAULT_IMENGINE_FACTORY) + String ("/") + String ("~other");
                 String keyboard_uuid = _config->read (IMENGINE_KEY, String (""));
                 if (std::find (uuids.begin (), uuids.end (), keyboard_uuid) == uuids.end ()) {
                     active_uuid = String (SCIM_COMPOSE_KEY_FACTORY_UUID);
-                    _panel_agent->change_factory (active_uuid);
+                    _info_manager->change_factory (active_uuid);
                     _config->write (IMENGINE_KEY, active_uuid);
                     _config->flush ();
                 }
@@ -4125,14 +4121,14 @@ static void slot_focus_in (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     _focus_in = true;
-    if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
+    if ((_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE)) {
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
             if (uuid.length () > 0 && (_ime_info[get_ise_index(uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
                 LOGD ("Start helper (%s)\n", uuid.c_str ());
 
                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-                if (_panel_agent->start_helper (uuid))
+                if (_info_manager->start_helper (uuid))
                     _soft_keyboard_launched = true;
             }
         }
@@ -4234,20 +4230,20 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
     String ise_name = info.name;
     String ise_icon = info.icon;
 
-    String old_ise = _panel_agent->get_current_ise_name ();
+    String old_ise = _info_manager->get_current_ise_name ();
     if (old_ise != ise_name) {
-        if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && _candidate_window) {
+        if ((_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && _candidate_window) {
             ui_destroy_candidate_window ();
         }
     }
 
-    TOOLBAR_MODE_T mode = _panel_agent->get_current_toolbar_mode ();
+    TOOLBAR_MODE_T mode = _info_manager->get_current_toolbar_mode ();
 
     if (TOOLBAR_HELPER_MODE == mode)
-        ise_name = _ime_info[get_ise_index (_panel_agent->get_current_helper_uuid())].label;
+        ise_name = _ime_info[get_ise_index (_info_manager->get_current_helper_uuid())].label;
 
     if (ise_name.length () > 0)
-        _panel_agent->set_current_ise_name (ise_name);
+        _info_manager->set_current_ise_name (ise_name);
 
 #ifdef HAVE_NOTIFICATION
     if (old_ise != ise_name) {
@@ -4316,7 +4312,7 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 
     LOGD ("x : %d , y : %d , width : %d , height : %d, _ise_state : %d\n", x, y, width, height, _ise_state);
 
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+    if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
             /*IF ISE sent the ise_geometry information when the current_keyboard_mode is H/W mode and candidate_mode is SOFT_CANDIDATE,
              It means that given geometry information is for the candidate window */
@@ -4345,7 +4341,7 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 #if HAVE_ECOREX
             set_keyboard_geometry_atom_info (_app_window, _ise_reported_geometry.geometry);
 #endif
-            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         }
     }
 }
@@ -4426,7 +4422,7 @@ static void slot_show_aux_string (void)
 static void slot_show_candidate_table (void)
 {
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
-        _panel_agent->helper_candidate_show ();
+        _info_manager->helper_candidate_show ();
         return;
     }
 
@@ -4510,7 +4506,7 @@ static void slot_hide_candidate_table (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
-        _panel_agent->helper_candidate_hide ();
+        _info_manager->helper_candidate_hide ();
         return;
     }
 
@@ -4537,7 +4533,7 @@ static void slot_hide_candidate_table (void)
             _candidate_area_2_visible = false;
             evas_object_hide (_scroller_bg);
             evas_object_hide (_close_btn);
-            _panel_agent->candidate_more_window_hide ();
+            _info_manager->candidate_more_window_hide ();
         }
         ui_candidate_window_adjust ();
 
@@ -4997,8 +4993,8 @@ static void update_table (int table_type, const LookupTable &table)
     }
 
     _candidate_row_items.push_back (item_num - nLast);     /* Add the number of last row */
-    _panel_agent->update_displayed_candidate_number (_candidate_display_number);
-    _panel_agent->update_candidate_item_layout (_candidate_row_items);
+    _info_manager->update_displayed_candidate_number (_candidate_display_number);
+    _info_manager->update_candidate_item_layout (_candidate_row_items);
     if (more_item_count == 0) {
         ui_candidate_window_close_button_cb (NULL, NULL, NULL, NULL);
         evas_object_hide (_more_btn);
@@ -5035,7 +5031,7 @@ static void slot_update_candidate_table (const LookupTable &table)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
-        _panel_agent->update_helper_lookup_table (table);
+        _info_manager->update_helper_lookup_table (table);
         return ;
     }
 
@@ -5064,7 +5060,7 @@ static void slot_update_candidate_table (const LookupTable &table)
 static void slot_select_candidate (int index)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    _panel_agent->select_candidate (index);
+    _info_manager->select_candidate (index);
 }
 
 /**
@@ -5116,7 +5112,7 @@ static void slot_get_candidate_geometry (struct rectinfo &info)
  */
 static void slot_get_input_panel_geometry (struct rectinfo &info)
 {
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+    if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         info.pos_x = 0;
         info.width = 0;
         info.height = 0;
@@ -5294,8 +5290,8 @@ static bool slot_get_all_helper_ise_info (HELPER_ISE_INFO &info)
         isf_pkg_select_all_ime_info_db (_ime_info);
 
     //active_ime_appid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-    if (_panel_agent) {
-        active_ime_appid = _panel_agent->get_current_helper_uuid ();
+    if (_info_manager) {
+        active_ime_appid = _info_manager->get_current_helper_uuid ();
     }
 
     if (_ime_info.size () > 0) {
@@ -5602,7 +5598,7 @@ static bool slot_get_keyboard_ise_list (std::vector<String> &name_list)
     isf_get_all_languages (lang_list);
     isf_get_keyboard_ises_in_languages (lang_list, uuid_list, name_list, false);
 
-    _panel_agent->update_ise_list (uuid_list);
+    _info_manager->update_ise_list (uuid_list);
     return true;
 }
 
@@ -5721,8 +5717,8 @@ static void slot_set_keyboard_ise (const String &uuid)
     _config->flush ();
     _config->reload ();
 
-    _panel_agent->change_factory (uuid);
-    _panel_agent->reload_config ();
+    _info_manager->change_factory (uuid);
+    _info_manager->reload_config ();
 }
 
 /**
@@ -5748,8 +5744,6 @@ static void slot_accept_connection (int fd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    Ecore_Fd_Handler *panel_agent_read_handler = ecore_main_fd_handler_add (fd, ECORE_FD_READ, panel_agent_handler, NULL, NULL, NULL);
-    _read_handler_list.push_back (panel_agent_read_handler);
 #if HAVE_ECOREX
     get_input_window ();
 #endif
@@ -5763,16 +5757,7 @@ static void slot_accept_connection (int fd)
 static void slot_close_connection (int fd)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    int i = 0;
-    std::vector<Ecore_Fd_Handler *>::iterator IterPos;
 
-    for (IterPos = _read_handler_list.begin (); IterPos != _read_handler_list.end (); ++IterPos,++i) {
-        if (ecore_main_fd_handler_fd_get (_read_handler_list[i]) == fd) {
-            ecore_main_fd_handler_del (_read_handler_list[i]);
-            _read_handler_list.erase (IterPos);
-            break;
-        }
-    }
 }
 
 /**
@@ -5819,9 +5804,9 @@ static void slot_show_ise (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     /* If the current toolbar mode is not HELPER_MODE, do not proceed */
-    if (_panel_agent->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
+    if (_info_manager->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
         LOGD ("Current toolbar mode should be TOOLBAR_HELPER_MODE but is %d, returning\n",
-            _panel_agent->get_current_toolbar_mode ());
+            _info_manager->get_current_toolbar_mode ());
         return;
     }
 
@@ -5898,7 +5883,7 @@ static void slot_will_hide_ack (void)
     //ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
     LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
-    if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+    if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
         LOGD ("calling ui_candidate_hide (true, false)\n");
         ui_candidate_hide (true, false);
     }
@@ -5938,7 +5923,7 @@ static void slot_set_keyboard_mode (int mode)
 static void slot_get_ise_state (int &state)
 {
     if (_ise_state == WINDOW_STATE_SHOW ||
-        ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_candidate_state == WINDOW_STATE_SHOW))) {
+        ((_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) && (_candidate_state == WINDOW_STATE_SHOW))) {
         state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
     } else {
         /* Currently we don't have WILL_HIDE / HIDE state distinction in Ecore_IMF */
@@ -5966,14 +5951,14 @@ static void slot_get_ise_state (int &state)
 static void slot_start_default_ise (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    if ((_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE)) {
+    if ((_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE)) {
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
 
             LOGD ("Start helper (%s)\n", uuid.c_str ());
 
             set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
-            if (_panel_agent->start_helper (uuid))
+            if (_info_manager->start_helper (uuid))
                 _soft_keyboard_launched = true;
         }
     }
@@ -5984,11 +5969,11 @@ static void slot_stop_default_ise (void)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     if (_launch_ise_on_request && _soft_keyboard_launched) {
-        String uuid = _panel_agent->get_current_helper_uuid ();
+        String uuid = _info_manager->get_current_helper_uuid ();
 
         if (uuid.length () > 0) {
-            _panel_agent->hide_helper (uuid);
-            _panel_agent->stop_helper (uuid);
+            _info_manager->hide_helper (uuid);
+            _info_manager->stop_helper (uuid);
             _soft_keyboard_launched = false;
             LOGD ("stop helper (%s)\n", uuid.c_str ());
         }
@@ -6001,39 +5986,6 @@ static void slot_stop_default_ise (void)
 
 
 /**
- * @brief Callback function for ecore fd handler.
- *
- * @param data The data to pass to this callback.
- * @param fd_handler The ecore fd handler.
- *
- * @return ECORE_CALLBACK_RENEW
- */
-static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
-{
-    if (fd_handler == NULL)
-        return ECORE_CALLBACK_RENEW;
-
-    int fd = ecore_main_fd_handler_fd_get (fd_handler);
-    for (unsigned int i = 0; i < _read_handler_list.size (); i++) {
-        if (fd_handler == _read_handler_list [i]) {
-            if (!_panel_agent->filter_event (fd)) {
-                std::cerr << "_panel_agent->filter_event () is failed!!!\n";
-                ecore_main_fd_handler_del (fd_handler);
-
-                ISF_SAVE_LOG ("_panel_agent->filter_event (fd=%d) is failed!!!\n", fd);
-            }
-            return ECORE_CALLBACK_RENEW;
-        }
-    }
-    std::cerr << "panel_agent_handler () has received exception event!!!\n";
-    _panel_agent->filter_exception_event (fd);
-    ecore_main_fd_handler_del (fd_handler);
-
-    ISF_SAVE_LOG ("Received exception event (fd=%d)!!!\n", fd);
-    return ECORE_CALLBACK_RENEW;
-}
-
-/**
  * @brief Handler function for HelperManager input.
  *
  * @param data The data to pass to this callback.
@@ -6043,16 +5995,16 @@ static Eina_Bool panel_agent_handler (void *data, Ecore_Fd_Handler *fd_handler)
  */
 static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_handler)
 {
-    if (_panel_agent->has_helper_manager_pending_event ()) {
-        if (!_panel_agent->filter_helper_manager_event ()) {
-            std::cerr << "_panel_agent->filter_helper_manager_event () is failed!!!\n";
-            LOGE ("_panel_agent->filter_helper_manager_event () is failed!!!");
+    if (_info_manager->has_helper_manager_pending_event ()) {
+        if (!_info_manager->filter_helper_manager_event ()) {
+            std::cerr << "_info_manager->filter_helper_manager_event () is failed!!!\n";
+            LOGE ("_info_manager->filter_helper_manager_event () is failed!!!");
 
             elm_exit ();
         }
     } else {
-        std::cerr << "_panel_agent->has_helper_manager_pending_event () is failed!!!\n";
-        LOGE ("_panel_agent->has_helper_manager_pending_event () is failed!!!");
+        std::cerr << "_info_manager->has_helper_manager_pending_event () is failed!!!\n";
+        LOGE ("_info_manager->has_helper_manager_pending_event () is failed!!!");
     }
 
     return ECORE_CALLBACK_RENEW;
@@ -6174,7 +6126,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
 
     if (ise_idx < _ime_info.size ()) {
         String default_name = _ime_info[ise_idx].label;
-        _panel_agent->set_current_ise_name (default_name);
+        _info_manager->set_current_ise_name (default_name);
         _config->reload ();
     }
 }
@@ -6190,7 +6142,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
 static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+    LOGD("");
     uint32 option = 0;
     String uuid, name;
     bool _support_hw_keyboard_mode = false;
@@ -6203,7 +6155,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
     if (mode == TOOLBAR_KEYBOARD_MODE && _support_hw_keyboard_mode) {
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             LOGD ("HARDWARE_KEYBOARD_MODE return\n");
             return;
         }
@@ -6241,16 +6193,16 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         _soft_candidate_width = 0;
         _soft_candidate_height = 0;
         _ise_state = WINDOW_STATE_HIDE;
-        _panel_agent->set_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE);
-        _panel_agent->hide_helper (helper_uuid);
-        _panel_agent->reload_config ();
+        _info_manager->set_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE);
+        _info_manager->hide_helper (helper_uuid);
+        _info_manager->reload_config ();
 
         /* Check whether stop soft keyboard */
         if (_focus_in && (_ime_info[get_ise_index (helper_uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
             /* If focus in and soft keyboard can support hardware key event, then don't stop it */
             ;
         } else if (_launch_ise_on_request && _soft_keyboard_launched) {
-            _panel_agent->stop_helper (helper_uuid);
+            _info_manager->stop_helper (helper_uuid);
             _soft_keyboard_launched = false;
         }
 #if HAVE_ECOREX
@@ -6280,7 +6232,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         ui_candidate_hide (true, true, true);
         _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
         _config->flush ();
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             uuid = helper_uuid.length () > 0 ? helper_uuid : _initial_ise_uuid;
             if (_launch_ise_on_request) {
                 if (set_active_ise (uuid, false) == false) {
@@ -6325,7 +6277,7 @@ static void _bt_cb_hid_state_changed (int result, bool connected, const char *re
 {
     if (connected == false) {
        LOGD ("Bluetooth keyboard disconnected\n");
-       if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+       if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
            change_keyboard_mode (TOOLBAR_HELPER_MODE);
         }
     }
@@ -6356,10 +6308,10 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
         unsigned int val = 0;
         if (ecore_x_window_prop_card32_get (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1) > 0) {
             if (val == 0) {
-                _panel_agent->reset_keyboard_ise ();
+                _info_manager->reset_keyboard_ise ();
                 change_keyboard_mode (TOOLBAR_HELPER_MODE);
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
                 show_soft_keyboard ();
             }
         }
@@ -6390,18 +6342,18 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 }
 
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-                _panel_agent->update_input_panel_event (
+                _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                _info_manager->update_input_panel_event (
                         ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW);
 
-                if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+                if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
                     if (get_ise_count (TOOLBAR_HELPER_MODE, true) >= 2) {
                         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 #ifdef HAVE_NOTIFICATION
                         String ise_name;
-                        unsigned int idx = get_ise_index (_panel_agent->get_current_helper_uuid ());
+                        unsigned int idx = get_ise_index (_info_manager->get_current_helper_uuid ());
                         if (idx < _ime_info.size ())
                             ise_name = _ime_info[idx].label;
 
@@ -6443,7 +6395,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
                 LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
                 // For now don't send HIDE signal here
-                //_panel_agent->update_input_panel_event (
+                //_info_manager->update_input_panel_event (
                 //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
                 _ise_state = WINDOW_STATE_HIDE;
                 _ise_angle = -1;
@@ -6451,13 +6403,13 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                     /* When the ISE gets hidden by the window manager forcefully without OFF_PREPARE,
                        the application might not have updated its autoscroll area */
                     set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-                    _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-                    _panel_agent->update_input_panel_event (
+                    _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                    _info_manager->update_input_panel_event (
                             ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
 
                     _updated_hide_state_geometry = true;
                 }
-                if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+                if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
                     LOGD ("calling ui_candidate_hide (true, false)\n");
                     ui_candidate_hide (true, false);
                 } else {
@@ -6517,7 +6469,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             LOGD ("_ecore_x_e_virtual_keyboard_on_prepare_done_send (%x, %x)\n",
                     root_window, _control_window);
 
-            _panel_agent->update_input_panel_event (
+            _info_manager->update_input_panel_event (
                     ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
             ui_create_candidate_window ();
 
@@ -6536,7 +6488,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
 
             _ise_reported_geometry.valid = false;
             set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-            _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
             _updated_hide_state_geometry = true;
 
             /* If the input panel is getting hidden because of hw keyboard mode while
@@ -6544,18 +6496,18 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                "input panel being resized" event instead of "input panel being hidden",
                since the candidate window will work as an "input panel" afterwards */
             bool send_input_panel_hide_event = true;
-            if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
+            if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
                 LOGD ("_candidate_state : %d", _candidate_state);
                 if (_candidate_state == WINDOW_STATE_SHOW) {
                     send_input_panel_hide_event = false;
                 }
             }
             if (send_input_panel_hide_event) {
-                _panel_agent->update_input_panel_event (
+                _info_manager->update_input_panel_event (
                         ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
             }
             // For now don't send WILL_HIDE signal here
-            //_panel_agent->update_input_panel_event (
+            //_info_manager->update_input_panel_event (
             //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_WILL_HIDE);
             // Instead send HIDE signal
             vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_HIDE);
@@ -6573,7 +6525,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             }
             if (_ise_state == WINDOW_STATE_SHOW) {
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
             }
             ui_settle_candidate_window ();
             ui_candidate_window_rotate (_candidate_angle);
@@ -6588,7 +6540,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             _ise_angle = ise_angle;
             if (_ise_state == WINDOW_STATE_SHOW) {
                 set_keyboard_geometry_atom_info (_app_window, get_ise_geometry ());
-                _panel_agent->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+                _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
                 ui_settle_candidate_window ();
             }
         }
@@ -6767,7 +6719,7 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
     Ecore_X_Event_Window_Focus_Out *e = (Ecore_X_Event_Window_Focus_Out*)event;
 
     if (e && e->win == _app_window) {
-        if (_panel_agent->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
+        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
             if (check_focus_out_by_popup_win ())
                 return ECORE_CALLBACK_RENEW;
 
@@ -6789,13 +6741,13 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
 
             if (!_ise_hide_timer) {
                 LOGD ("Panel hides ISE\n");
-                _panel_agent->hide_helper (_panel_agent->get_current_helper_uuid ());
+                _info_manager->hide_helper (_info_manager->get_current_helper_uuid ());
                 slot_hide_ise ();
                 ui_candidate_hide (true, false, false);
             }
 #else
             LOGD ("Application window focus OUT! Panel hides ISE\n");
-            _panel_agent->hide_helper (_panel_agent->get_current_helper_uuid ());
+            _info_manager->hide_helper (_info_manager->get_current_helper_uuid ());
             slot_hide_ise ();
             ui_candidate_hide (true, false, false);
 #endif
@@ -6845,6 +6797,35 @@ static String sanitize_string (const char *str, int maxlen = 32)
     return ret;
 }
 
+static int launch_socket_frontend ()
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+    LOGD("Launching a ISF daemon with Socket FrontEnd");
+    std::vector<String>     engine_list;
+    std::vector<String>     helper_list;
+    std::vector<String>     load_engine_list;
+
+    std::vector<String>::iterator it;
+
+    std::cerr << "Launching a ISF daemon with Socket FrontEnd...\n";
+    //get modules list
+    scim_get_imengine_module_list (engine_list);
+    scim_get_helper_module_list (helper_list);
+
+    for (it = engine_list.begin (); it != engine_list.end (); it++) {
+        if (*it != "socket")
+            load_engine_list.push_back (*it);
+    }
+    for (it = helper_list.begin (); it != helper_list.end (); it++)
+        load_engine_list.push_back (*it);
+
+    return scim_launch (true,
+        "simple",
+        (load_engine_list.size () > 0 ? scim_combine_string_list (load_engine_list, ',') : "none"),
+        "socket",
+        NULL);
+}
+
 int main (int argc, char *argv [])
 {
     struct tms    tiks_buf;
@@ -6864,7 +6845,6 @@ int main (int argc, char *argv [])
     String        display_name    = String ();
     char          buf[256]        = {0};
 
-    Ecore_Fd_Handler *panel_agent_read_handler = NULL;
     Ecore_Fd_Handler *helper_manager_handler   = NULL;
 #if HAVE_ECOREX
     Ecore_Event_Handler *xclient_message_handler  = NULL;
@@ -6982,6 +6962,29 @@ int main (int argc, char *argv [])
         goto cleanup;
     }
 
+    /* Get current display. */
+    {
+        const char *p = getenv ("DISPLAY");
+        if (p)
+            display_name = String (p);
+    }
+
+    snprintf (buf, sizeof (buf), "config_name=%s display_name=%s", config_name.c_str (), display_name.c_str ());
+    check_time (buf);
+
+    if (daemon) {
+        check_time ("ISF Panel EFL run as daemon");
+        scim_daemon ();
+    }
+
+    elm_init (argc, argv);
+    check_time ("elm_init");
+
+    elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
+
+    //FIXME: frontend name shoule be got from paramter,set socket as dead code
+    launch_socket_frontend ();
+
     if (config_name != "dummy") {
         /* Load config module */
         config_module = new ConfigModule (config_name);
@@ -6995,18 +6998,18 @@ int main (int argc, char *argv [])
         _config = new DummyConfig ();
     }
 
-    /* Get current display. */
-    {
-        const char *p = getenv ("DISPLAY");
-        if (p)
-            display_name = String (p);
+    /* Create config instance */
+    if (_config.null () && config_module && config_module->valid ())
+        _config = config_module->create_config ();
+    if (_config.null ()) {
+        std::cerr << "Failed to create Config instance from " << config_name << " Config module.\n";
+        ret = -1;
+        goto cleanup;
     }
-
-    snprintf (buf, sizeof (buf), "config_name=%s display_name=%s", config_name.c_str (), display_name.c_str ());
-    check_time (buf);
+    check_time ("create config instance");
 
     try {
-        if (!initialize_panel_agent (config_name, display_name, should_resident)) {
+        if (!initialize_panel_agent (_config, display_name, should_resident)) {
             check_time ("Failed to initialize Panel Agent!");
             std::cerr << "Failed to initialize Panel Agent!\n";
             ISF_SAVE_LOG ("Failed to initialize Panel Agent!\n");
@@ -7021,16 +7024,6 @@ int main (int argc, char *argv [])
     }
     check_time ("initialize_panel_agent");
 
-    /* Create config instance */
-    if (_config.null () && config_module && config_module->valid ())
-        _config = config_module->create_config ();
-    if (_config.null ()) {
-        std::cerr << "Failed to create Config instance from " << config_name << " Config module.\n";
-        ret = -1;
-        goto cleanup;
-    }
-    check_time ("create config instance");
-
     /* Initialize global variables and pointers for candidate items and etc. */
     for (i = 0; i < SCIM_LOOKUP_TABLE_MAX_PAGESIZE; i++) {
         _candidate_0 [i]     = NULL;
@@ -7044,25 +7037,15 @@ int main (int argc, char *argv [])
     }
 
     try {
-        _panel_agent->send_display_name (display_name);
+        _info_manager->send_display_name (display_name);
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
         ret = -1;
         goto cleanup;
     }
 
-    if (daemon) {
-        check_time ("ISF Panel EFL run as daemon");
-        scim_daemon ();
-    }
-
     /* Connect the configuration reload signal. */
     _config->signal_connect_reload (slot (config_reload_cb));
-
-    elm_init (argc, argv);
-    check_time ("elm_init");
-
-    elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
 #if HAVE_ECOREX
     if (!efl_create_control_window ()) {
@@ -7089,10 +7072,8 @@ int main (int argc, char *argv [])
     load_config ();
     check_time ("load_config");
 
-    helper_manager_handler   = ecore_main_fd_handler_add (_panel_agent->get_helper_manager_id (), ECORE_FD_READ, helper_manager_input_handler, NULL, NULL, NULL);
-    panel_agent_read_handler = ecore_main_fd_handler_add (_panel_agent->get_server_id (), ECORE_FD_READ, panel_agent_handler, NULL, NULL, NULL);
-    _read_handler_list.push_back (panel_agent_read_handler);
-    check_time ("run_panel_agent");
+    helper_manager_handler   = ecore_main_fd_handler_add (_info_manager->get_helper_manager_id (), ECORE_FD_READ, helper_manager_input_handler, NULL, NULL, NULL);
+    check_time ("run_info_manager");
 
     set_language_and_locale ();
 
@@ -7214,10 +7195,7 @@ int main (int argc, char *argv [])
         helper_manager_handler = NULL;
     }
 
-    for (unsigned int ii = 0; ii < _read_handler_list.size (); ++ii) {
-        ecore_main_fd_handler_del (_read_handler_list[ii]);
-    }
-    _read_handler_list.clear ();
+
 
 #if HAVE_VCONF
     /* Remove callback function for input language and display language */
@@ -7248,13 +7226,13 @@ cleanup:
         _config.reset ();
     if (config_module)
         delete config_module;
-    if (_panel_agent) {
+    if (_info_manager) {
         try {
-            _panel_agent->stop ();
+            _info_manager->stop ();
         } catch (scim::Exception & e) {
-            std::cerr << "Exception is thrown from _panel_agent->stop (), error is " << e.what () << "\n";
+            std::cerr << "Exception is thrown from _info_manager->stop (), error is " << e.what () << "\n";
         }
-        delete _panel_agent;
+        delete _info_manager;
     }
     if ((display_name_c > 0) && new_argv [display_name_c]) {
         free (new_argv [display_name_c]);
