@@ -779,13 +779,14 @@ AC_CONFIG_FILES([Makefile
                  ism/modules/imengine/Makefile
                  ism/modules/filter/Makefile
                  ism/modules/config/Makefile
+                 ism/modules/panelagent/ecoresocket/Makefile
+                 ism/modules/panelagent/wayland/Makefile
                  ism/configs/Makefile
                  ism/extras/Makefile
                  ism/extras/gtk2_immodule/Makefile
                  ism/extras/efl_immodule/Makefile
                  ism/extras/efl_panel/Makefile
                  ism/extras/kbd_mode_changer/Makefile
-                 ism/extras/efl_wsc/Makefile
                  ism/demos/Makefile
                  intltool-extract
                  intltool-merge
