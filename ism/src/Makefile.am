@@ -76,7 +76,6 @@ libsciminclude_HEADERS 	= scim.h \
 			  scim_lookup_table.h \
 			  scim_module.h \
 			  scim_object.h \
-			  scim_panel_agent.h \
 			  scim_panel_client.h \
 			  scim_panel_common.h \
 			  scim_pointer.h \
@@ -92,7 +91,11 @@ libsciminclude_HEADERS 	= scim.h \
 			  isf_control.h \
 			  isf_imcontrol_client.h \
 			  ise_context.h \
-			  scim_visibility.h
+			  scim_visibility.h \
+			  isf_panel_agent_manager.h \
+			  isf_info_manager.h \
+			  isf_panel_agent_base.h \
+			  isf_panel_agent_module.h
 
 noinst_LTLIBRARIES	= libltdlc.la
 
@@ -130,7 +133,6 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  scim_imengine_module.cpp \
 			  scim_lookup_table.cpp \
 			  scim_object.cpp \
-			  scim_panel_agent.cpp \
 			  scim_panel_client.cpp \
 			  scim_private.cpp \
 			  scim_signals.cpp \
@@ -141,7 +143,11 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  scim_setup_module_efl.cpp \
 			  isf_control.cpp \
 			  isf_imcontrol_client.cpp \
-			  isf_query_utility.cpp
+			  isf_query_utility.cpp \
+			  isf_panel_agent_manager.cpp \
+			  isf_info_manager.cpp \
+			  isf_panel_agent_base.cpp \
+			  isf_panel_agent_module.cpp
 
 libscim@SCIM_EPOCH@_la_CXXFLAGS = @EVAS_CFLAGS@ \
 			  @DLOG_CFLAGS@ \

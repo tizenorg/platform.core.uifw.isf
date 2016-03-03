@@ -72,7 +72,13 @@
     #define Uses_SCIM_PANEL_CLIENT
 #endif
 
+#ifdef Uses_SCIM_PANEL_AGENT_MODULE
+    #define Uses_SCIM_MODULE
+    #define Uses_SCIM_PANEL_AGENT
+#endif
+
 #ifdef Uses_SCIM_PANEL_AGENT
+    #define Uses_SCIM_CONFIG_BASE
     #define Uses_SCIM_HELPER_MANAGER
     #define Uses_SCIM_TRANSACTION
 #endif
@@ -415,7 +421,13 @@
 #endif
 
 #ifdef Uses_SCIM_PANEL_AGENT
-    #include <scim_panel_agent.h>
+    #include <isf_panel_agent_base.h>
+    #include <isf_panel_agent_manager.h>
+    #include <isf_info_manager.h>
+#endif
+
+#ifdef Uses_SCIM_PANEL_AGENT_MODULE
+    #include <isf_panel_agent_module.h>
 #endif
 
 #ifdef Uses_SCIM_PANEL_CLIENT

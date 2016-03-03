@@ -18,4 +18,4 @@
 MAINTAINERCLEANFILES	= Makefile.in
 CLEANFILES		= *.bak
 
-SUBDIRS			= frontend imengine config filter
+SUBDIRS			= frontend imengine config filter panelagent/ecoresocket panelagent/wayland
