@@ -277,7 +277,11 @@ static int app_create (void *data)
     ad->conformant = create_conformant (ad);
 
     // Indicator
+#ifdef _MOBILE
     elm_win_indicator_mode_set (ad->win_main, ELM_WIN_INDICATOR_SHOW);
+#else
+    elm_win_indicator_mode_set (ad->win_main, ELM_WIN_INDICATOR_HIDE);
+#endif
 
     // Navigation Bar
     ad->naviframe = _create_naviframe_layout (ad->conformant);
