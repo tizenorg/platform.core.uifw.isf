@@ -8,23 +8,23 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="12" y="13">
-    <key hit_left="12" hit_top="13">
+  <row x="50" y="13">
+    <key width="150" hit_left="12" hit_top="13">
       <label>
         <rec>(</rec>
       </label>
     </key>
-    <key label_type="3X4_BTN_5" hit_top="13">
+    <key width="150" label_type="3X4_BTN_5" hit_top="13">
       <label>
         <rec>/</rec>
       </label>
     </key>
-    <key hit_top="13">
+    <key width="150" hit_top="13">
       <label>
         <rec>)</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="12" hit_top="13">
+    <key width="150" button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" hit_right="12" hit_top="13">
       <image_label>
         <rec button="normal">B09_icon_back_nor_65x65.png</rec>
         <rec button="pressed">B09_icon_back_press_65x65.png</rec>
@@ -39,13 +39,13 @@
       </key_value>
     </key>
   </row>
-  <row x="12">
-    <key label_type="3X4_BTN_5" hit_left="12">
+  <row x="85">
+    <key width="130" label_type="3X4_BTN_5" hit_left="12">
       <label>
         <rec>N</rec>
       </label>
     </key>
-    <key label_type="3X4_BTN_3">
+    <key width="130" label_type="3X4_BTN_3">
       <label>
         <rec>Pause(,)</rec>
       </label>
@@ -53,12 +53,12 @@
         <rec>,</rec>
       </key_value>
     </key>
-    <key>
+    <key width="130">
       <label>
         <rec>.</rec>
       </label>
     </key>
-    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
+    <key width="130" key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
       <image_label>
         <rec button="normal">B09_icon_enter_nor_65x65.png</rec>
         <rec button="pressed">B09_icon_enter_press_65x65.png</rec>
@@ -74,13 +74,13 @@
       </key_value>
     </key>
   </row>
-  <row x="12">
-    <key hit_left="12">
+  <row x="130">
+    <key width="110" hit_left="12">
       <label>
         <rec>*</rec>
       </label>
     </key>
-    <key label_type="3X4_BTN_3">
+    <key width="110" label_type="3X4_BTN_3">
       <label>
         <rec>Wait(;)</rec>
       </label>
@@ -88,12 +88,12 @@
         <rec>;</rec>
       </key_value>
     </key>
-    <key>
+    <key width="110">
       <label>
         <rec>#</rec>
       </label>
     </key>
-    <key button_type="selfish" key_type="modechange" label_type="3X4_BTN_2" hit_right="12">
+    <key width="110" button_type="selfish" key_type="modechange" label_type="3X4_BTN_2" hit_right="12">
       <label>
         <rec>123</rec>
       </label>
@@ -107,8 +107,8 @@
       </key_value>
     </key>
   </row>
-  <row x="12" y="320">
-    <key hit_left="12" hit_top="4" hit_bottom="27">
+  <row x="210" y="320" key_spacing="5">
+    <key width="65" height="90" hit_left="12" hit_top="4" hit_bottom="27">
       <background_image>
         <rec button="normal">button/B09_key_btn_02.png</rec>
         <rec button="pressed">button/B09_key_btn_press.png</rec>
@@ -118,12 +118,12 @@
         <rec>-</rec>
       </label>
     </key>
-    <key hit_top="4" hit_bottom="27">
+    <key width="90" height="90" hit_top="4" hit_bottom="27">
       <label>
         <rec>+</rec>
       </label>
     </key>
-    <key button_type="direction" key_type="control" label_type="QTY_SPACE" hit_top="4" hit_bottom="27">
+    <key width="65" height="90" button_type="direction" key_type="control" label_type="QTY_SPACE" hit_top="4" hit_bottom="27">
       <image_label>
         <rec button="normal">B09_icon_space_nor_73x22.png</rec>
         <rec button="pressed">B09_icon_space_press_73x22.png</rec>
@@ -138,7 +138,7 @@
         <rec>Space</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="user" hit_right="12" hit_top="4" hit_bottom="27">
+    <key width="65" height="90" button_type="selfish" key_type="user" hit_right="12" hit_top="4" hit_bottom="27">
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_nor_65x65.png</rec>
         <rec button="pressed">setting icon/B09_icon_setting_press_65x65.png</rec>

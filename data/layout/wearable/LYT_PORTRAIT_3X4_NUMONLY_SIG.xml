@@ -8,8 +8,8 @@
     <rec button="pressed">button/B09_key_btn_press.png</rec>
     <rec button="disabled">button/B09_key_btn_01.png</rec>
   </background_image>
-  <row x="12" y="13">
-    <key hit_left="12" hit_top="13">
+  <row x="50" y="13">
+    <key width="150" hit_left="12" hit_top="13">
       <label>
         <rec>1</rec>
       </label>
@@ -17,7 +17,7 @@
         <rec>1</rec>
       </key_value>
     </key>
-    <key hit_top="13">
+    <key width="150" hit_top="13">
       <label>
         <rec multi="0">2</rec>
       </label>
@@ -25,7 +25,7 @@
         <rec>2</rec>
       </key_value>
     </key>
-    <key hit_top="13">
+    <key width="150" hit_top="13">
       <label>
         <rec multi="0">3</rec>
       </label>
@@ -33,7 +33,7 @@
         <rec>3</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="control" use_repeat_key="true" hit_right="12" hit_top="13">
+    <key width="150" button_type="selfish" key_type="control" use_repeat_key="true" hit_right="12" hit_top="13">
       <image_label>
         <rec button="normal">B09_icon_back_nor_65x65.png</rec>
         <rec button="pressed">B09_icon_back_press_65x65.png</rec>
@@ -48,8 +48,8 @@
       </key_value>
     </key>
   </row>
-  <row x="12">
-    <key hit_left="12">
+  <row x="85">
+    <key width="130" hit_left="12">
       <label>
         <rec multi="0">4</rec>
       </label>
@@ -57,7 +57,7 @@
         <rec>4</rec>
       </key_value>
     </key>
-    <key>
+    <key width="130">
       <label>
         <rec multi="0">5</rec>
       </label>
@@ -65,7 +65,7 @@
         <rec>5</rec>
       </key_value>
     </key>
-    <key>
+    <key width="130">
       <label>
         <rec multi="0">6</rec>
       </label>
@@ -73,7 +73,7 @@
         <rec>6</rec>
       </key_value>
     </key>
-    <key key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
+    <key width="130" key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
       <image_label>
         <rec button="normal">B09_icon_enter_nor_65x65.png</rec>
         <rec button="pressed">B09_icon_enter_press_65x65.png</rec>
@@ -89,8 +89,8 @@
       </key_value>
     </key>
   </row>
-  <row x="12">
-    <key hit_left="12">
+  <row x="130">
+    <key width="110" hit_left="12">
       <label>
         <rec multi="0">7</rec>
       </label>
@@ -98,7 +98,7 @@
         <rec>7</rec>
       </key_value>
     </key>
-    <key>
+    <key width="110">
       <label>
         <rec multi="0">8</rec>
       </label>
@@ -106,7 +106,7 @@
         <rec>8</rec>
       </key_value>
     </key>
-    <key>
+    <key width="110">
       <label>
         <rec multi="0">9</rec>
       </label>
@@ -114,7 +114,7 @@
         <rec>9</rec>
       </key_value>
     </key>
-    <key label_type="3X4_BTN_9" hit_right="12">
+    <key width="110" label_type="3X4_BTN_9" hit_right="12">
       <label>
         <rec>-</rec>
       </label>
@@ -128,8 +128,8 @@
       </key_value>
     </key>
   </row>
-  <row x="12" y="320">
-    <key button_type="uiitem" label_type="3X4_BTN_5_2_DISABLED" hit_left="12" hit_top="4" hit_bottom="27">
+  <row x="210" y="320" key_spacing="5">
+    <key width="65" height="90" button_type="uiitem" label_type="3X4_BTN_5_2_DISABLED" hit_left="12" hit_top="4" hit_bottom="27">
       <label>
         <rec>Sym</rec>
         <rec multi="1">123</rec>
@@ -140,7 +140,7 @@
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
     </key>
-    <key hit_bottom="10">
+    <key width="90" height="90" hit_bottom="10">
       <label>
         <rec>0</rec>
       </label>
@@ -148,7 +148,7 @@
         <rec>0</rec>
       </key_value>
     </key>
-    <key button_type="uiitem" hit_top="4" hit_bottom="27">
+    <key width="65" height="90" button_type="uiitem" hit_top="4" hit_bottom="27">
       <image_label>
         <rec button="normal">B09_icon_space_dim_73x22.png</rec>
       </image_label>
@@ -158,7 +158,7 @@
         <rec button="disabled">button/B09_key_btn_02.png</rec>
       </background_image>
     </key>
-    <key button_type="uiitem" hit_right="12" hit_top="4" hit_bottom="27">
+    <key width="65" height="90" button_type="uiitem" hit_right="12" hit_top="4" hit_bottom="27">
       <image_label>
         <rec button="normal">setting icon/B09_icon_setting_dim_65x65.png</rec>
       </image_label>
