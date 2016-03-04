@@ -5,9 +5,9 @@
 #--------------------------------------
 export DISPLAY=:0.0
 ISF_DEBUG=$1/isf
-ISF_HOME=~/.scim
+ISF_HOME=~/.config/.scim
 ISF_SCIM_HOME=/root/.scim
-ISF_DB=/opt/usr/dbspace
+ISF_DB=~/.applications/dbspace
 /bin/mkdir -p ${ISF_DEBUG}
 /bin/cat ${ISF_HOME}/isf.log > ${ISF_DEBUG}/isf.log
 /bin/cat ${ISF_HOME}/config > ${ISF_DEBUG}/config
