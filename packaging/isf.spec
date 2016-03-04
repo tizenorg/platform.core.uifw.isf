@@ -49,7 +49,7 @@ Requires: org.tizen.isf-kbd-mode-changer
 %endif
 
 %define _optexecdir /opt/usr/devel/usr/bin/
-%define APP_PREFIX %{_prefix}/apps/org.tizen.isf-kbd-mode-changer/bin/
+%define APP_PREFIX %{TZ_SYS_RO_APP}/org.tizen.isf-kbd-mode-changer/bin/
 
 %description
 Input Service Framewok (ISF) is an input method (IM) platform, and it has been derived from SCIM.
@@ -116,20 +116,18 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 %endif
 		--disable-frontend-x11 \
 		--disable-multiwindow-support \
-		--disable-ime-embed-app
+		--disable-ime-embed-app \
+		--with-ro-app-dir=%{TZ_SYS_RO_APP} \
+		--with-ro-packages-dir=%{TZ_SYS_RO_PACKAGES}
 make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
 
 %make_install
-mkdir -p %{buildroot}/opt/etc/dump.d/module.d
-cp -af ism/dump/isf_log_dump.sh %{buildroot}/opt/etc/dump.d/module.d
+mkdir -p %{buildroot}/%{TZ_SYS_ETC}/dump.d/module.d
+cp -af ism/dump/isf_log_dump.sh %{buildroot}/%{TZ_SYS_ETC}/dump.d/module.d
 mkdir -p %{buildroot}/etc/scim/conf
-mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/Helper
-mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
-mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-mkdir -p %{buildroot}/opt/apps/scim/lib/scim-1.0/1.4.0/PanelAgent
 %find_lang scim
 
 cat scim.lang > isf.lang
@@ -148,10 +146,6 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %files -f isf.lang
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
-%dir /opt/apps/scim/lib/scim-1.0/1.4.0/Helper
-%dir /opt/apps/scim/lib/scim-1.0/1.4.0/SetupUI
-%dir /opt/apps/scim/lib/scim-1.0/1.4.0/IMEngine
-%dir /opt/apps/scim/lib/scim-1.0/1.4.0/PanelAgent
 %dir /etc/scim/conf
 %{_prefix}/lib/systemd/user/default.target.wants/scim.path
 %{_prefix}/lib/systemd/user/scim.service
@@ -179,7 +173,7 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_libdir}/scim-1.0/scim-helper-launcher
 %{_libdir}/libscim-*.so*
 %license COPYING
-/opt/etc/dump.d/module.d/*
+%{TZ_SYS_ETC}/dump.d/module.d/*
 
 %files devel
 %defattr(-,root,root,-)
@@ -190,10 +184,10 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 
 %if %{without wayland}
 %post -n org.tizen.isf-kbd-mode-changer
-mkdir -p /usr/apps/org.tizen.isf-kbd-mode-changer
+mkdir -p %{TZ_SYS_RO_APP}/org.tizen.isf-kbd-mode-changer
 
 %files -n org.tizen.isf-kbd-mode-changer
 %manifest org.tizen.isf-kbd-mode-changer.manifest
-/usr/share/packages/org.tizen.isf-kbd-mode-changer.xml
+%{TZ_SYS_RO_PACKAGES}/org.tizen.isf-kbd-mode-changer.xml
 %{APP_PREFIX}/*
 %endif

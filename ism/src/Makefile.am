@@ -172,9 +172,9 @@ libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 bin_PROGRAMS		= scim isf-log
 
 scim_SOURCES	 	= scim.cpp isf_pkg.cpp
-scim_CXXFLAGS		= @ECORE_CFLAGS@ @ECORE_IPC_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ -fPIE
+scim_CXXFLAGS		= @ECORE_CFLAGS@ @ECORE_IPC_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@ -fPIE
 scim_LDADD		= libscim@SCIM_EPOCH@.la
-scim_LDFLAGS		= @LTLIBINTL@ @ECORE_LIBS@ @ECORE_IPC_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ -pie
+scim_LDFLAGS		= @LTLIBINTL@ @ECORE_LIBS@ @ECORE_IPC_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ @TZPLATFORM_CONFIG_LIBS@ -pie
 
 isf_log_SOURCES	 	= isf_log.cpp
 isf_log_LDADD		= libscim@SCIM_EPOCH@.la
@@ -191,8 +191,8 @@ libexec_PROGRAMS        = scim-launcher scim-helper-launcher
 
 scim_launcher_SOURCES 	= scim_launcher.cpp isf_pkg.cpp
 scim_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_launcher_CXXFLAGS  = @VCONF_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ -fPIE
-scim_launcher_LDFLAGS	= @LTLIBINTL@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ -pie
+scim_launcher_CXXFLAGS  = @VCONF_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@ -fPIE
+scim_launcher_LDFLAGS	= @LTLIBINTL@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ @TZPLATFORM_CONFIG_LIBS@ -pie
 
 scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp
 scim_helper_launcher_CXXFLAGS	= -fPIE

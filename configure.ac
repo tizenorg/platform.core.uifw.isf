@@ -421,6 +421,16 @@ AC_ARG_WITH(efl-im-module-dir,
                            [Select efl immodule dir]),
             EFL_IM_MODULEDIR=$with_efl_im_module_dir)
 
+AC_ARG_WITH(ro-app-dir,
+            AS_HELP_STRING([--with-ro-app-dir=dir],
+                           [Select Read only application dir]),
+            RO_APP_DIR=$with_ro_app_dir)
+
+AC_ARG_WITH(ro-packages-dir,
+            AS_HELP_STRING([--with-ro-app-dir=dir],
+                           [Select Read only packages dir]),
+            RO_PACKAGES_DIR=$with_ro_packages_dir)
+
 AC_ARG_ENABLE(ld-version-script,
               [  --enable-ld-version-script Use ld version script to limit exported symbols],
               enable_ld_version_script=yes,
@@ -760,6 +770,9 @@ AC_SUBST(SCIM_MODULE_PATH)
 AC_SUBST(SCIM_LIBEXECDIR)
 AC_SUBST(SCIM_LOCALEDIR)
 AC_SUBST(SCIM_TEMPDIR)
+
+AC_SUBST(RO_APP_DIR)
+AC_SUBST(RO_PACKAGES_DIR)
 
 ###########################################################
 ##                      Output files.                    ##
