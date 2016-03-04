@@ -35,6 +35,7 @@
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
 #include <dlog.h>
+#include <tzplatform_config.h>
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -177,7 +178,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
             if (path)
                 ime_db.module_path = String (path) + String ("/lib");
             else
-                ime_db.module_path = String ("/opt/usr/apps/") + ime_db.pkgid + String ("/lib");
+                ime_db.module_path = String (tzplatform_getenv(TZ_SYS_RW_APP)) + ime_db.pkgid + String ("/lib");
             ime_db.module_name = String ("lib") + ime_db.exec.substr (ime_db.exec.find_last_of (SCIM_PATH_DELIM) + 1);
             if (ime_db.exec.compare (0, 5, "/usr/") == 0) {
                 ime_db.is_enabled = 1;

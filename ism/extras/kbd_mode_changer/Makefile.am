@@ -25,7 +25,7 @@ if ISF_BUILD_KBD_MODE_CHANGER
 ISF_KBD_MODE_CHANGER = isf-kbd-mode-changer
 endif
 
-appexecdir            = /usr/apps/org.tizen.isf-kbd-mode-changer/bin/
+appexecdir            = @RO_APP_DIR@/org.tizen.isf-kbd-mode-changer/bin/
 appexec_PROGRAMS      = $(ISF_KBD_MODE_CHANGER)
 
 isf_kbd_mode_changer_SOURCES  = main.cpp
