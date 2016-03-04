@@ -1,9 +1,8 @@
 /**
- * @file scim_panel_agent.h
+ * @file isf_info_manager.h
  * @brief Defines scim::InfoManager and their related types.
  *
  * scim::InfoManager is a class used to write Panel daemons.
- * It acts like a Socket Server and handles all socket clients
  * issues.
  */
 
@@ -13,7 +12,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2004-2005 James Su <suzhe@tsinghua.org.cn>
- * Copyright (c) 2012-2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2012-2016 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
@@ -1558,7 +1557,7 @@ public:
 
 } /* namespace scim */
 
-#endif /* __SCIM_PANEL_AGENT_H */
+#endif /* __ISF_INFO_MANAGER_H */
 
 /*
 vi:ts=4:nowrap:ai:expandtab

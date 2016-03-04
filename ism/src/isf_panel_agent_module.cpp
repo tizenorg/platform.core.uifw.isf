@@ -1,8 +1,15 @@
+/** @file isf_panel_agent_module.cpp
+ *  @brief Implementation of class PanelAgentModule.
+ */
+
+/* ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable. */
+
 /*
  * Smart Common Input Method
  *
- * Copyright (c) 2002-2005 James Su <suzhe@tsinghua.org.cn>
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *
+ * Contact: Li Zhang <li2012.zhang@samsung.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,8 +26,7 @@
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA  02111-1307  USA
  *
- * $Id: scim_panel_client_module.h,v 0.01 2016/01/26 15:38:00 lizhang $
- *
+ * $Id: isf_panel_agent_module.cpp,v 1.00 2016/03/03 15:38:00 lizhang $
  */
 
 #define Uses_SCIM_PANEL_AGENT_MODULE
