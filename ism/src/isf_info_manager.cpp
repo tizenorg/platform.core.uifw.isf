@@ -1,4 +1,4 @@
-/** @file scim_panel.cpp
+/** @file isf_info_manager.cpp
  *  @brief Implementation of class InfoManager.
  */
 
@@ -8,7 +8,7 @@
  * Smart Common Input Method
  *
  * Copyright (c) 2005 James Su <suzhe@tsinghua.org.cn>
- * Copyright (c) 2012-2015 Samsung Electronics Co., Ltd.
+ * Copyright (c) 2012-2016 Samsung Electronics Co., Ltd.
  *
  *
  * This library is free software; you can redistribute it and/or
