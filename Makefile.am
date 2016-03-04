@@ -57,7 +57,7 @@ pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
 if ISF_BUILD_KBD_MODE_CHANGER
-kbdmodechangerxmldir = /usr/share/packages/
+kbdmodechangerxmldir = @RO_PACKAGES_DIR@
 kbdmodechangerxml_DATA = org.tizen.isf-kbd-mode-changer.xml
 endif
 
