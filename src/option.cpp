@@ -73,6 +73,7 @@ struct OPTION_ELEMENTS
         genlist = NULL;
         lang_popup = NULL;
         back_button = NULL;
+        conformant = NULL;
 
         itc_main_item = NULL;
 
@@ -90,6 +91,7 @@ struct OPTION_ELEMENTS
     Evas_Object *genlist;
     Evas_Object *lang_popup;
     Evas_Object *back_button;
+    Evas_Object *conformant;
 
     Elm_Genlist_Item_Class *itc_main_item;
 
@@ -653,6 +655,13 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         genlist = elm_genlist_add(naviframe);
         option_elements[type].genlist = genlist;
 
+#ifdef _CIRCLE
+        /* Circle Surface Creation */
+        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
+        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
+        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+#endif
+
         elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
         evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
         evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -763,6 +772,13 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     SCLOptionWindowType type = find_option_window_type(naviframe);
 
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
+#ifdef _CIRCLE
+        /* Circle Surface Creation */
+        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
+        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
+        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+#endif
+
         for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
         {
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
@@ -924,6 +940,8 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
     elm_win_resize_object_add(window, conformant);
     elm_win_conformant_set(window, EINA_TRUE);
     evas_object_show(conformant);
+
+    option_elements[type].conformant = conformant;
 
 #ifdef _MOBILE
     /* Create header bg */
