@@ -243,3 +243,8 @@ void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imd
 {
     _isf_wsc_context_input_panel_imdata_set (_get_context_id (ctx), imdata, len);
 }
+
+void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void *imdata, int* len)
+{
+    _isf_wsc_context_input_panel_imdata_get (_get_context_id (ctx), imdata, len);
+}
