@@ -28,15 +28,13 @@
 #define MVK_Return 0xff0d
 
 #define LANGUAGE_STRING "_LANGUAGE_"
-
+#undef MAIN_ENTRY_XML_PATH
 #ifdef _TV
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/tv/main_entry.xml"
 #elif _WEARABLE
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/wearable/main_entry.xml"
 #else
-#ifndef MAIN_ENTRY_XML_PATH
 #define MAIN_ENTRY_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry.xml"
-#endif
 #endif
 
 #endif
