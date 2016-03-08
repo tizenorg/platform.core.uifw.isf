@@ -259,35 +259,35 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
             case SETTING_ITEM_ID_AUTO_CAPITALISE: {
                 if (item) {
                     state = _update_check_button_state(item, obj);
-                    check_autocapitalise_change_callback((void *)(state), NULL, NULL);
+                    check_autocapitalise_change_callback((void *)(intptr_t)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_AUTO_PUNCTUATE: {
                 if (item) {
                     state = _update_check_button_state(item, obj);
-                    check_autopunctuate_change_callback((void *)(state), NULL, NULL);
+                    check_autopunctuate_change_callback((void *)(intptr_t)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_SOUND: {
                 if (item) {
                     state = _update_check_button_state(item, obj);
-                    check_sound_change_callback((void *)(state), NULL, NULL);
+                    check_sound_change_callback((void *)(intptr_t)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_VIBRATION: {
                 if (item) {
                     state = _update_check_button_state(item, obj);
-                    check_vibration_change_callback((void *)(state), NULL, NULL);
+                    check_vibration_change_callback((void *)(intptr_t)(state), NULL, NULL);
                 }
             break;
             }
             case SETTING_ITEM_ID_CHARACTER_PRE: {
                 if (item) {
                     state = _update_check_button_state(item, obj);
-                    check_character_pre_change_callback((void *)(state), NULL, NULL);
+                    check_character_pre_change_callback((void *)(intptr_t)(state), NULL, NULL);
                 }
             break;
             }
@@ -888,8 +888,9 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
                     info->enabled = FALSE;
                     elm_check_state_set(obj, EINA_FALSE);
 
-                    char buf[256] = {0};
-                    snprintf(buf, 256, SUPPORTED_MAX_LANGUAGES, MAX_SELECTED_LANGUAGES);
+                    char buf[256] = { 0 };
+                    const sclchar *suppoted_max_languages = SUPPORTED_MAX_LANGUAGES;
+                    snprintf(buf, sizeof(buf), suppoted_max_languages, MAX_SELECTED_LANGUAGES);
                     language_view_popup_show(obj, type, buf, NULL);
                 }
             }

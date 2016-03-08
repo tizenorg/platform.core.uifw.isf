@@ -584,7 +584,7 @@ void ise_set_private_key_for_emoticon_mode(const emoticon_group_t emoticon_group
             sclchar* imagebg[SCL_BUTTON_STATE_MAX] = {
                const_cast<sclchar*>("button/B09_Qwerty_btn_press.png"), const_cast<sclchar*>(""), const_cast<sclchar*>("")};
 
-            g_ui->set_private_key(group_name, "", NULL, imagebg, 0, const_cast<sclchar*>(group_name), TRUE);
+            g_ui->set_private_key(group_name, const_cast<sclchar*>(""), NULL, imagebg, 0, const_cast<sclchar*>(group_name), TRUE);
         }
     }
 }

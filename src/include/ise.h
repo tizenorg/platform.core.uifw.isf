@@ -36,11 +36,13 @@
 #define MAIN_ENTRY_XML_PATH_720X1280   "/usr/share/isf/ise/ise-default/720x1280/default/wearable/main_entry.xml"
 #define MAIN_ENTRY_XML_PATH MAIN_ENTRY_XML_PATH_720X1280
 #else
+#ifndef MAIN_ENTRY_XML_PATH
 #define MAIN_ENTRY_XML_PATH_480X800    "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry_480x800.xml"
 #define MAIN_ENTRY_XML_PATH_540X960    "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry_540x960.xml"
 #define MAIN_ENTRY_XML_PATH_720X1280   "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry.xml"
 #define MAIN_ENTRY_XML_PATH_1440X2560  "/usr/share/isf/ise/ise-default/720x1280/default/sdk/main_entry_1440x2560.xml"
 #define MAIN_ENTRY_XML_PATH MAIN_ENTRY_XML_PATH_720X1280
+#endif
 #endif
 
 #define DEFAULT_KEYBOARD_ISE_UUID "org.tizen.ise-engine-default"
