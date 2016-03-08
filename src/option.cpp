@@ -799,6 +799,9 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     elm_object_style_set(back_button, "naviframe/back_btn/default");
     evas_object_smart_callback_add(back_button, "clicked", language_selection_finished_cb, naviframe);
     Elm_Object_Item *navi_it = elm_naviframe_item_push(naviframe, LANGUAGE, back_button, NULL, genlist, NULL);
+#ifdef _WEARABLE
+    elm_naviframe_item_title_enabled_set(navi_it, EINA_FALSE, EINA_FALSE);
+#endif
     elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, naviframe);
 
     return genlist;
@@ -956,7 +959,12 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type)
 
     elm_object_style_set(back_button, "naviframe/back_btn/default");
     evas_object_smart_callback_add(back_button, "clicked", navi_back_cb, NULL);
+#ifdef _WEARABLE
+    Elm_Object_Item *navi_it = elm_naviframe_item_push(naviframe, OPTIONS, back_button, NULL, list, NULL);
+    elm_naviframe_item_title_enabled_set(navi_it, EINA_FALSE, EINA_FALSE);
+#else
     elm_naviframe_item_push(naviframe, OPTIONS, back_button, NULL, list, NULL);
+#endif
 
     elm_object_content_set(conformant, naviframe);
 
