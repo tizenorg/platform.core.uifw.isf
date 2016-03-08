@@ -193,7 +193,9 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                 Ecore_X_Window client_win = client_window_id_get (active_ctx);
                 Ecore_X_Window focus_win = ecore_x_window_focus_get ();
                 if (client_win && focus_win && client_win == focus_win) {
-                    ecore_imf_context_input_panel_show (active_ctx);
+                    if (ecore_imf_context_input_panel_enabled_get (active_ctx)) {
+                        ecore_imf_context_input_panel_show (active_ctx);
+                    }
                 }
             }
 
