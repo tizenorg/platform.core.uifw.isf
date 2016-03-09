@@ -2400,7 +2400,7 @@ public:
             HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
             if (it != m_helper_client_index.end ()) {
-                uint32 ctx = get_helper_ic (focused_client, focused_context);
+                //uint32 ctx = get_helper_ic (focused_client, focused_context);
                 //FIXME
                 //m_panel_agent_manager.socket_turn_on_log (it->second.id, ctx, m_current_helper_uuid, isOn);
             }

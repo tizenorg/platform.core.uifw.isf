@@ -2,7 +2,7 @@ MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES           = *.bak *.edj
 EXTRA_DIST		= wayland.version-script
 
-INCLUDES = -I$(top_builddir) \
+AM_CPPFLAGS = -I$(top_builddir) \
            -I$(top_builddir)/ism/src \
            -I$(top_srcdir) \
            -I$(top_srcdir)/ism/src \

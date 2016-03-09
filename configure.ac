@@ -74,6 +74,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [The gettext domain])
 ##                  Start Configuration.                 ##
 ###########################################################
 AC_CANONICAL_HOST
+AC_USE_SYSTEM_EXTENSIONS
 
 # Init automake stuff
 AM_INIT_AUTOMAKE
