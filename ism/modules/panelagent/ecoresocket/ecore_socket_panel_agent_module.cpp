@@ -130,7 +130,7 @@ public:
             _read_handler_list.push_back(panel_agent_read_handler);
             return true;
         }
-        LOGE("create server failed");
+        LOGE("create server failed\n");
         return false;
     }
 
@@ -151,7 +151,7 @@ public:
     }
 private:
     void update_panel_event(int client, uint32 context_id, int cmd, uint32 nType, uint32 nValue) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -164,7 +164,7 @@ private:
 
     void move_preedit_caret(int client, uint32 context_id, uint32 position) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::move_preedit_caret (" << position << ")\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -201,7 +201,7 @@ private:
 #endif
 
     void reset_keyboard_ise(int client, uint32 context_id) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -211,7 +211,7 @@ private:
     }
 
     void update_keyboard_ise_list(int client, uint32 context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -223,7 +223,7 @@ private:
 
     void change_factory(int client, uint32 context, const String&  uuid) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::change_factory (" << uuid << ")\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -236,7 +236,7 @@ private:
 
     void helper_candidate_show(int client, uint32 context, const String&  uuid) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
 
         Socket client_socket(client);
@@ -250,7 +250,7 @@ private:
     }
 
     void helper_candidate_hide(int client, uint32 context, const String&  uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -264,7 +264,7 @@ private:
 
     void candidate_more_window_show(int client, uint32 context) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
 
         Socket client_socket(client);
@@ -280,7 +280,7 @@ private:
 
     void candidate_more_window_hide(int client, uint32 context) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -295,7 +295,7 @@ private:
 
     void update_helper_lookup_table(int client, uint32 context, const String& uuid, const LookupTable& table) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -310,7 +310,7 @@ private:
 
     void select_aux(int client, uint32 contextid, uint32 item) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::select_aux (" << item << ")\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -326,7 +326,7 @@ private:
     }
 
     void select_candidate(int client, uint32 context, uint32 item) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -343,7 +343,7 @@ private:
 
     void lookup_table_page_up(int client, uint32 context) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::lookup_table_page_up ()\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -358,7 +358,7 @@ private:
     }
 
     void lookup_table_page_down(int client, uint32 context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -373,7 +373,7 @@ private:
     }
 
     void update_lookup_table_page_size(int client, uint32 context, uint32 size) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -389,7 +389,7 @@ private:
     }
 
     void update_candidate_item_layout(int client, uint32 context, const std::vector<uint32>& row_items) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -405,7 +405,7 @@ private:
     }
 
     void select_associate(int client, uint32 context, uint32 item) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -421,7 +421,7 @@ private:
     }
 
     void associate_table_page_up(int client, uint32 context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -436,7 +436,7 @@ private:
     }
 
     void associate_table_page_down(int client, uint32 context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -451,7 +451,7 @@ private:
     }
 
     void update_associate_table_page_size(int client, uint32 context, uint32 size) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -467,7 +467,7 @@ private:
     }
 
     void update_displayed_candidate_number(int client, uint32 context, uint32 size) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -483,7 +483,7 @@ private:
     }
 
     void send_longpress_event(int client, uint32 context, int index) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -499,7 +499,7 @@ private:
     }
 
     void trigger_property(int client, uint32 context, const String&  property) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -515,7 +515,7 @@ private:
     }
 
     void focus_out_helper(int client, uint32 context, const String& uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -527,7 +527,7 @@ private:
     }
 
     void focus_in_helper(int client, uint32 context, const String& uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -539,7 +539,7 @@ private:
     }
 
     void show_helper(int client, uint32 context, const String& uuid, char* data, size_t& len) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -552,7 +552,7 @@ private:
     }
 
     void hide_helper(int client, uint32 context, const String& uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -564,7 +564,7 @@ private:
     }
 
     void set_helper_mode(int client, uint32 context, const String& uuid, uint32& mode) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -577,7 +577,7 @@ private:
     }
 
     void set_helper_language(int client, uint32 context, const String& uuid, uint32& language) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -590,7 +590,7 @@ private:
     }
 
     void set_helper_imdata(int client, uint32 context, const String& uuid, char* imdata, size_t& len) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -603,7 +603,7 @@ private:
     }
 
     void set_helper_return_key_type(int client, uint32 context, const String& uuid, uint32 type) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -616,7 +616,7 @@ private:
     }
 
     void get_helper_return_key_type(int client, uint32 context, const String& uuid, _OUT_ uint32& type) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         Transaction trans;
@@ -635,12 +635,12 @@ private:
             SCIM_DEBUG_MAIN(1) << __func__ << " success\n";
 
         } else {
-            LOGW("read failed");
+            LOGW("read failed\n");
         }
     }
 
     void set_helper_return_key_disable(int client, uint32 context, const String& uuid, uint32 disabled) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -679,7 +679,7 @@ private:
     }
 
     void set_helper_layout(int client, uint32 context, const String& uuid, uint32& layout) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -692,7 +692,7 @@ private:
     }
 
     void set_helper_input_mode(int client, uint32 context, const String& uuid, uint32& mode) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -705,7 +705,7 @@ private:
     }
 
     void set_helper_input_hint(int client, uint32 context, const String& uuid, uint32& hint) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -718,7 +718,7 @@ private:
     }
 
     void set_helper_bidi_direction(int client, uint32 context, const String& uuid, uint32& direction) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -731,7 +731,7 @@ private:
     }
 
     void set_helper_caps_mode(int client, uint32 context, const String& uuid, uint32& mode) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -744,7 +744,7 @@ private:
     }
 
     void show_helper_option_window(int client, uint32 context, const String& uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -756,7 +756,7 @@ private:
     }
 
     bool process_key_event(int client, uint32 context, const String& uuid, KeyEvent& key, _OUT_ uint32& result) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -777,14 +777,14 @@ private:
             SCIM_DEBUG_MAIN(1) << __func__ << " success\n";
             return true;
         } else {
-            LOGW("read failed");
+            LOGW("read failed\n");
         }
 
         return false;
     }
 
     bool get_helper_geometry(int client, uint32 context, String& uuid, _OUT_ struct rectinfo& info) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -809,15 +809,15 @@ private:
                 SCIM_DEBUG_MAIN(1) << __func__ << " is successful\n";
                 return true;
             } else
-                LOGW("read failed");
+                LOGW("read failed\n");
         } else
-            LOGW("write failed");
+            LOGW("write failed\n");
 
         return false;
     }
 
     void get_helper_imdata(int client, uint32 context, String& uuid, char** imdata, size_t& len) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -836,12 +836,12 @@ private:
             && trans.get_data(imdata, len)) {
             SCIM_DEBUG_MAIN(1) << "get_helper_imdata success\n";
         } else {
-            LOGW("read failed");
+            LOGW("read failed\n");
         }
     }
 
     void get_helper_layout(int client, uint32 context, String& uuid, uint32& layout) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -860,12 +860,12 @@ private:
             && trans.get_data(layout)) {
             SCIM_DEBUG_MAIN(1) << "get_helper_layout success\n";
         } else
-            LOGW("failed");
+            LOGW("failed\n");
     }
 
     void get_ise_language_locale(int client, uint32 context, String& uuid, char* data,  size_t& len) {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Transaction trans;
 
@@ -883,12 +883,12 @@ private:
             && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
             && trans.get_data(&data, len)) {
         } else {
-            LOGW("failed");
+            LOGW("failed\n");
         }
     }
 
     void check_option_window(int client, uint32 context, String& uuid, _OUT_ uint32& avail) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         int cmd;
         Socket client_socket(client);
@@ -905,12 +905,12 @@ private:
         if (!trans.read_from_socket(client_socket, m_socket_timeout) ||
             !trans.get_command(cmd) || cmd != SCIM_TRANS_CMD_REPLY ||
             !trans.get_data(avail)) {
-            LOGW("ISM_TRANS_CMD_CHECK_OPTION_WINDOW failed");
+            LOGW("ISM_TRANS_CMD_CHECK_OPTION_WINDOW failed\n");
         }
     }
 
     void reset_ise_option(int client, uint32 context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -921,7 +921,7 @@ private:
     }
 
     void reset_helper_context(int client, uint32 context, const String& uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -934,7 +934,7 @@ private:
 
     void reload_config(int client) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::reload_config ()\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -946,7 +946,7 @@ private:
 
     void exit(int client, uint32 context) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::exit ()\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -962,7 +962,7 @@ private:
 
     void socket_update_surrounding_text(int client, uint32 context, const String& uuid, String text, uint32 cursor) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -977,7 +977,7 @@ private:
     }
 
     void socket_update_selection(int client, uint32 context, const String& uuid, String text) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -991,7 +991,7 @@ private:
     }
 
     void socket_get_keyboard_ise_list(int client, uint32 context, const String& uuid, std::vector<String>& list) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1010,7 +1010,7 @@ private:
     void socket_get_candidate_ui(int client, uint32 context, const String& uuid,  int style,  int mode) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_get_candidate_ui ()\n";
 
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1026,7 +1026,7 @@ private:
     void socket_get_candidate_geometry(int client, uint32 context, const String& uuid, struct rectinfo& info) {
         SCIM_DEBUG_MAIN(4) << __func__ << " \n";
 
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1042,7 +1042,7 @@ private:
     }
 
     void socket_get_keyboard_ise(int client, uint32 context, const String& uuid, String& ise_name, String& ise_uuid) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1058,7 +1058,7 @@ private:
     void socket_start_helper(int client, uint32 context, const String& ic_uuid) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_start_helper ()\n";
 
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -1072,7 +1072,7 @@ private:
     void helper_detach_input_context(int client, uint32 context, const String& ic_uuid) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_stop_helper ()\n";
 
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -1085,7 +1085,7 @@ private:
 
     void helper_process_imengine_event(int client, uint32 context, const String& ic_uuid, const Transaction& _nest_trans) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_send_helper_event ()\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -1107,7 +1107,7 @@ private:
     }
 
     void process_helper_event(int client, uint32 context, String target_uuid, String active_uuid, Transaction& nest_trans) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_helper_send_imengine_event (" << client << ")\n";
         Socket socket_client(client);
@@ -1125,7 +1125,7 @@ private:
     }
 
     void socket_helper_key_event(int client, uint32 context, int cmd, KeyEvent& key) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1139,7 +1139,7 @@ private:
     }
 
     void commit_string(int client, uint32 target_context, const WideString& wstr) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1154,7 +1154,7 @@ private:
 
     void socket_helper_get_surrounding_text(int client, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1170,7 +1170,7 @@ private:
 
     void socket_helper_delete_surrounding_text(int client, uint32 context_id, uint32 offset, uint32 len) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1186,7 +1186,7 @@ private:
 
     void socket_helper_get_selection(int client, uint32 context_id) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
 
         Socket socket_client(client);
@@ -1200,7 +1200,7 @@ private:
     }
 
     void socket_helper_set_selection(int client, uint32 context_id, uint32 start, uint32 end) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1215,7 +1215,7 @@ private:
     }
 
     void show_preedit_string(int client, uint32  target_context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1228,7 +1228,7 @@ private:
     }
 
     void hide_preedit_string(int client, uint32  target_context) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1241,7 +1241,7 @@ private:
     }
 
     void update_preedit_string(int client, uint32  target_context, WideString wstr, AttributeList& attrs, uint32 caret) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1259,7 +1259,7 @@ private:
 
     void update_preedit_caret(int client, uint32 focused_context, uint32 caret) {
 
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1274,7 +1274,7 @@ private:
     }
 
     void helper_attach_input_context_and_update_screen(int client, std::vector < std::pair <uint32, String> >& helper_ic_index, uint32 current_screen) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1293,7 +1293,7 @@ private:
     }
 
     void update_ise_input_context(int client, uint32 focused_context, uint32 type, uint32 value) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -1307,7 +1307,7 @@ private:
     }
 
     void send_private_command(int client, uint32 focused_context, String command) {
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1322,8 +1322,7 @@ private:
 
 
     void helper_all_update_spot_location(int client, uint32 context_id, String uuid, int x, int y) {
-
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -1343,8 +1342,7 @@ private:
     }
 
     void helper_all_update_cursor_position(int client, uint32 context_id, String uuid, int cursor_pos) {
-
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -1359,8 +1357,7 @@ private:
     }
 
     void helper_all_update_screen(int client, uint32 context_id, String uuid, int screen) {
-
-        LOGD("client id:%d", client);
+        LOGD("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -1419,9 +1416,9 @@ private:
             return true;
 
         if (nbytes < 0) {
-            LOGW("Error occurred when reading socket: %s", client.get_error_message().c_str());
+            LOGW("Error occurred when reading socket: %s\n", client.get_error_message().c_str());
         } else {
-            LOGW("Timeout when reading socket");
+            LOGW("Timeout when reading socket\n");
         }
 
         return false;
@@ -1496,7 +1493,7 @@ private:
 
         /* If the connection is closed then close this client. */
         if (!socket_check_client_connection(client)) {
-            LOGW("check client connection failed");
+            LOGW("check client connection failed\n");
             socket_close_connection(server, client);
             return;
         }
@@ -1516,7 +1513,7 @@ private:
         if (!m_recv_trans.read_from_socket(client, m_socket_timeout) ||
             !m_recv_trans.get_command(cmd) || cmd != SCIM_TRANS_CMD_REQUEST ||
             !m_recv_trans.get_data(key)    || key != (uint32) client_info.key) {
-            LOGW("cmd:%d key:%d client info key: %d", cmd, key, client_info.key);
+            LOGW("cmd:%d key:%d client info key: %d\n", cmd, key, client_info.key);
             return;
         }
 
@@ -1526,7 +1523,7 @@ private:
                 socket_transaction_start();
 
                 while (m_recv_trans.get_command(cmd)) {
-                    LOGD("PanelAgent::cmd = %d", cmd);
+                    LOGD("PanelAgent::cmd = %d\n", cmd);
 
                     if (cmd == ISM_TRANS_CMD_REGISTER_PANEL_CLIENT) {
                         uint32 id = 0;
@@ -1534,7 +1531,7 @@ private:
                         if (m_recv_trans.get_data(id)) {
                             m_info_manager->register_panel_client(client_id, id);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1544,7 +1541,7 @@ private:
                         if (m_recv_trans.get_data(uuid)) {
                             m_info_manager->register_input_context(client_id, context, uuid);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1566,7 +1563,7 @@ private:
                         if (m_recv_trans.get_data(uuid)) {
                             m_info_manager->focus_in(client_id, context, uuid);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1578,7 +1575,7 @@ private:
                         if (m_recv_trans.get_data(isOn)) {
                             m_info_manager->socket_turn_on_log(isOn);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1600,7 +1597,7 @@ private:
                         if (m_recv_trans.get_data(client) && m_recv_trans.get_data(context) && m_recv_trans.get_data(&data, len)) {
                             ret = true;
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         Transaction trans;
@@ -1626,7 +1623,7 @@ private:
                         if (m_recv_trans.get_data(client) && m_recv_trans.get_data(context)) {
                             m_info_manager->hide_ise_panel(client_id, client, context);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1688,7 +1685,7 @@ private:
                         if (m_recv_trans.get_data(language)) {
                             m_info_manager->set_ise_language(client_id, language);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1699,7 +1696,7 @@ private:
                         if (m_recv_trans.get_data(&imdata, len)) {
                             m_info_manager->set_ise_imdata(client_id, imdata, len);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         if (NULL != imdata)
@@ -1735,7 +1732,7 @@ private:
                         if (m_recv_trans.get_data(type)) {
                             m_info_manager->set_ise_return_key_type(client_id, type);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1763,7 +1760,7 @@ private:
                         if (m_recv_trans.get_data(disabled)) {
                             m_info_manager->set_ise_return_key_disable(client_id, disabled);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1810,7 +1807,7 @@ private:
                         if (m_recv_trans.get_data(layout)) {
                             m_info_manager->set_ise_layout(client_id, layout);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1820,7 +1817,7 @@ private:
                         if (m_recv_trans.get_data(mode)) {
                             m_info_manager->set_ise_caps_mode(client_id, mode);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1836,7 +1833,7 @@ private:
                         if (m_recv_trans.get_data(mode)) {
                             m_info_manager->set_keyboard_mode(client_id, mode);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1853,7 +1850,7 @@ private:
                             ret      = true;
                             m_info_manager->process_key_event(key, result);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         Transaction trans;
@@ -1902,7 +1899,7 @@ private:
                         if (m_recv_trans.get_data(input_mode)) {
                             m_info_manager->set_ise_input_mode(client_id, input_mode);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1912,7 +1909,7 @@ private:
                         if (m_recv_trans.get_data(input_hint)) {
                             m_info_manager->set_ise_input_hint(client_id, input_hint);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1922,7 +1919,7 @@ private:
                         if (m_recv_trans.get_data(bidi_direction)) {
                             m_info_manager->update_ise_bidi_direction(client_id, bidi_direction);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1940,7 +1937,7 @@ private:
                         if (m_recv_trans.get_data(uuid) && uuid.length()) {
                             m_info_manager->socket_start_helper(client_id, context, uuid);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1951,7 +1948,7 @@ private:
                             uuid.length() && m_nest_trans.valid()) {
                             m_info_manager->socket_send_helper_event(client_id, context, uuid, m_nest_trans);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1961,7 +1958,7 @@ private:
                         if (m_recv_trans.get_data(uuid) && uuid.length()) {
                             m_info_manager->socket_stop_helper(client_id, context, uuid);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         continue;
@@ -1981,14 +1978,14 @@ private:
                         if (m_recv_trans.get_data(num))
                             m_info_manager->socket_update_screen(client_id, num);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION) {
                         uint32 x, y, top_y;
 
                         if (m_recv_trans.get_data(x) && m_recv_trans.get_data(y) && m_recv_trans.get_data(top_y)) {
                             m_info_manager->socket_update_spot_location(x, y, top_y);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
                     } else if (cmd == ISM_TRANS_CMD_UPDATE_CURSOR_POSITION) {
                         uint32 cursor_pos;
@@ -1996,7 +1993,7 @@ private:
                         if (m_recv_trans.get_data(cursor_pos)) {
                             m_info_manager->socket_update_cursor_position(cursor_pos);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
                     } else if (cmd == ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT) {
                         String text;
@@ -2005,7 +2002,7 @@ private:
                         if (m_recv_trans.get_data(text) && m_recv_trans.get_data(cursor)) {
                             m_info_manager->socket_update_surrounding_text(text, cursor);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
                     } else if (cmd == ISM_TRANS_CMD_UPDATE_SELECTION) {
                         String text;
@@ -2013,7 +2010,7 @@ private:
                         if (m_recv_trans.get_data(text)) {
                             m_info_manager->socket_update_selection(text);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
                     } else if (cmd == ISM_TRANS_CMD_EXPAND_CANDIDATE)
                         m_info_manager->expand_candidate();
@@ -2025,7 +2022,7 @@ private:
                         if (m_recv_trans.get_data(portrait_line) && m_recv_trans.get_data(mode))
                             m_info_manager->socket_set_candidate_ui(portrait_line, mode);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO) {
                         PanelFactoryInfo info;
 
@@ -2033,7 +2030,7 @@ private:
                             m_recv_trans.get_data(info.lang) && m_recv_trans.get_data(info.icon)) {
                             m_info_manager->socket_update_factory_info(info);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
                     } else if (cmd == SCIM_TRANS_CMD_SHOW_PREEDIT_STRING)
                         m_info_manager->socket_show_preedit_string();
@@ -2059,14 +2056,14 @@ private:
                         if (m_recv_trans.get_data(str) && m_recv_trans.get_data(attrs) && m_recv_trans.get_data(caret))
                             m_info_manager->socket_update_preedit_string(str, attrs, caret);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET) {
                         uint32 caret;
 
                         if (m_recv_trans.get_data(caret))
                             m_info_manager->socket_update_preedit_caret(caret);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_UPDATE_AUX_STRING) {
                         String str;
                         AttributeList attrs;
@@ -2074,14 +2071,14 @@ private:
                         if (m_recv_trans.get_data(str) && m_recv_trans.get_data(attrs))
                             m_info_manager->socket_update_aux_string(str, attrs);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE) {
                         CommonLookupTable _isf_candidate_table;
 
                         if (m_recv_trans.get_data(_isf_candidate_table))
                             m_info_manager->socket_update_lookup_table(_isf_candidate_table);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
 
                     } else if (cmd == ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE) {
                         CommonLookupTable table;
@@ -2089,28 +2086,28 @@ private:
                         if (m_recv_trans.get_data(table))
                             m_info_manager->socket_update_associate_table(table);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_REGISTER_PROPERTIES) {
                         PropertyList properties;
 
                         if (m_recv_trans.get_data(properties))
                             m_info_manager->socket_register_properties(properties);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_UPDATE_PROPERTY) {
                         Property property;
 
                         if (m_recv_trans.get_data(property))
                             m_info_manager->socket_update_property(property);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_PANEL_SHOW_HELP) {
                         String help;
 
                         if (m_recv_trans.get_data(help))
                             m_info_manager->socket_show_help(help);
                         else
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                     } else if (cmd == SCIM_TRANS_CMD_PANEL_SHOW_FACTORY_MENU) {
                         PanelFactoryInfo info;
                         std::vector <PanelFactoryInfo> vec;
@@ -2125,7 +2122,7 @@ private:
                     } else if (cmd == SCIM_TRANS_CMD_FOCUS_OUT) {
                         m_info_manager->focus_out(client_id, context);
                     } else {
-                        LOGW("unknow cmd: %d", cmd);
+                        LOGW("unknow cmd: %d\n", cmd);
                     }
                 }
 
@@ -2137,7 +2134,7 @@ private:
                 socket_transaction_start();
 
                 while (m_recv_trans.get_command(cmd)) {
-                    LOGD("PanelAgent::cmd = %d", cmd);
+                    LOGD("PanelAgent::cmd = %d\n", cmd);
 
                     if (cmd == ISM_TRANS_CMD_GET_PANEL_CLIENT_ID) {
                         Socket client_socket(client_id);
@@ -2150,7 +2147,7 @@ private:
                         trans.write_to_socket(client_socket);
                         continue;
                     } else {
-                        LOGW("unknow cmd: %d", cmd);
+                        LOGW("unknow cmd: %d\n", cmd);
                     }
                 }
 
@@ -2160,7 +2157,7 @@ private:
             socket_transaction_start();
 
             while (m_recv_trans.get_command(cmd)) {
-                LOGD("PanelAgent::cmd = %d", cmd);
+                LOGD("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == SCIM_TRANS_CMD_PANEL_REGISTER_HELPER) {
                     HelperInfo info;
@@ -2174,7 +2171,7 @@ private:
                         m_info_manager->socket_helper_register_helper(client_id, info);
                     }
                 } else {
-                    LOGW("unknow cmd: %d", cmd);
+                    LOGW("unknow cmd: %d\n", cmd);
                 }
             }
 
@@ -2183,7 +2180,7 @@ private:
             socket_transaction_start();
 
             while (m_recv_trans.get_command(cmd)) {
-                LOGD("PanelAgent::cmd = %d", cmd);
+                LOGD("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == SCIM_TRANS_CMD_PANEL_REGISTER_ACTIVE_HELPER) {
                     HelperInfo info;
@@ -2196,7 +2193,7 @@ private:
                         info.uuid.length()) {
                         m_info_manager->socket_helper_register_helper_passive(client_id, info);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_COMMIT_STRING) {
                     uint32 target_ic;
@@ -2209,7 +2206,7 @@ private:
                         wstr.length()) {
                         m_info_manager->socket_helper_commit_string(client_id, target_ic, target_uuid, wstr);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_SHOW_PREEDIT_STRING) {
                     uint32 target_ic;
@@ -2218,7 +2215,7 @@ private:
                     if (m_recv_trans.get_data(target_ic) && m_recv_trans.get_data(target_uuid)) {
                         m_info_manager->socket_helper_show_preedit_string(client_id, target_ic, target_uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_SHOW_AUX_STRING) {
                     m_info_manager->socket_show_aux_string();
@@ -2233,7 +2230,7 @@ private:
                     if (m_recv_trans.get_data(target_ic) && m_recv_trans.get_data(target_uuid)) {
                         m_info_manager->socket_helper_hide_preedit_string(client_id, target_ic, target_uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_HIDE_AUX_STRING) {
                     m_info_manager->socket_hide_aux_string();
@@ -2255,7 +2252,7 @@ private:
                         m_recv_trans.get_data(caret)) {
                         m_info_manager->socket_helper_update_preedit_string(client_id, target_ic, target_uuid, wstr, attrs, caret);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET) {
                     uint32 caret;
@@ -2263,7 +2260,7 @@ private:
                     if (m_recv_trans.get_data(caret)) {
                         m_info_manager->socket_helper_update_preedit_caret(client_id, caret);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_AUX_STRING) {
                     String str;
@@ -2272,7 +2269,7 @@ private:
                     if (m_recv_trans.get_data(str) && m_recv_trans.get_data(attrs))
                         m_info_manager->socket_update_aux_string(str, attrs);
                     else
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
 
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE) {
                     CommonLookupTable _isf_candidate_table;
@@ -2280,7 +2277,7 @@ private:
                     if (m_recv_trans.get_data(_isf_candidate_table)) {
                         m_info_manager->socket_update_lookup_table(_isf_candidate_table);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE) {
                     CommonLookupTable _isf_candidate_table;
@@ -2288,7 +2285,7 @@ private:
                     if (m_recv_trans.get_data(_isf_candidate_table)) {
                         m_info_manager->socket_update_associate_table(_isf_candidate_table);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_PROCESS_KEY_EVENT ||
                            cmd == SCIM_TRANS_CMD_PANEL_SEND_KEY_EVENT) {
@@ -2302,7 +2299,7 @@ private:
                         !key.empty()) {
                         m_info_manager->socket_helper_send_key_event(client_id, target_ic, target_uuid, key);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_FORWARD_KEY_EVENT) {
                     uint32 target_ic;
@@ -2315,7 +2312,7 @@ private:
                         !key.empty()) {
                         m_info_manager->socket_helper_forward_key_event(client_id, target_ic, target_uuid, key);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_PANEL_SEND_IMENGINE_EVENT) {
                     uint32 target_ic;
@@ -2327,7 +2324,7 @@ private:
                         m_nest_trans.valid()) {
                         m_info_manager->socket_helper_send_imengine_event(client_id, target_ic, target_uuid, m_nest_trans);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_REGISTER_PROPERTIES) {
                     PropertyList properties;
@@ -2335,14 +2332,14 @@ private:
                     if (m_recv_trans.get_data(properties))
                         m_info_manager->socket_helper_register_properties(client_id, properties);
                     else
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_PROPERTY) {
                     Property property;
 
                     if (m_recv_trans.get_data(property))
                         m_info_manager->socket_helper_update_property(client_id, property);
                     else
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                 } else if (cmd == SCIM_TRANS_CMD_RELOAD_CONFIG) {
                     m_info_manager->reload_config();
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT) {
@@ -2352,7 +2349,7 @@ private:
                     if (m_recv_trans.get_data(type) && m_recv_trans.get_data(value)) {
                         m_info_manager->socket_helper_update_input_context(client_id, type, value);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_GET_KEYBOARD_ISE_LIST) {
                     String uuid;
@@ -2360,7 +2357,7 @@ private:
                     if (m_recv_trans.get_data(uuid)) {
                         m_info_manager->socket_get_keyboard_ise_list(uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_SET_CANDIDATE_UI) {
                     uint32 portrait_line, mode;
@@ -2368,14 +2365,14 @@ private:
                     if (m_recv_trans.get_data(portrait_line) && m_recv_trans.get_data(mode))
                         m_info_manager->socket_set_candidate_ui(portrait_line, mode);
                     else
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                 } else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_UI) {
                     String uuid;
 
                     if (m_recv_trans.get_data(uuid)) {
                         m_info_manager->socket_get_candidate_ui(uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_SET_CANDIDATE_POSITION) {
                     uint32 left, top;
@@ -2383,7 +2380,7 @@ private:
                     if (m_recv_trans.get_data(left) && m_recv_trans.get_data(top))
                         m_info_manager->socket_set_candidate_position(left, top);
                     else
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                 } else if (cmd == ISM_TRANS_CMD_HIDE_CANDIDATE) {
                     m_info_manager->socket_hide_candidate();
                 } else if (cmd == ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY) {
@@ -2392,7 +2389,7 @@ private:
                     if (m_recv_trans.get_data(uuid)) {
                         m_info_manager->socket_get_candidate_geometry(uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE) {
                     m_info_manager->reset_keyboard_ise();
@@ -2402,7 +2399,7 @@ private:
                     if (m_recv_trans.get_data(uuid)) {
                         m_info_manager->socket_set_keyboard_ise(uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_GET_KEYBOARD_ISE) {
                     String uuid;
@@ -2410,7 +2407,7 @@ private:
                     if (m_recv_trans.get_data(uuid)) {
                         m_info_manager->socket_get_keyboard_ise(uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY) {
                     uint32 x, y, width, height;
@@ -2419,7 +2416,7 @@ private:
                         m_recv_trans.get_data(width) && m_recv_trans.get_data(height)) {
                         m_info_manager->socket_helper_update_ise_geometry(client_id, x, y, width, height);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == ISM_TRANS_CMD_EXPAND_CANDIDATE) {
                     m_info_manager->expand_candidate();
@@ -2431,7 +2428,7 @@ private:
                     if (m_recv_trans.get_data(index))
                         m_info_manager->socket_helper_select_candidate(index);
                     else
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                 } else if (cmd == SCIM_TRANS_CMD_GET_SURROUNDING_TEXT) {
                     String uuid;
                     uint32 maxlen_before;
@@ -2442,7 +2439,7 @@ private:
                         m_recv_trans.get_data(maxlen_after)) {
                         m_info_manager->socket_helper_get_surrounding_text(client_id, uuid, maxlen_before, maxlen_after);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT) {
                     uint32 offset;
@@ -2451,7 +2448,7 @@ private:
                     if (m_recv_trans.get_data(offset) && m_recv_trans.get_data(len)) {
                         m_info_manager->socket_helper_delete_surrounding_text(client_id, offset, len);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_GET_SELECTION) {
                     String uuid;
@@ -2459,7 +2456,7 @@ private:
                     if (m_recv_trans.get_data(uuid)) {
                         m_info_manager->socket_helper_get_selection(client_id, uuid);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_SET_SELECTION) {
                     uint32 start;
@@ -2468,7 +2465,7 @@ private:
                     if (m_recv_trans.get_data(start) && m_recv_trans.get_data(end)) {
                         m_info_manager->socket_helper_set_selection(client_id, start, end);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 } else if (cmd == SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND) {
                     String command;
@@ -2476,13 +2473,13 @@ private:
                     if (m_recv_trans.get_data(command)) {
                         m_info_manager->socket_helper_send_private_command(client_id, command);
                     } else {
-                        LOGW("wrong format of transaction");
+                        LOGW("wrong format of transaction\n");
                     }
                 //FIXME: useless
                 //} else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_EXIT) {
                 //    m_info_manager->UPDATE_ISE_EXIT(client_id);
                 } else {
-                    LOGW("unknow cmd: %d", cmd);
+                    LOGW("unknow cmd: %d\n", cmd);
                 }
             }
 
@@ -2491,7 +2488,7 @@ private:
             socket_transaction_start();
 
             while (m_recv_trans.get_command(cmd)) {
-                LOGD("PanelAgent::cmd = %d", cmd);
+                LOGD("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE) {
 
@@ -2508,7 +2505,7 @@ private:
                         trans.write_to_socket(client_socket);
                     }
                     else {
-                        LOGW("Access denied to get active ise");
+                        LOGW("Access denied to get active ise\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SET_ACTIVE_ISE_BY_UUID) {
@@ -2520,7 +2517,7 @@ private:
                         if (!(m_recv_trans.get_data(&buf, len))) {
                             ret = m_info_manager->set_active_ise_by_uuid(client_id, buf, len);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         Transaction trans;
@@ -2535,7 +2532,7 @@ private:
                             delete[] buf;
                     }
                     else {
-                        LOGW("Access denied to set active ise");
+                        LOGW("Access denied to set active ise\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SET_INITIAL_ISE_BY_UUID) {
@@ -2549,7 +2546,7 @@ private:
                         if (!(m_recv_trans.get_data(&buf, len))) {
                             m_info_manager->set_initial_ise_by_uuid(client_id, buf, len);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         Transaction trans;
@@ -2564,7 +2561,7 @@ private:
                             delete[] buf;
                     }
                     else {
-                        LOGW("Access denied to set initial ise");
+                        LOGW("Access denied to set initial ise\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_GET_ISE_LIST) {
@@ -2593,7 +2590,7 @@ private:
                         trans.write_to_socket(client_socket);
                     }
                     else {
-                        LOGW("Access denied to get ise list");
+                        LOGW("Access denied to get ise list\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO) {
@@ -2621,7 +2618,7 @@ private:
                         } while (0);
                     }
                     else {
-                        LOGW("Access denied to get all helper ise info");
+                        LOGW("Access denied to get all helper ise info\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO) {
@@ -2634,7 +2631,7 @@ private:
                             m_info_manager->set_enable_helper_ise_info(client_id, appid, is_enabled);
                             ret = true;
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         Transaction trans;
@@ -2646,7 +2643,7 @@ private:
                         trans.write_to_socket(client_socket);
                     }
                     else {
-                        LOGW("Access denied to set enable helper ise info");
+                        LOGW("Access denied to set enable helper ise info\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_GET_ISE_INFORMATION) {
@@ -2658,7 +2655,7 @@ private:
                         if (m_recv_trans.get_data(strUuid)) {
                             m_info_manager->get_ise_information(client_id, strUuid, strName, strLanguage, nType, nOption, strModuleName);
                         } else {
-                            LOGW("wrong format of transaction");
+                            LOGW("wrong format of transaction\n");
                         }
 
                         Transaction trans;
@@ -2674,7 +2671,7 @@ private:
                         trans.write_to_socket(client_socket);
                     }
                     else {
-                        LOGW("Access denied to get ise information");
+                        LOGW("Access denied to get ise information\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_RESET_ISE_OPTION) {
@@ -2690,7 +2687,7 @@ private:
                         m_info_manager->reset_ise_option(client_id);
                     }
                     else {
-                        LOGW("Access denied to reset ise option");
+                        LOGW("Access denied to reset ise option\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_RESET_DEFAULT_ISE) {
@@ -2698,7 +2695,7 @@ private:
                         m_info_manager->reset_default_ise(client_id);
                     }
                     else {
-                        LOGW("Access denied to reset default ise");
+                        LOGW("Access denied to reset default ise\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SHOW_ISF_CONTROL) {
@@ -2706,7 +2703,7 @@ private:
                         m_info_manager->show_isf_panel(client_id);
                     }
                     else {
-                        LOGW("Access denied to show isf control");
+                        LOGW("Access denied to show isf control\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW) {
@@ -2714,7 +2711,7 @@ private:
                         m_info_manager->show_ise_option_window(client_id);
                     }
                     else {
-                        LOGW("Access denied to show ise option window");
+                        LOGW("Access denied to show ise option window\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_LIST) {
@@ -2730,7 +2727,7 @@ private:
                         m_info_manager->show_helper_ise_list(client_id);
                     }
                     else {
-                        LOGW("Access denied to show helper ise list");
+                        LOGW("Access denied to show helper ise list\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR) {
@@ -2745,7 +2742,7 @@ private:
                         m_info_manager->show_helper_ise_selector(client_id);
                     }
                     else {
-                        LOGW("Access denied to show helper ise selector");
+                        LOGW("Access denied to show helper ise selector\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED) {
@@ -2771,7 +2768,7 @@ private:
                         trans.write_to_socket(client_socket);
                     }
                     else {
-                        LOGW("Access denied to check helper ise enabled");
+                        LOGW("Access denied to check helper ise enabled\n");
                         send_fail_reply (client_id);
                     }
                 } else if (cmd == ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY) {
@@ -2798,7 +2795,7 @@ private:
 
                     trans.write_to_socket(client_socket);
                 } else {
-                    LOGW("unknow cmd: %d", cmd);
+                    LOGW("unknow cmd: %d\n", cmd);
                 }
             }
 
@@ -2809,14 +2806,14 @@ private:
     void socket_exception_callback(SocketServer*   server,
                                    const Socket&   client) {
         SCIM_DEBUG_MAIN(2) << "PanelAgent::socket_exception_callback (" << client.get_id() << ")\n";
-        LOGD("client id:%d", client.get_id());
+        LOGD("client id:%d\n", client.get_id());
         socket_close_connection(server, client);
     }
 
     bool socket_open_connection(SocketServer*   server,
                                 const Socket&   client) {
         SCIM_DEBUG_MAIN(3) << "PanelAgent::socket_open_connection (" << client.get_id() << ")\n";
-        LOGD("client id:%d", client.get_id());
+        LOGD("client id:%d\n", client.get_id());
         uint32 key;
         String type = scim_socket_accept_connection(key,
                       String("Panel"),
@@ -2835,7 +2832,7 @@ private:
             unlock();
             return true;
         }
-        LOGW("open_connection failed");
+        LOGW("open_connection failed\n");
 
         SCIM_DEBUG_MAIN(4) << "Close client connection " << client.get_id() << "\n";
         server->close_connection(client);
@@ -2845,7 +2842,7 @@ private:
     void socket_close_connection(SocketServer*   server,
                                  const Socket&   client) {
         SCIM_DEBUG_MAIN(3) << "PanelAgent::socket_close_connection (" << client.get_id() << ")\n";
-        LOGD("client id:%d", client.get_id());
+        LOGD("client id:%d\n", client.get_id());
         int i = 0;
         std::vector<Ecore_Fd_Handler *>::iterator IterPos;
 
