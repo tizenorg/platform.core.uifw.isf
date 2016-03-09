@@ -33,7 +33,7 @@ EXTRA_DIST		= config.rpath \
 			  intltool-update.in
 
 AUTOMAKE_OPTIONS 	= gnu
-SUBDIRS 		= ism/src ism/utils ism/modules ism/configs po/scim ism/extras ism/data ism/demos
+SUBDIRS 		= ism/src ism/utils ism/modules ism/configs po ism/extras ism/data ism/demos
 
 MAINTAINERCLEANFILES 	= Makefile.in \
 			  aclocal.m4 \

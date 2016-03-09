@@ -97,10 +97,18 @@ libsciminclude_HEADERS 	= scim.h \
 			  isf_panel_agent_base.h \
 			  isf_panel_agent_module.h
 
-noinst_LTLIBRARIES	= libltdlc.la
+noinst_LTLIBRARIES	= libltdlc.la libprivilege_checker.la libisf_pkg.la
 
 libltdlc_la_SOURCES	= ltdl.cpp
 libltdlc_la_LIBADD	= $(LIBADD_DL)
+
+libprivilege_checker_la_SOURCES	= privilege_checker.cpp
+libprivilege_checker_la_CXXFLAGS = @DLOG_CFLAGS@ @CYNARA_CFLAGS@
+libprivilege_checker_la_LIBADD	= @DLOG_LIBS@ @CYNARA_LIBS@
+
+libisf_pkg_la_SOURCES	= isf_pkg.cpp
+libisf_pkg_la_CXXFLAGS =  @DLOG_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @PACKAGE_MANAGER_CFLAGS@
+libisf_pkg_la_LIBADD	= @DLOG_LIBS@ @PKGMGR_INFO_LIBS@  @PACKAGE_MANAGER_LIBS@
 
 if SCIM_LD_VERSION_SCRIPT
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/libscim.version-script"
@@ -171,10 +179,10 @@ libscim@SCIM_EPOCH@_la_LIBADD	= libltdlc.la
 
 bin_PROGRAMS		= scim isf-log
 
-scim_SOURCES	 	= scim.cpp isf_pkg.cpp
-scim_CXXFLAGS		= @ECORE_CFLAGS@ @ECORE_IPC_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@ -fPIE
-scim_LDADD		= libscim@SCIM_EPOCH@.la
-scim_LDFLAGS		= @LTLIBINTL@ @ECORE_LIBS@ @ECORE_IPC_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ @TZPLATFORM_CONFIG_LIBS@ -pie
+scim_SOURCES	 	= scim.cpp
+scim_CXXFLAGS		= @ECORE_CFLAGS@ @ECORE_IPC_CFLAGS@ @DLOG_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@ -fPIE
+scim_LDADD		= libscim@SCIM_EPOCH@.la libisf_pkg.la
+scim_LDFLAGS		= @LTLIBINTL@ @ECORE_LIBS@ @ECORE_IPC_LIBS@ @DLOG_LIBS@ @TZPLATFORM_CONFIG_LIBS@ -pie
 
 isf_log_SOURCES	 	= isf_log.cpp
 isf_log_LDADD		= libscim@SCIM_EPOCH@.la
@@ -189,10 +197,10 @@ endif
 libexecdir		= $(libdir)/scim@SCIM_EPOCH@
 libexec_PROGRAMS        = scim-launcher scim-helper-launcher
 
-scim_launcher_SOURCES 	= scim_launcher.cpp isf_pkg.cpp
-scim_launcher_LDADD	= libscim@SCIM_EPOCH@.la
-scim_launcher_CXXFLAGS  = @VCONF_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @DLOG_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@ -fPIE
-scim_launcher_LDFLAGS	= @LTLIBINTL@ @VCONF_LIBS@ @PKGMGR_INFO_LIBS@ @DLOG_LIBS@ @TZPLATFORM_CONFIG_LIBS@ -pie
+scim_launcher_SOURCES 	= scim_launcher.cpp
+scim_launcher_LDADD	= libscim@SCIM_EPOCH@.la libisf_pkg.la
+scim_launcher_CXXFLAGS  = @VCONF_CFLAGS@ @DLOG_CFLAGS@ @TZPLATFORM_CONFIG_CFLAGS@ -fPIE
+scim_launcher_LDFLAGS	= @LTLIBINTL@ @VCONF_LIBS@ @DLOG_LIBS@ @TZPLATFORM_CONFIG_LIBS@ -pie
 
 scim_helper_launcher_SOURCES 	= scim_helper_launcher.cpp
 scim_helper_launcher_CXXFLAGS	= -fPIE

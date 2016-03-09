@@ -47,7 +47,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "privilege_checker.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

@@ -26,9 +26,7 @@ endif
 bin_PROGRAMS           = $(CONFIG_SCIM_PANEL_EFL)
 
 isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
-                         isf_panel_utility.cpp \
-                         $(top_builddir)/ism/src/isf_pkg.cpp \
-                         $(top_builddir)/ism/src/privilege_checker.cpp
+                         isf_panel_utility.cpp
 
 isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
                          @EDJE_CFLAGS@ \
@@ -41,11 +39,8 @@ isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
                          @EDBUS_CFLAGS@ \
                          @BLUETOOTH_CFLAGS@ \
                          @FEEDBACK_CFLAGS@ \
-                         @PACKAGE_MANAGER_CFLAGS@ \
-                         @PKGMGR_INFO_CFLAGS@ \
                          @APP_CONTROL_CFLAGS@ \
                          @WAYLAND_CFLAGS@ \
-                         @CYNARA_CFLAGS@ \
                          -fPIE
 
 isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
@@ -60,12 +55,11 @@ isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @EDBUS_LIBS@ \
                          @BLUETOOTH_LIBS@ \
                          @FEEDBACK_LIBS@ \
-                         @PACKAGE_MANAGER_LIBS@ \
-                         @PKGMGR_INFO_LIBS@ \
                          @APP_CONTROL_LIBS@ \
                          @WAYLAND_LIBS@ \
-                         @CYNARA_LIBS@ \
                          -pie
 
-isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
+isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la \
+                         $(top_builddir)/ism/src/libisf_pkg.la \
+                         $(top_builddir)/ism/src/libprivilege_checker.la
 

@@ -780,7 +780,7 @@ AC_SUBST(RO_PACKAGES_DIR)
 ###########################################################
 AC_SUBST(ac_aux_dir)
 AC_CONFIG_FILES([Makefile
-                 po/scim/Makefile.in
+                 po/Makefile.in
                  ism/src/Makefile
                  ism/src/scim_types.h
                  ism/utils/Makefile

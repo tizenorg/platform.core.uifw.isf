@@ -65,7 +65,6 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
-#include "privilege_checker.h"
 #include "isf_panel_agent_manager.h"
 
 #ifdef LOG_TAG

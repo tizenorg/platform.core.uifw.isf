@@ -246,8 +246,8 @@ POTFILES: POTFILES.in
 	    && chmod a-w $@-t \
 	    && mv $@-t $@ )
 
-Makefile: Makefile.in.in ../../config.status POTFILES
-	cd ../.. \
+Makefile: Makefile.in.in ../config.status POTFILES
+	cd .. \
 	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
 	       $(SHELL) ./config.status
 
