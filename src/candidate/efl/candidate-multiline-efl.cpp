@@ -36,6 +36,16 @@ using namespace std;
 #define CANDIDATE_SEPERATE_HEIGHT     52
 #define CANDIDATE_HORIZON_LINE_HEIGHT 2
 
+#ifdef _MOBILE
+#define IME_UI_RESOLUTION_W           720
+#define IME_UI_RESOLUTION_H           1280
+#endif
+
+#ifdef _TV
+#define IME_UI_RESOLUTION_W           1920
+#define IME_UI_RESOLUTION_H           1080
+#endif
+
 static void
 _mouse_down(void *data, Evas *e,
     Evas_Object *button, void *event_info)
@@ -301,9 +311,9 @@ EflMultiLineCandidate::make_view()
     elm_win_screen_size_get(m_window, NULL, NULL, &scr_w, &scr_h);
     m_screenWidth = scr_w;
     m_screenHeight = scr_h;
-    double screenRatio_w = scr_w/720.0;
-    double screenRatio_h = scr_h/1280.0;
-    m_screenRatio = MIN(screenRatio_w, screenRatio_h);
+    double screenRatio_w = (double)scr_w/IME_UI_RESOLUTION_W;
+    double screenRatio_h = (double)scr_h/IME_UI_RESOLUTION_H;
+    m_screenRatio = MAX(screenRatio_w, screenRatio_h);
 
     m_candidateScrollerBg = edje_object_add(evas_object_evas_get((Evas_Object*)m_window));
     edje_object_file_set(m_candidateScrollerBg, CANDIDATE_EDJ_FILE_PATH, "candidate_bg");
@@ -350,15 +360,15 @@ EflMultiLineCandidate::make_view()
 EflMultiLineCandidate::EflMultiLineCandidate(Evas_Object *window)
 {
     m_degree = 0;
+    m_screenWidth = 0;
+    m_screenHeight = 0;
+    m_screenRatio = 1.0;
     m_window = window;
     make_view();
     make_more_view();
     m_candidateFontName = string("Tizen");
     m_candidateFontSize = 37*m_screenRatio;
     m_stringWidthCalObj = evas_object_text_add(m_window);
-    m_screenWidth = 0;
-    m_screenHeight = 0;
-    m_screenRatio = 0.0;
     evas_object_text_font_set(m_stringWidthCalObj, m_candidateFontName.c_str(), m_candidateFontSize);
 }
 
@@ -527,6 +537,12 @@ EflMultiLineCandidate::rotate(int degree)
         default:
             break;
     }
+
+#ifdef _TV
+    int temp = m_screenWidth;
+    m_screenWidth = m_screenHeight;
+    m_screenHeight = temp;
+#endif
 
     evas_object_resize(m_candidateScrollerBg, m_screenWidth, CANDIDATE_WINDOW_HEIGHT*m_screenRatio);
     evas_object_resize(m_candidateScroller, m_screenWidth, CANDIDATE_WINDOW_HEIGHT*m_screenRatio);
