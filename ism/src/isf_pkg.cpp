@@ -164,7 +164,11 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
                 ime_db.is_preinstalled = 1;
             }
             else {
+#ifdef _MOBILE
                ime_db.is_enabled = 0;
+#else
+               ime_db.is_enabled = 1;
+#endif
                ime_db.is_preinstalled = 0;
             }
             ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
@@ -183,7 +187,11 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
                 ime_db.is_preinstalled = 1;
             }
             else {
+#ifdef _MOBILE
                 ime_db.is_enabled = 0;
+#else
+                ime_db.is_enabled = 1;
+#endif
                 ime_db.is_preinstalled = 0;
             }
             ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
