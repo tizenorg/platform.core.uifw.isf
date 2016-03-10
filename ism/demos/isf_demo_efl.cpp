@@ -30,7 +30,6 @@
 #endif
 #include <vconf.h>
 #include <efl_extension.h>
-#include "scim_private.h"
 #include "isf_demo_efl.h"
 #include "isf_imcontrol_efl.h"
 #include "isf_layout_efl.h"
