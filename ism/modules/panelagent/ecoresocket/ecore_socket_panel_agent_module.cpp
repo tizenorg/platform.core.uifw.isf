@@ -2514,7 +2514,7 @@ private:
                         size_t  len;
                         bool ret = false;
 
-                        if (!(m_recv_trans.get_data(&buf, len))) {
+                        if (m_recv_trans.get_data(&buf, len)) {
                             ret = m_info_manager->set_active_ise_by_uuid(client_id, buf, len);
                         } else {
                             LOGW("wrong format of transaction\n");
@@ -2543,7 +2543,7 @@ private:
 
                         //FIXME
                         //ret need be checked
-                        if (!(m_recv_trans.get_data(&buf, len))) {
+                        if (m_recv_trans.get_data(&buf, len)) {
                             m_info_manager->set_initial_ise_by_uuid(client_id, buf, len);
                         } else {
                             LOGW("wrong format of transaction\n");
