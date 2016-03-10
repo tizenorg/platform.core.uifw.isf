@@ -152,7 +152,6 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
             ime_db.is_preinstalled = 1;
             ime_db.has_option = 1;  // Let's assume the inhouse IME always has an option menu.
         }
-#ifdef _WEARABLE
         else if (ime_db.pkgtype.compare ("wgt") == 0)    //1 Download Web IME
         {
             ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
@@ -170,7 +169,6 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
             }
             ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
         }
-#endif
         else if (ime_db.pkgtype.compare ("tpk") == 0)    //1 Download Native IME
         {
             ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART
