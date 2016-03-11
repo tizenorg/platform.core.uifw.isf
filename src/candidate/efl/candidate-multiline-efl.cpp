@@ -36,14 +36,12 @@ using namespace std;
 #define CANDIDATE_SEPERATE_HEIGHT     52
 #define CANDIDATE_HORIZON_LINE_HEIGHT 2
 
-#ifdef _MOBILE
-#define IME_UI_RESOLUTION_W           720
-#define IME_UI_RESOLUTION_H           1280
-#endif
-
 #ifdef _TV
 #define IME_UI_RESOLUTION_W           1920
 #define IME_UI_RESOLUTION_H           1080
+#else
+#define IME_UI_RESOLUTION_W           720
+#define IME_UI_RESOLUTION_H           1280
 #endif
 
 static void
