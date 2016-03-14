@@ -322,34 +322,6 @@ static void _main_gl_con(void *data, Evas_Object *obj, void *event_info)
     elm_genlist_item_subitems_clear(item);
 }
 
-static void _main_gl_exp(void *data, Evas_Object *obj, void *event_info)
-{
-    // Elm_Object_Item *it = (Elm_Object_Item*)event_info;
-    // Evas_Object *gl =  elm_object_item_widget_get(it);
-}
-
-static char *_language_gl_text_get(void *data, Evas_Object *obj, const char *part)
-{
-    ITEMDATA *item_data = (ITEMDATA*)data;
-    if (item_data) {
-        if (!strcmp(part, "elm.text.main.left.top") ||
-            !strcmp(part, "elm.text.main.left") ||
-            !strcmp(part, "elm.text.main") ||
-            !strcmp(part, "elm.text") ||
-            !strcmp(part, "elm.text.1")) {
-            return strdup(item_data->main_text);
-        }
-        if (!strcmp(part, "elm.text.sub.left.bottom") ||
-            !strcmp(part, "elm.text.multiline") ||
-            !strcmp(part, "elm.text.2")) {
-            if (strlen(item_data->sub_text) > 0)
-                return strdup(item_data->sub_text);
-        }
-    }
-
-    return NULL;
-}
-
 static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const char *part)
 {
     Evas_Object *item = NULL;
@@ -546,7 +518,7 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
     option_elements[type].itc_language_subitems = elm_genlist_item_class_new();
     if (option_elements[type].itc_language_subitems) {
         option_elements[type].itc_language_subitems->item_style = "type1";
-        option_elements[type].itc_language_subitems->func.text_get = _language_gl_text_get;
+        option_elements[type].itc_language_subitems->func.text_get = _main_gl_text_get;
         option_elements[type].itc_language_subitems->func.content_get = _language_gl_content_get;
         option_elements[type].itc_language_subitems->func.state_get = _main_gl_state_get;
         option_elements[type].itc_language_subitems->func.del = _main_gl_del;
@@ -762,7 +734,6 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
     elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_RESET],
                         NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_RESET].mode));
 
-    evas_object_smart_callback_add(genlist, "expanded", _main_gl_exp, genlist);
     evas_object_smart_callback_add(genlist, "contracted", _main_gl_con, genlist);
 
     return genlist;
