@@ -191,7 +191,7 @@ isf_log_CXXFLAGS	= @GTK2_CFLAGS@ -fPIE
 isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -L@GTK_LIBDIR@ -lgtk-x11-2.0 -lgdk-x11-2.0 -lglib-2.0 -lgobject-2.0 -pie
 else
 isf_log_CXXFLAGS	= -fPIE
-isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -lglib-2.0 -lgobject-2.0 -pie
+isf_log_LDFLAGS		= @LTLIBINTL@ -rpath $(libdir) -pie
 endif
 
 libexecdir		= $(libdir)/scim@SCIM_EPOCH@
