@@ -22,7 +22,9 @@
  *
  */
 
+#if HAVE_ECORE_X
 #include <Ecore_X.h>
+#endif
 #include "main.h"
 
 typedef enum
@@ -46,6 +48,7 @@ void app_control (app_control_h app_control, void *user_data)
 {
     LOGD ("%s\n", __func__);
 
+#if HAVE_ECOREX
     Ecore_X_Atom       prop_x_keyboard_input_detected = 0;
     TOOLBAR_MODE_T     kbd_mode = TOOLBAR_HELPER_MODE;
     Ecore_X_Window     _control_win = 0;
@@ -80,6 +83,7 @@ void app_control (app_control_h app_control, void *user_data)
             }
         }
     }
+#endif
 
     ui_app_exit ();
 }

@@ -62,7 +62,6 @@ Requires:   %{name} = %{version}-%{release}
 %description devel
 This package contains ISF header files for ISE development.
 
-%if %{without wayland}
 %package -n org.tizen.isf-kbd-mode-changer
 Summary: isf-kbd-mode-changer
 Group: Application
@@ -70,7 +69,6 @@ Requires: %{name} = %{version}-%{release}
 
 %description -n org.tizen.isf-kbd-mode-changer
 isf-kbd-mode-changer
-%endif
 
 %prep
 %setup -q
@@ -182,7 +180,6 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_libdir}/pkgconfig/isf.pc
 %{_libdir}/pkgconfig/scim.pc
 
-%if %{without wayland}
 %post -n org.tizen.isf-kbd-mode-changer
 mkdir -p %{TZ_SYS_RO_APP}/org.tizen.isf-kbd-mode-changer
 
@@ -190,4 +187,3 @@ mkdir -p %{TZ_SYS_RO_APP}/org.tizen.isf-kbd-mode-changer
 %manifest org.tizen.isf-kbd-mode-changer.manifest
 %{TZ_SYS_RO_PACKAGES}/org.tizen.isf-kbd-mode-changer.xml
 %{APP_PREFIX}/*
-%endif

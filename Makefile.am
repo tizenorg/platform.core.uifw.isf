@@ -56,10 +56,8 @@ endif
 pkgconfig_DATA          = isf.pc scim.pc \
 			  $(GTK_UTILS_PKGCONFIG)
 
-if ISF_BUILD_KBD_MODE_CHANGER
 kbdmodechangerxmldir = @RO_PACKAGES_DIR@
 kbdmodechangerxml_DATA = org.tizen.isf-kbd-mode-changer.xml
-endif
 
 if ISF_INSTALL_SYSTEMD_SCRIPT
 SYSTEMD_SCRIPT = scim.service scim.path
