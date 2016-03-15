@@ -5209,10 +5209,12 @@ static void slot_set_active_ise (const String &uuid, bool changeDefault)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " (" << uuid << ")\n";
 
+    bool invalid = false;
+
+#if HAVE_PKGMGR_INFO
     /* When changing the active (default) keyboard, initialize ime_info DB if appid is invalid.
        This may be necessary if IME packages are changed while panel process is terminated. */
     pkgmgrinfo_appinfo_h handle = NULL;
-    bool invalid = false;
     int ret = pkgmgrinfo_appinfo_get_appinfo (uuid.c_str (), &handle);
     if (ret != PMINFO_R_OK) {
         LOGW ("appid \"%s\" is invalid.\n", uuid.c_str ());
@@ -5220,8 +5222,10 @@ static void slot_set_active_ise (const String &uuid, bool changeDefault)
            The variable uuid would be invalid, so set_active_ise() would return false. */
         invalid = true;
     }
+
     if (handle)
         pkgmgrinfo_appinfo_destroy_appinfo (handle);
+#endif
 
     if (invalid) {
         _initialize_ime_info ();
@@ -5353,6 +5357,7 @@ static void slot_set_enable_helper_ise_info (const String &appid, bool is_enable
     }
 }
 
+#if HAVE_PKGMGR_INFO
 /**
  * @brief Finds appid with specific category
  *
@@ -5380,6 +5385,7 @@ static int _find_appid_from_category (const pkgmgrinfo_appinfo_h handle, void *u
 
     return -1;  // This callback is no longer called.
 }
+#endif
 
 /**
  * @brief Requests to open the installed IME list application.
@@ -5390,6 +5396,7 @@ static void slot_show_helper_ise_list (void)
     int ret;
     app_control_h app_control;
     char *app_id = NULL;
+#if HAVE_PKGMGR_INFO
     pkgmgrinfo_appinfo_filter_h handle;
 
     if (ime_list_app.length() < 1) {
@@ -5407,6 +5414,7 @@ static void slot_show_helper_ise_list (void)
     }
     else
         app_id = strdup(ime_list_app.c_str());
+#endif
 
     if (app_id) {
         ret = app_control_create (&app_control);
@@ -5458,6 +5466,7 @@ static void slot_show_helper_ise_selector (void)
     int ret;
     app_control_h app_control;
     char *app_id = NULL;
+#if HAVE_PKGMGR_INFO
     pkgmgrinfo_appinfo_filter_h handle;
 
     if (ime_selector_app.length() < 1) {
@@ -5475,6 +5484,7 @@ static void slot_show_helper_ise_selector (void)
     }
     else
         app_id = strdup(ime_selector_app.c_str());
+#endif
 
     if (app_id) {
         ret = app_control_create (&app_control);
@@ -6027,11 +6037,12 @@ static void update_ise_locale ()
     LOGD ("update all ISE names according to display language\n");
     set_language_and_locale ();
 
+    bool need_to_init_db = false;
+#if HAVE_PKGMGR_INFO
     int ret = 0;
     bool exist = false;
     char *label = NULL;
     pkgmgrinfo_appinfo_h handle = NULL;
-    bool need_to_init_db = false;
 
     /* Read DB from ime_info table */
     isf_load_ise_information(ALL_ISE, _config);
@@ -6061,6 +6072,7 @@ static void update_ise_locale ()
             need_to_init_db = true;
         }
     }
+#endif
 
     if (need_to_init_db) {
         _initialize_ime_info ();

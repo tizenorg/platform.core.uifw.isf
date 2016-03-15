@@ -40,7 +40,9 @@
 #include "isf_panel_efl.h"
 #include "isf_panel_utility.h"
 #include "isf_query_utility.h"
+#if HAVE_PKGMGR_INFO
 #include <pkgmgr-info.h>
+#endif
 #include "isf_pkg.h"
 
 /////////////////////////////////////////////////////////////////////////////

@@ -42,7 +42,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <vconf.h>
-#include <pkgmgr-info.h>
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
 #include <dlog.h>

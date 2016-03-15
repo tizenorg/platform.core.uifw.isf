@@ -255,6 +255,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
     }
     ISF_SAVE_LOG ("uuid(%s), config(%s), display(%s)\n", uuid.c_str (), config.c_str (), display.c_str ());
 
+#if HAVE_PKGMGR_INFO
     char *execpath = NULL;
     int ret;
     pkgmgrinfo_appinfo_h appinfo_handle;
@@ -280,6 +281,9 @@ void SocketFrontEnd::run_helper (const Socket &client)
         pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
         appinfo_handle = NULL;
     }
+#else
+    scim_helper_path = String (SCIM_HELPER_LAUNCHER_PROGRAM);
+#endif
 
     if (scim_helper_path != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
         /* exe type IME */

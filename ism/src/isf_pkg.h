@@ -25,7 +25,13 @@
 #ifndef __ISF_PKG_H__
 #define __ISF_PKG_H__
 
+#if HAVE_PKGMGR_INFO
+#include <pkgmgr-info.h>
+#endif
+
+#if HAVE_PKGMGR_INFO
 int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data);
+#endif
 void isf_pkg_reload_ime_info_db(void);
 int isf_pkg_select_all_ime_info_db(std::vector<ImeInfoDB> &ime_info);
 

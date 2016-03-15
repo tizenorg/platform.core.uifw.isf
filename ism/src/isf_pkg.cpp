@@ -30,7 +30,9 @@
 #include <unistd.h>
 #include "scim_private.h"
 #include "scim.h"
+#if HAVE_PKGMGR_INFO
 #include <pkgmgr-info.h>
+#endif
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
@@ -44,7 +46,7 @@
 
 using namespace scim;
 
-
+#if HAVE_PKGMGR_INFO
 /**
  * @brief Read data from ime category manifest and insert initial db
  *
@@ -229,13 +231,14 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 
     return 0;
 }
-
+#endif
 
 /**
  * @brief Reload ime_info DB. This needs to be called when ime_info table is empty.
  */
 void isf_pkg_reload_ime_info_db(void)
 {
+#if HAVE_PKGMGR_INFO
     pkgmgrinfo_appinfo_filter_h handle;
     int ret = pkgmgrinfo_appinfo_filter_create (&handle);
     if (ret == PMINFO_R_OK) {
@@ -251,6 +254,7 @@ void isf_pkg_reload_ime_info_db(void)
     else {
         LOGE ("pkgmgrinfo_appinfo_filter_create failed(%d)", ret);
     }
+#endif
 }
 
 /**
