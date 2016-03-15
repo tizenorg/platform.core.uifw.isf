@@ -68,6 +68,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <dlog.h>
+#if HAVE_PKGMGR_INFO
+#include <pkgmgr-info.h>
+#endif
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -207,6 +210,34 @@ void SocketFrontEnd::get_helper_list (const Socket &client)
   #define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
 #endif
 static std::vector<String>  __active_helpers;
+static String scim_helper_path;
+
+void SocketFrontEnd::launch_helper (const char *name, const char *appid, const char *config, const char *display)
+{
+    int pid;
+
+    pid = fork ();
+
+    if (pid < 0) return;
+
+    if (pid == 0) {
+        const char *argv [] = { scim_helper_path.c_str (),
+                           "--daemon",
+                           "--config", config,
+                           "--display", display,
+                           const_cast<char*> (name),
+                           const_cast<char*> (appid),
+                           0};
+
+        SCIM_DEBUG_MAIN (2) << " Call scim-helper-launcher.\n";
+        ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", name, appid);
+
+        setsid ();
+        LOGD ("launch execpath : %s\n", scim_helper_path.c_str ());
+        execv (scim_helper_path.c_str (), const_cast<char **>(argv));
+        exit (-1);
+    }
+}
 
 void SocketFrontEnd::run_helper (const Socket &client)
 {
@@ -224,48 +255,56 @@ void SocketFrontEnd::run_helper (const Socket &client)
     }
     ISF_SAVE_LOG ("uuid(%s), config(%s), display(%s)\n", uuid.c_str (), config.c_str (), display.c_str ());
 
-    for (i = 0; i < __helpers.size (); ++i) {
-        if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
+    char *execpath = NULL;
+    int ret;
+    pkgmgrinfo_appinfo_h appinfo_handle;
 
-            __active_helpers.push_back (__helpers [i].first.name);
-
-            int pid;
-
-            pid = fork ();
-
-            if (pid < 0) return;
-
-            if (pid == 0) {
-
-                const char *argv [] = { SCIM_HELPER_LAUNCHER_PROGRAM,
-                                   "--daemon",
-                                   "--config", const_cast<char*> (config.c_str ()),
-                                   "--display", const_cast<char*> (display.c_str ()),
-                                   const_cast<char*> (__helpers [i].second.c_str ()),
-                                   const_cast<char*> (__helpers [i].first.uuid.c_str ()),
-                                   0};
-
-                SCIM_DEBUG_MAIN (2) << " Call scim-helper-launcher.\n";
-                ISF_SAVE_LOG ("Exec scim_helper_launcher(%s)\n", __helpers [i].second.c_str ());
-
-                setsid ();
-                execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
-                exit (-1);
-            }
-
-            //int status;
-            //waitpid (pid, &status, 0);
-
-            break;
-        }
+    /* get app info handle */
+    ret = pkgmgrinfo_appinfo_get_appinfo (uuid.c_str (), &appinfo_handle);
+    if (ret != PMINFO_R_OK) {
+        LOGW ("pkgmgrinfo_appinfo_get_appinfo failed %s %d \n", uuid.c_str (), ret);
+        return;
     }
 
-    if (i > 0 && i == __helpers.size ()) {
-        ISF_SAVE_LOG ("Can't find and exec scim_helper_launcher appid=\"%s\"\n", uuid.c_str ());
-        m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+    /* Get exec path */
+    ret = pkgmgrinfo_appinfo_get_exec (appinfo_handle, &execpath);
+    if (ret != PMINFO_R_OK) {
+        pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
+        return;
     }
-    else
+
+    LOGD ("exec path : %s\n", execpath);
+    scim_helper_path = String (execpath);
+
+    if (appinfo_handle) {
+        pkgmgrinfo_appinfo_destroy_appinfo (appinfo_handle);
+        appinfo_handle = NULL;
+    }
+
+    if (scim_helper_path != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
+        /* exe type IME */
+        launch_helper (NULL, NULL, config.c_str (), display.c_str ());
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+    }
+    else {
+        /* shared object (so) type IME */
+        for (i = 0; i < __helpers.size (); ++i) {
+            if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
+
+                __active_helpers.push_back (__helpers [i].first.name);
+
+                launch_helper (__helpers [i].second.c_str (), __helpers [i].first.uuid.c_str (), config.c_str (), display.c_str ());
+                break;
+            }
+        }
+
+        if (i > 0 && i == __helpers.size ()) {
+            ISF_SAVE_LOG ("Can't find and exec scim_helper_launcher appid=\"%s\"\n", uuid.c_str ());
+            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+        }
+        else
+            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+    }
 
     SCIM_DEBUG_MAIN (2) << " exit run_helper ().\n";
 }
