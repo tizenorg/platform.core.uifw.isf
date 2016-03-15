@@ -121,6 +121,7 @@ using namespace scim;
 
 #define E_PROP_DEVICEMGR_INPUTWIN                       "DeviceMgr Input Window"
 
+#define SCIM_HELPER_LAUNCHER_PROGRAM (SCIM_LIBEXECDIR "/scim-helper-launcher")
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
@@ -1721,17 +1722,23 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 ise_changed = set_keyboard_ise (_ime_info[i].appid);
             else if (TOOLBAR_HELPER_MODE == _ime_info[i].mode) {
                 if (_ime_info[i].is_enabled) {
-                    /* If IME so is deleted somehow, main() in scim_helper_launcher.cpp will return -1.
-                       Checking HelperModule validity seems necessary here. */
-                    HelperModule helper_module (_ime_info[i].module_name);
-                    if (helper_module.valid ())
+                    if (_ime_info[i].exec == String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
+                        /* If IME so is deleted somehow, main() in scim_helper_launcher.cpp will return -1.
+                           Checking HelperModule validity seems necessary here. */
+                        HelperModule helper_module (_ime_info[i].module_name);
+                        if (helper_module.valid ())
+                            valid = true;
+                        helper_module.unload ();
+                    }
+                    else {
+                        /* executable type */
                         valid = true;
-                    helper_module.unload ();
+                    }
 
                     if (valid)
                         ise_changed = set_helper_ise (_ime_info[i].appid, launch_ise);
                     else
-                        LOGW ("Helper ISE(appid=\"%s\",moudle_name=\"%s\") is not valid.\n", _ime_info[i].appid.c_str (),_ime_info[i].module_name.c_str ());
+                        LOGW ("Helper ISE(appid=\"%s\",module_name=\"%s\") is not valid.\n", _ime_info[i].appid.c_str (), _ime_info[i].module_name.c_str ());
                 }
                 else {
                     LOGW ("Helper ISE(appid=\"%s\") is not enabled.\n", _ime_info[i].appid.c_str ());

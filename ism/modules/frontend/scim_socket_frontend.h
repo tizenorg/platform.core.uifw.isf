@@ -168,6 +168,7 @@ public:
 private:
     void load_helper_modules (const std::vector<String> &load_engine_list);
     void get_helper_list (const Socket &client);
+    void launch_helper (const char *name, const char *appid, const char *config, const char *display);
     void run_helper (const Socket &client);
 
     void get_active_ise_list (int client_id);
