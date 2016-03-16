@@ -329,13 +329,13 @@ EXAPI int isf_control_get_active_ime (char **appid)
     int ret = 0;
     IMControlClient imcontrol_client;
     if (!imcontrol_client.open_connection ()) {
-        LOGW("open_connection failed");
+        LOGW ("open_connection failed");
         return -1;
     }
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.get_active_ise (strUuid)) {
-        LOGW("get_active_ise failed");
+        LOGW ("get_active_ise failed");
         ret = -1;
     }
 
@@ -347,7 +347,7 @@ EXAPI int isf_control_get_active_ime (char **appid)
     *appid = strUuid.length () ? strdup (strUuid.c_str ()) : NULL;
 
     if (*appid == NULL) {
-        LOGW("appid is invalid");
+        LOGW ("appid is invalid");
         return -1;
     }
     else
@@ -390,7 +390,7 @@ EXAPI int isf_control_show_ime_list (void)
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.show_helper_ise_list ()) {
-        LOGW("show_helper_ise_list failed");
+        LOGW ("show_helper_ise_list failed");
         ret = -1;
     }
 
@@ -409,7 +409,7 @@ EXAPI int isf_control_show_ime_selector (void)
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.show_helper_ise_selector ()) {
-        LOGW("show_helper_ise_selector failed");
+        LOGW ("show_helper_ise_selector failed");
         ret = -1;
     }
 
@@ -421,7 +421,7 @@ EXAPI int isf_control_show_ime_selector (void)
 EXAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
 {
     if (!appid || !enabled || strlen(appid) < 1) {
-        LOGW("Invalid parameter");
+        LOGW ("Invalid parameter");
         return -1;
     }
 
@@ -430,13 +430,13 @@ EXAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
 
     IMControlClient imcontrol_client;
     if (!imcontrol_client.open_connection ()) {
-        LOGW("open_connection failed");
+        LOGW ("open_connection failed");
         return -1;
     }
 
     imcontrol_client.prepare ();
     if (!imcontrol_client.is_helper_ise_enabled (appid, nEnabled)) {
-        LOGW("is_helper_ise_enabled failed");
+        LOGW ("is_helper_ise_enabled failed");
         ret = -1;
     }
 
@@ -446,7 +446,7 @@ EXAPI int isf_control_is_ime_enabled (const char *appid, bool *enabled)
         return -1;
 
     if (nEnabled < 0) {
-        LOGW("Failed; appid(%s), nEnabled=%d", appid, nEnabled);
+        LOGW ("Failed; appid(%s), nEnabled=%d", appid, nEnabled);
         return -1;
     }
     else

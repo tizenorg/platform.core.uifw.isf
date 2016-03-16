@@ -474,7 +474,7 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             mname.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mname.back().c_str());
+            SECURE_LOGD ("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mname.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
@@ -954,7 +954,7 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
 
     ret = sqlite3_step(pStmt);
     if (ret != SQLITE_DONE) {
-        LOGW("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
+        LOGW ("sqlite3_step returned %d, appid=%s, %s", ret, ime_db->appid.c_str(), sqlite3_errmsg(databaseInfo.pHandle));
         ret = SQLITE_ERROR;
         goto out;
     }

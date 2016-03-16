@@ -332,7 +332,7 @@ static void get_pkginfo (const char *appid, PKGINFO *info)
 
 		ret = isf_db_select_ime_info_by_appid(appid, &imeInfo);
 		if (ret < 1) {
-			LOGW("ime_info row is not available for %s", appid);
+			LOGW ("ime_info row is not available for %s", appid);
 			return;
 		}
 
@@ -353,7 +353,7 @@ static void get_pkginfo (const char *appid, PKGINFO *info)
 			info->package_name = std::string(imeInfo.pkgid.c_str());
 		}
 		else {
-			LOGW("Unknown pkg type: %s", imeInfo.pkgtype.c_str());
+			LOGW ("Unknown pkg type: %s", imeInfo.pkgtype.c_str());
 		}
 	}
 }

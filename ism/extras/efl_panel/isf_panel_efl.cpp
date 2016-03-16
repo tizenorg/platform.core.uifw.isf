@@ -1156,19 +1156,19 @@ static int _isf_insert_ime_info_by_pkgid(const char *pkgid)
     int result = 0;  // 0: not IME, 1: Inserted, 2: Updated (because of the same appid)
 
     if (!pkgid) {
-        LOGW("pkgid is null.\n");
+        LOGW ("pkgid is null.\n");
         return 0;
     }
 
     ret = pkgmgrinfo_pkginfo_get_pkginfo(pkgid, &handle);
     if (ret != PMINFO_R_OK) {
-        LOGW("pkgmgrinfo_pkginfo_get_pkginfo(\"%s\",~) returned %d\n", pkgid, ret);
+        LOGW ("Failed to call pkgmgrinfo_pkginfo_get_pkginfo(\"%s\",~) returned %d\n", pkgid, ret);
         return 0;
     }
 
     ret = pkgmgrinfo_appinfo_get_list(handle, PMINFO_UI_APP, isf_pkg_ime_app_list_cb, (void *)&result);
     if (ret != PMINFO_R_OK) {
-        LOGW("pkgmgrinfo_appinfo_get_list failed(%d)\n", ret);
+        LOGW ("Failed to call pkgmgrinfo_appinfo_get_list failed(%d)\n", ret);
         ret = 0;
     }
     else if (result)
@@ -1200,7 +1200,7 @@ static Eina_Bool _start_default_helper_timer(void *data)
     if (total_appids.size() > 0)
         _info_manager->update_ise_list (total_appids);
 
-    LOGD("Try to start the initial helper\n");
+    LOGD ("Try to start the initial helper\n");
     set_active_ise(_initial_ise_uuid, true);
 
     for (iter = g_pkgids_to_be_uninstalled.begin (); iter != g_pkgids_to_be_uninstalled.end (); iter++) {
@@ -5194,7 +5194,7 @@ static bool slot_check_privilege_by_sockfd (int client_id, String privilege)
     if (priv_ret == false)
         LOGW ("Failed to check privilege (%s)\n", privilege.c_str ());
     else
-        LOGD ("Succceeded to check privilege (%s)\n", privilege.c_str ());
+        LOGD ("Succeeded to check privilege (%s)\n", privilege.c_str ());
 
     return priv_ret;
 }
@@ -5453,7 +5453,7 @@ static void slot_show_helper_ise_list (void)
         free(app_id);
     }
     else {
-      SECURE_LOGW("AppID with http://tizen.org/category/ime-list category is not available.\n");
+      SECURE_LOGW ("AppID with http://tizen.org/category/ime-list category is not available.\n");
     }
 }
 
@@ -6146,7 +6146,7 @@ static void display_language_changed_cb (keynode_t *key, void* data)
 static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    LOGD("");
+    LOGD ("");
     uint32 option = 0;
     String uuid, name;
     bool _support_hw_keyboard_mode = false;
@@ -6803,7 +6803,7 @@ static String sanitize_string (const char *str, int maxlen = 32)
 static int launch_socket_frontend ()
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-    LOGD("Launching a ISF daemon with Socket FrontEnd");
+    LOGD ("Launching a ISF daemon with Socket FrontEnd");
     std::vector<String>     engine_list;
     std::vector<String>     helper_list;
     std::vector<String>     load_engine_list;
