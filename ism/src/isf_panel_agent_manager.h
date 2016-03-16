@@ -344,6 +344,9 @@ public:
     bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
     void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
     void set_autocapital_type(int id, uint32 context_id, String uuid, int mode);
+    void update_preedit_string (int target_client, uint32  target_context, const WideString &str, const AttributeList &attrs);
+    void send_key_event (int target_client, uint32  target_context, const KeyEvent &key);
+    void forward_key_event (int target_client, uint32  target_context, const KeyEvent &key);
 };
 
 /**  @} */

@@ -510,6 +510,20 @@ void PanelAgentBase::set_autocapital_type(int client, uint32 context, String uui
     LOGW("not implemented for %s", m_name.c_str());
 }
 
+void PanelAgentBase::update_preedit_string (int client, uint32 context,const WideString &str, const AttributeList &attrs)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
+void PanelAgentBase::send_key_event (int client, uint32 context,const KeyEvent &key)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
+void PanelAgentBase::forward_key_event (int client, uint32 context,const KeyEvent &key)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
 
 } /* namespace scim */
 
