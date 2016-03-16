@@ -807,6 +807,33 @@ public:
     * @return none.
     */
     virtual void set_autocapital_type(int client, uint32 context, String uuid, int mode);
+
+    /**
+    * @brief update_preedit_string.
+    *
+    * @param
+    *
+    * @return none.
+    */
+    virtual void update_preedit_string (int client, uint32 context,const WideString &str, const AttributeList &attrs);
+
+    /**
+    * @brief send_key_event.
+    *
+    * @param
+    *
+    * @return none.
+    */
+    virtual void send_key_event (int client, uint32 context,const KeyEvent &key);
+
+    /**
+    * @brief forward_key_event.
+    *
+    * @param
+    *
+    * @return none.
+    */
+    virtual void forward_key_event (int client, uint32 context,const KeyEvent &key);
 };
 
 /**  @} */
