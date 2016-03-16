@@ -790,6 +790,29 @@ void PanelAgentManager::process_key_event_done(int id, uint32 context_id, KeyEve
         _p->process_key_event_done (id, context_id, key, ret, serial);
 }
 
+void PanelAgentManager::update_preedit_string (int id, uint32 context_id, const WideString &str, const AttributeList &attrs)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->update_preedit_string (id, context_id, str, attrs);
+}
+
+void PanelAgentManager::send_key_event (int id, uint32 context_id, const KeyEvent &key)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->send_key_event (id, context_id, key);
+}
+
+void PanelAgentManager::forward_key_event (int id, uint32 context_id, const KeyEvent &key)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->forward_key_event (id, context_id, key);
+}
 
 
 } /* namespace scim */

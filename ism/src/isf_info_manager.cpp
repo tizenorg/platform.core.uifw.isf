@@ -1259,13 +1259,13 @@ public:
         m_signal_show_panel ();
     }
 
-    void enable_remote_input (void)
+    void enable_remote_input (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::enable_remote_input ()\n";
         m_signal_enable_remote_input ();
     }
 
-    void disable_remote_input (void)
+    void disable_remote_input (int client_id)
     {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::disable_remote_input ()\n";
         m_signal_disable_remote_input ();
@@ -1933,7 +1933,7 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            
+            m_panel_agent_manager.update_preedit_string (client, context, str, attrs);
         }
 
         unlock ();
@@ -1951,7 +1951,7 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            
+            m_panel_agent_manager.commit_string (client, context, str);
         }
 
         unlock ();
@@ -1965,14 +1965,10 @@ public:
         int    client = -1;
         uint32 context = 0;
 
-        lock ();
-
         get_focused_context (client, context);
         if (client >= 0) {
-            
+            m_panel_agent_manager.send_key_event (client, context, key);
         }
-
-        unlock ();
 
         return client >= 0;
     }
@@ -1983,14 +1979,10 @@ public:
         int    client = -1;
         uint32 context = 0;
 
-        lock ();
-
         get_focused_context (client, context);
         if (client >= 0) {
-            
+            m_panel_agent_manager.forward_key_event (client, context, key);
         }
-
-        unlock ();
 
         return client >= 0;
     }
@@ -4422,15 +4414,15 @@ void InfoManager::get_recent_ise_geometry (int client_id, uint32 angle, _OUT_ st
 }
 
 //ISM_TRANS_CMD_ENABLE_REMOTE_INPUT
-void InfoManager::enable_remote_input ()
+void InfoManager::enable_remote_input (int client_id)
 {
-    m_impl->enable_remote_input ();
+    m_impl->enable_remote_input (client_id);
 }
 
 //ISM_TRANS_CMD_DISABLE_REMOTE_INPUT
-void InfoManager::disable_remote_input ()
+void InfoManager::disable_remote_input (int client_id)
 {
-    m_impl->disable_remote_input ();
+    m_impl->disable_remote_input (client_id);
 }
 
 //ISM_TRANS_CMD_REGISTER_PANEL_CLIENT

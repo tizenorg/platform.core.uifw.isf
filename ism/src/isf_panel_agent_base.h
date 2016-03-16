@@ -798,6 +798,12 @@ public:
     * @return none.
     */
     virtual void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
+
+    virtual void update_preedit_string (int client, uint32 context,const WideString &str, const AttributeList &attrs);
+
+    virtual void send_key_event (int client, uint32 context,const KeyEvent &key);
+
+    virtual void forward_key_event (int client, uint32 context,const KeyEvent &key);
 };
 
 /**  @} */
