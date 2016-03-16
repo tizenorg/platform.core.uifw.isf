@@ -2480,6 +2480,13 @@ public:
         LOGD ("client id:%d", id);
         panel_slot_commit_string (context_id, wstr);
     }
+
+    void
+    forward_key_event (int id, uint32 context_id, const KeyEvent &key) {
+        LOGD ("client id:%d", id);
+        panel_slot_forward_key_event (context_id, key);
+    }
+
 #if 0
     void
     request_help (int id, uint32 context_id) {

@@ -476,6 +476,7 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
                 case 124://TV_KEY_POWER
                     LOGD ("TV_KEY_POWER");
                     panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_POWER);
+                    g_web_socket_server->on_init();
                     break;
 
                 case 235://TV_KEY_SWITCHMODE

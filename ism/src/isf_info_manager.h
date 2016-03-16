@@ -572,14 +572,14 @@ public:
      *
      * @return none.
      */
-    void enable_remote_input (void);
+    void enable_remote_input (int client_id);
 
     /**
      * @brief Disable remote input.
      *
      * @return none.
      */
-    void disable_remote_input (void);
+    void disable_remote_input (int client_id);
 
 /////////////////////////////////Message function begin/////////////////////////////////////////
 
