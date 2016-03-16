@@ -1435,6 +1435,50 @@ private:
         Socket client_socket(client);
         m_send_trans.write_to_socket(client_socket);
     }
+
+    void update_preedit_string (int client, uint32 target_context, const WideString &str, const AttributeList &attrs) {
+        LOGD("client id:%d\n", client);
+
+        Socket client_socket(client);
+        lock();
+        m_send_trans.clear();
+        m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
+        m_send_trans.put_data(target_context);
+        m_send_trans.put_command(SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING);
+        m_send_trans.put_data(str);
+        m_send_trans.put_data(attrs);
+        m_send_trans.put_data(-1);
+        m_send_trans.write_to_socket(client_socket);
+        unlock();
+    }
+
+    void send_key_event (int client, uint32 target_context, const KeyEvent &key) {
+        LOGD("client id:%d\n", client);
+
+        Socket client_socket(client);
+        lock();
+        m_send_trans.clear ();
+        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+        m_send_trans.put_data (target_context);
+        m_send_trans.put_command (SCIM_TRANS_CMD_PROCESS_KEY_EVENT);
+        m_send_trans.put_data (key);
+        m_send_trans.write_to_socket (client_socket);
+        unlock();
+    }
+
+    void forward_key_event (int client, uint32 target_context, const KeyEvent &key) {
+        LOGD("client id:%d\n", client);
+
+        Socket client_socket(client);
+        lock();
+        m_send_trans.clear ();
+        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+        m_send_trans.put_data (target_context);
+        m_send_trans.put_command (SCIM_TRANS_CMD_FORWARD_KEY_EVENT);
+        m_send_trans.put_data (key);
+        m_send_trans.write_to_socket (client_socket);
+        unlock();
+    }
 private:
 
     static void send_fail_reply (int client_id)
@@ -2878,9 +2922,9 @@ private:
                     trans.write_to_socket(client_socket);
                     m_info_manager->hide_helper_ise ();
                 } else if (cmd == ISM_TRANS_CMD_ENABLE_REMOTE_INPUT) {
-                    m_info_manager->enable_remote_input ();
+                    m_info_manager->enable_remote_input (client_id);
                 } else if (cmd == ISM_TRANS_CMD_DISABLE_REMOTE_INPUT) {
-                    m_info_manager->disable_remote_input ();
+                    m_info_manager->disable_remote_input (client_id);
                 } else {
                     LOGW ("unknow cmd: %d\n", cmd);
                 }
