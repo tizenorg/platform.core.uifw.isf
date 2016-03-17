@@ -545,7 +545,7 @@ public:
      *
      * @return none.
      */
-    virtual void socket_update_surrounding_text (int client, uint32 context, String& uuid, String text, uint32 cursor);
+    virtual void socket_update_surrounding_text (int client, uint32 context,const String& uuid, String& text, uint32 cursor);
 
     /**
      * @brief socket_update_selection.

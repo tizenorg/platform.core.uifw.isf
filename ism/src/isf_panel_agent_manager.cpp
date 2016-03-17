@@ -560,7 +560,7 @@ void PanelAgentManager::reload_config (int id)
         _p->reload_config (id);
 }
 
-void PanelAgentManager::socket_update_surrounding_text (int id, uint32 context_id, String& uuid, String text, uint32 cursor)
+void PanelAgentManager::socket_update_surrounding_text (int id, uint32 context_id, const String& uuid, String& text, uint32 cursor)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
 

@@ -2231,7 +2231,7 @@ Eina_Bool wsc_context_prediction_allow_get (WSCContextISF *wsc_ctx)
 
 void wsc_context_delete_surrounding (WSCContextISF *wsc_ctx, int offset, int len)
 {
-    LOGD ("");
+    LOGD ("offset = %d, len = %d", offset, len);
 
     if (!wsc_ctx)
         return;
@@ -4310,13 +4310,13 @@ public:
     }
 
     void
-    get_surrounding_text (int id, uint32 context_id, int maxlen_before, int maxlen_after) {
+    socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
         LOGD ("client id:%d", id);
         panel_slot_get_surrounding_text (context_id, maxlen_before, maxlen_after);
     }
 
     void
-    delete_surrounding_text (int id, uint32 context_id, int offset, int len) {
+    socket_helper_delete_surrounding_text (int id, uint32 context_id, uint32 offset, uint32 len) {
         LOGD ("client id:%d", id);
         panel_slot_delete_surrounding_text (context_id, offset, len);
     }

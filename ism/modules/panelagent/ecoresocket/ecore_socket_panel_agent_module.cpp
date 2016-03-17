@@ -960,7 +960,7 @@ private:
         m_send_trans.write_to_socket(client_socket);
     }
 
-    void socket_update_surrounding_text(int client, uint32 context, const String& uuid, String text, uint32 cursor) {
+    void socket_update_surrounding_text(int client, uint32 context, const String& uuid, String& text, uint32 cursor) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
         LOGD ("client id:%d\n", client);
 

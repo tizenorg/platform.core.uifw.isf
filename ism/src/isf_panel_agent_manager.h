@@ -314,7 +314,7 @@ public:
     void check_option_window (int client, uint32 context, String& uuid, _OUT_ uint32& avail);
     void reset_ise_option (int client_id, uint32 context);
     void reset_helper_context (int client_id, uint32 context, const String& uuid);
-    void socket_update_surrounding_text (int client, uint32 context, String& uuid, String text, uint32 cursor);
+    void socket_update_surrounding_text (int client, uint32 context, const String& uuid, String& text, uint32 cursor);
     void socket_update_selection (int client, uint32 context, String& uuid, String text);
     void socket_get_keyboard_ise_list (int client, uint32 context, const String& uuid, std::vector<String>& list);
     void socket_get_candidate_ui (int client, uint32 context, const String& uuid,  int style,  int mode);
