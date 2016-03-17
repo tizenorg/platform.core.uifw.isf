@@ -75,12 +75,10 @@ public :
 
 void CSDKOption::on_create_option_main_view(Evas_Object *genlist, Evas_Object *naviframe)
 {
-
 }
 
 void CSDKOption::on_destroy_option_main_view()
 {
-
 }
 
 static CSDKOption ise_option_instance;
