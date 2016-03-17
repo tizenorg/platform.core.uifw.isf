@@ -107,6 +107,11 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 
     /* get pkgmgrinfo_pkginfo_h */
     ret = pkgmgrinfo_pkginfo_get_pkginfo (pkgid, &pkginfo_handle);
+    if (ret != PMINFO_R_OK) {
+        /* Try to find in user */
+        ret = pkgmgrinfo_pkginfo_get_usr_pkginfo (pkgid, getpid (), &pkginfo_handle);
+    }
+
     if (ret == PMINFO_R_OK && pkginfo_handle) {
         /* pkgtype */
         ret = pkgmgrinfo_pkginfo_get_type(pkginfo_handle, &pkgtype);
