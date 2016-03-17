@@ -1154,27 +1154,46 @@ static int _isf_insert_ime_info_by_pkgid(const char *pkgid)
     int ret = -1;
     pkgmgrinfo_pkginfo_h handle = NULL;
     int result = 0;  // 0: not IME, 1: Inserted, 2: Updated (because of the same appid)
+    uid_t uid = getpid ();
+    bool user = false;
 
     if (!pkgid) {
         LOGW ("pkgid is null.\n");
         return 0;
     }
 
-    ret = pkgmgrinfo_pkginfo_get_pkginfo(pkgid, &handle);
+    /* Try to get in global packages */
+    ret = pkgmgrinfo_pkginfo_get_pkginfo (pkgid, &handle);
     if (ret != PMINFO_R_OK) {
-        LOGW ("Failed to call pkgmgrinfo_pkginfo_get_pkginfo(\"%s\",~) returned %d\n", pkgid, ret);
-        return 0;
+        /* Try to get in user packages */
+        ret = pkgmgrinfo_pkginfo_get_usr_pkginfo (pkgid, uid, &handle);
+        if (ret != PMINFO_R_OK) {
+            LOGW ("Failed to call pkgmgrinfo_pkginfo_get_pkginfo & get_usr_pkginfo(\"%s\",~) returned %d\n", pkgid, ret);
+            return 0;
+        }
+        else {
+            user = true;
+        }
     }
 
-    ret = pkgmgrinfo_appinfo_get_list(handle, PMINFO_UI_APP, isf_pkg_ime_app_list_cb, (void *)&result);
+    if (user) {
+        /* Try to get in user packages */
+        ret = pkgmgrinfo_appinfo_get_usr_list (handle, PMINFO_UI_APP, isf_pkg_ime_app_list_cb, (void *)&result, uid);
+    }
+    else {
+        /* Try to get in global packages */
+        ret = pkgmgrinfo_appinfo_get_list (handle, PMINFO_UI_APP, isf_pkg_ime_app_list_cb, (void *)&result);
+    }
+
     if (ret != PMINFO_R_OK) {
-        LOGW ("Failed to call pkgmgrinfo_appinfo_get_list failed(%d)\n", ret);
+        LOGW ("Failed to call %s failed(%d)\n", user ? "pkgmgrinfo_appinfo_get_usr_list" : "pkgmgrinfo_appinfo_get_list", ret);
+
         ret = 0;
     }
     else if (result)
         ret = result;
 
-    pkgmgrinfo_pkginfo_destroy_pkginfo(handle);
+    pkgmgrinfo_pkginfo_destroy_pkginfo (handle);
 
     return ret;
 }
@@ -5371,9 +5390,9 @@ static int _find_appid_from_category (const pkgmgrinfo_appinfo_h handle, void *u
         int ret = 0;
 
         /* Get appid */
-        ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
+        ret = pkgmgrinfo_appinfo_get_appid (handle, &appid);
         if (ret == PMINFO_R_OK) {
-            *result = strdup(appid);
+            *result = strdup (appid);
         }
         else {
             LOGW ("pkgmgrinfo_appinfo_get_appid failed!\n");

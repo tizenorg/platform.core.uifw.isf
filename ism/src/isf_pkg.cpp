@@ -106,16 +106,22 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
         ime_db.label = String (label ? label : "");
 
     /* get pkgmgrinfo_pkginfo_h */
+    /* Try to get in global packages */
     ret = pkgmgrinfo_pkginfo_get_pkginfo (pkgid, &pkginfo_handle);
+    if (ret != PMINFO_R_OK) {
+        /* Try to get in user packages */
+        ret = pkgmgrinfo_pkginfo_get_usr_pkginfo (pkgid, getpid (), &pkginfo_handle);
+    }
+
     if (ret == PMINFO_R_OK && pkginfo_handle) {
         /* pkgtype */
-        ret = pkgmgrinfo_pkginfo_get_type(pkginfo_handle, &pkgtype);
+        ret = pkgmgrinfo_pkginfo_get_type (pkginfo_handle, &pkgtype);
 
         if (ret == PMINFO_R_OK)
-            ime_db.pkgtype = String(pkgtype ? pkgtype : "");
+            ime_db.pkgtype = String (pkgtype ? pkgtype : "");
         else {
             ISF_SAVE_LOG ("pkgtype is not available!");
-            pkgmgrinfo_pkginfo_destroy_pkginfo(pkginfo_handle);
+            pkgmgrinfo_pkginfo_destroy_pkginfo (pkginfo_handle);
             return 0;
         }
 
