@@ -261,10 +261,16 @@ void SocketFrontEnd::run_helper (const Socket &client)
     pkgmgrinfo_appinfo_h appinfo_handle;
 
     /* get app info handle */
+    /* Try to get in global packages */
     ret = pkgmgrinfo_appinfo_get_appinfo (uuid.c_str (), &appinfo_handle);
     if (ret != PMINFO_R_OK) {
-        LOGW ("pkgmgrinfo_appinfo_get_appinfo failed %s %d \n", uuid.c_str (), ret);
-        return;
+        /* Try to get in user packages */
+        ret = pkgmgrinfo_appinfo_get_usr_appinfo (uuid.c_str (), getpid (), &appinfo_handle);
+
+        if (ret != PMINFO_R_OK) {
+            LOGW ("pkgmgrinfo_appinfo_get_appinfo () & get_usr_appinfo () failed %s %d \n", uuid.c_str (), ret);
+            return;
+        }
     }
 
     /* Get exec path */
