@@ -262,6 +262,7 @@ static void       delete_notification                  (NotificationData *noti_d
 static void       create_notification                  (NotificationData *noti_data);
 #endif
 static void       set_language_and_locale              (void);
+static void       show_ime_selector_notification       (void);
 
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of internal variables.
@@ -5887,6 +5888,8 @@ static void slot_show_ise (void)
     _ise_angle = 0;
     _candidate_angle = 0;
     _ise_state = WINDOW_STATE_SHOW;
+
+    show_ime_selector_notification ();
 #endif
 }
 
@@ -6231,6 +6234,12 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         _info_manager->hide_helper (helper_uuid);
         _info_manager->reload_config ();
 
+#ifdef HAVE_ECOREWL
+#ifdef HAVE_NOTIFICATION
+        delete_notification (&ise_selector_module_noti);
+#endif
+#endif
+
         /* Check whether stop soft keyboard */
         if (_focus_in && (_ime_info[get_ise_index (helper_uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
             /* If focus in and soft keyboard can support hardware key event, then don't stop it */
@@ -6318,6 +6327,44 @@ static void _bt_cb_hid_state_changed (int result, bool connected, const char *re
 }
 #endif
 
+static void show_ime_selector_notification ()
+{
+#ifdef HAVE_NOTIFICATION
+    String ise_name;
+    unsigned int idx = get_ise_index (_info_manager->get_current_helper_uuid ());
+    if (idx < _ime_info.size ())
+        ise_name = _ime_info[idx].label;
+
+    ise_selector_module_noti.content = ise_name.c_str ();
+
+    /* Find IME Selector appid for notification */
+    if (ime_selector_app.length() < 1) {
+        char *app_id = NULL;
+        pkgmgrinfo_appinfo_filter_h handle;
+        int ret = pkgmgrinfo_appinfo_filter_create(&handle);
+        if (ret == PMINFO_R_OK) {
+            ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-selector");
+            if (ret == PMINFO_R_OK) {
+                ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _find_appid_from_category, &app_id);
+            }
+            pkgmgrinfo_appinfo_filter_destroy(handle);
+
+            if (app_id) {
+                ime_selector_app = String(app_id);
+                free (app_id);
+            }
+        }
+    }
+    if (ime_selector_app.length() > 0) {
+        ise_selector_module_noti.launch_app = ime_selector_app;
+        LOGD ("Create ise_selector notification with : %s\n", ime_selector_app.c_str ());
+        create_notification (&ise_selector_module_noti);
+    }
+    else
+        LOGW ("AppID with http://tizen.org/category/ime-selector category is not available\n");
+#endif
+}
+
 #if HAVE_ECOREX
 /**
  * @brief Callback function for ECORE_X_EVENT_WINDOW_PROPERTY.
@@ -6384,40 +6431,8 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
                     if (get_ise_count (TOOLBAR_HELPER_MODE, true) >= 2) {
                         ecore_x_event_mask_set (efl_get_quickpanel_window (), ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
-#ifdef HAVE_NOTIFICATION
-                        String ise_name;
-                        unsigned int idx = get_ise_index (_info_manager->get_current_helper_uuid ());
-                        if (idx < _ime_info.size ())
-                            ise_name = _ime_info[idx].label;
 
-                        ise_selector_module_noti.content = ise_name.c_str ();
-
-                        /* Find IME Selector appid for notification */
-                        if (ime_selector_app.length() < 1) {
-                            char *app_id = NULL;
-                            pkgmgrinfo_appinfo_filter_h handle;
-                            int ret = pkgmgrinfo_appinfo_filter_create(&handle);
-                            if (ret == PMINFO_R_OK) {
-                                ret = pkgmgrinfo_appinfo_filter_add_string(handle, PMINFO_APPINFO_PROP_APP_CATEGORY, "http://tizen.org/category/ime-selector");
-                                if (ret == PMINFO_R_OK) {
-                                    ret = pkgmgrinfo_appinfo_filter_foreach_appinfo(handle, _find_appid_from_category, &app_id);
-                                }
-                                pkgmgrinfo_appinfo_filter_destroy(handle);
-
-                                if (app_id) {
-                                    ime_selector_app = String(app_id);
-                                    free (app_id);
-                                }
-                            }
-                        }
-                        if (ime_selector_app.length() > 0) {
-                            ise_selector_module_noti.launch_app = ime_selector_app;
-                            LOGD ("Create ise_selector notification with : %s\n", ime_selector_app.c_str ());
-                            create_notification (&ise_selector_module_noti);
-                        }
-                        else
-                            LOGW ("AppID with http://tizen.org/category/ime-selector category is not available\n");
-#endif
+                        show_ime_selector_notification ();
                     }
                 }
 
