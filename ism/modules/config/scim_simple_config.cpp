@@ -487,6 +487,14 @@ SimpleConfig::get_sysconf_filename ()
 }
 
 String
+SimpleConfig::get_sysconf2_filename ()
+{
+    return get_sysconf_dir () +
+           String (SCIM_PATH_DELIM_STRING) +
+           String ("conf/config");
+}
+
+String
 SimpleConfig::get_userconf_filename ()
 {
     return get_userconf_dir () +
@@ -577,6 +585,7 @@ bool
 SimpleConfig::load_all_config ()
 {
     String sysconf = get_sysconf_filename ();
+    String sysconf2 = get_sysconf2_filename ();
     String userconf = get_userconf_filename ();
 
     KeyValueRepository config;
@@ -586,6 +595,15 @@ SimpleConfig::load_all_config ()
         if (is) {
             SCIM_DEBUG_CONFIG(1) << "Parsing user config file: "
                                  << userconf << "\n";
+            parse_config (is, config);
+        }
+    }
+
+    if (sysconf2.length ()) {
+        std::ifstream is (sysconf2.c_str ());
+        if (is) {
+            SCIM_DEBUG_CONFIG(1) << "Parsing user_system config file: "
+                                 << sysconf2 << "\n";
             parse_config (is, config);
         }
     }
@@ -600,7 +618,6 @@ SimpleConfig::load_all_config ()
     } else {
         std::cerr << __func__ << " Cannot open(" << sysconf << ")\n";
     }
-
     if (!m_config.size () || (m_update_timestamp.tv_sec == 0 && m_update_timestamp.tv_usec == 0)) {
         m_config.swap (config);
         gettimeofday (&m_update_timestamp, 0);

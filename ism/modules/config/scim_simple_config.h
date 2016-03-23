@@ -99,6 +99,7 @@ private:
     String get_sysconf_dir ();
     String get_userconf_dir ();
     String get_sysconf_filename ();
+    String get_sysconf2_filename ();
     String get_userconf_filename ();
 
     String trim_blank (const String &str);
