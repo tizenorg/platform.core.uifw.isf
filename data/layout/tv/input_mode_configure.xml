@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <input_mode_table>
+  <mode name="ENGLISH_QTY">
+    <layouts>
+      <portrait>LYT_PORTRAIT_QTY_ENGLISH.xml</portrait>
+      <landscape>LYT_LANDSCAPE_QTY_ENGLISH.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="FRENCH_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_FRENCH.xml</portrait>
@@ -7,12 +13,6 @@
     </layouts>
   </mode>
   <!-- 10-9-7 BEGIN -->
-  <mode name="ENGLISH_QTY">
-    <layouts>
-      <portrait>LYT_PORTRAIT_QTY_ENGLISH.xml</portrait>
-      <landscape>LYT_LANDSCAPE_QTY_ENGLISH.xml</landscape>
-    </layouts>
-  </mode>
   <mode name="ITALIAN_QTY">
     <layouts>
       <portrait>LYT_PORTRAIT_QTY_ITALIAN.xml</portrait>
