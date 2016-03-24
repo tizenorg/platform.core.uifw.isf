@@ -72,7 +72,7 @@ x11_la_LIBADD      = imdkit/libXimd.la \
 
 socket_la_SOURCES  = scim_socket_frontend.cpp
 
-socket_la_CXXFLAGS = @DLOG_CFLAGS@ @ECORE_CFLAGS@ @PKGMGR_INFO_CFLAGS@
+socket_la_CXXFLAGS = @DLOG_CFLAGS@ @ECORE_CFLAGS@ @PKGMGR_INFO_CFLAGS@ @APP_CONTROL_CFLAGS@
 
 socket_la_LDFLAGS  = -avoid-version \
                      -rpath $(moduledir) \
@@ -80,6 +80,7 @@ socket_la_LDFLAGS  = -avoid-version \
                      @DLOG_LIBS@ \
                      @ECORE_LIBS@ \
                      @PKGMGR_INFO_LIBS@ \
+                     @APP_CONTROL_LIBS@ \
                      @LIBTOOL_EXPORT_OPTIONS@
 
 socket_la_LIBADD   = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
