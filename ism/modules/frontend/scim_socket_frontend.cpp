@@ -68,6 +68,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <dlog.h>
+#include <app_control.h>
 #if HAVE_PKGMGR_INFO
 #include <pkgmgr-info.h>
 #endif
@@ -239,6 +240,42 @@ void SocketFrontEnd::launch_helper (const char *name, const char *appid, const c
     }
 }
 
+void SocketFrontEnd::app_control_launch (const char *app_id)
+{
+    app_control_h app_control;
+    int ret;
+
+    ret = app_control_create (&app_control);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW ("app_control_create returned %d\n", ret);
+        return;
+    }
+
+    ret = app_control_set_operation (app_control, APP_CONTROL_OPERATION_DEFAULT);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW ("app_control_set_operation returned %d\n", ret);
+        app_control_destroy (app_control);
+        return;
+    }
+
+    ret = app_control_set_app_id (app_control, app_id);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW ("app_control_set_app_id returned %d\n", ret);
+        app_control_destroy (app_control);
+        return;
+    }
+
+    ret = app_control_send_launch_request (app_control, NULL, NULL);
+    if (ret != APP_CONTROL_ERROR_NONE) {
+        LOGW ("app_control_send_launch_request returned %d, app_id=%s\n", ret, app_id);
+        app_control_destroy (app_control);
+        return;
+    }
+
+    app_control_destroy (app_control);
+    LOGD ("Launch %s\n", app_id);
+}
+
 void SocketFrontEnd::run_helper (const Socket &client)
 {
     String uuid;
@@ -293,7 +330,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
 
     if (scim_helper_path != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
         /* exe type IME */
-        launch_helper (NULL, NULL, config.c_str (), display.c_str ());
+        app_control_launch (uuid.c_str ());
         m_send_trans.put_command (SCIM_TRANS_CMD_OK);
     }
     else {
