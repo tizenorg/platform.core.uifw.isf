@@ -610,6 +610,7 @@ static void create_notification (NotificationData *noti_data)
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
     notification_h notification = NULL;
+    int ret;
 
     if (noti_data->noti_id != 0) {
         notification_delete_by_priv_id ("isf-panel-efl", NOTIFICATION_TYPE_ONGOING, noti_data->noti_id);
@@ -617,23 +618,34 @@ static void create_notification (NotificationData *noti_data)
     }
 
     notification = notification_create (NOTIFICATION_TYPE_ONGOING);
+    if (notification != NULL) {
+        notification_set_pkgname (notification, "isf-panel-efl");
+        notification_set_layout (notification, NOTIFICATION_LY_NOTI_EVENT_SINGLE);
+        notification_set_image (notification, NOTIFICATION_IMAGE_TYPE_ICON, noti_data->icon);
+        notification_set_text (notification, NOTIFICATION_TEXT_TYPE_TITLE, _(noti_data->title), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+        notification_set_text (notification, NOTIFICATION_TEXT_TYPE_CONTENT, _(noti_data->content), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+        notification_set_display_applist (notification, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY);
 
-    notification_set_pkgname (notification, "isf-panel-efl");
-    notification_set_layout (notification, NOTIFICATION_LY_NOTI_EVENT_SINGLE);
-    notification_set_image (notification, NOTIFICATION_IMAGE_TYPE_ICON, noti_data->icon);
-    notification_set_text (notification, NOTIFICATION_TEXT_TYPE_TITLE, _(noti_data->title), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-    notification_set_text (notification, NOTIFICATION_TEXT_TYPE_CONTENT, _(noti_data->content), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-    notification_set_display_applist (notification, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY);
+        app_control_h service = NULL;
+        if (app_control_create (&service) == APP_CONTROL_ERROR_NONE) {
+            app_control_set_operation (service, APP_CONTROL_OPERATION_DEFAULT);
+            app_control_set_app_id (service, noti_data->launch_app.c_str ());
 
-    app_control_h service = NULL;
-    app_control_create (&service);
-    app_control_set_operation (service, APP_CONTROL_OPERATION_DEFAULT);
-    app_control_set_app_id (service, noti_data->launch_app.c_str ());
-
-    notification_set_launch_option (notification, NOTIFICATION_LAUNCH_OPTION_APP_CONTROL, (void *)service);
-    notification_insert (notification, &noti_data->noti_id);
-    app_control_destroy (service);
-    notification_free (notification);
+            notification_set_launch_option (notification, NOTIFICATION_LAUNCH_OPTION_APP_CONTROL, (void *)service);
+            ret = notification_insert (notification, &noti_data->noti_id);
+            if (ret == NOTIFICATION_ERROR_PERMISSION_DENIED) {
+                LOGW ("Failed to insert notification due to permission denied\n");
+            }
+            app_control_destroy (service);
+        }
+        else {
+            LOGW ("Failed to create appcontrol\n");
+        }
+        notification_free (notification);
+    }
+    else {
+        LOGW ("Failed to create notification\n");
+    }
 }
 #endif
 
