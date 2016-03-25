@@ -88,6 +88,12 @@ PanelAgentModule::load (const String& name, const ConfigPointer& config)
 }
 
 bool
+PanelAgentModule::unload ()
+{
+    return m_module.unload ();
+}
+
+bool
 PanelAgentModule::valid () const
 {
     return (m_module.valid () && m_panel_agent_init && m_panel_agent_get_instance);

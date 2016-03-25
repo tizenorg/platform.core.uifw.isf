@@ -4389,10 +4389,7 @@ extern "C" {
     EXAPI void scim_module_exit (void)
     {
         LOGD ("");
-        if (instance) {
-            delete instance;
-            instance = NULL;
-        }
+        //instance manager by ReferencedObject, do not delete yourself
     }
 
     EXAPI void scim_panel_agent_module_init (const scim::ConfigPointer& config)
