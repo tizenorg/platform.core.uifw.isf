@@ -7271,10 +7271,6 @@ cleanup:
 
     elm_shutdown ();
 
-    if (!_config.null ())
-        _config.reset ();
-    if (config_module)
-        delete config_module;
     if (_info_manager) {
         try {
             _info_manager->stop ();
@@ -7283,6 +7279,12 @@ cleanup:
         }
         delete _info_manager;
     }
+
+    if (!_config.null ())
+        _config.reset ();
+    if (config_module)
+        delete config_module;
+
     if ((display_name_c > 0) && new_argv [display_name_c]) {
         free (new_argv [display_name_c]);
     }
