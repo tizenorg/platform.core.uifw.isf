@@ -4378,7 +4378,7 @@ public:
 
 };
 
-static scim::PanelAgentBase* instance = NULL;
+static scim::PanelAgentPointer instance;
 extern "C" {
 
     EXAPI void scim_module_init (void)
@@ -4389,10 +4389,7 @@ extern "C" {
     EXAPI void scim_module_exit (void)
     {
         LOGD ("");
-        if (instance) {
-            delete instance;
-            instance = NULL;
-        }
+        instance.reset();
     }
 
     EXAPI void scim_panel_agent_module_init (const scim::ConfigPointer& config)
@@ -4403,17 +4400,19 @@ extern "C" {
 
     EXAPI scim::PanelAgentPointer scim_panel_agent_module_get_instance ()
     {
-        if (!instance) {
+        scim::PanelAgentBase* _instance = NULL;
+        if (instance.null()) {
             try {
-                LOGD ("");
-                instance = new WaylandPanelAgent ();
+                _instance = new WaylandPanelAgent();
             } catch (...) {
-                delete instance;
-                instance = NULL;
+                delete _instance;
+                _instance = NULL;
             }
+            if(_instance)
+                instance = _instance;
         }
+        return instance;
 
-        return scim::PanelAgentPointer (instance);
     }
 }
 

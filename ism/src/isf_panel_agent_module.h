@@ -115,6 +115,12 @@ public:
     bool load (const String& name, const ConfigPointer& config);
 
     /**
+     * @brief Unload the PanelAgent Module.
+     * @return true if sucessfully unloaded.
+     */
+    bool unload ();
+
+    /**
      * @brief Check if a module is loaded and initialized successfully.
      *
      * @return true if a module is already loaded and initialized successfully.
