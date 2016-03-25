@@ -75,9 +75,6 @@
 #define MIN_REPEAT_TIME     2.0
 
 
-EXAPI scim::CommonLookupTable g_isf_candidate_table;
-
-
 namespace scim
 {
 
