@@ -4024,6 +4024,12 @@ static void hide_ise ()
         else
             ui_candidate_hide (true, false, true);
     }
+
+#ifdef HAVE_ECOREWL
+#ifdef HAVE_NOTIFICATION
+    delete_notification (&ise_selector_module_noti);
+#endif
+#endif
 }
 
 #if ENABLE_MULTIWINDOW_SUPPORT
@@ -6251,12 +6257,6 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         _info_manager->set_current_toolbar_mode (TOOLBAR_KEYBOARD_MODE);
         _info_manager->hide_helper (helper_uuid);
         _info_manager->reload_config ();
-
-#ifdef HAVE_ECOREWL
-#ifdef HAVE_NOTIFICATION
-        delete_notification (&ise_selector_module_noti);
-#endif
-#endif
 
         /* Check whether stop soft keyboard */
         if (_focus_in && (_ime_info[get_ise_index (helper_uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
