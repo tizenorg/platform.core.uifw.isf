@@ -621,9 +621,15 @@ static void create_notification (NotificationData *noti_data)
     if (notification != NULL) {
         notification_set_pkgname (notification, "isf-panel-efl");
         notification_set_layout (notification, NOTIFICATION_LY_NOTI_EVENT_SINGLE);
-        notification_set_image (notification, NOTIFICATION_IMAGE_TYPE_ICON, noti_data->icon);
-        notification_set_text (notification, NOTIFICATION_TEXT_TYPE_TITLE, _(noti_data->title), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-        notification_set_text (notification, NOTIFICATION_TEXT_TYPE_CONTENT, _(noti_data->content), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+        if (noti_data->icon)
+            notification_set_image (notification, NOTIFICATION_IMAGE_TYPE_ICON, noti_data->icon);
+
+        if (noti_data->title)
+            notification_set_text (notification, NOTIFICATION_TEXT_TYPE_TITLE, _(noti_data->title), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+
+        if (noti_data->content)
+            notification_set_text (notification, NOTIFICATION_TEXT_TYPE_CONTENT, _(noti_data->content), NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+
         notification_set_display_applist (notification, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY);
 
         app_control_h service = NULL;
@@ -633,8 +639,8 @@ static void create_notification (NotificationData *noti_data)
 
             notification_set_launch_option (notification, NOTIFICATION_LAUNCH_OPTION_APP_CONTROL, (void *)service);
             ret = notification_insert (notification, &noti_data->noti_id);
-            if (ret == NOTIFICATION_ERROR_PERMISSION_DENIED) {
-                LOGW ("Failed to insert notification due to permission denied\n");
+            if (ret != NOTIFICATION_ERROR_NONE) {
+                LOGW ("Failed to insert notification. error code : %d\n", ret);
             }
             app_control_destroy (service);
         }
@@ -6368,6 +6374,7 @@ static void show_ime_selector_notification ()
             }
         }
     }
+
     if (ime_selector_app.length () > 0) {
         ise_selector_module_noti.launch_app = ime_selector_app;
         LOGD ("Create ise_selector notification with : %s\n", ime_selector_app.c_str ());
