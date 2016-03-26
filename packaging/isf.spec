@@ -101,9 +101,9 @@ CXXFLAGS+=" -DWAYLAND"
 
 export GC_SECTIONS_FLAGS="-fdata-sections -ffunction-sections -Wl,--gc-sections"
 
-CFLAGS+=" -fvisibility=hidden ${GC_SECTIONS_FLAGS} "; export CFLAGS
+CFLAGS+=" -fvisibility=hidden ${GC_SECTIONS_FLAGS} -flto "; export CFLAGS
 
-CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS} ";export CXXFLAGS
+CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS} -flto ";export CXXFLAGS
 
 %autogen
 %configure --disable-static \
