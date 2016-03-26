@@ -52,9 +52,6 @@
 
 #define IMEMANAGER_PRIVILEGE "http://tizen.org/privilege/imemanager"
 
-EXAPI scim::CommonLookupTable g_isf_candidate_table;
-
-
 namespace scim
 {
 
@@ -2877,7 +2874,7 @@ private:
 /***************************************************/
 /*** Beginning of panel agent interface for ISF ***/
 /***************************************************/
-static scim::PanelAgentBase* instance = NULL;
+static scim::PanelAgentPointer instance;
 
 extern "C" {
 
@@ -2887,10 +2884,7 @@ extern "C" {
 
     EXAPI void scim_module_exit(void)
     {
-        if (instance) {
-            delete instance;
-            instance = NULL;
-        }
+        instance.reset();
     }
 
     EXAPI void scim_panel_agent_module_init(const scim::ConfigPointer& config)
@@ -2899,17 +2893,18 @@ extern "C" {
 
     EXAPI scim::PanelAgentPointer scim_panel_agent_module_get_instance()
     {
-
-        if (!instance) {
+        scim::PanelAgentBase* _instance = NULL;
+        if (instance.null()) {
             try {
-                instance = new scim::EcoreSocketPanelAgent();
+                _instance = new scim::EcoreSocketPanelAgent();
             } catch (...) {
-                delete instance;
-                instance = NULL;
+                delete _instance;
+                _instance = NULL;
             }
+            if(_instance)
+                instance = _instance;
         }
-
-        return scim::PanelAgentPointer(instance);
+        return instance;
     }
 }
 

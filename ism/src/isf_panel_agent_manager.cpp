@@ -77,9 +77,12 @@ public:
     }
 
     ~PanelAgentManagerImpl () {
+        m_socket.reset(0);
+        m_wayland.reset(0);
         std::vector<PanelAgentModule*>::iterator iter = m_panel_agent_modules.begin ();
 
         for (; iter != m_panel_agent_modules.end (); iter++) {
+            (*iter)->unload();
             delete *iter;
         }
 
