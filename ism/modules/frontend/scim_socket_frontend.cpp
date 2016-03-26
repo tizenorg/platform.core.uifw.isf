@@ -328,30 +328,28 @@ void SocketFrontEnd::run_helper (const Socket &client)
     scim_helper_path = String (SCIM_HELPER_LAUNCHER_PROGRAM);
 #endif
 
-    if (scim_helper_path != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
-        /* exe type IME */
-        app_control_launch (uuid.c_str ());
-        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
-    }
-    else {
-        /* shared object (so) type IME */
-        for (i = 0; i < __helpers.size (); ++i) {
-            if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
+    for (i = 0; i < __helpers.size (); ++i) {
+        if (__helpers [i].first.uuid == uuid && __helpers [i].second.length ()) {
+            __active_helpers.push_back (__helpers [i].first.name);
 
-                __active_helpers.push_back (__helpers [i].first.name);
-
-                launch_helper (__helpers [i].second.c_str (), __helpers [i].first.uuid.c_str (), config.c_str (), display.c_str ());
-                break;
+            if (scim_helper_path != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
+                /* execute type IME */
+                app_control_launch (uuid.c_str ());
             }
+            else {
+                /* shared object (so) type IME */
+                launch_helper (__helpers [i].second.c_str (), __helpers [i].first.uuid.c_str (), config.c_str (), display.c_str ());
+            }
+            break;
         }
-
-        if (i > 0 && i == __helpers.size ()) {
-            ISF_SAVE_LOG ("Can't find and exec scim_helper_launcher appid=\"%s\"\n", uuid.c_str ());
-            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
-        }
-        else
-            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
     }
+
+    if (i > 0 && i == __helpers.size ()) {
+        ISF_SAVE_LOG ("Can't find and exec scim_helper_launcher appid=\"%s\"\n", uuid.c_str ());
+        m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+    }
+    else
+        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
 
     SCIM_DEBUG_MAIN (2) << " exit run_helper ().\n";
 }
