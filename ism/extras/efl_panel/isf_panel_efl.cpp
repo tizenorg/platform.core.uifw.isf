@@ -121,8 +121,6 @@ using namespace scim;
 
 #define E_PROP_DEVICEMGR_INPUTWIN                       "DeviceMgr Input Window"
 
-#define SCIM_HELPER_LAUNCHER_PROGRAM (SCIM_LIBEXECDIR "/scim-helper-launcher")
-
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
 /////////////////////////////////////////////////////////////////////////////

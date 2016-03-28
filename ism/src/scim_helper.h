@@ -46,6 +46,10 @@
 
 #include "scim_utility.h"
 
+#ifndef SCIM_HELPER_LAUNCHER_PROGRAM
+#define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
+#endif
+
 namespace scim {
 
 /**
