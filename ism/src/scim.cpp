@@ -129,10 +129,6 @@ static bool check_panel (const String &display)
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 
-#ifndef SCIM_HELPER_LAUNCHER_PROGRAM
-#define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
-#endif
-
 static Ecore_Ipc_Server *server = NULL;
 static Ecore_Event_Handler *exit_handler = NULL;
 static Ecore_Event_Handler *data_handler = NULL;

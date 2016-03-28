@@ -140,11 +140,13 @@ int main (int argc, char *argv [])
             uuid = String (argv [i]);
             continue;
         }
+    }
 
-        ISF_SAVE_LOG ("Invalid command line option: %d %s...\n", i, argv [i]);
+    String exec = String (argv[0]);
 
-        std::cerr << "Invalid command line option: " << argv [i] << "\n";
-        return -1;
+    if (exec != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
+        /* 3rd party shared object type IME */
+        uuid = helper = String ("lib") + exec.substr (exec.find_last_of (SCIM_PATH_DELIM) + 1);
     }
 
     SCIM_DEBUG_MAIN(1) << "scim-helper-launcher: " << config << " " << display << " " << helper << " " << uuid << "\n";

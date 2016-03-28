@@ -207,9 +207,6 @@ void SocketFrontEnd::get_helper_list (const Socket &client)
     }
 }
 
-#ifndef SCIM_HELPER_LAUNCHER_PROGRAM
-  #define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
-#endif
 static std::vector<String>  __active_helpers;
 static String scim_helper_path;
 
