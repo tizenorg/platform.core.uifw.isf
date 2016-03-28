@@ -42,7 +42,6 @@ BuildRequires:  pkgconfig(cynara-client)
 BuildRequires:  pkgconfig(cynara-creds-socket)
 BuildRequires:  pkgconfig(cynara-session)
 BuildRequires:  capi-appfw-package-manager-devel
-Requires(post): /sbin/ldconfig /usr/bin/vconftool
 Requires(postun): /sbin/ldconfig
 %if %{without wayland}
 Requires: org.tizen.isf-kbd-mode-changer
