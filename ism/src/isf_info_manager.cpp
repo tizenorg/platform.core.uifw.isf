@@ -409,9 +409,7 @@ public:
 
     bool initialize (InfoManager* info_manager, const ConfigPointer& config, const String& display, bool resident) {
 
-
-        //set config name as empty, scim_helper_launcher will read from global config
-        m_config_name = "";
+        m_config_name = "socket";
         m_display_name = display;
 
         /* If our helper manager could not connect to the HelperManager process,
