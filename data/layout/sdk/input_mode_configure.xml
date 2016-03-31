@@ -594,7 +594,7 @@
       <landscape>LYT_LANDSCAPE_EMOTICON.xml</landscape>
     </layouts>
   </mode>
-  <mode name="EMOTICON_POPUP" dim_window="true">
+  <mode name="EMOTICON_POPUP" virtual_window="true" dim_window="true">
     <layouts>
       <portrait>LYT_EMOTICON_POPUP.xml</portrait>
       <landscape>LYT_EMOTICON_POPUP.xml</landscape>
@@ -612,7 +612,7 @@
       <landscape>LYT_URL_POPUP.xml</landscape>
     </layouts>
   </mode>
-  <mode name="CM_POPUP" dim_window="true">
+  <mode name="CM_POPUP" virtual_window="true" dim_window="true">
     <layouts>
       <portrait>LYT_CM_POPUP.xml</portrait>
       <landscape>LYT_CM_POPUP.xml</landscape>

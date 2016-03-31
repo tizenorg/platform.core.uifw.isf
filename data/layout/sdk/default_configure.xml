@@ -22,7 +22,7 @@
     </landscape>
   </touch_offset>
   <default_sub_layout>DEFAULT</default_sub_layout>
-  <dim_use_window_flag>true</dim_use_window_flag>
+  <dim_use_window_flag>false</dim_use_window_flag>
   <dim_color>
     <r>0</r>
     <g>0</g>
