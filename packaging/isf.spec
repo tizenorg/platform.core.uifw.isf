@@ -6,7 +6,6 @@ Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1+
 Source0:    %{name}-%{version}.tar.gz
-Source1001: isf.manifest
 BuildRequires:  edje-bin
 BuildRequires:  gettext-tools
 BuildRequires:  pkgconfig(appcore-efl)
@@ -71,7 +70,6 @@ isf-kbd-mode-changer
 
 %prep
 %setup -q
-cp %{SOURCE1001} .
 
 %build
 export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
