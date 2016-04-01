@@ -124,8 +124,10 @@ static const struct serveable whitelist[] = {
     { "/c_bt.png", "image/png" },
     { "/c_bt_pressed.png", "image/png" },
 
+    { "/openinput.js", "text/javascript" },
     /* last one is the default served if no match */
-    { "/tv.htm", "text/html" },
+    //{ "/tv.htm", "text/html" },
+    { "/testpage.htm", "text/html" },
 };
 #define LOCAL_RESOURCE_PATH "/usr/share/scim/remote-input"
 

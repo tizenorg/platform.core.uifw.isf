@@ -1,42 +1,247 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript">
-function WebSocketTest()
-{
-  if ("WebSocket" in window)
-  {
-     alert("WebSocket is supported by your Browser!");
-     // Let us open a web socket
-     var ws = new WebSocket("ws://192.168.0.20:7172");
-     ws.onopen = function()
-     {
-        // Web Socket is connected, send data using send()
-        ws.send("Message to send");
-        alert("Message is sent...");
-     };
-     ws.onmessage = function (evt) 
-     { 
-        var received_msg = evt.data;
-        alert("Message is received...");
-     };
-     ws.onclose = function()
-     { 
-        // websocket is closed.
-        alert("Connection is closed..."); 
-     };
-  }
-  else
-  {
-     // The browser doesn't support WebSocket
-     alert("WebSocket NOT supported by your Browser!");
-  }
-}
-</script>
+    <title>Tizen Remote Input</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="remote_input.css" type="text/css"/>
+    <script type="text/javascript" src="openinput.js"></script>
 </head>
-<body>
-<div id="sse">
-   <a href="javascript:WebSocketTest()">Run WebSocket</a>
-</div>
+
+<body id="by">
+<script>
+        var obj = document.getElementById('by');
+        obj.style.height =  $(document).height() + "px";
+
+        openInput.initialize('default');
+
+        openInput.tv.setMousepad('mousepad');
+        openInput.tv.setMousescroll('mousescroll', 1);
+        openInput.tv.setEntry('test_entry');
+
+      function sendevent(form) {
+        if (form == "sys_btn_modechange") {
+            inputModeChanged("tvmode", "keymode");
+        }
+        else if (form == "sys_btn_home"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_HOME);
+        }
+        else if (form == "sys_btn_back"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_BACK);
+        }
+        else if (form == "sys_btn_modechange2"){
+            inputModeChanged("keymode", "tvmode");
+        }
+        else if (form == "sys_btn_home2"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_HOME);
+        }
+        else if (form == "sys_btn_back2"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_BACK);
+        }
+        else if (form == "bt_power"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_POWER);
+        }
+        else if (form == "bt_switchmode"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_SWITCHMODE);
+        }
+        else if (form == "bt_menu"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_MENU);
+        }
+        else if (form == "bt_info"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_INFO);
+        }
+        else if (form == "bt_select"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_SELECT);
+        }
+        else if (form == "bt_exit"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_EXIT);
+        }
+        else if (form == "bt_volume_up"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_VOLUME_UP);
+        }
+        else if (form == "bt_mute"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_MUTE);
+        }
+        else if (form == "bt_channel_up"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_CHANNEL_UP);
+        }
+        else if (form == "bt_volume_down"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_VOLUME_DOWN);
+        }
+        else if (form == "bt_channel_list"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_CHANNEL_LIST);
+        }
+        else if (form == "bt_channel_down"){
+            openInput.tv.sendKeyEvent(openInput.TV_KEY_CHANNEL_DOWN);
+        }
+    }
+        function inputModeChanged(from, to) {
+            event.preventDefault();
+            var from_div = document.getElementById(from);
+            from_div.style.display = "none";
+            var to_div = document.getElementById(to);
+            to_div.style.display = "block";
+        }
+
+        function home_icon_add(title){
+            var home_page_uri = "http://moakey.com/tizen_tv/list.php";
+            var home_icon_uri = "http://" + document.domain +":8182/shortcut_icon.png";
+
+            var naver_UrlScheme= "intent://addshortcut?url="+home_page_uri+"%3F"+"&icon="+home_icon_uri+"&title="+title+"&oq="+title+"&serviceCode=nstore&version=7#Intent;scheme=naversearchapp;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.search;end";
+            var UserAgent = navigator.userAgent.toLowerCase();
+
+            if(UserAgent.indexOf("iphone") == -1 && UserAgent.indexOf("ipad") == -1 && UserAgent.indexOf("tizen") == -1) {
+                alert('Add the ' + title +'shortCut icon');
+                var home_icon_add_frame=document.getElementById("home_icon_add_frame");
+                    home_icon_add_frame.src=naver_UrlScheme;
+            }else{
+                alert("Not surpport in iOS, Tizen ");
+            }
+        }
+        /*
+      var sum = 0;
+      var flag = 1;
+      $(document).ready(function() {
+        setInterval(function() {
+            if(sum == 100) {
+                sum = 0;
+                if (flag == 1)
+                    flag = 2;
+                else
+                    flag = 1;
+            }
+
+            if(flag == 1)
+                openInput.tv.tmpevent("0,1.3879974365234375");
+            else
+                openInput.tv.tmpevent("0,-1.3879974365234375");
+            sum++;
+        }, 5);
+      });
+        */
+</script>
+<!-- page 1 -->
+    <!-- TV MODE -->
+    <div id="tvmode" data-role="page" data-fullscreen="true" class ="visible">
+        <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_width33 cell_height5"></td>
+            </tr>
+            <tr>
+                <td  class="t_cell t_cell_inner" colspan="3">
+                        <!-- Content -->
+<!--                         <table class="tv_table"  id="mousepad2" > -->
+                        <table class="tv_table" >
+
+                                <!-- Content_space-top
+                                <tr>
+                                    <td class="t_cell cell_height5"></td>
+                                </tr> -->
+                                <tr>
+                                    <td>
+                                    <!-- Content_area -->
+                                        <table class="tv_inner_table">
+                                            <tr>
+                                                <td class="t_cell cell_height18" colspan="2"></td>
+                                                <td id="bt_power" class="t_cell power cell_height18" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell cell_height5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_volume_up" class="t_cell volume_up cell_width33" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_channel_up" class="t_cell channel_up cell_width33" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_switchmode" class="t_cell source cell_height13 cell_width33" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="t_cell cell_height13"></td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="t_cell volume t_cell_text"></td>
+                                                <td  class="t_cell channel t_cell_text"></td>
+                                                <td id="bt_menu" class="t_cell menu cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_volume_down" class="t_cell volume_down" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_channel_down" class="t_cell channel_down" rowspan="2" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_info" class="t_cell info cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_select" class="t_cell return cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="bt_mute" class="t_cell mute" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_channel_list" class="t_cell chlist" ontouchstart="sendevent(this.id)"></td>
+                                                <td id="bt_exit" class="t_cell exit cell_height13" ontouchstart="sendevent(this.id)"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Content_space-bottom -->
+                                <tr>
+                                    <td class="t_cell cell_height15 cell_gray_font"></td>
+                                </tr>
+                        </table>
+                </td>
+            </tr>
+        <!-- Footer -->
+            <tr>
+                <td id="sys_btn_home" class="t_cell_footer apps cell_width33" ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id="sys_btn_modechange" class="t_cell_footer modeswitcher_to_mouse cell_width33" ontouchstart="javascript:inputModeChanged('tvmode','keymode')" ></td>
+                <td id="sys_btn_back" class="t_cell_footer back cell_width33" ontouchstart="sendevent(this.id)"></td>
+            </tr>
+        </table>
+    </div>
+
+<!-- end page 1 -->
+
+<!-- page 2 -->
+    <!-- MOUSE MODE -->
+    <div id="keymode"  data-role="page" data-fullscreen="true" class ="invisible">
+       <table class="tb1" >
+        <!-- Header -->
+            <tr>
+                <td class="t_cell t_cell_header cell_width33 cell_height1" ontouchstart="home_icon_add('Tizen_Input')"></td>
+            </tr>
+            <tr>
+                <td  class="t_cell" colspan="3">
+                        <!-- Content -->
+                        <table class="tb1">
+                                <!-- Content_space-top -->
+                                <tr>
+                                    <td class="t_cell cell_height13 t_cell_vertical_align_bottom" >
+                                        <textarea name="test_entry" wrap="off" rows="1" id="test_entry" class="test_entry" placeholder="Send your text here" ></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="tb1_thin_border mouse_panel ">
+                                            <tr>
+                                                <!-- Content_area -->
+                                                <td id="mousepad" class="t_cell t_cell_mousepad t_cell_thin_border"> </td>
+                                                <td id="mousescroll" class="t_cell cell_width15 t_cell_thin_border"> </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Content_space-bottom -->
+                        </table>
+                </td>
+            </tr>
+        <!-- Footer -->
+            <tr>
+                <td id="sys_btn_home2" class="t_cell_footer apps cell_width33" ontouchstart="javascript:sendevent(this.id)"></td>
+                <td id="sys_btn_modechange2" class="t_cell_footer modeswitcher_to_tv cell_width33" ontouchstart="javascript:inputModeChanged('keymode','tvmode')" ></td>
+                <td id="sys_btn_back2" class="cell_width16 t_cell_footer back cell_width33" ontouchstart="sendevent(this.id)"></td>
+            </tr>
+
+        </table>
+    </div>
+
+<!-- end page 2 -->
+<iframe id="home_icon_add_frame" style="display:none;width:0px;height:0px;"></iframe>
+
 </body>
 </html>
