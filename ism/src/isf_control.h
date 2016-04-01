@@ -317,6 +317,16 @@ EXAPI int isf_control_get_recent_ime_geometry (int *x, int *y, int *w, int *h);
  * @return 0 if successfully, otherwise return -1;
  */
 EXAPI int isf_control_get_recent_ime_geometry_with_rotation_angle (int angle, int *x, int *y, int *w, int *h);
+
+/**
+ * @brief Requests to hide the input panel.
+ *
+ * @since_tizen 2.4
+ *
+ * @return 0 on success, otherwise return -1
+ */
+EXAPI int isf_control_hide_ime (void);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

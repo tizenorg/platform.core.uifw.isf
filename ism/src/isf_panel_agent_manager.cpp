@@ -764,6 +764,14 @@ void PanelAgentManager::helper_attach_input_context_and_update_screen (int id, s
         _p->helper_attach_input_context_and_update_screen (id, helper_ic_index, current_screen);
 }
 
+void PanelAgentManager::hide_helper_ise (int id, uint32 context)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->hide_helper_ise (id, context);
+}
+
 
 } /* namespace scim */
 

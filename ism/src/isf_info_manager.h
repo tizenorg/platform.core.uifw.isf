@@ -640,6 +640,9 @@ public:
     //ISM_TRANS_CMD_HIDE_ISE_PANEL
     void hide_ise_panel (int client_id, uint32 client, uint32 context);
 
+    //ISM_TRANS_CMD_HIDE_ISE_PANEL from ISF control
+    void hide_helper_ise (void);
+
     //SCIM_TRANS_CMD_PROCESS_KEY_EVENT
     bool process_key_event (KeyEvent& key, _OUT_ uint32& result);
 

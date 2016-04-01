@@ -488,6 +488,11 @@ void PanelAgentBase::helper_attach_input_context_and_update_screen (int client, 
     LOGW ("not implemented for %s", m_name.c_str ());
 }
 
+void PanelAgentBase::hide_helper_ise (int client, uint32 context)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
 
 } /* namespace scim */
 
