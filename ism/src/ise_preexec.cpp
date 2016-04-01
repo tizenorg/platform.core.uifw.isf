@@ -48,7 +48,7 @@
 
 #define DEFAULT_PACKAGE_TYPE "rpm"
 #define DEFAULT_PACKAGE_NAME "libisf-bin"
-#define DEFAULT_APPLICATION_PATH "/usr/lib/scim-1.0/scim-helper-launcher"
+#define DEFAULT_APPLICATION_PATH (SCIM_LIBEXECDIR "/scim-helper-launcher")
 
 #define NATIVE_PACKAGE_TYPE "tpk"
 

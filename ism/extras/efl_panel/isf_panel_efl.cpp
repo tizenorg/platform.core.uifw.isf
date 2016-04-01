@@ -108,9 +108,9 @@ using namespace scim;
 #define ISF_PREEDIT_BORDER                              16
 #define ISE_LAUNCH_TIMEOUT                              2.0
 
-#define ISF_POP_PLAY_ICON_FILE                          "/usr/share/scim/icons/pop_play.png"
-#define ISF_KEYBOARD_ICON_FILE                          "/usr/share/scim/icons/noti_icon_hwkbd_module.png"
-#define ISF_ISE_SELECTOR_ICON_FILE                      "/usr/share/scim/icons/noti_icon_ise_selector.png"
+#define ISF_POP_PLAY_ICON_FILE                          (SCIM_ICONDIR "/pop_play.png")
+#define ISF_KEYBOARD_ICON_FILE                          (SCIM_ICONDIR "/noti_icon_hwkbd_module.png")
+#define ISF_ISE_SELECTOR_ICON_FILE                      (SCIM_ICONDIR "/noti_icon_ise_selector.png")
 
 #define HOST_BUS_NAME        "org.tizen.usb.host"
 #define HOST_OBJECT_PATH     "/Org/Tizen/Usb/Host"
