@@ -497,6 +497,26 @@ EXAPI int isf_control_get_recent_ime_geometry_with_rotation_angle (int angle, in
     return ret;
 }
 
+EXAPI int isf_control_hide_ime (void)
+{
+    IMControlClient imcontrol_client;
+    int ret = 0;
+
+    if (!imcontrol_client.open_connection ())
+        return -1;
+
+    imcontrol_client.prepare ();
+    if (!imcontrol_client.hide_helper_ise ()) {
+        LOGW ("hide_helper_ise failed");
+        ret = -1;
+    }
+
+    imcontrol_client.close_connection ();
+
+    return ret;
+}
+
+
 /*
 vi:ts=4:nowrap:ai:expandtab
 */

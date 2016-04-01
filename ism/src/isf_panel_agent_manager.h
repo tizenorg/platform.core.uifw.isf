@@ -340,6 +340,7 @@ public:
     void update_preedit_string (int target_client, uint32  target_context, WideString wstr, AttributeList& attrs, uint32 caret);
     void update_preedit_caret (int focused_client, uint32 focused_context, uint32 caret);
     void helper_attach_input_context_and_update_screen (int client, std::vector < std::pair <uint32, String> >& helper_ic_index, uint32 current_screen);
+    void hide_helper_ise (int id, uint32 context);
 };
 
 /**  @} */

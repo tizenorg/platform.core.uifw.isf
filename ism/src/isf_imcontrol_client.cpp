@@ -561,6 +561,25 @@ public:
             return false;
         }
     }
+
+    bool hide_helper_ise (void) {
+        int cmd;
+        m_trans.put_command (ISM_TRANS_CMD_HIDE_ISE_PANEL);
+        m_trans.write_to_socket (m_socket_imclient2panel);
+        if (!m_trans.read_from_socket (m_socket_imclient2panel, m_socket_timeout)) {
+            std::cerr << __func__ << " read_from_socket() may be timeout \n";
+            return false;
+        }
+
+        if (m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
+            m_trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
+            return true;
+        } else {
+            std::cerr << __func__ << " get_command() or get_data() may fail!!!\n";
+            return false;
+        }
+    }
+
 };
 
 IMControlClient::IMControlClient ()
@@ -680,6 +699,11 @@ bool IMControlClient::is_helper_ise_enabled (const char* appid, int &enabled)
 bool IMControlClient::get_recent_ime_geometry (int *x, int *y, int *w, int *h, int angle)
 {
     return m_impl->get_recent_ime_geometry (x, y, w, h, angle);
+}
+
+bool IMControlClient::hide_helper_ise (void)
+{
+    return m_impl->hide_helper_ise ();
 }
 };
 
