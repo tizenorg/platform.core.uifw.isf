@@ -34,7 +34,6 @@ web_DATA =  remote-input/*
             remote-input/game_mode.htm \
             remote-input/index.htm \
             remote-input/test.htm \
-            remote-input/testpage.htm \
             remote-input/avahi.htm \
             remote-input/jquery-2.0.2.min.js \
             remote-input/jquery.mobile-1.3.1.css \
@@ -51,6 +50,8 @@ web_DATA =  remote-input/*
             remote-input/tv2.htm \
             remote-input/tv_mode.htm \
             remote-input/tv_mode.js \
+            remote-input/testpage.htm \
+            remote-input/openinput.js \
             remote-input/util.js \
             remote-input/web-helper-client.js
 

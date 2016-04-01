@@ -3,7 +3,8 @@ html {
 }
 body {
 /*    background:#111121;*/
-    background-image:url(/remotekeyboard_remocon_bg3.png);
+    /*background-image:url(/remotekeyboard_remocon_bg3.png);*/
+    background-color: #0d0d0d;
     background-repeat:no-repeat;
     background-size: 100% 100%;
     margin:0;
@@ -148,7 +149,7 @@ div {
 .cell_height50 {
     height:50%;
 }
-#entry {
+.test_entry {
     overflow:hidden;
     width:90%;
     font-size:160%;
