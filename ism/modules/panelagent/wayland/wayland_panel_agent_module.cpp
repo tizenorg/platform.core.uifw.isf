@@ -4376,6 +4376,17 @@ public:
         reload_config_callback (_config);
     }
 
+    void
+    hide_helper_ise (int id, uint32 context_id)
+    {
+        LOGD ("client id:%d", id);
+        WSCContextISF* ic = find_ic (context_id);
+
+        if (ic && ic->impl) {
+            wl_input_method_context_hide_ime (ic->im_ctx, ic->serial);
+        }
+    }
+
 };
 
 static scim::PanelAgentPointer instance;

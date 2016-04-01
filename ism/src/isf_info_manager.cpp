@@ -1347,8 +1347,8 @@ public:
         LOGD ("prepare to hide ISE, %d %d", client_id, m_show_request_client_id);
         SCIM_DEBUG_MAIN (4) << __func__ << " (client:" << client << " context:" << context << ")\n";
 
-        if ((m_panel_client_map[client_id] == m_current_socket_client || client_id == m_show_request_client_id)
-            && (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
+        if (m_panel_client_map[client_id] == m_current_socket_client || client_id == m_show_request_client_id) {
+//            && (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
             int    focused_client;
             uint32 focused_context;
             get_focused_context (focused_client, focused_context);
@@ -1363,6 +1363,17 @@ public:
 
         /* Release ISE context buffer */
         delete_ise_context_buffer ();
+    }
+
+    void hide_helper_ise (void) {
+#ifdef WAYLAND
+        int    focused_client;
+        uint32 focused_context;
+        get_focused_context (focused_client, focused_context);
+        m_panel_agent_manager.hide_helper_ise (focused_client, focused_context);
+#else
+        m_signal_hide_ise ();
+#endif
     }
 
     void set_default_ise (const DEFAULT_ISE_T& ise) {
@@ -4133,6 +4144,12 @@ void InfoManager::show_ise_panel (int client_id, uint32 client, uint32 context, 
 void InfoManager::hide_ise_panel (int client_id, uint32 client, uint32 context)
 {
     m_impl->hide_ise_panel (client_id, client, context);
+}
+
+//ISM_TRANS_CMD_HIDE_ISE_PANEL from ISF control
+void InfoManager::hide_helper_ise (void)
+{
+    m_impl->hide_helper_ise ();
 }
 
 //SCIM_TRANS_CMD_PROCESS_KEY_EVENT
