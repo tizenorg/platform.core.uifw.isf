@@ -25,15 +25,13 @@
 #include "isf_demo_efl.h"
 #include "isf_password_mode_efl.h"
 
-static Evas_Object *_create_ef_layout (Evas_Object *parent, const char *label, const char *guide_text, Eina_Bool mode)
+static void
+ck_changed_cb (void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *en;
-    Evas_Object *ef = create_ef (parent, label, guide_text, &en);
-    if (!ef || !en) return NULL;
+    en = (Evas_Object*)data;
 
-    elm_entry_password_set (en, mode);
-
-    return ef;
+    elm_entry_password_set (en, elm_check_state_get (obj));
 }
 
 static Evas_Object * create_inner_layout (void *data)
@@ -41,6 +39,7 @@ static Evas_Object * create_inner_layout (void *data)
     struct appdata *ad = (struct appdata *)data;
     Evas_Object *bx = NULL;
     Evas_Object *ef = NULL;
+    Evas_Object *en = NULL;
 
     Evas_Object *parent = ad->naviframe;
 
@@ -49,13 +48,20 @@ static Evas_Object * create_inner_layout (void *data)
     evas_object_size_hint_align_set (bx, EVAS_HINT_FILL, 0.0);
     evas_object_show (bx);
 
-    /* Password mode : TRUE */
-    ef = _create_ef_layout (parent, _("Password mode : TRUE"), _("click to enter"), EINA_TRUE);
+    ef = create_ef (parent, _("Password mode"), _("click to enter"), &en);
+    elm_entry_password_set (en, EINA_TRUE);
+
     elm_box_pack_end (bx, ef);
 
-    /* Password mode : FALSE */
-    ef = _create_ef_layout (parent, _("Password mode : FALSE"), _("click to enter"), EINA_FALSE);
-    elm_box_pack_end (bx, ef);
+    Evas_Object *ck = elm_check_add (parent);
+    evas_object_size_hint_weight_set (ck, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    evas_object_size_hint_align_set (ck, EVAS_HINT_FILL, EVAS_HINT_FILL);
+    elm_check_state_set (ck, EINA_TRUE);
+    evas_object_smart_callback_add (ck, "changed", ck_changed_cb, en);
+    elm_object_text_set (ck, _("Password mode"));
+    elm_object_focus_allow_set (ck, EINA_FALSE);
+    elm_box_pack_end (bx, ck);
+    evas_object_show (ck);
 
     return bx;
 }
