@@ -43,9 +43,9 @@
 #define ISE_HEIGHT_LAND         318
 #endif
 
-#define EMOTICON_DIR "/usr/share/emoticons/"
-#define EMOTICON_EDJ_FILE_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/layout_keypad.edj"
-#define CUSTOM_GENGRID_EDJ_FILE_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/customised_gengrid.edj"
+#define EMOTICON_DIR LAYOUTDIR"/emoticons/"
+#define EMOTICON_EDJ_FILE_PATH LAYOUTDIR"/sdk/edc/layout_keypad.edj"
+#define CUSTOM_GENGRID_EDJ_FILE_PATH LAYOUTDIR"/sdk/edc/customised_gengrid.edj"
 
 #define EMOTICON_EDJ_GROUP_PORT_CANDIDATE_ON "emoticon.main.portrait.candidate.on"
 #define EMOTICON_EDJ_GROUP_LAND_CANDIDATE_ON "emoticon.main.landscape.candidate.on"

@@ -31,11 +31,11 @@
 using namespace scl;
 
 #ifdef _TV
-#define LANG_TABLE_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/tv/ise_lang_table.xml"
+#define LANG_TABLE_XML_PATH LAYOUTDIR"/tv/ise_lang_table.xml"
 #elif _WEARABLE
-#define LANG_TABLE_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/wearable/ise_lang_table.xml"
+#define LANG_TABLE_XML_PATH LAYOUTDIR"/wearable/ise_lang_table.xml"
 #else
-#define LANG_TABLE_XML_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/ise_lang_table.xml"
+#define LANG_TABLE_XML_PATH LAYOUTDIR"/sdk/ise_lang_table.xml"
 #endif
 
 typedef struct Keyboard_UUID {

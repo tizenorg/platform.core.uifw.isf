@@ -22,11 +22,9 @@ SET(ISE_SRCS
 SET(ISE_PACKAGE ${PROJECT_NAME})
 SET(ISE_PKGNAME ${PACKAGE})
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
-SET(LIBDIR ${LIB_INSTALL_DIR})
-SET(ISE_LIBDIR "${LIBDIR}/scim-1.0/1.4.0/Helper")
-SET(ISE_RESDIR "${PREFIX}/share/isf/ise/ise-default/720x1280/default")
-SET(MANIFEST_DIR "${PREFIX}/share/packages")
-
+SET(ISE_LIBDIR "${TZ_SYS_RO_APP}/${ISE_PACKAGE}/lib")
+SET(ISE_RESDIR "${TZ_SYS_RO_APP}/${ISE_PACKAGE}/res")
+SET(ISE_LAYOUTDIR "${ISE_RESDIR}/720x1280/default")
 IF("${CMAKE_BUILD_TYPE}" STREQUAL "")
     SET(CMAKE_BUILD_TYPE "Release")
 ENDIF()
@@ -62,6 +60,8 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -g")
 
 ADD_DEFINITIONS("-DPACKAGE=\"${ISE_PACKAGE}\"")
 ADD_DEFINITIONS("-DPACKAGE_NAME=\"${ISE_PKGNAME}\"")
+ADD_DEFINITIONS("-DRESDIR=\"${ISE_RESDIR}\"")
+ADD_DEFINITIONS("-DLAYOUTDIR=\"${ISE_LAYOUTDIR}\"")
 ADD_DEFINITIONS(-DISE_NAME=\"/ise-default\")
 ADD_DEFINITIONS(-DSUPPORTS_EMOTICONS)
 
@@ -78,7 +78,7 @@ ADD_CUSTOM_TARGET(
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-single/candidate.edc
 )
 ADD_DEPENDENCIES(${PROJECT_NAME} candidate-single.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-single.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-single.edj DESTINATION ${ISE_LAYOUTDIR}/sdk/edc)
 # For edc File end
 # For edc File
 ADD_CUSTOM_TARGET(
@@ -91,7 +91,7 @@ ADD_CUSTOM_TARGET(
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/candidate-multiline/candidate.edc
 )
 ADD_DEPENDENCIES(${PROJECT_NAME} candidate-multiline.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-multiline.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/candidate-multiline.edj DESTINATION ${ISE_LAYOUTDIR}/sdk/edc)
 # For edc File end
 # For edc File
 ADD_CUSTOM_TARGET(
@@ -103,7 +103,7 @@ ADD_CUSTOM_TARGET(
         ${CMAKE_BINARY_DIR}/customised_gengrid.edj
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid/customised_gengrid.edc)
 ADD_DEPENDENCIES(${PROJECT_NAME} customised_gengrid.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/customised_gengrid.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/customised_gengrid.edj DESTINATION ${ISE_LAYOUTDIR}/sdk/edc)
 
 ADD_CUSTOM_TARGET(
     layout_keypad.edj
@@ -112,7 +112,7 @@ ADD_CUSTOM_TARGET(
         ${CMAKE_BINARY_DIR}/layout_keypad.edj
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/data/edc/gengrid/layout_keypad.edc)
 ADD_DEPENDENCIES(${PROJECT_NAME} layout_keypad.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/layout_keypad.edj DESTINATION ${ISE_RESDIR}/sdk/edc)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/layout_keypad.edj DESTINATION ${ISE_LAYOUTDIR}/sdk/edc)
 # For edc File end
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${ISE_PKGS_LDFLAGS})
@@ -121,23 +121,23 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${ISE_LIBDIR})
 
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.xml DESTINATION
-        ${MANIFEST_DIR})
+        ${TZ_SYS_RO_PACKAGES})
 
 if(${TARGET} STREQUAL "tv")
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/tv/
-        DESTINATION ${ISE_RESDIR}/tv/image)
+        DESTINATION ${ISE_LAYOUTDIR}/tv/image)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/tv/ DESTINATION
-        ${ISE_RESDIR}/tv FILES_MATCHING PATTERN "*.xml")
+        ${ISE_LAYOUTDIR}/tv FILES_MATCHING PATTERN "*.xml")
 elseif(${TARGET} STREQUAL "wearable")
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/wearable/
-        DESTINATION ${ISE_RESDIR}/wearable/image)
+        DESTINATION ${ISE_LAYOUTDIR}/wearable/image)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/wearable/ DESTINATION
-        ${ISE_RESDIR}/wearable FILES_MATCHING PATTERN "*.xml")
+        ${ISE_LAYOUTDIR}/wearable FILES_MATCHING PATTERN "*.xml")
 elseif(${TARGET} STREQUAL "mobile")
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/pixmaps/default/sdk/
-        DESTINATION ${ISE_RESDIR}/sdk/image)
+        DESTINATION ${ISE_LAYOUTDIR}/sdk/image)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/data/layout/sdk/ DESTINATION
-        ${ISE_RESDIR}/sdk FILES_MATCHING PATTERN "*.xml")
+        ${ISE_LAYOUTDIR}/sdk FILES_MATCHING PATTERN "*.xml")
 endif()
 
 ADD_SUBDIRECTORY(po)

@@ -19,7 +19,7 @@ BuildRequires:  pkgconfig(libscl-core)
 BuildRequires:  pkgconfig(ecore-imf)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(efl-extension)
-
+BuildRequires:  pkgconfig(libtzplatform-config)
 
 
 %description
@@ -53,14 +53,15 @@ CXXFLAGS+=" -D_TV";
 
 rm -rf CMakeFiles
 rm -rf CMakeCache.txt
-cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}  -DLIB_INSTALL_DIR:PATH=%{_libdir} -DTARGET=%{?profile}
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+        -DTARGET=%{?profile} \
+        -DTZ_SYS_RO_APP=%TZ_SYS_RO_APP \
+        -DTZ_SYS_RO_PACKAGES=%TZ_SYS_RO_PACKAGES
 
 make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/license
-cp LICENSE %{buildroot}/usr/share/license/%{name}
 
 %make_install
 
@@ -71,9 +72,7 @@ cp LICENSE %{buildroot}/usr/share/license/%{name}
 %files
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
-%{_libdir}/scim-1.0/1.4.0/Helper/ise-default.so
-%{_datadir}/isf/ise/ise-default/*
-%{_datadir}/packages/*
-%{_datadir}/locale/*
-/usr/share/license/%{name}
+%{TZ_SYS_RO_APP}/*
+%{TZ_SYS_RO_PACKAGES}/%{name}.xml
+%license LICENSE
 

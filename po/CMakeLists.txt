@@ -1,6 +1,6 @@
 # for i18n
 
-SET(LOCALEDIR "${PREFIX}/share/locale")
+SET(LOCALEDIR "${ISE_RESDIR}/locale")
 SET(POFILES
 		ar.po as.po az.po be_BY.po bg.po bn.po bn_BD.po ca.po cs.po da.po de.po el_GR.po en.po en_PH.po
 		en_US.po es_ES.po es_US.po et.po eu.po fa.po fi.po fr.po fr_CA.po ga.po gl.po gu.po he.po
