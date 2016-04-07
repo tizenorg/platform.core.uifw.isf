@@ -436,13 +436,17 @@ HelperAgent::filter_event ()
     uint32 ic = (uint32) -1;
     String ic_uuid;
 
-    if (!m_impl->recv.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY)
+    if (!m_impl->recv.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY) {
+        LOGW ("wrong format of transaction");
         return true;
+    }
 
     /* If there are ic and ic_uuid then read them. */
     if (!(m_impl->recv.get_data_type () == SCIM_TRANS_DATA_COMMAND) &&
-        !(m_impl->recv.get_data (ic) && m_impl->recv.get_data (ic_uuid)))
+        !(m_impl->recv.get_data (ic) && m_impl->recv.get_data (ic_uuid))) {
+        LOGW ("wrong format of transaction");
         return true;
+    }
 
     while (m_impl->recv.get_command (cmd)) {
         switch (cmd) {
@@ -536,7 +540,6 @@ HelperAgent::filter_event ()
             case ISM_TRANS_CMD_HIDE_ISE_PANEL:
             {
                 LOGD ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
-
                 m_impl->signal_ise_hide (this, ic, ic_uuid);
                 break;
             }

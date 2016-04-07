@@ -948,8 +948,10 @@ private:
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
 
-        if (m_info_manager->socket_get_client_info(client).type == HELPER_CLIENT)
+        if (m_info_manager->socket_get_client_info(client).type == HELPER_CLIENT) {
+            m_send_trans.put_data(context);
             m_send_trans.put_data(m_info_manager->get_current_helper_uuid());
+        }
 
         m_send_trans.put_command(SCIM_TRANS_CMD_EXIT);
 
