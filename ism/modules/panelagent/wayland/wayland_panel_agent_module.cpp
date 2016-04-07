@@ -4301,12 +4301,9 @@ public:
     }
 
     void
-    update_preedit_string (int id, uint32 context_id,
-                           const WideString&    str,
-                           const AttributeList& attrs,
-                           int caret) {
+    update_preedit_string (int id, uint32 context_id, WideString wstr, AttributeList& attrs, uint32 caret) {
         LOGD ("client id:%d", id);
-        panel_slot_update_preedit_string (context_id, str, attrs, caret);
+        panel_slot_update_preedit_string (context_id, wstr, attrs, caret);
     }
 
     void
