@@ -34,10 +34,12 @@
 #include <pkgmgr-info.h>
 #endif
 #include <scim_panel_common.h>
-#include "isf_query_utility.h"
-#include "isf_pkg.h"
 #include <dlog.h>
 #include <tzplatform_config.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include "isf_query_utility.h"
+#include "isf_pkg.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -153,8 +155,17 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 #else
             ime_db.options = SCIM_HELPER_STAND_ALONE | SCIM_HELPER_NEED_SCREEN_INFO | SCIM_HELPER_AUTO_RESTART;
 #endif
-            ime_db.module_path = String (SCIM_MODULE_PATH) + String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION)
-                + String (SCIM_PATH_DELIM_STRING) + String ("Helper");
+            String module_path = String (path) + String ("/lib");
+            struct stat st;
+            if (stat(module_path.c_str (), &st) < 0) {
+                /* Not found in lib directory of package's root path */
+                ime_db.module_path = String (SCIM_MODULE_PATH) + String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION)
+                    + String (SCIM_PATH_DELIM_STRING) + String ("Helper");
+            }
+            else {
+                ime_db.module_path = module_path;
+            }
+
             ime_db.module_name = ime_db.pkgid;
             ime_db.is_enabled = 1;
             ime_db.is_preinstalled = 1;
