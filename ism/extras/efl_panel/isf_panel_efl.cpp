@@ -4238,6 +4238,7 @@ static void slot_set_candidate_style (int portrait_line, int mode)
     }
 }
 
+#if defined(HAVE_NOTIFICATION) || defined(HAVE_ECOREX)
 static unsigned int get_ise_count (TOOLBAR_MODE_T mode, bool valid_helper)
 {
     unsigned int ise_count = 0;
@@ -4252,6 +4253,7 @@ static unsigned int get_ise_count (TOOLBAR_MODE_T mode, bool valid_helper)
 
     return ise_count;
 }
+#endif
 
 /**
  * @brief Update keyboard ISE information slot function for PanelAgent.
