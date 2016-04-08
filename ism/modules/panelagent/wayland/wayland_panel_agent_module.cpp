@@ -784,7 +784,6 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     if (!wsc || !wsc->wsc_ctx) return;
     WSCContextISF *wsc_ctx = wsc->wsc_ctx;
 
-    isf_wsc_context_input_panel_hide (wsc_ctx);
     isf_wsc_context_focus_out (wsc_ctx);
 
     if (wsc_ctx->keyboard) {
