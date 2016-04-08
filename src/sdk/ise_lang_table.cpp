@@ -149,7 +149,7 @@ Ise_Lang::parsing_languages() {
 
     doc = xmlReadFile(LANG_TABLE_XML_PATH, NULL, 0);
     if (doc == NULL) {
-        LOGE("Could not load file.\n");
+        LOGE("Could not load file : %s\n", LANG_TABLE_XML_PATH);
         return;
     }
 

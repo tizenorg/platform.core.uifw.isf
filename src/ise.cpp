@@ -69,6 +69,8 @@ static bool g_softcandidate_show = false;
 #define SOFT_CANDIDATE_DELETE_TIME (1.0/100)
 static Ecore_Timer *g_softcandidate_hide_timer = NULL;
 
+static SCLKeyModifier g_prev_modifier;
+
 KEYBOARD_STATE g_keyboard_state = {
     0,
     0,
@@ -77,6 +79,7 @@ KEYBOARD_STATE g_keyboard_state = {
     FALSE,
     TRUE,
     FALSE,
+    ""
 };
 
 #define ISE_LAYOUT_NUMBERONLY_VARIATION_MAX 4
@@ -676,6 +679,23 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
 {
     SCLEventReturnType ret = SCL_EVENT_PASS_ON;
 
+    if (event_desc.key_modifier == KEY_MODIFIER_MULTITAP_START) {
+        if (!g_keyboard_state.multitap_value.empty()) {
+            ise_send_string(g_keyboard_state.multitap_value.c_str());
+        }
+        ise_update_preedit_string(event_desc.key_value);
+        g_keyboard_state.multitap_value = event_desc.key_value;
+    } else if (event_desc.key_modifier == KEY_MODIFIER_MULTITAP_REPEAT) {
+        ise_update_preedit_string(event_desc.key_value);
+        g_keyboard_state.multitap_value = event_desc.key_value;
+    } else if (g_prev_modifier == KEY_MODIFIER_MULTITAP_START ||
+            g_prev_modifier == KEY_MODIFIER_MULTITAP_REPEAT) {
+        ise_send_string(g_keyboard_state.multitap_value.c_str());
+        ise_update_preedit_string("");
+        g_keyboard_state.multitap_value = "";
+    }
+    g_prev_modifier = event_desc.key_modifier;
+
     if (g_ui) {
         switch (event_desc.key_type) {
         case KEY_TYPE_STRING: {
@@ -850,11 +870,15 @@ ise_set_layout(sclu32 layout, sclu32 layout_variation)
 void
 ise_reset_context()
 {
+    g_keyboard_state.multitap_value = "";
+    g_prev_modifier = KEY_MODIFIER_NONE;
 }
 
 void
 ise_reset_input_context()
 {
+    g_keyboard_state.multitap_value = "";
+    g_prev_modifier = KEY_MODIFIER_NONE;
 }
 
 void
@@ -1104,6 +1128,7 @@ ise_hide()
     delete_commit_timer();
     if (g_ui) {
         g_ui->disable_input_events(TRUE);
+        g_ui->hide();
     }
     g_keyboard_state.visible_state = FALSE;
     if (g_candidate) {

@@ -34,6 +34,7 @@ using namespace scl;
 #define MVK_Shift_Disable 0x9fe8
 
 static ISELanguageManager _language_manager;
+extern KEYBOARD_STATE g_keyboard_state;
 
 /*
  * This callback class will receive all response events from SCL
@@ -132,7 +133,10 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
             ret = process_key_type_char(event_desc);
             break;
         case KEY_TYPE_STRING:
-            flush_imengine(cur_lang);
+            if (event_desc.key_modifier != KEY_MODIFIER_MULTITAP_START &&
+                    event_desc.key_modifier != KEY_MODIFIER_MULTITAP_REPEAT) {
+                flush_imengine(cur_lang);
+            }
             break;
         case KEY_TYPE_MODECHANGE:
             {
@@ -343,6 +347,8 @@ static inline int get_lang_id(const sclchar* language) {
 sclboolean CSDKISE::flush_imengine(const sclchar *language)
 {
     bool bRet = false;
+
+    g_keyboard_state.multitap_value = "";
 
     int lang_id = get_lang_id(language);
     if (lang_id != -1) {

@@ -153,6 +153,7 @@ typedef struct {
     sclboolean caps_mode;
     sclboolean need_reset;
     sclboolean visible_state;
+    std::string multitap_value;
 } KEYBOARD_STATE;
 
 using namespace scl;

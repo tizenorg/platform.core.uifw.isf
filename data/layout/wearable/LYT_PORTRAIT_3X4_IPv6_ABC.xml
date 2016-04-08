@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="720" height="490" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="360" height="240" vibe_style="DEFAULT" sound_style="DEFAULT">
   <image_path>
     <button_normal>textinput_panel_bg.png</button_normal>
   </image_path>

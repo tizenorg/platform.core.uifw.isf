@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="360" height="240" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_DEFAULT">
+  <image_path>
+    <button_normal>B09_panel.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="normal">button/B09_key_btn_01.png</rec>
+    <rec button="pressed">button/B09_key_btn_press.png</rec>
+    <rec button="disabled">button/B09_key_btn_01.png</rec>
+  </background_image>
+  <row>
+    <key key_type="string" width="100">
+      <label>
+        <rec>_</rec>
+      </label>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>°</rec>
+      </label>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>×</rec>
+      </label>
+    </key>
+    <key key_type="control" use_repeat_key="true" width="100">
+      <image_label>
+        <rec button="normal">B09_icon_back_nor_65x65.png</rec>
+        <rec button="pressed">B09_icon_back_press_65x65.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+  </row>
+  <row>
+    <key key_type="string" width="100">
+      <label>
+        <rec>÷</rec>
+      </label>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>=</rec>
+      </label>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>%</rec>
+      </label>
+    </key>
+    <key key_type="control" width="100">
+      <image_label>
+        <rec button="normal">B09_icon_enter.png</rec>
+        <rec button="pressed">B09_icon_enter_press.png</rec>
+        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+  <row>
+    <key key_type="string" width="100">
+      <label>
+        <rec>$</rec>
+      </label>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>€</rec>
+      </label>
+    </key>
+    <key key_type="string">
+      <label>
+        <rec>£</rec>
+      </label>
+    </key>
+    <key key_type="control" width="100">
+      <image_label>
+        <rec button="normal">B09_icon_shift_50x50.png</rec>
+        <rec button="pressed">B09_icon_shift_50x50_press.png</rec>
+        <rec button="disabled">B09_icon_shift_50x50_dim.png</rec>
+      </image_label>
+      <background_image>
+        <rec button="normal">button/B09_key_btn_02.png</rec>
+        <rec button="pressed">button/B09_key_btn_press.png</rec>
+        <rec button="disabled">button/B09_key_btn_02.png</rec>
+      </background_image>
+      <key_value>
+        <rec>Shift</rec>
+      </key_value>
+    </key>
+  </row>
+  <row>
+    <key key_type="modechange" width="120">
+      <label>
+        <rec>3/5</rec>
+      </label>
+      <key_value>
+        <rec>SYM_4X4_4</rec>
+      </key_value>
+    </key>
+    <key key_type="modechange" width="120">
+      <label>
+        <rec>ABC</rec>
+      </label>
+      <key_value>
+        <rec>ENGLISH_4X4</rec>
+      </key_value>
+    </key>
+    <key key_type="control" width="120">
+      <image_label>
+        <rec button="normal">B09_icon_space.png</rec>
+        <rec button="pressed">B09_icon_space_press.png</rec>
+        <rec button="disabled">B09_icon_space_dim.png</rec>
+      </image_label>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>
