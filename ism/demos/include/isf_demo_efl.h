@@ -59,6 +59,7 @@ struct appdata {
 };
 
 // Utility functions
+Elm_Object_Item *naviframe_item_push (Evas_Object *nf, const char *title, Evas_Object *back_btn, Evas_Object *content);
 Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text, Evas_Object **entry = NULL);
 Evas_Object *create_button (Evas_Object *parent, const char *text);
 Elm_Object_Item *add_layout_to_naviframe (void *data, Evas_Object *lay_in, const char *title);
