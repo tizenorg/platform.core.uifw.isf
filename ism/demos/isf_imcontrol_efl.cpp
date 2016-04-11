@@ -413,7 +413,7 @@ void imcontrolapi_bt (void *data, Evas_Object *obj, void *event_info)
     win = ad->win_main;
 
     Evas_Object *back_btn = create_naviframe_back_button (ad);
-    Elm_Object_Item *navi_it = elm_naviframe_item_push (ad->naviframe, _("IM Control"), back_btn, NULL, gl, NULL);
+    Elm_Object_Item *navi_it = naviframe_item_push (ad->naviframe, _("IM Control"), back_btn, gl);
     elm_naviframe_item_pop_cb_set (navi_it, _nf_back_event_cb, ad);
 
     evas_object_smart_callback_add (ad->win_main, "rotation,changed", win_rotation_changed_cb, ad);
