@@ -115,7 +115,7 @@ static int create_demo_view (struct appdata *ad)
 
     elm_list_go (li);
 
-    elm_naviframe_item_push (ad->naviframe, _("ISF Demo"), l_button, NULL, li, NULL);
+    naviframe_item_push (ad->naviframe, _("ISF Demo"), l_button, li);
 
     return 0;
 }
@@ -378,6 +378,18 @@ int main (int argc, char *argv[])
 }
 
 // Utility functions
+Elm_Object_Item *naviframe_item_push (Evas_Object *nf, const char *title, Evas_Object *back_btn, Evas_Object *content)
+{
+    Elm_Object_Item *navi_it = elm_naviframe_item_push (nf, title, back_btn, NULL, content, NULL);
+#ifdef _WEARABLE
+    elm_naviframe_item_title_enabled_set (navi_it, EINA_FALSE, EINA_FALSE);
+#else
+    elm_naviframe_item_title_enabled_set (navi_it, EINA_TRUE, EINA_TRUE);
+#endif
+
+    return navi_it;
+}
+
 Evas_Object *create_ef (Evas_Object *parent, const char *label, const char *guide_text, Evas_Object **entry)
 {
     Evas_Object *lb, *en;
@@ -453,7 +465,7 @@ Elm_Object_Item *add_layout_to_naviframe (void *data, Evas_Object *lay_in, const
     elm_object_content_set (scroller, lay_in);
 
     Evas_Object *back_btn = create_naviframe_back_button (ad);
-    return elm_naviframe_item_push (ad->naviframe, title, back_btn, NULL, scroller, NULL);
+    return naviframe_item_push (ad->naviframe, title, back_btn, scroller);
 }
 
 /*

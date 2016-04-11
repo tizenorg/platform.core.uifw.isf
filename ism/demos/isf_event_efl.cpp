@@ -245,7 +245,7 @@ void isf_event_demo_bt (void *data, Evas_Object *obj, void *event_info)
 
     // create back key
     Evas_Object *back_btn = create_naviframe_back_button (ad);
-    elm_naviframe_item_push (ad->naviframe, _("Event"), back_btn, NULL, ad->ev_li, NULL);
+    naviframe_item_push (ad->naviframe, _("Event"), back_btn, ad->ev_li);
 }
 
 /*
