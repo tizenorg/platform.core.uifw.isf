@@ -2793,6 +2793,15 @@ private:
                     }
 
                     trans.write_to_socket(client_socket);
+                } else if (cmd == ISM_TRANS_CMD_HIDE_ISE_PANEL) {
+                    Transaction trans;
+                    Socket client_socket(client_id);
+
+                    trans.clear();
+                    trans.put_command(SCIM_TRANS_CMD_REPLY);
+                    trans.put_command(SCIM_TRANS_CMD_OK);
+                    trans.write_to_socket(client_socket);
+                    m_info_manager->hide_helper_ise ();
                 } else {
                     LOGW ("unknow cmd: %d\n", cmd);
                 }

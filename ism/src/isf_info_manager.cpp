@@ -1365,6 +1365,17 @@ public:
         delete_ise_context_buffer ();
     }
 
+    void hide_helper_ise (void) {
+#ifdef WAYLAND
+        int    focused_client;
+        uint32 focused_context;
+        get_focused_context (focused_client, focused_context);
+        m_panel_agent_manager.hide_helper_ise (focused_client, focused_context);
+#else
+        m_signal_hide_ise ();
+#endif
+    }
+
     void set_default_ise (const DEFAULT_ISE_T& ise) {
         LOGD ("");
         scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), ise.uuid);
@@ -4133,6 +4144,12 @@ void InfoManager::show_ise_panel (int client_id, uint32 client, uint32 context, 
 void InfoManager::hide_ise_panel (int client_id, uint32 client, uint32 context)
 {
     m_impl->hide_ise_panel (client_id, client, context);
+}
+
+//ISM_TRANS_CMD_HIDE_ISE_PANEL from ISF control
+void InfoManager::hide_helper_ise (void)
+{
+    m_impl->hide_helper_ise ();
 }
 
 //SCIM_TRANS_CMD_PROCESS_KEY_EVENT

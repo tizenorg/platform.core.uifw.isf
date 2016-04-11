@@ -772,6 +772,14 @@ public:
      */
     virtual void helper_attach_input_context_and_update_screen (int client, std::vector < std::pair <uint32, String> >& helper_ic_index, uint32 current_screen);
 
+    /**
+     * @brief hide_helper_ise.
+     *
+     * @param
+     *
+     * @return none.
+     */
+    virtual void hide_helper_ise (int client, uint32 context);
 };
 
 /**  @} */
