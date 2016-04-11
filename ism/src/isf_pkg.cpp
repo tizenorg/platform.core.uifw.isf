@@ -159,7 +159,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
             String module_path = String (path) + String ("/lib");
             String fullpath = module_path + String (SCIM_PATH_DELIM_STRING) + ime_db.module_name + String (".so");
             struct stat st;
-            if (stat(fullpath.c_str (), &st) < 0) {
+            if (stat (fullpath.c_str (), &st) < 0) {
                 /* Not found in lib directory of package's root path */
                 ime_db.module_path = String (SCIM_MODULE_PATH) + String (SCIM_PATH_DELIM_STRING) + String (SCIM_BINARY_VERSION)
                     + String (SCIM_PATH_DELIM_STRING) + String ("Helper");
@@ -215,6 +215,19 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
                 ime_db.is_preinstalled = 0;
             }
             ime_db.has_option = -1; // At this point, we can't know IME has an option (setting) or not; -1 means unknown.
+
+            String bin_path = String (path) + String (SCIM_PATH_DELIM_STRING) + String ("bin") + String (SCIM_PATH_DELIM_STRING) +
+                              ime_db.exec.substr (ime_db.exec.find_last_of (SCIM_PATH_DELIM) + 1);
+
+            struct stat st;
+            if (stat (bin_path.c_str (), &st) < 0) {
+                /* In case of no executatble in bin directory of package's root path */
+                /* Create symbolic link for launching and supporting application FW APIs */
+                if (symlink (SCIM_HELPER_LAUNCHER_PROGRAM, bin_path.c_str ()) != 0)
+                    LOGW ("Failed to create symbolic link : %s\n", bin_path.c_str ());
+                else
+                    LOGD ("Succeeded to create symbolic link : %s\n", bin_path.c_str ());
+            }
         }
         else {
             LOGE ("Unsupported pkgtype(%s)", ime_db.pkgtype.c_str ());
