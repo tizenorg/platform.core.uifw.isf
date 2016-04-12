@@ -104,6 +104,9 @@ option_window_created(Evas_Object *window, SCLOptionWindowType type);
 void
 option_window_destroyed(Evas_Object *window);
 
+bool
+option_window_is_available(SCLOptionWindowType type);
+
 void
 read_options(Evas_Object *naviframe);
 

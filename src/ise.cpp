@@ -795,7 +795,8 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
            }
         case KEY_TYPE_MODECHANGE:
             if (strcmp(event_desc.key_value, USER_KEYSTRING_OPTION) == 0) {
-                g_core.create_option_window();
+                if (!option_window_is_available (OPTION_WINDOW_TYPE_NORMAL))
+                    g_core.create_option_window();
                 ret = SCL_EVENT_DONE;
             } else if (on_input_mode_changed(event_desc.key_value, event_desc.key_event, event_desc.key_type)) {
                 ret = SCL_EVENT_DONE;
@@ -814,7 +815,8 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
         case KEY_TYPE_USER:
             if (strcmp(event_desc.key_value, USER_KEYSTRING_OPTION) == 0) {
                 //open_option_window(NULL, ROTATION_TO_DEGREE(g_ui->get_rotation()));
-                g_core.create_option_window();
+                if (!option_window_is_available (OPTION_WINDOW_TYPE_NORMAL))
+                    g_core.create_option_window();
                 ret = SCL_EVENT_DONE;
             }
             else {

@@ -882,6 +882,7 @@ static void navi_back_cb(void *data, Evas_Object *obj, void *event_info)
 void
 option_window_created(Evas_Object *window, SCLOptionWindowType type)
 {
+    LOGD("option_window_created(%d) \n", type);
     if (window == NULL) return;
 
     read_ise_config_values();
@@ -955,4 +956,14 @@ option_window_destroyed(Evas_Object *window)
         option_elements[type].lang_popup = NULL;
         option_elements[type].back_button = NULL;
     }
+}
+
+bool
+option_window_is_available(SCLOptionWindowType type)
+{
+    LOGD("OptionWindowType = %d \n", type);
+    if (option_elements[type].option_window != NULL) {
+        return true;
+    }
+    return false;
 }
