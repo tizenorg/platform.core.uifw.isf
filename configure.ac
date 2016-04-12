@@ -233,8 +233,10 @@ if test "$ISF_HAS_ECORE_IMF" = "yes"; then
     EFL_LIBDIR="$libdir"
   fi
   EFL_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/isf/$ECORE_IMF_MODULE_ARCH
+  WAYLAND_IM_MODULEDIR=$EFL_LIBDIR/ecore_imf/modules/wayland/$ECORE_IMF_MODULE_ARCH
   AC_SUBST(EFL_LIBDIR)
   AC_SUBST(EFL_IM_MODULEDIR)
+  AC_SUBST(WAYLAND_IM_MODULEDIR)
 fi
 
 # Check EVAS
@@ -253,7 +255,7 @@ fi
 PKG_CHECK_MODULES(XKBCOMMON, [xkbcommon])
 
 # Check ECORE WAYLAND library
-PKG_CHECK_MODULES(WAYLAND, [ecore-wayland],
+PKG_CHECK_MODULES(ECORE_WL, [ecore-wayland],
                   [ISF_HAS_ECOREWL=yes],
                   [ISF_HAS_ECOREWL=no])
 
@@ -422,6 +424,11 @@ AC_ARG_WITH(efl-im-module-dir,
                            [Select efl immodule dir]),
             EFL_IM_MODULEDIR=$with_efl_im_module_dir)
 
+AC_ARG_WITH(wayland-im-module-dir,
+            AS_HELP_STRING([--with-wayland-im-module-dir=dir],
+                           [Select wayland immodule dir]),
+            WAYLAND_IM_MODULEDIR=$with_wayland_im_module_dir)
+
 AC_ARG_WITH(ro-app-dir,
             AS_HELP_STRING([--with-ro-app-dir=dir],
                            [Select Read only application dir]),
@@ -491,6 +498,11 @@ AC_ARG_ENABLE(efl-immodule,
               [  --disable-efl-immodule    Do not build EFL IMModule],
               enable_efl_immodule=no,
               enable_efl_immodule=yes)
+
+AC_ARG_ENABLE(wayland-immodule,
+              [  --disable-wayland-immodule    Do not build Wayland IMModule],
+              enable_wayland_immodule=no,
+              enable_wayland_immodule=yes)
 
 AC_ARG_ENABLE(panel-efl,
               [  --disable-panel-efl       Do not build EFL Panel],
@@ -638,6 +650,13 @@ else
   enable_efl_immodule=no
 fi
 
+if test "$enable_wayland_immodule" = "yes" -a "$ISF_HAS_ECORE_IMF" = "yes"; then
+  ISF_BUILD_WAYLAND_IMMODULE=1
+else
+  ISF_BUILD_WAYLAND_IMMODULE=0
+  enable_wayland_immodule=no
+fi
+
 if test "$enable_wsc_efl" = "yes" -a "$ISF_HAS_ELM" = "yes"; then
   ISF_BUILD_WSC_EFL=1
 else
@@ -715,6 +734,9 @@ AM_CONDITIONAL(SCIM_BUILD_TRAY_ICON,
 
 AM_CONDITIONAL(ISF_BUILD_EFL_IMMODULE,
                 [test "$enable_efl_immodule" = "yes"])
+
+AM_CONDITIONAL(ISF_BUILD_WAYLAND_IMMODULE,
+                [test "$enable_wayland_immodule" = "yes"])
 
 AM_CONDITIONAL(ISF_BUILD_WSC_EFL,
                 [test "$enable_wsc_efl" = "yes"])
@@ -796,6 +818,7 @@ AC_CONFIG_FILES([Makefile
                  ism/extras/Makefile
                  ism/extras/gtk2_immodule/Makefile
                  ism/extras/efl_immodule/Makefile
+                 ism/extras/wayland_immodule/Makefile
                  ism/extras/efl_panel/Makefile
                  ism/extras/kbd_mode_changer/Makefile
                  ism/demos/Makefile
@@ -837,6 +860,10 @@ Module options:
 
   EFL  IMModule            $enable_efl_immodule
   EFL  IMModule dir        $EFL_IM_MODULEDIR
+
+  Wayland IMModule         $enable_wayland_immodule
+  Wayland IMModule dir     $WAYLAND_IM_MODULEDIR
+
   EFL  Panel GUI           $enable_panel_efl
   EFL  Wsc GUI             $enable_wsc_efl
 

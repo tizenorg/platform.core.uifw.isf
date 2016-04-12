@@ -42,7 +42,7 @@ wayland_la_CXXFLAGS = @DLOG_CFLAGS@ \
                        @ECORE_IMF_CFLAGS@ \
                        @EINA_CFLAGS@ \
                        @VCONF_CFLAGS@ \
-                       @WAYLAND_CFLAGS@ \
+                       @ECORE_WL_CFLAGS@ \
                        @WL_TEXT_INPUT_CFLAGS@ \
                        @WL_INPUT_METHOD_CFLAGS@ \
                        @XKBCOMMON_CFLAGS@
@@ -57,7 +57,7 @@ wayland_la_LDFLAGS  = -avoid-version \
 			@ECORE_LIBS@ \
 			@EINA_LIBS@ \
 			@VCONF_LIBS@ \
-			@WAYLAND_LIBS@ \
+			@ECORE_WL_LIBS@ \
 			@WL_INPUT_METHOD_LIBS@ \
 			@XKBCOMMON_LIBS@
 
