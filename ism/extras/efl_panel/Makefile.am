@@ -29,6 +29,7 @@ isf_panel_efl_SOURCES  = isf_panel_efl.cpp \
                          isf_panel_utility.cpp
 
 isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
+                         @ECORE_WL_CFLAGS@ \
                          @EDJE_CFLAGS@ \
                          @ELEMENTARY_CFLAGS@ \
                          @VCONF_CFLAGS@ \
@@ -40,11 +41,11 @@ isf_panel_efl_CXXFLAGS = @ECOREX_CFLAGS@ \
                          @BLUETOOTH_CFLAGS@ \
                          @FEEDBACK_CFLAGS@ \
                          @APP_CONTROL_CFLAGS@ \
-                         @WAYLAND_CFLAGS@ \
                          -fPIE
 
 isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @ECOREX_LIBS@ \
+                         @ECORE_WL_LIBS@ \
                          @EDJE_LIBS@ \
                          @ELEMENTARY_LIBS@ \
                          @VCONF_LIBS@ \
@@ -56,7 +57,6 @@ isf_panel_efl_LDFLAGS  = @LTLIBINTL@ -rpath $(libdir) \
                          @BLUETOOTH_LIBS@ \
                          @FEEDBACK_LIBS@ \
                          @APP_CONTROL_LIBS@ \
-                         @WAYLAND_LIBS@ \
                          -pie
 
 isf_panel_efl_LDADD    = $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la \
