@@ -221,7 +221,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
 
             struct stat st;
             if (stat (bin_path.c_str (), &st) < 0) {
-                /* In case of no executatble in bin directory of package's root path */
+                /* In case of no executable in bin directory of package's root path */
                 /* Create symbolic link for launching and supporting application FW APIs */
                 if (symlink (SCIM_HELPER_LAUNCHER_PROGRAM, bin_path.c_str ()) != 0)
                     LOGW ("Failed to create symbolic link : %s\n", bin_path.c_str ());

@@ -1164,7 +1164,7 @@ static void _initialize_ime_info (void)
  *
  * @param pkgid pkgid to insert/update ime_info table.
  *
- * @return 1 on successfull insert, 2 on successful update, -1 if pkgid is not IME package, otherwise return 0.
+ * @return 1 on successful insert, 2 on successful update, -1 if pkgid is not IME package, otherwise return 0.
  */
 static int _isf_insert_ime_info_by_pkgid(const char *pkgid)
 {
@@ -1229,7 +1229,7 @@ static Eina_Bool _start_default_helper_timer(void *data)
     std::vector<ImeInfoDB>::iterator it;
     VectorPairStringUint32::iterator iter;
 
-    /* Let panel know that ise is deleted... */
+    /* Let panel know that ISE is deleted... */
     for (it = _ime_info.begin(); it != _ime_info.end(); it++) {
         total_appids.push_back(it->appid);
     }
@@ -7050,7 +7050,7 @@ int main (int argc, char *argv [])
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
-    //FIXME: frontend name shoule be got from paramter,set socket as dead code
+    //FIXME: frontend name should be got from parameter,set socket as dead code
     launch_socket_frontend ();
 
     if (config_name != "dummy") {
