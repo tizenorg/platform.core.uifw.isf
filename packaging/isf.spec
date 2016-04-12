@@ -109,6 +109,7 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 %if %{with wayland}
         --disable-efl-immodule \
 %endif
+		--disable-wayland-immodule \
 		--disable-frontend-x11 \
 		--disable-multiwindow-support \
 		--disable-ime-embed-app \
@@ -153,7 +154,6 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_optexecdir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
 %if %{with wayland}
-
 %else
 %{_libdir}/ecore_imf/modules/*/*/*.so
 %endif
