@@ -18,4 +18,4 @@
 MAINTAINERCLEANFILES	= Makefile.in
 CLEANFILES		= *.bak
 
-SUBDIRS			= gtk2_immodule efl_panel efl_immodule kbd_mode_changer
+SUBDIRS			= gtk2_immodule efl_panel efl_immodule wayland_immodule kbd_mode_changer
