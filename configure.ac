@@ -504,6 +504,11 @@ AC_ARG_ENABLE(wayland-immodule,
               enable_wayland_immodule=no,
               enable_wayland_immodule=yes)
 
+AC_ARG_ENABLE(tv-profile-specific,
+              [  --enable-tv-profile-specific    Configure tv profile specific],
+              enable_tv_profile_specific=yes,
+              enable_tv_profile_specific=no)
+
 AC_ARG_ENABLE(panel-efl,
               [  --disable-panel-efl       Do not build EFL Panel],
               enable_panel_efl=no,
@@ -657,6 +662,12 @@ else
   enable_wayland_immodule=no
 fi
 
+if test "$enable_tv_profile_specific" = "yes"; then
+  ISF_BUILD_TV_PROFILE_SPECIFIC=1
+else
+  ISF_BUILD_TV_PROFILE_SPECIFIC=0
+fi
+
 if test "$enable_wsc_efl" = "yes" -a "$ISF_HAS_ELM" = "yes"; then
   ISF_BUILD_WSC_EFL=1
 else
@@ -738,6 +749,9 @@ AM_CONDITIONAL(ISF_BUILD_EFL_IMMODULE,
 AM_CONDITIONAL(ISF_BUILD_WAYLAND_IMMODULE,
                 [test "$enable_wayland_immodule" = "yes"])
 
+AM_CONDITIONAL(ISF_BUILD_TV_PROFILE_SPECIFIC,
+                [test "$enable_tv_profile_specific" = "yes"])
+
 AM_CONDITIONAL(ISF_BUILD_WSC_EFL,
                 [test "$enable_wsc_efl" = "yes"])
 
@@ -764,6 +778,7 @@ AC_SUBST(SCIM_BUILD_SCIM_SETUP)
 AC_SUBST(SCIM_BUILD_GTK_UTILS)
 AC_SUBST(SCIM_BUILD_X11_UTILS)
 AC_SUBST(ISF_BUILD_EFL_IMMODULE)
+AC_SUBST(ISF_BUILD_TV_PROFILE_SPECIFIC)
 AC_SUBST(ISF_BUILD_PANEL_EFL)
 AC_SUBST(ISF_BUILD_DB_UTIL)
 AC_SUBST(ISF_INSTALL_SYSTEMD_SCRIPT)
