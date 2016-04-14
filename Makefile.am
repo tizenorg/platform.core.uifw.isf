@@ -63,8 +63,13 @@ if ISF_INSTALL_SYSTEMD_SCRIPT
 SYSTEMD_SCRIPT = scim.service scim.path
 endif
 # $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
+if ISF_BUILD_TV_PROFILE_SPECIFIC
+systemdunitdir = /usr/lib/systemd/system
+systemdunit_DATA = $(SYSTEMD_SCRIPT)
+else
 systemduserunitdir = /usr/lib/systemd/user
 systemduserunit_DATA = $(SYSTEMD_SCRIPT)
+endif
 
 ACLOCAL_AMFLAGS = -I ism/m4
 
@@ -78,6 +83,11 @@ uninstall-local:
 
 install-data-hook:
 if ISF_INSTALL_SYSTEMD_SCRIPT
+if ISF_BUILD_TV_PROFILE_SPECIFIC
+	$(mkinstalldirs) $(DESTDIR)$(systemdunitdir)/multi-user.target.wants
+	ln -sf ../scim.path $(DESTDIR)$(systemdunitdir)/multi-user.target.wants/scim.path
+else
 	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/default.target.wants
 	ln -sf ../scim.path $(DESTDIR)$(systemduserunitdir)/default.target.wants/scim.path
+endif
 endif
