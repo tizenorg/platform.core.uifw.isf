@@ -24,7 +24,7 @@ BuildRequires:  pkgconfig(tts)
 BuildRequires:  pkgconfig(ecore)
 BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(edje)
-%if "%{?profile}" == "mobile"
+%if "%{?tizen_profile_name}" == "mobile"
 BuildRequires:  pkgconfig(notification)
 %endif
 BuildRequires:  pkgconfig(dlog)
@@ -76,17 +76,17 @@ export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
 export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
 
-%if "%{profile}" == "wearable"
+%if "%{?tizen_profile_name}" == "wearable"
 CFLAGS+=" -D_WEARABLE";
 CXXFLAGS+=" -D_WEARABLE";
 %endif
 
-%if "%{profile}" == "mobile"
+%if "%{?tizen_profile_name}" == "mobile"
 CFLAGS+=" -D_MOBILE";
 CXXFLAGS+=" -D_MOBILE";
 %endif
 
-%if "%{profile}" == "tv"
+%if "%{?tizen_profile_name}" == "tv"
 CFLAGS+=" -D_TV";
 CXXFLAGS+=" -D_TV";
 %endif
