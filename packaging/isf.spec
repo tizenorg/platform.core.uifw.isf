@@ -109,6 +109,9 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 %if %{with wayland}
         --disable-efl-immodule \
 %endif
+%if "%{?tizen_profile_name}" == "tv"
+		--enable-tv-profile-specific \
+%endif
 		--disable-frontend-x11 \
 		--disable-multiwindow-support \
 		--disable-ime-embed-app \
@@ -122,6 +125,9 @@ rm -rf %{buildroot}
 %make_install
 mkdir -p %{buildroot}/%{TZ_SYS_ETC}/dump.d/module.d
 cp -af ism/dump/isf_log_dump.sh %{buildroot}/%{TZ_SYS_ETC}/dump.d/module.d
+%if "%{?tizen_profile_name}" == "tv"
+cp -af scim-tv.service %{buildroot}/usr/lib/systemd/system/scim.service
+%endif
 mkdir -p %{buildroot}/etc/scim/conf
 %find_lang scim
 
@@ -142,9 +148,15 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
 %dir /etc/scim/conf
+%if "%{?tizen_profile_name}" == "tv"
+%{_prefix}/lib/systemd/system/multi-user.target.wants/scim.path
+%{_prefix}/lib/systemd/system/scim.service
+%{_prefix}/lib/systemd/system/scim.path
+%else
 %{_prefix}/lib/systemd/user/default.target.wants/scim.path
 %{_prefix}/lib/systemd/user/scim.service
 %{_prefix}/lib/systemd/user/scim.path
+%endif
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config
