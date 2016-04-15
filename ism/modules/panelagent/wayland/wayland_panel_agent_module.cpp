@@ -1651,9 +1651,16 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
 
             g_info_manager->get_active_helper_option (WAYLAND_MODULE_CLIENT_ID, _active_helper_option);
 
+            /* At the moment we received focus_in, our surrounding text has not been updated yet -
+            which means it will always turn Shift key on, resulting the whole keyboard blinking.
+            This is only a temporary solution - the caps_mode_check() needs be executed on
+            client application side. The code below, will still be needed when we implement the
+            auto capitalization logic on immodule, so just commenting out */
+            /*
             if (caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
                 context_scim->impl->next_shift_status = 0;
             }
+            */
         }
     }
 
