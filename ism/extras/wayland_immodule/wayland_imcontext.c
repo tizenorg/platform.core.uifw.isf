@@ -614,12 +614,19 @@ text_input_preedit_styling(void                 *data,
     switch (style)
     {
         case WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT:
-        case WL_TEXT_INPUT_PREEDIT_STYLE_UNDERLINE:
-        case WL_TEXT_INPUT_PREEDIT_STYLE_INCORRECT:
-        case WL_TEXT_INPUT_PREEDIT_STYLE_HIGHLIGHT:
-        case WL_TEXT_INPUT_PREEDIT_STYLE_ACTIVE:
-        case WL_TEXT_INPUT_PREEDIT_STYLE_INACTIVE:
             attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB1;
+            break;
+        case WL_TEXT_INPUT_PREEDIT_STYLE_UNDERLINE:
+            attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB1;
+            break;
+        case WL_TEXT_INPUT_PREEDIT_STYLE_INCORRECT:
+            break;
+        case WL_TEXT_INPUT_PREEDIT_STYLE_HIGHLIGHT:
+            attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB3;
+            break;
+        case WL_TEXT_INPUT_PREEDIT_STYLE_ACTIVE:
+            break;
+        case WL_TEXT_INPUT_PREEDIT_STYLE_INACTIVE:
             break;
         case WL_TEXT_INPUT_PREEDIT_STYLE_SELECTION:
             attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB2;
