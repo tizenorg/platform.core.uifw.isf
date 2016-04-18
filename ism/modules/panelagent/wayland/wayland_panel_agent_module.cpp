@@ -45,6 +45,7 @@
 #include <string.h>
 #include <malloc.h>
 #include <dlog.h>
+#include <glib.h>
 
 #include <Eina.h>
 #include <Ecore.h>
@@ -2015,11 +2016,94 @@ wsc_send_preedit (WSCContextISF* wsc_ctx, int32_t cursor)
 
     uint32_t index = strlen (wsc_ctx->preedit_str);
 
-    if (wsc_ctx->preedit_style)
-        wl_input_method_context_preedit_styling (wsc_ctx->im_ctx,
-                                                 0,
-                                                 strlen (wsc_ctx->preedit_str),
-                                                 wsc_ctx->preedit_style);
+    if (wsc_ctx && wsc_ctx->impl && wsc_ctx->impl->is_on) {
+        String mbs = utf8_wcstombs (wsc_ctx->impl->preedit_string);
+
+        if (!wsc_ctx->impl->preedit_attrlist.empty()) {
+            if (mbs.length ()) {
+                uint32_t preedit_style;
+                int start_index, end_index;
+                int wlen = wsc_ctx->impl->preedit_string.length ();
+                AttributeList::const_iterator i;
+                bool *attrs_flag = new bool [mbs.length ()];
+                memset (attrs_flag, 0, mbs.length () * sizeof (bool));
+                for (i = wsc_ctx->impl->preedit_attrlist.begin ();
+                    i != wsc_ctx->impl->preedit_attrlist.end (); ++i) {
+                    start_index = i->get_start ();
+                    end_index = i->get_end ();
+                    if (end_index <= wlen && start_index < end_index && i->get_type () != SCIM_ATTR_DECORATE_NONE) {
+                        start_index = g_utf8_offset_to_pointer (mbs.c_str (), i->get_start ()) - mbs.c_str ();
+                        end_index = g_utf8_offset_to_pointer (mbs.c_str (), i->get_end ()) - mbs.c_str ();
+                        if (i->get_type () == SCIM_ATTR_DECORATE) {
+                            if (i->get_value () == SCIM_ATTR_DECORATE_UNDERLINE) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_UNDERLINE;
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_REVERSE) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_SELECTION;
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_HIGHLIGHT) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_HIGHLIGHT;
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR1) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT;
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR2) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT;
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR3) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT;
+                            } else if (i->get_value () == SCIM_ATTR_DECORATE_BGCOLOR4) {
+                                preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT;
+                            }
+
+                            if (preedit_style)
+                                wl_input_method_context_preedit_styling (wsc_ctx->im_ctx,
+                                                                         start_index,
+                                                                         end_index,
+                                                                         preedit_style);
+                            switch (i->get_value ())
+                            {
+                                case SCIM_ATTR_DECORATE_UNDERLINE:
+                                case SCIM_ATTR_DECORATE_REVERSE:
+                                case SCIM_ATTR_DECORATE_HIGHLIGHT:
+                                case SCIM_ATTR_DECORATE_BGCOLOR1:
+                                case SCIM_ATTR_DECORATE_BGCOLOR2:
+                                case SCIM_ATTR_DECORATE_BGCOLOR3:
+                                case SCIM_ATTR_DECORATE_BGCOLOR4:
+                                    // Record which character has attribute.
+                                    for (int pos = start_index; pos < end_index; ++pos)
+                                        attrs_flag [pos] = 1;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } else if (i->get_type () == SCIM_ATTR_FOREGROUND) {
+                            SCIM_DEBUG_FRONTEND(4) << "SCIM_ATTR_FOREGROUND\n";
+                        } else if (i->get_type () == SCIM_ATTR_BACKGROUND) {
+                            SCIM_DEBUG_FRONTEND(4) << "SCIM_ATTR_BACKGROUND\n";
+                        }
+                    }
+                }
+                // Add underline for all characters which don't have attribute.
+                for (unsigned int pos = 0; pos < mbs.length (); ++pos) {
+                    if (!attrs_flag [pos]) {
+                        int begin_pos = pos;
+                        while (pos < mbs.length () && !attrs_flag [pos])
+                            ++pos;
+                        // use REVERSE style as default
+                        preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_UNDERLINE;
+                        start_index = begin_pos;
+                        end_index = pos;
+
+                        wl_input_method_context_preedit_styling (wsc_ctx->im_ctx,
+                                                                     start_index,
+                                                                     end_index,
+                                                                     preedit_style);
+                    }
+                }
+                delete [] attrs_flag;
+            }
+        }
+    } else {
+        if (!wsc_ctx->impl->preedit_attrlist.empty())
+            wsc_ctx->impl->preedit_attrlist.clear();
+    }
+
     if (cursor > 0)
         index = cursor;
 

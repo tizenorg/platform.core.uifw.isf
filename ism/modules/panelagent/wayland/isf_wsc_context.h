@@ -86,7 +86,6 @@ struct _WSCContextISF {
     char *language;
 
     uint32_t serial;
-    uint32_t preedit_style;
     uint32_t content_hint;
     uint32_t content_purpose;
     uint32_t surrounding_cursor;
