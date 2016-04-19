@@ -23,14 +23,9 @@
  *
  */
 
-#define Uses_SCIM_BACKEND
-#define Uses_SCIM_IMENGINE_MODULE
-#define Uses_SCIM_HELPER_MODULE
-#define Uses_SCIM_HOTKEY
 #define Uses_SCIM_PANEL_CLIENT
 #define Uses_SCIM_CONFIG_PATH
 #define Uses_SCIM_PANEL_AGENT
-#define Uses_SCIM_COMPOSE_KEY
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -74,7 +69,6 @@ using namespace scim;
 
 struct _WSCContextISFImpl {
     WSCContextISF           *parent;
-    IMEngineInstancePointer  si;
     Ecore_Wl_Window         *client_window;
     Ecore_IMF_Input_Mode     input_mode;
     WideString               preedit_string;
@@ -91,11 +85,9 @@ struct _WSCContextISFImpl {
     int                      cursor_pos;
     bool                     use_preedit;
     bool                     is_on;
-    bool                     shared_si;
     bool                     preedit_started;
     bool                     preedit_updating;
     bool                     need_commit_preedit;
-    bool                     prediction_allow;
     int                      next_shift_status;
     int                      shift_mode_enabled;
 
@@ -117,11 +109,9 @@ struct _WSCContextISFImpl {
                            cursor_pos(-1),
                            use_preedit(true),
                            is_on(true),
-                           shared_si(false),
                            preedit_started(false),
                            preedit_updating(false),
                            need_commit_preedit(false),
-                           prediction_allow(false),
                            next_shift_status(0),
                            shift_mode_enabled(0),
                            next(NULL)
@@ -174,156 +164,47 @@ static __Punctuations __punctuations [] = {
 };
 
 /* private functions */
-//static void     panel_slot_reload_config                (int                     context);
-static void     panel_slot_exit                         (int                     context);
-static void     panel_slot_update_candidate_item_layout (int                     context,
-                                                         const std::vector<uint32> &row_items);
-static void     panel_slot_update_lookup_table_page_size(int                     context,
-                                                         int                     page_size);
-static void     panel_slot_lookup_table_page_up         (int                     context);
-static void     panel_slot_lookup_table_page_down       (int                     context);
-static void     panel_slot_trigger_property             (int                     context,
-                                                         const String           &property);
-static void     panel_slot_process_helper_event         (int                     context,
-                                                         const String           &target_uuid,
-                                                         const String           &helper_uuid,
-                                                         const Transaction      &trans);
-//static void     panel_slot_move_preedit_caret           (int                     context,
-//                                                         int                     caret_pos);
+
 static void     panel_slot_update_preedit_caret         (int                     context,
                                                          int                     caret);
-static void     panel_slot_select_aux                   (int                     context,
-                                                         int                     aux_index);
-static void     panel_slot_select_candidate             (int                     context,
-                                                         int                     cand_index);
 static void     panel_slot_process_key_event            (int                     context,
                                                          const KeyEvent         &key);
 static void     panel_slot_commit_string                (int                     context,
                                                          const WideString       &wstr);
 static void     panel_slot_forward_key_event            (int                     context,
                                                          const KeyEvent         &key);
-//static void     panel_slot_request_help                 (int                     context);
-//static void     panel_slot_request_factory_menu         (int                     context);
-static void     panel_slot_change_factory               (int                     context,
-                                                         const String           &uuid);
-static void     panel_slot_reset_keyboard_ise           (int                     context);
-static void     panel_slot_update_keyboard_ise          (int                     context);
-static void     panel_slot_show_preedit_string          (int                     context);
-static void     panel_slot_hide_preedit_string          (int                     context);
-static void     panel_slot_update_preedit_string        (int                     context,
+static void     _show_preedit_string          (int                     context);
+static void     _update_preedit_string        (int                     context,
                                                          const WideString       &str,
                                                          const AttributeList    &attrs,
                                                          int               caret);
-static void     panel_slot_get_surrounding_text         (int                     context,
+static void     _get_surrounding_text         (int                     context,
                                                          int                     maxlen_before,
                                                          int                     maxlen_after);
-static void     panel_slot_delete_surrounding_text      (int                     context,
-                                                         int                     offset,
-                                                         int                     len);
-
-static void     panel_slot_set_selection                (int                     context,
-                                                         int                     start,
-                                                         int                     end);
-static void     panel_slot_send_private_command         (int                     context,
-                                                         const String           &command);
-static void     panel_req_focus_in                      (WSCContextISF     *ic);
-static void     panel_req_update_factory_info           (WSCContextISF     *ic);
 static void     panel_req_update_cursor_position        (WSCContextISF     *ic, int cursor_pos);
 static void     panel_req_update_bidi_direction         (WSCContextISF     *ic, int direction);
-//static void     panel_req_show_help                     (WSCContextISF     *ic);
-static void     panel_req_show_factory_menu             (WSCContextISF     *ic);
 
 /* Panel iochannel handler*/
-static bool     panel_initialize                        (void);
+static void     panel_initialize                        (void);
 static void     panel_finalize                          (void);
 
 
 /* utility functions */
-static bool     filter_hotkeys                          (WSCContextISF     *ic,
-                                                         const KeyEvent         &key);
+
 static bool     filter_keys                             (const char *keyname,
                                                          const char *config_path);
-
-static void     turn_on_ic                              (WSCContextISF     *ic);
-static void     turn_off_ic                             (WSCContextISF     *ic);
 static void     set_ic_capabilities                     (WSCContextISF     *ic);
 
 static void     initialize                              (void);
 static void     finalize                                (void);
 
-static void     open_next_factory                       (WSCContextISF     *ic);
-static void     open_previous_factory                   (WSCContextISF     *ic);
-static void     open_specific_factory                   (WSCContextISF     *ic,
-                                                         const String           &uuid);
 static void     send_wl_key_event                       (WSCContextISF *ic, const KeyEvent &key, bool fake);
 static void     _hide_preedit_string                    (int context, bool update_preedit);
 
-static void     attach_instance                         (const IMEngineInstancePointer &si);
-
-/* slot functions */
-static void     slot_show_preedit_string                (IMEngineInstanceBase   *si);
-static void     slot_show_aux_string                    (IMEngineInstanceBase   *si);
-static void     slot_show_lookup_table                  (IMEngineInstanceBase   *si);
-
-static void     slot_hide_preedit_string                (IMEngineInstanceBase   *si);
-static void     slot_hide_aux_string                    (IMEngineInstanceBase   *si);
-static void     slot_hide_lookup_table                  (IMEngineInstanceBase   *si);
-
-static void     slot_update_preedit_caret               (IMEngineInstanceBase   *si,
-                                                         int                     caret);
-static void     slot_update_preedit_string              (IMEngineInstanceBase   *si,
-                                                         const WideString       &str,
-                                                         const AttributeList    &attrs,
-                                                         int               caret);
-static void     slot_update_aux_string                  (IMEngineInstanceBase   *si,
-                                                         const WideString       &str,
-                                                         const AttributeList    &attrs);
-static void     slot_commit_string                      (IMEngineInstanceBase   *si,
-                                                         const WideString       &str);
-static void     slot_forward_key_event                  (IMEngineInstanceBase   *si,
-                                                         const KeyEvent         &key);
-static void     slot_update_lookup_table                (IMEngineInstanceBase   *si,
-                                                         const LookupTable      &table);
-
-static void     slot_register_properties                (IMEngineInstanceBase   *si,
-                                                         const PropertyList     &properties);
-static void     slot_update_property                    (IMEngineInstanceBase   *si,
-                                                         const Property         &property);
-static void     slot_beep                               (IMEngineInstanceBase   *si);
-static void     slot_start_helper                       (IMEngineInstanceBase   *si,
-                                                         const String           &helper_uuid);
-static void     slot_stop_helper                        (IMEngineInstanceBase   *si,
-                                                         const String           &helper_uuid);
-static void     slot_send_helper_event                  (IMEngineInstanceBase   *si,
-                                                         const String           &helper_uuid,
-                                                         const Transaction      &trans);
-static bool     slot_get_surrounding_text               (IMEngineInstanceBase   *si,
-                                                         WideString             &text,
+static bool     slot_get_surrounding_text               (WideString             &text,
                                                          int                    &cursor,
                                                          int                     maxlen_before,
                                                          int                     maxlen_after);
-static bool     slot_delete_surrounding_text            (IMEngineInstanceBase   *si,
-                                                         int                     offset,
-                                                         int                     len);
-static bool     slot_set_selection                      (IMEngineInstanceBase   *si,
-                                                         int                     start,
-                                                         int                     end);
-
-static void     slot_expand_candidate                   (IMEngineInstanceBase   *si);
-static void     slot_contract_candidate                 (IMEngineInstanceBase   *si);
-
-static void     slot_set_candidate_style                (IMEngineInstanceBase   *si,
-                                                         ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
-                                                         ISF_CANDIDATE_MODE_T    mode);
-
-static void     slot_send_private_command               (IMEngineInstanceBase   *si,
-                                                         const String           &command);
-
-//static void     reload_config_callback                  (const ConfigPointer    &config);
-
-static void     fallback_commit_string_cb               (IMEngineInstanceBase   *si,
-                                                         const WideString       &str);
-static void     _display_input_language                 (WSCContextISF *ic);
 
 /* Local variables declaration */
 static String                                           _language;
@@ -334,28 +215,16 @@ static WSCContextISF                                   *_ic_list                
 static KeyboardLayout                                   _keyboard_layout            = SCIM_KEYBOARD_Default;
 static int                                              _valid_key_mask             = SCIM_KEY_AllMasks;
 
-static FrontEndHotkeyMatcher                            _frontend_hotkey_matcher;
-static IMEngineHotkeyMatcher                            _imengine_hotkey_matcher;
-
-static IMEngineInstancePointer                          _default_instance;
-
 static ConfigPointer                                    _config;
-static BackEndPointer                                   _backend;
 
 static WSCContextISF                                   *_focused_ic                 = 0;
 
 static bool                                             _scim_initialized           = false;
 
-static int                                              _instance_count             = 0;
-
-static IMEngineFactoryPointer                           _fallback_factory;
-static IMEngineInstancePointer                          _fallback_instance;
 static int                                              _panel_client_id            = 0;
 static uint32                                           _active_helper_option       = 0;
 
-
 static bool                                             _on_the_spot                = true;
-static bool                                             _shared_input_method        = false;
 static bool                                             _change_keyboard_mode_by_focus_move = false;
 static bool                                             _support_hw_keyboard_mode   = false;
 static double                                           space_key_time              = 0.0;
@@ -367,6 +236,7 @@ static bool                                             _x_key_event_is_valid   
 
 static Input_Language                                   input_lang                  = INPUT_LANG_OTHER;
 
+//FIXME: remove this definations
 #define SHIFT_MODE_OFF  0xffe1
 #define SHIFT_MODE_ON   0xffe2
 #define SHIFT_MODE_LOCK 0xffe6
@@ -410,9 +280,17 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
 static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
 {
-    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
-    if (!wsc_ctx) return;
-    isf_wsc_context_reset(wsc_ctx);
+    WSCContextISF *context_scim = (WSCContextISF*)data;
+    LOGD ("");
+    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+        g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
+
+        if (context_scim->impl->need_commit_preedit) {
+            _hide_preedit_string (context_scim->id, false);
+            wsc_context_commit_preedit_string (context_scim);
+        }
+    }
+
 }
 
 static void
@@ -771,11 +649,14 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
 
     isf_wsc_context_focus_in (wsc_ctx);
 
-    int len = 1024;
-    char imdata[1024] = {0};
-    isf_wsc_context_input_panel_imdata_get (wsc_ctx, imdata, &len);
+    int len = 0;
+    char *imdata = NULL;
+    isf_wsc_context_input_panel_imdata_get (wsc_ctx, (void**)&imdata, &len);
     LOGD ("Get imdata:%s, length:%d\n", imdata, len);
-    wl_input_method_context_update_input_panel_data (im_ctx, wsc_ctx->serial, imdata, len);
+    if(imdata && len)
+        wl_input_method_context_update_input_panel_data (im_ctx, wsc_ctx->serial, imdata, len);
+    if (imdata)
+        delete[] imdata;
 }
 
 static void
@@ -863,11 +744,15 @@ _wsc_setup(struct weescim *wsc)
 
     if (!wsc) return false;
 
-    if (!(registry = ecore_wl_registry_get()))
+    if (!(registry = ecore_wl_registry_get())) {
+        LOGW ("failed to get wl_registry");
         return false;
+    }
 
-    if (!(globals = ecore_wl_globals_get()))
+    if (!(globals = ecore_wl_globals_get())) {
+        LOGW ("failed to get wl_globals");
         return false;
+    }
 
     EINA_INLIST_FOREACH(globals, global) {
         if (strcmp (global->interface, "wl_input_method") == 0)
@@ -972,7 +857,6 @@ delete_ic_impl (WSCContextISFImpl *impl)
 
             rec->imdata_size = 0;
             rec->parent = 0;
-            rec->si.reset ();
             rec->client_window = 0;
             rec->preedit_string = WideString ();
             rec->preedit_attrlist.clear ();
@@ -1022,16 +906,6 @@ check_valid_ic (WSCContextISF * ic)
         return true;
     else
         return false;
-}
-
-static void
-set_prediction_allow (WSCContextISF *ctx, bool prediction)
-{
-    WSCContextISF *context_scim = ctx;
-
-    if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
-        context_scim->impl->si->set_prediction_allow (prediction);
-    }
 }
 
 static Eina_Bool
@@ -1340,8 +1214,9 @@ imengine_layout_set (WSCContextISF *wsc_ctx, Ecore_IMF_Input_Panel_Layout layout
     LOGD ("");
     WSCContextISF* context_scim = wsc_ctx;
 
-    if (context_scim && context_scim->impl && context_scim->impl->si && context_scim == _focused_ic) {
-        context_scim->impl->si->set_layout (layout);
+    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+        //FIXME: add this interface
+        //_info_manager->set_layout (layout);
     }
 }
 
@@ -1425,43 +1300,12 @@ isf_wsc_context_add (WSCContextISF *wsc_ctx)
 
     if (!context_scim) return;
 
-    context_scim->impl = NULL;
-
-    if (_backend.null ())
-        return;
-
-    IMEngineInstancePointer si;
-
-    // Use the default instance if "shared input method" mode is enabled.
-    if (_shared_input_method && !_default_instance.null ()) {
-        si = _default_instance;
-        SCIM_DEBUG_FRONTEND(2) << "use default instance: " << si->get_id () << " " << si->get_factory_uuid () << "\n";
-    }
-
-    // Not in "shared input method" mode, or no default instance, create an instance.
-    if (si.null ()) {
-        IMEngineFactoryPointer factory = _backend->get_default_factory (_language, "UTF-8");
-        if (factory.null ()) return;
-        si = factory->create_instance ("UTF-8", _instance_count++);
-        if (si.null ()) return;
-        attach_instance (si);
-        SCIM_DEBUG_FRONTEND(2) << "create new instance: " << si->get_id () << " " << si->get_factory_uuid () << "\n";
-    }
-
-    // If "shared input method" mode is enabled, and there is no default instance,
-    // then store this instance as default one.
-    if (_shared_input_method && _default_instance.null ()) {
-        SCIM_DEBUG_FRONTEND(2) << "update default instance.\n";
-        _default_instance = si;
-    }
-
     context_scim->impl                      = new_ic_impl (context_scim);
     if (context_scim->impl == NULL) {
         std::cerr << "memory allocation failed in " << __FUNCTION__ << "\n";
         return;
     }
 
-    context_scim->impl->si                  = si;
     context_scim->impl->client_window       = 0;
     context_scim->impl->preedit_caret       = 0;
     context_scim->impl->cursor_x            = 0;
@@ -1469,12 +1313,10 @@ isf_wsc_context_add (WSCContextISF *wsc_ctx)
     context_scim->impl->cursor_pos          = -1;
     context_scim->impl->cursor_top_y        = 0;
     context_scim->impl->is_on               = true;
-    context_scim->impl->shared_si           = _shared_input_method;
     context_scim->impl->use_preedit         = _on_the_spot;
     context_scim->impl->preedit_started     = false;
     context_scim->impl->preedit_updating    = false;
     context_scim->impl->need_commit_preedit = false;
-    context_scim->impl->prediction_allow    = true;
 
     if (!_ic_list)
         context_scim->next = NULL;
@@ -1482,10 +1324,9 @@ isf_wsc_context_add (WSCContextISF *wsc_ctx)
         context_scim->next = _ic_list;
     _ic_list = context_scim;
 
-    if (_shared_input_method)
-        context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+    context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
 
-    g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id, si->get_factory_uuid ());
+    g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id, "");
     set_ic_capabilities (context_scim);
     SCIM_DEBUG_FRONTEND (2) << "input context created: id = " << context_scim->id << "\n";
 }
@@ -1518,8 +1359,6 @@ isf_wsc_context_del (WSCContextISF *wsc_ctx)
     }
 
     if (context_scim && context_scim->impl) {
-        if (context_scim == _focused_ic && context_scim->impl->si)
-            context_scim->impl->si->focus_out ();
 
         // Delete the instance.
         // FIXME:
@@ -1528,7 +1367,6 @@ isf_wsc_context_del (WSCContextISF *wsc_ctx)
         // we need set the focused_ic to this context temporary.
         WSCContextISF* old_focused = _focused_ic;
         _focused_ic = context_scim;
-        context_scim->impl->si.reset ();
         _focused_ic = old_focused;
 
         if (context_scim == _focused_ic) {
@@ -1575,94 +1413,51 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
         isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_HELPER_MODE);
     }
 
-    bool need_cap   = false;
-    bool need_reset = false;
-    bool need_reg   = false;
-
     if (context_scim && context_scim->impl) {
         _focused_ic = context_scim;
 
-        // Handle the "Shared Input Method" mode.
-        if (_shared_input_method) {
-            SCIM_DEBUG_FRONTEND (2) << "shared input method.\n";
-            IMEngineFactoryPointer factory = _backend->get_default_factory (_language, "UTF-8");
+        context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+        context_scim->impl->preedit_string.clear ();
+        context_scim->impl->preedit_attrlist.clear ();
+        context_scim->impl->preedit_caret = 0;
+        context_scim->impl->preedit_started = false;
 
-            if (!factory.null ()) {
-                if (_default_instance.null () || _default_instance->get_factory_uuid () != factory->get_uuid ()) {
-                    _default_instance = factory->create_instance ("UTF-8", _default_instance.null () ? _instance_count++ : _default_instance->get_id ());
-                    attach_instance (_default_instance);
-                    SCIM_DEBUG_FRONTEND (2) << "create new default instance: " << _default_instance->get_id () << " " << _default_instance->get_factory_uuid () << "\n";
-                }
+        g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id, "");
 
-                context_scim->impl->shared_si = true;
-                context_scim->impl->si = _default_instance;
-                context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
-                context_scim->impl->preedit_string.clear ();
-                context_scim->impl->preedit_attrlist.clear ();
-                context_scim->impl->preedit_caret = 0;
-                context_scim->impl->preedit_started = false;
-                need_cap = true;
-                need_reset = true;
-                need_reg = true;
-            }
-        } else if (context_scim->impl->shared_si) {
-            SCIM_DEBUG_FRONTEND (2) << "exit shared input method.\n";
-            IMEngineFactoryPointer factory = _backend->get_default_factory (_language, "UTF-8");
+        set_ic_capabilities (context_scim);
 
-            if (!factory.null ()) {
-                context_scim->impl->si = factory->create_instance ("UTF-8", _instance_count++);
-                context_scim->impl->preedit_string.clear ();
-                context_scim->impl->preedit_attrlist.clear ();
-                context_scim->impl->preedit_caret = 0;
-                context_scim->impl->preedit_started = false;
-                attach_instance (context_scim->impl->si);
-                need_cap = true;
-                need_reg = true;
-                context_scim->impl->shared_si = false;
-                SCIM_DEBUG_FRONTEND (2) << "create new instance: " << context_scim->impl->si->get_id () << " " << context_scim->impl->si->get_factory_uuid () << "\n";
-            }
+        //FIXME: modify the paramter ic->impl->si->get_factory_uuid ()
+        g_info_manager->focus_in (WAYLAND_MODULE_CLIENT_ID, context_scim->id, "");
+        if (context_scim->impl->is_on) {
+            g_info_manager->socket_turn_on ();
+            //            _panel_client.hide_preedit_string (context_scim->id);
+            //            _panel_client.hide_aux_string (context_scim->id);
+            //            _panel_client.hide_lookup_table (context_scim->id);
+            //FIXME
+            #if 0 //REMOVE_SCIM_LAUNCHER
+            context_scim->impl->si->set_layout (wsc_context_input_panel_layout_get (wsc_ctx));
+            context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
+
+            if (context_scim->impl->imdata)
+                context_scim->impl->si->set_imdata ((const char*)context_scim->impl->imdata, context_scim->impl->imdata_size);
+            #endif
+        } else {
+            g_info_manager->socket_turn_off ();
         }
 
-        if (context_scim->impl->si) {
-            context_scim->impl->si->set_frontend_data (static_cast <void*> (context_scim));
+        g_info_manager->get_active_helper_option (WAYLAND_MODULE_CLIENT_ID, _active_helper_option);
 
-            if (need_reg) g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id, context_scim->impl->si->get_factory_uuid ());
-
-            if (need_cap) set_ic_capabilities (context_scim);
-
-            panel_req_focus_in (context_scim);
-            //        panel_req_update_factory_info (context_scim);
-
-            if (need_reset) context_scim->impl->si->reset ();
-
-            if (context_scim->impl->is_on) {
-                g_info_manager->socket_turn_on ();
-                //            _panel_client.hide_preedit_string (context_scim->id);
-                //            _panel_client.hide_aux_string (context_scim->id);
-                //            _panel_client.hide_lookup_table (context_scim->id);
-                context_scim->impl->si->focus_in ();
-                context_scim->impl->si->set_layout (wsc_context_input_panel_layout_get (wsc_ctx));
-                context_scim->impl->si->set_prediction_allow (context_scim->impl->prediction_allow);
-
-                if (context_scim->impl->imdata)
-                    context_scim->impl->si->set_imdata ((const char*)context_scim->impl->imdata, context_scim->impl->imdata_size);
-            } else {
-                g_info_manager->socket_turn_off ();
-            }
-
-            g_info_manager->get_active_helper_option (WAYLAND_MODULE_CLIENT_ID, _active_helper_option);
-
-            /* At the moment we received focus_in, our surrounding text has not been updated yet -
-            which means it will always turn Shift key on, resulting the whole keyboard blinking.
-            This is only a temporary solution - the caps_mode_check() needs be executed on
-            client application side. The code below, will still be needed when we implement the
-            auto capitalization logic on immodule, so just commenting out */
-            /*
-            if (caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
-                context_scim->impl->next_shift_status = 0;
-            }
-            */
+        /* At the moment we received focus_in, our surrounding text has not been updated yet -
+        which means it will always turn Shift key on, resulting the whole keyboard blinking.
+        This is only a temporary solution - the caps_mode_check() needs be executed on
+        client application side. The code below, will still be needed when we implement the
+        auto capitalization logic on immodule, so just commenting out */
+        /*
+        if (caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE) == EINA_FALSE) {
+            context_scim->impl->next_shift_status = 0;
         }
+
+        */
     }
 
     LOGD ("ctx : %p\n", wsc_ctx);
@@ -1689,37 +1484,13 @@ isf_wsc_context_focus_out (WSCContextISF *wsc_ctx)
             g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
         }
 
-        if (context_scim->impl->si) {
-            context_scim->impl->si->focus_out ();
-            context_scim->impl->si->reset ();
-            context_scim->impl->cursor_pos = -1;
+        context_scim->impl->cursor_pos = -1;
 //          if (context_scim->impl->shared_si) context_scim->impl->si->reset ();
-            g_info_manager->focus_out (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
-        }
+        g_info_manager->focus_out (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
 
         _focused_ic = 0;
     }
     _x_key_event_is_valid = false;
-}
-
-void
-isf_wsc_context_reset (WSCContextISF *wsc_ctx)
-{
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-
-    WSCContextISF *context_scim = wsc_ctx;
-
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        if (context_scim->impl->si) {
-            context_scim->impl->si->reset ();
-            g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
-        }
-
-        if (context_scim->impl->need_commit_preedit) {
-            _hide_preedit_string (context_scim->id, false);
-            wsc_context_commit_preedit_string (context_scim);
-        }
-    }
 }
 
 void
@@ -1738,11 +1509,7 @@ isf_wsc_context_cursor_position_set (WSCContextISF *wsc_ctx, int cursor_pos)
 
             if (context_scim->impl->preedit_updating)
                 return;
-
-            if (context_scim->impl->si) {
-                context_scim->impl->si->update_cursor_position (cursor_pos);
-                panel_req_update_cursor_position (context_scim, cursor_pos);
-            }
+            panel_req_update_cursor_position (context_scim, cursor_pos);
         }
     }
 }
@@ -1780,34 +1547,6 @@ isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cur
 }
 
 void
-isf_wsc_context_prediction_allow_set (WSCContextISF* wsc_ctx, Eina_Bool prediction)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " = " << (prediction == EINA_TRUE ? "true" : "false") << "...\n";
-    LOGD ("");
-    WSCContextISF* context_scim = wsc_ctx;
-
-    if (context_scim && context_scim->impl && context_scim->impl->prediction_allow != prediction) {
-        context_scim->impl->prediction_allow = prediction;
-        set_prediction_allow (wsc_ctx, prediction);
-    }
-}
-
-Eina_Bool
-isf_wsc_context_prediction_allow_get (WSCContextISF* wsc_ctx)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* context_scim = wsc_ctx;
-    Eina_Bool ret = EINA_FALSE;
-    if (context_scim && context_scim->impl) {
-        ret = context_scim->impl->prediction_allow;
-    } else {
-        std::cerr << __FUNCTION__ << " failed!!!\n";
-    }
-    return ret;
-}
-
-void
 isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " = " << autocapital_type << "...\n";
@@ -1817,9 +1556,10 @@ isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapi
     if (context_scim && context_scim->impl && context_scim->impl->autocapital_type != autocapital_type) {
         context_scim->impl->autocapital_type = autocapital_type;
 
-        if (context_scim->impl->si && context_scim == _focused_ic) {
+        if (context_scim == _focused_ic) {
             LOGD ("ctx : %p. set autocapital type : %d\n", wsc_ctx, autocapital_type);
-            context_scim->impl->si->set_autocapital_type (autocapital_type);
+            //FIXME:add this interface
+            //_info_manager->set_autocapital_type (autocapital_type);
         }
     }
 }
@@ -1835,9 +1575,8 @@ isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direc
         if (context_scim->impl->bidi_direction != direction) {
             context_scim->impl->bidi_direction = direction;
 
-            if (context_scim->impl->si && context_scim == _focused_ic) {
+            if (context_scim == _focused_ic) {
                 LOGD ("ctx : %p, bidi direction : %#x\n", wsc_ctx, direction);
-                context_scim->impl->si->update_bidi_direction (direction);
                 panel_req_update_bidi_direction (context_scim, direction);
             }
         }
@@ -1919,8 +1658,9 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
     if (!ignore_key) {
         ret = EINA_TRUE;
 
-        if (!filter_hotkeys (wsc_ctx, key)) {
+        {
             if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
+                LOGD ("ic is off");
                 ret = EINA_FALSE;
 #ifdef _TV
             } else if (get_keyboard_mode () == TOOLBAR_HELPER_MODE
@@ -1928,32 +1668,13 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                 uint32 _ret;
                 g_info_manager->process_key_event (key, _ret);
                 ret = (Eina_Bool)_ret;
-
-                if (!ret) {
-                    if (_focused_ic->impl->si)
-                        ret = _focused_ic->impl->si->process_key_event (key);
-                    else
-                        ret = EINA_FALSE;
-                }
 #else
             } else if (get_keyboard_mode () == TOOLBAR_HELPER_MODE
                        && _active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 uint32 _ret;
                 g_info_manager->process_key_event (key, _ret);
                 ret = (Eina_Bool)_ret;
-
-                if (!ret && ! (_active_helper_option & ISM_HELPER_WITHOUT_IMENGINE)) {
-                    if (_focused_ic->impl->si)
-                        ret = _focused_ic->impl->si->process_key_event (key);
-                    else
-                        ret = EINA_FALSE;
-                }
 #endif
-            } else {
-                if (_focused_ic->impl->si)
-                    ret = _focused_ic->impl->si->process_key_event (key);
-                else
-                    ret = EINA_FALSE;
             }
 
             if (ret == EINA_FALSE) {
@@ -2414,115 +2135,21 @@ void wsc_context_send_key (WSCContextISF *wsc_ctx, uint32_t keysym, uint32_t mod
 }
 
 static void
-turn_on_ic (WSCContextISF *ic)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    if (ic && ic->impl && ic->impl->si && !ic->impl->is_on) {
-        ic->impl->is_on = true;
-
-        if (ic == _focused_ic) {
-            panel_req_focus_in (ic);
-            panel_req_update_factory_info (ic);
-            g_info_manager->socket_turn_on ();
-//            _panel_client.hide_preedit_string (ic->id);
-//            _panel_client.hide_aux_string (ic->id);
-//            _panel_client.hide_lookup_table (ic->id);
-            ic->impl->si->focus_in ();
-            ic->impl->si->set_layout (ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL);
-            ic->impl->si->set_prediction_allow (ic->impl->prediction_allow);
-        }
-
-        //Record the IC on/off status
-        if (_shared_input_method) {
-            _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), true);
-            _config->flush ();
-        }
-
-        if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
-            if (!check_valid_ic (ic))
-                return;
-
-            if (check_valid_ic (ic))
-                ic->impl->preedit_started = true;
-        }
-    }
-}
-
-static void
-turn_off_ic (WSCContextISF *ic)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    if (ic && ic->impl && ic->impl->si && ic->impl->is_on) {
-        ic->impl->is_on = false;
-
-        if (ic == _focused_ic) {
-            ic->impl->si->focus_out ();
-
-//            panel_req_update_factory_info (ic);
-            g_info_manager->socket_turn_off ();
-        }
-
-        //Record the IC on/off status
-        if (_shared_input_method) {
-            _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
-            _config->flush ();
-        }
-
-        if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
-            if (!check_valid_ic (ic))
-                return;
-
-            if (check_valid_ic (ic))
-                ic->impl->preedit_started = false;
-        }
-    }
-}
-
-static void
 set_ic_capabilities (WSCContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
-
+#if 0 //FIXME
     if (ic && ic->impl) {
         unsigned int cap = SCIM_CLIENT_CAP_ALL_CAPABILITIES;
 
         if (!_on_the_spot || !ic->impl->use_preedit)
             cap -= SCIM_CLIENT_CAP_ONTHESPOT_PREEDIT;
 
-        if (ic->impl->si)
-            ic->impl->si->update_client_capabilities (cap);
+        //FIXME:add this interface
+        //_info_manager->update_client_capabilities (cap);
     }
-}
-
-static bool
-check_socket_frontend (void)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    SocketAddress address;
-    SocketClient client;
-
-    uint32 magic;
-
-    address.set_address (scim_get_default_socket_frontend_address ());
-
-    if (!client.connect (address))
-        return false;
-
-    if (!scim_socket_open_connection (magic,
-                                      String ("ConnectionTester"),
-                                      String ("SocketFrontEnd"),
-                                      client,
-                                      1000)) {
-        return false;
-    }
-
-    return true;
+#endif
 }
 
 //useless
@@ -2557,58 +2184,6 @@ panel_req_show_help (WSCContextISF *ic)
 #endif
 
 static void
-panel_req_show_factory_menu (WSCContextISF *ic)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    std::vector<IMEngineFactoryPointer> factories;
-    std::vector <PanelFactoryInfo> menu;
-
-    _backend->get_factories_for_encoding (factories, "UTF-8");
-
-    for (size_t i = 0; i < factories.size (); ++ i) {
-        menu.push_back (PanelFactoryInfo (
-                            factories [i]->get_uuid (),
-                            utf8_wcstombs (factories [i]->get_name ()),
-                            factories [i]->get_language (),
-                            factories [i]->get_icon_file ()));
-    }
-
-    if (menu.size ())
-        g_info_manager->socket_show_factory_menu (menu);
-}
-
-static void
-panel_req_update_factory_info (WSCContextISF *ic)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    if (ic && ic->impl && ic == _focused_ic) {
-        PanelFactoryInfo info;
-        if (ic->impl->is_on) {
-            IMEngineFactoryPointer sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
-            if (sf)
-                info = PanelFactoryInfo (sf->get_uuid (), utf8_wcstombs (sf->get_name ()), sf->get_language (), sf->get_icon_file ());
-        } else {
-            info = PanelFactoryInfo (String (""), String (_("English Keyboard")), String ("C"), String (SCIM_KEYBOARD_ICON_FILE));
-        }
-
-        g_info_manager->socket_update_factory_info (info);
-    }
-}
-
-static void
-panel_req_focus_in (WSCContextISF *ic)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    if (ic && ic->impl && ic->impl->si)
-        g_info_manager->focus_in (WAYLAND_MODULE_CLIENT_ID, ic->id, ic->impl->si->get_factory_uuid ());
-}
-
-static void
 panel_req_update_cursor_position (WSCContextISF *ic, int cursor_pos)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
@@ -2627,70 +2202,6 @@ panel_req_update_bidi_direction   (WSCContextISF *ic, int direction)
         g_info_manager->update_ise_bidi_direction (WAYLAND_MODULE_CLIENT_ID, direction);
 }
 
-static bool
-filter_hotkeys (WSCContextISF *ic, const KeyEvent &key)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    bool ret = false;
-
-    if (!check_valid_ic (ic))
-        return ret;
-
-    _frontend_hotkey_matcher.push_key_event (key);
-    _imengine_hotkey_matcher.push_key_event (key);
-
-    FrontEndHotkeyAction hotkey_action = _frontend_hotkey_matcher.get_match_result ();
-
-    if (hotkey_action == SCIM_FRONTEND_HOTKEY_TRIGGER) {
-        IMEngineFactoryPointer sf = _backend->get_factory (ic->impl->si->get_factory_uuid ());
-        if (sf && (sf->get_option () & SCIM_IME_SUPPORT_LANGUAGE_TOGGLE_KEY)) {
-            ret = false;
-        } else {
-            if (!ic->impl->is_on) {
-                turn_on_ic (ic);
-            } else {
-                turn_off_ic (ic);
-                g_info_manager->socket_hide_aux_string ();
-                g_info_manager->socket_hide_lookup_table ();
-            }
-
-            _display_input_language (ic);
-            ret = true;
-        }
-    } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_ON) {
-        if (!ic->impl->is_on) {
-            turn_on_ic (ic);
-            _display_input_language (ic);
-        }
-        ret = true;
-    } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_OFF) {
-        if (ic->impl->is_on) {
-            turn_off_ic (ic);
-            _display_input_language (ic);
-        }
-        ret = true;
-    } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_NEXT_FACTORY) {
-        open_next_factory (ic);
-        ret = true;
-    } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_PREVIOUS_FACTORY) {
-        open_previous_factory (ic);
-        ret = true;
-    } else if (hotkey_action == SCIM_FRONTEND_HOTKEY_SHOW_FACTORY_MENU) {
-        panel_req_show_factory_menu (ic);
-        ret = true;
-    } else if (_imengine_hotkey_matcher.is_matched ()) {
-        ISEInfo info = _imengine_hotkey_matcher.get_match_result ();
-        ISE_TYPE type = info.type;
-        if (type == IMENGINE_T)
-            open_specific_factory (ic, info.uuid);
-        else if (type == HELPER_T)
-            g_info_manager->start_helper (info.uuid);
-
-        ret = true;
-    }
-    return ret;
-}
 
 static bool
 filter_keys (const char *keyname, const char *config_path)
@@ -2713,7 +2224,7 @@ filter_keys (const char *keyname, const char *config_path)
     return false;
 }
 
-static bool
+static void
 panel_initialize (void)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
@@ -2729,9 +2240,8 @@ panel_initialize (void)
     WSCContextISF* context_scim = _ic_list;
 
     while (context_scim != NULL) {
-        if (context_scim->impl && context_scim->impl->si) {
-            g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id, context_scim->impl->si->get_factory_uuid ());
-        }
+        //FIXME:modify the paramter
+        g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id, "");
 
         context_scim = context_scim->next;
     }
@@ -2739,8 +2249,6 @@ panel_initialize (void)
     if (_focused_ic) {
         _focused_ic = 0;
     }
-
-    return true;
 }
 
 static void
@@ -2749,90 +2257,6 @@ panel_finalize (void)
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
     g_info_manager->del_client (WAYLAND_MODULE_CLIENT_ID);
-}
-
-static void
-panel_slot_exit (int /* context */)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    finalize ();
-}
-
-static void
-panel_slot_update_candidate_item_layout (int context, const std::vector<uint32> &row_items)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " row size=" << row_items.size () << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->update_candidate_item_layout (row_items);
-    }
-}
-
-static void
-panel_slot_update_lookup_table_page_size (int context, int page_size)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " page_size=" << page_size << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->update_lookup_table_page_size (page_size);
-    }
-}
-
-static void
-panel_slot_lookup_table_page_up (int context)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->lookup_table_page_up ();
-    }
-}
-
-static void
-panel_slot_lookup_table_page_down (int context)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->lookup_table_page_down ();
-    }
-}
-
-static void
-panel_slot_trigger_property (int context, const String &property)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " property=" << property << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si) {
-        ic->impl->si->trigger_property (property);
-    }
-}
-
-static void
-panel_slot_process_helper_event (int context, const String &target_uuid, const String &helper_uuid, const Transaction &trans)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " target=" << target_uuid
-                            << " helper=" << helper_uuid << " ic=" << ic << " ic->impl=" << (ic != NULL ? ic->impl : 0) << " ic-uuid="
-                            << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << " _focused_ic=" << _focused_ic << "\n";
-
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->is_on && ic->impl->si &&
-        ic->impl->si->get_factory_uuid () == target_uuid) {
-        SCIM_DEBUG_FRONTEND (2) << "call process_helper_event\n";
-        ic->impl->si->process_helper_event (helper_uuid, trans);
-    }
 }
 
 //useless
@@ -2870,30 +2294,6 @@ panel_slot_update_preedit_caret (int context, int caret)
     }
 }
 
-static void
-panel_slot_select_aux (int context, int aux_index)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " aux=" << aux_index << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->select_aux (aux_index);
-    }
-}
-
-static void
-panel_slot_select_candidate (int context, int cand_index)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " candidate=" << cand_index << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->select_candidate (cand_index);
-    }
-}
-
 static Eina_Bool
 feed_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake)
 {
@@ -2916,7 +2316,6 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 {
     LOGD ("");
     WSCContextISF* ic = find_ic (context);
-    Eina_Bool process_key = EINA_TRUE;
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
     if (!(ic && ic->impl))
@@ -2925,31 +2324,11 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     if ((_focused_ic != NULL) && (_focused_ic != ic))
         return;
 
-    KeyEvent _key = key;
-    if (key.is_key_press () &&
-        wsc_context_input_panel_layout_get (ic) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL) {
-        if (key.code == SHIFT_MODE_OFF ||
-            key.code == SHIFT_MODE_ON ||
-            key.code == SHIFT_MODE_LOCK) {
-            ic->impl->next_shift_status = _key.code;
-        } else if (key.code == SHIFT_MODE_ENABLE) {
-            ic->impl->shift_mode_enabled = true;
-            caps_mode_check (ic, EINA_TRUE, EINA_TRUE);
-        } else if (key.code == SHIFT_MODE_DISABLE) {
-            ic->impl->shift_mode_enabled = false;
-        }
-    }
-
-    if (key.code == SHIFT_MODE_ENABLE ||
-        key.code == SHIFT_MODE_DISABLE) {
-        process_key = EINA_FALSE;
-    }
-
-    if (filter_hotkeys (ic, _key) == false && process_key) {
-        if (!_focused_ic || !_focused_ic->impl->is_on || !_focused_ic->impl->si ||
-            !_focused_ic->impl->si->process_key_event (_key)) {
-            if (_key.is_key_press ()) {
-                char code = _key.get_ascii_code ();
+    //FIXME: filter_hotkeys should be added
+    //if (filter_hotkeys (ic, _key) == false && process_key) {
+        //if (!_focused_ic || !_focused_ic->impl->is_on) {
+            if (key.is_key_press ()) {
+                char code = key.get_ascii_code ();
 
                 if (isgraph (code)) {
                     char string[2] = {0};
@@ -2964,11 +2343,11 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
                         key.code == SCIM_KEY_KP_Space)
                         autoperiod_insert (ic);
 
-                    feed_key_event (ic, _key, false);
+                    feed_key_event (ic, key, false);
                 }
             }
-        }
-    }
+        //}
+    //}
 }
 
 static void
@@ -3037,54 +2416,7 @@ panel_slot_request_factory_menu (int context)
 #endif
 
 static void
-panel_slot_change_factory (int context, const String &uuid)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " factory=" << uuid << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si) {
-        ic->impl->si->reset ();
-        open_specific_factory (ic, uuid);
-    }
-}
-
-static void
-panel_slot_reset_keyboard_ise (int context)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-
-    if (ic && ic->impl) {
-        WideString wstr = ic->impl->preedit_string;
-        if (ic->impl->need_commit_preedit) {
-            _hide_preedit_string (ic->id, false);
-
-            if (wstr.length ()) {
-                wsc_context_commit_string (ic, utf8_wcstombs (wstr).c_str ());
-                if (!check_valid_ic (ic))
-                    return;
-            }
-        }
-
-        if (ic->impl->si) {
-            ic->impl->si->reset ();
-        }
-    }
-}
-
-static void
-panel_slot_update_keyboard_ise (int context)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-    _backend->add_module (_config, "socket", false);
-}
-
-static void
-panel_slot_show_preedit_string (int context)
+_show_preedit_string (int context)
 {
     LOGD ("");
     WSCContextISF* ic = find_ic (context);
@@ -3144,15 +2476,7 @@ _hide_preedit_string (int context, bool update_preedit)
 }
 
 static void
-panel_slot_hide_preedit_string (int context)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    _hide_preedit_string (context, true);
-}
-
-static void
-panel_slot_update_preedit_string (int context,
+_update_preedit_string (int context,
                                   const WideString    &str,
                                   const AttributeList &attrs,
                                   int caret)
@@ -3194,225 +2518,54 @@ panel_slot_update_preedit_string (int context,
 }
 
 static void
-panel_slot_get_surrounding_text (int context, int maxlen_before, int maxlen_after)
+_get_surrounding_text (int context, int maxlen_before, int maxlen_after)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
     WSCContextISF* ic = find_ic (context);
 
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
+    if (ic && ic->impl && _focused_ic == ic) {
         int cursor = 0;
         WideString text = WideString ();
-        slot_get_surrounding_text (ic->impl->si, text, cursor, maxlen_before, maxlen_after);
+        slot_get_surrounding_text (text, cursor, maxlen_before, maxlen_after);
         String _str = utf8_wcstombs (text);
         g_info_manager->socket_update_surrounding_text (_str, (uint32)cursor);
     }
 }
 
-static void
-panel_slot_delete_surrounding_text (int context, int offset, int len)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
-        slot_delete_surrounding_text (ic->impl->si, offset, len);
-}
-
-static void
-panel_slot_set_selection (int context, int start, int end)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
-        slot_set_selection (ic->impl->si, start, end);
-}
-
-static void
-panel_slot_send_private_command (int context, const String &command)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic)
-        slot_send_private_command (ic->impl->si, command);
-}
-
-static void
-panel_slot_update_displayed_candidate_number (int context, int number)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " number=" << number << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->update_displayed_candidate_number (number);
-    }
-}
-
-static void
-panel_slot_candidate_more_window_show (int context)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->candidate_more_window_show ();
-    }
-}
-
-static void
-panel_slot_candidate_more_window_hide (int context)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->candidate_more_window_hide ();
-    }
-}
-
-static void
-panel_slot_longpress_candidate (int context, int index)
-{
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " index=" << index << " ic=" << ic << "\n";
-
-    if (ic && ic->impl && ic->impl->si && _focused_ic == ic) {
-        ic->impl->si->longpress_candidate (index);
-    }
-}
-
-static void
-panel_slot_update_ise_input_context (int context, int type, int value)
-{
-    LOGD ("");
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-}
-
-static void
-panel_slot_update_isf_candidate_panel (int context, int type, int value)
-{
-    LOGD ("");
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-}
-
 void
 initialize (void)
 {
-    std::vector<String>     config_list;
-    std::vector<String>     engine_list;
-    std::vector<String>     helper_list;
-    std::vector<String>     load_engine_list;
 
-    std::vector<String>::iterator it;
-
-    bool                    manual = false;
-    bool                    socket = true;
-    String                  config_module_name = "simple";
-
-    LOGD ("Initializing Ecore ISF IMModule...\n");
+    LOGD ("Initializing Wayland ISF IMModule...\n");
 
     // Get system language.
     _language = scim_get_locale_language (scim_get_current_locale ());
 
-    if (socket) {
-        // If no Socket FrontEnd is running, then launch one.
-        // And set manual to false.
-        bool check_result = check_socket_frontend ();
-        if (!check_result) {
-            std::cerr << "Launching a ISF daemon with Socket FrontEnd...\n";
-            //get modules list
-            scim_get_imengine_module_list (engine_list);
-            scim_get_helper_module_list (helper_list);
-
-            for (it = engine_list.begin (); it != engine_list.end (); it++) {
-                if (*it != "socket")
-                    load_engine_list.push_back (*it);
-            }
-            for (it = helper_list.begin (); it != helper_list.end (); it++)
-                load_engine_list.push_back (*it);
-            const char *new_argv [] = { 0 };
-            scim_launch (true,
-                         config_module_name,
-                         (load_engine_list.size () > 0 ? scim_combine_string_list (load_engine_list, ',') : "none"),
-                         "socket",
-                         (char **)new_argv);
-            manual = false;
-        }
-
-        // If there is one Socket FrontEnd running and it's not manual mode,
-        // then just use this Socket Frontend.
-        if (!manual) {
-            for (int i = 0; i < 200; ++i) {
-                if (check_result) {
-                    config_module_name = "socket";
-                    load_engine_list.clear ();
-                    load_engine_list.push_back ("socket");
-                    break;
-                }
-                scim_usleep (50000);
-                check_result = check_socket_frontend ();
-            }
-        }
-    }
-
-    // create backend
-    _backend = new CommonBackEnd (_config, load_engine_list.size () > 0 ? load_engine_list : engine_list);
-
-    if (_backend.null ()) {
-        std::cerr << "Cannot create BackEnd Object!\n";
-    } else {
-        _backend->initialize (_config, load_engine_list.size () > 0 ? load_engine_list : engine_list, false, false);
-        _fallback_factory = _backend->get_factory (SCIM_COMPOSE_KEY_FACTORY_UUID);
-    }
-
-    if (_fallback_factory.null ())
-        _fallback_factory = new DummyIMEngineFactory ();
-
-    _fallback_instance = _fallback_factory->create_instance (String ("UTF-8"), 0);
-    _fallback_instance->signal_connect_commit_string (slot (fallback_commit_string_cb));
-
-    if (!panel_initialize ()) {
-        std::cerr << "Ecore IM Module: Cannot connect to Panel!\n";
-    }
+    panel_initialize ();
 }
 
 static void
 finalize (void)
 {
     LOGD ("Finalizing Ecore ISF IMModule...\n");
-
-    // Reset this first so that the shared instance could be released correctly afterwards.
-    _default_instance.reset ();
-
+    
     SCIM_DEBUG_FRONTEND(2) << "Finalize all IC partially.\n";
     while (_used_ic_impl_list) {
         // In case in "shared input method" mode,
         // all contexts share only one instance,
         // so we need point the reference pointer correctly before finalizing.
+        #if 0 //REMOVE
         if (_used_ic_impl_list->si) {
             _used_ic_impl_list->si->set_frontend_data (static_cast <void*> (_used_ic_impl_list->parent));
         }
+        #endif
         if (_used_ic_impl_list->parent && _used_ic_impl_list->parent->ctx) {
             isf_wsc_context_del (_used_ic_impl_list->parent);
         }
     }
 
     delete_all_ic_impl ();
-
-    _fallback_instance.reset ();
-    _fallback_factory.reset ();
-
-    SCIM_DEBUG_FRONTEND(2) << " Releasing BackEnd...\n";
-    _backend.reset ();
 
     SCIM_DEBUG_FRONTEND(2) << " Releasing Config...\n";
     _config.reset ();
@@ -3421,150 +2574,6 @@ finalize (void)
 
     _scim_initialized = false;
     panel_finalize ();
-}
-
-static void
-_display_input_language (WSCContextISF *ic)
-{
-}
-
-static void
-open_next_factory (WSCContextISF *ic)
-{
-    LOGD ("");
-
-    if (!check_valid_ic (ic))
-        return;
-
-    if (!ic->impl->si)
-        return;
-
-    SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
-    IMEngineFactoryPointer sf = _backend->get_next_factory ("", "UTF-8", ic->impl->si->get_factory_uuid ());
-
-    if (!sf.null ()) {
-        turn_off_ic (ic);
-        ic->impl->si = sf->create_instance ("UTF-8", ic->impl->si->get_id ());
-        ic->impl->si->set_frontend_data (static_cast <void*> (ic));
-        ic->impl->preedit_string = WideString ();
-        ic->impl->preedit_caret = 0;
-        attach_instance (ic->impl->si);
-        _backend->set_default_factory (_language, sf->get_uuid ());
-        g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, ic->id, sf->get_uuid ());
-        g_info_manager->socket_set_candidate_ui (ONE_LINE_CANDIDATE, FIXED_CANDIDATE_WINDOW);
-        set_ic_capabilities (ic);
-        turn_on_ic (ic);
-
-        if (_shared_input_method) {
-            _default_instance = ic->impl->si;
-            ic->impl->shared_si = true;
-        }
-    }
-}
-
-static void
-open_previous_factory (WSCContextISF *ic)
-{
-    LOGD ("");
-
-    if (!check_valid_ic (ic))
-        return;
-
-    if (!ic->impl->si)
-        return;
-
-    SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
-    IMEngineFactoryPointer sf = _backend->get_previous_factory ("", "UTF-8", ic->impl->si->get_factory_uuid ());
-
-    if (!sf.null ()) {
-        turn_off_ic (ic);
-        ic->impl->si = sf->create_instance ("UTF-8", ic->impl->si->get_id ());
-        ic->impl->si->set_frontend_data (static_cast <void*> (ic));
-        ic->impl->preedit_string = WideString ();
-        ic->impl->preedit_caret = 0;
-        attach_instance (ic->impl->si);
-        _backend->set_default_factory (_language, sf->get_uuid ());
-        g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, ic->id, sf->get_uuid ());
-        g_info_manager->socket_set_candidate_ui (ONE_LINE_CANDIDATE, FIXED_CANDIDATE_WINDOW);
-        set_ic_capabilities (ic);
-        turn_on_ic (ic);
-
-        if (_shared_input_method) {
-            _default_instance = ic->impl->si;
-            ic->impl->shared_si = true;
-        }
-    }
-}
-
-static void
-open_specific_factory (WSCContextISF *ic,
-                       const String     &uuid)
-{
-    LOGD ("");
-
-    if (!check_valid_ic (ic))
-        return;
-
-    if (!ic->impl->si)
-        return;
-
-    SCIM_DEBUG_FRONTEND(2) << __FUNCTION__ << " context=" << ic->id << "\n";
-
-    // The same input method is selected, just turn on the IC.
-    if (ic->impl->si->get_factory_uuid () == uuid) {
-        turn_on_ic (ic);
-        return;
-    }
-
-    IMEngineFactoryPointer sf = _backend->get_factory (uuid);
-
-    if (uuid.length () && !sf.null ()) {
-        turn_off_ic (ic);
-        ic->impl->si = sf->create_instance ("UTF-8", ic->impl->si->get_id ());
-        ic->impl->si->set_frontend_data (static_cast <void*> (ic));
-        ic->impl->preedit_string = WideString ();
-        ic->impl->preedit_caret = 0;
-        attach_instance (ic->impl->si);
-        _backend->set_default_factory (_language, sf->get_uuid ());
-        g_info_manager->register_input_context (WAYLAND_MODULE_CLIENT_ID, ic->id, sf->get_uuid ());
-        set_ic_capabilities (ic);
-        turn_on_ic (ic);
-
-        if (_shared_input_method) {
-            _default_instance = ic->impl->si;
-            ic->impl->shared_si = true;
-        }
-    } else {
-        std::cerr << "open_specific_factory () is failed!!!!!!\n";
-        LOGW ("open_specific_factory () is failed. uuid : %s\n", uuid.c_str ());
-
-        // turn_off_ic comment out panel_req_update_factory_info ()
-        //turn_off_ic (ic);
-        if (ic->impl->is_on) {
-            ic->impl->is_on = false;
-
-            if (ic == _focused_ic) {
-                ic->impl->si->focus_out ();
-
-                panel_req_update_factory_info (ic);
-                g_info_manager->socket_turn_off ();
-            }
-
-            //Record the IC on/off status
-            if (_shared_input_method) {
-                _config->write (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), false);
-                _config->flush ();
-            }
-
-            if (ic->impl->use_preedit && ic->impl->preedit_string.length ()) {
-                if (!check_valid_ic (ic))
-                    return;
-
-                if (check_valid_ic (ic))
-                    ic->impl->preedit_started = false;
-            }
-        }
-    }
 }
 
 #define MOD_SHIFT_MASK		0x01
@@ -3673,409 +2682,19 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
         wsc_context_send_key (ic, key.code, modifiers, time, key.is_key_press ());
 }
 
-static void
-attach_instance (const IMEngineInstancePointer &si)
-{
-    si->signal_connect_show_preedit_string (
-        slot (slot_show_preedit_string));
-    si->signal_connect_show_aux_string (
-        slot (slot_show_aux_string));
-    si->signal_connect_show_lookup_table (
-        slot (slot_show_lookup_table));
-
-    si->signal_connect_hide_preedit_string (
-        slot (slot_hide_preedit_string));
-    si->signal_connect_hide_aux_string (
-        slot (slot_hide_aux_string));
-    si->signal_connect_hide_lookup_table (
-        slot (slot_hide_lookup_table));
-
-    si->signal_connect_update_preedit_caret (
-        slot (slot_update_preedit_caret));
-    si->signal_connect_update_preedit_string (
-        slot (slot_update_preedit_string));
-    si->signal_connect_update_aux_string (
-        slot (slot_update_aux_string));
-    si->signal_connect_update_lookup_table (
-        slot (slot_update_lookup_table));
-
-    si->signal_connect_commit_string (
-        slot (slot_commit_string));
-
-    si->signal_connect_forward_key_event (
-        slot (slot_forward_key_event));
-
-    si->signal_connect_register_properties (
-        slot (slot_register_properties));
-
-    si->signal_connect_update_property (
-        slot (slot_update_property));
-
-    si->signal_connect_beep (
-        slot (slot_beep));
-
-    si->signal_connect_start_helper (
-        slot (slot_start_helper));
-
-    si->signal_connect_stop_helper (
-        slot (slot_stop_helper));
-
-    si->signal_connect_send_helper_event (
-        slot (slot_send_helper_event));
-
-    si->signal_connect_get_surrounding_text (
-        slot (slot_get_surrounding_text));
-
-    si->signal_connect_delete_surrounding_text (
-        slot (slot_delete_surrounding_text));
-
-    si->signal_connect_set_selection (
-        slot (slot_set_selection));
-
-    si->signal_connect_expand_candidate (
-        slot (slot_expand_candidate));
-    si->signal_connect_contract_candidate (
-        slot (slot_contract_candidate));
-
-    si->signal_connect_set_candidate_style (
-        slot (slot_set_candidate_style));
-
-    si->signal_connect_send_private_command (
-        slot (slot_send_private_command));
-}
-
-// Implementation of slot functions
-static void
-slot_show_preedit_string (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic) {
-        if (ic->impl->use_preedit) {
-            if (!ic->impl->preedit_started) {
-                if (check_valid_ic (ic))
-                    ic->impl->preedit_started = true;
-            }
-        } else {
-            g_info_manager->socket_show_preedit_string ();
-        }
-    }
-}
-
-static void
-slot_show_aux_string (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_show_aux_string ();
-}
-
-static void
-slot_show_lookup_table (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_show_lookup_table ();
-}
-
-static void
-slot_hide_preedit_string (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic) {
-        if (ic->impl->preedit_string.length ()) {
-            ic->impl->preedit_string = WideString ();
-            ic->impl->preedit_caret = 0;
-            ic->impl->preedit_attrlist.clear ();
-        }
-        if (ic->impl->use_preedit) {
-            if (check_valid_ic (ic) && ic->impl->preedit_started) {
-                if (check_valid_ic (ic))
-                    ic->impl->preedit_started = false;
-            }
-            wsc_context_send_preedit_string (ic);
-        } else {
-            g_info_manager->socket_hide_preedit_string ();
-        }
-    }
-}
-
-static void
-slot_hide_aux_string (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_hide_aux_string ();
-}
-
-static void
-slot_hide_lookup_table (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_hide_lookup_table ();
-}
-
-static void
-slot_update_preedit_caret (IMEngineInstanceBase *si, int caret)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic && ic->impl->preedit_caret != caret) {
-        ic->impl->preedit_caret = caret;
-        if (ic->impl->use_preedit) {
-            if (!ic->impl->preedit_started) {
-                if (!check_valid_ic (ic))
-                    return;
-
-                ic->impl->preedit_started = true;
-            }
-        } else {
-            g_info_manager->socket_update_preedit_caret (caret);
-        }
-    }
-}
-
-static void
-slot_update_preedit_string (IMEngineInstanceBase *si,
-                            const WideString & str,
-                            const AttributeList & attrs,
-                            int caret)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic && (ic->impl->preedit_string != str || str.length ())) {
-        ic->impl->preedit_string   = str;
-        ic->impl->preedit_attrlist = attrs;
-        if (ic->impl->use_preedit) {
-            if (!ic->impl->preedit_started) {
-                if (!check_valid_ic (ic))
-                    return;
-
-                ic->impl->preedit_started = true;
-            }
-            if (caret >= 0 && caret <= (int)str.length ())
-                ic->impl->preedit_caret = caret;
-            else
-                ic->impl->preedit_caret = str.length ();
-            ic->impl->preedit_updating = true;
-            if (check_valid_ic (ic))
-                ic->impl->preedit_updating = false;
-            wsc_context_send_preedit_string (ic);
-        } else {
-            String _str = utf8_wcstombs (str);
-            g_info_manager->socket_update_preedit_string (_str, attrs, caret);
-        }
-    }
-}
-
-static void
-slot_update_aux_string (IMEngineInstanceBase *si,
-                        const WideString & str,
-                        const AttributeList & attrs)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic) {
-        String _str = utf8_wcstombs (str);
-        g_info_manager->socket_update_aux_string (_str, attrs);
-    }
-}
-
-static void
-slot_commit_string (IMEngineInstanceBase *si,
-                    const WideString & str)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic) {
-        if (utf8_wcstombs (str) == String (" ") || utf8_wcstombs (str) == String ("　"))
-            autoperiod_insert (ic);
-
-        Eina_Bool auto_capitalized = EINA_FALSE;
-
-        if (ic->impl) {
-            if (wsc_context_input_panel_layout_get (ic) == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL &&
-                ic->impl->shift_mode_enabled &&
-                ic->impl->autocapital_type != ECORE_IMF_AUTOCAPITAL_TYPE_NONE &&
-                get_keyboard_mode () == TOOLBAR_HELPER_MODE) {
-                char converted[2] = {'\0'};
-                if (utf8_wcstombs (str).length () == 1) {
-                    Eina_Bool uppercase;
-                    switch (ic->impl->next_shift_status) {
-                        case 0:
-                            uppercase = caps_mode_check (ic, EINA_FALSE, EINA_FALSE);
-                            break;
-                        case SHIFT_MODE_OFF:
-                            uppercase = EINA_FALSE;
-                            ic->impl->next_shift_status = 0;
-                            break;
-                        case SHIFT_MODE_ON:
-                            uppercase = EINA_TRUE;
-                            ic->impl->next_shift_status = 0;
-                            break;
-                        case SHIFT_MODE_LOCK:
-                            uppercase = EINA_TRUE;
-                            break;
-                        default:
-                            uppercase = EINA_FALSE;
-                    }
-                    converted[0] = utf8_wcstombs (str).at (0);
-                    if (uppercase) {
-                        if (converted[0] >= 'a' && converted[0] <= 'z')
-                            converted[0] -= 32;
-                    } else {
-                        if (converted[0] >= 'A' && converted[0] <= 'Z')
-                            converted[0] += 32;
-                    }
-
-                    wsc_context_commit_string (ic, converted);
-                    auto_capitalized = EINA_TRUE;
-                }
-            }
-        }
-
-        if (!auto_capitalized) {
-            wsc_context_commit_string (ic, utf8_wcstombs (str).c_str ());
-        }
-    }
-}
-
-static void
-slot_forward_key_event (IMEngineInstanceBase *si,
-                        const KeyEvent & key)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && _focused_ic == ic) {
-        if (!_fallback_instance->process_key_event (key)) {
-            feed_key_event (ic, key, true);
-        }
-    }
-}
-
-static void
-slot_update_lookup_table (IMEngineInstanceBase *si,
-                          const LookupTable & table)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_update_lookup_table (table);
-}
-
-static void
-slot_register_properties (IMEngineInstanceBase *si,
-                          const PropertyList & properties)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_register_properties (properties);
-}
-
-static void
-slot_update_property (IMEngineInstanceBase *si,
-                      const Property & property)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_update_property (property);
-}
-
-static void
-slot_beep (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-}
-
-static void
-slot_start_helper (IMEngineInstanceBase *si,
-                   const String &helper_uuid)
-{
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-    LOGD ("");
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " helper= " << helper_uuid << " context="
-                            << (ic != NULL ? ic->id : -1) << " ic=" << ic
-                            << " ic-uuid=" << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
-
-    if (ic && ic->impl)
-        g_info_manager->socket_start_helper (WAYLAND_MODULE_CLIENT_ID, ic->id, helper_uuid);
-}
-
-static void
-slot_stop_helper (IMEngineInstanceBase *si,
-                  const String &helper_uuid)
-{
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-    LOGD ("");
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " helper= " << helper_uuid << " context=" << (ic != NULL ? ic->id : -1) << " ic=" << ic << "...\n";
-
-    if (ic && ic->impl)
-        g_info_manager->socket_stop_helper (WAYLAND_MODULE_CLIENT_ID, ic->id, helper_uuid);
-}
-
-static void
-slot_send_helper_event (IMEngineInstanceBase *si,
-                        const String      &helper_uuid,
-                        const Transaction &trans)
-{
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-    LOGD ("");
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " helper= " << helper_uuid << " context="
-                            << (ic != NULL ? ic->id : -1) << " ic=" << ic
-                            << " ic-uuid=" << ((ic && ic->impl && ic->impl->si) ? ic->impl->si->get_factory_uuid () : "") << "...\n";
-
-    if (ic && ic->impl)
-        g_info_manager->socket_send_helper_event (WAYLAND_MODULE_CLIENT_ID, ic->id, helper_uuid, trans);
-}
-
 static bool
-slot_get_surrounding_text (IMEngineInstanceBase *si,
-                           WideString            &text,
+slot_get_surrounding_text (WideString            &text,
                            int                   &cursor,
                            int                    maxlen_before,
                            int                    maxlen_after)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
+    #if 0 //REMOVE
     WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
 
     if (ic && ic->impl && _focused_ic == ic) {
+    #endif
         char *surrounding = NULL;
         int   cursor_index;
         if (wsc_context_surrounding_get (_focused_ic, &surrounding, &cursor_index)) {
@@ -4112,87 +2731,10 @@ slot_get_surrounding_text (IMEngineInstanceBase *si,
             cursor = before.length ();
             return true;
         }
+    #if 0 //REMOVE
     }
+    #endif
     return false;
-}
-
-static bool
-slot_delete_surrounding_text (IMEngineInstanceBase *si,
-                              int                   offset,
-                              int                   len)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && _focused_ic == ic) {
-        wsc_context_delete_surrounding (_focused_ic, offset, len);
-        return true;
-    }
-    return false;
-}
-
-static bool
-slot_set_selection (IMEngineInstanceBase *si,
-                    int              start,
-                    int              end)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (_focused_ic && _focused_ic == ic) {
-        wsc_context_set_selection (_focused_ic, start, end);
-        return true;
-    }
-    return false;
-}
-
-static void
-slot_expand_candidate (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->expand_candidate ();
-}
-
-static void
-slot_contract_candidate (IMEngineInstanceBase *si)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->contract_candidate ();
-}
-
-static void
-slot_set_candidate_style (IMEngineInstanceBase *si, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (ic && ic->impl && _focused_ic == ic)
-        g_info_manager->socket_set_candidate_ui (portrait_line, mode);
-}
-
-static void
-slot_send_private_command (IMEngineInstanceBase *si,
-                           const String &command)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = static_cast<WSCContextISF*> (si->get_frontend_data ());
-
-    if (_focused_ic && _focused_ic == ic) {
-        if (_focused_ic->im_ctx)
-            wl_input_method_context_private_command (_focused_ic->im_ctx, _focused_ic->serial, command.c_str ());
-    }
 }
 
 static void
@@ -4200,8 +2742,9 @@ reload_config_callback (const ConfigPointer &config)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
-    _frontend_hotkey_matcher.load_hotkeys (config);
-    _imengine_hotkey_matcher.load_hotkeys (config);
+    //FIXME:_frontend_hotkey_matcher and _imengine_hotkey_matcher should be added
+    //_frontend_hotkey_matcher.load_hotkeys (config);
+    //_imengine_hotkey_matcher.load_hotkeys (config);
 
     KeyEvent key;
     scim_string_to_key (key,
@@ -4214,7 +2757,7 @@ reload_config_callback (const ConfigPointer &config)
     _valid_key_mask |= SCIM_KEY_QuirkKanaRoMask;
 
     _on_the_spot = config->read (String (SCIM_CONFIG_FRONTEND_ON_THE_SPOT), _on_the_spot);
-    _shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
+    //_shared_input_method = config->read (String (SCIM_CONFIG_FRONTEND_SHARED_INPUT_METHOD), _shared_input_method);
     _change_keyboard_mode_by_focus_move = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_CHANGE_KEYBOARD_MODE_BY_FOCUS_MOVE), _change_keyboard_mode_by_focus_move);
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
 
@@ -4223,18 +2766,6 @@ reload_config_callback (const ConfigPointer &config)
     scim_global_config_flush ();
 
     _keyboard_layout = scim_get_default_keyboard_layout ();
-}
-
-static void
-fallback_commit_string_cb (IMEngineInstanceBase  *si,
-                           const WideString      &str)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    if (_focused_ic && _focused_ic->impl) {
-        wsc_context_commit_string (_focused_ic, utf8_wcstombs (str).c_str ());
-    }
 }
 
 class WaylandPanelAgent: public PanelAgentBase
@@ -4255,6 +2786,8 @@ public:
             return false;
         }
 
+        _config->signal_connect_reload (slot (reload_config_callback));
+
         return true;
     }
     bool valid (void) const {
@@ -4269,26 +2802,28 @@ public:
     void
     exit (int id, uint32 contextid) {
         LOGD ("client id:%d", id);
-        panel_slot_exit (id);
+        finalize ();
     }
-
+#if 0 //REMOVE
+    //FIXME:remove
     void
     update_candidate_item_layout (int id, uint32 contextid, const std::vector<uint32>& row_items) {
-        LOGD ("client id:%d", id);
-        panel_slot_update_candidate_item_layout (contextid, row_items);
     }
+    //FIXME:remove
 
     void
     update_lookup_table_page_size (int id, uint32 context_id, int page_size) {
         LOGD ("client id:%d", id);
         panel_slot_update_lookup_table_page_size (context_id, page_size);
     }
+    //FIXME:remove
 
     void
     lookup_table_page_up (int id, uint32 context_id) {
         LOGD ("client id:%d", id);
         panel_slot_lookup_table_page_up (context_id);
     }
+    //FIXME:remove
 
     void
     lookup_table_page_down (int id, uint32 context_id) {
@@ -4296,17 +2831,23 @@ public:
         panel_slot_lookup_table_page_down (context_id);
     }
 
+
+    //FIXME:remove
+
     void
     trigger_property (int id, uint32 context_id, const String& property) {
         LOGD ("client id:%d", id);
         panel_slot_trigger_property (context_id, property);
     }
+    //FIXME:remove
+
 
     void
     process_helper_event (int id, uint32 context_id, const String target_uuid, const String helper_uuid, Transaction& trans) {
         LOGD ("client id:%d", id);
         panel_slot_process_helper_event (context_id, target_uuid, helper_uuid, trans);
     }
+#endif
 
     //FIXME
     //useless
@@ -4323,6 +2864,7 @@ public:
         panel_slot_update_preedit_caret (context_id, caret);
     }
 
+#if 0 //REMOVE_SCIM_LAUNCHER
     void
     select_aux (int id, uint32 context_id, int aux_index) {
         LOGD ("client id:%d", id);
@@ -4334,6 +2876,7 @@ public:
         LOGD ("client id:%d", id);
         panel_slot_select_candidate (context_id, cand_index);
     }
+#endif
 
     void
     socket_helper_key_event (int id, uint32 context_id,  int cmd , KeyEvent& key) {
@@ -4365,11 +2908,14 @@ public:
     }
 #endif
 
+#if 0 //REMOVE_SCIM_LAUNCHER
+
     void
     change_factory (int id, uint32 context_id, const String& uuid) {
         LOGD ("client id:%d", id);
         panel_slot_change_factory (context_id, uuid);
     }
+
 
     void
     reset_keyboard_ise (int id, uint32 context_id) {
@@ -4377,54 +2923,61 @@ public:
         panel_slot_reset_keyboard_ise (context_id);
     }
 
+
     void
     update_keyboard_ise (int id, uint32 context_id) {
         LOGD ("client id:%d", id);
         panel_slot_update_keyboard_ise (context_id);
     }
+#endif
 
     void
     show_preedit_string (int id, uint32 context_id) {
         LOGD ("client id:%d", id);
-        panel_slot_show_preedit_string (context_id);
+        _show_preedit_string (context_id);
     }
 
     void
     hide_preedit_string (int id, uint32 context_id) {
         LOGD ("client id:%d", id);
-        panel_slot_hide_preedit_string (context_id);
+        //panel_slot_hide_preedit_string (context_id);
+        _hide_preedit_string (context_id, true);
     }
 
     void
     update_preedit_string (int id, uint32 context_id, WideString wstr, AttributeList& attrs, uint32 caret) {
         LOGD ("client id:%d", id);
-        panel_slot_update_preedit_string (context_id, wstr, attrs, caret);
+        _update_preedit_string (context_id, wstr, attrs, caret);
     }
 
     void
     socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
         LOGD ("client id:%d", id);
-        panel_slot_get_surrounding_text (context_id, maxlen_before, maxlen_after);
+        _get_surrounding_text (context_id, maxlen_before, maxlen_after);
     }
 
     void
     socket_helper_delete_surrounding_text (int id, uint32 context_id, uint32 offset, uint32 len) {
         LOGD ("client id:%d", id);
-        panel_slot_delete_surrounding_text (context_id, offset, len);
+        //panel_slot_delete_surrounding_text (context_id, offset, len);
+        wsc_context_delete_surrounding (_focused_ic, offset, len);
     }
 
     void
     set_selection (int id, uint32 context_id, int start, int end) {
         LOGD ("client id:%d", id);
-        panel_slot_set_selection (context_id, start, end);
+        //panel_slot_set_selection (context_id, start, end);
+        wsc_context_set_selection (_focused_ic, start, end);
     }
 
     void
     send_private_command (int id, uint32 context_id, const String& command) {
         LOGD ("client id:%d", id);
-        panel_slot_send_private_command (context_id, command);
+        //panel_slot_send_private_command (context_id, command);
+        wl_input_method_context_private_command (_focused_ic->im_ctx, _focused_ic->serial, command.c_str ());
     }
 
+#if 0 //REMOVE
     void
     update_displayed_candidate_number (int id, uint32 context_id, int number) {
         LOGD ("client id:%d", id);
@@ -4443,11 +2996,13 @@ public:
         panel_slot_candidate_more_window_hide (context_id);
     }
 
+
     void
     longpress_candidate (int id, uint32 context_id, int index) {
         LOGD ("client id:%d", id);
         panel_slot_longpress_candidate (context_id, index);
     }
+
 
     void
     update_ise_input_context (int id, uint32 context_id, uint32 type, uint32 value) {
@@ -4455,17 +3010,18 @@ public:
         panel_slot_update_ise_input_context ((int)context_id, (int)type, (int)value);
     }
 
+
     void
     update_isf_candidate_panel (int id, uint32 context_id, int type, int value) {
         LOGD ("client id:%d", id);
         panel_slot_update_isf_candidate_panel (context_id, type, value);
     }
+#endif
 
     void
     reload_config (int id)
     {
         LOGD ("client id:%d", id);
-        reload_config_callback (_config);
     }
 
     void

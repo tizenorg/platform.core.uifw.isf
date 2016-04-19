@@ -123,6 +123,9 @@ InfoManagerSignalIntInt2;
 typedef Signal3<void, int, int, int>
 InfoManagerSignalIntIntInt;
 
+typedef Signal3<void, const String &, const String &, const String &>
+InfoManagerSignalString3;
+
 typedef Signal4<void, int, int, int, int>
 InfoManagerSignalIntIntIntInt;
 
@@ -185,8 +188,6 @@ struct IMControlStub {
     std::vector<ISE_INFO> info;
     std::vector<int> count;
 };
-
-static  int _id_count = -4;
 
 #define DEFAULT_CONTEXT_VALUE 0xfff
 
@@ -285,9 +286,6 @@ class InfoManager::InfoManagerImpl
     ClientContextUUIDRepository         m_client_context_helper;
     UUIDCountRepository                 m_helper_uuid_count;
 
-    HelperManager                       m_helper_manager;
-
-    InfoManagerSignalVoid                m_signal_reload_config;
     InfoManagerSignalVoid                m_signal_turn_on;
     InfoManagerSignalVoid                m_signal_turn_off;
     InfoManagerSignalVoid                m_signal_show_panel;
@@ -368,6 +366,7 @@ class InfoManager::InfoManagerImpl
 
     InfoManagerSignalVoid                m_signal_candidate_will_hide_ack;
     InfoManagerSignalInt2                m_signal_get_ise_state;
+    InfoManagerSignalString3             m_signal_run_helper;
 
     InfoManagerSignalIntRect             m_signal_get_recent_ise_geometry;
 
@@ -412,14 +411,6 @@ public:
         m_config_name = "socket";
         m_display_name = display;
 
-        /* If our helper manager could not connect to the HelperManager process,
-           this panel agent's initialization has failed - since we are assuming
-           the helper manager process should be launched beforehand */
-        if (m_helper_manager.get_connection_number () == -1) {
-            ISF_SAVE_LOG ("Fail to get connection with HelperManager!\n");
-            return false;
-        }
-
         return m_panel_agent_manager.initialize (info_manager, config, display, resident);
     }
 
@@ -442,29 +433,6 @@ public:
         m_panel_agent_manager.stop ();
     }
 
-    int get_helper_list (std::vector <HelperInfo>& helpers) const {
-        SCIM_DEBUG_MAIN (1) << "InfoManager::get_helper_list ()\n";
-        LOGD ("");
-        helpers.clear ();
-        m_helper_manager.get_helper_list ();
-        unsigned int num = m_helper_manager.number_of_helpers ();
-        HelperInfo info;
-        SCIM_DEBUG_MAIN (2) << "Found " << num << " Helper objects\n";
-
-        for (unsigned int i = 0; i < num; ++i) {
-            if (m_helper_manager.get_helper_info (i, info) && info.uuid.length ()
-                && (info.option & SCIM_HELPER_STAND_ALONE))
-                helpers.push_back (info);
-
-            SCIM_DEBUG_MAIN (3) << "Helper " << i << " : " << info.uuid << " : " << info.name << " : "
-                                << ((info.option & SCIM_HELPER_STAND_ALONE) ? "SA " : "")
-                                << ((info.option & SCIM_HELPER_AUTO_START) ? "AS " : "")
-                                << ((info.option & SCIM_HELPER_AUTO_RESTART) ? "AR " : "") << "\n";
-        }
-
-        return (int) (helpers.size ());
-    }
-
     TOOLBAR_MODE_T get_current_toolbar_mode () const {
         return m_current_toolbar_mode;
     }
@@ -475,19 +443,6 @@ public:
 
     String get_current_helper_uuid () const {
         return m_current_helper_uuid;
-    }
-
-    String get_current_helper_name () const {
-        std::vector<HelperInfo> helpers;
-        get_helper_list (helpers);
-        std::vector<HelperInfo>::iterator iter;
-
-        for (iter = helpers.begin (); iter != helpers.end (); iter++) {
-            if (iter->uuid == m_current_helper_uuid)
-                return iter->name;
-        }
-
-        return String ("");
     }
 
     uint32 get_current_helper_option () const {
@@ -624,10 +579,10 @@ public:
         LOGD ("");
         int client;
         uint32 context;
-
+#if 0
         if (scim_global_config_read (SCIM_GLOBAL_CONFIG_PRELOAD_KEYBOARD_ISE, false))
             m_helper_manager.preload_keyboard_ise (uuid);
-
+#endif
         lock ();
         get_focused_context (client, context);
 
@@ -1004,7 +959,7 @@ public:
         lock ();
         /*if (m_current_toolbar_mode != TOOLBAR_HELPER_MODE || m_current_helper_uuid.compare (uuid) != 0)*/ {
             SCIM_DEBUG_MAIN (1) << "Run_helper\n";
-            m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
+            m_signal_run_helper (uuid, m_config_name, m_display_name);
         }
         m_current_helper_uuid = uuid;
         unlock ();
@@ -1731,30 +1686,6 @@ public:
         if (info.type == TOOLBAR_KEYBOARD_MODE) {
             m_signal_set_active_ise_by_uuid (uuid, 1);
             return true;
-        } else if (info.option & ISM_ISE_HIDE_IN_CONTROL_PANEL) {
-            int count = _id_count--;
-
-            if (info.type == TOOLBAR_HELPER_MODE) {
-                m_current_toolbar_mode = TOOLBAR_HELPER_MODE;
-
-                if (uuid != m_current_helper_uuid)
-                    m_last_helper_uuid = m_current_helper_uuid;
-
-                start_helper (uuid, count, DEFAULT_CONTEXT_VALUE);
-                IMControlRepository::iterator iter = m_imcontrol_repository.find (client_id);
-
-                if (iter == m_imcontrol_repository.end ()) {
-                    struct IMControlStub stub;
-                    stub.count.clear ();
-                    stub.info.clear ();
-                    stub.info.push_back (info);
-                    stub.count.push_back (count);
-                    m_imcontrol_repository[client_id] = stub;
-                } else {
-                    iter->second.info.push_back (info);
-                    iter->second.count.push_back (count);
-                }
-            }
         } else {
             m_signal_set_active_ise_by_uuid (uuid, 1);
         }
@@ -1819,25 +1750,6 @@ public:
             get_helper_return_key_disable (m_current_helper_uuid, disabled);
     }
 
-    int get_active_ise_list (std::vector<String>& strlist) {
-        LOGD ("");
-        strlist.clear ();
-        m_helper_manager.get_active_ise_list (strlist);
-        return (int) (strlist.size ());
-    }
-
-    int get_helper_manager_id (void) {
-        return m_helper_manager.get_connection_number ();
-    }
-
-    bool has_helper_manager_pending_event (void) {
-        return m_helper_manager.has_pending_event ();
-    }
-
-    bool filter_helper_manager_event (void) {
-        return m_helper_manager.filter_event ();
-    }
-
     void reset_helper_context (const String& uuid) {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1868,10 +1780,6 @@ public:
             set_helper_caps_mode (m_current_helper_uuid, mode);
     }
 
-    int send_display_name (String& name) {
-        LOGD ("");
-        return m_helper_manager.send_display_name (name);
-    }
     //SCIM_TRANS_CMD_RELOAD_CONFIG
     void reload_config (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::reload_config ()\n";
@@ -1885,7 +1793,6 @@ public:
         }
 
         unlock ();
-        m_signal_reload_config ();
     }
 
     bool exit (void) {
@@ -1902,9 +1809,6 @@ public:
     }
 
     void update_ise_list (std::vector<String>& strList) {
-        /* send ise list to frontend */
-        String dst_str = scim_combine_string_list (strList);
-        m_helper_manager.send_ise_list (dst_str);
         /* request PanelClient to update keyboard ise list */
         update_keyboard_ise_list ();
     }
@@ -1983,10 +1887,6 @@ public:
 
     bool check_privilege_by_sockfd (int client_id, const String& privilege) {
         return m_signal_check_privilege_by_sockfd (client_id, privilege);
-    }
-
-    Connection signal_connect_reload_config (InfoManagerSlotVoid*                slot) {
-        return m_signal_reload_config.connect (slot);
     }
 
     Connection signal_connect_turn_on (InfoManagerSlotVoid*                slot) {
@@ -2281,6 +2181,11 @@ public:
         return m_signal_get_ise_state.connect (slot);
     }
 
+    Connection signal_connect_run_helper (InfoManagerSlotString3*                slot)
+    {
+        return m_signal_run_helper.connect (slot);
+    }
+
     Connection signal_connect_get_recent_ise_geometry (InfoManagerSlotIntRect*                slot) {
         return m_signal_get_recent_ise_geometry.connect (slot);
     }
@@ -2562,7 +2467,6 @@ public:
                     (it != m_helper_client_index.end () && it->second.ref > 0))
                     restart = true;
 
-                m_helper_manager.stop_helper (hiit->second.name);
                 m_helper_client_index.erase (uuid);
                 m_helper_info_repository.erase (hiit);
 
@@ -2576,7 +2480,7 @@ public:
                     static String  restart_uuid;
 
                     if (restart_uuid != uuid || secs > MIN_REPEAT_TIME) {
-                        m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
+                        m_signal_run_helper (uuid, m_config_name, m_display_name);
                         restart_uuid = uuid;
                         LOGE ("Auto restart soft ISE:%s", uuid.c_str ());
                     } else {
@@ -2626,6 +2530,8 @@ public:
 
             if (iter2 != m_imcontrol_map.end ())
                 m_imcontrol_map.erase (iter2);
+        } else if (client_info.type == CONFIG_CLIENT) {
+            SCIM_DEBUG_MAIN(4) << "It's a CONFIG_CLIENT client.\n";
         }
         LOGI ("clients: %d, panel clients: %d, imcontrols size: %d, helper infos: %d, \
 helper active infos: %d, helper client indexs: %d, ises pending: %d, \
@@ -3002,7 +2908,7 @@ client context helpers: %d, helpers uuid count: %d",
         if (it == m_helper_client_index.end ()) {
             SCIM_DEBUG_MAIN (5) << "Run this Helper.\n";
             m_start_helper_ic_index [uuid].push_back (std::make_pair (ic, ic_uuid));
-            m_helper_manager.run_helper (uuid, m_config_name, m_display_name);
+            m_signal_run_helper (uuid, m_config_name, m_display_name);
         } else {
             SCIM_DEBUG_MAIN (5) << "Increase the Reference count.\n";
             m_panel_agent_manager.socket_start_helper (it->second.id, ic, ic_uuid);
@@ -3077,6 +2983,7 @@ client context helpers: %d, helpers uuid count: %d",
         LOGD ("");
         m_signal_register_helper_properties (client, properties);
 
+#if 0 //why? remove if useless, infinite loop
         /* Check whether application is already focus_in */
         if (m_current_socket_client != -1) {
             SCIM_DEBUG_MAIN (2) << "Application is already focus_in!\n";
@@ -3102,6 +3009,7 @@ client context helpers: %d, helpers uuid count: %d",
             if (ret)
                 m_signal_show_ise ();
         }
+#endif
     }
     //SCIM_TRANS_CMD_UPDATE_PROPERTY
     void socket_helper_update_property (int client, Property& property) {
@@ -3838,12 +3746,6 @@ InfoManager::socket_get_client_info (int client) const
     return m_impl->socket_get_client_info (client);
 }
 
-int
-InfoManager::get_helper_list (std::vector <HelperInfo>& helpers) const
-{
-    return m_impl->get_helper_list (helpers);
-}
-
 void InfoManager::hide_helper (const String& uuid)
 {
     m_impl->hide_helper (uuid);
@@ -3864,12 +3766,6 @@ String
 InfoManager::get_current_helper_uuid () const
 {
     return m_impl->get_current_helper_uuid ();
-}
-
-String
-InfoManager::get_current_helper_name () const
-{
-    return m_impl->get_current_helper_name ();
 }
 
 String
@@ -4065,36 +3961,6 @@ void
 InfoManager::set_should_shared_ise (const bool should_shared_ise)
 {
     m_impl->set_should_shared_ise (should_shared_ise);
-}
-
-int
-InfoManager::get_active_ise_list (std::vector<String>& strlist)
-{
-    return m_impl->get_active_ise_list (strlist);
-}
-
-int
-InfoManager::get_helper_manager_id (void)
-{
-    return m_impl->get_helper_manager_id ();
-}
-
-bool
-InfoManager::has_helper_manager_pending_event (void)
-{
-    return m_impl->has_helper_manager_pending_event ();
-}
-
-bool
-InfoManager::filter_helper_manager_event (void)
-{
-    return m_impl->filter_helper_manager_event ();
-}
-
-int
-InfoManager::send_display_name (String& name)
-{
-    return m_impl->send_display_name (name);
 }
 
 //void
@@ -4490,6 +4356,7 @@ void InfoManager::socket_update_selection (String text)
     m_impl->socket_update_selection (text);
 }
 
+//FIXME: useless anymore
 //SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO
 void InfoManager::socket_update_factory_info (PanelFactoryInfo& info)
 {
@@ -4807,11 +4674,6 @@ void InfoManager::del_client (int client_id)
 }
 
 //////////////////////////////////Message function end/////////////////////////////////////////
-Connection
-InfoManager::signal_connect_reload_config (InfoManagerSlotVoid*                slot)
-{
-    return m_impl->signal_connect_reload_config (slot);
-}
 
 Connection
 InfoManager::signal_connect_turn_on (InfoManagerSlotVoid*                slot)
@@ -5249,6 +5111,12 @@ Connection
 InfoManager::signal_connect_get_ise_state (InfoManagerSlotInt2*                slot)
 {
     return m_impl->signal_connect_get_ise_state (slot);
+}
+
+Connection
+InfoManager::signal_connect_run_helper (InfoManagerSlotString3*                slot)
+{
+    return m_impl->signal_connect_run_helper (slot);
 }
 
 Connection

@@ -52,6 +52,9 @@ int main (int argc, char *argv [])
     char *p =  getenv ("DISPLAY");
     if (p) display = String (p);
 
+    //In thie normal situation, config should be set by CMD,
+    //if not provide, we assume have some thing wrong in
+    //server side, so using simple config as default
     config = scim_global_config_read (SCIM_GLOBAL_CONFIG_DEFAULT_CONFIG_MODULE, String ("simple"));
 
     while (i < argc) {
@@ -165,6 +168,11 @@ int main (int argc, char *argv [])
         std::cerr << "Unable to load helper module(" << helper << ")\n";
         return -1;
     }
+
+    //FIXME
+    //Temporary solution
+    //remove this if simple socket config server is done
+    config = "simple";
 
     ConfigPointer config_pointer = ConfigBase::get (true, config);
 

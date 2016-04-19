@@ -377,6 +377,7 @@ IMEngineInstanceBase::get_frontend_data (void)
     return m_impl->m_frontend_data;
 }
 
+//depredicated
 void
 IMEngineInstanceBase::move_preedit_caret (unsigned int)
 {
