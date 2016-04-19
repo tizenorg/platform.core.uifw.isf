@@ -42,6 +42,7 @@ static Ecore_Timer *_hide_timer  = NULL;
 #define BACK_KEY "XF86Back"
 
 static Eina_Bool             input_detected = EINA_FALSE;
+static Eina_Bool             will_hide = EINA_FALSE;
 
 static Ecore_Event_Filter   *_ecore_event_filter_handler = NULL;
 static Ecore_IMF_Context    *_focused_ctx                = NULL;
@@ -191,6 +192,8 @@ _clear_hide_timer()
         return EINA_TRUE;
     }
 
+    will_hide = EINA_FALSE;
+
     return EINA_FALSE;
 }
 
@@ -225,6 +228,8 @@ _input_panel_hide_timer_start(void *data)
 static void
 _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
 {
+    will_hide = EINA_TRUE;
+
     if (instant || (_hide_timer && ecore_timer_pending_get(_hide_timer) <= 0.0)) {
         _clear_hide_timer();
         _send_input_panel_hide_request(ctx);
@@ -444,7 +449,7 @@ show_input_panel(Ecore_IMF_Context *ctx)
     _clear_hide_timer();
 
     // TIZEN_ONLY(20160217): ignore the duplicate show request
-    if ((_show_req_ctx == ctx) && _compare_context(_show_req_ctx, ctx)) {
+    if ((_show_req_ctx == ctx) && _compare_context(_show_req_ctx, ctx) && (!will_hide)) {
         if (_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
             _input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             LOGD("already show. ctx : %p", ctx);
@@ -453,6 +458,7 @@ show_input_panel(Ecore_IMF_Context *ctx)
         }
     }
 
+    will_hide = EINA_FALSE;
     _show_req_ctx = ctx;
     //
 
@@ -799,6 +805,8 @@ text_input_input_panel_state(void                 *data EINA_UNUSED,
             _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
             if (imcontext->ctx == _show_req_ctx)
                 _show_req_ctx = NULL;
+
+            will_hide = EINA_FALSE;
             break;
         case WL_TEXT_INPUT_INPUT_PANEL_STATE_SHOW:
             _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
