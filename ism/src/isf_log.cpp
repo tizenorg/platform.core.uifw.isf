@@ -76,13 +76,6 @@ static void _enable_panel_agent_log (bool _enable_debug)
     }
 }
 
-static void _enable_frontend_log (bool _enable_debug)
-{
-    HelperManager m_helper_manager;
-
-    m_helper_manager.turn_on_log (_enable_debug);
-}
-
 int main (int argc, char **argv)
 {
     bool _enable_debug;
@@ -107,7 +100,6 @@ int main (int argc, char **argv)
 
     try {
         _enable_panel_agent_log (_enable_debug);
-        _enable_frontend_log (_enable_debug);
     } catch (...) {
         printf ("exception happen...\n");
     }
