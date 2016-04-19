@@ -69,7 +69,8 @@ enum ClientType {
     HELPER_CLIENT,
     HELPER_ACT_CLIENT,
     IMCONTROL_ACT_CLIENT,
-    IMCONTROL_CLIENT
+    IMCONTROL_CLIENT,
+    CONFIG_CLIENT
 };
 
 struct ClientInfo {
@@ -126,6 +127,9 @@ InfoManagerSlotIntInt2;
 
 typedef Slot3<void, int, int, int>
 InfoManagerSlotIntIntInt;
+
+typedef Slot3<void, const String &, const String &, const String &>
+InfoManagerSlotString3;
 
 typedef Slot4<void, int, int, int, int>
 InfoManagerSlotIntIntIntInt;
@@ -237,65 +241,6 @@ public:
     const ClientInfo& socket_get_client_info (int client) const;
 
     /**
-     * @brief Get the list of all helpers.
-     *
-     * Panel program should provide a menu which contains
-     * all stand alone but not auto start Helpers, so that users can activate
-     * the Helpers by clicking in the menu.
-     *
-     * All auto start Helpers should be started by Panel after running InfoManager
-     * by calling InfoManager::start_helper().
-     *
-     * @param helpers A list contains information of all Helpers.
-     */
-    int get_helper_list (std::vector <HelperInfo>& helpers) const;
-
-    /**
-     * @brief Get the list of active ISEs.
-     *
-     * @param strlist A list contains information of active ISEs.
-     *
-     * @return the list size.
-     */
-    int get_active_ise_list (std::vector<String>& strlist);
-
-    /**
-     * @brief Get the helper manager connection id.
-     *
-     * @return the connection id
-     */
-    int get_helper_manager_id (void);
-
-    /**
-     * @brief Check if there are any events available to be processed.
-     *
-     * If it returns true then HelperManager object should call
-     * HelperManager::filter_event () to process them.
-     *
-     * @return true if there are any events available.
-     */
-    bool has_helper_manager_pending_event (void);
-
-    /**
-     * @brief Filter the events received from helper manager.
-     *
-     * Corresponding signal will be emitted in this method.
-     *
-     * @return true if the command was sent correctly, otherwise return false.
-     */
-    bool filter_helper_manager_event (void);
-
-    /**
-     * @brief Send display name to FrontEnd.
-     *
-     * @param name The display name.
-     *
-     * @return zero if this operation is successful, otherwise return -1.
-     */
-    int send_display_name (String& name);
-
-
-    /**
      * @brief Get current ISE type.
      *
      * @return the current ISE type.
@@ -308,13 +253,6 @@ public:
      * @return the current helper ISE uuid.
      */
     String get_current_helper_uuid (void) const;
-
-    /**
-     * @brief Get current helper ISE name.
-     *
-     * @return the current helper ISE name.
-     */
-    String get_current_helper_name (void) const;
 
     /**
      * @brief Get current ISE name.
@@ -994,13 +932,6 @@ public:
 
 
 public:
-    /**
-     * @brief Signal: Reload configuration.
-     *
-     * When a Helper object send a RELOAD_CONFIG event to this Panel,
-     * this signal will be emitted. Panel should reload all configuration here.
-     */
-    Connection signal_connect_reload_config (InfoManagerSlotVoid*                slot);
 
     /**
      * @brief Signal: Turn on.
@@ -1117,9 +1048,10 @@ public:
     /**
      * @brief Signal: Get keyboard ise.
      *
-     * slot prototype: void get_keyboard_ise (String &ise_name);
+     * slot prototype: void get_keyboard_ise (String &ise_name, String &ise_uuid);
      */
     Connection signal_connect_get_keyboard_ise (InfoManagerSlotString2*             slot);
+
     /**
      * @brief Signal: Update ise geometry.
      *
@@ -1545,6 +1477,13 @@ public:
      * slot prototype: void get_ise_state (int &state);
      */
     Connection signal_connect_get_ise_state (InfoManagerSlotInt2*                slot);
+
+    /**
+     * @brief Signal: run helper.
+     *
+     * slot prototype: bool run_helper (const String &uuid, const String &config, const String &display);
+     */
+    Connection signal_connect_run_helper (InfoManagerSlotString3*                slot);
 
     /**
      * @brief Signal: Get the recent input panel geometry information.
