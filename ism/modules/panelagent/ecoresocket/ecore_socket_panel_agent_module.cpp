@@ -52,6 +52,8 @@
 
 #define IMEMANAGER_PRIVILEGE "http://tizen.org/privilege/imemanager"
 
+#define SCIM_CONFIG_PANEL_SOCKET_CONFIG_READONLY    "/Panel/Socket/ConfigReadOnly"
+
 namespace scim
 {
 
@@ -75,6 +77,9 @@ struct IMControlStub {
 #define scim_panel_agent_module_get_instance ecoresocket_LTX_scim_panel_agent_module_get_instance
 
 
+static ConfigPointer        _config;
+
+
 //==================================== PanelAgent ===========================
 class EcoreSocketPanelAgent: public PanelAgentBase
 {
@@ -90,6 +95,7 @@ class EcoreSocketPanelAgent: public PanelAgentBase
 
     bool                                m_should_shared_ise;
     bool                                m_ise_exiting;
+    bool                                m_config_readonly;
 
     std::vector<Ecore_Fd_Handler*>     _read_handler_list;
 
@@ -101,7 +107,8 @@ public:
           m_should_exit(false),
           m_socket_timeout(scim_get_default_socket_timeout()),
           m_should_shared_ise(false),
-          m_ise_exiting(false) {
+          m_ise_exiting(false),
+          m_config_readonly (false) {
         m_socket_server.signal_connect_accept(slot(this, &EcoreSocketPanelAgent::socket_accept_callback));
         m_socket_server.signal_connect_receive(slot(this, &EcoreSocketPanelAgent::socket_receive_callback));
         m_socket_server.signal_connect_exception(slot(this, &EcoreSocketPanelAgent::socket_exception_callback));
@@ -118,6 +125,13 @@ public:
         LOGD ("");
         m_info_manager = info_manager;
         m_socket_address = scim_get_default_panel_socket_address(display);
+
+        if (!_config.null ())
+            m_config_readonly = _config->read (String (SCIM_CONFIG_PANEL_SOCKET_CONFIG_READONLY), false);
+        else {
+            m_config_readonly = false;
+            LOGW("config is not ready");
+        }
 
         m_socket_server.shutdown();
 
@@ -145,6 +159,7 @@ public:
         if (client.connect(SocketAddress(m_socket_address))) {
             client.close();
         }
+        _config.reset();
     }
 private:
     void update_panel_event(int client, uint32 context_id, int cmd, uint32 nType, uint32 nValue) {
@@ -586,7 +601,7 @@ private:
         m_send_trans.write_to_socket(client_socket);
     }
 
-    void set_helper_imdata(int client, uint32 context, const String& uuid, char* imdata, size_t& len) {
+    void set_helper_imdata(int client, uint32 context, const String& uuid, const char* imdata, size_t& len) {
         LOGD ("client id:%d\n", client);
 
         Socket client_socket(client);
@@ -815,7 +830,6 @@ private:
 
     void get_helper_imdata(int client, uint32 context, String& uuid, char** imdata, size_t& len) {
         LOGD ("client id:%d\n", client);
-
         Socket client_socket(client);
 
         Transaction trans;
@@ -833,7 +847,7 @@ private:
             && trans.get_data(imdata, len)) {
             SCIM_DEBUG_MAIN(1) << "get_helper_imdata success\n";
         } else {
-            LOGW ("read failed\n");
+            LOGW ("read imdata failed imdata len=%d\n", len);
         }
     }
 
@@ -1318,7 +1332,6 @@ private:
         m_send_trans.write_to_socket(socket_client);
 
     }
-
 
     void helper_all_update_spot_location(int client, uint32 context_id, String uuid, int x, int y) {
         LOGD ("client id:%d\n", client);
@@ -2339,8 +2352,10 @@ private:
                         m_info_manager->socket_helper_update_property(client_id, property);
                     else
                         LOGW ("wrong format of transaction\n");
+#if 0 //only receives reload message by socketconfig
                 } else if (cmd == SCIM_TRANS_CMD_RELOAD_CONFIG) {
                     m_info_manager->reload_config();
+#endif
                 } else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT) {
                     uint32 type;
                     uint32 value;
@@ -2808,6 +2823,401 @@ private:
             }
 
             socket_transaction_end();
+        } else if (client_info.type == CONFIG_CLIENT) {
+            socket_transaction_start ();
+            while (m_recv_trans.get_command (cmd)) {
+                LOGD ("PanelAgent::cmd = %d\n", cmd);
+
+                if (cmd == SCIM_TRANS_CMD_FLUSH_CONFIG) {
+                    if (m_config_readonly) {
+                        LOGW ("sorry config readonly");
+                        continue;
+                    }
+                    if (_config.null ()) {
+                        LOGW ("config is not ready");
+                        continue;
+                    }
+                    SCIM_DEBUG_FRONTEND (2) << " socket_flush_config.\n";
+
+                    _config->flush ();
+
+                } else if (cmd == SCIM_TRANS_CMD_ERASE_CONFIG) {
+
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_erase_config.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key   (" << key << ").\n";
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        _config->erase (key);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+                } else if (cmd == SCIM_TRANS_CMD_RELOAD_CONFIG) {
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_reload_config.\n";
+                    Socket client_socket (client_id);
+                    m_send_trans.clear ();
+                    m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+                    if (_config.null ()) {
+                        LOGW ("config is not ready");
+                        m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                    } else {
+                        static timeval last_timestamp = {0, 0};
+
+                        timeval timestamp;
+
+                        gettimeofday (&timestamp, 0);
+
+                        if (timestamp.tv_sec >= last_timestamp.tv_sec)
+                            _config->reload ();
+
+                        gettimeofday (&last_timestamp, 0);
+                        m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                    }
+
+                    m_send_trans.write_to_socket (client_socket);
+
+                } else if (cmd == SCIM_TRANS_CMD_GET_CONFIG_STRING) {
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_get_config_string.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+                        String value;
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+                        Socket client_socket (client_id);
+                        m_send_trans.clear ();
+                        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                        if (!_config.null () && _config->read (key, &value)) {
+                            m_send_trans.put_data (value);
+                            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                        } else {
+                            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                            LOGW ("read config key = %s faided\n", key.c_str());
+                        }
+                        m_send_trans.write_to_socket (client_socket);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+                } else if (cmd == SCIM_TRANS_CMD_SET_CONFIG_STRING) {
+                    String key;
+                    String value;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_set_config_string.\n";
+
+                    if (m_recv_trans.get_data (key) &&
+                        m_recv_trans.get_data (value)) {
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key   (" << key << ").\n";
+                        SCIM_DEBUG_FRONTEND (3) << "  Value (" << value << ").\n";
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        if (_config.null ()) {
+                            LOGW ("config is not ready");
+                            continue;
+                        }
+                        _config->write (key, value);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+                } else if (cmd == SCIM_TRANS_CMD_GET_CONFIG_INT) {
+                    if (_config.null ()) {
+                        LOGW ("config not ready");
+                        break;
+                    }
+
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_get_config_int.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+
+                        int value;
+                        Socket client_socket (client_id);
+                        m_send_trans.clear ();
+                        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+                        if (_config->read (key, &value)) {
+                            m_send_trans.put_data ((uint32) value);
+                            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                        } else {
+                            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                            LOGW ("read config key = %s faided\n", key.c_str());
+                        }
+                        m_send_trans.write_to_socket (client_socket);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_SET_CONFIG_INT) {
+
+                    String key;
+                    uint32 value;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_set_config_int.\n";
+
+                    if (m_recv_trans.get_data (key) &&
+                        m_recv_trans.get_data (value)) {
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key   (" << key << ").\n";
+                        SCIM_DEBUG_FRONTEND (3) << "  Value (" << value << ").\n";
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        if (_config.null ()) {
+                            LOGW ("config is not ready");
+                            continue;
+                        }
+                        _config->write (key, (int) value);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_GET_CONFIG_BOOL) {
+
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_get_config_bool.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+                        bool value;
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+                        Socket client_socket (client_id);
+                        m_send_trans.clear ();
+                        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+                        if (!_config.null () && _config->read (key, &value)) {
+                            m_send_trans.put_data ((uint32) value);
+                            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                        } else {
+                            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                            LOGW ("read config key = %s faided\n", key.c_str());
+                        }
+                        m_send_trans.write_to_socket (client_socket);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_SET_CONFIG_BOOL) {
+
+                    String key;
+                    uint32 value;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_set_config_bool.\n";
+
+                    if (m_recv_trans.get_data (key) &&
+                        m_recv_trans.get_data (value)) {
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key   (" << key << ").\n";
+                        SCIM_DEBUG_FRONTEND (3) << "  Value (" << value << ").\n";
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        if (_config.null ()) {
+                            LOGW ("config is not ready");
+                            continue;
+                        }
+                        _config->write (key, (bool) value);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_GET_CONFIG_DOUBLE) {
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_get_config_double.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+                        double value;
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+                        Socket client_socket (client_id);
+                        m_send_trans.clear ();
+                        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+                        if (!_config.null () && _config->read (key, &value)) {
+                            char buf [80];
+                            snprintf (buf, 79, "%lE", value);
+                            m_send_trans.put_data (String (buf));
+                            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                        } else {
+                            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                            LOGW ("read config key = %s faided\n", key.c_str());
+                        }
+                        m_send_trans.write_to_socket (client_socket);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_SET_CONFIG_DOUBLE) {
+
+                    String key;
+                    String str;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_set_config_double.\n";
+
+                    if (m_recv_trans.get_data (key) &&
+                        m_recv_trans.get_data (str)) {
+                        double value;
+                        sscanf (str.c_str (), "%lE", &value);
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key   (" << key << ").\n";
+                        SCIM_DEBUG_FRONTEND (3) << "  Value (" << value << ").\n";
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        if (_config.null ()) {
+                            LOGW ("config is not ready");
+                            continue;
+                        }
+                        _config->write (key, value);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_GET_CONFIG_VECTOR_STRING) {
+
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_get_config_vector_string.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+                        std::vector <String> vec;
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+                        Socket client_socket (client_id);
+                        m_send_trans.clear ();
+                        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+                        if (!_config.null () && _config->read (key, &vec)) {
+                            m_send_trans.put_data (vec);
+                            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                        } else {
+                            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                            LOGW ("read config key = %s faided\n", key.c_str());
+                        }
+                        m_send_trans.write_to_socket (client_socket);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_SET_CONFIG_VECTOR_STRING) {
+
+                    String key;
+                    std::vector<String> vec;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_set_config_vector_string.\n";
+
+                    if (m_recv_trans.get_data (key) &&
+                        m_recv_trans.get_data (vec)) {
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        if (_config.null ()) {
+                            LOGW ("config is not ready");
+                            continue;
+                        }
+                        _config->write (key, vec);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_GET_CONFIG_VECTOR_INT) {
+
+                    String key;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_get_config_vector_int.\n";
+
+                    if (m_recv_trans.get_data (key)) {
+                        std::vector <int> vec;
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+                        Socket client_socket (client_id);
+                        m_send_trans.clear ();
+                        m_send_trans.put_command (SCIM_TRANS_CMD_REPLY);
+
+                        if (!_config.null () && _config->read (key, &vec)) {
+                            std::vector <uint32> reply;
+
+                            for (uint32 i=0; i<vec.size (); ++i)
+                                reply.push_back ((uint32) vec[i]);
+
+                            m_send_trans.put_data (reply);
+                            m_send_trans.put_command (SCIM_TRANS_CMD_OK);
+                        } else {
+                            m_send_trans.put_command (SCIM_TRANS_CMD_FAIL);
+                            LOGW ("read config key = %s faided\n", key.c_str());
+                        }
+                        m_send_trans.write_to_socket (client_socket);
+
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                } else if (cmd == SCIM_TRANS_CMD_SET_CONFIG_VECTOR_INT) {
+
+                    String key;
+                    std::vector<uint32> vec;
+
+                    SCIM_DEBUG_FRONTEND (2) << " socket_set_config_vector_int.\n";
+
+                    if (m_recv_trans.get_data (key) &&
+                        m_recv_trans.get_data (vec)) {
+                        if (m_config_readonly) {
+                            LOGW ("sorry config readonly");
+                            continue;
+                        }
+                        if (_config.null ()) {
+                            LOGW ("config is not ready");
+                            continue;
+                        }
+                        std::vector<int> req;
+
+                        SCIM_DEBUG_FRONTEND (3) << "  Key (" << key << ").\n";
+
+                        for (uint32 i=0; i<vec.size (); ++i)
+                            req.push_back ((int) vec[i]);
+
+                        _config->write (key, req);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                        break;
+                    }
+
+                }
+            }
+
+            socket_transaction_end ();
         }
     }
 
@@ -2825,16 +3235,18 @@ private:
         uint32 key;
         String type = scim_socket_accept_connection(key,
                       String("Panel"),
-                      String("FrontEnd,FrontEnd_Active,Helper,Helper_Active,IMControl_Active,IMControl_Passive"),
+                      String("FrontEnd,FrontEnd_Active,Helper,Helper_Active,IMControl_Active,IMControl_Passive,SocketConfig"),
                       client,
                       m_socket_timeout);
 
+        SCIM_DEBUG_MAIN (3) << "type = " << type << "\n";
         if (type.length()) {
             ClientType _type = ((type == "FrontEnd") ? FRONTEND_CLIENT :
-                                ((type == "FrontEnd_Active") ? FRONTEND_ACT_CLIENT :
-                                 ((type == "IMControl_Active") ? IMCONTROL_ACT_CLIENT :
-                                  ((type == "Helper_Active") ? HELPER_ACT_CLIENT :
-                                   ((type == "IMControl_Passive") ? IMCONTROL_CLIENT : HELPER_CLIENT)))));
+                               ((type == "FrontEnd_Active") ? FRONTEND_ACT_CLIENT :
+                               ((type == "Helper") ? HELPER_CLIENT :
+                               ((type == "Helper_Active") ? HELPER_ACT_CLIENT :
+                               ((type == "IMControl_Active") ? IMCONTROL_ACT_CLIENT :
+                               ((type == "IMControl_Passive") ? IMCONTROL_CLIENT : CONFIG_CLIENT))))));
             lock();
             m_info_manager->add_client(client.get_id(), key, _type);
             unlock();
@@ -2900,6 +3312,8 @@ extern "C" {
 
     EXAPI void scim_panel_agent_module_init(const scim::ConfigPointer& config)
     {
+        LOGD ("");
+        scim::_config = config;
     }
 
     EXAPI scim::PanelAgentPointer scim_panel_agent_module_get_instance()
