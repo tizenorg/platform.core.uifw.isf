@@ -134,11 +134,6 @@ extern "C" {
     }
 }
 
-/**
- * To reduce the number of the servers, we merge the function of
- * HelperManager process into the SocketFrontEnd.
-*/
-
 typedef std::vector < std::pair <HelperInfo, String> >                      HelperRepository;
 
 static HelperRepository     __helpers;
@@ -1199,7 +1194,7 @@ SocketFrontEnd::socket_open_connection (SocketServer *server, const Socket &clie
     uint32 key;
     String type = scim_socket_accept_connection (key,
                                                  String ("SocketFrontEnd,HelperLauncher"),
-                                                 String ("SocketIMEngine,SocketConfig,HelperManager"),
+                                                 String ("SocketIMEngine"),
                                                  client,
                                                  m_socket_timeout);
     ClientInfo info = socket_get_client_info (client);

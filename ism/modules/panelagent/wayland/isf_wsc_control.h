@@ -44,7 +44,7 @@ extern "C"
     int _isf_wsc_context_input_panel_language_locale_get (int context, char **locale);
 
     int _isf_wsc_context_input_panel_imdata_set (int context, const void *data, int len);
-    int _isf_wsc_context_input_panel_imdata_get (int context, void *data, int *len);
+    int _isf_wsc_context_input_panel_imdata_get (int context, void **data, int *len);
     int _isf_wsc_context_input_panel_geometry_get (int context, int *x, int *y, int *w, int *h);
     int _isf_wsc_context_input_panel_layout_set (int context, Ecore_IMF_Input_Panel_Layout layout);
     int _isf_wsc_context_input_panel_layout_get (int context, Ecore_IMF_Input_Panel_Layout *layout);
