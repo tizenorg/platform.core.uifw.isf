@@ -52,7 +52,7 @@ extern "C"
     void isf_wsc_context_input_panel_return_key_type_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Return_Key_Type return_key_type);
     void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled);
     void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imdata, int len);
-    void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void *imdata, int* len);
+    void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void **imdata, int* len);
 
 #ifdef __cplusplus
 }
