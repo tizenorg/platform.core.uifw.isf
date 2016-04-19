@@ -98,9 +98,9 @@ int _isf_wsc_context_input_panel_imdata_set (int context, const void* data, int 
     return 0;
 }
 
-int _isf_wsc_context_input_panel_imdata_get (int context, void* data, int* len)
+int _isf_wsc_context_input_panel_imdata_get (int context, void** data, int* len)
 {
-    g_info_manager->get_ise_imdata (get_panel_client_id (), (char**)&data, (size_t&)*len);
+    g_info_manager->get_ise_imdata (get_panel_client_id (), (char**)data, (size_t&)*len);
     return 0;
 }
 
