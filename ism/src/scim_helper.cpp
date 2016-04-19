@@ -43,6 +43,8 @@
 #define Uses_SCIM_HELPER
 #define Uses_SCIM_SOCKET
 #define Uses_SCIM_EVENT
+#define Uses_SCIM_BACKEND
+#define Uses_SCIM_IMENGINE_MODULE
 
 #include <string.h>
 #include <unistd.h>
@@ -57,6 +59,14 @@
 # undef LOG_TAG
 #endif
 #define LOG_TAG             "SCIM_HELPER"
+
+
+//FIXME: remove this definations
+#define SHIFT_MODE_OFF  0xffe1
+#define SHIFT_MODE_ON   0xffe2
+#define SHIFT_MODE_LOCK 0xffe6
+#define SHIFT_MODE_ENABLE 0x9fe7
+#define SHIFT_MODE_DISABLE 0x9fe8
 
 EXAPI scim::CommonLookupTable g_helper_candidate_table;
 
@@ -128,6 +138,11 @@ public:
     int          timeout;
     uint32       focused_ic;
 
+    HelperAgent* thiz;
+    IMEngineInstancePointer si;
+    ConfigPointer m_config;
+    BackEndPointer m_backend;
+
     HelperAgentSignalVoid           signal_exit;
     HelperAgentSignalVoid           signal_attach_input_context;
     HelperAgentSignalVoid           signal_detach_input_context;
@@ -188,11 +203,297 @@ public:
     HelperAgentSignalUintVoid           signal_check_option_window;
 
 public:
+    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz(thiz) {
+    }
+
+
+    // Implementation of slot functions
+    void
+    slot_show_preedit_string (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->show_preedit_string (focused_ic, "");
+    }
+
+    void
+    slot_show_aux_string (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->show_aux_string ();
+    }
+
+    void
+    slot_show_lookup_table (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->show_candidate_string ();
+    }
+
+    void
+    slot_hide_preedit_string (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->hide_preedit_string (focused_ic, "");
+    }
+
+    void
+    slot_hide_aux_string (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->hide_aux_string ();
+    }
+
+    void
+    slot_hide_lookup_table (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->hide_candidate_string ();
+    }
+
+    void
+    slot_update_preedit_caret (IMEngineInstanceBase *si, int caret)
+    {
+        LOGD("");
+        thiz->update_preedit_caret (caret);
+    }
+
+    void
+    slot_update_preedit_string (IMEngineInstanceBase *si,
+                                const WideString & str,
+                                const AttributeList & attrs,
+                                int caret)
+    {
+        LOGD("");
+        thiz->update_preedit_string (-1, "", str, attrs, caret);
+    }
+
+    void
+    slot_update_aux_string (IMEngineInstanceBase *si,
+                            const WideString & str,
+                            const AttributeList & attrs)
+    {
+        LOGD("");
+        thiz->update_aux_string (utf8_wcstombs(str), attrs);
+    }
+
+    void
+    slot_commit_string (IMEngineInstanceBase *si,
+                        const WideString & str)
+    {
+        LOGD("");
+        thiz->commit_string (-1, "", str);
+    }
+
+    void
+    slot_forward_key_event (IMEngineInstanceBase *si,
+                            const KeyEvent & key)
+    {
+        LOGD("");
+        thiz->forward_key_event (-1, "", key);
+    }
+
+    void
+    slot_update_lookup_table (IMEngineInstanceBase *si,
+                              const LookupTable & table)
+    {
+        LOGD("");
+        thiz->update_candidate_string(table);
+    }
+
+    void
+    slot_register_properties (IMEngineInstanceBase *si,
+                              const PropertyList & properties)
+    {
+        LOGD("");
+        thiz->register_properties (properties);
+    }
+
+    void
+    slot_update_property (IMEngineInstanceBase *si,
+                          const Property & property)
+    {
+        LOGD("");
+        thiz->update_property (property);
+    }
+
+    void
+    slot_beep (IMEngineInstanceBase *si)
+    {
+        //FIXME
+        LOGD("");
+    }
+
+    void
+    slot_start_helper (IMEngineInstanceBase *si,
+                       const String &helper_uuid)
+    {
+        LOGW("deprecated function");
+    }
+
+    void
+    slot_stop_helper (IMEngineInstanceBase *si,
+                      const String &helper_uuid)
+    {
+        LOGW("deprecated function");
+    }
+
+    void
+    slot_send_helper_event (IMEngineInstanceBase *si,
+                            const String      &helper_uuid,
+                            const Transaction &trans)
+    {
+        LOGD("");
+        signal_process_imengine_event (thiz, focused_ic, helper_uuid, trans);
+    }
+
+    bool
+    slot_get_surrounding_text (IMEngineInstanceBase *si,
+                               WideString            &text,
+                               int                   &cursor,
+                               int                    maxlen_before,
+                               int                    maxlen_after)
+    {
+        //FIXME
+        LOGD("");
+        return false;
+    }
+
+    bool
+    slot_delete_surrounding_text (IMEngineInstanceBase *si,
+                                  int                   offset,
+                                  int                   len)
+    {
+        //FIXME
+        LOGD("");
+        return false;
+    }
+
+    bool
+    slot_get_selection (IMEngineInstanceBase *si,
+                        WideString            &text)
+    {
+        //FIXME
+        LOGD("");
+        return false;
+    }
+
+    bool
+    slot_set_selection (IMEngineInstanceBase *si,
+                        int              start,
+                        int              end)
+    {
+        LOGD("");
+        thiz->set_selection(start, end);
+        return true;
+    }
+
+    void
+    slot_expand_candidate (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->expand_candidate();
+    }
+
+    void
+    slot_contract_candidate (IMEngineInstanceBase *si)
+    {
+        LOGD("");
+        thiz->contract_candidate();
+    }
+
+    void
+    slot_set_candidate_style (IMEngineInstanceBase *si, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
+    {
+        LOGD("");
+        thiz->set_candidate_style(portrait_line, mode);
+    }
+
+    void
+    slot_send_private_command (IMEngineInstanceBase *si,
+                               const String &command)
+    {
+        LOGD("");
+        thiz->send_private_command(command);
+    }
+
+    void
+    attach_instance ()
+    {
+        si->signal_connect_show_preedit_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_show_preedit_string));
+        si->signal_connect_show_aux_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_show_aux_string));
+        si->signal_connect_show_lookup_table (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_show_lookup_table));
+
+        si->signal_connect_hide_preedit_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_hide_preedit_string));
+        si->signal_connect_hide_aux_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_hide_aux_string));
+        si->signal_connect_hide_lookup_table (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_hide_lookup_table));
+
+        si->signal_connect_update_preedit_caret (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_update_preedit_caret));
+        si->signal_connect_update_preedit_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_update_preedit_string));
+        si->signal_connect_update_aux_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_update_aux_string));
+        si->signal_connect_update_lookup_table (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_update_lookup_table));
+
+        si->signal_connect_commit_string (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_commit_string));
+
+        si->signal_connect_forward_key_event (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_forward_key_event));
+
+        si->signal_connect_register_properties (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_register_properties));
+
+        si->signal_connect_update_property (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_update_property));
+
+        si->signal_connect_beep (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_beep));
+
+        si->signal_connect_start_helper (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_start_helper));
+
+        si->signal_connect_stop_helper (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_stop_helper));
+
+        si->signal_connect_send_helper_event (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_send_helper_event));
+
+        si->signal_connect_get_surrounding_text (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_get_surrounding_text));
+
+        si->signal_connect_delete_surrounding_text (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_delete_surrounding_text));
+
+        si->signal_connect_get_selection (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_get_selection));
+
+        si->signal_connect_set_selection (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_set_selection));
+
+        si->signal_connect_expand_candidate (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_expand_candidate));
+        si->signal_connect_contract_candidate (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_contract_candidate));
+
+        si->signal_connect_set_candidate_style (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_set_candidate_style));
+
+        si->signal_connect_send_private_command (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_send_private_command));
+    }
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
 };
 
 HelperAgent::HelperAgent ()
-    : m_impl (new HelperAgentImpl ())
+    : m_impl (new HelperAgentImpl (this))
 {
 }
 
@@ -358,6 +659,28 @@ HelperAgent::open_connection (const HelperInfo &info,
         return -1;
     }
 
+    if (m_impl->m_backend.null ()) {
+        std::vector<String>  engine_list;
+        std::vector<String>::iterator it;
+
+        scim_get_imengine_module_list (engine_list);
+        for (it = engine_list.begin (); it != engine_list.end (); it++) {
+            if (*it == "socket")
+                engine_list.erase (it);
+        }
+
+        m_impl->m_config = ConfigBase::get (false, "socket");
+        if (m_impl->m_config.null () || !m_impl->m_config->valid ()) {
+            LOGE ("invalid SocketConfig");
+            return -1;
+        }
+        m_impl->m_backend = new CommonBackEnd (m_impl->m_config, engine_list);
+        if(m_impl->m_backend == NULL)
+            LOGE("Create CommonBackEnd instance failed");
+        m_impl->m_backend->initialize (m_impl->m_config, engine_list, false, false);
+        LOGD("CommonBackEnd good mood!");
+    }
+
     return m_impl->socket.get_id ();
 }
 
@@ -437,18 +760,19 @@ HelperAgent::filter_event ()
     String ic_uuid;
 
     if (!m_impl->recv.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY) {
-        LOGW ("wrong format of transaction");
+        LOGW ("wrong format of transaction\n");
         return true;
     }
 
     /* If there are ic and ic_uuid then read them. */
     if (!(m_impl->recv.get_data_type () == SCIM_TRANS_DATA_COMMAND) &&
         !(m_impl->recv.get_data (ic) && m_impl->recv.get_data (ic_uuid))) {
-        LOGW ("wrong format of transaction");
+        LOGW ("wrong format of transaction\n");
         return true;
     }
 
     while (m_impl->recv.get_command (cmd)) {
+        LOGD("HelperAgent::cmd = %d\n", cmd);
         switch (cmd) {
             case SCIM_TRANS_CMD_EXIT:
                 ISF_SAVE_LOG ("Helper ISE received SCIM_TRANS_CMD_EXIT message\n");
@@ -456,12 +780,16 @@ HelperAgent::filter_event ()
                 break;
             case SCIM_TRANS_CMD_RELOAD_CONFIG:
                 m_impl->signal_reload_config (this, ic, ic_uuid);
+                if (!m_impl->m_config.null())
+                    m_impl->m_config->ConfigBase::reload();
                 break;
             case SCIM_TRANS_CMD_UPDATE_SCREEN:
             {
                 uint32 screen;
                 if (m_impl->recv.get_data (screen))
                     m_impl->signal_update_screen (this, ic, ic_uuid, (int) screen);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION:
@@ -469,13 +797,19 @@ HelperAgent::filter_event ()
                 uint32 x, y;
                 if (m_impl->recv.get_data (x) && m_impl->recv.get_data (y))
                     m_impl->signal_update_spot_location (this, ic, ic_uuid, (int) x, (int) y);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_CURSOR_POSITION:
             {
                 uint32 cursor_pos;
-                if (m_impl->recv.get_data (cursor_pos))
+                if (m_impl->recv.get_data (cursor_pos)) {
                     m_impl->signal_update_cursor_position (this, ic, ic_uuid, (int) cursor_pos);
+                        if (!m_impl->si.null ()) m_impl->si->update_cursor_position(cursor_pos);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT:
@@ -484,6 +818,8 @@ HelperAgent::filter_event ()
                 uint32 cursor;
                 if (m_impl->recv.get_data (text) && m_impl->recv.get_data (cursor))
                     m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_SELECTION:
@@ -491,13 +827,19 @@ HelperAgent::filter_event ()
                 String text;
                 if (m_impl->recv.get_data (text))
                     m_impl->signal_update_selection (this, ic, text);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case SCIM_TRANS_CMD_TRIGGER_PROPERTY:
             {
                 String property;
-                if (m_impl->recv.get_data (property))
+                if (m_impl->recv.get_data (property)) {
                     m_impl->signal_trigger_property (this, ic, ic_uuid, property);
+                    if (!m_impl->si.null ()) m_impl->si->trigger_property(property);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case SCIM_TRANS_CMD_HELPER_PROCESS_IMENGINE_EVENT:
@@ -505,6 +847,8 @@ HelperAgent::filter_event ()
                 Transaction trans;
                 if (m_impl->recv.get_data (trans))
                     m_impl->signal_process_imengine_event (this, ic, ic_uuid, trans);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case SCIM_TRANS_CMD_HELPER_ATTACH_INPUT_CONTEXT:
@@ -517,12 +861,14 @@ HelperAgent::filter_event ()
             {
                 m_impl->signal_focus_out (this, ic, ic_uuid);
                 m_impl->focused_ic = (uint32) -1;
+                if (!m_impl->si.null ()) m_impl->si->focus_out();
                 break;
             }
             case SCIM_TRANS_CMD_FOCUS_IN:
             {
                 m_impl->signal_focus_in (this, ic, ic_uuid);
                 m_impl->focused_ic = ic;
+                if (!m_impl->si.null ()) m_impl->si->focus_in();
                 break;
             }
             case ISM_TRANS_CMD_SHOW_ISE_PANEL:
@@ -533,6 +879,8 @@ HelperAgent::filter_event ()
                 size_t  len;
                 if (m_impl->recv.get_data (&data, len))
                     m_impl->signal_ise_show (this, ic, data, len);
+                else
+                    LOGW ("wrong format of transaction\n");
                 if (data)
                     delete [] data;
                 break;
@@ -561,6 +909,8 @@ HelperAgent::filter_event ()
                 uint32 mode;
                 if (m_impl->recv.get_data (mode))
                     m_impl->signal_set_mode (this, mode);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_SET_ISE_LANGUAGE:
@@ -568,14 +918,20 @@ HelperAgent::filter_event ()
                 uint32 language;
                 if (m_impl->recv.get_data (language))
                     m_impl->signal_set_language (this, language);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_SET_ISE_IMDATA:
             {
                 char   *imdata = NULL;
                 size_t  len;
-                if (m_impl->recv.get_data (&imdata, len))
+                if (m_impl->recv.get_data (&imdata, len)) {
                     m_impl->signal_set_imdata (this, imdata, len);
+                    if (!m_impl->si.null ()) m_impl->si->set_imdata(imdata, len);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
 
                 if (NULL != imdata)
                     delete[] imdata;
@@ -587,6 +943,7 @@ HelperAgent::filter_event ()
                 size_t  len = 0;
 
                 m_impl->signal_get_imdata (this, &buf, len);
+                LOGD ("send ise imdata len = %d", len);
                 m_impl->send.clear ();
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
                 m_impl->send.put_data (buf, len);
@@ -632,6 +989,8 @@ HelperAgent::filter_event ()
                 if (m_impl->recv.get_data (disabled)) {
                     m_impl->signal_set_return_key_disable (this, disabled);
                 }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE:
@@ -650,6 +1009,14 @@ HelperAgent::filter_event ()
                 uint32 ret = 0;
                 if (m_impl->recv.get_data (key))
                     m_impl->signal_process_key_event(this, key, ret);
+                else
+                    LOGW ("wrong format of transaction\n");
+                if (ret == 0)
+                    if (!m_impl->si.null ())
+                    {
+                        ret = m_impl->si->process_key_event (key);
+                        LOGD("imengine(%s) prceoss key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
+                    }
                 m_impl->send.clear ();
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
                 m_impl->send.put_data (ret);
@@ -660,8 +1027,12 @@ HelperAgent::filter_event ()
             {
                 uint32 layout;
 
-                if (m_impl->recv.get_data (layout))
+                if (m_impl->recv.get_data (layout)) {
                     m_impl->signal_set_layout (this, layout);
+                    if (!m_impl->si.null ()) m_impl->si->set_layout(layout);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_GET_LAYOUT:
@@ -681,6 +1052,8 @@ HelperAgent::filter_event ()
 
                 if (m_impl->recv.get_data (input_mode))
                     m_impl->signal_set_input_mode (this, input_mode);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_SET_CAPS_MODE:
@@ -689,11 +1062,14 @@ HelperAgent::filter_event ()
 
                 if (m_impl->recv.get_data (mode))
                     m_impl->signal_set_caps_mode (this, mode);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case SCIM_TRANS_CMD_PANEL_RESET_INPUT_CONTEXT:
             {
                 m_impl->signal_reset_input_context (this, ic, ic_uuid);
+                if (!m_impl->si.null ()) m_impl->si->reset();
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_CANDIDATE_UI:
@@ -701,6 +1077,8 @@ HelperAgent::filter_event ()
                 uint32 style, mode;
                 if (m_impl->recv.get_data (style) && m_impl->recv.get_data (mode))
                     m_impl->signal_update_candidate_ui (this, ic, ic_uuid, style, mode);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY:
@@ -711,6 +1089,8 @@ HelperAgent::filter_event ()
                     && m_impl->recv.get_data (info.width)
                     && m_impl->recv.get_data (info.height))
                     m_impl->signal_update_candidate_geometry (this, ic, ic_uuid, info);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE:
@@ -718,6 +1098,8 @@ HelperAgent::filter_event ()
                 String name, uuid;
                 if (m_impl->recv.get_data (name) && m_impl->recv.get_data (uuid))
                     m_impl->signal_update_keyboard_ise (this, ic, ic_uuid, name, uuid);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE_LIST:
@@ -736,70 +1118,93 @@ HelperAgent::filter_event ()
                     }
                     m_impl->signal_update_keyboard_ise_list (this, ic, ic_uuid, list);
                 }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW:
             {
                 m_impl->signal_candidate_more_window_show (this, ic, ic_uuid);
+                if (!m_impl->si.null ()) m_impl->si->candidate_more_window_show();
                 break;
             }
             case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE:
             {
                 m_impl->signal_candidate_more_window_hide (this, ic, ic_uuid);
+                if (!m_impl->si.null ()) m_impl->si->candidate_more_window_hide();
                 break;
             }
             case ISM_TRANS_CMD_SELECT_AUX:
             {
                 uint32 item;
-                if (m_impl->recv.get_data (item))
+                if (m_impl->recv.get_data (item)) {
                     m_impl->signal_select_aux (this, ic, ic_uuid, item);
+                    if (!m_impl->si.null ()) m_impl->si->select_aux(item);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
-            case SCIM_TRANS_CMD_SELECT_CANDIDATE:
+            case SCIM_TRANS_CMD_SELECT_CANDIDATE: //FIXME:remove if useless
             {
                 uint32 item;
                 if (m_impl->recv.get_data (item))
                     m_impl->signal_select_candidate (this, ic, ic_uuid, item);
+                else
+                    LOGW ("wrong format of transaction\n");
+                if (!m_impl->si.null ()) m_impl->si->select_candidate(item);
                 break;
             }
-            case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_UP:
+            case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_UP: //FIXME:remove if useless
             {
                 m_impl->signal_candidate_table_page_up (this, ic, ic_uuid);
+                if (!m_impl->si.null ()) m_impl->si->lookup_table_page_up();
                 break;
             }
-            case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_DOWN:
+            case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_DOWN: //FIXME:remove if useless
             {
                 m_impl->signal_candidate_table_page_down (this, ic, ic_uuid);
+                if (!m_impl->si.null ()) m_impl->si->lookup_table_page_down();
                 break;
             }
             case SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE_PAGE_SIZE:
             {
                 uint32 size;
-                if (m_impl->recv.get_data (size))
+                if (m_impl->recv.get_data (size)) {
                     m_impl->signal_update_candidate_table_page_size (this, ic, ic_uuid, size);
+                    if (!m_impl->si.null ()) m_impl->si->update_lookup_table_page_size(size);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
-            case ISM_TRANS_CMD_CANDIDATE_SHOW:
+            case ISM_TRANS_CMD_CANDIDATE_SHOW: //FIXME:remove if useless
             {
                 m_impl->signal_candidate_show (this, ic, ic_uuid);
                 break;
             }
-            case ISM_TRANS_CMD_CANDIDATE_HIDE:
+            case ISM_TRANS_CMD_CANDIDATE_HIDE: //FIXME:remove if useless
             {
                 m_impl->signal_candidate_hide (this, ic, ic_uuid);
                 break;
             }
-            case ISM_TRANS_CMD_UPDATE_LOOKUP_TABLE:
+            case ISM_TRANS_CMD_UPDATE_LOOKUP_TABLE: //FIXME:remove if useless
             {
                 if (m_impl->recv.get_data (g_helper_candidate_table))
                     m_impl->signal_update_lookup_table (this, g_helper_candidate_table);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT:
             {
                 std::vector<uint32> row_items;
-                if (m_impl->recv.get_data (row_items))
+                if (m_impl->recv.get_data (row_items)) {
                     m_impl->signal_update_candidate_item_layout (this, row_items);
+                    if (!m_impl->si.null ()) m_impl->si->update_candidate_item_layout(row_items);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_SELECT_ASSOCIATE:
@@ -807,6 +1212,8 @@ HelperAgent::filter_event ()
                 uint32 item;
                 if (m_impl->recv.get_data (item))
                     m_impl->signal_select_associate (this, ic, ic_uuid, item);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_UP:
@@ -824,11 +1231,14 @@ HelperAgent::filter_event ()
                 uint32 size;
                 if (m_impl->recv.get_data (size))
                     m_impl->signal_update_associate_table_page_size (this, ic, ic_uuid, size);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_RESET_ISE_CONTEXT:
             {
                 m_impl->signal_reset_ise_context (this, ic, ic_uuid);
+                if (!m_impl->si.null ()) m_impl->si->reset();
                 break;
             }
             case ISM_TRANS_CMD_TURN_ON_LOG:
@@ -836,36 +1246,54 @@ HelperAgent::filter_event ()
                 uint32 isOn;
                 if (m_impl->recv.get_data (isOn))
                     m_impl->signal_turn_on_log (this, isOn);
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
             {
                 uint32 size;
-                if (m_impl->recv.get_data (size))
+                if (m_impl->recv.get_data (size)) {
                     m_impl->signal_update_displayed_candidate_number (this, ic, ic_uuid, size);
+                    if (!m_impl->si.null ()) m_impl->si->update_displayed_candidate_number(size);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_LONGPRESS_CANDIDATE:
             {
                 uint32 index;
-                if (m_impl->recv.get_data (index))
+                if (m_impl->recv.get_data (index)) {
                     m_impl->signal_longpress_candidate (this, ic, ic_uuid, index);
+                    if (!m_impl->si.null ()) m_impl->si->longpress_candidate(index);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_SET_INPUT_HINT:
             {
                 uint32 input_hint;
 
-                if (m_impl->recv.get_data (input_hint))
+                if (m_impl->recv.get_data (input_hint)) {
                     m_impl->signal_set_input_hint (this, input_hint);
+                    if (!m_impl->si.null ()) m_impl->si->set_input_hint(input_hint);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION:
             {
                 uint32 bidi_direction;
 
-                if (m_impl->recv.get_data (bidi_direction))
+                if (m_impl->recv.get_data (bidi_direction)) {
                     m_impl->signal_update_bidi_direction (this, bidi_direction);
+                    if (!m_impl->si.null ()) m_impl->si->update_bidi_direction(bidi_direction);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
                 break;
             }
             case ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW:
@@ -899,6 +1327,8 @@ HelperAgent::filter_event ()
 void
 HelperAgent::reload_config () const
 {
+    LOGD("");
+#if 0 //reload config message only send by socketconfig client
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -906,6 +1336,9 @@ HelperAgent::reload_config () const
         m_impl->send.put_command (SCIM_TRANS_CMD_RELOAD_CONFIG);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+#endif
+    if (!m_impl->m_config.null())
+        m_impl->m_config->reload();
 }
 
 /**
@@ -921,6 +1354,7 @@ HelperAgent::reload_config () const
 void
 HelperAgent::register_properties (const PropertyList &properties) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -939,6 +1373,7 @@ HelperAgent::register_properties (const PropertyList &properties) const
 void
 HelperAgent::update_property (const Property &property) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -964,6 +1399,9 @@ HelperAgent::send_imengine_event (int                ic,
                                   const String      &ic_uuid,
                                   const Transaction &trans) const
 {
+    LOGD("");
+//remove if not necessary
+#if 0
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -974,6 +1412,8 @@ HelperAgent::send_imengine_event (int                ic,
         m_impl->send.put_data (trans);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+#endif
+    if (!m_impl->si.null ()) m_impl->si->process_helper_event (ic_uuid, trans);
 }
 
 /**
@@ -989,7 +1429,23 @@ HelperAgent::send_key_event (int            ic,
                              const String   &ic_uuid,
                              const KeyEvent &key) const
 {
-    if (m_impl->socket_active.is_connected ()) {
+    LOGD("");
+    //FIXME: remove shift_mode_off, shift_mode_on, shift_mode_lock from ISE side
+    if (key.code == SHIFT_MODE_OFF ||
+        key.code == SHIFT_MODE_ON ||
+        key.code == SHIFT_MODE_LOCK ||
+        key.code == SHIFT_MODE_ENABLE ||
+        key.code == SHIFT_MODE_DISABLE) {
+        LOGW("FIXME ignore shift codes");
+        return;
+    }
+
+    bool ret = false;
+    if (!m_impl->si.null ()) {
+        ret = m_impl->si->process_key_event (key);
+        LOGD("imengine(%s) prceoss key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
+    }
+    if (ret == false && m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
         m_impl->send.put_data (m_impl->magic_active);
@@ -1019,6 +1475,7 @@ HelperAgent::forward_key_event (int            ic,
                                 const String   &ic_uuid,
                                 const KeyEvent &key) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1049,6 +1506,7 @@ HelperAgent::commit_string (int               ic,
                             const String     &ic_uuid,
                             const WideString &wstr) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1071,6 +1529,7 @@ HelperAgent::commit_string (int               ic,
                             const  char      *buf,
                             int               buflen) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1099,6 +1558,8 @@ void
 HelperAgent::show_preedit_string (int               ic,
                                   const String     &ic_uuid) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1116,6 +1577,8 @@ HelperAgent::show_preedit_string (int               ic,
 void
 HelperAgent::show_aux_string (void) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1131,6 +1594,8 @@ HelperAgent::show_aux_string (void) const
 void
 HelperAgent::show_candidate_string (void) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1146,6 +1611,7 @@ HelperAgent::show_candidate_string (void) const
 void
 HelperAgent::show_associate_string (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1167,6 +1633,8 @@ void
 HelperAgent::hide_preedit_string (int               ic,
                                   const String     &ic_uuid) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1184,6 +1652,7 @@ HelperAgent::hide_preedit_string (int               ic,
 void
 HelperAgent::hide_aux_string (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1199,6 +1668,7 @@ HelperAgent::hide_aux_string (void) const
 void
 HelperAgent::hide_candidate_string (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1214,6 +1684,7 @@ HelperAgent::hide_candidate_string (void) const
 void
 HelperAgent::hide_associate_string (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1239,6 +1710,7 @@ HelperAgent::update_preedit_string (int                  ic,
                                     const WideString    &str,
                                     const AttributeList &attrs) const
 {
+    LOGD("");
     update_preedit_string (ic, ic_uuid, str, attrs, -1);
 }
 
@@ -1249,6 +1721,7 @@ HelperAgent::update_preedit_string (int                  ic,
                                     int                 buflen,
                                     const AttributeList &attrs) const
 {
+    LOGD("");
     update_preedit_string (ic, ic_uuid, buf, buflen, attrs, -1);
 }
 
@@ -1270,6 +1743,8 @@ HelperAgent::update_preedit_string (int                  ic,
                                     const AttributeList &attrs,
                                     int            caret) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1292,6 +1767,8 @@ HelperAgent::update_preedit_string (int                 ic,
                                     const AttributeList &attrs,
                                     int            caret) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1314,6 +1791,8 @@ HelperAgent::update_preedit_string (int                 ic,
 void
 HelperAgent::update_preedit_caret (int caret) const
 {
+    LOGD("");
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1334,6 +1813,7 @@ void
 HelperAgent::update_aux_string (const String        &str,
                                 const AttributeList &attrs) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1353,6 +1833,7 @@ HelperAgent::update_aux_string (const String        &str,
 void
 HelperAgent::update_candidate_string (const LookupTable &table) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1371,6 +1852,7 @@ HelperAgent::update_candidate_string (const LookupTable &table) const
 void
 HelperAgent::update_associate_string (const LookupTable &table) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1391,6 +1873,7 @@ HelperAgent::update_associate_string (const LookupTable &table) const
 void
 HelperAgent::update_input_context (uint32 type, uint32 value) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1412,6 +1895,7 @@ HelperAgent::update_input_context (uint32 type, uint32 value) const
 void
 HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int maxlen_after) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1433,6 +1917,7 @@ HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int ma
 void
 HelperAgent::delete_surrounding_text (int offset, int len) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1452,6 +1937,7 @@ HelperAgent::delete_surrounding_text (int offset, int len) const
 void
 HelperAgent::get_selection (const String &uuid) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1471,6 +1957,7 @@ HelperAgent::get_selection (const String &uuid) const
 void
 HelperAgent::set_selection (int start, int end) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1490,6 +1977,7 @@ HelperAgent::set_selection (int start, int end) const
 void
 HelperAgent::send_private_command (const String &command) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1508,6 +1996,7 @@ HelperAgent::send_private_command (const String &command) const
 void
 HelperAgent::get_keyboard_ise_list (const String &uuid) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1527,6 +2016,7 @@ HelperAgent::get_keyboard_ise_list (const String &uuid) const
 void
 HelperAgent::set_candidate_position (int left, int top) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1548,6 +2038,7 @@ void
 HelperAgent::set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
                                   ISF_CANDIDATE_MODE_T          mode) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1565,6 +2056,7 @@ HelperAgent::set_candidate_style (ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line,
 void
 HelperAgent::candidate_hide (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1582,6 +2074,7 @@ HelperAgent::candidate_hide (void) const
 void
 HelperAgent::get_candidate_window_geometry (const String &uuid) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1600,6 +2093,9 @@ HelperAgent::get_candidate_window_geometry (const String &uuid) const
 void
 HelperAgent::set_keyboard_ise_by_uuid (const String &uuid) const
 {
+    LOGD("");
+    //FIXME: remove if not necessary
+#if 0
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1607,6 +2103,43 @@ HelperAgent::set_keyboard_ise_by_uuid (const String &uuid) const
         m_impl->send.put_command (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID);
         m_impl->send.put_data (uuid);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+#endif
+    if ((!m_impl->si.null ()) && m_impl->si->get_factory_uuid () == uuid) {
+        LOGW("Already in UUID: %s\n", uuid.c_str());
+        return;
+    }
+
+    if (m_impl->m_backend.null () || m_impl->m_config.null ()) {
+        LOGE("Conection does not building");
+        return;
+    }
+
+    IMEngineFactoryPointer factory = m_impl->m_backend->get_factory (uuid);
+    if (factory.null ()) {
+       m_impl->m_backend->add_factory_by_uuid (m_impl->m_config, uuid);
+       factory = m_impl->m_backend->get_factory (uuid);
+    }
+
+    if (factory.null ()) {
+       LOGE("Load IMEngineFactory %s failed", uuid.c_str ());
+       return;
+    }
+
+    static int instance_count = 1;
+    if(m_impl->focused_ic != (uint32)-1 && !m_impl->si.null())
+    {
+        LOGE("");
+        m_impl->si->focus_out();
+    }
+    m_impl->si = factory->create_instance ("UTF-8", instance_count++);
+    if (!m_impl->si.null ()) {
+        m_impl->attach_instance ();
+        LOGD("Require UUID: %s Current UUID: %s", uuid.c_str (), m_impl->si->get_factory_uuid ().c_str ());
+        if(m_impl->focused_ic != (uint32)-1)
+            m_impl->si->focus_in();
+    } else {
+        LOGE("create_instance %s failed",uuid.c_str ());
     }
 }
 
@@ -1618,6 +2151,9 @@ HelperAgent::set_keyboard_ise_by_uuid (const String &uuid) const
 void
 HelperAgent::get_keyboard_ise (const String &uuid) const
 {
+    LOGD("");
+    //FIXME: maybe useless
+#if 0
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1626,6 +2162,7 @@ HelperAgent::get_keyboard_ise (const String &uuid) const
         m_impl->send.put_data (uuid);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+#endif
 }
 
 /**
@@ -1639,6 +2176,7 @@ HelperAgent::get_keyboard_ise (const String &uuid) const
 void
 HelperAgent::update_geometry (int x, int y, int width, int height) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1658,6 +2196,7 @@ HelperAgent::update_geometry (int x, int y, int width, int height) const
 void
 HelperAgent::expand_candidate (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1673,6 +2212,7 @@ HelperAgent::expand_candidate (void) const
 void
 HelperAgent::contract_candidate (void) const
 {
+    LOGD("");
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1688,6 +2228,12 @@ HelperAgent::contract_candidate (void) const
 void
 HelperAgent::select_candidate (int index) const
 {
+    LOGD("");
+    if (!m_impl->si.null())
+        m_impl->si->select_candidate(index);
+    //FIXME: maybe useless
+#if 0
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1696,6 +2242,7 @@ HelperAgent::select_candidate (int index) const
         m_impl->send.put_data (index);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+#endif
 }
 
 /**
@@ -1704,6 +2251,9 @@ HelperAgent::select_candidate (int index) const
 void
 HelperAgent::update_ise_exit (void) const
 {
+    LOGD("");
+    //FIXME: maybe useless
+#if 0
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1711,6 +2261,7 @@ HelperAgent::update_ise_exit (void) const
         m_impl->send.put_command (ISM_TRANS_CMD_UPDATE_ISE_EXIT);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+#endif
 }
 
 /**
@@ -1719,12 +2270,19 @@ HelperAgent::update_ise_exit (void) const
 void
 HelperAgent::reset_keyboard_ise (void) const
 {
+    LOGD("");
+//FIXME: maybe useless
+#if 0
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
         m_impl->send.put_data (m_impl->magic_active);
         m_impl->send.put_command (ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+#endif
+    if (!m_impl->si.null ()) {
+        m_impl->si.reset ();
     }
 }
 

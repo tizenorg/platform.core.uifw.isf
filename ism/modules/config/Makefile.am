@@ -54,24 +54,26 @@ module_LTLIBRARIES	= \
 		     	  $(CONFIG_SOCKET_MODULE)
 
 simple_la_SOURCES 	= scim_simple_config.cpp
-
+simple_la_CXXFLAGS  = @DLOG_CFLAGS@
 simple_la_LDFLAGS	= -avoid-version \
 		     	  -rpath $(moduledir) \
 			  -module \
 			  $(LD_VERSION_SCRIPT_OPTION) \
 			  @LIBTOOL_EXPORT_OPTIONS@ \
-			  @LTLIBINTL@
+			  @LTLIBINTL@ \
+			  @DLOG_LIBS@
 
 simple_la_LIBADD	= $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
 
 socket_la_SOURCES 	= scim_socket_config.cpp
-
+socket_la_CXXFLAGS  = @DLOG_CFLAGS@
 socket_la_LDFLAGS	= -avoid-version \
 		     	  -rpath $(moduledir) \
 			  -module \
 			  $(LD_VERSION_SCRIPT_OPTION) \
 			  @LIBTOOL_EXPORT_OPTIONS@ \
-			  @LTLIBINTL@
+			  @LTLIBINTL@ \
+			  @DLOG_LIBS@
 
 socket_la_LIBADD	= $(top_builddir)/ism/src/libscim@SCIM_EPOCH@.la
 

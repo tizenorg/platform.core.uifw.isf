@@ -111,7 +111,7 @@ void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
     if (iseContext.layout == ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL)
         iseContext.prediction_allow = EINA_FALSE;
 
-    isf_wsc_context_prediction_allow_set (wsc_ctx, iseContext.prediction_allow);
+    //isf_wsc_context_prediction_allow_set (wsc_ctx, iseContext.prediction_allow);
 
     /* set return key type */
     iseContext.return_key_type = (Ecore_IMF_Input_Panel_Return_Key_Type)wsc_ctx->return_key_type;
@@ -244,7 +244,7 @@ void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imd
     _isf_wsc_context_input_panel_imdata_set (_get_context_id (ctx), imdata, len);
 }
 
-void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void *imdata, int* len)
+void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void **imdata, int* len)
 {
     _isf_wsc_context_input_panel_imdata_get (_get_context_id (ctx), imdata, len);
 }

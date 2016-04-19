@@ -121,6 +121,10 @@ using namespace scim;
 
 #define E_PROP_DEVICEMGR_INPUTWIN                       "DeviceMgr Input Window"
 
+#ifndef SCIM_HELPER_LAUNCHER_PROGRAM
+#define SCIM_HELPER_LAUNCHER_PROGRAM  (SCIM_LIBEXECDIR "/scim-helper-launcher")
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 // Declaration of external variables.
 /////////////////////////////////////////////////////////////////////////////
@@ -186,7 +190,6 @@ static void       launch_default_soft_keyboard         (keynode_t *key = NULL, v
 /* PanelAgent related functions */
 static bool       initialize_panel_agent               (const ConfigPointer& config, const String &display, bool resident);
 
-static void       slot_reload_config                   (void);
 static void       slot_focus_in                        (void);
 static void       slot_focus_out                       (void);
 static void       slot_expand_candidate                (void);
@@ -242,6 +245,8 @@ static void       slot_set_keyboard_mode               (int mode);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
+
+static void       slot_run_helper                      (const String &uuid, const String &config, const String &display);
 
 #if HAVE_ECOREX
 static Eina_Bool  efl_create_control_window            (void);
@@ -1836,7 +1841,7 @@ static void load_config (void)
 static void config_reload_cb (const ConfigPointer &config)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
+    _info_manager->reload_config();
     /* load_config (); */
 }
 
@@ -3923,7 +3928,6 @@ static bool initialize_panel_agent (const ConfigPointer& config, const String &d
         return false;
     }
 
-    _info_manager->signal_connect_reload_config              (slot (slot_reload_config));
     _info_manager->signal_connect_focus_in                   (slot (slot_focus_in));
     _info_manager->signal_connect_focus_out                  (slot (slot_focus_out));
     _info_manager->signal_connect_expand_candidate           (slot (slot_expand_candidate));
@@ -3982,8 +3986,8 @@ static bool initialize_panel_agent (const ConfigPointer& config, const String &d
 
     _info_manager->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
     _info_manager->signal_connect_check_privilege_by_sockfd  (slot (slot_check_privilege_by_sockfd));
-    std::vector<String> load_ise_list;
-    _info_manager->get_active_ise_list (load_ise_list);
+
+    _info_manager->signal_connect_run_helper                 (slot (slot_run_helper));
 
     LOGD ("initializing panel agent succeeded\n");
 
@@ -4135,17 +4139,6 @@ static bool update_ise_list (std::vector<String> &list)
 #endif
 
     return result;
-}
-
-/**
- * @brief Reload config slot function for PanelAgent.
- */
-static void slot_reload_config (void)
-{
-    SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-
-    if (!_config.null ())
-        _config->reload ();
 }
 
 /**
@@ -6033,35 +6026,78 @@ static void slot_stop_default_ise (void)
     }
 }
 
+static void slot_run_helper (const String &uuid, const String &config, const String &display)
+{
+    ISF_SAVE_LOG ("time:%ld  pid:%d  %s  %s  uuid(%s)\n",
+        time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+
+    bool bFind = false;
+    String strConfig  = config;
+    String strDisplay = display;
+
+    for (size_t i = 0; i < _ime_info.size (); ++i) {
+        if (_ime_info[i].appid == uuid && _ime_info[i].module_name.length ()) {
+
+            int pid = fork ();
+
+            if (pid < 0) return;
+            LOGD("Launching new %s with uuid %s", SCIM_HELPER_LAUNCHER_PROGRAM, uuid.c_str());
+            if (pid == 0) {
+#if HAVE_TTS
+                ui_close_tts ();
+#endif
+                ui_candidate_delete_check_size_timer ();
+                ui_candidate_delete_longpress_timer ();
+                ui_candidate_delete_destroy_timer ();
+
+                unregister_edbus_signal_handler ();
+
+                if (!_config.null ())
+                    _config.reset ();
+                if (_info_manager) {
+                    try {
+                        _info_manager->stop ();
+                    } catch (scim::Exception & e) {
+                        std::cerr << "Exception is thrown from _panel_agent->stop (), error is " << e.what () << "\n";
+                    }
+                    delete _info_manager;
+                }
+
+                const char *argv [] = { SCIM_HELPER_LAUNCHER_PROGRAM,
+                                   "--daemon",
+                                   "--config", const_cast<char*> (strConfig.c_str ()),
+                                   "--display", const_cast<char*> (strDisplay.c_str ()),
+                                   const_cast<char*> (_ime_info[i].module_name.c_str ()),
+                                   const_cast<char*> (uuid.c_str ()),
+                                   0};
+
+                SCIM_DEBUG_MAIN (2) << " Call scim-helper-launcher.\n";
+                ISF_SAVE_LOG ("time:%ld  pid:%d ppid:%d  %s  %s  Exec scim_helper_launcher(%s)\n",
+                    time (0), getpid (), getppid (), __FILE__, __func__, _ime_info[i].module_name.c_str ());
+
+                execv (SCIM_HELPER_LAUNCHER_PROGRAM, const_cast<char **>(argv));
+                exit (-1);
+            }
+
+            //int status;
+            //waitpid (pid, &status, 0);
+
+            bFind = true;
+            break;
+        }
+    }
+
+    if (!bFind) {
+        ISF_SAVE_LOG ("time:%ld  pid:%d  %s  %s  Can't find and exec scim_helper_launcher uuid : %s\n",
+            time (0), getpid (), __FILE__, __func__, uuid.c_str ());
+    }
+    SCIM_DEBUG_MAIN (2) << " exit run_helper ().\n";
+}
+
 //////////////////////////////////////////////////////////////////////
 // End of PanelAgent-Functions
 //////////////////////////////////////////////////////////////////////
 
-
-/**
- * @brief Handler function for HelperManager input.
- *
- * @param data The data to pass to this callback.
- * @param fd_handler The Ecore Fd handler.
- *
- * @return ECORE_CALLBACK_RENEW
- */
-static Eina_Bool helper_manager_input_handler (void *data, Ecore_Fd_Handler *fd_handler)
-{
-    if (_info_manager->has_helper_manager_pending_event ()) {
-        if (!_info_manager->filter_helper_manager_event ()) {
-            std::cerr << "_info_manager->filter_helper_manager_event () is failed!!!\n";
-            LOGE ("_info_manager->filter_helper_manager_event () is failed!!!");
-
-            elm_exit ();
-        }
-    } else {
-        std::cerr << "_info_manager->has_helper_manager_pending_event () is failed!!!\n";
-        LOGE ("_info_manager->has_helper_manager_pending_event () is failed!!!");
-    }
-
-    return ECORE_CALLBACK_RENEW;
-}
 
 /**
  * @brief Callback function for abnormal signal.
@@ -6865,35 +6901,6 @@ static String sanitize_string (const char *str, int maxlen = 32)
     return ret;
 }
 
-static int launch_socket_frontend ()
-{
-    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
-    LOGD ("Launching a ISF daemon with Socket FrontEnd");
-    std::vector<String>     engine_list;
-    std::vector<String>     helper_list;
-    std::vector<String>     load_engine_list;
-
-    std::vector<String>::iterator it;
-
-    std::cerr << "Launching a ISF daemon with Socket FrontEnd...\n";
-    //get modules list
-    scim_get_imengine_module_list (engine_list);
-    scim_get_helper_module_list (helper_list);
-
-    for (it = engine_list.begin (); it != engine_list.end (); it++) {
-        if (*it != "socket")
-            load_engine_list.push_back (*it);
-    }
-    for (it = helper_list.begin (); it != helper_list.end (); it++)
-        load_engine_list.push_back (*it);
-
-    return scim_launch (true,
-        "simple",
-        (load_engine_list.size () > 0 ? scim_combine_string_list (load_engine_list, ',') : "none"),
-        "socket",
-        NULL);
-}
-
 int main (int argc, char *argv [])
 {
     struct tms    tiks_buf;
@@ -6909,11 +6916,10 @@ int main (int argc, char *argv [])
     char        **new_argv        = new char * [40];
     int           display_name_c  = 0;
     ConfigModule *config_module   = NULL;
-    String        config_name     = String ("socket");
+    String        config_name     = String ("simple");
     String        display_name    = String ();
     char          buf[256]        = {0};
 
-    Ecore_Fd_Handler *helper_manager_handler   = NULL;
 #if HAVE_ECOREX
     Ecore_Event_Handler *xclient_message_handler  = NULL;
     Ecore_Event_Handler *xwindow_property_handler = NULL;
@@ -7050,9 +7056,6 @@ int main (int argc, char *argv [])
 
     elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
-    //FIXME: frontend name should be got from parameter,set socket as dead code
-    launch_socket_frontend ();
-
     if (config_name != "dummy") {
         /* Load config module */
         config_module = new ConfigModule (config_name);
@@ -7080,13 +7083,13 @@ int main (int argc, char *argv [])
         if (!initialize_panel_agent (_config, display_name, should_resident)) {
             check_time ("Failed to initialize Panel Agent!");
             std::cerr << "Failed to initialize Panel Agent!\n";
-            ISF_SAVE_LOG ("Failed to initialize Panel Agent!\n");
-
+            LOGE ("Failed to initialize Panel Agent!\n");
             ret = -1;
             goto cleanup;
         }
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
+        LOGD("");
         ret = -1;
         goto cleanup;
     }
@@ -7102,14 +7105,6 @@ int main (int argc, char *argv [])
         _candidate_text [i]  = NULL;
         _candidate_image [i] = NULL;
         _candidate_pop_image [i] = NULL;
-    }
-
-    try {
-        _info_manager->send_display_name (display_name);
-    } catch (scim::Exception & e) {
-        std::cerr << e.what () << "\n";
-        ret = -1;
-        goto cleanup;
     }
 
     /* Connect the configuration reload signal. */
@@ -7139,9 +7134,6 @@ int main (int argc, char *argv [])
     /* Load ISF configuration */
     load_config ();
     check_time ("load_config");
-
-    helper_manager_handler   = ecore_main_fd_handler_add (_info_manager->get_helper_manager_id (), ECORE_FD_READ, helper_manager_input_handler, NULL, NULL, NULL);
-    check_time ("run_info_manager");
 
     set_language_and_locale ();
 
@@ -7225,6 +7217,8 @@ int main (int argc, char *argv [])
 
     elm_run ();
 
+    LOGW("out of loop");
+
     isf_cynara_finish();
 
     _config->flush ();
@@ -7257,12 +7251,6 @@ int main (int argc, char *argv [])
         xwindow_focus_out_handler = NULL;
     }
 #endif
-
-    if (helper_manager_handler) {
-        ecore_main_fd_handler_del (helper_manager_handler);
-        helper_manager_handler = NULL;
-    }
-
 
 
 #if HAVE_VCONF
