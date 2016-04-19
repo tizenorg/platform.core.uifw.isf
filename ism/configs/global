@@ -3,7 +3,7 @@
 /DefaultConfigModule = simple
 /DefaultSocketFrontEndAddress = local:/tmp/scim-socket-frontend
 /DefaultSocketIMEngineAddress = local:/tmp/scim-socket-frontend
-/DefaultSocketConfigAddress = local:/tmp/scim-socket-frontend
+/DefaultSocketConfigAddress = local:/tmp/scim-panel-socket
 /DefaultPanelSocketAddress = local:/tmp/scim-panel-socket
 /DefaultHelperManagerSocketAddress = local:/tmp/scim-socket-frontend
 /DefaultSocketTimeout = 5000
