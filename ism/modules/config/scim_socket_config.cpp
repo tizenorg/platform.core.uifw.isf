@@ -38,6 +38,14 @@
 #include "scim.h"
 #include "scim_socket_config.h"
 
+#include <dlog.h>
+
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG "ISF_SOCKET_CONFIG"
+
+
 #define scim_module_init socket_LTX_scim_module_init
 #define scim_module_exit socket_LTX_scim_module_exit
 #define scim_config_module_init socket_LTX_scim_config_module_init
@@ -78,6 +86,13 @@ SocketConfig::SocketConfig ()
 {
     SCIM_DEBUG_CONFIG (2) << " Construct SocketConfig object.\n";
 
+    String display_name;
+    {
+        const char *p = getenv ("DISPLAY");
+        if (p) display_name = String (p);
+    }
+    m_socket_address = scim_get_default_panel_socket_address (display_name);
+
     m_valid = open_connection ();
 }
 
@@ -102,6 +117,7 @@ SocketConfig::get_name () const
 bool
 SocketConfig::read (const String& key, String *pStr) const
 {
+    LOGV ("");
     if (!valid () || !pStr || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -123,7 +139,7 @@ SocketConfig::read (const String& key, String *pStr) const
 
             break;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -136,6 +152,7 @@ SocketConfig::read (const String& key, String *pStr) const
 bool
 SocketConfig::read (const String& key, int *pl) const
 {
+    LOGV ("");
     if (!valid () || !pl || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -159,7 +176,7 @@ SocketConfig::read (const String& key, int *pl) const
 
             break;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -172,6 +189,7 @@ SocketConfig::read (const String& key, int *pl) const
 bool
 SocketConfig::read (const String& key, double* val) const
 {
+    LOGV ("");
     if (!valid () || !val || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -195,7 +213,7 @@ SocketConfig::read (const String& key, double* val) const
 
             break;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -208,6 +226,7 @@ SocketConfig::read (const String& key, double* val) const
 bool
 SocketConfig::read (const String& key, bool* val) const
 {
+    LOGV ("");
     if (!valid () || !val || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -231,7 +250,7 @@ SocketConfig::read (const String& key, bool* val) const
 
             break;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -244,6 +263,7 @@ SocketConfig::read (const String& key, bool* val) const
 bool
 SocketConfig::read (const String& key, std::vector <String>* val) const
 {
+    LOGV ("");
     if (!valid () || !val || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -267,7 +287,7 @@ SocketConfig::read (const String& key, std::vector <String>* val) const
 
             break;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -279,6 +299,7 @@ SocketConfig::read (const String& key, std::vector <String>* val) const
 bool
 SocketConfig::read (const String& key, std::vector <int>* val) const
 {
+    LOGV ("");
     if (!valid () || !val || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -305,7 +326,7 @@ SocketConfig::read (const String& key, std::vector <int>* val) const
 
             break;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -317,11 +338,11 @@ SocketConfig::read (const String& key, std::vector <int>* val) const
 bool
 SocketConfig::write (const String& key, const String& value)
 {
+    LOGV ("");
     if (!valid () || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
@@ -329,15 +350,10 @@ SocketConfig::write (const String& key, const String& value)
         trans.put_data (key);
         trans.put_data (value);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -348,11 +364,11 @@ SocketConfig::write (const String& key, const String& value)
 bool
 SocketConfig::write (const String& key, int value)
 {
+    LOGV ("");
     if (!valid () || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
@@ -360,15 +376,10 @@ SocketConfig::write (const String& key, int value)
         trans.put_data (key);
         trans.put_data ((uint32)value);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -379,6 +390,7 @@ SocketConfig::write (const String& key, int value)
 bool
 SocketConfig::write (const String& key, double value)
 {
+    LOGV ("");
     if (!valid () || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -386,7 +398,6 @@ SocketConfig::write (const String& key, double value)
     snprintf (buf, 255, "%lE", value);
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
@@ -394,15 +405,10 @@ SocketConfig::write (const String& key, double value)
         trans.put_data (key);
         trans.put_data (String (buf));
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -413,11 +419,11 @@ SocketConfig::write (const String& key, double value)
 bool
 SocketConfig::write (const String& key, bool value)
 {
+    LOGV ("");
     if (!valid () || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
@@ -425,15 +431,10 @@ SocketConfig::write (const String& key, bool value)
         trans.put_data (key);
         trans.put_data ((uint32)value);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -444,11 +445,11 @@ SocketConfig::write (const String& key, bool value)
 bool
 SocketConfig::write (const String& key, const std::vector <String>& value)
 {
+    LOGV ("");
     if (!valid () || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
@@ -456,15 +457,10 @@ SocketConfig::write (const String& key, const std::vector <String>& value)
         trans.put_data (key);
         trans.put_data (value);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -475,6 +471,7 @@ SocketConfig::write (const String& key, const std::vector <String>& value)
 bool
 SocketConfig::write (const String& key, const std::vector <int>& value)
 {
+    LOGV ("");
     if (!valid () || key.empty()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -484,7 +481,6 @@ SocketConfig::write (const String& key, const std::vector <int>& value)
         vec.push_back ((uint32) value [i]);
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
@@ -492,15 +488,10 @@ SocketConfig::write (const String& key, const std::vector <int>& value)
         trans.put_data (key);
         trans.put_data (vec);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -510,28 +501,23 @@ SocketConfig::write (const String& key, const std::vector <int>& value)
 
 // permanently writes all changes
 bool
-SocketConfig::flush()
+SocketConfig::flush ()
 {
+    LOGD ("");
     if (!valid ()) return false;
     if (!m_connected && !open_connection ()) return false;
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
         trans.put_command (SCIM_TRANS_CMD_FLUSH_CONFIG);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
-                gettimeofday (&m_update_timestamp, 0);
-                return true;
-            }
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            gettimeofday (&m_update_timestamp, 0);
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -543,26 +529,21 @@ SocketConfig::flush()
 bool
 SocketConfig::erase (const String& key)
 {
+    LOGD ("");
     if (!valid ()) return false;
     if (!m_connected && !open_connection ()) return false;
 
     Transaction trans;
-    int cmd;
 
     for (int retry = 0; retry < 3; ++retry) {
         init_transaction (trans);
         trans.put_command (SCIM_TRANS_CMD_ERASE_CONFIG);
         trans.put_data (key);
 
-        if (trans.write_to_socket (m_socket_client) &&
-            trans.read_from_socket (m_socket_client, m_socket_timeout)) {
-            if (trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
-                trans.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK)
-                return true;
-
-            break;
+        if (trans.write_to_socket (m_socket_client)) {
+            return true;
         }
-
+        LOGW ("Failed, reconnect again");
         if (!open_connection ())
             break;
     }
@@ -573,6 +554,7 @@ SocketConfig::erase (const String& key)
 bool
 SocketConfig::reload ()
 {
+    LOGD ("");
     if (!valid ()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -607,7 +589,7 @@ SocketConfig::reload ()
             }
             break;
         }
-
+        LOGW ("Failed reconnect again");
         if (!open_connection ())
             break;
     }
@@ -630,35 +612,34 @@ SocketConfig::open_connection () const
 
     m_connected = false;
 
-    // Connect to SocketFrontEnd.
+    // Connect to SocketServer.
     if (!m_socket_client.connect (socket_address)) {
         /* Retry connecting considering the ANR timeout */
         for (int i = 0; i < 3; ++i) {
             if (m_socket_client.connect (socket_address))
                 break;
             scim_usleep (100000);
-            std::cerr << " Re-connecting to ISF(scim) server. SocketConfig connect count : " << i+1 << "\n";
-            ISF_LOG (" Re-connecting to ISF(scim) server. SocketConfig connect count : %d\n", i+1);
+            LOGW (" Re-connecting to ISF(scim) server. SocketConfig connect count : %d\n", i+1);
         }
     }
 
     if (!m_socket_client.is_connected ()) {
-        std::cerr << " Cannot connect to SocketFrontEnd (" << m_socket_address << ").\n";
-        ISF_LOG (" Cannot connect to SocketFrontEnd (%s).\n", m_socket_address.c_str ());
+        LOGW (" Cannot connect to SocketServer (%s).\n", m_socket_address.c_str ());
         return false;
     }
 
     // Init the connection,
     if (!scim_socket_open_connection (m_socket_magic_key,
                                       String ("SocketConfig"),
-                                      String ("SocketFrontEnd"),
+                                      String ("Panel"),
                                       m_socket_client,
                                       m_socket_timeout)) {
         m_socket_client.close ();
+        LOGE (" Connect to SocketServer (%s) failed.\n", m_socket_address.c_str ());
         return false;
     }
 
-    ISF_LOG (" Connect to SocketFrontEnd (%s).\n", m_socket_address.c_str ());
+    LOGD (" Connect to SocketServer (%s).\n", m_socket_address.c_str ());
     m_connected = true;
     gettimeofday (&m_update_timestamp, 0);
     return true;
