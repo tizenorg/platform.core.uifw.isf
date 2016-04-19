@@ -522,6 +522,17 @@ show_input_panel(Ecore_IMF_Context *ctx)
 
     if (imcontext->imdata_size > 0)
         wl_text_input_set_input_panel_data(imcontext->text_input, (const char *)imcontext->imdata, imcontext->imdata_size);
+
+    SECURE_LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx,
+            ecore_imf_context_input_panel_layout_get (ctx),
+            layout_variation);
+    SECURE_LOGD ("language : %d, cursor position : %d\n",
+            ecore_imf_context_input_panel_language_get (ctx),
+            cursor_pos);
+    SECURE_LOGD ("return key type : %d, return key disabled : %d, autocapital type : %d\n",
+            ecore_imf_context_input_panel_return_key_type_get (ctx),
+            ecore_imf_context_input_panel_return_key_disabled_get (ctx),
+            ecore_imf_context_autocapital_type_get (ctx));
     //
 
     wl_text_input_show_input_panel(imcontext->text_input);
