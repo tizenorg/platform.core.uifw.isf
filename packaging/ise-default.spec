@@ -64,12 +64,9 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 
 %make_install
+%find_lang %{name}
 
-%post
-
-%postun
-
-%files
+%files -f %{name}.lang
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
 %{TZ_SYS_RO_APP}/*
