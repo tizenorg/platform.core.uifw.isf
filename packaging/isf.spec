@@ -46,7 +46,6 @@ Requires(postun): /sbin/ldconfig
 Requires: org.tizen.isf-kbd-mode-changer
 %endif
 
-%define _optexecdir /opt/usr/devel/usr/bin/
 %define APP_PREFIX %{TZ_SYS_RO_APP}/org.tizen.isf-kbd-mode-changer/bin/
 
 %description
@@ -113,7 +112,8 @@ CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS}
 		--disable-multiwindow-support \
 		--disable-ime-embed-app \
 		--with-ro-app-dir=%{TZ_SYS_RO_APP} \
-		--with-ro-packages-dir=%{TZ_SYS_RO_PACKAGES}
+		--with-ro-packages-dir=%{TZ_SYS_RO_PACKAGES} \
+		--with-sys-bin-dir=%{TZ_SYS_BIN}
 make %{?_smp_mflags}
 
 %install
@@ -150,7 +150,7 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_sysconfdir}/scim/config
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
-%{_optexecdir}/isf-demo-efl
+%{_bindir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
 %{_libdir}/ecore_imf/modules/*/*/*.so
 %{_bindir}/scim

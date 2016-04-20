@@ -793,6 +793,7 @@ AC_SUBST(SCIM_TEMPDIR)
 
 AC_SUBST(RO_APP_DIR)
 AC_SUBST(RO_PACKAGES_DIR)
+AC_SUBST(SYS_BIN_DIR)
 
 ###########################################################
 ##                      Output files.                    ##
