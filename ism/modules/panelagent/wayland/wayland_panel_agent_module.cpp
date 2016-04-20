@@ -2050,9 +2050,8 @@ wsc_send_preedit (WSCContextISF* wsc_ctx, int32_t cursor)
                                 case SCIM_ATTR_DECORATE_BGCOLOR2:
                                 case SCIM_ATTR_DECORATE_BGCOLOR3:
                                 case SCIM_ATTR_DECORATE_BGCOLOR4:
-                                    preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT;
-                                    break;
                                 default:
+                                    preedit_style = WL_TEXT_INPUT_PREEDIT_STYLE_DEFAULT;
                                     break;
                             }
 
