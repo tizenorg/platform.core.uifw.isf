@@ -439,6 +439,11 @@ AC_ARG_WITH(ro-packages-dir,
                            [Select Read only packages dir]),
             RO_PACKAGES_DIR=$with_ro_packages_dir)
 
+AC_ARG_WITH(sys-bin-dir,
+            AS_HELP_STRING([--with-sys-bin-dir=dir],
+                           [Select usr bin dir]),
+            SYS_BIN_DIR=$with_sys_bin_dir)      
+
 AC_ARG_ENABLE(ld-version-script,
               [  --enable-ld-version-script Use ld version script to limit exported symbols],
               enable_ld_version_script=yes,
@@ -793,6 +798,7 @@ AC_SUBST(SCIM_TEMPDIR)
 
 AC_SUBST(RO_APP_DIR)
 AC_SUBST(RO_PACKAGES_DIR)
+AC_SUBST(SYS_BIN_DIR)
 
 ###########################################################
 ##                      Output files.                    ##

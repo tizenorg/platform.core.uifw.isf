@@ -23,7 +23,7 @@ noinst_HEADERS =
 
 ISF_DEMO_EFL = isf-demo-efl
 
-optexecdir            = /opt/usr/devel/usr/bin/
+optexecdir            = @SYS_BIN_DIR@
 optexec_PROGRAMS      = $(ISF_DEMO_EFL)
 
 isf_demo_efl_SOURCES  = isf_demo_efl.cpp \
