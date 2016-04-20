@@ -23,7 +23,7 @@
 
 using namespace std;
 
-#define CANDIDATE_EDJ_FILE_PATH "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/candidate-single.edj"
+#define CANDIDATE_EDJ_FILE_PATH LAYOUTDIR"/sdk/edc/candidate-single.edj"
 #include "configure.h"
 static void
 _mouse_down(void *data, Evas *e,
