@@ -26,7 +26,7 @@
 
 using namespace std;
 
-#define CANDIDATE_EDJ_FILE_PATH       "/usr/share/isf/ise/ise-default/720x1280/default/sdk/edc/candidate-multiline.edj"
+#define CANDIDATE_EDJ_FILE_PATH       LAYOUTDIR"/sdk/edc/candidate-multiline.edj"
 #define MORE_BUTTON_WIDTH             89
 #define MORE_BUTTON_HEIGHT            64
 #define CANDIDATE_WINDOW_HEIGHT       84
