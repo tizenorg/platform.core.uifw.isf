@@ -747,9 +747,9 @@ text_input_keysym(void                 *data,
     e->string = e->key + strlen(key) + 1;
     e->compose = e->string;
 
-    strcpy((char *)e->keyname, keyname);
-    strcpy((char *)e->key, key);
-    strcpy((char *)e->string, string);
+    strncpy((char *)e->keyname, keyname, strlen(keyname));
+    strncpy((char *)e->key, key, strlen(key));
+    strncpy((char *)e->string, string, strlen(string));
 
     e->window = ecore_wl_window_id_get(imcontext->window);
     e->event_window = ecore_wl_window_id_get(imcontext->window);
