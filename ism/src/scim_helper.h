@@ -543,7 +543,7 @@ public:
                                    uint32                       value) const;
 
     /**
-     * @brief Request to get surrounding text.
+     * @brief Request to get surrounding text asynchronously.
      *
      * @param uuid The helper ISE UUID.
      * @param maxlen_before The max length of before.
@@ -552,6 +552,16 @@ public:
     void get_surrounding_text     (const String                &uuid,
                                    int                          maxlen_before,
                                    int                          maxlen_after) const;
+
+    /**
+     * @brief Request to get surrounding text synchronously.
+     *
+     * @param maxlen_before The max length of before.
+     * @param maxlen_after The max length of after.
+     * @param text The surounding text.
+     * @param cursor The cursor position.
+     */
+    void get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor);
 
     /**
      * @brief Request to delete surrounding text.

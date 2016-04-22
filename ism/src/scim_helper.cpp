@@ -68,8 +68,6 @@
 #define SHIFT_MODE_ENABLE 0x9fe7
 #define SHIFT_MODE_DISABLE 0x9fe8
 
-EXAPI scim::CommonLookupTable g_helper_candidate_table;
-
 namespace scim {
 
 typedef Signal3<void, const HelperAgent *, int, const String &>
@@ -143,6 +141,9 @@ public:
     ConfigPointer m_config;
     BackEndPointer m_backend;
 
+    char* surrounding_text;
+    uint32 cursor_pos;
+
     HelperAgentSignalVoid           signal_exit;
     HelperAgentSignalVoid           signal_attach_input_context;
     HelperAgentSignalVoid           signal_detach_input_context;
@@ -203,7 +204,7 @@ public:
     HelperAgentSignalUintVoid           signal_check_option_window;
 
 public:
-    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz(thiz) {
+    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz), surrounding_text (NULL), cursor_pos (0) {
     }
 
 
@@ -297,7 +298,7 @@ public:
                               const LookupTable & table)
     {
         LOGD ("");
-        thiz->update_candidate_string(table);
+        thiz->update_candidate_string (table);
     }
 
     void
@@ -353,9 +354,11 @@ public:
                                int                    maxlen_before,
                                int                    maxlen_after)
     {
-        //FIXME
         LOGD ("");
-        return false;
+        String _text;
+        thiz->get_surrounding_text (maxlen_before, maxlen_after, _text, cursor);
+        text = utf8_mbstowcs(_text);
+        return true;
     }
 
     bool
@@ -363,18 +366,22 @@ public:
                                   int                   offset,
                                   int                   len)
     {
-        //FIXME
         LOGD ("");
-        return false;
+
+        thiz->delete_surrounding_text (offset, len);
+        return true;
     }
 
     bool
     slot_get_selection (IMEngineInstanceBase *si,
                         WideString            &text)
     {
-        //FIXME
         LOGD ("");
-        return false;
+        String _text;
+        //FIXME
+        //thiz->get_selection (_text);
+        text = utf8_mbstowcs (_text);
+        return true;
     }
 
     bool
@@ -383,7 +390,7 @@ public:
                         int              end)
     {
         LOGD ("");
-        thiz->set_selection(start, end);
+        thiz->set_selection (start, end);
         return true;
     }
 
@@ -391,21 +398,21 @@ public:
     slot_expand_candidate (IMEngineInstanceBase *si)
     {
         LOGD ("");
-        thiz->expand_candidate();
+        thiz->expand_candidate ();
     }
 
     void
     slot_contract_candidate (IMEngineInstanceBase *si)
     {
         LOGD ("");
-        thiz->contract_candidate();
+        thiz->contract_candidate ();
     }
 
     void
     slot_set_candidate_style (IMEngineInstanceBase *si, ISF_CANDIDATE_PORTRAIT_LINE_T portrait_line, ISF_CANDIDATE_MODE_T mode)
     {
         LOGD ("");
-        thiz->set_candidate_style(portrait_line, mode);
+        thiz->set_candidate_style (portrait_line, mode);
     }
 
     void
@@ -413,7 +420,7 @@ public:
                                const String &command)
     {
         LOGD ("");
-        thiz->send_private_command(command);
+        thiz->send_private_command (command);
     }
 
     void
@@ -489,6 +496,7 @@ public:
         si->signal_connect_send_private_command (
             slot (this, &HelperAgent::HelperAgentImpl::slot_send_private_command));
     }
+private:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
 };
 
@@ -499,6 +507,9 @@ HelperAgent::HelperAgent ()
 
 HelperAgent::~HelperAgent ()
 {
+    if (m_impl->surrounding_text != NULL)
+        free (m_impl->surrounding_text);
+
     delete m_impl;
 }
 
@@ -805,6 +816,7 @@ HelperAgent::filter_event ()
             {
                 uint32 cursor_pos;
                 if (m_impl->recv.get_data (cursor_pos)) {
+                    m_impl->cursor_pos = cursor_pos;
                     m_impl->signal_update_cursor_position (this, ic, ic_uuid, (int) cursor_pos);
                         if (!m_impl->si.null ()) m_impl->si->update_cursor_position(cursor_pos);
                 }
@@ -816,8 +828,14 @@ HelperAgent::filter_event ()
             {
                 String text;
                 uint32 cursor;
-                if (m_impl->recv.get_data (text) && m_impl->recv.get_data (cursor))
+                if (m_impl->recv.get_data (text) && m_impl->recv.get_data (cursor)) {
+                    if (m_impl->surrounding_text != NULL)
+                        free (m_impl->surrounding_text);
+                    m_impl->surrounding_text = strdup (text.c_str ());
+                    m_impl->cursor_pos = cursor;
+                    LOGD ("%s, %d", m_impl->surrounding_text, m_impl->cursor_pos);
                     m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
+                }
                 else
                     LOGW ("wrong format of transaction\n");
                 break;
@@ -1190,8 +1208,9 @@ HelperAgent::filter_event ()
             }
             case ISM_TRANS_CMD_UPDATE_LOOKUP_TABLE: //FIXME:remove if useless
             {
-                if (m_impl->recv.get_data (g_helper_candidate_table))
-                    m_impl->signal_update_lookup_table (this, g_helper_candidate_table);
+                CommonLookupTable helper_candidate_table;
+                if (m_impl->recv.get_data (helper_candidate_table))
+                    m_impl->signal_update_lookup_table (this, helper_candidate_table);
                 else
                     LOGW ("wrong format of transaction\n");
                 break;
@@ -1701,7 +1720,7 @@ HelperAgent::hide_associate_string (void) const
  *        -1 means the currently focused Input Context.
  * @param ic_uuid The UUID of the IMEngine used by the Input Context.
  *        Empty means don't match.
- * @param wstr The WideString to be updated.
+ * @param str The WideString to be updated.
  * @param attrs The attribute list for preedit string.
  */
 void
@@ -1732,7 +1751,7 @@ HelperAgent::update_preedit_string (int                  ic,
  *        -1 means the currently focused Input Context.
  * @param ic_uuid The UUID of the IMEngine used by the Input Context.
  *        Empty means don't match.
- * @param wstr The WideString to be updated.
+ * @param str The WideString to be updated.
  * @param attrs The attribute list for preedit string.
  * @param caret The caret position in preedit string.
  */
@@ -1886,7 +1905,7 @@ HelperAgent::update_input_context (uint32 type, uint32 value) const
 }
 
 /**
- * @brief Request to get surrounding text.
+ * @brief Request to get surrounding text asynchronously.
  *
  * @param uuid The helper ISE UUID.
  * @param maxlen_before The max length of before.
@@ -1909,6 +1928,38 @@ HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int ma
 }
 
 /**
+ * @brief Request to get surrounding text synchronously.
+ *
+ * @param uuid The helper ISE UUID.
+ * @param maxlen_before The max length of before.
+ * @param maxlen_after The max length of after.
+ * @param text The surrounding text.
+ * @param cursor The cursor position.
+ */
+void
+HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor)
+{
+    LOGD ("");
+    if (maxlen_before < 0 || maxlen_after < 0) {
+        LOGW ("invalid maxlen_before = %d maxlen_after = %d", maxlen_before, maxlen_before);
+        return;
+    }
+    int before = cursor - maxlen_before;
+    int after = cursor + maxlen_after;
+
+    WideString ws = utf8_mbstowcs (m_impl->surrounding_text);
+
+    if (before < 0)
+        before = 0;
+    if (after > (int)ws.length())
+        after = ws.length();
+
+    WideString sub_ws = ws.substr (before, after);
+    text = utf8_wcstombs (sub_ws);
+    cursor = m_impl->cursor_pos;
+}
+
+/**
  * @brief Request to delete surrounding text.
  *
  * @param offset The offset for cursor position.
@@ -1917,7 +1968,25 @@ HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int ma
 void
 HelperAgent::delete_surrounding_text (int offset, int len) const
 {
-    LOGD ("");
+    LOGD ("offset = %d, len = %d", offset, len);
+    WideString ws = utf8_mbstowcs (m_impl->surrounding_text);
+
+    offset += m_impl->cursor_pos;
+
+    if (len <= 0 || offset < 0 || offset + len > (int)ws.length ()) {
+        LOGW ("invalid offset and len");
+        return;
+    }
+
+    WideString sub_ws_before = ws.substr (0, offset);
+    WideString sub_ws_after = ws.substr (offset + len, ws.length ());
+    WideString new_ws = sub_ws_before + sub_ws_after;
+
+    if (m_impl->surrounding_text)
+        free (m_impl->surrounding_text);
+    m_impl->surrounding_text = strdup (utf8_wcstombs (new_ws).c_str ());
+    m_impl->cursor_pos = offset;
+
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
@@ -1930,7 +1999,7 @@ HelperAgent::delete_surrounding_text (int offset, int len) const
 }
 
 /**
- * @brief Request to get selection text.
+ * @brief Request to get selection text asynchronously.
  *
  * @param uuid The helper ISE UUID.
  */
