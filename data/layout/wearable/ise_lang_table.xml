@@ -7,6 +7,7 @@
     <rec name="uuid_anthy" uuid="org.tizen.ise-engine-anthy"/>
     <rec name="uuid_zhuyin_big" uuid="org.tizen.ise-engine-tables.zhuyin-big"/>
     <rec name="uuid_cangjie_3" uuid="org.tizen.ise-engine-tables.cangjie3"/>
+    <rec name="uuid_unikey" uuid="org.tizen.ise-engine-unikey"/>
 </keyboard_uuid_table>
 <language_table>
   <rec language="English" language_name="English" inputmode_QTY="ENGLISH_4X4" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="uk" is_latin_language="true" accepts_caps_mode="true" locale_string="en_US"/>
@@ -57,7 +58,7 @@
   <rec language="Taiwan" language_name="繁體中文-註音" inputmode_QTY="ZHUYIN_4X4" inputmode_QTY_name="註音" main_keyboard_name="中" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw" locale_string="zh_TW"/>
   <rec language="Hongkong" language_name="繁體中文-倉頡" inputmode_QTY="CANGJIE_4X4" inputmode_QTY_name="倉頡" main_keyboard_name="中" keyboard_ise_uuid="uuid_cangjie_3" country_code_URL="hk" locale_string="zh_HK"/>
   <rec language="Japanese" language_name="日本語" inputmode_QTY="JAPANESE_4X4" inputmode_QTY_name="Qwerty" main_keyboard_name="あ" keyboard_ise_uuid="uuid_anthy" country_code_URL="jp" locale_string="ja_JP"/>
-  <rec language="Vietnamese" language_name="Tiếng Việt" inputmode_QTY="VIETNAMESE_4X4" inputmode_QTY_name="Vietnamese Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="vn" is_latin_language="true" accepts_caps_mode="true" locale_string="vi_VN"/>
+  <rec language="Vietnamese" language_name="Tiếng Việt" inputmode_QTY="VIETNAMESE_4X4" inputmode_QTY_name="Vietnamese Qwerty" keyboard_ise_uuid="uuid_unikey" country_code_URL="vn" is_latin_language="true" accepts_caps_mode="true" locale_string="vi_VN"/>
   <!--
   <rec language="Thai" language_name="ภาษาไทย" inputmode_QTY="THAI_4X4" inputmode_QTY_name="Thai" keyboard_ise_uuid="uuid_default" country_code_URL="th"/>
   -->
