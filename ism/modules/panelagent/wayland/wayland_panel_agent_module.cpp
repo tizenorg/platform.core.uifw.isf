@@ -263,6 +263,7 @@ InfoManager* g_info_manager = NULL;
 static void
 _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx, const char *text, uint32_t cursor, uint32_t anchor)
 {
+    LOGD ("");
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     if (!wsc_ctx) return;
 
@@ -271,6 +272,7 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
 
     wsc_ctx->surrounding_text = strdup (text ? text : "");
     wsc_ctx->surrounding_cursor = cursor;
+    g_info_manager->socket_update_surrounding_text (wsc_ctx->surrounding_text, wsc_ctx->surrounding_cursor);
 
     isf_wsc_context_cursor_position_set(wsc_ctx, cursor);
 
