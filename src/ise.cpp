@@ -245,11 +245,12 @@ static void add_softcandidate_hide_timer(void)
 
 static void create_softcandidate(void)
 {
-    if (!g_candidate)
+    if (!g_candidate) {
         g_candidate = CandidateFactory::make_candidate(CANDIDATE_MULTILINE, g_core.get_main_window());
-
-    if (g_candidate)
-        g_candidate->add_event_listener(&g_candidate_event_listener);
+        if (g_candidate) {
+            g_candidate->add_event_listener(&g_candidate_event_listener);
+        }
+    }
 }
 
 void CCoreEventCallback::on_init()
