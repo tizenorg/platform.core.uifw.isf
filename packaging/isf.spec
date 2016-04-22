@@ -126,7 +126,7 @@ mkdir -p %{buildroot}/etc/scim/conf
 
 cat scim.lang > isf.lang
 %post
-%if "%{?tizen_profile_name}" == "mobile"
+%if "%{?profile}" == "mobile"
 mkdir -p %{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
 ln -sf %{_prefix}/lib/systemd/user/scim.service %{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
 %endif
