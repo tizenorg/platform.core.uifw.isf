@@ -554,6 +554,15 @@ public:
                                    int                          maxlen_after) const;
 
     /**
+     * @brief Request to get surrounding text.
+     *
+     * @param maxlen_before The max length of before.
+     * @param maxlen_after The max length of after.
+     */
+
+    void get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor);
+
+    /**
      * @brief Request to delete surrounding text.
      *
      * @param offset The offset for cursor position.
@@ -568,6 +577,13 @@ public:
      * @param uuid The helper ISE UUID.
      */
     void get_selection       (const String                &uuid) const;
+
+    /**
+     * @brief Request to get selection.
+     *
+     * @param text The selection text.
+     */
+    void get_selection (String &text);
 
     /**
      * @brief Request to selected text.
