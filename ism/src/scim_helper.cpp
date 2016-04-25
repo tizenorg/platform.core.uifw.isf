@@ -143,6 +143,7 @@ public:
 
     char* surrounding_text;
     uint32 cursor_pos;
+    bool need_update_surrounding_text;
 
     HelperAgentSignalVoid           signal_exit;
     HelperAgentSignalVoid           signal_attach_input_context;
@@ -204,7 +205,7 @@ public:
     HelperAgentSignalUintVoid           signal_check_option_window;
 
 public:
-    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz), surrounding_text (NULL), cursor_pos (0) {
+    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz), surrounding_text (NULL), cursor_pos (0), need_update_surrounding_text(false) {
     }
 
 
@@ -834,7 +835,10 @@ HelperAgent::filter_event ()
                     m_impl->surrounding_text = strdup (text.c_str ());
                     m_impl->cursor_pos = cursor;
                     LOGD ("%s, %d", m_impl->surrounding_text, m_impl->cursor_pos);
-                    m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
+                    if (m_impl->need_update_surrounding_text) {
+                        m_impl->need_update_surrounding_text = false;
+                        m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
+                    }
                 }
                 else
                     LOGW ("wrong format of transaction\n");
@@ -1925,6 +1929,7 @@ HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int ma
         m_impl->send.put_data (maxlen_after);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+    m_impl->need_update_surrounding_text = true;
 }
 
 /**
