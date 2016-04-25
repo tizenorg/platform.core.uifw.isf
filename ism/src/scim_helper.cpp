@@ -1940,23 +1940,24 @@ void
 HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor)
 {
     LOGD ("");
-    if (maxlen_before < 0 || maxlen_after < 0) {
-        LOGW ("invalid maxlen_before = %d maxlen_after = %d", maxlen_before, maxlen_before);
+
+    WideString before = utf8_mbstowcs (String (m_impl->surrounding_text));
+
+    if (m_impl->cursor_pos > (int)before.length ())
         return;
-    }
-    int before = cursor - maxlen_before;
-    int after = cursor + maxlen_after;
-
-    WideString ws = utf8_mbstowcs (m_impl->surrounding_text);
-
-    if (before < 0)
-        before = 0;
-    if (after > (int)ws.length())
-        after = ws.length();
-
-    WideString sub_ws = ws.substr (before, after);
-    text = utf8_wcstombs (sub_ws);
-    cursor = m_impl->cursor_pos;
+    WideString after = before;
+    before = before.substr (0, m_impl->cursor_pos);
+    after =  after.substr (m_impl->cursor_pos, after.length () - m_impl->cursor_pos);
+    if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
+        before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());
+    else if (maxlen_before == 0)
+        before = WideString ();
+    if (maxlen_after > 0 && ((unsigned int)maxlen_after) < after.length ())
+        after = WideString (after.begin (), after.begin () + maxlen_after);
+    else if (maxlen_after == 0)
+        after = WideString ();
+    text = utf8_wcstombs (before + after);
+    cursor = before.length ();
 }
 
 /**
@@ -1971,21 +1972,21 @@ HelperAgent::delete_surrounding_text (int offset, int len) const
     LOGD ("offset = %d, len = %d", offset, len);
     WideString ws = utf8_mbstowcs (m_impl->surrounding_text);
 
-    offset += m_impl->cursor_pos;
+    int _offset = offset + m_impl->cursor_pos;
 
-    if (len <= 0 || offset < 0 || offset + len > (int)ws.length ()) {
+    if (len <= 0 || _offset < 0 || _offset + len > (int)ws.length ()) {
         LOGW ("invalid offset and len");
         return;
     }
 
-    WideString sub_ws_before = ws.substr (0, offset);
-    WideString sub_ws_after = ws.substr (offset + len, ws.length ());
+    WideString sub_ws_before = ws.substr (0, _offset);
+    WideString sub_ws_after = ws.substr (_offset + len, ws.length ());
     WideString new_ws = sub_ws_before + sub_ws_after;
 
     if (m_impl->surrounding_text)
         free (m_impl->surrounding_text);
     m_impl->surrounding_text = strdup (utf8_wcstombs (new_ws).c_str ());
-    m_impl->cursor_pos = offset;
+    m_impl->cursor_pos = _offset;
 
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
