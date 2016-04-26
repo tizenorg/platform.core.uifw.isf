@@ -260,6 +260,7 @@ static void
 update_state(WaylandIMContext *imcontext)
 {
     char *surrounding = NULL;
+    char *selection = NULL;
     int cursor_pos;
     Ecore_Evas *ee;
     int canvas_x = 0, canvas_y = 0;
@@ -276,6 +277,13 @@ update_state(WaylandIMContext *imcontext)
         if (surrounding)
             free(surrounding);
     }
+
+    ecore_imf_context_selection_get(imcontext->ctx, &selection);
+    if (imcontext->text_input)
+        wl_text_input_set_selection_text(imcontext->text_input, selection ? selection : "");
+
+    if (selection)
+        free(selection);
 
     if (imcontext->canvas) {
         ee = ecore_evas_ecore_evas_get(imcontext->canvas);

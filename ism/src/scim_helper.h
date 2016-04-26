@@ -580,6 +580,13 @@ public:
     void get_selection       (const String                &uuid) const;
 
     /**
+     * @brief Request to get selection text synchronously.
+     *
+     * @param text The selection text.
+     */
+    void get_selection       (String                      &text) const;
+
+    /**
      * @brief Request to selected text.
      *
      * @param start The start position in text.
