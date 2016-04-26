@@ -42,9 +42,7 @@ BuildRequires:  pkgconfig(cynara-creds-socket)
 BuildRequires:  pkgconfig(cynara-session)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(postun): /sbin/ldconfig
-%if %{without wayland}
 Requires: org.tizen.isf-kbd-mode-changer
-%endif
 
 %define APP_PREFIX %{TZ_SYS_RO_APP}/org.tizen.isf-kbd-mode-changer/bin/
 
@@ -151,9 +149,9 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_datadir}/scim/icons/*
 %{_bindir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
-%{_libdir}/ecore_imf/modules/*/*/*.so
 %{_bindir}/scim
 %{_bindir}/isf-log
+%{_libdir}/ecore_imf/modules/*/*/*.so
 %{_libdir}/scim-1.0/1.4.0/IMEngine/socket.so
 %{_libdir}/scim-1.0/1.4.0/PanelAgent/*.so
 %{_libdir}/scim-1.0/1.4.0/Config/simple.so
