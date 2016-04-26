@@ -989,7 +989,7 @@ private:
         m_send_trans.write_to_socket(client_socket);
     }
 
-    void socket_update_selection(int client, uint32 context, const String& uuid, String text) {
+    void socket_update_selection(int client, uint32 context, String& uuid, String text) {
         LOGD ("client id:%d\n", client);
 
         Socket client_socket(client);

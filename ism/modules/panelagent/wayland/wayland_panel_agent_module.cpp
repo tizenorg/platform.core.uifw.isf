@@ -423,6 +423,17 @@ _wsc_im_ctx_bidi_direction(void *data, struct wl_input_method_context *im_ctx, u
     }
 }
 
+static void
+_wsc_im_ctx_selection_text(void *data, struct wl_input_method_context *im_ctx, const char *text)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+
+    LOGD ("im_context = %p selection text = %s\n", im_ctx, text);
+    if (!wsc_ctx) return;
+
+    g_info_manager->socket_update_selection (text);
+}
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_surrounding_text,
      _wsc_im_ctx_reset,
@@ -433,7 +444,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_return_key_type,
      _wsc_im_ctx_return_key_disabled,
      _wsc_im_ctx_input_panel_data,
-     _wsc_im_ctx_bidi_direction
+     _wsc_im_ctx_bidi_direction,
+     _wsc_im_ctx_selection_text
 };
 
 static void

@@ -142,8 +142,10 @@ public:
     BackEndPointer m_backend;
 
     char* surrounding_text;
+    char* selection_text;
     uint32 cursor_pos;
     bool need_update_surrounding_text;
+    bool need_update_selection_text;
 
     HelperAgentSignalVoid           signal_exit;
     HelperAgentSignalVoid           signal_attach_input_context;
@@ -205,7 +207,9 @@ public:
     HelperAgentSignalUintVoid           signal_check_option_window;
 
 public:
-    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz), surrounding_text (NULL), cursor_pos (0), need_update_surrounding_text(false) {
+    HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz),
+        surrounding_text (NULL), selection_text (NULL), cursor_pos (0),
+        need_update_surrounding_text (false), need_update_selection_text (false) {
     }
 
 
@@ -379,8 +383,7 @@ public:
     {
         LOGD ("");
         String _text;
-        //FIXME
-        //thiz->get_selection (_text);
+        thiz->get_selection (_text);
         text = utf8_mbstowcs (_text);
         return true;
     }
@@ -510,6 +513,8 @@ HelperAgent::~HelperAgent ()
 {
     if (m_impl->surrounding_text != NULL)
         free (m_impl->surrounding_text);
+    if (m_impl->selection_text != NULL)
+        free (m_impl->selection_text);
 
     delete m_impl;
 }
@@ -834,7 +839,7 @@ HelperAgent::filter_event ()
                         free (m_impl->surrounding_text);
                     m_impl->surrounding_text = strdup (text.c_str ());
                     m_impl->cursor_pos = cursor;
-                    LOGD ("%s, %d", m_impl->surrounding_text, m_impl->cursor_pos);
+                    LOGD ("surrounding text: %s, %d", m_impl->surrounding_text, m_impl->cursor_pos);
                     if (m_impl->need_update_surrounding_text) {
                         m_impl->need_update_surrounding_text = false;
                         m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
@@ -847,9 +852,18 @@ HelperAgent::filter_event ()
             case ISM_TRANS_CMD_UPDATE_SELECTION:
             {
                 String text;
-                if (m_impl->recv.get_data (text))
-                    m_impl->signal_update_selection (this, ic, text);
-                else
+                if (m_impl->recv.get_data (text)) {
+                    if (m_impl->selection_text != NULL)
+                        free (m_impl->selection_text);
+
+                    m_impl->selection_text = strdup (text.c_str ());
+                    LOGD ("selection text: %s", m_impl->selection_text);
+
+                    if (m_impl->need_update_selection_text) {
+                        m_impl->need_update_selection_text = false;
+                        m_impl->signal_update_selection (this, ic, text);
+                    }
+                } else
                     LOGW ("wrong format of transaction\n");
                 break;
             }
@@ -2021,6 +2035,21 @@ HelperAgent::get_selection (const String &uuid) const
         m_impl->send.put_data (uuid);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
+
+    m_impl->need_update_selection_text = true;
+}
+
+/**
+ * @brief Request to get selection text synchronously.
+ *
+ * @param text The selection text.
+ */
+void
+HelperAgent::get_selection (String &text) const
+{
+    LOGD ("");
+    if (m_impl->selection_text)
+        text = m_impl->selection_text;
 }
 
 /**
