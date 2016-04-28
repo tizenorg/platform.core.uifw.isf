@@ -1214,8 +1214,14 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
 {
 
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
-        if (ecore_imf_context_input_panel_enabled_get(ctx))
-            show_input_panel(ctx);
+        if (ecore_imf_context_input_panel_enabled_get(ctx)) {
+            LOGD ("[Mouse-up event] ctx : %p\n", ctx);
+            if (ctx == _focused_ctx) {
+                ecore_imf_context_input_panel_show(ctx);
+            }
+            else
+                LOGE ("Can't show IME because there is no focus. ctx : %p\n", ctx);
+        }
     }
 
     return EINA_FALSE;
