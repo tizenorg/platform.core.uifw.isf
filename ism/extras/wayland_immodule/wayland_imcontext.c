@@ -1015,7 +1015,7 @@ wayland_im_context_del(Ecore_IMF_Context *ctx)
         _focused_ctx = NULL;
 
     if (_hide_req_ctx == ctx && _hide_timer)
-        _input_panel_hide(ctx, EINA_TRUE);
+        ecore_imf_context_input_panel_hide(ctx);
     //
 
     if (imcontext->language) {
@@ -1095,7 +1095,7 @@ wayland_im_context_focus_out(Ecore_IMF_Context *ctx)
 
     if (imcontext->text_input) {
         if (ecore_imf_context_input_panel_enabled_get(ctx))
-            _input_panel_hide(ctx, EINA_FALSE);
+            ecore_imf_context_input_panel_hide(ctx);
 
         wl_text_input_deactivate(imcontext->text_input,
                 ecore_wl_input_seat_get(imcontext->input));
@@ -1214,8 +1214,14 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
 {
 
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
-        if (ecore_imf_context_input_panel_enabled_get(ctx))
-            show_input_panel(ctx);
+        if (ecore_imf_context_input_panel_enabled_get(ctx)) {
+            LOGD ("[Mouse-up event] ctx : %p\n", ctx);
+            if (ctx == _focused_ctx) {
+                ecore_imf_context_input_panel_show(ctx);
+            }
+            else
+                LOGE ("Can't show IME because there is no focus. ctx : %p\n", ctx);
+        }
     }
 
     return EINA_FALSE;
