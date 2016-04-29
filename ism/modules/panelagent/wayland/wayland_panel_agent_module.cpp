@@ -2859,9 +2859,8 @@ public:
     }
 
     void
-    set_selection (int id, uint32 context_id, int start, int end) {
+    socket_helper_set_selection (int id, uint32 context_id, uint32 start, uint32 end) {
         LOGD ("client id:%d", id);
-        //panel_slot_set_selection (context_id, start, end);
         wsc_context_set_selection (_focused_ic, start, end);
     }
 
