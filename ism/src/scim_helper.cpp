@@ -139,7 +139,7 @@ public:
     HelperAgent* thiz;
     IMEngineInstancePointer si;
     ConfigPointer m_config;
-    BackEndPointer m_backend;
+    IMEngineModule engine_module;
 
     char* surrounding_text;
     char* selection_text;
@@ -212,6 +212,20 @@ public:
         need_update_surrounding_text (false), need_update_selection_text (false) {
     }
 
+    ~HelperAgentImpl() {
+
+        if (!si.null()) {
+            si.reset();
+        }
+        if (surrounding_text != NULL)
+            free (surrounding_text);
+        if (selection_text != NULL)
+            free (selection_text);
+
+        if (engine_module.valid()) {
+            engine_module.unload ();
+        }
+    }
 
     // Implementation of slot functions
     void
@@ -511,11 +525,6 @@ HelperAgent::HelperAgent ()
 
 HelperAgent::~HelperAgent ()
 {
-    if (m_impl->surrounding_text != NULL)
-        free (m_impl->surrounding_text);
-    if (m_impl->selection_text != NULL)
-        free (m_impl->selection_text);
-
     delete m_impl;
 }
 
@@ -675,28 +684,7 @@ HelperAgent::open_connection (const HelperInfo &info,
         m_impl->socket_active.close ();
         return -1;
     }
-
-    if (m_impl->m_backend.null ()) {
-        std::vector<String>  engine_list;
-        std::vector<String>::iterator it;
-
-        scim_get_imengine_module_list (engine_list);
-        for (it = engine_list.begin (); it != engine_list.end (); it++) {
-            if (*it == "socket")
-                engine_list.erase (it);
-        }
-
-        m_impl->m_config = ConfigBase::get (false, "socket");
-        if (m_impl->m_config.null () || !m_impl->m_config->valid ()) {
-            LOGE ("invalid SocketConfig");
-            return -1;
-        }
-        m_impl->m_backend = new CommonBackEnd (m_impl->m_config, engine_list);
-        if(m_impl->m_backend == NULL)
-            LOGE ("Create CommonBackEnd instance failed");
-        m_impl->m_backend->initialize (m_impl->m_config, engine_list, false, false);
-        LOGD ("CommonBackEnd good mood!");
-    }
+    m_impl->m_config = ConfigBase::get (false, "socket");
 
     return m_impl->socket.get_id ();
 }
@@ -2198,53 +2186,74 @@ void
 HelperAgent::set_keyboard_ise_by_uuid (const String &uuid) const
 {
     LOGD ("");
-    //FIXME: remove if not necessary
-#if 0
-    if (m_impl->socket_active.is_connected ()) {
-        m_impl->send.clear ();
-        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-        m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID);
-        m_impl->send.put_data (uuid);
-        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-    }
-#endif
+    ImeInfoDB imeInfo;
+    IMEngineFactoryPointer factory;
+    IMEngineModule *engine_module = NULL;
+    static int instance_count = 1;
+
     if ((!m_impl->si.null ()) && m_impl->si->get_factory_uuid () == uuid) {
         LOGD ("Already in UUID: %s\n", uuid.c_str());
         return;
     }
 
-    if (m_impl->m_backend.null () || m_impl->m_config.null ()) {
-        LOGE ("Conection does not building");
+    if (!m_impl->si.null()) {
+        m_impl->si->focus_out();
+        m_impl->si.reset();
+    }
+
+    if (m_impl->m_config.null ()) {
+        LOGW ("config is not working");
         return;
     }
 
-    IMEngineFactoryPointer factory = m_impl->m_backend->get_factory (uuid);
-    if (factory.null ()) {
-       m_impl->m_backend->add_factory_by_uuid (m_impl->m_config, uuid);
-       factory = m_impl->m_backend->get_factory (uuid);
+    if (isf_db_select_ime_info_by_appid(uuid.c_str (), &imeInfo) < 1) {
+        LOGW ("ime_info row is not available for %s", uuid.c_str ());
+        return;
     }
 
-    if (factory.null ()) {
-       LOGE ("Load IMEngineFactory %s failed", uuid.c_str ());
-       return;
+    engine_module = &m_impl->engine_module;
+
+    if (engine_module->valid() && imeInfo.module_name != engine_module->get_module_name()) {
+        LOGD ("imengine module %s unloaded", engine_module->get_module_name().c_str());
+        engine_module->unload();
     }
 
-    static int instance_count = 1;
-    if(m_impl->focused_ic != (uint32)-1 && !m_impl->si.null())
-    {
-        LOGD ("");
-        m_impl->si->focus_out ();
+    if (!engine_module->valid()) {
+
+        if (engine_module->load (imeInfo.module_name, m_impl->m_config) == false) {
+            LOGW ("load module %s failed", imeInfo.module_name.c_str());
+            return;
+        }
+        LOGD ("imengine module %s loaded", imeInfo.module_name.c_str());
     }
+
+    for (size_t j = 0; j < engine_module->number_of_factories (); ++j) {
+
+        try {
+            factory = engine_module->create_factory (j);
+            if (factory.null () == false && factory->get_uuid () == uuid)
+                break;
+        } catch (...) {
+            factory.reset ();
+            return;
+        }
+    }
+
+    if (factory.null()) {
+        LOGW ("imengine uuid %s is not found", uuid.c_str());
+        return;
+    }
+
     m_impl->si = factory->create_instance ("UTF-8", instance_count++);
-    if (!m_impl->si.null ()) {
-        m_impl->attach_instance ();
-        LOGD ("Require UUID: %s Current UUID: %s", uuid.c_str (), m_impl->si->get_factory_uuid ().c_str ());
-        if(m_impl->focused_ic != (uint32)-1)
-            m_impl->si->focus_in ();
-    } else {
+    if (m_impl->si.null ()) {
         LOGE ("create_instance %s failed",uuid.c_str ());
+        return;
     }
+
+    m_impl->attach_instance ();
+    LOGD ("Require UUID: %s Current UUID: %s", uuid.c_str (), m_impl->si->get_factory_uuid ().c_str ());
+    if(m_impl->focused_ic != (uint32)-1)
+        m_impl->si->focus_in ();
 }
 
 /**
