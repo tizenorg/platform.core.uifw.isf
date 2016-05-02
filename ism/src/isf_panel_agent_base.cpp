@@ -428,7 +428,7 @@ void PanelAgentBase::update_ise_input_context (int client, uint32 context, uint3
 
 //socket_helper_send_private_command
 //SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND
-void PanelAgentBase::send_private_command (int client, uint32 context, String command)
+void PanelAgentBase::send_private_command (int client, uint32 context, const String& command)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
 }

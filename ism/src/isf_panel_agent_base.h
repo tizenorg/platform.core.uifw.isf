@@ -689,7 +689,7 @@ public:
      *
      * @return none.
      */
-    virtual void send_private_command (int client, uint32 context, String command);
+    virtual void send_private_command (int client, uint32 context, const String& command);
 
     /**
      * @brief helper_all_update_spot_location.

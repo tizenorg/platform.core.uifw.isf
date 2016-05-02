@@ -1480,7 +1480,7 @@ HelperAgent::send_key_event (int            ic,
     bool ret = false;
     if (!m_impl->si.null ()) {
         ret = m_impl->si->process_key_event (key);
-        LOGD ("imengine(%s) prceoss key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
+        LOGD ("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
     }
     if (ret == false && m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
