@@ -1951,7 +1951,7 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
 
     WideString before = utf8_mbstowcs (String (m_impl->surrounding_text));
 
-    if (m_impl->cursor_pos > (int)before.length ())
+    if (m_impl->cursor_pos > before.length ())
         return;
     WideString after = before;
     before = before.substr (0, m_impl->cursor_pos);
