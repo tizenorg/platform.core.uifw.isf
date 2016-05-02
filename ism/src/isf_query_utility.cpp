@@ -212,6 +212,15 @@ static inline int _db_init(void)
         _db_create_table();
     }
 
+    if (databaseInfo.pHandle) {
+        char* pException = NULL;
+        static const char* pQuery = "PRAGMA journal_mode = WAL";
+        int ret = sqlite3_exec(databaseInfo.pHandle, pQuery, NULL, NULL, &pException);
+        if (ret != SQLITE_OK) {
+            LOGE ("sqlite3_exec returned %d: %s\n", ret, pException);
+        }
+    }
+
     return 0;
 }
 
