@@ -1,7 +1,7 @@
 %bcond_with wayland
 Name:       isf
 Summary:    Input Service Framework
-Version:    3.0.70
+Version:    3.0.71
 Release:    1
 Group:      Graphics & UI Framework/Input
 License:    LGPL-2.1+
@@ -95,7 +95,7 @@ CXXFLAGS+=" -DWAYLAND"
 
 export GC_SECTIONS_FLAGS="-fdata-sections -ffunction-sections -Wl,--gc-sections"
 
-CFLAGS+=" -fvisibility=hidden ${GC_SECTIONS_FLAGS} "; export CFLAGS
+CFLAGS+=" ${GC_SECTIONS_FLAGS} "; export CFLAGS
 
 CXXFLAGS+=" -fvisibility=hidden -fvisibility-inlines-hidden ${GC_SECTIONS_FLAGS} ";export CXXFLAGS
 
