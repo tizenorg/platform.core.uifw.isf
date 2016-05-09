@@ -59,13 +59,6 @@ pkgconfig_DATA          = isf.pc scim.pc \
 kbdmodechangerxmldir = @RO_PACKAGES_DIR@
 kbdmodechangerxml_DATA = org.tizen.isf-kbd-mode-changer.xml
 
-if ISF_INSTALL_SYSTEMD_SCRIPT
-SYSTEMD_SCRIPT = scim.service scim.path
-endif
-# $(libdir) will be /usr/lib64 on x86_64 arch, so hard-coded.
-systemduserunitdir = /usr/lib/systemd/user
-systemduserunit_DATA = $(SYSTEMD_SCRIPT)
-
 ACLOCAL_AMFLAGS = -I ism/m4
 
 .PHONY: update-ChangeLog
@@ -77,7 +70,3 @@ uninstall-local:
 	rm -rf @SCIM_MODULE_PATH@
 
 install-data-hook:
-if ISF_INSTALL_SYSTEMD_SCRIPT
-	$(mkinstalldirs) $(DESTDIR)$(systemduserunitdir)/default.target.wants
-	ln -sf ../scim.path $(DESTDIR)$(systemduserunitdir)/default.target.wants/scim.path
-endif

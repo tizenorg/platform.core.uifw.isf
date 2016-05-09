@@ -124,10 +124,6 @@ mkdir -p %{buildroot}/etc/scim/conf
 
 cat scim.lang > isf.lang
 %post
-%if "%{?profile}" == "mobile"
-mkdir -p %{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
-ln -sf %{_prefix}/lib/systemd/user/scim.service %{_sysconfdir}/systemd/default-extra-dependencies/ignore-units.d/
-%endif
 ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_imf/modules/wayland/v-1.16/libwltextinputmodule.so
 /sbin/ldconfig
 
@@ -139,9 +135,6 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
 %dir /etc/scim/conf
-%{_prefix}/lib/systemd/user/default.target.wants/scim.path
-%{_prefix}/lib/systemd/user/scim.service
-%{_prefix}/lib/systemd/user/scim.path
 %attr(755,root,root) %{_sysconfdir}/profile.d/isf.sh
 %{_sysconfdir}/scim/global
 %{_sysconfdir}/scim/config
