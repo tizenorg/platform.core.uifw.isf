@@ -1672,31 +1672,20 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
     if (!ignore_key) {
         ret = EINA_TRUE;
 
-        {
-            if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
-                LOGD ("ic is off");
-                ret = EINA_FALSE;
-#ifdef _TV
-            } else if (get_keyboard_mode () == TOOLBAR_HELPER_MODE
-                       && _active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
-                uint32 _ret;
-                g_info_manager->process_key_event (key, _ret);
-                ret = (Eina_Bool)_ret;
-#else
-            } else if (get_keyboard_mode () == TOOLBAR_HELPER_MODE
-                       && _active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
-                uint32 _ret;
-                g_info_manager->process_key_event (key, _ret);
-                ret = (Eina_Bool)_ret;
-#endif
-            }
+        if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
+            LOGD ("ic is off");
+            ret = EINA_FALSE;
+        } else {
+            uint32 _ret;
+            g_info_manager->process_key_event (key, _ret);
+            ret = (Eina_Bool)_ret;
+        }
 
-            if (ret == EINA_FALSE) {
-                if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
-                    if (key.code == SCIM_KEY_space ||
-                        key.code == SCIM_KEY_KP_Space)
-                        autoperiod_insert (wsc_ctx);
-                }
+        if (ret == EINA_FALSE) {
+            if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+                if (key.code == SCIM_KEY_space ||
+                    key.code == SCIM_KEY_KP_Space)
+                    autoperiod_insert (wsc_ctx);
             }
         }
     }
