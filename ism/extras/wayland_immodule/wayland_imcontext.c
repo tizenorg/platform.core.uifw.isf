@@ -82,6 +82,8 @@ struct _WaylandIMContext
         int32_t cursor;
     } pending_preedit;
 
+    int32_t cursor_position;
+
     struct
     {
         int x;
@@ -288,29 +290,8 @@ send_cursor_location(WaylandIMContext *imcontext)
 static void
 update_state(WaylandIMContext *imcontext)
 {
-    char *surrounding = NULL;
-    char *selection = NULL;
-    int cursor_pos;
-
     if (!imcontext->ctx)
         return;
-
-    /* cursor_pos is a byte index */
-    if (ecore_imf_context_surrounding_get(imcontext->ctx, &surrounding, &cursor_pos)) {
-        if (imcontext->text_input)
-            wl_text_input_set_surrounding_text(imcontext->text_input, surrounding,
-                    cursor_pos, cursor_pos);
-
-        if (surrounding)
-            free(surrounding);
-    }
-
-    ecore_imf_context_selection_get(imcontext->ctx, &selection);
-    if (imcontext->text_input)
-        wl_text_input_set_selection_text(imcontext->text_input, selection ? selection : "");
-
-    if (selection)
-        free(selection);
 
     send_cursor_location (imcontext);
 
@@ -468,6 +449,7 @@ static Eina_Bool
 show_input_panel(Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+
     char *surrounding = NULL;
     int cursor_pos;
 
@@ -537,16 +519,12 @@ show_input_panel(Ecore_IMF_Context *ctx)
             new_purpose);
 
     if (ecore_imf_context_surrounding_get(imcontext->ctx, &surrounding, &cursor_pos)) {
-        if (imcontext->text_input)
-            wl_text_input_set_surrounding_text(imcontext->text_input, surrounding,
-                    cursor_pos, cursor_pos);
+        if (surrounding)
+            free (surrounding);
 
-        if (surrounding) {
-            free(surrounding);
-            surrounding = NULL;
-        }
+        imcontext->cursor_position = cursor_pos;
+        wl_text_input_set_cursor_position(imcontext->text_input, cursor_pos);
     }
-
     // TIZEN_ONLY(20150716): Support return key type
     wl_text_input_set_return_key_type(imcontext->text_input,
             imcontext->return_key_type);
@@ -978,6 +956,82 @@ text_input_input_panel_data(void                 *data,
     memcpy(imcontext->input_panel_data, input_panel_data, length);
     imcontext->input_panel_data_length = length;
 }
+
+static void
+text_input_get_selection_text (void                 *data,
+                              struct wl_text_input *text_input EINA_UNUSED,
+                              uint32_t              serial)
+{
+    char *selection = NULL;
+    LOGD ("%d", serial);
+    WaylandIMContext *imcontext = (WaylandIMContext *)data;
+    if (!imcontext || !imcontext->ctx) {
+        LOGD ("");
+        return;
+    }
+
+    ecore_imf_context_selection_get (imcontext->ctx, &selection);
+    if (imcontext->text_input) {
+        LOGD ("selection :%s", selection ? selection : "");
+        wl_text_input_set_selection_text (imcontext->text_input, serial, selection ? selection : "");
+    }
+
+    if (selection)
+        free (selection);
+}
+
+static void
+text_input_get_surrounding_text (void                 *data,
+                                struct wl_text_input *text_input EINA_UNUSED,
+                                uint32_t              serial,
+                                uint32_t              maxlen_before,
+                                uint32_t              maxlen_after)
+{
+    int cursor_pos;
+    char *surrounding = NULL;
+    LOGD ("serial: %d maxlen_before: %d maxlen_after: %d", serial, maxlen_before, maxlen_after);
+    WaylandIMContext *imcontext = (WaylandIMContext *)data;
+    if (!imcontext || !imcontext->ctx) {
+        LOGD ("");
+        return;
+    }
+
+    /* cursor_pos is a byte index */
+    if (ecore_imf_context_surrounding_get (imcontext->ctx, &surrounding, &cursor_pos)) {
+        LOGD ("surrounding :%s, cursor: %d", surrounding? surrounding : "", cursor_pos);
+        if (imcontext->text_input) {
+            Eina_Unicode *wide_surrounding = eina_unicode_utf8_to_unicode (surrounding, NULL);
+            size_t wlen = eina_unicode_strlen (wide_surrounding);
+
+            if (cursor_pos > (int)wlen || cursor_pos < 0)
+                cursor_pos = 0;
+
+            if (maxlen_before > cursor_pos)
+                maxlen_before = 0;
+            else
+                maxlen_before = cursor_pos - maxlen_before;
+
+            if (maxlen_after > wlen - cursor_pos)
+                maxlen_after = wlen;
+            else
+                maxlen_after = cursor_pos + maxlen_after;
+
+            char *req_surrounding = eina_unicode_unicode_to_utf8_range (wide_surrounding + maxlen_before, maxlen_after - maxlen_before, NULL);
+
+            wl_text_input_set_surrounding_text (imcontext->text_input,
+                    serial, req_surrounding ? req_surrounding : "", cursor_pos);
+
+            if (req_surrounding)
+                free (req_surrounding);
+
+            if (wide_surrounding)
+                free (wide_surrounding);
+        }
+
+        if (surrounding)
+            free (surrounding);
+    }
+}
 //
 
 static const struct wl_text_input_listener text_input_listener =
@@ -999,7 +1053,9 @@ static const struct wl_text_input_listener text_input_listener =
     text_input_selection_region,
     text_input_private_command,
     text_input_input_panel_geometry,
-    text_input_input_panel_data
+    text_input_input_panel_data,
+    text_input_get_selection_text,
+    text_input_get_surrounding_text
     //
 };
 
@@ -1059,11 +1115,11 @@ wayland_im_context_add(Ecore_IMF_Context *ctx)
 }
 
 EAPI void
-wayland_im_context_del(Ecore_IMF_Context *ctx)
+wayland_im_context_del (Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("context_del. ctx : %p", ctx);
+    LOGD ("context_del. ctx : %p", ctx);
 
     // TIZEN_ONLY(20150708): Support back key
     if (_focused_ctx == ctx)
@@ -1079,34 +1135,36 @@ wayland_im_context_del(Ecore_IMF_Context *ctx)
     //
 
     if (imcontext->language) {
-        free(imcontext->language);
+        free (imcontext->language);
         imcontext->language = NULL;
     }
 
     // TIZEN_ONLY(20150922): Support to set input panel data
     if (imcontext->imdata) {
-        free(imcontext->imdata);
+        free (imcontext->imdata);
         imcontext->imdata = NULL;
         imcontext->imdata_size = 0;
     }
 
     if (imcontext->input_panel_data) {
-        free(imcontext->input_panel_data);
+        free (imcontext->input_panel_data);
         imcontext->input_panel_data = NULL;
         imcontext->input_panel_data_length = 0;
     }
     //
 
     if (imcontext->text_input)
-        wl_text_input_destroy(imcontext->text_input);
+        wl_text_input_destroy (imcontext->text_input);
 
-    clear_preedit(imcontext);
+    clear_preedit (imcontext);
 }
 
 EAPI void
 wayland_im_context_reset(Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+
+    LOGD("ctx : %p", ctx);
 
     commit_preedit(imcontext);
     clear_preedit(imcontext);
@@ -1211,14 +1269,16 @@ wayland_im_context_preedit_string_with_attributes_get(Ecore_IMF_Context  *ctx,
 }
 
 EAPI void
-wayland_im_context_cursor_position_set(Ecore_IMF_Context *ctx,
+wayland_im_context_cursor_position_set (Ecore_IMF_Context *ctx,
                                        int                cursor_pos)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("set cursor position (cursor: %d)", cursor_pos);
-
-    update_state(imcontext);
+    LOGD ("set cursor position (cursor: %d)", cursor_pos);
+    if (imcontext->cursor_position != cursor_pos) {
+        imcontext->cursor_position = cursor_pos;
+        wl_text_input_set_cursor_position (imcontext->text_input, cursor_pos);
+    }
 }
 
 EAPI void
