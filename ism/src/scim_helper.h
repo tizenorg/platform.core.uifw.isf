@@ -584,7 +584,7 @@ public:
      *
      * @param text The selection text.
      */
-    void get_selection       (String                      &text) const;
+    void get_selection_text       (String                      &text);
 
     /**
      * @brief Request to selected text.

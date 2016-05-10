@@ -178,10 +178,6 @@ static void     _update_preedit_string        (int                     context,
                                                          const WideString       &str,
                                                          const AttributeList    &attrs,
                                                          int               caret);
-static void     _get_surrounding_text         (int                     context,
-                                                         int                     maxlen_before,
-                                                         int                     maxlen_after);
-static void     panel_req_update_cursor_position        (WSCContextISF     *ic, int cursor_pos);
 static void     panel_req_update_bidi_direction         (WSCContextISF     *ic, int direction);
 
 /* Panel iochannel handler*/
@@ -200,11 +196,6 @@ static void     finalize                                (void);
 
 static void     send_wl_key_event                       (WSCContextISF *ic, const KeyEvent &key, bool fake);
 static void     _hide_preedit_string                    (int context, bool update_preedit);
-
-static bool     slot_get_surrounding_text               (WideString             &text,
-                                                         int                    &cursor,
-                                                         int                     maxlen_before,
-                                                         int                     maxlen_after);
 
 /* Local variables declaration */
 static String                                           _language;
@@ -261,7 +252,7 @@ InfoManager* g_info_manager = NULL;
 // Implementation of Wayland Input Method functions.
 /////////////////////////////////////////////////////////////////////////////
 static void
-_wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx, const char *text, uint32_t cursor, uint32_t anchor)
+_wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx, uint32_t serial, const char *text, uint32_t cursor_position)
 {
     LOGD ("");
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
@@ -271,12 +262,10 @@ _wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx,
         free (wsc_ctx->surrounding_text);
 
     wsc_ctx->surrounding_text = strdup (text ? text : "");
-    wsc_ctx->surrounding_cursor = cursor;
+    wsc_ctx->surrounding_cursor = cursor_position;
     g_info_manager->socket_update_surrounding_text (wsc_ctx->surrounding_text, wsc_ctx->surrounding_cursor);
 
-    isf_wsc_context_cursor_position_set(wsc_ctx, cursor);
-
-    LOGD ("text : '%s', cursor : %d\n", text, cursor);
+    LOGD ("text : '%s', cursor : %d\n", text, cursor_position);
 }
 
 static void
@@ -341,9 +330,6 @@ _wsc_im_ctx_commit_state(void *data, struct wl_input_method_context *im_ctx, uin
     if (!wsc_ctx) return;
 
     wsc_ctx->serial = serial;
-
-    if (wsc_ctx->surrounding_text)
-        LOGD ("Surrounding text updated: '%s'\n", wsc_ctx->surrounding_text);
 
     if (wsc_ctx->language)
         wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
@@ -424,7 +410,7 @@ _wsc_im_ctx_bidi_direction(void *data, struct wl_input_method_context *im_ctx, u
 }
 
 static void
-_wsc_im_ctx_selection_text(void *data, struct wl_input_method_context *im_ctx, const char *text)
+_wsc_im_ctx_selection_text(void *data, struct wl_input_method_context *im_ctx, uint32_t serial, const char *text)
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
@@ -432,6 +418,17 @@ _wsc_im_ctx_selection_text(void *data, struct wl_input_method_context *im_ctx, c
     if (!wsc_ctx) return;
 
     g_info_manager->socket_update_selection (text);
+}
+
+static void
+_wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, uint32_t cursor_pos)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+
+    LOGD ("im_context = %p cursor_pos = %d\n", im_ctx, cursor_pos);
+    if (!wsc_ctx) return;
+    caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE);
+    g_info_manager->socket_update_cursor_position (cursor_pos);
 }
 
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
@@ -445,7 +442,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_return_key_disabled,
      _wsc_im_ctx_input_panel_data,
      _wsc_im_ctx_bidi_direction,
-     _wsc_im_ctx_selection_text
+     _wsc_im_ctx_selection_text,
+     _wsc_im_ctx_cursor_position,
 };
 
 static void
@@ -1508,27 +1506,6 @@ isf_wsc_context_focus_out (WSCContextISF *wsc_ctx)
 }
 
 void
-isf_wsc_context_cursor_position_set (WSCContextISF *wsc_ctx, int cursor_pos)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* context_scim = wsc_ctx;
-
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        if (context_scim->impl->cursor_pos != cursor_pos) {
-            LOGD ("ctx : %p, cursor pos : %d\n", wsc_ctx, cursor_pos);
-            context_scim->impl->cursor_pos = cursor_pos;
-
-            caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE);
-
-            if (context_scim->impl->preedit_updating)
-                return;
-            panel_req_update_cursor_position (context_scim, cursor_pos);
-        }
-    }
-}
-
-void
 isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
@@ -2186,16 +2163,6 @@ panel_req_show_help (WSCContextISF *ic)
 #endif
 
 static void
-panel_req_update_cursor_position (WSCContextISF *ic, int cursor_pos)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    if (ic)
-        g_info_manager->socket_update_cursor_position (cursor_pos);
-}
-
-static void
 panel_req_update_bidi_direction   (WSCContextISF *ic, int direction)
 {
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
@@ -2478,22 +2445,6 @@ _update_preedit_string (int context,
     }
 }
 
-static void
-_get_surrounding_text (int context, int maxlen_before, int maxlen_after)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-
-    if (ic && ic->impl && _focused_ic == ic) {
-        int cursor = 0;
-        WideString text = WideString ();
-        slot_get_surrounding_text (text, cursor, maxlen_before, maxlen_after);
-        String _str = utf8_wcstombs (text);
-        g_info_manager->socket_update_surrounding_text (_str, (uint32)cursor);
-    }
-}
-
 void
 initialize (void)
 {
@@ -2643,55 +2594,6 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
         wsc_context_send_key (ic, key.code, modifiers, time, key.is_key_press ());
 }
 
-static bool
-slot_get_surrounding_text (WideString            &text,
-                           int                   &cursor,
-                           int                    maxlen_before,
-                           int                    maxlen_after)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-
-    char *surrounding = NULL;
-    int   cursor_index;
-    if (wsc_context_surrounding_get (_focused_ic, &surrounding, &cursor_index)) {
-        SCIM_DEBUG_FRONTEND(2) << "Surrounding text: " << surrounding <<"\n";
-        SCIM_DEBUG_FRONTEND(2) << "Cursor Index    : " << cursor_index <<"\n";
-
-        if (!surrounding)
-            return false;
-
-        if (cursor_index < 0) {
-            free (surrounding);
-            surrounding = NULL;
-            return false;
-        }
-
-        WideString before = utf8_mbstowcs (String (surrounding));
-        free (surrounding);
-        surrounding = NULL;
-
-        if (cursor_index > (int)before.length ())
-            return false;
-        WideString after = before;
-        before = before.substr (0, cursor_index);
-        after =  after.substr (cursor_index, after.length () - cursor_index);
-        if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
-            before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());
-        else if (maxlen_before == 0)
-            before = WideString ();
-        if (maxlen_after > 0 && ((unsigned int)maxlen_after) < after.length ())
-            after = WideString (after.begin (), after.begin () + maxlen_after);
-        else if (maxlen_after == 0)
-            after = WideString ();
-        text = before + after;
-        cursor = before.length ();
-        return true;
-    }
-
-    return false;
-}
-
 static void
 reload_config_callback (const ConfigPointer &config)
 {
@@ -2837,7 +2739,8 @@ public:
     void
     socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
         LOGD ("client id:%d", id);
-        _get_surrounding_text (context_id, maxlen_before, maxlen_after);
+        WSCContextISF* ic = find_ic (context_id);
+        wl_input_method_context_get_surrounding_text(ic->im_ctx, ic->serial, maxlen_before, maxlen_after);
     }
 
     void
@@ -2877,6 +2780,12 @@ public:
         }
     }
 
+    void
+    socket_helper_get_selection (int id, uint32 context_id) {
+        LOGD ("client id:%d", id);
+        WSCContextISF* ic = find_ic (context_id);
+        wl_input_method_context_get_selection_text(ic->im_ctx, ic->serial);
+    }
 };
 
 static scim::PanelAgentPointer instance;
