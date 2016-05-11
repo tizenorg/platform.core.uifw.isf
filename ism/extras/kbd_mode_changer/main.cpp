@@ -22,78 +22,46 @@
  *
  */
 
-#if HAVE_ECORE_X
-#include <Ecore_X.h>
+#include "scim_private.h"
+#include "scim_visibility.h"
+#if HAVE_VCONF
+#include <vconf.h>
 #endif
 #include "main.h"
 
-typedef enum
-{
-    TOOLBAR_KEYBOARD_MODE = 0,  /* Hardware keyboard ISE */
-    TOOLBAR_HELPER_MODE         /* Software keyboard ISE */
-} TOOLBAR_MODE_T;
-
-#define E_PROP_DEVICEMGR_INPUTWIN                        "DeviceMgr Input Window"
-#define E_PROP_DEVICEMGR_CONTROLWIN                      "_ISF_CONTROL_WINDOW"
-#define PROP_X_EXT_KEYBOARD_INPUT_DETECTED               "HW Keyboard Input Started"
-#define PROP_X_EXT_KEYBOARD_EXIST                        "X External Keyboard Exist"
-
-bool app_create (void *user_data)
+static bool app_create (void *user_data)
 {
     LOGD ("app create\n");
     return true;
 }
 
-void app_control (app_control_h app_control, void *user_data)
+static void app_control (app_control_h app_control, void *user_data)
 {
     LOGD ("%s\n", __func__);
 
-#if HAVE_ECOREX
-    Ecore_X_Atom       prop_x_keyboard_input_detected = 0;
-    TOOLBAR_MODE_T     kbd_mode = TOOLBAR_HELPER_MODE;
-    Ecore_X_Window     _control_win = 0;
-    Ecore_X_Window     _input_win = 0;
-    unsigned int val = 0;
-
     LOGD ("isf_extra_hwkbd_module start\n");
 
-    Ecore_X_Atom atom = ecore_x_atom_get (E_PROP_DEVICEMGR_CONTROLWIN);
-    if (ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_control_win, 1) >= 0) {
-        if (!prop_x_keyboard_input_detected)
-            prop_x_keyboard_input_detected = ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED);
+    /* Toggle input mode */
+#if HAVE_VCONF
+    int val = 1;
+    if (vconf_get_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, &val) != 0)
+        LOGW ("Failed to get vconf key\n");
 
-        if (ecore_x_window_prop_card32_get (_control_win, prop_x_keyboard_input_detected, &val, 1) > 0) {
-            if (val == 1) {
-                kbd_mode = TOOLBAR_KEYBOARD_MODE;
-            } else {
-                kbd_mode = TOOLBAR_HELPER_MODE;
-            }
-        } else {
-            kbd_mode = TOOLBAR_HELPER_MODE;
-        }
-
-        // get the input window
-        atom = ecore_x_atom_get (E_PROP_DEVICEMGR_INPUTWIN);
-        if (ecore_x_window_prop_xid_get (ecore_x_window_root_first_get (), atom, ECORE_X_ATOM_WINDOW, &_input_win, 1) >= 0) {
-            //Set the window property value;
-            if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-                val = 0;
-                ecore_x_window_prop_card32_set (_input_win, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_EXIST), &val, 1);
-                LOGD ("keyboard mode is changed HW -> SW by isf-kbd-mode-changer\n");
-            }
-        }
-    }
+    if (vconf_set_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, !val) != 0)
+        LOGW ("Failed to set vconf key\n");
+    else
+        LOGD ("Succeeded to set vconf key\n");
 #endif
 
     ui_app_exit ();
 }
 
-void app_terminate (void *user_data)
+static void app_terminate (void *user_data)
 {
     LOGD ("app terminated\n");
 }
 
-int main (int argc, char *argv [])
+EXAPI int main (int argc, char *argv [])
 {
     ui_app_lifecycle_callback_s event_callback = {0,};
 
