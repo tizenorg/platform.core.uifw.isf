@@ -27,7 +27,8 @@ module_la_CFLAGS = @ECORE_CFLAGS@ \
                    @ECORE_EVAS_CFLAGS@ \
                    @ECORE_WL_CFLAGS@ \
                    @WL_TEXT_INPUT_CFLAGS@ \
-                   @DLOG_CFLAGS@
+                   @DLOG_CFLAGS@ \
+                   @VCONF_CFLAGS@
 
 module_la_LDFLAGS  = -rpath $(moduledir) \
                      -avoid-version \
@@ -39,4 +40,5 @@ module_la_LIBADD   = $(LD_VERSION_SCRIPT_OPTION) \
                      @ECORE_EVAS_LIBS@ \
                      @ECORE_WL_LIBS@ \
                      @WL_TEXT_INPUT_LIBS@ \
-                     @DLOG_LIBS@
+                     @DLOG_LIBS@ \
+                     @VCONF_LIBS@
