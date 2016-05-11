@@ -29,11 +29,8 @@
 typedef struct _WaylandIMContext WaylandIMContext;
 
 // TIZEN_ONLY(20150708): Support back key
-EAPI void register_key_handler                  ();
-EAPI void unregister_key_handler                ();
-
-EAPI void register_ecore_event_handler          ();
-EAPI void unregister_ecore_event_handler        ();
+EAPI void initialize                            ();
+EAPI void uninitialize                          ();
 //
 
 EAPI void wayland_im_context_add                (Ecore_IMF_Context    *ctx);
