@@ -353,7 +353,7 @@ static int app_resume (void *data)
     return 0;
 }
 
-int main (int argc, char *argv[])
+EXAPI int main (int argc, char *argv[])
 {
     struct appdata ad;
     struct appcore_ops ops;
