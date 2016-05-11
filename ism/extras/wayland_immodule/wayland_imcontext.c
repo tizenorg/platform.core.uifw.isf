@@ -25,6 +25,7 @@
 #include <Ecore_Input.h>
 #include <Ecore_Wayland.h>
 #include <dlog.h>
+#include <vconf.h>
 
 #include "wayland_imcontext.h"
 
@@ -113,6 +114,18 @@ struct _WaylandIMContext
 // TIZEN_ONLY(20150708): Support back key
 static void _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant);
 
+static Ecore_IMF_Context *
+get_using_ctx ()
+{
+    Ecore_IMF_Context *using_ctx = NULL;
+    if (_show_req_ctx)
+        using_ctx = _show_req_ctx;
+    else if (_focused_ctx)
+        using_ctx = _focused_ctx;
+
+    return using_ctx;
+}
+
 static Eina_Bool
 key_down_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
@@ -133,11 +146,7 @@ key_up_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
     if (!ev || !ev->keyname) return EINA_TRUE;
 
-    Ecore_IMF_Context *active_ctx = NULL;
-    if (_show_req_ctx)
-        active_ctx = _show_req_ctx;
-    else if (_focused_ctx)
-        active_ctx = _focused_ctx;
+    Ecore_IMF_Context *active_ctx = get_using_ctx ();
 
     if (!active_ctx) return EINA_TRUE;
 
@@ -165,14 +174,14 @@ _ecore_event_filter_cb(void *data, void *loop_data EINA_UNUSED, int type, void *
     return EINA_TRUE;
 }
 
-EAPI void
+static void
 register_key_handler()
 {
     if (!_ecore_event_filter_handler)
         _ecore_event_filter_handler = ecore_event_filter_add(NULL, _ecore_event_filter_cb, NULL, NULL);
 }
 
-EAPI void
+static void
 unregister_key_handler()
 {
     if (_ecore_event_filter_handler) {
@@ -995,6 +1004,37 @@ static const struct wl_text_input_listener text_input_listener =
     text_input_input_panel_data
     //
 };
+
+static void
+keyboard_mode_changed_cb (keynode_t *key, void* data)
+{
+    int val;
+    Ecore_IMF_Context *active_ctx = get_using_ctx ();
+
+    if (vconf_get_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, &val) != 0)
+        return;
+
+    if (active_ctx) {
+        LOGD ("ctx : %p, input detect : %d\n", active_ctx, val);
+
+        Ecore_IMF_Input_Panel_Keyboard_Mode input_mode = !val;
+        ecore_imf_context_input_panel_event_callback_call (active_ctx, ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, input_mode);
+    }
+}
+
+EAPI void initialize ()
+{
+    register_key_handler ();
+
+    vconf_notify_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb, NULL);
+}
+
+EAPI void uninitialize ()
+{
+    unregister_key_handler ();
+
+    vconf_ignore_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb);
+}
 
 EAPI void
 wayland_im_context_add(Ecore_IMF_Context *ctx)
