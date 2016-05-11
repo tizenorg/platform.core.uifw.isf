@@ -2199,7 +2199,7 @@ HelperAgent::set_keyboard_ise_by_uuid (const String &uuid) const
 
     if (!m_impl->si.null()) {
         m_impl->si->focus_out();
-        m_impl->si.reset();
+        m_impl->si->reset();
     }
 
     if (m_impl->m_config.null ()) {
@@ -2396,7 +2396,7 @@ HelperAgent::reset_keyboard_ise (void) const
     }
 #endif
     if (!m_impl->si.null ()) {
-        m_impl->si.reset ();
+        m_impl->si->reset ();
     }
 }
 
