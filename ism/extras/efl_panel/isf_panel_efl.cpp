@@ -1803,7 +1803,9 @@ static bool set_active_ise (const String &uuid, bool launch_ise)
                 _config->reload ();
                 _info_manager->reload_config ();
 
+#if HAVE_VCONF
                 vconf_set_str (VCONFKEY_ISF_ACTIVE_KEYBOARD_UUID, uuid.c_str ());
+#endif
             }
 
             return ise_changed;
@@ -4108,12 +4110,14 @@ static bool update_ise_list (std::vector<String> &list)
             }
         }
 
+#if HAVE_VCONF
         char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
         if (lang_str) {
             if (_ime_info.size () > 0 && _ime_info[0].display_lang.compare(lang_str) == 0)
                 _locale_string = String (lang_str);
             free (lang_str);
         }
+#endif
     }
 
 
@@ -6263,6 +6267,7 @@ static void set_language_and_locale (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
+#if HAVE_VCONF
     char *lang_str = vconf_get_str (VCONFKEY_LANGSET);
 
     if (lang_str) {
@@ -6275,6 +6280,7 @@ static void set_language_and_locale (void)
         setenv ("LANG", "en_US.utf8", 1);
         setlocale (LC_MESSAGES, "en_US.utf8");
     }
+#endif
 }
 
 /**
@@ -6301,6 +6307,24 @@ static void display_language_changed_cb (keynode_t *key, void* data)
         String default_name = _ime_info[ise_idx].label;
         _info_manager->set_current_ise_name (default_name);
         _config->reload ();
+    }
+}
+
+/**
+ * @brief Callback function for keyboard mode change.
+ *
+ * @param key The key node.
+ * @param data The data to pass to this callback.
+ *
+ * @return void
+ */
+static void keyboard_mode_changed_cb (keynode_t *key, void* data)
+{
+    int val;
+    if (vconf_get_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, &val) == 0 && val == 0) {
+        _info_manager->reset_keyboard_ise ();
+        change_keyboard_mode (TOOLBAR_HELPER_MODE);
+        _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
     }
 }
 #endif
@@ -6397,6 +6421,13 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         val = 1;
         ecore_x_window_prop_card32_set (_control_window, ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
         ecore_x_window_prop_card32_set (ecore_x_window_root_first_get (), ecore_x_atom_get (PROP_X_EXT_KEYBOARD_INPUT_DETECTED), &val, 1);
+#endif
+
+#if HAVE_VCONF
+        if (vconf_set_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, 1) != 0)
+            LOGW ("Failed to set vconf key\n");
+        else
+            LOGD ("Succeeded to set vconf key\n");
 #endif
     } else if (mode == TOOLBAR_HELPER_MODE) {
         LOGD ("SOFTWARE KEYBOARD MODE\n");
@@ -6558,7 +6589,9 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 _info_manager->update_input_panel_event (
                         ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
+#if HAVE_VCONF
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW);
+#endif
 
                 if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
                     if (get_ise_count (TOOLBAR_HELPER_MODE, true) >= 2) {
@@ -6596,7 +6629,9 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                     ui_settle_candidate_window ();
                 }
 
+#if HAVE_VCONF
                 vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_HIDE);
+#endif
 
 #ifdef HAVE_NOTIFICATION
                 delete_notification (&ise_selector_module_noti);
@@ -7216,6 +7251,7 @@ int main (int argc, char *argv [])
 #if HAVE_VCONF
     /* Add callback function for input language and display language */
     vconf_notify_key_changed (VCONFKEY_LANGSET, display_language_changed_cb, NULL);
+    vconf_notify_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb, NULL);
 #endif
 
     if (0 != register_edbus_signal_handler ())
@@ -7328,10 +7364,10 @@ int main (int argc, char *argv [])
     }
 #endif
 
-
 #if HAVE_VCONF
     /* Remove callback function for input language and display language */
     vconf_ignore_key_changed (VCONFKEY_LANGSET, display_language_changed_cb);
+    vconf_ignore_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb);
 #endif
 
 cleanup:
