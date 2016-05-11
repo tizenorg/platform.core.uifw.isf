@@ -82,11 +82,6 @@ void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
     if (!wsc_ctx || !wsc_ctx->ctx)
         return;
 
-    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-        LOGD ("H/W keyboard is existed.\n");
-        return;
-    }
-
     /* set password mode */
     iseContext.password_mode = wsc_context_input_panel_password_mode_get (wsc_ctx);
 
