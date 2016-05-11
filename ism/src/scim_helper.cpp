@@ -1044,7 +1044,7 @@ HelperAgent::filter_event ()
                     if (!m_impl->si.null ())
                     {
                         ret = m_impl->si->process_key_event (key);
-                        LOGD("imengine(%s) prceoss key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
+                        LOGD("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
                     }
                 m_impl->send.clear ();
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);

@@ -28,8 +28,10 @@
 /* IM control UI part */
 #include <Ecore_Wayland.h>
 #include <Ecore_IMF.h>
+#include <vconf.h>
 
 #include "scim.h"
+#include "scim_private.h"
 #include "isf_wsc_control_ui.h"
 #include "isf_wsc_context.h"
 #include "isf_wsc_control.h"
@@ -56,6 +58,19 @@ static int _get_context_id (WSCContextISF *ctx)
     return context_scim->id;
 }
 
+#ifdef HAVE_VCONF
+static void keyboard_mode_changed_cb (keynode_t *key, void* data)
+{
+    int val;
+    if (vconf_get_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, &val) != 0) {
+        LOGW ("Failed to get input detect\n");
+        return;
+    }
+
+    kbd_mode = (TOOLBAR_MODE_T)!val;
+}
+#endif
+
 TOOLBAR_MODE_T get_keyboard_mode ()
 {
     return kbd_mode;
@@ -64,10 +79,17 @@ TOOLBAR_MODE_T get_keyboard_mode ()
 void isf_wsc_input_panel_init (void)
 {
     _support_hw_keyboard_mode = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_SUPPORT_HW_KEYBOARD_MODE), _support_hw_keyboard_mode);
+
+#ifdef HAVE_VCONF
+    vconf_notify_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb, NULL);
+#endif
 }
 
 void isf_wsc_input_panel_shutdown (void)
 {
+#ifdef HAVE_VCONF
+    vconf_ignore_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb);
+#endif
 }
 
 void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
@@ -81,11 +103,6 @@ void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
 
     if (!wsc_ctx || !wsc_ctx->ctx)
         return;
-
-    if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-        LOGD ("H/W keyboard is existed.\n");
-        return;
-    }
 
     /* set password mode */
     iseContext.password_mode = wsc_context_input_panel_password_mode_get (wsc_ctx);
