@@ -28,12 +28,12 @@ appexec_PROGRAMS      = $(ISF_KBD_MODE_CHANGER)
 
 isf_kbd_mode_changer_SOURCES  = main.cpp
 
-isf_kbd_mode_changer_CXXFLAGS = @ECOREX_CFLAGS@ \
+isf_kbd_mode_changer_CXXFLAGS = @VCONF_CFLAGS@ \
                                 @DLOG_CFLAGS@ \
                                 @APPFW_CFLAGS@ \
                                 -fPIE
 
-isf_kbd_mode_changer_LDFLAGS  = @ECOREX_LIBS@ -rpath $(libdir)\
+isf_kbd_mode_changer_LDFLAGS  = @VCONF_LIBS@ -rpath $(libdir)\
                                 @DLOG_LIBS@ \
                                 @APPFW_LIBS@ \
                                 -pie
