@@ -48,6 +48,7 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -1950,10 +1951,6 @@ void
 HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor)
 {
     LOGD ("");
-    if (m_impl->surrounding_text) {
-        free (m_impl->surrounding_text);
-        m_impl->surrounding_text = NULL;
-    }
 
     if (!m_impl->socket_active.is_connected ())
         return;
@@ -1967,6 +1964,48 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
     m_impl->send.put_data (maxlen_after);
     m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
 
+#ifdef WAYLAND
+    int filedes[2];
+    if (pipe2(filedes,O_CLOEXEC|O_NONBLOCK) ==-1 ) {
+        LOGD ("create pipe failed");
+        return;
+    }
+    LOGD("%d,%d",filedes[0],filedes[1]);
+
+    m_impl->socket_active.write_fd (filedes[1]);
+    close (filedes[1]);
+
+    for (int i = 0; i < 3; i++) {
+        int fds[3];
+        fds[0] = m_impl->socket_active.get_id();
+        fds[1] = filedes[0];
+        fds[2] = 0;
+        if (!scim_wait_for_data (fds)) {
+            LOGE ("");
+            break;
+        }
+
+        if (fds[1]) {
+            char buff[512];
+            int len = read (fds[1], buff, sizeof(buff));
+            if (len <= 0)
+                break;
+            else {
+                buff[len] = '\0';
+                text.append (buff);
+            }
+        }
+        if (fds[0])
+            filter_event ();
+    }
+    close (filedes[0]);
+    cursor = m_impl->cursor_pos;
+#else
+    if (m_impl->surrounding_text) {
+        free (m_impl->surrounding_text);
+        m_impl->surrounding_text = NULL;
+    }
+
     for (int i = 0; i < 3; i++) {
         if (filter_event () && m_impl->surrounding_text) {
             text = m_impl->surrounding_text;
@@ -1979,6 +2018,7 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
         free (m_impl->surrounding_text);
         m_impl->surrounding_text = NULL;
     }
+#endif
 }
 
 /**
@@ -2033,19 +2073,56 @@ void
 HelperAgent::get_selection_text (String &text)
 {
     LOGD ("");
-    if (m_impl->selection_text) {
-        free (m_impl->selection_text);
-        m_impl->selection_text = NULL;
-    }
 
     if (!m_impl->socket_active.is_connected ())
         return;
+
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (m_impl->magic_active);
     m_impl->send.put_command (SCIM_TRANS_CMD_GET_SELECTION);
     m_impl->send.put_data ("");
     m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+#ifdef WAYLAND
+    int filedes[2];
+    if (pipe2(filedes,O_CLOEXEC|O_NONBLOCK) ==-1 ) {
+        LOGD ("create pipe failed");
+        return;
+    }
+    LOGD("%d,%d",filedes[0],filedes[1]);
+
+    m_impl->socket_active.write_fd (filedes[1]);
+    close (filedes[1]);
+
+    for (int i = 0; i < 3; i++) {
+        int fds[3];
+        fds[0] = m_impl->socket_active.get_id();
+        fds[1] = filedes[0];
+        fds[2] = 0;
+        if (!scim_wait_for_data (fds)) {
+            LOGE ("");
+            break;
+        }
+
+        if (fds[1]) {
+            char buff[512];
+            int len = read (fds[1], buff, sizeof(buff));
+            if (len <= 0)
+                break;
+            else {
+                buff[len] = '\0';
+                text.append (buff);
+            }
+        }
+        if (fds[0])
+            filter_event ();
+    }
+    close (filedes[0]);
+#else
+    if (m_impl->selection_text) {
+        free (m_impl->selection_text);
+        m_impl->selection_text = NULL;
+    }
 
     for (int i = 0; i < 3; i++) {
         if (filter_event () && m_impl->selection_text) {
@@ -2053,11 +2130,11 @@ HelperAgent::get_selection_text (String &text)
             break;
         }
     }
-
     if (m_impl->selection_text) {
         free (m_impl->selection_text);
         m_impl->selection_text = NULL;
     }
+#endif
 }
 
 /**

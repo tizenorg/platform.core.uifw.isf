@@ -373,6 +373,101 @@ public:
         return m_id >= 0;
     }
 
+    void write_fd(int fd) {
+        struct msghdr msg;
+        char buff[]={0};
+        struct iovec iov[1];
+#ifdef HAVE_STRUCT_MSGHDR_MSG_CONTROL
+        union{
+            struct cmsghdr cm;
+            char control[CMSG_SPACE (sizeof (int))];
+        }control_un;
+        struct cmsghdr *cmptr;
+        msg.msg_control = control_un.control;
+        msg.msg_controllen = sizeof(control_un.control);
+        cmptr = CMSG_FIRSTHDR (&msg);
+        cmptr->cmsg_len = CMSG_LEN (sizeof(int));
+        cmptr->cmsg_level = SOL_SOCKET;
+        cmptr->cmsg_type = SCM_RIGHTS;
+        //*((int*)CMSG_DATA (cmptr)) = fd;
+        memcpy (CMSG_DATA (cmptr), &fd, sizeof(int));
+#else
+        msg.msg_accrights = (caddr_t)&fd;
+        msg.msg_accrightslen = sizeof (int);
+#endif
+        //msg.msg_name = static_cast<sockaddr*> (const_cast<void*> (m_address.get_data ()));
+        //msg.msg_namelen = m_address.get_data_length ();
+        msg.msg_name = NULL;
+        msg.msg_namelen = 0;
+        iov[0].iov_base = buff;
+        iov[0].iov_len = sizeof (buff);
+        msg.msg_iov = iov;
+        msg.msg_iovlen = 1;
+        sendmsg (m_id, &msg, 0);
+    }
+
+    void read_fd(int *fd) {
+        struct msghdr msg;
+        char buff[]={0};
+        struct iovec iov[1];
+#ifndef HAVE_STRUCT_MSGHDR_MSG_CONTROL
+        int newfd;
+#endif
+
+#ifdef HAVE_STRUCT_MSGHDR_MSG_CONTROL
+        union{
+            struct cmsghdr cm;
+            char control[CMSG_SPACE (sizeof (int))];
+        }control_un;
+        struct cmsghdr *cmptr;
+        msg.msg_control = control_un.control;
+        msg.msg_controllen = sizeof (control_un.control);
+#else
+        msg.msg_accrights = (caddr_t) &newfd;
+        msg.msg_accrightslen = sizeof (int);
+#endif
+        //msg.msg_name = static_cast<sockaddr*> (const_cast<void*> (m_address.get_data ()));
+        //msg.msg_namelen = m_address.get_data_length ();
+        msg.msg_name = NULL;
+        msg.msg_namelen = 0;
+        iov[0].iov_base = buff;
+        iov[0].iov_len = sizeof (buff);
+        msg.msg_iov = iov;
+        msg.msg_iovlen = 1;
+        while (true) {
+            if (recvmsg (m_id, &msg, 0) <= 0) {
+                if (errno ==  EAGAIN)
+                    continue;
+                *fd = -1;
+                LOGE("%d",errno);
+                return;
+            }
+            break;
+        }
+#ifdef HAVE_STRUCT_MSGHDR_MSG_CONTROL
+        cmptr = CMSG_FIRSTHDR (&msg);
+        if ((cmptr != NULL) && (cmptr->cmsg_len == CMSG_LEN (sizeof (int)))) {
+            if (cmptr->cmsg_level != SOL_SOCKET || cmptr->cmsg_type != SCM_RIGHTS) {
+                *fd = -1;
+                LOGE ("unknow message");
+                return;
+            }
+            //*fd = *((int*)CMSG_DATA(cmptr));
+            memcpy (fd, CMSG_DATA (cmptr), sizeof(int));
+        }
+        else
+        {
+            *fd = -1;
+            LOGE("unknow message format");
+        }
+#else
+        if (msg.msg_accrightslen == sizeof (int))
+            *fd = newfd;
+        else
+            *fd = -1;
+#endif
+    }
+
     int read (void *buf, size_t size) {
         if (!buf || !size) { m_err = EINVAL; return -1; }
         if (m_id < 0) { m_err = EBADF; return -1; }
@@ -870,6 +965,18 @@ int
 Socket::set_nonblock_mode ()
 {
     return m_impl->set_nonblock_mode ();
+}
+
+void
+Socket::write_fd(int fd) const
+{
+    m_impl->write_fd (fd);
+}
+
+void
+Socket::read_fd(int *fd) const
+{
+    m_impl->read_fd (fd);
 }
 
 bool
@@ -1592,6 +1699,43 @@ scim_socket_accept_connection (uint32       &key,
     }
     return String ("");
 }
+
+bool
+scim_wait_for_data (int *fds)
+{
+    fd_set _fd_set;
+    int max_fd;
+    int *_fds;
+    if (fds == NULL)
+        return false;
+    max_fd = *fds;
+    FD_ZERO (&_fd_set);
+    for (_fds = fds; *_fds; _fds++) {
+        FD_SET (*_fds, &_fd_set);
+        if (*_fds > max_fd)
+           max_fd = *_fds;
+    }
+    while (true) {
+        int ret = select (max_fd + 1, &_fd_set, NULL, NULL, NULL);
+        if (ret < 0) {
+            if (errno == EINTR)
+                continue;
+            LOGW ("%d", errno);
+            return false;
+        }
+        else if (ret == 0)
+            continue;
+        else
+            break;
+    }
+
+    for (_fds = fds; *_fds; _fds++) {
+        if (!FD_ISSET(*_fds, &_fd_set))
+            *_fds = 0;
+    }
+    return true;
+}
+
 
 } // namespace scim
 

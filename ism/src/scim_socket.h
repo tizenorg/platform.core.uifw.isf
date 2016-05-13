@@ -282,6 +282,10 @@ public:
      */
     int set_nonblock_mode ();
 
+    void write_fd(int fd) const;
+    void read_fd(int *fd) const;
+
+
 protected:
 
     /**
@@ -650,6 +654,8 @@ EXAPI String scim_socket_accept_connection (uint32       &key,
                                       const String &client_types,
                                       const Socket &socket,
                                       int           timeout = -1);
+
+EXAPI bool scim_wait_for_data (int *fds);
 /** @} */
 
 } // namespace scim

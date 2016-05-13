@@ -20,6 +20,8 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include <unistd.h>
+
 #include <Ecore.h>
 #include <Ecore_Evas.h>
 #include <Ecore_Input.h>
@@ -943,45 +945,61 @@ text_input_input_panel_data(void                 *data,
 static void
 text_input_get_selection_text(void                 *data,
                               struct wl_text_input *text_input EINA_UNUSED,
-                              uint32_t              serial)
+                              int32_t              fd)
 {
     char *selection = NULL;
-    LOGD ("%d", serial);
+    LOGD("%d", fd);
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext || !imcontext->ctx) {
-        LOGD ("");
+        LOGD("");
+        close(fd);
         return;
     }
 
     ecore_imf_context_selection_get(imcontext->ctx, &selection);
     if (imcontext->text_input) {
-        LOGD ("selection :%s", selection ? selection : "");
-        wl_text_input_set_selection_text(imcontext->text_input, serial, selection ? selection : "");
+        LOGD("selection :%s", selection ? selection : "");
+        if (selection) {
+            char *_selection = selection;
+            size_t len = strlen(selection);
+            while (len) {
+                ssize_t ret = write(fd, _selection, len);
+                if (ret <= 0) {
+                    if (errno == EINTR)
+                        continue;
+                    LOGW ("write pipe failed, errno: %d", errno);
+                    break;
+                }
+                _selection += ret;
+                len -= ret;
+            }
+        }
     }
-
     if (selection)
         free(selection);
+    close(fd);
 }
 
 static void
 text_input_get_surrounding_text(void                 *data,
                                 struct wl_text_input *text_input EINA_UNUSED,
-                                uint32_t              serial,
                                 uint32_t              maxlen_before,
-                                uint32_t              maxlen_after)
+                                uint32_t              maxlen_after,
+                                int32_t              fd)
 {
     int cursor_pos;
     char *surrounding = NULL;
-    LOGD ("serial: %d maxlen_before: %d maxlen_after: %d", serial, maxlen_before, maxlen_after);
+    LOGD("fd: %d maxlen_before: %d maxlen_after: %d", fd, maxlen_before, maxlen_after);
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext || !imcontext->ctx) {
-        LOGD ("");
+        LOGD("");
+        close(fd);
         return;
     }
 
     /* cursor_pos is a byte index */
     if (ecore_imf_context_surrounding_get(imcontext->ctx, &surrounding, &cursor_pos)) {
-        LOGD ("surrounding :%s, cursor: %d", surrounding? surrounding : "", cursor_pos);
+        LOGD("surrounding :%s, cursor: %d", surrounding? surrounding : "", cursor_pos);
         if (imcontext->text_input) {
             Eina_Unicode *wide_surrounding = eina_unicode_utf8_to_unicode (surrounding, NULL);
             size_t wlen = eina_unicode_strlen (wide_surrounding);
@@ -1001,8 +1019,21 @@ text_input_get_surrounding_text(void                 *data,
 
             char *req_surrounding = eina_unicode_unicode_to_utf8_range (wide_surrounding + maxlen_before, maxlen_after - maxlen_before, NULL);
 
-            wl_text_input_set_surrounding_text(imcontext->text_input,
-                    serial, req_surrounding ? req_surrounding : "", cursor_pos);
+            if (req_surrounding) {
+                char *_surrounding = req_surrounding;
+                size_t len = strlen(req_surrounding);
+                while (len) {
+                    ssize_t ret = write(fd, _surrounding, len);
+                    if (ret <= 0) {
+                        if (errno == EINTR)
+                            continue;
+                        LOGW ("write pipe failed, errno: %d", errno);
+                        break;
+                    }
+                    _surrounding += ret;
+                    len -= ret;
+                }
+            }
 
             if (req_surrounding)
                 free (req_surrounding);
@@ -1014,6 +1045,7 @@ text_input_get_surrounding_text(void                 *data,
         if (surrounding)
             free(surrounding);
     }
+    close(fd);
 }
 //
 
