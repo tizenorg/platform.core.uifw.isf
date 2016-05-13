@@ -325,9 +325,9 @@ public:
     void helper_process_imengine_event (int client, uint32 context, const String& ic_uuid, const Transaction& nest_transaction);
     void process_helper_event (int client, uint32 context, String target_uuid, String active_uuid, Transaction& nest_trans);
     void socket_helper_key_event (int client, uint32 context, int cmd , KeyEvent& key);
-    void socket_helper_get_surrounding_text (int client, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after);
+    void socket_helper_get_surrounding_text (int client, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd);
     void socket_helper_delete_surrounding_text (int client, uint32 context_id, uint32 offset, uint32 len);
-    void socket_helper_get_selection (int client, uint32 context_id);
+    void socket_helper_get_selection (int client, uint32 context_id, const int fd);
     void socket_helper_set_selection (int client, uint32 context_id, uint32 start, uint32 end);
     void update_ise_input_context (int    focused_client, uint32 focused_context, uint32 type, uint32 value);
     void send_private_command (int    focused_client, uint32 focused_context, String command);

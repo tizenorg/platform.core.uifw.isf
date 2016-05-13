@@ -1165,7 +1165,7 @@ private:
         unlock();
     }
 
-    void socket_helper_get_surrounding_text(int client, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
+    void socket_helper_get_surrounding_text(int client, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
         LOGD ("client id:%d\n", client);
 
@@ -1197,7 +1197,7 @@ private:
         unlock();
     }
 
-    void socket_helper_get_selection(int client, uint32 context_id) {
+    void socket_helper_get_selection(int client, uint32 context_id, const int fd) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
         LOGD ("client id:%d\n", client);
 
@@ -2451,7 +2451,14 @@ private:
                     if (m_recv_trans.get_data(uuid) &&
                         m_recv_trans.get_data(maxlen_before) &&
                         m_recv_trans.get_data(maxlen_after)) {
-                        m_info_manager->socket_helper_get_surrounding_text(client_id, uuid, maxlen_before, maxlen_after);
+                        int fd;
+                        client.read_fd(&fd);
+                        if (fd == -1) {
+                            LOGW ("wrong format of transaction\n");
+                        } else {
+                            m_info_manager->socket_helper_get_surrounding_text(client_id, uuid, maxlen_before, maxlen_after, fd);
+                            close (fd);
+                        }
                     } else {
                         LOGW ("wrong format of transaction\n");
                     }
@@ -2468,7 +2475,14 @@ private:
                     String uuid;
 
                     if (m_recv_trans.get_data(uuid)) {
-                        m_info_manager->socket_helper_get_selection(client_id, uuid);
+                        int fd;
+                        client.read_fd(&fd);
+                        if (fd == -1) {
+                            LOGW ("wrong format of transaction\n");
+                        } else {
+                            m_info_manager->socket_helper_get_selection(client_id, uuid, fd);
+                            close (fd);
+                        }
                     } else {
                         LOGW ("wrong format of transaction\n");
                     }
