@@ -292,7 +292,6 @@ _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
             wsc_context_commit_preedit_string (context_scim);
         }
     }
-
 }
 
 static void
@@ -627,12 +626,14 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     if (!wsc_ctx) {
         return;
     }
+
     wsc_ctx->xkb_context = xkb_context_new((xkb_context_flags)0);
     if (wsc_ctx->xkb_context == NULL) {
         LOGW ("Failed to create XKB context\n");
         delete wsc_ctx;
         return;
     }
+
     wsc_ctx->id = text_input_id;
     wsc->wsc_ctx = wsc_ctx;
     wsc_ctx->ctx = wsc;
@@ -2116,7 +2117,7 @@ void wsc_context_send_key (WSCContextISF *wsc_ctx, uint32_t keysym, uint32_t mod
 {
     LOGD ("");
 
-    if (!wsc_ctx)
+    if (!wsc_ctx || !wsc_ctx->im_ctx)
         return;
 
     wl_input_method_context_keysym (wsc_ctx->im_ctx, wsc_ctx->serial, time,
