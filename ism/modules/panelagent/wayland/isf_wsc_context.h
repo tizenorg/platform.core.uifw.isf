@@ -108,7 +108,6 @@ Eina_Bool caps_mode_check (WSCContextISF *wsc_ctx, Eina_Bool force, Eina_Bool no
 WSCContextISF *get_focused_ic ();
 
 void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length);
-void imengine_layout_set (WSCContextISF *wsc_ctx, Ecore_IMF_Input_Panel_Layout layout);
 
 void isf_wsc_context_add (WSCContextISF *wsc_ctx);
 void isf_wsc_context_del (WSCContextISF *wsc_ctx);

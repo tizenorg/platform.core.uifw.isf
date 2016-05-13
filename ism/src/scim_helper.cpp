@@ -146,6 +146,7 @@ public:
     uint32 cursor_pos;
     bool need_update_surrounding_text;
     bool need_update_selection_text;
+    uint32 layout;
 
     HelperAgentSignalVoid           signal_exit;
     HelperAgentSignalVoid           signal_attach_input_context;
@@ -209,7 +210,8 @@ public:
 public:
     HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz),
         surrounding_text (NULL), selection_text (NULL), cursor_pos (0),
-        need_update_surrounding_text (false), need_update_selection_text (false) {
+        need_update_surrounding_text (false), need_update_selection_text (false),
+        layout (0) {
     }
 
     ~HelperAgentImpl () {
@@ -1053,6 +1055,7 @@ HelperAgent::filter_event ()
                 uint32 layout;
 
                 if (m_impl->recv.get_data (layout)) {
+                    m_impl->layout = layout;
                     m_impl->signal_set_layout (this, layout);
                     if (!m_impl->si.null ()) m_impl->si->set_layout(layout);
                 }
@@ -2253,6 +2256,7 @@ HelperAgent::set_keyboard_ise_by_uuid (const String &uuid) const
 
     m_impl->attach_instance ();
     LOGD ("Require UUID: %s Current UUID: %s", uuid.c_str (), m_impl->si->get_factory_uuid ().c_str ());
+    m_impl->si->set_layout (m_impl->layout);
     if(m_impl->focused_ic != (uint32)-1)
         m_impl->si->focus_in ();
 }

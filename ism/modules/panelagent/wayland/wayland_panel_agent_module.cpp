@@ -1222,18 +1222,6 @@ void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length)
     }
 }
 
-void
-imengine_layout_set (WSCContextISF *wsc_ctx, Ecore_IMF_Input_Panel_Layout layout)
-{
-    LOGD ("");
-    WSCContextISF* context_scim = wsc_ctx;
-
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        //FIXME: add this interface
-        //_info_manager->set_layout (layout);
-    }
-}
-
 static char *
 insert_text (const char *text, uint32_t offset, const char *insert)
 {

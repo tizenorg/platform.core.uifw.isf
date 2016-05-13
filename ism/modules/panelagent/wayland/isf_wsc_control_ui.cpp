@@ -189,7 +189,6 @@ isf_wsc_context_input_panel_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Pane
     if (context_scim == get_focused_ic ()) {
         LOGD ("layout type : %d\n", layout);
         _isf_wsc_context_input_panel_layout_set (_get_context_id (ctx), layout);
-        imengine_layout_set (ctx, layout);
     }
 }
 
