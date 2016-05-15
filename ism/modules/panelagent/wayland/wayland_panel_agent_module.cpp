@@ -638,6 +638,7 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wsc_ctx->ctx = wsc;
     wsc_ctx->state = NULL;
     wsc_ctx->keymap = NULL;
+    wsc_ctx->modifiers = 0;
     wsc_ctx->surrounding_text = NULL;
     wsc_ctx->key_handler = isf_wsc_context_filter_key_event;
 
@@ -2118,10 +2119,8 @@ void wsc_context_send_key (WSCContextISF *wsc_ctx, uint32_t keysym, uint32_t mod
     if (!wsc_ctx)
         return;
 
-    wsc_ctx->modifiers = modifiers;
-
     wl_input_method_context_keysym (wsc_ctx->im_ctx, wsc_ctx->serial, time,
-            keysym, press ? WL_KEYBOARD_KEY_STATE_PRESSED : WL_KEYBOARD_KEY_STATE_RELEASED, wsc_ctx->modifiers);
+            keysym, press ? WL_KEYBOARD_KEY_STATE_PRESSED : WL_KEYBOARD_KEY_STATE_RELEASED, modifiers);
 }
 
 static void
