@@ -105,11 +105,11 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="MAGNIFIER">
-    <label_properties font_name="Tizen:style=Regular" font_size="60" label_alignment="center_middle" padding_X="0" padding_Y="0">
+    <label_properties font_name="Tizen:style=Regular" font_size="27" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
-        <color button="normal">0x00a6c2ff</color>
-        <color button="pressed">0x00a6c2ff</color>
-        <color button="disabled">0x00a6c233</color>
+        <color button="normal">0x099ee3ff</color>
+        <color button="pressed">0x099ee37f</color>
+        <color button="disabled">0x099ee366</color>
       </font_color_record>
     </label_properties>
     <label_properties font_name="Tizen:style=medium" font_size="48" label_alignment="right_bottom" padding_X="8" padding_Y="-10">
@@ -146,18 +146,43 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_DEFAULT">
-    <label_properties font_name="Tizen:style=medium" font_size="25" label_alignment="center_top" padding_X="0" padding_Y="3" inner_width="80" inner_height="34">
+    <label_properties font_name="Tizen:style=medium" font_size="25" label_alignment="center_top" padding_X="0" padding_Y="3" inner_width="80" inner_height="32">
       <font_color_record>
-        <color button="normal">0x171717ff</color>
-        <color button="pressed">0x000000ff</color>
-        <color button="disabled">0x17171733</color>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
       </font_color_record>
     </label_properties>
-    <label_properties font_name="Tizen:style=medium" font_size="15" label_alignment="center_bottom" padding_X="0" padding_Y="3" inner_width="80" inner_height="20">
+    <label_properties font_name="Tizen:style=medium" font_size="20" label_alignment="center_bottom" padding_X="0" padding_Y="2" inner_width="80" inner_height="26">
       <font_color_record>
-        <color button="normal">0x171717ff</color>
-        <color button="pressed">0x000000ff</color>
-        <color button="disabled">0x17171733</color>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_DEFAULT_0">
+    <label_properties font_name="Tizen:style=medium" font_size="25" label_alignment="right_top" padding_X="0" padding_Y="3" inner_width="80" inner_height="32">
+      <font_color_record>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
+      </font_color_record>
+    </label_properties>
+    <label_properties font_name="Tizen:style=medium" font_size="20" label_alignment="right_bottom" padding_X="0" padding_Y="2" inner_width="80" inner_height="26">
+      <font_color_record>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_DEFAULT_SPACE">
+    <label_properties font_name="Tizen:style=medium" font_size="14" label_alignment="left_top" padding_X="0" padding_Y="3" inner_width="92" inner_height="32">
+      <font_color_record>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
       </font_color_record>
     </label_properties>
   </label_properties_table>
@@ -562,6 +587,14 @@
   </label_properties_table>
   <label_properties_table label_type="IMAGE_SPACE">
     <label_properties label_alignment="center_bottom" padding_X="0" padding_Y="10">
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="IMAGE_3X4">
+    <label_properties label_alignment="center_top" padding_X="0" padding_Y="8">
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="IMAGE_3X4_SPACE">
+    <label_properties label_alignment="left_bottom" padding_X="30" padding_Y="20" inner_width="80" inner_height="12">
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="LAND_IMAGE_SPACE">

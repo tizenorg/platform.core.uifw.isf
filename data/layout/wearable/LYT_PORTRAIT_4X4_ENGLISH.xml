@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="360" height="240" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_DEFAULT">
+<layout width="360" height="240" magnifier="true" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
   <background_image>
-    <rec button="normal">button/B09_key_btn_01.png</rec>
-    <rec button="pressed">button/B09_key_btn_press.png</rec>
-    <rec button="disabled">button/B09_key_btn_01.png</rec>
+    <rec button="pressed">key_btn_press.png</rec>
   </background_image>
-  <row>
-    <key key_type="string" button_type="multitap" long_key_value="1" width="100">
+  <row x="20">
+    <key key_type="string" button_type="multitap" long_key_value="1" longkey_magnifier="true">
       <label>
         <rec multi="0">.,?!</rec>
         <rec multi="1">1</rec>
@@ -21,7 +19,7 @@
         <rec multichar_state="3">!</rec>
       </key_value>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="2">
+    <key key_type="string" button_type="multitap" long_key_value="2" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">abc</rec>
         <rec multi="1">2</rec>
@@ -32,7 +30,7 @@
         <rec auto_upper="true" multichar_state="2">c</rec>
       </key_value>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="3">
+    <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">def</rec>
         <rec multi="1">3</rec>
@@ -43,23 +41,18 @@
         <rec auto_upper="true" multichar_state="2">f</rec>
       </key_value>
     </key>
-    <key key_type="control" use_repeat_key="true" width="100">
+    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4">
       <image_label>
-        <rec button="normal">B09_icon_back_nor_65x65.png</rec>
-        <rec button="pressed">B09_icon_back_press_65x65.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_delete.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_delete.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>BackSpace</rec>
       </key_value>
     </key>
   </row>
-  <row>
-    <key key_type="string" button_type="multitap" long_key_value="4" width="100">
+  <row x="20">
+    <key key_type="string" button_type="multitap" long_key_value="4" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">ghi</rec>
         <rec multi="1">4</rec>
@@ -70,7 +63,7 @@
         <rec auto_upper="true" multichar_state="2">i</rec>
       </key_value>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="5">
+    <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">jkl</rec>
         <rec multi="1">5</rec>
@@ -81,7 +74,7 @@
         <rec auto_upper="true" multichar_state="2">l</rec>
       </key_value>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="6">
+    <key key_type="string" button_type="multitap" long_key_value="6" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">mno</rec>
         <rec multi="1">6</rec>
@@ -92,24 +85,19 @@
         <rec auto_upper="true" multichar_state="2">o</rec>
       </key_value>
     </key>
-    <key key_type="control" width="100">
+    <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="disabled">w_sip_3x4_btn_ic_enter_d.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>Enter</rec>
       </key_value>
     </key>
   </row>
-  <row>
-    <key key_type="string" button_type="multitap" long_key_value="7" width="100">
+  <row x="20">
+    <key key_type="string" button_type="multitap" long_key_value="7" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">pqrs</rec>
         <rec multi="1">7</rec>
@@ -121,7 +109,7 @@
         <rec auto_upper="true" multichar_state="3">s</rec>
       </key_value>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="8">
+    <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">tuv</rec>
         <rec multi="1">8</rec>
@@ -132,7 +120,7 @@
         <rec auto_upper="true" multichar_state="2">v</rec>
       </key_value>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="9">
+    <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
       <label>
         <rec multi="0" auto_upper="true">wxyz</rec>
         <rec multi="1">9</rec>
@@ -144,32 +132,21 @@
         <rec auto_upper="true" multichar_state="3">z</rec>
       </key_value>
     </key>
-    <key key_type="control" width="100">
+    <key key_type="control" image_label_type="IMAGE_3X4">
       <image_label>
-        <rec button="normal">B09_icon_shift_50x50.png</rec>
-        <rec button="pressed">B09_icon_shift_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_shift_50x50_dim.png</rec>
+        <rec shift="off" button="normal">w_sip_3x4_btn_ic_shift.png</rec>
+        <rec shift="on" button="normal">w_sip_3x4_btn_ic_shift.png</rec>
+        <rec shift="loc" button="normal">w_sip_3x4_btn_ic_shift_p.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_shift.png</rec>
+        <rec button="disabled">w_sip_3x4_btn_ic_shift_d.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>Shift</rec>
       </key_value>
     </key>
   </row>
-  <row>
-    <key key_type="modechange" width="120">
-      <label>
-        <rec>?123</rec>
-      </label>
-      <key_value>
-        <rec>SYM_4X4_1</rec>
-      </key_value>
-    </key>
-    <key key_type="string" width="120">
+  <row x="47">
+    <key key_type="string" label_type="3X4_DEFAULT_0" width="133">
       <label>
         <rec>0</rec>
       </label>
@@ -177,11 +154,13 @@
         <rec>0</rec>
       </key_value>
     </key>
-    <key key_type="control" width="120">
+    <key button_type="direction" key_type="control" label_type="3X4_DEFAULT_SPACE" image_label_type="IMAGE_3X4_SPACE" width="133">
+      <label>
+        <rec>_LANGUAGE_</rec>
+      </label>
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_space.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_space.png</rec>
       </image_label>
       <key_value>
         <rec>Space</rec>

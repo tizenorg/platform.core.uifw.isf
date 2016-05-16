@@ -10,7 +10,7 @@
     <rec name="uuid_unikey" uuid="org.tizen.ise-engine-unikey"/>
 </keyboard_uuid_table>
 <language_table>
-  <rec language="English" language_name="English" inputmode_QTY="ENGLISH_4X4" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="uk" is_latin_language="true" accepts_caps_mode="true" locale_string="en_US"/>
+  <rec language="English" language_name="EN(US)" inputmode_QTY="ENGLISH_4X4" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="uk" is_latin_language="true" accepts_caps_mode="true" locale_string="en_US"/>
   <rec language="Italian" language_name="Italiano" inputmode_QTY="ITALIAN_4X4" inputmode_QTY_name="Tastiera Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="it" is_latin_language="true" accepts_caps_mode="true" locale_string="it_IT"/>
   <rec language="Spanish" language_name="Español" inputmode_QTY="SPANISH_4X4" inputmode_QTY_name="Teclado Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="es" is_latin_language="true" accepts_caps_mode="true" locale_string="es_ES"/>
   <rec language="Galician" language_name="Galego" inputmode_QTY="GALICIA_4X4" inputmode_QTY_name="Qwerty" keyboard_ise_uuid="uuid_default" country_code_URL="gl" is_latin_language="true" accepts_caps_mode="true" locale_string="gl_ES"/>
@@ -54,9 +54,9 @@
   <rec language="Hebrew" language_name="עברית" inputmode_QTY="HEBREW_4X4" inputmode_QTY_name="Hebrew" keyboard_ise_uuid="uuid_default" country_code_URL="il"/>
   -->
   <rec language="Korean" language_name="한글" inputmode_QTY="KOREAN_4X4" inputmode_QTY_name="쿼티" keyboard_ise_uuid="uuid_korean" country_code_URL="kr" locale_string="ko_KR"/>
-  <rec language="Chinese" language_name="简体中文" inputmode_QTY="CHINESE_4X4" inputmode_QTY_name="Qwerty键盘" main_keyboard_name="中" keyboard_ise_uuid="uuid_sunpinyin" country_code_URL="cn" locale_string="zh_CN"/>
-  <rec language="Taiwan" language_name="繁體中文-註音" inputmode_QTY="ZHUYIN_4X4" inputmode_QTY_name="註音" main_keyboard_name="中" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw" locale_string="zh_TW"/>
-  <rec language="Hongkong" language_name="繁體中文-倉頡" inputmode_QTY="CANGJIE_4X4" inputmode_QTY_name="倉頡" main_keyboard_name="中" keyboard_ise_uuid="uuid_cangjie_3" country_code_URL="hk" locale_string="zh_HK"/>
+  <rec language="Chinese" language_name="中文" inputmode_QTY="CHINESE_4X4" inputmode_QTY_name="Qwerty键盘" keyboard_ise_uuid="uuid_sunpinyin" country_code_URL="cn" locale_string="zh_CN"/>
+  <rec language="Taiwan" language_name="註音" inputmode_QTY="ZHUYIN_4X4" inputmode_QTY_name="註音" main_keyboard_name="中" keyboard_ise_uuid="uuid_zhuyin_big" country_code_URL="tw" locale_string="zh_TW"/>
+  <rec language="Hongkong" language_name="倉頡" inputmode_QTY="CANGJIE_4X4" inputmode_QTY_name="倉頡" main_keyboard_name="中" keyboard_ise_uuid="uuid_cangjie_3" country_code_URL="hk" locale_string="zh_HK"/>
   <rec language="Japanese" language_name="日本語" inputmode_QTY="JAPANESE_4X4" inputmode_QTY_name="Qwerty" main_keyboard_name="あ" keyboard_ise_uuid="uuid_anthy" country_code_URL="jp" locale_string="ja_JP"/>
   <rec language="Vietnamese" language_name="Tiếng Việt" inputmode_QTY="VIETNAMESE_4X4" inputmode_QTY_name="Vietnamese Qwerty" keyboard_ise_uuid="uuid_unikey" country_code_URL="vn" is_latin_language="true" accepts_caps_mode="true" locale_string="vi_VN"/>
   <!--

@@ -103,6 +103,10 @@ void read_ise_config_values() {
     g_config_values.enabled_languages.push_back("Japanese");
     g_config_values.enabled_languages.push_back("Hongkong");
     g_config_values.selected_language = std::string("English");
+#elif _WEARABLE
+    g_config_values.enabled_languages.clear ();
+    g_config_values.enabled_languages.push_back("English");
+    g_config_values.selected_language = std::string("English");
 #endif
 }
 
