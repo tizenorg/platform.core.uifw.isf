@@ -1235,8 +1235,6 @@ wayland_im_context_cursor_location_set(Ecore_IMF_Context *ctx, int x, int y, int
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("cursor_location_set (x: %d, y: %d, w: %d, h: %d)", x, y, width, height);
-
     if ((imcontext->cursor_location.x != x) ||
         (imcontext->cursor_location.y != y) ||
         (imcontext->cursor_location.width != width) ||
