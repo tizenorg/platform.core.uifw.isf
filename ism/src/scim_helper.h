@@ -212,6 +212,9 @@ typedef Slot2<void, const HelperAgent *, LookupTable &>
 typedef Slot3<void, const HelperAgent *, KeyEvent &, uint32 &>
         HelperAgentSlotKeyEventUint;
 
+typedef Slot5<void, const HelperAgent *, uint32 &, char *, size_t &, uint32 &>
+        HelperAgentSlotUintCharSizeUint;
+
 /**
  * @brief The accessory class to write a Helper object.
  *
@@ -1284,6 +1287,14 @@ public:
      * void check_option_window (const HelperAgent *agent, uint32 &avail);
      */
     Connection signal_connect_check_option_window                   (HelperAgentSlotUintVoid            *slot);
+
+    /**
+    * @brief Connect a slot to Helper process unconventional input device event signal.
+    *
+    * The prototype of the slot is:
+    * void process_input_device_event (const HelperAgent *, uint32 &type, char *data, size_t &size, uint32 &ret);
+    */
+    Connection signal_connect_process_input_device_event            (HelperAgentSlotUintCharSizeUint *slot);
 };
 
 /**  @} */

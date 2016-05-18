@@ -740,6 +740,9 @@ public:
     //SCIM_TRANS_CMD_FOCUS_OUT
     void focus_out (int client_id, uint32 context);
 
+    //ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT
+    bool process_input_device_event(int client_id, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
+
     //ISM_TRANS_CMD_TURN_ON_LOG
     void socket_turn_on_log (uint32 isOn);
 

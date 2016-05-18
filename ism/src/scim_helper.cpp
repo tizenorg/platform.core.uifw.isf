@@ -124,6 +124,9 @@ typedef Signal2<void, const HelperAgent *, LookupTable &>
 typedef Signal3<void, const HelperAgent *, KeyEvent &, uint32 &>
         HelperAgentSignalKeyEventUint;
 
+typedef Signal5<void, const HelperAgent *, uint32 &, char *, size_t &, uint32 &>
+        HelperAgentSignalUintCharSizeUint;
+
 class HelperAgent::HelperAgentImpl
 {
 public:
@@ -206,6 +209,7 @@ public:
     HelperAgentSignalUintVoid           signal_update_bidi_direction;
     HelperAgentSignalVoid               signal_show_option_window;
     HelperAgentSignalUintVoid           signal_check_option_window;
+    HelperAgentSignalUintCharSizeUint   signal_process_input_device_event;
 
 public:
     HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz),
@@ -1340,6 +1344,24 @@ HelperAgent::filter_event ()
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
                 m_impl->send.put_data (avail);
                 m_impl->send.write_to_socket (m_impl->socket);
+                break;
+            }
+            case ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT:
+            {
+                uint32 ret = 0;
+                uint32 type;
+                char *data = NULL;
+                size_t len;
+                if (m_impl->recv.get_data(type) &&
+                    m_impl->recv.get_data(&data, len)) {
+                    m_impl->signal_process_input_device_event(this, type, data, len, ret);
+                }
+                else
+                    LOGW("wrong format of transaction\n");
+                m_impl->send.clear();
+                m_impl->send.put_command(SCIM_TRANS_CMD_REPLY);
+                m_impl->send.put_data(ret);
+                m_impl->send.write_to_socket(m_impl->socket);
                 break;
             }
             default:
@@ -3234,6 +3256,20 @@ HelperAgent::signal_connect_check_option_window (HelperAgentSlotUintVoid *slot)
 }
 
 } /* namespace scim */
+
+/**
+ * @brief Connect a slot to Helper process unconventional input device event signal.
+ *
+ * This signal is used to send unconventional input device event to Helper ISE.
+ *
+ * The prototype of the slot is:
+ * void process_input_device_event (const HelperAgent *, uint32 &type, char *data, size_t &size, uint32 &ret);
+ */
+Connection
+HelperAgent::signal_connect_process_input_device_event (HelperAgentSlotUintCharSizeUint *slot)
+{
+    return m_impl->signal_process_input_device_event.connect (slot);
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab

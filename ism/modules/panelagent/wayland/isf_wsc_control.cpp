@@ -206,6 +206,12 @@ int _isf_wsc_context_input_panel_send_candidate_will_hide_ack (int context)
     return 0;
 }
 
+int _isf_wsc_context_process_input_device_event(int context, int type, const void* data, int len)
+{
+    uint32 result;
+    g_info_manager->process_input_device_event(context, (unsigned int)type, (const char*)data, (size_t)len, result);
+    return 0;
+}
 /*
 vi:ts=4:expandtab:nowrap
 */

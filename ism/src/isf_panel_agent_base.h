@@ -780,6 +780,15 @@ public:
      * @return none.
      */
     virtual void hide_helper_ise (int client, uint32 context);
+
+    /**
+    * @brief process_input_device_event.
+    *
+    * @param
+    *
+    * @return none.
+    */
+    virtual bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
 };
 
 /**  @} */
