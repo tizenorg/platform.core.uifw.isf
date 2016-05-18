@@ -265,3 +265,8 @@ void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void **imdata, 
 {
     _isf_wsc_context_input_panel_imdata_get (_get_context_id (ctx), imdata, len);
 }
+
+void isf_wsc_context_process_input_device_event (WSCContextISF *ctx, uint32_t type, const char *data, uint32_t len)
+{
+    _isf_wsc_context_process_input_device_event (_get_context_id(ctx), type, data, len);
+}
