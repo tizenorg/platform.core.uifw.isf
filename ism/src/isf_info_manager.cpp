@@ -1358,6 +1358,24 @@ public:
         return false;
     }
 
+    //ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT
+    bool process_input_device_event(int client_id, uint32 type, const char *data, size_t len, _OUT_ uint32& result) {
+        SCIM_DEBUG_MAIN(4) << "InfoManager::process_input_device_event ()\n";
+        LOGD("");
+        HelperClientIndex::iterator it = m_helper_client_index.find(m_current_helper_uuid);
+
+        if (it != m_helper_client_index.end()) {
+            int    client;
+            uint32 context;
+            uint32 ctx;
+            get_focused_context(client, context);
+            ctx = get_helper_ic(client, context);
+            return m_panel_agent_manager.process_input_device_event(it->second.id, ctx, m_current_helper_uuid, type, data, len, result);
+        }
+
+        return false;
+    }
+
     bool get_helper_geometry (String& uuid, struct rectinfo& info) {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -4306,6 +4324,12 @@ void InfoManager::focus_in (int client_id, uint32 context,  String  uuid)
 void InfoManager::focus_out (int client_id, uint32 context)
 {
     m_impl->focus_out (client_id, context);
+}
+
+//ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT
+bool InfoManager::process_input_device_event(int client, uint32 type, const char *data, size_t len, _OUT_ uint32& result)
+{
+    return m_impl->process_input_device_event(client, type, data, len, result);
 }
 
 //ISM_TRANS_CMD_TURN_ON_LOG

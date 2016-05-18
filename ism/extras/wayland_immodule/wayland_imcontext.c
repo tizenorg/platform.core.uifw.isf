@@ -152,6 +152,33 @@ key_up_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
     return EINA_FALSE;
 }
 
+#ifdef _WEARABLE
+static Eina_Bool
+rotary_event_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+{
+    Ecore_Event_Detent_Rotate *ev = event;
+    if (!ev) return EINA_TRUE;
+
+    Ecore_IMF_Context *active_ctx = NULL;
+    if (_show_req_ctx)
+        active_ctx = _show_req_ctx;
+    else if (_focused_ctx)
+        active_ctx = _focused_ctx;
+
+    if (!active_ctx) return EINA_TRUE;
+
+    if (_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+        return EINA_TRUE;
+
+    WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(active_ctx);
+
+    wl_text_input_process_input_device_event(imcontext->text_input,
+        (unsigned int)ECORE_EVENT_DETENT_ROTATE, (char*)event, sizeof(Ecore_Event_Detent_Rotate));
+
+    return EINA_FALSE;
+}
+#endif
+
 static Eina_Bool
 _ecore_event_filter_cb(void *data, void *loop_data EINA_UNUSED, int type, void *event)
 {
@@ -161,6 +188,12 @@ _ecore_event_filter_cb(void *data, void *loop_data EINA_UNUSED, int type, void *
     else if (type == ECORE_EVENT_KEY_UP) {
         return key_up_cb(data, type, event);
     }
+#ifdef _WEARABLE
+    /* The keyboard needs to process Rotary event prior to client application */
+    else if (type == ECORE_EVENT_DETENT_ROTATE) {
+        return rotary_event_cb(data, type, event);
+    }
+#endif
 
     return EINA_TRUE;
 }

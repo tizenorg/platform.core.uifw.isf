@@ -341,6 +341,7 @@ public:
     void update_preedit_caret (int focused_client, uint32 focused_context, uint32 caret);
     void helper_attach_input_context_and_update_screen (int client, std::vector < std::pair <uint32, String> >& helper_ic_index, uint32 current_screen);
     void hide_helper_ise (int id, uint32 context);
+    bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
 };
 
 /**  @} */
