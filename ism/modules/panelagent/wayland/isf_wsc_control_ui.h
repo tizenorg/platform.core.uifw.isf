@@ -53,6 +53,7 @@ extern "C"
     void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled);
     void isf_wsc_context_input_panel_imdata_set (WSCContextISF *ctx, const void *imdata, int len);
     void isf_wsc_context_input_panel_imdata_get (WSCContextISF *ctx, void **imdata, int* len);
+    void isf_wsc_context_process_input_device_event (WSCContextISF *ctx, uint32_t type, const char *data, uint32_t len);
 
 #ifdef __cplusplus
 }
