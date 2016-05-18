@@ -493,6 +493,11 @@ void PanelAgentBase::hide_helper_ise (int client, uint32 context)
     LOGW ("not implemented for %s", m_name.c_str ());
 }
 
+bool PanelAgentBase::process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result)
+{
+    LOGW("not implemented for %s", m_name.c_str());
+    return false;
+}
 
 } /* namespace scim */
 

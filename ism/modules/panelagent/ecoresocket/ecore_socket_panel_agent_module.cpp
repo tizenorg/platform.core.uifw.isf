@@ -973,6 +973,36 @@ private:
         m_send_trans.write_to_socket(client_socket);
     }
 
+    bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result) {
+        LOGD("client id:%d\n", client);
+
+        Socket client_socket(client);
+
+        Transaction trans;
+
+        trans.clear();
+        trans.put_command(SCIM_TRANS_CMD_REPLY);
+        trans.put_data(context);
+        trans.put_data(uuid);
+        trans.put_command(ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT);
+        trans.put_data(type);
+        trans.put_data(data, len);
+        int cmd;
+
+        if (trans.write_to_socket(client_socket)
+            && trans.read_from_socket(client_socket)
+            && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
+            && trans.get_data(result)) {
+            SCIM_DEBUG_MAIN(1) << __func__ << " success\n";
+            return true;
+        }
+        else {
+            LOGW("read failed\n");
+        }
+
+        return false;
+    }
+
     void socket_update_surrounding_text(int client, uint32 context, const String& uuid, String& text, uint32 cursor) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
         LOGD ("client id:%d\n", client);
