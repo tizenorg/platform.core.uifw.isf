@@ -635,6 +635,15 @@ void PanelAgentManager::process_helper_event (int id, uint32 context_id, String 
         _p->process_helper_event (id, context_id, target_uuid, active_uuid, nest_trans);
 }
 
+bool PanelAgentManager::process_input_device_event(int id, uint32 context_id, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id(id);
+
+    if (!_p.null())
+        return _p->process_input_device_event(id, context_id, uuid, type, data, len, result);
+    return false;
+}
+
 void PanelAgentManager::socket_helper_key_event (int id, uint32 context_id, int cmd , KeyEvent& key)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);

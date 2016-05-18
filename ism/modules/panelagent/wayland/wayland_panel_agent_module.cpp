@@ -403,6 +403,17 @@ _wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, 
     g_info_manager->socket_update_cursor_position (cursor_pos);
 }
 
+static void
+_wsc_im_ctx_process_input_device_event(void *data, struct wl_input_method_context *im_ctx, uint32_t type, const char *input_data, uint32_t input_data_len)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+
+    LOGD("im_context = %p type = %d, data = (%p) %d\n", im_ctx, type, input_data, input_data_len);
+    if (!wsc_ctx) return;
+
+    isf_wsc_context_process_input_device_event(wsc_ctx, type, input_data, input_data_len);
+}
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_reset,
      _wsc_im_ctx_content_type,
@@ -414,6 +425,7 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_input_panel_data,
      _wsc_im_ctx_bidi_direction,
      _wsc_im_ctx_cursor_position
+     _wsc_im_ctx_process_input_device_event
 };
 
 static void

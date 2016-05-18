@@ -63,6 +63,7 @@ extern "C"
     int _isf_wsc_context_set_keyboard_mode (int context, scim::TOOLBAR_MODE_T mode);
 
     int _isf_wsc_context_input_panel_send_candidate_will_hide_ack (int context);
+    int _isf_wsc_context_process_input_device_event(int context, int type, const void* data, int len);
 
 #ifdef __cplusplus
 }
