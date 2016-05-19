@@ -1954,6 +1954,9 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
 {
     LOGD ("");
 
+    if (!m_impl || !m_impl->surrounding_text)
+        return;
+
     WideString before = utf8_mbstowcs (String (m_impl->surrounding_text));
 
     if (m_impl->cursor_pos > before.length ())
