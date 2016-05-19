@@ -548,7 +548,7 @@ HelperAgent::open_connection (const HelperInfo &info,
         close_connection ();
 
     SocketAddress address (scim_get_default_panel_socket_address (display));
-    int timeout = scim_get_default_socket_timeout ();
+    int timeout = m_impl->timeout = scim_get_default_socket_timeout ();
     uint32 magic;
 
     if (!address.valid ())
@@ -631,7 +631,6 @@ HelperAgent::open_connection (const HelperInfo &info,
         m_impl->recv.get_command (cmd) && cmd == SCIM_TRANS_CMD_REPLY &&
         m_impl->recv.get_command (cmd) && cmd == SCIM_TRANS_CMD_OK) {
         m_impl->magic = magic;
-        m_impl->timeout = timeout;
 
         while (m_impl->recv.get_command (cmd)) {
             switch (cmd) {
@@ -654,6 +653,9 @@ HelperAgent::open_connection (const HelperInfo &info,
                     break;
             }
         }
+    } else {
+        //FIXME: Attaching input context is needed for desktop environment
+        LOGW ("Attach input context and update screen failed");
     }
 
     ISF_SAVE_LOG ("Trying connect() with Helper_Active\n");
