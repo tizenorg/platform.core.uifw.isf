@@ -71,6 +71,7 @@ struct OPTION_ELEMENTS
         option_window = NULL;
         naviframe = NULL;
         genlist = NULL;
+        circle_genlist = NULL;
         lang_popup = NULL;
         back_button = NULL;
         conformant = NULL;
@@ -89,6 +90,7 @@ struct OPTION_ELEMENTS
     Evas_Object *option_window;
     Evas_Object *naviframe;
     Evas_Object *genlist;
+    Evas_Object *circle_genlist;
     Evas_Object *lang_popup;
     Evas_Object *back_button;
     Evas_Object *conformant;
@@ -617,6 +619,12 @@ static Eina_Bool _pop_cb(void *data, Elm_Object_Item *it)
         if (option_elements[type].lang_popup) {
             _popup_timeout_cb(NULL, option_elements[type].lang_popup, NULL);
         }
+
+#ifdef _CIRCLE
+        if (option_elements[type].circle_genlist) {
+            eext_rotary_object_event_activated_set(option_elements[type].circle_genlist, EINA_TRUE);
+        }
+#endif
     }
 
     return EINA_TRUE;
@@ -660,6 +668,8 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
         Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
         eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+
+        option_elements[type].circle_genlist = circle_genlist;
 #endif
 
         elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
