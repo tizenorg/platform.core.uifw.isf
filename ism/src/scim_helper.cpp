@@ -1954,6 +1954,12 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
 {
     LOGD ("");
 
+    if (!m_impl || !m_impl->surrounding_text) {
+        text = utf8_wcstombs (WideString ());
+        cursor = 0;
+        return;
+    }
+
     WideString before = utf8_mbstowcs (String (m_impl->surrounding_text));
 
     if (m_impl->cursor_pos > before.length ())
@@ -1983,7 +1989,16 @@ void
 HelperAgent::delete_surrounding_text (int offset, int len) const
 {
     LOGD ("offset = %d, len = %d", offset, len);
-    WideString ws = utf8_mbstowcs (m_impl->surrounding_text);
+
+    if (!m_impl)
+        return;
+
+    WideString ws;
+
+    if (!m_impl->surrounding_text)
+        ws = utf8_mbstowcs (String (""));
+    else
+        ws = utf8_mbstowcs (String (m_impl->surrounding_text));
 
     int _offset = offset + m_impl->cursor_pos;
 
