@@ -74,6 +74,8 @@ EAPI void wayland_im_context_autocapital_type_set(Ecore_IMF_Context *ctx,
 EAPI void wayland_im_context_input_panel_layout_set(Ecore_IMF_Context *ctx,
                                                     Ecore_IMF_Input_Panel_Layout layout);
 
+EAPI Ecore_IMF_Input_Panel_Layout wayland_im_context_input_panel_layout_get(Ecore_IMF_Context *ctx);
+
 EAPI void wayland_im_context_input_mode_set(Ecore_IMF_Context *ctx,
                                             Ecore_IMF_Input_Mode input_mode);
 
