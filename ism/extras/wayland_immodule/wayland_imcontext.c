@@ -93,6 +93,7 @@ struct _WaylandIMContext
     uint32_t reset_serial;
     uint32_t content_purpose;
     uint32_t content_hint;
+    Ecore_IMF_Input_Panel_Layout input_panel_layout;
 
     // TIZEN_ONLY(20150716): Support return key type
     uint32_t return_key_type;
@@ -994,6 +995,7 @@ wayland_im_context_add(Ecore_IMF_Context *ctx)
     LOGD("context_add. ctx : %p", ctx);
 
     imcontext->ctx = ctx;
+    imcontext->input_panel_layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
 
     imcontext->text_input =
         wl_text_input_manager_create_text_input(imcontext->text_input_manager);
@@ -1278,6 +1280,8 @@ wayland_im_context_input_panel_layout_set(Ecore_IMF_Context *ctx,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
+    imcontext->input_panel_layout = layout;
+
     switch (layout) {
         case ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBER:
             imcontext->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NUMBER;
@@ -1320,6 +1324,14 @@ wayland_im_context_input_panel_layout_set(Ecore_IMF_Context *ctx,
             imcontext->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
             break;
     }
+}
+
+EAPI Ecore_IMF_Input_Panel_Layout
+wayland_im_context_input_panel_layout_get(Ecore_IMF_Context *ctx)
+{
+    WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+
+    return imcontext->input_panel_layout;
 }
 
 EAPI void
