@@ -46,7 +46,7 @@ int main (int argc, char *argv [])
     String config;
     String display;
     String helper;
-    String uuid;
+    String appid;
     //bool   daemon = false;
 
     char *p =  getenv ("DISPLAY");
@@ -87,14 +87,14 @@ int main (int argc, char *argv [])
 
         if (String ("-h") == argv [i] ||
             String ("--help") == argv [i]) {
-            std::cout << "Usage: " << argv [0] << " [options] module uuid\n\n"
+            std::cout << "Usage: " << argv [0] << " [options] module appid\n\n"
                       << "The options are:\n"
                       << "  -c, --config name    Use specified config module, default is \"simple\".\n"
                       << "  -d, --daemon         Run as daemon.\n"
                       << "  --display name       run setup on a specified DISPLAY.\n"
                       << "  -h, --help           Show this help message.\n"
                       << "module                 The name of the Helper module\n"
-                      << "uuid                   The uuid of the Helper to be launched.\n";
+                      << "appid                  The appid of the Helper to be launched.\n";
             return 0;
         }
 
@@ -140,7 +140,7 @@ int main (int argc, char *argv [])
             helper = String (argv [i]);
             continue;
         } else if (j == 2) {
-            uuid = String (argv [i]);
+            appid = String (argv [i]);
             continue;
         }
     }
@@ -149,14 +149,17 @@ int main (int argc, char *argv [])
 
     if (exec != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
         /* 3rd party shared object type IME */
-        uuid = helper = String ("lib") + exec.substr (exec.find_last_of (SCIM_PATH_DELIM) + 1);
+        helper = String ("lib") + exec.substr (exec.find_last_of (SCIM_PATH_DELIM) + 1);
+        appid = String ("");
     }
 
-    SCIM_DEBUG_MAIN(1) << "scim-helper-launcher: " << config << " " << display << " " << helper << " " << uuid << "\n";
-    ISF_SAVE_LOG ("Helper ISE (%s %s) is launching...\n", helper.c_str (), uuid.c_str ());
+    SCIM_DEBUG_MAIN(1) << "scim-helper-launcher: " << config << " " << display << " " << helper << " " << appid << "\n";
+    ISF_SAVE_LOG ("Helper ISE (%s %s) is launching...\n", helper.c_str (), appid.c_str ());
 
-    if (!helper.length () || !uuid.length ()) {
-        std::cerr << "Module name or Helper UUID is missing.\n";
+    if (!helper.length ()) {
+        ISF_SAVE_LOG ("Module name is missing\n");
+
+        std::cerr << "Module name is missing.\n";
         return -1;
     }
 
@@ -183,13 +186,13 @@ int main (int argc, char *argv [])
 //    if (daemon) scim_daemon ();
 
     helper_module.set_arg_info (argc, argv);
-    helper_module.run_helper (uuid, config_pointer, display);
+    helper_module.run_helper (appid, config_pointer, display);
     helper_module.unload ();
 
     if (!config_pointer.null ())
         config_pointer.reset ();
     ConfigBase::set (0);
-    ISF_SAVE_LOG ("Helper ISE (%s) is destroyed!!!\n", uuid.c_str ());
+    ISF_SAVE_LOG ("Helper ISE (%s) is destroyed!!!\n", appid.c_str ());
 }
 
 /*
