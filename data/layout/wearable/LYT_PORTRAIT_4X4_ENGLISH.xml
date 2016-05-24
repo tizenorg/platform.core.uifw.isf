@@ -41,7 +41,7 @@
         <rec auto_upper="true" multichar_state="2">f</rec>
       </key_value>
     </key>
-    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4">
+    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
       <image_label>
         <rec button="normal">w_sip_3x4_btn_ic_delete.png</rec>
         <rec button="pressed">w_sip_3x4_btn_ic_delete.png</rec>
@@ -85,7 +85,7 @@
         <rec auto_upper="true" multichar_state="2">o</rec>
       </key_value>
     </key>
-    <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4">
+    <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
       <image_label>
         <rec button="normal">w_sip_3x4_btn_ic_enter.png</rec>
         <rec button="pressed">w_sip_3x4_btn_ic_enter.png</rec>
@@ -132,7 +132,7 @@
         <rec auto_upper="true" multichar_state="3">z</rec>
       </key_value>
     </key>
-    <key key_type="control" image_label_type="IMAGE_3X4">
+    <key key_type="control" image_label_type="IMAGE_3X4_TOP">
       <image_label>
         <rec shift="off" button="normal">w_sip_3x4_btn_ic_shift.png</rec>
         <rec shift="on" button="normal">w_sip_3x4_btn_ic_shift.png</rec>
