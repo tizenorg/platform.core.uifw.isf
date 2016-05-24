@@ -149,14 +149,17 @@ int main (int argc, char *argv [])
 
     if (exec != String (SCIM_HELPER_LAUNCHER_PROGRAM)) {
         /* 3rd party shared object type IME */
-        uuid = helper = String ("lib") + exec.substr (exec.find_last_of (SCIM_PATH_DELIM) + 1);
+        helper = String ("lib") + exec.substr (exec.find_last_of (SCIM_PATH_DELIM) + 1);
+        uuid = String ("");
     }
 
     SCIM_DEBUG_MAIN(1) << "scim-helper-launcher: " << config << " " << display << " " << helper << " " << uuid << "\n";
     ISF_SAVE_LOG ("Helper ISE (%s %s) is launching...\n", helper.c_str (), uuid.c_str ());
 
-    if (!helper.length () || !uuid.length ()) {
-        std::cerr << "Module name or Helper UUID is missing.\n";
+    if (!helper.length ()) {
+        ISF_SAVE_LOG ("Module name is missing\n");
+
+        std::cerr << "Module name is missing.\n";
         return -1;
     }
 
