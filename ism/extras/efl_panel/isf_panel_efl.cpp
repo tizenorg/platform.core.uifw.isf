@@ -394,6 +394,8 @@ static bool               _is_click                         = true;
 static String             _initial_ise_uuid                 = String ("");
 static String             _locale_string                    = String ("");
 static ConfigPointer      _config;
+static Connection         _config_connection;
+
 static InfoManager       *_info_manager                      = 0;
 
 static clock_t            _clock_start;
@@ -7186,7 +7188,7 @@ int main (int argc, char *argv [])
     }
 
     /* Connect the configuration reload signal. */
-    _config->signal_connect_reload (slot (config_reload_cb));
+    _config_connection = _config->signal_connect_reload (slot (config_reload_cb));
 
 #if HAVE_ECOREX
     if (!efl_create_control_window ()) {
@@ -7354,8 +7356,6 @@ cleanup:
 
     unregister_edbus_signal_handler ();
 
-    elm_shutdown ();
-
     if (_info_manager) {
         try {
             _info_manager->stop ();
@@ -7364,11 +7364,15 @@ cleanup:
         }
         delete _info_manager;
     }
-
+    _config_connection.disconnect ();
     if (!_config.null ())
         _config.reset ();
+    ConfigBase::set (0);
+
     if (config_module)
         delete config_module;
+
+    elm_shutdown ();
 
     if ((display_name_c > 0) && new_argv [display_name_c]) {
         free (new_argv [display_name_c]);

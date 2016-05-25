@@ -2713,6 +2713,8 @@ reload_config_callback (const ConfigPointer &config)
 
 class WaylandPanelAgent: public PanelAgentBase
 {
+    Connection _config_connection;
+
 public:
     WaylandPanelAgent ()
         : PanelAgentBase ("wayland") {
@@ -2729,7 +2731,7 @@ public:
             return false;
         }
 
-        _config->signal_connect_reload (slot (reload_config_callback));
+        _config_connection = _config->signal_connect_reload (slot (reload_config_callback));
 
         return true;
     }
@@ -2738,6 +2740,7 @@ public:
     }
 
     void stop (void) {
+        _config_connection.disconnect ();
         isf_wsc_context_shutdown ();
     }
 
