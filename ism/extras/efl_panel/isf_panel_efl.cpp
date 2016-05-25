@@ -7285,6 +7285,8 @@ int main (int argc, char *argv [])
         setenv ("ELM_SCALE", buf, 1);
     }
 
+    setenv ("ELM_THEME", NULL, 1);
+
     signal (SIGQUIT, signalhandler);
     signal (SIGTERM, signalhandler);
     signal (SIGINT,  signalhandler);
