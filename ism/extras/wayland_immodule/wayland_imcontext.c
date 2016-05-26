@@ -258,13 +258,32 @@ utf8_offset_to_characters(const char *str, int offset)
 }
 
 static void
+send_cursor_location(WaylandIMContext *imcontext)
+{
+    Ecore_Evas *ee = NULL;
+    int canvas_x = 0, canvas_y = 0;
+
+    if (imcontext->canvas) {
+        ee = ecore_evas_ecore_evas_get(imcontext->canvas);
+        if (ee)
+            ecore_evas_geometry_get(ee, &canvas_x, &canvas_y, NULL, NULL);
+    }
+
+    if (imcontext->text_input) {
+        wl_text_input_set_cursor_rectangle(imcontext->text_input,
+                imcontext->cursor_location.x + canvas_x,
+                imcontext->cursor_location.y + canvas_y,
+                imcontext->cursor_location.width,
+                imcontext->cursor_location.height);
+    }
+}
+
+static void
 update_state(WaylandIMContext *imcontext)
 {
     char *surrounding = NULL;
     char *selection = NULL;
     int cursor_pos;
-    Ecore_Evas *ee;
-    int canvas_x = 0, canvas_y = 0;
 
     if (!imcontext->ctx)
         return;
@@ -286,19 +305,9 @@ update_state(WaylandIMContext *imcontext)
     if (selection)
         free(selection);
 
-    if (imcontext->canvas) {
-        ee = ecore_evas_ecore_evas_get(imcontext->canvas);
-        if (ee)
-            ecore_evas_geometry_get(ee, &canvas_x, &canvas_y, NULL, NULL);
-    }
+    send_cursor_location (imcontext);
 
     if (imcontext->text_input) {
-        wl_text_input_set_cursor_rectangle(imcontext->text_input,
-                imcontext->cursor_location.x + canvas_x,
-                imcontext->cursor_location.y + canvas_y,
-                imcontext->cursor_location.width,
-                imcontext->cursor_location.height);
-
         wl_text_input_commit_state(imcontext->text_input, ++imcontext->serial);
     }
 }
@@ -1217,7 +1226,6 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                                 Ecore_IMF_Event_Type  type,
                                 Ecore_IMF_Event      *event EINA_UNUSED)
 {
-
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get(ctx)) {
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
@@ -1246,7 +1254,8 @@ wayland_im_context_cursor_location_set(Ecore_IMF_Context *ctx, int x, int y, int
         imcontext->cursor_location.width = width;
         imcontext->cursor_location.height = height;
 
-        update_state(imcontext);
+        if (_focused_ctx == ctx)
+            send_cursor_location (imcontext);
     }
 }
 
