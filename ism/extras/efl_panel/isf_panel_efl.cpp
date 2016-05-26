@@ -7159,6 +7159,7 @@ int main (int argc, char *argv [])
         ret = -1;
         goto cleanup;
     }
+    ConfigBase::set (_config);
     check_time ("create config instance");
 
     try {
