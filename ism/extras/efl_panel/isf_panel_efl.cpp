@@ -7129,8 +7129,6 @@ int main (int argc, char *argv [])
         scim_daemon ();
     }
 
-    setenv ("ELM_THEME", "", 1);
-
     elm_init (argc, argv);
     check_time ("elm_init");
 
