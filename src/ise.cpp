@@ -535,10 +535,11 @@ ise_forward_key_event(sclulong key_event)
     LOGD("ic : %x, %x\n", ic, key_event);
 }
 
-static void set_caps_mode(sclint mode) {
+static void set_caps_mode(sclboolean mode) {
     if (g_ui) {
         if (g_ui->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
             g_ui->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
+            g_ui->set_autocapital_shift_state(!mode);
         }
     }
 }
@@ -1081,11 +1082,12 @@ ise_show(int ic)
                 if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
                     g_ui->set_autocapital_shift_state(TRUE);
                     g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
-                }
-                // normal layout means the AC is on
-                else {
+                } else {
                     ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
-                    g_ui->set_autocapital_shift_state(FALSE);
+                    // Auto Capital is supported only in normal layout
+                    if (g_keyboard_state.caps_mode) {
+                        g_ui->set_autocapital_shift_state(FALSE);
+                    }
                 }
             } else {
                 g_ui->set_autocapital_shift_state(TRUE);
