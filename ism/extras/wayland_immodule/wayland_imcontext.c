@@ -1016,8 +1016,10 @@ wayland_im_context_del(Ecore_IMF_Context *ctx)
     if (_focused_ctx == ctx)
         _focused_ctx = NULL;
 
-    if (_hide_req_ctx == ctx && _hide_timer)
+    if (_hide_req_ctx == ctx && _hide_timer) {
         _input_panel_hide(ctx, EINA_TRUE);
+        _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
+    }
 
     if (_show_req_ctx == ctx)
         _show_req_ctx = NULL;
