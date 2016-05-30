@@ -6034,26 +6034,6 @@ static void launch_helper (const char* exec, const char *name, const char *appid
     if (pid < 0) return;
 
     if (pid == 0) {
-#if HAVE_TTS
-        ui_close_tts ();
-#endif
-        ui_candidate_delete_check_size_timer ();
-        ui_candidate_delete_longpress_timer ();
-        ui_candidate_delete_destroy_timer ();
-
-        unregister_edbus_signal_handler ();
-
-        if (!_config.null ())
-            _config.reset ();
-        if (_info_manager) {
-            try {
-                _info_manager->stop ();
-            } catch (scim::Exception & e) {
-                std::cerr << "Exception is thrown from _panel_agent->stop (), error is " << e.what () << "\n";
-            }
-            delete _info_manager;
-        }
-
         const char *argv [] = { exec,
                            "--daemon",
                            "--config", config,
