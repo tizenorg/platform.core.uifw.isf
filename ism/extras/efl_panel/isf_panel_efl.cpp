@@ -6045,6 +6045,8 @@ static void launch_helper (const char* exec, const char *name, const char *appid
         SCIM_DEBUG_MAIN (2) << " Call scim-helper-launcher.\n";
         ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", name, appid);
 
+        unsetenv ("ELM_THEME");
+
         setsid ();
         LOGD ("launch execpath : %s\n", exec);
         execv (exec, const_cast<char **>(argv));
@@ -7108,6 +7110,9 @@ int main (int argc, char *argv [])
         check_time ("ISF Panel EFL run as daemon");
         scim_daemon ();
     }
+
+    /* No loading default theme to reduce heap memory */
+    setenv ("ELM_THEME", "", 1);
 
     elm_init (argc, argv);
     check_time ("elm_init");
