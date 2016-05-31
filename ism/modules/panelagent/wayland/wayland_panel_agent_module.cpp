@@ -414,6 +414,18 @@ _wsc_im_ctx_process_input_device_event(void *data, struct wl_input_method_contex
     isf_wsc_context_process_input_device_event(wsc_ctx, type, input_data, input_data_len);
 }
 
+static void
+_wsc_im_ctx_filter_key_event(void *data, struct wl_input_method_context *im_ctx, uint32_t serial, uint32_t time, uint32_t key, uint32_t state)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
+
+    if (wsc_ctx->key_handler)
+        (*wsc_ctx->key_handler)(wsc_ctx, serial, time, 0, key, "",
+            (wl_keyboard_key_state)state);
+}
+
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_reset,
      _wsc_im_ctx_content_type,
@@ -425,7 +437,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_input_panel_data,
      _wsc_im_ctx_bidi_direction,
      _wsc_im_ctx_cursor_position,
-     _wsc_im_ctx_process_input_device_event
+     _wsc_im_ctx_process_input_device_event,
+     _wsc_im_ctx_filter_key_event
 };
 
 static void
@@ -1571,7 +1584,7 @@ void
 isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                   uint32_t serial,
                                   uint32_t timestamp, uint32_t keycode, uint32_t symcode,
-                                  char *keyname,
+                                  char *_keyname,
                                   enum wl_keyboard_key_state state)
 
 {
@@ -1582,6 +1595,9 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 
     Eina_Bool ret = EINA_FALSE;
     KeyEvent key(symcode, wsc_ctx->modifiers);
+    char keyname[100];
+    xkb_keysym_to_utf8((xkb_keysym_t)symcode, keyname,sizeof(keyname));
+    LOGD ("%d:%s:%d", symcode, keyname, state);
     bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
 
     if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
@@ -1640,9 +1656,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
         }
     }
 
-    if (ret == EINA_FALSE) {
-        send_wl_key_event (wsc_ctx, key, false);
-    }
+    wl_input_method_context_filter_key_event_done (wsc_ctx->im_ctx, serial, ret);
 }
 
 static void
@@ -2251,6 +2265,13 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 
     if ((_focused_ic != NULL) && (_focused_ic != ic))
         return;
+    Eina_Bool ret = feed_key_event (ic, key, false);
+    if(ret == EINA_FALSE) {
+        uint32 _ret;
+        KeyEvent _key = key;
+        g_info_manager->process_key_event (_key, _ret);
+    }
+    return;
 
     //FIXME: filter_hotkeys should be added
     //if (filter_hotkeys (ic, _key) == false && process_key) {
