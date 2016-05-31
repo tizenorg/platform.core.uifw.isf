@@ -48,12 +48,6 @@ const double WILL_SHOW_TIMER_INTERVAL = 5.0;
 typedef struct _WSCContextISF      WSCContextISF;
 typedef struct _WSCContextISFImpl  WSCContextISFImpl;
 
-typedef void (*keyboard_input_key_handler_t)(WSCContextISF *wsc_ctx,
-                                             uint32_t serial,
-                                             uint32_t time, uint32_t keycode, uint32_t symcode,
-                                             char *keyname,
-                                             enum wl_keyboard_key_state state);
-
 struct weescim
 {
     struct wl_input_method *im;
@@ -64,22 +58,7 @@ struct weescim
 struct _WSCContextISF {
     weescim *ctx;
 
-    struct wl_keyboard *keyboard;
     struct wl_input_method_context *im_ctx;
-
-    struct xkb_context *xkb_context;
-
-    uint32_t modifiers;
-
-    struct xkb_keymap *keymap;
-    struct xkb_state *state;
-    xkb_mod_mask_t control_mask;
-    xkb_mod_mask_t alt_mask;
-    xkb_mod_mask_t shift_mask;
-
-    KeycodeRepository _keysym2keycode;
-
-    keyboard_input_key_handler_t key_handler;
 
     char *surrounding_text;
     char *preedit_str;
@@ -118,9 +97,8 @@ void isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Aut
 void isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction);
 void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                        uint32_t serial,
-                                       uint32_t timestamp, uint32_t key, uint32_t unicode,
-                                       char *keyname,
-                                       enum wl_keyboard_key_state state);
+                                       uint32_t timestamp, const char *keyname,
+                                       bool press, uint32_t modifiers);
 
 bool wsc_context_surrounding_get (WSCContextISF *wsc_ctx, char **text, int *cursor_pos);
 Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(WSCContextISF *wsc_ctx);
