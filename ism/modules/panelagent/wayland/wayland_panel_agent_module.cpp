@@ -56,7 +56,6 @@
 #include "isf_wsc_control_ui.h"
 
 #include <linux/input.h>
-#include <xkbcommon/xkbcommon.h>
 #include <sys/mman.h>
 #include "isf_debug.h"
 
@@ -237,6 +236,10 @@ static Input_Language                                   input_lang              
 
 #define WAYLAND_MODULE_CLIENT_ID (0)
 
+#define MOD_SHIFT_MASK      0x01
+#define MOD_ALT_MASK        0x02
+#define MOD_CONTROL_MASK    0x04
+
 //////////////////////////////wayland_panel_agent_module begin//////////////////////////////////////////////////
 
 #define scim_module_init wayland_LTX_scim_module_init
@@ -415,6 +418,17 @@ _wsc_im_ctx_process_input_device_event(void *data, struct wl_input_method_contex
     isf_wsc_context_process_input_device_event(wsc_ctx, type, input_data, input_data_len);
 }
 
+static void
+_wsc_im_ctx_filter_key_event(void *data, struct wl_input_method_context *im_ctx, uint32_t serial, uint32_t time, const char *keyname, uint32_t state, uint32_t modifiers)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
+
+    isf_wsc_context_filter_key_event(wsc_ctx, serial, time, keyname,
+            ((wl_keyboard_key_state)state) == WL_KEYBOARD_KEY_STATE_PRESSED, modifiers);
+}
+
+
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_reset,
      _wsc_im_ctx_content_type,
@@ -426,176 +440,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_input_panel_data,
      _wsc_im_ctx_bidi_direction,
      _wsc_im_ctx_cursor_position,
-     _wsc_im_ctx_process_input_device_event
-};
-
-static void
-_init_keysym2keycode(WSCContextISF *wsc_ctx)
-{
-    uint32_t i = 0;
-    uint32_t code;
-    uint32_t num_syms;
-    const xkb_keysym_t *syms;
-
-    if (!wsc_ctx || !wsc_ctx->state)
-        return;
-
-    for (i = 0; i < 256; i++) {
-        code = i + 8;
-        num_syms = xkb_key_get_syms(wsc_ctx->state, code, &syms);
-
-        if (num_syms == 1)
-            wsc_ctx->_keysym2keycode[syms[0]] = i;
-    }
-}
-
-static void
-_fini_keysym2keycode(WSCContextISF *wsc_ctx)
-{
-    wsc_ctx->_keysym2keycode.clear();
-}
-
-static void
-_wsc_im_keyboard_keymap(void *data,
-        struct wl_keyboard *wl_keyboard,
-        uint32_t format,
-        int32_t fd,
-        uint32_t size)
-{
-    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
-    char *map_str;
-
-    if (!wsc_ctx) return;
-
-    _fini_keysym2keycode(wsc_ctx);
-
-    if (wsc_ctx->state) {
-        xkb_state_unref(wsc_ctx->state);
-        wsc_ctx->state = NULL;
-    }
-
-    if (wsc_ctx->keymap) {
-        xkb_map_unref(wsc_ctx->keymap);
-        wsc_ctx->keymap = NULL;
-    }
-
-    if (format != WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1) {
-        close(fd);
-        return;
-    }
-
-    map_str = (char*)mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
-    if (map_str == MAP_FAILED) {
-        close(fd);
-        return;
-    }
-
-    wsc_ctx->keymap =
-        xkb_map_new_from_string(wsc_ctx->xkb_context,
-                map_str,
-                XKB_KEYMAP_FORMAT_TEXT_V1,
-                (xkb_keymap_compile_flags)0);
-
-    munmap(map_str, size);
-    close(fd);
-
-    if (!wsc_ctx->keymap) {
-        LOGW ("failed to compile keymap\n");
-        return;
-    }
-
-    wsc_ctx->state = xkb_state_new(wsc_ctx->keymap);
-    if (!wsc_ctx->state) {
-        LOGW ("failed to create XKB state\n");
-        xkb_map_unref(wsc_ctx->keymap);
-        return;
-    }
-
-    wsc_ctx->control_mask =
-        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Control");
-    wsc_ctx->alt_mask =
-        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Mod1");
-    wsc_ctx->shift_mask =
-        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Shift");
-
-    LOGD ("create _keysym2keycode\n");
-    _init_keysym2keycode(wsc_ctx);
-}
-
-static void
-_wsc_im_keyboard_key(void *data,
-        struct wl_keyboard *wl_keyboard,
-        uint32_t serial,
-        uint32_t time,
-        uint32_t key,
-        uint32_t state_w)
-{
-    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
-    uint32_t code;
-    uint32_t num_syms;
-    const xkb_keysym_t *syms;
-    xkb_keysym_t sym;
-    char keyname[64] = {0};
-    enum wl_keyboard_key_state state = (wl_keyboard_key_state)state_w;
-
-    if (!wsc_ctx || !wsc_ctx->state)
-        return;
-
-    code = key + 8;
-    num_syms = xkb_key_get_syms(wsc_ctx->state, code, &syms);
-
-    sym = XKB_KEY_NoSymbol;
-    if (num_syms == 1)
-    {
-        sym = syms[0];
-        xkb_keysym_get_name(sym, keyname, 64);
-    }
-
-    if (wsc_ctx->key_handler)
-        (*wsc_ctx->key_handler)(wsc_ctx, serial, time, code, sym, keyname,
-                state);
-}
-
-static void
-_wsc_im_keyboard_modifiers(void *data,
-        struct wl_keyboard *wl_keyboard,
-        uint32_t serial,
-        uint32_t mods_depressed,
-        uint32_t mods_latched,
-        uint32_t mods_locked,
-        uint32_t group)
-{
-    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
-    if (!wsc_ctx || !wsc_ctx->state)
-        return;
-
-    struct wl_input_method_context *context = wsc_ctx->im_ctx;
-    xkb_mod_mask_t mask;
-
-    xkb_state_update_mask(wsc_ctx->state, mods_depressed,
-            mods_latched, mods_locked, 0, 0, group);
-    mask = xkb_state_serialize_mods(wsc_ctx->state,
-            (xkb_state_component)(XKB_STATE_DEPRESSED | XKB_STATE_LATCHED));
-
-    wsc_ctx->modifiers = 0;
-    if (mask & wsc_ctx->control_mask)
-        wsc_ctx->modifiers |= SCIM_KEY_ControlMask;
-    if (mask & wsc_ctx->alt_mask)
-        wsc_ctx->modifiers |= SCIM_KEY_AltMask;
-    if (mask & wsc_ctx->shift_mask)
-        wsc_ctx->modifiers |= SCIM_KEY_ShiftMask;
-
-    wl_input_method_context_modifiers(context, serial,
-            mods_depressed, mods_depressed,
-            mods_latched, group);
-}
-
-static const struct wl_keyboard_listener wsc_im_keyboard_listener = {
-    _wsc_im_keyboard_keymap,
-    NULL, /* enter */
-    NULL, /* leave */
-    _wsc_im_keyboard_key,
-    _wsc_im_keyboard_modifiers
+     _wsc_im_ctx_process_input_device_event,
+     _wsc_im_ctx_filter_key_event
 };
 
 static void
@@ -609,21 +455,10 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
         return;
     }
 
-    wsc_ctx->xkb_context = xkb_context_new((xkb_context_flags)0);
-    if (wsc_ctx->xkb_context == NULL) {
-        LOGW ("Failed to create XKB context\n");
-        delete wsc_ctx;
-        return;
-    }
-
     wsc_ctx->id = text_input_id;
     wsc->wsc_ctx = wsc_ctx;
     wsc_ctx->ctx = wsc;
-    wsc_ctx->state = NULL;
-    wsc_ctx->keymap = NULL;
-    wsc_ctx->modifiers = 0;
     wsc_ctx->surrounding_text = NULL;
-    wsc_ctx->key_handler = isf_wsc_context_filter_key_event;
 
     get_language(&wsc_ctx->language);
 
@@ -633,10 +468,6 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
 
     wsc_ctx->im_ctx = im_ctx;
     wl_input_method_context_add_listener (im_ctx, &wsc_im_context_listener, wsc_ctx);
-
-    wsc_ctx->keyboard = wl_input_method_context_grab_keyboard(im_ctx);
-    if (wsc_ctx->keyboard)
-        wl_keyboard_add_listener(wsc_ctx->keyboard, &wsc_im_keyboard_listener, wsc_ctx);
 
     if (wsc_ctx->language)
         wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
@@ -665,23 +496,6 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     WSCContextISF *wsc_ctx = wsc->wsc_ctx;
 
     isf_wsc_context_focus_out (wsc_ctx);
-
-    if (wsc_ctx->keyboard) {
-        wl_keyboard_destroy (wsc_ctx->keyboard);
-        wsc_ctx->keyboard = NULL;
-    }
-
-    _fini_keysym2keycode (wsc_ctx);
-
-    if (wsc_ctx->state) {
-        xkb_state_unref (wsc_ctx->state);
-        wsc_ctx->state = NULL;
-    }
-
-    if (wsc_ctx->keymap) {
-        xkb_map_unref (wsc_ctx->keymap);
-        wsc_ctx->keymap = NULL;
-    }
 
     if (wsc_ctx->im_ctx) {
         wl_input_method_context_destroy (wsc_ctx->im_ctx);
@@ -1571,10 +1385,8 @@ bool is_number_key(const char *str)
 void
 isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                   uint32_t serial,
-                                  uint32_t timestamp, uint32_t keycode, uint32_t symcode,
-                                  char *keyname,
-                                  enum wl_keyboard_key_state state)
-
+                                  uint32_t timestamp, const char *keyname,
+                                  bool press, uint32_t modifiers)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
@@ -1582,12 +1394,21 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
     if (!wsc_ctx) return;
 
     Eina_Bool ret = EINA_FALSE;
-    KeyEvent key(symcode, wsc_ctx->modifiers);
+    String _keyname(keyname);
+    KeyEvent key(_keyname);
+    LOGD ("keyname: %s, keycode: %d, press: %d, modifiers: %d", keyname, key.code, press, modifiers);
     bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
 
-    if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
-        key.mask = SCIM_KEY_ReleaseMask;
-    } else if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+    if (modifiers & MOD_SHIFT_MASK)
+        key.mask |= SCIM_KEY_ShiftMask;
+    if (modifiers & MOD_ALT_MASK)
+        key.mask |= SCIM_KEY_AltMask;
+    if (modifiers & MOD_CONTROL_MASK)
+        key.mask |= SCIM_KEY_ControlMask;
+
+    if (!press) {
+        key.mask |= SCIM_KEY_ReleaseMask;
+    } else {
         if (!ignore_key) {
             /* Hardware input detect code */
 #ifdef _TV
@@ -1633,7 +1454,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
         }
 
         if (ret == EINA_FALSE) {
-            if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+            if (press) {
                 if (key.code == SCIM_KEY_space ||
                     key.code == SCIM_KEY_KP_Space)
                     autoperiod_insert (wsc_ctx);
@@ -1641,9 +1462,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
         }
     }
 
-    if (ret == EINA_FALSE) {
-        send_wl_key_event (wsc_ctx, key, false);
-    }
+    wl_input_method_context_filter_key_event_done (wsc_ctx->im_ctx, serial, ret);
 }
 
 static void
@@ -2252,6 +2071,13 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 
     if ((_focused_ic != NULL) && (_focused_ic != ic))
         return;
+    Eina_Bool ret = feed_key_event (ic, key, false);
+    if(ret == EINA_FALSE) {
+        uint32 _ret;
+        KeyEvent _key = key;
+        g_info_manager->process_key_event (_key, _ret);
+    }
+    return;
 
     //FIXME: filter_hotkeys should be added
     //if (filter_hotkeys (ic, _key) == false && process_key) {
@@ -2463,10 +2289,6 @@ finalize (void)
     _scim_initialized = false;
     panel_finalize ();
 }
-
-#define MOD_SHIFT_MASK		0x01
-#define MOD_ALT_MASK		0x02
-#define MOD_CONTROL_MASK	0x04
 
 static uint32_t _keyname_to_keysym (uint32_t keyname, uint32_t *modifiers)
 {
