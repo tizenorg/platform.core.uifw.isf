@@ -26,7 +26,7 @@ pthread_cond_t g_ws_query_condition = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t g_ws_query_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 bool g_ws_server_exit = false;
-struct libwebsocket_context *g_ws_server_context = NULL;
+struct lws_context *g_ws_server_context = NULL;
 
 WebSocketServer* WebSocketServer::m_current_instance = NULL;
 static Remote_Input* remote_input_impl= NULL;
@@ -139,10 +139,9 @@ struct per_session_data__http {
 
 /* this protocol server (always the first one) just knows how to do HTTP */
 
-static int callback_http(struct libwebsocket_context *context,
-		struct libwebsocket *wsi,
-		enum libwebsocket_callback_reasons reason, void *user,
-							   void *in, size_t len)
+static int callback_http(struct lws *wsi,
+        enum lws_callback_reasons reason,
+        void *user, void *in, size_t len)
 {
     LOGD(" ");
 #if 0
@@ -196,7 +195,7 @@ static int callback_http(struct libwebsocket_context *context,
 			 * (too small for partial)
 			 */
 
-			n = libwebsocket_write(wsi, buffer,
+			n = lws_write(wsi, buffer,
 				   p - buffer, LWS_WRITE_HTTP);
 
 			if (n < 0) {
@@ -206,7 +205,7 @@ static int callback_http(struct libwebsocket_context *context,
 			/*
 			 * book us a LWS_CALLBACK_HTTP_WRITEABLE callback
 			 */
-			libwebsocket_callback_on_writable(context, wsi);
+			lws_callback_on_writable(wsi);
 			break;
 		}
 
@@ -218,7 +217,7 @@ static int callback_http(struct libwebsocket_context *context,
 
 		sprintf(buf, LOCAL_RESOURCE_PATH"%s", whitelist[n].urlpath);
 
-		if (libwebsockets_serve_http_file(context, wsi, buf, whitelist[n].mimetype))
+		if (lws_serve_http_file(wsi, buf, whitelist[n].mimetype, NULL, NULL))
 			return -1; /* through completion or error, close the socket */
 
 		/*
@@ -251,7 +250,7 @@ static int callback_http(struct libwebsocket_context *context,
 			 * because it's HTTP and not websocket, don't need to take
 			 * care about pre and postamble
 			 */
-			m = libwebsocket_write(wsi, buffer, n, LWS_WRITE_HTTP);
+			m = lws_write(wsi, buffer, n, LWS_WRITE_HTTP);
 			if (m < 0)
 				/* write failed, close conn */
 				goto bail;
@@ -260,7 +259,7 @@ static int callback_http(struct libwebsocket_context *context,
 				lseek(pss->fd, m - n, SEEK_CUR);
 
 		} while (!lws_send_pipe_choked(wsi));
-		libwebsocket_callback_on_writable(context, wsi);
+		lws_callback_on_writable(wsi);
 		break;
 
 bail:
@@ -338,14 +337,12 @@ struct per_session_data__keyboard {
     int valid;
 };
 
-static int
-callback_keyboard(struct libwebsocket_context *context,
-struct libwebsocket *wsi,
-    enum libwebsocket_callback_reasons reason,
-    void *user, void *in, size_t len);
+static int callback_keyboard(struct lws *wsi,
+        enum lws_callback_reasons reason,
+        void *user, void *in, size_t len);
 
 /* list of supported protocols and callbacks */
-static struct libwebsocket_protocols protocols[] = {
+static struct lws_protocols protocols[] = {
     /* first protocol must always be HTTP handler */
     {
         "http-only",		/* name */
@@ -362,11 +359,9 @@ static struct libwebsocket_protocols protocols[] = {
     { NULL, NULL, 0, 0 } /* terminator */
 };
 
-static int
-callback_keyboard(struct libwebsocket_context *context,
-            struct libwebsocket *wsi,
-            enum libwebsocket_callback_reasons reason,
-                           void *user, void *in, size_t len)
+static int callback_keyboard(struct lws *wsi,
+        enum lws_callback_reasons reason,
+        void *user, void *in, size_t len)
 {
     LOGD(" %d",reason);
     static int last_session_id = 0;
@@ -383,7 +378,9 @@ callback_keyboard(struct libwebsocket_context *context,
         pss->session_id = ++last_session_id;
         LOGD("LWS_CALLBACK_ESTABLISHED : %d", pss->session_id);
         //pss->valid = false;
-        libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+        if (g_ws_server_context) {
+            lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+        }
         break;
 
     case LWS_CALLBACK_CLOSED:
@@ -398,12 +395,11 @@ callback_keyboard(struct libwebsocket_context *context,
                 std::queue<ISE_MESSAGE>& messages = agent->get_send_message_queue();
                 while (messages.size() > 0) {
                     ISE_MESSAGE &message = messages.front();
-                    //n = sprintf((char *)p, "%s %s", message.command.c_str(), message.value.c_str());
                     std::string str = CISEMessageSerializer::serialize(message);
                     LOGD("SEND_WEBSOCKET_MESSAGE : %s", str.c_str());
                     n = snprintf((char *)p, bufsize, "%s", str.c_str());
                     /* too small for partial */
-                    n = libwebsocket_write(wsi, p, n, LWS_WRITE_TEXT);
+                    n = lws_write(wsi, p, n, LWS_WRITE_TEXT);
                     messages.pop();
                 }
                 pthread_mutex_unlock(&g_ws_server_mutex);
@@ -487,7 +483,7 @@ void *process_ws_server(void *data)
          * the number of ms in the second argument.
          */
 
-        libwebsocket_service(g_ws_server_context, 50);
+        lws_service(g_ws_server_context, 50);
     }
     return NULL;
 }
@@ -547,7 +543,7 @@ bool WebSocketServer::init()
     info.iface = NULL;
     info.protocols = protocols;
 #ifndef LWS_NO_EXTENSIONS
-    info.extensions = libwebsocket_get_internal_extensions();
+    info.extensions = lws_get_internal_extensions();
 #endif
     info.ssl_cert_filepath = NULL;
     info.ssl_private_key_filepath = NULL;
@@ -566,7 +562,7 @@ bool WebSocketServer::init()
     int retry_num = 0;
 
     do {
-        g_ws_server_context = libwebsocket_create_context(&info);
+        g_ws_server_context = lws_create_context(&info);
         LOGD("libwebsocket context : %p", g_ws_server_context);
         sleep(1);
     } while (g_ws_server_context == NULL && retry_num++ < max_retry_num);
@@ -577,7 +573,10 @@ bool WebSocketServer::init()
     pthread_cond_init(&g_ws_query_condition, NULL);
 
     if (g_ws_server_context) {
-        pthread_create(&g_ws_server_thread, NULL, &process_ws_server, NULL);
+        if (pthread_create(&g_ws_server_thread, NULL, &process_ws_server, NULL) != 0) {
+            g_ws_server_thread = (pthread_t)NULL;
+            ret = false;
+        }
     } else {
         ret = false;
     }
@@ -612,7 +611,7 @@ bool WebSocketServer::exit()
 
     pthread_mutex_destroy(&g_ws_server_mutex);
 
-    libwebsocket_context_destroy(g_ws_server_context);
+    lws_context_destroy(g_ws_server_context);
 
     return true;
 }
@@ -645,7 +644,11 @@ void WebSocketServer::on_init()
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_exit()
@@ -659,7 +662,11 @@ void WebSocketServer::on_exit()
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_focus_in(int ic)
@@ -674,7 +681,11 @@ void WebSocketServer::on_focus_in(int ic)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_focus_out(int ic)
@@ -689,7 +700,11 @@ void WebSocketServer::on_focus_out(int ic)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_show(int ic)
@@ -704,9 +719,11 @@ void WebSocketServer::on_show(int ic)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
-
-    LOGD("put into send message buffer");
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_hide(int ic)
@@ -721,7 +738,11 @@ void WebSocketServer::on_hide(int ic)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_set_rotation(int degree)
@@ -736,7 +757,11 @@ void WebSocketServer::on_set_rotation(int degree)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_update_cursor_position(int ic, int cursor_pos)
@@ -752,7 +777,11 @@ void WebSocketServer::on_update_cursor_position(int ic, int cursor_pos)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_set_language(unsigned int language)
@@ -775,7 +804,11 @@ void WebSocketServer::on_set_language(unsigned int language)
         m_send_message_queue.push(message);
         pthread_mutex_unlock(&g_ws_server_mutex);
 
-        libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+        if (g_ws_server_context) {
+            lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+        } else {
+            LOGD("WARNING : g_ws_server_context is NULL");
+        }
     }
 }
 
@@ -791,7 +824,11 @@ void WebSocketServer::on_set_imdata(char *buf, unsigned int len)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_get_imdata(char **buf, unsigned int *len)
@@ -805,7 +842,11 @@ void WebSocketServer::on_get_imdata(char **buf, unsigned int *len)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 
     wait_for_reply_message();
 
@@ -850,7 +891,11 @@ void WebSocketServer::on_set_return_key_type(unsigned int type)
         m_send_message_queue.push(message);
         pthread_mutex_unlock(&g_ws_server_mutex);
 
-        libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+        if (g_ws_server_context) {
+            lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+        } else {
+            LOGD("WARNING : g_ws_server_context is NULL");
+        }
     }
 }
 
@@ -865,12 +910,14 @@ void WebSocketServer::on_get_return_key_type(unsigned int *type)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for GET_RETURN_KEY_TYPE message */
     if (process_recved_messages_until_reply_found(
@@ -885,7 +932,6 @@ void WebSocketServer::on_get_return_key_type(unsigned int *type)
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 void WebSocketServer::on_set_return_key_disable(unsigned int disabled)
@@ -908,13 +954,16 @@ void WebSocketServer::on_set_return_key_disable(unsigned int disabled)
         m_send_message_queue.push(message);
         pthread_mutex_unlock(&g_ws_server_mutex);
 
-        libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+        if (g_ws_server_context) {
+            lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+        } else {
+            LOGD("WARNING : g_ws_server_context is NULL");
+        }
     }
 }
 
 void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
 {
-    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_RETURN_KEY_DISABLE];
@@ -923,12 +972,14 @@ void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for GET_RETURN_KEY_DISABLE message */
     if (process_recved_messages_until_reply_found(
@@ -943,19 +994,17 @@ void WebSocketServer::on_get_return_key_disable(unsigned int *disabled)
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 void WebSocketServer::on_set_layout(unsigned int layout)
 {
-    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_SET_LAYOUT];
 
     bool found = false;
     for (unsigned int loop = 0;loop < sizeof(ISE_LAYOUT_TYPES) / sizeof(ISE_TYPE_VALUE_STRING);loop++) {
-        if (layout == ISE_LAYOUT_TYPES[loop].type_value) {
+        if (layout == (unsigned int)ISE_LAYOUT_TYPES[loop].type_value) {
             message.values.push_back(ISE_LAYOUT_TYPES[loop].type_string);
             found = true;
         }
@@ -966,13 +1015,16 @@ void WebSocketServer::on_set_layout(unsigned int layout)
         m_send_message_queue.push(message);
         pthread_mutex_unlock(&g_ws_server_mutex);
 
-        libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+        if (g_ws_server_context) {
+            lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+        } else {
+            LOGD("WARNING : g_ws_server_context is NULL");
+        }
     }
 }
 
 void WebSocketServer::on_get_layout(unsigned int *layout)
 {
-    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_GET_LAYOUT];
@@ -981,12 +1033,14 @@ void WebSocketServer::on_get_layout(unsigned int *layout)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for GET_LAYOUT message */
     if (process_recved_messages_until_reply_found(
@@ -1001,12 +1055,10 @@ void WebSocketServer::on_get_layout(unsigned int *layout)
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 void WebSocketServer::on_reset_input_context(int ic)
 {
-    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_PLAIN];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_RESET_INPUT_CONTEXT];
@@ -1016,12 +1068,15 @@ void WebSocketServer::on_reset_input_context(int ic)
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 }
 
 void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask, unsigned int layout, unsigned int *ret)
 {
-    LOGD(" ");
     ISE_MESSAGE message;
     message.type = ISE_MESSAGE_TYPE_STRINGS[ISE_MESSAGE_TYPE_QUERY];
     message.command = ISE_MESSAGE_COMMAND_STRINGS[ISE_MESSAGE_COMMAND_PROCESS_KEY_EVENT];
@@ -1033,12 +1088,14 @@ void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask,
     m_send_message_queue.push(message);
     pthread_mutex_unlock(&g_ws_server_mutex);
 
-    libwebsocket_callback_on_writable_all_protocol(&protocols[PROTOCOL_KEYBOARD]);
+    if (g_ws_server_context) {
+        lws_callback_on_writable_all_protocol(g_ws_server_context, &protocols[PROTOCOL_KEYBOARD]);
+    } else {
+        LOGD("WARNING : g_ws_server_context is NULL");
+    }
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for PROCESS_KEY_EVENT message */
     if (process_recved_messages_until_reply_found(
@@ -1053,30 +1110,25 @@ void WebSocketServer::on_process_key_event(unsigned int code, unsigned int mask,
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 WebSocketServer* WebSocketServer::get_current_instance()
 {
-    LOGD(" ");
     return m_current_instance;
 }
 
 std::queue<ISE_MESSAGE>& WebSocketServer::get_send_message_queue()
 {
-    LOGD(" ");
     return m_send_message_queue;
 }
 
 std::queue<ISE_MESSAGE>& WebSocketServer::get_recv_message_queue()
 {
-    LOGD(" ");
     return m_recv_message_queue;
 }
 
 Ecore_Pipe* WebSocketServer::get_recv_message_pipe()
 {
-    LOGD(" ");
     return m_recv_message_pipe;
 }
 
