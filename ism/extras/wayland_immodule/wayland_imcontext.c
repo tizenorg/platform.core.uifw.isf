@@ -41,6 +41,11 @@
 #define LOG_TAG "IMMODULE"
 
 #define HIDE_TIMER_INTERVAL     0.05
+#define WAIT_FOR_FILTER_DONE_SECOND 2
+
+#define MOD_SHIFT_MASK		0x01
+#define MOD_ALT_MASK		0x02
+#define MOD_CONTROL_MASK	0x04
 
 static Eina_Bool _clear_hide_timer();
 static Ecore_Timer *_hide_timer  = NULL;
@@ -117,6 +122,13 @@ struct _WaylandIMContext
 
     void *input_panel_data;
     uint32_t input_panel_data_length;
+
+    struct
+    {
+        uint32_t serial;
+        uint32_t state;
+    } last_key_event_filter;
+    Eina_List *keysym_list;
     //
 };
 
@@ -255,6 +267,7 @@ static void _win_focus_out_handler_del ()
 static void
 _send_input_panel_hide_request(Ecore_IMF_Context *ctx)
 {
+    LOGD ("");
     // TIZEN_ONLY(20150708): Support back key
     _hide_req_ctx = NULL;
     //
@@ -286,6 +299,8 @@ _input_panel_hide_timer_start(void *data)
 static void
 _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
 {
+    LOGD ("");
+
     if (!get_using_ctx()) {
         LOGW("Can't hide input_panel because there is no using context!!");
         return;
@@ -810,7 +825,7 @@ text_input_modifiers_map(void                 *data,
                          struct wl_array      *map)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
-
+    LOGD ("");
     imcontext->shift_mask = modifiers_get_mask(map, "Shift");
     imcontext->control_mask = modifiers_get_mask(map, "Control");
     imcontext->alt_mask = modifiers_get_mask(map, "Mod1");
@@ -869,10 +884,16 @@ text_input_keysym(void                 *data,
     if (modifiers & imcontext->alt_mask)
         e->modifiers |= ECORE_EVENT_MODIFIER_ALT;
 
-    if (state)
-        ecore_event_add(ECORE_EVENT_KEY_DOWN, e, NULL, NULL);
-    else
-        ecore_event_add(ECORE_EVENT_KEY_UP, e, NULL, NULL);
+    if (eina_list_count(imcontext->keysym_list)) {
+        e->data = (void *)(state ? ECORE_EVENT_KEY_DOWN : ECORE_EVENT_KEY_UP);
+        imcontext->keysym_list = eina_list_prepend(imcontext->keysym_list, e);
+    }
+    else {
+        if (state)
+            ecore_event_add(ECORE_EVENT_KEY_DOWN, e, NULL, NULL);
+        else
+            ecore_event_add(ECORE_EVENT_KEY_UP, e, NULL, NULL);
+    }
 }
 
 static void
@@ -905,7 +926,7 @@ text_input_input_panel_state(void                 *data EINA_UNUSED,
 {
     // TIZEN_ONLY(20150708): Support input panel state callback
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
-
+    LOGD("input panel state: %d", state);
     switch (state) {
         case WL_TEXT_INPUT_INPUT_PANEL_STATE_HIDE:
             _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
@@ -1154,6 +1175,21 @@ text_input_get_surrounding_text (void                 *data,
     }
     close(fd);
 }
+
+static void
+text_input_filter_key_event_done(void                 *data,
+                                 struct wl_text_input *text_input EINA_UNUSED,
+                                 uint32_t              serial,
+                                 uint32_t              state)
+{
+    LOGD("serial:%d,state:%d", serial, state);
+    WaylandIMContext *imcontext = (WaylandIMContext *)data;
+    if (!imcontext) return;
+
+    imcontext->last_key_event_filter.serial = serial;
+    imcontext->last_key_event_filter.state = state;
+}
+
 //
 
 static const struct wl_text_input_listener text_input_listener =
@@ -1177,7 +1213,8 @@ static const struct wl_text_input_listener text_input_listener =
     text_input_input_panel_geometry,
     text_input_input_panel_data,
     text_input_get_selection_text,
-    text_input_get_surrounding_text
+    text_input_get_surrounding_text,
+    text_input_filter_key_event_done
     //
 };
 
@@ -1237,6 +1274,10 @@ wayland_im_context_add(Ecore_IMF_Context *ctx)
 
     imcontext->ctx = ctx;
     imcontext->input_panel_layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
+    imcontext->keysym_list = NULL;
+    imcontext->shift_mask = MOD_SHIFT_MASK;
+    imcontext->control_mask = MOD_CONTROL_MASK;
+    imcontext->alt_mask = MOD_ALT_MASK;
 
     imcontext->text_input =
         wl_text_input_manager_create_text_input(imcontext->text_input_manager);
@@ -1251,6 +1292,7 @@ wayland_im_context_del (Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
+    Ecore_Event_Key *ev;
     LOGD ("context_del. ctx : %p", ctx);
 
     if (!imcontext) return;
@@ -1291,6 +1333,10 @@ wayland_im_context_del (Ecore_IMF_Context *ctx)
         wl_text_input_destroy (imcontext->text_input);
 
     clear_preedit (imcontext);
+
+    EINA_LIST_FREE(imcontext->keysym_list, ev) {
+        free(ev);
+    }
 }
 
 EAPI void
@@ -1471,6 +1517,8 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                                 Ecore_IMF_Event_Type  type,
                                 Ecore_IMF_Event      *event EINA_UNUSED)
 {
+    Eina_Bool ret = EINA_FALSE;
+
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get(ctx)) {
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
@@ -1480,9 +1528,50 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
             else
                 LOGE ("Can't show IME because there is no focus. ctx : %p\n", ctx);
         }
+    } else if (type == ECORE_IMF_EVENT_KEY_UP || type == ECORE_IMF_EVENT_KEY_DOWN) {
+        Ecore_Event_Key *ev =  (Ecore_Event_Key *)event;
+        WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+        if (!imcontext)
+            return EINA_FALSE;
+
+        int serial = imcontext->serial++;
+        double start_time = ecore_time_get();
+
+        uint32_t modifiers = 0;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+            modifiers |= imcontext->shift_mask;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+            modifiers |= imcontext->control_mask;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+            modifiers |= imcontext->alt_mask;
+
+        LOGD ("ev:modifiers=%d, modifiers=%d, shift_mask=%d, control_mask=%d, alt_mask=%d", ev->modifiers, modifiers, imcontext->shift_mask, imcontext->control_mask, imcontext->alt_mask);
+        wl_text_input_filter_key_event(imcontext->text_input, serial, ev->timestamp, ev->keyname,
+                                       type == ECORE_IMF_EVENT_KEY_UP? WL_KEYBOARD_KEY_STATE_RELEASED : WL_KEYBOARD_KEY_STATE_PRESSED,
+                                       modifiers);
+
+        while (ecore_time_get() - start_time < WAIT_FOR_FILTER_DONE_SECOND){
+            wl_display_dispatch(ecore_wl_display_get());
+            if (imcontext->last_key_event_filter.serial == serial) {
+                ret = imcontext->last_key_event_filter.state;
+                break;
+            }
+        }
+
+        LOGD ("eclipse : %fs, serial (last,require) : (%d,%d)", (ecore_time_get() - start_time), imcontext->last_key_event_filter.serial, serial);
+
+        if (eina_list_count (imcontext->keysym_list)) {
+            Eina_List *n = eina_list_last(imcontext->keysym_list);
+            ev = (Ecore_Event_Key *)eina_list_data_get(n);
+            int type = (int)ev->data;
+
+            ev->data = NULL;
+            ecore_event_add(type, ev, NULL, NULL);
+            imcontext->keysym_list = eina_list_remove_list(imcontext->keysym_list, n);
+        }
     }
 
-    return EINA_FALSE;
+    return ret;
 }
 
 EAPI void
