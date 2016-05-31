@@ -1056,18 +1056,18 @@ HelperAgent::filter_event ()
                 KeyEvent key;
                 uint32 ret = 0;
                 uint32 serial = 0;
-                if (m_impl->recv.get_data (key) && m_impl->recv.get_data (serial))
+                if (m_impl->recv.get_data (key) && m_impl->recv.get_data (serial)) {
                     m_impl->signal_process_key_event(this, key, ret);
+                    if (ret == 0)
+                        if (!m_impl->si.null ())
+                        {
+                            ret = m_impl->si->process_key_event (key);
+                            LOGD("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
+                        }
+                    m_impl->process_key_event_done (key, ret, serial);
+                }
                 else
                     LOGW ("wrong format of transaction\n");
-                if (ret == 0)
-                    if (!m_impl->si.null ())
-                    {
-                        ret = m_impl->si->process_key_event (key);
-                        LOGD("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
-                    }
-
-                m_impl->process_key_event_done (key, ret, serial);
                 break;
             }
             case ISM_TRANS_CMD_SET_LAYOUT:
@@ -1509,7 +1509,17 @@ HelperAgent::send_key_event (int            ic,
     }
 
     bool ret = false;
-    if (!m_impl->si.null ()) {
+
+    if (key.code <= 0x7F ||
+        (key.code >= SCIM_KEY_BackSpace && key.code <= SCIM_KEY_Delete) ||
+        (key.code >= SCIM_KEY_Home && key.code <= SCIM_KEY_Hyper_R)) {
+        // ascii code and function keys
+        ret = false;
+    } else {
+        ret = true;
+    }
+
+    if (ret && (!m_impl->si.null ())) {
         ret = m_impl->si->process_key_event (key);
         LOGD ("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
     }
