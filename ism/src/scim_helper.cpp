@@ -1498,7 +1498,17 @@ HelperAgent::send_key_event (int            ic,
     }
 
     bool ret = false;
-    if (!m_impl->si.null ()) {
+
+    if (key.code <= 0x7F ||
+        (key.code >= SCIM_KEY_BackSpace && key.code <= SCIM_KEY_Delete) ||
+        (key.code >= SCIM_KEY_Home && key.code <= SCIM_KEY_Hyper_R)) {
+        // ascii code and function keys
+        ret = false;
+    } else {
+        ret = true;
+    }
+
+    if (ret && (!m_impl->si.null ())) {
         ret = m_impl->si->process_key_event (key);
         LOGD ("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
     }
