@@ -548,6 +548,42 @@ public:
     virtual void socket_update_surrounding_text (int client, uint32 context,const String& uuid, String& text, uint32 cursor);
 
     /**
+     * @brief socket_remoteinput_focus_in.
+     *
+     * @param
+     *
+     * @return none.
+     */
+    virtual void socket_remoteinput_focus_in (int client);
+
+    /**
+     * @brief socket_remoteinput_focus_out.
+     *
+     * @param
+     *
+     * @return none.
+     */
+    virtual void socket_remoteinput_focus_out (int client);
+
+    /**
+     * @brief socket_remoteinput_entry_metadata.
+     *
+     * @param
+     *
+     * @return none.
+     */
+    virtual void socket_remoteinput_entry_metadata (int client, uint32 hint, uint32 layout, int variation, uint32 autocapital_type);
+
+    /**
+     * @brief socket_remoteinput_default_text.
+     *
+     * @param
+     *
+     * @return none.
+     */
+    virtual void socket_remoteinput_default_text (int client, String& text, uint32 cursor);
+
+    /**
      * @brief socket_update_selection.
      *
      * @param

@@ -41,7 +41,7 @@ BuildRequires:  pkgconfig(cynara-creds-socket)
 BuildRequires:  pkgconfig(cynara-session)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(postun): /sbin/ldconfig
-%if "%{?profile}" != "wearable"
+%if "%{?profile}" == "mobile"
 BuildRequires:  pkgconfig(notification)
 Requires: org.tizen.isf-kbd-mode-changer
 %endif

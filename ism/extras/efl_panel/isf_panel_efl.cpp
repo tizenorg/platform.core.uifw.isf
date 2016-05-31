@@ -244,8 +244,8 @@ static void       slot_set_keyboard_mode               (int mode);
 static void       slot_get_ise_state                   (int &state);
 static void       slot_start_default_ise               (void);
 static void       slot_stop_default_ise                (void);
-static void       slot_enable_remote_input             (void);
-static void       slot_disable_remote_input            (void);
+static void       slot_send_remote_input_message       (const String &msg, bool len);
+static void       slot_recv_remote_surrounding_text    (int cursor, const String &text);
 
 static void       slot_run_helper                      (const String &uuid, const String &config, const String &display);
 
@@ -3992,8 +3992,8 @@ static bool initialize_panel_agent (const ConfigPointer& config, const String &d
     _info_manager->signal_connect_start_default_ise          (slot (slot_start_default_ise));
     _info_manager->signal_connect_stop_default_ise           (slot (slot_stop_default_ise));
     _info_manager->signal_connect_show_panel                 (slot (slot_show_helper_ise_selector));
-    _info_manager->signal_connect_enable_remote_input        (slot (slot_enable_remote_input));
-    _info_manager->signal_connect_disable_remote_input       (slot (slot_disable_remote_input));
+    _info_manager->signal_connect_remoteinput_send_input_message(slot (slot_send_remote_input_message));
+    _info_manager->signal_connect_remoteinput_send_surrounding_text(slot (slot_recv_remote_surrounding_text));
 
     _info_manager->signal_connect_get_recent_ise_geometry    (slot (slot_get_recent_ise_geometry));
     _info_manager->signal_connect_check_privilege_by_sockfd  (slot (slot_check_privilege_by_sockfd));
@@ -5857,16 +5857,29 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
 #endif
 }
 
-static void slot_enable_remote_input (void)
+static void slot_send_remote_input_message (const String &msg, bool len)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    LOGD("Enable remote input");
+
+    String con = msg.c_str ();
+    ISE_MESSAGE message = CISEMessageSerializer::deserialize(con);
+
+    if (remote_input_impl == NULL) {
+        remote_input_impl = Remote_Input::get_instance();
+    }
+
+    remote_input_impl->handle_websocket_message(message);
 }
 
-static void slot_disable_remote_input (void)
+static void slot_recv_remote_surrounding_text (int cursor, const String &text)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    LOGD("Disable remote input");
+
+    if (remote_input_impl == NULL) {
+        remote_input_impl = Remote_Input::get_instance();
+    }
+
+    remote_input_impl->handle_recv_panel_message(3, text.c_str (), cursor);
 }
 
 static void slot_show_ise (void)
@@ -7314,7 +7327,9 @@ int main (int argc, char *argv [])
          LOGW ("bt_hid_host_initialize failed\n");
 #endif
 
+#ifdef _TV
     launch_remote_input = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_LAUNCH_REMOTE_INPUT), launch_remote_input);
+#endif
      /* Create remote input */
     if (launch_remote_input) {
          LOGD("remote input start");

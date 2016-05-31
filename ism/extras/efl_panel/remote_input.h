@@ -30,7 +30,6 @@
 
 #include <dlog.h>
 
-#include <notification.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -50,11 +49,9 @@
 #include <linux/uinput.h>
 
 #include "scim.h"
-#include "scim_private.h"
 #include "motion_input.h"
 #include "websocketserver.h"
 
-#define LOG_TAG                                         "ISF_REMOTE_INPUT"
 using namespace scim;
 
 enum UINPUT_DEVICE{
@@ -100,13 +97,14 @@ public:
     void reset_setting_value_for_air_mouse(double data[]);
 
     void handle_websocket_message(ISE_MESSAGE &message);
+
+    void handle_recv_panel_message(int mode, const char* text, int cursor);
     
     void del_notification();
 
     void ongoing_notification(const char* _ptitle, const char* _ptext);
 
     void post_notification(const char* _ptitle, const char* _ptext);
-
 };
 
 #endif /* __REMOTE_INPUT_H__ */
