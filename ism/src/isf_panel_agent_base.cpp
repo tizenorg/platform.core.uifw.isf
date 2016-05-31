@@ -353,6 +353,26 @@ void PanelAgentBase::socket_update_surrounding_text (int client, uint32 context,
     LOGW ("not implemented for %s", m_name.c_str ());
 }
 
+void PanelAgentBase::socket_remoteinput_focus_in (int client)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
+void PanelAgentBase::socket_remoteinput_focus_out (int client)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
+void PanelAgentBase::socket_remoteinput_entry_metadata (int client, uint32 hint, uint32 layout, int variation, uint32 autocapital_type)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
+void PanelAgentBase::socket_remoteinput_default_text (int client, String& text, uint32 cursor)
+{
+    LOGW ("not implemented for %s", m_name.c_str ());
+}
+
 void PanelAgentBase::socket_update_selection (int client, uint32 context, String& uuid, String text)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
@@ -503,11 +523,6 @@ bool PanelAgentBase::process_input_device_event(int client, uint32 context, cons
 void PanelAgentBase::process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial)
 {
     LOGW("not implemented for %s", m_name.c_str());
-}
-
-void PanelAgentBase::update_preedit_string (int client, uint32 context,const WideString &str, const AttributeList &attrs)
-{
-    LOGW ("not implemented for %s", m_name.c_str ());
 }
 
 void PanelAgentBase::send_key_event (int client, uint32 context,const KeyEvent &key)

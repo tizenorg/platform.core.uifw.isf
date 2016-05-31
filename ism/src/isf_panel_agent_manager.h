@@ -315,6 +315,10 @@ public:
     void reset_ise_option (int client_id, uint32 context);
     void reset_helper_context (int client_id, uint32 context, const String& uuid);
     void socket_update_surrounding_text (int client, uint32 context, const String& uuid, String& text, uint32 cursor);
+    void socket_remoteinput_focus_in (int client);
+    void socket_remoteinput_focus_out (int client);
+    void socket_remoteinput_entry_metadata (int client, uint32 hint, uint32 layout, int variation, uint32 autocapital_type);
+    void socket_remoteinput_default_text (int client, String& text, uint32 cursor);
     void socket_update_selection (int client, uint32 context, String& uuid, String text);
     void socket_get_keyboard_ise_list (int client, uint32 context, const String& uuid, std::vector<String>& list);
     void socket_get_candidate_ui (int client, uint32 context, const String& uuid,  int style,  int mode);
@@ -343,7 +347,6 @@ public:
     void hide_helper_ise (int id, uint32 context);
     bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
     void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
-    void update_preedit_string (int target_client, uint32  target_context, const WideString &str, const AttributeList &attrs);
     void send_key_event (int target_client, uint32  target_context, const KeyEvent &key);
     void forward_key_event (int target_client, uint32  target_context, const KeyEvent &key);
 };

@@ -572,6 +572,38 @@ void PanelAgentManager::socket_update_surrounding_text (int id, uint32 context_i
         _p->socket_update_surrounding_text (id, context_id, uuid, text, cursor);
 }
 
+void PanelAgentManager::socket_remoteinput_focus_in (int id)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->socket_remoteinput_focus_in (id);
+}
+
+void PanelAgentManager::socket_remoteinput_focus_out (int id)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->socket_remoteinput_focus_out (id);
+}
+
+void PanelAgentManager::socket_remoteinput_entry_metadata (int id, uint32 hint, uint32 layout, int variation, uint32 autocapital_type)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->socket_remoteinput_entry_metadata (id, hint, layout, variation, autocapital_type);
+}
+
+void PanelAgentManager::socket_remoteinput_default_text (int id, String& text, uint32 cursor)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->socket_remoteinput_default_text (id, text, cursor);
+}
+
 void PanelAgentManager::socket_update_selection (int id, uint32 context_id, String& uuid, String text)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
@@ -788,14 +820,6 @@ void PanelAgentManager::process_key_event_done(int id, uint32 context_id, KeyEve
 
     if (!_p.null ())
         _p->process_key_event_done (id, context_id, key, ret, serial);
-}
-
-void PanelAgentManager::update_preedit_string (int id, uint32 context_id, const WideString &str, const AttributeList &attrs)
-{
-    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
-
-    if (!_p.null ())
-        _p->update_preedit_string (id, context_id, str, attrs);
 }
 
 void PanelAgentManager::send_key_event (int id, uint32 context_id, const KeyEvent &key)

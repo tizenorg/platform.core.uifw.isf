@@ -78,6 +78,8 @@ typedef enum {
     ISE_MESSAGE_COMMAND_LOGIN,
 
     ISE_MESSAGE_COMMANDS_NUM,
+
+    ISE_MESSAGE_COMMANDS_GET_SURROUNDING_TEXT,
 } ISE_MESSAGE_COMMANDS;
 
 const std::string ISE_MESSAGE_COMMAND_STRINGS[] = {
@@ -236,6 +238,8 @@ public:
 
     void on_focus_in(int ic);
     void on_focus_out(int ic);
+
+    void get_surrounding_text(int cursor, const char *text);
 
     void on_show(int ic);
     void on_hide(int ic);

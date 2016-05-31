@@ -72,11 +72,13 @@ struct _WSCContextISFImpl {
     WSCContextISF           *parent;
     Ecore_Wl_Window         *client_window;
     Ecore_IMF_Input_Mode     input_mode;
+    WideString               surrounding_text;
     WideString               preedit_string;
     AttributeList            preedit_attrlist;
     Ecore_IMF_Autocapital_Type autocapital_type;
     Ecore_IMF_Input_Hints    input_hint;
     Ecore_IMF_BiDi_Direction bidi_direction;
+    Ecore_IMF_Input_Panel_Layout panel_layout;
     void                    *imdata;
     int                      imdata_size;
     int                      preedit_caret;
@@ -84,6 +86,7 @@ struct _WSCContextISFImpl {
     int                      cursor_y;
     int                      cursor_top_y;
     int                      cursor_pos;
+    int                      variation;
     bool                     use_preedit;
     bool                     is_on;
     bool                     preedit_started;
@@ -101,6 +104,7 @@ struct _WSCContextISFImpl {
                            autocapital_type(ECORE_IMF_AUTOCAPITAL_TYPE_SENTENCE),
                            input_hint(ECORE_IMF_INPUT_HINT_NONE),
                            bidi_direction(ECORE_IMF_BIDI_DIRECTION_NEUTRAL),
+                           panel_layout(ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL),
                            imdata(NULL),
                            imdata_size(0),
                            preedit_caret(0),
@@ -108,6 +112,7 @@ struct _WSCContextISFImpl {
                            cursor_y(0),
                            cursor_top_y(0),
                            cursor_pos(-1),
+                           variation(0),
                            use_preedit(true),
                            is_on(true),
                            preedit_started(false),
@@ -292,6 +297,9 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
     isf_wsc_context_input_panel_language_set (wsc_ctx, wsc_context_input_panel_language_get(wsc_ctx));
 
     caps_mode_check (wsc_ctx, EINA_TRUE, EINA_TRUE);
+
+    isf_wsc_context_send_entry_metadata (wsc_ctx, wsc_context_input_hint_get (wsc_ctx), wsc_context_input_panel_layout_get (wsc_ctx),
+        wsc_context_input_panel_layout_variation_get (wsc_ctx), wsc_context_autocapital_type_get(wsc_ctx));
 
     wsc_ctx->context_changed = EINA_FALSE;
 }
@@ -688,6 +696,7 @@ delete_ic_impl (WSCContextISFImpl *impl)
             rec->imdata_size = 0;
             rec->parent = 0;
             rec->client_window = 0;
+            rec->surrounding_text = WideString ();
             rec->preedit_string = WideString ();
             rec->preedit_attrlist.clear ();
 
@@ -1044,7 +1053,7 @@ insert_text (const char *text, uint32_t offset, const char *insert)
 {
     uint32_t tlen = strlen (text), ilen = strlen (insert);
     char *new_text = (char*)malloc (tlen + ilen + 1);
-    if (tlen < offset)
+    if ((unsigned int) tlen < offset)
         offset = tlen;
     memcpy (new_text, text, offset);
     memcpy (new_text + offset, insert, ilen);
@@ -1262,6 +1271,7 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
         _focused_ic = context_scim;
 
         context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
+        context_scim->impl->surrounding_text.clear ();
         context_scim->impl->preedit_string.clear ();
         context_scim->impl->preedit_attrlist.clear ();
         context_scim->impl->preedit_caret = 0;
@@ -1291,6 +1301,8 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
         }
 
         g_info_manager->get_active_helper_option (WAYLAND_MODULE_CLIENT_ID, _active_helper_option);
+
+        g_info_manager->remoteinput_callback_focus_in ();
 
         /* At the moment we received focus_in, our surrounding text has not been updated yet -
         which means it will always turn Shift key on, resulting the whole keyboard blinking.
@@ -1334,6 +1346,8 @@ isf_wsc_context_focus_out (WSCContextISF *wsc_ctx)
         g_info_manager->focus_out (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
 
         _focused_ic = 0;
+
+        g_info_manager->remoteinput_callback_focus_out ();
     }
     _x_key_event_is_valid = false;
 }
@@ -1404,6 +1418,45 @@ isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direc
                 panel_req_update_bidi_direction (context_scim, direction);
             }
         }
+    }
+}
+
+void
+isf_wsc_context_send_default_text (WSCContextISF* wsc_ctx, const char *text, int cursor)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *context_scim = wsc_ctx;
+    char *conv_text = strdup (utf8_wcstombs (context_scim->impl->surrounding_text).c_str ());
+
+    if (context_scim && context_scim->impl && 
+        (strcmp (conv_text, text) != 0 || context_scim->impl->cursor_pos != cursor)) {
+        context_scim->impl->surrounding_text = utf8_mbstowcs (String (strdup (text)));
+        context_scim->impl->cursor_pos = cursor;
+
+        g_info_manager->remoteinput_callback_default_text (strdup (text), context_scim->impl->cursor_pos);
+    }
+}
+
+void
+isf_wsc_context_send_entry_metadata (WSCContextISF* wsc_ctx, Ecore_IMF_Input_Hints hint,
+                                     Ecore_IMF_Input_Panel_Layout layout, int variation,
+                                     Ecore_IMF_Autocapital_Type type)
+{
+    SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << "...\n";
+
+    WSCContextISF *context_scim = wsc_ctx;
+
+    if (context_scim && context_scim->impl && 
+        (context_scim->impl->input_hint != hint || context_scim->impl->panel_layout != layout || 
+            context_scim->impl->variation != variation || context_scim->impl->autocapital_type != type)) {
+        context_scim->impl->input_hint = hint;
+        context_scim->impl->panel_layout = layout;
+        context_scim->impl->variation = variation;
+        context_scim->impl->autocapital_type = type;
+
+        g_info_manager->remoteinput_callback_entry_metadata (context_scim->impl->input_hint, context_scim->impl->panel_layout,
+            context_scim->impl->variation, context_scim->impl->autocapital_type);
     }
 }
 
@@ -1986,6 +2039,9 @@ panel_req_show_help (WSCContextISF *ic)
 
         g_info_manager->socket_show_help (help);
     }
+
+    g_info_manager->remoteinput_callback_focus_out ();
+    LOGD("Remote control button click");
 }
 #endif
 
@@ -2547,6 +2603,9 @@ public:
         if (len == 0) {
             LOGD ("update");
             g_info_manager->socket_update_surrounding_text (wsc_ctx->surrounding_text ? wsc_ctx->surrounding_text : "", wsc_ctx->surrounding_cursor);
+            //g_info_manager->remoteinput_send_surrounding_text (wsc_ctx->surrounding_text ? reinterpret_cast<const char*> (wsc_ctx->surrounding_text) : "", wsc_ctx->surrounding_cursor);
+            isf_wsc_context_send_default_text (wsc_ctx, wsc_ctx->surrounding_text ? wsc_ctx->surrounding_text : "", wsc_ctx->surrounding_cursor);
+
         } else if (len < 0) {
             LOGW ("failed");
         } else {
