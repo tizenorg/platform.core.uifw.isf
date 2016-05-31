@@ -1023,6 +1023,80 @@ private:
         m_send_trans.write_to_socket(client_socket);
     }
 
+    void socket_remoteinput_focus_in (int client) {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
+        LOGD ("client id:%d\n", client);
+
+        bool ret;
+        ret = (client == -1) ? false : true;
+
+        if (ret) {
+            Socket client_socket(client);
+
+            m_send_trans.clear();
+            m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_command(ISM_TRANS_CMD_RECV_REMOTE_FOCUS_IN);
+            m_send_trans.write_to_socket(client_socket);
+        }
+    }
+
+    void socket_remoteinput_focus_out (int client) {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
+        LOGD ("client id:%d\n", client);
+
+        bool ret;
+        ret = (client == -1) ? false : true;
+
+        if (ret) {
+            Socket client_socket(client);
+
+            m_send_trans.clear();
+            m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_command(ISM_TRANS_CMD_RECV_REMOTE_FOCUS_OUT);
+            m_send_trans.write_to_socket(client_socket);
+        }
+    }
+
+    void socket_remoteinput_entry_metadata (int client, uint32 hint, uint32 layout, int variation, uint32 autocapital_type) {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
+        LOGD ("client id:%d\n", client);
+
+        bool ret;
+        ret = (client == -1) ? false : true;
+
+        if (ret) {
+            Socket client_socket(client);
+
+            m_send_trans.clear();
+            m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_command(ISM_TRANS_CMD_RECV_REMOTE_ENTRY_METADATA);
+            m_send_trans.put_data(hint);
+            m_send_trans.put_data(layout);
+            m_send_trans.put_data(variation);
+            m_send_trans.put_data(autocapital_type);
+            m_send_trans.write_to_socket(client_socket);
+        }
+    }
+
+    void socket_remoteinput_default_text (int client, String& text, uint32 cursor) {
+        SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
+        LOGD ("client id:%d\n", client);
+
+        bool ret;
+        ret = (client == -1) ? false : true;
+
+        if (ret) {
+            Socket client_socket(client);
+
+            m_send_trans.clear();
+            m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
+            m_send_trans.put_command(ISM_TRANS_CMD_RECV_REMOTE_DEFAULT_TEXT);
+            m_send_trans.put_data(text);
+            m_send_trans.put_data(cursor);
+            m_send_trans.write_to_socket(client_socket);
+        }
+    }
+
     void socket_update_selection(int client, uint32 context, String& uuid, String text) {
         LOGD ("client id:%d\n", client);
 
@@ -2919,10 +2993,37 @@ private:
                     trans.put_command(SCIM_TRANS_CMD_OK);
                     trans.write_to_socket(client_socket);
                     m_info_manager->hide_helper_ise ();
-                } else if (cmd == ISM_TRANS_CMD_ENABLE_REMOTE_INPUT) {
-                    m_info_manager->enable_remote_input (client_id);
-                } else if (cmd == ISM_TRANS_CMD_DISABLE_REMOTE_INPUT) {
-                    m_info_manager->disable_remote_input (client_id);
+                } else {
+                    LOGW ("unknow cmd: %d\n", cmd);
+                }
+            }
+
+            socket_transaction_end();
+        } else if (client_info.type == REMOTEINPUT_ACT_CLIENT) {
+            socket_transaction_start();
+            while (m_recv_trans.get_command(cmd)) {
+                LOGD ("PanelAgent::cmd = %d\n", cmd);
+                if (cmd == ISM_TRANS_CMD_SEND_REMOTE_INPUT_MESSAGE) {
+                    char*   buf = NULL;
+                    size_t  len;
+                    bool ret = false;
+
+                    if (m_recv_trans.get_data(&buf, len)) {
+                        ret = m_info_manager->remoteinput_send_input_message(client_id, buf, len);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                    }
+
+                    Transaction trans;
+                    Socket client_socket(client_id);
+
+                    trans.clear();
+                    trans.put_command(SCIM_TRANS_CMD_REPLY);
+                    trans.put_command(ret ? SCIM_TRANS_CMD_OK : SCIM_TRANS_CMD_FAIL);
+                    trans.write_to_socket(client_socket);
+
+                    if (NULL != buf)
+                        delete[] buf;
                 } else {
                     LOGW ("unknow cmd: %d\n", cmd);
                 }
@@ -3341,7 +3442,7 @@ private:
         uint32 key;
         String type = scim_socket_accept_connection(key,
                       String("Panel"),
-                      String("FrontEnd,FrontEnd_Active,Helper,Helper_Active,IMControl_Active,IMControl_Passive,SocketConfig"),
+                      String("FrontEnd,FrontEnd_Active,Helper,Helper_Active,IMControl_Active,IMControl_Passive,RemoteInput_Active,RemoteInput_Passive,SocketConfig"),
                       client,
                       m_socket_timeout);
 
@@ -3352,7 +3453,9 @@ private:
                                ((type == "Helper") ? HELPER_CLIENT :
                                ((type == "Helper_Active") ? HELPER_ACT_CLIENT :
                                ((type == "IMControl_Active") ? IMCONTROL_ACT_CLIENT :
-                               ((type == "IMControl_Passive") ? IMCONTROL_CLIENT : CONFIG_CLIENT))))));
+                               ((type == "IMControl_Passive") ? IMCONTROL_CLIENT :
+                               ((type == "RemoteInput_Active") ? REMOTEINPUT_ACT_CLIENT :
+                               ((type == "RemoteInput_Passive") ? REMOTEINPUT_CLIENT : CONFIG_CLIENT))))))));
             lock();
             m_info_manager->add_client(client.get_id(), key, _type);
             unlock();

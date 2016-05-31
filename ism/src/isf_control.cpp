@@ -88,26 +88,6 @@ EXAPI int isf_control_get_active_ise (char **uuid)
     return strUuid.length ();
 }
 
-EXAPI int isf_control_enable_remote_input (void)
-{
-    IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
-    imcontrol_client.prepare ();
-    imcontrol_client.enable_remote_input ();
-    imcontrol_client.close_connection ();
-    return 0;
-}
-
-EXAPI int isf_control_disable_remote_input (void)
-{
-    IMControlClient imcontrol_client;
-    imcontrol_client.open_connection ();
-    imcontrol_client.prepare ();
-    imcontrol_client.disable_remote_input ();
-    imcontrol_client.close_connection ();
-    return 0;
-}
-
 EXAPI int isf_control_get_ise_list (char ***uuid_list)
 {
     if (uuid_list == NULL)

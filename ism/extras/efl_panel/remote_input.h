@@ -30,7 +30,6 @@
 
 #include <dlog.h>
 
-#include <notification.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -50,11 +49,9 @@
 #include <linux/uinput.h>
 
 #include "scim.h"
-#include "scim_private.h"
 #include "motion_input.h"
 #include "websocketserver.h"
 
-#define LOG_TAG                                         "ISF_REMOTE_INPUT"
 using namespace scim;
 
 enum UINPUT_DEVICE{
@@ -101,12 +98,7 @@ public:
 
     void handle_websocket_message(ISE_MESSAGE &message);
 
-    void del_notification();
-
-    void ongoing_notification(const char* _ptitle, const char* _ptext);
-
-    void post_notification(const char* _ptitle, const char* _ptext);
-
+    void handle_recv_panel_message(int mode, const char* text, int cursor);
 };
 
 #endif /* __REMOTE_INPUT_H__ */
