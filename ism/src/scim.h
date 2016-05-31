@@ -438,6 +438,10 @@
     #include <isf_imcontrol_client.h>
 #endif
 
+#ifdef Uses_ISF_REMOTE_CLIENT
+    #include <isf_remote_client.h>
+#endif
+
 #ifdef Uses_SCIM_HOTKEY
     #include <scim_hotkey.h>
 #endif
