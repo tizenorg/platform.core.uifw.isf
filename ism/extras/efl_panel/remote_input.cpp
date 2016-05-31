@@ -23,10 +23,8 @@
  */
 
 #include "remote_input.h"
+#include <iostream>
 #include <math.h>
-
-#include<iostream>
-//#include<curl/curl.h>
 
 using namespace scim;
 
@@ -40,203 +38,14 @@ extern std::vector<TOOLBAR_MODE_T>  _modes;
 
 static InfoManager*      _info_manager;
 
-static unsigned int _ise_selector_ise_idx = 0;
-
-// Global variables for remote keyboard
-int priv_id;
-int ret;
-notification_h noti = NULL;
-int noti_count = 0;
-unsigned int preedit_from_remote = 0;
-
-char tv_ip_address[128] = {0};
-char tv_id[128] = {0};
-char db_server_ip[128] = {0};
+char* surrounding_text = 0;
+int cursor_pos = 0;
 
 static WebSocketServer *g_web_socket_server = NULL;
 Remote_Input* Remote_Input::m_instance = NULL; 
 
-//HelperAgent  helper_agent;
-int entry_focused = 0;
 static Motion_Input motion_input;
 
-// curl enum value //
-enum {
-    ERROR_ARGS = 1 ,
-    ERROR_CURL_INIT = 2
-} ;
-
-enum {
-    OPTION_FALSE = 0 ,
-    OPTION_TRUE = 1
-} ;
-
-enum {
-    FLAG_DEFAULT = 0
-} ;
-
-static size_t showSize( void *source , size_t size , size_t nmemb , void *userData ){
-
-    // we don't touch the data here, so the cast is commented out
-    const char* data = static_cast< const char* >( source ) ;
-    const int bufferSize = size * nmemb ;
-    LOGD ("received TV ID : %s", data);
-    strcpy(tv_id, data);
-
-    return bufferSize;
-
-}
-
-void get_current_ip()
-{
-    int sock_fd;
-    struct ifconf conf;
-    struct ifreq* ifr;
-    struct sockaddr_in* sin = NULL;
-    char buff[128];
-    int num, i;
-
-    sock_fd = socket(PF_INET, SOCK_DGRAM, 0);
-    if (sock_fd < 0)
-    {
-        LOGD ("Fail to create socket");
-        return;
-    }
-    conf.ifc_len = 128;
-    conf.ifc_buf = buff;
-
-    ioctl(sock_fd, SIOCGIFCONF, &conf);
-    num = conf.ifc_len / sizeof(struct ifreq);
-    ifr = conf.ifc_req;
-
-    for (i = 0; i < num; i++)
-    {
-        sin = (struct sockaddr_in*)(&ifr->ifr_addr);
-
-        ioctl(sock_fd, SIOCGIFFLAGS, ifr);
-        if (((ifr->ifr_flags & IFF_LOOPBACK) == 0)
-                && (ifr->ifr_flags & IFF_UP))
-        {
-            char noti_str[128] = {0};
-            strcat(noti_str, ifr->ifr_name);
-            strcat(noti_str, ":http://");
-            strcat(noti_str, inet_ntoa(sin->sin_addr));
-            strcat(noti_str, ":7172");
-//            post_notification("Wifi ", noti_str);
-        }
-        ifr++;
-    }
-
-    tv_ip_address[0] = '\0';
-    //strcat(tv_ip_address, "http://");
-    strcat(tv_ip_address, inet_ntoa(sin->sin_addr));
-    strcat(tv_ip_address, ":7172");
-
-/*
-    if (noti_count == 0)
-    {
-        ongoing_notification(tv_ip_address,"Wifi Input Address: ");
-        if (ret == NOTIFICATION_ERROR_NONE)
-        {
-            noti_count++;
-            memcpy(pre_tv_ip_address,tv_ip_address,sizeof(tv_ip_address));
-        }
-    }
-
-    if (strcmp(tv_ip_address, pre_tv_ip_address) != 0)
-    {gg wh
-        del_notification();
-        ongoing_notification(tv_ip_address,"Wifi Input Address: ");
-        if (ret == NOTIFICATION_ERROR_NONE)
-        {
-            noti_count++;
-        }
-    }
-    memcpy(pre_tv_ip_address,tv_ip_address,sizeof(tv_ip_address));
-  */
-    close(sock_fd);
-}
-
-/*
-static void set_tvid_To_tvserver () {
-
-    char urlmessage [256] = {0};
-    get_current_ip ();
-
-    //tv_ip_address is current TV IP address
-    if (!strcmp (tv_ip_address,"") || !strcmp(db_server_ip, tv_ip_address)) {
-        LOGD("Fail to set tv IP Because ip not valid or already registered :%s\n", tv_ip_address);
-        return;
-    }
-
-    LOGD ("TV ip address is  : %s\n", tv_ip_address);
-
-    const char* url = "http://www.moakey.com/tizen_tv/register.php?ip=";
-    strcat (urlmessage, url);
-    strcat (urlmessage, "http://");
-    strcat (urlmessage, tv_ip_address);
-    LOGD ("URL Message  : %s\n",urlmessage);
-
-    // lubcURL init
-    curl_global_init (CURL_GLOBAL_ALL);
-
-    // create context object
-    CURL* ctx = curl_easy_init ();
-
-    if (NULL == ctx) {
-        strcpy (db_server_ip, "");
-        strcpy (tv_id, "");
-        return;
-    }
-
-    // set the context obj
-    curl_easy_setopt (ctx, CURLOPT_URL, urlmessage);
-    // no progress bar
-    curl_easy_setopt (ctx, CURLOPT_NOPROGRESS, OPTION_TRUE);
-    // 1 s connect timeout
-    curl_easy_setopt (ctx, CURLOPT_CONNECTTIMEOUT, 1);
-    curl_easy_setopt (ctx, CURLOPT_WRITEFUNCTION, showSize) ;
-
-    // get the web page
-    const CURLcode rc = curl_easy_perform (ctx);
-
-    if (CURLE_OK != rc) {
-        LOGD ("Error from cURL");
-        strcpy (db_server_ip, "");
-        strcpy (tv_id, "");
-        return;
-    }else {
-
-        // get some info about the xfer:
-        double statDouble ;
-        long statLong ;
-        char* statString = NULL ;
-
-        // get the  HTTP response code
-        if (CURLE_OK == curl_easy_getinfo(ctx, CURLINFO_HTTP_CODE, &statLong)) {
-            LOGD ("Response code:  %d ",statLong);
-        }
-        // get the Content-Type
-        if (CURLE_OK == curl_easy_getinfo(ctx , CURLINFO_CONTENT_TYPE , &statString)) {
-            LOGD ("Content type:  %s ",statString);
-        }
-        // get the size of document
-        if (CURLE_OK == curl_easy_getinfo(ctx , CURLINFO_SIZE_DOWNLOAD, &statDouble)) {
-            LOGD ("Download size: %d bytes ",statDouble);
-        }
-        if (CURLE_OK == curl_easy_getinfo(ctx, CURLINFO_SPEED_DOWNLOAD, &statDouble)) {
-            LOGD ("Download speed: %d bytes",statDouble);
-        }
-    }
-
-    strncpy (db_server_ip, tv_ip_address, sizeof(db_server_ip));
-
-    // cleanup
-    curl_easy_cleanup (ctx);
-    curl_global_cleanup ();
-
-}
-*/
 Remote_Input::Remote_Input()
 {
     if (m_instance != NULL) {
@@ -314,7 +123,7 @@ bool Remote_Input::init_uinput_keyboard_device() {
     //For initialize uinput device for keyboard
 
      struct uinput_user_dev device_key;
-     int uinput_keys[] = {KEY_POWER, KEY_F6, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9, KEY_MINUS, KEY_0, KEY_REDO, KEY_F10, KEY_F9, KEY_F8, KEY_F7, KEY_F12, KEY_F11, KEY_LEFTMETA, KEY_HOMEPAGE, KEY_BOOKMARKS, KEY_MENU, KEY_F18, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_BACK, KEY_EXIT, KEY_ESC, KEY_BACKSPACE, KEY_POWER, KEY_PHONE};
+     int uinput_keys[] = {KEY_POWER, KEY_F6, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9, KEY_MINUS, KEY_0, KEY_REDO, KEY_F10, KEY_F9, KEY_F8, KEY_F7, KEY_F5, KEY_F12, KEY_F11, KEY_LEFTMETA, KEY_HOMEPAGE, KEY_BOOKMARKS, KEY_MENU, KEY_F18, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_BACK, KEY_EXIT, KEY_ESC, KEY_BACKSPACE, KEY_POWER, KEY_PHONE};
      memset(&device_key, 0, sizeof device_key);
 
      fd_uinput_keyboard = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
@@ -346,7 +155,7 @@ bool Remote_Input::init_uinput_keyboard_device() {
          return false;
      }
 
-     for (int i  = 0; i < sizeof(uinput_keys)/sizeof(uinput_keys[0]); i ++)
+     for (unsigned int i  = 0; i < sizeof(uinput_keys)/sizeof(uinput_keys[0]); i ++)
      {
          if (ioctl(fd_uinput_keyboard, UI_SET_KEYBIT, uinput_keys[i]) < 0)
          {
@@ -366,7 +175,6 @@ bool Remote_Input::init_uinput_keyboard_device() {
 bool Remote_Input::init_uinput_mouse_device() {
 
     //For initialize uinput device for mouse
-    //     int fd_uinput_mouse = 0;
 
     struct uinput_user_dev device_mouse;
     int uinput_btns[] = {BTN_LEFT, BTN_RIGHT, BTN_MIDDLE};
@@ -398,7 +206,7 @@ bool Remote_Input::init_uinput_mouse_device() {
         LOGD("Fail to enable EV_KEY event type\n");
         return false;
     }
-    for (int i  = 0; i < sizeof(uinput_btns)/sizeof(uinput_btns[0]); i++)
+    for (unsigned int i  = 0; i < sizeof(uinput_btns)/sizeof(uinput_btns[0]); i++)
     {
         if (ioctl(fd_uinput_mouse, UI_SET_KEYBIT, uinput_btns[i]) < 0)
         {
@@ -412,7 +220,7 @@ bool Remote_Input::init_uinput_mouse_device() {
         LOGD("Fail to enable EV_REL event type\n");
         return false;
     }
-    for (int i  = 0; i < sizeof(uinput_rel_axes)/sizeof(uinput_rel_axes[0]); i++)
+    for (unsigned int i  = 0; i < sizeof(uinput_rel_axes)/sizeof(uinput_rel_axes[0]); i++)
     {
         if (ioctl(fd_uinput_mouse, UI_SET_RELBIT, uinput_rel_axes[i]) < 0)
         {
@@ -460,7 +268,7 @@ void Remote_Input::send_uinput_event(UINPUT_DEVICE device, __u16 type, __u16 cod
 
 void Remote_Input::panel_send_uinput_event(UINPUT_DEVICE device, __u16 type, __u16 code, __s32 value)
 {
-        send_uinput_event(device, type, code, value);
+    send_uinput_event(device, type, code, value);
 }
 
 void Remote_Input::panel_send_uinput_event_for_key(UINPUT_DEVICE device, __u16 code)
@@ -564,38 +372,67 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
             int e = atoi(message.values.at(0).c_str());
             LOGD("send_key_event key num : %d", e);
             switch (e) {
-                case 8://backspace
-                    LOGD ("back");
-                    _info_manager->forward_key_event(KeyEvent(SCIM_KEY_BackSpace));
-                    _info_manager->forward_key_event(KeyEvent(SCIM_KEY_BackSpace, SCIM_KEY_ReleaseMask));
-                    break;
-
-                case 13://enter
+                case 0: //enter
                     LOGD ("enter");
-                    _info_manager->forward_key_event(KeyEvent(SCIM_KEY_Select));
-                    _info_manager->forward_key_event(KeyEvent(SCIM_KEY_Select, SCIM_KEY_ReleaseMask));
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Select));
                     break;
-
+                case 1: //space
+                    LOGD ("space");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_KP_Space));
+                    break;
+                case 2: //backspace
+                    LOGD ("backspace");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_BackSpace));
+                    break;
+                case 3: //esc
+                    LOGD ("esc");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Escape));
+                    break;
+                case 4: //up
+                    LOGD ("up");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Up));
+                    break;
+                case 5: //down
+                    LOGD ("down");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Down));
+                    break;
+                case 6: //left
+                    LOGD ("left");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Left));
+                    break;
+                case 7: //right
+                    LOGD ("right");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Right));
+                    break;
+                case 8: //page_up
+                    LOGD ("page_up");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Page_Up));
+                    break;
+                case 9: //page_down
+                    LOGD ("page_down");
+                    _info_manager->remoteinput_forward_key_event(KeyEvent(SCIM_KEY_Page_Down));
+                    break;
                 case 10001://Menu
                     LOGD ("menu");
-                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_PHONE);
+                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_PHONE);
+                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_LEFTMETA); //for tv product binary
                     break;
 
                 case 10002://Home
                     LOGD ("home");
-                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_MENU);
+                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_MENU);
+                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_F5); //for tv product binary
                     break;
 
                 case 10003://Back
                     LOGD ("back");
-                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_BACK); //for TDC, 2.4 binary
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_ESC); //for tv product binary
+                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_BACK); //for TDC, 3.0 binary
+                    panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_ESC); //for tv product binary
                     break;
 
                 case 124://TV_KEY_POWER
                     LOGD ("TV_KEY_POWER");
                     panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_POWER);
-                    g_web_socket_server->on_init();
                     break;
 
                 case 235://TV_KEY_SWITCHMODE
@@ -678,42 +515,6 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
                     panel_send_uinput_event_for_key(UINPUT_KEYBOARD, KEY_F11);
                     break;
 
-                case 304://GAME_A
-                    LOGD ("GAME_A");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, );
-                    //ecore_x_test_fake_key_press("BNT_A");
-                    break;
-
-                case 305://GAME_B
-                    LOGD ("GAME_B");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, );
-                    //ecore_x_test_fake_key_press("BNT_B");
-                    break;
-
-                case 307://GAME_X
-                    LOGD ("GAME_X");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, );
-                    //ecore_x_test_fake_key_press("BNT_X");
-                    break;
-
-                case 308://GAME_Y
-                    LOGD ("GAME_Y");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, );
-                    //ecore_x_test_fake_key_press("BNT_Y");
-                    break;
-
-                case 314://GAME_SELECT
-                    LOGD ("GAME_SELECT");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, );
-                    //ecore_x_test_fake_key_press("BNT_SELECT");
-                    break;
-
-                case 315://GAME_START
-                    LOGD ("GAME_START");
-                    //panel_send_uinput_event_for_key(UINPUT_KEYBOARD, );
-                    //ecore_x_test_fake_key_press("BNT_START");
-                    break;
-
                 default:
                     LOGD ("unknow key=%d", e);
                     break;
@@ -733,7 +534,7 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
             attrs.push_back(scim::Attribute(0, scim::utf8_mbstowcs((char*)message.values.at(0).c_str()).length(), scim::SCIM_ATTR_DECORATE, scim::SCIM_ATTR_DECORATE_UNDERLINE));
 
             LOGD( "commit_str:|%s|", message.values.at(0).c_str());
-            _info_manager->commit_string(scim::utf8_mbstowcs((char*)message.values.at(0).c_str()));
+            _info_manager->remoteinput_commit_string(scim::utf8_mbstowcs((char*)message.values.at(0).c_str()));
         }
     }
 
@@ -742,18 +543,8 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
             scim::AttributeList attrs;
             attrs.push_back(scim::Attribute(0, scim::utf8_mbstowcs((char*)message.values.at(0).c_str()).length(), scim::SCIM_ATTR_DECORATE, scim::SCIM_ATTR_DECORATE_UNDERLINE));
 
-            if (preedit_from_remote == 1){
-                LOGD ("preedit:|%s| from same %d", message.values.at(0).c_str(),preedit_from_remote);
-                _info_manager->update_preedit_string(scim::utf8_mbstowcs((char*)message.values.at(0).c_str()), attrs);
-                preedit_from_remote = 1;
-            }
-            else{
-                //FIXME flush_imengine fuction need
-                //flush_immengine_by_remote();
-                LOGD ("preedit:|%s| from different %d", message.values.at(0).c_str(),preedit_from_remote);
-                _info_manager->update_preedit_string(scim::utf8_mbstowcs((char*)message.values.at(0).c_str()), attrs);
-                preedit_from_remote = 1;
-            }
+            LOGD ("preedit:|%s|", message.values.at(0).c_str());
+            _info_manager->remoteinput_update_preedit_string(scim::utf8_mbstowcs((char*)message.values.at(0).c_str()), attrs, -1);
         }
     }
 
@@ -781,7 +572,7 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
         if (message.values.size() == 1) {
 
             std::size_t tmp_offset = message.values.at(0).find(',');
-            int x = atoi(message.values.at(0).substr(0, tmp_offset).c_str());
+            //int x = atoi(message.values.at(0).substr(0, tmp_offset).c_str());
             int y = atoi(message.values.at(0).substr(tmp_offset+1).c_str());
             panel_send_uinput_event_for_wheel(UINPUT_MOUSE, (__s32)y);
         }
@@ -827,59 +618,25 @@ void Remote_Input::handle_websocket_message(ISE_MESSAGE &message)
     
 }
 
-void Remote_Input::post_notification(const char* _ptitle, const char* _ptext)
+void Remote_Input::handle_recv_panel_message(int mode, const char* text, int cursor)
 {
-    if (_ptext == NULL)
-        return;
-    notification_status_message_post(_ptext);
-}
-
-void Remote_Input::ongoing_notification(const char* _ptitle, const char* _ptext)
-{
-    if (_ptext == NULL)
-        return;
-    noti = notification_create(NOTIFICATION_TYPE_ONGOING);
-    ret = notification_set_layout(noti, NOTIFICATION_LY_ONGOING_EVENT);
-
-    if (ret != NOTIFICATION_ERROR_NONE)
-    {
-        LOGD ( "Fail to notification_set_image [%d]", ret);
+    switch (mode) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+        {
+            if (cursor_pos != cursor || strcmp (surrounding_text, text) != 0) {
+                cursor_pos = cursor;
+                surrounding_text = strdup(text);
+                g_web_socket_server->get_surrounding_text(cursor, text);
+            }
+            break;
+        }
+        default:
+            break;
     }
-
-    ret = notification_set_image(noti, NOTIFICATION_IMAGE_TYPE_ICON, "/usr/share/scim/ise-wifi-keyboard/wifikeyboard.png");
-    if (ret != NOTIFICATION_ERROR_NONE)
-    {
-        LOGD ( "Fail to notification_set_image [%d]", ret);
-    }
-
-    ret = notification_set_text(noti, NOTIFICATION_TEXT_TYPE_TITLE, _ptext, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-    if (ret != NOTIFICATION_ERROR_NONE)
-    {
-        LOGD ( "Fail to notification_set_text [%d]", ret);
-    }
-
-    ret = notification_set_text(noti, NOTIFICATION_TEXT_TYPE_CONTENT, _ptitle, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-    if (ret != NOTIFICATION_ERROR_NONE)
-    {
-        LOGD ( "Fail to notification_set_text [%d]", ret);
-    }
-
-    //ret = notification_insert(noti, &priv_id);
-    if (ret != NOTIFICATION_ERROR_NONE)
-    {
-        LOGD ( "Fail to notification_insert [%d]", ret);
-    }
-}
-
-void Remote_Input::del_notification()
-{
-    ret = notification_free(noti);
-    if (ret != NOTIFICATION_ERROR_NONE)
-    {
-        LOGD ( "Fail to notification_free [%d]", ret);
-    }
-    //notification_delete_group_by_priv_id(NULL, NOTIFICATION_TYPE_NOTI, priv_id);
-    noti_count = 0;
 }
 
 

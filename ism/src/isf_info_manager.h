@@ -70,6 +70,8 @@ enum ClientType {
     HELPER_ACT_CLIENT,
     IMCONTROL_ACT_CLIENT,
     IMCONTROL_CLIENT,
+    REMOTEINPUT_ACT_CLIENT,
+    REMOTEINPUT_CLIENT,
     CONFIG_CLIENT
 };
 
@@ -558,28 +560,25 @@ public:
     void update_ise_list (std::vector<String>& strList);
 
 
-    bool update_preedit_string (const WideString &str, const AttributeList &attrs) ;
+    bool remoteinput_update_preedit_string (WideString str, AttributeList &attrs, uint32 caret);
     
-    bool commit_string (const WideString &str) ;
+    bool remoteinput_commit_string (const WideString &str);
     
-    bool send_key_event (const KeyEvent &key) ;
+    bool remoteinput_send_key_event (const KeyEvent &key);
     
-    bool forward_key_event (const KeyEvent &key) ;
+    bool remoteinput_forward_key_event (const KeyEvent &key);
 
+    bool remoteinput_send_input_message (int client_id, char*  buf, size_t  len);
 
-    /**
-     * @brief Enable remote input.
-     *
-     * @return none.
-     */
-    void enable_remote_input (int client_id);
+    void remoteinput_send_surrounding_text (const char* text, uint32 cursor);
 
-    /**
-     * @brief Disable remote input.
-     *
-     * @return none.
-     */
-    void disable_remote_input (int client_id);
+    void remoteinput_callback_focus_in (void);
+
+    void remoteinput_callback_focus_out (void);
+
+    void remoteinput_callback_entry_metadata (uint32 hint, uint32 layout, int variation, uint32 autocapital_type);
+
+    void remoteinput_callback_default_text (String text, uint32 cursor);
 
 /////////////////////////////////Message function begin/////////////////////////////////////////
 
@@ -1525,19 +1524,9 @@ public:
      */
     Connection signal_connect_get_recent_ise_geometry (InfoManagerSlotIntRect*             slot);
 
-    /**
-     * @brief Signal: Enable remote input.
-     *
-     * slot prototype: void enabl_remote_input (void);
-     */
-    Connection signal_connect_enable_remote_input (InfoManagerSlotVoid*                slot);
+    Connection signal_connect_remoteinput_send_input_message (InfoManagerSlotStringBool*          slot);
 
-    /**
-     * @brief Signal: Disable remote input.
-     *
-     * slot prototype: void disable_remote_input (void);
-     */
-    Connection signal_connect_disable_remote_input (InfoManagerSlotVoid*                slot);
+    Connection signal_connect_remoteinput_send_surrounding_text (InfoManagerSlotIntString*          slot);    
 
     Connection signal_connect_check_privilege_by_sockfd  (InfoManagerSlotIntString2* slot);
 };

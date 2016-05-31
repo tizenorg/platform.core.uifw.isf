@@ -6,10 +6,10 @@ var openInput;
 
 if(!openInput) openInput = {};
 
-openInput.TV_KEY_BACKSPACE = 8;
-openInput.TV_KEY_ENTER = 13;
-openInput.TV_KEY_SPACE = 32;
-openInput.TV_KEY_ESCAPE = 27;
+openInput.TV_KEY_ENTER = 0;
+openInput.TV_KEY_SPACE = 1;
+openInput.TV_KEY_BACKSPACE = 2;
+openInput.TV_KEY_ESCAPE = 3;
 openInput.TV_KEY_SELECT = 36;
 openInput.TV_KEY_POWER = 124;
 openInput.TV_KEY_MENU = 10001;
@@ -187,7 +187,8 @@ function WebHelperClientInternal(client) {
 
             this.socket.onmessage = function(msg) {
                 var items = msg.data.split("|");
-                handler.defaultHandler(items);
+                alert (items[1]);
+                //handler.defaultHandler(items);
             };
 
             this.socket.onclose = function(evt) {
