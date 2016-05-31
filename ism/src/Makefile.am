@@ -97,7 +97,9 @@ libsciminclude_HEADERS 	= scim.h \
 			  isf_info_manager.h \
 			  isf_panel_agent_base.h \
 			  isf_panel_agent_module.h \
-			  isf_message_queue.h
+			  isf_message_queue.h \
+			  isf_remote_control.h \
+			  isf_remote_client.h
 
 noinst_LTLIBRARIES	= libltdlc.la libprivilege_checker.la libisf_pkg.la
 
@@ -157,9 +159,13 @@ libscim@SCIM_EPOCH@_la_SOURCES = \
 			  isf_panel_agent_manager.cpp \
 			  isf_info_manager.cpp \
 			  isf_panel_agent_base.cpp \
-			  isf_panel_agent_module.cpp
+			  isf_panel_agent_module.cpp \
+			  isf_remote_control.cpp \
+			  isf_remote_client.cpp
 
 libscim@SCIM_EPOCH@_la_CXXFLAGS = @EVAS_CFLAGS@ \
+			  @ECORE_CFLAGS@ \
+			  @ECORE_IMF_CFLAGS@ \
 			  @DLOG_CFLAGS@ \
 			  @DB_UTIL_CFLAGS@ \
 			  @TZPLATFORM_CONFIG_CFLAGS@
@@ -171,6 +177,7 @@ libscim@SCIM_EPOCH@_la_LDFLAGS  = -version-info $(SCIM_CURRENT):$(SCIM_REVISION)
 			  @LIBTOOL_EXPORT_OPTIONS@ \
 			  @LIBICONV@ \
 			  @LTLIBINTL@ \
+			  @ECORE_LIBS@ \
 			  @DLOG_LIBS@ \
 			  @DB_UTIL_LIBS@ \
 			  @TZPLATFORM_CONFIG_LIBS@ \

@@ -41,7 +41,7 @@ BuildRequires:  pkgconfig(cynara-creds-socket)
 BuildRequires:  pkgconfig(cynara-session)
 BuildRequires:  capi-appfw-package-manager-devel
 Requires(postun): /sbin/ldconfig
-%if "%{?profile}" != "wearable"
+%if "%{?profile}" == "mobile"
 BuildRequires:  pkgconfig(notification)
 Requires: org.tizen.isf-kbd-mode-changer
 %endif
@@ -143,7 +143,7 @@ ln -sf %{_libdir}/ecore_imf/modules/wayland/v-1.16/module.so %{_libdir}/ecore_im
 %{_sysconfdir}/scim/config
 %{_datadir}/scim/isf_candidate_theme1.edj
 %{_datadir}/scim/icons/*
-%attr(766,app,app) %{_datadir}/scim/remote-input/*
+%attr(755,root,root) %{_datadir}/scim/remote-input/*
 %{_bindir}/isf-demo-efl
 %{_bindir}/isf-panel-efl
 %{_bindir}/scim

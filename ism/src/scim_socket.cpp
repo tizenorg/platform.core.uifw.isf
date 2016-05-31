@@ -238,7 +238,12 @@ SocketAddress::SocketAddressImpl::set_address (const String &addr)
 #else
         String real_addr = addr.substr (varlist [0].length ()+1) +
                            String ("-") +
+#ifdef _TV
+                           String ("owner");
+#else
                            scim_get_user_name ();
+#endif
+
 #endif
         struct sockaddr_un *un = new struct sockaddr_un;
 
