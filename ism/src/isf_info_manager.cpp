@@ -257,6 +257,11 @@ class InfoManager::InfoManagerImpl
     bool                                m_is_imengine_aux;
     bool                                m_is_imengine_candidate;
 
+    int                                 m_current_send_remoteinput_id;
+    int                                 m_current_recv_remoteinput_id;
+    IntIntRepository                    m_send_remoteinput_map;
+    IntIntRepository                    m_recv_remoteinput_map;
+
     int                                 m_last_socket_client;
     uint32                              m_last_client_context;
     String                              m_last_context_uuid;
@@ -371,8 +376,8 @@ class InfoManager::InfoManagerImpl
 
     InfoManagerSignalIntRect             m_signal_get_recent_ise_geometry;
 
-    InfoManagerSignalVoid                m_signal_enable_remote_input;
-    InfoManagerSignalVoid                m_signal_disable_remote_input;
+    InfoManagerSignalStringBool          m_signal_remoteinput_send_input_message;
+    InfoManagerSignalIntString           m_signal_remoteinput_send_surrounding_text;
 
     InfoManagerSignalIntString2          m_signal_check_privilege_by_sockfd;
 
@@ -390,11 +395,14 @@ public:
           m_active_client_id (-1),
           m_should_shared_ise (false),
           m_ise_exiting (false), m_is_imengine_aux (false), m_is_imengine_candidate (false),
+          m_current_send_remoteinput_id (0), m_current_recv_remoteinput_id (0),
           m_last_socket_client (-1), m_last_client_context (0),
           m_ise_context_buffer (NULL), m_ise_context_length (0) {
         m_current_ise_name = String (_ ("English Keyboard"));
         m_imcontrol_repository.clear ();
         m_imcontrol_map.clear ();
+        m_send_remoteinput_map.clear ();
+        m_recv_remoteinput_map.clear ();
         m_panel_client_map.clear ();
     }
 
@@ -1259,16 +1267,23 @@ public:
         m_signal_show_panel ();
     }
 
-    void enable_remote_input (int client_id)
-    {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::enable_remote_input ()\n";
-        m_signal_enable_remote_input ();
+    //ISM_TRANS_CMD_SEND_REMOTE_INPUT_MESSAGE
+    bool send_remote_input_message (int client_id, char* buf, size_t len) {
+        SCIM_DEBUG_MAIN(4) << "InfoManager::send_remote_input_message ()\n";
+
+        if(buf == NULL) {
+            return false;
+        }
+
+        String msg (buf);
+        m_signal_remoteinput_send_input_message (msg, 1);
+        return true;
     }
 
-    void disable_remote_input (int client_id)
-    {
-        SCIM_DEBUG_MAIN(4) << "PanelAgent::disable_remote_input ()\n";
-        m_signal_disable_remote_input ();
+    void send_remote_surrounding_text (const char* text, uint32 cursor) {
+        SCIM_DEBUG_MAIN(4) << "InfoManager::send_remote_surrounding_text ()\n";
+
+        m_signal_remoteinput_send_surrounding_text (cursor, text);
     }
 
     //ISM_TRANS_CMD_HIDE_ISF_CONTROL
@@ -1923,7 +1938,7 @@ public:
         return m_signal_check_privilege_by_sockfd (client_id, privilege);
     }
 
-    bool update_preedit_string (const WideString &str, const AttributeList &attrs)
+    bool remoteinput_update_preedit_string (WideString str, AttributeList &attrs, uint32 caret)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::update_preedit_string ()\n";
         int    client = -1;
@@ -1933,15 +1948,15 @@ public:
 
         get_focused_context (client, context);
         if (client >= 0) {
-            m_panel_agent_manager.update_preedit_string (client, context, str, attrs);
+            m_panel_agent_manager.update_preedit_string (client, context, str, attrs, caret);
         }
 
         unlock ();
 
         return client >= 0;
     }
-
-    bool commit_string (const WideString &str)
+    
+    bool remoteinput_commit_string (const WideString &str)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::commit_string ()\n";
         int    client = -1;
@@ -1958,8 +1973,8 @@ public:
 
         return client >= 0;
     }
-
-    bool send_key_event (const KeyEvent &key)
+    
+    bool remoteinput_send_key_event (const KeyEvent &key)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::send_key_event ()\n";
         int    client = -1;
@@ -1972,8 +1987,8 @@ public:
 
         return client >= 0;
     }
-
-    bool forward_key_event (const KeyEvent &key)
+    
+    bool remoteinput_forward_key_event (const KeyEvent &key)
     {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::forward_key_event ()\n";
         int    client = -1;
@@ -2293,14 +2308,14 @@ public:
         return m_signal_check_privilege_by_sockfd.connect (slot);
     }
 
-    Connection signal_connect_enable_remote_input        (InfoManagerSlotVoid*                slot)
+    Connection signal_connect_remoteinput_send_input_message   (InfoManagerSlotStringBool*                slot)
     {
-        return m_signal_enable_remote_input.connect (slot);
+        return m_signal_remoteinput_send_input_message.connect (slot);
     }
 
-    Connection signal_connect_disable_remote_input        (InfoManagerSlotVoid*                slot)
+    Connection signal_connect_remoteinput_send_surrounding_text (InfoManagerSlotIntString*                slot)
     {
-        return m_signal_disable_remote_input.connect (slot);
+        return m_signal_remoteinput_send_surrounding_text.connect (slot);
     }
 
     //ISM_TRANS_CMD_REGISTER_PANEL_CLIENT
@@ -2452,6 +2467,12 @@ public:
         } else if (info.type == IMCONTROL_CLIENT) {
             m_imcontrol_map [m_pending_active_imcontrol_id] = client_id;
             m_pending_active_imcontrol_id = -1;
+        } else if (info.type == REMOTEINPUT_ACT_CLIENT) {
+            m_current_send_remoteinput_id = client_id;
+            m_send_remoteinput_map [m_current_send_remoteinput_id] = 1;
+        } else if (info.type == REMOTEINPUT_CLIENT) {
+            m_current_recv_remoteinput_id = client_id;
+            m_recv_remoteinput_map [m_current_recv_remoteinput_id] = 1;
         }
 
         LOGD ("%d clients connecting", m_client_repository.size());
@@ -2638,6 +2659,24 @@ public:
 
             if (iter2 != m_imcontrol_map.end ())
                 m_imcontrol_map.erase (iter2);
+        } else if (client_info.type == REMOTEINPUT_ACT_CLIENT) {
+            SCIM_DEBUG_MAIN (4) << "It's a REMOTEINPUT_ACT_CLIENT client.\n";
+
+            IntIntRepository::iterator iter = m_send_remoteinput_map.find (client_id);
+
+            if (iter != m_send_remoteinput_map.end())
+                m_send_remoteinput_map.erase (iter);
+
+            m_current_send_remoteinput_id = -1;
+        } else if (client_info.type == REMOTEINPUT_CLIENT) {
+            SCIM_DEBUG_MAIN (4) << "It's a REMOTEINPUT_CLIENT client.\n";
+
+            IntIntRepository::iterator iter = m_recv_remoteinput_map.find (client_id);
+
+            if (iter != m_recv_remoteinput_map.end())
+                m_recv_remoteinput_map.erase (iter);
+
+            m_current_recv_remoteinput_id = -1;
         } else if (client_info.type == CONFIG_CLIENT) {
             SCIM_DEBUG_MAIN(4) << "It's a CONFIG_CLIENT client.\n";
         }
@@ -2725,6 +2764,43 @@ client context helpers: %d, helpers uuid count: %d",
             unlock ();
         }
     }
+
+    void remoteinput_callback_focus_in () {
+        SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
+        LOGD ("");
+
+        lock();
+        m_panel_agent_manager.socket_remoteinput_focus_in (m_current_recv_remoteinput_id);
+        unlock ();
+    }
+
+    void remoteinput_callback_focus_out () {
+        SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
+        LOGD ("");
+
+        lock();
+        m_panel_agent_manager.socket_remoteinput_focus_out (m_current_recv_remoteinput_id);
+        unlock ();
+    }
+
+    void remoteinput_callback_entry_metadata (uint32 hint, uint32 layout, int variation, uint32 autocapital_type) {
+        SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
+        LOGD ("");
+
+        lock();
+        m_panel_agent_manager.socket_remoteinput_entry_metadata (m_current_recv_remoteinput_id, hint, layout, variation, autocapital_type);
+        unlock ();
+    }
+
+    void remoteinput_callback_default_text (String text, uint32 cursor) {
+        SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
+        LOGD ("");
+
+        lock();
+        m_panel_agent_manager.socket_remoteinput_default_text (m_current_recv_remoteinput_id, text, cursor);
+        unlock ();
+    }
+
     //ISM_TRANS_CMD_UPDATE_SELECTION
     void socket_update_selection (String text) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
@@ -4123,24 +4199,24 @@ InfoManager::update_ise_list (std::vector<String>& strList)
 }
 
 bool
-InfoManager::update_preedit_string (const WideString &str, const AttributeList &attrs)
+InfoManager::remoteinput_update_preedit_string (WideString str, AttributeList &attrs, uint32 caret)
 {
-    return m_impl->update_preedit_string (str, attrs);
+    return m_impl->remoteinput_update_preedit_string (str, attrs, caret);
 }
 bool
-InfoManager::commit_string (const WideString &str)
+InfoManager::remoteinput_commit_string (const WideString &str)
 {
-    return m_impl->commit_string (str);
+    return m_impl->remoteinput_commit_string (str);
 }
 bool
-InfoManager::send_key_event (const KeyEvent &key)
+InfoManager::remoteinput_send_key_event (const KeyEvent &key)
 {
-    return m_impl->send_key_event (key);
+    return m_impl->remoteinput_send_key_event (key);
 }
 bool
-InfoManager::forward_key_event (const KeyEvent &key)
+InfoManager::remoteinput_forward_key_event (const KeyEvent &key)
 {
-    return m_impl->forward_key_event (key);
+    return m_impl->remoteinput_forward_key_event (key);
 }
 
 /////////////////////////////////Message function begin/////////////////////////////////////////
@@ -4435,16 +4511,15 @@ void InfoManager::get_recent_ise_geometry (int client_id, uint32 angle, _OUT_ st
     m_impl->get_recent_ise_geometry (client_id, angle, info);
 }
 
-//ISM_TRANS_CMD_ENABLE_REMOTE_INPUT
-void InfoManager::enable_remote_input (int client_id)
+//ISM_TRANS_CMD_SEND_REMOTE_INPUT_MESSAGE
+bool InfoManager::remoteinput_send_input_message (int client_id, char* buf, size_t len)
 {
-    m_impl->enable_remote_input (client_id);
+    return m_impl->send_remote_input_message (client_id, buf, len);
 }
 
-//ISM_TRANS_CMD_DISABLE_REMOTE_INPUT
-void InfoManager::disable_remote_input (int client_id)
+void InfoManager::remoteinput_send_surrounding_text (const char* text, uint32 cursor)
 {
-    m_impl->disable_remote_input (client_id);
+    return m_impl->send_remote_surrounding_text (text, cursor);
 }
 
 //ISM_TRANS_CMD_REGISTER_PANEL_CLIENT
@@ -4529,6 +4604,26 @@ void InfoManager::socket_update_cursor_position (uint32 cursor_pos)
 void InfoManager::socket_update_surrounding_text (String text, uint32 cursor)
 {
     m_impl->socket_update_surrounding_text (text, cursor);
+}
+
+void InfoManager::remoteinput_callback_focus_in (void)
+{
+    m_impl->remoteinput_callback_focus_in ();
+}
+
+void InfoManager::remoteinput_callback_focus_out (void)
+{
+    m_impl->remoteinput_callback_focus_out ();
+}
+
+void InfoManager::remoteinput_callback_entry_metadata (uint32 hint, uint32 layout, int variation, uint32 autocapital_type)
+{
+    m_impl->remoteinput_callback_entry_metadata (hint, layout, variation, autocapital_type);
+}
+
+void InfoManager::remoteinput_callback_default_text (String text, uint32 cursor)
+{
+    m_impl->remoteinput_callback_default_text (text, cursor);
 }
 
 //ISM_TRANS_CMD_UPDATE_SELECTION
@@ -5326,15 +5421,15 @@ InfoManager::signal_connect_check_privilege_by_sockfd  (InfoManagerSlotIntString
 }
 
 Connection
-InfoManager::signal_connect_enable_remote_input         (InfoManagerSlotVoid*                slot)
+InfoManager::signal_connect_remoteinput_send_input_message  (InfoManagerSlotStringBool*          slot)
 {
-    return m_impl->signal_connect_enable_remote_input (slot);
+    return m_impl->signal_connect_remoteinput_send_input_message (slot);
 }
 
 Connection
-InfoManager::signal_connect_disable_remote_input         (InfoManagerSlotVoid*                slot)
+InfoManager::signal_connect_remoteinput_send_surrounding_text  (InfoManagerSlotIntString*                slot)
 {
-    return m_impl->signal_connect_disable_remote_input (slot);
+    return m_impl->signal_connect_remoteinput_send_surrounding_text (slot);
 }
 
 } /* namespace scim */

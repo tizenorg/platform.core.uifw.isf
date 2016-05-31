@@ -4,68 +4,69 @@
 template<typename _Tp>
 void hpfitler(const _Tp* Y, _Tp* Trend, int numObs, double smoothing)
 {
-    if (numObs < 2)
-    {
-        return;
-    }
+	if (numObs < 2)
+	{
+		return;
+	}
 
-    CvMat* A=cvCreateMat(numObs,numObs,CV_32FC1);
-    cvZero(A);
-    CvMat* b= cvCreateMat(numObs,1,CV_32FC1);
-    for (int i=0;i<numObs;i++)
-    {
-        cvSetReal1D(b,i,Y[i]);
-    }
-    if (numObs==3)
-    {
-        for (int i=0;i<numObs;i++)
-        {
-            cvSetReal2D(A,i,i,smoothing);
-        }
-        CvMat* A_mul= cvCreateMat(3,3,CV_32FC1);
-        float A_mul_float[]={ 1, -2, 1, -2, 4, -2, 1, -2, 1};
-        cvSetData(A_mul,A_mul_float,CV_AUTOSTEP);
-        cvMatMul(A,A_mul,A);
-        cvReleaseMat(&A_mul);
-    }
-    else
-    {
-        float e[]={smoothing,-4*smoothing,(1+6*smoothing),-4*smoothing,smoothing};
-        for (int i=0;i<numObs;i++)
-        {
-            cvSetReal2D(A,i,i,e[2]);
-        }
-        for (int i=0;i<numObs-1;i++)
-        {
-            cvSetReal2D(A,i,i+1,e[1]);
-            cvSetReal2D(A,i+1,i,e[1]);
-        }
-        for (int i=0;i<numObs-2;i++)
-        {
-            cvSetReal2D(A,i,i+2,e[0]);
-            cvSetReal2D(A,i+2,i,e[0]);
-        }
-        cvSetReal2D(A,0,0,1+smoothing);
-        cvSetReal2D(A,0,1,-2*smoothing);
-        cvSetReal2D(A,1,0,-2*smoothing);
-        cvSetReal2D(A,1,1,1+5*smoothing);
-        cvSetReal2D(A,numObs-2,numObs-2,1+5*smoothing);
-        cvSetReal2D(A,numObs-2,numObs-1,-2*smoothing);
-        cvSetReal2D(A,numObs-1,numObs-2,-2*smoothing);
-        cvSetReal2D(A,numObs-1,numObs-1,1+smoothing);
-    }
-    CvMat* Trend_x= cvCreateMat(numObs,1,CV_32FC1);
+	CvMat* A=cvCreateMat(numObs,numObs,CV_32FC1);
+	cvZero(A);
+	CvMat* b= cvCreateMat(numObs,1,CV_32FC1);
+	for (int i=0;i<numObs;i++)
+	{
+		cvSetReal1D(b,i,Y[i]);
+	}
+	if (numObs==3)
+	{
+		for (int i=0;i<numObs;i++)
+		{
+			cvSetReal2D(A,i,i,smoothing);
+		}
+		CvMat* A_mul= cvCreateMat(3,3,CV_32FC1);
+		float A_mul_float[]={ 1, -2, 1, -2, 4, -2, 1, -2, 1};
+		cvSetData(A_mul,A_mul_float,CV_AUTOSTEP);
+		cvMatMul(A,A_mul,A);
+		cvReleaseMat(&A_mul);
+	}
+	else
+	{
+		float e[]={(float)smoothing,-4*(float)smoothing,(1+6*(float)smoothing),-4*(float)smoothing,(float)smoothing};
+		for (int i=0;i<numObs;i++)
+		{
+			cvSetReal2D(A,i,i,e[2]);
+		}
+		for (int i=0;i<numObs-1;i++)
+		{
+			cvSetReal2D(A,i,i+1,e[1]);
+			cvSetReal2D(A,i+1,i,e[1]);
+		}
+		for (int i=0;i<numObs-2;i++)
+		{
+			cvSetReal2D(A,i,i+2,e[0]);
+			cvSetReal2D(A,i+2,i,e[0]);
+		}
+		cvSetReal2D(A,0,0,1+smoothing);
+		cvSetReal2D(A,0,1,-2*smoothing);
+		cvSetReal2D(A,1,0,-2*smoothing);
+		cvSetReal2D(A,1,1,1+5*smoothing);
+		cvSetReal2D(A,numObs-2,numObs-2,1+5*smoothing);
+		cvSetReal2D(A,numObs-2,numObs-1,-2*smoothing);
+		cvSetReal2D(A,numObs-1,numObs-2,-2*smoothing);
+		cvSetReal2D(A,numObs-1,numObs-1,1+smoothing);
+	}
+	CvMat* Trend_x= cvCreateMat(numObs,1,CV_32FC1);
 
-    cvSolve(A,b,Trend_x);
+	cvSolve(A,b,Trend_x);
 
-    for (int i=0;i<Trend_x->rows;i++)
-    {
-        Trend[i]=Trend_x->data.fl[i];
-    }
-    cvReleaseMat(&Trend_x);
-    cvReleaseMat(&b);
-    cvReleaseMat(&A);
+	for (int i=0;i<Trend_x->rows;i++)
+	{
+		Trend[i]=Trend_x->data.fl[i];
+	}
+	cvReleaseMat(&Trend_x);
+	cvReleaseMat(&b);
+	cvReleaseMat(&A);
 }
+
 void hpfitler(std::deque<Point2Df>& pY, std::deque<Point2Df>& pTrend, double smoothing)
 {
     if (pTrend.empty())
@@ -91,6 +92,7 @@ void hpfitler(std::deque<Point2Df>& pY, std::deque<Point2Df>& pTrend, double smo
     delete[] Y;
     delete[] Trend;
 }
+
 void hpfitler(std::deque<Point3Df>& pY, std::deque<Point3Df>& pTrend, double smoothing)
 {
     if (pTrend.empty())
@@ -151,11 +153,11 @@ bool Motion_Input::filter_raw_sensor_data(Point3Df *origin_AccData, Point3Df *or
     _GyrFilterBuffer.push_back(GyrData);
     _AccFilterBuffer.push_back(AccData);
 
-    if (_GyrFilterBuffer.size() > _filterNumber)
-    {
-        _GyrFilterBuffer.pop_front();
-        std::deque<Point3Df> filter_points(_GyrFilterBuffer.size());
-        hpfitler(_GyrFilterBuffer, filter_points, _Cursor_smooth_val);
+	if (_GyrFilterBuffer.size() > (unsigned int)_filterNumber)
+	{
+		_GyrFilterBuffer.pop_front();
+		std::deque<Point3Df> filter_points(_GyrFilterBuffer.size());
+		hpfitler(_GyrFilterBuffer, filter_points, _Cursor_smooth_val);
 
         //this->_GyroData = filter_points[_filterNumber - 1];
 
@@ -172,11 +174,11 @@ bool Motion_Input::filter_raw_sensor_data(Point3Df *origin_AccData, Point3Df *or
         GyrData.z = zoom_m * (GyrData.z * (1 - rate) + filter_points[_filterNumber - 1].z * rate);
     }
 
-    if (_AccFilterBuffer.size() > _filterNumber)
-    {
-        _AccFilterBuffer.pop_front();
-        std::deque<Point3Df> filter_points(_AccFilterBuffer.size());
-        hpfitler(_AccFilterBuffer, filter_points, _Cursor_smooth_val);
+	if (_AccFilterBuffer.size() > (unsigned int)_filterNumber)
+	{
+		_AccFilterBuffer.pop_front();
+		std::deque<Point3Df> filter_points(_AccFilterBuffer.size());
+		hpfitler(_AccFilterBuffer, filter_points, _Cursor_smooth_val);
         AccData = filter_points[_filterNumber - 1];
     }
 

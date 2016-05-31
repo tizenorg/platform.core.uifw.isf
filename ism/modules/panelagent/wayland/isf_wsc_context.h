@@ -119,6 +119,10 @@ void isf_wsc_context_focus_out (WSCContextISF *wsc_ctx);
 void isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos);
 void isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type);
 void isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction);
+void isf_wsc_context_send_default_text (WSCContextISF* wsc_ctx, const char *text, int cursor);
+void isf_wsc_context_send_entry_metadata (WSCContextISF* wsc_ctx, Ecore_IMF_Input_Hints hint,
+                                     Ecore_IMF_Input_Panel_Layout layout, int variation,
+                                     Ecore_IMF_Autocapital_Type type);
 void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                        uint32_t serial,
                                        uint32_t timestamp, const char *keyname,
