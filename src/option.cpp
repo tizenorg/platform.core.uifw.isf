@@ -653,6 +653,17 @@ static void _naviframe_back_cb(void *data, Evas_Object *obj, void *event_info)
     }
 }
 
+#ifdef _CIRCLE
+static void add_padding_area(Evas_Object *genlist)
+{
+    /* Add padding area in wearable circle profile */
+    Elm_Genlist_Item_Class *ptc = elm_genlist_item_class_new();
+    ptc->item_style = "padding";
+    elm_genlist_item_append(genlist, ptc, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+    elm_genlist_item_class_free(ptc);
+}
+#endif
+
 Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe, SCLOptionWindowType type)
 {
     Evas_Object *genlist = NULL;
@@ -768,6 +779,10 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_RESET].mode));
 
         evas_object_smart_callback_add(genlist, "contracted", _main_gl_con, genlist);
+
+#ifdef _CIRCLE
+        add_padding_area(genlist);
+#endif
     }
 
     return genlist;
@@ -803,6 +818,10 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
                 option_elements[type].language_item[loop] = NULL;
             }
         }
+
+#ifdef _CIRCLE
+        add_padding_area(genlist);
+#endif
     }
 
     evas_object_show(genlist);
