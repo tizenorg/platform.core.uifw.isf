@@ -2302,9 +2302,8 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
     //FIXME: filter_hotkeys should be added
     //if (filter_hotkeys (ic, _key) == false && process_key) {
         //if (!_focused_ic || !_focused_ic->impl->is_on) {
+            char code = key.get_ascii_code ();
             if (key.is_key_press ()) {
-                char code = key.get_ascii_code ();
-
                 if (isgraph (code)) {
                     char string[2] = {0};
                     snprintf (string, sizeof (string), "%c", code);
@@ -2317,9 +2316,11 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
                     if (key.code == SCIM_KEY_space ||
                         key.code == SCIM_KEY_KP_Space)
                         autoperiod_insert (ic);
-
-                    feed_key_event (ic, key, false);
                 }
+            }
+
+            if (!isgraph (code)) {
+                feed_key_event (ic, key, false);
             }
         //}
     //}
