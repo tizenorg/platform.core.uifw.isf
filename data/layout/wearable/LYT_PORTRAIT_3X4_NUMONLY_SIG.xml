@@ -1,172 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="360" height="240" key_width="168" key_height="95" key_spacing="8" row_spacing="7" hit_left="4" hit_right="4" hit_top="3" hit_bottom="4" label_type="3X4_BTN_1" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="360" height="240" key_width="89" key_height="59" key_spacing="1" row_spacing="1" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_BTN_1">
   <image_path>
-    <button_normal>B09_panel.png</button_normal>
+    <button_normal>number_pad_btn_bg_bottom.png</button_normal>
   </image_path>
   <background_image>
-    <rec button="normal">button/B09_key_btn_01.png</rec>
-    <rec button="pressed">button/B09_key_btn_press.png</rec>
-    <rec button="disabled">button/B09_key_btn_01.png</rec>
+    <rec button="normal">number_pad_btn_bg.png</rec>
   </background_image>
-  <row x="50" y="13">
-    <key width="150" hit_left="12" hit_top="13">
-      <label>
-        <rec>1</rec>
-      </label>
+  <row x="0" y="1">
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_01.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_01.png</rec>
+      </image_label>
       <key_value>
         <rec>1</rec>
       </key_value>
     </key>
-    <key width="150" hit_top="13">
-      <label>
-        <rec multi="0">2</rec>
-      </label>
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_02.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_02.png</rec>
+      </image_label>
       <key_value>
         <rec>2</rec>
       </key_value>
     </key>
-    <key width="150" hit_top="13">
-      <label>
-        <rec multi="0">3</rec>
-      </label>
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_03.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_03.png</rec>
+      </image_label>
       <key_value>
         <rec>3</rec>
       </key_value>
     </key>
-    <key width="150" button_type="selfish" key_type="control" use_repeat_key="true" hit_right="12" hit_top="13">
+    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4" width="90">
       <image_label>
-        <rec button="normal">B09_icon_back_nor_65x65.png</rec>
-        <rec button="pressed">B09_icon_back_press_65x65.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_delete.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_delete.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>BackSpace</rec>
       </key_value>
     </key>
   </row>
-  <row x="85">
-    <key width="130" hit_left="12">
-      <label>
-        <rec multi="0">4</rec>
-      </label>
+  <row x="0">
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_04.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_04.png</rec>
+      </image_label>
       <key_value>
         <rec>4</rec>
       </key_value>
     </key>
-    <key width="130">
-      <label>
-        <rec multi="0">5</rec>
-      </label>
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_05.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_05.png</rec>
+      </image_label>
       <key_value>
         <rec>5</rec>
       </key_value>
     </key>
-    <key width="130">
-      <label>
-        <rec multi="0">6</rec>
-      </label>
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_06.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_06.png</rec>
+      </image_label>
       <key_value>
         <rec>6</rec>
       </key_value>
     </key>
-    <key width="130" key_type="control" custom_id="Enter" label_type="3X4_BTN_2" hit_right="12">
+    <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4" width="90">
       <image_label>
-        <rec button="normal">B09_icon_enter_nor_65x65.png</rec>
-        <rec button="pressed">B09_icon_enter_press_65x65.png</rec>
-        <rec button="disabled">B09_icon_enter_dim_65x65.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_enter.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>Enter</rec>
       </key_value>
     </key>
   </row>
-  <row x="130">
-    <key width="110" hit_left="12">
-      <label>
-        <rec multi="0">7</rec>
-      </label>
+  <row x="0">
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_07.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_07.png</rec>
+      </image_label>
       <key_value>
         <rec>7</rec>
       </key_value>
     </key>
-    <key width="110">
-      <label>
-        <rec multi="0">8</rec>
-      </label>
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_08.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_08.png</rec>
+      </image_label>
       <key_value>
         <rec>8</rec>
       </key_value>
     </key>
-    <key width="110">
-      <label>
-        <rec multi="0">9</rec>
-      </label>
+    <key>
+      <image_label>
+        <rec button="normal">Date_time_button/privacy_lock_pad_variation_09.png</rec>
+        <rec button="pressed">Date_time_button/privacy_lock_pad_variation_09.png</rec>
+      </image_label>
       <key_value>
         <rec>9</rec>
       </key_value>
     </key>
-    <key width="110" label_type="3X4_BTN_9" hit_right="12">
+    <key key_type="string" label_type="3X4_BTN_SYM" width="90">
       <label>
         <rec>-</rec>
       </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>-</rec>
       </key_value>
     </key>
   </row>
-  <row x="210" y="320" key_spacing="5">
-    <key width="65" height="90" button_type="uiitem" label_type="3X4_BTN_5_2_DISABLED" hit_left="12" hit_top="4" hit_bottom="27">
-      <label>
-        <rec>Sym</rec>
-        <rec multi="1">123</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
-    </key>
-    <key width="90" height="90" hit_bottom="10">
-      <label>
-        <rec>0</rec>
-      </label>
+  <row x="39">
+    <key label_type="3X4_NUMBER_0" width="140">
+      <image_label>
+        <rec button="normal">Privacy_button/privacy_lock_button_00.png</rec>
+        <rec button="pressed">Privacy_button/privacy_lock_button_00.png</rec>
+      </image_label>
       <key_value>
         <rec>0</rec>
       </key_value>
     </key>
-    <key width="65" height="90" button_type="uiitem" hit_top="4" hit_bottom="27">
+    <key button_type="uiitem" key_type="control" image_label_type="IMAGE_NUMBERONLY_SPACE" width="140">
       <image_label>
-        <rec button="normal">B09_icon_space_dim_73x22.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_space_d.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_space_d.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
-    </key>
-    <key width="65" height="90" button_type="uiitem" hit_right="12" hit_top="4" hit_bottom="27">
-      <image_label>
-        <rec button="normal">setting icon/B09_icon_setting_dim_65x65.png</rec>
-      </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
+      <key_value>
+        <rec>Space</rec>
+      </key_value>
     </key>
   </row>
 </layout>
