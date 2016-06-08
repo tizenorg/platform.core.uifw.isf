@@ -939,6 +939,8 @@ void isf_imf_context_set_keyboard_mode (Ecore_IMF_Context *ctx, TOOLBAR_MODE_T m
     if (_support_hw_keyboard_mode) {
         kbd_mode = mode;
         SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
+        will_hide = EINA_TRUE;
+        hide_req_ic = ctx;
         _isf_imf_context_set_keyboard_mode (_get_context_id (ctx), mode);
     }
 }
