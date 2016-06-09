@@ -6050,6 +6050,7 @@ static void launch_helper (const char* exec, const char *name, const char *appid
         ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", name, appid);
 
         unsetenv ("ELM_THEME");
+        unsetenv ("ELM_SCALE");
 
         setsid ();
         LOGD ("launch execpath : %s\n", exec);
