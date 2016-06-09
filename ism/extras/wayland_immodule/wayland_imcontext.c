@@ -1452,6 +1452,9 @@ wayland_im_context_input_panel_layout_set(Ecore_IMF_Context *ctx,
         case ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY:
             imcontext->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS;
             break;
+        case ECORE_IMF_INPUT_PANEL_LAYOUT_HEX:
+            imcontext->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_ALPHA;
+            break;
         case ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL:
             imcontext->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL;
             break;

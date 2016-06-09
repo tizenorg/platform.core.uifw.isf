@@ -1833,6 +1833,9 @@ Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get (WSCContextISF *
         case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD_DIGITS:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD;
             break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_ALPHA:
+            layout = ECORE_IMF_INPUT_PANEL_LAYOUT_HEX;
+            break;
         case WL_TEXT_INPUT_CONTENT_PURPOSE_TERMINAL:
             layout = ECORE_IMF_INPUT_PANEL_LAYOUT_TERMINAL;
             break;
