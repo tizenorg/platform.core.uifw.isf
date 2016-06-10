@@ -3130,7 +3130,7 @@ client context helpers: %d, helpers uuid count: %d",
         }
     }
     //SCIM_TRANS_CMD_GET_SURROUNDING_TEXT
-    void socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
+    void socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
         LOGD ("");
         int     focused_client;
@@ -3139,7 +3139,7 @@ client context helpers: %d, helpers uuid count: %d",
         ClientInfo client_info = socket_get_client_info (focused_client);
 
         if (client_info.type == FRONTEND_CLIENT) {
-            m_panel_agent_manager.socket_helper_get_surrounding_text (focused_client, focused_context, maxlen_before, maxlen_after, fd);
+            m_panel_agent_manager.socket_helper_get_surrounding_text (focused_client, focused_context, maxlen_before, maxlen_after);
         }
     }
     //SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT
@@ -3156,7 +3156,7 @@ client context helpers: %d, helpers uuid count: %d",
         }
     }
     //SCIM_TRANS_CMD_GET_SELECTION
-    void socket_helper_get_selection (int client, String uuid, const int fd) {
+    void socket_helper_get_selection (int client, String uuid) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
         LOGD ("");
         int     focused_client;
@@ -3165,7 +3165,7 @@ client context helpers: %d, helpers uuid count: %d",
         ClientInfo client_info = socket_get_client_info (focused_client);
 
         if (client_info.type == FRONTEND_CLIENT) {
-            m_panel_agent_manager.socket_helper_get_selection (focused_client, focused_context, fd);
+            m_panel_agent_manager.socket_helper_get_selection (focused_client, focused_context);
         }
     }
     //SCIM_TRANS_CMD_SET_SELECTION
@@ -4581,9 +4581,9 @@ void InfoManager::socket_helper_commit_string (int client, uint32 target_ic, Str
 }
 
 //SCIM_TRANS_CMD_GET_SURROUNDING_TEXT
-void InfoManager::socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after, const int fd)
+void InfoManager::socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after)
 {
-    m_impl->socket_helper_get_surrounding_text (client, uuid, maxlen_before, maxlen_after, fd);
+    m_impl->socket_helper_get_surrounding_text (client, uuid, maxlen_before, maxlen_after);
 }
 
 //SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT
@@ -4593,9 +4593,9 @@ void InfoManager::socket_helper_delete_surrounding_text (int client, uint32 offs
 }
 
 //SCIM_TRANS_CMD_GET_SELECTION
-void InfoManager::socket_helper_get_selection (int client, String uuid, const int fd)
+void InfoManager::socket_helper_get_selection (int client, String uuid)
 {
-    m_impl->socket_helper_get_selection (client, uuid, fd);
+    m_impl->socket_helper_get_selection (client, uuid);
 }
 
 //SCIM_TRANS_CMD_SET_SELECTION

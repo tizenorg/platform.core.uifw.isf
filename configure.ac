@@ -194,8 +194,6 @@ AC_SUBST(UINT16)
 AC_SUBST(UINT32)
 AC_SUBST(UINT64)
 
-AC_CHECK_MEMBERS([struct msghdr.msg_control],,, [#include <sys/socket.h>])
-
 # Checks for library functions.
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gettimeofday memmove memset nl_langinfo setlocale daemon])

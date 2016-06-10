@@ -883,13 +883,13 @@ public:
     void socket_helper_commit_string (int client, uint32 target_ic, String target_uuid, WideString wstr);
 
     //SCIM_TRANS_CMD_GET_SURROUNDING_TEXT
-    void socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after, const int fd);
+    void socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after);
 
     //SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT
     void socket_helper_delete_surrounding_text (int client, uint32 offset, uint32 len);
 
     //SCIM_TRANS_CMD_GET_SELECTION
-    void socket_helper_get_selection (int client, String uuid, const int fd);
+    void socket_helper_get_selection (int client, String uuid);
 
     //SCIM_TRANS_CMD_SET_SELECTION
     void socket_helper_set_selection (int client, uint32 start, uint32 end);

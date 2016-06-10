@@ -643,12 +643,12 @@ void PanelAgentManager::socket_helper_key_event (int id, uint32 context_id, int 
         _p->socket_helper_key_event (id, context_id, cmd, key);
 }
 
-void PanelAgentManager::socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd)
+void PanelAgentManager::socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
 
     if (!_p.null ())
-        _p->socket_helper_get_surrounding_text (id, context_id, maxlen_before, maxlen_after, fd);
+        _p->socket_helper_get_surrounding_text (id, context_id, maxlen_before, maxlen_after);
 }
 
 void PanelAgentManager::socket_helper_delete_surrounding_text (int id, uint32 context_id, uint32 offset, uint32 len)
@@ -659,12 +659,12 @@ void PanelAgentManager::socket_helper_delete_surrounding_text (int id, uint32 co
         _p->socket_helper_delete_surrounding_text (id, context_id, offset, len);
 }
 
-void PanelAgentManager::socket_helper_get_selection (int id, uint32 context_id, const int fd)
+void PanelAgentManager::socket_helper_get_selection (int id, uint32 context_id)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
 
     if (!_p.null ())
-        _p->socket_helper_get_selection (id, context_id, fd);
+        _p->socket_helper_get_selection (id, context_id);
 }
 
 void PanelAgentManager::socket_helper_set_selection (int id, uint32 context_id, uint32 start, uint32 end)
