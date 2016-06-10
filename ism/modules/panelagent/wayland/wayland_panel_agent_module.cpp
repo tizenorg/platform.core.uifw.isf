@@ -251,6 +251,22 @@ InfoManager* g_info_manager = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Implementation of Wayland Input Method functions.
 /////////////////////////////////////////////////////////////////////////////
+static void
+_wsc_im_ctx_surrounding_text(void *data, struct wl_input_method_context *im_ctx, uint32_t serial, const char *text, uint32_t cursor_position)
+{
+    LOGD ("");
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx) return;
+
+    if (wsc_ctx->surrounding_text)
+        free (wsc_ctx->surrounding_text);
+
+    wsc_ctx->surrounding_text = strdup (text ? text : "");
+    wsc_ctx->surrounding_cursor = cursor_position;
+    g_info_manager->socket_update_surrounding_text (wsc_ctx->surrounding_text, wsc_ctx->surrounding_cursor);
+
+    LOGD ("text : '%s', cursor : %d\n", text, cursor_position);
+}
 
 static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
@@ -393,6 +409,17 @@ _wsc_im_ctx_bidi_direction(void *data, struct wl_input_method_context *im_ctx, u
 }
 
 static void
+_wsc_im_ctx_selection_text(void *data, struct wl_input_method_context *im_ctx, uint32_t serial, const char *text)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+
+    LOGD ("im_context = %p selection text = %s\n", im_ctx, text);
+    if (!wsc_ctx) return;
+
+    g_info_manager->socket_update_selection (text);
+}
+
+static void
 _wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, uint32_t cursor_pos)
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
@@ -404,6 +431,7 @@ _wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, 
 }
 
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
+     _wsc_im_ctx_surrounding_text,
      _wsc_im_ctx_reset,
      _wsc_im_ctx_content_type,
      _wsc_im_ctx_invoke_action,
@@ -413,7 +441,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_return_key_disabled,
      _wsc_im_ctx_input_panel_data,
      _wsc_im_ctx_bidi_direction,
-     _wsc_im_ctx_cursor_position
+     _wsc_im_ctx_selection_text,
+     _wsc_im_ctx_cursor_position,
 };
 
 static void
@@ -2703,10 +2732,10 @@ public:
     }
 
     void
-    socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
-        LOGD ("client id:%d, fd:%d", id, fd);
+    socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
+        LOGD ("client id:%d", id);
         WSCContextISF* ic = find_ic (context_id);
-        wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, fd);
+        wl_input_method_context_get_surrounding_text(ic->im_ctx, ic->serial, maxlen_before, maxlen_after);
     }
 
     void
@@ -2747,10 +2776,10 @@ public:
     }
 
     void
-    socket_helper_get_selection (int id, uint32 context_id, const int fd) {
-        LOGD ("client id:%d, fd:%d", id, fd);
+    socket_helper_get_selection (int id, uint32 context_id) {
+        LOGD ("client id:%d", id);
         WSCContextISF* ic = find_ic (context_id);
-        wl_input_method_context_get_selection_text (ic->im_ctx, fd);
+        wl_input_method_context_get_selection_text (ic->im_ctx, ic->serial);
     }
 };
 

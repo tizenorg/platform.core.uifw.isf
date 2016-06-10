@@ -644,7 +644,7 @@ public:
      *
      * @return none.
      */
-    virtual void socket_helper_get_surrounding_text (int client, uint32 context, uint32 maxlen_before, uint32 maxlen_after, const int fd);
+    virtual void socket_helper_get_surrounding_text (int client, uint32 context, uint32 maxlen_before, uint32 maxlen_after);
 
     /**
      * @brief socket_helper_delete_surrounding_text.
@@ -662,7 +662,7 @@ public:
      *
      * @return none.
      */
-    virtual void socket_helper_get_selection (int client, uint32 context, const int fd);
+    virtual void socket_helper_get_selection (int client, uint32 context);
 
     /**
      * @brief socket_helper_set_selection.
