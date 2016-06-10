@@ -400,7 +400,7 @@ public:
     {
         LOGD ("");
         String _text;
-        thiz->get_selection_text (_text);
+        thiz->get_selection (_text);
         text = utf8_mbstowcs (_text);
         return true;
     }
@@ -816,7 +816,6 @@ HelperAgent::filter_event ()
                 uint32 cursor_pos;
                 if (m_impl->recv.get_data (cursor_pos)) {
                     m_impl->cursor_pos = cursor_pos;
-                    LOGD ("update cursor position %d", cursor_pos);
                     m_impl->signal_update_cursor_position (this, ic, ic_uuid, (int) cursor_pos);
                         if (!m_impl->si.null ()) m_impl->si->update_cursor_position(cursor_pos);
                 }
@@ -833,7 +832,7 @@ HelperAgent::filter_event ()
                         free (m_impl->surrounding_text);
                     m_impl->surrounding_text = strdup (text.c_str ());
                     m_impl->cursor_pos = cursor;
-                    LOGD ("surrounding text: %s, %d", m_impl->surrounding_text, cursor);
+                    LOGD ("surrounding text: %s, %d", m_impl->surrounding_text, m_impl->cursor_pos);
                     if (m_impl->need_update_surrounding_text) {
                         m_impl->need_update_surrounding_text = false;
                         m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
@@ -1462,7 +1461,6 @@ HelperAgent::send_key_event (int            ic,
                              const KeyEvent &key) const
 {
     LOGD ("");
-
     //FIXME: remove shift_mode_off, shift_mode_on, shift_mode_lock from ISE side
     if (key.code == SHIFT_MODE_OFF ||
         key.code == SHIFT_MODE_ON ||
@@ -1955,35 +1953,30 @@ void
 HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor)
 {
     LOGD ("");
-    if (m_impl->surrounding_text) {
-        free (m_impl->surrounding_text);
-        m_impl->surrounding_text = NULL;
-    }
 
-    if (!m_impl->socket_active.is_connected ())
+    if (!m_impl || !m_impl->surrounding_text) {
+        text = utf8_wcstombs (WideString ());
+        cursor = 0;
         return;
-
-    m_impl->send.clear ();
-    m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-    m_impl->send.put_data (m_impl->magic_active);
-    m_impl->send.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT);
-    m_impl->send.put_data ("");
-    m_impl->send.put_data (maxlen_before);
-    m_impl->send.put_data (maxlen_after);
-    m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-
-    for (int i = 0; i < 3; i++) {
-        if (filter_event () && m_impl->surrounding_text) {
-            text = m_impl->surrounding_text;
-            cursor = m_impl->cursor_pos;
-            break;
-        }
     }
 
-    if (m_impl->surrounding_text) {
-        free (m_impl->surrounding_text);
-        m_impl->surrounding_text = NULL;
-    }
+    WideString before = utf8_mbstowcs (String (m_impl->surrounding_text));
+
+    if (m_impl->cursor_pos > before.length ())
+        return;
+    WideString after = before;
+    before = before.substr (0, m_impl->cursor_pos);
+    after =  after.substr (m_impl->cursor_pos, after.length () - m_impl->cursor_pos);
+    if (maxlen_before > 0 && ((unsigned int)maxlen_before) < before.length ())
+        before = WideString (before.begin () + (before.length () - maxlen_before), before.end ());
+    else if (maxlen_before == 0)
+        before = WideString ();
+    if (maxlen_after > 0 && ((unsigned int)maxlen_after) < after.length ())
+        after = WideString (after.begin (), after.begin () + maxlen_after);
+    else if (maxlen_after == 0)
+        after = WideString ();
+    text = utf8_wcstombs (before + after);
+    cursor = before.length ();
 }
 
 /**
@@ -1996,6 +1989,32 @@ void
 HelperAgent::delete_surrounding_text (int offset, int len) const
 {
     LOGD ("offset = %d, len = %d", offset, len);
+
+    if (!m_impl)
+        return;
+
+    WideString ws;
+
+    if (!m_impl->surrounding_text)
+        ws = utf8_mbstowcs (String (""));
+    else
+        ws = utf8_mbstowcs (String (m_impl->surrounding_text));
+
+    int _offset = offset + m_impl->cursor_pos;
+
+    if (len <= 0 || _offset < 0 || _offset + len > (int)ws.length ()) {
+        LOGW ("invalid offset and len");
+        return;
+    }
+
+    WideString sub_ws_before = ws.substr (0, _offset);
+    WideString sub_ws_after = ws.substr (_offset + len, ws.length ());
+    WideString new_ws = sub_ws_before + sub_ws_after;
+
+    if (m_impl->surrounding_text)
+        free (m_impl->surrounding_text);
+    m_impl->surrounding_text = strdup (utf8_wcstombs (new_ws).c_str ());
+    m_impl->cursor_pos = _offset;
 
     if (m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
@@ -2035,35 +2054,11 @@ HelperAgent::get_selection (const String &uuid) const
  * @param text The selection text.
  */
 void
-HelperAgent::get_selection_text (String &text)
+HelperAgent::get_selection (String &text) const
 {
     LOGD ("");
-    if (m_impl->selection_text) {
-        free (m_impl->selection_text);
-        m_impl->selection_text = NULL;
-    }
-
-    if (!m_impl->socket_active.is_connected ())
-        return;
-
-    m_impl->send.clear ();
-    m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-    m_impl->send.put_data (m_impl->magic_active);
-    m_impl->send.put_command (SCIM_TRANS_CMD_GET_SELECTION);
-    m_impl->send.put_data ("");
-    m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-
-    for (int i = 0; i < 3; i++) {
-        if (filter_event () && m_impl->selection_text) {
-            text = m_impl->selection_text;
-            break;
-        }
-    }
-
-    if (m_impl->selection_text) {
-        free (m_impl->selection_text);
-        m_impl->selection_text = NULL;
-    }
+    if (m_impl->selection_text)
+        text = m_impl->selection_text;
 }
 
 /**
