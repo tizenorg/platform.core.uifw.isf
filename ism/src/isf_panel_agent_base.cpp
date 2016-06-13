@@ -398,7 +398,7 @@ void PanelAgentBase::socket_helper_key_event (int client, uint32 context, int cm
 
 //SCIM_TRANS_CMD_GET_SURROUNDING_TEXT
 //socket_helper_get_surrounding_text
-void PanelAgentBase::socket_helper_get_surrounding_text (int client, uint32 context, uint32 maxlen_before, uint32 maxlen_after)
+void PanelAgentBase::socket_helper_get_surrounding_text (int client, uint32 context, uint32 maxlen_before, uint32 maxlen_after, const int fd)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
 }
@@ -409,7 +409,7 @@ void PanelAgentBase::socket_helper_delete_surrounding_text (int client, uint32 c
     LOGD ("not implemented ");
 }
 //SCIM_TRANS_CMD_GET_SELECTION
-void PanelAgentBase::socket_helper_get_selection (int client, uint32 context)
+void PanelAgentBase::socket_helper_get_selection (int client, uint32 context, const int fd)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
 }
