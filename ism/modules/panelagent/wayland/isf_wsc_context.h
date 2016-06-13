@@ -113,7 +113,6 @@ void isf_wsc_context_add (WSCContextISF *wsc_ctx);
 void isf_wsc_context_del (WSCContextISF *wsc_ctx);
 void isf_wsc_context_focus_in (WSCContextISF *wsc_ctx);
 void isf_wsc_context_focus_out (WSCContextISF *wsc_ctx);
-void isf_wsc_context_cursor_position_set (WSCContextISF *wsc_ctx, int cursor_pos);
 void isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos);
 void isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type);
 void isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction);
