@@ -3760,9 +3760,10 @@ static Ecore_X_Window efl_get_window (const char *name)
     if (ret == Success) {
         if ((type_return == XA_WINDOW) && (format_return == 32) && (data)) {
             window = *(Window *)data;
-            if (data)
-                XFree (data);
         }
+
+        if (data)
+            XFree (data);
     } else {
         std::cerr << "XGetWindowProperty () is failed!!!\n";
     }
