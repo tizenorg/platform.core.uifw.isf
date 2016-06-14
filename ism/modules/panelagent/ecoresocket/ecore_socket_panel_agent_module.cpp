@@ -874,7 +874,7 @@ private:
             LOGW ("failed\n");
     }
 
-    void get_ise_language_locale(int client, uint32 context, String& uuid, char* data,  size_t& len) {
+    void get_ise_language_locale(int client, uint32 context, String& uuid, char** data,  size_t& len) {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
         LOGD ("client id:%d\n", client);
 
@@ -892,7 +892,7 @@ private:
         if (trans.write_to_socket(client_socket)
             && trans.read_from_socket(client_socket)
             && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
-            && trans.get_data(&data, len)) {
+            && trans.get_data(data, len)) {
         } else {
             LOGW ("failed\n");
         }
@@ -1672,7 +1672,7 @@ private:
                     } else if (cmd == ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE) {
                         size_t  len;
                         char*   data = NULL;
-                        m_info_manager->get_ise_language_locale(client_id, data, len);
+                        m_info_manager->get_ise_language_locale(client_id, &data, len);
                         Transaction trans;
                         trans.clear();
                         trans.put_command(SCIM_TRANS_CMD_REPLY);

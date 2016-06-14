@@ -509,7 +509,7 @@ public:
      *
      * @return none.
      */
-    virtual void get_ise_language_locale (int client, uint32 context, String& uuid, _OUT_ char* data, _OUT_ size_t& len);
+    virtual void get_ise_language_locale (int client, uint32 context, String& uuid, _OUT_ char** data, _OUT_ size_t& len);
 
     /**
      * @brief check_option_window.

@@ -592,7 +592,7 @@ public:
 
 
     //ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE
-    void get_ise_language_locale (int client_id, _OUT_ char* data, _OUT_ size_t& len);
+    void get_ise_language_locale (int client_id, _OUT_ char** data, _OUT_ size_t& len);
 
     //ISM_TRANS_CMD_SET_LAYOUT
     void set_ise_layout (int client_id, uint32 layout);
