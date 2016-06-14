@@ -2741,7 +2741,7 @@ public:
         LOGD ("client id:%d", id);
         WSCContextISF* ic = find_ic (context_id);
 
-        if (ic && ic->impl) {
+        if (ic) {
             wl_input_method_context_hide_input_panel (ic->im_ctx, ic->serial);
         }
     }
@@ -2750,7 +2750,10 @@ public:
     socket_helper_get_selection (int id, uint32 context_id, const int fd) {
         LOGD ("client id:%d, fd:%d", id, fd);
         WSCContextISF* ic = find_ic (context_id);
-        wl_input_method_context_get_selection_text (ic->im_ctx, fd);
+
+        if (ic) {
+            wl_input_method_context_get_selection_text (ic->im_ctx, fd);
+        }
     }
 };
 
