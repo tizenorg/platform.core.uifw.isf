@@ -1417,7 +1417,7 @@ public:
         m_signal_get_candidate_geometry (info);
     }
     //ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE
-    void get_ise_language_locale (int client_id, _OUT_ char* data, _OUT_ size_t& len) {
+    void get_ise_language_locale (int client_id, _OUT_ char** data, _OUT_ size_t& len) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
         LOGD ("");
         Transaction trans;
@@ -4038,7 +4038,7 @@ void InfoManager::get_candidate_window_geometry (int client_id, _OUT_ struct rec
 
 
 //ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE
-void InfoManager::get_ise_language_locale (int client_id, _OUT_ char* data, _OUT_ size_t& len)
+void InfoManager::get_ise_language_locale (int client_id, _OUT_ char** data, _OUT_ size_t& len)
 {
     m_impl->get_ise_language_locale (client_id, data, len);
 }

@@ -523,7 +523,7 @@ void PanelAgentManager::get_helper_layout (int id, uint32 context_id, String& uu
         _p->get_helper_layout (id, context_id, uuid, layout);
 }
 
-void PanelAgentManager::get_ise_language_locale (int id, uint32 context_id, String& uuid, _OUT_ char* data, _OUT_ size_t& len)
+void PanelAgentManager::get_ise_language_locale (int id, uint32 context_id, String& uuid, _OUT_ char** data, _OUT_ size_t& len)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
 

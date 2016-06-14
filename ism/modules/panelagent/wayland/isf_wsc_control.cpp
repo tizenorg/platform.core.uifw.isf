@@ -81,7 +81,7 @@ int _isf_wsc_context_input_panel_language_locale_get (int context, char** locale
 {
     size_t datalen = 0;
     char*  data = NULL;
-    g_info_manager->get_ise_language_locale (get_panel_client_id (), data, datalen);
+    g_info_manager->get_ise_language_locale (get_panel_client_id (), &data, datalen);
 
     if (locale)
         *locale = strndup (data, datalen);

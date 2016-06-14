@@ -310,7 +310,7 @@ public:
     bool get_helper_geometry (int client, uint32 context, String& uuid, _OUT_ struct rectinfo& info);
     void get_helper_imdata (int client, uint32 context, String& uuid, _OUT_ char** imdata, _OUT_ size_t& len);
     void get_helper_layout (int client, uint32 context, String& uuid, uint32& layout);
-    void get_ise_language_locale (int client, uint32 context, String& uuid, _OUT_ char* data, _OUT_ size_t& len);
+    void get_ise_language_locale (int client, uint32 context, String& uuid, _OUT_ char** data, _OUT_ size_t& len);
     void check_option_window (int client, uint32 context, String& uuid, _OUT_ uint32& avail);
     void reset_ise_option (int client_id, uint32 context);
     void reset_helper_context (int client_id, uint32 context, const String& uuid);

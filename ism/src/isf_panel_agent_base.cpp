@@ -322,7 +322,7 @@ void PanelAgentBase::get_helper_layout (int client, uint32 context, String& uuid
 }
 
 
-void PanelAgentBase::get_ise_language_locale (int client, uint32 context, String& uuid, _OUT_ char* data, _OUT_ size_t& len)
+void PanelAgentBase::get_ise_language_locale (int client, uint32 context, String& uuid, _OUT_ char** data, _OUT_ size_t& len)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
 }
