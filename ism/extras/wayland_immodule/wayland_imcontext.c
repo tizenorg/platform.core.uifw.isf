@@ -1105,6 +1105,12 @@ keyboard_mode_changed_cb (keynode_t *key, void* data)
 
         Ecore_IMF_Input_Panel_Keyboard_Mode input_mode = !val;
         ecore_imf_context_input_panel_event_callback_call (active_ctx, ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, input_mode);
+
+        if ((input_mode == ECORE_IMF_INPUT_PANEL_SW_KEYBOARD_MODE) && _focused_ctx && (active_ctx == _focused_ctx)) {
+            if (ecore_imf_context_input_panel_enabled_get (active_ctx)) {
+                ecore_imf_context_input_panel_show (active_ctx);
+            }
+        }
     }
 }
 #endif
