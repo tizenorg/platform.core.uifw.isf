@@ -2718,7 +2718,8 @@ public:
     socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
         LOGD ("client id:%d, fd:%d", id, fd);
         WSCContextISF* ic = find_ic (context_id);
-        wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, fd);
+        if (ic)
+            wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, fd);
     }
 
     void

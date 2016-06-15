@@ -2014,7 +2014,7 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
 
         if (fds[1]) {
             char buff[512];
-            int len = read (fds[1], buff, sizeof(buff));
+            int len = read (fds[1], buff, sizeof(buff) - 1);
             if (len <= 0)
                 break;
             else {
@@ -2133,7 +2133,7 @@ HelperAgent::get_selection_text (String &text)
 
         if (fds[1]) {
             char buff[512];
-            int len = read (fds[1], buff, sizeof(buff));
+            int len = read (fds[1], buff, sizeof(buff) - 1);
             if (len <= 0)
                 break;
             else {
