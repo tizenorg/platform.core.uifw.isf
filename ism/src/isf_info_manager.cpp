@@ -66,6 +66,7 @@
 #include "scim.h"
 #include "scim_stl_map.h"
 #include "isf_panel_agent_manager.h"
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

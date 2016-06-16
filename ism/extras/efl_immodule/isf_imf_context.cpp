@@ -1933,6 +1933,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
 
     if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *ev = (Ecore_IMF_Event_Key_Down *)event;
+        SECURE_LOGD ("[Key-down event] ctx : %p, key_name: %s \n", ctx, ev->keyname);
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
         scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);
@@ -1940,6 +1941,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);
     } else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *ev = (Ecore_IMF_Event_Key_Up *)event;
+        SECURE_LOGD ("[Key-up event] ctx : %p, key_name: %s \n", ctx, ev->keyname);
         timestamp = ev->timestamp;
         scim_string_to_key (key, ev->key);
         scim_set_device_info (key, ev->dev_name ? ev->dev_name : "", ev->dev_class, ev->dev_subclass);

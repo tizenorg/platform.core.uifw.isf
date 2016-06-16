@@ -48,6 +48,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include "scim_stl_map.h"
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

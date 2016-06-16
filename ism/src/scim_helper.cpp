@@ -55,6 +55,7 @@
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
 #include <dlog.h>
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

@@ -34,6 +34,7 @@
 #include "scim_private.h"
 #include "scim.h"
 #include <dlog.h>
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

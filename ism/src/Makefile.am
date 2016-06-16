@@ -44,7 +44,8 @@ noinst_HEADERS		= ltdl.h \
 			  scim_keyevent_data.h \
 			  scim_stl_map.h \
 			  isf_query_utility.h \
-			  isf_pkg.h
+			  isf_pkg.h \
+			  isf_debug.h
 
 libscimincludedir       = $(includedir)/scim@SCIM_EPOCH@
 

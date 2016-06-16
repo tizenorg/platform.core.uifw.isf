@@ -56,6 +56,7 @@
 #include <fcntl.h>
 #include <sys/prctl.h>
 #include <dlog.h>
+#include "isf_debug.h"
 
 #include "scim_private.h"
 #include "scim.h"

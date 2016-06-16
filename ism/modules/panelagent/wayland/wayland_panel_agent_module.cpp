@@ -58,6 +58,7 @@
 #include <linux/input.h>
 #include <xkbcommon/xkbcommon.h>
 #include <sys/mman.h>
+#include "isf_debug.h"
 
 
 #ifdef LOG_TAG

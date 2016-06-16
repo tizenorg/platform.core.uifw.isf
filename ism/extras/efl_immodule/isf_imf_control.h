@@ -29,6 +29,7 @@
 
 #include <Ecore_IMF.h>
 #include "scim.h"
+#include "isf_debug.h"
 
 #ifdef __cplusplus
 extern "C"

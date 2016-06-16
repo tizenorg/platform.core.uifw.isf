@@ -72,6 +72,7 @@
 #if HAVE_PKGMGR_INFO
 #include <pkgmgr-info.h>
 #endif
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
