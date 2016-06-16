@@ -227,7 +227,7 @@ void SocketFrontEnd::launch_helper (const char *name, const char *appid, const c
         ISF_SAVE_LOG ("Exec scim_helper_launcher(%s %s)\n", name, appid);
 
         setsid ();
-        LOGD ("launch execpath : %s\n", scim_helper_path.c_str ());
+        LOGI ("launch execpath : %s\n", scim_helper_path.c_str ());
         execv (scim_helper_path.c_str (), const_cast<char **>(argv));
         exit (-1);
     }
@@ -266,7 +266,7 @@ void SocketFrontEnd::app_control_launch (const char *app_id)
     }
 
     app_control_destroy (app_control);
-    LOGD ("Launch %s\n", app_id);
+    LOGI ("Launch %s\n", app_id);
 }
 
 void SocketFrontEnd::run_helper (const Socket &client)
@@ -310,7 +310,7 @@ void SocketFrontEnd::run_helper (const Socket &client)
         return;
     }
 
-    LOGD ("exec path : %s\n", execpath);
+    LOGI ("exec path : %s\n", execpath);
     scim_helper_path = String (execpath);
 
     if (appinfo_handle) {
@@ -2126,7 +2126,7 @@ SocketFrontEnd::socket_update_ise_list (int /*client_id*/)
     if (m_receive_trans.get_data (strName) && strName.length () > 0) {
         //std::cout << "ISE name list:" << strName << "\n";
         //scim_split_string_list (name_list, strName);
-        LOGD ("%s\n", strName.c_str ());
+        LOGI ("%s\n", strName.c_str ());
         /* The strName has all appids but here module name is necessary. */
         HelperInfo   info;
         std::vector<ImeInfoDB> ime_info;

@@ -596,7 +596,7 @@ public:
 
             char proc_name[17] = {0}; /* the buffer provided shall at least be 16+1 bytes long */
             if (-1 != prctl (PR_GET_NAME, proc_name, 0, 0, 0)) {
-                LOGD ("ppid:%d  trying connect() to %s, %s\n", getppid (), addr.get_address ().c_str (), proc_name);
+                LOGI ("ppid:%d  trying connect() to %s, %s\n", getppid (), addr.get_address ().c_str (), proc_name);
             }
 
             if ((m_err = ::connect (m_id, data, len)) == 0) {
@@ -605,7 +605,7 @@ public:
                 }
                 m_address = addr;
 
-                LOGD ("connect() succeeded\n");
+                LOGI ("connect() succeeded\n");
 
                 return true;
             }
@@ -630,7 +630,7 @@ public:
                     LOGW ("timeout in select()\n");
                 } else {
                     // We've got something, connection succeeded
-                    LOGD ("finally connected\n");
+                    LOGI ("finally connected\n");
 
                     if (fcntl (m_id, F_SETFL, flags) == -1) {
                         m_err = errno;

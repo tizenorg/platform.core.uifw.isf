@@ -80,7 +80,7 @@ static Eina_Bool handler_server_data (void *data, int ev_type, void *ev) {
     if (e) {
         char message[_POSIX_PATH_MAX] = {0};
         strncpy (message, (char*)(e->data), e->size);
-        LOGD ("Got server data %p [%i] [%i] [%i] (%s)\n", e->server, e->major, e->minor, e->size, message);
+        LOGI ("Got server data %p [%i] [%i] [%i] (%s)\n", e->server, e->major, e->minor, e->size, message);
         ecore_main_loop_quit ();
     }
     return ECORE_CALLBACK_RENEW;
@@ -88,7 +88,7 @@ static Eina_Bool handler_server_data (void *data, int ev_type, void *ev) {
 
 void send_message_to_broker (const char *message)
 {
-    LOGD ("send_message_to_broker () starting\n");
+    LOGI ("send_message_to_broker () starting\n");
 
     if (!ecore_init ()) {
         LOGW ("unable to init ecore\n");
@@ -109,13 +109,13 @@ void send_message_to_broker (const char *message)
     const char *sever_name = "scim-helper-broker";
     server = ecore_ipc_server_connect (ECORE_IPC_LOCAL_SYSTEM, const_cast<char*>(sever_name), 0, NULL);
 
-    LOGD ("connect_broker () : %p\n", server);
+    LOGI ("connect_broker () : %p\n", server);
 
     if (server) {
         if (message) {
             ecore_ipc_server_send (server, 0, 0, 0, 0, 0, message, strlen (message));
             ecore_ipc_server_flush (server);
-            LOGD ("send message : %s\n", message);
+            LOGI ("send message : %s\n", message);
         }
 
         /* We need a ecore loop for sending the ipc message */
@@ -194,7 +194,7 @@ static inline void __preexec_init ()
         return;
     }
 
-    LOGD ("preexec start\n");
+    LOGI ("preexec start\n");
 
     while (fgets (line, MAX_LOCAL_BUFSZ, preexec_file) != NULL) {
         /* Parse each line */
@@ -224,7 +224,7 @@ static inline void __preexec_init ()
             free (type_t);
             continue;
         }
-        LOGD ("preexec %s %s# - handle : %x\n", type, sopath, type_t->handle);
+        LOGI ("preexec %s %s# - handle : %x\n", type, sopath, type_t->handle);
 
         func = (int (*)(char*, char*))dlsym (type_t->handle, symbol);
         if (func == NULL) {
@@ -279,7 +279,7 @@ static inline void __preexec_run (const char *pkg_type, const char *pkg_name,
                 if (type_t->dl_do_pre_exe != NULL) {
                     type_t->dl_do_pre_exe (const_cast<char*>(pkg_name),
                             const_cast<char*>(app_path));
-                    LOGD ("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
+                    LOGI ("called dl_do_pre_exe () type: %s, %s %s\n", pkg_type, pkg_name, app_path);
                 } else {
                     LOGE ("no symbol for this type: %s",
                         pkg_type);
@@ -376,7 +376,7 @@ int ise_preexec (const char *helper, const char *uuid)
     info.package_type = DEFAULT_PACKAGE_TYPE;
     info.app_path = DEFAULT_APPLICATION_PATH;
 
-    LOGD ("starting\n");
+    LOGI ("starting\n");
 
     get_pkginfo (uuid, &info);
 
@@ -398,7 +398,7 @@ int ise_preexec (const char *helper, const char *uuid)
     if (lpwd && lpwd->pw_name) {
         if (info.package_type.compare (DEFAULT_PACKAGE_TYPE) != 0) {
             if (strcmp (lpwd->pw_name, "root") != 0) {
-                LOGD ("%s %s %s, return\n", lpwd->pw_name, helper, info.package_type.c_str ());
+                LOGI ("%s %s %s, return\n", lpwd->pw_name, helper, info.package_type.c_str ());
 
                 String parameter = String (helper);
                 parameter += " ";
@@ -411,7 +411,7 @@ int ise_preexec (const char *helper, const char *uuid)
             }
         }
 
-        LOGD ("%s %s %s %s %s %s\n", lpwd->pw_name, helper, uuid,
+        LOGI ("%s %s %s %s %s %s\n", lpwd->pw_name, helper, uuid,
              info.package_name.c_str (), info.package_type.c_str (), info.app_path.c_str ());
     }
 

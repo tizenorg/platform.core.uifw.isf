@@ -227,7 +227,7 @@ int isf_pkg_ime_app_list_cb (const pkgmgrinfo_appinfo_h handle, void *user_data)
                 if (symlink (SCIM_HELPER_LAUNCHER_PROGRAM, bin_path.c_str ()) != 0)
                     LOGW ("Failed to create symbolic link : %s\n", bin_path.c_str ());
                 else
-                    LOGD ("Succeeded to create symbolic link : %s\n", bin_path.c_str ());
+                    LOGI ("Succeeded to create symbolic link : %s\n", bin_path.c_str ());
             }
         }
         else {

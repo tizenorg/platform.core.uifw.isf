@@ -34,9 +34,9 @@ static Evas_Object * _commit_event_label     = NULL;
 static void _input_panel_event_callback (void *data, Ecore_IMF_Context *ctx, int value)
 {
     if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-        LOGD ("ECORE_IMF_INPUT_PANEL_STATE_SHOW\n");
+        LOGI ("ECORE_IMF_INPUT_PANEL_STATE_SHOW\n");
     } else if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-        LOGD ("ECORE_IMF_INPUT_PANEL_STATE_HIDE\n");
+        LOGI ("ECORE_IMF_INPUT_PANEL_STATE_HIDE\n");
     }
 }
 

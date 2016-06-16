@@ -535,12 +535,12 @@ static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
     if (!str) return;
 
     if (!strncmp (str, HOST_ADDED, strlen (HOST_ADDED))) {
-        LOGD ("HOST_ADDED\n");
+        LOGI ("HOST_ADDED\n");
         return;
     }
 
     if (!strncmp (str, HOST_REMOVED, strlen (HOST_REMOVED))) {
-        LOGD ("HOST_REMOVED\n");
+        LOGI ("HOST_REMOVED\n");
         if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
             change_keyboard_mode (TOOLBAR_HELPER_MODE);
         }
@@ -553,7 +553,7 @@ static void usb_keyboard_signal_cb (void *data, DBusMessage *msg)
 static void unregister_edbus_signal_handler (void)
 {
     if (edbus_conn) {
-        LOGD ("unregister signal handler for keyboard\n");
+        LOGI ("unregister signal handler for keyboard\n");
         if (edbus_handler) {
             e_dbus_signal_handler_del (edbus_conn, edbus_handler);
             edbus_handler = NULL;
@@ -567,7 +567,7 @@ static void unregister_edbus_signal_handler (void)
 static int register_edbus_signal_handler (void)
 {
     int retry;
-    LOGD ("start register_edbus_signal_handler\n");
+    LOGI ("start register_edbus_signal_handler\n");
 
     retry = 0;
     while (e_dbus_init () == 0) {
@@ -590,7 +590,7 @@ static int register_edbus_signal_handler (void)
         return -1;
     }
 
-    LOGD ("Success register\n");
+    LOGI ("Success register\n");
 
     return 0;
 }
@@ -602,7 +602,7 @@ static void delete_notification (NotificationData *noti_data)
 
     if (noti_data->noti_id != 0) {
         notification_delete_by_priv_id ("isf-panel-efl", NOTIFICATION_TYPE_ONGOING, noti_data->noti_id);
-        LOGD ("deleted notification : %s\n", noti_data->launch_app.c_str ());
+        LOGI ("deleted notification : %s\n", noti_data->launch_app.c_str ());
         noti_data->noti_id = 0;
     }
 }
@@ -754,7 +754,7 @@ static Evas_Object* get_candidate (const String& str, Evas_Object *parent, int *
                         elm_image_animated_set (_candidate_image [_candidate_image_count], EINA_TRUE);
                         elm_image_animated_play_set (_candidate_image [_candidate_image_count], EINA_TRUE);
                         elm_image_object_size_get (_candidate_image [_candidate_image_count], &image_get_width, &image_get_height);
-                        LOGD ("image_path=%s, key=%s\n", image_data.path.c_str (), image_key);
+                        LOGI ("image_path=%s, key=%s\n", image_data.path.c_str (), image_key);
 
                         if (image_get_height > image_get_width)
                             image_rate = ((double)candidate_image_height / (double)image_get_width);
@@ -986,7 +986,7 @@ static struct rectinfo get_ise_geometry ()
                 }
             }
 
-            LOGD ("angle : %d, w_angle : %d, mode : %d, Geometry : %d %d %d %d\n",
+            LOGI ("angle : %d, w_angle : %d, mode : %d, Geometry : %d %d %d %d\n",
                     angle, _ise_angle,
                     _info_manager->get_current_toolbar_mode (),
                     info.pos_x, info.pos_y, info.width, info.height);
@@ -1058,7 +1058,7 @@ static void set_keyboard_geometry_atom_info (Ecore_X_Window window, struct recti
     }
 
     ecore_x_e_illume_keyboard_geometry_set (window, ise_rect.pos_x, ise_rect.pos_y, ise_rect.width, ise_rect.height);
-    LOGD ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", ise_rect.pos_x, ise_rect.pos_y, ise_rect.width, ise_rect.height);
+    LOGI ("KEYBOARD_GEOMETRY_SET : %d %d %d %d\n", ise_rect.pos_x, ise_rect.pos_y, ise_rect.width, ise_rect.height);
     SCIM_DEBUG_MAIN (3) << "    KEYBOARD_GEOMETRY x=" << ise_rect.pos_x << " y=" << ise_rect.pos_y
         << " width=" << ise_rect.width << " height=" << ise_rect.height << "\n";
 
@@ -1240,7 +1240,7 @@ static Eina_Bool _start_default_helper_timer(void *data)
     if (total_appids.size() > 0)
         _info_manager->update_ise_list (total_appids);
 
-    LOGD ("Try to start the initial helper\n");
+    LOGI ("Try to start the initial helper\n");
     set_active_ise(_initial_ise_uuid, true);
 
     for (iter = g_pkgids_to_be_uninstalled.begin (); iter != g_pkgids_to_be_uninstalled.end (); iter++) {
@@ -1323,7 +1323,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
 
     if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UPDATE) {
         if (event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
-            LOGD ("type=%s package=%s event_type=UPDATE event_state=COMPLETED progress=%d error=%d", type, package, progress, error);
+            LOGI ("type=%s package=%s event_type=UPDATE event_state=COMPLETED progress=%d error=%d", type, package, progress, error);
 
             ret = _isf_insert_ime_info_by_pkgid (package);   // If package is not IME, -1 would be returned.
             if (ret == 1) { // In case the package is updated with the changed appid. In this case, there will be two IMEs
@@ -1346,10 +1346,10 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                 if (ret > 1 && _soft_keyboard_launched) { // If the previous appid of pkgid is the current IME, restart it with new appid.
                     current_ime_appid = scim_global_config_read(String(SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), _initial_ise_uuid);
                     if (current_ime_appid.compare (appids.front ()) == 0) {
-                        LOGD ("Stop IME(%s)\n", current_ime_appid.c_str ());
+                        LOGI ("Stop IME(%s)\n", current_ime_appid.c_str ());
                         _info_manager->hide_helper (current_ime_appid);
                         _info_manager->stop_helper (current_ime_appid);
-                        LOGD ("Start IME(%s)\n", appids.back ().c_str ());
+                        LOGI ("Start IME(%s)\n", appids.back ().c_str ());
                         scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), appids.back ());
                         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                         _info_manager->start_helper (appids.back ());
@@ -1365,7 +1365,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                         if (std::find(appids.begin(), appids.end(), current_ime_appid) != appids.end()) { // If the current ISE package is updated, restart it.
                             for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                                 if (it->mode == TOOLBAR_HELPER_MODE && it->appid.compare(current_ime_appid) == 0) { // Make sure it's Helper ISE...
-                                    LOGD ("Restart IME(%s)\n", current_ime_appid.c_str ());
+                                    LOGI ("Restart IME(%s)\n", current_ime_appid.c_str ());
                                     _info_manager->hide_helper (current_ime_appid);
                                     _info_manager->stop_helper (current_ime_appid);
                                     _info_manager->start_helper (current_ime_appid);
@@ -1391,7 +1391,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                     if (_soft_keyboard_launched && std::find(appids.begin(), appids.end(), current_ime_appid) != appids.end()) { // If the updated IME is the current ISE...
                         for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                             if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
-                                LOGD ("Stop IME(%s)\n", current_ime_appid.c_str ());
+                                LOGI ("Stop IME(%s)\n", current_ime_appid.c_str ());
                                 _info_manager->hide_helper (current_ime_appid);
                                 _info_manager->stop_helper (current_ime_appid);
                                 _soft_keyboard_launched = false;
@@ -1402,7 +1402,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                     }
 
                     if (appids.size () > 0) // Probably appids size is 1.
-                        LOGD ("Delete IME(%s)\n", appids[0].c_str ());
+                        LOGI ("Delete IME(%s)\n", appids[0].c_str ());
                     if (isf_db_delete_ime_info_by_pkgid(package)) { // Delete package from ime_info db.
                         _update_ime_info();
 
@@ -1422,11 +1422,11 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
     }
     else if (event_type == PACKAGE_MANAGER_EVENT_TYPE_INSTALL) {
         if (event_state == PACKAGE_MANAGER_EVENT_STATE_COMPLETED) {
-            LOGD ("type=%s package=%s event_type=INSTALL event_state=COMPLETED progress=%d error=%d\n", type, package, progress, error);
+            LOGI ("type=%s package=%s event_type=INSTALL event_state=COMPLETED progress=%d error=%d\n", type, package, progress, error);
 
             ///////////////// UNINSTALL -> INSTALL and if the uninstalled IME is reinstalled /////////////////
             if (g_stopped_helper_pkgid.compare(package) == 0 && g_start_default_helper_timer) {
-                LOGD ("Cancel timer to start the default IME\n");
+                LOGI ("Cancel timer to start the default IME\n");
                 ecore_timer_del(g_start_default_helper_timer);
                 g_start_default_helper_timer = NULL;
                 g_stopped_helper_pkgid = "";
@@ -1451,7 +1451,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                                 if (total_appids.size() > 0)
                                     _info_manager->update_ise_list (total_appids);
 
-                                LOGD ("Restart IME(%s)\n", appids[0].c_str ());
+                                LOGI ("Restart IME(%s)\n", appids[0].c_str ());
                                 scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), appids[0]);
                                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                                 _info_manager->start_helper (appids[0]);
@@ -1515,7 +1515,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                     if (g_updated_helper_pkgid.compare(package) == 0) {
                         for (it = _ime_info.begin(); it != _ime_info.end(); it++) {
                             if (it->mode == TOOLBAR_HELPER_MODE && it->pkgid.compare(package) == 0) {
-                                LOGD ("Start IME(%s)\n", it->appid.c_str ());
+                                LOGI ("Start IME(%s)\n", it->appid.c_str ());
                                 scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), it->appid);
                                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                                 _info_manager->start_helper (it->appid);
@@ -1555,7 +1555,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
     else if (event_type == PACKAGE_MANAGER_EVENT_TYPE_UNINSTALL) {
         switch (event_state) {
             case PACKAGE_MANAGER_EVENT_STATE_STARTED:
-                LOGD ("type=%s package=%s event_type=UNINSTALL event_state=STARTED progress=%d error=%d\n", type, package, progress, error);
+                LOGI ("type=%s package=%s event_type=UNINSTALL event_state=STARTED progress=%d error=%d\n", type, package, progress, error);
                 {
                     // Need to check if there is "http://tizen.org/category/ime" category; it can be done by comparing pkgid with ime_info db.
                     int imeCnt = 0;
@@ -1571,7 +1571,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
 
                     if (imeCnt > 0) {
                         // There might be more than one appid for one pkgid, but let's assume Helper always has one appid per a pkgid. Stop Helper ISE, but not delete it from ime_info db.
-                        LOGD ("%s for pkgid(\"%s\") is about to be deleted\n", it->appid.c_str (), package);
+                        LOGI ("%s for pkgid(\"%s\") is about to be deleted\n", it->appid.c_str (), package);
                         g_pkgids_to_be_uninstalled.push_back(std::make_pair (String(package), it->is_enabled));
 
                         if (_soft_keyboard_launched && isf_db_select_appids_by_pkgid(package, appids)) {
@@ -1579,7 +1579,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                             if (std::find(appids.begin(), appids.end(), current_ime_appid) != appids.end()) { // If the uninstalled IME is the current ISE... appids size is probably 1.
                                 for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                                     if (it->appid.compare(current_ime_appid) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
-                                        LOGD ("Stop IME(%s)\n", current_ime_appid.c_str ());
+                                        LOGI ("Stop IME(%s)\n", current_ime_appid.c_str ());
                                         _info_manager->hide_helper (current_ime_appid);
                                         _info_manager->stop_helper (current_ime_appid);
                                         _soft_keyboard_launched = false;
@@ -1594,7 +1594,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                 break;
 
             case PACKAGE_MANAGER_EVENT_STATE_COMPLETED:
-                LOGD ("type=%s package=%s event_type=UNINSTALL event_state=COMPLETED progress=%d error=%d\n", type, package, progress, error);
+                LOGI ("type=%s package=%s event_type=UNINSTALL event_state=COMPLETED progress=%d error=%d\n", type, package, progress, error);
 
                 for (it3 = g_pkgids_to_be_uninstalled.begin (); it3 != g_pkgids_to_be_uninstalled.end (); it3++) {
                     if (it3->first.compare(package) == 0) {
@@ -1605,13 +1605,13 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                         if (g_stopped_helper_pkgid.compare(package) == 0) { // If the uninstalled ISE is the current ISE, start the initial helper ISE by timer.
                             if (g_start_default_helper_timer)
                                 ecore_timer_del(g_start_default_helper_timer);
-                            LOGD ("Add timer to start the default IME\n");
+                            LOGI ("Add timer to start the default IME\n");
                             g_start_default_helper_timer = ecore_timer_add(3.0, _start_default_helper_timer, NULL);
                         }
                         else {  // Need to clean up g_pkgids_to_be_uninstalled info unless the same package is installed again; e.g., UNINSTALL -> INSTALL case.
                             if (g_release_uninstalled_ime_info_timer)
                                 ecore_timer_del(g_release_uninstalled_ime_info_timer);
-                            LOGD ("Add timer to release uninstalled IME pkg info\n");
+                            LOGI ("Add timer to release uninstalled IME pkg info\n");
                             g_release_uninstalled_ime_info_timer = ecore_timer_add(7.0, _release_uninstalled_pkginfo_timer, NULL);
                         }
 
@@ -1628,7 +1628,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                 break;
 
             case PACKAGE_MANAGER_EVENT_STATE_FAILED:
-                LOGD ("type=%s package=%s event_type=UNINSTALL event_state=FAILED progress=%d error=%d\n", type, package, progress, error);
+                LOGI ("type=%s package=%s event_type=UNINSTALL event_state=FAILED progress=%d error=%d\n", type, package, progress, error);
 
                 for (it3 = g_pkgids_to_be_uninstalled.begin (); it3 != g_pkgids_to_be_uninstalled.end (); it3++) {
                     if (it3->first.compare(package) == 0) {
@@ -1640,7 +1640,7 @@ static void _package_manager_event_cb (const char *type, const char *package, pa
                             if (ret == 1 && appids.size () == 1) {
                                 for (it = _ime_info.begin (); it != _ime_info.end (); it++) {
                                     if (it->appid.compare(appids[0]) == 0 && it->mode == TOOLBAR_HELPER_MODE) { // Make sure it's Helper ISE...
-                                        LOGD ("Restart IME(%s)\n", appids[0].c_str ());
+                                        LOGI ("Restart IME(%s)\n", appids[0].c_str ());
                                         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                                         _info_manager->start_helper (appids[0]);
                                         _soft_keyboard_launched = true;
@@ -1715,7 +1715,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
 
     TOOLBAR_MODE_T mode = _info_manager->get_current_toolbar_mode ();
     String pre_uuid = _info_manager->get_current_helper_uuid ();
-    LOGD ("pre_appid=%s, appid=%s, launch_ise=%d, %d\n", pre_uuid.c_str(), uuid.c_str(), launch_ise, _soft_keyboard_launched);
+    LOGI ("pre_appid=%s, appid=%s, launch_ise=%d, %d\n", pre_uuid.c_str(), uuid.c_str(), launch_ise, _soft_keyboard_launched);
     if (pre_uuid == uuid && _soft_keyboard_launched)
         return true;
 
@@ -1723,11 +1723,11 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
         _info_manager->hide_helper (pre_uuid);
         _info_manager->stop_helper (pre_uuid);
         _soft_keyboard_launched = false;
-        LOGD ("stop helper : %s\n", pre_uuid.c_str ());
+        LOGI ("stop helper : %s\n", pre_uuid.c_str ());
     }
 
     if (launch_ise) {
-        LOGD ("Start helper (%s)\n", uuid.c_str ());
+        LOGI ("Start helper (%s)\n", uuid.c_str ());
 
         set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
         if (_info_manager->start_helper (uuid))
@@ -1749,7 +1749,7 @@ static bool set_helper_ise (const String &uuid, bool launch_ise)
 static bool set_active_ise (const String &uuid, bool launch_ise)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    LOGD ("set ISE (%s) %d\n", uuid.c_str(), launch_ise);
+    LOGI ("set ISE (%s) %d\n", uuid.c_str(), launch_ise);
 
     if (uuid.length () <= 0)
         return false;
@@ -1897,7 +1897,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
 
     int height;
 
-    LOGD ("%s (w: %d, h: %d)\n", __func__, new_width, new_height);
+    LOGI ("%s (w: %d, h: %d)\n", __func__, new_width, new_height);
     evas_object_resize (_aux_line, new_width, 2);
     _candidate_width  = new_width;
     _candidate_height = new_height;
@@ -1943,7 +1943,7 @@ static void ui_candidate_window_resize (int new_width, int new_height)
         }
     }
 
-    LOGD ("window_rotation_geometry_set (_candidate_window), port (%d, %d), land (%d, %d)\n",
+    LOGI ("window_rotation_geometry_set (_candidate_window), port (%d, %d), land (%d, %d)\n",
             port_width, port_height, land_width, land_height);
 
 #if HAVE_ECOREX
@@ -2245,7 +2245,7 @@ static Eina_Bool off_prepare_done_timeout (void *data)
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
     //ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
-    LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
+    LOGI ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
     _off_prepare_done_timer = NULL;
 
@@ -2260,7 +2260,7 @@ static Eina_Bool off_prepare_done_timeout (void *data)
  */
 static void delete_candidate_hide_timer (void)
 {
-    LOGD ("deleting candidate_hide_timer\n");
+    LOGI ("deleting candidate_hide_timer\n");
     if (_candidate_hide_timer) {
         ecore_timer_del (_candidate_hide_timer);
         _candidate_hide_timer = NULL;
@@ -2274,7 +2274,7 @@ static void candidate_window_hide (void)
     delete_candidate_hide_timer ();
     _candidate_state = WINDOW_STATE_HIDE;
 
-    LOGD ("evas_object_hide (_candidate_window, %p)\n", elm_win_xwindow_get (_candidate_window));
+    LOGI ("evas_object_hide (_candidate_window, %p)\n", elm_win_xwindow_get (_candidate_window));
 
     if (_candidate_window) {
         /* There are cases that when there are rapid ISE_HIDE and ISE_SHOW requests,
@@ -2302,7 +2302,7 @@ static Eina_Bool candidate_hide_timer (void *data)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    LOGD ("calling candidate_window_hide ()\n");
+    LOGI ("calling candidate_window_hide ()\n");
     candidate_window_hide ();
 
     return ECORE_CALLBACK_CANCEL;
@@ -2337,7 +2337,7 @@ static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
     Ecore_X_Event_Window_Show *e = (Ecore_X_Event_Window_Show*)event;
     if (_candidate_state == WINDOW_STATE_WILL_SHOW) {
         if (e->win == elm_win_xwindow_get (_candidate_window)) {
-            LOGD ("Candidate window show callback\n");
+            LOGI ("Candidate window show callback\n");
 
             /* If our candidate window is in WILL_SHOW state and this show callback was called,
                now we are finally displayed on to the screen */
@@ -2360,7 +2360,7 @@ static Eina_Bool x_event_window_show_cb (void *data, int ev_type, void *event)
         }
     } else {
         if (e->win == elm_win_xwindow_get (_candidate_window)) {
-            LOGD ("Candidate window show callback, but _candidate_state is %d\n", _candidate_state);
+            LOGI ("Candidate window show callback, but _candidate_state is %d\n", _candidate_state);
         }
     }
 
@@ -2387,7 +2387,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     /* If the ISE is not visible currently, wait for the ISE to be opened and then show our candidate window */
     _candidate_show_requested = true;
     if ((_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) && (_ise_state != WINDOW_STATE_SHOW)) {
-        LOGD ("setting _show_candidate_requested to TRUE\n");
+        LOGI ("setting _show_candidate_requested to TRUE\n");
         return;
     }
 
@@ -2417,7 +2417,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
             struct rectinfo info = {0, 0, 0, 0};
             info.pos_y = _screen_width > _screen_height ? _screen_width : _screen_height;
             set_keyboard_geometry_atom_info (_app_window, info);
-            LOGD ("Conformant reset for window %x\n", _app_window);
+            LOGI ("Conformant reset for window %x\n", _app_window);
             _app_window = current_app_window;
         }
     }
@@ -2446,7 +2446,7 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     /* If we are in hardware keyboard mode, this candidate window is now considered to be a input panel */
     if (_candidate_mode == FIXED_CANDIDATE_WINDOW) {
         if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-            LOGD ("sending ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW\n");
+            LOGI ("sending ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW\n");
             _info_manager->update_input_panel_event ((uint32)ECORE_IMF_INPUT_PANEL_STATE_EVENT, (uint32)ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW);
         }
     }
@@ -2454,15 +2454,15 @@ static void ui_candidate_show (bool bSetVirtualKbd)
     if (_candidate_state != WINDOW_STATE_SHOW) {
 #if HAVE_ECOREX
         if (_candidate_show_handler) {
-            LOGD ("Was still waiting for CANDIDATE_WINDOW_SHOW....\n");
+            LOGI ("Was still waiting for CANDIDATE_WINDOW_SHOW....\n");
         } else {
             delete_candidate_show_handler ();
-            LOGD ("Registering ECORE_X_EVENT_WINDOW_SHOW event, %d\n", _candidate_state);
+            LOGI ("Registering ECORE_X_EVENT_WINDOW_SHOW event, %d\n", _candidate_state);
             _candidate_show_handler = ecore_event_handler_add (ECORE_X_EVENT_WINDOW_SHOW, x_event_window_show_cb, NULL);
         }
 #endif
     } else {
-        LOGD ("The candidate window was already in SHOW state, update geometry information\n");
+        LOGI ("The candidate window was already in SHOW state, update geometry information\n");
         _info_manager->update_input_panel_event (ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
         _info_manager->update_input_panel_event (ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT, 0);
 
@@ -2506,7 +2506,7 @@ static void ui_candidate_hide (bool bForce, bool bSetVirtualKbd, bool will_hide)
 
     if (bForce || ui_candidate_can_be_hide ()) {
         if (will_hide) {
-            LOGD ("candidate_state = WILL_HIDE\n");
+            LOGI ("candidate_state = WILL_HIDE\n");
             _candidate_state = WINDOW_STATE_WILL_HIDE;
 
             delete_candidate_hide_timer ();
@@ -2574,7 +2574,7 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
     if (_candidate_angle == 180) {
         Ecore_Evas *ee = ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
         ecore_evas_move_resize (ee, 0, 0, 0, 0);
-        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n", ee, 0, 0, 0, 0);
+        LOGI ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n", ee, 0, 0, 0, 0);
     } else if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _candidate_angle == 270) {
         /*
          * when screen rotate 270 degrees, candidate have to move then resize for expanding more
@@ -2583,7 +2583,7 @@ static void ui_candidate_window_more_button_cb (void *data, Evas *e, Evas_Object
          */
         Ecore_Evas *ee = ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
         ecore_evas_move_resize (ee, 0, 0, _screen_height, ui_candidate_get_valid_height () + _ise_height);
-        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n",
+        LOGI ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n",
             ee, 0, 0, _screen_height, ui_candidate_get_valid_height () + _ise_height);
     }
 
@@ -2629,7 +2629,7 @@ static void ui_candidate_window_close_button_cb (void *data, Evas *e, Evas_Objec
     if (_candidate_angle == 180) {
         Ecore_Evas *ee= ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
         ecore_evas_move_resize (ee, 0, 0, 0, 0);
-        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n", ee, 0, 0, 0, 0);
+        LOGI ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n", ee, 0, 0, 0, 0);
     } else if (_candidate_mode == FIXED_CANDIDATE_WINDOW && _candidate_angle == 270) {
         /*
          * when screen rotate 270 degrees, candidate have to move then resize for expanding more
@@ -2638,7 +2638,7 @@ static void ui_candidate_window_close_button_cb (void *data, Evas *e, Evas_Objec
          */
         Ecore_Evas *ee = ecore_evas_ecore_evas_get (evas_object_evas_get (_candidate_window));
         ecore_evas_move_resize (ee, _ise_height, 0, _screen_height, ui_candidate_get_valid_height ());
-        LOGD ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n",
+        LOGI ("ecore_evas_move_resize (%p, %d, %d, %d, %d)\n",
             ee, _ise_height, 0, _screen_height, ui_candidate_get_valid_height ());
     }
 
@@ -2680,7 +2680,7 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
                 feedback_result = feedback_play_type (FEEDBACK_TYPE_SOUND, FEEDBACK_PATTERN_SIP);
 
                 if (FEEDBACK_ERROR_NONE == feedback_result)
-                    LOGD ("Sound play successful\n");
+                    LOGI ("Sound play successful\n");
                 else
                     LOGW ("Cannot play feedback sound : %d\n", feedback_result);
             }
@@ -2691,7 +2691,7 @@ static void ui_mouse_button_pressed_cb (void *data, Evas *e, Evas_Object *button
                 feedback_result = feedback_play_type (FEEDBACK_TYPE_VIBRATION, FEEDBACK_PATTERN_SIP);
 
                 if (FEEDBACK_ERROR_NONE == feedback_result)
-                    LOGD ("Vibration play successful\n");
+                    LOGI ("Vibration play successful\n");
                 else
                     LOGW ("Cannot play feedback vibration : %d\n", feedback_result);
             }
@@ -2874,7 +2874,7 @@ static void ui_play_tts (const char* str)
             language = ise_langs[0];
         }
     }
-    LOGD ("TTS language:%s, str:%s\n", language.c_str (), str);
+    LOGI ("TTS language:%s, str:%s\n", language.c_str (), str);
 
     r = tts_add_text (_tts, str, language.c_str (), TTS_VOICE_TYPE_AUTO, TTS_SPEED_AUTO, &utt_id);
     if (TTS_ERROR_NONE == r) {
@@ -3332,7 +3332,7 @@ static void ui_destroy_candidate_window (void)
     _aux_seperates.clear ();
     /* Delete candidate window */
     if (_candidate_window) {
-        LOGD ("calling ui_candidate_hide (true)\n");
+        LOGI ("calling ui_candidate_hide (true)\n");
         ui_candidate_hide (true);
 
         evas_object_del (_candidate_window);
@@ -3529,7 +3529,7 @@ static void ui_settle_candidate_window (void)
         _candidate_x = spot_x;
         _candidate_y = spot_y;
         evas_object_move (_candidate_window, spot_x, spot_y);
-        LOGD ("Moving candidate window to : %d %d\n", spot_x, spot_y);
+        LOGI ("Moving candidate window to : %d %d\n", spot_x, spot_y);
         if (_preedit_window) {
             if (_candidate_angle == 90) {
                 spot_x -= _preedit_height;
@@ -3562,7 +3562,7 @@ static void set_soft_candidate_geometry (int x, int y, int width, int height)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << x << " y:" << y << " width:" << width << " height:" << height << "...\n";
 
-    LOGD ("candidate geometry x: %d , y: %d , width: %d , height: %d, _ise_state: %d, candidate_mode: %d\n", x, y, width, height, _ise_state, _candidate_mode);
+    LOGI ("candidate geometry x: %d , y: %d , width: %d , height: %d, _ise_state: %d, candidate_mode: %d\n", x, y, width, height, _ise_state, _candidate_mode);
 
     if ((_candidate_mode != SOFT_CANDIDATE_WINDOW) || (_info_manager->get_current_toolbar_mode () != TOOLBAR_KEYBOARD_MODE))
         return;
@@ -3593,7 +3593,7 @@ static void efl_set_transient_for_app_window (Ecore_X_Window window)
     Ecore_X_Window   xAppWindow = efl_get_app_window ();
     ecore_x_icccm_transient_for_set (window, xAppWindow);
 
-    LOGD ("win : %x, forwin : %x\n", window, xAppWindow);
+    LOGI ("win : %x, forwin : %x\n", window, xAppWindow);
 }
 
 static int efl_get_window_rotate_angle (Ecore_X_Window win)
@@ -3609,7 +3609,7 @@ static int efl_get_window_rotate_angle (Ecore_X_Window win)
             ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE, ECORE_X_ATOM_CARDINAL, 32, &prop_data, &count);
     if (ret && prop_data) {
         memcpy (&angle, prop_data, sizeof (int));
-        LOGD ("WINDOW angle of %p is %d\n", win, angle);
+        LOGI ("WINDOW angle of %p is %d\n", win, angle);
     } else {
         std::cerr << "ecore_x_window_prop_property_get () is failed!!!\n";
         LOGW ("WINDOW angle of %p FAILED!\n", win);
@@ -3921,7 +3921,7 @@ static bool initialize_panel_agent (const ConfigPointer& config, const String &d
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    LOGD ("initializing panel agent\n");
+    LOGI ("initializing panel agent\n");
 
     _info_manager = new InfoManager ();
 
@@ -3991,14 +3991,14 @@ static bool initialize_panel_agent (const ConfigPointer& config, const String &d
 
     _info_manager->signal_connect_run_helper                 (slot (slot_run_helper));
 
-    LOGD ("initializing panel agent succeeded\n");
+    LOGI ("initializing panel agent succeeded\n");
 
     return true;
 }
 
 static void delete_ise_hide_timer (void)
 {
-    LOGD ("deleting ise_hide_timer\n");
+    LOGI ("deleting ise_hide_timer\n");
     if (_ise_hide_timer) {
         ecore_timer_del (_ise_hide_timer);
         _ise_hide_timer = NULL;
@@ -4007,7 +4007,7 @@ static void delete_ise_hide_timer (void)
 
 static void hide_ise ()
 {
-    LOGD ("send request to hide helper\n");
+    LOGI ("send request to hide helper\n");
     String uuid = _info_manager->get_current_helper_uuid ();
     _info_manager->hide_helper (uuid);
 
@@ -4130,7 +4130,7 @@ static bool update_ise_list (std::vector<String> &list)
         if (ret == PACKAGE_MANAGER_ERROR_NONE) {
             package_manager_set_event_cb (pkgmgr, _package_manager_event_cb, NULL);
             if (ret == PACKAGE_MANAGER_ERROR_NONE) {
-                LOGD ("package_manager_set_event_cb succeeded.\n");
+                LOGI ("package_manager_set_event_cb succeeded.\n");
             }
             else {
                 LOGE ("package_manager_set_event_cb failed(%d)\n", ret);
@@ -4157,7 +4157,7 @@ static void slot_focus_in (void)
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
             if (uuid.length () > 0 && (_ime_info[get_ise_index(uuid)].options & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)) {
-                LOGD ("Start helper (%s)\n", uuid.c_str ());
+                LOGI ("Start helper (%s)\n", uuid.c_str ());
 
                 set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
                 if (_info_manager->start_helper (uuid))
@@ -4285,7 +4285,7 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
             char noti_msg[256] = {0};
             unsigned int keyboard_ise_count = get_ise_count (TOOLBAR_KEYBOARD_MODE, false);
             if (keyboard_ise_count == 0) {
-                LOGD ("the number of keyboard ise is %d\n", keyboard_ise_count);
+                LOGI ("the number of keyboard ise is %d\n", keyboard_ise_count);
                 return;
             }
             else if (keyboard_ise_count >= 2) {
@@ -4296,7 +4296,7 @@ static void slot_update_factory_info (const PanelFactoryInfo &info)
             }
 
             notification_status_message_post (noti_msg);
-            LOGD ("%s\n", noti_msg);
+            LOGI ("%s\n", noti_msg);
         }
     }
 #endif
@@ -4344,7 +4344,7 @@ static void slot_update_ise_geometry (int x, int y, int width, int height)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << x << " y:" << y << " width:" << width << " height:" << height << "...\n";
 
-    LOGD ("x : %d , y : %d , width : %d , height : %d, _ise_state : %d\n", x, y, width, height, _ise_state);
+    LOGI ("x : %d , y : %d , width : %d , height : %d, _ise_state : %d\n", x, y, width, height, _ise_state);
 
     if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
         if (_candidate_mode == SOFT_CANDIDATE_WINDOW) {
@@ -4444,7 +4444,7 @@ static void slot_show_aux_string (void)
     _aux_area_visible = true;
     ui_candidate_window_adjust ();
 
-    LOGD ("calling ui_candidate_show ()\n");
+    LOGI ("calling ui_candidate_show ()\n");
     ui_candidate_show ();
     ui_settle_candidate_window ();
     ui_candidate_delete_destroy_timer ();
@@ -4476,7 +4476,7 @@ static void slot_show_candidate_table (void)
     _candidate_area_1_visible = true;
     ui_candidate_window_adjust ();
 
-    LOGD ("calling ui_candidate_show ()\n");
+    LOGI ("calling ui_candidate_show ()\n");
     ui_candidate_show ();
     ui_settle_candidate_window ();
     ui_candidate_delete_destroy_timer ();
@@ -4485,7 +4485,7 @@ static void slot_show_candidate_table (void)
     int feedback_result = feedback_initialize ();
 
     if (FEEDBACK_ERROR_NONE == feedback_result) {
-        LOGD ("Feedback initialize successful\n");
+        LOGI ("Feedback initialize successful\n");
         feedback_initialized = true;
     } else {
         LOGW ("Feedback initialize fail : %d\n", feedback_result);
@@ -4522,13 +4522,13 @@ static void slot_hide_aux_string (void)
     elm_scroller_region_show (_aux_area, 0, 0, 10, 10);
     ui_candidate_window_adjust ();
 
-    LOGD ("calling ui_candidate_hide (false, true, true)\n");
+    LOGI ("calling ui_candidate_hide (false, true, true)\n");
     ui_candidate_hide (false, true, true);
     ui_settle_candidate_window ();
 
     if (ui_candidate_can_be_hide ()) {
         _candidate_show_requested = false;
-        LOGD ("setting _show_candidate_requested to FALSE\n");
+        LOGI ("setting _show_candidate_requested to FALSE\n");
     }
 }
 
@@ -4571,7 +4571,7 @@ static void slot_hide_candidate_table (void)
         }
         ui_candidate_window_adjust ();
 
-        LOGD ("calling ui_candidate_hide (%d, true, true)\n", bForce);
+        LOGI ("calling ui_candidate_hide (%d, true, true)\n", bForce);
         ui_candidate_hide (bForce, true, true);
         ui_settle_candidate_window ();
     }
@@ -4580,7 +4580,7 @@ static void slot_hide_candidate_table (void)
     int feedback_result = feedback_deinitialize ();
 
     if (FEEDBACK_ERROR_NONE == feedback_result)
-        LOGD ("Feedback deinitialize successful\n");
+        LOGI ("Feedback deinitialize successful\n");
     else
         LOGW ("Feedback deinitialize fail : %d\n", feedback_result);
 
@@ -4589,7 +4589,7 @@ static void slot_hide_candidate_table (void)
 
     if (ui_candidate_can_be_hide ()) {
         _candidate_show_requested = false;
-        LOGD ("setting _show_candidate_requested to FALSE\n");
+        LOGI ("setting _show_candidate_requested to FALSE\n");
     }
 }
 
@@ -4692,7 +4692,7 @@ static void slot_update_aux_string (const String &str, const AttributeList &attr
         return;
 
     if (!_aux_area_visible) {
-        LOGD ("calling ui_candidate_show ()\n");
+        LOGI ("calling ui_candidate_show ()\n");
         ui_candidate_show ();
         slot_show_aux_string ();
     }
@@ -5134,7 +5134,7 @@ static void slot_get_candidate_geometry (struct rectinfo &info)
     info.width  = width;
     info.height = height;
 
-    LOGD ("%d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
+    LOGI ("%d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << info.pos_x << " y:" << info.pos_y
                         << " width:" << info.width << " height:" << info.height << "\n";
 }
@@ -5187,7 +5187,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
         }
     }
 
-    LOGD ("%d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
+    LOGI ("%d %d %d %d\n", info.pos_x, info.pos_y, info.width, info.height);
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " x:" << info.pos_x << " y:" << info.pos_y
                         << " width:" << info.width << " height:" << info.height << "\n";
 }
@@ -5200,7 +5200,7 @@ static void slot_get_input_panel_geometry (struct rectinfo &info)
  */
 static void slot_get_recent_ise_geometry (int angle, struct rectinfo &info)
 {
-    LOGD ("slot_get_recent_ise_geometry\n");
+    LOGI ("slot_get_recent_ise_geometry\n");
 
     /* If we have geometry reported by ISE, use the geometry information */
     if (angle < 0) {
@@ -5235,7 +5235,7 @@ static bool slot_check_privilege_by_sockfd (int client_id, String privilege)
     if (priv_ret == false)
         LOGW ("Failed to check privilege (%s)\n", privilege.c_str ());
     else
-        LOGD ("Succeeded to check privilege (%s)\n", privilege.c_str ());
+        LOGI ("Succeeded to check privilege (%s)\n", privilege.c_str ());
 
     return priv_ret;
 }
@@ -5495,7 +5495,7 @@ static void slot_show_helper_ise_list (void)
         }
 
         app_control_destroy(app_control);
-        SECURE_LOGD ("Launch %s\n", app_id);
+        SECURE_LOGI ("Launch %s\n", app_id);
         free(app_id);
     }
     else {
@@ -5565,7 +5565,7 @@ static void slot_show_helper_ise_selector (void)
         }
 
         app_control_destroy(app_control);
-        SECURE_LOGD ("Launch %s\n", app_id);
+        SECURE_LOGI ("Launch %s\n", app_id);
         free(app_id);
     }
     else {
@@ -5830,7 +5830,7 @@ static void slot_register_helper_properties (int id, const PropertyList &props)
     if (prop.get_label ().compare ("XID") == 0) {
         Ecore_X_Window xwindow = atoi (prop.get_key ().c_str ());
         _ise_window = xwindow;
-        LOGD ("ISE XID : %x\n", _ise_window);
+        LOGI ("ISE XID : %x\n", _ise_window);
 
         /* Just in case for the helper sent this message later than show_ise request */
         if (_ise_state == WINDOW_STATE_SHOW || _ise_state == WINDOW_STATE_WILL_SHOW) {
@@ -5854,12 +5854,12 @@ static void slot_show_ise (void)
 
     /* If the current toolbar mode is not HELPER_MODE, do not proceed */
     if (_info_manager->get_current_toolbar_mode () != TOOLBAR_HELPER_MODE) {
-        LOGD ("Current toolbar mode should be TOOLBAR_HELPER_MODE but is %d, returning\n",
+        LOGI ("Current toolbar mode should be TOOLBAR_HELPER_MODE but is %d, returning\n",
             _info_manager->get_current_toolbar_mode ());
         return;
     }
 
-    LOGD ("slot_show_ise ()\n");
+    LOGI ("slot_show_ise ()\n");
 
     delete_ise_hide_timer ();
 #if HAVE_ECOREX
@@ -5871,7 +5871,7 @@ static void slot_show_ise (void)
         info.pos_y = _screen_width > _screen_height ? _screen_width : _screen_height;
         set_keyboard_geometry_atom_info (_app_window, info);
         ecore_x_event_mask_unset (_app_window, ECORE_X_EVENT_MASK_WINDOW_FOCUS_CHANGE);
-        LOGD ("Conformant reset for window %x\n", _app_window);
+        LOGI ("Conformant reset for window %x\n", _app_window);
         _app_window = current_app_window;
 
         /* If the target window has changed but our ISE is still in visible state,
@@ -5918,7 +5918,7 @@ static void slot_hide_ise (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 
-    LOGD ("slot_hide_ise ()\n");
+    LOGI ("slot_hide_ise ()\n");
 
     if (!_ise_hide_timer)
         hide_ise ();
@@ -5932,10 +5932,10 @@ static void slot_will_hide_ack (void)
     // WILL_HIDE_REQUEST_DONE Ack to WM
     Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
     //ecore_x_e_virtual_keyboard_off_prepare_done_send (root_window, _control_window);
-    LOGD ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
+    LOGI ("_ecore_x_e_virtual_keyboard_off_prepare_done_send (%x, %x)\n",
             root_window, _control_window);
     if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
-        LOGD ("calling ui_candidate_hide (true, false)\n");
+        LOGI ("calling ui_candidate_hide (true, false)\n");
         ui_candidate_hide (true, false);
     }
 
@@ -5956,7 +5956,7 @@ static void slot_candidate_will_hide_ack (void)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
 #if HAVE_ECOREX
-    LOGD ("candidate_will_hide_ack\n");
+    LOGI ("candidate_will_hide_ack\n");
     if (_candidate_state == WINDOW_STATE_WILL_HIDE) {
         candidate_window_hide ();
     }
@@ -5965,7 +5965,7 @@ static void slot_candidate_will_hide_ack (void)
 
 static void slot_set_keyboard_mode (int mode)
 {
-    LOGD ("slot_set_keyboard_mode called (TOOLBAR_MODE : %d)\n",mode);
+    LOGI ("slot_set_keyboard_mode called (TOOLBAR_MODE : %d)\n",mode);
 
     change_keyboard_mode ((TOOLBAR_MODE_T)mode);
 }
@@ -5994,7 +5994,7 @@ static void slot_get_ise_state (int &state)
                 state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
         };
     }
-    LOGD ("state = %d\n", state);
+    LOGI ("state = %d\n", state);
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " state = " << state << "\n";
 }
 
@@ -6005,7 +6005,7 @@ static void slot_start_default_ise (void)
         if (_launch_ise_on_request && !_soft_keyboard_launched) {
             String uuid  = _config->read (SCIM_CONFIG_DEFAULT_HELPER_ISE, String (""));
 
-            LOGD ("Start helper (%s)\n", uuid.c_str ());
+            LOGI ("Start helper (%s)\n", uuid.c_str ());
 
             set_keyboard_engine (String (SCIM_COMPOSE_KEY_FACTORY_UUID));
             if (_info_manager->start_helper (uuid))
@@ -6025,7 +6025,7 @@ static void slot_stop_default_ise (void)
             _info_manager->hide_helper (uuid);
             _info_manager->stop_helper (uuid);
             _soft_keyboard_launched = false;
-            LOGD ("stop helper (%s)\n", uuid.c_str ());
+            LOGI ("stop helper (%s)\n", uuid.c_str ());
         }
     }
 }
@@ -6054,7 +6054,7 @@ static void launch_helper (const char* exec, const char *name, const char *appid
         unsetenv ("ELM_SCALE");
 
         setsid ();
-        LOGD ("launch execpath : %s\n", exec);
+        LOGI ("launch execpath : %s\n", exec);
         execv (exec, const_cast<char **>(argv));
         elm_exit ();
     }
@@ -6093,7 +6093,7 @@ static void app_control_launch (const char *app_id)
     }
 
     app_control_destroy (app_control);
-    LOGD ("Launch %s\n", app_id);
+    LOGI ("Launch %s\n", app_id);
 }
 
 static void slot_run_helper (const String &uuid, const String &config, const String &display)
@@ -6130,7 +6130,7 @@ static void slot_run_helper (const String &uuid, const String &config, const Str
         return;
     }
 
-    LOGD ("exec path : %s\n", execpath);
+    LOGI ("exec path : %s\n", execpath);
     scim_helper_path = String (execpath);
 
     if (appinfo_handle) {
@@ -6187,7 +6187,7 @@ static void update_ise_locale ()
         return;
     }
 
-    LOGD ("update all ISE names according to display language\n");
+    LOGI ("update all ISE names according to display language\n");
     set_language_and_locale ();
 
     bool need_to_init_db = false;
@@ -6325,7 +6325,7 @@ static void keyboard_mode_changed_cb (keynode_t *key, void* data)
 static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 {
     SCIM_DEBUG_MAIN (3) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     uint32 option = 0;
     String uuid, name;
     bool _support_hw_keyboard_mode = false;
@@ -6343,11 +6343,11 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 
     if (mode == TOOLBAR_KEYBOARD_MODE && _support_hw_keyboard_mode) {
         if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-            LOGD ("HARDWARE_KEYBOARD_MODE return\n");
+            LOGI ("HARDWARE_KEYBOARD_MODE return\n");
             return;
         }
 
-        LOGD ("HARDWARE KEYBOARD MODE\n");
+        LOGI ("HARDWARE KEYBOARD MODE\n");
         _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 1);
         _config->flush ();
 
@@ -6402,7 +6402,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
         /* Read configuations for notification app (isf-kbd-mode-changer) */
         String kbd_mode_changer = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_KBD_MODE_CHANGER_PROGRAM), String (""));
         hwkbd_module_noti.launch_app = kbd_mode_changer;
-        LOGD ("Create kbd_mode_changer notification with : %s\n", kbd_mode_changer.c_str ());
+        LOGI ("Create kbd_mode_changer notification with : %s\n", kbd_mode_changer.c_str ());
         create_notification (&hwkbd_module_noti);
 #endif
 
@@ -6413,13 +6413,13 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
             if (vconf_set_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, 1) != 0)
                 LOGW ("Failed to set vconf key\n");
             else
-                LOGD ("Succeeded to set vconf key\n");
+                LOGI ("Succeeded to set vconf key\n");
         }
 #endif
     } else if (mode == TOOLBAR_HELPER_MODE) {
-        LOGD ("SOFTWARE KEYBOARD MODE\n");
+        LOGI ("SOFTWARE KEYBOARD MODE\n");
         /* When switching back to S/W keyboard mode, let's hide candidate window first */
-        LOGD ("calling ui_candidate_hide (true, true, true)\n");
+        LOGI ("calling ui_candidate_hide (true, true, true)\n");
         ui_candidate_hide (true, true, true);
         _config->write (ISF_CONFIG_HARDWARE_KEYBOARD_DETECT, 0);
         _config->flush ();
@@ -6450,7 +6450,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
             if (vconf_set_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, 0) != 0)
                 LOGW ("Failed to set vconf key\n");
             else
-                LOGD ("Succeeded to set vconf key\n");
+                LOGI ("Succeeded to set vconf key\n");
         }
 #endif
 
@@ -6472,7 +6472,7 @@ static void change_keyboard_mode (TOOLBAR_MODE_T mode)
 static void _bt_cb_hid_state_changed (int result, bool connected, const char *remote_address, void *user_data)
 {
     if (connected == false) {
-       LOGD ("Bluetooth keyboard disconnected\n");
+       LOGI ("Bluetooth keyboard disconnected\n");
        if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
            change_keyboard_mode (TOOLBAR_HELPER_MODE);
         }
@@ -6512,7 +6512,7 @@ static void show_ime_selector_notification ()
 
     if (ime_selector_app.length () > 0) {
         ise_selector_module_noti.launch_app = ime_selector_app;
-        LOGD ("Create ise_selector notification with : %s\n", ime_selector_app.c_str ());
+        LOGI ("Create ise_selector notification with : %s\n", ime_selector_app.c_str ());
         create_notification (&ise_selector_module_noti);
     }
     else
@@ -6542,11 +6542,11 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
     if (ev->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) {
         if (ev->win == _control_window) {
             /* WMSYNC, #6 The keyboard window is displayed fully so set the conformant geometry */
-            LOGD ("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE : win : %p, atom : %d\n", ev->win, ev->atom);
+            LOGI ("ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE : win : %p, atom : %d\n", ev->win, ev->atom);
             Ecore_X_Virtual_Keyboard_State state;
             state = ecore_x_e_virtual_keyboard_state_get (ev->win);
             if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
-                LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_ON\n");
+                LOGI ("ECORE_X_VIRTUAL_KEYBOARD_STATE_ON\n");
                 _ise_state = WINDOW_STATE_SHOW;
 
                 /* Make sure that we have the same rotation angle with the keyboard window */
@@ -6556,11 +6556,11 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 }
 
                 if (_candidate_show_requested) {
-                    LOGD ("calling ui_candidate_show (true)\n");
+                    LOGI ("calling ui_candidate_show (true)\n");
                     ui_candidate_show (true);
                 } else {
                     if (_candidate_area_1_visible) {
-                        LOGD ("calling ui_candidate_show (false)\n");
+                        LOGI ("calling ui_candidate_show (false)\n");
                         ui_candidate_show (false);
                     }
                 }
@@ -6587,7 +6587,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                 ecore_x_e_virtual_keyboard_state_set (_ise_window, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
             } else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
                 /* WMSYNC, #9 The keyboard window is hidden fully so send HIDE state */
-                LOGD ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
+                LOGI ("ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF\n");
                 // For now don't send HIDE signal here
                 //_info_manager->update_input_panel_event (
                 //    ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
@@ -6604,7 +6604,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
                     _updated_hide_state_geometry = true;
                 }
                 if (_info_manager->get_current_toolbar_mode () == TOOLBAR_HELPER_MODE) {
-                    LOGD ("calling ui_candidate_hide (true, false)\n");
+                    LOGI ("calling ui_candidate_hide (true, false)\n");
                     ui_candidate_hide (true, false);
                 } else {
                     ui_settle_candidate_window ();
@@ -6627,7 +6627,7 @@ static Eina_Bool x_event_window_property_cb (void *data, int ev_type, void *even
     } else if (ev->atom == ECORE_X_ATOM_E_ILLUME_ROTATE_WINDOW_ANGLE) {
         if (ev->win == efl_get_quickpanel_window ()) {
             int angle = efl_get_quickpanel_window_angle ();
-            LOGD ("ev->win : %p, change window angle : %d\n", ev->win, angle);
+            LOGI ("ev->win : %p, change window angle : %d\n", ev->win, angle);
         }
     }
 
@@ -6656,13 +6656,13 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
     if ((ev->win == _control_window)) {
         if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST) {
             /* WMSYNC, #4 Send WILL_SHOW event when the keyboard window is about to displayed */
-            LOGD ("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST\n");
+            LOGI ("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ON_PREPARE_REQUEST\n");
 
             /* WMSYNC, #5 Let the Window Manager to actually show keyboard window */
             // WILL_SHOW_REQUEST_DONE Ack to WM
             Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
             ecore_x_e_virtual_keyboard_on_prepare_done_send (root_window, _control_window);
-            LOGD ("_ecore_x_e_virtual_keyboard_on_prepare_done_send (%x, %x)\n",
+            LOGI ("_ecore_x_e_virtual_keyboard_on_prepare_done_send (%x, %x)\n",
                     root_window, _control_window);
 
             _info_manager->update_input_panel_event (
@@ -6673,7 +6673,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
         } else if (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST) {
             _ise_state = WINDOW_STATE_WILL_HIDE;
             /* WMSYNC, #7 Send WILL_HIDE event when the keyboard window is about to hidden */
-            LOGD ("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST\n");
+            LOGI ("_ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF_PREPARE_REQUEST\n");
             // Clear conformant geometry information first
 
             if (_off_prepare_done_timer) {
@@ -6693,7 +6693,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                since the candidate window will work as an "input panel" afterwards */
             bool send_input_panel_hide_event = true;
             if (_info_manager->get_current_toolbar_mode () == TOOLBAR_KEYBOARD_MODE) {
-                LOGD ("_candidate_state : %d", _candidate_state);
+                LOGI ("_candidate_state : %d", _candidate_state);
                 if (_candidate_state == WINDOW_STATE_SHOW) {
                     send_input_panel_hide_event = false;
                 }
@@ -6712,7 +6712,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             // PRE_ROTATE_DONE Ack to WM
             _candidate_angle = ev->data.l[1];
             _ise_angle = ev->data.l[1];
-            LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE : %d\n", _candidate_angle);
+            LOGI ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_PREPARE : %d\n", _candidate_angle);
 
             if (_candidate_angle == 90 || _candidate_angle == 270) {
                 ui_candidate_window_resize (_candidate_land_width, _candidate_land_height_min);
@@ -6726,12 +6726,12 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             ui_settle_candidate_window ();
             ui_candidate_window_rotate (_candidate_angle);
             Ecore_X_Window root_window = ecore_x_window_root_get (_control_window);
-            LOGD ("ecore_x_e_window_rotation_change_prepare_done_send (%d)\n", _candidate_angle);
+            LOGI ("ecore_x_e_window_rotation_change_prepare_done_send (%d)\n", _candidate_angle);
             ecore_x_e_window_rotation_change_prepare_done_send (root_window,
                     _control_window, _candidate_angle);
         } else if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
             int ise_angle = (int)ev->data.l[1];
-            LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST for ISE WINDOW : ISE angle : %d, Candidate angle : %d\n", ise_angle, _candidate_angle);
+            LOGI ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST for ISE WINDOW : ISE angle : %d, Candidate angle : %d\n", ise_angle, _candidate_angle);
             _candidate_angle = ise_angle;
             _ise_angle = ise_angle;
             if (_ise_state == WINDOW_STATE_SHOW) {
@@ -6746,7 +6746,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
             if (ev->message_type == ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST) {
                 _candidate_angle = (int)ev->data.l[1];
                 ui_candidate_window_rotate (_candidate_angle);
-                LOGD ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST : %d\n", _candidate_angle);
+                LOGI ("ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST : %d\n", _candidate_angle);
             } else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE &&
                 _ise_state != WINDOW_STATE_SHOW) {
                 ecore_x_e_window_rotation_app_set (elm_win_xwindow_get (_candidate_window), EINA_TRUE);
@@ -6759,7 +6759,7 @@ static Eina_Bool x_event_client_message_cb (void *data, int type, void *event)
                 ui_candidate_window_rotate (_candidate_angle);
                 ui_settle_candidate_window ();
                 ecore_x_e_window_rotation_app_set (elm_win_xwindow_get (_candidate_window), EINA_FALSE);
-                LOGD ("ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE : %d\n", _candidate_angle);
+                LOGI ("ECORE_X_ATOM_E_ILLUME_ROTATE_ROOT_ANGLE : %d\n", _candidate_angle);
             }
             SCIM_DEBUG_MAIN (3) << __FUNCTION__ << " : ANGLE (" << _candidate_angle << ")\n";
         }
@@ -6892,7 +6892,7 @@ Eina_Bool check_focus_out_by_popup_win ()
     if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
         return EINA_FALSE;
 
-    LOGD ("win type : %d\n", win_type);
+    LOGI ("win type : %d\n", win_type);
 
     if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU ||
         win_type == ECORE_X_WINDOW_TYPE_NOTIFICATION) {
@@ -6921,14 +6921,14 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
 
 #if ENABLE_MULTIWINDOW_SUPPORT
             unsigned int layout = 0;
-            LOGD ("Application window focus OUT!\n");
+            LOGI ("Application window focus OUT!\n");
             delete_ise_hide_timer ();
 
             // Check multi window mode
             if (ecore_x_window_prop_card32_get (efl_get_app_window (), ECORE_X_ATOM_E_WINDOW_DESKTOP_LAYOUT, &layout, 1) != -1) {
                 if (layout == 0 || layout == 1) {
                     // Split mode
-                    LOGD ("Multi window mode. start timer to hide IME\n");
+                    LOGI ("Multi window mode. start timer to hide IME\n");
 
                     // Use timer not to hide and show IME again in focus-out and focus-in event between applications
                     _ise_hide_timer = ecore_timer_add (ISF_ISE_HIDE_DELAY, ise_hide_timeout, NULL);
@@ -6936,13 +6936,13 @@ static Eina_Bool x_event_window_focus_out_cb (void *data, int ev_type, void *eve
             }
 
             if (!_ise_hide_timer) {
-                LOGD ("Panel hides ISE\n");
+                LOGI ("Panel hides ISE\n");
                 _info_manager->hide_helper (_info_manager->get_current_helper_uuid ());
                 slot_hide_ise ();
                 ui_candidate_hide (true, false, false);
             }
 #else
-            LOGD ("Application window focus OUT! Panel hides ISE\n");
+            LOGI ("Application window focus OUT! Panel hides ISE\n");
             _info_manager->hide_helper (_info_manager->get_current_helper_uuid ());
             slot_hide_ise ();
             ui_candidate_hide (true, false, false);
@@ -7187,7 +7187,7 @@ int main (int argc, char *argv [])
         }
     } catch (scim::Exception & e) {
         std::cerr << e.what () << "\n";
-        LOGD("");
+        LOGI("");
         ret = -1;
         goto cleanup;
     }

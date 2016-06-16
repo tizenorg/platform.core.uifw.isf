@@ -123,7 +123,7 @@ public:
     }
 
     bool initialize(InfoManager* info_manager, const String& display, bool resident) {
-        LOGD ("");
+        LOGI ("");
         m_info_manager = info_manager;
         m_socket_address = scim_get_default_panel_socket_address(display);
 
@@ -152,7 +152,7 @@ public:
 
     void stop(void) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::stop ()\n";
-        LOGD ("");
+        LOGI ("");
         lock();
         m_should_exit = true;
         unlock();
@@ -164,7 +164,7 @@ public:
     }
 private:
     void update_panel_event(int client, uint32 context_id, int cmd, uint32 nType, uint32 nValue) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -177,7 +177,7 @@ private:
 
     void move_preedit_caret(int client, uint32 context_id, uint32 position) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::move_preedit_caret (" << position << ")\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -191,7 +191,7 @@ private:
 #if 0
     void request_help(int client_id, uint32 context_id) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::request_help ()\n";
-        LOGD ("client id:%d", client_id);
+        LOGI ("client id:%d", client_id);
 
         Socket client_socket(client_id);
         m_send_trans.clear();
@@ -203,7 +203,7 @@ private:
     }
 
     void request_factory_menu(int client_id, uint32 context_id) {
-        LOGD ("client id:%d", client_id);
+        LOGI ("client id:%d", client_id);
         Socket client_socket(client_id);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -214,7 +214,7 @@ private:
 #endif
 
     void reset_keyboard_ise(int client, uint32 context_id) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -224,7 +224,7 @@ private:
     }
 
     void update_keyboard_ise_list(int client, uint32 context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -236,7 +236,7 @@ private:
 
     void change_factory(int client, uint32 context, const String&  uuid) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::change_factory (" << uuid << ")\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -249,7 +249,7 @@ private:
 
     void helper_candidate_show(int client, uint32 context, const String&  uuid) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
 
         Socket client_socket(client);
@@ -263,7 +263,7 @@ private:
     }
 
     void helper_candidate_hide(int client, uint32 context, const String&  uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -277,7 +277,7 @@ private:
 
     void candidate_more_window_show(int client, uint32 context) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
 
         Socket client_socket(client);
@@ -293,7 +293,7 @@ private:
 
     void candidate_more_window_hide(int client, uint32 context) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -308,7 +308,7 @@ private:
 
     void update_helper_lookup_table(int client, uint32 context, const String& uuid, const LookupTable& table) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -323,7 +323,7 @@ private:
 
     void select_aux(int client, uint32 contextid, uint32 item) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::select_aux (" << item << ")\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -339,7 +339,7 @@ private:
     }
 
     void select_candidate(int client, uint32 context, uint32 item) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -356,7 +356,7 @@ private:
 
     void lookup_table_page_up(int client, uint32 context) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::lookup_table_page_up ()\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -371,7 +371,7 @@ private:
     }
 
     void lookup_table_page_down(int client, uint32 context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -386,7 +386,7 @@ private:
     }
 
     void update_lookup_table_page_size(int client, uint32 context, uint32 size) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -402,7 +402,7 @@ private:
     }
 
     void update_candidate_item_layout(int client, uint32 context, const std::vector<uint32>& row_items) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -418,7 +418,7 @@ private:
     }
 
     void select_associate(int client, uint32 context, uint32 item) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -434,7 +434,7 @@ private:
     }
 
     void associate_table_page_up(int client, uint32 context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -449,7 +449,7 @@ private:
     }
 
     void associate_table_page_down(int client, uint32 context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -464,7 +464,7 @@ private:
     }
 
     void update_associate_table_page_size(int client, uint32 context, uint32 size) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -480,7 +480,7 @@ private:
     }
 
     void update_displayed_candidate_number(int client, uint32 context, uint32 size) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -496,7 +496,7 @@ private:
     }
 
     void send_longpress_event(int client, uint32 context, int index) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -512,7 +512,7 @@ private:
     }
 
     void trigger_property(int client, uint32 context, const String&  property) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -528,7 +528,7 @@ private:
     }
 
     void focus_out_helper(int client, uint32 context, const String& uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -540,7 +540,7 @@ private:
     }
 
     void focus_in_helper(int client, uint32 context, const String& uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -552,7 +552,7 @@ private:
     }
 
     void show_helper(int client, uint32 context, const String& uuid, char* data, size_t& len) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -565,7 +565,7 @@ private:
     }
 
     void hide_helper(int client, uint32 context, const String& uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -577,7 +577,7 @@ private:
     }
 
     void set_helper_mode(int client, uint32 context, const String& uuid, uint32& mode) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -590,7 +590,7 @@ private:
     }
 
     void set_helper_language(int client, uint32 context, const String& uuid, uint32& language) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -603,7 +603,7 @@ private:
     }
 
     void set_helper_imdata(int client, uint32 context, const String& uuid, const char* imdata, size_t& len) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -616,7 +616,7 @@ private:
     }
 
     void set_helper_return_key_type(int client, uint32 context, const String& uuid, uint32 type) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -629,7 +629,7 @@ private:
     }
 
     void get_helper_return_key_type(int client, uint32 context, const String& uuid, _OUT_ uint32& type) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         Transaction trans;
@@ -653,7 +653,7 @@ private:
     }
 
     void set_helper_return_key_disable(int client, uint32 context, const String& uuid, uint32 disabled) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -668,7 +668,7 @@ private:
     void get_helper_return_key_disable(int client, uint32 context, const String& uuid, _OUT_ uint32& disabled) {
 
         Socket client_socket(client);
-        LOGD ("client id:%d", client);
+        LOGI ("client id:%d", client);
 
         Transaction trans;
 
@@ -692,7 +692,7 @@ private:
     }
 
     void set_helper_layout(int client, uint32 context, const String& uuid, uint32& layout) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -705,7 +705,7 @@ private:
     }
 
     void set_helper_input_mode(int client, uint32 context, const String& uuid, uint32& mode) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -718,7 +718,7 @@ private:
     }
 
     void set_helper_input_hint(int client, uint32 context, const String& uuid, uint32& hint) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -731,7 +731,7 @@ private:
     }
 
     void set_helper_bidi_direction(int client, uint32 context, const String& uuid, uint32& direction) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -744,7 +744,7 @@ private:
     }
 
     void set_helper_caps_mode(int client, uint32 context, const String& uuid, uint32& mode) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -757,7 +757,7 @@ private:
     }
 
     void show_helper_option_window(int client, uint32 context, const String& uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -769,7 +769,7 @@ private:
     }
 
     bool process_key_event(int client, uint32 context, const String& uuid, KeyEvent& key, _OUT_ uint32& result) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -797,7 +797,7 @@ private:
     }
 
     bool get_helper_geometry(int client, uint32 context, String& uuid, _OUT_ struct rectinfo& info) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -830,7 +830,7 @@ private:
     }
 
     void get_helper_imdata(int client, uint32 context, String& uuid, char** imdata, size_t& len) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
         Socket client_socket(client);
 
         Transaction trans;
@@ -846,14 +846,14 @@ private:
             && trans.read_from_socket(client_socket)
             && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY) {
             trans.get_data(imdata, len);
-            LOGD ("length of imdata is %d", len);
+            LOGI ("length of imdata is %d", len);
         } else {
             LOGW ("read imdata failed\n");
         }
     }
 
     void get_helper_layout(int client, uint32 context, String& uuid, uint32& layout) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -877,7 +877,7 @@ private:
 
     void get_ise_language_locale(int client, uint32 context, String& uuid, char** data,  size_t& len) {
         SCIM_DEBUG_MAIN(4) << __func__ << "\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Transaction trans;
 
@@ -900,7 +900,7 @@ private:
     }
 
     void check_option_window(int client, uint32 context, String& uuid, _OUT_ uint32& avail) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         int cmd;
         Socket client_socket(client);
@@ -922,7 +922,7 @@ private:
     }
 
     void reset_ise_option(int client, uint32 context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -933,7 +933,7 @@ private:
     }
 
     void reset_helper_context(int client, uint32 context, const String& uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -946,7 +946,7 @@ private:
 
     void reload_config(int client) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::reload_config ()\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -958,7 +958,7 @@ private:
 
     void exit(int client, uint32 context) {
         SCIM_DEBUG_MAIN(1) << "PanelAgent::exit ()\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -975,7 +975,7 @@ private:
     }
 
     bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result) {
-        LOGD("client id:%d\n", client);
+        LOGI("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -1006,7 +1006,7 @@ private:
 
     void socket_update_surrounding_text(int client, uint32 context, const String& uuid, String& text, uint32 cursor) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << "...\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -1021,7 +1021,7 @@ private:
     }
 
     void socket_update_selection(int client, uint32 context, String& uuid, String text) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -1035,7 +1035,7 @@ private:
     }
 
     void socket_get_keyboard_ise_list(int client, uint32 context, const String& uuid, std::vector<String>& list) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1054,7 +1054,7 @@ private:
     void socket_get_candidate_ui(int client, uint32 context, const String& uuid,  int style,  int mode) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_get_candidate_ui ()\n";
 
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1070,7 +1070,7 @@ private:
     void socket_get_candidate_geometry(int client, uint32 context, const String& uuid, struct rectinfo& info) {
         SCIM_DEBUG_MAIN(4) << __func__ << " \n";
 
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1086,7 +1086,7 @@ private:
     }
 
     void socket_get_keyboard_ise(int client, uint32 context, const String& uuid, String& ise_name, String& ise_uuid) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1102,7 +1102,7 @@ private:
     void socket_start_helper(int client, uint32 context, const String& ic_uuid) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_start_helper ()\n";
 
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -1116,7 +1116,7 @@ private:
     void helper_detach_input_context(int client, uint32 context, const String& ic_uuid) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_stop_helper ()\n";
 
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -1129,7 +1129,7 @@ private:
 
     void helper_process_imengine_event(int client, uint32 context, const String& ic_uuid, const Transaction& _nest_trans) {
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_send_helper_event ()\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
 
@@ -1151,7 +1151,7 @@ private:
     }
 
     void process_helper_event(int client, uint32 context, String target_uuid, String active_uuid, Transaction& nest_trans) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         SCIM_DEBUG_MAIN(4) << "PanelAgent::socket_helper_send_imengine_event (" << client << ")\n";
         Socket socket_client(client);
@@ -1169,7 +1169,7 @@ private:
     }
 
     void socket_helper_key_event(int client, uint32 context, int cmd, KeyEvent& key) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1183,7 +1183,7 @@ private:
     }
 
     void commit_string(int client, uint32 target_context, const WideString& wstr) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1198,7 +1198,7 @@ private:
 
     void socket_helper_get_surrounding_text(int client, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1214,7 +1214,7 @@ private:
 
     void socket_helper_delete_surrounding_text(int client, uint32 context_id, uint32 offset, uint32 len) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1230,7 +1230,7 @@ private:
 
     void socket_helper_get_selection(int client, uint32 context_id, const int fd) {
         SCIM_DEBUG_MAIN(4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
 
         Socket socket_client(client);
@@ -1244,7 +1244,7 @@ private:
     }
 
     void socket_helper_set_selection(int client, uint32 context_id, uint32 start, uint32 end) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1259,7 +1259,7 @@ private:
     }
 
     void show_preedit_string(int client, uint32  target_context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1272,7 +1272,7 @@ private:
     }
 
     void hide_preedit_string(int client, uint32  target_context) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1285,7 +1285,7 @@ private:
     }
 
     void update_preedit_string(int client, uint32  target_context, WideString wstr, AttributeList& attrs, uint32 caret) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1303,7 +1303,7 @@ private:
 
     void update_preedit_caret(int client, uint32 focused_context, uint32 caret) {
 
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1318,7 +1318,7 @@ private:
     }
 
     void helper_attach_input_context_and_update_screen(int client, std::vector < std::pair <uint32, String> >& helper_ic_index, uint32 current_screen) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         m_send_trans.clear();
@@ -1337,7 +1337,7 @@ private:
     }
 
     void update_ise_input_context(int client, uint32 focused_context, uint32 type, uint32 value) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket client_socket(client);
         m_send_trans.clear();
@@ -1351,7 +1351,7 @@ private:
     }
 
     void send_private_command(int client, uint32 focused_context, String command) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         Socket socket_client(client);
         lock();
@@ -1365,7 +1365,7 @@ private:
     }
 
     void helper_all_update_spot_location(int client, uint32 context_id, String uuid, int x, int y) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -1385,7 +1385,7 @@ private:
     }
 
     void helper_all_update_cursor_position(int client, uint32 context_id, String uuid, int cursor_pos) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -1400,7 +1400,7 @@ private:
     }
 
     void helper_all_update_screen(int client, uint32 context_id, String uuid, int screen) {
-        LOGD ("client id:%d\n", client);
+        LOGI ("client id:%d\n", client);
 
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -1507,7 +1507,7 @@ private:
     void socket_accept_callback(SocketServer*   server,
                                 const Socket&   client) {
         SCIM_DEBUG_MAIN(2) << "PanelAgent::socket_accept_callback (" << client.get_id() << ")\n";
-        LOGD ("");
+        LOGI ("");
         lock();
 
         if (m_should_exit) {
@@ -1566,7 +1566,7 @@ private:
                 socket_transaction_start();
 
                 while (m_recv_trans.get_command(cmd)) {
-                    LOGD ("PanelAgent::cmd = %d\n", cmd);
+                    LOGI ("PanelAgent::cmd = %d\n", cmd);
 
                     if (cmd == ISM_TRANS_CMD_REGISTER_PANEL_CLIENT) {
                         uint32 id = 0;
@@ -2177,7 +2177,7 @@ private:
                 socket_transaction_start();
 
                 while (m_recv_trans.get_command(cmd)) {
-                    LOGD ("PanelAgent::cmd = %d\n", cmd);
+                    LOGI ("PanelAgent::cmd = %d\n", cmd);
 
                     if (cmd == ISM_TRANS_CMD_GET_PANEL_CLIENT_ID) {
                         Socket client_socket(client_id);
@@ -2200,7 +2200,7 @@ private:
             socket_transaction_start();
 
             while (m_recv_trans.get_command(cmd)) {
-                LOGD ("PanelAgent::cmd = %d\n", cmd);
+                LOGI ("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == SCIM_TRANS_CMD_PANEL_REGISTER_HELPER) {
                     HelperInfo info;
@@ -2223,7 +2223,7 @@ private:
             socket_transaction_start();
 
             while (m_recv_trans.get_command(cmd)) {
-                LOGD ("PanelAgent::cmd = %d\n", cmd);
+                LOGI ("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == SCIM_TRANS_CMD_PANEL_REGISTER_ACTIVE_HELPER) {
                     HelperInfo info;
@@ -2547,7 +2547,7 @@ private:
             socket_transaction_start();
 
             while (m_recv_trans.get_command(cmd)) {
-                LOGD ("PanelAgent::cmd = %d\n", cmd);
+                LOGI ("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == ISM_TRANS_CMD_GET_ACTIVE_ISE) {
 
@@ -2871,7 +2871,7 @@ private:
         } else if (client_info.type == CONFIG_CLIENT) {
             socket_transaction_start ();
             while (m_recv_trans.get_command (cmd)) {
-                LOGD ("PanelAgent::cmd = %d\n", cmd);
+                LOGI ("PanelAgent::cmd = %d\n", cmd);
 
                 if (cmd == SCIM_TRANS_CMD_FLUSH_CONFIG) {
                     if (m_config_readonly) {
@@ -3269,14 +3269,14 @@ private:
     void socket_exception_callback(SocketServer*   server,
                                    const Socket&   client) {
         SCIM_DEBUG_MAIN(2) << "PanelAgent::socket_exception_callback (" << client.get_id() << ")\n";
-        LOGD ("client id:%d\n", client.get_id());
+        LOGI ("client id:%d\n", client.get_id());
         socket_close_connection(server, client);
     }
 
     bool socket_open_connection(SocketServer*   server,
                                 const Socket&   client) {
         SCIM_DEBUG_MAIN(3) << "PanelAgent::socket_open_connection (" << client.get_id() << ")\n";
-        LOGD ("client id:%d\n", client.get_id());
+        LOGI ("client id:%d\n", client.get_id());
         uint32 key;
         String type = scim_socket_accept_connection(key,
                       String("Panel"),
@@ -3307,7 +3307,7 @@ private:
     void socket_close_connection(SocketServer*   server,
                                  const Socket&   client) {
         SCIM_DEBUG_MAIN(3) << "PanelAgent::socket_close_connection (" << client.get_id() << ")\n";
-        LOGD ("client id:%d\n", client.get_id());
+        LOGI ("client id:%d\n", client.get_id());
         int i = 0;
         std::vector<Ecore_Fd_Handler *>::iterator IterPos;
 
@@ -3357,7 +3357,7 @@ extern "C" {
 
     EXAPI void scim_panel_agent_module_init(const scim::ConfigPointer& config)
     {
-        LOGD ("");
+        LOGI ("");
         scim::_config = config;
     }
 

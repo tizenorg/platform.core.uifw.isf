@@ -355,7 +355,7 @@ check_serial(WaylandIMContext *imcontext, uint32_t serial)
 
     if ((imcontext->serial - serial) >
         (imcontext->serial - imcontext->reset_serial)) {
-        LOGD("outdated serial: %u, current: %u, reset: %u",
+        LOGI("outdated serial: %u, current: %u, reset: %u",
                 serial, imcontext->serial, imcontext->reset_serial);
 
         imcontext->pending_preedit.cursor = 0;
@@ -405,7 +405,7 @@ text_input_commit_string(void                 *data,
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     Eina_Bool old_preedit = EINA_FALSE;
 
-    LOGD("commit event (text: '%s', current pre-edit: '%s')",
+    LOGI("commit event (text: '%s', current pre-edit: '%s')",
             text,
             imcontext->preedit_text ? imcontext->preedit_text : "");
 
@@ -551,7 +551,7 @@ show_input_panel(Ecore_IMF_Context *ctx)
     if ((_show_req_ctx == ctx) && _compare_context(_show_req_ctx, ctx) && (!will_hide)) {
         if (_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
             _input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-            LOGD("already show. ctx : %p", ctx);
+            LOGI("already show. ctx : %p", ctx);
 
             return EINA_FALSE;
         }
@@ -618,13 +618,13 @@ show_input_panel(Ecore_IMF_Context *ctx)
     if (imcontext->imdata_size > 0)
         wl_text_input_set_input_panel_data(imcontext->text_input, (const char *)imcontext->imdata, imcontext->imdata_size);
 
-    SECURE_LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx,
+    SECURE_LOGI ("ctx : %p, layout : %d, layout variation : %d\n", ctx,
             ecore_imf_context_input_panel_layout_get (ctx),
             layout_variation);
-    SECURE_LOGD ("language : %d, cursor position : %d\n",
+    SECURE_LOGI ("language : %d, cursor position : %d\n",
             ecore_imf_context_input_panel_language_get (ctx),
             cursor_pos);
-    SECURE_LOGD ("return key type : %d, return key disabled : %d, autocapital type : %d\n",
+    SECURE_LOGI ("return key type : %d, return key disabled : %d, autocapital type : %d\n",
             ecore_imf_context_input_panel_return_key_type_get (ctx),
             ecore_imf_context_input_panel_return_key_disabled_get (ctx),
             ecore_imf_context_autocapital_type_get (ctx));
@@ -645,7 +645,7 @@ text_input_preedit_string(void                 *data,
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     Eina_Bool old_preedit = EINA_FALSE;
 
-    LOGD("preedit event (text: '%s', current pre-edit: '%s')",
+    LOGI("preedit event (text: '%s', current pre-edit: '%s')",
             text,
             imcontext->preedit_text ? imcontext->preedit_text : "");
 
@@ -693,7 +693,7 @@ text_input_delete_surrounding_text(void                 *data,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     Ecore_IMF_Event_Delete_Surrounding ev;
-    LOGD("delete surrounding text (index: %d, length: %u)",
+    LOGI("delete surrounding text (index: %d, length: %u)",
             index, length);
 
     ev.offset = index;
@@ -709,7 +709,7 @@ text_input_cursor_position(void                 *data EINA_UNUSED,
                            int32_t               index,
                            int32_t               anchor)
 {
-    LOGD("cursor_position for next commit (index: %d, anchor: %d)",
+    LOGI("cursor_position for next commit (index: %d, anchor: %d)",
             index, anchor);
 }
 
@@ -831,7 +831,7 @@ text_input_keysym(void                 *data,
     memset(string, 0, sizeof(string));
     xkb_keysym_to_utf8(sym, string, 32);
 
-    LOGD("key event (key: %s)", keyname);
+    LOGI("key event (key: %s)", keyname);
 
     e = calloc(1, sizeof(Ecore_Event_Key) + strlen(key) + strlen(keyname) +
             strlen(string) + 3);
@@ -1046,17 +1046,17 @@ text_input_get_selection_text (void                 *data,
                                int32_t              fd)
 {
     char *selection = NULL;
-    LOGD ("%d", fd);
+    LOGI ("%d", fd);
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext || !imcontext->ctx) {
-        LOGD ("");
+        LOGI ("");
         close (fd);
         return;
     }
 
     ecore_imf_context_selection_get (imcontext->ctx, &selection);
     if (imcontext->text_input) {
-        LOGD ("selection :%s", selection ? selection : "");
+        LOGI ("selection :%s", selection ? selection : "");
         if (selection) {
             char *_selection = selection;
             size_t len = strlen (selection);
@@ -1087,17 +1087,17 @@ text_input_get_surrounding_text (void                 *data,
 {
     int cursor_pos;
     char *surrounding = NULL;
-    LOGD("fd: %d maxlen_before: %d maxlen_after: %d", fd, maxlen_before, maxlen_after);
+    LOGI("fd: %d maxlen_before: %d maxlen_after: %d", fd, maxlen_before, maxlen_after);
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext || !imcontext->ctx) {
-        LOGD("");
+        LOGI("");
         close(fd);
         return;
     }
 
     /* cursor_pos is a byte index */
     if (ecore_imf_context_surrounding_get (imcontext->ctx, &surrounding, &cursor_pos)) {
-        LOGD ("surrounding :%s, cursor: %d", surrounding ? surrounding : "", cursor_pos);
+        LOGI ("surrounding :%s, cursor: %d", surrounding ? surrounding : "", cursor_pos);
         if (imcontext->text_input) {
             Eina_Unicode *wide_surrounding = eina_unicode_utf8_to_unicode (surrounding, NULL);
             size_t wlen = eina_unicode_strlen (wide_surrounding);
@@ -1183,7 +1183,7 @@ keyboard_mode_changed_cb (keynode_t *key, void* data)
         return;
 
     if (active_ctx) {
-        LOGD ("ctx : %p, input detect : %d\n", active_ctx, val);
+        LOGI ("ctx : %p, input detect : %d\n", active_ctx, val);
 
         Ecore_IMF_Input_Panel_Keyboard_Mode input_mode = !val;
         ecore_imf_context_input_panel_event_callback_call (active_ctx, ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT, input_mode);
@@ -1222,7 +1222,7 @@ wayland_im_context_add(Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("context_add. ctx : %p", ctx);
+    LOGI("context_add. ctx : %p", ctx);
 
     imcontext->ctx = ctx;
     imcontext->input_panel_layout = ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL;
@@ -1240,7 +1240,7 @@ wayland_im_context_del (Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD ("context_del. ctx : %p", ctx);
+    LOGI ("context_del. ctx : %p", ctx);
 
     // TIZEN_ONLY(20150708): Support back key
     if (_focused_ctx == ctx)
@@ -1285,7 +1285,7 @@ wayland_im_context_reset(Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("ctx : %p", ctx);
+    LOGI("ctx : %p", ctx);
 
     commit_preedit(imcontext);
     clear_preedit(imcontext);
@@ -1307,15 +1307,15 @@ wayland_im_context_focus_in(Ecore_IMF_Context *ctx)
 
     set_focus(ctx);
 
-    LOGD ("ctx : %p. on demand : %d\n", ctx, ecore_imf_context_input_panel_show_on_demand_get (ctx));
+    LOGI ("ctx : %p. on demand : %d\n", ctx, ecore_imf_context_input_panel_show_on_demand_get (ctx));
 
     if (ecore_imf_context_input_panel_enabled_get(ctx))
         if (!ecore_imf_context_input_panel_show_on_demand_get (ctx))
             show_input_panel(ctx);
         else
-            LOGD ("ctx : %p input panel on demand mode : TRUE\n", ctx);
+            LOGI ("ctx : %p input panel on demand mode : TRUE\n", ctx);
     else
-        LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
+        LOGI ("ctx : %p input panel enable : FALSE\n", ctx);
 }
 
 EAPI void
@@ -1323,7 +1323,7 @@ wayland_im_context_focus_out(Ecore_IMF_Context *ctx)
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("ctx : %p", ctx);
+    LOGI("ctx : %p", ctx);
 
     if (!imcontext->input) return;
 
@@ -1350,7 +1350,7 @@ wayland_im_context_preedit_string_get(Ecore_IMF_Context  *ctx,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("pre-edit string requested (preedit: '%s')",
+    LOGI("pre-edit string requested (preedit: '%s')",
             imcontext->preedit_text ? imcontext->preedit_text : "");
 
     if (str)
@@ -1368,7 +1368,7 @@ wayland_im_context_preedit_string_with_attributes_get(Ecore_IMF_Context  *ctx,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("pre-edit string with attributes requested (preedit: '%s')",
+    LOGI("pre-edit string with attributes requested (preedit: '%s')",
             imcontext->preedit_text ? imcontext->preedit_text : "");
 
     if (str)
@@ -1395,7 +1395,7 @@ wayland_im_context_cursor_position_set (Ecore_IMF_Context *ctx,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD ("set cursor position (cursor: %d)", cursor_pos);
+    LOGI ("set cursor position (cursor: %d)", cursor_pos);
     if (imcontext->cursor_position != cursor_pos) {
         imcontext->cursor_position = cursor_pos;
         wl_text_input_set_cursor_position (imcontext->text_input, cursor_pos);
@@ -1414,7 +1414,7 @@ wayland_im_context_client_window_set(Ecore_IMF_Context *ctx,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("client window set (window: %p)", window);
+    LOGI("client window set (window: %p)", window);
 
     if (window != NULL)
         imcontext->window = ecore_wl_window_find((Ecore_Window)window);
@@ -1426,7 +1426,7 @@ wayland_im_context_client_canvas_set(Ecore_IMF_Context *ctx,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
-    LOGD("client canvas set (canvas: %p)", canvas);
+    LOGI("client canvas set (canvas: %p)", canvas);
 
     if (canvas != NULL)
         imcontext->canvas = canvas;
@@ -1435,7 +1435,7 @@ wayland_im_context_client_canvas_set(Ecore_IMF_Context *ctx,
 EAPI void
 wayland_im_context_show(Ecore_IMF_Context *ctx)
 {
-    LOGD("ctx : %p", ctx);
+    LOGI("ctx : %p", ctx);
 
     show_input_panel(ctx);
 }
@@ -1443,7 +1443,7 @@ wayland_im_context_show(Ecore_IMF_Context *ctx)
 EAPI void
 wayland_im_context_hide(Ecore_IMF_Context *ctx)
 {
-    LOGD("ctx : %p", ctx);
+    LOGI("ctx : %p", ctx);
 
     _input_panel_hide(ctx, EINA_FALSE);
 }
@@ -1455,7 +1455,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
 {
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get(ctx)) {
-            LOGD ("[Mouse-up event] ctx : %p\n", ctx);
+            LOGI ("[Mouse-up event] ctx : %p\n", ctx);
             if (ctx == _focused_ctx) {
                 ecore_imf_context_input_panel_show(ctx);
             }
@@ -1742,7 +1742,7 @@ WaylandIMContext *wayland_im_context_new (struct wl_text_input_manager *text_inp
 {
     WaylandIMContext *context = calloc(1, sizeof(WaylandIMContext));
 
-    LOGD("new context created");
+    LOGI("new context created");
     context->text_input_manager = text_input_manager;
 
     return context;
