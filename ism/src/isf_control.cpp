@@ -33,6 +33,7 @@
 #include "isf_control.h"
 
 #include <dlog.h>
+#include "isf_debug.h"
 #ifdef LOG_TAG
 #undef LOG_TAG
 #endif

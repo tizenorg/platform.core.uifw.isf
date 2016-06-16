@@ -45,6 +45,7 @@
 #include "isf_query_utility.h"
 #include "isf_pkg.h"
 #include <dlog.h>
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

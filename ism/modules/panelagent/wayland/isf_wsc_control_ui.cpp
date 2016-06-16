@@ -39,6 +39,7 @@
 #include "isf_wsc_context.h"
 #include "isf_wsc_control.h"
 #include "ise_context.h"
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

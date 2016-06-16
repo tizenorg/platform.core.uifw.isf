@@ -35,6 +35,7 @@
 #include <dlog.h>
 #include <scim_panel_common.h>
 #include "isf_query_utility.h"
+#include "isf_debug.h"
 
 #define Uses_SCIM_HELPER
 #include "scim.h"

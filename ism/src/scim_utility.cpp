@@ -49,6 +49,7 @@
 #include <sys/time.h>
 #include <sys/times.h>
 #include <dlog.h>
+#include "isf_debug.h"
 
 #include "scim_private.h"
 #include "scim.h"

@@ -31,6 +31,7 @@
 #ifdef HAVE_VCONF
 #include <vconf.h>
 #endif
+#include "isf_debug.h"
 
 #include "wayland_imcontext.h"
 

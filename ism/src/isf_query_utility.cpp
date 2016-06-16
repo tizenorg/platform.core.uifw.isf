@@ -44,6 +44,7 @@
 #include "isf_query_utility.h"
 #include "scim_helper.h"
 #include <db-util.h>
+#include "isf_debug.h"
 
 
 using namespace scim;

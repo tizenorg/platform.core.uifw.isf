@@ -50,6 +50,7 @@
 #include "scim.h"
 #include "scim_utility.h"
 #include <dlog.h>
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

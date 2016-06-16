@@ -26,6 +26,7 @@
 #define __ISF_PANEL_EFL_H__
 
 #include <dlog.h>
+#include "isf_debug.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG

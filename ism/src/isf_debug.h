@@ -4,7 +4,7 @@
  * ISF is based on SCIM 1.4.7 and extended for supporting more mobile fitable.
  * Copyright (c) 2012-2015 Samsung Electronics Co., Ltd.
  *
- * Contact: Wonkeun Oh <wonkeun.oh@samsung.com>, Jihoon Kim <jihoon48.kim@samsung.com>
+ * Contact: Wonkeun Oh <wonkeun.oh@samsung.com>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -22,24 +22,20 @@
  *
  */
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __ISF_DEBUG_H__
+#define __ISF_DEBUG_H__
 
-#include <app.h>
-#include <dlog.h>
-#include "isf_debug.h"
+#ifdef _TV
+#ifdef LOGD
+# undef LOGD
+#endif
+#define LOGD LOGI
 
-#if !defined(PACKAGE)
-#  define PACKAGE "isf-kbd-mode-changer"
+#ifdef SECURE_LOGD
+# undef SECURE_LOGD
+#endif
+#define SECURE_LOGD SECURE_LOGI
 #endif
 
-#if !defined(PKGNAME)
-#  define PKGNAME "org.tizen.isf-kbd-mode-changer"
-#endif
+#endif /* __ISF_DEBUG_H__ */
 
-#ifdef LOG_TAG
-# undef LOG_TAG
-#endif
-#define LOG_TAG "ISF_KBD_MODE_CHANGER"
-
-#endif /* __MAIN_H__ */
