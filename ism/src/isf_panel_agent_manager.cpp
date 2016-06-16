@@ -113,18 +113,18 @@ bool PanelAgentManager::initialize (InfoManager* info_manager, const ConfigPoint
     scim_get_panel_agent_module_list (mod_list);
 
     for (std::vector<String>::iterator it = mod_list.begin (); it != mod_list.end (); ++it) {
-        LOGD ("Trying to load panelagent module %s", it->c_str ());
+        LOGI ("Trying to load panelagent module %s", it->c_str ());
         PanelAgentModule* _panel_agent_module = new PanelAgentModule;
 
         if (!_panel_agent_module) {
-            LOGD ("");
+            LOGI ("");
             continue;
         }
 
         _panel_agent_module->load (*it, config);
 
         if (!_panel_agent_module->valid ()) {
-            LOGD ("");
+            LOGI ("");
             delete _panel_agent_module;
             continue;
         }
@@ -132,13 +132,13 @@ bool PanelAgentManager::initialize (InfoManager* info_manager, const ConfigPoint
         PanelAgentPointer _panelagent = _panel_agent_module->get_instance ();
 
         if (_panelagent.null ()) {
-            LOGD ("");
+            LOGI ("");
             delete _panel_agent_module;
             continue;
         }
 
         _panelagent->initialize (info_manager, display, resident);
-        LOGD ("PanelAgent Module %s loaded", _panel_agent_module->get_module_name ().c_str ());
+        LOGI ("PanelAgent Module %s loaded", _panel_agent_module->get_module_name ().c_str ());
         m_impl->m_panel_agent_modules.push_back (_panel_agent_module);
 
         if (_panel_agent_module->get_module_name () == "wayland")

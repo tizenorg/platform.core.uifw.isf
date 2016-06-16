@@ -159,7 +159,7 @@ static inline int _db_create_ime_info(void)
     }
 
     if (sqlite3_changes(databaseInfo.pHandle) == 0) {
-        LOGD ("The database is not changed.\n");
+        LOGI ("The database is not changed.\n");
     }
 
     return 0;
@@ -310,7 +310,7 @@ static int _db_select_all_ime_info(std::vector<ImeInfoDB> &ime_info)
             db_text = (char *)sqlite3_column_text(pStmt, 12);
             info.display_lang = String(db_text ? db_text : "");
 
-            SECURE_LOGD ("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"\n",
+            SECURE_LOGI ("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"\n",
                 info.appid.c_str(),
                 info.label.c_str(),
                 info.pkgid.c_str(),
@@ -428,7 +428,7 @@ static int _db_select_ime_info_by_appid(const char *appid, ImeInfoDB *pImeInfo)
     db_text = (char*)sqlite3_column_text(pStmt, 12);
     pImeInfo->display_lang = String(db_text ? db_text : "");
 
-    SECURE_LOGD ("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"\n",
+    SECURE_LOGI ("appid=\"%s\", label=\"%s\", pkgid=\"%s\", pkgtype=\"%s\", exec=\"%s\", mname=\"%s\", mpath=\"%s\", mode=%d, options=%u, is_enabled=%u, is_preinstalled=%u, has_option=%d, disp_lang=\"%s\"\n",
         pImeInfo->appid.c_str(),
         pImeInfo->label.c_str(),
         pImeInfo->pkgid.c_str(),
@@ -483,7 +483,7 @@ static int _db_select_module_name_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             mname.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD ("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mname.back().c_str());
+            SECURE_LOGI ("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mname.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
@@ -530,7 +530,7 @@ static int _db_select_module_path_by_mode(TOOLBAR_MODE_T mode, std::vector<Strin
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             mpath.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD ("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mpath.back().c_str());
+            SECURE_LOGI ("%s: \"%s\"\n", (mode? "Helper": "IMEngine"), mpath.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
@@ -577,7 +577,7 @@ static int _db_select_appids_by_pkgid(const char *pkgid, std::vector<String> &ap
         if (ret == SQLITE_ROW) {
             char *db_text = (char *)sqlite3_column_text(pStmt, 0);
             appids.push_back(String(db_text ? db_text : ""));
-            SECURE_LOGD ("appid=\"%s\"\n", appids.back().c_str());
+            SECURE_LOGI ("appid=\"%s\"\n", appids.back().c_str());
             i++;
         }
     } while (ret == SQLITE_ROW);
@@ -629,7 +629,7 @@ static int _db_select_is_enabled_by_appid(const char *appid, bool *is_enabled)
     else {
         *is_enabled = (bool)sqlite3_column_int(pStmt, 0);
         i = 1;
-        SECURE_LOGD ("is_enabled=%d by appid=\"%s\"\n", *is_enabled, appid);
+        SECURE_LOGI ("is_enabled=%d by appid=\"%s\"\n", *is_enabled, appid);
     }
 
 out:
@@ -724,7 +724,7 @@ static int _db_update_label_by_appid(const char *appid, const char *label)
         ret = 0;
     }
     else {
-        SECURE_LOGD ("UPDATE ime_info SET label = %s WHERE appid = %s;\n", label, appid);
+        SECURE_LOGI ("UPDATE ime_info SET label = %s WHERE appid = %s;\n", label, appid);
         ret = 1;
     }
 
@@ -772,7 +772,7 @@ static int _db_update_disp_lang(const char *disp_lang)
         ret = 0;
     }
     else {
-        SECURE_LOGD ("UPDATE ime_info SET disp_lang = %s;\n", disp_lang);
+        SECURE_LOGI ("UPDATE ime_info SET disp_lang = %s;\n", disp_lang);
         ret = 1;
     }
 
@@ -828,7 +828,7 @@ static int _db_update_is_enabled_by_appid(const char *appid, bool is_enabled)
         ret = 0;
     }
     else {
-        SECURE_LOGD ("UPDATE ime_info SET enabled = %d WHERE appid = %s;\n", is_enabled, appid);
+        SECURE_LOGI ("UPDATE ime_info SET enabled = %d WHERE appid = %s;\n", is_enabled, appid);
         ret = 1;
     }
 
@@ -883,7 +883,7 @@ static int _db_update_has_option_by_appid(const char *appid, bool has_option)
         ret = 0;
     }
     else {
-        SECURE_LOGD ("UPDATE ime_info SET enabled = %d WHERE appid = %s;\n", has_option, appid);
+        SECURE_LOGI ("UPDATE ime_info SET enabled = %d WHERE appid = %s;\n", has_option, appid);
         ret = 1;
     }
 
@@ -968,7 +968,7 @@ static int _db_update_ime_info(ImeInfoDB *ime_db)
         goto out;
     }
     else {
-        SECURE_LOGD ("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+        SECURE_LOGI ("Update \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
             ime_db->appid.c_str(), ime_db->label.c_str(), ime_db->exec.c_str(), ime_db->module_name.c_str(), ime_db->module_path.c_str());
         ret = SQLITE_OK;
         i++;
@@ -1095,7 +1095,7 @@ static int _db_insert_ime_info(ImeInfoDB *ime_db)
         goto out;
     }
     else {
-        SECURE_LOGD ("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u %d \"%s\"\n",
+        SECURE_LOGI ("Insert \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" %d %u %u %u %d \"%s\"\n",
             ime_db->appid.c_str(), ime_db->label.c_str(), ime_db->pkgid.c_str(), ime_db->pkgtype.c_str(),
             ime_db->module_name.c_str(), ime_db->exec.c_str(), ime_db->module_path.c_str(), ime_db->mode,
             ime_db->options, ime_db->is_enabled, ime_db->is_preinstalled, ime_db->has_option, ime_db->display_lang.c_str());
@@ -1146,7 +1146,7 @@ static int _db_delete_ime_info_by_pkgid(const char *pkgid)
     }
     else {
         // If there is no pkgid to delete, ret is still SQLITE_DONE.
-        SECURE_LOGD ("DELETE FROM ime_info WHERE pkgid = %s;\n", pkgid);
+        SECURE_LOGI ("DELETE FROM ime_info WHERE pkgid = %s;\n", pkgid);
         i = 1;
     }
 
@@ -1188,7 +1188,7 @@ static int _db_delete_ime_info_by_appid(const char *appid)
     }
     else {
         // If there is no appid to delete, ret is still SQLITE_DONE.
-        SECURE_LOGD ("DELETE FROM ime_info WHERE appid = %s;\n", appid);
+        SECURE_LOGI ("DELETE FROM ime_info WHERE appid = %s;\n", appid);
         i = 1;
     }
 
@@ -1222,7 +1222,7 @@ static int _db_delete_ime_info(void)
     }
     else {
         // If there is no pkgid to delete, ret is still SQLITE_DONE.
-        SECURE_LOGD ("DELETE FROM ime_info;\n");
+        SECURE_LOGI ("DELETE FROM ime_info;\n");
         i = 1;
     }
 

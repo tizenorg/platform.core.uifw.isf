@@ -143,7 +143,7 @@ static Evas_Object* create_win (const char *name)
                                         win_del, NULL);
 
         elm_win_screen_size_get (eo, NULL, NULL, &w, &h);
-        LOGD ("resize window as %d x %d\n", w, h);
+        LOGI ("resize window as %d x %d\n", w, h);
         evas_object_resize (eo, w, h);
     }
 
@@ -159,7 +159,7 @@ _vkbd_state_on (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
 
-    LOGD ("input panel is shown\n");
+    LOGI ("input panel is shown\n");
     ad->vkbd_state = EINA_TRUE;
 }
 
@@ -168,7 +168,7 @@ _vkbd_state_off (void *data, Evas_Object *obj, void *event_info)
 {
     struct appdata *ad = (struct appdata *)data;
 
-    LOGD ("input panel is hidden\n");
+    LOGI ("input panel is hidden\n");
     ad->vkbd_state = EINA_FALSE;
 }
 
@@ -221,7 +221,7 @@ static Eina_Bool _keydown_event (void *data, int type, void *event)
     struct appdata *ad = (struct appdata *)data;
     if (ad == NULL || ev == NULL) return ECORE_CALLBACK_PASS_ON;
 
-    LOGD ("[ecore key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+    LOGI ("[ecore key down] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -230,7 +230,7 @@ static Eina_Bool _keyup_event (void *data, int type, void *event)
 {
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
 
-    LOGD ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
+    LOGI ("[ecore key up] keyname : '%s', key : '%s', string : '%s', compose : '%s'\n", ev->keyname, ev->key, ev->string, ev->compose);
 
     return ECORE_CALLBACK_PASS_ON;
 }
@@ -241,19 +241,19 @@ static void input_panel_state_changed_cb (keynode_t *key, void* data)
 
     switch (sip_status) {
         case VCONFKEY_ISF_INPUT_PANEL_STATE_HIDE:
-            LOGD ("state : hide\n");
+            LOGI ("state : hide\n");
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_HIDE:
-            LOGD ("state : will_hide\n");
+            LOGI ("state : will_hide\n");
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW:
-            LOGD ("state : show\n");
+            LOGI ("state : show\n");
             break;
         case VCONFKEY_ISF_INPUT_PANEL_STATE_WILL_SHOW:
-            LOGD ("state : will_show\n");
+            LOGI ("state : will_show\n");
             break;
         default :
-            LOGD ("sip_status error!\n");
+            LOGI ("sip_status error!\n");
             break;
     }
 }

@@ -31,15 +31,15 @@
 
 static bool app_create (void *user_data)
 {
-    LOGD ("app create\n");
+    LOGI ("app create\n");
     return true;
 }
 
 static void app_control (app_control_h app_control, void *user_data)
 {
-    LOGD ("%s\n", __func__);
+    LOGI ("%s\n", __func__);
 
-    LOGD ("isf_extra_hwkbd_module start\n");
+    LOGI ("isf_extra_hwkbd_module start\n");
 
     /* Toggle input mode */
 #if HAVE_VCONF
@@ -50,7 +50,7 @@ static void app_control (app_control_h app_control, void *user_data)
     if (vconf_set_bool (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, !val) != 0)
         LOGW ("Failed to set vconf key\n");
     else
-        LOGD ("Succeeded to set vconf key\n");
+        LOGI ("Succeeded to set vconf key\n");
 #endif
 
     ui_app_exit ();
@@ -58,7 +58,7 @@ static void app_control (app_control_h app_control, void *user_data)
 
 static void app_terminate (void *user_data)
 {
-    LOGD ("app terminated\n");
+    LOGI ("app terminated\n");
 }
 
 EXAPI int main (int argc, char *argv [])
@@ -69,7 +69,7 @@ EXAPI int main (int argc, char *argv [])
     event_callback.terminate = app_terminate;
     event_callback.app_control = app_control;
 
-    LOGD ("start org.tizen.isf-kbd-mode-changer\n");
+    LOGI ("start org.tizen.isf-kbd-mode-changer\n");
 
     return ui_app_main (argc, argv, &event_callback, NULL);
 }

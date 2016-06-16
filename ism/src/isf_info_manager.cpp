@@ -422,7 +422,7 @@ public:
 
     void stop (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::stop ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
             String helper_uuid = get_current_helper_uuid ();
@@ -462,7 +462,7 @@ public:
     }
 
     void update_panel_event (int cmd, uint32 nType, uint32 nValue) {
-        LOGD ("");
+        LOGI ("");
         int    focused_client;
         uint32 focused_context;
         get_focused_context (focused_client, focused_context);
@@ -495,7 +495,7 @@ public:
 
     bool move_preedit_caret (uint32 position) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::move_preedit_caret (" << position << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -543,7 +543,7 @@ public:
 
     //ISM_TRANS_CMD_PANEL_RESET_KEYBOARD_ISE
     bool reset_keyboard_ise (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (1) << "InfoManager::reset_keyboard_ise ()\n";
         int    client = -1;
         uint32 context = 0;
@@ -559,7 +559,7 @@ public:
     }
 
     bool update_keyboard_ise_list (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (1) << "InfoManager::update_keyboard_ise_list ()\n";
         int    client = -1;
         uint32 context = 0;
@@ -576,7 +576,7 @@ public:
 
     bool change_factory (const String&  uuid) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::change_factory (" << uuid << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
 #if 0
@@ -596,7 +596,7 @@ public:
 
     bool helper_candidate_show (void) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         int    client;
         uint32 context;
         get_focused_context (client, context);
@@ -616,7 +616,7 @@ public:
 
     bool helper_candidate_hide (void) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         int    client;
         uint32 context;
         get_focused_context (client, context);
@@ -636,7 +636,7 @@ public:
 
     bool candidate_more_window_show (void) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         int    client;
         uint32 context;
         get_focused_context (client, context);
@@ -663,7 +663,7 @@ public:
 
     bool candidate_more_window_hide (void) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         int    client;
         uint32 context;
         get_focused_context (client, context);
@@ -690,7 +690,7 @@ public:
 
     bool update_helper_lookup_table (const LookupTable& table) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         int    client;
         uint32 context;
 
@@ -711,7 +711,7 @@ public:
 
     bool select_aux (uint32 item) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::select_aux (" << item << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -731,7 +731,7 @@ public:
 
     bool select_candidate (uint32 item) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::select_candidate (" << item << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -751,7 +751,7 @@ public:
 
     bool lookup_table_page_up (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::lookup_table_page_up ()\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -771,7 +771,7 @@ public:
 
     bool lookup_table_page_down (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::lookup_table_page_down ()\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -791,7 +791,7 @@ public:
 
     bool update_lookup_table_page_size (uint32 size) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::update_lookup_table_page_size (" << size << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -811,7 +811,7 @@ public:
 
     bool update_candidate_item_layout (const std::vector<uint32>& row_items) {
         SCIM_DEBUG_MAIN (1) << __func__ << " (" << row_items.size () << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -831,7 +831,7 @@ public:
 
     bool select_associate (uint32 item) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::select_associate (" << item << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -848,7 +848,7 @@ public:
 
     bool associate_table_page_up (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::associate_table_page_up ()\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -865,7 +865,7 @@ public:
 
     bool associate_table_page_down (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::associate_table_page_down ()\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -882,7 +882,7 @@ public:
 
     bool update_associate_table_page_size (uint32 size) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::update_associate_table_page_size (" << size << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -899,7 +899,7 @@ public:
 
     bool update_displayed_candidate_number (uint32 size) {
         SCIM_DEBUG_MAIN (1) << __func__ << " (" << size << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -919,7 +919,7 @@ public:
 
     void send_longpress_event (int type, int index) {
         SCIM_DEBUG_MAIN (1) << __func__ << " (" << type << ", " << index << ")\n";
-        LOGD ("");
+        LOGI ("");
         int    client;
         uint32 context;
         get_focused_context (client, context);
@@ -935,7 +935,7 @@ public:
 
     bool trigger_property (const String&  property) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::trigger_property (" << property << ")\n";
-        LOGD ("");
+        LOGI ("");
         int client;
         uint32 context;
         lock ();
@@ -951,7 +951,7 @@ public:
 
     bool start_helper (const String&  uuid, int client, uint32 context) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::start_helper (" << uuid << ")\n";
-        LOGD ("start ISE(%s)", uuid.c_str ());
+        LOGI ("start ISE(%s)", uuid.c_str ());
 
         if (uuid.length () <= 0)
             return false;
@@ -970,7 +970,7 @@ public:
         char buf[256] = {0};
         snprintf (buf, sizeof (buf), "time:%ld  pid:%d  %s  %s  prepare to stop ISE(%s)\n",
                   time (0), getpid (), __FILE__, __func__, uuid.c_str ());
-        LOGD ("prepare to stop ISE(%s)", uuid.c_str ());
+        LOGI ("prepare to stop ISE(%s)", uuid.c_str ());
         SCIM_DEBUG_MAIN (1) << "InfoManager::stop_helper (" << uuid << ")\n";
 
         if (uuid.length () <= 0)
@@ -1016,7 +1016,7 @@ public:
         if (it != m_helper_client_index.end ()) {
             Socket client_socket (it->second.id);
             m_panel_agent_manager.show_helper (it->second.id, ctx, uuid, data, len);
-            LOGD ("Send ISM_TRANS_CMD_SHOW_ISE_PANEL message");
+            LOGI ("Send ISM_TRANS_CMD_SHOW_ISE_PANEL message");
             return true;
         }
 
@@ -1026,7 +1026,7 @@ public:
 
     void hide_helper (const String& uuid, uint32 ctx = 0) {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
-        LOGD ("");
+        LOGI ("");
 
         if (it != m_helper_client_index.end ()) {
             int client;
@@ -1038,7 +1038,7 @@ public:
             }
 
             m_panel_agent_manager.hide_helper (it->second.id, ctx, uuid);
-            LOGD ("Send ISM_TRANS_CMD_HIDE_ISE_PANEL message");
+            LOGI ("Send ISM_TRANS_CMD_HIDE_ISE_PANEL message");
         }
     }
 
@@ -1241,7 +1241,7 @@ public:
             uint32 ctx;
             get_focused_context (client, context);
             ctx = get_helper_ic (client, context);
-            LOGD ("Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message");
+            LOGI ("Send ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW message");
             m_panel_agent_manager.show_helper_option_window (it->second.id, ctx, uuid);
             return true;
         }
@@ -1250,13 +1250,13 @@ public:
     }
     //ISM_TRANS_CMD_SHOW_ISF_CONTROL
     void show_isf_panel (int client_id) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::show_isf_panel ()\n";
         m_signal_show_panel ();
     }
     //ISM_TRANS_CMD_HIDE_ISF_CONTROL
     void hide_isf_panel (int client_id) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::hide_isf_panel ()\n";
         m_signal_hide_panel ();
     }
@@ -1264,10 +1264,10 @@ public:
     //ISM_TRANS_CMD_SHOW_ISE_PANEL
     void show_ise_panel (int client_id, uint32 client, uint32 context, char*   data, size_t  len) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::show_ise_panel ()\n";
-        LOGD ("");
+        LOGI ("");
         String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-        LOGD ("prepare to show ISE %d [%s] [%s]", client_id, initial_uuid.c_str (), default_uuid.c_str ());
+        LOGI ("prepare to show ISE %d [%s] [%s]", client_id, initial_uuid.c_str (), default_uuid.c_str ());
         bool ret = false;
         m_show_request_client_id = client_id;
         m_active_client_id = client_id;
@@ -1299,7 +1299,7 @@ public:
     //ISM_TRANS_CMD_HIDE_ISE_PANEL
     void hide_ise_panel (int client_id, uint32 client, uint32 context) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::hide_ise_panel ()\n";
-        LOGD ("prepare to hide ISE, %d %d", client_id, m_show_request_client_id);
+        LOGI ("prepare to hide ISE, %d %d", client_id, m_show_request_client_id);
         SCIM_DEBUG_MAIN (4) << __func__ << " (client:" << client << " context:" << context << ")\n";
 
         if (m_panel_client_map[client_id] == m_current_socket_client || client_id == m_show_request_client_id) {
@@ -1332,18 +1332,18 @@ public:
     }
 
     void set_default_ise (const DEFAULT_ISE_T& ise) {
-        LOGD ("");
+        LOGI ("");
         scim_global_config_write (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), ise.uuid);
         scim_global_config_flush ();
     }
 
     void set_should_shared_ise (const bool should_shared_ise) {
-        LOGD ("");
+        LOGI ("");
         m_should_shared_ise = should_shared_ise;
     }
     //SCIM_TRANS_CMD_PROCESS_KEY_EVENT
     bool process_key_event (KeyEvent& key, _OUT_ uint32& result) {
-        LOGD ("");
+        LOGI ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
         if (it != m_helper_client_index.end ()) {
@@ -1424,19 +1424,19 @@ public:
     //ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY
     void get_input_panel_geometry (int client_id, _OUT_ struct rectinfo& info) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_get_input_panel_geometry (info);
     }
     //ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY
     void get_candidate_window_geometry (int client_id, _OUT_ struct rectinfo& info) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_get_candidate_geometry (info);
     }
     //ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE
     void get_ise_language_locale (int client_id, _OUT_ char** data, _OUT_ size_t& len) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         Transaction trans;
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
@@ -1453,7 +1453,7 @@ public:
     }
 
     void get_current_ise_geometry (rectinfo& rect) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << __func__ << " \n";
         bool           ret  = false;
 
@@ -1470,7 +1470,7 @@ public:
 
     void set_ise_mode (int client_id, uint32 mode) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_mode ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_mode (m_current_helper_uuid, mode);
@@ -1478,7 +1478,7 @@ public:
     //ISM_TRANS_CMD_SET_LAYOUT
     void set_ise_layout (int client_id, uint32 layout) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_layout ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_layout (m_current_helper_uuid, layout);
@@ -1486,7 +1486,7 @@ public:
     //ISM_TRANS_CMD_SET_INPUT_MODE
     void set_ise_input_mode (int client_id, uint32 input_mode) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_input_mode ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_input_mode (m_current_helper_uuid, input_mode);
@@ -1494,14 +1494,14 @@ public:
     //ISM_TRANS_CMD_SET_INPUT_HINT
     void set_ise_input_hint (int client_id, uint32 input_hint) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_input_hint ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_input_hint (m_current_helper_uuid, input_hint);
     }
     //ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION
     void update_ise_bidi_direction (int client_id, uint32 bidi_direction) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::update_ise_bidi_direction ()\n";
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
@@ -1510,7 +1510,7 @@ public:
     //ISM_TRANS_CMD_SET_ISE_LANGUAGE
     void set_ise_language (int client_id, uint32 language) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_language ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_language (m_current_helper_uuid, language);
@@ -1518,7 +1518,7 @@ public:
     //ISM_TRANS_CMD_SET_ISE_IMDATA
     void set_ise_imdata (int client_id, const char*   imdata, size_t  len) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_imdata ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_imdata (m_current_helper_uuid, imdata, len);
@@ -1527,7 +1527,7 @@ public:
     bool get_ise_imdata (int client_id, _OUT_ char** imdata, _OUT_ size_t& len) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::get_ise_imdata ()\n";
         bool    ret    = false;
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_imdata (m_current_helper_uuid, imdata, len);
@@ -1538,7 +1538,7 @@ public:
     bool get_ise_layout (int client_id, _OUT_ uint32& layout) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::get_ise_layout ()\n";
         bool   ret = false;
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_layout (m_current_helper_uuid, layout);
@@ -1548,25 +1548,25 @@ public:
     //ISM_TRANS_CMD_GET_ISE_STATE
     void get_ise_state (int client_id, _OUT_ int& state) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_get_ise_state (state);
     }
     //ISM_TRANS_CMD_GET_ACTIVE_ISE
     void get_active_ise (int client_id, _OUT_ String& default_uuid) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
         default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
     }
     //ISM_TRANS_CMD_GET_ISE_LIST
     void get_ise_list (int client_id, _OUT_ std::vector<String>& strlist) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::get_ise_list ()\n";
         m_signal_get_ise_list (strlist);
     }
     //ISM_TRANS_CMD_GET_ALL_HELPER_ISE_INFO
     void get_all_helper_ise_info (int client_id, _OUT_ HELPER_ISE_INFO& info) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::get_all_helper_ise_info ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_get_all_helper_ise_info (info);
 
         //1 Check if the current IME's option (setting) is available or not.
@@ -1598,7 +1598,7 @@ public:
     //ISM_TRANS_CMD_SET_ENABLE_HELPER_ISE_INFO
     //reply SCIM_TRANS_CMD_FAIL or SCIM_TRANS_CMD_OK
     void set_enable_helper_ise_info (int client_id, String appid, uint32 is_enabled) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_enable_helper_ise_info ()\n";
         m_signal_set_enable_helper_ise_info (appid, static_cast<bool> (is_enabled));
     }
@@ -1606,21 +1606,21 @@ public:
     //reply SCIM_TRANS_CMD_FAIL or SCIM_TRANS_CMD_OK
     void show_helper_ise_list (int client_id) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::show_helper_ise_list ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_show_helper_ise_list ();
     }
     //ISM_TRANS_CMD_SHOW_HELPER_ISE_SELECTOR
     //reply SCIM_TRANS_CMD_FAIL or SCIM_TRANS_CMD_OK
     void show_helper_ise_selector (int client_id) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::show_helper_ise_selector ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_show_helper_ise_selector ();
     }
     //ISM_TRANS_CMD_IS_HELPER_ISE_ENABLED
     //reply
     void is_helper_ise_enabled (int client_id, String strAppid, _OUT_ uint32& nEnabled) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         int _nEnabled = 0;
         m_signal_is_helper_ise_enabled (strAppid, _nEnabled);
         nEnabled = (uint32)_nEnabled;
@@ -1629,7 +1629,7 @@ public:
     void get_ise_information (int client_id, String strUuid, _OUT_ String& strName, _OUT_ String& strLanguage,
                               _OUT_ int& nType, _OUT_ int& nOption, _OUT_ String& strModuleName) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_get_ise_information (strUuid, strName, strLanguage, nType, nOption, strModuleName);
     }
     /*
@@ -1655,7 +1655,7 @@ public:
     //reply SCIM_TRANS_CMD_OK
     bool reset_ise_option (int client_id) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::resect_ise_option ()\n";
-        LOGD ("");
+        LOGI ("");
         int    client = -1;
         uint32 context;
         lock ();
@@ -1687,7 +1687,7 @@ public:
     //reply
     bool set_active_ise_by_uuid (int client_id, char*  buf, size_t  len) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_active_ise_by_uuid ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (buf == NULL) {
             return false;
@@ -1720,7 +1720,7 @@ public:
     //reply SCIM_TRANS_CMD_FAIL or SCIM_TRANS_CMD_OK
     void set_initial_ise_by_uuid (int client_id, char*  buf, size_t  len) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_initial_ise_by_uuid ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (buf == NULL) {
             return;
@@ -1733,7 +1733,7 @@ public:
     //ISM_TRANS_CMD_SET_RETURN_KEY_TYPE
     void set_ise_return_key_type (int client_id, uint32 type) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_return_key_type (m_current_helper_uuid, type);
@@ -1743,7 +1743,7 @@ public:
     bool get_ise_return_key_type (int client_id, _OUT_ uint32& type) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
         bool   ret  = false;
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             ret = get_helper_return_key_type (m_current_helper_uuid, type);
@@ -1753,7 +1753,7 @@ public:
     //ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE
     void set_ise_return_key_disable (int client_id, uint32 disabled) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_return_key_disable (m_current_helper_uuid, disabled);
@@ -1761,7 +1761,7 @@ public:
     //ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE
     void get_ise_return_key_disable (int client_id, _OUT_ uint32& disabled) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             get_helper_return_key_disable (m_current_helper_uuid, disabled);
@@ -1791,7 +1791,7 @@ public:
     //ISM_TRANS_CMD_SET_CAPS_MODE
     void set_ise_caps_mode (int client_id, uint32 mode) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_ise_caps_mode ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             set_helper_caps_mode (m_current_helper_uuid, mode);
@@ -1800,7 +1800,7 @@ public:
     //SCIM_TRANS_CMD_RELOAD_CONFIG
     void reload_config (void) {
         SCIM_DEBUG_MAIN (1) << "InfoManager::reload_config ()\n";
-        LOGD ("");
+        LOGI ("");
         lock ();
 
         for (ClientRepository::iterator it = m_client_repository.begin (); it != m_client_repository.end (); ++it) {
@@ -1832,19 +1832,19 @@ public:
     //ISM_TRANS_CMD_SEND_WILL_SHOW_ACK
     void will_show_ack (int client_id) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::will_show_ack ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_will_show_ack ();
     }
     //ISM_TRANS_CMD_SEND_WILL_HIDE_ACK
     void will_hide_ack (int client_id) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::will_hide_ack ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_will_hide_ack ();
     }
     //ISM_TRANS_CMD_RESET_DEFAULT_ISE
     void reset_default_ise (int client_id) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         String initial_ise = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
 
         if (initial_ise.length () > 0)
@@ -1854,30 +1854,30 @@ public:
     }
     //ISM_TRANS_CMD_SET_HARDWARE_KEYBOARD_MODE
     void set_keyboard_mode (int client_id, uint32 mode) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::set_keyboard_mode ()\n";
         m_signal_set_keyboard_mode (mode);
     }
     //ISM_TRANS_CMD_SEND_CANDIDATE_WILL_HIDE_ACK
     void candidate_will_hide_ack (int client_id) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_candidate_will_hide_ack ();
     }
 
     //ISM_TRANS_CMD_GET_ACTIVE_HELPER_OPTION
     void get_active_helper_option (int client_id, _OUT_ uint32& option) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
         option = get_current_helper_option ();
     }
     //ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW
     void show_ise_option_window (int client_id) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::show_ise_panel ()\n";
-        LOGD ("");
+        LOGI ("");
         String initial_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_INITIAL_ISE_UUID), String (""));
         String default_uuid = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_ISE_UUID), String (""));
-        LOGD ("prepare to show ISE option window %d [%s] [%s]", client_id, initial_uuid.c_str (), default_uuid.c_str ());
+        LOGI ("prepare to show ISE option window %d [%s] [%s]", client_id, initial_uuid.c_str (), default_uuid.c_str ());
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode) {
             show_helper_option_window (m_current_helper_uuid);
@@ -1886,19 +1886,19 @@ public:
 
     //ISM_TRANS_CMD_EXPAND_CANDIDATE
     void expand_candidate () {
-        LOGD ("");
+        LOGI ("");
         m_signal_expand_candidate ();
     }
 
     //ISM_TRANS_CMD_CONTRACT_CANDIDATE
     void contract_candidate () {
-        LOGD ("");
+        LOGI ("");
         m_signal_contract_candidate ();
     }
     //ISM_TRANS_CMD_GET_RECENT_ISE_GEOMETRY
     void get_recent_ise_geometry (int client_id, uint32 angle, _OUT_ struct rectinfo& info) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_get_recent_ise_geometry (angle, info);
     }
 
@@ -2214,18 +2214,18 @@ public:
 
     //ISM_TRANS_CMD_REGISTER_PANEL_CLIENT
     void register_panel_client (uint32 client_id, uint32 id) {
-        LOGD ("");
+        LOGI ("");
         m_panel_client_map [client_id] = (int)id;
     }
     //SCIM_TRANS_CMD_PANEL_REGISTER_INPUT_CONTEXT
     void register_input_context (uint32 client_id, uint32 context, String  uuid) {
-        LOGD ("");
+        LOGI ("");
         uint32 ctx = get_helper_ic (m_panel_client_map[client_id], context);
         m_client_context_uuids [ctx] = uuid;
     }
     //SCIM_TRANS_CMD_PANEL_REMOVE_INPUT_CONTEXT
     void remove_input_context (uint32 client_id, uint32 context) {
-        LOGD ("");
+        LOGI ("");
         uint32 ctx = get_helper_ic (m_panel_client_map[client_id], context);
         m_client_context_uuids.erase (ctx);
 
@@ -2259,7 +2259,7 @@ public:
     //SCIM_TRANS_CMD_PANEL_RESET_INPUT_CONTEXT
     void socket_reset_input_context (int client_id, uint32 context) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_reset_input_context \n";
-        LOGD ("");
+        LOGI ("");
 
         if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT)
             socket_reset_helper_input_context (m_current_helper_uuid, m_panel_client_map[client_id], context);
@@ -2267,7 +2267,7 @@ public:
 
     //SCIM_TRANS_CMD_FOCUS_IN
     void focus_in (int client_id, uint32 context,  String  uuid) {
-        LOGD ("");
+        LOGI ("");
         m_signal_focus_in ();
         focus_in_helper (m_current_helper_uuid, m_panel_client_map[client_id], context);
         SCIM_DEBUG_MAIN (2) << "PanelAgent::focus_in (" << client_id << "," << context << "," << uuid << ")\n";
@@ -2288,7 +2288,7 @@ public:
 
     //SCIM_TRANS_CMD_FOCUS_OUT
     void focus_out (int client_id, uint32 context) {
-        LOGD ("");
+        LOGI ("");
         m_signal_focus_out ();
         lock ();
         focus_out_helper (m_current_helper_uuid, m_panel_client_map[client_id], context);
@@ -2307,7 +2307,7 @@ public:
 
     //ISM_TRANS_CMD_TURN_ON_LOG
     void socket_turn_on_log (uint32 isOn) {
-        LOGD ("");
+        LOGI ("");
 
         if (isOn) {
             DebugOutput::enable_debug (SCIM_DEBUG_AllMask);
@@ -2348,7 +2348,7 @@ public:
 
 
     void add_client (int client_id, uint32 key, ClientType type) {
-        LOGD ("id:%d, key:%d, type:%d", client_id, key, type);
+        LOGI ("id:%d, key:%d, type:%d", client_id, key, type);
         ClientInfo info;
         info.key = key;
         info.type = type;
@@ -2363,13 +2363,13 @@ public:
             m_pending_active_imcontrol_id = -1;
         }
 
-        LOGD ("%d clients connecting", m_client_repository.size());
+        LOGI ("%d clients connecting", m_client_repository.size());
 
         unlock ();
     }
 
     void del_client (int client_id) {
-        LOGD ("id:%d", client_id);
+        LOGI ("id:%d", client_id);
         lock ();
         m_signal_close_connection (client_id);
         ClientInfo client_info = socket_get_client_info (client_id);
@@ -2581,19 +2581,19 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_PANEL_TURN_ON
     void socket_turn_on (void) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_turn_on ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_turn_on ();
     }
     //SCIM_TRANS_CMD_PANEL_TURN_OFF
     void socket_turn_off (void) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_turn_off ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_turn_off ();
     }
     //SCIM_TRANS_CMD_UPDATE_SCREEN
     void socket_update_screen (int client_id, uint32 num) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_screen ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (((int) num) != m_current_screen) {
             SCIM_DEBUG_MAIN (4) << "New Screen number = " << num << "\n";
@@ -2605,7 +2605,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION
     void socket_update_spot_location (uint32 x, uint32 y, uint32 top_y) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_spot_location ()\n";
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "New Spot location x=" << x << " y=" << y << "\n";
         m_signal_update_spot_location ((int)x, (int)y, (int)top_y);
         helper_all_update_spot_location ((int)x, (int)y);
@@ -2613,14 +2613,14 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_UPDATE_CURSOR_POSITION
     void socket_update_cursor_position (uint32 cursor_pos) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_cursor_position ()\n";
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "New cursor position pos=" << cursor_pos << "\n";
         helper_all_update_cursor_position ((int)cursor_pos);
     }
     //ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT
     void socket_update_surrounding_text (String text, uint32 cursor) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
         if (it != m_helper_client_index.end ()) {
@@ -2637,7 +2637,7 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_UPDATE_SELECTION
     void socket_update_selection (String text) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << "...\n";
-        LOGD ("");
+        LOGI ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
         if (it != m_helper_client_index.end ()) {
@@ -2654,7 +2654,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_PANEL_UPDATE_FACTORY_INFO
     void socket_update_factory_info (PanelFactoryInfo& info) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_factory_info ()\n";
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "New Factory info uuid=" << info.uuid << " name=" << info.name << "\n";
         info.lang = scim_get_normalized_language (info.lang);
         m_signal_update_factory_info (info);
@@ -2662,13 +2662,13 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_PANEL_SHOW_HELP
     void socket_show_help (String help) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_show_help ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_show_help (help);
     }
     //SCIM_TRANS_CMD_PANEL_SHOW_FACTORY_MENU
     void socket_show_factory_menu (std::vector <PanelFactoryInfo>& vec) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_show_factory_menu ()\n";
-        LOGD ("");
+        LOGI ("");
 
         if (vec.size ())
             m_signal_show_factory_menu (vec);
@@ -2677,75 +2677,75 @@ client context helpers: %d, helpers uuid count: %d",
 
     //SCIM_TRANS_CMD_SHOW_PREEDIT_STRING
     void socket_show_preedit_string (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_show_preedit_string ()\n";
         m_signal_show_preedit_string ();
     }
     //SCIM_TRANS_CMD_SHOW_AUX_STRING
     void socket_show_aux_string (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_show_aux_string ()\n";
         m_signal_show_aux_string ();
     }
     //SCIM_TRANS_CMD_SHOW_LOOKUP_TABLE
     void socket_show_lookup_table (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_show_lookup_table ()\n";
         m_signal_show_lookup_table ();
     }
     //ISM_TRANS_CMD_SHOW_ASSOCIATE_TABLE
     void socket_show_associate_table (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_show_associate_table ()\n";
         m_signal_show_associate_table ();
     }
     //SCIM_TRANS_CMD_HIDE_PREEDIT_STRING
     void socket_hide_preedit_string (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_hide_preedit_string ()\n";
         m_signal_hide_preedit_string ();
     }
     //SCIM_TRANS_CMD_HIDE_AUX_STRING
     void socket_hide_aux_string (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_hide_aux_string ()\n";
         m_signal_hide_aux_string ();
     }
     //SCIM_TRANS_CMD_HIDE_LOOKUP_TABLE
     void socket_hide_lookup_table (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_hide_lookup_table ()\n";
         m_signal_hide_lookup_table ();
     }
     //ISM_TRANS_CMD_HIDE_ASSOCIATE_TABLE
     void socket_hide_associate_table (void) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_hide_associate_table ()\n";
         m_signal_hide_associate_table ();
     }
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING
     void socket_update_preedit_string (String& str, const AttributeList& attrs, uint32 caret) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_preedit_string ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_preedit_string (str, attrs, (int) caret);
     }
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET
     void socket_update_preedit_caret (uint32 caret) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_preedit_caret ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_preedit_caret ((int) caret);
     }
     //SCIM_TRANS_CMD_UPDATE_AUX_STRING
     void socket_update_aux_string (String& str, const AttributeList& attrs) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_aux_string ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_aux_string (str, attrs);
         m_is_imengine_aux = true;
     }
     //SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE
     void socket_update_lookup_table (const LookupTable& table) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_lookup_table ()\n";
-        LOGD ("");
+        LOGI ("");
         //FIXME:
         //g_isf_candidate_table = _isf_candidate_table;
         m_signal_update_lookup_table (table);
@@ -2754,7 +2754,7 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE
     void socket_update_associate_table (const LookupTable& table) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_associate_table ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_associate_table (table);
     }
 
@@ -2774,19 +2774,19 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_REGISTER_PROPERTIES
     void socket_register_properties (const PropertyList& properties) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_register_properties ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_register_properties (properties);
     }
     //SCIM_TRANS_CMD_UPDATE_PROPERTY
     void socket_update_property (const Property& property) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_update_property ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_property (property);
     }
     //ISM_TRANS_CMD_GET_KEYBOARD_ISE_LIST
     void socket_get_keyboard_ise_list (String& uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_get_keyboard_ise_list ()\n";
-        LOGD ("");
+        LOGI ("");
         std::vector<String> list;
         list.clear ();
         m_signal_get_keyboard_ise_list (list);
@@ -2803,12 +2803,12 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_SET_CANDIDATE_UI
     void socket_set_candidate_ui (uint32 portrait_line, uint32 mode) {
         SCIM_DEBUG_MAIN (4) << __func__ << " \n";
-        LOGD ("");
+        LOGI ("");
         m_signal_set_candidate_ui (portrait_line, mode);
     }
     //ISM_TRANS_CMD_GET_CANDIDATE_UI
     void socket_get_candidate_ui (String uuid) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_get_candidate_ui ()\n";
         int style = 0, mode = 0;
         m_signal_get_candidate_ui (style, mode);
@@ -2824,14 +2824,14 @@ client context helpers: %d, helpers uuid count: %d",
     }
     //ISM_TRANS_CMD_SET_CANDIDATE_POSITION
     void socket_set_candidate_position (uint32 left, uint32 top) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_set_candidate_position ()\n";
         m_signal_set_candidate_position (left, top);
     }
     //ISM_TRANS_CMD_HIDE_CANDIDATE
     void socket_hide_candidate (void) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_hide_candidate ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_hide_preedit_string ();
         m_signal_hide_aux_string ();
         m_signal_hide_lookup_table ();
@@ -2839,7 +2839,7 @@ client context helpers: %d, helpers uuid count: %d",
     }
     //ISM_TRANS_CMD_GET_CANDIDATE_GEOMETRY
     void socket_get_candidate_geometry (String& uuid) {
-        LOGD ("");
+        LOGI ("");
         SCIM_DEBUG_MAIN (4) << __func__ << " \n";
         HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
 
@@ -2856,19 +2856,19 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_SET_KEYBOARD_ISE_BY_UUID
     void socket_set_keyboard_ise (String uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_set_keyboard_ise ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_set_keyboard_ise (uuid);
     }
     //ISM_TRANS_CMD_SELECT_CANDIDATE
     void socket_helper_select_candidate (uint32 index) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_set_keyboard_ise ()\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_select_candidate (index);
     }
     //ISM_TRANS_CMD_UPDATE_ISE_GEOMETRY
     void socket_helper_update_ise_geometry (int client, uint32 x, uint32 y, uint32 width, uint32 height) {
         SCIM_DEBUG_MAIN (4) << __func__ << "\n";
-        LOGD ("");
+        LOGI ("");
         HelperInfoRepository::iterator it = m_helper_active_info_repository.find (client);
 
         if (it != m_helper_active_info_repository.end ()) {
@@ -2879,7 +2879,7 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_GET_KEYBOARD_ISE
     void socket_get_keyboard_ise (String uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_get_keyboard_ise ()\n";
-        LOGD ("");
+        LOGI ("");
         String ise_name, ise_uuid;
         int    client  = -1;
         uint32 context = 0;
@@ -2903,7 +2903,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_START_HELPER
     void socket_start_helper (int client_id, uint32 context, String uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_start_helper ()\n";
-        LOGD ("");
+        LOGI ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
         lock ();
         uint32 ic = get_helper_ic (m_panel_client_map[client_id], context);
@@ -2937,7 +2937,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_STOP_HELPER
     void socket_stop_helper (int client_id, uint32 context, String uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_stop_helper ()\n";
-        LOGD ("");
+        LOGI ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
         lock ();
         uint32 ic = get_helper_ic (m_panel_client_map[client_id], context);
@@ -2971,7 +2971,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_SEND_HELPER_EVENT
     void socket_send_helper_event (int client_id, uint32 context, String uuid, const Transaction& _nest_trans) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_send_helper_event ()\n";
-        LOGD ("");
+        LOGI ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (uuid);
 
         if (it != m_helper_client_index.end ()) {
@@ -2997,7 +2997,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_REGISTER_PROPERTIES
     void socket_helper_register_properties (int client, PropertyList& properties) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_register_properties (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_register_helper_properties (client, properties);
 
 #if 0 //why? remove if useless, infinite loop
@@ -3031,13 +3031,13 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_UPDATE_PROPERTY
     void socket_helper_update_property (int client, Property& property) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_update_property (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_helper_property (client, property);
     }
     //SCIM_TRANS_CMD_PANEL_SEND_IMENGINE_EVENT
     void socket_helper_send_imengine_event (int client, uint32 target_ic, String target_uuid , Transaction& nest_trans) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_send_imengine_event (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         HelperInfoRepository::iterator hiit = m_helper_active_info_repository.find (client);
 
         if (hiit != m_helper_active_info_repository.end ()) {
@@ -3101,20 +3101,20 @@ client context helpers: %d, helpers uuid count: %d",
     void socket_helper_send_key_event (int client, uint32 target_ic, String target_uuid, KeyEvent key) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_send_key_event (" << client << ")\n";
         ISF_PROF_DEBUG ("first message")
-        LOGD ("");
+        LOGI ("");
         socket_helper_key_event_op (client, SCIM_TRANS_CMD_PROCESS_KEY_EVENT, target_ic, target_uuid, key);
     }
     //SCIM_TRANS_CMD_FORWARD_KEY_EVENT
     void socket_helper_forward_key_event (int client, uint32 target_ic, String target_uuid, KeyEvent key) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_forward_key_event (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         socket_helper_key_event_op (client, SCIM_TRANS_CMD_FORWARD_KEY_EVENT, target_ic, target_uuid, key);
     }
 
     //SCIM_TRANS_CMD_COMMIT_STRING
     void socket_helper_commit_string (int client, uint32 target_ic, String target_uuid, WideString wstr) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_commit_string (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
 
         if (wstr.length ()) {
             int     target_client;
@@ -3149,7 +3149,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_GET_SURROUNDING_TEXT
     void socket_helper_get_surrounding_text (int client, String uuid, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     focused_client;
         uint32  focused_context;
         String  focused_uuid = get_focused_context (focused_client, focused_context);
@@ -3162,7 +3162,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_DELETE_SURROUNDING_TEXT
     void socket_helper_delete_surrounding_text (int client, uint32 offset, uint32 len) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     focused_client;
         uint32  focused_context;
         String  focused_uuid = get_focused_context (focused_client, focused_context);
@@ -3175,7 +3175,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_GET_SELECTION
     void socket_helper_get_selection (int client, String uuid, const int fd) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     focused_client;
         uint32  focused_context;
         String  focused_uuid = get_focused_context (focused_client, focused_context);
@@ -3188,7 +3188,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_SET_SELECTION
     void socket_helper_set_selection (int client, uint32 start, uint32 end) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     focused_client;
         uint32  focused_context;
         String  focused_uuid = get_focused_context (focused_client, focused_context);
@@ -3202,7 +3202,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_SHOW_PREEDIT_STRING
     void socket_helper_show_preedit_string (int client, uint32 target_ic, String target_uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_show_preedit_string (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     target_client;
         uint32  target_context;
         get_imengine_client_context (target_ic, target_client, target_context);
@@ -3231,7 +3231,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_HIDE_PREEDIT_STRING
     void socket_helper_hide_preedit_string (int client, uint32 target_ic, String target_uuid) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_hide_preedit_string (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     target_client;
         uint32  target_context;
         get_imengine_client_context (target_ic, target_client, target_context);
@@ -3260,7 +3260,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING
     void socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString wstr, AttributeList& attrs, uint32 caret) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_update_preedit_string (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     target_client;
         uint32  target_context;
         get_imengine_client_context (target_ic, target_client, target_context);
@@ -3290,7 +3290,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET
     void socket_helper_update_preedit_caret (int client, uint32 caret) {
         SCIM_DEBUG_MAIN (4) << __func__ << " (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     focused_client;
         uint32  focused_context;
         String  focused_uuid;
@@ -3307,7 +3307,7 @@ client context helpers: %d, helpers uuid count: %d",
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_register_helper (" << client << ")\n";
         bool result = false;
         lock ();
-        LOGD ("");
+        LOGI ("");
 
         if (info.uuid.length ()) {
             SCIM_DEBUG_MAIN (4) << "New Helper uuid=" << info.uuid << " name=" << info.name << "\n";
@@ -3336,7 +3336,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_PANEL_REGISTER_ACTIVE_HELPER
     void socket_helper_register_helper_passive (int client, HelperInfo& info) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_register_helper_passive (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         lock ();
 
         if (info.uuid.length ()) {
@@ -3365,7 +3365,7 @@ client context helpers: %d, helpers uuid count: %d",
     //ISM_TRANS_CMD_UPDATE_ISE_INPUT_CONTEXT
     void socket_helper_update_input_context (int client, uint32 type, uint32 value) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_update_input_context (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         m_signal_update_input_context ((int)type, (int)value);
         int    focused_client;
         uint32 focused_context;
@@ -3381,7 +3381,7 @@ client context helpers: %d, helpers uuid count: %d",
     //SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND
     void socket_helper_send_private_command (int client, String command) {
         SCIM_DEBUG_MAIN (4) << __FUNCTION__ << " (" << client << ")\n";
-        LOGD ("");
+        LOGI ("");
         int     focused_client;
         uint32  focused_context;
         String  focused_uuid = get_focused_context (focused_client, focused_context);
@@ -3393,7 +3393,7 @@ client context helpers: %d, helpers uuid count: %d",
     }
     //ISM_TRANS_CMD_UPDATE_ISE_EXIT
     //void UPDATE_ISE_EXIT (int client) {
-    //    LOGD ("");
+    //    LOGI ("");
     //    HelperInfoRepository::iterator hiit = m_helper_active_info_repository.find (client);
 
     //    if (hiit != m_helper_active_info_repository.end ()) {

@@ -503,7 +503,7 @@ SocketConfig::write (const String& key, const std::vector <int>& value)
 bool
 SocketConfig::flush ()
 {
-    LOGD ("");
+    LOGI ("");
     if (!valid ()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -529,7 +529,7 @@ SocketConfig::flush ()
 bool
 SocketConfig::erase (const String& key)
 {
-    LOGD ("");
+    LOGI ("");
     if (!valid ()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -554,7 +554,7 @@ SocketConfig::erase (const String& key)
 bool
 SocketConfig::reload ()
 {
-    LOGD ("");
+    LOGI ("");
     if (!valid ()) return false;
     if (!m_connected && !open_connection ()) return false;
 
@@ -639,7 +639,7 @@ SocketConfig::open_connection () const
         return false;
     }
 
-    LOGD (" Connect to SocketServer (%s).\n", m_socket_address.c_str ());
+    LOGI (" Connect to SocketServer (%s).\n", m_socket_address.c_str ());
     m_connected = true;
     gettimeofday (&m_update_timestamp, 0);
     return true;

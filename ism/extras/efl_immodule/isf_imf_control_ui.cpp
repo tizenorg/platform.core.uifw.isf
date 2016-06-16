@@ -86,7 +86,7 @@ Ecore_IMF_Context *get_using_ic (Ecore_IMF_Input_Panel_Event type, int value) {
 
 static void _render_post_cb (void *data, Evas *e, void *event_info)
 {
-    LOGD ("[_render_post_cb], conformant_reset_done = 1\n");
+    LOGI ("[_render_post_cb], conformant_reset_done = 1\n");
     evas_event_callback_del_full (e, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
     conformant_reset_done = EINA_TRUE;
     isf_imf_context_input_panel_send_will_hide_ack (get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW));
@@ -94,7 +94,7 @@ static void _render_post_cb (void *data, Evas *e, void *event_info)
 
 static void _candidate_render_post_cb (void *data, Evas *e, void *event_info)
 {
-    LOGD ("[%s], candidate_conformant_reset_done = 1\n", __func__);
+    LOGI ("[%s], candidate_conformant_reset_done = 1\n", __func__);
     evas_event_callback_del_full (e, EVAS_CALLBACK_RENDER_POST, _candidate_render_post_cb, NULL);
     candidate_conformant_reset_done = EINA_TRUE;
     isf_imf_context_input_panel_send_candidate_will_hide_ack (get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW));
@@ -157,24 +157,24 @@ static Eina_Bool _prop_change (void *data, int ev_type, void *ev)
                 sx = sy = sw = sh = 0;
 
             if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) {
-                LOGD ("conformant_reset_done = 0, candidate_conformant_reset_done = 0, registering _render_post_cb\n");
+                LOGI ("conformant_reset_done = 0, candidate_conformant_reset_done = 0, registering _render_post_cb\n");
                 conformant_reset_done = EINA_FALSE;
                 candidate_conformant_reset_done = EINA_FALSE;
                 if (active_context_canvas && _conformant_get ()) {
                     evas_event_callback_add (active_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, NULL);
                 }
 
-                LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+                LOGI ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
             }
             else if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) {
-                LOGD ("conformant_reset_done = 0, candidate_conformant_reset_done = 0, registering _candidate_render_post_cb\n");
+                LOGI ("conformant_reset_done = 0, candidate_conformant_reset_done = 0, registering _candidate_render_post_cb\n");
                 conformant_reset_done = EINA_FALSE;
                 candidate_conformant_reset_done = EINA_FALSE;
                 _clear_will_show_timer ();
                 if (active_context_canvas && _conformant_get ()) {
                     evas_event_callback_add (active_context_canvas, EVAS_CALLBACK_RENDER_POST, _candidate_render_post_cb, NULL);
                 }
-                LOGD ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_ON] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
+                LOGI ("[ECORE_X_VIRTUAL_KEYBOARD_STATE_ON] geometry x : %d, y : %d, w : %d, h : %d\n", sx, sy, sw, sh);
             }
         }
     } else {
@@ -243,7 +243,7 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
         case ECORE_IMF_INPUT_PANEL_STATE_EVENT:
             switch (value) {
                 case ECORE_IMF_INPUT_PANEL_STATE_HIDE:
-                    SECURE_LOGD ("[input panel has been hidden] ctx : %p\n", using_ic);
+                    SECURE_LOGI ("[input panel has been hidden] ctx : %p\n", using_ic);
                     if (hide_req_ic == show_req_ic)
                         show_req_ic = NULL;
 
@@ -251,10 +251,10 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
                     will_hide = EINA_FALSE;
                     break;
                 case ECORE_IMF_INPUT_PANEL_STATE_SHOW:
-                    SECURE_LOGD ("[input panel has been shown] ctx : %p\n", using_ic);
+                    SECURE_LOGI ("[input panel has been shown] ctx : %p\n", using_ic);
                     break;
                 case ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW:
-                    SECURE_LOGD ("[input panel will be shown] ctx : %p\n", using_ic);
+                    SECURE_LOGI ("[input panel will be shown] ctx : %p\n", using_ic);
                     break;
                 default:
                     break;
@@ -262,22 +262,22 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
             notified_state = (Ecore_IMF_Input_Panel_State)value;
             break;
         case ECORE_IMF_INPUT_PANEL_LANGUAGE_EVENT:
-            SECURE_LOGD ("[language is changed] ctx : %p\n", using_ic);
+            SECURE_LOGI ("[language is changed] ctx : %p\n", using_ic);
             break;
         case ECORE_IMF_INPUT_PANEL_SHIFT_MODE_EVENT:
-            SECURE_LOGD ("[shift mode is changed] ctx : %p\n", using_ic);
+            SECURE_LOGI ("[shift mode is changed] ctx : %p\n", using_ic);
             break;
         case ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT:
-            SECURE_LOGD ("[input panel geometry is changed] ctx : %p\n", using_ic);
+            SECURE_LOGI ("[input panel geometry is changed] ctx : %p\n", using_ic);
             break;
         case ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT:
-            SECURE_LOGD ("[candidate state is changed] ctx : %p, %d\n", using_ic, value);
+            SECURE_LOGI ("[candidate state is changed] ctx : %p, %d\n", using_ic, value);
             break;
         case ECORE_IMF_CANDIDATE_PANEL_GEOMETRY_EVENT:
-            SECURE_LOGD ("[candidate geometry is changed] ctx : %p\n", using_ic);
+            SECURE_LOGI ("[candidate geometry is changed] ctx : %p\n", using_ic);
             break;
         case ECORE_IMF_INPUT_PANEL_KEYBOARD_MODE_EVENT:
-            SECURE_LOGD ("[keyboard mode is changed] ctx : %p, mode(0:S/W, 1:H/W): %d \n", using_ic, value);
+            SECURE_LOGI ("[keyboard mode is changed] ctx : %p, mode(0:S/W, 1:H/W): %d \n", using_ic, value);
             break;
         default:
             break;
@@ -289,14 +289,14 @@ static void _event_callback_call (Ecore_IMF_Input_Panel_Event type, int value)
     if (type == ECORE_IMF_CANDIDATE_PANEL_STATE_EVENT) {
         if (value == ECORE_IMF_CANDIDATE_PANEL_HIDE) {
             if (notified_state != ECORE_IMF_INPUT_PANEL_STATE_HIDE) {
-                SECURE_LOGD ("received_candidate_will_hide_event = 1\n");
+                SECURE_LOGI ("received_candidate_will_hide_event = 1\n");
                 received_candidate_will_hide_event = TRUE;
                 isf_imf_context_input_panel_send_candidate_will_hide_ack (using_ic);
             } else {
-                SECURE_LOGD ("received_candidate_will_hide_event != 1, due to notified_state\n");
+                SECURE_LOGI ("received_candidate_will_hide_event != 1, due to notified_state\n");
             }
         } else if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-            SECURE_LOGD ("received_candidate_will_hide_event = 0\n");
+            SECURE_LOGI ("received_candidate_will_hide_event = 0\n");
             received_candidate_will_hide_event = EINA_FALSE;
         }
     }
@@ -334,7 +334,7 @@ static void _send_input_panel_hide_request ()
 
     _win_focus_out_handler_del ();
 
-    SECURE_LOGD ("Send input panel hide request\n");
+    SECURE_LOGI ("Send input panel hide request\n");
 
     _isf_imf_context_input_panel_hide (get_panel_client_id (), hide_context_id);
     hide_context_id = -1;
@@ -350,7 +350,7 @@ static Eina_Bool _hide_timer_handler (void *data)
 
 static Eina_Bool _will_show_timer_handler (void *data)
 {
-    SECURE_LOGD ("reset input panel state as HIDE\n");
+    SECURE_LOGI ("reset input panel state as HIDE\n");
 
     input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
     will_show_timer = NULL;
@@ -404,7 +404,7 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
     Ecore_X_Window focus_out_win = e->win;
     Ecore_X_Window focus_in_win = ecore_x_window_focus_get ();
 
-    LOGD ("ctx : %p, client_window : %#x, focus-out win : %#x, focus-in win : %#x\n", ctx, client_win, focus_out_win, focus_in_win);
+    LOGI ("ctx : %p, client_window : %#x, focus-out win : %#x, focus-in win : %#x\n", ctx, client_win, focus_out_win, focus_in_win);
 
     if (check_focus_out_by_popup_win (ctx))
         return ECORE_CALLBACK_PASS_ON;
@@ -437,18 +437,18 @@ Eina_Bool check_focus_out_by_popup_win (Ecore_IMF_Context *ctx)
     if (!ecore_x_netwm_window_type_get (focus_win, &win_type))
         return EINA_FALSE;
 
-    LOGD ("win type : %d\n", win_type);
+    LOGI ("win type : %d\n", win_type);
 
     if (win_type == ECORE_X_WINDOW_TYPE_POPUP_MENU ||
         win_type == ECORE_X_WINDOW_TYPE_NOTIFICATION) {
-        LOGD ("client window : %#x, focus window : %#x\n", client_win, focus_win);
+        LOGI ("client window : %#x, focus window : %#x\n", client_win, focus_win);
 
         if (client_win != focus_win) {
             ret = EINA_TRUE;
             ecore_x_icccm_name_class_get (focus_win, NULL, &class_name);
 
             if (class_name) {
-                LOGD ("window class name : %s\n", class_name);
+                LOGI ("window class name : %s\n", class_name);
                 for (unsigned int i = 0; i < lock_screen_class_names.size (); ++i) {
                     if (!strcmp (class_name, lock_screen_class_names [i].c_str ())) {
                         ret = EINA_FALSE;
@@ -508,7 +508,7 @@ void isf_imf_input_panel_init (void)
             kbd_mode = TOOLBAR_HELPER_MODE;
         }
     }
-    LOGD ("keyboard mode(0:H/W Keyboard, 1:S/W Keyboard): %d\n", kbd_mode);
+    LOGI ("keyboard mode(0:H/W Keyboard, 1:S/W Keyboard): %d\n", kbd_mode);
 }
 
 void isf_imf_input_panel_shutdown (void)
@@ -520,11 +520,11 @@ void isf_imf_input_panel_shutdown (void)
             _send_input_panel_hide_request ();
         }
         else
-            LOGD ("No hide timer\n");
+            LOGI ("No hide timer\n");
     }
 
     candidate_conformant_reset_done = TRUE;
-    SECURE_LOGD ("candidate_conformant_reset_done = 1\n");
+    SECURE_LOGI ("candidate_conformant_reset_done = 1\n");
 
     Ecore_IMF_Context *active_ctx = get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
     if (active_ctx) {
@@ -555,7 +555,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
     save_current_xid (ctx);
 
     if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-        LOGD ("H/W keyboard is existed.\n");
+        LOGI ("H/W keyboard is existed.\n");
         return;
     }
 
@@ -602,7 +602,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
         Ecore_IMF_Input_Panel_State state = ecore_imf_context_input_panel_state_get (ctx);
         if (state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
             state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-            LOGD ("already show\n");
+            LOGI ("already show\n");
             return;
         }
     }
@@ -634,12 +634,12 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
     iseContext.bidi_direction = ecore_imf_context_bidi_direction_get (ctx);
 
-    SECURE_LOGD ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
-    SECURE_LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
-    SECURE_LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
-    SECURE_LOGD ("client_window : %#x, password mode : %d, prediction_allow : %d\n", iseContext.client_window, iseContext.password_mode, iseContext.prediction_allow);
-    SECURE_LOGD ("input hint : %#x\n", iseContext.input_hint);
-    SECURE_LOGD ("bidi direction : %d\n", iseContext.bidi_direction);
+    SECURE_LOGI ("ctx : %p, layout : %d, layout variation : %d\n", ctx, iseContext.layout, iseContext.layout_variation);
+    SECURE_LOGI ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
+    SECURE_LOGI ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
+    SECURE_LOGI ("client_window : %#x, password mode : %d, prediction_allow : %d\n", iseContext.client_window, iseContext.password_mode, iseContext.prediction_allow);
+    SECURE_LOGI ("input hint : %#x\n", iseContext.input_hint);
+    SECURE_LOGI ("bidi direction : %d\n", iseContext.bidi_direction);
 
     if (iseContext.client_window != ecore_x_window_focus_get ()) {
         LOGW ("Client window is different from focus window. client win : %#x, focus win : %#x\n", iseContext.client_window, ecore_x_window_focus_get ());
@@ -679,7 +679,7 @@ void isf_imf_context_input_panel_show (Ecore_IMF_Context* ctx)
 
 void isf_imf_context_input_panel_hide (Ecore_IMF_Context *ctx)
 {
-    SECURE_LOGD ("ctx : %p\n", ctx);
+    SECURE_LOGI ("ctx : %p\n", ctx);
 
     _input_panel_hide (ctx, EINA_FALSE);
 }
@@ -694,7 +694,7 @@ void isf_imf_context_input_panel_language_set (Ecore_IMF_Context *ctx, Ecore_IMF
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (context_scim == get_focused_ic ()) {
-        SECURE_LOGD ("language mode : %d\n", language);
+        SECURE_LOGI ("language mode : %d\n", language);
         _isf_imf_context_input_panel_language_set (_get_context_id (ctx), language);
     }
 }
@@ -707,7 +707,7 @@ void isf_imf_context_input_panel_language_locale_get (Ecore_IMF_Context *ctx, ch
 
 void isf_imf_context_input_panel_caps_mode_set (Ecore_IMF_Context *ctx, unsigned int mode)
 {
-    SECURE_LOGD ("ctx : %p, mode : %d\n", ctx, mode);
+    SECURE_LOGI ("ctx : %p, mode : %d\n", ctx, mode);
     _isf_imf_context_input_panel_caps_mode_set (_get_context_id (ctx), mode);
 }
 
@@ -760,7 +760,7 @@ void isf_imf_context_input_panel_geometry_get (Ecore_IMF_Context *ctx, int *x, i
 {
     _isf_imf_context_input_panel_geometry_get (_get_context_id (ctx), x, y, w, h);
 
-    SECURE_LOGD ("ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
+    SECURE_LOGI ("ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
 }
 
 /**
@@ -774,7 +774,7 @@ void isf_imf_context_input_panel_return_key_type_set (Ecore_IMF_Context *ctx, Ec
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (context_scim == get_focused_ic ()) {
-        SECURE_LOGD ("Return key type : %d\n", type);
+        SECURE_LOGI ("Return key type : %d\n", type);
         _isf_imf_context_input_panel_return_key_type_set (_get_context_id (ctx), type);
     }
 }
@@ -808,7 +808,7 @@ void isf_imf_context_input_panel_return_key_disabled_set (Ecore_IMF_Context *ctx
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (context_scim == get_focused_ic ()) {
-        SECURE_LOGD ("Return key disabled : %d\n", disabled);
+        SECURE_LOGI ("Return key disabled : %d\n", disabled);
         _isf_imf_context_input_panel_return_key_disabled_set (_get_context_id (ctx), disabled);
     }
 }
@@ -843,7 +843,7 @@ isf_imf_context_input_panel_layout_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (context_scim == get_focused_ic ()) {
-        SECURE_LOGD ("layout type : %d\n", layout);
+        SECURE_LOGI ("layout type : %d\n", layout);
         _isf_imf_context_input_panel_layout_set (_get_context_id (ctx), layout);
         imengine_layout_set (ctx, layout);
     }
@@ -875,7 +875,7 @@ Ecore_IMF_Input_Panel_State isf_imf_context_input_panel_state_get (Ecore_IMF_Con
 {
     Ecore_IMF_Input_Panel_State state;
     _isf_imf_context_input_panel_state_get (_get_context_id (ctx), state);
-    LOGD ("    state:%d\n", state);
+    LOGI ("    state:%d\n", state);
     return state;
 }
 
@@ -907,7 +907,7 @@ void isf_imf_context_candidate_window_geometry_get (Ecore_IMF_Context *ctx, int 
 {
     _isf_imf_context_candidate_window_geometry_get (_get_context_id (ctx), x, y, w, h);
 
-    SECURE_LOGD ("ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
+    SECURE_LOGI ("ctx : %p, x : %d, y : %d, w : %d, h : %d\n", ctx, *x, *y, *w, *h);
 }
 
 void isf_imf_context_input_panel_send_will_show_ack (Ecore_IMF_Context *ctx)
@@ -919,12 +919,12 @@ void isf_imf_context_input_panel_send_will_hide_ack (Ecore_IMF_Context *ctx)
 {
     if (_conformant_get ()) {
         if (conformant_reset_done && received_will_hide_event) {
-            LOGD ("Send will hide ack, conformant_reset_done = 0, received_will_hide_event = 0\n");
+            LOGI ("Send will hide ack, conformant_reset_done = 0, received_will_hide_event = 0\n");
             _isf_imf_context_input_panel_send_will_hide_ack (_get_context_id (ctx));
             conformant_reset_done = EINA_FALSE;
             received_will_hide_event = EINA_FALSE;
         } else {
-            LOGD ("conformant_reset_done=%d, received_will_hide_event=%d\n",
+            LOGI ("conformant_reset_done=%d, received_will_hide_event=%d\n",
                 conformant_reset_done, received_will_hide_event);
         }
     } else {
@@ -938,7 +938,7 @@ void isf_imf_context_set_keyboard_mode (Ecore_IMF_Context *ctx, TOOLBAR_MODE_T m
 
     if (_support_hw_keyboard_mode) {
         kbd_mode = mode;
-        SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
+        SECURE_LOGI ("keyboard mode : %d\n", kbd_mode);
         will_hide = EINA_TRUE;
         hide_req_ic = ctx;
         _isf_imf_context_set_keyboard_mode (_get_context_id (ctx), mode);
@@ -949,13 +949,13 @@ void isf_imf_context_input_panel_send_candidate_will_hide_ack (Ecore_IMF_Context
 {
     if (_conformant_get ()) {
         if (candidate_conformant_reset_done && received_candidate_will_hide_event) {
-            LOGD ("Send candidate will hide ack, cand_conf_reset_done = 0, recv_cand_will_hide = 0\n");
+            LOGI ("Send candidate will hide ack, cand_conf_reset_done = 0, recv_cand_will_hide = 0\n");
             _isf_imf_context_input_panel_send_candidate_will_hide_ack (_get_context_id (ctx));
             candidate_conformant_reset_done = EINA_FALSE;
             received_candidate_will_hide_event = EINA_FALSE;
         }
         else {
-            LOGD ("isf_imf_context_input_panel_send_will_hide_ack, cand_conf_reset_done=%d recv_cand_will_hide=%d\n",
+            LOGI ("isf_imf_context_input_panel_send_will_hide_ack, cand_conf_reset_done=%d recv_cand_will_hide=%d\n",
                 candidate_conformant_reset_done, received_candidate_will_hide_event);
         }
     } else {
@@ -968,7 +968,7 @@ void isf_imf_context_input_panel_input_mode_set (Ecore_IMF_Context *ctx, Ecore_I
     EcoreIMFContextISF *context_scim = (EcoreIMFContextISF *)ecore_imf_context_data_get (ctx);
 
     if (context_scim == get_focused_ic ()) {
-        SECURE_LOGD ("input mode : %d\n", input_mode);
+        SECURE_LOGI ("input mode : %d\n", input_mode);
         _isf_imf_context_input_panel_input_mode_set (_get_context_id (ctx), input_mode);
     }
 }
@@ -986,7 +986,7 @@ static bool _process_ise_panel_showed (void)
     _event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_SHOW);
 
     received_will_hide_event = EINA_FALSE;
-    LOGD ("received_will_hide_event = 0\n");
+    LOGI ("received_will_hide_event = 0\n");
 
     return true;
 }
@@ -1006,7 +1006,7 @@ static bool _process_ise_panel_hided (void)
     _event_callback_call (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE);
 
     received_will_hide_event = EINA_TRUE;
-    LOGD ("received_will_hide_event = 1\n");
+    LOGI ("received_will_hide_event = 1\n");
     isf_imf_context_input_panel_send_will_hide_ack (get_using_ic (ECORE_IMF_INPUT_PANEL_STATE_EVENT, ECORE_IMF_INPUT_PANEL_STATE_HIDE));
 
     return true;

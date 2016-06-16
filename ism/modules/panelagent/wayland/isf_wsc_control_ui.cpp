@@ -156,12 +156,12 @@ void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
     /* FIXME */
     iseContext.bidi_direction = ECORE_IMF_BIDI_DIRECTION_NEUTRAL;
 
-    LOGD ("ctx : %p, layout : %d, layout variation : %d\n", wsc_ctx, iseContext.layout, iseContext.layout_variation);
-    LOGD ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
-    LOGD ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
-    LOGD ("password mode : %d, prediction_allow : %d\n", iseContext.password_mode, iseContext.prediction_allow);
-    LOGD ("input hint : %#x\n", iseContext.input_hint);
-    LOGD ("bidi direction : %d\n", iseContext.bidi_direction);
+    LOGI ("ctx : %p, layout : %d, layout variation : %d\n", wsc_ctx, iseContext.layout, iseContext.layout_variation);
+    LOGI ("language : %d, cursor position : %d, caps mode : %d\n", iseContext.language, iseContext.cursor_pos, iseContext.caps_mode);
+    LOGI ("return_key_type : %d, return_key_disabled : %d, autocapital type : %d\n", iseContext.return_key_type, iseContext.return_key_disabled, iseContext.autocapital_type);
+    LOGI ("password mode : %d, prediction_allow : %d\n", iseContext.password_mode, iseContext.prediction_allow);
+    LOGI ("input hint : %#x\n", iseContext.input_hint);
+    LOGI ("bidi direction : %d\n", iseContext.bidi_direction);
 
     /* calculate packet size */
     length = sizeof (iseContext);
@@ -204,7 +204,7 @@ void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, TOOLBAR_MODE_T mode)
 
     if (_support_hw_keyboard_mode) {
         kbd_mode = mode;
-        SECURE_LOGD ("keyboard mode : %d\n", kbd_mode);
+        SECURE_LOGI ("keyboard mode : %d\n", kbd_mode);
         _isf_wsc_context_set_keyboard_mode (_get_context_id (ctx), mode);
     }
 }
@@ -215,7 +215,7 @@ isf_wsc_context_input_panel_layout_set (WSCContextISF *ctx, Ecore_IMF_Input_Pane
     WSCContextISF *context_scim = ctx;
 
     if (context_scim == get_focused_ic ()) {
-        LOGD ("layout type : %d\n", layout);
+        LOGI ("layout type : %d\n", layout);
         _isf_wsc_context_input_panel_layout_set (_get_context_id (ctx), layout);
     }
 }
@@ -230,7 +230,7 @@ Ecore_IMF_Input_Panel_Layout isf_wsc_context_input_panel_layout_get (WSCContextI
 
 void isf_wsc_context_input_panel_caps_mode_set (WSCContextISF *ctx, unsigned int mode)
 {
-    LOGD ("ctx : %p, mode : %d\n", ctx, mode);
+    LOGI ("ctx : %p, mode : %d\n", ctx, mode);
     _isf_wsc_context_input_panel_caps_mode_set (_get_context_id (ctx), mode);
 }
 
@@ -247,20 +247,20 @@ void isf_wsc_context_input_panel_language_set (WSCContextISF *ctx, Ecore_IMF_Inp
     WSCContextISF *context_scim = ctx;
 
     if (context_scim == get_focused_ic ()) {
-        LOGD ("language mode : %d\n", language);
+        LOGI ("language mode : %d\n", language);
         _isf_wsc_context_input_panel_language_set (_get_context_id (ctx), language);
     }
 }
 
 void isf_wsc_context_input_panel_return_key_type_set (WSCContextISF *ctx, Ecore_IMF_Input_Panel_Return_Key_Type return_key_type)
 {
-    LOGD ("ctx : %p, return key type : %d\n", ctx, return_key_type);
+    LOGI ("ctx : %p, return key type : %d\n", ctx, return_key_type);
     _isf_wsc_context_input_panel_return_key_type_set (_get_context_id (ctx), return_key_type);
 }
 
 void isf_wsc_context_input_panel_return_key_disabled_set (WSCContextISF *ctx, Eina_Bool disabled)
 {
-    LOGD ("ctx : %p, disabled : %d\n", ctx, disabled);
+    LOGI ("ctx : %p, disabled : %d\n", ctx, disabled);
     _isf_wsc_context_input_panel_return_key_disabled_set (_get_context_id (ctx), disabled);
 }
 

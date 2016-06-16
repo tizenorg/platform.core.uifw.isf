@@ -662,7 +662,7 @@ scim_get_home_dir ()
     if (result && pw.pw_dir) {
         home_dir = pw.pw_dir;
     } else {
-        LOGD ("Fail to getpwuid_r\n");
+        LOGI ("Fail to getpwuid_r\n");
     }
 
     if (!home_dir) {
@@ -1376,12 +1376,12 @@ scim_usleep (unsigned int usec)
 EXAPI void scim_daemon ()
 {
 #if HAVE_DAEMON
-    LOGD ("ppid:%d  calling daemon()\n", getppid ());
+    LOGI ("ppid:%d  calling daemon()\n", getppid ());
 
     if (daemon (0, 0) == -1)
         std::cerr << "Error to make SCIM into a daemon!\n";
 
-    LOGD ("ppid:%d  daemon() called\n", getppid ());
+    LOGI ("ppid:%d  daemon() called\n", getppid ());
 
     return;
 #else
@@ -1438,7 +1438,7 @@ EXAPI void isf_save_log (const char *fmt, ...)
         }
     }
 
-    LOGD ("%s\n", buf);
+    LOGI ("%s\n", buf);
 }
 
 static struct timeval _t0 = {0, 0};

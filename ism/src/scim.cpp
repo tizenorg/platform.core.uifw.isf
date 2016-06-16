@@ -192,7 +192,7 @@ static Eina_Bool handler_client_data (void *data, int ev_type, void *ev)
     Ecore_Ipc_Event_Client_Data *e = (Ecore_Ipc_Event_Client_Data *)ev;
     if (!e) return ECORE_CALLBACK_RENEW;
 
-    LOGD ("client %p sent [%i] [%i] [%i]", e->client, e->major, e->minor, e->size);
+    LOGI ("client %p sent [%i] [%i] [%i]", e->client, e->major, e->minor, e->size);
 
     const char *message = "Done";
     if (ecore_ipc_client_send (e->client, 0, 0, 0, 0, 0, message, strlen (message)) == 0) {
@@ -493,7 +493,7 @@ int main (int argc, char *argv [])
 
     /* Try to start a SocketFrontEnd daemon first. */
     if (socket) {
-        LOGD ("ppid:%d Now socket frontend....", getppid ());
+        LOGI ("ppid:%d Now socket frontend....", getppid ());
 
         /* If no Socket FrontEnd is running, then launch one.
            And set manual to false. */
@@ -535,7 +535,7 @@ int main (int argc, char *argv [])
 
     cerr << "Launching a process with " << def_frontend << " FrontEnd...\n";
 
-    LOGD ("ppid:%d Now default frontend....", getppid ());
+    LOGI ("ppid:%d Now default frontend....", getppid ());
 
     /* Launch the scim process. */
     if (scim_launch (daemon,
@@ -550,13 +550,13 @@ int main (int argc, char *argv [])
 
         gettime (clock_start, "ISM launch time");
 
-        LOGD ("ppid:%d Now checking panel process....", getppid ());
+        LOGI ("ppid:%d Now checking panel process....", getppid ());
 
         /* When finished launching scim-launcher, let's create panel process also, for the default display :0 */
         try {
             if (!check_panel ("")) {
                cerr << "Launching Panel...\n";
-               LOGD ("ppid:%d Launching panel process....%s", getppid (), def_config.c_str ());
+               LOGI ("ppid:%d Launching panel process....%s", getppid (), def_config.c_str ());
 
                scim_launch_panel (true, "socket", "", NULL);
             }

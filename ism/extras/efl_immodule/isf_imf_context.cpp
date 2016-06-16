@@ -464,11 +464,11 @@ _key_down_cb (void *data, int type, void *event)
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
                     return EINA_TRUE;
             }
-            LOGD ("%s key is pressed.\n", ev->keyname);
+            LOGI ("%s key is pressed.\n", ev->keyname);
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 KeyEvent key;
                 scim_string_to_key (key, ev->key);
-                LOGD ("process hide_ise_key_event to handle it in the helper: %s\n", ev->keyname);
+                LOGI ("process hide_ise_key_event to handle it in the helper: %s\n", ev->keyname);
                 void *pvoid = &ret;
                 _panel_client.prepare (ic->id);
                 _panel_client.process_key_event (key, (int*) pvoid);
@@ -511,13 +511,13 @@ _key_up_cb (void *data, int type, void *event)
                 if (ecore_imf_context_input_panel_state_get (active_ctx) == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
                     return EINA_TRUE;
             }
-            LOGD ("%s key is released.\n", ev->keyname);
+            LOGI ("%s key is released.\n", ev->keyname);
             if (_active_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
                 KeyEvent key;
                 scim_string_to_key (key, ev->key);
                 key.mask = SCIM_KEY_ReleaseMask;
                 key.mask &= _valid_key_mask;
-                LOGD ("process hide_ise_key_event to handle it in the helper: %s\n", ev->keyname);
+                LOGI ("process hide_ise_key_event to handle it in the helper: %s\n", ev->keyname);
                 void *pvoid = &ret;
                 _panel_client.prepare (ic->id);
                 _panel_client.process_key_event (key, (int*) pvoid);
@@ -554,7 +554,7 @@ _key_up_cb (void *data, int type, void *event)
                 }
                 _click_timer = ecore_timer_add (0.4, _click_check, NULL);
             } else {
-                LOGD ("Skip toggle key input\n");
+                LOGI ("Skip toggle key input\n");
                 ecore_timer_del (_click_timer);
                 _click_timer = ecore_timer_add (0.4, _click_check, NULL);
             }
@@ -1041,7 +1041,7 @@ _scim_finalize (void)
     if (_scim_initialized) {
         _scim_initialized = false;
 
-        LOGD ("immodule shutdown\n");
+        LOGI ("immodule shutdown\n");
 
         vconf_ignore_key_changed (VCONFKEY_AUTOPERIOD_ALLOW_BOOL, autoperiod_allow_changed_cb);
         vconf_ignore_key_changed (VCONFKEY_AUTOCAPITAL_ALLOW_BOOL, autocapital_allow_changed_cb);
@@ -1175,7 +1175,7 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
         _panel_client.prepare (context_scim->id);
 
         if (input_panel_ctx == ctx && _scim_initialized) {
-            LOGD ("ctx : %p\n", ctx);
+            LOGI ("ctx : %p\n", ctx);
             Ecore_IMF_Input_Panel_State l_input_panel_state = ecore_imf_context_input_panel_state_get (ctx);
             if (l_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
                 l_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
@@ -1331,7 +1331,7 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
 
         //if h/w keyboard mode, keyboard mode will be changed to s/w mode when the entry get the focus.
         if (kbd_mode == TOOLBAR_KEYBOARD_MODE) {
-            LOGD ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
+            LOGI ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
             isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
         }
     }
@@ -1371,16 +1371,16 @@ isf_imf_context_focus_in (Ecore_IMF_Context *ctx)
         context_scim->impl->shift_mode_enabled = 0;
     }
 
-    LOGD ("ctx : %p. on demand : %d\n", ctx, ecore_imf_context_input_panel_show_on_demand_get (ctx));
+    LOGI ("ctx : %p. on demand : %d\n", ctx, ecore_imf_context_input_panel_show_on_demand_get (ctx));
 
     if (ecore_imf_context_input_panel_enabled_get (ctx)) {
         if (!ecore_imf_context_input_panel_show_on_demand_get (ctx))
             ecore_imf_context_input_panel_show (ctx);
         else
-            LOGD ("ctx : %p input panel on demand mode : TRUE\n", ctx);
+            LOGI ("ctx : %p input panel on demand mode : TRUE\n", ctx);
     }
     else
-        LOGD ("ctx : %p input panel enable : FALSE\n", ctx);
+        LOGI ("ctx : %p input panel enable : FALSE\n", ctx);
 
     if (get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE)
         clear_hide_request ();
@@ -1407,7 +1407,7 @@ isf_imf_context_focus_out (Ecore_IMF_Context *ctx)
 
         WideString wstr = context_scim->impl->preedit_string;
 
-        LOGD ("ctx : %p\n", ctx);
+        LOGI ("ctx : %p\n", ctx);
 
         if (ecore_imf_context_input_panel_enabled_get (ctx)) {
             if (!check_focus_out_by_popup_win (ctx))
@@ -1485,7 +1485,7 @@ isf_imf_context_cursor_position_set (Ecore_IMF_Context *ctx, int cursor_pos)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         if (context_scim->impl->cursor_pos != cursor_pos) {
-            LOGD ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            LOGI ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
             context_scim->impl->cursor_pos = cursor_pos;
 
             caps_mode_check (ctx, EINA_FALSE, EINA_TRUE);
@@ -1849,7 +1849,7 @@ isf_imf_context_autocapital_type_set (Ecore_IMF_Context* ctx, Ecore_IMF_Autocapi
         context_scim->impl->autocapital_type = autocapital_type;
 
         if (context_scim == _focused_ic) {
-            LOGD ("ctx : %p. set autocapital type : %d\n", ctx, autocapital_type);
+            LOGI ("ctx : %p. set autocapital type : %d\n", ctx, autocapital_type);
             _panel_client.prepare (context_scim->id);
             //FIXME: must add this function for panelclient
             //context_scim->impl->si->set_autocapital_type (autocapital_type);
@@ -1912,7 +1912,7 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
             _panel_client.get_active_helper_option (&_active_helper_option);
             _panel_client.send ();
             ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, ev->keyname);
-            LOGD ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
+            LOGI ("Hardware keyboard mode, active helper option: %d", _active_helper_option);
         }
     }
     else if (type == ECORE_IMF_EVENT_KEY_UP) {
@@ -1948,11 +1948,11 @@ isf_imf_context_filter_event (Ecore_IMF_Context *ctx, Ecore_IMF_Event_Type type,
         key.mask |= _ecore_imf_lock_to_scim_mask (ev->locks);
     } else if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get (ctx)) {
-            LOGD ("[Mouse-up event] ctx : %p\n", ctx);
+            LOGI ("[Mouse-up event] ctx : %p\n", ctx);
             if (ic == _focused_ic) {
                 if (_change_keyboard_mode_by_touch && get_keyboard_mode () == TOOLBAR_KEYBOARD_MODE) {
                     isf_imf_context_set_keyboard_mode (ctx, TOOLBAR_HELPER_MODE);
-                    LOGD ("S/W keyboard mode by enabling ChangeKeyboardModeByTouch\n");
+                    LOGI ("S/W keyboard mode by enabling ChangeKeyboardModeByTouch\n");
                 } else {
                     ecore_imf_context_input_panel_show (ctx);
                 }
@@ -2078,7 +2078,7 @@ isf_imf_context_input_hint_set (Ecore_IMF_Context *ctx, Ecore_IMF_Input_Hints hi
             context_scim->impl->input_hint = hint;
 
             if (context_scim == _focused_ic) {
-                LOGD ("ctx : %p, input hint : %#x\n", ctx, hint);
+                LOGI ("ctx : %p, input hint : %#x\n", ctx, hint);
                 _panel_client.prepare (context_scim->id);
                 _panel_client.set_input_hint (context_scim->id, hint);
                 _panel_client.send ();
@@ -2099,7 +2099,7 @@ isf_imf_context_bidi_direction_set (Ecore_IMF_Context *ctx, Ecore_IMF_BiDi_Direc
             context_scim->impl->bidi_direction = direction;
 
             if (context_scim == _focused_ic) {
-                LOGD ("ctx : %p, bidi direction : %#x\n", ctx, direction);
+                LOGI ("ctx : %p, bidi direction : %#x\n", ctx, direction);
                 _panel_client.prepare (context_scim->id);
                 _panel_client.update_bidi_direction (context_scim->id, direction);
                 _panel_client.send ();
@@ -2112,7 +2112,7 @@ isf_imf_context_bidi_direction_set (Ecore_IMF_Context *ctx, Ecore_IMF_BiDi_Direc
 static void
 panel_slot_reload_config (int context)
 {
-    LOGD ("");
+    LOGI ("");
     if (!_config.null())
         _config->ConfigBase::reload();
 }
@@ -2214,7 +2214,7 @@ panel_slot_forward_key_event (int context, const KeyEvent &key)
 {
     EcoreIMFContextISF *ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
-    LOGD ("forward key event requested\n");
+    LOGI ("forward key event requested\n");
 
     if (!(ic && ic->impl)) {
         LOGW ("No ic\n");
@@ -2626,7 +2626,7 @@ initialize (void)
     String                  config_module_name = "socket";
     int                     ret    = -1;
 
-    LOGD ("Initializing Ecore ISF IMModule...\n");
+    LOGI ("Initializing Ecore ISF IMModule...\n");
 
     // Get system language.
     _language = scim_get_locale_language (scim_get_current_locale ());
@@ -2697,7 +2697,7 @@ initialize (void)
 static void
 finalize (void)
 {
-    LOGD ("Finalizing Ecore ISF IMModule...\n");
+    LOGI ("Finalizing Ecore ISF IMModule...\n");
 
     SCIM_DEBUG_FRONTEND(2) << "Finalize all IC partially.\n";
     while (_used_ic_impl_list) {
@@ -2979,7 +2979,7 @@ slot_beep (IMEngineInstanceBase *si)
 static void
 reload_config_callback (const ConfigPointer &config)
 {
-    LOGD ("");
+    LOGI ("");
 
     KeyEvent key;
     scim_string_to_key (key,

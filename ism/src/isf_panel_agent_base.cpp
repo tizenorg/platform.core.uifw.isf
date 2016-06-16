@@ -406,7 +406,7 @@ void PanelAgentBase::socket_helper_get_surrounding_text (int client, uint32 cont
 //socket_helper_delete_surrounding_text
 void PanelAgentBase::socket_helper_delete_surrounding_text (int client, uint32 context, uint32 offset, uint32 len)
 {
-    LOGD ("not implemented ");
+    LOGI ("not implemented ");
 }
 //SCIM_TRANS_CMD_GET_SELECTION
 void PanelAgentBase::socket_helper_get_selection (int client, uint32 context, const int fd)

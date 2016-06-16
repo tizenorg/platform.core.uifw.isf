@@ -116,7 +116,7 @@ public:
         }
         if (!m_helpers.size ()) {
             get_helper_list ();
-            LOGD ("helper size:%d", m_helpers.size ());
+            LOGI ("helper size:%d", m_helpers.size ());
         }
 
         Transaction trans;

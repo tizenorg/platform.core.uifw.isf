@@ -256,7 +256,7 @@ static void
 _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
 {
     WSCContextISF *context_scim = (WSCContextISF*)data;
-    LOGD ("");
+    LOGI ("");
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
 
@@ -273,7 +273,7 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     if (!wsc_ctx) return;
 
-    LOGD ("im_context = %p hint = %d purpose = %d\n", im_ctx, hint, purpose);
+    LOGI ("im_context = %p hint = %d purpose = %d\n", im_ctx, hint, purpose);
 
     if (!wsc_ctx->context_changed) return;
 
@@ -298,7 +298,7 @@ _wsc_im_ctx_invoke_action(void *data, struct wl_input_method_context *im_ctx, ui
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     if (!wsc_ctx) return;
 
-    LOGD ("invoke action. button : %d\n", button);
+    LOGI ("invoke action. button : %d\n", button);
 
     if (button != BTN_LEFT)
         return;
@@ -334,7 +334,7 @@ _wsc_im_ctx_preferred_language(void *data, struct wl_input_method_context *im_ct
 
     if (language) {
         wsc_ctx->language = strdup (language);
-        LOGD ("Language changed, new: '%s'\n", language);
+        LOGI ("Language changed, new: '%s'\n", language);
     }
 }
 
@@ -343,7 +343,7 @@ _wsc_im_ctx_return_key_type(void *data, struct wl_input_method_context *im_ctx, 
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
-    LOGD ("im_context = %p return key type = %d\n", im_ctx, return_key_type);
+    LOGI ("im_context = %p return key type = %d\n", im_ctx, return_key_type);
     if (!wsc_ctx) return;
 
     if (wsc_ctx->return_key_type != return_key_type) {
@@ -358,7 +358,7 @@ _wsc_im_ctx_return_key_disabled(void *data, struct wl_input_method_context *im_c
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     Eina_Bool return_key_disabled = !!disabled;
 
-    LOGD ("im_context = %p return key disabled = %d\n", im_ctx, return_key_disabled);
+    LOGI ("im_context = %p return key disabled = %d\n", im_ctx, return_key_disabled);
     if (!wsc_ctx) return;
 
     if (wsc_ctx->return_key_disabled != return_key_disabled) {
@@ -371,7 +371,7 @@ static void
 _wsc_im_ctx_input_panel_data(void *data, struct wl_input_method_context *im_ctx, const char *input_panel_data, uint32_t input_panel_data_length)
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
-    LOGD ("im_context = %p input panel data = %s len = %d\n", im_ctx, input_panel_data, input_panel_data_length);
+    LOGI ("im_context = %p input panel data = %s len = %d\n", im_ctx, input_panel_data, input_panel_data_length);
     if (!wsc_ctx) return;
 
     isf_wsc_context_input_panel_imdata_set (wsc_ctx, (void *)input_panel_data, input_panel_data_length);
@@ -382,7 +382,7 @@ _wsc_im_ctx_bidi_direction(void *data, struct wl_input_method_context *im_ctx, u
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
-    LOGD ("im_context = %p bidi_direction = %d\n", im_ctx, bidi_direction);
+    LOGI ("im_context = %p bidi_direction = %d\n", im_ctx, bidi_direction);
     if (!wsc_ctx) return;
 
     if (wsc_ctx->bidi_direction != bidi_direction) {
@@ -397,7 +397,7 @@ _wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, 
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
-    LOGD ("im_context = %p cursor_pos = %d\n", im_ctx, cursor_pos);
+    LOGI ("im_context = %p cursor_pos = %d\n", im_ctx, cursor_pos);
     if (!wsc_ctx) return;
     caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE);
     g_info_manager->socket_update_cursor_position (cursor_pos);
@@ -408,7 +408,7 @@ _wsc_im_ctx_process_input_device_event(void *data, struct wl_input_method_contex
 {
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
-    LOGD("im_context = %p type = %d, data = (%p) %d\n", im_ctx, type, input_data, input_data_len);
+    LOGI("im_context = %p type = %d, data = (%p) %d\n", im_ctx, type, input_data, input_data_len);
     if (!wsc_ctx) return;
 
     isf_wsc_context_process_input_device_event(wsc_ctx, type, input_data, input_data_len);
@@ -517,7 +517,7 @@ _wsc_im_keyboard_keymap(void *data,
     wsc_ctx->shift_mask =
         1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Shift");
 
-    LOGD ("create _keysym2keycode\n");
+    LOGI ("create _keysym2keycode\n");
     _init_keysym2keycode(wsc_ctx);
 }
 
@@ -649,7 +649,7 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     int len = 0;
     char *imdata = NULL;
     isf_wsc_context_input_panel_imdata_get (wsc_ctx, (void**)&imdata, &len);
-    LOGD ("Get imdata:%s, length:%d\n", imdata, len);
+    LOGI ("Get imdata:%s, length:%d\n", imdata, len);
     if (imdata && len)
         wl_input_method_context_update_input_panel_data (im_ctx, wsc_ctx->serial, imdata, len);
     if (imdata)
@@ -762,7 +762,7 @@ _wsc_setup(struct weescim *wsc)
     }
 
     /* Input method listener */
-    LOGD ("Adding wl_input_method listener\n");
+    LOGI ("Adding wl_input_method listener\n");
 
     if (wsc->im)
         wl_input_method_add_listener (wsc->im, &wsc_im_listener, wsc);
@@ -1193,7 +1193,7 @@ static void input_language_changed_cb (keynode_t *key, void* data)
 void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length)
 {
     WSCContextISF* context_scim = wsc_ctx;
-    LOGD ("");
+    LOGI ("");
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
 
     if (context_scim && context_scim->impl) {
@@ -1224,7 +1224,7 @@ void
 isf_wsc_context_init (void)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     int val;
 
     if (!_scim_initialized) {
@@ -1260,7 +1260,7 @@ isf_wsc_context_init (void)
 void
 isf_wsc_context_shutdown (void)
 {
-    LOGD ("");
+    LOGI ("");
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
 
     if (_scim_initialized) {
@@ -1280,7 +1280,7 @@ void
 isf_wsc_context_add (WSCContextISF *wsc_ctx)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* context_scim = wsc_ctx;
 
     if (!context_scim) return;
@@ -1320,7 +1320,7 @@ void
 isf_wsc_context_del (WSCContextISF *wsc_ctx)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
 
     if (!_ic_list) return;
 
@@ -1376,7 +1376,7 @@ void
 isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
 {
     WSCContextISF* context_scim = wsc_ctx;
-    LOGD ("");
+    LOGI ("");
 
     if (!context_scim)
         return;
@@ -1394,7 +1394,7 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
 
     if (_change_keyboard_mode_by_focus_move) {
         //if h/w keyboard mode, keyboard mode will be changed to s/w mode when the entry get the focus.
-        LOGD ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
+        LOGI ("Keyboard mode is changed H/W->S/W because of focus_in.\n");
         isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_HELPER_MODE);
     }
 
@@ -1445,14 +1445,14 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
         */
     }
 
-    LOGD ("ctx : %p\n", wsc_ctx);
+    LOGI ("ctx : %p\n", wsc_ctx);
 }
 
 void
 isf_wsc_context_focus_out (WSCContextISF *wsc_ctx)
 {
     WSCContextISF* context_scim = wsc_ctx;
-    LOGD ("");
+    LOGI ("");
 
     if (!context_scim) return;
 
@@ -1460,7 +1460,7 @@ isf_wsc_context_focus_out (WSCContextISF *wsc_ctx)
 
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
 
-        LOGD ("ctx : %p\n", wsc_ctx);
+        LOGI ("ctx : %p\n", wsc_ctx);
 
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
@@ -1482,7 +1482,7 @@ void
 isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->is_on) {
@@ -1514,14 +1514,14 @@ void
 isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " = " << autocapital_type << "...\n";
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->autocapital_type != autocapital_type) {
         context_scim->impl->autocapital_type = autocapital_type;
 
         if (context_scim == _focused_ic) {
-            LOGD ("ctx : %p. set autocapital type : %d\n", wsc_ctx, autocapital_type);
+            LOGI ("ctx : %p. set autocapital type : %d\n", wsc_ctx, autocapital_type);
             //FIXME:add this interface
             //_info_manager->set_autocapital_type (autocapital_type);
         }
@@ -1540,7 +1540,7 @@ isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direc
             context_scim->impl->bidi_direction = direction;
 
             if (context_scim == _focused_ic) {
-                LOGD ("ctx : %p, bidi direction : %#x\n", wsc_ctx, direction);
+                LOGI ("ctx : %p, bidi direction : %#x\n", wsc_ctx, direction);
                 panel_req_update_bidi_direction (context_scim, direction);
             }
         }
@@ -1576,7 +1576,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
 
     if (!wsc_ctx) return;
 
@@ -1614,7 +1614,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 #endif
                 isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_KEYBOARD_MODE);
                 ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
-                LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
+                LOGI ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
             }
         }
     }
@@ -1623,7 +1623,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
         ret = EINA_TRUE;
 
         if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
-            LOGD ("ic is off");
+            LOGI ("ic is off");
             ret = EINA_FALSE;
         } else {
             uint32 _ret;
@@ -1648,7 +1648,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 static void
 wsc_commit_preedit (WSCContextISF* wsc_ctx)
 {
-    LOGD ("");
+    LOGI ("");
     char* surrounding_text;
 
     if (!wsc_ctx || !wsc_ctx->preedit_str ||
@@ -1684,7 +1684,7 @@ wsc_commit_preedit (WSCContextISF* wsc_ctx)
 static void
 wsc_send_preedit (WSCContextISF* wsc_ctx, int32_t cursor)
 {
-    LOGD ("");
+    LOGI ("");
 
     if (!wsc_ctx) return;
 
@@ -1989,7 +1989,7 @@ Ecore_IMF_Input_Hints wsc_context_input_hint_get (WSCContextISF *wsc_ctx)
 
 Eina_Bool wsc_context_prediction_allow_get (WSCContextISF *wsc_ctx)
 {
-    LOGD ("");
+    LOGI ("");
 
     if (!wsc_ctx)
         return EINA_FALSE;
@@ -2002,7 +2002,7 @@ Eina_Bool wsc_context_prediction_allow_get (WSCContextISF *wsc_ctx)
 
 void wsc_context_delete_surrounding (WSCContextISF *wsc_ctx, int offset, int len)
 {
-    LOGD ("offset = %d, len = %d", offset, len);
+    LOGI ("offset = %d, len = %d", offset, len);
 
     if (!wsc_ctx)
         return;
@@ -2012,7 +2012,7 @@ void wsc_context_delete_surrounding (WSCContextISF *wsc_ctx, int offset, int len
 
 void wsc_context_set_selection (WSCContextISF *wsc_ctx, int start, int end)
 {
-    LOGD ("");
+    LOGI ("");
 
     if (!wsc_ctx)
         return;
@@ -2022,7 +2022,7 @@ void wsc_context_set_selection (WSCContextISF *wsc_ctx, int start, int end)
 
 void wsc_context_commit_string (WSCContextISF *wsc_ctx, const char *str)
 {
-    LOGD ("");
+    LOGI ("");
 
     if (!wsc_ctx)
         return;
@@ -2038,7 +2038,7 @@ void wsc_context_commit_string (WSCContextISF *wsc_ctx, const char *str)
 
 void wsc_context_commit_preedit_string (WSCContextISF *wsc_ctx)
 {
-    LOGD ("");
+    LOGI ("");
     char* preedit_str = NULL;
     int cursor_pos = 0;
 
@@ -2058,7 +2058,7 @@ void wsc_context_commit_preedit_string (WSCContextISF *wsc_ctx)
 
 void wsc_context_send_preedit_string (WSCContextISF *wsc_ctx)
 {
-    LOGD ("");
+    LOGI ("");
     char* preedit_str = NULL;
     int cursor_pos = 0;
 
@@ -2078,7 +2078,7 @@ void wsc_context_send_preedit_string (WSCContextISF *wsc_ctx)
 
 void wsc_context_send_key (WSCContextISF *wsc_ctx, uint32_t keysym, uint32_t modifiers, uint32_t time, bool press)
 {
-    LOGD ("");
+    LOGI ("");
 
     if (!wsc_ctx || !wsc_ctx->im_ctx)
         return;
@@ -2091,7 +2091,7 @@ static void
 set_ic_capabilities (WSCContextISF *ic)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
 #if 0 //FIXME
     if (ic && ic->impl) {
         unsigned int cap = SCIM_CLIENT_CAP_ALL_CAPABILITIES;
@@ -2150,7 +2150,7 @@ static bool
 filter_keys (const char *keyname, const char *config_path)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
 
     if (!keyname)
         return false;
@@ -2171,7 +2171,7 @@ static void
 panel_initialize (void)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     String display_name;
     {
         const char *p = getenv ("DISPLAY");
@@ -2198,14 +2198,14 @@ static void
 panel_finalize (void)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     g_info_manager->del_client (WAYLAND_MODULE_CLIENT_ID);
 }
 
 static void
 panel_slot_update_preedit_caret (int context, int caret)
 {
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " caret=" << caret << " ic=" << ic << "\n";
 
@@ -2226,7 +2226,7 @@ static Eina_Bool
 feed_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
 
     if (key.code <= 0x7F ||
         (key.code >= SCIM_KEY_BackSpace && key.code <= SCIM_KEY_Delete) ||
@@ -2242,7 +2242,7 @@ feed_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake)
 static void
 panel_slot_process_key_event (int context, const KeyEvent &key)
 {
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
     SCIM_DEBUG_FRONTEND(1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
@@ -2282,7 +2282,7 @@ panel_slot_process_key_event (int context, const KeyEvent &key)
 static void
 panel_slot_commit_string (int context, const WideString &wstr)
 {
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " str=" << utf8_wcstombs (wstr) << " ic=" << ic << "\n";
 
@@ -2302,7 +2302,7 @@ panel_slot_commit_string (int context, const WideString &wstr)
 static void
 panel_slot_forward_key_event (int context, const KeyEvent &key)
 {
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << " key=" << key.get_key_string () << " ic=" << ic << "\n";
 
@@ -2321,7 +2321,7 @@ panel_slot_forward_key_event (int context, const KeyEvent &key)
 static void
 _show_preedit_string (int context)
 {
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " context=" << context << "\n";
 
@@ -2346,7 +2346,7 @@ static void
 _hide_preedit_string (int context, bool update_preedit)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
 
     if (ic && ic->impl && _focused_ic == ic) {
@@ -2385,7 +2385,7 @@ _update_preedit_string (int context,
                                   int caret)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     WSCContextISF* ic = find_ic (context);
 
     if (ic && ic->impl && _focused_ic == ic) {
@@ -2424,7 +2424,7 @@ void
 initialize (void)
 {
 
-    LOGD ("Initializing Wayland ISF IMModule...\n");
+    LOGI ("Initializing Wayland ISF IMModule...\n");
 
     // Get system language.
     _language = scim_get_locale_language (scim_get_current_locale ());
@@ -2435,7 +2435,7 @@ initialize (void)
 static void
 finalize (void)
 {
-    LOGD ("Finalizing Ecore ISF IMModule...\n");
+    LOGI ("Finalizing Ecore ISF IMModule...\n");
 
     SCIM_DEBUG_FRONTEND(2) << "Finalize all IC partially.\n";
     while (_used_ic_impl_list) {
@@ -2549,7 +2549,7 @@ static uint32_t _keyname_to_keysym (uint32_t keyname, uint32_t *modifiers)
 static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     uint32_t time = 0;
 
     if (!fake)
@@ -2573,7 +2573,7 @@ static void
 reload_config_callback (const ConfigPointer &config)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
+    LOGI ("");
     //FIXME:_frontend_hotkey_matcher and _imengine_hotkey_matcher should be added
     //_frontend_hotkey_matcher.load_hotkeys (config);
     //_imengine_hotkey_matcher.load_hotkeys (config);
@@ -2612,7 +2612,7 @@ public:
         stop ();
     }
     bool initialize (InfoManager* info_manager, const String& display, bool resident) {
-        LOGD ("");
+        LOGI ("");
         g_info_manager = info_manager;
         isf_wsc_context_init ();
 
@@ -2636,19 +2636,19 @@ public:
 public:
     void
     exit (int id, uint32 contextid) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         finalize ();
     }
 
     void
     update_preedit_caret (int id, uint32 context_id, uint32 caret) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_update_preedit_caret (context_id, caret);
     }
 
     void
     socket_helper_key_event (int id, uint32 context_id,  int cmd , KeyEvent& key) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
 
         if (cmd == SCIM_TRANS_CMD_PROCESS_KEY_EVENT)
             panel_slot_process_key_event (context_id, key);
@@ -2658,65 +2658,65 @@ public:
 
     void
     commit_string (int id, uint32 context_id, const WideString& wstr) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_commit_string (context_id, wstr);
     }
 #if 0
     void
     request_help (int id, uint32 context_id) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_request_help (context_id);
     }
 
 
     void
     request_factory_menu (int id, uint32 context_id) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_request_factory_menu (context_id);
     }
 
     void
     change_factory (int id, uint32 context_id, const String& uuid) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_change_factory (context_id, uuid);
     }
 
 
     void
     reset_keyboard_ise (int id, uint32 context_id) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_reset_keyboard_ise (context_id);
     }
 
 
     void
     update_keyboard_ise (int id, uint32 context_id) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         panel_slot_update_keyboard_ise (context_id);
     }
 #endif
 
     void
     show_preedit_string (int id, uint32 context_id) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         _show_preedit_string (context_id);
     }
 
     void
     hide_preedit_string (int id, uint32 context_id) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         _hide_preedit_string (context_id, true);
     }
 
     void
     update_preedit_string (int id, uint32 context_id, WideString wstr, AttributeList& attrs, uint32 caret) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         _update_preedit_string (context_id, wstr, attrs, caret);
     }
 
     void
     socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
-        LOGD ("client id:%d, fd:%d", id, fd);
+        LOGI ("client id:%d, fd:%d", id, fd);
         WSCContextISF* ic = find_ic (context_id);
         if (ic)
             wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, fd);
@@ -2724,20 +2724,20 @@ public:
 
     void
     socket_helper_delete_surrounding_text (int id, uint32 context_id, uint32 offset, uint32 len) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         //panel_slot_delete_surrounding_text (context_id, offset, len);
         wsc_context_delete_surrounding (_focused_ic, offset, len);
     }
 
     void
     socket_helper_set_selection (int id, uint32 context_id, uint32 start, uint32 end) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         wsc_context_set_selection (_focused_ic, start, end);
     }
 
     void
     send_private_command (int id, uint32 context_id, const String& command) {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         //panel_slot_send_private_command (context_id, command);
         wl_input_method_context_private_command (_focused_ic->im_ctx, _focused_ic->serial, command.c_str ());
     }
@@ -2745,13 +2745,13 @@ public:
     void
     reload_config (int id)
     {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
     }
 
     void
     hide_helper_ise (int id, uint32 context_id)
     {
-        LOGD ("client id:%d", id);
+        LOGI ("client id:%d", id);
         WSCContextISF* ic = find_ic (context_id);
 
         if (ic) {
@@ -2761,7 +2761,7 @@ public:
 
     void
     socket_helper_get_selection (int id, uint32 context_id, const int fd) {
-        LOGD ("client id:%d, fd:%d", id, fd);
+        LOGI ("client id:%d, fd:%d", id, fd);
         WSCContextISF* ic = find_ic (context_id);
 
         if (ic) {
@@ -2775,18 +2775,18 @@ extern "C" {
 
     EXAPI void scim_module_init (void)
     {
-        LOGD ("");
+        LOGI ("");
     }
 
     EXAPI void scim_module_exit (void)
     {
-        LOGD ("");
+        LOGI ("");
         instance.reset();
     }
 
     EXAPI void scim_panel_agent_module_init (const scim::ConfigPointer& config)
     {
-        LOGD ("");
+        LOGI ("");
         _config = config;
     }
 

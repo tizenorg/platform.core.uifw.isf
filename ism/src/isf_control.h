@@ -196,7 +196,7 @@ EXAPI int isf_control_show_ise_option_window (void);
      int i, cnt = isf_control_get_all_ime_info(&ime_info);
      if (ime_info) {
          for (i = 0; i < cnt; i++) {
-             LOGD("%s %s %d %d %d", ime_info[i].appid, ime_info[i].label, ime_info[i].is_enabled, ime_info[i].is_preinstalled, ime_info[i].has_option);
+             LOGI("%s %s %d %d %d", ime_info[i].appid, ime_info[i].label, ime_info[i].is_enabled, ime_info[i].is_preinstalled, ime_info[i].has_option);
          }
          free(ime_info);
      }
