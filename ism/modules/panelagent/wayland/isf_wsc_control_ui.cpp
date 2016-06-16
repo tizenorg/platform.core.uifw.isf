@@ -182,12 +182,20 @@ void isf_wsc_context_input_panel_show (WSCContextISF* wsc_ctx)
     free (packet);
 
     caps_mode_check (wsc_ctx, EINA_TRUE, EINA_TRUE);
+
+#if HAVE_VCONF
+    vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_SHOW);
+#endif
 }
 
 void isf_wsc_context_input_panel_hide (WSCContextISF *ctx)
 {
     int context_id = _get_context_id (ctx);
     _isf_wsc_context_input_panel_hide (get_panel_client_id (), context_id);
+
+#if HAVE_VCONF
+    vconf_set_int (VCONFKEY_ISF_INPUT_PANEL_STATE, VCONFKEY_ISF_INPUT_PANEL_STATE_HIDE);
+#endif
 }
 
 void isf_wsc_context_set_keyboard_mode (WSCContextISF *ctx, TOOLBAR_MODE_T mode)
