@@ -58,6 +58,7 @@ static Ecore_IMF_Context    *_hide_req_ctx               = NULL;
 static Eina_Rectangle        _keyboard_geometry = {0, 0, 0, 0};
 
 static Ecore_IMF_Input_Panel_State _input_panel_state    = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
+static Ecore_Event_Handler *_win_focus_out_handler       = NULL;
 //
 
 struct _WaylandIMContext
@@ -242,12 +243,23 @@ _clear_hide_timer()
     return EINA_FALSE;
 }
 
+static void _win_focus_out_handler_del ()
+{
+    if (_win_focus_out_handler) {
+        ecore_event_handler_del (_win_focus_out_handler);
+        _win_focus_out_handler = NULL;
+    }
+}
+
 static void
 _send_input_panel_hide_request(Ecore_IMF_Context *ctx)
 {
     // TIZEN_ONLY(20150708): Support back key
     _hide_req_ctx = NULL;
     //
+
+    _win_focus_out_handler_del ();
+
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
     if (imcontext && imcontext->text_input)
         wl_text_input_hide_input_panel(imcontext->text_input);
@@ -480,6 +492,38 @@ static Eina_Bool _compare_context(Ecore_IMF_Context *ctx1, Ecore_IMF_Context *ct
 }
 //
 
+static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
+{
+    Ecore_Wl_Event_Focus_Out *e = (Ecore_Wl_Event_Focus_Out *)ev;
+    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
+    if (!ctx || !e) return ECORE_CALLBACK_PASS_ON;
+
+    WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get (ctx);
+    unsigned int client_win_id = ecore_wl_window_id_get (imcontext->window);
+
+    LOGD ("ctx : %p, client_window id : %#x, focus-out win : %#x\n", ctx, client_win_id, e->win);
+
+    if (client_win_id > 0) {
+        if (e->win == client_win_id) {
+            LOGD ("window focus out\n");
+
+            if (_focused_ctx == ctx) {
+                wayland_im_context_focus_out (ctx);
+            }
+
+            if (_show_req_ctx == ctx) {
+                _input_panel_hide (ctx, EINA_TRUE);
+            }
+        }
+    }
+    else {
+        _input_panel_hide (ctx, EINA_FALSE);
+    }
+
+    return ECORE_CALLBACK_PASS_ON;
+}
+
+
 static Eina_Bool
 show_input_panel(Ecore_IMF_Context *ctx)
 {
@@ -498,6 +542,9 @@ show_input_panel(Ecore_IMF_Context *ctx)
         set_focus(ctx);
 
     _clear_hide_timer();
+
+    _win_focus_out_handler_del ();
+    _win_focus_out_handler = ecore_event_handler_add (ECORE_WL_EVENT_FOCUS_OUT, _client_window_focus_out_cb, ctx);
 
     // TIZEN_ONLY(20160217): ignore the duplicate show request
     if ((_show_req_ctx == ctx) && _compare_context(_show_req_ctx, ctx) && (!will_hide)) {
@@ -1161,6 +1208,8 @@ EAPI void initialize ()
 EAPI void uninitialize ()
 {
     unregister_key_handler ();
+
+    _win_focus_out_handler_del ();
 
 #ifdef HAVE_VCONF
     vconf_ignore_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb);
