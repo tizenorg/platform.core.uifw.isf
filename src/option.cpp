@@ -725,9 +725,11 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 
         for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
         {
+            /* Current languages */
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info && info->enabled) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                language_itemdata[loop].mode = SETTING_ITEM_ID_CUR_LANGUAGE;
                 option_elements[type].selected_language_item[loop] =
                     elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
                         NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
@@ -739,6 +741,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         }
 
         if (_language_manager.get_languages_num() > 1) {
+            /* Select input languages */
             strncpy(main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE].main_text, SELECT_LANGUAGES, ITEM_DATA_STRING_LEN - 1);
             main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE].mode = SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE;
             option_elements[type].languages_item =
@@ -885,6 +888,7 @@ void read_options(Evas_Object *naviframe)
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info && info->enabled) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                language_itemdata[loop].mode = SETTING_ITEM_ID_CUR_LANGUAGE;
                 option_elements[type].selected_language_item[loop] =
                     elm_genlist_item_insert_before(option_elements[type].genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
                             NULL, option_elements[type].languages_item, ELM_GENLIST_ITEM_NONE, NULL, NULL);
