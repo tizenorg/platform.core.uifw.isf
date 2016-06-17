@@ -107,6 +107,29 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
 
     {"NUMONLY_QTY",     "DEFAULT",   FALSE },       /* ISE_LAYOUT_STYLE_PASSWD_3X4 */
 };
+#elif _WEARABLE
+const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NORMAL */
+    {"NUM_3X4",         "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NUMBER */
+    {"",                "EMAIL",        TRUE },     /* ISE_LAYOUT_STYLE_EMAIL */
+    {"",                "URL",          TRUE },     /* ISE_LAYOUT_STYLE_URL */
+    {"PHONE_3X4",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_PHONENUMBER */
+    {"NUMONLY_3X4_DEC", "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_IP */
+    {"MONTH_3X4",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_MONTH */
+    {"NUMONLY_3X4",     "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY */
+    {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_INVALID */
+    {"SYM_4X4_1",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_HEX */
+    {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_TERMINAL */
+    {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_PASSWORD */
+    {"DATETIME_3X4",    "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_DATETIME */
+    {"EMOTICON_LAYOUT", "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_EMOTICON */
+
+    {"NUMONLY_3X4_SIG",    "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY_SIG */
+    {"NUMONLY_3X4_DEC",    "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY_DEC */
+    {"NUMONLY_3X4_SIGDEC", "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY_SIGDEC */
+
+    {"PASSWD_3X4",         "DEFAULT",   FALSE },    /* ISE_LAYOUT_STYLE_PASSWD_3X4 */
+};
 #else
 const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
     {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NORMAL */
@@ -199,6 +222,8 @@ class CCoreEventCallback : public ISCLCoreEventCallback
 
     void on_candidate_show(sclint ic, const sclchar *ic_uuid);
     void on_candidate_hide(sclint ic, const sclchar *ic_uuid);
+
+    void on_process_input_device_event(sclu32 &type, sclchar *data, size_t &len, sclu32 *ret);
 };
 
 void ise_send_string(const sclchar *key_value);

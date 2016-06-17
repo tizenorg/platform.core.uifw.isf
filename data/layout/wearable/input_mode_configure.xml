@@ -564,6 +564,12 @@
       <landscape>LYT_PORTRAIT_3X4_IPv6_ABC.xml</landscape>
     </layouts>
   </mode>
+  <mode name="NUM_3X4">
+    <layouts>
+      <portrait>LYT_PORTRAIT_3X4_NUM.xml</portrait>
+      <landscape>LYT_PORTRAIT_3X4_NUM.xml</landscape>
+    </layouts>
+  </mode>
   <mode name="NUMONLY_3X4">
     <layouts>
       <portrait>LYT_PORTRAIT_3X4_NUMONLY.xml</portrait>

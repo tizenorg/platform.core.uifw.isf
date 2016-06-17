@@ -296,6 +296,7 @@ void CCoreEventCallback::on_focus_out(sclint ic, const sclchar *ic_uuid)
 
 void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context &context)
 {
+    LOGD("Enter\n");
     //g_ise_common->set_keyboard_ise_by_uuid(KEYBD_ISE_UUID);
 
     ise_reset_context(); // reset ISE
@@ -325,6 +326,7 @@ void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context
 
 void CCoreEventCallback::on_ise_hide(sclint ic, const sclchar *ic_uuid)
 {
+    LOGD("Enter\n");
     ::ise_hide();
 }
 
@@ -399,6 +401,7 @@ void CCoreEventCallback::on_update_surrounding_text(sclint ic, const sclchar *te
 
 void CCoreEventCallback::on_set_return_key_type(sclu32 type)
 {
+    LOGD("Enter\n");
     ise_set_return_key_type(type);
 
     if (g_keyboard_state.visible_state)
@@ -474,6 +477,64 @@ void CCoreEventCallback::on_candidate_show(sclint ic, const sclchar *ic_uuid)
 void CCoreEventCallback::on_candidate_hide(sclint ic, const sclchar *ic_uuid)
 {
     add_softcandidate_hide_timer();
+}
+
+void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *data, size_t &len, sclu32 *ret)
+{
+    LOGD("type:%d, len:%d\n", type, len);
+    if (ret == NULL) {
+        LOGE("ret is NULL\n");
+        return;
+    }
+    *ret = 0;
+#ifdef _WEARABLE
+    if (type == (sclu32)(ECORE_EVENT_DETENT_ROTATE)) {
+        void *event_data = static_cast<void*>(data);
+        Ecore_Event_Detent_Rotate *rotary_device_event = static_cast<Ecore_Event_Detent_Rotate*>(event_data);
+        if (rotary_device_event) {
+            sclu32 new_layout = g_keyboard_state.layout;
+            if (rotary_device_event->direction == ECORE_DETENT_DIRECTION_CLOCKWISE) {
+                LOGD("CLOCKWISE\n");
+                switch (g_keyboard_state.layout) {
+                    case ISE_LAYOUT_STYLE_NORMAL:
+                    case ISE_LAYOUT_STYLE_EMAIL:
+                    case ISE_LAYOUT_STYLE_URL:
+                        new_layout = ISE_LAYOUT_STYLE_NUMBER;
+                        break;
+                    case ISE_LAYOUT_STYLE_NUMBER:
+                        new_layout = ISE_LAYOUT_STYLE_HEX;
+                        break;
+                    case ISE_LAYOUT_STYLE_HEX:
+                        new_layout = ISE_LAYOUT_STYLE_NORMAL;
+                        break;
+                    default:
+                        ;
+                }
+            } else if (rotary_device_event->direction == ECORE_DETENT_DIRECTION_COUNTER_CLOCKWISE) {
+                LOGD("COUNTER_CLOCKWISE\n");
+                switch (g_keyboard_state.layout) {
+                    case ISE_LAYOUT_STYLE_NORMAL:
+                    case ISE_LAYOUT_STYLE_EMAIL:
+                    case ISE_LAYOUT_STYLE_URL:
+                        new_layout = ISE_LAYOUT_STYLE_HEX;
+                        break;
+                    case ISE_LAYOUT_STYLE_NUMBER:
+                        new_layout = ISE_LAYOUT_STYLE_NORMAL;
+                        break;
+                    case ISE_LAYOUT_STYLE_HEX:
+                        new_layout = ISE_LAYOUT_STYLE_NUMBER;
+                        break;
+                    default:
+                        ;
+                }
+            }
+            if (new_layout != g_keyboard_state.layout) {
+                on_set_layout(new_layout);
+                *ret = 1;
+            }
+        }
+    }
+#endif
 }
 
 /**
@@ -1337,8 +1398,9 @@ ise_update_cursor_position(int position)
 void ise_set_return_key_type(unsigned int type)
 {
     const int BUF_LEN = 64;
-    char buf[BUF_LEN];
+    char buf[BUF_LEN] = {0};
 
+    LOGD("return key type : %d\n", type);
     switch (type)
     {
     case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DONE:
@@ -1377,11 +1439,13 @@ void ise_set_return_key_type(unsigned int type)
         };
 
         g_ui->set_private_key("Enter", buf, imagelabel, NULL, 0, const_cast<sclchar*>("Enter"), TRUE);
+        LOGD("return key lable : %s\n", buf);
     }
 }
 
 void ise_set_return_key_disable(unsigned int disabled)
 {
+    LOGD("enable : %d\n", !disabled);
     g_ui->enable_button("Enter", !disabled);
 }
 

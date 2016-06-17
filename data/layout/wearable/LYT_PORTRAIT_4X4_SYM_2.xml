@@ -1,110 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="360" height="240" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_DEFAULT">
+<layout width="360" height="240" magnifier="true" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_NUM">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
   <background_image>
-    <rec button="normal">button/B09_key_btn_01.png</rec>
-    <rec button="pressed">button/B09_key_btn_press.png</rec>
-    <rec button="disabled">button/B09_key_btn_01.png</rec>
+    <rec button="pressed">key_btn_press.png</rec>
   </background_image>
-  <row>
-    <key key_type="string" width="100">
+  <row x="20">
+    <key>
       <label>
         <rec>/</rec>
       </label>
     </key>
-    <key key_type="string">
+    <key>
       <label>
         <rec>:</rec>
       </label>
     </key>
-    <key key_type="string">
+    <key>
       <label>
         <rec>;</rec>
       </label>
     </key>
-    <key key_type="control" use_repeat_key="true" width="100">
+    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
       <image_label>
-        <rec button="normal">B09_icon_back_nor_65x65.png</rec>
-        <rec button="pressed">B09_icon_back_press_65x65.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_delete.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_delete.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>BackSpace</rec>
       </key_value>
     </key>
   </row>
-  <row>
-    <key key_type="string" width="100">
+  <row x="20">
+    <key>
       <label>
         <rec>"</rec>
       </label>
     </key>
-    <key key_type="string">
+    <key>
       <label>
         <rec>(</rec>
       </label>
     </key>
-    <key key_type="string">
+    <key>
       <label>
         <rec>)</rec>
       </label>
     </key>
-    <key key_type="control" width="100">
+    <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
       <image_label>
-        <rec button="normal">B09_icon_enter.png</rec>
-        <rec button="pressed">B09_icon_enter_press.png</rec>
-        <rec button="disabled">B09_icon_enter_disabled.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="disabled">w_sip_3x4_btn_ic_enter_d.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
         <rec>Enter</rec>
       </key_value>
     </key>
   </row>
-  <row>
-    <key key_type="string" width="100">
+  <row x="20">
+    <key>
       <label>
         <rec>+</rec>
       </label>
     </key>
-    <key key_type="string">
+    <key>
       <label>
         <rec>*</rec>
       </label>
     </key>
-    <key key_type="string">
+    <key>
       <label>
         <rec>^</rec>
       </label>
     </key>
-    <key key_type="control" width="100">
+    <key key_type="modechange" image_label_type="IMAGE_3X4_TOP">
       <image_label>
-        <rec button="normal">B09_icon_shift_50x50.png</rec>
-        <rec button="pressed">B09_icon_shift_50x50_press.png</rec>
-        <rec button="disabled">B09_icon_shift_50x50_dim.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_setting.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_setting.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_key_btn_02.png</rec>
-        <rec button="pressed">button/B09_key_btn_press.png</rec>
-        <rec button="disabled">button/B09_key_btn_02.png</rec>
-      </background_image>
       <key_value>
-        <rec>Shift</rec>
+        <rec>OPTION</rec>
       </key_value>
     </key>
   </row>
-  <row>
-    <key key_type="modechange" width="120">
+  <row x="47">
+    <key key_type="modechange" label_type="3X4_NUM_0" width="133">
       <label>
         <rec>2/5</rec>
       </label>
@@ -112,19 +94,13 @@
         <rec>SYM_4X4_3</rec>
       </key_value>
     </key>
-    <key key_type="modechange" width="120">
+    <key button_type="direction" key_type="control" label_type="3X4_DEFAULT_SPACE" image_label_type="IMAGE_3X4_SPACE" width="133">
       <label>
-        <rec>ABC</rec>
+        <rec>_LANGUAGE_</rec>
       </label>
-      <key_value>
-        <rec>ENGLISH_4X4</rec>
-      </key_value>
-    </key>
-    <key key_type="control" width="120">
       <image_label>
-        <rec button="normal">B09_icon_space.png</rec>
-        <rec button="pressed">B09_icon_space_press.png</rec>
-        <rec button="disabled">B09_icon_space_dim.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_space.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_space.png</rec>
       </image_label>
       <key_value>
         <rec>Space</rec>

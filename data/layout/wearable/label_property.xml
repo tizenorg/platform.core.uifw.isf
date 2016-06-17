@@ -161,6 +161,24 @@
       </font_color_record>
     </label_properties>
   </label_properties_table>
+  <label_properties_table label_type="3X4_NUM">
+    <label_properties font_name="Tizen:style=medium" font_size="31" label_alignment="center_top" padding_X="0" padding_Y="2" inner_width="66" inner_height="41">
+      <font_color_record>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
+  <label_properties_table label_type="3X4_NUM_0">
+    <label_properties font_name="Tizen:style=medium" font_size="31" label_alignment="right_top" padding_X="0" padding_Y="2" inner_width="80" inner_height="41">
+      <font_color_record>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
+      </font_color_record>
+    </label_properties>
+  </label_properties_table>
   <label_properties_table label_type="3X4_DEFAULT_0">
     <label_properties font_name="Tizen:style=medium" font_size="25" label_alignment="right_top" padding_X="0" padding_Y="3" inner_width="80" inner_height="32">
       <font_color_record>
