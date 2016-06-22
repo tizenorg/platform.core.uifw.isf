@@ -264,7 +264,6 @@ _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
     LOGD ("");
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
-
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
             wsc_context_commit_preedit_string (context_scim);
@@ -431,6 +430,21 @@ _wsc_im_ctx_filter_key_event(void *data, struct wl_input_method_context *im_ctx,
             ((wl_keyboard_key_state)state) == WL_KEYBOARD_KEY_STATE_PRESSED, modifiers);
 }
 
+static void
+_wsc_im_ctx_reset_sync(void *data, struct wl_input_method_context *im_ctx, uint32_t serial)
+{
+    WSCContextISF *context_scim = (WSCContextISF*)data;
+    LOGD ("");
+    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
+        g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
+        if (context_scim->impl->need_commit_preedit) {
+            _hide_preedit_string (context_scim->id, false);
+            wsc_context_commit_preedit_string (context_scim);
+        }
+    }
+    wl_input_method_context_reset_done (context_scim->im_ctx, serial);
+}
+
 
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_reset,
@@ -444,7 +458,8 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_bidi_direction,
      _wsc_im_ctx_cursor_position,
      _wsc_im_ctx_process_input_device_event,
-     _wsc_im_ctx_filter_key_event
+     _wsc_im_ctx_filter_key_event,
+     _wsc_im_ctx_reset_sync
 };
 
 static void
