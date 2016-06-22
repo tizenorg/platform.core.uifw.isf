@@ -129,6 +129,8 @@ struct _WaylandIMContext
         uint32_t state;
     } last_key_event_filter;
     Eina_List *keysym_list;
+
+    uint32_t last_reset_serial;
     //
 };
 
@@ -1187,6 +1189,18 @@ text_input_filter_key_event_done(void                 *data,
     imcontext->last_key_event_filter.state = state;
 }
 
+static void
+text_input_reset_done(void                 *data,
+                      struct wl_text_input *text_input EINA_UNUSED,
+                      uint32_t              serial)
+{
+    LOGD("serial:%d", serial);
+    WaylandIMContext *imcontext = (WaylandIMContext *)data;
+    if (!imcontext) return;
+
+    imcontext->last_reset_serial = serial;
+}
+
 //
 
 static const struct wl_text_input_listener text_input_listener =
@@ -1211,7 +1225,8 @@ static const struct wl_text_input_listener text_input_listener =
     text_input_input_panel_data,
     text_input_get_selection_text,
     text_input_get_surrounding_text,
-    text_input_filter_key_event_done
+    text_input_filter_key_event_done,
+    text_input_reset_done
     //
 };
 
@@ -1346,10 +1361,23 @@ wayland_im_context_reset(Ecore_IMF_Context *ctx)
     if (!imcontext) return;
 
     commit_preedit(imcontext);
-    clear_preedit(imcontext);
 
-    if (imcontext->text_input)
-        wl_text_input_reset(imcontext->text_input);
+    if (!imcontext->input) return;
+
+    if (imcontext->text_input) {
+        int serial = imcontext->serial++;
+        double start_time = ecore_time_get();
+
+        wl_text_input_reset(imcontext->text_input, serial);
+
+        while (ecore_time_get() - start_time < WAIT_FOR_FILTER_DONE_SECOND){
+            wl_display_dispatch(ecore_wl_display_get());
+            if (imcontext->last_reset_serial >= serial) {
+                LOGD("reset_serial %d, serial %d", imcontext->last_reset_serial, serial);
+                break;
+            }
+        }
+    }
 
     update_state(imcontext);
 
@@ -1552,7 +1580,8 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
             if (imcontext->last_key_event_filter.serial == serial) {
                 ret = imcontext->last_key_event_filter.state;
                 break;
-            }
+            } else if (imcontext->last_key_event_filter.serial > serial)
+                return EINA_FALSE;
         }
 
         LOGD ("eclipse : %fs, serial (last,require) : (%d,%d)", (ecore_time_get() - start_time), imcontext->last_key_event_filter.serial, serial);
