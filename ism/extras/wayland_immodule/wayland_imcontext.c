@@ -286,6 +286,11 @@ _input_panel_hide_timer_start(void *data)
 static void
 _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
 {
+    if (!get_using_ctx()) {
+        LOGW("Can't hide input_panel because there is no using context!!");
+        return;
+    }
+
     will_hide = EINA_TRUE;
 
     if (instant || (_hide_timer && ecore_timer_pending_get(_hide_timer) <= 0.0)) {
