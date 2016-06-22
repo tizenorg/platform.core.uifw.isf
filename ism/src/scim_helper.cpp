@@ -1276,6 +1276,9 @@ HelperAgent::filter_event ()
             {
                 m_impl->signal_reset_ise_context (this, ic, ic_uuid);
                 if (!m_impl->si.null ()) m_impl->si->reset();
+                m_impl->send.clear ();
+                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+                m_impl->send.write_to_socket (m_impl->socket);
                 break;
             }
             case ISM_TRANS_CMD_TURN_ON_LOG:

@@ -61,7 +61,6 @@ struct _WSCContextISF {
     struct wl_input_method_context *im_ctx;
 
     char *surrounding_text;
-    char *preedit_str;
     char *language;
 
     uint32_t serial;
@@ -92,7 +91,6 @@ void isf_wsc_context_add (WSCContextISF *wsc_ctx);
 void isf_wsc_context_del (WSCContextISF *wsc_ctx);
 void isf_wsc_context_focus_in (WSCContextISF *wsc_ctx);
 void isf_wsc_context_focus_out (WSCContextISF *wsc_ctx);
-void isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos);
 void isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type);
 void isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction);
 void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
@@ -110,9 +108,6 @@ Ecore_IMF_Input_Panel_Lang wsc_context_input_panel_language_get (WSCContextISF *
 bool wsc_context_input_panel_password_mode_get (WSCContextISF *wsc_ctx);
 Ecore_IMF_Input_Hints wsc_context_input_hint_get (WSCContextISF *wsc_ctx);
 Eina_Bool wsc_context_prediction_allow_get (WSCContextISF *wsc_ctx);
-void wsc_context_commit_preedit_string(WSCContextISF *wsc_ctx);
-void wsc_context_commit_string(WSCContextISF *wsc_ctx, const char *str);
-void wsc_context_send_preedit_string(WSCContextISF *wsc_ctx);
 void wsc_context_send_key(WSCContextISF *wsc_ctx, uint32_t keysym, uint32_t modifiers, uint32_t time, bool press);
 
 #endif /* __ISF_WSC_CONTEXT_H_ */

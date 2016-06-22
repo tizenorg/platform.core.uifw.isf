@@ -933,7 +933,8 @@ private:
 
     void reset_helper_context(int client, uint32 context, const String& uuid) {
         LOGD ("client id:%d\n", client);
-
+        Transaction trans;
+        int cmd;
         Socket client_socket(client);
         m_send_trans.clear();
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
@@ -941,6 +942,11 @@ private:
         m_send_trans.put_data(uuid);
         m_send_trans.put_command(ISM_TRANS_CMD_RESET_ISE_CONTEXT);
         m_send_trans.write_to_socket(client_socket);
+
+        if (!trans.read_from_socket(client_socket, m_socket_timeout) ||
+            !trans.get_command(cmd) || cmd != SCIM_TRANS_CMD_REPLY) {
+            LOGW ("ISM_TRANS_CMD_RESET_ISE_CONTEXT failed\n");
+        }
     }
 
     void reload_config(int client) {
