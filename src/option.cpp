@@ -560,7 +560,11 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
 
         option_elements[type].itc_group_title = elm_genlist_item_class_new();
         if (option_elements[type].itc_group_title) {
+#ifdef _WEARABLE
+            option_elements[type].itc_group_title->item_style = "groupindex";
+#else
             option_elements[type].itc_group_title->item_style = "group_index";
+#endif
             option_elements[type].itc_group_title->func.text_get = _main_gl_text_get;
             option_elements[type].itc_group_title->func.content_get = NULL;
             option_elements[type].itc_group_title->func.state_get = _main_gl_state_get;
