@@ -258,18 +258,18 @@ InfoManager* g_info_manager = NULL;
 /////////////////////////////////////////////////////////////////////////////
 
 static void
-_wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
+_wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx, uint32_t serial)
 {
     WSCContextISF *context_scim = (WSCContextISF*)data;
     LOGD ("");
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
-
         if (context_scim->impl->need_commit_preedit) {
             _hide_preedit_string (context_scim->id, false);
             wsc_context_commit_preedit_string (context_scim);
         }
     }
+    wl_input_method_context_reset_done (context_scim->im_ctx, serial);
 }
 
 static void
@@ -1027,7 +1027,7 @@ void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length)
 static char *
 insert_text (const char *text, uint32_t offset, const char *insert)
 {
-    int tlen = strlen (text), ilen = strlen (insert);
+    size_t tlen = strlen (text), ilen = strlen (insert);
     char *new_text = (char*)malloc (tlen + ilen + 1);
     if (tlen < offset)
         offset = tlen;
