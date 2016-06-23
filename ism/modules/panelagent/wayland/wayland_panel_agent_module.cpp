@@ -399,7 +399,8 @@ _wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, 
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
 
     LOGD ("im_context = %p cursor_pos = %d\n", im_ctx, cursor_pos);
-    if (!wsc_ctx) return;
+    if (!wsc_ctx || !wsc_ctx->impl) return;
+    wsc_ctx->impl->cursor_pos = cursor_pos;
     caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE);
     g_info_manager->socket_update_cursor_position (cursor_pos);
 }
