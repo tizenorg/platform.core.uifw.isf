@@ -505,6 +505,8 @@ static Eina_Bool _client_window_focus_out_cb (void *data, int ev_type, void *ev)
     if (!ctx || !e) return ECORE_CALLBACK_PASS_ON;
 
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get (ctx);
+    if (!imcontext) return ECORE_CALLBACK_PASS_ON;
+
     unsigned int client_win_id = ecore_wl_window_id_get (imcontext->window);
 
     LOGD ("ctx : %p, client_window id : %#x, focus-out win : %#x\n", ctx, client_win_id, e->win);
