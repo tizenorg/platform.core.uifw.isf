@@ -684,6 +684,11 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
         wsc_ctx->keymap = NULL;
     }
 
+    if (wsc_ctx->xkb_context) {
+        xkb_context_unref (wsc_ctx->xkb_context);
+        wsc_ctx->xkb_context = NULL;
+    }
+
     if (wsc_ctx->im_ctx) {
         wl_input_method_context_destroy (wsc_ctx->im_ctx);
         wsc_ctx->im_ctx = NULL;
