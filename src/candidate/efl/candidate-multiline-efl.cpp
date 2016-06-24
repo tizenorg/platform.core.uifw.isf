@@ -447,9 +447,7 @@ EflMultiLineCandidate::update(const vector<string> &vec_str)
             elm_table_pack(m_candidateTable, item, cur_item_sum, y_start,
                            item_text_size.width, item_text_size.height);
             cur_item_sum += item_text_size.width;
-        }
-        else if (!multiline)
-        {
+        } else if (!multiline) {
             multiline = true;
             cur_item_sum = 0;
             if (0 == i)
@@ -481,9 +479,7 @@ EflMultiLineCandidate::update(const vector<string> &vec_str)
                         lineCount*CANDIDATE_WINDOW_HEIGHT*m_screenRatio+(lineCount+1)*CANDIDATE_HORIZON_LINE_HEIGHT+y_start,
                         CANDIDATE_SEPERATE_WIDTH, CANDIDATE_SEPERATE_HEIGHT*m_screenRatio);
                 cur_item_sum += CANDIDATE_SEPERATE_WIDTH;
-            }
-            else
-            {
+            } else {
                 Evas_Object *horizon_seperate = get_candidate_seperate_line_horizon();
                 y_start = lineCount*(CANDIDATE_WINDOW_HEIGHT*m_screenRatio+CANDIDATE_HORIZON_LINE_HEIGHT);
                 elm_table_pack(m_candidateMoreTable, horizon_seperate, cur_item_sum, y_start,

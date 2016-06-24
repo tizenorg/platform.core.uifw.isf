@@ -543,8 +543,7 @@ static void _item_selected(void *data, Evas_Object *obj, void *event_info)
                         emoticon_list_recent.erase(it);
                         emoticon_list_recent.insert(emoticon_list_recent.begin(), ti->keyevent);
                     }
-                }
-                else {
+                } else {
                     it = find(emoticon_list_recent.begin(), emoticon_list_recent.end(), ti->keyevent);
                     if (it != emoticon_list_recent.end())
                         emoticon_list_recent.erase(it);

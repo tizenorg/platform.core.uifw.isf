@@ -700,11 +700,9 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
                         LOGD("shift state: %d\n", desc->shift_state);
                         if (desc->shift_state == SCL_SHIFT_STATE_OFF) {
                             ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
-                        }
-                        else if (desc->shift_state == SCL_SHIFT_STATE_ON) {
+                        } else if (desc->shift_state == SCL_SHIFT_STATE_ON) {
                             ise_send_event(MVK_Shift_On, KEY_MASK_NULL);
-                        }
-                        else if (desc->shift_state == SCL_SHIFT_STATE_LOCK) {
+                        } else if (desc->shift_state == SCL_SHIFT_STATE_LOCK) {
                             ise_send_event(MVK_Shift_Lock, KEY_MASK_NULL);
                         }
                         ret = SCL_EVENT_PASS_ON;
@@ -713,9 +711,7 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
             }
             g_need_send_shift_event = FALSE;
         }
-    }
-    else if (noti_type == SCL_UINOTITYPE_POPUP_OPENING)
-    {
+    } else if (noti_type == SCL_UINOTITYPE_POPUP_OPENING) {
         vector<string>::reverse_iterator iter = g_recent_used_punctuation.rbegin();
         int punc_pos = 0;
         for (; iter != g_recent_used_punctuation.rend(); ++iter)
@@ -730,9 +726,7 @@ SCLEventReturnType CUIEventCallback::on_event_notification(SCLUINotiType noti_ty
             else
                 g_ui->enable_button("EMOTICON_KEY", true);
         }
-    }
-    else if (noti_type == SCL_UINOTITYPE_POPUP_OPENED)
-    {
+    } else if (noti_type == SCL_UINOTITYPE_POPUP_OPENED) {
         g_popup_opened = TRUE;
         SclNotiPopupOpenedDesc *openedDesc = (SclNotiPopupOpenedDesc *)etc_info;
         if (0 == strcmp(openedDesc->input_mode, "PUNCTUATION_POPUP")) {
@@ -893,8 +887,7 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                 if (!option_window_is_available (OPTION_WINDOW_TYPE_NORMAL))
                     g_core.create_option_window();
                 ret = SCL_EVENT_DONE;
-            }
-            else {
+            } else {
                 const sclchar *input_mode = g_ui->get_input_mode();
                 if ((NULL != input_mode) && (!strcmp(input_mode, "EMOTICON_LAYOUT")))
                 {
@@ -1256,11 +1249,9 @@ ise_create()
 #ifdef _MOBILE
             if ((480 == nwidth) && (800 == nheight)) {
                 entry_path = MAIN_ENTRY_XML_PATH_480X800;
-            }
-            else if ((540 == nwidth) && (960 == nheight)) {
+            } else if ((540 == nwidth) && (960 == nheight)) {
                 entry_path = MAIN_ENTRY_XML_PATH_540X960;
-            }
-            else if ((1440 == nwidth) && (2560 == nheight)) {
+            } else if ((1440 == nwidth) && (2560 == nheight)) {
                 entry_path = MAIN_ENTRY_XML_PATH_1440X2560;
             }
 #endif

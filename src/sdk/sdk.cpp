@@ -173,10 +173,8 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                             if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
                                 g_ui->set_autocapital_shift_state(TRUE);
                                 g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
-                            }
-
-                            // normal layout means the AC is on
-                            else {
+                            } else {
+                                // normal layout means the AC is on
                                 g_ui->set_autocapital_shift_state(FALSE);
                                 ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
                                 set_caps_mode(g_keyboard_state.caps_mode);

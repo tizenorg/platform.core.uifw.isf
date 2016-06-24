@@ -738,8 +738,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
                     elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
                         NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
                 elm_genlist_item_select_mode_set(option_elements[type].selected_language_item[loop], ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-            }
-            else {
+            } else {
                 option_elements[type].selected_language_item[loop] = NULL;
             }
         }
