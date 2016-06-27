@@ -1343,7 +1343,7 @@ public:
         m_should_shared_ise = should_shared_ise;
     }
     //SCIM_TRANS_CMD_PROCESS_KEY_EVENT
-    bool process_key_event (KeyEvent& key, _OUT_ uint32& result) {
+    bool process_key_event (KeyEvent& key, uint32 serial) {
         LOGD ("");
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -1353,7 +1353,7 @@ public:
             uint32 ctx;
             get_focused_context (client, context);
             ctx = get_helper_ic (client, context);
-            return m_panel_agent_manager.process_key_event (it->second.id, ctx, m_current_helper_uuid, key, result);
+            return m_panel_agent_manager.process_key_event (it->second.id, ctx, m_current_helper_uuid, key, serial);
         }
 
         return false;
@@ -3409,6 +3409,19 @@ client context helpers: %d, helpers uuid count: %d",
     //    del_client (client);
     //}
 
+    
+    void process_key_event_done (KeyEvent &key, uint32 ret, uint32 serial) {
+        LOGD ("");
+        int     focused_client;
+        uint32  focused_context;
+        String  focused_uuid = get_focused_context (focused_client, focused_context);
+        ClientInfo client_info = socket_get_client_info (focused_client);
+
+        if (client_info.type == FRONTEND_CLIENT) {
+            m_panel_agent_manager.process_key_event_done (focused_client, focused_context, key, ret, serial);
+        }
+    }
+
     void socket_reset_helper_input_context (const String& uuid, int client, uint32 context) {
         HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
 
@@ -4037,9 +4050,9 @@ void InfoManager::hide_helper_ise (void)
 }
 
 //SCIM_TRANS_CMD_PROCESS_KEY_EVENT
-bool InfoManager::process_key_event (KeyEvent& key, _OUT_ uint32& result)
+bool InfoManager::process_key_event (KeyEvent& key, uint32 serial)
 {
-    return m_impl->process_key_event (key, result);
+    return m_impl->process_key_event (key, serial);
 }
 
 //ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY
@@ -4682,6 +4695,13 @@ void InfoManager::socket_helper_send_private_command (int client, String command
 //{
 //    m_impl->UPDATE_ISE_EXIT (client);
 //}
+
+//ISM_TRANS_CMD_PROCESS_KEY_EVENT_DONE
+void InfoManager::process_key_event_done (KeyEvent &key, uint32 ret, uint32 serial)
+{
+    m_impl->process_key_event_done (key, ret, serial);
+}
+
 
 bool InfoManager::check_privilege_by_sockfd (int client_id, const String& privilege) {
     return m_impl->check_privilege_by_sockfd (client_id, privilege);

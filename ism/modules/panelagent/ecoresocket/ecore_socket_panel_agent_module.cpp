@@ -768,7 +768,7 @@ private:
         m_send_trans.write_to_socket(client_socket);
     }
 
-    bool process_key_event(int client, uint32 context, const String& uuid, KeyEvent& key, _OUT_ uint32& result) {
+    bool process_key_event(int client, uint32 context, const String& uuid, KeyEvent& key, uint32 serial) {
         LOGD ("client id:%d\n", client);
 
         Socket client_socket(client);
@@ -781,12 +781,10 @@ private:
         trans.put_data(uuid);
         trans.put_command(SCIM_TRANS_CMD_PROCESS_KEY_EVENT);
         trans.put_data(key);
+        trans.put_data(serial);
         int cmd;
 
-        if (trans.write_to_socket(client_socket)
-            && trans.read_from_socket(client_socket)
-            && trans.get_command(cmd) && cmd == SCIM_TRANS_CMD_REPLY
-            && trans.get_data(result)) {
+        if (trans.write_to_socket(client_socket)) {
             SCIM_DEBUG_MAIN(1) << __func__ << " success\n";
             return true;
         } else {
@@ -2537,6 +2535,16 @@ private:
                 //FIXME: useless
                 //} else if (cmd == ISM_TRANS_CMD_UPDATE_ISE_EXIT) {
                 //    m_info_manager->UPDATE_ISE_EXIT(client_id);
+                } else if (cmd == ISM_TRANS_CMD_PROCESS_KEY_EVENT_DONE) {
+                    KeyEvent key;
+                    uint32 ret;
+                    uint32 serial;
+
+                    if (m_recv_trans.get_data(key) && m_recv_trans.get_data(ret) && m_recv_trans.get_data(serial)) {
+                        m_info_manager->process_key_event_done(key, ret, serial);
+                    } else {
+                        LOGW ("wrong format of transaction\n");
+                    }
                 } else {
                     LOGW ("unknow cmd: %d\n", cmd);
                 }
