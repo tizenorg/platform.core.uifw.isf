@@ -473,7 +473,7 @@ public:
      *
      * @return none.
      */
-    virtual bool process_key_event (int client, uint32 context, const String& uuid, KeyEvent& key, _OUT_ uint32& result);
+    virtual bool process_key_event (int client, uint32 context, const String& uuid, KeyEvent& key, uint32 serial);
 
     /**
      * @brief get_helper_geometry.
@@ -789,6 +789,15 @@ public:
     * @return none.
     */
     virtual bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
+
+    /**
+    * @brief process_key_event_done.
+    *
+    * @param
+    *
+    * @return none.
+    */
+    virtual void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
 };
 
 /**  @} */
