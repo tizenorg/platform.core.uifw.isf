@@ -306,7 +306,7 @@ public:
     void set_helper_bidi_direction (int client, uint32 context, const String& uuid, uint32& direction);
     void set_helper_caps_mode (int client, uint32 context, const String& uuid, uint32& mode);
     void show_helper_option_window (int client, uint32 context, const String& uuid);
-    bool process_key_event (int client, uint32 context, const String& uuid, KeyEvent& key, _OUT_ uint32& result);
+    bool process_key_event (int client, uint32 context, const String& uuid, KeyEvent& key, uint32 serial);
     bool get_helper_geometry (int client, uint32 context, String& uuid, _OUT_ struct rectinfo& info);
     void get_helper_imdata (int client, uint32 context, String& uuid, _OUT_ char** imdata, _OUT_ size_t& len);
     void get_helper_layout (int client, uint32 context, String& uuid, uint32& layout);
@@ -342,6 +342,7 @@ public:
     void helper_attach_input_context_and_update_screen (int client, std::vector < std::pair <uint32, String> >& helper_ic_index, uint32 current_screen);
     void hide_helper_ise (int id, uint32 context);
     bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
+    void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
 };
 
 /**  @} */

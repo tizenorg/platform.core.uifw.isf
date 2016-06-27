@@ -490,12 +490,12 @@ void PanelAgentManager::show_helper_option_window (int id, uint32 context_id, co
         _p->show_helper_option_window (id, context_id, uuid);
 }
 
-bool PanelAgentManager::process_key_event (int id, uint32 context_id, const String& uuid, KeyEvent& key, _OUT_ uint32& result)
+bool PanelAgentManager::process_key_event (int id, uint32 context_id, const String& uuid, KeyEvent& key, uint32 serial)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
 
     if (!_p.null ())
-        return _p->process_key_event (id, context_id, uuid, key, result);
+        return _p->process_key_event (id, context_id, uuid, key, serial);
     return false;
 }
 
@@ -781,6 +781,15 @@ void PanelAgentManager::hide_helper_ise (int id, uint32 context)
     if (!_p.null ())
         _p->hide_helper_ise (id, context);
 }
+
+void PanelAgentManager::process_key_event_done(int id, uint32 context_id, KeyEvent &key, uint32 ret, uint32 serial)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->process_key_event_done (id, context_id, key, ret, serial);
+}
+
 
 
 } /* namespace scim */
