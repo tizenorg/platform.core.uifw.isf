@@ -300,7 +300,7 @@ void PanelAgentBase::show_helper_option_window (int client, uint32 context, cons
     LOGW ("not implemented for %s", m_name.c_str ());
 }
 
-bool PanelAgentBase::process_key_event (int client, uint32 context, const String& uuid, KeyEvent& key, _OUT_ uint32& result)
+bool PanelAgentBase::process_key_event (int client, uint32 context, const String& uuid, KeyEvent& key, uint32 serial)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
     return false;
@@ -499,6 +499,12 @@ bool PanelAgentBase::process_input_device_event(int client, uint32 context, cons
     LOGW("not implemented for %s", m_name.c_str());
     return false;
 }
+
+void PanelAgentBase::process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial)
+{
+    LOGW("not implemented for %s", m_name.c_str());
+}
+
 
 } /* namespace scim */
 
