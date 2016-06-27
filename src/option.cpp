@@ -186,6 +186,9 @@ static void reset_settings_popup_response_cancel_cb(void *data, Evas_Object *obj
 static void reset_settings_popup(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *popup = elm_popup_add(elm_object_top_widget_get(obj));
+#ifdef _CIRCLE
+    elm_object_style_set(popup, "circle");
+#endif
     elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
     eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
     evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -931,6 +934,9 @@ static void language_view_popup_show(Evas_Object *obj, SCLOptionWindowType type,
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
         Evas_Object *top_level = elm_object_top_widget_get(obj);
         option_elements[type].lang_popup = elm_popup_add(top_level);
+#ifdef _CIRCLE
+    elm_object_style_set(option_elements[type].lang_popup, "circle");
+#endif
         elm_object_text_set(option_elements[type].lang_popup, content_text);
         elm_popup_align_set(option_elements[type].lang_popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
         elm_popup_timeout_set(option_elements[type].lang_popup, 3.0);
