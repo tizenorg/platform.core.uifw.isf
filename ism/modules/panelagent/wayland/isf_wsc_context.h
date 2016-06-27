@@ -80,8 +80,10 @@ struct _WSCContextISF {
     KeycodeRepository _keysym2keycode;
 
     keyboard_input_key_handler_t key_handler;
-
+    Ecore_Fd_Handler* surrounding_text_fd_read_handler;
+    Ecore_Fd_Handler* selection_text_fd_read_handler;
     char *surrounding_text;
+    char *selection_text;
     char *preedit_str;
     char *language;
 

@@ -34,6 +34,7 @@
 #include <pthread.h>
 #include <langinfo.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include <signal.h>
 #include <stdlib.h>
@@ -401,6 +402,7 @@ _wsc_im_ctx_cursor_position(void *data, struct wl_input_method_context *im_ctx, 
     LOGD ("im_context = %p cursor_pos = %d\n", im_ctx, cursor_pos);
     if (!wsc_ctx || !wsc_ctx->impl) return;
     wsc_ctx->impl->cursor_pos = cursor_pos;
+    wsc_ctx->surrounding_cursor = cursor_pos;
     caps_mode_check (wsc_ctx, EINA_FALSE, EINA_TRUE);
     g_info_manager->socket_update_cursor_position (cursor_pos);
 }
@@ -1291,6 +1293,10 @@ isf_wsc_context_add (WSCContextISF *wsc_ctx)
     WSCContextISF* context_scim = wsc_ctx;
 
     if (!context_scim) return;
+    context_scim->surrounding_text_fd_read_handler = NULL;
+    context_scim->selection_text_fd_read_handler = NULL;
+    context_scim->surrounding_text = NULL;
+    context_scim->selection_text = NULL;
 
     context_scim->impl                      = new_ic_impl (context_scim);
     if (context_scim->impl == NULL) {
@@ -1332,6 +1338,30 @@ isf_wsc_context_del (WSCContextISF *wsc_ctx)
     if (!_ic_list) return;
 
     WSCContextISF *context_scim = wsc_ctx;
+
+    if (context_scim->selection_text_fd_read_handler) {
+        int fd = ecore_main_fd_handler_fd_get(context_scim->selection_text_fd_read_handler);
+        close(fd);
+        ecore_main_fd_handler_del(context_scim->selection_text_fd_read_handler);
+        context_scim->selection_text_fd_read_handler = NULL;
+    }
+
+    if (context_scim->selection_text) {
+        free (context_scim->selection_text);
+        context_scim->selection_text = NULL;
+    }
+
+    if (context_scim->surrounding_text_fd_read_handler) {
+        int fd = ecore_main_fd_handler_fd_get(context_scim->surrounding_text_fd_read_handler);
+        close(fd);
+        ecore_main_fd_handler_del(context_scim->surrounding_text_fd_read_handler);
+        context_scim->surrounding_text_fd_read_handler = NULL;
+    }
+
+    if (context_scim->surrounding_text) {
+        free (context_scim->surrounding_text);
+        context_scim->surrounding_text = NULL;
+    }
 
     if (context_scim) {
         if (context_scim->id != _ic_list->id) {
@@ -2707,12 +2737,85 @@ public:
         _update_preedit_string (context_id, wstr, attrs, caret);
     }
 
+    static Eina_Bool
+    surrounding_text_fd_read_func(void* data, Ecore_Fd_Handler* fd_handler) {
+        if (fd_handler == NULL || data == NULL)
+            return ECORE_CALLBACK_RENEW;
+
+        WSCContextISF* wsc_ctx = (WSCContextISF*)data;
+
+        int fd = ecore_main_fd_handler_fd_get(fd_handler);
+        char buff[512];
+        int len = read (fd, buff, sizeof(buff));
+        if (len == 0) {
+            LOGD ("update");
+            g_info_manager->socket_update_surrounding_text (wsc_ctx->surrounding_text ? wsc_ctx->surrounding_text : "", wsc_ctx->surrounding_cursor);
+        } else if (len < 0) {
+            LOGW ("failed");
+        } else {
+            buff[len] = '\0';
+            if (wsc_ctx->surrounding_text == NULL) {
+                wsc_ctx->surrounding_text = (char*)malloc (len + 1);
+                if (wsc_ctx->surrounding_text) {
+                    memcpy (wsc_ctx->surrounding_text, buff, len);
+                    wsc_ctx->surrounding_text[len] = '\0';
+                    return ECORE_CALLBACK_RENEW;
+                } else {
+                    LOGE ("malloc failed");
+                }
+            } else {
+                int old_len = strlen(wsc_ctx->surrounding_text);
+                void * _new = realloc (wsc_ctx->surrounding_text, len + old_len + 1);
+                if (_new) {
+                    wsc_ctx->surrounding_text = (char*)_new;
+                    memcpy (wsc_ctx->surrounding_text + old_len, buff, len);
+                    wsc_ctx->surrounding_text[old_len + len] = '\0';
+                    return ECORE_CALLBACK_RENEW;
+                } else {
+                    LOGE ("realloc failed");
+                }
+            }
+        }
+
+        if (wsc_ctx->surrounding_text_fd_read_handler) {
+            close(fd);
+            ecore_main_fd_handler_del(wsc_ctx->surrounding_text_fd_read_handler);
+            wsc_ctx->surrounding_text_fd_read_handler = NULL;
+        }
+
+        if (wsc_ctx->surrounding_text) {
+            free (wsc_ctx->surrounding_text);
+            wsc_ctx->surrounding_text = NULL;
+        }
+
+        return ECORE_CALLBACK_RENEW;
+    }
+
     void
-    socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after, const int fd) {
-        LOGD ("client id:%d, fd:%d", id, fd);
+    socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
+        LOGD ("client id:%d", id);
         WSCContextISF* ic = find_ic (context_id);
-        if (ic)
-            wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, fd);
+
+        int filedes[2];
+        if (pipe2(filedes,O_CLOEXEC|O_NONBLOCK) ==-1 ) {
+            LOGW ("create pipe failed");
+            return;
+        }
+        LOGD("%d,%d",filedes[0],filedes[1]);
+        wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, filedes[1]);
+        ecore_wl_flush();
+        close (filedes[1]);
+        if (ic->surrounding_text_fd_read_handler) {
+            int fd = ecore_main_fd_handler_fd_get(ic->surrounding_text_fd_read_handler);
+            close(fd);
+            ecore_main_fd_handler_del(ic->surrounding_text_fd_read_handler);
+            ic->surrounding_text_fd_read_handler = NULL;
+        }
+        if (ic->surrounding_text) {
+            free (ic->surrounding_text);
+            ic->surrounding_text = NULL;
+        }
+        ic->surrounding_text_fd_read_handler = ecore_main_fd_handler_add(filedes[0], ECORE_FD_READ, surrounding_text_fd_read_func, ic, NULL, NULL);
     }
 
     void
@@ -2752,14 +2855,88 @@ public:
         }
     }
 
+    static Eina_Bool
+    selection_text_fd_read_func(void* data, Ecore_Fd_Handler* fd_handler) {
+        if (fd_handler == NULL || data == NULL)
+            return ECORE_CALLBACK_RENEW;
+
+        WSCContextISF* wsc_ctx = (WSCContextISF*)data;
+        LOGD("");
+        int fd = ecore_main_fd_handler_fd_get(fd_handler);
+        char buff[512];
+        int len = read (fd, buff, sizeof(buff));
+        if (len == 0) {
+            LOGD ("update");
+            g_info_manager->socket_update_selection (wsc_ctx->selection_text ? wsc_ctx->selection_text : "");
+        } else if (len < 0) {
+            LOGW ("failed");
+        } else {
+            buff[len] = '\0';
+            if (wsc_ctx->selection_text == NULL) {
+                wsc_ctx->selection_text = (char*)malloc (len + 1);
+                if (wsc_ctx->selection_text) {
+                    memcpy (wsc_ctx->selection_text, buff, len);
+                    wsc_ctx->selection_text[len] = '\0';
+                    return ECORE_CALLBACK_RENEW;
+                } else {
+                    LOGE ("malloc failed");
+                }
+            } else {
+                int old_len = strlen(wsc_ctx->selection_text);
+                void * _new = realloc (wsc_ctx->selection_text, len + old_len + 1);
+                if (_new) {
+                    wsc_ctx->selection_text = (char*)_new;
+                    memcpy (wsc_ctx->selection_text + old_len, buff, len);
+                    wsc_ctx->selection_text[old_len + len] = '\0';
+                    return ECORE_CALLBACK_RENEW;
+                } else {
+                    LOGE ("realloc failed");
+                }
+            }
+        }
+
+        if (wsc_ctx->selection_text_fd_read_handler) {
+            close(fd);
+            ecore_main_fd_handler_del(wsc_ctx->selection_text_fd_read_handler);
+            wsc_ctx->selection_text_fd_read_handler = NULL;
+        }
+
+        if (wsc_ctx->selection_text) {
+            free (wsc_ctx->selection_text);
+            wsc_ctx->selection_text = NULL;
+        }
+
+        return ECORE_CALLBACK_RENEW;
+    }
+
     void
-    socket_helper_get_selection (int id, uint32 context_id, const int fd) {
-        LOGD ("client id:%d, fd:%d", id, fd);
+    socket_helper_get_selection (int id, uint32 context_id) {
+        LOGD ("client id:%d", id);
         WSCContextISF* ic = find_ic (context_id);
 
-        if (ic) {
-            wl_input_method_context_get_selection_text (ic->im_ctx, fd);
+        int filedes[2];
+        if (pipe2(filedes,O_CLOEXEC|O_NONBLOCK) ==-1 ) {
+            LOGW ("create pipe failed");
+            return;
         }
+        LOGD("%d,%d",filedes[0],filedes[1]);
+        wl_input_method_context_get_selection_text(ic->im_ctx, filedes[1]);
+        ecore_wl_flush();
+        close (filedes[1]);
+
+        if (ic->selection_text_fd_read_handler) {
+            int fd = ecore_main_fd_handler_fd_get(ic->selection_text_fd_read_handler);
+            close(fd);
+            ecore_main_fd_handler_del(ic->selection_text_fd_read_handler);
+            ic->selection_text_fd_read_handler = NULL;
+        }
+
+        if (ic->selection_text) {
+            free (ic->selection_text);
+            ic->selection_text = NULL;
+        }
+
+        ic->selection_text_fd_read_handler = ecore_main_fd_handler_add(filedes[0], ECORE_FD_READ, selection_text_fd_read_func, ic, NULL, NULL);
     }
 
     void process_key_event_done(int id, uint32 context_id, KeyEvent &key, uint32 ret, uint32 serial) {
