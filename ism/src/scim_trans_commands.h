@@ -532,6 +532,9 @@ const int ISM_TRANS_CMD_TRANSACTION_CONTINUE              = 173;
 const int SCIM_TRANS_CMD_GET_SELECTION                    = 174;
 const int SCIM_TRANS_CMD_SET_SELECTION                    = 175;
 const int SCIM_TRANS_CMD_SEND_PRIVATE_COMMAND             = 176;
+const int SCIM_TRANS_CMD_GET_SURROUNDING_TEXT_FROM_FD     = 177;
+const int SCIM_TRANS_CMD_GET_SELECTION_FROM_FD            = 178;
+
 
 // Socket IMEngine to Socket FrontEnd
 const int SCIM_TRANS_CMD_NEW_INSTANCE                     = 200;

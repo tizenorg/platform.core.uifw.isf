@@ -1998,7 +1998,7 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (m_impl->magic_active);
-    m_impl->send.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT);
+    m_impl->send.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT_FROM_FD);
     m_impl->send.put_data ("");
     m_impl->send.put_data (maxlen_before);
     m_impl->send.put_data (maxlen_after);
@@ -2120,7 +2120,7 @@ HelperAgent::get_selection_text (String &text)
     m_impl->send.clear ();
     m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
     m_impl->send.put_data (m_impl->magic_active);
-    m_impl->send.put_command (SCIM_TRANS_CMD_GET_SELECTION);
+    m_impl->send.put_command (SCIM_TRANS_CMD_GET_SELECTION_FROM_FD);
     m_impl->send.put_data ("");
     m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
 #ifdef WAYLAND

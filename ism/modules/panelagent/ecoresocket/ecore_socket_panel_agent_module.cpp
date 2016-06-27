@@ -2471,7 +2471,7 @@ private:
                         m_info_manager->socket_helper_select_candidate(index);
                     else
                         LOGW ("wrong format of transaction\n");
-                } else if (cmd == SCIM_TRANS_CMD_GET_SURROUNDING_TEXT) {
+                } else if (cmd == SCIM_TRANS_CMD_GET_SURROUNDING_TEXT_FROM_FD) {
                     String uuid;
                     uint32 maxlen_before;
                     uint32 maxlen_after;
@@ -2499,7 +2499,7 @@ private:
                     } else {
                         LOGW ("wrong format of transaction\n");
                     }
-                } else if (cmd == SCIM_TRANS_CMD_GET_SELECTION) {
+                } else if (cmd == SCIM_TRANS_CMD_GET_SELECTION_FROM_FD) {
                     String uuid;
 
                     if (m_recv_trans.get_data(uuid)) {
