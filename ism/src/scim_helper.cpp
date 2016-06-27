@@ -523,6 +523,19 @@ public:
         si->signal_connect_send_private_command (
             slot (this, &HelperAgent::HelperAgentImpl::slot_send_private_command));
     }
+public:
+    void process_key_event_done(KeyEvent &key, uint32 ret, uint32 serial) {
+        if (socket_active.is_connected ()) {
+            send.clear ();
+            send.put_command (SCIM_TRANS_CMD_REQUEST);
+            send.put_data (magic_active);
+            send.put_command (ISM_TRANS_CMD_PROCESS_KEY_EVENT_DONE);
+            send.put_data (key);
+            send.put_data (ret);
+            send.put_data (serial);
+            send.write_to_socket (socket_active, magic_active);
+        }
+    }
 private:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
 };
@@ -1043,7 +1056,8 @@ HelperAgent::filter_event ()
             {
                 KeyEvent key;
                 uint32 ret = 0;
-                if (m_impl->recv.get_data (key))
+                uint32 serial = 0;
+                if (m_impl->recv.get_data (key) && m_impl->recv.get_data (serial))
                     m_impl->signal_process_key_event(this, key, ret);
                 else
                     LOGW ("wrong format of transaction\n");
@@ -1053,10 +1067,8 @@ HelperAgent::filter_event ()
                         ret = m_impl->si->process_key_event (key);
                         LOGD("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
                     }
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (ret);
-                m_impl->send.write_to_socket (m_impl->socket);
+
+                m_impl->process_key_event_done (key, ret, serial);
                 break;
             }
             case ISM_TRANS_CMD_SET_LAYOUT:

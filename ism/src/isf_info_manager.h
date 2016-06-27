@@ -582,7 +582,7 @@ public:
     void hide_helper_ise (void);
 
     //SCIM_TRANS_CMD_PROCESS_KEY_EVENT
-    bool process_key_event (KeyEvent& key, _OUT_ uint32& result);
+    bool process_key_event (KeyEvent& key, uint32 serial);
 
     //ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY
     void get_input_panel_geometry (int client_id, _OUT_ struct rectinfo& info);
@@ -924,6 +924,10 @@ public:
 
     //ISM_TRANS_CMD_UPDATE_ISE_EXIT
     //void UPDATE_ISE_EXIT (int client);
+
+    //ISM_TRANS_CMD_PROCESS_KEY_EVENT_DONE
+    void process_key_event_done (KeyEvent &key, uint32 ret, uint32 serial);
+
     bool check_privilege_by_sockfd (int client_id, const String& privilege);
 
     void add_client (int client_id, uint32 key, ClientType type);
