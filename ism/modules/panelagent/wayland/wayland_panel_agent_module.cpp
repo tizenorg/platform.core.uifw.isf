@@ -1587,7 +1587,6 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 
     if (!wsc_ctx) return;
 
-    Eina_Bool ret = EINA_FALSE;
     KeyEvent key(symcode, wsc_ctx->modifiers);
     bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
 
@@ -1627,27 +1626,14 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
     }
 
     if (!ignore_key) {
-        ret = EINA_TRUE;
 
         if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
             LOGD ("ic is off");
-            ret = EINA_FALSE;
         } else {
-            uint32 _ret;
-            g_info_manager->process_key_event (key, _ret);
-            ret = (Eina_Bool)_ret;
+            static uint32 _serial = 0;
+            g_info_manager->process_key_event (key, ++_serial);
         }
-
-        if (ret == EINA_FALSE) {
-            if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
-                if (key.code == SCIM_KEY_space ||
-                    key.code == SCIM_KEY_KP_Space)
-                    autoperiod_insert (wsc_ctx);
-            }
-        }
-    }
-
-    if (ret == EINA_FALSE) {
+    } else {
         send_wl_key_event (wsc_ctx, key, false);
     }
 }
@@ -2773,6 +2759,22 @@ public:
 
         if (ic) {
             wl_input_method_context_get_selection_text (ic->im_ctx, fd);
+        }
+    }
+
+    void process_key_event_done(int id, uint32 context_id, KeyEvent &key, uint32 ret, uint32 serial) {
+        LOGD ("client id:%d", id);
+        WSCContextISF* ic = find_ic (context_id);
+        if (ret == EINA_FALSE) {
+            if (key.is_key_press()) {
+                if (key.code == SCIM_KEY_space ||
+                    key.code == SCIM_KEY_KP_Space)
+                    autoperiod_insert (ic);
+            }
+        }
+
+        if (ret == EINA_FALSE) {
+            send_wl_key_event (ic, key, false);
         }
     }
 };

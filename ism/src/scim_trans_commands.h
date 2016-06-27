@@ -682,6 +682,8 @@ const int ISM_TRANS_CMD_EXPAND_CANDIDATE                  = 1214;
 const int ISM_TRANS_CMD_CONTRACT_CANDIDATE                = 1215;
 const int ISM_TRANS_CMD_UPDATE_ISE_EXIT                   = 1216;
 const int ISM_TRANS_CMD_SELECT_CANDIDATE                  = 1217;
+const int ISM_TRANS_CMD_PROCESS_KEY_EVENT_DONE            = 1218;
+
 
 /* Panel to ISE */
 const int ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW        = 1251;
