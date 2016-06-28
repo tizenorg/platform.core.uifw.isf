@@ -984,21 +984,6 @@ void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length)
     }
 }
 
-static char *
-insert_text (const char *text, uint32_t offset, const char *insert)
-{
-    int tlen = strlen (text), ilen = strlen (insert);
-    char *new_text = (char*)malloc (tlen + ilen + 1);
-    if (tlen < offset)
-        offset = tlen;
-    memcpy (new_text, text, offset);
-    memcpy (new_text + offset, insert, ilen);
-    memcpy (new_text + offset + ilen, text + offset, tlen - offset);
-    new_text[tlen + ilen] = '\0';
-
-    return new_text;
-}
-
 /* Public functions */
 void
 isf_wsc_context_init (void)
