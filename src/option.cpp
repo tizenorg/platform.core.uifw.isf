@@ -935,7 +935,7 @@ static void language_view_popup_show(Evas_Object *obj, SCLOptionWindowType type,
         Evas_Object *top_level = elm_object_top_widget_get(obj);
         option_elements[type].lang_popup = elm_popup_add(top_level);
 #ifdef _CIRCLE
-    elm_object_style_set(option_elements[type].lang_popup, "circle");
+        elm_object_style_set(option_elements[type].lang_popup, "circle");
 #endif
         elm_object_text_set(option_elements[type].lang_popup, content_text);
         elm_popup_align_set(option_elements[type].lang_popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
