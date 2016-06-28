@@ -360,6 +360,7 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
 {
     Evas_Object *item = NULL;
     ITEMDATA *item_data = (ITEMDATA*)data;
+    const char *ck_style = NULL;
 
     if (item_data) {
         if (!strcmp(part, "elm.icon.right") ||
@@ -369,7 +370,12 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
                 LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
                 if (info) {
                     Evas_Object *ck = elm_check_add(obj);
-                    elm_object_style_set(ck, "default/genlist");
+#ifdef _WEARABLE
+                    ck_style = "on&off";
+#else
+                    ck_style = "default/genlist";
+#endif
+                    elm_object_style_set(ck, ck_style);
                     evas_object_propagate_events_set(ck, EINA_FALSE);
                     if (info->enabled) {
                         elm_check_state_set(ck, TRUE);
