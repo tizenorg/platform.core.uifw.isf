@@ -1217,7 +1217,7 @@ void context_scim_imdata_get (WSCContextISF *wsc_ctx, void* data, int* length)
 static char *
 insert_text (const char *text, uint32_t offset, const char *insert)
 {
-    int tlen = strlen (text), ilen = strlen (insert);
+    uint32_t tlen = strlen (text), ilen = strlen (insert);
     char *new_text = (char*)malloc (tlen + ilen + 1);
     if (tlen < offset)
         offset = tlen;
@@ -1339,6 +1339,7 @@ isf_wsc_context_del (WSCContextISF *wsc_ctx)
     if (!_ic_list) return;
 
     WSCContextISF *context_scim = wsc_ctx;
+    if (!context_scim) return;
 
     if (context_scim->selection_text_fd_read_handler) {
         int fd = ecore_main_fd_handler_fd_get(context_scim->selection_text_fd_read_handler);
@@ -1364,25 +1365,22 @@ isf_wsc_context_del (WSCContextISF *wsc_ctx)
         context_scim->surrounding_text = NULL;
     }
 
-    if (context_scim) {
-        if (context_scim->id != _ic_list->id) {
-            WSCContextISF * pre = _ic_list;
-            WSCContextISF * cur = _ic_list->next;
-            while (cur != NULL) {
-                if (cur->id == context_scim->id) {
-                    pre->next = cur->next;
-                    break;
-                }
-                pre = cur;
-                cur = cur->next;
+    if (context_scim->id != _ic_list->id) {
+        WSCContextISF * pre = _ic_list;
+        WSCContextISF * cur = _ic_list->next;
+        while (cur != NULL) {
+            if (cur->id == context_scim->id) {
+                pre->next = cur->next;
+                break;
             }
-        } else {
-            _ic_list = _ic_list->next;
+            pre = cur;
+            cur = cur->next;
         }
+    } else {
+        _ic_list = _ic_list->next;
     }
 
-    if (context_scim && context_scim->impl) {
-
+    if (context_scim->impl) {
         // Delete the instance.
         // FIXME:
         // In case the instance send out some helper event,
@@ -1407,7 +1405,6 @@ isf_wsc_context_del (WSCContextISF *wsc_ctx)
 
     if (context_scim == _focused_ic)
         _focused_ic = 0;
-
 }
 
 void
@@ -2747,7 +2744,7 @@ public:
 
         int fd = ecore_main_fd_handler_fd_get(fd_handler);
         char buff[512];
-        int len = read (fd, buff, sizeof(buff));
+        int len = read (fd, buff, sizeof(buff) - 1);
         if (len == 0) {
             LOGD ("update");
             g_info_manager->socket_update_surrounding_text (wsc_ctx->surrounding_text ? wsc_ctx->surrounding_text : "", wsc_ctx->surrounding_cursor);
@@ -2795,7 +2792,6 @@ public:
     void
     socket_helper_get_surrounding_text (int id, uint32 context_id, uint32 maxlen_before, uint32 maxlen_after) {
         LOGD ("client id:%d", id);
-        WSCContextISF* ic = find_ic (context_id);
 
         int filedes[2];
         if (pipe2(filedes,O_CLOEXEC|O_NONBLOCK) ==-1 ) {
@@ -2803,6 +2799,9 @@ public:
             return;
         }
         LOGD("%d,%d",filedes[0],filedes[1]);
+        WSCContextISF* ic = find_ic (context_id);
+        if (!ic) return;
+
         wl_input_method_context_get_surrounding_text(ic->im_ctx, maxlen_before, maxlen_after, filedes[1]);
         ecore_wl_flush();
         close (filedes[1]);
@@ -2865,7 +2864,7 @@ public:
         LOGD("");
         int fd = ecore_main_fd_handler_fd_get(fd_handler);
         char buff[512];
-        int len = read (fd, buff, sizeof(buff));
+        int len = read (fd, buff, sizeof(buff) - 1);
         if (len == 0) {
             LOGD ("update");
             g_info_manager->socket_update_selection (wsc_ctx->selection_text ? wsc_ctx->selection_text : "");
@@ -2913,7 +2912,6 @@ public:
     void
     socket_helper_get_selection (int id, uint32 context_id) {
         LOGD ("client id:%d", id);
-        WSCContextISF* ic = find_ic (context_id);
 
         int filedes[2];
         if (pipe2(filedes,O_CLOEXEC|O_NONBLOCK) ==-1 ) {
@@ -2921,6 +2919,10 @@ public:
             return;
         }
         LOGD("%d,%d",filedes[0],filedes[1]);
+
+        WSCContextISF* ic = find_ic (context_id);
+        if (!ic) return;
+
         wl_input_method_context_get_selection_text(ic->im_ctx, filedes[1]);
         ecore_wl_flush();
         close (filedes[1]);
