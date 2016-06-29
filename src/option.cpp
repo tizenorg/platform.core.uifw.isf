@@ -72,6 +72,7 @@ struct OPTION_ELEMENTS
         naviframe = NULL;
         genlist = NULL;
         circle_genlist = NULL;
+        language_genlist = NULL;
         lang_popup = NULL;
         back_button = NULL;
         conformant = NULL;
@@ -91,6 +92,7 @@ struct OPTION_ELEMENTS
     Evas_Object *naviframe;
     Evas_Object *genlist;
     Evas_Object *circle_genlist;
+    Evas_Object *language_genlist;
     Evas_Object *lang_popup;
     Evas_Object *back_button;
     Evas_Object *conformant;
@@ -144,6 +146,7 @@ SCLOptionWindowType find_option_window_type(Evas_Object *obj)
         if (option_elements[loop].option_window == obj ||
             option_elements[loop].naviframe == obj ||
             option_elements[loop].genlist == obj ||
+            option_elements[loop].language_genlist == obj ||
             option_elements[loop].lang_popup == obj ||
             option_elements[loop].back_button == obj) {
                 return static_cast<SCLOptionWindowType>(loop);
@@ -376,6 +379,7 @@ static Evas_Object *_language_gl_content_get(void *data, Evas_Object *obj, const
                     ck_style = "default/genlist";
 #endif
                     elm_object_style_set(ck, ck_style);
+                    evas_object_data_set(ck, "parent_genlist", obj);
                     evas_object_propagate_events_set(ck, EINA_FALSE);
                     if (info->enabled) {
                         elm_check_state_set(ck, TRUE);
@@ -838,6 +842,7 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     elm_genlist_homogeneous_set(genlist, EINA_TRUE);
 
     SCLOptionWindowType type = find_option_window_type(naviframe);
+    option_elements[type].language_genlist = genlist;
 
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
 #ifdef _CIRCLE
