@@ -1196,6 +1196,8 @@ isf_imf_context_del (Ecore_IMF_Context *ctx)
         // we need set the focused_ic to this context temporary.
         EcoreIMFContextISF *old_focused = _focused_ic;
         _focused_ic = context_scim;
+        if(context_scim->impl->si && context_scim->impl->si->get_frontend_data() == context_scim)
+            context_scim->impl->si->set_frontend_data (NULL);
         _focused_ic = old_focused;
 
         if (context_scim == _focused_ic) {
