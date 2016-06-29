@@ -505,6 +505,12 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                         new_layout = ISE_LAYOUT_STYLE_HEX;
                         break;
                     case ISE_LAYOUT_STYLE_HEX:
+                        new_layout = ISE_LAYOUT_STYLE_EMOTICON;
+                        break;
+                    case ISE_LAYOUT_STYLE_EMOTICON:
+                        new_layout = ISE_LAYOUT_STYLE_TERMINAL;
+                        break;
+                    case ISE_LAYOUT_STYLE_TERMINAL:
                         new_layout = ISE_LAYOUT_STYLE_NORMAL;
                         break;
                     default:
@@ -516,13 +522,19 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                     case ISE_LAYOUT_STYLE_NORMAL:
                     case ISE_LAYOUT_STYLE_EMAIL:
                     case ISE_LAYOUT_STYLE_URL:
-                        new_layout = ISE_LAYOUT_STYLE_HEX;
+                        new_layout = ISE_LAYOUT_STYLE_TERMINAL;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
                         new_layout = ISE_LAYOUT_STYLE_NORMAL;
                         break;
                     case ISE_LAYOUT_STYLE_HEX:
                         new_layout = ISE_LAYOUT_STYLE_NUMBER;
+                        break;
+                    case ISE_LAYOUT_STYLE_EMOTICON:
+                        new_layout = ISE_LAYOUT_STYLE_HEX;
+                        break;
+                    case ISE_LAYOUT_STYLE_TERMINAL:
+                        new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     default:
                         ;
@@ -670,10 +682,14 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if (key_value) {
             if (!strcmp(key_value, USER_KEYSTRING_EMOTICON)) {
                 ise_init_emoticon_list();
+#ifdef _WEARABLE
+                    current_emoticon_group = EMOTICON_GROUP_1;
+#else
                 if (emoticon_list_recent.size() == 0)
                     current_emoticon_group = EMOTICON_GROUP_1;
                 else
                     current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
+#endif
                 SCLRotation rotation = g_ui->get_rotation();
                 ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
             }
@@ -895,7 +911,20 @@ SCLEventReturnType CUIEventCallback::on_event_key_clicked(SclUIEventDesc event_d
                     {
                         ise_destroy_emoticon_window();
                     }
+#ifdef _WEARABLE
+                    emoticon_group_t group_id = EMOTICON_GROUP_1;
+                    if (current_emoticon_group < EMOTICON_GROUP_3)
+                        group_id = (emoticon_group_t)(current_emoticon_group + 1);
+
+                    const int BUF_LEN = 16;
+                    char buf[BUF_LEN] = {0};
+                    snprintf(buf, BUF_LEN, "%d/3", group_id);
+                    static sclchar *imagelabel[SCL_BUTTON_STATE_MAX] = {
+                           const_cast<sclchar*>(" "), const_cast<sclchar*>(" "), const_cast<sclchar*>(" ")};
+                    g_ui->set_private_key("EMOTICON_GROUP_ID", buf, imagelabel, NULL, 0, const_cast<sclchar*>("EMOTICON_GROUP_NEXT"), TRUE);
+#else
                     emoticon_group_t group_id = ise_get_emoticon_group_id(event_desc.key_value);
+#endif
                     if ((group_id >= 0) && (group_id < MAX_EMOTICON_GROUP))
                     {
                         SCLRotation rotation = g_ui->get_rotation();
@@ -1096,10 +1125,14 @@ ise_show(int ic)
 
                 if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_EMOTICON) {
                     ise_init_emoticon_list();
+#ifdef _WEARABLE
+                    current_emoticon_group = EMOTICON_GROUP_1;
+#else
                     if (emoticon_list_recent.size() == 0)
                         current_emoticon_group = EMOTICON_GROUP_1;
                     else
                         current_emoticon_group = EMOTICON_GROUP_RECENTLY_USED;
+#endif
                     SCLRotation rotation = g_ui->get_rotation();
                     ise_show_emoticon_window(current_emoticon_group, ROTATION_TO_DEGREE(rotation), false, g_core.get_main_window());
                 }

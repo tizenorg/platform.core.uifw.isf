@@ -558,10 +558,10 @@
       <landscape>LYT_PORTRAIT_3X4_IPv6_123.xml</landscape>
     </layouts>
   </mode>
-  <mode name="IPv6_3X4_ABC">
+  <mode name="STT_3X4">
     <layouts>
-      <portrait>LYT_PORTRAIT_3X4_IPv6_ABC.xml</portrait>
-      <landscape>LYT_PORTRAIT_3X4_IPv6_ABC.xml</landscape>
+      <portrait>LYT_PORTRAIT_STT.xml</portrait>
+      <landscape>LYT_PORTRAIT_STT.xml</landscape>
     </layouts>
   </mode>
   <mode name="NUM_3X4">

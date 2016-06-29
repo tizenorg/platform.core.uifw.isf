@@ -1,115 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="360" height="240" magnifier="true" key_width="65" key_height="81" key_spacing="6" row_spacing="10" hit_left="3" hit_right="3" hit_top="12" hit_bottom="23" label_type="QTY_DEFAULT" vibe_style="DEFAULT" sound_style="DEFAULT">
+<layout width="360" height="240" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_NUM">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>
   <background_image>
-    <rec button="normal">button/B09_Qwerty_btn_01.png</rec>
-    <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-    <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
+    <rec button="pressed">key_btn_press.png</rec>
   </background_image>
-  <row x="168" y="240">
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123" width="100">
-      <label>
-        <rec>abc</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
-      </background_image>
-      <key_value>
-        <rec>CUR_LANG</rec>
-      </key_value>
-    </key>
-    <key button_type="selfish" key_type="modechange" label_type="QTY_?123_2">
-      <label>
-        <rec>?123</rec>
-      </label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
-      </background_image>
-      <key_value>
-        <rec>SYM_QTY_1</rec>
-      </key_value>
-    </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_RECENTLY_USED" multitouch_type="settle_previous">
+  <row x="260">
+    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
       <image_label>
-        <rec button="normal">emoticon/icon_recent_nor_55x55.png</rec>
-        <rec button="pressed">emoticon/icon_recent_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_recent_dim_55x55.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_delete.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_delete.png</rec>
       </image_label>
       <key_value>
-      <rec>EMOTICON_GROUP_RECENTLY_USED</rec>
-      </key_value>
-    </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_FACE" multitouch_type="settle_previous">
-      <image_label>
-        <rec button="normal">emoticon/icon_emotion_nor_55x55.png</rec>
-        <rec button="pressed">emoticon/icon_emotion_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_emotion_dim_55x55.png</rec>
-      </image_label>
-      <key_value>
-        <rec>EMOTICON_GROUP_FACE</rec>
-      </key_value>
-    </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_CROWN" multitouch_type="settle_previous">
-      <image_label>
-        <rec button="normal">emoticon/icon_crown_nor_55x55.png</rec>
-        <rec button="pressed">emoticon/icon_crown_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_crown_dim_55x55.png</rec>
-      </image_label>
-      <key_value>
-        <rec>EMOTICON_GROUP_CROWN</rec>
+        <rec>BackSpace</rec>
       </key_value>
     </key>
   </row>
-  <row x="205" y="330">
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_DOG" multitouch_type="settle_previous">
+  <row x="260">
+    <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
       <image_label>
-        <rec button="normal">emoticon/icon_dog_nor_55x55.png</rec>
-        <rec button="pressed">emoticon/icon_dog_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_dog_dim_55x55.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_enter.png</rec>
+        <rec button="disabled">w_sip_3x4_btn_ic_enter_d.png</rec>
       </image_label>
       <key_value>
-        <rec>EMOTICON_GROUP_DOG</rec>
+        <rec>Enter</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_HOUSE" multitouch_type="settle_previous">
+  </row>
+  <row x="260">
+    <key key_type="modechange" image_label_type="IMAGE_3X4_TOP">
       <image_label>
-        <rec button="normal">emoticon/icon_house_nor_55x55.png</rec>
-        <rec button="pressed">emoticon/icon_house_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_house_dim_55x55.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_setting.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_setting.png</rec>
       </image_label>
       <key_value>
-        <rec>EMOTICON_GROUP_HOUSE</rec>
+        <rec>OPTION</rec>
       </key_value>
     </key>
-    <key key_type="user" use_magnifier="true" longkey_magnifier="true" custom_id="EMOTICON_GROUP_STAR" multitouch_type="settle_previous">
-      <image_label>
-        <rec button="normal">emoticon/icon_star_nor_55x55.png</rec>
-        <rec button="pressed">emoticon/icon_star_press_55x55.png</rec>
-        <rec button="disabled">emoticon/icon_star_dim_55x55.png</rec>
-      </image_label>
+  </row>
+  <row x="47">
+    <key key_type="user" label_type="3X4_NUM_0" custom_id="EMOTICON_GROUP_ID" width="133">
+      <label>
+        <rec>1/3</rec>
+      </label>
       <key_value>
-        <rec>EMOTICON_GROUP_STAR</rec>
+        <rec>EMOTICON_GROUP_NEXT</rec>
       </key_value>
     </key>
-    <key button_type="selfish" key_type="control" use_magnifier="true" use_repeat_key="true" width="95">
+    <key button_type="direction" key_type="control" label_type="3X4_DEFAULT_SPACE" image_label_type="IMAGE_3X4_SPACE" width="133">
+      <label>
+        <rec>_LANGUAGE_</rec>
+      </label>
       <image_label>
-        <rec button="normal">B09_icon_back_nor_54x54.png</rec>
-        <rec button="pressed">B09_icon_back_press_54x54.png</rec>
-        <rec button="disabled">B09_icon_back_dim_54x54.png</rec>
+        <rec button="normal">w_sip_3x4_btn_ic_space.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_space.png</rec>
       </image_label>
-      <background_image>
-        <rec button="normal">button/B09_Qwerty_btn_02.png</rec>
-        <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
-        <rec button="disabled">button/B09_Qwerty_btn_02.png</rec>
-      </background_image>
       <key_value>
-        <rec>BackSpace</rec>
+        <rec>Space</rec>
       </key_value>
     </key>
   </row>

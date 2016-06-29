@@ -18,6 +18,59 @@
 #ifdef SUPPORTS_EMOTICONS
 #include "ise-emoticon-mode.h"
 #include <string.h>
+#ifdef _WEARABLE
+int emoticon_list_1[EMOTICON_GROUP_1_NUM] = {
+    0x1f44c,
+    0x1f44d,
+    0x1f44e,
+    0x1f60a,
+    0x1f60d,
+    0x1f61a,
+    0x1f61c,
+    0x1f62a,
+    0x1f62b
+};
+
+int emoticon_list_2[EMOTICON_GROUP_2_NUM] = {
+    0x1f604,
+    0x1f606,
+    0x1f620,
+    0x1f621,
+    0x1f622,
+    0x1f624,
+    0x1f625,
+    0x1f631,
+    0x1f632
+};
+
+int emoticon_list_3[EMOTICON_GROUP_3_NUM] = {
+    0x1f637,
+    0x1f495,
+    0x1f43d,
+    0x1f415,
+    0x1f408,
+    0x1f414,
+    0x1f433,
+    0x1f43c,
+    0x1f42f
+};
+
+int * emoticon_list[] =
+{
+    emoticon_list_1,
+    emoticon_list_2,
+    emoticon_list_3
+};
+
+const char *emoticon_group_name[] =
+{
+    "EMOTICON_GROUP_RECENTLY_USED",
+    "EMOTICON_GROUP_GESTURE",
+    "EMOTICON_GROUP_FACE",
+    "EMOTICON_GROUP_DOG"
+};
+
+#else
 int emoticon_list_1[EMOTICON_GROUP_1_NUM] = {
         0x263a,
         0x1f60a,
@@ -763,7 +816,6 @@ int emoticon_list_5[EMOTICON_GROUP_5_NUM] = {
         0x1f50a
 };
 
-
 int * emoticon_list[] =
 {
     emoticon_list_1,
@@ -782,6 +834,7 @@ const char *emoticon_group_name[] =
     "EMOTICON_GROUP_HOUSE",
     "EMOTICON_GROUP_STAR"
 };
+#endif
 
 extern void ise_read_recent_emoticon_list_from_scim(void);
 

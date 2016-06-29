@@ -232,11 +232,11 @@
     </label_properties>
   </label_properties_table>
   <label_properties_table label_type="3X4_PHONE">
-    <label_properties font_name="Tizen:style=medium" font_size="44" label_alignment="center_middle" padding_X="0" padding_Y="0" inner_width="0" inner_height="56">
+    <label_properties font_name="Tizen:style=medium" font_size="25" label_alignment="center_middle" padding_X="0" padding_Y="0">
       <font_color_record>
-        <color button="normal">0x171717ff</color>
-        <color button="pressed">0x000000ff</color>
-        <color button="disabled">0x17171733</color>
+        <color button="normal">0xfafafaff</color>
+        <color button="pressed">0xfafafa7f</color>
+        <color button="disabled">0xfafafa66</color>
       </font_color_record>
     </label_properties>
     <label_properties font_name="Tizen:style=medium" font_size="30" label_alignment="right_top" padding_X="18" padding_Y="8">

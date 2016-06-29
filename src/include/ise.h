@@ -119,7 +119,7 @@ const ISE_DEFAULT_VALUES g_ise_default_values[ISE_LAYOUT_STYLE_MAX] = {
     {"NUMONLY_3X4",     "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_NUMBERONLY */
     {"",                "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_INVALID */
     {"SYM_4X4_1",       "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_HEX */
-    {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_TERMINAL */
+    {"STT_3X4",         "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_TERMINAL */
     {"",                "DEFAULT",      TRUE },     /* ISE_LAYOUT_STYLE_PASSWORD */
     {"DATETIME_3X4",    "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_DATETIME */
     {"EMOTICON_LAYOUT", "DEFAULT",      FALSE },    /* ISE_LAYOUT_STYLE_EMOTICON */

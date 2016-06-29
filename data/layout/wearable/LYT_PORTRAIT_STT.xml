@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout width="360" height="240" magnifier="true" key_width="90" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_PHONE">
+  <image_path>
+    <button_normal>B09_panel.png</button_normal>
+  </image_path>
+  <background_image>
+    <rec button="pressed">key_btn_press.png</rec>
+  </background_image>
+  <row x="226" y="13">
+    <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4">
+      <image_label>
+        <rec button="normal">w_sip_3x4_btn_ic_delete.png</rec>
+        <rec button="pressed">w_sip_3x4_btn_ic_delete.png</rec>
+      </image_label>
+      <key_value>
+        <rec>BackSpace</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="226">
+    <key key_type="control" custom_id="Enter">
+      <label>
+        <rec>Done</rec>
+      </label>
+      <key_value>
+        <rec>Enter</rec>
+      </key_value>
+    </key>
+  </row>
+  <row x="49" y="41">
+    <key key_type="modechange" image_label_type="IMAGE_3X4">
+      <image_label>
+        <rec button="normal">b_stt_language_icon.png</rec>
+        <rec button="pressed">b_stt_language_icon.png</rec>
+      </image_label>
+      <key_value>
+        <rec>LANGUAGE</rec>
+      </key_value>
+    </key>
+  </row>
+</layout>

@@ -38,6 +38,9 @@
 #ifdef _TV
 #define ISE_HEIGHT_PORT         398
 #define ISE_HEIGHT_LAND         398
+#elif _WEARABLE
+#define ISE_HEIGHT_PORT         240
+#define ISE_HEIGHT_LAND         240
 #else
 #define ISE_HEIGHT_PORT         442
 #define ISE_HEIGHT_LAND         318
@@ -59,14 +62,23 @@
 #define EMOTICON_GENGRID_ITEM_STYLE_PORT2 "ise/customized_default_style_port2"
 #define EMOTICON_GENGRID_ITEM_STYLE_LAND2 "ise/customized_default_style_land2"
 
+#define EMOTICON_GENGRID_ITEM_STYLE_WEARABLE "ise/customized_default_style_wearable"
+
 #define IND_NUM 20
 
+#ifdef _WEARABLE
+#define EMOTICON_ICON_WIDTH_PORT 40
+#define EMOTICON_ICON_HEIGHT_PORT 40
+
+#define EMOTICON_ICON_GAP_WIDTH_PORT 24
+#define EMOTICON_ICON_GAP_HEIGHT_PORT 3
+#else
 #define EMOTICON_ICON_WIDTH_PORT 30
 #define EMOTICON_ICON_HEIGHT_PORT 30
 
 #define EMOTICON_ICON_GAP_WIDTH_PORT 12
 #define EMOTICON_ICON_GAP_HEIGHT_PORT 6
-
+#endif
 #define EMOTICON_WIDTH_PORT (EMOTICON_ICON_WIDTH_PORT + EMOTICON_ICON_GAP_WIDTH_PORT)
 #define EMOTICON_HEIGHT_PORT (EMOTICON_ICON_HEIGHT_PORT + EMOTICON_ICON_GAP_HEIGHT_PORT)
 
@@ -215,6 +227,10 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
             elm_layout_file_set(layout, EMOTICON_EDJ_FILE_PATH, EMOTICON_EDJ_GROUP_LAND_CANDIDATE_OFF);
             evas_object_resize(layout, width, g_ui->get_scaled_y(ISE_HEIGHT_LAND));
         }
+#ifdef _WEARABLE
+        evas_object_resize(layout, 260, 240);
+        evas_object_move(layout, 10, 0);
+#endif
     }
 
     theme = elm_theme_new();
@@ -475,11 +491,14 @@ static void __ise_emoticon_create_item_class(unsigned short int screen_degree)
         gic = elm_gengrid_item_class_new();
 
     if (gic) {
+#ifdef _WEARABLE
+        gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_WEARABLE;
+#else
         if (screen_degree == 0 || screen_degree == 180)
             gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_PORT2;
         else
             gic->item_style = EMOTICON_GENGRID_ITEM_STYLE_LAND2;
-
+#endif
         gic->func.text_get = grid_text_get;
         gic->func.content_get = NULL;
         gic->func.state_get = NULL;
