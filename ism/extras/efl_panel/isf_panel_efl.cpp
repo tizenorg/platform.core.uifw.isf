@@ -449,7 +449,6 @@ static double             _system_scale                     = 1.0;
 #ifdef HAVE_NOTIFICATION
 static NotificationData hwkbd_module_noti                   = {"Input detected from hardware keyboard", "Tap to use virtual keyboard", ISF_KEYBOARD_ICON_FILE, "", 0};
 static NotificationData ise_selector_module_noti            = {"Select input method", NULL, ISF_ISE_SELECTOR_ICON_FILE, "", 0};
-static NotificationData remote_input_noti                   = {"Interface_Share", "Tap to use Interface share", ISF_ISE_SELECTOR_ICON_FILE, "", 0};
 #endif
 
 #if HAVE_TTS
@@ -643,18 +642,9 @@ static void create_notification (NotificationData *noti_data)
         notification_set_display_applist (notification, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY);
 
         app_control_h service = NULL;
-
-        //char *mime_data = "192.168.0.73";
-        /* Read configuations for notification app (ise-selector) */
-        String tv_address = scim_global_config_read (String (SCIM_GLOBAL_CONFIG_DEFAULT_TV_ADDRESS), String (""));
-
         if (app_control_create (&service) == APP_CONTROL_ERROR_NONE) {
             app_control_set_operation (service, APP_CONTROL_OPERATION_DEFAULT);
             app_control_set_app_id (service, noti_data->launch_app.c_str ());
-
-            //app_control_set_mime (service, tv_address.c_str());
-            app_control_add_extra_data (service, "bt_address", "btaaaa");
-            app_control_add_extra_data (service, "ip_address", tv_address.c_str());
 
             notification_set_launch_option (notification, NOTIFICATION_LAUNCH_OPTION_APP_CONTROL, (void *)service);
             ret = notification_insert (notification, &noti_data->noti_id);
@@ -7043,8 +7033,6 @@ int main (int argc, char *argv [])
     String        display_name    = String ();
     char          buf[256]        = {0};
 
-    String remote_input = "org.tizen.interface-share";
-
 #if HAVE_ECOREX
     Ecore_Event_Handler *xclient_message_handler  = NULL;
     Ecore_Event_Handler *xwindow_property_handler = NULL;
@@ -7355,12 +7343,6 @@ int main (int argc, char *argv [])
 
     if (!isf_cynara_initialize())
         LOGW ("Failed to initialize cynara\n");
-
-    /*create noti for remote input */
-    remote_input_noti.launch_app = remote_input.c_str();
-    LOGD ("Create kbd_mode_changer notification with : %s", remote_input.c_str ());
-    create_notification (&remote_input_noti);
-    /*end of create noti for remote input */
 
     elm_run ();
 
