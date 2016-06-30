@@ -243,8 +243,6 @@ _clear_hide_timer()
         return EINA_TRUE;
     }
 
-    will_hide = EINA_FALSE;
-
     return EINA_FALSE;
 }
 
