@@ -555,7 +555,11 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
         option_elements[type].itc_main_item = elm_genlist_item_class_new();
         if (option_elements[type].itc_main_item) {
+#ifdef _WEARABLE
+            option_elements[type].itc_main_item->item_style = "1text.1icon.1";
+#else
             option_elements[type].itc_main_item->item_style = "type1";
+#endif
             option_elements[type].itc_main_item->func.text_get = _main_gl_text_get;
             option_elements[type].itc_main_item->func.content_get = _main_radio_gl_content_get;
             option_elements[type].itc_main_item->func.state_get = _main_gl_state_get;
@@ -564,7 +568,11 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
 
         option_elements[type].itc_language_subitems = elm_genlist_item_class_new();
         if (option_elements[type].itc_language_subitems) {
+#ifdef _WEARABLE
+            option_elements[type].itc_language_subitems->item_style = "1text.1icon.1";
+#else
             option_elements[type].itc_language_subitems->item_style = "type1";
+#endif
             option_elements[type].itc_language_subitems->func.text_get = _main_gl_text_get;
             option_elements[type].itc_language_subitems->func.content_get = _language_gl_content_get;
             option_elements[type].itc_language_subitems->func.state_get = _main_gl_state_get;
