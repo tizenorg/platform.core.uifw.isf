@@ -850,9 +850,10 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
     elm_genlist_homogeneous_set(genlist, EINA_TRUE);
 
     SCLOptionWindowType type = find_option_window_type(naviframe);
-    option_elements[type].language_genlist = genlist;
 
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
+        option_elements[type].language_genlist = genlist;
+
 #ifdef _CIRCLE
         /* Circle Surface Creation */
         Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
