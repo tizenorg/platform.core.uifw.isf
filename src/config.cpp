@@ -32,6 +32,9 @@ extern CSCLCore g_core;
 #ifdef _TV
 #define SOUND_ON        FALSE;
 #define VIBRATION_ON    FALSE;
+#elif _WEARABLE
+#define SOUND_ON        TRUE;
+#define VIBRATION_ON    FALSE;
 #else
 #define SOUND_ON        TRUE;
 #define VIBRATION_ON    TRUE;
