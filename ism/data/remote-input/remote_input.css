@@ -100,23 +100,14 @@ div {
 .cell_width5 {
     width:5%;
 }
-.cell_width7 {
-    width:7%;
-}
 .cell_width10 {
     width:10%;
 }
 .cell_width15 {
     width:15%;
 }
-.cell_width20 {
-    width:20%;
-}
 .cell_width25 {
     width:25%;
-}
-.cell_width30 {
-    width:30%;
 }
 .cell_width33 {
     width:33.33%;
@@ -127,53 +118,20 @@ div {
 .cell_width75 {
     width:75%;
 }
-.cell_height1 {
-    height:1%;
-}
-.cell_height3 {
-    height:3%;
-}
-.cell_height4 {
-    height:4%;
-}
 .cell_height5 {
     height:5%;
-}
-.cell_height6 {
-    height:6%;
 }
 .cell_height7 {
     height:7%;
 }
-.cell_height8 {
-    height:8%;
-}
-.cell_height9 {
-    height:9%;
-}
 .cell_height10 {
     height:10%;
-}
-.cell_height11 {
-    height:11%;
-}
-.cell_height12 {
-    height:12%;
 }
 .cell_height13 {
     height:13%;
 }
-.cell_height14 {
-    height:14%;
-}
 .cell_height15 {
     height:15%;
-}
-.cell_height16 {
-    height:16%;
-}
-.cell_height17 {
-    height:17%;
 }
 .cell_height18 {
     height:18%;
@@ -184,17 +142,8 @@ div {
 .cell_height25 {
     height:25%;
 }
-.cell_height30 {
-    height:30%;
-}
-.cell_height34 {
-    height:34%;
-}
 .cell_height40 {
     height:40%;
-}
-.cell_height43 {
-    height:43%;
 }
 .cell_height50 {
     height:50%;
@@ -498,138 +447,6 @@ div {
 	background-position:center;
 }
 
-.g_up {
-    background:url(imgs/game_up.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_up:active {
-    background:url(imgs/game_up_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_down {
-    background:url(imgs/game_down.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:right center;
-}
-.g_down:active {
-    background:url(imgs/game_down_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:right center;
-}
-.g_left {
-    background:url(imgs/game_left.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_left:active {
-    background:url(imgs/game_left_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_right {
-    background:url(imgs/game_right.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_right:active {
-    background:url(imgs/game_right_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_a {
-    background:url(imgs/game_a.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_a:active {
-    background:url(imgs/game_a_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_b {
-    background:url(imgs/game_b.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_b:active {
-    background:url(imgs/game_b_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_c {
-    background:url(imgs/game_c.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:right center;
-}
-.g_c:active {
-    background:url(imgs/game_c_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:right center;
-}
-.g_d {
-    background:url(imgs/game_d.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_d:active {
-    background:url(imgs/game_d_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_menu {
-    background:url(imgs/game_menu.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_menu:active {
-    background:url(imgs/game_menu_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_exit {
-    background:url(imgs/game_exit.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_exit:active {
-    background:url(imgs/game_exit_pressed.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position:left center;
-}
-.g_title {
-    background:url(imgs/game_title.png);
-    background-size: 100% auto;
-    background-repeat:no-repeat;
-    background-position:center;
-}
-.g_logo {
-    background:url(imgs/game_logo.png);
-    background-size: auto 100%;
-    background-repeat:no-repeat;
-    background-position: right center;
-}
 .cell_gray_font{
     font-size:180%;
     color: #dedede /*{a-font-color}*/;
