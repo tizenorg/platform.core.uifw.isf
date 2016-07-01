@@ -116,6 +116,12 @@ extern CSCLUI *g_ui;
 
 static Evas_Object* create_option_language_view(Evas_Object *naviframe);
 
+#ifdef _WEARABLE
+static Evas_Object* create_smart_typing_view(Evas_Object *naviframe);
+static Evas_Object* create_feedback_view(Evas_Object *naviframe);
+#endif
+
+
 /* This function is called by setup_module.cpp : create_ise_setup_eo() also */
 Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe, SCLOptionWindowType type);
 
@@ -293,6 +299,24 @@ static void _main_gl_sel(void *data, Evas_Object *obj, void *event_info)
                 }
             }
             break;
+#ifdef _WEARABLE
+            case SETTING_ITEM_ID_SMART_INPUT_TITLE: {
+                SCLOptionWindowType type = find_option_window_type(obj);
+
+                if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
+                    create_smart_typing_view(option_elements[type].naviframe);
+                }
+            }
+            break;
+            case SETTING_ITEM_ID_KEY_TAP_TITLE: {
+                SCLOptionWindowType type = find_option_window_type(obj);
+
+                if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
+                    create_feedback_view(option_elements[type].naviframe);
+                }
+            }
+            break;
+#endif
             case SETTING_ITEM_ID_AUTO_CAPITALISE: {
                 if (item) {
                     state = _update_check_button_state(item, obj);
@@ -773,6 +797,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
                     NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void*)(main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE].mode));
         }
 
+#ifndef _WEARABLE
         /* Smart input functions */
         strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_FUNCTIONS, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode = SETTING_ITEM_ID_SMART_INPUT_TITLE;
@@ -819,6 +844,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode = SETTING_ITEM_ID_CHARACTER_PRE;
         elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode));
+#endif
 
         /* More settings */
         strncpy(main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE].main_text, MORE_SETTINGS, ITEM_DATA_STRING_LEN - 1);
@@ -826,6 +852,20 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         item = elm_genlist_item_append(genlist, option_elements[type].itc_group_title, &main_itemdata[SETTING_ITEM_ID_MORE_SETTINGS_TITLE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, NULL);
         elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+#ifdef _WEARABLE
+        /* Smart typing */
+        strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_FUNCTIONS, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode = SETTING_ITEM_ID_SMART_INPUT_TITLE;
+        item = elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode));
+
+        /* Key-tap feedback */
+        strncpy(main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].main_text, KEY_FEEDBACK, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].mode = SETTING_ITEM_ID_KEY_TAP_TITLE;
+        item = elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].mode));
+#endif
 
         /* Reset */
         strncpy(main_itemdata[SETTING_ITEM_ID_RESET].main_text, RESET, ITEM_DATA_STRING_LEN - 1);
@@ -898,6 +938,121 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 
     return genlist;
 }
+
+#ifdef _WEARABLE
+static Evas_Object* create_smart_typing_view(Evas_Object *naviframe)
+{
+    Evas_Object *genlist = elm_genlist_add(naviframe);
+    elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+    elm_genlist_homogeneous_set(genlist, EINA_TRUE);
+
+    SCLOptionWindowType type = find_option_window_type(naviframe);
+
+    if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
+        //option_elements[type].language_genlist = genlist;
+
+#ifdef _CIRCLE
+        /* Circle Surface Creation */
+        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
+        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
+        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+#endif
+
+#ifdef _WEARABLE
+        add_scrollable_title_area(genlist, SMART_FUNCTIONS);
+#endif
+
+        /* Auto capitalize */
+        strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].main_text, AUTO_CAPITALISE, ITEM_DATA_STRING_LEN - 1);
+        strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].sub_text, CAPITALISE_DESC, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode = SETTING_ITEM_ID_AUTO_CAPITALISE;
+        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode));
+
+        /* Auto punctuate */
+        strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].main_text, AUTO_PUNCTUATE, ITEM_DATA_STRING_LEN - 1);
+        strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].sub_text, PUNCTUATE_DESC, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].mode = SETTING_ITEM_ID_AUTO_PUNCTUATE;
+        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].mode));
+
+#ifdef _CIRCLE
+        add_padding_area(genlist);
+#endif
+    }
+
+    evas_object_show(genlist);
+
+    Evas_Object *back_button = elm_button_add(naviframe);
+    elm_object_style_set(back_button, "naviframe/back_btn/default");
+    Elm_Object_Item *navi_it = elm_naviframe_item_push(naviframe, LANGUAGE, back_button, NULL, genlist, NULL);
+#ifdef _WEARABLE
+    elm_naviframe_item_title_enabled_set(navi_it, EINA_FALSE, EINA_FALSE);
+#endif
+    elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, naviframe);
+
+    return genlist;
+}
+
+static Evas_Object* create_feedback_view(Evas_Object *naviframe)
+{
+    Evas_Object *genlist = elm_genlist_add(naviframe);
+    elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+    elm_genlist_homogeneous_set(genlist, EINA_TRUE);
+
+    SCLOptionWindowType type = find_option_window_type(naviframe);
+
+    if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
+        //option_elements[type].language_genlist = genlist;
+
+#ifdef _CIRCLE
+        /* Circle Surface Creation */
+        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
+        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
+        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+#endif
+
+#ifdef _WEARABLE
+        add_scrollable_title_area(genlist, KEY_FEEDBACK);
+#endif
+
+        /* Sound */
+        strncpy(main_itemdata[SETTING_ITEM_ID_SOUND].main_text, SOUND, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_SOUND].mode = SETTING_ITEM_ID_SOUND;
+        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_SOUND],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_SOUND].mode));
+
+        /* Vibration */
+        strncpy(main_itemdata[SETTING_ITEM_ID_VIBRATION].main_text, VIBRATION, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_VIBRATION].mode = SETTING_ITEM_ID_VIBRATION;
+        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_VIBRATION],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_VIBRATION].mode));
+
+        /* Character preview */
+        strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].main_text, CHARACTER_PREVIEW, ITEM_DATA_STRING_LEN - 1);
+        strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].sub_text, PREVIEW_DESC, ITEM_DATA_STRING_LEN - 1);
+        main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode = SETTING_ITEM_ID_CHARACTER_PRE;
+        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
+            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode));
+
+#ifdef _CIRCLE
+        add_padding_area(genlist);
+#endif
+    }
+
+    evas_object_show(genlist);
+
+    Evas_Object *back_button = elm_button_add(naviframe);
+    elm_object_style_set(back_button, "naviframe/back_btn/default");
+    Elm_Object_Item *navi_it = elm_naviframe_item_push(naviframe, LANGUAGE, back_button, NULL, genlist, NULL);
+#ifdef _WEARABLE
+    elm_naviframe_item_title_enabled_set(navi_it, EINA_FALSE, EINA_FALSE);
+#endif
+    elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, naviframe);
+
+    return genlist;
+}
+#endif
 
 void read_options(Evas_Object *naviframe)
 {
