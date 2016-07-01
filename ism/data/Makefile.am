@@ -44,7 +44,6 @@ web_DATA =  remote-input/air.htm \
             remote-input/key_mode.htm \
             remote-input/mouse.htm \
             remote-input/remote_input.css \
-            remote-input/remote_input_game.css \
             remote-input/remote_input.js \
             remote-input/shortcut_icon.png \
             remote-input/tv.htm \

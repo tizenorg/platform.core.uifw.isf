@@ -33,7 +33,6 @@ web_DATA = index.htm\
             jquery.mobile-1.3.1.min.css\
             jquery.mobile-1.3.1.css\
             remote_input.css\
-            remote_input_game.css\
             remote_input.js\
             custom3.css\
             jquery.mobile-1.3.1.min.js\
