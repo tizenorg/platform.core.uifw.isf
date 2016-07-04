@@ -63,7 +63,7 @@ Group: Application
 Requires: %{name} = %{version}-%{release}
 
 %description -n org.tizen.isf-kbd-mode-changer
-isf-kbd-mode-changer
+Keyboard mode changer application
 
 %prep
 %setup -q
