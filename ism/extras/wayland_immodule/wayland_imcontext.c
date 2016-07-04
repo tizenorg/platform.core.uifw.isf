@@ -286,8 +286,18 @@ _send_input_panel_hide_request(Ecore_IMF_Context *ctx)
     _win_focus_out_handler_del ();
 
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
-    if (imcontext && imcontext->text_input)
+    if (imcontext && imcontext->text_input) {
         wl_text_input_hide_input_panel(imcontext->text_input);
+    } else {
+        LOGD("creating temporary context for sending hide request\n");
+        const char *ctx_id = ecore_imf_context_default_id_get();
+        Ecore_IMF_Context *temp_context = ecore_imf_context_add(ctx_id);
+        if (temp_context) {
+            imcontext = (WaylandIMContext *)ecore_imf_context_data_get(temp_context);
+            wl_text_input_hide_input_panel(imcontext->text_input);
+            ecore_imf_context_del(temp_context);
+        }
+    }
 }
 
 static Eina_Bool
@@ -310,7 +320,7 @@ _input_panel_hide_timer_start(void *data)
 static void
 _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
 {
-    LOGD ("");
+    LOGD ("ctx : %p", ctx);
 
     if (!get_using_ctx()) {
         LOGW("Can't hide input_panel because there is no using context!!");
@@ -1419,13 +1429,13 @@ wayland_im_context_del (Ecore_IMF_Context *ctx)
     if (!imcontext) return;
 
     // TIZEN_ONLY(20150708): Support back key
-    if (_focused_ctx == ctx)
-        _focused_ctx = NULL;
-
     if (_hide_req_ctx == ctx && _hide_timer) {
         _input_panel_hide(ctx, EINA_TRUE);
         _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
     }
+
+    if (_focused_ctx == ctx)
+        _focused_ctx = NULL;
 
     if (_show_req_ctx == ctx)
         _show_req_ctx = NULL;
@@ -1520,11 +1530,6 @@ wayland_im_context_focus_out(Ecore_IMF_Context *ctx)
 
     if (!imcontext || !imcontext->input) return;
 
-    // TIZEN_ONLY(20150708): Support back key
-    if (ctx == _focused_ctx)
-        _focused_ctx = NULL;
-    //
-
     if (imcontext->text_input) {
         if (ecore_imf_context_input_panel_enabled_get(ctx))
             ecore_imf_context_input_panel_hide(ctx);
@@ -1532,6 +1537,11 @@ wayland_im_context_focus_out(Ecore_IMF_Context *ctx)
         wl_text_input_deactivate(imcontext->text_input,
                 ecore_wl_input_seat_get(imcontext->input));
     }
+
+    // TIZEN_ONLY(20150708): Support back key
+    if (ctx == _focused_ctx)
+        _focused_ctx = NULL;
+    //
 
     imcontext->input = NULL;
 }
