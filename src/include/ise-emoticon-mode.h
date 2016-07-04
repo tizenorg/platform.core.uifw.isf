@@ -27,6 +27,17 @@
 #define EMOTICON_GROUP_3_NUM 9
 #define EMOTICON_GROUP_4_NUM 0
 #define EMOTICON_GROUP_5_NUM 0
+
+enum emoticon_group_t
+{
+    EMOTICON_GROUP_DESTROY = -1,
+    EMOTICON_GROUP_RECENTLY_USED,
+    EMOTICON_GROUP_1,
+    EMOTICON_GROUP_2,
+    EMOTICON_GROUP_3,
+    MAX_EMOTICON_GROUP,
+};
+
 #else
 #define EMOTICON_GROUP_RECENTLY_USED_NUM 18
 #define EMOTICON_GROUP_1_NUM 77
@@ -34,7 +45,6 @@
 #define EMOTICON_GROUP_3_NUM 178
 #define EMOTICON_GROUP_4_NUM 114
 #define EMOTICON_GROUP_5_NUM 207
-#endif
 
 enum emoticon_group_t
 {
@@ -47,6 +57,7 @@ enum emoticon_group_t
     EMOTICON_GROUP_5,
     MAX_EMOTICON_GROUP,
 };
+#endif
 
 void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_degree, const bool is_candidate_on, void *main_window);
 void ise_change_emoticon_mode(emoticon_group_t emoticon_group);

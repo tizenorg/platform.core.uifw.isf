@@ -107,6 +107,15 @@ extern CSCLCore g_core;
 extern int * emoticon_list[];
 extern CONFIG_VALUES g_config_values;
 
+#ifdef _WEARABLE
+unsigned short int emoticon_group_items[MAX_EMOTICON_GROUP] =
+{
+    EMOTICON_GROUP_RECENTLY_USED_NUM,
+    EMOTICON_GROUP_1_NUM,
+    EMOTICON_GROUP_2_NUM,
+    EMOTICON_GROUP_3_NUM
+};
+#else
 unsigned short int emoticon_group_items[MAX_EMOTICON_GROUP] =
 {
     EMOTICON_GROUP_RECENTLY_USED_NUM,
@@ -116,6 +125,7 @@ unsigned short int emoticon_group_items[MAX_EMOTICON_GROUP] =
     EMOTICON_GROUP_4_NUM,
     EMOTICON_GROUP_5_NUM
 };
+#endif
 
 struct emoticon_item_t
 {
