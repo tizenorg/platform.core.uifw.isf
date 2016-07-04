@@ -67,8 +67,9 @@ static Ecore_IMF_Input_Panel_State _input_panel_state    = ECORE_IMF_INPUT_PANEL
 static Ecore_Event_Handler *_win_focus_out_handler       = NULL;
 static Ecore_Event_Handler *_conformant_change_handler   = NULL;
 
-static Eina_Bool             received_will_hide_event    = EINA_FALSE;
-static Eina_Bool             conformant_reset_done       = EINA_FALSE;
+static Eina_Bool             _received_will_hide_event    = EINA_FALSE;
+static Eina_Bool             _conformant_reset_done       = EINA_FALSE;
+static Evas                 *_active_context_canvas       = NULL;
 //
 
 struct _WaylandIMContext
@@ -279,6 +280,8 @@ static void
 _send_input_panel_hide_request(Ecore_IMF_Context *ctx)
 {
     LOGD ("");
+    if (!ctx) return;
+
     // TIZEN_ONLY(20150708): Support back key
     _hide_req_ctx = NULL;
     //
@@ -300,11 +303,65 @@ _send_input_panel_hide_request(Ecore_IMF_Context *ctx)
     }
 }
 
+static Eina_Bool reset_conformant_area(Ecore_IMF_Context *ctx)
+{
+    Eina_Bool reset = EINA_FALSE;
+    Ecore_Wl_Window *window = NULL;
+
+    if (!ctx) return EINA_FALSE;
+
+    WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+    if (imcontext) window = imcontext->window;
+
+    if (window) {
+        int x = 0, y = 0, w = 0, h = 0;
+        Eina_Bool result = ecore_wl_window_keyboard_geometry_get(window, &x, &y, &w, &h);
+
+        if (result) {
+            if (ecore_imf_context_client_canvas_get(ctx) && ecore_wl_window_conformant_get(window) &&
+                (w != 0 || h != 0)) {
+                reset = EINA_TRUE;
+            }
+        }
+    }
+    LOGD("reset %d", reset);
+    if (reset) {
+        ecore_wl_window_keyboard_geometry_set(window, 0, 0, 0, 0);
+
+        Ecore_Wl_Event_Conformant_Change *ev;
+        if (ev = calloc(1, sizeof(Ecore_Wl_Event_Conformant_Change))) {
+            ev->win = ecore_wl_window_id_get(window);
+            ev->part_type = 1;
+            ev->state = 0;
+            ecore_event_add(ECORE_WL_EVENT_CONFORMANT_CHANGE, ev, NULL, NULL);
+        }
+    }
+
+    return reset;
+}
+
+static void
+_send_will_hide_ack(WaylandIMContext *imcontext)
+{
+    if (!imcontext) return;
+    if (!(imcontext->text_input)) return;
+
+    LOGD("");
+    const char *szWillHideAck = "WILL_HIDE_ACK";
+    wl_text_input_set_input_panel_data(imcontext->text_input, szWillHideAck, strlen(szWillHideAck));
+    _received_will_hide_event = EINA_FALSE;
+}
+
 static Eina_Bool
 _hide_timer_handler(void *data)
 {
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
     _send_input_panel_hide_request(ctx);
+
+    if (!reset_conformant_area(ctx)) {
+        LOGD("No need to reset conformant, sending ACK right away");
+        _send_will_hide_ack((WaylandIMContext *)ecore_imf_context_data_get(ctx));
+    }
 
     _hide_timer = NULL;
     return ECORE_CALLBACK_CANCEL;
@@ -322,6 +379,8 @@ _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
 {
     LOGD ("ctx : %p", ctx);
 
+    if (!ctx) return;
+
     if (!get_using_ctx()) {
         LOGW("Can't hide input_panel because there is no using context!!");
         return;
@@ -332,8 +391,12 @@ _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
     if (instant || (_hide_timer && ecore_timer_pending_get(_hide_timer) <= 0.0)) {
         _clear_hide_timer();
         _send_input_panel_hide_request(ctx);
-    }
-    else {
+
+        if (!reset_conformant_area(ctx)) {
+            LOGD("No need to reset conformant, sending ACK right away");
+            _send_will_hide_ack((WaylandIMContext *)ecore_imf_context_data_get(ctx));
+        }
+    } else {
         _input_panel_hide_timer_start(ctx);
         // TIZEN_ONLY(20150708): Support back key
         _hide_req_ctx = ctx;
@@ -510,16 +573,6 @@ static Eina_Bool _compare_context(Ecore_IMF_Context *ctx1, Ecore_IMF_Context *ct
 }
 //
 
-static void _send_will_hide_ack(WaylandIMContext *imcontext)
-{
-    if (!imcontext) return;
-    if (!(imcontext->text_input)) return;
-
-    const char *szWillHideAck = "WILL_HIDE_ACK";
-    wl_text_input_set_input_panel_data(imcontext->text_input, szWillHideAck, strlen(szWillHideAck));
-    received_will_hide_event = EINA_FALSE;
-}
-
 static Eina_Bool _client_window_focus_out_cb(void *data, int ev_type, void *ev)
 {
     Ecore_Wl_Event_Focus_Out *e = (Ecore_Wl_Event_Focus_Out *)ev;
@@ -567,7 +620,7 @@ static void send_will_hide_ack(Ecore_IMF_Context *ctx)
     } else {
         imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
         if (!imcontext) {
-            LOGD("imcontext is NULL\n");
+            LOGD("imcontext is NULL :%p\n", ctx);
             need_temporary_context = EINA_TRUE;
         }
     }
@@ -578,42 +631,43 @@ static void send_will_hide_ack(Ecore_IMF_Context *ctx)
     if (need_temporary_context) {
         LOGD("creating temporary context for sending WILL_HIDE_ACK\n");
         const char *ctx_id = ecore_imf_context_default_id_get();
-        Ecore_IMF_Context *temp_context = ecore_imf_context_add(ctx_id);
-        if (temp_context) {
-            imcontext = (WaylandIMContext *)ecore_imf_context_data_get(temp_context);
-            if (imcontext) _send_will_hide_ack(imcontext);
-            ecore_imf_context_del(temp_context);
+        ctx = ecore_imf_context_add(ctx_id);
+        if (ctx) {
+            imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
         }
-        return;
     }
 
     if (ctx && imcontext) {
         if (ecore_imf_context_client_canvas_get(ctx) && ecore_wl_window_conformant_get(imcontext->window)) {
-            if (conformant_reset_done && received_will_hide_event) {
-                LOGD("Send will hide ack, conformant_reset_done = 1, received_will_hide_event = 1\n");
+            if (_conformant_reset_done && _received_will_hide_event) {
+                LOGD("Send will hide ack, _conformant_reset_done = 1, received_will_hide_event = 1\n");
                 _send_will_hide_ack(imcontext);
-                conformant_reset_done = EINA_FALSE;
-                received_will_hide_event = EINA_FALSE;
+                _conformant_reset_done = EINA_FALSE;
+                _received_will_hide_event = EINA_FALSE;
             } else {
-                LOGD ("conformant_reset_done=%d, received_will_hide_event=%d\n",
-                    conformant_reset_done, received_will_hide_event);
+                LOGD ("_conformant_reset_done=%d, received_will_hide_event=%d\n",
+                    _conformant_reset_done, _received_will_hide_event);
             }
         } else {
+            LOGD("Send will hide ack right away, since there is no conformant available : %p %d\n",
+                ecore_imf_context_client_canvas_get(ctx), ecore_wl_window_conformant_get(imcontext->window));
             _send_will_hide_ack (imcontext);
-            LOGD("Send will hide ack, since there is no conformant available\n");
+        }
+    }
+
+    if (need_temporary_context) {
+        if (ctx) {
+            ecore_imf_context_del(ctx);
         }
     }
 }
 
 static void _render_post_cb(void *data, Evas *e, void *event_info)
 {
-    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
-    if (!ctx) return;
-
     void *callback = evas_event_callback_del(e, EVAS_CALLBACK_RENDER_POST, _render_post_cb);
-    LOGD("[_render_post_cb], conformant_reset_done = 1 , %p\n", callback);
-    conformant_reset_done = EINA_TRUE;
-    send_will_hide_ack(ctx);
+    _conformant_reset_done = EINA_TRUE;
+    LOGD("[_render_post_cb], _conformant_reset_done = 1 , %p\n", callback);
+    send_will_hide_ack(NULL);
 }
 
 static Eina_Bool _conformant_change_cb(void *data, int ev_type, void *ev)
@@ -622,22 +676,19 @@ static Eina_Bool _conformant_change_cb(void *data, int ev_type, void *ev)
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
     if (!e || !ctx) return ECORE_CALLBACK_PASS_ON;
 
-    WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
-    if (!imcontext) return ECORE_CALLBACK_PASS_ON;
-
     LOGD ("CONFORMANT changed!! : %d %d", e->part_type, e->state);
 
-    Evas *evas = (Evas*)ecore_imf_context_client_canvas_get(ctx);
-    if (e->state == 0) {
-        LOGD("conformant_reset_done = 0, registering _render_post_cb\n");
-        conformant_reset_done = EINA_FALSE;
-        if (evas && ecore_wl_window_conformant_get(imcontext->window)) {
-            evas_event_callback_add(evas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, ctx);
+    if (!(e->state)) {
+        Ecore_Wl_Window *window = ecore_wl_window_find(e->win);
+        LOGD("_conformant_reset_done = 0, registering _render_post_cb : %p %p\n", _active_context_canvas, window);
+        _conformant_reset_done = EINA_FALSE;
+        if (_active_context_canvas && ecore_wl_window_conformant_get(window)) {
+            evas_event_callback_add(_active_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb, ctx);
         }
     } else {
-        conformant_reset_done = EINA_FALSE;
-        if (evas) {
-            evas_event_callback_del(evas, EVAS_CALLBACK_RENDER_POST, _render_post_cb);
+        _conformant_reset_done = EINA_FALSE;
+        if (_active_context_canvas) {
+            evas_event_callback_del(_active_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb);
         }
     }
 
@@ -680,6 +731,7 @@ show_input_panel(Ecore_IMF_Context *ctx)
 
     will_hide = EINA_FALSE;
     _show_req_ctx = ctx;
+    _active_context_canvas = ecore_imf_context_client_canvas_get(ctx);
     //
 
     // TIZEN_ONLY(20150715): Support input_panel_state_get
@@ -1029,13 +1081,14 @@ text_input_input_panel_state(void                 *data EINA_UNUSED,
 
             will_hide = EINA_FALSE;
 
-            received_will_hide_event = EINA_TRUE;
-            LOGD("received_will_hide_event = 1\n");
+            _received_will_hide_event = EINA_TRUE;
+            LOGD("_received_will_hide_event = 1\n");
+            send_will_hide_ack(imcontext->ctx);
             break;
         case WL_TEXT_INPUT_INPUT_PANEL_STATE_SHOW:
             _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_SHOW;
-            received_will_hide_event = EINA_FALSE;
-            LOGD("received_will_hide_event = 0\n");
+            _received_will_hide_event = EINA_FALSE;
+            LOGD("_received_will_hide_event = 0\n");
             break;
         default:
             _input_panel_state = (Ecore_IMF_Input_Panel_State)state;
@@ -1151,20 +1204,12 @@ text_input_private_command(void                 *data,
     const char *szConformantReset = "CONFORMANT_RESET";
     LOGD("Checking command : %s %s", command, szConformantReset);
     if (strncmp(command, szConformantReset, strlen(szConformantReset)) == 0) {
-        LOGD("Resetting conformant area");
-
         Ecore_Wl_Window *window = imcontext->window;
         if (!window) return;
 
-        ecore_wl_window_keyboard_geometry_set(window, 0, 0, 0, 0);
-
-        Ecore_Wl_Event_Conformant_Change *ev;
-        if (!(ev = calloc(1, sizeof(Ecore_Wl_Event_Conformant_Change)))) return;
-
-        ev->win = ecore_wl_window_id_get(window);
-        ev->part_type = 1;
-        ev->state = 0;
-        ecore_event_add(ECORE_WL_EVENT_CONFORMANT_CHANGE, ev, NULL, NULL);
+        if (!reset_conformant_area(imcontext->ctx)) {
+            _send_will_hide_ack(imcontext);
+        }
     } else {
         ecore_imf_context_event_callback_call(imcontext->ctx, ECORE_IMF_CALLBACK_PRIVATE_COMMAND_SEND, (void *)command);
     }
