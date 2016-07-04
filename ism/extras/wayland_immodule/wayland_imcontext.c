@@ -1289,7 +1289,7 @@ text_input_filter_key_event_done(void                 *data,
                                  uint32_t              serial,
                                  uint32_t              state)
 {
-    LOGD("serial:%d,state:%d", serial, state);
+    LOGD("serial: %d, state: %d", serial, state);
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext) return;
 
@@ -1302,7 +1302,7 @@ text_input_reset_done(void                 *data,
                       struct wl_text_input *text_input EINA_UNUSED,
                       uint32_t              serial)
 {
-    LOGD("serial:%d", serial);
+    LOGD("serial: %d", serial);
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext) return;
 
@@ -1663,6 +1663,12 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
     } else if (type == ECORE_IMF_EVENT_KEY_UP || type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_Event_Key *ev =  (Ecore_Event_Key *)event;
         WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+
+        if (!_focused_ctx) {
+            LOGD ("no focus\n");
+            return EINA_FALSE;
+        }
+
         if (!imcontext)
             return EINA_FALSE;
 
@@ -1693,7 +1699,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                 return EINA_FALSE;
         }
 
-        LOGD ("eclipse : %fs, serial (last,require) : (%d,%d)", (ecore_time_get() - start_time), imcontext->last_key_event_filter.serial, serial);
+        LOGD ("elapsed : %.3f ms, serial (last, require) : (%d, %d)", (ecore_time_get() - start_time)*1000, imcontext->last_key_event_filter.serial, serial);
         //Deal with the next key event in list.
         if (eina_list_count (imcontext->keysym_list)) {
             Eina_List *n = eina_list_last(imcontext->keysym_list);
