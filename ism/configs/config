@@ -11,7 +11,7 @@
 /Hotkeys/FrontEnd/Trigger = Shift+space,Hangul
 /Hotkeys/FrontEnd/ValidKeyMask = Shift+Control+Alt+CapsLock+Meta+QuirkKanaRo
 /Hotkeys/FrontEnd/HideISE = Escape,XF86Stop,XF86Back
-/Hotkeys/FrontEnd/IgnoreKey = XF86AudioLowerVolume,XF86AudioRaiseVolume,XF86Send,XF86PowerOff,XF86Stop,XF86Home,XF86Menu
+/Hotkeys/FrontEnd/IgnoreKey = XF86AudioLowerVolume,XF86AudioRaiseVolume,XF86Send,XF86PowerOff,XF86Stop,XF86Home,XF86Menu,XF86Phone
 /IMEngine/Hangul/AutoReorder = false
 /Panel/CandidateSoundFeedback = false
 /Panel/CandidateVibrationFeedback = false
