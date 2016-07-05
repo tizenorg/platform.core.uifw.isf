@@ -1456,32 +1456,31 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
     } else {
         if (!ignore_key) {
             /* Hardware input detect code */
-#ifdef _TV
             if (get_keyboard_mode() == TOOLBAR_HELPER_MODE &&
                 timestamp > 1 &&
                 _support_hw_keyboard_mode &&
-                strcmp(keyname, "Down") &&
-                strcmp(keyname, "KP_Down") &&
-                strcmp(keyname, "Up") &&
-                strcmp(keyname, "KP_Up") &&
-                strcmp(keyname, "Right") &&
-                strcmp(keyname, "KP_Right") &&
-                strcmp(keyname, "Left") &&
-                strcmp(keyname, "KP_Left") &&
-                strcmp(keyname, "Return") &&
-                strcmp(keyname, "Pause") &&
-                strcmp(keyname, "NoSymbol") &&
-                strncmp(keyname, "XF86", 4) &&
-                !is_number_key(keyname)) {
+                strncmp(keyname, "XF86", 4)) {
+#ifdef _TV
+                if (strcmp(keyname, "Down") &&
+                    strcmp(keyname, "KP_Down") &&
+                    strcmp(keyname, "Up") &&
+                    strcmp(keyname, "KP_Up") &&
+                    strcmp(keyname, "Right") &&
+                    strcmp(keyname, "KP_Right") &&
+                    strcmp(keyname, "Left") &&
+                    strcmp(keyname, "KP_Left") &&
+                    strcmp(keyname, "Return") &&
+                    strcmp(keyname, "Pause") &&
+                    strcmp(keyname, "NoSymbol") &&
+                    !is_number_key(keyname)) {
 #else
-            if (get_keyboard_mode() == TOOLBAR_HELPER_MODE && timestamp > 1
-                && _support_hw_keyboard_mode && key.code != 0x1008ff26
-                && key.code != 0xFF69) {
-                /* XF86back, Cancel (Power + Volume down) key */
+                if (key.code != 0x1008ff26 && key.code != 0xFF69) {
+                    /* XF86back, Cancel (Power + Volume down) key */
 #endif
-                isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_KEYBOARD_MODE);
-                ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
-                LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
+                    isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_KEYBOARD_MODE);
+                    ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
+                    LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
+                }
             }
         }
     }
