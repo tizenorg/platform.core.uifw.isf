@@ -499,6 +499,7 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                     case ISE_LAYOUT_STYLE_NORMAL:
                     case ISE_LAYOUT_STYLE_EMAIL:
                     case ISE_LAYOUT_STYLE_URL:
+                    case ISE_LAYOUT_STYLE_PASSWORD:
                         new_layout = ISE_LAYOUT_STYLE_NUMBER;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
@@ -522,6 +523,7 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                     case ISE_LAYOUT_STYLE_NORMAL:
                     case ISE_LAYOUT_STYLE_EMAIL:
                     case ISE_LAYOUT_STYLE_URL:
+                    case ISE_LAYOUT_STYLE_PASSWORD:
                         new_layout = ISE_LAYOUT_STYLE_TERMINAL;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
