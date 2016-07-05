@@ -1440,7 +1440,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 
     String _keyname(keyname);
     KeyEvent key(_keyname);
-    LOGD ("keyname: %s, keycode: %d, press: %d, modifiers: %d", keyname, key.code, press, modifiers);
+    SECURE_LOGD ("keyname: %s, keycode: %d, press: %d, modifiers: %d", keyname, key.code, press, modifiers);
 
     bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
 

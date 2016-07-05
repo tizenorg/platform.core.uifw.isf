@@ -486,9 +486,9 @@ text_input_commit_string(void                 *data,
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     Eina_Bool old_preedit = EINA_FALSE;
 
-    LOGD("commit event (text: '%s', current pre-edit: '%s')",
-            text,
-            imcontext->preedit_text ? imcontext->preedit_text : "");
+    SECURE_LOGD("commit event (text: '%s', current pre-edit: '%s')",
+                text,
+                imcontext->preedit_text ? imcontext->preedit_text : "");
 
     old_preedit =
         imcontext->preedit_text && strlen(imcontext->preedit_text) > 0;
@@ -818,9 +818,9 @@ text_input_preedit_string(void                 *data,
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     Eina_Bool old_preedit = EINA_FALSE;
 
-    LOGD("preedit event (text: '%s', current pre-edit: '%s')",
-            text,
-            imcontext->preedit_text ? imcontext->preedit_text : "");
+    SECURE_LOGD("preedit event (text: '%s', current pre-edit: '%s')",
+                text,
+                imcontext->preedit_text ? imcontext->preedit_text : "");
 
     old_preedit =
         imcontext->preedit_text && strlen(imcontext->preedit_text) > 0;
@@ -1001,7 +1001,7 @@ text_input_keysym(void                 *data,
     memset(string, 0, sizeof(string));
     xkb_keysym_to_utf8(sym, string, 32);
 
-    LOGD("key event (key: %s)", keyname);
+    SECURE_LOGD("key event (key: %s)", keyname);
 
     e = calloc(1, sizeof(Ecore_Event_Key) + strlen(key) + strlen(keyname) +
             strlen(string) + 3);
@@ -1600,8 +1600,8 @@ wayland_im_context_preedit_string_get(Ecore_IMF_Context  *ctx,
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
     if (!imcontext) return;
 
-    LOGD("pre-edit string requested (preedit: '%s')",
-            imcontext->preedit_text ? imcontext->preedit_text : "");
+    SECURE_LOGD("pre-edit string requested (preedit: '%s')",
+                imcontext->preedit_text ? imcontext->preedit_text : "");
 
     if (str)
         *str = strdup(imcontext->preedit_text ? imcontext->preedit_text : "");
@@ -1619,8 +1619,8 @@ wayland_im_context_preedit_string_with_attributes_get(Ecore_IMF_Context  *ctx,
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
     if (!imcontext) return;
 
-    LOGD("pre-edit string with attributes requested (preedit: '%s')",
-            imcontext->preedit_text ? imcontext->preedit_text : "");
+    SECURE_LOGD("pre-edit string with attributes requested (preedit: '%s')",
+                imcontext->preedit_text ? imcontext->preedit_text : "");
 
     if (str)
         *str = strdup(imcontext->preedit_text ? imcontext->preedit_text : "");
