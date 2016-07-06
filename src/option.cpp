@@ -226,16 +226,21 @@ static char *_main_gl_text_get(void *data, Evas_Object *obj, const char *part)
         if (!strcmp(part, "elm.text.main.left.top") ||
             !strcmp(part, "elm.text.main.left") ||
             !strcmp(part, "elm.text.main") ||
-            !strcmp(part, "elm.text") ||
-            !strcmp(part, "elm.text.1")) {
-            return strdup(item_data->main_text);
+            !strcmp(part, "elm.text")) {
+            if (strlen(item_data->main_text)) {
+                LOGD("%s : %s", part, item_data->main_text);
+                return strdup(item_data->main_text);
+            }
         }
         if (!strcmp(part, "elm.text.sub.left.bottom") ||
             !strcmp(part, "elm.text.multiline") ||
             !strcmp(part, "elm.text.sub") ||
+            !strcmp(part, "elm.text.1") ||
             !strcmp(part, "elm.text.2")) {
-            if (strlen(item_data->sub_text) > 0)
+            if (strlen(item_data->sub_text) > 0) {
+                LOGD("%s : %s", part, item_data->sub_text);
                 return strdup(item_data->sub_text);
+            }
         }
     }
 
@@ -580,7 +585,7 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
         option_elements[type].itc_main_item = elm_genlist_item_class_new();
         if (option_elements[type].itc_main_item) {
 #ifdef _WEARABLE
-            option_elements[type].itc_main_item->item_style = "1text.1icon.1";
+            option_elements[type].itc_main_item->item_style = "2text.1icon.1";
 #else
             option_elements[type].itc_main_item->item_style = "type1";
 #endif
@@ -778,6 +783,10 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info && info->enabled) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                if (info->input_modes.size() > 0) {
+                    INPUT_MODE_INFO input_mode = info->input_modes.at(0);
+                    strncpy(language_itemdata[loop].sub_text, input_mode.display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                }
                 language_itemdata[loop].mode = SETTING_ITEM_ID_CUR_LANGUAGE;
                 option_elements[type].selected_language_item[loop] =
                     elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
@@ -910,6 +919,10 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                if (info->input_modes.size() > 0) {
+                    INPUT_MODE_INFO input_mode = info->input_modes.at(0);
+                    strncpy(language_itemdata[loop].sub_text, input_mode.display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                }
                 language_itemdata[loop].mode = loop;
                 option_elements[type].language_item[loop] =
                     elm_genlist_item_append(genlist, option_elements[type].itc_language_subitems,
@@ -1069,6 +1082,10 @@ void read_options(Evas_Object *naviframe)
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info && info->enabled) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                if (info->input_modes.size() > 0) {
+                    INPUT_MODE_INFO input_mode = info->input_modes.at(0);
+                    strncpy(language_itemdata[loop].sub_text, input_mode.display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+                }
                 language_itemdata[loop].mode = SETTING_ITEM_ID_CUR_LANGUAGE;
                 option_elements[type].selected_language_item[loop] =
                     elm_genlist_item_insert_before(option_elements[type].genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
