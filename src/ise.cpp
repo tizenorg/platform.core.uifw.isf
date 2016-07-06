@@ -1447,7 +1447,11 @@ void ise_set_return_key_type(unsigned int type)
     case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN:
         snprintf(buf, BUF_LEN, ISE_RETURN_KEY_LABEL_SIGNIN);
         break;
+    case ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT:
+        break;
     default:
+        LOGW("Unknown return key type : %d\n", type);
+        type = ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
         break;
     }
 
