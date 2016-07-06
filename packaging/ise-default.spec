@@ -1,6 +1,6 @@
 Name:       ise-default
 Summary:    Tizen keyboard
-Version:    1.2.52
+Version:    1.2.53
 Release:    1
 Group:      Graphics & UI Framework/Input
 License:    Apache-2.0
