@@ -3294,8 +3294,6 @@ HelperAgent::signal_connect_check_option_window (HelperAgentSlotUintVoid *slot)
     return m_impl->signal_check_option_window.connect (slot);
 }
 
-} /* namespace scim */
-
 /**
  * @brief Connect a slot to Helper process unconventional input device event signal.
  *
@@ -3309,6 +3307,8 @@ HelperAgent::signal_connect_process_input_device_event (HelperAgentSlotUintCharS
 {
     return m_impl->signal_process_input_device_event.connect (slot);
 }
+
+} /* namespace scim */
 
 /*
 vi:ts=4:nowrap:ai:expandtab
