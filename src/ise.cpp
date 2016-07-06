@@ -509,9 +509,6 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                         new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     case ISE_LAYOUT_STYLE_EMOTICON:
-                        new_layout = ISE_LAYOUT_STYLE_TERMINAL;
-                        break;
-                    case ISE_LAYOUT_STYLE_TERMINAL:
                         new_layout = ISE_LAYOUT_STYLE_NORMAL;
                         break;
                     default:
@@ -524,7 +521,7 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                     case ISE_LAYOUT_STYLE_EMAIL:
                     case ISE_LAYOUT_STYLE_URL:
                     case ISE_LAYOUT_STYLE_PASSWORD:
-                        new_layout = ISE_LAYOUT_STYLE_TERMINAL;
+                        new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
                         new_layout = ISE_LAYOUT_STYLE_NORMAL;
@@ -534,9 +531,6 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                         break;
                     case ISE_LAYOUT_STYLE_EMOTICON:
                         new_layout = ISE_LAYOUT_STYLE_HEX;
-                        break;
-                    case ISE_LAYOUT_STYLE_TERMINAL:
-                        new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     default:
                         ;
