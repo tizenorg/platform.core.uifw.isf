@@ -82,6 +82,28 @@ struct _WSCContextISF {
 
     int id; /* Input Context id*/
     _WSCContextISF *next;
+
+    _WSCContextISF() : ctx(NULL),
+                       im_ctx(NULL),
+                       surrounding_text_fd_read_handler(NULL),
+                       selection_text_fd_read_handler(NULL),
+                       surrounding_text(NULL),
+                       selection_text(NULL),
+                       preedit_str(NULL),
+                       language(NULL),
+                       serial(0),
+                       content_hint(0),
+                       content_purpose(0),
+                       surrounding_cursor(0),
+                       return_key_type(0),
+                       bidi_direction(0),
+                       context_changed(EINA_FALSE),
+                       return_key_disabled(EINA_FALSE),
+                       impl(NULL),
+                       id(0),
+                       next(NULL)
+    {
+    }
 };
 
 void get_language(char **language);
