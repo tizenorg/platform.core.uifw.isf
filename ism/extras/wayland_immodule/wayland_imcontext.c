@@ -347,7 +347,8 @@ static Eina_Bool reset_conformant_area(Ecore_IMF_Context *ctx)
         ecore_wl_window_keyboard_geometry_set(window, 0, 0, 0, 0);
 
         Ecore_Wl_Event_Conformant_Change *ev;
-        if (ev = calloc(1, sizeof(Ecore_Wl_Event_Conformant_Change))) {
+        ev = calloc(1, sizeof(Ecore_Wl_Event_Conformant_Change));
+        if (ev) {
             ev->win = ecore_wl_window_id_get(window);
             ev->part_type = 1;
             ev->state = 0;
@@ -1036,7 +1037,7 @@ text_input_keysym(void                 *data,
 
     e->window = ecore_wl_window_id_get(imcontext->window);
     e->event_window = ecore_wl_window_id_get(imcontext->window);
-    e->timestamp = time;
+    e->timestamp = 0; /* For distinguishing S/W keyboard event */
 
     e->modifiers = 0;
     if (modifiers & imcontext->shift_mask)
@@ -1721,9 +1722,10 @@ wayland_im_context_hide(Ecore_IMF_Context *ctx)
 EAPI Eina_Bool
 wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                                 Ecore_IMF_Event_Type  type,
-                                Ecore_IMF_Event      *event EINA_UNUSED)
+                                Ecore_IMF_Event      *imf_event)
 {
     Eina_Bool ret = EINA_FALSE;
+    Ecore_Event_Key ecore_key_ev;
 
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get(ctx)) {
@@ -1734,8 +1736,21 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
             else
                 LOGE ("Can't show IME because there is no focus. ctx : %p\n", ctx);
         }
-    } else if (type == ECORE_IMF_EVENT_KEY_UP || type == ECORE_IMF_EVENT_KEY_DOWN) {
-        Ecore_Event_Key *ev =  (Ecore_Event_Key *)event;
+    }
+    else if (type == ECORE_IMF_EVENT_KEY_UP) {
+        Ecore_IMF_Event_Key_Up *key_ev = (Ecore_IMF_Event_Key_Up *)imf_event;
+        ecore_key_ev.keyname = key_ev->keyname;
+        ecore_key_ev.timestamp = key_ev->timestamp;
+        ecore_key_ev.modifiers = key_ev->modifiers;
+    }
+    else if (type == ECORE_IMF_EVENT_KEY_DOWN) {
+        Ecore_IMF_Event_Key_Down *key_ev = (Ecore_IMF_Event_Key_Down *)imf_event;
+        ecore_key_ev.keyname = key_ev->keyname;
+        ecore_key_ev.timestamp = key_ev->timestamp;
+        ecore_key_ev.modifiers = key_ev->modifiers;
+    }
+
+    if (type == ECORE_IMF_EVENT_KEY_UP || type == ECORE_IMF_EVENT_KEY_DOWN) {
         WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
         if (!_focused_ctx) {
@@ -1750,16 +1765,16 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
         double start_time = ecore_time_get();
 
         uint32_t modifiers = 0;
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+        if (ecore_key_ev.modifiers & ECORE_EVENT_MODIFIER_SHIFT)
             modifiers |= imcontext->shift_mask;
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+        if (ecore_key_ev.modifiers & ECORE_EVENT_MODIFIER_CTRL)
             modifiers |= imcontext->control_mask;
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+        if (ecore_key_ev.modifiers & ECORE_EVENT_MODIFIER_ALT)
             modifiers |= imcontext->alt_mask;
 
-        LOGD ("ev:modifiers=%d, modifiers=%d, shift_mask=%d, control_mask=%d, alt_mask=%d", ev->modifiers, modifiers, imcontext->shift_mask, imcontext->control_mask, imcontext->alt_mask);
+        LOGD ("ev:modifiers=%d, modifiers=%d, shift_mask=%d, control_mask=%d, alt_mask=%d", ecore_key_ev.modifiers, modifiers, imcontext->shift_mask, imcontext->control_mask, imcontext->alt_mask);
         //Send key event to IME.
-        wl_text_input_filter_key_event(imcontext->text_input, serial, ev->timestamp, ev->keyname,
+        wl_text_input_filter_key_event(imcontext->text_input, serial, ecore_key_ev.timestamp, ecore_key_ev.keyname,
                                        type == ECORE_IMF_EVENT_KEY_UP? WL_KEYBOARD_KEY_STATE_RELEASED : WL_KEYBOARD_KEY_STATE_PRESSED,
                                        modifiers);
         //Waiting for filter_key_event_done from IME.
@@ -1775,6 +1790,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
 
         LOGD ("elapsed : %.3f ms, serial (last, require) : (%d, %d)", (ecore_time_get() - start_time)*1000, imcontext->last_key_event_filter.serial, serial);
         //Deal with the next key event in list.
+        Ecore_Event_Key *ev = NULL;
         if (eina_list_count (imcontext->keysym_list)) {
             Eina_List *n = eina_list_last(imcontext->keysym_list);
             ev = (Ecore_Event_Key *)eina_list_data_get(n);
