@@ -52,6 +52,7 @@ static Ecore_Timer *_hide_timer  = NULL;
 
 // TIZEN_ONLY(20150708): Support back key
 #define BACK_KEY "XF86Back"
+#define OLD_BACK_KEY "XF86Stop"
 
 static Eina_Bool             input_detected = EINA_FALSE;
 static Eina_Bool             will_hide = EINA_FALSE;
@@ -148,6 +149,19 @@ get_using_ctx ()
 }
 
 static Eina_Bool
+check_hide_key(const char *keyname)
+{
+    if (!keyname) return EINA_FALSE;
+
+    if (strcmp(keyname, "Escape") == 0 ||
+        strcmp(keyname, BACK_KEY) == 0 ||
+        strcmp(keyname, OLD_BACK_KEY) == 0)
+        return EINA_TRUE;
+    else
+        return EINA_FALSE;
+}
+
+static Eina_Bool
 key_down_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
     Ecore_Event_Key *ev = (Ecore_Event_Key *)event;
@@ -155,8 +169,10 @@ key_down_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 
     if ((_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW ||
          _input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW) &&
-         strcmp(ev->keyname, BACK_KEY) == 0)
+        check_hide_key(ev->keyname)) {
+        LOGD ("%s key is pressed.\n", ev->keyname);
         return EINA_FALSE;
+    }
 
     return EINA_TRUE;
 }
@@ -172,8 +188,10 @@ key_up_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
     if (!active_ctx) return EINA_TRUE;
 
     if (_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_HIDE ||
-        strcmp(ev->keyname, BACK_KEY) != 0)
+        !check_hide_key(ev->keyname))
         return EINA_TRUE;
+
+    LOGD ("%s key is released.\n", ev->keyname);
 
     ecore_imf_context_reset(active_ctx);
 
