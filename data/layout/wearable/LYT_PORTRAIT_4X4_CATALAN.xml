@@ -28,6 +28,8 @@
         <rec auto_upper="true" multichar_state="0">a</rec>
         <rec auto_upper="true" multichar_state="1">b</rec>
         <rec auto_upper="true" multichar_state="2">c</rec>
+        <rec auto_upper="true" multichar_state="3">ç</rec>
+        <rec auto_upper="true" multichar_state="4">à</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
@@ -39,6 +41,8 @@
         <rec auto_upper="true" multichar_state="0">d</rec>
         <rec auto_upper="true" multichar_state="1">e</rec>
         <rec auto_upper="true" multichar_state="2">f</rec>
+        <rec auto_upper="true" multichar_state="3">é</rec>
+        <rec auto_upper="true" multichar_state="4">è</rec>
       </key_value>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
@@ -61,6 +65,8 @@
         <rec auto_upper="true" multichar_state="0">g</rec>
         <rec auto_upper="true" multichar_state="1">h</rec>
         <rec auto_upper="true" multichar_state="2">i</rec>
+        <rec auto_upper="true" multichar_state="3">í</rec>
+        <rec auto_upper="true" multichar_state="4">ï</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
@@ -83,6 +89,8 @@
         <rec auto_upper="true" multichar_state="0">m</rec>
         <rec auto_upper="true" multichar_state="1">n</rec>
         <rec auto_upper="true" multichar_state="2">o</rec>
+        <rec auto_upper="true" multichar_state="3">ó</rec>
+        <rec auto_upper="true" multichar_state="4">ò</rec>
       </key_value>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
@@ -118,6 +126,8 @@
         <rec auto_upper="true" multichar_state="0">t</rec>
         <rec auto_upper="true" multichar_state="1">u</rec>
         <rec auto_upper="true" multichar_state="2">v</rec>
+        <rec auto_upper="true" multichar_state="3">ú</rec>
+        <rec auto_upper="true" multichar_state="4">ü</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">

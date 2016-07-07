@@ -83,6 +83,7 @@
         <rec auto_upper="true" multichar_state="0">m</rec>
         <rec auto_upper="true" multichar_state="1">n</rec>
         <rec auto_upper="true" multichar_state="2">o</rec>
+        <rec auto_upper="true" multichar_state="3">ñ</rec>
       </key_value>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">

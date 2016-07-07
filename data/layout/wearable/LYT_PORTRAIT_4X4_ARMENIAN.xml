@@ -21,24 +21,26 @@
     </key>
     <key key_type="string" button_type="multitap" long_key_value="2" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">abc</rec>
+        <rec multi="0" auto_upper="true">աբգդ</rec>
         <rec multi="1">2</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">a</rec>
-        <rec auto_upper="true" multichar_state="1">b</rec>
-        <rec auto_upper="true" multichar_state="2">c</rec>
+        <rec auto_upper="true" multichar_state="0">ա</rec>
+        <rec auto_upper="true" multichar_state="1">բ</rec>
+        <rec auto_upper="true" multichar_state="2">գ</rec>
+        <rec auto_upper="true" multichar_state="3">դ</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">def</rec>
+        <rec multi="0" auto_upper="true">եզէը</rec>
         <rec multi="1">3</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">d</rec>
-        <rec auto_upper="true" multichar_state="1">e</rec>
-        <rec auto_upper="true" multichar_state="2">f</rec>
+        <rec auto_upper="true" multichar_state="0">ե</rec>
+        <rec auto_upper="true" multichar_state="1">զ</rec>
+        <rec auto_upper="true" multichar_state="2">է</rec>
+        <rec auto_upper="true" multichar_state="3">ը</rec>
       </key_value>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
@@ -54,35 +56,41 @@
   <row x="20">
     <key key_type="string" button_type="multitap" long_key_value="4" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">ghi</rec>
+        <rec multi="0" auto_upper="true">թժիլխ</rec>
         <rec multi="1">4</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">g</rec>
-        <rec auto_upper="true" multichar_state="1">h</rec>
-        <rec auto_upper="true" multichar_state="2">i</rec>
+        <rec auto_upper="true" multichar_state="0">թ</rec>
+        <rec auto_upper="true" multichar_state="1">ժ</rec>
+        <rec auto_upper="true" multichar_state="2">ի</rec>
+        <rec auto_upper="true" multichar_state="3">լ</rec>
+        <rec auto_upper="true" multichar_state="4">խ</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">jkl</rec>
+        <rec multi="0" auto_upper="true">ծկհձղ</rec>
         <rec multi="1">5</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">j</rec>
-        <rec auto_upper="true" multichar_state="1">k</rec>
-        <rec auto_upper="true" multichar_state="2">l</rec>
+        <rec auto_upper="true" multichar_state="0">ծ</rec>
+        <rec auto_upper="true" multichar_state="1">կ</rec>
+        <rec auto_upper="true" multichar_state="2">հ</rec>
+        <rec auto_upper="true" multichar_state="3">ձ</rec>
+        <rec auto_upper="true" multichar_state="4">ղ</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="6" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">mno</rec>
+        <rec multi="0" auto_upper="true">ճմյնշ</rec>
         <rec multi="1">6</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">m</rec>
-        <rec auto_upper="true" multichar_state="1">n</rec>
-        <rec auto_upper="true" multichar_state="2">o</rec>
+        <rec auto_upper="true" multichar_state="0">ճ</rec>
+        <rec auto_upper="true" multichar_state="1">մ</rec>
+        <rec auto_upper="true" multichar_state="2">յ</rec>
+        <rec auto_upper="true" multichar_state="3">ն</rec>
+        <rec auto_upper="true" multichar_state="4">շ</rec>
       </key_value>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
@@ -99,37 +107,42 @@
   <row x="20">
     <key key_type="string" button_type="multitap" long_key_value="7" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">pqrs</rec>
+        <rec multi="0" auto_upper="true">ոչպջռ</rec>
         <rec multi="1">7</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">p</rec>
-        <rec auto_upper="true" multichar_state="1">q</rec>
-        <rec auto_upper="true" multichar_state="2">r</rec>
-        <rec auto_upper="true" multichar_state="3">s</rec>
+        <rec auto_upper="true" multichar_state="0">ո</rec>
+        <rec auto_upper="true" multichar_state="1">չ</rec>
+        <rec auto_upper="true" multichar_state="2">պ</rec>
+        <rec auto_upper="true" multichar_state="3">ջ</rec>
+        <rec auto_upper="true" multichar_state="4">ռ</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">tuv</rec>
+        <rec multi="0" auto_upper="true">սվտրց</rec>
         <rec multi="1">8</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">t</rec>
-        <rec auto_upper="true" multichar_state="1">u</rec>
-        <rec auto_upper="true" multichar_state="2">v</rec>
+        <rec auto_upper="true" multichar_state="0">ս</rec>
+        <rec auto_upper="true" multichar_state="1">վ</rec>
+        <rec auto_upper="true" multichar_state="2">տ</rec>
+        <rec auto_upper="true" multichar_state="3">ր</rec>
+        <rec auto_upper="true" multichar_state="4">ց</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">wxyz</rec>
+        <rec multi="0" auto_upper="true">ւփքօֆ</rec>
         <rec multi="1">9</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">w</rec>
-        <rec auto_upper="true" multichar_state="1">x</rec>
-        <rec auto_upper="true" multichar_state="2">y</rec>
-        <rec auto_upper="true" multichar_state="3">z</rec>
+        <rec auto_upper="true" multichar_state="0">ւ</rec>
+        <rec auto_upper="true" multichar_state="1">փ</rec>
+        <rec auto_upper="true" multichar_state="2">ք</rec>
+        <rec auto_upper="true" multichar_state="3">օ</rec>
+        <rec auto_upper="true" multichar_state="4">ֆ</rec>
+        <rec auto_upper="true" multichar_state="5">և*</rec>
       </key_value>
     </key>
     <key key_type="control" image_label_type="IMAGE_3X4_TOP">

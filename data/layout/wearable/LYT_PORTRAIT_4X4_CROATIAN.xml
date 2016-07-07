@@ -28,6 +28,8 @@
         <rec auto_upper="true" multichar_state="0">a</rec>
         <rec auto_upper="true" multichar_state="1">b</rec>
         <rec auto_upper="true" multichar_state="2">c</rec>
+        <rec auto_upper="true" multichar_state="3">č</rec>
+        <rec auto_upper="true" multichar_state="4">ć</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
@@ -39,6 +41,7 @@
         <rec auto_upper="true" multichar_state="0">d</rec>
         <rec auto_upper="true" multichar_state="1">e</rec>
         <rec auto_upper="true" multichar_state="2">f</rec>
+        <rec auto_upper="true" multichar_state="3">đ</rec>
       </key_value>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
@@ -107,6 +110,7 @@
         <rec auto_upper="true" multichar_state="1">q</rec>
         <rec auto_upper="true" multichar_state="2">r</rec>
         <rec auto_upper="true" multichar_state="3">s</rec>
+        <rec auto_upper="true" multichar_state="4">š</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
@@ -130,6 +134,7 @@
         <rec auto_upper="true" multichar_state="1">x</rec>
         <rec auto_upper="true" multichar_state="2">y</rec>
         <rec auto_upper="true" multichar_state="3">z</rec>
+        <rec auto_upper="true" multichar_state="4">ž</rec>
       </key_value>
     </key>
     <key key_type="control" image_label_type="IMAGE_3X4_TOP">

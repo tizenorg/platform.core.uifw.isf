@@ -28,6 +28,8 @@
         <rec auto_upper="true" multichar_state="0">a</rec>
         <rec auto_upper="true" multichar_state="1">b</rec>
         <rec auto_upper="true" multichar_state="2">c</rec>
+        <rec auto_upper="true" multichar_state="3">á</rec>
+        <rec auto_upper="true" multichar_state="4">č</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
@@ -39,6 +41,9 @@
         <rec auto_upper="true" multichar_state="0">d</rec>
         <rec auto_upper="true" multichar_state="1">e</rec>
         <rec auto_upper="true" multichar_state="2">f</rec>
+        <rec auto_upper="true" multichar_state="3">ď</rec>
+        <rec auto_upper="true" multichar_state="4">é</rec>
+        <rec auto_upper="true" multichar_state="5">ě</rec>
       </key_value>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
@@ -61,6 +66,7 @@
         <rec auto_upper="true" multichar_state="0">g</rec>
         <rec auto_upper="true" multichar_state="1">h</rec>
         <rec auto_upper="true" multichar_state="2">i</rec>
+        <rec auto_upper="true" multichar_state="3">í</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
@@ -83,6 +89,8 @@
         <rec auto_upper="true" multichar_state="0">m</rec>
         <rec auto_upper="true" multichar_state="1">n</rec>
         <rec auto_upper="true" multichar_state="2">o</rec>
+        <rec auto_upper="true" multichar_state="3">ň</rec>
+        <rec auto_upper="true" multichar_state="4">ó</rec>
       </key_value>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
@@ -107,6 +115,8 @@
         <rec auto_upper="true" multichar_state="1">q</rec>
         <rec auto_upper="true" multichar_state="2">r</rec>
         <rec auto_upper="true" multichar_state="3">s</rec>
+        <rec auto_upper="true" multichar_state="4">ř</rec>
+        <rec auto_upper="true" multichar_state="5">š</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
@@ -118,6 +128,9 @@
         <rec auto_upper="true" multichar_state="0">t</rec>
         <rec auto_upper="true" multichar_state="1">u</rec>
         <rec auto_upper="true" multichar_state="2">v</rec>
+        <rec auto_upper="true" multichar_state="3">ť</rec>
+        <rec auto_upper="true" multichar_state="4">ú</rec>
+        <rec auto_upper="true" multichar_state="5">ů</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
@@ -130,6 +143,8 @@
         <rec auto_upper="true" multichar_state="1">x</rec>
         <rec auto_upper="true" multichar_state="2">y</rec>
         <rec auto_upper="true" multichar_state="3">z</rec>
+        <rec auto_upper="true" multichar_state="4">ý</rec>
+        <rec auto_upper="true" multichar_state="5">ž</rec>
       </key_value>
     </key>
     <key key_type="control" image_label_type="IMAGE_3X4_TOP">

@@ -61,6 +61,7 @@
         <rec auto_upper="true" multichar_state="0">g</rec>
         <rec auto_upper="true" multichar_state="1">h</rec>
         <rec auto_upper="true" multichar_state="2">i</rec>
+        <rec auto_upper="true" multichar_state="3">gʻ</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
@@ -83,6 +84,7 @@
         <rec auto_upper="true" multichar_state="0">m</rec>
         <rec auto_upper="true" multichar_state="1">n</rec>
         <rec auto_upper="true" multichar_state="2">o</rec>
+        <rec auto_upper="true" multichar_state="3">oʻ</rec>
       </key_value>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">

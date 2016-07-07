@@ -21,24 +21,26 @@
     </key>
     <key key_type="string" button_type="multitap" long_key_value="2" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">abc</rec>
+        <rec multi="0" auto_upper="true">абвг</rec>
         <rec multi="1">2</rec>
       </label>
       <key_value>
         <rec auto_upper="true" multichar_state="0">a</rec>
-        <rec auto_upper="true" multichar_state="1">b</rec>
-        <rec auto_upper="true" multichar_state="2">c</rec>
+        <rec auto_upper="true" multichar_state="1">б</rec>
+        <rec auto_upper="true" multichar_state="2">в</rec>
+        <rec auto_upper="true" multichar_state="3">г</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">def</rec>
+        <rec multi="0" auto_upper="true">дѓeж</rec>
         <rec multi="1">3</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">d</rec>
-        <rec auto_upper="true" multichar_state="1">e</rec>
-        <rec auto_upper="true" multichar_state="2">f</rec>
+        <rec auto_upper="true" multichar_state="0">д</rec>
+        <rec auto_upper="true" multichar_state="1">ѓ</rec>
+        <rec auto_upper="true" multichar_state="2">e</rec>
+        <rec auto_upper="true" multichar_state="3">ж</rec>
       </key_value>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
@@ -54,35 +56,38 @@
   <row x="20">
     <key key_type="string" button_type="multitap" long_key_value="4" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">ghi</rec>
+        <rec multi="0" auto_upper="true">зѕиј</rec>
         <rec multi="1">4</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">g</rec>
-        <rec auto_upper="true" multichar_state="1">h</rec>
-        <rec auto_upper="true" multichar_state="2">i</rec>
+        <rec auto_upper="true" multichar_state="0">з</rec>
+        <rec auto_upper="true" multichar_state="1">ѕ</rec>
+        <rec auto_upper="true" multichar_state="2">и</rec>
+        <rec auto_upper="true" multichar_state="3">ј</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">jkl</rec>
+        <rec multi="0" auto_upper="true">клљм</rec>
         <rec multi="1">5</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">j</rec>
-        <rec auto_upper="true" multichar_state="1">k</rec>
-        <rec auto_upper="true" multichar_state="2">l</rec>
+        <rec auto_upper="true" multichar_state="0">к</rec>
+        <rec auto_upper="true" multichar_state="1">л</rec>
+        <rec auto_upper="true" multichar_state="2">љ</rec>
+        <rec auto_upper="true" multichar_state="3">м</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="6" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">mno</rec>
+        <rec multi="0" auto_upper="true">нњоп</rec>
         <rec multi="1">6</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">m</rec>
-        <rec auto_upper="true" multichar_state="1">n</rec>
-        <rec auto_upper="true" multichar_state="2">o</rec>
+        <rec auto_upper="true" multichar_state="0">н</rec>
+        <rec auto_upper="true" multichar_state="1">њ</rec>
+        <rec auto_upper="true" multichar_state="2">о</rec>
+        <rec auto_upper="true" multichar_state="3">п</rec>
       </key_value>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
@@ -99,37 +104,37 @@
   <row x="20">
     <key key_type="string" button_type="multitap" long_key_value="7" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">pqrs</rec>
+        <rec multi="0" auto_upper="true">рстќ</rec>
         <rec multi="1">7</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">p</rec>
-        <rec auto_upper="true" multichar_state="1">q</rec>
-        <rec auto_upper="true" multichar_state="2">r</rec>
-        <rec auto_upper="true" multichar_state="3">s</rec>
+        <rec auto_upper="true" multichar_state="0">р</rec>
+        <rec auto_upper="true" multichar_state="1">с</rec>
+        <rec auto_upper="true" multichar_state="2">т</rec>
+        <rec auto_upper="true" multichar_state="3">ќ</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">tuv</rec>
+        <rec multi="0" auto_upper="true">уфхц</rec>
         <rec multi="1">8</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">t</rec>
-        <rec auto_upper="true" multichar_state="1">u</rec>
-        <rec auto_upper="true" multichar_state="2">v</rec>
+        <rec auto_upper="true" multichar_state="0">у</rec>
+        <rec auto_upper="true" multichar_state="1">ф</rec>
+        <rec auto_upper="true" multichar_state="2">х</rec>
+        <rec auto_upper="true" multichar_state="3">ц</rec>
       </key_value>
     </key>
     <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
       <label>
-        <rec multi="0" auto_upper="true">wxyz</rec>
+        <rec multi="0" auto_upper="true">чџш</rec>
         <rec multi="1">9</rec>
       </label>
       <key_value>
-        <rec auto_upper="true" multichar_state="0">w</rec>
-        <rec auto_upper="true" multichar_state="1">x</rec>
-        <rec auto_upper="true" multichar_state="2">y</rec>
-        <rec auto_upper="true" multichar_state="3">z</rec>
+        <rec auto_upper="true" multichar_state="0">ч</rec>
+        <rec auto_upper="true" multichar_state="1">џ</rec>
+        <rec auto_upper="true" multichar_state="2">ш</rec>
       </key_value>
     </key>
     <key key_type="control" image_label_type="IMAGE_3X4_TOP">
