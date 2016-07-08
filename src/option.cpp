@@ -38,7 +38,7 @@ static ISELanguageManager _language_manager;
 
 #define OPTION_MAX_LANGUAGES        255
 #define MIN_SELECTED_LANGUAGES      1
-#define MAX_SELECTED_LANGUAGES      4
+#define MAX_SELECTED_LANGUAGES      2
 
 enum SETTING_ITEM_ID {
     SETTING_ITEM_ID_INPUT_LANGUAGE_TITLE,
