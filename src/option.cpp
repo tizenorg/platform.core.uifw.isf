@@ -31,6 +31,10 @@
 #define LOG_TAG "ISE_DEFAULT"
 #include <dlog.h>
 
+#ifdef _CIRCLE
+#define ICON_DIR LAYOUTDIR"/wearable/image"
+#endif
+
 using namespace scl;
 
 
@@ -201,25 +205,56 @@ static void reset_settings_popup_response_cancel_cb(void *data, Evas_Object *obj
 static void reset_settings_popup(void *data, Evas_Object *obj, void *event_info)
 {
     Evas_Object *popup = elm_popup_add(elm_object_top_widget_get(obj));
-#ifdef _CIRCLE
-    elm_object_style_set(popup, "circle");
-#endif
     elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
     eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
     evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+#ifdef _CIRCLE
+    elm_object_style_set(popup, "circle");
+
+    Evas_Object *layout = elm_layout_add(popup);
+    elm_layout_theme_set(layout, "layout", "popup", "content/circle/buttons2");
+    elm_object_domain_translatable_text_set(layout, PACKAGE, RESET_SETTINGS_POPUP_TEXT);
+    elm_object_content_set(popup, layout);
+#else
     elm_object_domain_translatable_text_set(popup, PACKAGE, RESET_SETTINGS_POPUP_TEXT);
     elm_object_domain_translatable_part_text_set(popup, "title,text", PACKAGE, RESET_SETTINGS_POPUP_TITLE_TEXT);
+#endif
 
+    /* Cancel button */
     Evas_Object *btn_cancel = elm_button_add(popup);
+#ifdef _CIRCLE
+    elm_object_style_set(btn_cancel, "popup/circle/left");
+
+    /* Create Cancel icon */
+    Evas_Object *icon = elm_image_add(btn_cancel);
+    elm_image_file_set(icon, ICON_DIR"/tw_ic_popup_btn_delete.png", NULL);
+    evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    elm_object_part_content_set(btn_cancel, "elm.swallow.content", icon);
+    evas_object_show(icon);
+#else
     elm_object_style_set(btn_cancel, "popup");
     elm_object_domain_translatable_text_set(btn_cancel, PACKAGE, POPUP_CANCEL_BTN);
+#endif
     elm_object_part_content_set(popup, "button1", btn_cancel);
     evas_object_smart_callback_add(btn_cancel, "clicked", reset_settings_popup_response_cancel_cb, popup);
 
+    /* Ok button */
     Evas_Object *btn_ok = elm_button_add(popup);
     evas_object_data_set(btn_ok, "parent_genlist", obj);
+#ifdef _CIRCLE
+    elm_object_style_set(btn_ok, "popup/circle/right");
+
+    /* Create Ok icon */
+    icon = elm_image_add(btn_ok);
+    elm_image_file_set(icon, ICON_DIR"/tw_ic_popup_btn_check.png", NULL);
+    evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+    elm_object_part_content_set(btn_ok, "elm.swallow.content", icon);
+    evas_object_show(icon);
+#else
     elm_object_style_set(btn_ok, "popup");
     elm_object_domain_translatable_text_set(btn_ok, PACKAGE, POPUP_OK_BTN);
+#endif
     elm_object_part_content_set(popup, "button2", btn_ok);
     evas_object_smart_callback_add(btn_ok, "clicked", reset_settings_popup_response_ok_cb, popup);
     evas_object_show(popup);
