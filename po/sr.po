@@ -97,3 +97,5 @@ msgstr "Još podešav."
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Podešavanja tastature će biti resetovana. Nastaviti?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Pametan unos"

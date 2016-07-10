@@ -97,3 +97,5 @@ msgstr "ေနာက္ထပ္ သတ္မွတ္ခ်က္မ်ား"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "ကီးပက္ သတ္မွတ္ခ်က္မ်ား ျပန္သတ္မွတ္မည္။ ဆက္လုပ္မလား?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "စမတ္ စာ႐ိုက္ျခင္း"

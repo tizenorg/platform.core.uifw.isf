@@ -97,3 +97,5 @@ msgstr "ការកំណត់​ច្រើន​ទៀត"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Keypad settings will be reset. Continue?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "ការវាយ​វៃឆ្លាត"

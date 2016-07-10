@@ -97,3 +97,5 @@ msgstr "વધુ સેટિંગ્સ"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "કીપેડ સેટિંગ્સ રીસેટ કરવામાં આવશે. ચાલુ રાખીએ?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "સ્માર્ટ ટાઇપિંગ"

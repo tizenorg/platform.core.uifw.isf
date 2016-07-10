@@ -97,3 +97,5 @@ msgstr "Іншыя налады"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Налады клавіятуры будуць скінуты. Працягваць?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Смарт-набор"

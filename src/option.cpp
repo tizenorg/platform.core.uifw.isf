@@ -889,7 +889,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 
 #ifdef _WEARABLE
         /* Smart typing */
-        strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_FUNCTIONS, ITEM_DATA_STRING_LEN - 1);
+        strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_TYPING, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode = SETTING_ITEM_ID_SMART_INPUT_TITLE;
         item = elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode));
@@ -999,7 +999,7 @@ static Evas_Object* create_smart_typing_view(Evas_Object *naviframe)
 #endif
 
 #ifdef _WEARABLE
-        add_scrollable_title_area(genlist, SMART_FUNCTIONS);
+        add_scrollable_title_area(genlist, SMART_TYPING);
 #endif
 
         /* Auto capitalize */

@@ -97,3 +97,6 @@ msgstr "مزید سیٹنگز"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "کی پیڈ سیٹنگز بحال کردی جائیں گی۔ جاری رکھیں؟"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "اسمارٹ ٹائپنگ"
+

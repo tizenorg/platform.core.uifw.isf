@@ -97,3 +97,5 @@ msgstr "കൂടുതല്‍ ക്രമീകരണങ്ങള്‍"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "കീപാഡ് സെറ്റിംഗ്സ് റാസെറ്റ് ചെയ്യപ്പെടും. തുടരണമോ?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "സ്മാർട്ട് ടൈപ്പിംഗ്"

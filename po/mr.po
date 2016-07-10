@@ -97,3 +97,5 @@ msgstr "अधिक सेटिंग्स"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "कीपॅड सेटिंग्स रीसेट केली जातील. सुरू ठेवायचे?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "स्‍मार्ट टंकलेखन"

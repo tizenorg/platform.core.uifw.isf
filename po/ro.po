@@ -97,3 +97,5 @@ msgstr "Setări"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Setările pentru tastatură vor fi resetate. Continuaţi?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Intr. intelig."

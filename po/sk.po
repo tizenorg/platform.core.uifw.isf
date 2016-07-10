@@ -97,3 +97,5 @@ msgstr "Ďalšie nast."
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Nastavenia klávesníc sa vynulujú. Pokračovať?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Intel. písanie"

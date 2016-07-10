@@ -97,3 +97,5 @@ msgstr "การ​ตั้ง​ค่า​เพิ่ม​เติม"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "การ​ตั้ง​ค่า​ปุ่ม​กด​จะ​ถูก​ตั้ง​ค่า​ใหม่ ดำเนิน​การ​ต่อ?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "การพิมพ์อัจฉริยะ"

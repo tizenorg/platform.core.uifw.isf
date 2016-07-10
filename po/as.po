@@ -97,3 +97,6 @@ msgstr "অধিক ছেটিংছ"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "কীপেড ছেটিংছ পুনঃছেট কৰিব লাগিব৷ জাৰী ৰাখিবনে?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "স্মাৰ্ট টাইপিং"
+

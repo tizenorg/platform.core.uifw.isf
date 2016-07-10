@@ -97,3 +97,5 @@ msgstr "その他の設定"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "キーパッド設定をリセットします。続行しますか？"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "スマート入力"

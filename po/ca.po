@@ -97,3 +97,5 @@ msgstr "Més ajustaments"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Es restabliran els ajustaments de teclat. Continuar?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Smart typing"

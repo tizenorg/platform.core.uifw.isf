@@ -97,3 +97,5 @@ msgstr "ಮತ್ತಷ್ಟು ಸಂಯೋಜನೆಗಳು"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "ಕೀಪ್ಯಾಡ್ ಸಂಯೋಜನೆಗಳನ್ನು ಮರುಹೊಂದಿಸಲಾಗುವುದು. ಮುಂದುವರಿಯುವುದೆ?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "ಸ್ಮಾರ್ಟ್ ಟೈಪಿಂಗ್"

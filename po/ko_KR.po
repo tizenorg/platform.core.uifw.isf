@@ -97,3 +97,5 @@ msgstr "설정 더보기"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "키패드 설정을 초기화합니다. 계속할까요?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "스마트 입력"

@@ -97,3 +97,5 @@ msgstr "Дополнительно"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "Параметры клавиатуры будут сброшены. Продолжить?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Смарт-набор"

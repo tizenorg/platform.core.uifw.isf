@@ -97,3 +97,5 @@ msgstr "Mais definições"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "As definições do teclado serão restauradas. Continuar?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "Escrita intel."

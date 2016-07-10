@@ -97,3 +97,5 @@ msgstr "ଅଧିକ ସେଟିଂସ୍"
 msgid "IDS_IME_BODY_KEYPAD_SETTINGS_WILL_BE_RESET_CONTINUE_Q"
 msgstr "କୀପ୍ୟାଡ୍ ସେଟିଂସମୂହ ପୁନଃସେଟ୍ ହେବ । ଜାରି ରଖିବେ?"
 
+msgid "IDS_IME_HEADER_SMART_TYPING_ABB"
+msgstr "ସ୍ମାର୍ଟ୍‌ ଟାଇପିଂ"
