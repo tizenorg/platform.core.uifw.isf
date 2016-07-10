@@ -82,6 +82,7 @@ struct OPTION_ELEMENTS
         conformant = NULL;
 
         itc_main_item = NULL;
+        itc_1text_main_item = NULL;
 
         itc_language_subitems = NULL;
 
@@ -102,6 +103,7 @@ struct OPTION_ELEMENTS
     Evas_Object *conformant;
 
     Elm_Genlist_Item_Class *itc_main_item;
+    Elm_Genlist_Item_Class *itc_1text_main_item;
 
     Elm_Genlist_Item_Class *itc_language_subitems;
 
@@ -572,6 +574,10 @@ static void destroy_genlist_item_classes(SCLOptionWindowType type)
             elm_genlist_item_class_free(option_elements[type].itc_main_item);
             option_elements[type].itc_main_item = NULL;
         }
+        if (option_elements[type].itc_1text_main_item) {
+            elm_genlist_item_class_free(option_elements[type].itc_1text_main_item);
+            option_elements[type].itc_1text_main_item = NULL;
+        }
         if (option_elements[type].itc_language_subitems) {
             elm_genlist_item_class_free(option_elements[type].itc_language_subitems);
             option_elements[type].itc_language_subitems = NULL;
@@ -597,6 +603,19 @@ static void create_genlist_item_classes(SCLOptionWindowType type)
             option_elements[type].itc_main_item->func.content_get = _main_radio_gl_content_get;
             option_elements[type].itc_main_item->func.state_get = _main_gl_state_get;
             option_elements[type].itc_main_item->func.del = _main_gl_del;
+        }
+
+        option_elements[type].itc_1text_main_item = elm_genlist_item_class_new();
+        if (option_elements[type].itc_1text_main_item) {
+#ifdef _WEARABLE
+            option_elements[type].itc_1text_main_item->item_style = "1text.1icon.1";
+#else
+            option_elements[type].itc_1text_main_item->item_style = "type1";
+#endif
+            option_elements[type].itc_1text_main_item->func.text_get = _main_gl_text_get;
+            option_elements[type].itc_1text_main_item->func.content_get = _main_radio_gl_content_get;
+            option_elements[type].itc_1text_main_item->func.state_get = _main_gl_state_get;
+            option_elements[type].itc_1text_main_item->func.del = _main_gl_del;
         }
 
         option_elements[type].itc_language_subitems = elm_genlist_item_class_new();
@@ -806,7 +825,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
             strncpy(main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE].main_text, SELECT_LANGUAGES, ITEM_DATA_STRING_LEN - 1);
             main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE].mode = SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE;
             option_elements[type].languages_item =
-                elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE],
+                elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE],
                     NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void*)(main_itemdata[SETTING_ITEM_ID_SELECT_INPUT_LANGUAGE].mode));
         }
 
@@ -870,20 +889,20 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         /* Smart typing */
         strncpy(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].main_text, SMART_FUNCTIONS, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode = SETTING_ITEM_ID_SMART_INPUT_TITLE;
-        item = elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
+        item = elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_SMART_INPUT_TITLE].mode));
 
         /* Key-tap feedback */
         strncpy(main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].main_text, KEY_FEEDBACK, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].mode = SETTING_ITEM_ID_KEY_TAP_TITLE;
-        item = elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE],
+        item = elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_KEY_TAP_TITLE].mode));
 #endif
 
         /* Reset */
         strncpy(main_itemdata[SETTING_ITEM_ID_RESET].main_text, RESET, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_RESET].mode = SETTING_ITEM_ID_RESET;
-        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_RESET],
+        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_RESET],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_RESET].mode));
 
         evas_object_smart_callback_add(genlist, "contracted", _main_gl_con, genlist);
@@ -981,16 +1000,14 @@ static Evas_Object* create_smart_typing_view(Evas_Object *naviframe)
 
         /* Auto capitalize */
         strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].main_text, AUTO_CAPITALISE, ITEM_DATA_STRING_LEN - 1);
-        strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].sub_text, CAPITALISE_DESC, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode = SETTING_ITEM_ID_AUTO_CAPITALISE;
-        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE],
+        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_AUTO_CAPITALISE].mode));
 
         /* Auto punctuate */
         strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].main_text, AUTO_PUNCTUATE, ITEM_DATA_STRING_LEN - 1);
-        strncpy(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].sub_text, PUNCTUATE_DESC, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].mode = SETTING_ITEM_ID_AUTO_PUNCTUATE;
-        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE],
+        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_AUTO_PUNCTUATE].mode));
 
 #ifdef _CIRCLE
@@ -1036,20 +1053,19 @@ static Evas_Object* create_feedback_view(Evas_Object *naviframe)
         /* Sound */
         strncpy(main_itemdata[SETTING_ITEM_ID_SOUND].main_text, SOUND, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_SOUND].mode = SETTING_ITEM_ID_SOUND;
-        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_SOUND],
+        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_SOUND],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_SOUND].mode));
 
         /* Vibration */
         strncpy(main_itemdata[SETTING_ITEM_ID_VIBRATION].main_text, VIBRATION, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_VIBRATION].mode = SETTING_ITEM_ID_VIBRATION;
-        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_VIBRATION],
+        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_VIBRATION],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_VIBRATION].mode));
 
         /* Character preview */
         strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].main_text, CHARACTER_PREVIEW, ITEM_DATA_STRING_LEN - 1);
-        strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].sub_text, PREVIEW_DESC, ITEM_DATA_STRING_LEN - 1);
         main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode = SETTING_ITEM_ID_CHARACTER_PRE;
-        elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
+        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode));
 
 #ifdef _CIRCLE
