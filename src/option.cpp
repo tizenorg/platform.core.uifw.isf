@@ -806,10 +806,12 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info && info->enabled) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+#ifdef _WEARABLE
                 if (info->input_modes.size() > 0) {
                     INPUT_MODE_INFO input_mode = info->input_modes.at(0);
                     strncpy(language_itemdata[loop].sub_text, input_mode.display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
                 }
+#endif
                 language_itemdata[loop].mode = SETTING_ITEM_ID_CUR_LANGUAGE;
                 option_elements[type].selected_language_item[loop] =
                     elm_genlist_item_append(genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
@@ -942,10 +944,12 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+#ifdef _WEARABLE
                 if (info->input_modes.size() > 0) {
                     INPUT_MODE_INFO input_mode = info->input_modes.at(0);
                     strncpy(language_itemdata[loop].sub_text, input_mode.display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
                 }
+#endif
                 language_itemdata[loop].mode = loop;
                 option_elements[type].language_item[loop] =
                     elm_genlist_item_append(genlist, option_elements[type].itc_language_subitems,
@@ -1102,10 +1106,12 @@ void read_options(Evas_Object *naviframe)
             LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
             if (info && info->enabled) {
                 strncpy(language_itemdata[loop].main_text, info->display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
+#ifdef _WEARABLE
                 if (info->input_modes.size() > 0) {
                     INPUT_MODE_INFO input_mode = info->input_modes.at(0);
                     strncpy(language_itemdata[loop].sub_text, input_mode.display_name.c_str(), ITEM_DATA_STRING_LEN - 1);
                 }
+#endif
                 language_itemdata[loop].mode = SETTING_ITEM_ID_CUR_LANGUAGE;
                 option_elements[type].selected_language_item[loop] =
                     elm_genlist_item_insert_before(option_elements[type].genlist, option_elements[type].itc_main_item, &language_itemdata[loop],
