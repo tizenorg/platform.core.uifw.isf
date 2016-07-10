@@ -477,6 +477,7 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     wsc->wsc_ctx = wsc_ctx;
     wsc_ctx->ctx = wsc;
     wsc_ctx->surrounding_text = NULL;
+    wsc_ctx->surrounding_cursor = 0;
 
     get_language(&wsc_ctx->language);
 
@@ -788,6 +789,7 @@ autoperiod_insert (WSCContextISF *wsc_ctx)
     int cursor_pos = 0;
     Eina_Unicode *ustr = NULL;
     char *fullstop_mark = NULL;
+    size_t ulen = 0;
 
     if (autoperiod_allow == EINA_FALSE)
         return;
@@ -808,7 +810,9 @@ autoperiod_insert (WSCContextISF *wsc_ctx)
     ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
     if (!ustr) goto done;
 
-    if (cursor_pos < 2) goto done;
+    ulen = eina_unicode_strlen (ustr);
+
+    if (cursor_pos < 2 || cursor_pos > (int)ulen) goto done;
 
     if (check_space_symbol (ustr[cursor_pos-1]) &&
         !(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
