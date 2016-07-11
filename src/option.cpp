@@ -1074,12 +1074,6 @@ static Evas_Object* create_feedback_view(Evas_Object *naviframe)
         elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_VIBRATION],
             NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_VIBRATION].mode));
 
-        /* Character preview */
-        strncpy(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].main_text, CHARACTER_PREVIEW, ITEM_DATA_STRING_LEN - 1);
-        main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode = SETTING_ITEM_ID_CHARACTER_PRE;
-        elm_genlist_item_append(genlist, option_elements[type].itc_1text_main_item, &main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE],
-            NULL, ELM_GENLIST_ITEM_NONE, _main_gl_sel, (void *)(main_itemdata[SETTING_ITEM_ID_CHARACTER_PRE].mode));
-
 #ifdef _CIRCLE
         add_padding_area(genlist);
 #endif

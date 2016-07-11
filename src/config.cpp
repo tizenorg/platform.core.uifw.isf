@@ -32,12 +32,15 @@ extern CSCLCore g_core;
 #ifdef _TV
 #define SOUND_ON        FALSE;
 #define VIBRATION_ON    FALSE;
+#define PREVIEW_ON      TRUE;
 #elif _WEARABLE
 #define SOUND_ON        TRUE;
 #define VIBRATION_ON    FALSE;
+#define PREVIEW_ON      FALSE;
 #else
 #define SOUND_ON        TRUE;
 #define VIBRATION_ON    TRUE;
+#define PREVIEW_ON      TRUE;
 #endif
 
 CONFIG_VALUES::CONFIG_VALUES() {
@@ -47,7 +50,7 @@ CONFIG_VALUES::CONFIG_VALUES() {
     auto_punctuate = TRUE;
     sound_on = SOUND_ON;
     vibration_on = VIBRATION_ON;
-    preview_on = TRUE;
+    preview_on = PREVIEW_ON;
 };
 
 CONFIG_VALUES g_config_values;
@@ -96,7 +99,7 @@ void read_ise_config_values() {
     g_core.config_read_int(ISE_CONFIG_VIBRATION_ON, integer_value);
     g_config_values.vibration_on = integer_value;
 
-    integer_value = 1;
+    integer_value = PREVIEW_ON;
     g_core.config_read_int(ISE_CONFIG_PREVIEW_ON, integer_value);
     g_config_values.preview_on = integer_value;
 #ifdef _TV
@@ -152,7 +155,7 @@ void reset_ise_config_values() {
     g_config_values.auto_punctuate = TRUE;
     g_config_values.sound_on = SOUND_ON;
     g_config_values.vibration_on = VIBRATION_ON;
-    g_config_values.preview_on = TRUE;
+    g_config_values.preview_on = PREVIEW_ON;
 
     write_ise_config_values();
 }
