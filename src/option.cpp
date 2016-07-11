@@ -702,33 +702,6 @@ static void language_selection_finished_cb(void *data, Evas_Object *obj, void *e
             read_options(naviframe);
         }
     }
-
-    sclboolean selected_language_found = FALSE;
-    std::vector<std::string> enabled_languages;
-
-    for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
-        LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
-        if (info) {
-            if (info->enabled) {
-                enabled_languages.push_back(info->name);
-                LOGD("Enabled language:%s\n", info->name.c_str());
-                if (info->name.compare(g_config_values.selected_language) == 0) {
-                    selected_language_found = TRUE;
-                }
-            }
-        }
-    }
-    if (enabled_languages.size() > 0) {
-        g_config_values.enabled_languages = enabled_languages;
-        LOGD("Enabled languages size:%d\n", g_config_values.enabled_languages.size());
-        if (!selected_language_found) {
-            if (!(g_config_values.enabled_languages.at(0).empty())) {
-                g_config_values.selected_language = g_config_values.enabled_languages.at(0);
-            }
-        }
-
-        write_ise_config_values();
-    }
 }
 
 static void _popup_timeout_cb(void *data, Evas_Object * obj, void *event_info)
@@ -1210,12 +1183,14 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
     if (item_data) {
         LANGUAGE_INFO *info = _language_manager.get_language_info(item_data->mode);
         if (info) {
+            sclboolean language_changed = TRUE;
             info->enabled = elm_check_state_get(obj);
             if (!elm_check_state_get(obj)) {
                 if (_language_manager.get_enabled_languages_num() < MIN_SELECTED_LANGUAGES) {
                     info->enabled = TRUE;
                     elm_check_state_set(obj, EINA_TRUE);
                     language_view_popup_show(obj, type, MSG_NONE_SELECTED, NULL);
+                    language_changed = FALSE;
                 }
             } else {
                 if (_language_manager.get_enabled_languages_num() > MAX_SELECTED_LANGUAGES) {
@@ -1226,6 +1201,37 @@ static void language_selected(void *data, Evas_Object *obj, void *event_info)
                     const sclchar *suppoted_max_languages = SUPPORTED_MAX_LANGUAGES;
                     snprintf(buf, sizeof(buf), suppoted_max_languages, MAX_SELECTED_LANGUAGES);
                     language_view_popup_show(obj, type, buf, NULL);
+                    language_changed = FALSE;
+                }
+            }
+
+            if (language_changed) {
+                // Update enabled_languages
+                sclboolean selected_language_found = FALSE;
+                std::vector<std::string> enabled_languages;
+
+                for (unsigned int loop = 0;loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num();loop++) {
+                    LANGUAGE_INFO *info = _language_manager.get_language_info(loop);
+                    if (info) {
+                        if (info->enabled) {
+                            enabled_languages.push_back(info->name);
+                            LOGD("Enabled language:%s\n", info->name.c_str());
+                            if (info->name.compare(g_config_values.selected_language) == 0) {
+                                selected_language_found = TRUE;
+                            }
+                        }
+                    }
+                }
+                if (enabled_languages.size() > 0) {
+                    g_config_values.enabled_languages = enabled_languages;
+                    LOGD("Enabled languages size:%d\n", g_config_values.enabled_languages.size());
+                    if (!selected_language_found) {
+                        if (!(g_config_values.enabled_languages.at(0).empty())) {
+                            g_config_values.selected_language = g_config_values.enabled_languages.at(0);
+                        }
+                    }
+
+                    write_ise_config_values();
                 }
             }
         }
