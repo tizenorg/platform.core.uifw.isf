@@ -91,6 +91,10 @@ static scluint              _click_count = 0;
 static const char          *_sig_dec[SIG_DEC_SIZE] = {".", "-"};
 static scluint              _sig_dec_event[SIG_DEC_SIZE] = {'.', '-'};
 static Ecore_Timer         *_commit_timer = NULL;
+
+static sclu32               _context_layout = ISE_LAYOUT_STYLE_NORMAL;
+static sclu32               _context_layout_variation = 0;
+
 static Candidate           *g_candidate = NULL;
 
 class CandidateEventListener: public EventListener
@@ -315,6 +319,8 @@ void CCoreEventCallback::on_ise_show(sclint ic, const sclint degree, Ise_Context
         ise_explictly_set_language(PRIMARY_LATIN_LANGUAGE_INDEX);
     }*/
 
+    _context_layout = context.layout;
+    _context_layout_variation = context.layout_variation;
     ise_set_layout(context.layout, context.layout_variation);
 
     ise_set_return_key_type(context.return_key_type);
@@ -388,6 +394,8 @@ void CCoreEventCallback::on_set_layout(sclu32 layout)
             g_keyboard_state.need_reset = TRUE;
         }
         g_keyboard_state.layout = layout;
+        _context_layout = layout;
+        _context_layout_variation = 0;
     }
     if (g_keyboard_state.visible_state)
         ise_show(g_keyboard_state.ic);
@@ -510,13 +518,22 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                     case ISE_LAYOUT_STYLE_EMAIL:
                     case ISE_LAYOUT_STYLE_URL:
                     case ISE_LAYOUT_STYLE_PASSWORD:
-                        new_layout = ISE_LAYOUT_STYLE_NUMBER;
+                        if (_context_layout == ISE_LAYOUT_STYLE_PASSWORD &&
+                            _context_layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY)
+                            ;   // PASSWORD NUMBER ONLY, do nothing
+                        else
+                            new_layout = ISE_LAYOUT_STYLE_NUMBER;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
                         new_layout = ISE_LAYOUT_STYLE_HEX;
                         break;
                     case ISE_LAYOUT_STYLE_HEX:
-                        new_layout = ISE_LAYOUT_STYLE_EMOTICON;
+                        if (_context_layout == ISE_LAYOUT_STYLE_EMAIL ||
+                            _context_layout == ISE_LAYOUT_STYLE_URL ||
+                            _context_layout == ISE_LAYOUT_STYLE_PASSWORD)
+                            new_layout = ISE_LAYOUT_STYLE_NORMAL;
+                        else
+                            new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     case ISE_LAYOUT_STYLE_EMOTICON:
                         new_layout = ISE_LAYOUT_STYLE_NORMAL;
@@ -531,7 +548,15 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                     case ISE_LAYOUT_STYLE_EMAIL:
                     case ISE_LAYOUT_STYLE_URL:
                     case ISE_LAYOUT_STYLE_PASSWORD:
-                        new_layout = ISE_LAYOUT_STYLE_EMOTICON;
+                        if (_context_layout == ISE_LAYOUT_STYLE_PASSWORD &&
+                            _context_layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY)
+                            ;   // PASSWORD NUMBER ONLY, do nothing
+                        else if (_context_layout == ISE_LAYOUT_STYLE_EMAIL ||
+                            _context_layout == ISE_LAYOUT_STYLE_URL ||
+                            _context_layout == ISE_LAYOUT_STYLE_PASSWORD)
+                            new_layout = ISE_LAYOUT_STYLE_HEX;
+                        else
+                            new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
                         new_layout = ISE_LAYOUT_STYLE_NORMAL;
@@ -546,8 +571,13 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                         ;
                 }
             }
-            if (new_layout != g_keyboard_state.layout) {
-                on_set_layout(new_layout);
+            if (new_layout != g_keyboard_state.layout && new_layout < ISE_LAYOUT_STYLE_MAX) {
+                g_keyboard_state.need_reset = TRUE;
+                g_keyboard_state.layout = new_layout;
+
+                if (g_keyboard_state.visible_state)
+                    ise_show(g_keyboard_state.ic);
+
                 *ret = 1;
             }
         }
