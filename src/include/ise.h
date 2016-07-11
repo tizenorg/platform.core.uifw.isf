@@ -177,6 +177,7 @@ typedef struct {
     sclboolean need_reset;
     sclboolean visible_state;
     std::string multitap_value;
+    SCLKeyModifier prev_modifier;
 } KEYBOARD_STATE;
 
 using namespace scl;

@@ -346,7 +346,13 @@ sclboolean CSDKISE::flush_imengine(const sclchar *language)
 {
     bool bRet = false;
 
+    if (g_keyboard_state.prev_modifier == KEY_MODIFIER_MULTITAP_START ||
+        g_keyboard_state.prev_modifier == KEY_MODIFIER_MULTITAP_REPEAT) {
+        ise_send_string(g_keyboard_state.multitap_value.c_str());
+        ise_update_preedit_string("");
+    }
     g_keyboard_state.multitap_value = "";
+    g_keyboard_state.prev_modifier = KEY_MODIFIER_NONE;
 
     int lang_id = get_lang_id(language);
     if (lang_id != -1) {
