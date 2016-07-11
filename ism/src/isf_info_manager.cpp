@@ -3712,6 +3712,28 @@ client context helpers: %d, helpers uuid count: %d",
         }
     }
 
+    bool set_autocapital_type (int mode) {
+        SCIM_DEBUG_MAIN (4) << __func__ << "\n";
+
+        if (TOOLBAR_HELPER_MODE == m_current_toolbar_mode || m_current_helper_option & ISM_HELPER_PROCESS_KEYBOARD_KEYEVENT) {
+            HelperClientIndex::iterator it = m_helper_client_index.find (m_current_helper_uuid);
+
+            if (it != m_helper_client_index.end ()) {
+                int    client;
+                uint32 context;
+                uint32 ctx;
+                get_focused_context (client, context);
+                ctx = get_helper_ic (client, context);
+                m_panel_agent_manager.set_autocapital_type (it->second.id, ctx, m_current_helper_uuid, mode);
+                return true;
+            }
+        }
+
+        std::cerr << __func__ << " is failed!!!\n";
+        return false;
+
+    }
+
     const String& get_focused_context (int& client, uint32& context, bool force_last_context = false) const {
         if (m_current_socket_client >= 0) {
             client  = m_current_socket_client;
@@ -4715,6 +4737,12 @@ void InfoManager::del_client (int client_id)
 {
     m_impl->del_client (client_id);
 }
+
+bool InfoManager::set_autocapital_type (int mode)
+{
+    return m_impl->set_autocapital_type (mode);
+}
+
 
 //////////////////////////////////Message function end/////////////////////////////////////////
 

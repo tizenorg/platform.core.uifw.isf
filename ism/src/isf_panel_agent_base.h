@@ -798,6 +798,15 @@ public:
     * @return none.
     */
     virtual void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
+
+    /**
+    * @brief set_autocapital_type.
+    *
+    * @param
+    *
+    * @return none.
+    */
+    virtual void set_autocapital_type(int client, uint32 context, String uuid, int mode);
 };
 
 /**  @} */

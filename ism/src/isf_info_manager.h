@@ -932,8 +932,9 @@ public:
 
     void add_client (int client_id, uint32 key, ClientType type);
 
-
     void del_client (int client_id);
+
+    bool set_autocapital_type (int mode);
 
 //////////////////////////////////Message function end/////////////////////////////////////////
 

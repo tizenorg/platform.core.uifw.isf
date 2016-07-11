@@ -343,6 +343,7 @@ public:
     void hide_helper_ise (int id, uint32 context);
     bool process_input_device_event(int client, uint32 context, const String& uuid, uint32 type, const char *data, size_t len, _OUT_ uint32& result);
     void process_key_event_done(int client, uint32 context, KeyEvent &key, uint32 ret, uint32 serial);
+    void set_autocapital_type(int id, uint32 context_id, String uuid, int mode);
 };
 
 /**  @} */

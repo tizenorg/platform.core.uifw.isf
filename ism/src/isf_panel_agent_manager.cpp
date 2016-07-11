@@ -790,6 +790,13 @@ void PanelAgentManager::process_key_event_done(int id, uint32 context_id, KeyEve
         _p->process_key_event_done (id, context_id, key, ret, serial);
 }
 
+void PanelAgentManager::set_autocapital_type(int id, uint32 context_id, String uuid, int mode)
+{
+    PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
+
+    if (!_p.null ())
+        _p->set_autocapital_type (id, context_id, uuid, mode);
+}
 
 
 } /* namespace scim */
