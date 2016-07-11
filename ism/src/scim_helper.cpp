@@ -148,8 +148,8 @@ public:
     char* surrounding_text;
     char* selection_text;
     uint32 cursor_pos;
-    bool need_update_surrounding_text;
-    bool need_update_selection_text;
+    int need_update_surrounding_text;
+    int need_update_selection_text;
     uint32 layout;
 
     HelperAgentSignalVoid           signal_exit;
@@ -215,7 +215,7 @@ public:
 public:
     HelperAgentImpl (HelperAgent* thiz) : focused_ic ((uint32) -1), thiz (thiz),
         surrounding_text (NULL), selection_text (NULL), cursor_pos (0),
-        need_update_surrounding_text (false), need_update_selection_text (false),
+        need_update_surrounding_text (0), need_update_selection_text (0),
         layout (0) {
     }
 
@@ -852,8 +852,8 @@ HelperAgent::filter_event ()
                     m_impl->surrounding_text = strdup (text.c_str ());
                     m_impl->cursor_pos = cursor;
                     LOGD ("surrounding text: %s, %d", m_impl->surrounding_text, cursor);
-                    if (m_impl->need_update_surrounding_text) {
-                        m_impl->need_update_surrounding_text = false;
+                    while (m_impl->need_update_surrounding_text > 0) {
+                        m_impl->need_update_surrounding_text--;
                         m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
                     }
                 }
@@ -871,8 +871,8 @@ HelperAgent::filter_event ()
                     m_impl->selection_text = strdup (text.c_str ());
                     LOGD ("selection text: %s", m_impl->selection_text);
 
-                    if (m_impl->need_update_selection_text) {
-                        m_impl->need_update_selection_text = false;
+                    while (m_impl->need_update_selection_text > 0) {
+                        m_impl->need_update_selection_text--;
                         m_impl->signal_update_selection (this, ic, text);
                     }
                 } else
@@ -1988,7 +1988,7 @@ void
 HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int maxlen_after) const
 {
     LOGD ("");
-    if (m_impl->socket_active.is_connected ()) {
+    if (m_impl->socket_active.is_connected () && (m_impl->need_update_surrounding_text == 0)) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
         m_impl->send.put_data (m_impl->magic_active);
@@ -1998,7 +1998,7 @@ HelperAgent::get_surrounding_text (const String &uuid, int maxlen_before, int ma
         m_impl->send.put_data (maxlen_after);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
-    m_impl->need_update_surrounding_text = true;
+    m_impl->need_update_surrounding_text++;
 }
 
 /**
@@ -2080,7 +2080,7 @@ void
 HelperAgent::get_selection (const String &uuid) const
 {
     LOGD ("");
-    if (m_impl->socket_active.is_connected ()) {
+    if (m_impl->socket_active.is_connected () && (m_impl->need_update_selection_text == 0)) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
         m_impl->send.put_data (m_impl->magic_active);
@@ -2088,8 +2088,7 @@ HelperAgent::get_selection (const String &uuid) const
         m_impl->send.put_data (uuid);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
     }
-
-    m_impl->need_update_selection_text = true;
+    m_impl->need_update_selection_text++;
 }
 
 /**
