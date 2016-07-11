@@ -1381,6 +1381,17 @@ HelperAgent::filter_event ()
                 m_impl->send.write_to_socket(m_impl->socket);
                 break;
             }
+            case SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE:
+            {
+                uint32 auto_capital_type;
+
+                if (m_impl->recv.get_data (auto_capital_type)) {
+                    if (!m_impl->si.null ()) m_impl->si->set_autocapital_type(auto_capital_type);
+                }
+                else
+                    LOGW ("wrong format of transaction\n");
+                break;
+            }
             default:
                 break;
         }

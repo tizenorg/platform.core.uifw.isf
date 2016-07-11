@@ -505,6 +505,11 @@ void PanelAgentBase::process_key_event_done(int client, uint32 context, KeyEvent
     LOGW("not implemented for %s", m_name.c_str());
 }
 
+void PanelAgentBase::set_autocapital_type(int client, uint32 context, String uuid, int mode)
+{
+    LOGW("not implemented for %s", m_name.c_str());
+}
+
 
 } /* namespace scim */
 

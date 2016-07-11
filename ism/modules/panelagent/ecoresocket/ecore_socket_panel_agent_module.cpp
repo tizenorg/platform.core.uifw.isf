@@ -1421,6 +1421,20 @@ private:
 
     }
 
+    void set_autocapital_type(int client, uint32 context, String uuid, int mode) {
+        LOGD ("client id:%d\n", client);
+
+        m_send_trans.clear();
+        m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
+
+        m_send_trans.put_data(context);
+        m_send_trans.put_data(uuid);
+        m_send_trans.put_command(SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE);
+        m_send_trans.put_data((uint32) mode);
+
+        Socket client_socket(client);
+        m_send_trans.write_to_socket(client_socket);
+    }
 private:
 
     static void send_fail_reply (int client_id)

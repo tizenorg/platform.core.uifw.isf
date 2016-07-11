@@ -1290,6 +1290,8 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
             if (context_scim->impl->imdata)
                 context_scim->impl->si->set_imdata ((const char*)context_scim->impl->imdata, context_scim->impl->imdata_size);
             #endif
+            LOGD ("set autocapital type : %d\n", context_scim->impl->autocapital_type);
+            g_info_manager->set_autocapital_type ((int)context_scim->impl->autocapital_type);
         } else {
             g_info_manager->socket_turn_off ();
         }
@@ -1378,16 +1380,16 @@ void
 isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << " = " << autocapital_type << "...\n";
-    LOGD ("");
+    LOGD ("autocapital_type: %d", autocapital_type);
     WSCContextISF* context_scim = wsc_ctx;
 
     if (context_scim && context_scim->impl && context_scim->impl->autocapital_type != autocapital_type) {
         context_scim->impl->autocapital_type = autocapital_type;
+        LOGD ("ctx : %p. set autocapital type : %d\n", wsc_ctx, autocapital_type);
 
         if (context_scim == _focused_ic) {
             LOGD ("ctx : %p. set autocapital type : %d\n", wsc_ctx, autocapital_type);
-            //FIXME:add this interface
-            //_info_manager->set_autocapital_type (autocapital_type);
+            g_info_manager->set_autocapital_type ((int)autocapital_type);
         }
     }
 }
