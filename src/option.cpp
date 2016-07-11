@@ -96,6 +96,8 @@ struct OPTION_ELEMENTS
         memset(selected_language_item, 0x00, sizeof(selected_language_item));
 
         itc_group_title = NULL;
+
+        circle_surface = NULL;
     }
     Evas_Object *option_window;
     Evas_Object *naviframe;
@@ -117,6 +119,8 @@ struct OPTION_ELEMENTS
     Elm_Object_Item *selected_language_item[OPTION_MAX_LANGUAGES];
 
     Elm_Genlist_Item_Class *itc_group_title;
+
+    Eext_Circle_Surface *circle_surface;
 };
 
 static OPTION_ELEMENTS option_elements[OPTION_WINDOW_TYPE_MAX];
@@ -785,8 +789,8 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
 
 #ifdef _CIRCLE
         /* Circle Surface Creation */
-        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
-        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
+        option_elements[type].circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
+        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, option_elements[type].circle_surface);
         eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
 
         option_elements[type].circle_genlist = circle_genlist;
@@ -938,9 +942,10 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 
 #ifdef _CIRCLE
         /* Circle Surface Creation */
-        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
-        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
-        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+        if (option_elements[type].circle_surface) {
+            Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, option_elements[type].circle_surface);
+            eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+        }
 #endif
 
 #ifdef _WEARABLE
@@ -1000,10 +1005,10 @@ static Evas_Object* create_smart_typing_view(Evas_Object *naviframe)
         //option_elements[type].language_genlist = genlist;
 
 #ifdef _CIRCLE
-        /* Circle Surface Creation */
-        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
-        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
-        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+        if (option_elements[type].circle_surface) {
+            Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, option_elements[type].circle_surface);
+            eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+        }
 #endif
 
 #ifdef _WEARABLE
@@ -1052,10 +1057,10 @@ static Evas_Object* create_feedback_view(Evas_Object *naviframe)
         //option_elements[type].language_genlist = genlist;
 
 #ifdef _CIRCLE
-        /* Circle Surface Creation */
-        Eext_Circle_Surface *circle_surface = eext_circle_surface_conformant_add(option_elements[type].conformant);
-        Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, circle_surface);
-        eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+        if (option_elements[type].circle_surface) {
+            Evas_Object *circle_genlist = eext_circle_object_genlist_add(genlist, option_elements[type].circle_surface);
+            eext_rotary_object_event_activated_set(circle_genlist, EINA_TRUE);
+        }
 #endif
 
 #ifdef _WEARABLE
@@ -1314,11 +1319,26 @@ option_window_destroyed(Evas_Object *window)
 
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
         if (option_elements[type].option_window == window) {
+            if (option_elements[type].circle_surface) {
+                eext_circle_surface_del(option_elements[type].circle_surface);
+            }
+
             option_elements[type].option_window = NULL;
             option_elements[type].naviframe = NULL;
             option_elements[type].genlist = NULL;
+            option_elements[type].circle_genlist = NULL;
+            option_elements[type].language_genlist = NULL;
             option_elements[type].lang_popup = NULL;
             option_elements[type].back_button = NULL;
+            option_elements[type].conformant = NULL;
+            option_elements[type].circle_surface = NULL;
+
+            option_elements[type].itc_main_item = NULL;
+            option_elements[type].itc_1text_main_item = NULL;
+            option_elements[type].itc_language_subitems = NULL;
+            option_elements[type].itc_group_title = NULL;
+
+            option_elements[type].languages_item = NULL;
         }
     }
 }
