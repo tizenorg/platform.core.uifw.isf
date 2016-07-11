@@ -660,6 +660,7 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
     Eina_Unicode *ustr = NULL;
     Ecore_IMF_Event_Delete_Surrounding ev;
     char *fullstop_mark = NULL;
+    size_t ulen = 0;
 
     if (autoperiod_allow == EINA_FALSE)
         return;
@@ -680,7 +681,9 @@ autoperiod_insert (Ecore_IMF_Context *ctx)
     ustr = eina_unicode_utf8_to_unicode (plain_str, NULL);
     if (!ustr) goto done;
 
-    if (cursor_pos < 2) goto done;
+    ulen = eina_unicode_strlen (ustr);
+
+    if (cursor_pos < 2 || cursor_pos > (int)ulen) goto done;
 
     if (check_space_symbol (ustr[cursor_pos-1]) &&
         !(iswpunct (ustr[cursor_pos-2]) || check_space_symbol (ustr[cursor_pos-2]))) {
