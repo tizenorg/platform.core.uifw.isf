@@ -11,7 +11,7 @@
     <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
     <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
   </background_image>
-  <row x="9" y="95">
+  <row x="9" y="11">
     <key use_magnifier="true" longkey_magnifier="true" long_key_value="1" multitouch_type="settle_previous" hit_left="9">
       <label>
         <rec auto_upper="true">q</rec>
