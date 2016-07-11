@@ -1761,6 +1761,11 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
         if (!imcontext)
             return EINA_FALSE;
 
+        if (!ecore_key_ev.timestamp) {
+            LOGD("Return! This is SW keyboard event!");
+            return EINA_FALSE;
+        }
+
         int serial = imcontext->serial++;
         double start_time = ecore_time_get();
 
