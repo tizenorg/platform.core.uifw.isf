@@ -1719,6 +1719,34 @@ wayland_im_context_hide(Ecore_IMF_Context *ctx)
     _input_panel_hide(ctx, EINA_FALSE);
 }
 
+static unsigned int
+_ecore_imf_modifier_to_ecore_key_modifier(unsigned int modifiers)
+{
+   unsigned int mask = 0;
+
+   /**< "Control" is pressed */
+   if (modifiers & ECORE_IMF_KEYBOARD_MODIFIER_CTRL)
+     mask |= ECORE_EVENT_MODIFIER_CTRL;
+
+   /**< "Alt" is pressed */
+   if (modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALT)
+     mask |= ECORE_EVENT_MODIFIER_ALT;
+
+   /**< "Shift" is pressed */
+   if (modifiers & ECORE_IMF_KEYBOARD_MODIFIER_SHIFT)
+     mask |= ECORE_EVENT_MODIFIER_SHIFT;
+
+   /**< "Win" (between "Ctrl" and "Alt") is pressed */
+   if (modifiers & ECORE_IMF_KEYBOARD_MODIFIER_WIN)
+     mask |= ECORE_EVENT_MODIFIER_WIN;
+
+   /**< "AltGr" is pressed */
+   if (modifiers & ECORE_IMF_KEYBOARD_MODIFIER_ALTGR)
+     mask |= ECORE_EVENT_MODIFIER_ALTGR;
+
+   return mask;
+}
+
 EAPI Eina_Bool
 wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                                 Ecore_IMF_Event_Type  type,
@@ -1741,13 +1769,13 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
         Ecore_IMF_Event_Key_Up *key_ev = (Ecore_IMF_Event_Key_Up *)imf_event;
         ecore_key_ev.keyname = key_ev->keyname;
         ecore_key_ev.timestamp = key_ev->timestamp;
-        ecore_key_ev.modifiers = key_ev->modifiers;
+        ecore_key_ev.modifiers = _ecore_imf_modifier_to_ecore_key_modifier(key_ev->modifiers);
     }
     else if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *key_ev = (Ecore_IMF_Event_Key_Down *)imf_event;
         ecore_key_ev.keyname = key_ev->keyname;
         ecore_key_ev.timestamp = key_ev->timestamp;
-        ecore_key_ev.modifiers = key_ev->modifiers;
+        ecore_key_ev.modifiers = _ecore_imf_modifier_to_ecore_key_modifier(key_ev->modifiers);
     }
 
     if (type == ECORE_IMF_EVENT_KEY_UP || type == ECORE_IMF_EVENT_KEY_DOWN) {
@@ -1764,6 +1792,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
         int serial = imcontext->serial++;
         double start_time = ecore_time_get();
 
+        /* xkb_mod_mask */
         uint32_t modifiers = 0;
         if (ecore_key_ev.modifiers & ECORE_EVENT_MODIFIER_SHIFT)
             modifiers |= imcontext->shift_mask;
