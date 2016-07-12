@@ -96,8 +96,9 @@ struct OPTION_ELEMENTS
         memset(selected_language_item, 0x00, sizeof(selected_language_item));
 
         itc_group_title = NULL;
-
+#ifdef _CIRCLE
         circle_surface = NULL;
+#endif
     }
     Evas_Object *option_window;
     Evas_Object *naviframe;
@@ -120,7 +121,9 @@ struct OPTION_ELEMENTS
 
     Elm_Genlist_Item_Class *itc_group_title;
 
+#ifdef _CIRCLE
     Eext_Circle_Surface *circle_surface;
+#endif
 };
 
 static OPTION_ELEMENTS option_elements[OPTION_WINDOW_TYPE_MAX];
@@ -1319,9 +1322,12 @@ option_window_destroyed(Evas_Object *window)
 
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
         if (option_elements[type].option_window == window) {
+#ifdef _CIRCLE
             if (option_elements[type].circle_surface) {
                 eext_circle_surface_del(option_elements[type].circle_surface);
+                option_elements[type].circle_surface = NULL;
             }
+#endif
 
             option_elements[type].option_window = NULL;
             option_elements[type].naviframe = NULL;
@@ -1331,7 +1337,6 @@ option_window_destroyed(Evas_Object *window)
             option_elements[type].lang_popup = NULL;
             option_elements[type].back_button = NULL;
             option_elements[type].conformant = NULL;
-            option_elements[type].circle_surface = NULL;
 
             option_elements[type].itc_main_item = NULL;
             option_elements[type].itc_1text_main_item = NULL;
