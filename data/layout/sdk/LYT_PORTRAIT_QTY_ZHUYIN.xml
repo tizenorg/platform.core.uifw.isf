@@ -8,7 +8,7 @@
     <rec button="pressed">button/B09_Qwerty_btn_press.png</rec>
     <rec button="disabled">button/B09_Qwerty_btn_01.png</rec>
   </background_image>
-  <row x="11" y="95" hit_top="11">
+  <row x="11" y="11" hit_top="11">
     <key use_magnifier="true" multitouch_type="settle_previous" hit_left="11">
       <label>
         <rec multi="0">ㄅ</rec>
