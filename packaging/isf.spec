@@ -84,8 +84,8 @@ CXXFLAGS+=" -D_MOBILE";
 %endif
 
 %if "%{profile}" == "tv"
-CFLAGS+=" -D_TV";
-CXXFLAGS+=" -D_TV";
+CFLAGS+=" -D_TV -DENABLE_GRAB_KEYBOARD=1";
+CXXFLAGS+=" -D_TV -DENABLE_GRAB_KEYBOARD=1";
 %endif
 
 %if %{with wayland}

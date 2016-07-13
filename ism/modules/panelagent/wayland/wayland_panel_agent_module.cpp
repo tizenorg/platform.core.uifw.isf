@@ -57,6 +57,11 @@
 #include "isf_wsc_control_ui.h"
 
 #include <linux/input.h>
+
+#if ENABLE_GRAB_KEYBOARD
+#include <xkbcommon/xkbcommon.h>
+#endif
+
 #include <sys/mman.h>
 #include "isf_debug.h"
 
@@ -422,8 +427,10 @@ _wsc_im_ctx_filter_key_event(void *data, struct wl_input_method_context *im_ctx,
     WSCContextISF *wsc_ctx = (WSCContextISF*)data;
     if (!wsc_ctx) return;
 
+#if !(ENABLE_GRAB_KEYBOARD)
     isf_wsc_context_filter_key_event(wsc_ctx, serial, time, keyname,
             ((wl_keyboard_key_state)state) == WL_KEYBOARD_KEY_STATE_PRESSED, modifiers);
+#endif
 }
 
 static void
@@ -458,6 +465,176 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_reset_sync
 };
 
+#if ENABLE_GRAB_KEYBOARD
+static void
+_init_keysym2keycode(WSCContextISF *wsc_ctx)
+{
+    uint32_t i = 0;
+    uint32_t code;
+    uint32_t num_syms;
+    const xkb_keysym_t *syms;
+
+    if (!wsc_ctx || !wsc_ctx->state)
+        return;
+
+    for (i = 0; i < 256; i++) {
+        code = i + 8;
+        num_syms = xkb_key_get_syms(wsc_ctx->state, code, &syms);
+
+        if (num_syms == 1)
+            wsc_ctx->_keysym2keycode[syms[0]] = i;
+    }
+}
+
+static void
+_fini_keysym2keycode(WSCContextISF *wsc_ctx)
+{
+    wsc_ctx->_keysym2keycode.clear();
+}
+
+static void
+_wsc_im_keyboard_keymap(void *data,
+        struct wl_keyboard *wl_keyboard,
+        uint32_t format,
+        int32_t fd,
+        uint32_t size)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    char *map_str;
+
+    if (!wsc_ctx) return;
+
+    _fini_keysym2keycode(wsc_ctx);
+
+    if (wsc_ctx->state) {
+        xkb_state_unref(wsc_ctx->state);
+        wsc_ctx->state = NULL;
+    }
+
+    if (wsc_ctx->keymap) {
+        xkb_map_unref(wsc_ctx->keymap);
+        wsc_ctx->keymap = NULL;
+    }
+
+    if (format != WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1) {
+        close(fd);
+        return;
+    }
+
+    map_str = (char*)mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
+    if (map_str == MAP_FAILED) {
+        close(fd);
+        return;
+    }
+
+    wsc_ctx->keymap =
+        xkb_map_new_from_string(wsc_ctx->xkb_context,
+                map_str,
+                XKB_KEYMAP_FORMAT_TEXT_V1,
+                (xkb_keymap_compile_flags)0);
+
+    munmap(map_str, size);
+    close(fd);
+
+    if (!wsc_ctx->keymap) {
+        LOGW ("failed to compile keymap\n");
+        return;
+    }
+
+    wsc_ctx->state = xkb_state_new(wsc_ctx->keymap);
+    if (!wsc_ctx->state) {
+        LOGW ("failed to create XKB state\n");
+        xkb_map_unref(wsc_ctx->keymap);
+        return;
+    }
+
+    wsc_ctx->control_mask =
+        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Control");
+    wsc_ctx->alt_mask =
+        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Mod1");
+    wsc_ctx->shift_mask =
+        1 << xkb_map_mod_get_index(wsc_ctx->keymap, "Shift");
+
+    LOGD ("create _keysym2keycode\n");
+    _init_keysym2keycode(wsc_ctx);
+}
+
+static void
+_wsc_im_keyboard_key(void *data,
+        struct wl_keyboard *wl_keyboard,
+        uint32_t serial,
+        uint32_t time,
+        uint32_t key,
+        uint32_t state_w)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    uint32_t code;
+    uint32_t num_syms;
+    const xkb_keysym_t *syms;
+    xkb_keysym_t sym;
+    char keyname[64] = {0};
+    enum wl_keyboard_key_state state = (wl_keyboard_key_state)state_w;
+
+    if (!wsc_ctx || !wsc_ctx->state)
+        return;
+
+    code = key + 8;
+    num_syms = xkb_key_get_syms(wsc_ctx->state, code, &syms);
+
+    sym = XKB_KEY_NoSymbol;
+    if (num_syms == 1)
+    {
+        sym = syms[0];
+        xkb_keysym_get_name(sym, keyname, 64);
+    }
+
+    isf_wsc_context_filter_key_event (wsc_ctx, serial, time, code, sym, keyname,
+                state);
+}
+
+static void
+_wsc_im_keyboard_modifiers(void *data,
+        struct wl_keyboard *wl_keyboard,
+        uint32_t serial,
+        uint32_t mods_depressed,
+        uint32_t mods_latched,
+        uint32_t mods_locked,
+        uint32_t group)
+{
+    WSCContextISF *wsc_ctx = (WSCContextISF*)data;
+    if (!wsc_ctx || !wsc_ctx->state)
+        return;
+
+    struct wl_input_method_context *context = wsc_ctx->im_ctx;
+    xkb_mod_mask_t mask;
+
+    xkb_state_update_mask(wsc_ctx->state, mods_depressed,
+            mods_latched, mods_locked, 0, 0, group);
+    mask = xkb_state_serialize_mods(wsc_ctx->state,
+            (xkb_state_component)(XKB_STATE_DEPRESSED | XKB_STATE_LATCHED));
+
+    wsc_ctx->modifiers = 0;
+    if (mask & wsc_ctx->control_mask)
+        wsc_ctx->modifiers |= SCIM_KEY_ControlMask;
+    if (mask & wsc_ctx->alt_mask)
+        wsc_ctx->modifiers |= SCIM_KEY_AltMask;
+    if (mask & wsc_ctx->shift_mask)
+        wsc_ctx->modifiers |= SCIM_KEY_ShiftMask;
+
+    wl_input_method_context_modifiers(context, serial,
+            mods_depressed, mods_depressed,
+            mods_latched, group);
+}
+
+static const struct wl_keyboard_listener wsc_im_keyboard_listener = {
+    _wsc_im_keyboard_keymap,
+    NULL, /* enter */
+    NULL, /* leave */
+    _wsc_im_keyboard_key,
+    _wsc_im_keyboard_modifiers
+};
+#endif
+
 static void
 _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_input_method_context *im_ctx, uint32_t text_input_id)
 {
@@ -468,6 +645,18 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
     if (!wsc_ctx) {
         return;
     }
+
+#if ENABLE_GRAB_KEYBOARD
+    wsc_ctx->xkb_context = xkb_context_new((xkb_context_flags)0);
+    if (wsc_ctx->xkb_context == NULL) {
+        LOGW ("Failed to create XKB context\n");
+        delete wsc_ctx;
+        return;
+    }
+    wsc_ctx->state = NULL;
+    wsc_ctx->keymap = NULL;
+    wsc_ctx->modifiers = 0;
+#endif
 
     wsc_ctx->id = text_input_id;
     wsc->wsc_ctx = wsc_ctx;
@@ -483,6 +672,12 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
 
     wsc_ctx->im_ctx = im_ctx;
     wl_input_method_context_add_listener (im_ctx, &wsc_im_context_listener, wsc_ctx);
+
+#if ENABLE_GRAB_KEYBOARD
+    wsc_ctx->keyboard = wl_input_method_context_grab_keyboard(im_ctx);
+    if (wsc_ctx->keyboard)
+        wl_keyboard_add_listener(wsc_ctx->keyboard, &wsc_im_keyboard_listener, wsc_ctx);
+#endif
 
     if (wsc_ctx->language)
         wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
@@ -509,6 +704,30 @@ _wsc_im_deactivate(void *data, struct wl_input_method *input_method, struct wl_i
     WSCContextISF *wsc_ctx = wsc->wsc_ctx;
 
     isf_wsc_context_focus_out (wsc_ctx);
+
+#if ENABLE_GRAB_KEYBOARD
+    if (wsc_ctx->keyboard) {
+        wl_keyboard_destroy (wsc_ctx->keyboard);
+        wsc_ctx->keyboard = NULL;
+    }
+
+    _fini_keysym2keycode (wsc_ctx);
+
+    if (wsc_ctx->state) {
+        xkb_state_unref (wsc_ctx->state);
+        wsc_ctx->state = NULL;
+    }
+
+    if (wsc_ctx->keymap) {
+        xkb_map_unref (wsc_ctx->keymap);
+        wsc_ctx->keymap = NULL;
+    }
+
+    if (wsc_ctx->xkb_context) {
+        xkb_context_unref (wsc_ctx->xkb_context);
+        wsc_ctx->xkb_context = NULL;
+    }
+#endif
 
     if (wsc_ctx->im_ctx) {
         wl_input_method_context_destroy (wsc_ctx->im_ctx);
@@ -1427,6 +1646,71 @@ bool is_number_key(const char *str)
 }
 #endif
 
+#if ENABLE_GRAB_KEYBOARD
+void
+isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
+                                  uint32_t serial,
+                                  uint32_t timestamp, uint32_t keycode, uint32_t symcode,
+                                  char *keyname,
+                                  enum wl_keyboard_key_state state)
+
+{
+    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
+    LOGD ("");
+
+    if (!wsc_ctx) return;
+
+    KeyEvent key(symcode, wsc_ctx->modifiers);
+
+    bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
+
+    if (state == WL_KEYBOARD_KEY_STATE_RELEASED) {
+        key.mask = SCIM_KEY_ReleaseMask;
+    } else if (state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+        if (!ignore_key) {
+            /* Hardware input detect code */
+            if (get_keyboard_mode() == TOOLBAR_HELPER_MODE &&
+                timestamp > 1 &&
+                _support_hw_keyboard_mode &&
+                strncmp(keyname, "XF86", 4)) {
+#ifdef _TV
+                if (strcmp(keyname, "Down") &&
+                    strcmp(keyname, "KP_Down") &&
+                    strcmp(keyname, "Up") &&
+                    strcmp(keyname, "KP_Up") &&
+                    strcmp(keyname, "Right") &&
+                    strcmp(keyname, "KP_Right") &&
+                    strcmp(keyname, "Left") &&
+                    strcmp(keyname, "KP_Left") &&
+                    strcmp(keyname, "Return") &&
+                    strcmp(keyname, "Pause") &&
+                    strcmp(keyname, "NoSymbol") &&
+                    !is_number_key(keyname)) {
+#else
+                if (key.code != 0x1008ff26 && key.code != 0xFF69) {
+                    /* XF86back, Cancel (Power + Volume down) key */
+#endif
+                    isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_KEYBOARD_MODE);
+                    ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
+                    LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
+                }
+            }
+        }
+    }
+
+    if (!ignore_key) {
+
+        if (!_focused_ic || !_focused_ic->impl || !_focused_ic->impl->is_on) {
+            LOGD ("ic is off");
+        } else {
+            static uint32 _serial = 0;
+            g_info_manager->process_key_event (key, ++_serial);
+        }
+    } else {
+        send_wl_key_event (wsc_ctx, key, false);
+    }
+}
+#else
 void
 isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                   uint32_t serial,
@@ -1503,6 +1787,7 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 
     wl_input_method_context_filter_key_event_done (wsc_ctx->im_ctx, serial, EINA_FALSE);
 }
+#endif
 
 static void
 wsc_commit_preedit (WSCContextISF* wsc_ctx)
@@ -2753,8 +3038,13 @@ public:
                 }
             }
         }
-
+#if ENABLE_GRAB_KEYBOARD
+        if (ret == EINA_FALSE) {
+            send_wl_key_event (ic, key, false);
+        }
+#else
         wl_input_method_context_filter_key_event_done (ic->im_ctx, serial, ret);
+#endif
     }
 };
 
