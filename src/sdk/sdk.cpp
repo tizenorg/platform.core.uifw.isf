@@ -165,7 +165,10 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                     _language_manager.select_next_language();
                     ret = SCL_EVENT_DONE;
                 }
+                cur_lang = _language_manager.get_current_language();
                 if (cur_lang) {
+                    LOGD("cur_lang : %s\n", cur_lang);
+
                     LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
                     if (info) {
                         if (info->accepts_caps_mode) {
@@ -236,6 +239,7 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
     const char *replace_target = "us";
 
     if (language) {
+        LOGD("language : %s\n", language);
         sclint loop;
         for (loop = 0;loop < get_lang_table_size();loop++) {
             if (strcmp(language, get_lang_table()[loop].language) == 0) {

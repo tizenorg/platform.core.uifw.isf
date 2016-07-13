@@ -647,6 +647,7 @@ ise_forward_key_event(sclulong key_event)
 }
 
 static void set_caps_mode(sclboolean mode) {
+    LOGD("mode : %d\n", mode);
     if (g_ui) {
         if (g_ui->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
             g_ui->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
@@ -693,6 +694,7 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
 
     if (g_ui) {
         if (key_value) {
+            LOGD("key_value : %s\n", key_value);
             if (strcmp(key_value, "CUR_LANG") == 0) {
                 ret = _language_manager.select_current_language();
             }
@@ -1420,6 +1422,7 @@ ise_destroy()
 void
 ise_set_caps_mode(unsigned int mode)
 {
+    LOGD("caps_mode : %d\n", mode);
     if (mode) {
         g_keyboard_state.caps_mode = TRUE;
     } else {
