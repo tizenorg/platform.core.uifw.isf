@@ -315,7 +315,9 @@ _send_input_panel_hide_request(Ecore_IMF_Context *ctx)
         Ecore_IMF_Context *temp_context = ecore_imf_context_add(ctx_id);
         if (temp_context) {
             imcontext = (WaylandIMContext *)ecore_imf_context_data_get(temp_context);
-            if (imcontext) wl_text_input_hide_input_panel(imcontext->text_input);
+            if (imcontext && imcontext->text_input)
+                wl_text_input_hide_input_panel(imcontext->text_input);
+
             ecore_imf_context_del(temp_context);
         }
     }
