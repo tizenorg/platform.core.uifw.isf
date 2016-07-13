@@ -1525,6 +1525,9 @@ HelperAgent::send_key_event (int            ic,
 
     bool ret = false;
 
+#if ENABLE_GRAB_KEYBOARD
+    if (!m_impl->si.null ()) {
+#else
     if (key.code <= 0x7F ||
         (key.code >= SCIM_KEY_BackSpace && key.code <= SCIM_KEY_Delete) ||
         (key.code >= SCIM_KEY_Home && key.code <= SCIM_KEY_Hyper_R)) {
@@ -1535,9 +1538,11 @@ HelperAgent::send_key_event (int            ic,
     }
 
     if (ret && (!m_impl->si.null ())) {
+#endif
         ret = m_impl->si->process_key_event (key);
         LOGD ("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
     }
+
     if (ret == false && m_impl->socket_active.is_connected ()) {
         m_impl->send.clear ();
         m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
