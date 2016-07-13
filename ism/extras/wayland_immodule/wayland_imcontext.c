@@ -1815,9 +1815,11 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                                 Ecore_IMF_Event_Type  type,
                                 Ecore_IMF_Event      *imf_event)
 {
+
+#if !(ENABLE_GRAB_KEYBOARD)
     Eina_Bool ret = EINA_FALSE;
     Ecore_Event_Key ecore_key_ev;
-
+#endif
     if (type == ECORE_IMF_EVENT_MOUSE_UP) {
         if (ecore_imf_context_input_panel_enabled_get(ctx)) {
             LOGD ("[Mouse-up event] ctx : %p\n", ctx);
@@ -1828,6 +1830,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
                 LOGE ("Can't show IME because there is no focus. ctx : %p\n", ctx);
         }
     }
+#if !(ENABLE_GRAB_KEYBOARD)
     else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *key_ev = (Ecore_IMF_Event_Key_Up *)imf_event;
         ecore_key_ev.keyname = key_ev->keyname;
@@ -1895,6 +1898,9 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
     }
 
     return ret;
+#else
+	return EINA_FALSE;
+#endif
 }
 
 EAPI void
