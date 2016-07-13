@@ -40,6 +40,12 @@
 #endif
 #define LOG_TAG "IMMODULE"
 
+#ifdef _TV
+# define ENABLE_RESET_DONE_FUNC 0
+#else
+# define ENABLE_RESET_DONE_FUNC 1
+#endif
+
 #define HIDE_TIMER_INTERVAL     0.05
 #define WAIT_FOR_FILTER_DONE_SECOND 2
 
@@ -134,8 +140,11 @@ struct _WaylandIMContext
         uint32_t state;
     } last_key_event_filter;
     Eina_List *keysym_list;
-
+#if ENABLE_RESET_DONE_FUNC
     uint32_t last_reset_serial;
+#else
+    uint32_t reset_serial;
+#endif
     //
 };
 
@@ -473,6 +482,31 @@ update_state(WaylandIMContext *imcontext)
     }
 }
 
+#if !(ENABLE_RESET_DONE_FUNC)
+static Eina_Bool
+check_serial(WaylandIMContext *imcontext, uint32_t serial)
+{
+    Ecore_IMF_Preedit_Attr *attr;
+
+    if ((imcontext->serial - serial) >
+        (imcontext->serial - imcontext->reset_serial)) {
+        LOGD("outdated serial: %u, current: %u, reset: %u",
+                serial, imcontext->serial, imcontext->reset_serial);
+
+        imcontext->pending_preedit.cursor = 0;
+
+        if (imcontext->pending_preedit.attrs) {
+            EINA_LIST_FREE(imcontext->pending_preedit.attrs, attr) free(attr);
+            imcontext->pending_preedit.attrs = NULL;
+        }
+
+        return EINA_FALSE;
+    }
+
+    return EINA_TRUE;
+}
+#endif
+
 static void
 clear_preedit(WaylandIMContext *imcontext)
 {
@@ -517,6 +551,10 @@ text_input_commit_string(void                 *data,
     if (!imcontext->ctx)
         return;
 
+#if !(ENABLE_RESET_DONE_FUNC)
+    if (!check_serial(imcontext, serial))
+        return;
+#endif
     if (old_preedit)
     {
         ecore_imf_context_preedit_end_event_add(imcontext->ctx);
@@ -842,7 +880,10 @@ text_input_preedit_string(void                 *data,
     SECURE_LOGD("preedit event (text: '%s', current pre-edit: '%s')",
                 text,
                 imcontext->preedit_text ? imcontext->preedit_text : "");
-
+#if !(ENABLE_RESET_DONE_FUNC)
+    if (!check_serial(imcontext, serial))
+        return;
+#endif
     old_preedit =
         imcontext->preedit_text && strlen(imcontext->preedit_text) > 0;
 
@@ -1073,6 +1114,9 @@ text_input_enter(void                 *data,
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
 
     update_state(imcontext);
+#if !(ENABLE_RESET_DONE_FUNC)
+    imcontext->reset_serial = imcontext->serial;
+#endif
 }
 
 static void
@@ -1380,10 +1424,12 @@ text_input_reset_done(void                 *data,
                       uint32_t              serial)
 {
     LOGD("serial: %d", serial);
+#if ENABLE_RESET_DONE_FUNC
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     if (!imcontext) return;
 
     imcontext->last_reset_serial = serial;
+#endif
 }
 
 //
@@ -1549,7 +1595,9 @@ wayland_im_context_reset(Ecore_IMF_Context *ctx)
     clear_preedit(imcontext);
 
     if (!imcontext->input) return;
-
+#if !(ENABLE_RESET_DONE_FUNC)
+    wl_text_input_reset(imcontext->text_input);
+#else
     if (imcontext->text_input) {
         int serial = imcontext->serial++;
         double start_time = ecore_time_get();
@@ -1564,8 +1612,11 @@ wayland_im_context_reset(Ecore_IMF_Context *ctx)
             }
         }
     }
-
+#endif
     update_state(imcontext);
+#if !(ENABLE_RESET_DONE_FUNC)
+    imcontext->reset_serial = imcontext->serial;
+#endif
 }
 
 EAPI void
