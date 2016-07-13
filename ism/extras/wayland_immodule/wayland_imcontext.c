@@ -1658,12 +1658,12 @@ wayland_im_context_preedit_string_with_attributes_get(Ecore_IMF_Context  *ctx,
             }
         }
         else {
-            if (str) {
+            if (imcontext->preedit_text) {
                 Ecore_IMF_Preedit_Attr *attr = calloc(1, sizeof(*attr));
                 // use REVERSE style as default
                 attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB2;
                 attr->start_index = 0;
-                attr->end_index = strlen(str);
+                attr->end_index = strlen(imcontext->preedit_text);
                 *attrs = eina_list_append(*attrs, attr);
             }
         }
