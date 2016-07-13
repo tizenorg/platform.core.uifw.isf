@@ -58,6 +58,21 @@ struct weescim
 struct _WSCContextISF {
     weescim *ctx;
 
+#if ENABLE_GRAB_KEYBOARD
+    struct wl_keyboard *keyboard;
+    struct xkb_context *xkb_context;
+
+    uint32_t modifiers;
+
+    struct xkb_keymap *keymap;
+    struct xkb_state *state;
+    xkb_mod_mask_t control_mask;
+    xkb_mod_mask_t alt_mask;
+    xkb_mod_mask_t shift_mask;
+
+    KeycodeRepository _keysym2keycode;
+
+#endif
     struct wl_input_method_context *im_ctx;
 
     Ecore_Fd_Handler* surrounding_text_fd_read_handler;
@@ -121,10 +136,18 @@ void isf_wsc_context_focus_out (WSCContextISF *wsc_ctx);
 void isf_wsc_context_preedit_string_get (WSCContextISF *wsc_ctx, char** str, int *cursor_pos);
 void isf_wsc_context_autocapital_type_set (WSCContextISF* wsc_ctx, Ecore_IMF_Autocapital_Type autocapital_type);
 void isf_wsc_context_bidi_direction_set (WSCContextISF* wsc_ctx, Ecore_IMF_BiDi_Direction direction);
+#if !(ENABLE_GRAB_KEYBOARD)
 void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                        uint32_t serial,
                                        uint32_t timestamp, const char *keyname,
                                        bool press, uint32_t modifiers);
+#else
+void isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
+                                       uint32_t serial,
+                                       uint32_t timestamp, uint32_t key, uint32_t unicode,
+                                       char *keyname,
+                                       enum wl_keyboard_key_state state);
+#endif
 
 bool wsc_context_surrounding_get (WSCContextISF *wsc_ctx, char **text, int *cursor_pos);
 Ecore_IMF_Input_Panel_Layout wsc_context_input_panel_layout_get(WSCContextISF *wsc_ctx);
