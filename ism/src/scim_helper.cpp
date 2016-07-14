@@ -1967,7 +1967,19 @@ void
 HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &text, int &cursor)
 {
     LOGD ("");
-
+#ifdef _TV
+    if (m_impl->socket_active.is_connected () && (m_impl->need_update_surrounding_text == 0)) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_GET_SURROUNDING_TEXT);
+        m_impl->send.put_data ("");
+        m_impl->send.put_data (maxlen_before);
+        m_impl->send.put_data (maxlen_after);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+    m_impl->need_update_surrounding_text++;
+#else
     if (!m_impl->socket_active.is_connected ())
         return;
 
@@ -2001,6 +2013,7 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
         free (m_impl->surrounding_text);
         m_impl->surrounding_text = NULL;
     }
+#endif
 }
 
 /**
