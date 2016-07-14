@@ -547,7 +547,7 @@ text_input_commit_string(void                 *data,
     if (!imcontext->ctx)
         return;
 
-#if !(ENABLE_RESET_DONE_FUNC)
+#if ENABLE_RESET_DONE_FUNC
     if (!check_serial(imcontext, serial))
         return;
 #endif
@@ -936,7 +936,7 @@ text_input_preedit_string(void                 *data,
     SECURE_LOGD("preedit event (text: '%s', current pre-edit: '%s')",
                 text,
                 imcontext->preedit_text ? imcontext->preedit_text : "");
-#if !(ENABLE_RESET_DONE_FUNC)
+#if ENABLE_RESET_DONE_FUNC
     if (!check_serial(imcontext, serial))
         return;
 #endif
