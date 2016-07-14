@@ -1650,22 +1650,10 @@ wayland_im_context_preedit_string_with_attributes_get(Ecore_IMF_Context  *ctx,
         Eina_List *l;
         Ecore_IMF_Preedit_Attr *a, *attr;
 
-        if (imcontext->preedit_attrs) {
-            EINA_LIST_FOREACH(imcontext->preedit_attrs, l, a) {
-                attr = malloc(sizeof(*attr));
-                attr = memcpy(attr, a, sizeof(*attr));
-                *attrs = eina_list_append(*attrs, attr);
-            }
-        }
-        else {
-            if (imcontext->preedit_text) {
-                Ecore_IMF_Preedit_Attr *attr = calloc(1, sizeof(*attr));
-                // use REVERSE style as default
-                attr->preedit_type = ECORE_IMF_PREEDIT_TYPE_SUB2;
-                attr->start_index = 0;
-                attr->end_index = strlen(imcontext->preedit_text);
-                *attrs = eina_list_append(*attrs, attr);
-            }
+        EINA_LIST_FOREACH(imcontext->preedit_attrs, l, a) {
+            attr = malloc(sizeof(*attr));
+            attr = memcpy(attr, a, sizeof(*attr));
+            *attrs = eina_list_append(*attrs, attr);
         }
     }
 
