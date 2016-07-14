@@ -70,6 +70,7 @@ class Candidate
         virtual void hide() = 0;
         virtual void update(const std::vector<std::string> &candidates) = 0;
         virtual void rotate(int degree) { }
+        virtual int get_height() { return 0; }
         void add_event_listener(EventListener *l);
     protected:
         void notify_listeners(const EventDesc &desc);

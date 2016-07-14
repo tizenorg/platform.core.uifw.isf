@@ -38,6 +38,7 @@ class EflMultiLineCandidate: public Candidate
         void hide();
         void update(const std::vector<std::string> &candidates);
         void rotate(int degree);
+        int get_height();
         void more_btn_clicked();
         void more_btn_released();
         void close_btn_clicked();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout width="360" height="240" magnifier="true" key_width="80" key_height="60" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_DEFAULT">
+<layout width="360" height="240" magnifier="true" key_width="80" key_height="50" vibe_style="DEFAULT" sound_style="DEFAULT" label_type="3X4_DEFAULT">
   <image_path>
     <button_normal>B09_panel.png</button_normal>
   </image_path>

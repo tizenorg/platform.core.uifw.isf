@@ -486,17 +486,21 @@ void CCoreEventCallback::on_candidate_show(sclint ic, const sclchar *ic_uuid)
 
     create_softcandidate();
 
-    if (g_candidate)
-        g_candidate->show();
-
     g_softcandidate_show = true;
-    g_ui->set_custom_starting_coordinates(0, CANDIDATE_WINDOW_HEIGHT);
+    if (g_candidate) {
+        g_candidate->show();
+        if (g_ui) {
+            g_ui->set_custom_starting_coordinates(0, g_candidate->get_height());
+        }
+    }
 }
 
 void CCoreEventCallback::on_candidate_hide(sclint ic, const sclchar *ic_uuid)
 {
     add_softcandidate_hide_timer();
-    g_ui->set_custom_starting_coordinates(0, 0);
+    if (g_ui) {
+        g_ui->set_custom_starting_coordinates(0, 0);
+    }
 }
 
 void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *data, size_t &len, sclu32 *ret)

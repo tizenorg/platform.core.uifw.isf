@@ -547,3 +547,9 @@ EflMultiLineCandidate::rotate(int degree)
     evas_object_move(m_candidateCloseBtn, m_screenWidth-MORE_BUTTON_WIDTH*m_screenRatio,
                      (CANDIDATE_WINDOW_HEIGHT-MORE_BUTTON_HEIGHT)*m_screenRatio/2);
 }
+
+int
+EflMultiLineCandidate::get_height()
+{
+    return CANDIDATE_WINDOW_HEIGHT*m_screenRatio;
+}

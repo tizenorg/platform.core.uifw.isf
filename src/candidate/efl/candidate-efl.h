@@ -33,6 +33,7 @@ class EflCandidate: public Candidate
         void show();
         void hide();
         void update(const std::vector<std::string> &candidates);
+        int get_height();
         void item_pressed(Evas_Object *item);
         void item_released(Evas_Object *item);
         void item_moved(Evas_Object *item);

@@ -178,6 +178,11 @@ EflCandidate::hide() {
     evas_object_hide(layout);
 }
 
+int
+EflCandidate::get_height() {
+    return candidate_config.height;
+}
+
 void
 EflCandidate::update(const vector<string> &vec_str) {
     cur_candidates = vec_str;
