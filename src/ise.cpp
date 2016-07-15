@@ -177,6 +177,7 @@ static void _reset_shift_state(void)
 
 static void _reset_multitap_state()
 {
+    LOGD("g_keyboard_state.prev_modifier : %d", g_keyboard_state.prev_modifier);
     if (g_keyboard_state.prev_modifier == KEY_MODIFIER_MULTITAP_START ||
         g_keyboard_state.prev_modifier == KEY_MODIFIER_MULTITAP_REPEAT) {
         ise_send_string(g_keyboard_state.multitap_value.c_str());
@@ -1043,6 +1044,7 @@ void
 ise_focus_out(int ic)
 {
     g_keyboard_state.focused_ic = 0;
+    _reset_multitap_state();
 }
 
 void
@@ -1283,6 +1285,7 @@ ise_hide()
     }
 
     _reset_shift_state();
+    _reset_multitap_state();
 }
 
 void
