@@ -65,15 +65,20 @@ class EventListener
 class Candidate
 {
     public:
-        virtual ~Candidate() { }
+        Candidate() { m_visible = false; }
+        virtual ~Candidate() { m_visible = false; }
         virtual void show() = 0;
         virtual void hide() = 0;
         virtual void update(const std::vector<std::string> &candidates) = 0;
         virtual void rotate(int degree) { }
         virtual int get_height() { return 0; }
+        virtual bool get_visible() { return m_visible; }
         void add_event_listener(EventListener *l);
     protected:
         void notify_listeners(const EventDesc &desc);
         std::vector<EventListener*> listeners;
+
+    protected:
+        bool m_visible;
 };
 #endif

@@ -20,6 +20,7 @@
 #include "sdk.h"
 #include "option.h"
 #include "sclcore.h"
+#include "candidate.h"
 
 #include "ise_lang_table.h"
 
@@ -35,6 +36,8 @@ using namespace scl;
 
 static ISELanguageManager _language_manager;
 extern KEYBOARD_STATE g_keyboard_state;
+
+extern Candidate *g_candidate;
 
 /*
  * This callback class will receive all response events from SCL
@@ -256,6 +259,10 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
 
                     SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
                     SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+                    if (g_candidate && g_candidate->get_visible()) {
+                        size_portrait.height += g_candidate->get_height();
+                        size_landscape.height += g_candidate->get_height();
+                    }
                     g_core.set_keyboard_size_hints(size_portrait, size_landscape);
 
                     /* Check if we need to turn on the shift key */

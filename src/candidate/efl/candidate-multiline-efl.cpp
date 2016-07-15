@@ -390,6 +390,7 @@ void
 EflMultiLineCandidate::show()
 {
     show_view();
+    m_visible = true;
 }
 
 void
@@ -397,6 +398,7 @@ EflMultiLineCandidate::hide()
 {
     hide_view();
     hide_more_view();
+    m_visible = false;
 }
 
 candidate_item_size

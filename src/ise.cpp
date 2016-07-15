@@ -95,7 +95,7 @@ static Ecore_Timer         *_commit_timer = NULL;
 static sclu32               _context_layout = ISE_LAYOUT_STYLE_NORMAL;
 static sclu32               _context_layout_variation = 0;
 
-static Candidate           *g_candidate = NULL;
+Candidate                  *g_candidate = NULL;
 
 class CandidateEventListener: public EventListener
 {
@@ -492,6 +492,14 @@ void CCoreEventCallback::on_candidate_show(sclint ic, const sclchar *ic_uuid)
         g_candidate->show();
         if (g_ui) {
             g_ui->set_custom_starting_coordinates(0, g_candidate->get_height());
+            SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
+            SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+            size_portrait.height += g_candidate->get_height();
+            size_landscape.height += g_candidate->get_height();
+            g_core.set_keyboard_size_hints(size_portrait, size_landscape);
+
+            LOGD("Showing candidate , position [%d %d] size [%d %d] [%d %d]", 0, g_candidate->get_height(),
+                size_portrait.width, size_portrait.height, size_landscape.width, size_landscape.height);
         }
     }
 }
@@ -501,6 +509,12 @@ void CCoreEventCallback::on_candidate_hide(sclint ic, const sclchar *ic_uuid)
     add_softcandidate_hide_timer();
     if (g_ui) {
         g_ui->set_custom_starting_coordinates(0, 0);
+        SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
+        SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+        g_core.set_keyboard_size_hints(size_portrait, size_landscape);
+
+        LOGD("Hiding candidate , position [%d %d] size [%d %d] [%d %d]", 0, 0,
+            size_portrait.width, size_portrait.height, size_landscape.width, size_landscape.height);
     }
 }
 
@@ -1011,12 +1025,14 @@ ise_set_layout(sclu32 layout, sclu32 layout_variation)
 void
 ise_reset_context()
 {
+    LOGD("");
     _reset_multitap_state();
 }
 
 void
 ise_reset_input_context()
 {
+    LOGD("");
     _reset_multitap_state();
 }
 
@@ -1149,6 +1165,10 @@ ise_show(int ic)
 
                     SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
                     SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+                    if (g_candidate && g_candidate->get_visible()) {
+                        size_portrait.height += g_candidate->get_height();
+                        size_landscape.height += g_candidate->get_height();
+                    }
                     g_core.set_keyboard_size_hints(size_portrait, size_landscape);
                 } else {
                     if (force_primary_latin) {
@@ -1373,6 +1393,10 @@ ise_create()
 
         SclSize size_portrait = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_PORTRAIT);
         SclSize size_landscape = g_ui->get_input_mode_size(g_ui->get_input_mode(), DISPLAYMODE_LANDSCAPE);
+        if (g_candidate && g_candidate->get_visible()) {
+            size_portrait.height += g_candidate->get_height();
+            size_landscape.height += g_candidate->get_height();
+        }
         g_core.set_keyboard_size_hints(size_portrait, size_landscape);
     }
     init_recent_used_punctuation();

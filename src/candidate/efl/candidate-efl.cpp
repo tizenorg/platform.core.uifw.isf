@@ -171,11 +171,13 @@ EflCandidate::~EflCandidate() {
 void
 EflCandidate::show() {
     evas_object_show(layout);
+    m_visible = true;
 }
 
 void
 EflCandidate::hide() {
     evas_object_hide(layout);
+    m_visible = false;
 }
 
 int
