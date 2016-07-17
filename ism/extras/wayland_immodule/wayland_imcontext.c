@@ -402,11 +402,6 @@ _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant)
 
     if (!ctx) return;
 
-    if (!get_using_ctx()) {
-        LOGW("Can't hide input_panel because there is no using context!!");
-        return;
-    }
-
     will_hide = EINA_TRUE;
 
     if (instant || (_hide_timer && ecore_timer_pending_get(_hide_timer) <= 0.0)) {
@@ -1760,6 +1755,11 @@ EAPI void
 wayland_im_context_hide(Ecore_IMF_Context *ctx)
 {
     LOGD("ctx : %p", ctx);
+
+    if (!get_using_ctx()) {
+        LOGW("Can't hide input_panel because there is no using context!!");
+        return;
+    }
 
     _input_panel_hide(ctx, EINA_FALSE);
 }
