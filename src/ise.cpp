@@ -552,12 +552,17 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                         if (_context_layout == ISE_LAYOUT_STYLE_EMAIL ||
                             _context_layout == ISE_LAYOUT_STYLE_URL ||
                             _context_layout == ISE_LAYOUT_STYLE_PASSWORD)
-                            new_layout = ISE_LAYOUT_STYLE_NORMAL;
+                            new_layout = _context_layout;
                         else
                             new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     case ISE_LAYOUT_STYLE_EMOTICON:
-                        new_layout = ISE_LAYOUT_STYLE_NORMAL;
+                        if (_context_layout == ISE_LAYOUT_STYLE_EMAIL ||
+                            _context_layout == ISE_LAYOUT_STYLE_URL ||
+                            _context_layout == ISE_LAYOUT_STYLE_PASSWORD)
+                            new_layout = _context_layout;
+                        else
+                            new_layout = ISE_LAYOUT_STYLE_NORMAL;
                         break;
                     default:
                         ;
@@ -580,7 +585,12 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                             new_layout = ISE_LAYOUT_STYLE_EMOTICON;
                         break;
                     case ISE_LAYOUT_STYLE_NUMBER:
-                        new_layout = ISE_LAYOUT_STYLE_NORMAL;
+                        if (_context_layout == ISE_LAYOUT_STYLE_EMAIL ||
+                            _context_layout == ISE_LAYOUT_STYLE_URL ||
+                            _context_layout == ISE_LAYOUT_STYLE_PASSWORD)
+                            new_layout = _context_layout;
+                        else
+                            new_layout = ISE_LAYOUT_STYLE_NORMAL;
                         break;
                     case ISE_LAYOUT_STYLE_HEX:
                         new_layout = ISE_LAYOUT_STYLE_NUMBER;
