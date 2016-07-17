@@ -22,8 +22,8 @@
   </button_image_path>
   <sw_button_style>0</sw_button_style>
   <button_size>
-    <width>75</width>
-    <height>116</height>
+    <width>41</width>
+    <height>74</height>
   </button_size>
   <button_spacing>2</button_spacing>
   <label_type>AUTOPOPUP</label_type >
