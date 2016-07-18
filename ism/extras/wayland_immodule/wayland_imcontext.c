@@ -530,6 +530,7 @@ text_input_commit_string(void                 *data,
 static void
 commit_preedit(WaylandIMContext *imcontext)
 {
+    LOGD("");
     if (!imcontext->preedit_commit)
         return;
 
@@ -555,6 +556,7 @@ commit_preedit(WaylandIMContext *imcontext)
 static void
 set_focus(Ecore_IMF_Context *ctx)
 {
+    LOGD("");
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
     if (!imcontext || !imcontext->window) return;
 
@@ -758,6 +760,7 @@ static Eina_Bool _conformant_change_cb(void *data, int ev_type, void *ev)
 static Eina_Bool
 show_input_panel(Ecore_IMF_Context *ctx)
 {
+    LOGD("");
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
 
     char *surrounding = NULL;
@@ -878,6 +881,7 @@ text_input_preedit_string(void                 *data,
 {
     WaylandIMContext *imcontext = (WaylandIMContext *)data;
     Eina_Bool old_preedit = EINA_FALSE;
+    Eina_Bool preedit_changed = EINA_FALSE;
 
     SECURE_LOGD("preedit event (text: '%s', current pre-edit: '%s')",
                 text,
@@ -885,6 +889,11 @@ text_input_preedit_string(void                 *data,
 
     old_preedit =
         imcontext->preedit_text && strlen(imcontext->preedit_text) > 0;
+
+    if (imcontext->preedit_text)
+        preedit_changed = (strcmp(imcontext->preedit_text, text) != 0);
+    else
+        preedit_changed = (strlen(text) != 0);
 
     clear_preedit(imcontext);
 
@@ -896,23 +905,25 @@ text_input_preedit_string(void                 *data,
 
     imcontext->pending_preedit.attrs = NULL;
 
-    if (!old_preedit) {
-        ecore_imf_context_preedit_start_event_add(imcontext->ctx);
-        ecore_imf_context_event_callback_call(imcontext->ctx,
-                ECORE_IMF_CALLBACK_PREEDIT_START,
-                NULL);
-    }
+    if (preedit_changed) {
+        if (!old_preedit) {
+            ecore_imf_context_preedit_start_event_add(imcontext->ctx);
+            ecore_imf_context_event_callback_call(imcontext->ctx,
+                    ECORE_IMF_CALLBACK_PREEDIT_START,
+                    NULL);
+        }
 
-    ecore_imf_context_preedit_changed_event_add(imcontext->ctx);
-    ecore_imf_context_event_callback_call(imcontext->ctx,
-            ECORE_IMF_CALLBACK_PREEDIT_CHANGED,
-            NULL);
-
-    if (imcontext->preedit_text && strlen(imcontext->preedit_text) == 0) {
-        ecore_imf_context_preedit_end_event_add(imcontext->ctx);
+        ecore_imf_context_preedit_changed_event_add(imcontext->ctx);
         ecore_imf_context_event_callback_call(imcontext->ctx,
-                ECORE_IMF_CALLBACK_PREEDIT_END,
+                ECORE_IMF_CALLBACK_PREEDIT_CHANGED,
                 NULL);
+
+        if (imcontext->preedit_text && strlen(imcontext->preedit_text) == 0) {
+            ecore_imf_context_preedit_end_event_add(imcontext->ctx);
+            ecore_imf_context_event_callback_call(imcontext->ctx,
+                    ECORE_IMF_CALLBACK_PREEDIT_END,
+                    NULL);
+        }
     }
 }
 
