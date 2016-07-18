@@ -71,6 +71,7 @@ static Ecore_Event_Handler *_conformant_change_handler   = NULL;
 static Eina_Bool             _received_will_hide_event    = EINA_FALSE;
 static Eina_Bool             _conformant_reset_done       = EINA_FALSE;
 static Evas                 *_active_context_canvas       = NULL;
+static unsigned int          _active_context_window_id    = 0;
 //
 
 struct _WaylandIMContext
@@ -692,9 +693,13 @@ static Eina_Bool _conformant_change_cb(void *data, int ev_type, void *ev)
     Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
     if (!e || !ctx) return ECORE_CALLBACK_PASS_ON;
 
-    LOGD ("CONFORMANT changed!! : %d %d", e->part_type, e->state);
+    LOGD ("CONFORMANT changed!! part type : %d, state : %d, win : %d", e->part_type, e->state, e->win);
+
+    if (_active_context_window_id != e->win)
+        return ECORE_CALLBACK_PASS_ON;
 
     Ecore_Wl_Window *window = ecore_wl_window_find(e->win);
+    if (!window) return ECORE_CALLBACK_PASS_ON;
 
     if (!(e->state)) {
         LOGD("_conformant_reset_done = 0, registering _render_post_cb : %p %p\n", _active_context_canvas, window);
@@ -708,46 +713,42 @@ static Eina_Bool _conformant_change_cb(void *data, int ev_type, void *ev)
             evas_event_callback_del(_active_context_canvas, EVAS_CALLBACK_RENDER_POST, _render_post_cb);
         }
         /* Since the input_panel_geometry is not delivered right at the moment, we use conformant geometry instead */
-        Ecore_Wl_Window *window = ecore_wl_window_find(e->win);
-        if (window) {
-            int x = 0, y = 0, w = 0, h = 0;
-            Eina_Bool result = ecore_wl_window_keyboard_geometry_get(window, &x, &y, &w, &h);
-            if (result) {
-                Evas_Coord scr_w = 0, scr_h = 0;
-                Evas_Coord tmp = 0;
-                ecore_wl_sync();
-                ecore_wl_screen_size_get(&scr_w, &scr_h);
-                int rot = ecore_wl_window_rotation_get(window);
-                /* Assume we are using keyboard that has the same width to the screen width*/
-                switch (rot) {
-                case 90:
-                    _keyboard_geometry.h = w;
-                    _keyboard_geometry.w = h;
-                    _keyboard_geometry.y = scr_w - _keyboard_geometry.h;
-                    _keyboard_geometry.x = 0;
-                    break;
-                case 180:
-                    _keyboard_geometry.w = w;
-                    _keyboard_geometry.h = h;
-                    _keyboard_geometry.x = 0;
-                    _keyboard_geometry.y = scr_h - _keyboard_geometry.h;
-                    break;
-                case 270:
-                    _keyboard_geometry.h = w;
-                    _keyboard_geometry.w = h;
-                    _keyboard_geometry.y = scr_w - _keyboard_geometry.h;
-                    _keyboard_geometry.x = 0;
-                    break;
-                default:
-                    _keyboard_geometry.x = x;
-                    _keyboard_geometry.y = y;
-                    _keyboard_geometry.w = w;
-                    _keyboard_geometry.h = h;
-                }
-                ecore_imf_context_input_panel_event_callback_call(ctx, ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
-                LOGD("[KEYPAD]: scr %dx%d, rot %d, orig (%d,%d, %dx%d), trans (%d,%d, %dx%d)", scr_w, scr_h, rot, x, y, w, h,
-                    _keyboard_geometry.x, _keyboard_geometry.y, _keyboard_geometry.w, _keyboard_geometry.h);
+        int x = 0, y = 0, w = 0, h = 0;
+        Eina_Bool result = ecore_wl_window_keyboard_geometry_get(window, &x, &y, &w, &h);
+        if (result) {
+            Evas_Coord scr_w = 0, scr_h = 0;
+            ecore_wl_sync();
+            ecore_wl_screen_size_get(&scr_w, &scr_h);
+            int rot = ecore_wl_window_rotation_get(window);
+            /* Assume we are using keyboard that has the same width to the screen width*/
+            switch (rot) {
+            case 90:
+                _keyboard_geometry.h = w;
+                _keyboard_geometry.w = h;
+                _keyboard_geometry.y = scr_w - _keyboard_geometry.h;
+                _keyboard_geometry.x = 0;
+                break;
+            case 180:
+                _keyboard_geometry.w = w;
+                _keyboard_geometry.h = h;
+                _keyboard_geometry.x = 0;
+                _keyboard_geometry.y = scr_h - _keyboard_geometry.h;
+                break;
+            case 270:
+                _keyboard_geometry.h = w;
+                _keyboard_geometry.w = h;
+                _keyboard_geometry.y = scr_w - _keyboard_geometry.h;
+                _keyboard_geometry.x = 0;
+                break;
+            default:
+                _keyboard_geometry.x = x;
+                _keyboard_geometry.y = y;
+                _keyboard_geometry.w = w;
+                _keyboard_geometry.h = h;
             }
+            ecore_imf_context_input_panel_event_callback_call(ctx, ECORE_IMF_INPUT_PANEL_GEOMETRY_EVENT, 0);
+            LOGD("[KEYPAD]: scr %dx%d, rot %d, orig (%d,%d, %dx%d), trans (%d,%d, %dx%d)", scr_w, scr_h, rot, x, y, w, h,
+                _keyboard_geometry.x, _keyboard_geometry.y, _keyboard_geometry.w, _keyboard_geometry.h);
         }
     }
 
@@ -791,6 +792,7 @@ show_input_panel(Ecore_IMF_Context *ctx)
     will_hide = EINA_FALSE;
     _show_req_ctx = ctx;
     _active_context_canvas = ecore_imf_context_client_canvas_get(ctx);
+    _active_context_window_id = ecore_wl_window_id_get(imcontext->window);
     //
 
     // TIZEN_ONLY(20150715): Support input_panel_state_get
