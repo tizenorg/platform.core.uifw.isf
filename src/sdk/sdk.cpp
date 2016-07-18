@@ -96,11 +96,6 @@ extern CSCLCore g_core;
 extern CONFIG_VALUES g_config_values;
 extern KEYBOARD_STATE g_keyboard_state;
 
-static void set_caps_mode(sclint mode) {
-    if (g_ui->get_shift_state() != SCL_SHIFT_STATE_LOCK) {
-        g_ui->set_shift_state(mode ? SCL_SHIFT_STATE_ON : SCL_SHIFT_STATE_OFF);
-    }
-}
 SCLEventReturnType
 CSDKISE::process_key_type_char(const SclUIEventDesc& event_desc)
 {
@@ -167,30 +162,6 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                     /* If flick event upon space key was detected, perform a language change and don't proceed anymore */
                     _language_manager.select_next_language();
                     ret = SCL_EVENT_DONE;
-                }
-                cur_lang = _language_manager.get_current_language();
-                if (cur_lang) {
-                    LOGD("cur_lang : %s\n", cur_lang);
-
-                    LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
-                    if (info) {
-                        if (info->accepts_caps_mode) {
-                            // FIXME this if condition means the AC is off
-                            if (g_keyboard_state.layout != ISE_LAYOUT_STYLE_NORMAL) {
-                                g_ui->set_autocapital_shift_state(TRUE);
-                                g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
-                            } else {
-                                // normal layout means the AC is on
-                                g_ui->set_autocapital_shift_state(FALSE);
-                                ise_send_event(MVK_Shift_Enable, KEY_MASK_NULL);
-                                set_caps_mode(g_keyboard_state.caps_mode);
-                            }
-                        } else {
-                            g_ui->set_autocapital_shift_state(TRUE);
-                            ise_send_event(MVK_Shift_Disable, KEY_MASK_NULL);
-                            g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
-                        }
-                    }
                 }
             } else {
                 if (event_desc.key_modifier == KEY_MODIFIER_DIRECTION_LEFT ||
@@ -277,10 +248,6 @@ sclboolean CSDKISE::on_language_selected(const sclchar *language, const sclchar 
                                 g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
                                 ise_send_event(MVK_Shift_Off, KEY_MASK_NULL);
                                 g_keyboard_state.caps_mode = FALSE;
-                            }
-                            if (g_keyboard_state.layout == ISE_LAYOUT_STYLE_NORMAL) {
-                                // not allow the SCL auto capital shift state
-                                g_ui->set_autocapital_shift_state(FALSE);
                             }
                         } else {
                             g_ui->set_autocapital_shift_state(TRUE);
