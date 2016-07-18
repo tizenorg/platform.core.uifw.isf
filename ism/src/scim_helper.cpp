@@ -1287,6 +1287,7 @@ HelperAgent::filter_event ()
             case ISM_TRANS_CMD_RESET_ISE_CONTEXT:
             {
                 m_impl->signal_reset_ise_context (this, ic, ic_uuid);
+                m_impl->signal_reset_input_context (this, ic, ic_uuid);
                 if (!m_impl->si.null ()) m_impl->si->reset();
                 m_impl->send.clear ();
                 m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
