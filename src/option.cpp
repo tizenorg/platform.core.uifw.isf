@@ -308,7 +308,16 @@ static char *_title_text_get(void *data, Evas_Object *obj, const char *part)
     return NULL;
 }
 
-static void add_scrollable_title_area(Evas_Object *genlist, const char *title)
+static void
+gl_realized_cb(void *data, Evas_Object *obj, void *event_info)
+{
+    Elm_Object_Item *it = (Elm_Object_Item *)event_info;
+    if (it == elm_genlist_first_item_get(obj)) {
+        elm_object_item_signal_emit(it, "elm,action,title,slide,start", "elm");
+    }
+}
+
+static void add_scrollable_title_area(Evas_Object *genlist, const char *title, Eina_Bool autoscroll)
 {
     /* Add scrollable title area in wearable profile */
     Elm_Genlist_Item_Class *ttc = elm_genlist_item_class_new();
@@ -316,6 +325,9 @@ static void add_scrollable_title_area(Evas_Object *genlist, const char *title)
     ttc->func.text_get = _title_text_get;
     elm_genlist_item_append(genlist, ttc, title, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
     elm_genlist_item_class_free(ttc);
+
+    if (autoscroll)
+        evas_object_smart_callback_add(genlist, "realized", gl_realized_cb, NULL);
 }
 #endif
 
@@ -805,7 +817,7 @@ Evas_Object* create_option_main_view(Evas_Object *parent, Evas_Object *naviframe
         elm_genlist_tree_effect_enabled_set(genlist, EINA_FALSE);
 
 #ifdef _WEARABLE
-        add_scrollable_title_area(genlist, OPTIONS);
+        add_scrollable_title_area(genlist, OPTIONS, EINA_TRUE);
 #endif
 
         /* Input languages */
@@ -952,7 +964,7 @@ static Evas_Object* create_option_language_view(Evas_Object *naviframe)
 #endif
 
 #ifdef _WEARABLE
-        add_scrollable_title_area(genlist, LANGUAGE);
+        add_scrollable_title_area(genlist, LANGUAGE, EINA_FALSE);
 #endif
 
         for (unsigned int loop = 0; loop < OPTION_MAX_LANGUAGES && loop < _language_manager.get_languages_num(); loop++)
@@ -1015,7 +1027,7 @@ static Evas_Object* create_smart_typing_view(Evas_Object *naviframe)
 #endif
 
 #ifdef _WEARABLE
-        add_scrollable_title_area(genlist, SMART_TYPING);
+        add_scrollable_title_area(genlist, SMART_TYPING, EINA_FALSE);
 #endif
 
         /* Auto capitalize */
@@ -1067,7 +1079,7 @@ static Evas_Object* create_feedback_view(Evas_Object *naviframe)
 #endif
 
 #ifdef _WEARABLE
-        add_scrollable_title_area(genlist, KEY_FEEDBACK);
+        add_scrollable_title_area(genlist, KEY_FEEDBACK, EINA_FALSE);
 #endif
 
         /* Sound */
