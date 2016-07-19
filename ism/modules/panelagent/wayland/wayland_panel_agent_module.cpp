@@ -240,6 +240,7 @@ static Input_Language                                   input_lang              
 #define MOD_SHIFT_MASK      0x01
 #define MOD_ALT_MASK        0x02
 #define MOD_CONTROL_MASK    0x04
+#define MOD_Mod5_MASK       0x80
 
 //////////////////////////////wayland_panel_agent_module begin//////////////////////////////////////////////////
 
@@ -2369,11 +2370,14 @@ static void send_wl_key_event (WSCContextISF *ic, const KeyEvent &key, bool fake
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
     LOGD ("");
     uint32_t time = 0;
-
-    if (!fake)
-        time = get_time ();
-
     uint32_t modifiers = 0;
+
+    if (!fake) {
+        time = get_time ();
+    } else {
+        modifiers     |= MOD_Mod5_MASK;
+    }
+
     if (key.is_shift_down ())
         modifiers |= MOD_SHIFT_MASK;
     if (key.is_alt_down ())
