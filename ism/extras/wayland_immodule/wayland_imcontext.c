@@ -46,6 +46,7 @@
 #define MOD_SHIFT_MASK      0x01
 #define MOD_ALT_MASK        0x02
 #define MOD_CONTROL_MASK    0x04
+#define MOD_Mod5_MASK       0x80
 
 static Eina_Bool _clear_hide_timer();
 static Ecore_Timer *_hide_timer  = NULL;
@@ -1113,6 +1114,10 @@ text_input_keysym(void                 *data,
 
     if (modifiers & imcontext->alt_mask)
         e->modifiers |= ECORE_EVENT_MODIFIER_ALT;
+
+    if (modifiers & MOD_Mod5_MASK)
+        e->modifiers |= MOD_Mod5_MASK;
+
     //Save "wl_text_input::keysym" keysym to list if list is not empty,
     //if not, send keysym to ecore loop as key event.
     //This code let key event which will be filtered by IME one by one.
@@ -1790,6 +1795,23 @@ wayland_im_context_hide(Ecore_IMF_Context *ctx)
 }
 
 static unsigned int
+_ecore_imf_lock_to_ecore_key_modifier(unsigned int locks)
+{
+   unsigned int mask = 0;
+
+    if (locks & ECORE_IMF_KEYBOARD_LOCK_SCROLL)
+        mask |= ECORE_EVENT_LOCK_SCROLL;
+
+    if (locks & ECORE_IMF_KEYBOARD_LOCK_CAPS)
+        mask |= ECORE_EVENT_LOCK_CAPS;
+
+    if (locks & ECORE_IMF_KEYBOARD_LOCK_NUM)
+        mask |= ECORE_EVENT_LOCK_NUM;
+
+   return mask;
+}
+
+static unsigned int
 _ecore_imf_modifier_to_ecore_key_modifier(Ecore_IMF_Keyboard_Modifiers modifiers)
 {
    unsigned int mask = 0;
@@ -1843,6 +1865,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
         ecore_key_ev.compose = key_ev->compose;
         ecore_key_ev.timestamp = key_ev->timestamp;
         ecore_key_ev.modifiers = _ecore_imf_modifier_to_ecore_key_modifier(key_ev->modifiers);
+        ecore_key_ev.modifiers |= _ecore_imf_lock_to_ecore_key_modifier(key_ev->locks);
     }
     else if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *key_ev = (Ecore_IMF_Event_Key_Down *)imf_event;
@@ -1852,6 +1875,8 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
         ecore_key_ev.compose = key_ev->compose;
         ecore_key_ev.timestamp = key_ev->timestamp;
         ecore_key_ev.modifiers = _ecore_imf_modifier_to_ecore_key_modifier(key_ev->modifiers);
+        ecore_key_ev.modifiers |= _ecore_imf_lock_to_ecore_key_modifier(key_ev->locks);
+
     }
 
     if (type == ECORE_IMF_EVENT_KEY_UP || type == ECORE_IMF_EVENT_KEY_DOWN) {
@@ -1864,6 +1889,11 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
 
         if (!imcontext)
             return EINA_FALSE;
+
+        if (!ecore_key_ev.timestamp && (ecore_key_ev.modifiers & MOD_Mod5_MASK)) {
+            LOGD("Return! This is SW keyboard fake event!");
+            return EINA_FALSE;
+        }
 
         int serial = imcontext->serial++;
         double start_time = ecore_time_get();
