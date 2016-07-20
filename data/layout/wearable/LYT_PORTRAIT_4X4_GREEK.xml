@@ -7,7 +7,7 @@
     <rec button="pressed">key_btn_press.png</rec>
   </background_image>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="1" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0">.,?!</rec>
         <rec multi="1">1</rec>
@@ -18,8 +18,15 @@
         <rec multichar_state="2">?</rec>
         <rec multichar_state="3">!</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">1</label>
+        <label autopopup="1">.</label>
+        <label autopopup="2">,</label>
+        <label autopopup="3">?</label>
+        <label autopopup="4">!</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="2" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">αβγ</rec>
         <rec multi="1">2</rec>
@@ -30,8 +37,15 @@
         <rec auto_upper="true" multichar_state="2">γ</rec>
         <rec auto_upper="true" multichar_state="3">ά</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">2</label>
+        <label autopopup="1">α</label>
+        <label autopopup="2">β</label>
+        <label autopopup="3">γ</label>
+        <label autopopup="4">ά</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">δεζ</rec>
         <rec multi="1">3</rec>
@@ -42,6 +56,13 @@
         <rec auto_upper="true" multichar_state="2">ζ</rec>
         <rec auto_upper="true" multichar_state="3">έ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">δ</label>
+        <label autopopup="1">ε</label>
+        <label autopopup="2">ζ</label>
+        <label autopopup="3">έ</label>
+        <label autopopup="4">3</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
       <image_label>
@@ -54,7 +75,7 @@
     </key>
   </row>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="4" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">ηθι</rec>
         <rec multi="1">4</rec>
@@ -68,8 +89,18 @@
         <rec auto_upper="true" multichar_state="5">ϊ</rec>
         <rec auto_upper="true" multichar_state="6">ΐ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">4</label>
+        <label autopopup="1">η</label>
+        <label autopopup="2">θ</label>
+        <label autopopup="3">ι</label>
+        <label autopopup="4">ή</label>
+        <label autopopup="5">ί</label>
+        <label autopopup="6">ϊ</label>
+        <label autopopup="7">ΐ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">κλμ</rec>
         <rec multi="1">5</rec>
@@ -79,8 +110,14 @@
         <rec auto_upper="true" multichar_state="1">λ</rec>
         <rec auto_upper="true" multichar_state="2">μ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">5</label>
+        <label autopopup="1">κ</label>
+        <label autopopup="2">λ</label>
+        <label autopopup="3">μ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="6" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">νξο</rec>
         <rec multi="1">6</rec>
@@ -91,6 +128,13 @@
         <rec auto_upper="true" multichar_state="2">ο</rec>
         <rec auto_upper="true" multichar_state="3">ό</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">ν</label>
+        <label autopopup="1">ξ</label>
+        <label autopopup="2">ο</label>
+        <label autopopup="3">ό</label>
+        <label autopopup="4">6</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
       <image_label>
@@ -104,7 +148,7 @@
     </key>
   </row>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="7" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">πρσς</rec>
         <rec multi="1">7</rec>
@@ -115,8 +159,15 @@
         <rec auto_upper="true" multichar_state="2">σ</rec>
         <rec auto_upper="true" multichar_state="3">ς</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">7</label>
+        <label autopopup="1">π</label>
+        <label autopopup="2">ρ</label>
+        <label autopopup="3">σ</label>
+        <label autopopup="4">ς</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">τυφ</rec>
         <rec multi="1">8</rec>
@@ -129,8 +180,17 @@
         <rec auto_upper="true" multichar_state="4">ϋ</rec>
         <rec auto_upper="true" multichar_state="5">ΰ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">8</label>
+        <label autopopup="1">τ</label>
+        <label autopopup="2">υ</label>
+        <label autopopup="3">φ</label>
+        <label autopopup="4">ύ</label>
+        <label autopopup="5">ϋ</label>
+        <label autopopup="6">ΰ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">χψω</rec>
         <rec multi="1">9</rec>
@@ -141,6 +201,13 @@
         <rec auto_upper="true" multichar_state="2">ω</rec>
         <rec auto_upper="true" multichar_state="3">ώ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">χ</label>
+        <label autopopup="1">ψ</label>
+        <label autopopup="2">ω</label>
+        <label autopopup="3">ώ</label>
+        <label autopopup="4">9</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" image_label_type="IMAGE_3X4_TOP">
       <image_label>
