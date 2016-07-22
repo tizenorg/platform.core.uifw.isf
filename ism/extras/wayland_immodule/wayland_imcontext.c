@@ -1826,12 +1826,18 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
     else if (type == ECORE_IMF_EVENT_KEY_UP) {
         Ecore_IMF_Event_Key_Up *key_ev = (Ecore_IMF_Event_Key_Up *)imf_event;
         ecore_key_ev.keyname = key_ev->keyname;
+        ecore_key_ev.key = key_ev->key;
+        ecore_key_ev.string = key_ev->string;
+        ecore_key_ev.compose = key_ev->compose;
         ecore_key_ev.timestamp = key_ev->timestamp;
         ecore_key_ev.modifiers = _ecore_imf_modifier_to_ecore_key_modifier(key_ev->modifiers);
     }
     else if (type == ECORE_IMF_EVENT_KEY_DOWN) {
         Ecore_IMF_Event_Key_Down *key_ev = (Ecore_IMF_Event_Key_Down *)imf_event;
         ecore_key_ev.keyname = key_ev->keyname;
+        ecore_key_ev.key = key_ev->key;
+        ecore_key_ev.string = key_ev->string;
+        ecore_key_ev.compose = key_ev->compose;
         ecore_key_ev.timestamp = key_ev->timestamp;
         ecore_key_ev.modifiers = _ecore_imf_modifier_to_ecore_key_modifier(key_ev->modifiers);
     }
