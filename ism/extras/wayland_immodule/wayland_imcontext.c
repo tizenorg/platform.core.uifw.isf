@@ -1879,7 +1879,7 @@ wayland_im_context_filter_event(Ecore_IMF_Context    *ctx,
 
         LOGD ("ev:modifiers=%d, modifiers=%d, shift_mask=%d, control_mask=%d, alt_mask=%d", ecore_key_ev.modifiers, modifiers, imcontext->shift_mask, imcontext->control_mask, imcontext->alt_mask);
         //Send key event to IME.
-        wl_text_input_filter_key_event(imcontext->text_input, serial, ecore_key_ev.timestamp, ecore_key_ev.keyname,
+        wl_text_input_filter_key_event(imcontext->text_input, serial, ecore_key_ev.timestamp, ecore_key_ev.key,
                                        type == ECORE_IMF_EVENT_KEY_UP? WL_KEYBOARD_KEY_STATE_RELEASED : WL_KEYBOARD_KEY_STATE_PRESSED,
                                        modifiers);
         //Waiting for filter_key_event_done from IME.

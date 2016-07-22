@@ -1430,7 +1430,7 @@ bool is_number_key(const char *str)
 void
 isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
                                   uint32_t serial,
-                                  uint32_t timestamp, const char *keyname,
+                                  uint32_t timestamp, const char *keysym,
                                   bool press, uint32_t modifiers)
 {
     SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
@@ -1438,11 +1438,18 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
 
     if (!wsc_ctx) return;
 
-    String _keyname(keyname);
-    KeyEvent key(_keyname);
-    SECURE_LOGD ("keyname: %s, keycode: %d, press: %d, modifiers: %d", keyname, key.code, press, modifiers);
+    if (!keysym) {
+        LOGD("key is NULL\n");
+        return;
+    }
 
-    bool ignore_key = filter_keys (keyname, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
+    String _key(keysym);
+    KeyEvent key;
+
+    scim_string_to_key (key, _key);
+    SECURE_LOGD ("key: %s, keycode: %d, press: %d, modifiers: %d", keysym, key.code, press, modifiers);
+
+    bool ignore_key = filter_keys (keysym, SCIM_CONFIG_HOTKEYS_FRONTEND_IGNORE_KEY);
 
     if (modifiers & MOD_SHIFT_MASK)
         key.mask |= SCIM_KEY_ShiftMask;
@@ -1459,26 +1466,26 @@ isf_wsc_context_filter_key_event (WSCContextISF* wsc_ctx,
             if (get_keyboard_mode() == TOOLBAR_HELPER_MODE &&
                 timestamp > 1 &&
                 _support_hw_keyboard_mode &&
-                strncmp(keyname, "XF86", 4)) {
+                strncmp(keysym, "XF86", 4)) {
 #ifdef _TV
-                if (strcmp(keyname, "Down") &&
-                    strcmp(keyname, "KP_Down") &&
-                    strcmp(keyname, "Up") &&
-                    strcmp(keyname, "KP_Up") &&
-                    strcmp(keyname, "Right") &&
-                    strcmp(keyname, "KP_Right") &&
-                    strcmp(keyname, "Left") &&
-                    strcmp(keyname, "KP_Left") &&
-                    strcmp(keyname, "Return") &&
-                    strcmp(keyname, "Pause") &&
-                    strcmp(keyname, "NoSymbol") &&
-                    !is_number_key(keyname)) {
+                if (strcmp(keysym, "Down") &&
+                    strcmp(keysym, "KP_Down") &&
+                    strcmp(keysym, "Up") &&
+                    strcmp(keysym, "KP_Up") &&
+                    strcmp(keysym, "Right") &&
+                    strcmp(keysym, "KP_Right") &&
+                    strcmp(keysym, "Left") &&
+                    strcmp(keysym, "KP_Left") &&
+                    strcmp(keysym, "Return") &&
+                    strcmp(keysym, "Pause") &&
+                    strcmp(keysym, "NoSymbol") &&
+                    !is_number_key(keysym)) {
 #else
                 if (key.code != 0x1008ff26 && key.code != 0xFF69) {
                     /* XF86back, Cancel (Power + Volume down) key */
 #endif
                     isf_wsc_context_set_keyboard_mode (wsc_ctx, TOOLBAR_KEYBOARD_MODE);
-                    ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, name: %s)\n", key.code, keyname);
+                    ISF_SAVE_LOG ("Changed keyboard mode from S/W to H/W (code: %x, key : %s)\n", key.code, keysym);
                     LOGD ("Hardware keyboard mode, active helper option: %d\n", _active_helper_option);
                 }
             }
