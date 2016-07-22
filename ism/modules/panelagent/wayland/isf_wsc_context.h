@@ -75,7 +75,6 @@ struct _WSCContextISF {
     uint32_t return_key_type;
     uint32_t bidi_direction;
 
-    Eina_Bool context_changed;
     Eina_Bool return_key_disabled;
 
     WSCContextISFImpl *impl;
@@ -97,7 +96,6 @@ struct _WSCContextISF {
                        surrounding_cursor(0),
                        return_key_type(0),
                        bidi_direction(0),
-                       context_changed(EINA_FALSE),
                        return_key_disabled(EINA_FALSE),
                        impl(NULL),
                        id(0),

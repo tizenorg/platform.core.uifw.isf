@@ -279,8 +279,6 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
 
     LOGD ("im_context = %p hint = %d purpose = %d\n", im_ctx, hint, purpose);
 
-    if (!wsc_ctx->context_changed) return;
-
     wsc_ctx->content_hint = hint;
     wsc_ctx->content_purpose = purpose;
 
@@ -292,8 +290,6 @@ _wsc_im_ctx_content_type(void *data, struct wl_input_method_context *im_ctx, uin
     isf_wsc_context_input_panel_language_set (wsc_ctx, wsc_context_input_panel_language_get(wsc_ctx));
 
     caps_mode_check (wsc_ctx, EINA_TRUE, EINA_TRUE);
-
-    wsc_ctx->context_changed = EINA_FALSE;
 }
 
 static void
@@ -492,8 +488,6 @@ _wsc_im_activate(void *data, struct wl_input_method *input_method, struct wl_inp
         wl_input_method_context_language (im_ctx, wsc_ctx->serial, wsc_ctx->language);
 
     isf_wsc_context_add (wsc_ctx);
-
-    wsc_ctx->context_changed = EINA_TRUE;
 
     isf_wsc_context_focus_in (wsc_ctx);
 

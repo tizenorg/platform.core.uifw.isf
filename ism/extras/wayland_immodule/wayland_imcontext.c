@@ -757,6 +757,49 @@ static Eina_Bool _conformant_change_cb(void *data, int ev_type, void *ev)
     return ECORE_CALLBACK_PASS_ON;
 }
 
+static uint32_t
+get_purpose(Ecore_IMF_Context *ctx)
+{
+    int layout_variation = ecore_imf_context_input_panel_layout_variation_get (ctx);
+    uint32_t new_purpose = 0;
+
+    WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
+    if (!imcontext)
+        return new_purpose;
+
+    switch (imcontext->content_purpose) {
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
+            if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED)
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGNED;
+            else if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL)
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_DECIMAL;
+            else if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL)
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGNEDDECIMAL;
+            else
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
+            if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY)
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD_DIGITS;
+            else
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD;
+            break;
+        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL:
+            if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_FILENAME)
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_FILENAME;
+            else if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_PERSON_NAME)
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NAME;
+            else
+                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
+            break;
+        default :
+            new_purpose = imcontext->content_purpose;
+            break;
+    }
+
+    return new_purpose;
+}
+
 static Eina_Bool
 show_input_panel(Ecore_IMF_Context *ctx)
 {
@@ -800,43 +843,12 @@ show_input_panel(Ecore_IMF_Context *ctx)
 
     // TIZEN_ONLY(20150715): Support input_panel_state_get
     _input_panel_state = ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW;
-
     int layout_variation = ecore_imf_context_input_panel_layout_variation_get (ctx);
-    uint32_t new_purpose = 0;
-    switch (imcontext->content_purpose) {
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS:
-            if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED)
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGNED;
-            else if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_DECIMAL)
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_DECIMAL;
-            else if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NUMBERONLY_VARIATION_SIGNED_AND_DECIMAL)
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS_SIGNEDDECIMAL;
-            else
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_DIGITS;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD:
-            if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY)
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD_DIGITS;
-            else
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_PASSWORD;
-            break;
-        case WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL:
-            if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_FILENAME)
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_FILENAME;
-            else if (layout_variation == ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL_VARIATION_PERSON_NAME)
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NAME;
-            else
-                new_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
-            break;
-        default :
-            new_purpose = imcontext->content_purpose;
-            break;
-    }
     //
 
     wl_text_input_set_content_type(imcontext->text_input,
             imcontext->content_hint,
-            new_purpose);
+            get_purpose(ctx));
 
     if (ecore_imf_context_surrounding_get(imcontext->ctx, &surrounding, &cursor_pos)) {
         if (surrounding)
@@ -1941,6 +1953,12 @@ EAPI void wayland_im_context_autocapital_type_set(Ecore_IMF_Context *ctx,
         imcontext->content_hint |= WL_TEXT_INPUT_CONTENT_HINT_UPPERCASE;
     else
         imcontext->content_hint |= WL_TEXT_INPUT_CONTENT_HINT_LOWERCASE;
+
+    if (imcontext->input && imcontext->text_input) {
+        wl_text_input_set_content_type(imcontext->text_input,
+                imcontext->content_hint,
+                get_purpose(ctx));
+    }
 }
 
 EAPI void
