@@ -156,11 +156,13 @@ SCLEventReturnType CSDKISE::on_event_key_clicked(SclUIEventDesc event_desc)
                 if (event_desc.key_modifier == KEY_MODIFIER_DIRECTION_LEFT) {
                     /* If flick event upon space key was detected, perform a language change and don't proceed anymore */
                     _language_manager.select_previous_language();
+                    g_keyboard_state.disable_force_latin = TRUE;
                     ret = SCL_EVENT_DONE;
                 }
                 if (event_desc.key_modifier == KEY_MODIFIER_DIRECTION_RIGHT) {
                     /* If flick event upon space key was detected, perform a language change and don't proceed anymore */
                     _language_manager.select_next_language();
+                    g_keyboard_state.disable_force_latin = TRUE;
                     ret = SCL_EVENT_DONE;
                 }
             } else {

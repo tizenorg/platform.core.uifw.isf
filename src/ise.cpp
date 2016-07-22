@@ -78,7 +78,8 @@ KEYBOARD_STATE g_keyboard_state = {
     TRUE,
     FALSE,
     "",
-    KEY_MODIFIER_NONE
+    KEY_MODIFIER_NONE,
+    FALSE
 };
 
 #define ISE_LAYOUT_NUMBERONLY_VARIATION_MAX 4
@@ -606,8 +607,9 @@ void CCoreEventCallback::on_process_input_device_event(sclu32 &type, sclchar *da
                 g_keyboard_state.need_reset = TRUE;
                 g_keyboard_state.layout = new_layout;
 
-                if (g_keyboard_state.visible_state)
+                if (g_keyboard_state.visible_state) {
                     ise_show(g_keyboard_state.ic);
+                }
 
                 *ret = 1;
             }
@@ -725,9 +727,11 @@ on_input_mode_changed(const sclchar *key_value, sclulong key_event, sclint key_t
         if (key_value) {
             LOGD("key_value : %s\n", key_value);
             if (strcmp(key_value, "CUR_LANG") == 0) {
+                g_keyboard_state.disable_force_latin = TRUE;
                 ret = _language_manager.select_current_language();
             }
             if (strcmp(key_value, "NEXT_LANG") == 0) {
+                g_keyboard_state.disable_force_latin = TRUE;
                 ret = _language_manager.select_next_language();
             }
         }
@@ -1044,6 +1048,7 @@ ise_reset_input_context()
 {
     LOGD("");
     _reset_multitap_state();
+    g_keyboard_state.disable_force_latin = FALSE;
 }
 
 void
@@ -1143,7 +1148,9 @@ ise_show(int ic)
         LANGUAGE_INFO *info = _language_manager.get_language_info(g_config_values.selected_language.c_str());
         if (info) {
             if (g_ise_default_values[g_keyboard_state.layout].force_latin && !(info->is_latin_language)) {
-                force_primary_latin = TRUE;
+                if (!g_keyboard_state.disable_force_latin) {
+                    force_primary_latin = TRUE;
+                }
             }
         }
         if (force_primary_latin) {
