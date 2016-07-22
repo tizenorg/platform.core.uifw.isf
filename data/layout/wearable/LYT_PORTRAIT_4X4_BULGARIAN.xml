@@ -7,7 +7,7 @@
     <rec button="pressed">key_btn_press.png</rec>
   </background_image>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="1" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0">.,?!</rec>
         <rec multi="1">1</rec>
@@ -18,8 +18,15 @@
         <rec multichar_state="2">?</rec>
         <rec multichar_state="3">!</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">1</label>
+        <label autopopup="1">.</label>
+        <label autopopup="2">,</label>
+        <label autopopup="3">?</label>
+        <label autopopup="4">!</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="2" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">абвг</rec>
         <rec multi="1">2</rec>
@@ -30,18 +37,32 @@
         <rec auto_upper="true" multichar_state="2">в</rec>
         <rec auto_upper="true" multichar_state="3">г</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">2</label>
+        <label autopopup="1">a</label>
+        <label autopopup="2">б</label>
+        <label autopopup="3">в</label>
+        <label autopopup="3">г</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
-        <rec multi="0" auto_upper="true">дeж3</rec>
+        <rec multi="0" auto_upper="true">дeжз</rec>
         <rec multi="1">3</rec>
       </label>
       <key_value>
         <rec auto_upper="true" multichar_state="0">д</rec>
         <rec auto_upper="true" multichar_state="1">e</rec>
         <rec auto_upper="true" multichar_state="2">ж</rec>
-        <rec auto_upper="true" multichar_state="3">3</rec>
+        <rec auto_upper="true" multichar_state="3">з</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">д</label>
+        <label autopopup="1">e</label>
+        <label autopopup="2">ж</label>
+        <label autopopup="3">з</label>
+        <label autopopup="4">3</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
       <image_label>
@@ -54,7 +75,7 @@
     </key>
   </row>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="4" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">ийкл</rec>
         <rec multi="1">4</rec>
@@ -65,8 +86,15 @@
         <rec auto_upper="true" multichar_state="2">к</rec>
         <rec auto_upper="true" multichar_state="3">л</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">4</label>
+        <label autopopup="1">и</label>
+        <label autopopup="2">й</label>
+        <label autopopup="3">к</label>
+        <label autopopup="4">л</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">мноп</rec>
         <rec multi="1">5</rec>
@@ -77,8 +105,15 @@
         <rec auto_upper="true" multichar_state="2">о</rec>
         <rec auto_upper="true" multichar_state="3">п</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">5</label>
+        <label autopopup="1">м</label>
+        <label autopopup="2">н</label>
+        <label autopopup="3">о</label>
+        <label autopopup="4">п</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="6" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">рсту</rec>
         <rec multi="1">6</rec>
@@ -89,6 +124,13 @@
         <rec auto_upper="true" multichar_state="2">т</rec>
         <rec auto_upper="true" multichar_state="3">у</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">р</label>
+        <label autopopup="1">с</label>
+        <label autopopup="2">т</label>
+        <label autopopup="3">у</label>
+        <label autopopup="4">6</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
       <image_label>
@@ -102,7 +144,7 @@
     </key>
   </row>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="7" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">фхцч</rec>
         <rec multi="1">7</rec>
@@ -113,8 +155,15 @@
         <rec auto_upper="true" multichar_state="2">ц</rec>
         <rec auto_upper="true" multichar_state="3">ч</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">7</label>
+        <label autopopup="1">ф</label>
+        <label autopopup="2">х</label>
+        <label autopopup="3">ц</label>
+        <label autopopup="4">ч</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">шщъ</rec>
         <rec multi="1">8</rec>
@@ -124,8 +173,14 @@
         <rec auto_upper="true" multichar_state="1">щ</rec>
         <rec auto_upper="true" multichar_state="2">ъ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">8</label>
+        <label autopopup="1">ш</label>
+        <label autopopup="2">щ</label>
+        <label autopopup="3">ъ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">ьюя</rec>
         <rec multi="1">9</rec>
@@ -135,6 +190,12 @@
         <rec auto_upper="true" multichar_state="1">ю</rec>
         <rec auto_upper="true" multichar_state="2">я</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">ь</label>
+        <label autopopup="1">ю</label>
+        <label autopopup="2">я</label>
+        <label autopopup="3">9</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" image_label_type="IMAGE_3X4_TOP">
       <image_label>

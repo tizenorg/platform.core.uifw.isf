@@ -7,7 +7,7 @@
     <rec button="pressed">key_btn_press.png</rec>
   </background_image>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="1" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0">.,?!</rec>
         <rec multi="1">1</rec>
@@ -18,8 +18,15 @@
         <rec multichar_state="2">?</rec>
         <rec multichar_state="3">!</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">1</label>
+        <label autopopup="1">.</label>
+        <label autopopup="2">,</label>
+        <label autopopup="3">?</label>
+        <label autopopup="4">!</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="2" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">აბგდ</rec>
         <rec multi="1">2</rec>
@@ -30,8 +37,15 @@
         <rec auto_upper="true" multichar_state="2">გ</rec>
         <rec auto_upper="true" multichar_state="3">დ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">2</label>
+        <label autopopup="1">ა</label>
+        <label autopopup="2">ბ</label>
+        <label autopopup="3">გ</label>
+        <label autopopup="4">დ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="3" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">ევზთ</rec>
         <rec multi="1">3</rec>
@@ -42,6 +56,13 @@
         <rec auto_upper="true" multichar_state="2">ზ</rec>
         <rec auto_upper="true" multichar_state="3">თ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">ე</label>
+        <label autopopup="1">ვ</label>
+        <label autopopup="2">ზ</label>
+        <label autopopup="3">თ</label>
+        <label autopopup="4">3</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" use_repeat_key="true" image_label_type="IMAGE_3X4_TOP">
       <image_label>
@@ -54,7 +75,7 @@
     </key>
   </row>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="4" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">იკლმ</rec>
         <rec multi="1">4</rec>
@@ -65,8 +86,15 @@
         <rec auto_upper="true" multichar_state="2">ლ</rec>
         <rec auto_upper="true" multichar_state="3">მ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">4</label>
+        <label autopopup="1">ი</label>
+        <label autopopup="2">კ</label>
+        <label autopopup="3">ლ</label>
+        <label autopopup="4">მ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="5" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">ნოპჟ</rec>
         <rec multi="1">5</rec>
@@ -77,8 +105,15 @@
         <rec auto_upper="true" multichar_state="2">პ</rec>
         <rec auto_upper="true" multichar_state="3">ჟ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">5</label>
+        <label autopopup="1">ნ</label>
+        <label autopopup="2">ო</label>
+        <label autopopup="3">პ</label>
+        <label autopopup="4">ჟ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="6" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">რსტუ</rec>
         <rec multi="1">6</rec>
@@ -89,6 +124,13 @@
         <rec auto_upper="true" multichar_state="2">ტ</rec>
         <rec auto_upper="true" multichar_state="3">უ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">რ</label>
+        <label autopopup="1">ს</label>
+        <label autopopup="2">ტ</label>
+        <label autopopup="3">უ</label>
+        <label autopopup="4">6</label>
+      </auto_popup_keys>
     </key>
     <key key_type="control" custom_id="Enter" image_label_type="IMAGE_3X4_TOP">
       <image_label>
@@ -102,7 +144,7 @@
     </key>
   </row>
   <row x="20">
-    <key key_type="string" button_type="multitap" long_key_value="7" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">ფქღყ</rec>
         <rec multi="1">7</rec>
@@ -113,8 +155,15 @@
         <rec auto_upper="true" multichar_state="2">ღ</rec>
         <rec auto_upper="true" multichar_state="3">ყ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">7</label>
+        <label autopopup="1">ფ</label>
+        <label autopopup="2">ქ</label>
+        <label autopopup="3">ღ</label>
+        <label autopopup="4">ყ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="8" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">შჩცძ</rec>
         <rec multi="1">8</rec>
@@ -125,8 +174,15 @@
         <rec auto_upper="true" multichar_state="2">ც</rec>
         <rec auto_upper="true" multichar_state="3">ძ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">8</label>
+        <label autopopup="1">შ</label>
+        <label autopopup="2">ჩ</label>
+        <label autopopup="3">ც</label>
+        <label autopopup="4">ძ</label>
+      </auto_popup_keys>
     </key>
-    <key key_type="string" button_type="multitap" long_key_value="9" longkey_magnifier="true">
+    <key key_type="string" button_type="multitap" popup_type="auto_popup">
       <label>
         <rec multi="0" auto_upper="true">წჭხჯჰ</rec>
         <rec multi="1">9</rec>
@@ -138,6 +194,14 @@
         <rec auto_upper="true" multichar_state="3">ჯ</rec>
         <rec auto_upper="true" multichar_state="4">ჰ</rec>
       </key_value>
+      <auto_popup_keys>
+        <label autopopup="0">წ</label>
+        <label autopopup="1">ჭ</label>
+        <label autopopup="2">ხ</label>
+        <label autopopup="3">ჯ</label>
+        <label autopopup="4">ჰ</label>
+        <label autopopup="5">9</label>
+      </auto_popup_keys>
     </key>
     <key button_type="uiitem" image_label_type="IMAGE_3X4_TOP">
       <image_label>
