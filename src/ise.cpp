@@ -1481,7 +1481,13 @@ ise_set_caps_mode(unsigned int mode)
         LANGUAGE_INFO *info = _language_manager.get_language_info(cur_lang);
         if (info) {
             if (info->accepts_caps_mode) {
-                set_caps_mode(g_keyboard_state.caps_mode);
+                /* If we are inputting multitap character, do not manipulate shift mode */
+                if (g_keyboard_state.prev_modifier != KEY_MODIFIER_MULTITAP_START &&
+                    g_keyboard_state.prev_modifier != KEY_MODIFIER_MULTITAP_REPEAT) {
+                    set_caps_mode(g_keyboard_state.caps_mode);
+                } else {
+                    LOGD("Currently composing multitap string, skipping caps request");
+                }
             } else {
                 g_ui->set_shift_state(SCL_SHIFT_STATE_OFF);
             }
