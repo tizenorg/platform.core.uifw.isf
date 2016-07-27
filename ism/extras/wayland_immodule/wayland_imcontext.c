@@ -1731,10 +1731,13 @@ wayland_im_context_cursor_position_set (Ecore_IMF_Context *ctx,
     WaylandIMContext *imcontext = (WaylandIMContext *)ecore_imf_context_data_get(ctx);
     if (!imcontext) return;
 
-    LOGD ("set cursor position (cursor: %d)", cursor_pos);
     if (imcontext->cursor_position != cursor_pos) {
         imcontext->cursor_position = cursor_pos;
-        wl_text_input_set_cursor_position (imcontext->text_input, cursor_pos);
+
+        if (imcontext->input && imcontext->text_input) {
+            LOGD ("ctx : %p, cursor pos : %d\n", ctx, cursor_pos);
+            wl_text_input_set_cursor_position (imcontext->text_input, cursor_pos);
+        }
     }
 }
 
@@ -1955,6 +1958,7 @@ EAPI void wayland_im_context_autocapital_type_set(Ecore_IMF_Context *ctx,
         imcontext->content_hint |= WL_TEXT_INPUT_CONTENT_HINT_LOWERCASE;
 
     if (imcontext->input && imcontext->text_input) {
+        LOGD ("ctx : %p. set autocapital type : %d\n", ctx, autocapital_type);
         wl_text_input_set_content_type(imcontext->text_input,
                 imcontext->content_hint,
                 get_purpose(ctx));
@@ -2015,6 +2019,13 @@ wayland_im_context_input_panel_layout_set(Ecore_IMF_Context *ctx,
             imcontext->content_purpose = WL_TEXT_INPUT_CONTENT_PURPOSE_NORMAL;
             break;
     }
+
+    if (imcontext->input && imcontext->text_input) {
+        LOGD ("ctx : %p, layout type : %d\n", ctx, layout);
+        wl_text_input_set_content_type(imcontext->text_input,
+                imcontext->content_hint,
+                get_purpose(ctx));
+    }
 }
 
 EAPI Ecore_IMF_Input_Panel_Layout
@@ -2037,6 +2048,13 @@ wayland_im_context_input_mode_set(Ecore_IMF_Context *ctx,
         imcontext->content_hint |= WL_TEXT_INPUT_CONTENT_HINT_PASSWORD;
     else
         imcontext->content_hint &= ~WL_TEXT_INPUT_CONTENT_HINT_PASSWORD;
+
+    if (imcontext->input && imcontext->text_input) {
+        LOGD ("ctx : %p, input mode : %d\n", ctx, input_mode);
+        wl_text_input_set_content_type(imcontext->text_input,
+                imcontext->content_hint,
+                get_purpose(ctx));
+    }
 }
 
 EAPI void
@@ -2060,6 +2078,13 @@ wayland_im_context_input_hint_set(Ecore_IMF_Context *ctx,
         imcontext->content_hint |= WL_TEXT_INPUT_CONTENT_HINT_MULTILINE;
     else
         imcontext->content_hint &= ~WL_TEXT_INPUT_CONTENT_HINT_MULTILINE;
+
+    if (imcontext->input && imcontext->text_input) {
+        LOGD("ctx : %p, input hint : %#x\n", ctx, input_hints);
+        wl_text_input_set_content_type(imcontext->text_input,
+                imcontext->content_hint,
+                get_purpose(ctx));
+    }
 }
 
 EAPI void
@@ -2073,6 +2098,11 @@ wayland_im_context_input_panel_language_set(Ecore_IMF_Context *ctx,
         imcontext->content_hint |= WL_TEXT_INPUT_CONTENT_HINT_LATIN;
     else
         imcontext->content_hint &= ~WL_TEXT_INPUT_CONTENT_HINT_LATIN;
+
+    if (imcontext->input && imcontext->text_input)
+        wl_text_input_set_content_type(imcontext->text_input,
+                imcontext->content_hint,
+                get_purpose(ctx));
 }
 
 // TIZEN_ONLY(20150708): Support input_panel_state_get
@@ -2163,7 +2193,7 @@ wayland_im_context_input_panel_imdata_set(Ecore_IMF_Context *ctx, const void *da
     memcpy(imcontext->imdata, data, length);
     imcontext->imdata_size = length;
 
-    if (imcontext->input && (imcontext->imdata_size > 0))
+    if (imcontext->input && imcontext->text_input && (imcontext->imdata_size > 0))
         wl_text_input_set_input_panel_data(imcontext->text_input, (const char *)imcontext->imdata, imcontext->imdata_size);
 }
 
@@ -2195,8 +2225,10 @@ wayland_im_context_bidi_direction_set(Ecore_IMF_Context *ctx, Ecore_IMF_BiDi_Dir
 
     imcontext->bidi_direction = bidi_direction;
 
-    if (imcontext->text_input)
+    if (imcontext->input && imcontext->text_input) {
+        LOGD ("ctx : %p, bidi direction : %#x\n", ctx, bidi_direction);
         wl_text_input_bidi_direction(imcontext->text_input, imcontext->bidi_direction);
+    }
 }
 //
 
