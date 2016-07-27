@@ -96,7 +96,8 @@ libsciminclude_HEADERS 	= scim.h \
 			  isf_panel_agent_manager.h \
 			  isf_info_manager.h \
 			  isf_panel_agent_base.h \
-			  isf_panel_agent_module.h
+			  isf_panel_agent_module.h \
+			  isf_message_queue.h
 
 noinst_LTLIBRARIES	= libltdlc.la libprivilege_checker.la libisf_pkg.la
 
