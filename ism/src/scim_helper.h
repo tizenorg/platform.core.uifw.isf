@@ -157,6 +157,7 @@ enum HelperState
     HELPER_INVALID_STATE
 };
 
+class MessageItem;
 class HelperAgent;
 
 typedef Slot3<void, const HelperAgent *, int, const String &>
@@ -297,6 +298,25 @@ public:
      * @return false if the connection is broken, otherwise return true.
      */
     bool filter_event           ();
+
+    /**
+    * @brief Read messages from socket buffer, and see if there is a message with the given cmd.
+    *
+    * @return false if the connection is broken, or no message available with given cmd. Otherwise return true.
+    */
+    bool wait_for_message       (int cmd, int timeout);
+
+    /**
+    * @brief Process one message that is in our message queue.
+    *
+    * This function will emit the corresponding signals according
+    * to the events.
+    *
+    * @param message The message that needs to be handled.
+    *
+    * @return false if the connection is broken, otherwise return true.
+    */
+    bool handle_message         (MessageItem *message);
 
     /**
      * @brief Request SCIM to reload all configuration.
