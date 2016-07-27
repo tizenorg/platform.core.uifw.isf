@@ -48,6 +48,7 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 #include "scim_private.h"
 #include "scim.h"
@@ -55,6 +56,7 @@
 #include "isf_query_utility.h"
 #include <dlog.h>
 #include "isf_debug.h"
+#include "isf_message_queue.h"
 
 #ifdef LOG_TAG
 # undef LOG_TAG
@@ -539,13 +541,17 @@ private:
     HelperAgentImpl () : magic (0), magic_active (0), timeout (-1), focused_ic ((uint32) -1) { }
 };
 
+static MessageQueue message_queue;
+
 HelperAgent::HelperAgent ()
     : m_impl (new HelperAgentImpl (this))
 {
+    message_queue.create();
 }
 
 HelperAgent::~HelperAgent ()
 {
+    message_queue.destroy();
     delete m_impl;
 }
 
@@ -765,6 +771,9 @@ HelperAgent::has_pending_event () const
     if (m_impl->socket.is_connected () && m_impl->socket.wait_for_data (0) > 0)
         return true;
 
+    if (message_queue.has_pending_message())
+        return true;
+
     return false;
 }
 
@@ -782,620 +791,556 @@ HelperAgent::filter_event ()
     if (!m_impl->socket.is_connected () || !m_impl->recv.read_from_socket (m_impl->socket, m_impl->timeout))
         return false;
 
-    int cmd;
+    message_queue.read_from_transaction(m_impl->recv);
 
-    uint32 ic = (uint32) -1;
-    String ic_uuid;
-
-    if (!m_impl->recv.get_command (cmd) || cmd != SCIM_TRANS_CMD_REPLY) {
-        LOGW ("wrong format of transaction\n");
-        return true;
+    while (message_queue.has_pending_message()) {
+        MessageItem *message = message_queue.get_pending_message();
+        handle_message(message);
+        message_queue.remove_message(message);
     }
 
-    /* If there are ic and ic_uuid then read them. */
-    if (!(m_impl->recv.get_data_type () == SCIM_TRANS_DATA_COMMAND) &&
-        !(m_impl->recv.get_data (ic) && m_impl->recv.get_data (ic_uuid))) {
-        LOGW ("wrong format of transaction\n");
-        return true;
-    }
+    return true;
+}
 
-    while (m_impl->recv.get_command (cmd)) {
-        LOGD ("HelperAgent::cmd = %d\n", cmd);
-        switch (cmd) {
-            case SCIM_TRANS_CMD_EXIT:
-                ISF_SAVE_LOG ("Helper ISE received SCIM_TRANS_CMD_EXIT message\n");
-                m_impl->signal_exit (this, ic, ic_uuid);
-                break;
-            case SCIM_TRANS_CMD_RELOAD_CONFIG:
-                m_impl->signal_reload_config (this, ic, ic_uuid);
-                if (!m_impl->m_config.null())
-                    m_impl->m_config->ConfigBase::reload();
-                break;
-            case SCIM_TRANS_CMD_UPDATE_SCREEN:
-            {
-                uint32 screen;
-                if (m_impl->recv.get_data (screen))
-                    m_impl->signal_update_screen (this, ic, ic_uuid, (int) screen);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION:
-            {
-                uint32 x, y;
-                if (m_impl->recv.get_data (x) && m_impl->recv.get_data (y))
-                    m_impl->signal_update_spot_location (this, ic, ic_uuid, (int) x, (int) y);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_CURSOR_POSITION:
-            {
-                uint32 cursor_pos;
-                if (m_impl->recv.get_data (cursor_pos)) {
-                    m_impl->cursor_pos = cursor_pos;
-                    LOGD ("update cursor position %d", cursor_pos);
-                    m_impl->signal_update_cursor_position (this, ic, ic_uuid, (int) cursor_pos);
-                        if (!m_impl->si.null ()) m_impl->si->update_cursor_position(cursor_pos);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT:
-            {
-                String text;
-                uint32 cursor;
-                if (m_impl->recv.get_data (text) && m_impl->recv.get_data (cursor)) {
-                    if (m_impl->surrounding_text != NULL)
-                        free (m_impl->surrounding_text);
-                    m_impl->surrounding_text = strdup (text.c_str ());
-                    m_impl->cursor_pos = cursor;
-                    LOGD ("surrounding text: %s, %d", m_impl->surrounding_text, cursor);
-                    while (m_impl->need_update_surrounding_text > 0) {
-                        m_impl->need_update_surrounding_text--;
-                        m_impl->signal_update_surrounding_text (this, ic, text, (int) cursor);
-                    }
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_SELECTION:
-            {
-                String text;
-                if (m_impl->recv.get_data (text)) {
-                    if (m_impl->selection_text != NULL)
-                        free (m_impl->selection_text);
 
-                    m_impl->selection_text = strdup (text.c_str ());
-                    LOGD ("selection text: %s", m_impl->selection_text);
+/**
+* @brief Read messages from socket buffer, and see if there is a message with the given cmd.
+*
+* @return false if the connection is broken, or no message available with given cmd. Otherwise return true.
+*/
+bool
+HelperAgent::wait_for_message(int cmd, int timeout)
+{
+    struct timeval t0 = { 0, 0 };
+    struct timeval t1 = { 0, 0 };
 
-                    while (m_impl->need_update_selection_text > 0) {
-                        m_impl->need_update_selection_text--;
-                        m_impl->signal_update_selection (this, ic, text);
-                    }
-                } else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case SCIM_TRANS_CMD_TRIGGER_PROPERTY:
-            {
-                String property;
-                if (m_impl->recv.get_data (property)) {
-                    m_impl->signal_trigger_property (this, ic, ic_uuid, property);
-                    if (!m_impl->si.null ()) m_impl->si->trigger_property(property);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case SCIM_TRANS_CMD_HELPER_PROCESS_IMENGINE_EVENT:
-            {
-                Transaction trans;
-                if (m_impl->recv.get_data (trans))
-                    m_impl->signal_process_imengine_event (this, ic, ic_uuid, trans);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case SCIM_TRANS_CMD_HELPER_ATTACH_INPUT_CONTEXT:
-                m_impl->signal_attach_input_context (this, ic, ic_uuid);
-                break;
-            case SCIM_TRANS_CMD_HELPER_DETACH_INPUT_CONTEXT:
-                m_impl->signal_detach_input_context (this, ic, ic_uuid);
-                break;
-            case SCIM_TRANS_CMD_FOCUS_OUT:
-            {
-                m_impl->signal_focus_out (this, ic, ic_uuid);
-                m_impl->focused_ic = (uint32) -1;
-                if (!m_impl->si.null ()) m_impl->si->focus_out();
-                break;
-            }
-            case SCIM_TRANS_CMD_FOCUS_IN:
-            {
-                m_impl->signal_focus_in (this, ic, ic_uuid);
-                m_impl->focused_ic = ic;
-                if (!m_impl->si.null ()) m_impl->si->focus_in();
-                break;
-            }
-            case ISM_TRANS_CMD_SHOW_ISE_PANEL:
-            {
-                LOGD ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
+    gettimeofday(&t0, NULL);
+    int etime = 0.0f;
 
-                char   *data = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&data, len))
-                    m_impl->signal_ise_show (this, ic, data, len);
-                else
-                    LOGW ("wrong format of transaction\n");
-                if (data)
-                    delete [] data;
-                break;
-            }
-            case ISM_TRANS_CMD_HIDE_ISE_PANEL:
-            {
-                LOGD ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
-                m_impl->signal_ise_hide (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY:
-            {
-                struct rectinfo info = {0, 0, 0, 0};
-                m_impl->signal_get_geometry (this, info);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (info.pos_x);
-                m_impl->send.put_data (info.pos_y);
-                m_impl->send.put_data (info.width);
-                m_impl->send.put_data (info.height);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case ISM_TRANS_CMD_SET_ISE_MODE:
-            {
-                uint32 mode;
-                if (m_impl->recv.get_data (mode))
-                    m_impl->signal_set_mode (this, mode);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SET_ISE_LANGUAGE:
-            {
-                uint32 language;
-                if (m_impl->recv.get_data (language))
-                    m_impl->signal_set_language (this, language);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SET_ISE_IMDATA:
-            {
-                char   *imdata = NULL;
-                size_t  len;
-                if (m_impl->recv.get_data (&imdata, len)) {
-                    m_impl->signal_set_imdata (this, imdata, len);
-                    if (!m_impl->si.null ()) m_impl->si->set_imdata(imdata, len);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
+    do {
+        if (!m_impl->socket.is_connected() || !m_impl->recv.read_from_socket(m_impl->socket, timeout))
+            return false;
 
-                if (NULL != imdata)
-                    delete[] imdata;
-                break;
-            }
-            case ISM_TRANS_CMD_GET_ISE_IMDATA:
-            {
-                char   *buf = NULL;
-                size_t  len = 0;
-
-                m_impl->signal_get_imdata (this, &buf, len);
-                LOGD ("send ise imdata len = %d", len);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (buf, len);
-                m_impl->send.write_to_socket (m_impl->socket);
-                if (NULL != buf)
-                    delete[] buf;
-                break;
-            }
-            case ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE:
-            {
-                char *buf = NULL;
-                m_impl->signal_get_language_locale (this, ic, &buf);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                if (buf != NULL)
-                    m_impl->send.put_data (buf, strlen (buf));
-                m_impl->send.write_to_socket (m_impl->socket);
-                if (NULL != buf)
-                    delete[] buf;
-                break;
-            }
-            case ISM_TRANS_CMD_SET_RETURN_KEY_TYPE:
-            {
-                uint32 type = 0;
-                if (m_impl->recv.get_data (type)) {
-                    m_impl->signal_set_return_key_type (this, type);
-                }
-                break;
-            }
-            case ISM_TRANS_CMD_GET_RETURN_KEY_TYPE:
-            {
-                uint32 type = 0;
-                m_impl->signal_get_return_key_type (this, type);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (type);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE:
-            {
-                uint32 disabled = 0;
-                if (m_impl->recv.get_data (disabled)) {
-                    m_impl->signal_set_return_key_disable (this, disabled);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE:
-            {
-                uint32 disabled = 0;
-                m_impl->signal_get_return_key_type (this, disabled);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (disabled);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case SCIM_TRANS_CMD_PROCESS_KEY_EVENT:
-            {
-                KeyEvent key;
-                uint32 ret = 0;
-                uint32 serial = 0;
-                if (m_impl->recv.get_data (key) && m_impl->recv.get_data (serial)) {
-                    m_impl->signal_process_key_event(this, key, ret);
-                    if (ret == 0)
-                        if (!m_impl->si.null ())
-                        {
-                            ret = m_impl->si->process_key_event (key);
-                            LOGD("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(), key.code, ret);
-                        }
-                    m_impl->process_key_event_done (key, ret, serial);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SET_LAYOUT:
-            {
-                uint32 layout;
-
-                if (m_impl->recv.get_data (layout)) {
-                    m_impl->layout = layout;
-                    m_impl->signal_set_layout (this, layout);
-                    if (!m_impl->si.null ()) m_impl->si->set_layout(layout);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_GET_LAYOUT:
-            {
-                uint32 layout = 0;
-
-                m_impl->signal_get_layout (this, layout);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (layout);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case ISM_TRANS_CMD_SET_INPUT_MODE:
-            {
-                uint32 input_mode;
-
-                if (m_impl->recv.get_data (input_mode))
-                    m_impl->signal_set_input_mode (this, input_mode);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SET_CAPS_MODE:
-            {
-                uint32 mode;
-
-                if (m_impl->recv.get_data (mode))
-                    m_impl->signal_set_caps_mode (this, mode);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case SCIM_TRANS_CMD_PANEL_RESET_INPUT_CONTEXT:
-            {
-                m_impl->signal_reset_input_context (this, ic, ic_uuid);
-                if (!m_impl->si.null ()) m_impl->si->reset();
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_CANDIDATE_UI:
-            {
-                uint32 style, mode;
-                if (m_impl->recv.get_data (style) && m_impl->recv.get_data (mode))
-                    m_impl->signal_update_candidate_ui (this, ic, ic_uuid, style, mode);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY:
-            {
-                struct rectinfo info = {0, 0, 0, 0};
-                if (m_impl->recv.get_data (info.pos_x)
-                    && m_impl->recv.get_data (info.pos_y)
-                    && m_impl->recv.get_data (info.width)
-                    && m_impl->recv.get_data (info.height))
-                    m_impl->signal_update_candidate_geometry (this, ic, ic_uuid, info);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE:
-            {
-                String name, uuid;
-                if (m_impl->recv.get_data (name) && m_impl->recv.get_data (uuid))
-                    m_impl->signal_update_keyboard_ise (this, ic, ic_uuid, name, uuid);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE_LIST:
-            {
-                uint32 num;
-                String ise;
-                std::vector<String> list;
-                if (m_impl->recv.get_data (num)) {
-                    for (unsigned int i = 0; i < num; i++) {
-                        if (m_impl->recv.get_data (ise)) {
-                            list.push_back (ise);
-                        } else {
-                            list.clear ();
-                            break;
-                        }
-                    }
-                    m_impl->signal_update_keyboard_ise_list (this, ic, ic_uuid, list);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW:
-            {
-                m_impl->signal_candidate_more_window_show (this, ic, ic_uuid);
-                if (!m_impl->si.null ()) m_impl->si->candidate_more_window_show();
-                break;
-            }
-            case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE:
-            {
-                m_impl->signal_candidate_more_window_hide (this, ic, ic_uuid);
-                if (!m_impl->si.null ()) m_impl->si->candidate_more_window_hide();
-                break;
-            }
-            case ISM_TRANS_CMD_SELECT_AUX:
-            {
-                uint32 item;
-                if (m_impl->recv.get_data (item)) {
-                    m_impl->signal_select_aux (this, ic, ic_uuid, item);
-                    if (!m_impl->si.null ()) m_impl->si->select_aux(item);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case SCIM_TRANS_CMD_SELECT_CANDIDATE: //FIXME:remove if useless
-            {
-                uint32 item;
-                if (m_impl->recv.get_data (item))
-                    m_impl->signal_select_candidate (this, ic, ic_uuid, item);
-                else
-                    LOGW ("wrong format of transaction\n");
-                if (!m_impl->si.null ()) m_impl->si->select_candidate(item);
-                break;
-            }
-            case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_UP: //FIXME:remove if useless
-            {
-                m_impl->signal_candidate_table_page_up (this, ic, ic_uuid);
-                if (!m_impl->si.null ()) m_impl->si->lookup_table_page_up();
-                break;
-            }
-            case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_DOWN: //FIXME:remove if useless
-            {
-                m_impl->signal_candidate_table_page_down (this, ic, ic_uuid);
-                if (!m_impl->si.null ()) m_impl->si->lookup_table_page_down();
-                break;
-            }
-            case SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE_PAGE_SIZE:
-            {
-                uint32 size;
-                if (m_impl->recv.get_data (size)) {
-                    m_impl->signal_update_candidate_table_page_size (this, ic, ic_uuid, size);
-                    if (!m_impl->si.null ()) m_impl->si->update_lookup_table_page_size(size);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_CANDIDATE_SHOW: //FIXME:remove if useless
-            {
-                m_impl->signal_candidate_show (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_CANDIDATE_HIDE: //FIXME:remove if useless
-            {
-                m_impl->signal_candidate_hide (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_LOOKUP_TABLE: //FIXME:remove if useless
-            {
-                CommonLookupTable helper_candidate_table;
-                if (m_impl->recv.get_data (helper_candidate_table))
-                    m_impl->signal_update_lookup_table (this, helper_candidate_table);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT:
-            {
-                std::vector<uint32> row_items;
-                if (m_impl->recv.get_data (row_items)) {
-                    m_impl->signal_update_candidate_item_layout (this, row_items);
-                    if (!m_impl->si.null ()) m_impl->si->update_candidate_item_layout(row_items);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SELECT_ASSOCIATE:
-            {
-                uint32 item;
-                if (m_impl->recv.get_data (item))
-                    m_impl->signal_select_associate (this, ic, ic_uuid, item);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_UP:
-            {
-                m_impl->signal_associate_table_page_up (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_DOWN:
-            {
-                m_impl->signal_associate_table_page_down (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE_PAGE_SIZE:
-            {
-                uint32 size;
-                if (m_impl->recv.get_data (size))
-                    m_impl->signal_update_associate_table_page_size (this, ic, ic_uuid, size);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_RESET_ISE_CONTEXT:
-            {
-                m_impl->signal_reset_ise_context (this, ic, ic_uuid);
-                m_impl->signal_reset_input_context (this, ic, ic_uuid);
-                if (!m_impl->si.null ()) m_impl->si->reset();
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case ISM_TRANS_CMD_TURN_ON_LOG:
-            {
-                uint32 isOn;
-                if (m_impl->recv.get_data (isOn))
-                    m_impl->signal_turn_on_log (this, isOn);
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
-            {
-                uint32 size;
-                if (m_impl->recv.get_data (size)) {
-                    m_impl->signal_update_displayed_candidate_number (this, ic, ic_uuid, size);
-                    if (!m_impl->si.null ()) m_impl->si->update_displayed_candidate_number(size);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_LONGPRESS_CANDIDATE:
-            {
-                uint32 index;
-                if (m_impl->recv.get_data (index)) {
-                    m_impl->signal_longpress_candidate (this, ic, ic_uuid, index);
-                    if (!m_impl->si.null ()) m_impl->si->longpress_candidate(index);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SET_INPUT_HINT:
-            {
-                uint32 input_hint;
-
-                if (m_impl->recv.get_data (input_hint)) {
-                    m_impl->signal_set_input_hint (this, input_hint);
-                    if (!m_impl->si.null ()) m_impl->si->set_input_hint(input_hint);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION:
-            {
-                uint32 bidi_direction;
-
-                if (m_impl->recv.get_data (bidi_direction)) {
-                    m_impl->signal_update_bidi_direction (this, bidi_direction);
-                    if (!m_impl->si.null ()) m_impl->si->update_bidi_direction(bidi_direction);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            case ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW:
-            {
-                m_impl->signal_show_option_window (this, ic, ic_uuid);
-                break;
-            }
-            case ISM_TRANS_CMD_CHECK_OPTION_WINDOW:
-            {
-                uint32 avail = 0;
-                m_impl->signal_check_option_window (this, avail);
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data (avail);
-                m_impl->send.write_to_socket (m_impl->socket);
-                break;
-            }
-            case ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT:
-            {
-                uint32 ret = 0;
-                uint32 type;
-                char *data = NULL;
-                size_t len;
-                if (m_impl->recv.get_data(type) &&
-                    m_impl->recv.get_data(&data, len)) {
-                    m_impl->signal_process_input_device_event(this, type, data, len, ret);
-                }
-                else
-                    LOGW("wrong format of transaction\n");
-                m_impl->send.clear();
-                m_impl->send.put_command(SCIM_TRANS_CMD_REPLY);
-                m_impl->send.put_data(ret);
-                m_impl->send.write_to_socket(m_impl->socket);
-                break;
-            }
-            case SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE:
-            {
-                uint32 auto_capital_type;
-
-                if (m_impl->recv.get_data (auto_capital_type)) {
-                    if (!m_impl->si.null ()) m_impl->si->set_autocapital_type(auto_capital_type);
-                }
-                else
-                    LOGW ("wrong format of transaction\n");
-                break;
-            }
-            default:
-                break;
+        message_queue.read_from_transaction(m_impl->recv);
+        if (message_queue.get_pending_message_by_cmd(cmd)) {
+            return true;
         }
+
+        gettimeofday(&t1, NULL);
+        etime = ((t1.tv_sec * 1000000 + t1.tv_usec) - (t0.tv_sec * 1000000 + t0.tv_usec)) / 1000.0;
+
+        usleep(10 * 1000);
+    } while (etime < timeout);
+
+    return false;
+}
+
+/**
+ * @brief Process the pending events.
+ *
+ * This function will emit the corresponding signals according
+ * to the events.
+ *
+ * @return false if the connection is broken, otherwise return true.
+ */
+bool
+HelperAgent::handle_message (MessageItem *message)
+{
+    if (!message)
+        return false;
+
+    int cmd = message->get_command_ref();
+    LOGD ("HelperAgent::cmd = %d\n", cmd);
+    switch (cmd) {
+        case SCIM_TRANS_CMD_EXIT:
+        {
+            MessageItemExit *subclass = static_cast<MessageItemExit*>(message);
+            ISF_SAVE_LOG ("Helper ISE received SCIM_TRANS_CMD_EXIT message\n");
+            m_impl->signal_exit(this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_RELOAD_CONFIG:
+        {
+            MessageItemReloadConfig *subclass = static_cast<MessageItemReloadConfig*>(message);
+            m_impl->signal_reload_config (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->m_config.null())
+                m_impl->m_config->ConfigBase::reload();
+            break;
+        }
+        case SCIM_TRANS_CMD_UPDATE_SCREEN:
+        {
+            MessageItemUpdateScreen *subclass = static_cast<MessageItemUpdateScreen*>(message);
+            m_impl->signal_update_screen (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_screen_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_UPDATE_SPOT_LOCATION:
+        {
+            MessageItemUpdateSpotLocation *subclass = static_cast<MessageItemUpdateSpotLocation*>(message);
+            m_impl->signal_update_spot_location (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_x_ref(), subclass->get_y_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_CURSOR_POSITION:
+        {
+            MessageItemUpdateCursorPosition *subclass = static_cast<MessageItemUpdateCursorPosition*>(message);
+            m_impl->cursor_pos = subclass->get_cursor_pos_ref();
+            LOGD ("update cursor position %d", subclass->get_cursor_pos_ref());
+            m_impl->signal_update_cursor_position (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_cursor_pos_ref());
+            if (!m_impl->si.null ()) m_impl->si->update_cursor_position(subclass->get_cursor_pos_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT:
+        {
+            MessageItemUpdateSurroundingText *subclass = static_cast<MessageItemUpdateSurroundingText*>(message);
+            if (m_impl->surrounding_text != NULL)
+                free (m_impl->surrounding_text);
+            m_impl->surrounding_text = strdup (subclass->get_text_ref().c_str ());
+            m_impl->cursor_pos = subclass->get_cursor_ref();
+            LOGD ("surrounding text: %s, %d", m_impl->surrounding_text, subclass->get_cursor_ref());
+            while (m_impl->need_update_surrounding_text > 0) {
+                m_impl->need_update_surrounding_text--;
+                m_impl->signal_update_surrounding_text (this, subclass->get_ic_ref(),
+                    subclass->get_text_ref(), subclass->get_cursor_ref());
+            }
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_SELECTION:
+        {
+            MessageItemUpdateSelection *subclass = static_cast<MessageItemUpdateSelection*>(message);
+            if (m_impl->selection_text != NULL)
+                free (m_impl->selection_text);
+
+            m_impl->selection_text = strdup (subclass->get_text_ref().c_str ());
+            LOGD ("selection text: %s", m_impl->selection_text);
+
+            while (m_impl->need_update_selection_text > 0) {
+                m_impl->need_update_selection_text--;
+                m_impl->signal_update_selection (this, subclass->get_ic_ref(), subclass->get_text_ref());
+            }
+            break;
+        }
+        case SCIM_TRANS_CMD_TRIGGER_PROPERTY:
+        {
+            MessageItemTriggerProperty *subclass = static_cast<MessageItemTriggerProperty*>(message);
+            m_impl->signal_trigger_property (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_property_ref());
+            if (!m_impl->si.null ()) m_impl->si->trigger_property(subclass->get_property_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_HELPER_PROCESS_IMENGINE_EVENT:
+        {
+            MessageItemHelperProcessImengineEvent *subclass = static_cast<MessageItemHelperProcessImengineEvent*>(message);
+            m_impl->signal_process_imengine_event (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_transaction_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_HELPER_ATTACH_INPUT_CONTEXT:
+        {
+            MessageItemHelperAttachInputContext *subclass = static_cast<MessageItemHelperAttachInputContext*>(message);
+            m_impl->signal_attach_input_context (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_HELPER_DETACH_INPUT_CONTEXT:
+        {
+            MessageItemHelperDetachInputContext *subclass = static_cast<MessageItemHelperDetachInputContext*>(message);
+            m_impl->signal_detach_input_context (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_FOCUS_OUT:
+        {
+            MessageItemFocusOut *subclass = static_cast<MessageItemFocusOut*>(message);
+            m_impl->signal_focus_out (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            m_impl->focused_ic = (uint32) -1;
+            if (!m_impl->si.null ()) m_impl->si->focus_out();
+            break;
+        }
+        case SCIM_TRANS_CMD_FOCUS_IN:
+        {
+            MessageItemFocusIn *subclass = static_cast<MessageItemFocusIn*>(message);
+            m_impl->signal_focus_in (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            m_impl->focused_ic = subclass->get_ic_ref();
+            if (!m_impl->si.null ()) m_impl->si->focus_in();
+            break;
+        }
+        case ISM_TRANS_CMD_SHOW_ISE_PANEL:
+        {
+            MessageItemShowISEPanel *subclass = static_cast<MessageItemShowISEPanel*>(message);
+            LOGD ("Helper ISE received ISM_TRANS_CMD_SHOW_ISE_PANEL message\n");
+
+            m_impl->signal_ise_show (this, subclass->get_ic_ref(), *(subclass->get_data_ptr()),
+                subclass->get_len_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_HIDE_ISE_PANEL:
+        {
+            MessageItemHideISEPanel *subclass = static_cast<MessageItemHideISEPanel*>(message);
+            LOGD ("Helper ISE received ISM_TRANS_CMD_HIDE_ISE_PANEL message\n");
+            m_impl->signal_ise_hide (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_GET_ACTIVE_ISE_GEOMETRY:
+        {
+            struct rectinfo info = {0, 0, 0, 0};
+            m_impl->signal_get_geometry (this, info);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data (info.pos_x);
+            m_impl->send.put_data (info.pos_y);
+            m_impl->send.put_data (info.width);
+            m_impl->send.put_data (info.height);
+            m_impl->send.write_to_socket (m_impl->socket);
+            break;
+        }
+        case ISM_TRANS_CMD_SET_ISE_MODE:
+        {
+            MessageItemSetISEMode *subclass = static_cast<MessageItemSetISEMode*>(message);
+            m_impl->signal_set_mode (this, subclass->get_mode_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_SET_ISE_LANGUAGE:
+        {
+            MessageItemSetISELanguage *subclass = static_cast<MessageItemSetISELanguage*>(message);
+            m_impl->signal_set_language (this, subclass->get_language_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_SET_ISE_IMDATA:
+        {
+            MessageItemSetISEImData *subclass = static_cast<MessageItemSetISEImData*>(message);
+            m_impl->signal_set_imdata (this, *(subclass->get_imdata_ptr()), subclass->get_len_ref());
+            if (!m_impl->si.null ()) m_impl->si->set_imdata(*(subclass->get_imdata_ptr()),
+                subclass->get_len_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_GET_ISE_IMDATA:
+        {
+            char   *buf = NULL;
+            size_t  len = 0;
+
+            m_impl->signal_get_imdata (this, &buf, len);
+            LOGD ("send ise imdata len = %d", len);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data (buf, len);
+            m_impl->send.write_to_socket (m_impl->socket);
+            if (NULL != buf)
+                delete[] buf;
+            break;
+        }
+        case ISM_TRANS_CMD_GET_ISE_LANGUAGE_LOCALE:
+        {
+            MessageItemGetISELanguageLocale *subclass = static_cast<MessageItemGetISELanguageLocale*>(message);
+            char *buf = NULL;
+            m_impl->signal_get_language_locale (this, subclass->get_ic_ref(), &buf);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            if (buf != NULL)
+                m_impl->send.put_data (buf, strlen (buf));
+            m_impl->send.write_to_socket (m_impl->socket);
+            if (NULL != buf)
+                delete[] buf;
+            break;
+        }
+        case ISM_TRANS_CMD_SET_RETURN_KEY_TYPE:
+        {
+            MessageItemSetReturnKeyType *subclass = static_cast<MessageItemSetReturnKeyType*>(message);
+            m_impl->signal_set_return_key_type (this, subclass->get_type_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_GET_RETURN_KEY_TYPE:
+        {
+            uint32 type = 0;
+            m_impl->signal_get_return_key_type (this, type);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data (type);
+            m_impl->send.write_to_socket (m_impl->socket);
+            break;
+        }
+        case ISM_TRANS_CMD_SET_RETURN_KEY_DISABLE:
+        {
+            MessageItemSetReturnKeyDisable *subclass = static_cast<MessageItemSetReturnKeyDisable*>(message);
+            m_impl->signal_set_return_key_disable (this, subclass->get_disabled_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_GET_RETURN_KEY_DISABLE:
+        {
+            uint32 disabled = 0;
+            m_impl->signal_get_return_key_type (this, disabled);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data (disabled);
+            m_impl->send.write_to_socket (m_impl->socket);
+            break;
+        }
+        case SCIM_TRANS_CMD_PROCESS_KEY_EVENT:
+        {
+            MessageItemProcessKeyEvent *subclass = static_cast<MessageItemProcessKeyEvent*>(message);
+            uint32 ret = 0;
+            m_impl->signal_process_key_event(this, subclass->get_key_ref(), ret);
+            if (ret == 0)
+                if (!m_impl->si.null ())
+                {
+                    ret = m_impl->si->process_key_event (subclass->get_key_ref());
+                    LOGD("imengine(%s) process key %d return %d", m_impl->si->get_factory_uuid().c_str(),
+                        subclass->get_key_ref().code, ret);
+                }
+            m_impl->process_key_event_done (subclass->get_key_ref(), ret, subclass->get_serial_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_SET_LAYOUT:
+        {
+            MessageItemSetLayout *subclass = static_cast<MessageItemSetLayout*>(message);
+            m_impl->layout = subclass->get_layout_ref();
+            m_impl->signal_set_layout (this, subclass->get_layout_ref());
+            if (!m_impl->si.null ()) m_impl->si->set_layout(subclass->get_layout_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_GET_LAYOUT:
+        {
+            uint32 layout = 0;
+
+            m_impl->signal_get_layout (this, layout);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data (layout);
+            m_impl->send.write_to_socket (m_impl->socket);
+            break;
+        }
+        case ISM_TRANS_CMD_SET_INPUT_MODE:
+        {
+            MessageItemSetInputMode *subclass = static_cast<MessageItemSetInputMode*>(message);
+            m_impl->signal_set_input_mode (this, subclass->get_input_mode_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_SET_CAPS_MODE:
+        {
+            MessageItemSetCapsMode *subclass = static_cast<MessageItemSetCapsMode*>(message);
+            m_impl->signal_set_caps_mode (this, subclass->get_mode_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_PANEL_RESET_INPUT_CONTEXT:
+        {
+            MessageItemPanelResetInputContext *subclass = static_cast<MessageItemPanelResetInputContext*>(message);
+            m_impl->signal_reset_input_context (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->si.null ()) m_impl->si->reset();
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_CANDIDATE_UI:
+        {
+            MessageItemUpdateCandidateUI *subclass = static_cast<MessageItemUpdateCandidateUI*>(message);
+            m_impl->signal_update_candidate_ui (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_style_ref(), subclass->get_mode_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_CANDIDATE_GEOMETRY:
+        {
+            MessageItemUpdateCandidateGeometry *subclass = static_cast<MessageItemUpdateCandidateGeometry*>(message);
+            m_impl->signal_update_candidate_geometry (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_rectinfo_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE:
+        {
+            MessageItemUpdateKeyboardISE *subclass = static_cast<MessageItemUpdateKeyboardISE*>(message);
+            m_impl->signal_update_keyboard_ise (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_name_ref(), subclass->get_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_KEYBOARD_ISE_LIST:
+        {
+            MessageItemUpdateKeyboardISEList *subclass = static_cast<MessageItemUpdateKeyboardISEList*>(message);
+            m_impl->signal_update_keyboard_ise_list (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_list_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_SHOW:
+        {
+            MessageItemCandidateMoreWindowShow *subclass = static_cast<MessageItemCandidateMoreWindowShow*>(message);
+            m_impl->signal_candidate_more_window_show (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->si.null ()) m_impl->si->candidate_more_window_show();
+            break;
+        }
+        case ISM_TRANS_CMD_CANDIDATE_MORE_WINDOW_HIDE:
+        {
+            MessageItemCandidateMoreWindowHide *subclass = static_cast<MessageItemCandidateMoreWindowHide*>(message);
+            m_impl->signal_candidate_more_window_hide (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->si.null ()) m_impl->si->candidate_more_window_hide();
+            break;
+        }
+        case ISM_TRANS_CMD_SELECT_AUX:
+        {
+            MessageItemSelectAux *subclass = static_cast<MessageItemSelectAux*>(message);
+            m_impl->signal_select_aux (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_item_ref());
+            if (!m_impl->si.null ()) m_impl->si->select_aux(subclass->get_item_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_SELECT_CANDIDATE: //FIXME:remove if useless
+        {
+            MessageItemSelectCandidate *subclass = static_cast<MessageItemSelectCandidate*>(message);
+            m_impl->signal_select_candidate (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_item_ref());
+            if (!m_impl->si.null ()) m_impl->si->select_candidate(subclass->get_item_ref());
+            break;
+        }
+        case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_UP: //FIXME:remove if useless
+        {
+            MessageItemLookupTablePageUp *subclass = static_cast<MessageItemLookupTablePageUp*>(message);
+            m_impl->signal_candidate_table_page_up (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->si.null ()) m_impl->si->lookup_table_page_up();
+            break;
+        }
+        case SCIM_TRANS_CMD_LOOKUP_TABLE_PAGE_DOWN: //FIXME:remove if useless
+        {
+            MessageItemLookupTablePageDown *subclass = static_cast<MessageItemLookupTablePageDown*>(message);
+            m_impl->signal_candidate_table_page_down (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->si.null ()) m_impl->si->lookup_table_page_down();
+            break;
+        }
+        case SCIM_TRANS_CMD_UPDATE_LOOKUP_TABLE_PAGE_SIZE:
+        {
+            MessageItemUpdateLookupTablePageSize *subclass = static_cast<MessageItemUpdateLookupTablePageSize*>(message);
+            m_impl->signal_update_candidate_table_page_size (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_size_ref());
+            if (!m_impl->si.null ()) m_impl->si->update_lookup_table_page_size(subclass->get_size_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_CANDIDATE_SHOW: //FIXME:remove if useless
+        {
+            MessageItemCandidateShow *subclass = static_cast<MessageItemCandidateShow*>(message);
+            m_impl->signal_candidate_show (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_CANDIDATE_HIDE: //FIXME:remove if useless
+        {
+            MessageItemCandidateHide *subclass = static_cast<MessageItemCandidateHide*>(message);
+            m_impl->signal_candidate_hide (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_LOOKUP_TABLE: //FIXME:remove if useless
+        {
+            MessageItemUpdateLookupTable *subclass = static_cast<MessageItemUpdateLookupTable*>(message);
+            m_impl->signal_update_lookup_table (this, subclass->get_candidate_table_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_CANDIDATE_ITEM_LAYOUT:
+        {
+            MessageItemUpdateCandidateItemLayout *subclass = static_cast<MessageItemUpdateCandidateItemLayout*>(message);
+            m_impl->signal_update_candidate_item_layout (this, subclass->get_row_items_ref());
+            if (!m_impl->si.null ()) m_impl->si->update_candidate_item_layout(subclass->get_row_items_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_SELECT_ASSOCIATE:
+        {
+            MessageItemSelectAssociate *subclass = static_cast<MessageItemSelectAssociate*>(message);
+            m_impl->signal_select_associate (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_item_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_UP:
+        {
+            MessageItemAssociateTablePageUp *subclass = static_cast<MessageItemAssociateTablePageUp*>(message);
+            m_impl->signal_associate_table_page_up (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_ASSOCIATE_TABLE_PAGE_DOWN:
+        {
+            MessageItemAssociateTablePageDown *subclass = static_cast<MessageItemAssociateTablePageDown*>(message);
+            m_impl->signal_associate_table_page_down (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_ASSOCIATE_TABLE_PAGE_SIZE:
+        {
+            MessageItemUpdateAssociateTablePageSize *subclass = static_cast<MessageItemUpdateAssociateTablePageSize*>(message);
+            m_impl->signal_update_associate_table_page_size (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_size_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_RESET_ISE_CONTEXT:
+        {
+            MessageItemResetISEContext *subclass = static_cast<MessageItemResetISEContext*>(message);
+            m_impl->signal_reset_ise_context (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            m_impl->signal_reset_input_context (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            if (!m_impl->si.null ()) m_impl->si->reset();
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.write_to_socket (m_impl->socket);
+            break;
+        }
+        case ISM_TRANS_CMD_TURN_ON_LOG:
+        {
+            MessageItemTurnOnLog *subclass = static_cast<MessageItemTurnOnLog*>(message);
+            m_impl->signal_turn_on_log (this, subclass->get_state_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_DISPLAYED_CANDIDATE:
+        {
+            MessageItemUpdateDisplayedCandidate *subclass = static_cast<MessageItemUpdateDisplayedCandidate*>(message);
+            m_impl->signal_update_displayed_candidate_number (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_size_ref());
+            if (!m_impl->si.null ()) m_impl->si->update_displayed_candidate_number(subclass->get_size_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_LONGPRESS_CANDIDATE:
+        {
+            MessageItemLongpressCandidate *subclass = static_cast<MessageItemLongpressCandidate*>(message);
+            m_impl->signal_longpress_candidate (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref(),
+                subclass->get_index_ref());
+            if (!m_impl->si.null ()) m_impl->si->longpress_candidate(subclass->get_index_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_SET_INPUT_HINT:
+        {
+            MessageItemSetInputHint *subclass = static_cast<MessageItemSetInputHint*>(message);
+            m_impl->signal_set_input_hint (this, subclass->get_input_hint_ref());
+            if (!m_impl->si.null ()) m_impl->si->set_input_hint(subclass->get_input_hint_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_UPDATE_BIDI_DIRECTION:
+        {
+            MessageItemUpdateBidiDirection *subclass = static_cast<MessageItemUpdateBidiDirection*>(message);
+            m_impl->signal_update_bidi_direction (this, subclass->get_bidi_direction());
+            if (!m_impl->si.null ()) m_impl->si->update_bidi_direction(subclass->get_bidi_direction());
+            break;
+        }
+        case ISM_TRANS_CMD_SHOW_ISE_OPTION_WINDOW:
+        {
+            MessageItemShowISEOptionWindow *subclass = static_cast<MessageItemShowISEOptionWindow*>(message);
+            m_impl->signal_show_option_window (this, subclass->get_ic_ref(), subclass->get_ic_uuid_ref());
+            break;
+        }
+        case ISM_TRANS_CMD_CHECK_OPTION_WINDOW:
+        {
+            uint32 avail = 0;
+            m_impl->signal_check_option_window (this, avail);
+            m_impl->send.clear ();
+            m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data (avail);
+            m_impl->send.write_to_socket (m_impl->socket);
+            break;
+        }
+        case ISM_TRANS_CMD_PROCESS_INPUT_DEVICE_EVENT:
+        {
+            MessageItemProcessInputDeviceEvent *subclass = static_cast<MessageItemProcessInputDeviceEvent*>(message);
+            uint32 ret = 0;
+            m_impl->signal_process_input_device_event(this,
+                subclass->get_type_ref(), *(subclass->get_data_ptr()), subclass->get_len_ref(), ret);
+            m_impl->send.clear();
+            m_impl->send.put_command(SCIM_TRANS_CMD_REPLY);
+            m_impl->send.put_data(ret);
+            m_impl->send.write_to_socket(m_impl->socket);
+            break;
+        }
+        case SCIM_TRANS_CMD_SET_AUTOCAPITAL_TYPE:
+        {
+            MessageItemSetAutocapitalType *subclass = static_cast<MessageItemSetAutocapitalType*>(message);
+            if (!m_impl->si.null ()) m_impl->si->set_autocapital_type(subclass->get_auto_capital_type_ref());
+            break;
+        }
+        default:
+            break;
     }
     return true;
 }
@@ -2032,16 +1977,17 @@ HelperAgent::get_surrounding_text (int maxlen_before, int maxlen_after, String &
         m_impl->surrounding_text = NULL;
     }
 
-    for (int i = 0; i < 3; i++) {
-        filter_event ();
-        if (!m_impl->socket.is_connected ())
-            break;
+    const int WAIT_FOR_SYNC_RESPONSE_TIMEOUT = 1000;
+    /* Now we are waiting for the ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT message */
+    if (wait_for_message(ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT, WAIT_FOR_SYNC_RESPONSE_TIMEOUT)) {
+        MessageItem *message = message_queue.get_pending_message_by_cmd(ISM_TRANS_CMD_UPDATE_SURROUNDING_TEXT);
+        handle_message(message);
+        message_queue.remove_message(message);
+
         if (m_impl->surrounding_text) {
             text = m_impl->surrounding_text;
             cursor = m_impl->cursor_pos;
-            break;
         }
-        //timeout
     }
 
     if (m_impl->surrounding_text) {
