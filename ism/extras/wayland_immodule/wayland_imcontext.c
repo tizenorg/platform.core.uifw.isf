@@ -40,6 +40,8 @@
 #endif
 #define LOG_TAG "IMMODULE"
 
+#define IME_DEVICE_NAME "ime"
+
 #define HIDE_TIMER_INTERVAL     0.05
 #define WAIT_FOR_FILTER_DONE_SECOND 2
 
@@ -72,6 +74,8 @@ static Eina_Bool             _received_will_hide_event    = EINA_FALSE;
 static Eina_Bool             _conformant_reset_done       = EINA_FALSE;
 static Evas                 *_active_context_canvas       = NULL;
 static unsigned int          _active_context_window_id    = 0;
+
+static Ecore_Device         *_ime_device = NULL;
 //
 
 struct _WaylandIMContext
@@ -1102,6 +1106,7 @@ text_input_keysym(void                 *data,
 
     e->window = ecore_wl_window_id_get(imcontext->window);
     e->event_window = ecore_wl_window_id_get(imcontext->window);
+    e->dev = _ime_device;
     e->timestamp = 0; /* For distinguishing S/W keyboard event */
 
     e->modifiers = 0;
@@ -1510,6 +1515,14 @@ EAPI void initialize ()
 #ifdef HAVE_VCONF
     vconf_notify_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb, NULL);
 #endif
+
+    _ime_device = ecore_device_add();
+    if (_ime_device) {
+        ecore_device_name_set(_ime_device, IME_DEVICE_NAME);
+        ecore_device_description_set(_ime_device, IME_DEVICE_NAME);
+        ecore_device_identifier_set(_ime_device, IME_DEVICE_NAME);
+        ecore_device_class_set(_ime_device, ECORE_DEVICE_CLASS_KEYBOARD);
+    }
 }
 
 EAPI void uninitialize ()
@@ -1522,6 +1535,11 @@ EAPI void uninitialize ()
 #ifdef HAVE_VCONF
     vconf_ignore_key_changed (VCONFKEY_ISF_HW_KEYBOARD_INPUT_DETECTED, keyboard_mode_changed_cb);
 #endif
+
+    if (_ime_device) {
+        ecore_device_del(_ime_device);
+        _ime_device = NULL;
+    }
 }
 
 EAPI void
