@@ -58,8 +58,8 @@ Requires:   %{name} = %{version}-%{release}
 This package contains ISF header files for ISE development.
 
 %package -n org.tizen.isf-kbd-mode-changer
-Summary: isf-kbd-mode-changer
-Group: Application
+Summary: Keyboard mode changer
+Group: Graphics & UI Framework/Input
 Requires: %{name} = %{version}-%{release}
 
 %description -n org.tizen.isf-kbd-mode-changer
