@@ -1102,6 +1102,12 @@ text_input_keysym(void                 *data,
 
     e->window = ecore_wl_window_id_get(imcontext->window);
     e->event_window = ecore_wl_window_id_get(imcontext->window);
+    e->dev = ecore_device_add();
+    ecore_device_name_set(e->dev, "ime");
+    ecore_device_description_set(e->dev, "ime");
+    ecore_device_identifier_set(e->dev, "ime");
+    ecore_device_class_set(e->dev, ECORE_DEVICE_CLASS_KEYBOARD);
+
     e->timestamp = 0; /* For distinguishing S/W keyboard event */
 
     e->modifiers = 0;
