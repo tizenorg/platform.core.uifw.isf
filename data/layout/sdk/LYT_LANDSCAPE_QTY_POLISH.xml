@@ -39,7 +39,8 @@
         <label shift="off" autopopup="6">ė</label>
         <label shift="off" autopopup="7">ę</label>
         <label shift="off" autopopup="8">ě</label>
-        <label shift="off" autopopup="9">ə</label>
+        <label shift="off" autopopup="9">ĕ</label>
+        <label shift="off" autopopup="10">ə</label>
         <label shift="on" autopopup="0">3</label>
         <label shift="on" autopopup="1">È</label>
         <label shift="on" autopopup="2">É</label>
@@ -49,7 +50,8 @@
         <label shift="on" autopopup="6">Ė</label>
         <label shift="on" autopopup="7">Ę</label>
         <label shift="on" autopopup="8">Ě</label>
-        <label shift="on" autopopup="9">Ə</label>
+        <label shift="on" autopopup="9">Ĕ</label>
+        <label shift="on" autopopup="10">Ə</label>
         <label shift="loc" autopopup="0">3</label>
         <label shift="loc" autopopup="1">È</label>
         <label shift="loc" autopopup="2">É</label>
@@ -59,7 +61,8 @@
         <label shift="loc" autopopup="6">Ė</label>
         <label shift="loc" autopopup="7">Ę</label>
         <label shift="loc" autopopup="8">Ě</label>
-        <label shift="loc" autopopup="9">Ə</label>
+        <label shift="loc" autopopup="9">Ĕ</label>
+        <label shift="loc" autopopup="10">Ə</label>
       </auto_popup_keys>
     </key>
     <key use_magnifier="true" multitouch_type="settle_previous" popup_type="auto_popup">
