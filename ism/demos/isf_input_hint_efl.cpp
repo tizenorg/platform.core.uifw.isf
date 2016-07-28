@@ -57,6 +57,7 @@ static Evas_Object * create_inner_layout (void *data)
     Evas_Object *bx = NULL;
     Evas_Object *ef = NULL;
     Evas_Object *parent = ad->naviframe;
+    Evas_Object *en = NULL;
     int idx = 0;
 
     bx = elm_box_add (parent);
@@ -69,6 +70,11 @@ static Evas_Object * create_inner_layout (void *data)
         elm_box_pack_end (bx, ef);
         ++idx;
     }
+
+    /* Multiline */
+    ef = create_ef (parent, _("Multiline"), _("click to enter"), &en);
+    elm_entry_single_line_set (en, EINA_FALSE);
+    elm_box_pack_end (bx, ef);
 
     return bx;
 }
