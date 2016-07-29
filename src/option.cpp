@@ -762,7 +762,9 @@ static void close_option_window(SCLOptionWindowType type)
 {
     destroy_genlist_item_classes(type);
     if (CHECK_ARRAY_INDEX(type, OPTION_WINDOW_TYPE_MAX)) {
-        g_core.destroy_option_window(option_elements[type].option_window);
+        if (option_elements[type].option_window)
+            g_core.destroy_option_window(option_elements[type].option_window);
+
         option_elements[type].option_window = NULL;
     }
 }
