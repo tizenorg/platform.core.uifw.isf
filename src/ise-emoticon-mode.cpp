@@ -28,6 +28,7 @@
 #include "config.h"
 #include "sclutils.h"
 #include "sclfeedback.h"
+#include "candidate-factory.h"
 
 #undef LOG_TAG
 #define LOG_TAG "ISE_DEFAULT"
@@ -106,6 +107,7 @@ extern CSCLUI *g_ui;
 extern CSCLCore g_core;
 extern int * emoticon_list[];
 extern CONFIG_VALUES g_config_values;
+extern Candidate    *g_candidate;
 
 #ifdef _WEARABLE
 unsigned short int emoticon_group_items[MAX_EMOTICON_GROUP] =
@@ -218,7 +220,10 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
     evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-    evas_object_move(layout, 0, 0);
+    int y = 0;
+    if (g_candidate && g_candidate->get_visible ())
+        y = g_candidate->get_height ();
+    evas_object_move(layout, 0, y);
 
     if (is_candidate_on) {
         if (screen_degree == 0 || screen_degree == 180)
@@ -239,7 +244,7 @@ void ise_show_emoticon_window(emoticon_group_t emoticon_group, const int screen_
         }
 #ifdef _WEARABLE
         evas_object_resize(layout, 260, 240);
-        evas_object_move(layout, 10, 0);
+        evas_object_move(layout, 10, y);
 #endif
     }
 
