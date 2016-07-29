@@ -1504,6 +1504,7 @@ private:
             if (fd_handler == _agent->_read_handler_list [i]) {
                 if (!_agent->filter_event(fd)) {
                     std::cerr << "_panel_agent->filter_event () is failed!!!\n";
+                    ::close (fd);
                     ecore_main_fd_handler_del(fd_handler);
 
                     ISF_SAVE_LOG("_panel_agent->filter_event (fd=%d) is failed!!!\n", fd);
@@ -1515,6 +1516,7 @@ private:
 
         std::cerr << "panel_agent_handler () has received exception event!!!\n";
         _agent->filter_exception_event(fd);
+        ::close (fd);
         ecore_main_fd_handler_del(fd_handler);
 
         ISF_SAVE_LOG("Received exception event (fd=%d)!!!\n", fd);
@@ -3326,6 +3328,7 @@ private:
 
         for (IterPos = _read_handler_list.begin (); IterPos != _read_handler_list.end (); ++IterPos,++i) {
             if (ecore_main_fd_handler_fd_get (_read_handler_list[i]) == client.get_id()) {
+                ::close (client.get_id ());
                 ecore_main_fd_handler_del (_read_handler_list[i]);
                 _read_handler_list.erase (IterPos);
                 break;
