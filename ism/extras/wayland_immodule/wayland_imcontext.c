@@ -882,6 +882,10 @@ show_input_panel(Ecore_IMF_Context *ctx)
             ecore_imf_context_input_panel_return_key_type_get (ctx),
             ecore_imf_context_input_panel_return_key_disabled_get (ctx),
             ecore_imf_context_autocapital_type_get (ctx));
+
+    if (_active_context_canvas && !evas_focus_state_get (_active_context_canvas)) {
+        LOGW ("Canvas does not have focus!\n");
+    }
     //
 
     wl_text_input_show_input_panel(imcontext->text_input);
