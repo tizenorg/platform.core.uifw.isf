@@ -63,6 +63,8 @@ __initialize_modules (const ConfigPointer &config)
 
     __filter_modules = new FilterModule [__number_of_modules];
 
+    if (!__filter_modules) return;
+
     unsigned int i, j;
 
     for (i = 0; i < __number_of_modules; ++i) {

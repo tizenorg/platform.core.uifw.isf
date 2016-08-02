@@ -156,6 +156,8 @@ Module::Module ()
 Module::Module (const String &name, const String &type)
     : m_impl (new ModuleImpl)
 {
+    if (!m_impl) return;
+
     lt_dlinit ();
     if (!load (name, type))
         std::cerr << "Load name:" << name << " type:" << type << " is failed!!!";
