@@ -749,12 +749,12 @@ void PanelAgentManager::hide_preedit_string (int id, uint32 context_id)
         _p->hide_preedit_string (id, context_id);
 }
 
-void PanelAgentManager::update_preedit_string (int id, uint32 context_id, WideString wstr, AttributeList& attrs, uint32 caret)
+void PanelAgentManager::update_preedit_string (int id, uint32 context_id, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret)
 {
     PanelAgentPointer _p = m_impl->get_panel_agent_by_id (id);
 
     if (!_p.null ())
-        _p->update_preedit_string (id, context_id, wstr, attrs, caret);
+        _p->update_preedit_string (id, context_id, preedit, commit, attrs, caret);
 }
 
 void PanelAgentManager::update_preedit_caret (int id, uint32 context_id, uint32 caret)

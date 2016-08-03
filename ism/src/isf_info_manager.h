@@ -905,7 +905,7 @@ public:
     void socket_helper_hide_preedit_string (int client, uint32 target_ic, String target_uuid);
 
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING
-    void socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString wstr, AttributeList& attrs, uint32 caret);
+    void socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret);
 
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET
     void socket_helper_update_preedit_caret (int client, uint32 caret);

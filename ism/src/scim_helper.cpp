@@ -296,6 +296,17 @@ public:
     }
 
     void
+    slot_update_preedit_string_with_commit (IMEngineInstanceBase *si,
+                                            const WideString & preedit,
+                                            const WideString & commit,
+                                            const AttributeList & attrs,
+                                            int caret)
+    {
+        LOGD ("");
+        thiz->update_preedit_string (-1, "", preedit, commit, attrs, caret);
+    }
+
+    void
     slot_update_aux_string (IMEngineInstanceBase *si,
                             const WideString & str,
                             const AttributeList & attrs)
@@ -470,6 +481,9 @@ public:
             slot (this, &HelperAgent::HelperAgentImpl::slot_update_preedit_caret));
         si->signal_connect_update_preedit_string (
             slot (this, &HelperAgent::HelperAgentImpl::slot_update_preedit_string));
+        si->signal_connect_update_preedit_string_with_commit (
+            slot (this, &HelperAgent::HelperAgentImpl::slot_update_preedit_string_with_commit));
+
         si->signal_connect_update_aux_string (
             slot (this, &HelperAgent::HelperAgentImpl::slot_update_aux_string));
         si->signal_connect_update_lookup_table (
@@ -1289,9 +1303,6 @@ HelperAgent::filter_event ()
                 m_impl->signal_reset_ise_context (this, ic, ic_uuid);
                 m_impl->signal_reset_input_context (this, ic, ic_uuid);
                 if (!m_impl->si.null ()) m_impl->si->reset();
-                m_impl->send.clear ();
-                m_impl->send.put_command (SCIM_TRANS_CMD_REPLY);
-                m_impl->send.write_to_socket (m_impl->socket);
                 break;
             }
             case ISM_TRANS_CMD_TURN_ON_LOG:
@@ -1804,7 +1815,7 @@ HelperAgent::update_preedit_string (int                  ic,
                                     const AttributeList &attrs) const
 {
     LOGD ("");
-    update_preedit_string (ic, ic_uuid, str, attrs, -1);
+    update_preedit_string (ic, ic_uuid, str, str, attrs, -1);
 }
 
 void
@@ -1832,24 +1843,13 @@ HelperAgent::update_preedit_string (int                  ic,
 void
 HelperAgent::update_preedit_string (int                  ic,
                                     const String        &ic_uuid,
-                                    const WideString    &str,
+                                    const WideString    &wstr,
                                     const AttributeList &attrs,
                                     int            caret) const
 {
     LOGD ("");
 
-    if (m_impl->socket_active.is_connected ()) {
-        m_impl->send.clear ();
-        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
-        m_impl->send.put_data (m_impl->magic_active);
-        m_impl->send.put_command (SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING);
-        m_impl->send.put_data ((uint32)ic);
-        m_impl->send.put_data (ic_uuid);
-        m_impl->send.put_data (str);
-        m_impl->send.put_data (attrs);
-        m_impl->send.put_data (caret);
-        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
-    }
+    update_preedit_string (ic, ic_uuid, wstr, wstr, attrs, caret);
 }
 
 void
@@ -1870,6 +1870,31 @@ HelperAgent::update_preedit_string (int                 ic,
         m_impl->send.put_data ((uint32)ic);
         m_impl->send.put_data (ic_uuid);
         m_impl->send.put_dataw (buf, buflen);
+        m_impl->send.put_dataw (buf, buflen);
+        m_impl->send.put_data (attrs);
+        m_impl->send.put_data (caret);
+        m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);
+    }
+}
+
+void
+HelperAgent::update_preedit_string (int                  ic,
+                                    const String        &ic_uuid,
+                                    const WideString    &preedit,
+                                    const WideString    &commit,
+                                    const AttributeList &attrs,
+                                    int                  caret) const
+{
+    LOGD ("");
+    if (m_impl->socket_active.is_connected ()) {
+        m_impl->send.clear ();
+        m_impl->send.put_command (SCIM_TRANS_CMD_REQUEST);
+        m_impl->send.put_data (m_impl->magic_active);
+        m_impl->send.put_command (SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING);
+        m_impl->send.put_data ((uint32)ic);
+        m_impl->send.put_data (ic_uuid);
+        m_impl->send.put_data (preedit);
+        m_impl->send.put_data (commit);
         m_impl->send.put_data (attrs);
         m_impl->send.put_data (caret);
         m_impl->send.write_to_socket (m_impl->socket_active, m_impl->magic_active);

@@ -91,6 +91,9 @@ typedef Signal3<void, IMEngineInstanceBase*,const WideString&,const AttributeLis
 typedef Signal4<void, IMEngineInstanceBase*,const char*,int,const AttributeList&>
         IMEngineSignalUTF8StringAttributeList;
 
+typedef Signal5<void, IMEngineInstanceBase*,const WideString&,const WideString&,const AttributeList&,int>
+        IMEngineSignalWideStringWideStringAttributeListInt;
+
 typedef Signal5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
         IMEngineSignalGetSurroundingText;
 
@@ -133,6 +136,7 @@ public:
     IMEngineSignalUTF8StringAttributeListInt m_signal_update_preedit_utf8_string;
     IMEngineSignalWideStringAttributeList m_signal_update_aux_string;
     IMEngineSignalUTF8StringAttributeList m_signal_update_aux_utf8_string;
+    IMEngineSignalWideStringWideStringAttributeListInt m_signal_update_preedit_string_with_commit;
     IMEngineSignalWideString              m_signal_commit_string;
     IMEngineSignalUTF8String              m_signal_commit_utf8_string;
     IMEngineSignalLookupTable             m_signal_update_lookup_table;
@@ -553,6 +557,12 @@ IMEngineInstanceBase::signal_connect_update_preedit_utf8_string (IMEngineSlotUTF
 }
 
 Connection
+IMEngineInstanceBase::signal_connect_update_preedit_string_with_commit (IMEngineSlotWideStringWideStringAttributeListInt *slot)
+{
+    return m_impl->m_signal_update_preedit_string_with_commit.connect (slot);
+}
+
+Connection
 IMEngineInstanceBase::signal_connect_update_aux_string (IMEngineSlotWideStringAttributeList *slot)
 {
     return m_impl->m_signal_update_aux_string.connect (slot);
@@ -744,6 +754,15 @@ IMEngineInstanceBase::update_preedit_string (const char    *buf,
                                              int            caret)
 {
     m_impl->m_signal_update_preedit_utf8_string (this, buf, buflen, attrs, caret);
+}
+
+void
+IMEngineInstanceBase::update_preedit_string (const WideString    &preedit,
+                                             const WideString    &commit,
+                                             const AttributeList &attrs,
+                                             int                  caret)
+{
+    m_impl->m_signal_update_preedit_string_with_commit (this, preedit, commit, attrs, caret);
 }
 
 void

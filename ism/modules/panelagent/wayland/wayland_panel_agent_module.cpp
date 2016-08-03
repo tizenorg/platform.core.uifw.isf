@@ -74,6 +74,7 @@ struct _WSCContextISFImpl {
     Ecore_IMF_Input_Mode     input_mode;
     WideString               preedit_string;
     AttributeList            preedit_attrlist;
+    WideString               commit_string;
     Ecore_IMF_Autocapital_Type autocapital_type;
     Ecore_IMF_Input_Hints    input_hint;
     Ecore_IMF_BiDi_Direction bidi_direction;
@@ -175,10 +176,7 @@ static void     panel_slot_commit_string                (int                    
 static void     panel_slot_forward_key_event            (int                     context,
                                                          const KeyEvent         &key);
 static void     _show_preedit_string          (int                     context);
-static void     _update_preedit_string        (int                     context,
-                                                         const WideString       &str,
-                                                         const AttributeList    &attrs,
-                                                         int               caret);
+
 static void     panel_req_update_bidi_direction         (WSCContextISF     *ic, int direction);
 
 /* Panel iochannel handler*/
@@ -265,10 +263,6 @@ _wsc_im_ctx_reset(void *data, struct wl_input_method_context *im_ctx)
     LOGD ("");
     if (context_scim && context_scim->impl && context_scim == _focused_ic) {
         g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
-        if (context_scim->impl->need_commit_preedit) {
-            _hide_preedit_string (context_scim->id, false);
-            wsc_context_commit_preedit_string (context_scim);
-        }
     }
 }
 
@@ -427,21 +421,6 @@ _wsc_im_ctx_filter_key_event(void *data, struct wl_input_method_context *im_ctx,
             ((wl_keyboard_key_state)state) == WL_KEYBOARD_KEY_STATE_PRESSED, modifiers);
 }
 
-static void
-_wsc_im_ctx_reset_sync(void *data, struct wl_input_method_context *im_ctx, uint32_t serial)
-{
-    WSCContextISF *context_scim = (WSCContextISF*)data;
-    LOGD ("");
-    if (context_scim && context_scim->impl && context_scim == _focused_ic) {
-        g_info_manager->socket_reset_input_context (WAYLAND_MODULE_CLIENT_ID, context_scim->id);
-        if (context_scim->impl->need_commit_preedit) {
-            _hide_preedit_string (context_scim->id, false);
-            wsc_context_commit_preedit_string (context_scim);
-        }
-    }
-    wl_input_method_context_reset_done (im_ctx, serial);
-}
-
 
 static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_reset,
@@ -455,8 +434,7 @@ static const struct wl_input_method_context_listener wsc_im_context_listener = {
      _wsc_im_ctx_bidi_direction,
      _wsc_im_ctx_cursor_position,
      _wsc_im_ctx_process_input_device_event,
-     _wsc_im_ctx_filter_key_event,
-     _wsc_im_ctx_reset_sync
+     _wsc_im_ctx_filter_key_event
 };
 
 static void
@@ -686,6 +664,7 @@ delete_ic_impl (WSCContextISFImpl *impl)
             rec->client_window = 0;
             rec->preedit_string = WideString ();
             rec->preedit_attrlist.clear ();
+            rec->commit_string = WideString ();
 
             return;
         }
@@ -1263,6 +1242,7 @@ isf_wsc_context_focus_in (WSCContextISF *wsc_ctx)
         context_scim->impl->is_on = _config->read (String (SCIM_CONFIG_FRONTEND_IM_OPENED_BY_DEFAULT), context_scim->impl->is_on);
         context_scim->impl->preedit_string.clear ();
         context_scim->impl->preedit_attrlist.clear ();
+        context_scim->impl->commit_string.clear ();
         context_scim->impl->preedit_caret = 0;
         context_scim->impl->preedit_started = false;
 
@@ -1649,7 +1629,7 @@ wsc_send_preedit (WSCContextISF* wsc_ctx, int32_t cursor)
     wl_input_method_context_preedit_string (wsc_ctx->im_ctx,
                                             wsc_ctx->serial,
                                             wsc_ctx->preedit_str,
-                                            wsc_ctx->preedit_str);
+                                            utf8_wcstombs (wsc_ctx->impl->commit_string).c_str());
 }
 
 bool wsc_context_surrounding_get (WSCContextISF *wsc_ctx, char **text, int *cursor_pos)
@@ -2184,6 +2164,7 @@ _hide_preedit_string (int context, bool update_preedit)
             ic->impl->preedit_attrlist.clear ();
             emit = true;
         }
+        ic->impl->commit_string = WideString ();
         if (ic->impl->use_preedit) {
             if (update_preedit && emit) {
                 if (!check_valid_ic (ic))
@@ -2198,48 +2179,6 @@ _hide_preedit_string (int context, bool update_preedit)
             wsc_context_send_preedit_string (ic);
         } else {
             g_info_manager->socket_hide_preedit_string ();
-        }
-    }
-}
-
-static void
-_update_preedit_string (int context,
-                                  const WideString    &str,
-                                  const AttributeList &attrs,
-                                  int caret)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-
-    if (ic && ic->impl && _focused_ic == ic) {
-        if (!ic->impl->is_on)
-            ic->impl->is_on = true;
-
-        if (ic->impl->preedit_string != str || str.length ()) {
-            ic->impl->preedit_string   = str;
-            ic->impl->preedit_attrlist = attrs;
-
-            if (ic->impl->use_preedit) {
-                if (!ic->impl->preedit_started) {
-                    if (!check_valid_ic (ic))
-                        return;
-
-                    ic->impl->preedit_started = true;
-                    ic->impl->need_commit_preedit = true;
-                }
-                if (caret >= 0 && caret <= (int)str.length ())
-                    ic->impl->preedit_caret    = caret;
-                else
-                    ic->impl->preedit_caret    = str.length ();
-                ic->impl->preedit_updating = true;
-                if (check_valid_ic (ic))
-                    ic->impl->preedit_updating = false;
-                wsc_context_send_preedit_string (ic);
-            } else {
-                String _str = utf8_wcstombs (str);
-                g_info_manager->socket_update_preedit_string (_str, attrs, (uint32)caret);
-            }
         }
     }
 }
@@ -2532,9 +2471,40 @@ public:
     }
 
     void
-    update_preedit_string (int id, uint32 context_id, WideString wstr, AttributeList& attrs, uint32 caret) {
+    update_preedit_string (int id, uint32 context_id, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret) {
         LOGD ("client id:%d", id);
-        _update_preedit_string (context_id, wstr, attrs, caret);
+        SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
+        WSCContextISF* ic = find_ic (context_id);
+
+        if (ic && ic->impl && _focused_ic == ic) {
+            if (!ic->impl->is_on)
+                ic->impl->is_on = true;
+
+            ic->impl->preedit_string   = preedit;
+            ic->impl->preedit_attrlist = attrs;
+            ic->impl->commit_string   = commit;
+
+            if (ic->impl->use_preedit) {
+                if (!ic->impl->preedit_started) {
+                    if (!check_valid_ic (ic))
+                        return;
+
+                    ic->impl->preedit_started = true;
+                    ic->impl->need_commit_preedit = true;
+                }
+                if (caret <= preedit.length ())
+                    ic->impl->preedit_caret    = caret;
+                else
+                    ic->impl->preedit_caret    = preedit.length ();
+                ic->impl->preedit_updating = true;
+                if (check_valid_ic (ic))
+                    ic->impl->preedit_updating = false;
+                wsc_context_send_preedit_string (ic);
+            } else {
+                String _str = utf8_wcstombs (preedit);
+                g_info_manager->socket_update_preedit_string (_str, attrs, (uint32)caret);
+            }
+        }
     }
 
     static Eina_Bool
