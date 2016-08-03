@@ -752,7 +752,7 @@ public:
      *
      * @return none.
      */
-    virtual void update_preedit_string (int client, uint32  context, WideString wstr, AttributeList& attrs, uint32 caret);
+    virtual void update_preedit_string (int client, uint32  context, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret);
 
     /**
      * @brief update_preedit_caret.

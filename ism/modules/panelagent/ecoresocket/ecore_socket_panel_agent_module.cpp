@@ -1287,7 +1287,7 @@ private:
         unlock();
     }
 
-    void update_preedit_string(int client, uint32  target_context, WideString wstr, AttributeList& attrs, uint32 caret) {
+    void update_preedit_string(int client, uint32  target_context, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret) {
         LOGD ("client id:%d\n", client);
 
         Socket socket_client(client);
@@ -1296,7 +1296,8 @@ private:
         m_send_trans.put_command(SCIM_TRANS_CMD_REPLY);
         m_send_trans.put_data(target_context);
         m_send_trans.put_command(SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING);
-        m_send_trans.put_data(wstr);
+        m_send_trans.put_data(preedit);
+        m_send_trans.put_data(commit);
         m_send_trans.put_data(attrs);
         m_send_trans.put_data(caret);
         m_send_trans.write_to_socket(socket_client);
@@ -2303,16 +2304,18 @@ private:
                 } else if (cmd == SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING) {
                     uint32 target_ic;
                     String target_uuid;
-                    WideString wstr;
+                    WideString preedit;
+                    WideString commit;
                     AttributeList attrs;
                     uint32 caret;
 
                     if (m_recv_trans.get_data(target_ic)    &&
                         m_recv_trans.get_data(target_uuid)  &&
-                        m_recv_trans.get_data(wstr) &&
+                        m_recv_trans.get_data(preedit) &&
+                        m_recv_trans.get_data(commit) &&
                         m_recv_trans.get_data(attrs) &&
                         m_recv_trans.get_data(caret)) {
-                        m_info_manager->socket_helper_update_preedit_string(client_id, target_ic, target_uuid, wstr, attrs, caret);
+                        m_info_manager->socket_helper_update_preedit_string(client_id, target_ic, target_uuid, preedit, commit, attrs, caret);
                     } else {
                         LOGW ("wrong format of transaction\n");
                     }

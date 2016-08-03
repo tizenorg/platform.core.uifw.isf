@@ -175,10 +175,7 @@ static void     panel_slot_commit_string                (int                    
 static void     panel_slot_forward_key_event            (int                     context,
                                                          const KeyEvent         &key);
 static void     _show_preedit_string          (int                     context);
-static void     _update_preedit_string        (int                     context,
-                                                         const WideString       &str,
-                                                         const AttributeList    &attrs,
-                                                         int               caret);
+
 static void     panel_req_update_bidi_direction         (WSCContextISF     *ic, int direction);
 
 /* Panel iochannel handler*/
@@ -2202,48 +2199,6 @@ _hide_preedit_string (int context, bool update_preedit)
     }
 }
 
-static void
-_update_preedit_string (int context,
-                                  const WideString    &str,
-                                  const AttributeList &attrs,
-                                  int caret)
-{
-    SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
-    LOGD ("");
-    WSCContextISF* ic = find_ic (context);
-
-    if (ic && ic->impl && _focused_ic == ic) {
-        if (!ic->impl->is_on)
-            ic->impl->is_on = true;
-
-        if (ic->impl->preedit_string != str || str.length ()) {
-            ic->impl->preedit_string   = str;
-            ic->impl->preedit_attrlist = attrs;
-
-            if (ic->impl->use_preedit) {
-                if (!ic->impl->preedit_started) {
-                    if (!check_valid_ic (ic))
-                        return;
-
-                    ic->impl->preedit_started = true;
-                    ic->impl->need_commit_preedit = true;
-                }
-                if (caret >= 0 && caret <= (int)str.length ())
-                    ic->impl->preedit_caret    = caret;
-                else
-                    ic->impl->preedit_caret    = str.length ();
-                ic->impl->preedit_updating = true;
-                if (check_valid_ic (ic))
-                    ic->impl->preedit_updating = false;
-                wsc_context_send_preedit_string (ic);
-            } else {
-                String _str = utf8_wcstombs (str);
-                g_info_manager->socket_update_preedit_string (_str, attrs, (uint32)caret);
-            }
-        }
-    }
-}
-
 void
 initialize (void)
 {
@@ -2532,9 +2487,39 @@ public:
     }
 
     void
-    update_preedit_string (int id, uint32 context_id, WideString wstr, AttributeList& attrs, uint32 caret) {
+    update_preedit_string (int id, uint32 context_id, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret) {
         LOGD ("client id:%d", id);
-        _update_preedit_string (context_id, wstr, attrs, caret);
+        SCIM_DEBUG_FRONTEND (1) << __FUNCTION__ << "...\n";
+        WSCContextISF* ic = find_ic (context_id);
+
+        if (ic && ic->impl && _focused_ic == ic) {
+            if (!ic->impl->is_on)
+                ic->impl->is_on = true;
+
+            ic->impl->preedit_string   = preedit;
+            ic->impl->preedit_attrlist = attrs;
+
+            if (ic->impl->use_preedit) {
+                if (!ic->impl->preedit_started) {
+                    if (!check_valid_ic (ic))
+                        return;
+
+                    ic->impl->preedit_started = true;
+                    ic->impl->need_commit_preedit = true;
+                }
+                if (caret >= 0 && caret <= (int)preedit.length ())
+                    ic->impl->preedit_caret    = caret;
+                else
+                    ic->impl->preedit_caret    = preedit.length ();
+                ic->impl->preedit_updating = true;
+                if (check_valid_ic (ic))
+                    ic->impl->preedit_updating = false;
+                wsc_context_send_preedit_string (ic);
+            } else {
+                String _str = utf8_wcstombs (preedit);
+                g_info_manager->socket_update_preedit_string (_str, attrs, (uint32)caret);
+            }
+        }
     }
 
     static Eina_Bool

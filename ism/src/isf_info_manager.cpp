@@ -3259,7 +3259,7 @@ client context helpers: %d, helpers uuid count: %d",
         }
     }
     //SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING
-    void socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString wstr, AttributeList& attrs, uint32 caret) {
+    void socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret) {
         SCIM_DEBUG_MAIN (4) << "InfoManager::socket_helper_update_preedit_string (" << client << ")\n";
         LOGD ("");
         int     target_client;
@@ -3284,7 +3284,7 @@ client context helpers: %d, helpers uuid count: %d",
             ClientInfo client_info = socket_get_client_info (target_client);
 
             if (client_info.type == FRONTEND_CLIENT) {
-                m_panel_agent_manager.update_preedit_string (target_client, target_context, wstr, attrs, caret);
+                m_panel_agent_manager.update_preedit_string (target_client, target_context, preedit, commit, attrs, caret);
             }
         }
     }
@@ -4675,10 +4675,10 @@ void InfoManager::socket_helper_hide_preedit_string (int client, uint32 target_i
 }
 
 //SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING
-void InfoManager::socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString wstr,
-        AttributeList& attrs, uint32 caret)
+void InfoManager::socket_helper_update_preedit_string (int client, uint32 target_ic, String target_uuid, WideString preedit,
+        WideString commit, AttributeList& attrs, uint32 caret)
 {
-    m_impl->socket_helper_update_preedit_string (client, target_ic, target_uuid, wstr, attrs, caret);
+    m_impl->socket_helper_update_preedit_string (client, target_ic, target_uuid, preedit, commit, attrs, caret);
 }
 
 //SCIM_TRANS_CMD_UPDATE_PREEDIT_CARET
