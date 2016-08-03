@@ -52,6 +52,7 @@ static struct _menu_item _menu_its[] = {
     { N_("PASSWORD NUMBERONLY LAYOUT"), N_("click to enter PASSWORD NUMBERONLY"), ELM_INPUT_PANEL_LAYOUT_PASSWORD, ELM_INPUT_PANEL_LAYOUT_PASSWORD_VARIATION_NUMBERONLY },
     { N_("Emoticon LAYOUT"), N_("click to enter Emoticon"), ELM_INPUT_PANEL_LAYOUT_EMOTICON, 0},
     { N_("TERMINAL LAYOUT"), N_("click to enter TERMINAL"), ELM_INPUT_PANEL_LAYOUT_TERMINAL, 0},
+    { N_("VOICE LAYOUT"), N_("click to enter VOICE"), ELM_INPUT_PANEL_LAYOUT_VOICE, 0},
 
     /* do not delete below */
     { NULL, NULL, ELM_INPUT_PANEL_LAYOUT_NORMAL, 0 }
