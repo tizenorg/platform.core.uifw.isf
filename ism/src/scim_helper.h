@@ -489,7 +489,7 @@ public:
      */
     void update_preedit_string  (int                 ic,
                                  const String       &ic_uuid,
-                                 const WideString   &wstr,
+                                 const WideString    &wstr,
                                  const AttributeList &attrs,
                                  int                 caret) const;
 
@@ -511,6 +511,29 @@ public:
                                  int                 buflen,
                                  const AttributeList &attrs,
                                  int                 caret) const;
+
+    /**
+     * @brief Update a new WideString and caret for preedit.
+     *
+     * @param ic The handle of the client Input Context to receive the WideString.
+     *        -1 means the currently focused Input Context.
+     * @param ic_uuid The UUID of the IMEngine used by the Input Context.
+     *        Empty means don't match.
+     * @param preedit The WideString to be updated.
+     * @param commit The WideString to be commited on reset.
+     * @param attrs The attribute list for preedit string.
+     * @param caret The caret position in preedit string.
+     *
+     * The commit string can be used to replace the preedit string on reset
+     * for example on unfocus.
+     */
+
+    void update_preedit_string (int                  ic,
+                                            const String        &ic_uuid,
+                                            const WideString    &preedit,
+                                            const WideString    &commit,
+                                            const AttributeList &attrs,
+                                            int                  caret) const;
 
     /**
      * @brief Update a new string for aux.

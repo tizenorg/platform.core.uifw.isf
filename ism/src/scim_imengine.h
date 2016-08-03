@@ -158,6 +158,9 @@ typedef Slot3<void, IMEngineInstanceBase*,const WideString&,const AttributeList&
 typedef Slot4<void, IMEngineInstanceBase*,const char*, int,const AttributeList&>
         IMEngineSlotUTF8StringAttributeList;
 
+typedef Slot5<void, IMEngineInstanceBase*,const WideString&, const WideString&, const AttributeList&,int>
+        IMEngineSlotWideStringWideStringAttributeListInt;
+
 typedef Slot5<bool, IMEngineInstanceBase*,WideString&,int&,int,int>
         IMEngineSlotGetSurroundingText;
 
@@ -510,6 +513,8 @@ public:
     Connection signal_connect_update_preedit_caret    (IMEngineSlotInt *slot);
     Connection signal_connect_update_preedit_string   (IMEngineSlotWideStringAttributeListInt *slot);
     Connection signal_connect_update_preedit_utf8_string   (IMEngineSlotUTF8StringAttributeListInt *slot);
+    Connection signal_connect_update_preedit_string_with_commit (IMEngineSlotWideStringWideStringAttributeListInt *slot);
+
     Connection signal_connect_update_aux_string       (IMEngineSlotWideStringAttributeList *slot);
     Connection signal_connect_update_aux_utf8_string  (IMEngineSlotUTF8StringAttributeList *slot);
     Connection signal_connect_update_lookup_table     (IMEngineSlotLookupTable *slot);
@@ -868,6 +873,22 @@ protected:
                                 int                  buflen,
                                 const AttributeList &attrs,
                                 int                  caret);
+
+    /**
+     * @brief Update the content of the preedit string,
+     *
+     * @param preedit - the preedit string
+     * @param commit - the commit string
+     * @param attrs - the string attribute
+     * @param caret - the caret position
+     *
+     * The commit string can be used to replace the preedit string on reset
+     * for example on unfocus.
+     */
+     void update_preedit_string (const WideString    &preedit,
+                                 const WideString    &commit,
+                                 const AttributeList &attrs = AttributeList (),
+                                 int                  caret = -1);
 
     /**
      * @brief Update the content of the aux string,

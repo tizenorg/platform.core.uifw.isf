@@ -470,7 +470,7 @@ void PanelAgentBase::hide_preedit_string (int client, uint32 context)
 }
 //socket_helper_update_preedit_string
 //SCIM_TRANS_CMD_UPDATE_PREEDIT_STRING
-void PanelAgentBase::update_preedit_string (int client, uint32 context, WideString wstr, AttributeList& attrs, uint32 caret)
+void PanelAgentBase::update_preedit_string (int client, uint32 context, WideString preedit, WideString commit, AttributeList& attrs, uint32 caret)
 {
     LOGW ("not implemented for %s", m_name.c_str ());
 }
