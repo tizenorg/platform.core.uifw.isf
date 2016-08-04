@@ -64,6 +64,7 @@ static Ecore_Event_Filter   *_ecore_event_filter_handler = NULL;
 static Ecore_IMF_Context    *_focused_ctx                = NULL;
 static Ecore_IMF_Context    *_show_req_ctx               = NULL;
 static Ecore_IMF_Context    *_hide_req_ctx               = NULL;
+static Ecore_IMF_Context    *_focus_req_ctx              = NULL;
 
 static Eina_Rectangle        _keyboard_geometry = {0, 0, 0, 0};
 
@@ -147,6 +148,7 @@ struct _WaylandIMContext
 
 // TIZEN_ONLY(20150708): Support back key
 static void _input_panel_hide(Ecore_IMF_Context *ctx, Eina_Bool instant);
+static Eina_Bool show_input_panel(Ecore_IMF_Context *ctx);
 
 static Ecore_IMF_Context *
 get_using_ctx ()
@@ -566,12 +568,16 @@ set_focus(Ecore_IMF_Context *ctx)
     if (!imcontext || !imcontext->window) return;
 
     Ecore_Wl_Input *input = ecore_wl_window_keyboard_get(imcontext->window);
-    if (!input)
+    if (!input) {
+        LOGW("Can't get Wl_Input\n");
         return;
+    }
 
     struct wl_seat *seat = ecore_wl_input_seat_get(input);
-    if (!seat)
+    if (!seat) {
+        LOGW("Can't get Wl_seat\n");
         return;
+    }
 
     imcontext->input = input;
 
@@ -805,6 +811,17 @@ get_purpose(Ecore_IMF_Context *ctx)
     return new_purpose;
 }
 
+static void _canvas_focus_in_cb(void *data, Evas *e, void *event_info)
+{
+    Ecore_IMF_Context *ctx = (Ecore_IMF_Context *)data;
+
+    if (ctx) {
+        LOGD("_canvas_focus_in_cb\n");
+        set_focus(ctx);
+        show_input_panel(ctx);
+    }
+}
+
 static Eina_Bool
 show_input_panel(Ecore_IMF_Context *ctx)
 {
@@ -820,8 +837,13 @@ show_input_panel(Ecore_IMF_Context *ctx)
     if (input_detected)
         return EINA_FALSE;
 
-    if (!imcontext->input)
+    if (!imcontext->input) {
         set_focus(ctx);
+        if (!imcontext->input) {
+            _focus_req_ctx = ctx;
+            evas_event_callback_add(imcontext->canvas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _canvas_focus_in_cb, _focus_req_ctx);
+        }
+    }
 
     _clear_hide_timer();
 
@@ -831,7 +853,7 @@ show_input_panel(Ecore_IMF_Context *ctx)
     _conformant_change_handler = ecore_event_handler_add(ECORE_WL_EVENT_CONFORMANT_CHANGE, _conformant_change_cb, ctx);
 
     // TIZEN_ONLY(20160217): ignore the duplicate show request
-    if ((_show_req_ctx == ctx) && _compare_context(_show_req_ctx, ctx) && (!will_hide)) {
+    if ((_show_req_ctx == ctx) && _compare_context(_show_req_ctx, ctx) && (!will_hide) && (_focus_req_ctx != ctx)) {
         if (_input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_WILL_SHOW ||
             _input_panel_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
             LOGD("already show. ctx : %p", ctx);
@@ -1596,6 +1618,11 @@ wayland_im_context_del (Ecore_IMF_Context *ctx)
 
     if (_show_req_ctx == ctx)
         _show_req_ctx = NULL;
+
+    if (_focus_req_ctx == ctx) {
+        evas_event_callback_del(imcontext->canvas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _canvas_focus_in_cb);
+        _focus_req_ctx = NULL;
+    }
     //
 
     if (imcontext->language) {
